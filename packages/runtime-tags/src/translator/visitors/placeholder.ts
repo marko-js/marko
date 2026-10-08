@@ -3,11 +3,20 @@ import { types as t } from "@marko/compiler";
 import { BindingType, createBinding } from "../util/bindings";
 import { injectTextCoercion } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPatch } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
+import { writesPatchHole } from "../util/patch/decisions";
+import { getWriteReason, isBranchPathSection } from "../util/patch/structure";
 import { addReasonExprs } from "../util/reasons";
-import { getReferencedBindings } from "../util/references";
-import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import {
+  getReferencedBindings,
+  onFinalizeReferences,
+} from "../util/references";
+import {
+  callRuntime,
+  getHTMLRuntime,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
@@ -19,11 +28,12 @@ import {
 } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
-import { findSlot, getSlot } from "../util/slots";
+import { getSlot } from "../util/slots";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import * as structure from "../util/structure";
 import { getTagFacts, isNonHTMLText } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
+import { getExprWriteOwnership } from "../util/write-guard";
 import { getWriteGuard } from "../util/write-guard";
 import * as writer from "../util/writer";
 import * as SiblingText from "./constants/sibling-text";
@@ -64,6 +74,16 @@ export default {
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
         addReasonExprs(getSlot(nodeBinding), valueExtra);
+        valueExtra.rendersValue = true;
+        if (isPatch() && isBranchPathSection(section)) {
+          // A state-sourced hole recomputes through the signal graph, and
+          // inside stateful structure owner fills refresh it.
+          onFinalizeReferences(() => {
+            if (writesPatchHole(section, valueExtra)) {
+              linkRuntimeFeature(node.escape ? "patch-text" : "patch-html");
+            }
+          });
+        }
       }
     },
     exit(placeholder) {
@@ -124,6 +144,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   if (node.extra?.rawText) {
     injectTextCoercion(value);
   }
+  const valueExtra = (value.extra ??= {});
   const { confident, computed } = evaluate(value);
 
   if (
@@ -138,6 +159,10 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const write = writer.writeTo(placeholder);
   const extra = node.extra || {};
   const nodeBinding = extra.nodeBinding;
+  const section = getSection(placeholder);
+  // A state-sourced hole recomputes through the signal graph, and inside
+  // unpatched structure owner fills refresh it: neither patch-writes.
+  const patchWrites = !!nodeBinding && writesPatchHole(section, valueExtra);
   const canWriteHTML = isHTML || (confident && node.escape);
   const method = canWriteHTML
     ? node.escape
@@ -147,14 +172,16 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       ? "_text"
       : "_html";
 
-  if (confident && canWriteHTML) {
+  // Static markup has no template text to ride: a created scope gets it
+  // from the flush like a dynamic hole.
+  if (confident && canWriteHTML && !(isHTML && patchWrites && !node.escape)) {
     if (isHTML) {
       write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
     }
   } else {
-    const section = getSection(placeholder);
     const siblingText = extra[kSiblingText]!;
-    const markerReason = nodeBinding && findSlot(nodeBinding)?.reason;
+    const markerReason = nodeBinding && getWriteReason(nodeBinding);
+    const isPatchText = isHTML && patchWrites;
 
     if (isHTML) {
       if (markerReason) {
@@ -162,7 +189,13 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
         // `<!>` between non-empty text and the mergeable text before it.
         const guard = getWriteGuard(section, markerReason, true);
         write`${callRuntime(
-          node.escape ? "_text_resume" : "_html_resume",
+          isPatchText
+            ? node.escape
+              ? "_patch_text"
+              : "_patch_html"
+            : node.escape
+              ? "_text_resume"
+              : "_html_resume",
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(nodeBinding!),
           value,
@@ -171,6 +204,9 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
               ? t.binaryExpression("*", guard, t.numericLiteral(2))
               : t.numericLiteral(2)
             : guard,
+          // The patch write is also the output and resume writer, so the value
+          // evaluates once; a param-sourced write's ownership bit follows.
+          ...(isPatchText ? getExprWriteOwnership(valueExtra) : []),
         )}`;
       } else {
         write`${
@@ -181,7 +217,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       }
     } else {
       addStatement(
-        "render",
+        patchWrites ? "patch" : "render",
         section,
         getReferencedBindings(value.extra),
         t.expressionStatement(

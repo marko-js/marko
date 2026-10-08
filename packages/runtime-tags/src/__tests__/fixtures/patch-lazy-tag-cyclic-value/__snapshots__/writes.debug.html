@@ -1,0 +1,19 @@
+<script async type=module src="tagged.marko.load.mjs"></script>
+<button><!--M_%2 #text/1--></button><!--M_$2 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-cyclic-value/tagged.marko": [
+      _ => (_([2, {
+        input_node: _.a = {
+          name: "a"
+        }
+      }]), _.a.self = _.a, 0),
+      "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-cyclic-value/tagged.marko_0 2"
+    ]
+  };
+  M._.r = [_ => [1, {
+    "#childScope/1": _(2)
+  }]];
+  M._.w()
+</script>

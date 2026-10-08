@@ -2,11 +2,12 @@ import { types as t } from "@marko/compiler";
 
 import { type Binding } from "./bindings";
 import { some } from "./optional";
+import { getBranchWriteReason, getWriteReason } from "./patch/structure";
 import { isStateReason, isUnconditionalReason, type Reasons } from "./reasons";
 import { hasResumableWriter } from "./references";
 import { ContentType, type Section } from "./sections";
 import { setSectionOwnerResumedByMarker } from "./signals";
-import { findSectionSlot, findSlot, SlotKind } from "./slots";
+import { findSlot, SlotKind } from "./slots";
 import { createProgramState } from "./state";
 import { getWriteGuard, getWriteGuardForAny } from "./write-guard";
 
@@ -32,10 +33,8 @@ export function resumeOwnerByMarkerWhenStatic(
   if (
     isStateReason(branchExprReason) &&
     some(branchExprReason.state, hasResumableWriter) &&
-    isUnconditionalReason(
-      findSectionSlot(bodySection, SlotKind.Branch)?.reason,
-    ) &&
-    isUnconditionalReason(findSlot(nodeBinding)?.reason)
+    isUnconditionalReason(getBranchWriteReason(bodySection)) &&
+    isUnconditionalReason(getWriteReason(nodeBinding))
   ) {
     setSectionOwnerResumedByMarker(bodySection);
   }
@@ -47,16 +46,21 @@ export function getBranchResumeArgs(
   branchReasons: Reasons,
   onlyChildParentTagName: string | false | undefined,
   singleNode: boolean,
+  // A patched branch keeps its markers and pairs statically: patches address
+  // it at the markers, and interior writes reach it through the pairing.
+  patchChain?: boolean,
 ) {
   const endArgs = getBranchEndArgs(
     tagSection,
     nodeBinding,
-    onlyChildParentTagName,
-    singleNode,
+    !patchChain && onlyChildParentTagName,
+    !patchChain && singleNode,
   );
   const [markerGuard] = endArgs;
   return [
-    getWriteGuardForAny(tagSection, branchReasons, !markerGuard),
+    patchChain
+      ? t.numericLiteral(1)
+      : getWriteGuardForAny(tagSection, branchReasons, !markerGuard),
     ...endArgs,
   ];
 }
@@ -67,7 +71,7 @@ export function getBranchEndArgs(
   onlyChildParentTagName: string | false | undefined,
   singleNode: boolean | undefined,
 ) {
-  const markerReason = findSlot(nodeBinding)?.reason;
+  const markerReason = getWriteReason(nodeBinding);
   const skipParentEnd = !!onlyChildParentTagName && !!markerReason;
   if (skipParentEnd) {
     getBranchEndTags().add(nodeBinding);

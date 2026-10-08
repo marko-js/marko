@@ -1,0 +1,31 @@
+// template.marko
+_shells({
+	a: "a !;b%;<!><!><!>",
+	a2: "a2 !a3; b ;<input><input>"
+});
+var template_default = _template_patch("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_show = _source_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			let a = input.text;
+			let b = a;
+			_html(`<input${_attr_input_value($scope1_id, "a", a, _resume((_new_a) => {
+				a = _new_a;
+			}, "a0", $scope1_id))}${_patch_bind($scope1_id, "Ea", _resume((_new_a) => {
+				a = _new_a;
+			}, "a0", $scope1_id))}>${_el_resume($scope1_id, "a")}<input${_attr_input_value($scope1_id, "b", b, _resume((_new_b) => {
+				b = _new_b;
+			}, "a1", $scope1_id))}${_patch_bind($scope1_id, "Eb", _resume((_new_b) => {
+				b = _new_b;
+			}, "a1", $scope1_id))}>${_el_resume($scope1_id, "b")}`);
+			_script($scope1_id, "a3");
+			_patch_value($scope1_id, "a4", a, 1);
+			_patch_value($scope1_id, "a5", b, 1);
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			return 0;
+		}
+	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
+	$scope0_page ? _scope($scope0_id, { e: input.text }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "a6", input.text);
+}, 1);

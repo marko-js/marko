@@ -1,0 +1,5 @@
+// template.marko
+const $count = /*@__PURE__*/ _fill_let("a1", 8, ($scope) => _text($scope.e, $scope.i));
+const $setup__script = _script("a0", ($scope) => _on($scope.d, "click", function() {
+	$count($scope, +$scope.i + 1);
+}));

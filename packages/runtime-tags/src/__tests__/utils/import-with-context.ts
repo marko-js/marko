@@ -68,13 +68,15 @@ interface State {
   pending: number;
   promise: Promise<void> | undefined;
   resolve: (() => void) | undefined;
+  // Dynamic imports a fixture keeps in flight until a `release` step.
+  held: (() => Promise<vm.Module>)[];
 }
 
 const stateForCtx = new WeakMap<WeakKey, State>();
 
-// Simulates the network for a lazy chunk import: a load failure, or a chunk that
-// lands on the test's next `resolveAfter` tick, after the next animation frame.
-export type LoadFault = (id: string) => "reject" | "delay" | undefined;
+// Simulates the network for a lazy chunk import: a load failure, a chunk that
+// lands on the next `resolveAfter` tick, or one held until a `release` step.
+export type LoadFault = (id: string) => "reject" | "delay" | "hold" | undefined;
 
 export async function importWithContext<T>(
   entry: string,
@@ -90,6 +92,7 @@ export async function importWithContext<T>(
       pending: 0,
       promise: undefined,
       resolve: undefined,
+      held: [],
     });
   return (await load(entry)).namespace as T;
 
@@ -99,7 +102,7 @@ export async function importWithContext<T>(
       const mod = new vm.SourceTextModule(readFileSync(id, "utf8"), {
         context,
         identifier: id,
-        importModuleDynamically,
+        importModuleDynamically: importDynamic,
       });
 
       state.pending++;
@@ -122,11 +125,7 @@ export async function importWithContext<T>(
   function importModuleDynamically(id: string, parent: vm.Module) {
     // Simulate a network-level chunk load failure (e.g. deploy skew) for the
     // matched dynamic import while its siblings resolve normally.
-    const from = parent.identifier;
-    // The shared debug runtime bundle is linked by absolute path.
-    const resolved = path.isAbsolute(id)
-      ? id
-      : resolveSync(id, { ...resolveOpts, from });
+    const resolved = resolveId(id, parent);
     const fault = loadFault?.(resolved || id);
     if (fault === "reject") {
       return Promise.reject(new Error(`simulated chunk load failure: ${id}`));
@@ -134,11 +133,38 @@ export async function importWithContext<T>(
 
     if (!resolved) {
       throw new Error(
-        `Could not resolve ${JSON.stringify(id)} from ${JSON.stringify(from)}`,
+        `Could not resolve ${JSON.stringify(id)} from ${JSON.stringify(parent.identifier)}`,
       );
     }
 
     return load(resolved, fault === "delay");
+  }
+
+  // A dynamic import a fixture holds (as it holds lazy load scripts) lands
+  // at its `release` step; static links never hold.
+  function importDynamic(id: string, parent: vm.Module) {
+    const resolved = resolveId(id, parent);
+    if (
+      resolved &&
+      loadFault?.(resolved) === "hold" &&
+      !state.cache.has(resolved)
+    ) {
+      return new Promise<vm.Module>((resolve, reject) => {
+        state.held.push(() => {
+          const loading = load(resolved);
+          loading.then(resolve, reject);
+          return loading;
+        });
+      });
+    }
+    return importModuleDynamically(id, parent);
+  }
+
+  // The shared debug runtime bundle is linked by absolute path.
+  function resolveId(id: string, parent: vm.Module) {
+    return path.isAbsolute(id)
+      ? id
+      : resolveSync(id, { ...resolveOpts, from: parent.identifier });
   }
 
   function afterEvaluate() {
@@ -147,6 +173,11 @@ export async function importWithContext<T>(
       state.resolve?.();
     }
   }
+}
+
+export function releaseHeldImports(context: vm.Context) {
+  const state = stateForCtx.get(context);
+  return Promise.all(state ? state.held.splice(0).map((load) => load()) : []);
 }
 
 export function waitForPendingModules(context: vm.Context) {

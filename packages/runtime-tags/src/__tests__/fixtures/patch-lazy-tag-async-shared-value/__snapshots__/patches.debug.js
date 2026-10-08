@@ -1,0 +1,28 @@
+// PATCH
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko", {
+  "PatchChild:#childScope/1": {
+    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4": "input_name input_item",
+    "PatchWrite:input_item": {
+      label: "b"
+    }
+  },
+  "PatchChild:BranchScopes:#text/2": {
+    "PatchPending:#text/0": 1
+  }
+}
+{
+  "PatchChild:BranchScopes:#text/2": {
+    "PatchChild:BranchScopes:#text/0": {
+      "PatchText:#text/0": "y",
+      "PatchChild:#childScope/2": {
+        "PatchSetup:": {
+          "PatchAttr:#div/0 class": "c",
+          "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4"
+        },
+        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4": _(0)["PatchChild:#childScope/1"]["PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4"],
+        "PatchWrite:input_name": "c",
+        "PatchWrite:input_item": _(0)["PatchChild:#childScope/1"]["PatchWrite:input_item"]
+      }
+    }
+  }
+}

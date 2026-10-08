@@ -1,0 +1,23 @@
+// template.marko
+_shells({ a: "a !a3;D%b ;<main><!><button>+</button></main>" });
+var template_default = _template_patch("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	_source_guard($scope0_reason, 0);
+	const $scope0_page = _page_render();
+	_source_if($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	const $input_title__closures = /* @__PURE__ */ new Set();
+	const $open__closures = /* @__PURE__ */ new Set();
+	let open = false;
+	_html("<main>");
+	if ($scope0_page) _if(() => {}, $scope0_id, "a");
+	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
+	_script($scope0_id, "a3");
+	_patch_value($scope0_id, "a5", open, 1);
+	$scope0_page ? _scope($scope0_id, {
+		e: input.title,
+		f: open,
+		g: $input_title__closures,
+		h: $open__closures
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a4", input.title);
+}, 1);

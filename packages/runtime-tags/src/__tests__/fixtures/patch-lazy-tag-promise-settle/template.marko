@@ -1,0 +1,11 @@
+import Probe from "./probe.marko" with { load: "render" }
+
+<Probe promise=input.promise/>
+<try>
+  <@placeholder>
+    <span.loading>...</span>
+  </@placeholder>
+  <await|v|=input.promise>
+    <em>${v.name}</em>
+  </await>
+</try>

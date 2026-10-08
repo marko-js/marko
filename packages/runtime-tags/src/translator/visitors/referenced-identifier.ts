@@ -1,8 +1,14 @@
 import { types as t } from "@marko/compiler";
 
+import {
+  type Binding,
+  BindingType,
+  type ReferencedBindings,
+} from "../util/bindings";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getExprRoot } from "../util/get-root";
 import { isOptimize, isOutputHTML } from "../util/marko-config";
+import { some } from "../util/optional";
 import {
   assertReferencedInRender,
   getCanonicalExtra,
@@ -11,7 +17,7 @@ import {
   trackGlobalReference,
 } from "../util/references";
 import { callRuntime, importRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { getOrCreateSection, getSection, type Section } from "../util/sections";
 import { addStatement } from "../util/signals";
 import { createSectionState } from "../util/state";
 import type { TemplateVisitor } from "../util/visitors";
@@ -77,6 +83,7 @@ export default {
       (identifier.node.extra ??= {}).exprRoot = rootExtra;
       if (rootExtra[kAbortId] === undefined) {
         rootExtra[kAbortId] = section.abortSignalExprs++;
+        (section.abortSignalRoots ??= []).push(rootExtra);
       }
     }
   },
@@ -87,12 +94,22 @@ export default {
       case "$global": {
         // An HTML read resolves to the `$global` const the program declares.
         if (isOutputHTML()) break;
+        const key = !isOptimize() && getSignalGlobalKey(identifier);
+        // Only a patch keyed `$global.key` read becomes a tracked binding (a
+        // fill needs an identity); every other shape stays a bag access.
+        if (
+          !key &&
+          (t.isMemberExpression(identifier.parent) ||
+            t.isOptionalMemberExpression(identifier.parent)) &&
+          identifier.parent.extra?.read
+        ) {
+          break;
+        }
 
         const globalRead = t.memberExpression(
           scopeIdentifier,
           t.identifier(getAccessorProp().Global),
         );
-        const key = !isOptimize() && getSignalGlobalKey(identifier);
         if (key) {
           identifier.parentPath.replaceWith(
             callRuntime("_global_read", globalRead, t.stringLiteral(key)),
@@ -178,7 +195,27 @@ function getSignalGlobalKey(identifier: t.NodePath<t.Identifier>) {
 
   const { name } = parent.property;
   if (name === "runtimeId" || name === "renderId") return;
-  return getReferencedBindings(getExprRoot(identifier).node.extra)
+  // A patch build's `$global` reads are bindings too; only other reads make
+  // this a reactive read.
+  return some(
+    getReferencedBindings(getExprRoot(identifier).node.extra),
+    isNotGlobalBinding,
+  )
     ? name
     : undefined;
+}
+
+function isNotGlobalBinding(binding: Binding) {
+  return binding.type !== BindingType.global;
+}
+
+// The abort ids of the section's `$signal` roots whose work `references` keys.
+export function getAbortIds(section: Section, references: ReferencedBindings) {
+  let ids = "";
+  for (const root of section.abortSignalRoots || []) {
+    if (getReferencedBindings(root) === references) {
+      ids += (ids && " ") + root[kAbortId];
+    }
+  }
+  return ids;
 }

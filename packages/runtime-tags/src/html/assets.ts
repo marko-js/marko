@@ -8,8 +8,10 @@ import {
   $global,
   type Boundary,
   catchableBoundary,
+  getState,
   isInResumedBranch,
   mayDrop,
+  withPatchReadyId,
   writeScript,
   writeWaitReady,
 } from "./writer";
@@ -81,10 +83,16 @@ export function withLoadAssets(
     renderer[RendererProp.Id]!,
     Object.assign(
       (input: unknown) => {
+        // A flush waits for a lazy module only once it writes into the tag,
+        // then applies whole: the child composes into its shell like a plain one.
+        if (getState().writesPatches) {
+          return withPatchReadyId(assetId, renderer, input);
+        }
         writeLoadAsset(assetId, flush, triggers);
         return writeWaitReady(assetId, renderer, input);
       },
       MARKO_DEBUG ? { ...renderer, [RendererProp.Lazy]: 1 as const } : renderer,
+      { [RendererProp.ReadyId]: assetId },
     ),
   );
 }

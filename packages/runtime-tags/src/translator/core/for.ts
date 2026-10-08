@@ -18,8 +18,20 @@ import { detectForSelector, getForSelectorKey } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
+import { isPatch } from "../util/marko-config";
 import { fromIter } from "../util/optional";
-import { addReasonExprs } from "../util/reasons";
+import {
+  getBranchWriteReason,
+  isBranchPathSection,
+  isStatefulBranch,
+  recordStructuralParams,
+} from "../util/patch/structure";
+import {
+  addReason,
+  addReasonExprs,
+  getSourcesForExpr,
+  getSourcesForRef,
+} from "../util/reasons";
 import {
   dropNodes,
   getAllTagReferenceNodes,
@@ -29,16 +41,18 @@ import {
   setDerivedFrom,
   trackParamsReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
+  getDirectClosures,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
   startSection,
 } from "../util/sections";
+import { getShippedShellId } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -46,10 +60,15 @@ import {
   setClosureSignalBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import { findSectionSlot, getSlot, SlotKind } from "../util/slots";
+import { getSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
+import {
+  getExprWriteOwnership,
+  readsRootParam,
+  scopePageIdentifier,
+} from "../util/write-guard";
 import * as writer from "../util/writer";
 
 type ForType = "in" | "of" | "to" | "until";
@@ -194,6 +213,35 @@ export default {
       nodeBinding,
       optional: true,
     });
+
+    if (isPatch()) {
+      onFinalizeReferences(() => {
+        // Patches render a loop that is not stateful.
+        if (!isStatefulBranch(bodySection) && isBranchPathSection(tagSection)) {
+          linkRuntimeFeature(
+            isKeyedByIndex(forType!, getKnownAttrValues(tag.node))
+              ? "patch-loop"
+              : "patch-loop-keyed",
+          );
+          recordStructuralParams(getSourcesForExpr(tagExtra));
+          // A collection reading a root param may be client-sourced at
+          // runtime, and the rows it keeps patch in place.
+          if (readsRootParam(tagExtra)) {
+            linkRuntimeFeature("patch-loop-item");
+          }
+        }
+      });
+      onFinalizeReferences(() => {
+        // Item fills follow the body's closures through the marker's groups.
+        addReason(
+          getSlot(nodeBinding),
+          !isStatefulBranch(bodySection) &&
+            !bodySection.isHoistThrough &&
+            !bodySection.hoisted &&
+            getSourcesForRef(getDirectClosures(bodySection)),
+        );
+      });
+    }
   },
   translate: translateByTarget({
     html: {
@@ -224,10 +272,14 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
-        const branchReason = findSectionSlot(
-          bodySection,
-          SlotKind.Branch,
-        )?.reason;
+        // A stateful loop compiles as it does on a plain page: no marker
+        // retention, shells, or loop entry.
+        const stateful = isStatefulBranch(bodySection);
+        // A patchable loop keeps its markers: item pairing and insertion
+        // go through branch markers, which elision would remove.
+        const patchChain =
+          isPatch() && !stateful && isBranchPathSection(tagSection);
+        const branchReason = getBranchWriteReason(bodySection);
 
         resumeOwnerByMarkerWhenStatic(bodySection, nodeBinding);
 
@@ -256,13 +308,34 @@ export default {
               branchReason,
               onlyChildParentTagName,
               isSingleNodeBranch(bodySection),
+              patchChain,
             ),
           );
+
+          if (patchChain) {
+            // Item body shell id so patches can create additions.
+            const id = getShippedShellId(bodySection);
+            forTagArgs.push(
+              id ? t.stringLiteral(id) : t.numericLiteral(0),
+              // A loop whose expression derives from params yields to the client
+              // when the call site passes state for them.
+              ...getExprWriteOwnership(node.extra!),
+            );
+          }
         }
 
-        statements.push(
-          t.expressionStatement(callRuntime(forTagHTMLRuntime, ...forTagArgs)),
+        let statement: t.Statement = t.expressionStatement(
+          callRuntime(forTagHTMLRuntime, ...forTagArgs),
         );
+        if (stateful) {
+          // Patch renders skip the loop: its state reads are server-stale
+          // and the flush never speaks the listing.
+          statement = t.ifStatement(
+            scopePageIdentifier(tagSection.program),
+            statement,
+          );
+        }
+        statements.push(statement);
 
         for (const replacement of tag.replaceWithMultiple(statements)) {
           replacement.skip();
@@ -290,23 +363,37 @@ export default {
         const tagExtra = node.extra!;
         const referencedBindings = getReferencedBindings(tagExtra);
         const nodeBinding = tagExtra.nodeBinding!;
-        setClosureSignalBuilder(tag, (closure, render) => {
-          const selectorKeyBinding = getForSelectorKey(bodySection, closure);
-          if (selectorKeyBinding) {
-            return callRuntime(
-              "_for_selector",
-              getScopeAccessorLiteral(nodeBinding, true),
-              getScopeAccessorLiteral(closure, true),
-              getScopeAccessorLiteral(selectorKeyBinding, true),
-              render,
-            );
-          }
-          return callRuntime(
-            "_for_closure",
-            getScopeAccessorLiteral(nodeBinding, true),
-            render,
-          );
-        });
+        setClosureSignalBuilder(
+          tag,
+          { kind: "for", ref: nodeBinding },
+          (closure, render, initId) => {
+            const selectorKeyBinding = getForSelectorKey(bodySection, closure);
+            const init = initId && t.stringLiteral(initId);
+            if (selectorKeyBinding) {
+              const args = [
+                getScopeAccessorLiteral(nodeBinding, true),
+                getScopeAccessorLiteral(closure, true),
+                getScopeAccessorLiteral(selectorKeyBinding, true),
+                render,
+              ];
+              return init
+                ? callRuntime("_shell_for_selector", init, ...args)
+                : callRuntime("_for_selector", ...args);
+            }
+            return init
+              ? callRuntime(
+                  "_shell_for_closure",
+                  init,
+                  getScopeAccessorLiteral(nodeBinding, true),
+                  render,
+                )
+              : callRuntime(
+                  "_for_closure",
+                  getScopeAccessorLiteral(nodeBinding, true),
+                  render,
+                );
+          },
+        );
 
         const forType = getForType(node)!;
         const forAttrs = getKnownAttrValues(node);

@@ -1,0 +1,41 @@
+<script async type=module src="probe.marko.load.mjs"></script>
+<div>pending<!--M_$2 #text/0--></div>
+<!--M_[--><!--M_[--><em>v<!--M_$5 #text/0--></em><!--M_]4 #text/0 5--><!--M_]1 #text/2 4-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-promise-settle/probe.marko": [
+      _ => [2, {
+        input_promise: (p => p = new Promise((f, r) => _.a = {
+          f,
+          r(e) {
+            p.catch(_ => 0);
+            r(e)
+          }
+        }))()
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-promise-settle/probe.marko_0_input_promise#3 2"
+    ]
+  };
+  M._.r = [_ => [1, {
+    "#childScope/1": _(2),
+    "ClosureScopes:input_promise/6": new Set
+  }, 2, {
+    _: _(1),
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-promise-settle/template.marko_2*content"
+      ]
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-promise-settle/probe.marko"
+    ].push(_ => (_.a.f(_.a = {
+    name: "v"
+  }), 0));
+  M._.w()
+</script>

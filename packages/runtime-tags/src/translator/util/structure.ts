@@ -2,12 +2,14 @@ import { types as t } from "@marko/compiler";
 import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import { ReservedId, WalkCode, WalkRangeSize } from "../../common/types";
+import type { LoadImportConfig } from "../visitors/import-declaration";
 import { type Binding, BindingType, createBinding } from "./bindings";
 import * as Step from "./constants/step";
 import { generateUidIdentifier } from "./generate-uid";
 import { getParentTag } from "./get-parent-tag";
 import { importOrSelfReferenceName } from "./import-reference";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
+import { isOutputHTML } from "./marko-config";
 import { toModuleReadExpression } from "./module-read";
 import normalizeStringExpression, {
   appendLiteral,
@@ -58,16 +60,18 @@ export function child(
   tag: t.NodePath<t.MarkoTag>,
   name: string,
   renderer?: StructureRef,
+  load?: LoadImportConfig,
 ) {
   getSection(tag).structure?.push({
     kind: StructureKind.Child,
     name,
     binding: tag.node.extra!.nodeBinding!,
     renderer,
+    load,
   });
 }
 
-// Records the client template's markup into the section structure stream.
+// Shells the client template's markup into the section structure stream.
 export function writeTo(path: t.NodePath<any>) {
   const { structure } = getSection(path);
   return (strs: TemplateStringsArray, ...exprs: string[]): void => {
@@ -172,7 +176,7 @@ interface ResolvedStructure {
 
 // Resolves a section's structure stream into its inert template markup and the
 // walk string claiming each visited node, including dynamic content edges.
-export function resolveStructure(section: Section) {
+export function resolveStructure(section: Section, shell: boolean) {
   const startDynamic = section.content?.startType === ContentType.Dynamic;
   const resolved: ResolvedStructure = {
     writes: [startDynamic ? "<!>" : ""],
@@ -181,13 +185,15 @@ export function resolveStructure(section: Section) {
     steps: startDynamic ? [Step.Enter, Step.Exit] : [],
   };
   let textEdge: undefined | "own" | "child";
+  let skipSteps = 0;
 
   for (const op of section.structure!) {
     if (typeof op === "string") {
       appendLiteral(resolved.writes, op);
       textEdge = undefined;
     } else if (typeof op === "number") {
-      resolved.steps.push(op);
+      if (skipSteps) skipSteps--;
+      else resolved.steps.push(op);
     } else {
       switch (op.kind) {
         case StructureKind.Text:
@@ -220,7 +226,17 @@ export function resolveStructure(section: Section) {
         }
         case StructureKind.Child: {
           const withVar = hasScopeOffset(op.binding);
-          const content = refContent(op.renderer);
+          // A shell composes a lazy child, as the flush creating it waits for
+          // its module; the dom template leaves one to its own load.
+          const composed = shell && !!op.load;
+          const renderer = op.load && !composed ? undefined : op.renderer;
+          if (composed) {
+            // The walk steps over the marker into the composed child; the
+            // tag's own shallow steps after the child are dropped.
+            resolved.steps.push(Step.Enter, Step.Exit);
+            skipSteps = 2;
+          }
+          const content = refContent(renderer);
           // A child with no content has no node for the walker to reach.
           if (content) {
             if (textEdge && content.startType === ContentType.Text) {
@@ -230,7 +246,7 @@ export function resolveStructure(section: Section) {
               content.endType === ContentType.Text ? "child" : undefined;
             flushSteps(resolved);
           }
-          const template = op.renderer && resolveRef(op.renderer, "template");
+          const template = renderer && resolveRef(renderer, "template");
           if (template) {
             resolved.writes.push(template, "");
           }
@@ -241,7 +257,7 @@ export function resolveStructure(section: Section) {
               withVar ? WalkCode.BeginChildWithVar : WalkCode.BeginChild,
             ),
           );
-          const walks = op.renderer && resolveRef(op.renderer, "walks");
+          const walks = renderer && resolveRef(renderer, "walks");
           if (walks) {
             resolved.walks.push(walks, "");
           }
@@ -263,7 +279,7 @@ export function resolveStructure(section: Section) {
 
 // A dom binding reserves only its scope offset, which the walker holds right
 // after the node.
-function hasScopeOffset(nodeBinding: Binding) {
+export function hasScopeOffset(nodeBinding: Binding) {
   return nodeBinding.reserveSize >= ReservedId.ScopeOffset;
 }
 
@@ -310,7 +326,10 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
     if (!section.structure || section.pruned) {
       return { walks: undefined, writes: undefined };
     }
-    const { writes, walks, walkComment } = resolveStructure(section);
+    const { writes, walks, walkComment } = resolveStructure(
+      section,
+      isOutputHTML(),
+    );
     const walkLiteral = normalizeStringExpression(walks, true);
     if (walkLiteral && (walkLiteral as t.StringLiteral).value !== "") {
       withLeadingComment(walkLiteral, walkComment.join(", "));

@@ -46,6 +46,58 @@ builds page/load entries, records module `renderedLength`, and measures minified
 and Brotli size. Inspect optimized `dom.bundle.js`, chunk placement, and
 `sizes.json`; raw compiler output does not show transitive retention.
 
+## Patch protocol
+
+With the `patches` compiler option a template also answers a navigation with
+a patch render: a server rerender whose patches apply to the live document
+instead of a new page. `CONTEXT.md` defines the terms (patch render, flush,
+patch, fill, structural param, shell).
+
+- **Ownership.** Every write carries the ownership mask the caller set
+  (`_set_scope_reason`, read by `_scope_reason`): two bits per param
+  group, client and server. A page render writes what any contribution
+  can change; a patch render writes server-owned holes as bare values and
+  leaves client-owned structure to the resumed page, which the server keeps
+  current through fills (`_fill_*` in `dom/signals.ts`, keyed by
+  `getPatchFillKey`). `translator/util/patch/` decides per binding what a
+  patch fills, writes or leaves alone (`refresh.ts`, `structure.ts`,
+  `decisions.ts`).
+- **Flushes.** `html/patch.ts` (`PatchState`) collects a flush's entries into
+  one nested tree of patches rooted at the page root; scope ids never ride
+  the wire, a patch nests under its parent's structural entry. Each flush
+  is one line and one expression, which `flushChunk` asserts in debug;
+  `dom/patch.ts` evaluates it as a return.
+- **Applying.** `dom/patch.ts` walks each patch beside its live scope and
+  dispatches each entry by its key prefix (`PatchKey`, debug spelled
+  `PatchKind:`) into `patchers`, one `dom/patch-*.feat.ts` module per kind,
+  imported only where a template emits that kind. A scope a flush creates
+  applies through `createPatchers` (`dom/resume.ts` `patchCreated`), where
+  every entry is required.
+- **Shells.** Structure a server-rendered branch expression decides (a
+  branch, a loop body, a dynamic tag's content) is created client-side from a shell: the section's
+  template and walk plus the register ids a fresh scope runs, decided per
+  template at analyze exit in `translator/util/shell.ts` (a caller composing
+  a child's root reads that decision) and registered by the HTML module
+  (`_shells`). A flush ships a shell the page's held-shell token
+  lacks, once per response.
+- **Pairing and rejection.** Branches, loops, boundaries and children pair
+  on their resume markers; anything a matched build cannot pair throws,
+  and the caller falls back to a full navigation. A flush that
+  writes into a lazy tag's render waits for its module, like the document's
+  ready channels (`dom/patch-ready.feat.ts`); a module that fails settles
+  pending flushes as not applied.
+- **Timing.** Like a reorder, a flush arrives after effects ran and may find
+  its owners changed; the ownership masks decide what it writes. A caller
+  installed from an effect, as `@marko/run`'s router is, never applies one
+  while in-order content streams, since that content holds every effect.
+- **Transport.** `template.patch(input, headers)` renders the flushes;
+  `@marko/run` negotiates with `accept: text/marko-patch` and
+  `x-marko-patch` (the build id and held-shell token), streams flushes to
+  `patch($global)`'s apply, and navigates on any failure.
+
+Flushes run through `new Function`, so a page needs `unsafe-eval` in its
+content security policy.
+
 ## Compiler model
 
 Terms live in [CONTEXT.md](./CONTEXT.md); start here:
@@ -106,11 +158,15 @@ write merges, so they only grow and cycles settle.
 
 Across known tags, `finalizeParamReasonGroups()` groups child parameter
 dependencies. The parent calls `_set_scope_reason(...)`; the child consumes
-and clears it with `_scope_reason()`. HTML runtime encoding is two bits per
-group at `1 + 2 * group` (the low bit says the group serializes; a dynamic
-guard shifts into its place), a keyed object of group values past fifteen
-groups, or none. `write-guard.ts` emits/hoists `_write_if` and
-`_write_guard` calls.
+and clears it with `_scope_reason()`. HTML runtime encoding is one value for
+plain and patch templates: two bits per group at `1 + 2 * group` (client
+contributes, server contributes; a dynamic guard shifts into its place), a
+keyed object of group values past fifteen groups, or none. A plain template
+reads any contribution as "write"; a patch template reads the two bits as the
+group's ownership (`_source_if`, `_filled_guard`, `_client_guard`), and a
+render kind gate (`_page_render`) tells a page render, which writes resume
+data, from a patch, which carries fills alone. `write-guard.ts` emits/hoists
+`_write_if` and `_write_guard` calls.
 
 ### Signal lowering
 

@@ -1,0 +1,6 @@
+<if=input.show>
+  <await|v|=input.promise>
+    <let/open=false/>
+    <button onClick() { open = !open }>${v} ${open ? "close" : "open"}</button>
+  </await>
+</if>

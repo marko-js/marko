@@ -5,6 +5,7 @@ import { JSDOM, VirtualConsole } from "jsdom";
 import {
   importWithContext,
   type LoadFault,
+  releaseHeldImports,
   waitForPendingModules,
 } from "./import-with-context";
 import type { FlushType } from "./resolve";
@@ -49,6 +50,8 @@ export default function createBrowser(
   };
   const scriptObserver = new window.MutationObserver(collectScripts);
   scriptObserver.observe(window.document, { childList: true, subtree: true });
+  // Lazy load scripts a fixture keeps in flight until a `release` step.
+  const heldScripts: string[] = [];
   const qmt = window.queueMicrotask;
   const queues = {
     visible: batchQueue<IOEntry>(({ io, targets, callback }) => {
@@ -155,6 +158,25 @@ export default function createBrowser(
     flush(flushType: Exclude<FlushType, "stream">) {
       queues[flushType].flush();
     },
+    // Lets every held lazy load script and dynamic import land, then runs
+    // what they scheduled.
+    async releaseLoads(): Promise<void> {
+      if (dir) {
+        const imports = heldScripts
+          .splice(0)
+          .map((src) =>
+            importWithContext(
+              path.join(dir, src),
+              { browser: true },
+              ctx,
+              loadFault,
+            ),
+          );
+        imports.push(releaseHeldImports(ctx));
+        await waitForPendingModules(ctx);
+        await Promise.all(imports);
+      }
+    },
     async runAsyncScripts(beforeEffects?: () => void): Promise<void> {
       if (dir) {
         // Patch queueMicrotask to prevent scheduled updates (from effects)
@@ -193,6 +215,10 @@ export default function createBrowser(
             for (const el of window.document.scripts) {
               if (el.src === src) el.dispatchEvent(new window.Event("error"));
             }
+            continue;
+          }
+          if (src.endsWith(".load.mjs") && loadFault?.(src) === "hold") {
+            heldScripts.push(src);
             continue;
           }
           imports.push(

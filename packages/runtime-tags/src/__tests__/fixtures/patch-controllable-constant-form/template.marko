@@ -1,0 +1,9 @@
+<let/count=0/>
+<form>
+  <textarea name="msg"></textarea>
+  <select name="s"><option value="a">A</option><option value="b" selected>B</option></select>
+  <input type="radio" name="r" value="a" checked>
+  <input name="q" value="default">
+  <p>${input.note}</p>
+  <button type="button" onClick() { count++ }>${count}</button>
+</form>

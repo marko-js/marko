@@ -1,0 +1,28 @@
+// template.marko
+const $template = "<button>inc</button><!><!>";
+const $walks = " b%c";
+const $if_content__greeting = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "greeting", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.greeting)));
+const $if_content__setup = ($scope) => {
+	$if_content__greeting._($scope);
+	$if_content__count._($scope);
+};
+const $if_content__count = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.count));
+const $greeting = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "greeting", $if_content__greeting);
+const $input_name__OR__$global_prefix = /*@__PURE__*/ _fill_global_join("prefix", "__tests__/template.marko_0_input_name#4_$global_prefix#7/global", ($scope) => {
+	$greeting($scope, _global_read($scope.$global, "prefix") + ":" + $scope.input_name);
+});
+const $input_name = /*@__PURE__*/ _const("input_name", $input_name__OR__$global_prefix);
+const $if = /*@__PURE__*/ _if("#text/1", "<span><!> <!></span>", "D%c%", $if_content__setup);
+const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "count/8", ($scope) => {
+	$if($scope, $scope.count < 2 ? 0 : 1);
+	$if_content__count($scope);
+});
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$count($scope, +$scope.count + 1);
+}));
+function $setup($scope) {
+	$setup__script($scope);
+	$count($scope, 0);
+}
+const $input = ($scope, input) => $input_name($scope, input.name);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

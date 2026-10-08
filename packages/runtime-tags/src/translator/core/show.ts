@@ -14,9 +14,16 @@ import { generateUidIdentifier } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
+import { isPatch } from "../util/marko-config";
+import { writesPatchHole } from "../util/patch/decisions";
+import { isBranchPathSection } from "../util/patch/structure";
 import { addReasonExprs } from "../util/reasons";
-import { getReferencedBindings, mergeReferences } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import {
+  getReferencedBindings,
+  mergeReferences,
+  onFinalizeReferences,
+} from "../util/references";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -31,6 +38,7 @@ import * as structure from "../util/structure";
 import { getTagFacts } from "../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { translateByTarget } from "../util/visitors";
+import { getExprWriteOwnership } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 const kStartBinding = Symbol("<show> range start binding");
@@ -128,6 +136,14 @@ export default {
       if (tagExtra[kStaticDisplay] === undefined) {
         addReasonExprs(getSlot(nodeBinding), tagExtra);
         addReasonExprs(getSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
+        tagExtra.rendersValue = true;
+        if (isPatch() && isBranchPathSection(tagSection)) {
+          onFinalizeReferences(() => {
+            if (writesPatchHole(tagSection, tagExtra)) {
+              linkRuntimeFeature("patch-show");
+            }
+          });
+        }
       }
     },
   },
@@ -207,9 +223,7 @@ export default {
               ),
             );
 
-        // The runtime calls bracket the body's statements (rather than taking a
-        // callback) so declarations in them stay readable by later statements.
-        for (const replacement of tag.replaceWithMultiple([
+        const statements: t.Statement[] = [
           t.expressionStatement(showStart),
           ...bodyStatements,
           t.expressionStatement(
@@ -221,7 +235,34 @@ export default {
               ...endArgs,
             ),
           ),
-        ])) {
+        ];
+        if (writesPatchHole(tagSection, tagExtra)) {
+          const voidArg = () => t.unaryExpression("void", t.numericLiteral(0));
+          const start = tagExtra[kStartBinding];
+          const end = tagExtra[kEndBinding];
+          const ownership = getExprWriteOwnership(tagExtra);
+          const args: t.Expression[] = [
+            getScopeIdIdentifier(tagSection),
+            getScopeAccessorLiteral(nodeBinding),
+            t.cloneNode(display, true),
+            getScopeAccessorLiteral(nodeBinding, true),
+          ];
+          if (start || end || ownership.length) {
+            args.push(start ? getScopeAccessorLiteral(start, true) : voidArg());
+          }
+          if (end || ownership.length) {
+            args.push(end ? getScopeAccessorLiteral(end, true) : voidArg());
+          }
+          statements.push(
+            t.expressionStatement(
+              callRuntime("_patch_show", ...args, ...ownership),
+            ),
+          );
+        }
+
+        // The runtime calls bracket the body's statements (rather than taking a
+        // callback) so declarations in them stay readable by later statements.
+        for (const replacement of tag.replaceWithMultiple(statements)) {
           replacement.skip();
         }
       },

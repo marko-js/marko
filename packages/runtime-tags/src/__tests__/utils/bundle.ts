@@ -50,6 +50,7 @@ export async function createServerRunner<T extends Record<string, string>>(
   entries: T,
   config: compiler.Config,
   interop?: boolean,
+  outName = config.optimize ? "optimize" : "debug",
 ): Promise<{
   assets: string;
   runServer(): Promise<Record<keyof T, Template>>;
@@ -63,7 +64,7 @@ export async function createServerRunner<T extends Record<string, string>>(
   diagnostics: { id: string; items: Diagnostic[] }[];
 }> {
   const optimize = !!config.optimize;
-  const out = path.join(cwd, "dist", optimize ? "optimize" : "debug");
+  const out = path.join(cwd, "dist", outName);
   const htmlOut = path.join(out, "html");
   const domOut = path.join(out, "dom");
   const entryNames = Object.keys(entries);
@@ -210,7 +211,11 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
 
             return isPage
               ? code +
-                  `\nimport { run as _run } from "@marko/runtime-tags/dom"\n${
+                  `\nimport { run as _run${
+                    compileOpts.patches ? ", patch as _patch" : ""
+                  } } from "@marko/runtime-tags/dom"\n${
+                    compileOpts.patches ? "globalThis.patch=_patch;\n" : ""
+                  }${
                     interop
                       ? `import { ___componentLookup } from "marko/src/node_modules/@internal/components-util"\nglobalThis.run=()=>{ _run(); Object.values(___componentLookup).forEach((c) => c.update())}`
                       : `globalThis.run=_run`

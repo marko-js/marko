@@ -1,0 +1,37 @@
+<script async type=module src="outer.marko.load.mjs"></script>
+<main>
+  <section><button>a<!--M_$3 #text/1-->:<!>
+        0<!--M_$3 #text/2--></button><!--M_$3 #button/0--></section>
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-trigger-input/outer.marko": [
+      _ => [2, {
+        "#childScope/1": _(3)
+      }]
+    ]
+  };
+  ((h, d, l = $ => {
+    d || (d = new Range().createContextualFragment(h), d.querySelectorAll(
+      "script").forEach(s => s.onerror = () => console.error(
+      `The lazy module for "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-trigger-input/inner.marko" failed to load; its server-rendered content cannot become interactive.`
+      )), document.head.append(d))
+  }) => (e => e?.addEventListener("click", l, {
+    once: 1
+  }))(document.querySelector("body") || (console.warn(
+    "A lazy load trigger could not find an element matching \"body\". The module was loaded immediately."
+    ), l())))(
+    `\x3Cscript async type=module src="inner.marko.load.mjs">\x3C/script>`);
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-trigger-input/inner.marko"
+    ] = [_ => [3, {
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-trigger-input/inner.marko_0 3"
+  ];
+  M._.r = [_ => [1, {
+    "#childScope/1": _(2)
+  }]];
+  M._.w()
+</script>

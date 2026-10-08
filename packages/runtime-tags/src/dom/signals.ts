@@ -108,6 +108,204 @@ export function _const<T>(
   }) as Signal<T>;
 }
 
+// Value signals for live server/client intersections keyed by
+// `templateId:ordinal`, retained exactly when a consuming join is.
+export const patchFills: Record<string, Signal<unknown> & { _?: SignalFn }> =
+  {};
+function fillJoin<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  dispatch: SignalFn,
+): T {
+  const prev = patchFills[key];
+  const prevFn = prev?._;
+  // Never replace a fill-registered declaration: what derives from it
+  // already reaches every consumer a join could.
+  if (!prev || prevFn) {
+    const fn: SignalFn = prevFn
+      ? (scope) => {
+          prevFn(scope);
+          dispatch(scope);
+        }
+      : dispatch;
+    (patchFills[key] = _const(valueAccessor, fn) as Signal<unknown> & {
+      _?: SignalFn;
+    })._ = fn;
+  }
+  return join;
+}
+// A fill runs the join, or `run` where the flush does part of its work.
+export function _fill_join<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  run?: SignalFn | 0,
+  buildDispatch?: (join: SignalFn) => SignalFn,
+): T {
+  run ||= join;
+  return fillJoin(
+    key,
+    valueAccessor,
+    join,
+    buildDispatch ? buildDispatch(run) : run,
+  );
+}
+// Owner-side dispatch for cross-section joins over branch scopes; per-kind
+// helpers keep branch-free bundles free of the other kind.
+export function _fill_join_if<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  run: SignalFn | 0,
+  ...hops: (EncodedAccessor | number)[]
+): T {
+  let dispatch: SignalFn = run || join;
+  for (let i = hops.length; i > 0; i -= 2) {
+    dispatch = _if_closure(
+      hops[i - 2] as EncodedAccessor,
+      hops[i - 1] as number,
+      dispatch,
+    );
+  }
+  return fillJoin(key, valueAccessor, join, dispatch);
+}
+export function _fill_join_for<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  run: SignalFn | 0,
+  ...hops: EncodedAccessor[]
+): T {
+  let dispatch: SignalFn = run || join;
+  for (let i = hops.length; i--;) {
+    dispatch = _for_closure(hops[i], dispatch);
+  }
+  return fillJoin(key, valueAccessor, join, dispatch);
+}
+
+// Deep closure positions of one key reassemble the indexed composite; a
+// shaken position is simply absent.
+const closureFillJoins: Record<string, SignalFn[] & { d?: 1 }> = {};
+export function _fill_join_closure<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  index: number,
+): T {
+  const signals = (closureFillJoins[key] ??= []);
+  const closureJoin = join as T & {
+    [ClosureSignalProp.ScopeInstancesAccessor]: string;
+    [ClosureSignalProp.SignalIndexAccessor]: string;
+    [ClosureSignalProp.Index]: number;
+  };
+  signals[index] = join;
+  // Client-created positions stamp this index into their scope, keeping
+  // it in agreement with what the server serialized.
+  closureJoin[ClosureSignalProp.Index] = index;
+  if (!signals.d) {
+    signals.d = 1;
+    fillJoin(key, valueAccessor, join, (scope) => {
+      const instances = scope[
+        closureJoin[ClosureSignalProp.ScopeInstancesAccessor]
+      ] as ClosureScopes | undefined;
+      if (instances) {
+        // A subscriber that resumes after this renders the change it missed.
+        instances[ClosureScopesProp.Changed] = 1;
+        const signalIndex = closureJoin[ClosureSignalProp.SignalIndexAccessor];
+        for (const childScope of instances) {
+          if (
+            childScope[AccessorProp.Gen] > 0 &&
+            childScope[AccessorProp.Gen] < runId
+          ) {
+            const sig = signals[(childScope[signalIndex] as number) || 0];
+            if (sig) queueRender(childScope, sig, -1);
+          }
+        }
+      }
+    });
+  }
+  return join;
+}
+
+// A join in content its owner's closure subscribers hold: the fill runs it
+// in each subscribed scope of this closure position.
+export function _fill_join_subscribers<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+  closureAccessor: EncodedAccessor,
+  index: number,
+) {
+  if (!MARKO_DEBUG) closureAccessor = decodeAccessor(closureAccessor as number);
+  const instancesAccessor = MARKO_DEBUG
+    ? AccessorPrefix.ClosureScopes + closureAccessor
+    : (closureAccessor as string);
+  const signalIndex = AccessorPrefix.ClosureSignalIndex + closureAccessor;
+  return fillJoin(key, valueAccessor, join, (scope) => {
+    const instances = scope[instancesAccessor] as ClosureScopes | undefined;
+    if (instances) {
+      instances[ClosureScopesProp.Changed] = 1;
+      for (const childScope of instances) {
+        if (
+          childScope[AccessorProp.Gen] > 0 &&
+          childScope[AccessorProp.Gen] < runId &&
+          ((childScope[signalIndex] as number) || 0) === index
+        ) {
+          queueRender(childScope, join, -1);
+        }
+      }
+    }
+  });
+}
+
+// A declaration doubles as its fill; `fillFn` (renders minus what the
+// flush does itself) is the fill's run when it differs, `0` when nothing is left.
+function fill<T extends Signal<any>>(
+  key: string,
+  signal: T,
+  id: EncodedAccessor,
+  fillFn: SignalFn | 0 | undefined,
+) {
+  patchFills[key] =
+    fillFn === undefined ? signal : _const(id, fillFn || undefined);
+  return signal;
+}
+export function _fill_let<T>(
+  key: string,
+  id: EncodedAccessor,
+  fn?: SignalFn,
+  fillFn?: SignalFn | 0,
+) {
+  return fill(
+    key,
+    _let<T>(id, fn),
+    MARKO_DEBUG ? (id as string).slice(0, (id as string).lastIndexOf("/")) : id,
+    fillFn,
+  );
+}
+// A fill is the controller's value, never an assignment the handler takes.
+export function _fill_let_change<T>(
+  key: string,
+  id: EncodedAccessor,
+  fn?: SignalFn,
+  fillFn?: SignalFn | 0,
+) {
+  return fill(
+    key,
+    _let_change<T>(id, fn),
+    MARKO_DEBUG ? (id as string).slice(0, (id as string).lastIndexOf("/")) : id,
+    fillFn ?? fn ?? 0,
+  );
+}
+export function _fill_const<T>(
+  key: string,
+  id: EncodedAccessor,
+  fn?: SignalFn,
+  fillFn?: SignalFn | 0,
+) {
+  return fill(key, _const<T>(id, fn), id, fillFn);
+}
 export function _or(
   id: number,
   fn: SignalFn,
@@ -132,6 +330,25 @@ export function _or(
       queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
     }
   };
+}
+
+// A created scope's params land as seeds, so no arrival completes its join:
+// the flush runs it by this init, after whatever does arrive.
+export function _shell_or(
+  initId: string,
+  id: number,
+  fn: SignalFn,
+  defaultPending?: number,
+  scopeIdAccessor: EncodedAccessor = AccessorProp.Id,
+): Signal<never> {
+  const or = _or(id, fn, defaultPending, scopeIdAccessor);
+  if (!MARKO_DEBUG && scopeIdAccessor !== AccessorProp.Id) {
+    scopeIdAccessor = decodeAccessor(scopeIdAccessor as number);
+  }
+  // Queued in the same order as the join's own renders.
+  _resumed[initId] = (scope: Scope) =>
+    queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
+  return or;
 }
 
 export function _for_closure(
@@ -355,6 +572,86 @@ export function _closure_get(
   if (resumeId) _resumed[resumeId] = (scope: Scope) => closureSignal(scope, 1);
 
   return closureSignal;
+}
+
+// Creation INIT registration fused into the closure helpers: pure call
+// callers let tree shaking drop signal and registration together (fail closed).
+export function _shell_closure_get(
+  initId: string,
+  valueAccessor: EncodedAccessor,
+  fn: SignalFn,
+  getOwnerScope?: (scope: Scope) => Scope,
+  resumeId?: string,
+) {
+  return (_resumed[initId] = _closure_get(
+    valueAccessor,
+    fn,
+    getOwnerScope,
+    resumeId,
+  ));
+}
+// A created subscriber a flush names subscribes once the flush's values
+// settle, rendering only what its owner changed, as a resumed one does.
+export function _shell_subscribe_closure_get(
+  initId: string,
+  valueAccessor: EncodedAccessor,
+  fn: SignalFn,
+  getOwnerScope?: (scope: Scope) => Scope,
+  resumeId?: string,
+) {
+  const closureSignal = _closure_get(
+    valueAccessor,
+    fn,
+    getOwnerScope,
+    resumeId,
+  );
+  _resumed[initId] = (scope: Scope) =>
+    queueRender(
+      scope,
+      () => {
+        subscribeToScopeSet(
+          getOwnerScope ? getOwnerScope(scope) : scope[AccessorProp.Owner]!,
+          closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
+          scope,
+        );
+        closureSignal(scope, 1);
+      },
+      -1,
+    );
+  return closureSignal;
+}
+export function _shell_if_closure(
+  initId: string,
+  ownerConditionalNodeAccessor: EncodedAccessor,
+  branch: number,
+  fn: SignalFn,
+) {
+  return (_resumed[initId] = _if_closure(
+    ownerConditionalNodeAccessor,
+    branch,
+    fn,
+  ));
+}
+export function _shell_for_closure(
+  initId: string,
+  ownerLoopNodeAccessor: EncodedAccessor,
+  fn: SignalFn,
+) {
+  return (_resumed[initId] = _for_closure(ownerLoopNodeAccessor, fn));
+}
+export function _shell_for_selector(
+  initId: string,
+  ownerLoopNodeAccessor: EncodedAccessor,
+  ownerValueAccessor: EncodedAccessor,
+  keyValueAccessor: EncodedAccessor,
+  fn: SignalFn,
+) {
+  return (_resumed[initId] = _for_selector(
+    ownerLoopNodeAccessor,
+    ownerValueAccessor,
+    keyValueAccessor,
+    fn,
+  ));
 }
 
 export function _child_setup(setup: Signal<never> & { _: Signal<Scope> }) {

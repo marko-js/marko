@@ -1,0 +1,9 @@
+<let/n=0/>
+<button onClick() { n++ }>${n}</button>
+<try>
+  <await|v|=input.a>
+    <p>A:${v}</p>
+  </await>
+  <@placeholder><em>wait</em></@placeholder>
+  <@catch>caught-a</@catch>
+</try>

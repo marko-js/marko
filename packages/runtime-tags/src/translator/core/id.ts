@@ -72,6 +72,8 @@ export default {
     valueExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
     const binding = trackVarReferences(tag, BindingType.derived);
     if (binding) {
+      // A generated id never changes; a given value follows its sources.
+      if (!valueAttr) binding.stable = true;
       assertNoTagVarMutation(tag);
       setDerivedFrom(binding, valueExtra);
     }

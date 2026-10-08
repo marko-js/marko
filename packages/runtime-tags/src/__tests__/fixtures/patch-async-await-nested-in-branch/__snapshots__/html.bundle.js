@@ -1,0 +1,46 @@
+// template.marko
+_shells({
+	a0: "a0;D%c%;<em><!>:<!></em>",
+	a1: "a1;D%c%;<em><!>:<!></em>",
+	a2: "a2;b%;<!><!><!>",
+	a: "a !a9;D%b ;<main><!><button>interactive</button></main>",
+	a3: "a3;b%;<!><!><!>",
+	a4: "a4;b%;<!><!><!>"
+});
+var template_default = _template_patch("a", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $input_inner__closures = /* @__PURE__ */ new Set();
+	_html("<main>");
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_await($scope1_id, "a", input.outer, (outer) => {
+				const $scope2_id = _scope_id();
+				const $await_content__outer__closures = /* @__PURE__ */ new Set();
+				_await($scope2_id, "a", input.inner, (inner) => {
+					const $scope3_id = _scope_id();
+					_html(`<em>${_patch_text($scope3_id, "a", outer, void 0, $scope0_reason, 4)}:${_patch_text($scope3_id, "b", inner, 2, $scope0_reason, 5)}</em>`);
+					_client_guard($scope0_reason, 4) && _patch_init($scope3_id, "a5");
+					_subscribe(_unfilled_if($scope0_reason, 4) && $await_content__outer__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 4) && "a6");
+				}, 1, "a0");
+				_client_guard($scope0_reason, 5) && _patch_init($scope2_id, "a7");
+				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 5) && $input_inner__closures, _scope($scope2_id, {
+					c: _unfilled_if($scope0_reason, 5) && outer,
+					_: _scope_with_id($scope1_id),
+					j: _unfilled_if($scope0_reason, 4) && $await_content__outer__closures
+				}), _client_guard($scope0_reason, 5) && "a8", 0);
+				$scope0_page && _resume_branch($scope2_id);
+			}, 1, "a2");
+			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			return 0;
+		}
+	}, $scope0_id, "a", 1, _source_guard($scope0_reason, 3), void 0, void 0, void 0, ["a4"], $scope0_reason, 3);
+	_html(`<button>interactive</button>${_el_resume($scope0_id, "b")}</main>`);
+	_script($scope0_id, "a9");
+	$scope0_page ? _scope($scope0_id, {
+		f: _unfilled_if($scope0_reason, 3) && input.outer,
+		g: _unfilled_if($scope0_reason, 0) && input.inner,
+		i: _unfilled_if($scope0_reason, 5) && $input_inner__closures
+	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "a10", input.outer), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "a11", input.inner));
+}, 1);

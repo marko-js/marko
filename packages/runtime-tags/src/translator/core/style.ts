@@ -22,25 +22,33 @@ import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputDOM } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
+import { writesPatchHole } from "../util/patch/decisions";
+import { getWriteReason, writesPatchIn } from "../util/patch/structure";
 import { addReasonExprs } from "../util/reasons";
-import { getReferencedBindings, mergeReferences } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import {
+  getReferencedBindings,
+  mergeReferences,
+  onFinalizeReferences,
+} from "../util/references";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
   getNodeContentType,
   getOrCreateSection,
+  getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
-import { findSlot, getSlot } from "../util/slots";
+import { getSlot } from "../util/slots";
 import * as structure from "../util/structure";
 import {
   checkStyleInterpolations,
   htmlStyleTagAlternateMsg,
 } from "../util/style-interpolation";
 import { translateByTarget } from "../util/visitors";
+import { getExprWriteOwnership } from "../util/write-guard";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
@@ -126,6 +134,16 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   }
 
   addReasonExprs(getSlot(binding), exprExtras);
+  // Stateful structure is known only once sources resolve.
+  for (const value of dynamicStyleValues(node))
+    value.extra!.rendersValue = true;
+  onFinalizeReferences(() => {
+    // The flush writes a dynamic style's rule, even a state-sourced one: a
+    // scope the flush creates never runs the setup that writes its selector.
+    if (writesPatchIn(section)) {
+      linkRuntimeFeature("patch-style");
+    }
+  });
 }
 
 function collectDynamicStyleNames(tag: t.NodePath<t.MarkoTag>) {
@@ -215,8 +233,26 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const binding = node.extra?.nodeBinding;
 
   if (binding) {
-    writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
-    writer.markNode(tag, binding, findSlot(binding)?.reason);
+    const names = node.extra![kDynamicStyleNames]!;
+    const section = getSection(tag);
+    writer.writeTo(tag)`${callRuntime(
+      "_style_html",
+      buildStyleDecls(node, (value, i) =>
+        writesPatchIn(section)
+          ? callRuntime(
+              "_patch_style",
+              getScopeIdIdentifier(section),
+              getScopeAccessorLiteral(binding),
+              t.stringLiteral(names[i]),
+              value,
+              ...(writesPatchHole(section, value.extra)
+                ? getExprWriteOwnership(value.extra)
+                : [t.numericLiteral(0), t.numericLiteral(0)]),
+            )
+          : callRuntime("_escape_style_value", value),
+      ),
+    )}`;
+    writer.markNode(tag, binding, getWriteReason(binding));
   }
 
   emitStyleImport(tag);
@@ -248,8 +284,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
 
     dynamicStyleValues(node).forEach((value, i) => {
       const valueRef = getReferencedBindings(value.extra);
+      const patched = writesPatchHole(section, value.extra);
       addStatement(
-        "render",
+        patched ? "patch" : "render",
         section,
         valueRef,
         t.expressionStatement(
@@ -308,13 +345,16 @@ function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function buildStyleDecls(node: t.MarkoTag) {
+function buildStyleDecls(
+  node: t.MarkoTag,
+  toDecl: (value: t.Expression, i: number) => t.Expression,
+) {
   const names = node.extra![kDynamicStyleNames]!;
   const parts: (string | t.Expression)[] = [];
 
   dynamicStyleValues(node).forEach((value, i) => {
     parts.push(`${names[i]}:`);
-    parts.push(callRuntime("_escape_style_value", value));
+    parts.push(toDecl(value, i));
     parts.push(";");
   });
 

@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getProgram, loadFileForTag } from "@marko/compiler/babel-utils";
 
+import type { LoadImportConfig } from "../visitors/import-declaration";
 import {
   type Binding,
   bindingUtil,
@@ -27,6 +28,7 @@ import {
   forEach,
   reduce,
 } from "./optional";
+import { hasPatchKeyedNodes, isPatchKeyedSlot } from "./patch/structure";
 import {
   isConditionalReason,
   mapParamReason,
@@ -101,6 +103,8 @@ export interface StructureChild {
   name: string;
   binding: Binding;
   renderer?: StructureRef;
+  // A lazy child: its import's load config.
+  load?: LoadImportConfig;
 }
 
 // A module read written into the markup, read when the module loads.
@@ -134,6 +138,9 @@ export interface Section {
   /** When client code reads anything in its scope: its slots' reasons merged. */
   reason: undefined | Reason;
   paramReasonGroups: ParamReasonGroups | undefined;
+  /** Its params a branch expression derives from, here or in a child they are
+   * passed to (structural params). */
+  structuralParams: SortedOpt<Binding> | undefined;
   returnValueExpr: t.NodeExtra | undefined;
   isHoistThrough: true | undefined;
   branchExpr: t.NodeExtra | undefined;
@@ -168,8 +175,18 @@ export interface Section {
         optional: boolean;
         /** An `<if>` branch's place in its chain, the renderer index it renders as. */
         index?: number;
+        /** An `<await>`'s body. */
+        await?: true;
       }
     | undefined;
+  /** A `<try>`'s `@catch` or `@placeholder`: content that always
+   * registers, so its slot names it by id. */
+  boundaryContent: boolean;
+  /** A content body shipped as a shell, created by id from a dynamic tag
+   * entry. */
+  contentShell: boolean;
+  /** Each `$signal` expression root, in abort id order. */
+  abortSignalRoots: t.NodeExtra[] | undefined;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -240,6 +257,7 @@ export function startSection(
       slots: undefined,
       reason: undefined,
       paramReasonGroups: undefined,
+      structuralParams: undefined,
       returnValueExpr: undefined,
       content: getContentInfo(path),
       branchExpr: undefined,
@@ -251,6 +269,9 @@ export function startSection(
       readsOwner: false,
       hasSetupWork: false,
       branch: undefined,
+      boundaryContent: !!extra.tryContent,
+      contentShell: false,
+      abortSignalRoots: undefined,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     if (parentSection) {
@@ -551,13 +572,15 @@ export function getCommonSection(section: Section, other: Section) {
 }
 
 export function finalizeParamReasonGroups(section: Section) {
-  ensureReasonGroups(section.reason);
+  // A node a patch keys an entry on writes whatever its reason says, and so
+  // does its scope, so neither reason's param group would gate anything.
+  if (!hasPatchKeyedNodes(section)) ensureReasonGroups(section.reason);
 
   forEach(section.slots, ensureSlotReasonGroups);
 }
 
 function ensureSlotReasonGroups(slot: Slot) {
-  ensureReasonGroups(slot.reason);
+  if (!isPatchKeyedSlot(slot)) ensureReasonGroups(slot.reason);
 }
 
 export function ensureReasonGroups(reason: Section["reason"]) {

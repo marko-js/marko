@@ -1,0 +1,25 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<main>
+  <button>0<!--M_$2 #text/1--></button><!--M_$2 #button/0--><!--M_[--><i>1<!--M_$4 #text/0-->
+    <!>acme<!--M_$4 #text/1-->
+  </i><!--M_[4--><i>2<!--M_$5 #text/0-->
+    <!>acme<!--M_$5 #text/1-->
+  </i><!--M_]3 #text/0 5--></main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-global-closure-lazy/child.marko": [
+      _ => [2, {
+        "BranchScopes:#text/2": _(3),
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/patch-global-closure-lazy/child.marko_0 2"
+    ]
+  };
+  M._.r = [_ => [0, {
+    brand: "acme"
+  }, {
+    "#childScope/1": _(2)
+  }]];
+  M._.w()
+</script>

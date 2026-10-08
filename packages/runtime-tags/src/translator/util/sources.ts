@@ -5,7 +5,7 @@ import {
   compareReferences,
   someAliased,
 } from "./bindings";
-import { type SortedOpt } from "./optional";
+import { type SortedOpt, some } from "./optional";
 
 export interface Sources {
   state: SortedOpt<Binding>;
@@ -131,6 +131,33 @@ function unionParamSources(a: Sources["param"], b: Sources["param"]) {
   }
 
   return merged;
+}
+
+// A param of the template itself (its root section's), which its caller passes.
+export function isRootParam(binding: Binding) {
+  return !binding.section.parent;
+}
+
+// Whether the sources read one of the template's own params.
+export function hasRootParamSource(sources: Sources | undefined) {
+  return some(sources?.param, isRootParam);
+}
+
+// The template's own params among `params`: its root section is numbered
+// first and params sort by section, so they are the leading run.
+export function getRootParams(params: Sources["param"]): Sources["param"] {
+  if (!Array.isArray(params)) {
+    return params && isRootParam(params) ? params : undefined;
+  }
+  let end = 0;
+  while (end < params.length && isRootParam(params[end])) end++;
+  return end === params.length
+    ? params
+    : end > 1
+      ? (params.slice(0, end) as typeof params)
+      : end
+        ? params[0]
+        : undefined;
 }
 
 export function isInParams(binding: Binding, params: Sources["param"]) {

@@ -1,0 +1,5 @@
+<let/likes=3>
+<await|v|=input.promise>
+  <let/open=false>
+  <button onClick() { open = !open; likes++ }>${v} ${likes} ${open ? "open" : "closed"}</button>
+</await>

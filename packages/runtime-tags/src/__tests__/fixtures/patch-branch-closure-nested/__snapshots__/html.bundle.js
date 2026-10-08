@@ -1,0 +1,35 @@
+// template.marko
+_shells({
+	a: "a !;E l%;<main><h1> </h1><!></main>",
+	a0: "a0 !a2; b%;<button>+</button><!><!>",
+	a1: "a1 a6;Db%;<p>Seen <!></p>"
+});
+var template_default = _template_patch("a", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 1)}</h1>`);
+	_if(() => {
+		if (input.outer) {
+			const $scope1_id = _scope_id();
+			let count = 0;
+			_html(`<button>+</button>${_el_resume($scope1_id, "a")}`);
+			_if(() => {
+				if (input.inner) {
+					const $scope2_id = _scope_id();
+					_html(`<p>Seen ${_text_resume($scope2_id, "a", count, 2)}</p>`);
+					_scope($scope2_id, { _: _scope_with_id($scope1_id) });
+					return 0;
+				}
+			}, $scope1_id, "b", 1, _source_guard($scope0_reason, 3), void 0, void 0, void 0, ["a1"], $scope0_reason, 3);
+			_script($scope1_id, "a2");
+			_patch_value($scope1_id, "a3", count, 1);
+			_scope($scope1_id, {
+				c: count,
+				_: _scope_with_id($scope0_id)
+			});
+			return 0;
+		}
+	}, $scope0_id, "b", 1, _source_guard($scope0_reason, 2), void 0, void 0, void 0, ["a0"], $scope0_reason, 2);
+	_html("</main>");
+	$scope0_page ? _scope($scope0_id, { g: _unfilled_if($scope0_reason, 2) && input.inner }) : _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "a4", input.inner);
+}, 1);

@@ -1,0 +1,11 @@
+<nav>
+  <await|list|=input.list>
+    <for|item| of=list>
+      <a>${item}</a>
+    </for>
+    <if=list[0]>
+      <icon name=list[0]/>
+    </if>
+  </await>
+</nav>
+<article><${input.content}/></article>

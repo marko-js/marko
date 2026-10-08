@@ -13,7 +13,12 @@ import {
 } from "../../html";
 import { escapeDoubleQuotedAttrValue } from "../../html/attrs";
 import { isTranslate } from "./get-compile-stage";
-import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
+import {
+  getMarkoOpts,
+  isOutputDOM,
+  isOutputHTML,
+  isPatch,
+} from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
@@ -25,6 +30,22 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 // matters only for a value a serialized register id keeps in the module graph.
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
+  "_fill_join",
+  "_fill_global_join",
+  "_fill_join_closure",
+  "_fill_join_for",
+  "_fill_join_if",
+  "_fill_join_subscribers",
+  "_shell_closure_get",
+  "_shell_for_closure",
+  "_shell_for_selector",
+  "_shell_if_closure",
+  "_shell_join",
+  "_shell_or",
+  "_shell_subscribe_closure_get",
+  "_fill_const",
+  "_fill_let",
+  "_fill_let_change",
   "_await_content",
   "_child_setup",
   "_if",
@@ -53,6 +74,7 @@ const pureDOMFunctions = new Set<string>([
   "_let_change",
   "_const",
   "_load_signal",
+  "_load_signal_patch",
   "_load_setup",
   "_load_template",
   "_load_visible_trigger",
@@ -101,8 +123,13 @@ export function callRuntime(
     importRuntime(name),
     filterArguments(args),
   );
-  if (isOutputDOM() && pureDOMFunctions.has(name)) {
-    return t.addComment(callExpression, "leading", "@__PURE__");
+  if (isOutputDOM()) {
+    if (isPatch() && scopeBoundRegistrations.has(name)) {
+      importRuntimeFeature("patch-bind");
+    }
+    if (pureDOMFunctions.has(name)) {
+      return t.addComment(callExpression, "leading", "@__PURE__");
+    }
   }
   return callExpression;
 }
@@ -117,6 +144,14 @@ export function dynamicImport(
     ? t.callExpression(t.memberExpression(load, t.identifier("then")), args)
     : load;
 }
+
+// Client registrations of values the server can bind to a scope. A patch may
+// carry one (as an entry or in data), so registering one links its resolution.
+const scopeBoundRegistrations = new Set<string>([
+  "_el",
+  "_hoist_resume",
+  "_var_resume",
+]);
 
 // A `src/{dom,html}/*.feat.ts` module is a compiler-injected side-effect
 // import: it enables optional runtime behavior that referenced imports alone
@@ -135,7 +170,53 @@ export const domRuntimeFeatures = [
   "lazy",
   "placeholder",
 ] as const;
-export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];
+// Listed only for an app compiled with `patches`.
+export const domPatchRuntimeFeatures = [
+  "patch-attr",
+  "patch-attrs",
+  "patch-boundary",
+  "patch-branch",
+  "patch-catch",
+  "patch-child",
+  "patch-control",
+  "patch-control-checked-value",
+  "patch-control-input",
+  "patch-control-open",
+  "patch-control-select",
+  "patch-dynamic-tag",
+  "patch-effect",
+  "patch-effect-signal",
+  "patch-html",
+  "patch-loop",
+  "patch-loop-item",
+  "patch-loop-keyed",
+  "patch-ready",
+  "patch-show",
+  "patch-style",
+  "patch-text",
+  "patch-text-content",
+  "patch-try",
+  "patch-value",
+  "patch-bind",
+  "patch-var",
+] as const;
+export type DOMRuntimeFeature =
+  | (typeof domRuntimeFeatures)[number]
+  | (typeof domPatchRuntimeFeatures)[number];
+
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    /** Client runtime features the template links from analyze. */
+    runtimeFeatures?: Set<DOMRuntimeFeature>;
+  }
+}
+
+// Links a client runtime feature from analyze: the page entry imports it
+// when the template's module never loads, and that module imports it too.
+export function linkRuntimeFeature(feature: DOMRuntimeFeature) {
+  (getProgram().node.extra.runtimeFeatures ??= new Set()).add(feature);
+}
+
 const importedFeatures = new WeakMap<t.Program, Set<string>>();
 export function importRuntimeFeature(feature: DOMRuntimeFeature) {
   if (!isTranslate()) {

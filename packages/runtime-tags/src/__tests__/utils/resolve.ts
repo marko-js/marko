@@ -75,9 +75,21 @@ export const destroy = Object.assign(() => {}, {
   destroy: true,
 });
 
-export type Throws = ReturnType<typeof throws>;
-export function throws(fn: (...args: any[]) => void) {
-  return Object.assign(fn, { throws: true });
+// A step whose error is the point: a function, or a navigation (a patch) whose
+// render throws after it applied.
+export type Throws = ((...args: any[]) => void) & { throws: true };
+export function throws<T extends ((...args: any[]) => void) | Navigate>(
+  step: T,
+) {
+  return Object.assign(step, { throws: true as const });
+}
+
+// Lands the lazy load scripts a fixture's `hold_load` kept in flight.
+export type Release = typeof release;
+export const release = Object.assign(async () => {}, { release: true });
+
+export function isRelease(value: any): value is Release {
+  return typeof value === "function" && value.release;
 }
 
 export function isWait(value: any): value is Wait {
@@ -93,7 +105,26 @@ export function isDestroy(value: any): value is Destroy {
 }
 
 export function isThrows(value: any): value is Throws {
-  return typeof value === "function" && value.throws;
+  return !!value?.throws;
+}
+
+// A function input is built as the step runs, so a promise it creates
+// (`resolveAfter`) starts pending at that render rather than at setup.
+// `betweenFlushes` returning `"abandon"` stops applying the response there.
+export type Navigate = {
+  navigateInput: Record<string, unknown> | (() => Record<string, unknown>);
+  betweenFlushes?: (document: Document) => unknown;
+};
+export function navigate(
+  input: Navigate["navigateInput"],
+  betweenFlushes?: (document: Document) => unknown,
+): Navigate {
+  return { navigateInput: input, betweenFlushes };
+}
+export function isNavigate(value: any): value is Navigate {
+  return (
+    typeof value === "object" && value !== null && "navigateInput" in value
+  );
 }
 
 export function resolveAfter<T>(value: T, id?: number) {

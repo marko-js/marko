@@ -24,6 +24,7 @@ import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import isStatic from "./is-static";
+import { isPatch } from "./marko-config";
 import {
   concat,
   forEach,
@@ -43,7 +44,7 @@ import {
   setReadsOwner,
 } from "./sections";
 import { ALWAYS } from "./sources";
-import { createProgramState } from "./state";
+import { createProgramState, createSectionState } from "./state";
 import { getMemberExpressionPropString } from "./to-property-name";
 
 interface ReferencedFunctionExtra extends t.FunctionExtra, ReferencedExtra {}
@@ -72,6 +73,7 @@ export interface ExtraRead {
 const kReferencedBindings = Symbol("referenced bindings");
 const kLazyBindings = Symbol("lazy bindings");
 const kGlobalBindings = Symbol("global bindings");
+const kConstantBindings = Symbol("constant bindings");
 const kReferencedBindingsInFunction = Symbol("referenced bindings in function");
 const kConstantBindingsInFunction = Symbol("constant bindings in function");
 
@@ -97,6 +99,7 @@ declare module "@marko/compiler/dist/types" {
     [kReferencedBindings]?: ReferencedBindings;
     [kLazyBindings]?: ReferencedBindings;
     [kGlobalBindings]?: ReferencedBindings;
+    [kConstantBindings]?: ReferencedBindings;
     /** The bindings it feeds, in the order it feeds them: a call site's
      * values feed the child template's, so no one template's order sorts them. */
     derives?: Opt<Binding>;
@@ -114,6 +117,8 @@ declare module "@marko/compiler/dist/types" {
     assignmentTo?: Binding;
     read?: ExtraRead;
     pruned?: true;
+    /** A `<try>`'s `@catch` or `@placeholder` body. */
+    tryContent?: true;
     /** The expression this node sits in: dropped or merged as one. */
     exprRoot?: NodeExtra;
     isEffect?: true;
@@ -131,6 +136,9 @@ declare module "@marko/compiler/dist/types" {
     /** A `content` it spreads is rendered (as the element's body, or as a
      * `<meta>`'s attribute), so its effect never reads it. */
     rendersContent?: true;
+    /** Its value renders into its tag's node (an attribute, a text, a comment's
+     * or a style's), which the node's slot lists among its reason expressions. */
+    rendersValue?: true;
     merged?: NodeExtra;
   }
 
@@ -594,7 +602,8 @@ export function setReferencesScope(path: t.NodePath<any>) {
   }
 }
 
-// One signal-inert root binding per template, minted on first access.
+// One root binding per template, minted on first access; patches key
+// its property aliases as client-reactive reads of the globals object.
 const [getGlobalBinding] = createProgramState(() =>
   createBinding(
     "$global",
@@ -603,10 +612,31 @@ const [getGlobalBinding] = createProgramState(() =>
   ),
 );
 
+// Every scope holds the globals object, so a patch build reads `$global`
+// where it is read: no section closes over another's.
+const [getSectionGlobalBinding] = createSectionState(
+  "$global",
+  (section: Section) => createBinding("$global", BindingType.global, section),
+);
+
 // `$global` reads route through the reference graph, so property
 // aliases record the keys read.
 export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
-  trackReference(path, getGlobalBinding());
+  trackReference(
+    path,
+    isPatch()
+      ? getSectionGlobalBinding(getOrCreateSection(path))
+      : getGlobalBinding(),
+  );
+}
+
+// The first-hop `$global` key a keyed alias reads through.
+export function getGlobalKey(binding: Binding) {
+  let hop: Binding | undefined;
+  for (let cur: Binding | undefined = binding; cur; cur = cur.aliasOf) {
+    if (cur.aliasOf) hop = cur;
+  }
+  return hop?.property;
 }
 
 function createBindingsAndTrackReferences(
@@ -1359,6 +1389,12 @@ export function getGlobalBindings(extra: t.NodeExtra | undefined) {
   return extra && getCanonicalExtra(extra)[kGlobalBindings];
 }
 
+// Loop keys it reads: constant within their branch, they change only with
+// the collection they key.
+export function getConstantBindings(extra: t.NodeExtra | undefined) {
+  return extra && getCanonicalExtra(extra)[kConstantBindings];
+}
+
 // What a function's body reads when invoked, resolved with its expression.
 export function getReferencedBindingsInFunction(extra: t.FunctionExtra) {
   return extra[kReferencedBindingsInFunction];
@@ -1382,10 +1418,12 @@ export function setResolvedReads(
   referencedBindings: ReferencedBindings,
   lazyBindings: ReferencedBindings,
   globalBindings: ReferencedBindings,
+  constantBindings: ReferencedBindings,
 ) {
   extra[kReferencedBindings] = referencedBindings;
   extra[kLazyBindings] = lazyBindings;
   extra[kGlobalBindings] = globalBindings;
+  extra[kConstantBindings] = constantBindings;
 }
 
 export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {

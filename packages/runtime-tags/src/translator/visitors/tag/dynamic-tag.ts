@@ -30,9 +30,11 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import { isOptimize, isOutputHTML, isPatch } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
+import { isPatchFilledDynamicTag } from "../../util/patch/decisions";
+import { writesPatchIn } from "../../util/patch/structure";
 import { addReasonExprs, addReason } from "../../util/reasons";
 import {
   getAllTagReferenceNodes,
@@ -41,8 +43,11 @@ import {
   trackParamsReferences,
   trackVarReferences,
   getReferencedBindings,
+  onFinalizeReferences,
+  setDerivedFrom,
 } from "../../util/references";
 import {
+  linkRuntimeFeature,
   callRuntime,
   getCompatRuntimeFile,
   importRuntime,
@@ -91,6 +96,7 @@ import {
 } from "../../util/translate-attrs";
 import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
+import { getExprWriteOwnership } from "../../util/write-guard";
 import { getWriteGuard } from "../../util/write-guard";
 import * as writer from "../../util/writer";
 import * as ClassHydration from "./constants/class-hydration";
@@ -168,6 +174,7 @@ export default {
       // Name-only tags are left out: flagging them registers sibling attr-tag
       // props through `for` items, so a bare function as the name stays unregistered.
       if (inputNodes.length) tagExtra.retained = true;
+      if (!t.isStringLiteral(node.name)) tagExtra.rendersContent = true;
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
       const usesVar = hasVar && isTagVarUsed(tag);
@@ -189,10 +196,25 @@ export default {
         BindingType.dom,
         tagSection,
       ));
+      // The dynamic tag entry applies without this template's dom module;
+      // decided once references and structure resolve, as translate decides.
+      if (isPatch() && !t.isStringLiteral(node.name)) {
+        onFinalizeReferences(() => {
+          if (isPatchFilledDynamicTag(tag)) {
+            if (writesPatchDynamicTag(tag, tagSection)) {
+              linkRuntimeFeature("patch-dynamic-tag");
+            }
+          }
+        });
+      }
 
       if (hasVar) {
-        trackVarReferences(tag, BindingType.derived)!.returnedBy = nodeBinding;
+        const varBinding = trackVarReferences(tag, BindingType.derived)!;
+        varBinding.returnedBy = nodeBinding;
         reserveId(nodeBinding, ReservedId.ScopeOffset);
+        // A flush writes the variable from what the tag renders: its inputs
+        // are its sources (a client render drives it through `_var`).
+        if (isPatch()) setDerivedFrom(varBinding, tagExtra);
       }
 
       const bodySection = startSection(tagBody);
@@ -464,6 +486,70 @@ export default {
         const markerGuard = getWriteGuard(tagSection, markerReason, true);
         // For a debug build's check that the tag it renders is not lazy.
         const debugTagVar = !isOptimize() && node.var && t.numericLiteral(1);
+        // The entry writer returns how a patch treats the tag, which the render
+        // takes: the tag marks its branch for the entry whatever its reason.
+        let patchPairingArg: t.Expression | undefined;
+        if (writesPatchDynamicTag(tag, tagSection)) {
+          // The tag's renderer and input evaluate once: hoisted, both the
+          // render and the entry read them.
+          if (!t.isIdentifier(tagExpression)) {
+            const tagId = generateUidIdentifier("tag");
+            statements.push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(tagId, tagExpression),
+              ]),
+            );
+            tagExpression = tagId;
+          }
+          // A statically empty input is no input.
+          let input: t.Expression | undefined = hasTagArgs
+            ? t.arrayExpression([...args])
+            : (args[0] as t.Expression | undefined);
+          if (t.isObjectExpression(input) && !input.properties.length) {
+            input = undefined;
+          }
+          if (input && !t.isIdentifier(input)) {
+            const inputId = generateUidIdentifier("input");
+            statements.push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(inputId, input),
+              ]),
+            );
+            if (hasTagArgs) {
+              args.length = 0;
+              args.push(t.spreadElement(inputId));
+            } else {
+              args[0] = inputId;
+            }
+            input = inputId;
+          }
+          patchPairingArg = callRuntime(
+            "_patch_dynamic_tag",
+            getScopeIdIdentifier(tagSection),
+            getScopeAccessorLiteral(nodeBinding),
+            t.cloneNode(tagExpression),
+            input ? t.cloneNode(input) : t.numericLiteral(0),
+            contentProp
+              ? t.stringLiteral(
+                  getResumeRegisterId(
+                    getSectionForBody(tag.get("body"))!,
+                    "content",
+                  ),
+                )
+              : t.numericLiteral(0),
+            node.var
+              ? t.stringLiteral(
+                  getResumeRegisterId(
+                    tagSection,
+                    node.var.extra?.binding,
+                    "var",
+                  ),
+                )
+              : t.numericLiteral(0),
+            ...getExprWriteOwnership(tagExtra),
+          );
+        }
+
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -477,6 +563,7 @@ export default {
               t.numericLiteral(1),
               markerGuard,
               debugTagVar,
+              patchPairingArg,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -488,6 +575,7 @@ export default {
               markerGuard ? t.numericLiteral(0) : undefined,
               markerGuard,
               debugTagVar,
+              patchPairingArg,
             );
 
         if (node.var && isTagVarResumed(tag)) {
@@ -719,4 +807,10 @@ function isTagVarAssigned(tag: t.NodePath<t.MarkoTag>) {
     tag.node.var!.type === "Identifier" &&
     tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
   );
+}
+
+// A tag whose dynamic tag entry re-renders it from the server's value: a
+// renderer and input (`input` content included) with no state source.
+function writesPatchDynamicTag(tag: t.NodePath<t.MarkoTag>, section: Section) {
+  return writesPatchIn(section) && isPatchFilledDynamicTag(tag);
 }

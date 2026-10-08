@@ -10,9 +10,23 @@ import {
 import { type Binding, BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
+import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
-import { getAllTagReferenceNodes, mergeReferences } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  boundaryAlwaysPairs,
+  mayPatchReach,
+  someBindingRead,
+} from "../util/patch/structure";
+import {
+  getAllTagReferenceNodes,
+  mergeReferences,
+  onFinalizeReferences,
+} from "../util/references";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -69,6 +83,7 @@ export default {
       }
 
       for (const child of tag.get("attributeTags")) {
+        if (child.isMarkoTag()) markTryContent(child.get("body"));
         if (
           child.isMarkoTag() &&
           (child.node.attributes.length || child.node.arguments)
@@ -113,6 +128,16 @@ export default {
       nodeBinding,
       optional: false,
     });
+    if (isPatch()) {
+      // A `<try>` a patch may reach applies its body through `patch-try`.
+      onFinalizeReferences(() => {
+        if (mayPatchReach(section)) {
+          linkRuntimeFeature("catch");
+          linkRuntimeFeature("patch-try");
+          if (attrTags["@catch"]) linkRuntimeFeature("patch-catch");
+        }
+      });
+    }
     structure.marker(tag, nodeBinding);
     structure.enterShallow(tag);
   },
@@ -124,6 +149,7 @@ export default {
       exit(tag) {
         const section = getSection(tag);
         const tagBody = tag.get("body");
+        const bodySection = getSectionForBody(tagBody)!;
         const nodeBinding = tag.node.extra!.nodeBinding!;
         const catchTag = getAttrTag(tag, "@catch");
         const placeholderTag = getAttrTag(tag, "@placeholder");
@@ -158,6 +184,18 @@ export default {
                       ? getResumeRegisterId(catchSection, "content")
                       : getEmptyCatchId(section, nodeBinding),
                   ),
+                // A patch pairs by the body's shell; with no catch to rebuild,
+                // an always-pairing body drops it outside divergent contexts.
+                isPatch() &&
+                  t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+                isPatch() &&
+                  !catchTag &&
+                  boundaryAlwaysPairs(bodySection) &&
+                  t.numericLiteral(1),
+                isPatch() &&
+                  !!catchSection?.params &&
+                  someBindingRead(catchSection.params, () => true) &&
+                  t.numericLiteral(1),
               ),
             ),
           )[0]
@@ -226,6 +264,14 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/try.d.marko",
 } as Tag;
+
+// The body's section takes the mark when made, unless reference tracking
+// made it already.
+function markTryContent(body: t.NodePath<t.MarkoTagBody>) {
+  const section = getSectionForBody(body);
+  if (section) section.boundaryContent = true;
+  else (body.node.extra ??= {}).tryContent = true;
+}
 
 // An empty `@placeholder` shows nothing, so it is no placeholder; an empty
 // `@catch` still catches.

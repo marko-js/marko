@@ -91,6 +91,12 @@ export interface Binding {
   exposed: boolean;
   /** Read on invocation from its own scope slot, which must persist. */
   hasLazyReads: boolean;
+  /** Fixed for the scope's lifetime (an `<id>`, a `<define>` renderer):
+   * never derived from inputs, so never rewritten. */
+  stable?: true;
+  /** Captured inside a registered function: live-scope reads reach it at
+   * any later invocation. */
+  registeredFnCapture?: true;
 }
 
 /** A param of a template or of a tag body, which its caller supplies. */

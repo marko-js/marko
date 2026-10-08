@@ -21,7 +21,9 @@ import {
 } from "./cyclic-memo";
 import { getValueInputs } from "./finalize-references";
 import { finalizeKnownTags } from "./known-tag";
+import { isPatch } from "./marko-config";
 import { concat, first, forEach, type Opt, rest, some } from "./optional";
+import { finalizePatchReasonGroups } from "./patch/refresh";
 import {
   addOwnerReason,
   addReason,
@@ -74,12 +76,18 @@ export function solveReasons(
     );
     forEachSection(addClosureReasons);
     addRegisteredFnReasons(getFunctionReadsByExpression());
-    forEachSectionReverse(finalizeSectionReasons);
+    forEachSectionReverse((section) =>
+      finalizeSectionReasons(section, intersectionsBySection.get(section)),
+    );
   } while (reasonsVersion !== getReasonsVersion());
 }
 
-function finalizeSectionReasons(section: Section) {
+function finalizeSectionReasons(
+  section: Section,
+  intersections: Intersection[] | undefined,
+) {
   finalizeKnownTags(section);
+  if (isPatch()) finalizePatchReasonGroups(section, intersections);
   finalizeReason(section);
   finalizeParamReasonGroups(section);
 }
@@ -117,19 +125,23 @@ function addIntersectionMemberReason(
   member: Binding,
   partner: Binding,
 ) {
-  if (
-    !findSlot(member)?.reason?.always &&
-    (!isSupersetSources(member, partner) ||
-      hasReadIntermediate(member, partner, new Set()))
-  ) {
+  if (findSlot(member)?.reason?.always) return;
+  // A changed `$global` key re-runs the join wherever the client holds the
+  // member, so the member's own sources say where it is read.
+  const reason =
+    !isSupersetSources(member, partner) ||
+    hasReadIntermediate(member, partner, new Set())
+      ? partner.sources
+      : partner.sources?.global && member.sources;
+  if (reason) {
     if (!isSameOrChildSection(section, member.section)) {
       addOwnerReason(
         section,
         member.section,
-        mergeSources(member.sources, partner.sources),
+        mergeSources(member.sources, reason),
       );
     }
-    addReason(getSlot(member), partner.sources);
+    addReason(getSlot(member), reason);
   }
 }
 
@@ -258,7 +270,12 @@ function addRegisteredFnReasons(
             addOwnerReason(fn.section, binding.section, reason);
           }
         };
-        forEach(getReferencedBindingsInFunction(fn), addRead);
+        forEach(getReferencedBindingsInFunction(fn), (binding) => {
+          // A registered factory reads this capture from its live scope
+          // whenever it is invoked, so patches must keep the slot fresh.
+          binding.registeredFnCapture = true;
+          addRead(binding);
+        });
         forEach(getConstantBindingsInFunction(fn), addRead);
       }
     }

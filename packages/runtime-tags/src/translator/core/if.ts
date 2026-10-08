@@ -17,9 +17,28 @@ import {
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
-import { addReasonExprs, type Reasons, sourcesUtil } from "../util/reasons";
-import { getReferencedBindings, mergeReferences } from "../util/references";
-import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import { isPatch } from "../util/marko-config";
+import {
+  isBranchPathSection,
+  isStatefulBranch,
+  recordStructuralParams,
+} from "../util/patch/structure";
+import {
+  addReasonExprs,
+  getSourcesForExpr,
+  type Reasons,
+  sourcesUtil,
+} from "../util/reasons";
+import {
+  getReferencedBindings,
+  mergeReferences,
+  onFinalizeReferences,
+} from "../util/references";
+import {
+  callRuntime,
+  getHTMLRuntime,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
@@ -30,6 +49,7 @@ import {
   type Section,
   startSection,
 } from "../util/sections";
+import { getShippedShellId } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -38,10 +58,15 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { findSectionSlot, getSlot, SlotKind } from "../util/slots";
+import { ALWAYS } from "../util/sources";
 import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
 import { translateByTarget } from "../util/visitors";
+import {
+  getExprWriteOwnership,
+  scopePageIdentifier,
+} from "../util/write-guard";
 import * as writer from "../util/writer";
 
 const BRANCHES_LOOKUP = new WeakMap<
@@ -82,6 +107,20 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addReasonExprs(getSlot(nodeBinding, SlotKind.BranchExpr), ifTagExtra);
+      if (isPatch()) {
+        onFinalizeReferences(() => {
+          // Patches render a chain that is not stateful.
+          if (
+            !branches.some(
+              ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
+            ) &&
+            isBranchPathSection(ifTagSection)
+          ) {
+            linkRuntimeFeature("patch-branch");
+            recordStructuralParams(getSourcesForExpr(ifTagExtra));
+          }
+        });
+      }
     }
   },
   translate: translateByTarget({
@@ -111,11 +150,27 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
-          const nodeBinding = ifTag.node.extra!.nodeBinding!;
+          // Read before the branch tags are removed below.
+          const ifTagExtra = ifTag.node.extra!;
+          const nodeBinding = ifTagExtra.nodeBinding!;
           const onlyChildParentTagName = getOnlyChildParentTagName(ifTag);
           const nextTag = tag.getNextSibling();
-          let branchReasons: Reasons | undefined;
           let statement: t.Statement | undefined;
+
+          // A stateful chain compiles as it does on a plain page: no marker
+          // retention, shells, or branch entry.
+          const stateful = branches.some(
+            ([, branchBody]) => branchBody && isStatefulBranch(branchBody),
+          );
+          // A patchable conditional keeps its markers: the shipped-branch
+          // swap inserts at the marker node, which elision would remove.
+          const patchChain =
+            isPatch() && !stateful && isBranchPathSection(ifTagSection);
+          // A patched chain pairs and reports its branch even with a
+          // source-less test (a constant pick): a created scope needs the entry.
+          let branchReasons: Reasons | undefined = patchChain
+            ? ALWAYS
+            : undefined;
 
           for (let i = branches.length; i--;) {
             const [branchTag, branchBodySection] = branches[i];
@@ -127,6 +182,10 @@ export const IfTag = {
               )?.reason;
               if (branchReason) {
                 branchReasons = sourcesUtil.add(branchReasons, branchReason);
+              }
+              // Every branch of a patched chain reports its index, with or
+              // without a reason of its own: the patch names it by index.
+              if (branchReason || patchChain) {
                 bodyStatements.push(
                   t.returnStatement(t.numericLiteral(i)) as any,
                 );
@@ -169,8 +228,32 @@ export const IfTag = {
                   branches.every(([, branchBody]) =>
                     isSingleNodeBranch(branchBody),
                   ),
+                  patchChain,
                 ),
+                // Shell ids per branch index: a patch ships the shell so the
+                // client creates diverged branches without bundling them.
+                patchChain
+                  ? t.arrayExpression(
+                      branches.map(([, branchBody]) => {
+                        // An absent body (a bare `<else>`) ships `0`.
+                        const id = branchBody && getShippedShellId(branchBody);
+                        return id ? t.stringLiteral(id) : t.numericLiteral(0);
+                      }),
+                    )
+                  : undefined,
+                // A chain whose conditions derive from params yields to the
+                // client when the call site passes state for them.
+                ...(patchChain ? getExprWriteOwnership(ifTagExtra) : []),
               ),
+            );
+          }
+
+          if (stateful) {
+            // Patch renders skip the chain: the tests' state reads are
+            // server-stale and the patch never names the branch.
+            statement = t.ifStatement(
+              scopePageIdentifier(ifTagSection.program),
+              statement!,
             );
           }
 
@@ -196,13 +279,10 @@ export const IfTag = {
             const [testAttr] = branchTag.node.attributes;
             const consequent = t.numericLiteral(branchBodySection ? i : -1);
             if (branchBodySection) {
-              setClosureSignalBuilder(branchTag, (_closure, render) => {
-                return callRuntime(
-                  "_if_closure",
-                  getScopeAccessorLiteral(nodeBinding, true),
-                  t.numericLiteral(i),
-                  render,
-                );
+              setClosureSignalBuilder(branchTag, {
+                kind: "if",
+                ref: nodeBinding,
+                index: i,
               });
             }
 

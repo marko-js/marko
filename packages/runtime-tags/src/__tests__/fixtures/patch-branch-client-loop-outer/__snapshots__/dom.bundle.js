@@ -1,0 +1,8 @@
+// template.marko
+const $if_content__input_note = /*@__PURE__*/ _fill_join_closure("a3", 5, _closure_get(7, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._, "a1"), 0);
+const $for_content__if = /*@__PURE__*/ _if(1, "<p> </p>", "D ", $if_content__input_note);
+const $for_content__expand = _shell_for_closure("a6", 0, ($scope) => $for_content__if($scope, $scope._.g ? 0 : 1));
+const $expand = /*@__PURE__*/ _fill_let("a4", 6, $for_content__expand);
+const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
+	$expand($scope, !$scope.g);
+}));

@@ -1,0 +1,6 @@
+<let/on=true/>
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<if=on>
+  <for|x| of=[1, 2]><i>${x}${$global.brand}</i></for>
+</if>

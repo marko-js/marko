@@ -1,0 +1,12 @@
+<let/count=0/>
+<main>
+  <if=input.show>
+    <p>shown</p>
+  </if>
+  <else>
+    <if=input.inner>
+      <p>${input.title + "@" + count}</p>
+    </if>
+  </else>
+  <button onClick() { count++ }>+</button>
+</main>

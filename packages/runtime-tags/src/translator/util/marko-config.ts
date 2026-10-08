@@ -1,8 +1,22 @@
 import { types as t } from "@marko/compiler";
-import { getFile, getTemplateId } from "@marko/compiler/babel-utils";
+import {
+  getFile,
+  getProgram,
+  getTemplateId,
+} from "@marko/compiler/babel-utils";
 
 export function isOutputHTML() {
   return getMarkoOpts().output === "html";
+}
+
+export function isPatch() {
+  return !!getMarkoOpts().patches;
+}
+
+// The document's own template (the render's root), never composed into a
+// caller's shell.
+export function isPage() {
+  return !!getProgram().node.extra.page;
 }
 
 export function isOutputDOM() {
@@ -17,6 +31,8 @@ export function isOptimize() {
   return getMarkoOpts().optimize;
 }
 
+// An optimized id is `_` and a template id (a letter or `$` first): a patch frame
+// that waits for the module leads with the template id (`dom/patch-ready`).
 export function getReadyId(file: t.BabelFile = getFile()) {
   const { markoOpts } = file;
   if (!markoOpts.linkAssets) return undefined;

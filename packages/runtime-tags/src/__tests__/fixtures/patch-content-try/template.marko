@@ -1,0 +1,12 @@
+<main>
+  <if=input.show>
+    <card>
+      <try>
+        <await=Promise.resolve(input.value)>
+          <em>${input.value}</em>
+        </await>
+        <@placeholder>loading</@placeholder>
+      </try>
+    </card>
+  </if>
+</main>

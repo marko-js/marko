@@ -23,6 +23,7 @@ import {
   getReadyId,
   isOutputDOM,
   isOutputHTML,
+  isPatch,
 } from "../../util/marko-config";
 import { isUnconditionalReason } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
@@ -37,6 +38,7 @@ import {
   startSection,
 } from "../../util/sections";
 import { finalizeSetupWork } from "../../util/setup-work";
+import { buildShells } from "../../util/shell";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
@@ -134,6 +136,9 @@ export default {
         );
       });
 
+      if (isPatch()) {
+        buildShells();
+      }
       // A template with no setup work lets its callers skip its setup export
       // (checked when this template translates).
       finalizeSetupWork();
@@ -173,11 +178,9 @@ export default {
           const entryFile = getFile();
           const { filename } = entryFile.opts;
           const readyId = getReadyId(entryFile)!;
-          // A rejected chunk blocks this ready id forever: the debug build
-          // reports it instead of leaving the content silently inert, while
-          // production keeps the arm's bytes out (the failure still surfaces
-          // as a network error in devtools).
-          const report = !markoOpts.optimize;
+          // A rejected chunk blocks this ready id forever: debug reports it;
+          // patch pages also report in production so held flushes settle.
+          const report = !markoOpts.optimize || isPatch();
           program.node.body = [
             t.importDeclaration(
               [

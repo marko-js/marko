@@ -3,6 +3,7 @@ import { types as t } from "@marko/compiler";
 import { scopeIdentifier } from "../visitors/program";
 import { type Binding, BindingType } from "./bindings";
 import { getAccessorProp } from "./get-accessor-enums";
+import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { createRead } from "./references";
 import { getScopeAccessor } from "./scope-accessor";
 import type { Section } from "./sections";
@@ -25,6 +26,19 @@ export function createScopeReadExpression(
   reference: Binding,
   section = reference.section,
 ) {
+  // A keyed `$global` read: the globals object every scope shares.
+  if (reference.type === BindingType.global) {
+    return getDeclaredBindingExpression(
+      reference,
+      false,
+      () =>
+        t.memberExpression(
+          scopeIdentifier,
+          t.identifier(getAccessorProp().Global),
+        ),
+      false,
+    ) as t.MemberExpression;
+  }
   const propName = toPropertyName(getScopeAccessor(reference));
   const expr = t.memberExpression(
     getScopeExpression(section, reference.section),

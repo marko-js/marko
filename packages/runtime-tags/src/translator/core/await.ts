@@ -9,12 +9,24 @@ import {
 import { assertNoSpreadAttrs } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
+import { isPatch } from "../util/marko-config";
+import {
+  boundaryAlwaysPairs,
+  isPatchRendered,
+  mayPatchReach,
+} from "../util/patch/structure";
+import { getSourcesForExpr } from "../util/reasons";
 import {
   getReferencedBindings,
+  onFinalizeReferences,
   setDerivedFrom,
   trackParamsReferences,
 } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -26,6 +38,7 @@ import {
   startSection,
 } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
+import { findShellId } from "../util/shell";
 import {
   addStatement,
   addValue,
@@ -103,6 +116,12 @@ export default {
     }
 
     const bodySection = startSection(tagBody)!;
+    // An await a patch may reach pairs its body through a `PatchChild` entry.
+    if (isPatch()) {
+      onFinalizeReferences(() => {
+        if (mayPatchReach(section)) linkRuntimeFeature("patch-boundary");
+      });
+    }
     const valueExtra = (valueAttr.value.extra ??= {});
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
@@ -116,6 +135,7 @@ export default {
     initBranchSection(bodySection, valueExtra, {
       nodeBinding,
       optional: false,
+      await: true,
     });
 
     // The content renderer is initialized unconditionally in setup.
@@ -140,6 +160,20 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
+        // A thenable of client state alone resolves via `_await_promise`, so a
+        // patch skips its Pending entry; any other value's carries the shell id.
+        let patchContent: t.Expression | undefined;
+        if (isPatch()) {
+          const valueSources = getSourcesForExpr(valueAttr.value.extra || {});
+          const shellId = bodySection && findShellId(bodySection);
+          patchContent =
+            valueSources?.state && !valueSources.param && !valueSources.global
+              ? t.numericLiteral(0)
+              : shellId
+                ? t.stringLiteral(shellId)
+                : undefined;
+        }
+
         tag
           .replaceWith(
             t.expressionStatement(
@@ -152,7 +186,17 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                getWriteGuard(section, bodySection?.reason, true),
+                // A patch page always marks a patchable boundary: the
+                // flush pairs its body through the resumed branch link.
+                isPatchRendered(section)
+                  ? t.numericLiteral(1)
+                  : getWriteGuard(section, bodySection?.reason, true),
+                patchContent,
+                // An always-pairing body's Pending entry drops its
+                // creation id outside divergent contexts.
+                ...(isPatch() && bodySection && boundaryAlwaysPairs(bodySection)
+                  ? [t.numericLiteral(1)]
+                  : []),
               ),
             ),
           )[0]

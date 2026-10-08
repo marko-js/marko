@@ -1,0 +1,7 @@
+<let/clicks=0/>
+<button/btn onClick() { clicks++ }>${clicks}</button>
+<p/log/>
+<script>
+  log().dataset.label = input.label;
+  btn().addEventListener("click", () => { log().textContent += "x"; }, { signal: $signal });
+</script>

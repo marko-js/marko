@@ -9,10 +9,17 @@ import {
 } from "../../util/generate-uid";
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
 import isStatic from "../../util/is-static";
-import { getMarkoOpts } from "../../util/marko-config";
+import { getMarkoOpts, isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach } from "../../util/optional";
+import { forEach, some } from "../../util/optional";
+import {
+  getCreateInitClosures,
+  getPatchFillBindings,
+  getSectionGlobalReads,
+  isPatchFillBinding,
+} from "../../util/patch/refresh";
 import { getReadReplacement } from "../../util/read-replacement";
+import { getSourcesForRef } from "../../util/reasons";
 import {
   isRegisteredFnExtra,
   getReferencedBindingsInFunction,
@@ -27,15 +34,25 @@ import {
   type Section,
 } from "../../util/sections";
 import {
+  buildShell,
+  getShellId,
+  getShells,
+  getShippedShellId,
+} from "../../util/shell";
+import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
   getHTMLSectionStatements,
   getResumeRegisterId,
+  getSectionEffectRegisterIds,
+  getSignals,
+  patchCreates,
   setScopeProperty,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import { simplifyFunction } from "../../util/simplify-fn";
 import { findSectionSlot, SlotKind } from "../../util/slots";
+import { getSectionMeta, writeStructureExports } from "../../util/structure";
 import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -147,6 +164,7 @@ export default {
         );
       }
 
+      const patches = isPatch();
       flushInto(program);
       writeHTMLResumeStatements(program);
       traverseReplace(program.node, "body", replaceNode);
@@ -169,6 +187,61 @@ export default {
 
       writeModuleRegistrations(program);
 
+      const shells = getShells();
+      if (patches && shells) {
+        // Naming the template's parts first lets its shells share them.
+        getSectionMeta(section);
+        // Branch shells register at server module load so patches can create
+        // them without the client bundling conditional content.
+        const shellProps: t.ObjectProperty[] = [];
+        for (const id in shells) {
+          const section = shells[id];
+          // A branch shell ships where the tags creating it name it.
+          if (id === getShellId(section) && !getShippedShellId(section)) {
+            continue;
+          }
+          // A shell's id token is `inits…!effects…`; a lone `!` means setup
+          // for seeds alone. Roots, content and boundary bodies carry one too.
+          let marker = "";
+          if (
+            id === getShellId(section) ||
+            !section.parent ||
+            ((section.contentShell === true ||
+              section.branch?.optional === false) &&
+              patchCreates(section))
+          ) {
+            marker = getCreateInitIds(section);
+            // An effect the created scope's own renders queue (an init, seed,
+            // or item write cascades into it) is left out: those renders run it.
+            const effectIds = getSectionEffectRegisterIds(
+              section,
+              (refs) =>
+                !!getSourcesForRef(refs)?.state ||
+                some(
+                  refs,
+                  (ref) => ref.section === section && isPatchFillBinding(ref),
+                ),
+            );
+            if (effectIds) marker += "!" + effectIds;
+            marker ||= getPatchFillBindings(section) ? "!" : "";
+          }
+          shellProps.push(
+            toObjectProperty(id, buildShell(id, section, marker)),
+          );
+        }
+        if (shellProps.length) {
+          program.node.body.push(
+            t.expressionStatement(
+              callRuntime("_shells", t.objectExpression(shellProps)),
+            ),
+          );
+        }
+      }
+
+      // A parent's shell composes this template's markup and walks, exported
+      // under the dom module's names once the shells have named their parts.
+      if (patches) writeStructureExports(program);
+
       const contentId = usedSharedUid("content") && getTemplateContentName();
       const contentFn = t.arrowFunctionExpression(
         [t.identifier("input")],
@@ -176,7 +249,7 @@ export default {
       );
       const exportDefault = t.exportDefaultDeclaration(
         callRuntime(
-          "_template",
+          patches ? "_template_patch" : "_template",
           t.stringLiteral(getFile().metadata.marko.id),
           contentId ? t.identifier(contentId) : contentFn,
           // A non-page template gets a randomized render id ("embed") so several
@@ -339,4 +412,21 @@ function getRegisteredFnExpression(
         getScopeIdIdentifier(extra.section),
     );
   }
+}
+
+// The inits a created scope of the section runs, as the shell grammar's
+// space-joined ids.
+function getCreateInitIds(section: Section) {
+  let ids = "";
+  forEach(getCreateInitClosures(section), (closure) => {
+    ids += (ids && " ") + getResumeRegisterId(section, closure, "init");
+  });
+  if (patchCreates(section)) {
+    forEach(getSectionGlobalReads(section), (binding) => {
+      if (getSignals(section).get(binding)?.hasHTMLEffect) {
+        ids += (ids && " ") + getResumeRegisterId(section, binding, "init");
+      }
+    });
+  }
+  return ids;
 }

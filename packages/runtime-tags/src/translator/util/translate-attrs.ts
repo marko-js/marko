@@ -14,7 +14,7 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
-import { isOutputHTML } from "./marko-config";
+import { isOutputHTML, isPatch } from "./marko-config";
 import {
   type AttrTagLookup,
   getAttrTagIdentifier,
@@ -430,6 +430,22 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
       const serialized = getRendererReason(bodySection);
       body.node.body.unshift(getScopeReasonStatement(bodySection) as any);
 
+      // An unregistered shell content elides its slot.
+      if (isPatch() && bodySection.contentShell && !serialized) {
+        return callRuntime(
+          "_content_elide",
+          t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+          t.arrowFunctionExpression(
+            body.node.params,
+            t.blockStatement(body.node.body),
+          ),
+          getScopeIdIdentifier(
+            getSection(
+              getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
+            )!,
+          ),
+        );
+      }
       return callRuntime(
         serialized ? "_content_resume" : "_content",
         t.stringLiteral(getResumeRegisterId(bodySection, "content")),

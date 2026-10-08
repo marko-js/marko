@@ -1,0 +1,11 @@
+import type { TestConfig } from "../../main.test";
+
+// A flush whose try body renders without error but writes nothing still
+// takes the body back from the `@catch` an earlier flush showed.
+export const config: TestConfig = {
+  patches: true,
+  // A patch re-renders a caught `<try>` from the server, which recovers;
+  // a client render keeps its `@catch`.
+  skip_csr: true,
+  steps: [{ boom: false }, { boom: true }, { boom: false }],
+};

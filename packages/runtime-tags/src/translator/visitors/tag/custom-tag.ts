@@ -29,7 +29,12 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPatch,
+} from "../../util/marko-config";
 import {
   callRuntime,
   dynamicImport,
@@ -47,6 +52,7 @@ import * as structure from "../../util/structure";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
 import type { LoadImportConfig } from "../import-declaration";
+import { isCreatedOnlyLoad } from "../import-declaration";
 import { scopeIdentifier } from "../program";
 import { getTemplateContentName } from "../program/html";
 
@@ -125,7 +131,17 @@ export default {
       const tagName = getStaticTagName(tag.node);
       if (tagExtra.tagNameLoad) {
         structure.marker(tag, tagExtra[kLoadTagBinding]!);
-        structure.child(tag, tagName);
+        structure.child(
+          tag,
+          tagName,
+          {
+            kind: StructureKind.ExportRef,
+            program: childExtra,
+            path: getTagRelativePath(tag),
+            hint: tagName,
+          },
+          tagExtra.tagNameLoad,
+        );
         structure.enterShallow(tag);
       } else {
         structure.child(tag, tagName, {
@@ -182,6 +198,14 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const isLoad = !!loadConfig;
   const tagName = getStaticTagName(node);
 
+  // A child only created scopes meet has no client render: a flush's shell
+  // builds it and its setup entries seed it.
+  if (loadConfig && isCreatedOnlyLoad(loadConfig)) {
+    importRuntimeFeature("patch-child");
+    tag.remove();
+    return;
+  }
+
   if (isLoad) {
     const childFileName = childFile.opts.filename;
     const { triggers, signals, setups } = getLoadIdentifiers();
@@ -224,16 +248,24 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             t.variableDeclaration("let", [
               t.variableDeclarator(
                 signalIdent,
-                callRuntime(
-                  "_load_signal",
-                  triggerIdent
-                    ? t.addComment(
-                        t.callExpression(triggerIdent, [loadExpr]),
-                        "leading",
-                        "@__PURE__",
-                      )
-                    : loadExpr,
-                ),
+                isPatch()
+                  ? // A patch loads the input itself, ahead of the trigger.
+                    callRuntime(
+                      "_load_signal_patch",
+                      loadExpr,
+                      t.stringLiteral(getReadyId(childFile)!),
+                      triggerIdent,
+                    )
+                  : callRuntime(
+                      "_load_signal",
+                      triggerIdent
+                        ? t.addComment(
+                            t.callExpression(triggerIdent, [loadExpr]),
+                            "leading",
+                            "@__PURE__",
+                          )
+                        : loadExpr,
+                    ),
               ),
             ]),
           );

@@ -1,0 +1,26 @@
+<script async type=module src="outer.marko.load.mjs"></script>
+<main>
+  <section><button>a<!--M_$3 b-->:<!>0<!--M_$3 c--></button><!--M_$3 a-->
+  </section>
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _b: [_ => [2, {
+      b: _(3)
+    }]]
+  };
+  ((h, d, l = $ => {
+    d || document.head.append(new Range().createContextualFragment(d = h))
+  }) => (e => e?.addEventListener("click", l, {
+    once: 1
+  }))(document.querySelector("body") || l()))(
+    `\x3Cscript async type=module src="inner.marko.load.mjs">\x3C/script>`);
+  M._.b._a = [_ => [3, {
+    g: 0
+  }], "a0 3"];
+  M._.r = [_ => [1, {
+    b: _(2)
+  }]];
+  M._.w()
+</script>

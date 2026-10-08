@@ -11,22 +11,36 @@ import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
 } from "../util/body-to-text-literal";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPatch } from "../util/marko-config";
+import { writesPatchHole } from "../util/patch/decisions";
+import { getWriteReason, isBranchPathSection } from "../util/patch/structure";
 import { addReasonExprs, addReason } from "../util/reasons";
 import {
   getReferencedBindings,
   isTagVarUsed,
   mergeReferences,
   trackDomVarReferences,
+  isReferencedExtra,
+  onFinalizeReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import {
+  linkRuntimeFeature,
+  callRuntime,
+  importRuntime,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
+import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression } from "../util/scope-read";
-import { getOrCreateSection, getSection } from "../util/sections";
+import {
+  getOrCreateSection,
+  getScopeIdIdentifier,
+  getSection,
+} from "../util/sections";
 import { addStatement } from "../util/signals";
-import { findSlot, getSlot } from "../util/slots";
+import { getSlot } from "../util/slots";
 import { ALWAYS } from "../util/sources";
 import * as structure from "../util/structure";
+import { getExprWriteOwnership } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 // Applies the `>` escape of the runtime `_escape_comment`.
@@ -81,6 +95,18 @@ export default {
 
       if (isTagVarUsed(tag)) addReason(getSlot(nodeBinding), ALWAYS);
       addReasonExprs(getSlot(nodeBinding), tagExtra);
+      if (referenceNodes.length) tagExtra.rendersValue = true;
+      if (
+        isPatch() &&
+        referenceNodes.length &&
+        isBranchPathSection(tagSection)
+      ) {
+        onFinalizeReferences(() => {
+          if (writesPatchHole(tagSection, tagExtra)) {
+            linkRuntimeFeature("patch-text-content");
+          }
+        });
+      }
     }
 
     // The whole client template records here (its text children record none);
@@ -110,7 +136,27 @@ export default {
       if (isOutputHTML()) {
         const { body } = tag.node.body;
         write`<!--`;
-        if (nodeBinding && isEmptiableCommentBody(body)) {
+        if (
+          nodeBinding &&
+          isReferencedExtra(tagExtra) &&
+          writesPatchHole(tagSection, tagExtra)
+        ) {
+          // The patch write renders the comment text itself; an emptiable
+          // body still pads so the resume marker claims no stray text.
+          const patched = callRuntime(
+            "_patch_text_content",
+            getScopeIdIdentifier(tagSection),
+            getScopeAccessorLiteral(nodeBinding),
+            bodyToTextLiteral(tag.node.body),
+            importRuntime("_escape_comment"),
+            ...getExprWriteOwnership(tagExtra),
+          );
+          write`${
+            isEmptiableCommentBody(body)
+              ? t.logicalExpression("||", patched, t.stringLiteral(" "))
+              : patched
+          }`;
+        } else if (nodeBinding && isEmptiableCommentBody(body)) {
           // A resumable comment must serialize with content, else its trailing
           // resume marker claims a stray text node; pad an empty body with a space.
           if (body.length) {
@@ -134,10 +180,14 @@ export default {
         write`-->`;
       } else {
         const textLiteral = bodyToTextLiteral(tag.node.body);
+        const patched =
+          !!nodeBinding &&
+          isReferencedExtra(tagExtra) &&
+          writesPatchHole(tagSection, tagExtra);
 
         if (!t.isStringLiteral(textLiteral)) {
           addStatement(
-            "render",
+            patched ? "patch" : "render",
             tagSection,
             getReferencedBindings(tagExtra),
             t.expressionStatement(
@@ -152,7 +202,7 @@ export default {
       }
 
       if (nodeBinding) {
-        writer.markNode(tag, nodeBinding, findSlot(nodeBinding)?.reason);
+        writer.markNode(tag, nodeBinding, getWriteReason(nodeBinding));
       }
 
       tag.remove();

@@ -1,0 +1,31 @@
+// template.marko
+_shells({
+	a: "a !;D%bD ;<main><!><em> </em></main>",
+	a1: "a1 !a2; ;<a>go</a>"
+});
+var template_default = _template_patch("a", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html("<main>");
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_html(`<a${_patch_attrs({
+				...input.attrs,
+				onClick: _resume(function() {
+					count++;
+				}, "a0", $scope1_id)
+			}, "a", $scope1_id, "a", void 0, $scope0_reason, 2)}>go</a>${_el_resume($scope1_id, "a")}`);
+			_script($scope1_id, "a2");
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			return 0;
+		}
+	}, $scope0_id, "a", 1, _source_guard($scope0_reason, 1), void 0, void 0, void 0, ["a1"], $scope0_reason, 1);
+	_html(`<em>${_text_resume($scope0_id, "b", count)}</em></main>`);
+	_patch_value($scope0_id, "a4", count, 1);
+	$scope0_page ? _scope($scope0_id, {
+		f: _source_if($scope0_reason, 1) && input.attrs,
+		g: count
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "a3", input.attrs);
+}, 1);

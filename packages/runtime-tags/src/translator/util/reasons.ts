@@ -49,12 +49,18 @@ export const sourcesUtil = new Sorted(compareSources);
 export type Reason = Sources;
 
 export function addReason(slot: Slot, reason: undefined | false | Reason) {
-  if (reason) {
-    const curReason = slot.reason;
-    const newReason = mergeReasons(curReason, reason);
-    if (curReason !== newReason) {
-      setSlotReason(slot, newReason);
-    }
+  // A value read for a `$global` alone is never read after resume (the client
+  // reads the globals object); what a slot holds or renders keeps it.
+  if (reason && (reason.state || reason.param || reason.always)) {
+    mergeIntoSlot(slot, reason);
+  }
+}
+
+function mergeIntoSlot(slot: Slot, reason: Reason) {
+  const curReason = slot.reason;
+  const newReason = mergeReasons(curReason, reason);
+  if (curReason !== newReason) {
+    setSlotReason(slot, newReason);
   }
 }
 
@@ -97,9 +103,9 @@ export function isStateReason(reason: undefined | Reason): reason is Sources {
 
 export function getSourcesForExpr(expr: t.NodeExtra) {
   const root = getCanonicalExtra(expr);
-  return isReferencedExtra(root)
-    ? getSourcesForRef(getReferencedBindings(root))
-    : undefined;
+  if (isReferencedExtra(root)) {
+    return getSourcesForRef(getReferencedBindings(root));
+  }
 }
 
 export function getSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {
@@ -218,7 +224,8 @@ export function applyReasonExprs(section: Section) {
 }
 
 function applySlotExprs(slot: Slot) {
-  addReason(slot, getSourcesForExprs(slot.reasonExprs));
+  const reason = getSourcesForExprs(slot.reasonExprs);
+  if (reason) mergeIntoSlot(slot, reason);
 }
 
 export function finalizeReason(section: Section) {

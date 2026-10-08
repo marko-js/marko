@@ -12,13 +12,24 @@ import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
 import { generateUid } from "../util/generate-uid";
-import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
 import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPage,
+  isPatch,
+} from "../util/marko-config";
+import { hasStateSource } from "../util/patch/decisions";
+import { getAllTagReferenceNodes } from "../util/references";
+import {
+  linkRuntimeFeature,
   callRuntime,
   dynamicImport,
   importRuntime,
   importRuntimeFeature,
 } from "../util/runtime";
+import { getSection } from "../util/sections";
+import { patchCreates } from "../util/signals";
 import { createProgramState } from "../util/state";
 import { toMemberExpression } from "../util/to-property-name";
 import type { TemplateVisitor } from "../util/visitors";
@@ -50,6 +61,45 @@ const [getHtmlLoadWrapped] = createProgramState(
   () => new Map<string, string>(),
 );
 const derivedImports = new WeakSet<t.ImportDeclaration>();
+
+// Whether only scopes a patch creates render a page's import: no tag naming it
+// derives from state, and a document root never renders on the client.
+export function isCreatedOnlyLoad(loadImport: LoadImportConfig) {
+  return getCreatedOnlyLoads().has(loadImport);
+}
+
+// Decided at the first ask, before any load import translates its
+// references away (imports translate ahead of the tags naming them).
+const [getCreatedOnlyLoads] = createProgramState(() => {
+  const loads = new Set<LoadImportConfig>();
+  if (!isPatch() || !isPage()) return loads;
+  const program = getProgram();
+  for (const node of program.node.body) {
+    if (!t.isImportDeclaration(node)) continue;
+    const loadImport = node.extra?.loadImport;
+    if (!loadImport?.render) continue;
+    const { local } = node.specifiers.find(t.isImportDefaultSpecifier)!;
+    // A trigger keeps its channel, so a navigation never forces a load; an
+    // import's uses (tag names, values passed along) are its references.
+    if (
+      program.scope.getBinding(local.name)!.referencePaths.every(
+        (ref) =>
+          // Only a tag name renders it; a value (an alias, a ternary) is
+          // client code that reads the binding.
+          t.isMarkoTag(ref.parent) &&
+          ref.parentPath!.get("name") === ref &&
+          patchCreates(getSection(ref)) &&
+          // A tag deriving from state re-renders on the client.
+          !getAllTagReferenceNodes(ref.parent).some((node) =>
+            hasStateSource(node.extra),
+          ),
+      )
+    ) {
+      loads.add(loadImport);
+    }
+  }
+  return loads;
+});
 
 export default {
   analyze(importDecl) {
@@ -119,6 +169,12 @@ export default {
         );
       }
 
+      // A flush revealing the tag waits for its module and may reference
+      // binds: the page needs both features, interactive or not.
+      if (isPatch()) {
+        linkRuntimeFeature("patch-ready");
+        linkRuntimeFeature("patch-bind");
+      }
       const file = getFile();
 
       const loadFile = tagImport && loadFileForImport(file, value);
@@ -174,6 +230,28 @@ export default {
             node.attributes = undefined;
             return;
           } else {
+            // Flushes name a server-only template; the page registers its
+            // loader only, for the registrations its flushes need.
+            if (isCreatedOnlyLoad(loadImport)) {
+              importDecl.replaceWith(
+                t.expressionStatement(
+                  callRuntime(
+                    "_load_lazy",
+                    t.stringLiteral(getReadyId(loadFile)!),
+                    // `.then(() => {})` drops the namespace, so the bundler
+                    // keeps the registrations alone (no export, no render).
+                    t.arrowFunctionExpression(
+                      [],
+                      dynamicImport(
+                        resolveRelativePath(file, loadFile.opts.filename),
+                        t.arrowFunctionExpression([], t.blockStatement([])),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+              return;
+            }
             const allKnownTagReferences = binding.referencePaths.every(
               (ref) =>
                 t.isMarkoTag(ref.parent) && ref.parent.extra?.tagNameLoad,

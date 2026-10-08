@@ -26,7 +26,7 @@ import {
 } from "./bindings";
 import { generateUidIdentifier } from "./generate-uid";
 import { getStaticTagName, getTagName } from "./get-tag-name";
-import { isOptimize } from "./marko-config";
+import { isOptimize, isPatch } from "./marko-config";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -34,12 +34,21 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { forEach, fromIter, type SortedOpt } from "./optional";
+import { forEach, fromIter, type Opt, some, type SortedOpt } from "./optional";
+import {
+  inStatefulBranch,
+  isPatchRendered,
+  isStructuralParam,
+  recordStructuralParams,
+  getWriteReason,
+  isPatchKeyed,
+} from "./patch/structure";
 import {
   addReasonExprs,
   addReason,
   getSourcesForExpr,
   getSourcesForExprs,
+  getSourcesForRef,
 } from "./reasons";
 import {
   addRead,
@@ -54,14 +63,22 @@ import {
   setDerivedFrom,
   trackParamsReferences,
   trackVarReferences,
+  onFinalizeReferences,
+  getReferencedBindingsInFunction,
 } from "./references";
-import { callRuntime, importRuntime } from "./runtime";
+import {
+  linkRuntimeFeature,
+  callRuntime,
+  importRuntime,
+  importRuntimeFeature,
+} from "./runtime";
 import {
   getScopeAccessorLiteral,
   getScopeOffsetAccessorLiteral,
 } from "./scope-accessor";
 import { createScopeReadExpression } from "./scope-read";
 import {
+  ensureReasonGroups,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
@@ -82,8 +99,15 @@ import {
   writeHTMLResumeStatements,
 } from "./signals";
 import { findSlot, getSlot, SlotKind } from "./slots";
-import { ALWAYS } from "./sources";
+import {
+  ALWAYS,
+  getRootParams,
+  hasRootParamSource,
+  mergeSources,
+  type Sources,
+} from "./sources";
 import { createProgramState, createSectionState } from "./state";
+import { hasScopeOffset } from "./structure";
 import {
   toMemberExpression,
   toObjectProperty,
@@ -96,7 +120,12 @@ import {
   getSingleKnownSpread,
 } from "./translate-attrs";
 import translateVar from "./translate-var";
-import { buildGroupMask, getWriteGuard } from "./write-guard";
+import {
+  buildGroupMask,
+  getClientGuard,
+  getOwnershipGroupValue,
+  getWriteGuard,
+} from "./write-guard";
 import * as writer from "./writer";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
@@ -108,6 +137,7 @@ const [getKnownTags] = createSectionState(
 
 const kContentSection = Symbol("known tag content section");
 const kPropTree = Symbol("known tag prop tree");
+const kGroupSources = Symbol("known tag group sources");
 const kKnownExprs = Symbol("known tag exprs");
 
 declare module "@marko/compiler/dist/types" {
@@ -115,6 +145,7 @@ declare module "@marko/compiler/dist/types" {
     [kContentSection]?: Section;
     /** The child's params tree the call site was analyzed against. */
     [kPropTree]?: BindingPropTree;
+    [kGroupSources]?: ParamGroupSources[];
     [kKnownExprs]?: KnownExprs;
   }
 }
@@ -137,6 +168,12 @@ export function knownTagAnalyze(
   const tagBody = tag.get("body");
   const tagExtra = (tag.node.extra ??= {});
   tagExtra.nodeBinding = createBinding("#childScope", BindingType.dom, section);
+  if (isPatch()) {
+    // Children inside unpatched structure never pair from a patch.
+    onFinalizeReferences(() => {
+      if (isPatchRendered(section)) linkRuntimeFeature("patch-child");
+    });
+  }
   startSection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
   getKnownTags(section).push(tagExtra);
@@ -291,9 +328,11 @@ export function knownTagTranslateHTML(
         };
 
   const childScopeBinding = tagExtra.nodeBinding!;
-
+  const childScopeReason = findSlot(childScopeBinding)?.reason;
+  // A patch pairs the child through its scope ref, whatever the reason.
+  const childScopeWriteReason = getWriteReason(childScopeBinding);
   let varStatement: t.Statement | undefined;
-  if (isChildScopeResumed(tagExtra)) {
+  if (childScopeWriteReason) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
     // After the attr statements: building attribute tags can consume scope
     // ids (eg `_resume_locals`), and the peek must see the child's root id.
@@ -308,29 +347,63 @@ export function knownTagTranslateHTML(
       callRuntime("_existing_scope", peekScopeId),
     );
 
-    if (tagVar) {
-      // Deferred below the render call: `_var` mints the post-render scope id
-      // for the scope offset.
-      varStatement = t.expressionStatement(
-        callRuntime(
-          "_var",
-          getScopeIdIdentifier(section),
-          getScopeOffsetAccessorLiteral(childScopeBinding),
-          peekScopeId,
-          t.stringLiteral(
-            getResumeRegisterId(section, tagVar.extra?.binding, "var"),
+    if (isPatchRendered(section)) {
+      statements.push(
+        t.expressionStatement(
+          callRuntime(
+            "_patch_child",
+            getScopeIdIdentifier(section),
+            getScopeAccessorLiteral(childScopeBinding),
+            peekScopeId,
           ),
         ),
       );
     }
+
+    if (tagVar && childScopeReason) {
+      // Deferred below the render call: `_var` mints the post-render scope id
+      // for the scope offset.
+      let varCall: t.Expression = callRuntime(
+        "_var",
+        getScopeIdIdentifier(section),
+        getScopeOffsetAccessorLiteral(childScopeBinding),
+        peekScopeId,
+        t.stringLiteral(
+          getResumeRegisterId(section, tagVar.extra?.binding, "var"),
+        ),
+      );
+      // A patch-keyed ref writes the child scope even when a param-only reason's
+      // group is constant; the wiring resolves only where it is client-sourced.
+      const varGuard =
+        isPatchKeyed(section, childScopeBinding) &&
+        getClientGuard(section, childScopeReason);
+      if (varGuard) varCall = t.logicalExpression("&&", varGuard, varCall);
+      varStatement = t.expressionStatement(varCall);
+    }
   }
 
   if (contentSection.paramReasonGroups) {
-    const childGroupMask = buildChildGroupMask(
-      section,
-      childScopeBinding,
-      contentSection.paramReasonGroups,
-    );
+    let childGroupMask: t.Expression | undefined;
+    if (isPatch()) {
+      // An instance in stateful structure, which patch renders skip, takes
+      // the all-server default; elsewhere the scope reason carries ownership.
+      const groups =
+        !inStatefulBranch(section) && getParamGroupSources(tagExtra);
+      if (groups) {
+        childGroupMask = buildOwnershipMaskExpr(
+          section,
+          childScopeBinding,
+          contentSection.paramReasonGroups,
+          groups,
+        );
+      }
+    } else {
+      childGroupMask = buildChildGroupMask(
+        section,
+        childScopeBinding,
+        contentSection.paramReasonGroups,
+      );
+    }
 
     if (childGroupMask) {
       tag.insertBefore(
@@ -361,6 +434,40 @@ export function knownTagTranslateHTML(
       statements,
     );
     if (varStatement) statements.push(varStatement);
+    // A created scope never runs the child's return, so the flush seeds each
+    // var the client reads, unless its state-sourced return reaches it itself.
+    if (isPatch()) {
+      for (const name in t.getBindingIdentifiers(tag.node.var!)) {
+        const varBinding = tag.scope.getBinding(name)?.identifier.extra
+          ?.binding as Binding | undefined;
+        if (
+          !varBinding ||
+          varBinding.sources?.state ||
+          !findSlot(varBinding)?.reason
+        ) {
+          continue;
+        }
+        statements.push(
+          t.expressionStatement(
+            t.logicalExpression(
+              "&&",
+              callRuntime(
+                "_filled_guard",
+                t.numericLiteral(0),
+                t.numericLiteral(0),
+              ),
+              callRuntime(
+                "_patch_write",
+                getScopeIdIdentifier(section),
+                getScopeAccessorLiteral(varBinding),
+                t.identifier(name),
+                t.numericLiteral(1),
+              ),
+            ),
+          ),
+        );
+      }
+    }
   } else {
     statements.push(callStatement(tagIdentifier, ...getArgs()));
   }
@@ -401,6 +508,8 @@ export function knownTagTranslateDOM(
       }
       return t.callExpression(importRuntime("_var_change"), changeArgs);
     };
+    // A flush creating the child seeds the wiring through its setup.
+    if (isPatch()) importRuntimeFeature("patch-var");
     addStatement(
       "render",
       tagSection,
@@ -430,14 +539,48 @@ export function knownTagTranslateDOM(
 export function finalizeKnownTags(section: Section) {
   for (const tagExtra of getKnownTags(section)) {
     const scopeBinding = tagExtra.nodeBinding;
+    // A var's wiring guards by the ref's reason even where a patch keys it.
+    if (scopeBinding && hasScopeOffset(scopeBinding)) {
+      ensureReasonGroups(findSlot(scopeBinding)?.reason);
+    }
     const knownExprs = tagExtra[kKnownExprs];
     const contentSection = tagExtra[kContentSection]!;
     if (knownExprs && scopeBinding && contentSection.paramReasonGroups) {
+      const groupSources: ParamGroupSources[] = [];
+      if (isPatch()) tagExtra[kGroupSources] = groupSources;
       for (const group of contentSection.paramReasonGroups) {
+        const exprs = mapParamReasonToExpr(knownExprs, group);
         addReason(
           getSlot(scopeBinding, SlotKind.ParamGroup, section, group),
-          getSourcesForExprs(mapParamReasonToExpr(knownExprs, group)),
+          getSourcesForExprs(exprs),
         );
+        if (isPatch()) {
+          // Everything the group's expressions may read, function-body
+          // reads included: they inform ownership, never serialization.
+          const sources = getAllSourcesForExprs(exprs as Opt<t.NodeExtra>);
+          groupSources.push({ params: group, sources });
+          // The ownership mask composes over these groups at translate
+          // time; group order freezes here.
+          ensureReasonGroups(sources);
+          // Client state joined with server values fills the child's joins.
+          if (
+            sources?.state &&
+            (sources.param || sources.global) &&
+            isPatchRendered(section)
+          ) {
+            linkRuntimeFeature("patch-value");
+          }
+          // The fact rolls up: a param passed to a child's structural param
+          // makes this template's params so too.
+          if (some(group, isStructuralParam)) {
+            recordStructuralParams(sources);
+            // Client state passed to the child's structural params hands it the
+            // structure at run time: its fills need the value patcher.
+            if (sources?.state && isPatchRendered(section)) {
+              linkRuntimeFeature("patch-value");
+            }
+          }
+        }
       }
     }
   }
@@ -483,6 +626,106 @@ function buildChildGroupMask(
         names: getDebugNames(group),
       };
     }),
+  );
+}
+
+export interface ParamGroupSources {
+  /** The child params this group covers. */
+  params: NonNullable<Sources["param"]>;
+  /** The call site's sources for this group (fn-body reads included;
+   * survives any force on the key). */
+  sources: Sources | undefined;
+}
+
+// Whether the server supplies a group: params, or `$global`, which every patch
+// render re-ships; state recomputes client-side.
+export function hasParamOrGlobalSource(sources: Sources | undefined) {
+  return !!(sources?.param || sources?.global);
+}
+
+// A tag analyzed as a known child template (vs a `<define>` var's tag).
+export function isKnownTagExtra(tagExtra: t.MarkoTagExtra) {
+  return !!tagExtra[kKnownExprs];
+}
+
+// Per-group sources for a known templated call site, aligned with the
+// child's `paramReasonGroups` indices.
+export function getParamGroupSources(
+  tagExtra: t.MarkoTagExtra,
+): ParamGroupSources[] | undefined {
+  const scopeBinding = tagExtra.nodeBinding;
+  const contentSection = tagExtra[kContentSection];
+  const groups = contentSection?.paramReasonGroups;
+  if (!tagExtra[kKnownExprs] || !scopeBinding || !groups) return;
+  return tagExtra[kGroupSources];
+}
+
+// The instance's sources mask (2 bits per group at `1 + 2i`; keyed when
+// dynamic), or undefined when the all-server default is equivalent.
+function buildOwnershipMaskExpr(
+  section: Section,
+  childScopeBinding: Binding,
+  reasonGroups: ParamReasonGroups,
+  groups: ParamGroupSources[],
+): t.Expression | undefined {
+  const rootSection = section.program;
+  const values = groups.map(({ sources }, i) => {
+    if (sources?.state) return hasParamOrGlobalSource(sources) ? 3 : 1;
+    // The root params' own group composes the caller's bits at render.
+    const rootParams = getRootParams(sources?.param);
+    if (rootParams) {
+      const composed = getOwnershipGroupValue(rootSection, rootParams);
+      // A `$global` source adds a static server bit beside the composition.
+      return sources!.global
+        ? t.binaryExpression("|", t.numericLiteral(2), composed)
+        : composed;
+    }
+    if (isUngatedGroup(sources)) return 2;
+    // A constant group (a call-site constant) the child still reads
+    // client-side is the server's to supply; one it never reads ships not.
+    return findSlot(
+      childScopeBinding,
+      SlotKind.ParamGroup,
+      section,
+      reasonGroups[i],
+    )?.reason
+      ? 2
+      : 0;
+  });
+  if (!values.some((value) => typeof value !== "number" || value !== 2)) {
+    return;
+  }
+  return buildGroupMask(
+    values.map((value, i) => ({
+      value,
+      names: getDebugNames(groups[i].params),
+    })),
+  );
+}
+
+// A group with param or `$global` sources but none from state or a root
+// param: no caller gates it, so its mask is fixed and a patch writes it.
+function isUngatedGroup(sources: Sources | undefined) {
+  return (
+    !sources?.state &&
+    hasParamOrGlobalSource(sources) &&
+    !hasRootParamSource(sources)
+  );
+}
+
+// The params the child patches itself, as holes it writes (its ungated
+// groups'): a fill's run leaves their forwards to the patch.
+function getPatchedParams(
+  tag: t.NodePath<t.MarkoTag>,
+  section: Section,
+): SortedOpt<Binding> {
+  if (!isPatch() || inStatefulBranch(section)) return;
+  return getParamGroupSources(tag.node.extra!)?.reduce(
+    (params: SortedOpt<Binding>, group) =>
+      isUngatedGroup(group.sources)
+        ? bindingUtil.union(params, group.params)
+        : params,
+    undefined,
   );
 }
 
@@ -1402,6 +1645,7 @@ function writeAttrsToSignals(
   // Attributes were gathered last to first so the last duplicate wins.
   const inputProps = attrProps.reverse().concat(contentProps);
 
+  const patchedParams = getPatchedParams(tag, info.tagSection);
   for (let i = staticAttrs.length; i--;) {
     const attr = staticAttrs[i];
     const childAttrExports = getKnownFromPropTree(
@@ -1414,7 +1658,9 @@ function writeAttrsToSignals(
     );
     remaining.delete(attr.name);
     addStatement(
-      "render",
+      bindingUtil.has(patchedParams, childAttrExports.binding)
+        ? "patch"
+        : "render",
       info.tagSection,
       getReferencedBindings(attr.value.extra),
       t.expressionStatement(
@@ -1628,4 +1874,25 @@ function getGroupReads(
     if (read) reads.push([attrTagMeta, read]);
   }
   return reads;
+}
+
+// The section a known tag renders in (its child scope binding's).
+export function getKnownTagSection(tagExtra: t.MarkoTagExtra) {
+  return tagExtra.nodeBinding!.section;
+}
+
+// Everything the expressions may read, reads inside function values
+// included: a consumer may invoke them at render time.
+function getAllSourcesForExprs(exprs: Opt<t.NodeExtra>) {
+  let sources: Sources | undefined;
+  forEach(exprs, (expr) => {
+    sources = mergeSources(sources, getSourcesForExpr(expr));
+    forEach(
+      getReferencedBindingsInFunction(expr as t.FunctionExtra),
+      (binding) => {
+        sources = mergeSources(sources, getSourcesForRef(binding));
+      },
+    );
+  });
+  return sources;
 }

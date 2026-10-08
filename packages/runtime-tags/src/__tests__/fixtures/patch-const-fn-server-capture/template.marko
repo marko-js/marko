@@ -1,0 +1,6 @@
+<const/fmt(text: string) {
+  return text + input.decor.mark();
+}/>
+<if=input.show>
+  <p>$!{fmt(input.text)}</p>
+</if>

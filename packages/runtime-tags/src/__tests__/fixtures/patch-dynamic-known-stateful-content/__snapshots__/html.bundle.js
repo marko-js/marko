@@ -1,0 +1,49 @@
+// card.marko
+const $template = "<button>+</button><!><!>";
+const $walks = " b%c";
+_shells({ a: "a !a0; b%;<button>+</button><!><!>" });
+var card_default = _template_patch("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_content = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	let open = true;
+	_html(`<button>+</button>${_el_resume($scope0_id, "a")}`);
+	if ($scope0_page) _if(() => {
+		{
+			const $scope1_id = _scope_id();
+			_html("<section>");
+			_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $wg__input_content);
+			_html("</section>");
+			_scope($scope1_id, {});
+			return 0;
+		}
+	}, $scope0_id, "b", 1, 1, 0, 0, 1);
+	_script($scope0_id, "a0");
+	_patch_value($scope0_id, "a2", open, 1);
+	$scope0_page ? _scope($scope0_id, {
+		e: input.content,
+		f: open
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "a1", input.content);
+});
+
+// template.marko
+_shells({ b: /*@__PURE__*/ (() => `b !;${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}`)() });
+var template_default = _template_patch("b", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_label = _source_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $input_label__closures = /* @__PURE__ */ new Set();
+	_set_scope_reason(0);
+	const $childScope = _peek_scope_id();
+	_patch_child($scope0_id, "a", $childScope);
+	card_default({ content: _content_resume("b1", () => {
+		_scope_reason();
+		const $scope1_id = _scope_id();
+		_html(_text_resume($scope1_id, "a", input.label, $wg__input_label));
+		_subscribe(_source_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0", $wg__input_label);
+		$wg__input_label || _resume_branch($scope1_id);
+	}, $scope0_id) });
+	$scope0_page ? _scope($scope0_id, {
+		d: input.label,
+		e: $input_label__closures,
+		a: _existing_scope($childScope)
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "b2", input.label);
+}, 1);

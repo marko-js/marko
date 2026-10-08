@@ -1,0 +1,43 @@
+// template.marko
+const $template = "<main><!><button>+</button></main>";
+const $walks = "D%b l";
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
+var template_default = _template_patch("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_title__OR__input_upper = _source_guard($scope0_reason, 0), $scope0_page = _page_render(), $wi__input_upper = _source_if($scope0_reason, 2);
+	const $scope0_id = _scope_id();
+	const up = _resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id);
+	const low = _resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
+	const pick = input.upper ? up : low;
+	let open = false;
+	_html("<main>");
+	if ($scope0_page) _if(() => {
+		if (open) {
+			const $scope1_id = _scope_id();
+			_html(`<p>${_text_resume($scope1_id, "#text/0", pick(), $wg__input_title__OR__input_upper)}</p>`);
+			_scope($scope1_id, {}, "__tests__/template.marko", "6:4");
+			return 0;
+		}
+	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
+	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	_patch_write($scope0_id, "input_upper", input.upper, 1);
+	_patch_write($scope0_id, "up", up, 1);
+	_patch_write($scope0_id, "low", low, 1);
+	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_upper#5_up#6_low#7/init");
+	_patch_value($scope0_id, "__tests__/template.marko_fill4", open, 1);
+	$scope0_page ? _scope($scope0_id, {
+		input_title: input.title,
+		input_upper: _source_if($scope0_reason, 1) && input.upper,
+		up: $wi__input_upper && up,
+		low: $wi__input_upper && low,
+		pick,
+		open
+	}, "__tests__/template.marko", 0, {
+		input_title: ["input.title"],
+		input_upper: ["input.upper"],
+		up: "1:8",
+		low: "2:8",
+		pick: "3:8",
+		open: "4:6"
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "__tests__/template.marko_fill0", input.upper), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko_fill1", up), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "__tests__/template.marko_fill2", low), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "__tests__/template.marko_fill3", pick), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "input_title", input.title));
+}, 1);

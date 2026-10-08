@@ -1,0 +1,43 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<main>
+  <div class=a></div>
+  <!--M_$2 #div/0--><!--M_[--><!--M_[--><span>x<!--M_$5 #text/0--></span>
+  <div class=c></div>
+  <!--M_$6 #div/0--><!--M_]4 #text/0 5--><!--M_]1 #text/2 4-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko": [
+      _ => [2, {
+        input_name: "a",
+        input_item: _(1).item
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4 2"
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko"
+    ].push(_ => [6, {
+      input_name: "c",
+      input_item: _(1).item
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4 6"
+    );
+  M._.r = [_ => [1, {
+    item: {
+      label: "a"
+    },
+    "#childScope/1": _(2),
+    "ClosureScopes:item/9": new Set
+  }, 2, {
+    _: _(1),
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/template.marko_3*content"
+      ]
+  }], _ => [5, {
+    _: _(4),
+    "#childScope/2": _(6)
+  }]];
+  M._.w()
+</script>

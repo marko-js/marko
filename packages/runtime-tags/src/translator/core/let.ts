@@ -11,8 +11,10 @@ import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { BindingType, getDebugScopeAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { hasEmittedAssignment } from "../util/finalize-references";
-import { isOptimize, isOutputDOM } from "../util/marko-config";
-import { addReason } from "../util/reasons";
+import { getDeclaredBindingExpression } from "../util/get-declared-binding-expression";
+import { isOptimize, isOutputDOM, isPatch } from "../util/marko-config";
+import { getPatchFillKey, isPatchFillBinding } from "../util/patch/refresh";
+import { addReason, getSourcesForExpr } from "../util/reasons";
 import {
   mergeReferences,
   onFinalizeReferences,
@@ -20,9 +22,15 @@ import {
   trackVarReferences,
   getReferencedBindings,
 } from "../util/references";
+import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
-import { getOrCreateSection, getSection } from "../util/sections";
+import {
+  ensureReasonGroups,
+  getOrCreateSection,
+  getScopeIdIdentifier,
+  getSection,
+} from "../util/sections";
 import {
   addValue,
   initValue,
@@ -33,6 +41,7 @@ import {
 import { findSlot, getSlot, SlotKind } from "../util/slots";
 import { ALWAYS } from "../util/sources";
 import translateVar from "../util/translate-var";
+import { getFilledGuard } from "../util/write-guard";
 
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
@@ -135,11 +144,15 @@ export default {
         if (binding.assignments) {
           addReason(changeSlot, ALWAYS);
         }
+        // The controller's fill is gated on its group (translate).
+        if (isPatch()) {
+          ensureReasonGroups(getSourcesForExpr(tagExtra));
+        }
       });
     } else {
-      // An uncontrolled `<let>` is not reactive to its initial value; an
-      // unread let drops it.
-      tagExtra.initialValue = true;
+      // An uncontrolled `<let>` is not reactive to its initial value, though a
+      // patch re-renders it from that value; an unread let drops it.
+      if (!isPatch()) tagExtra.initialValue = true;
       tagExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
     }
   },
@@ -209,6 +222,35 @@ export default {
             tag.insertBefore(t.expressionStatement(valueChangeAttr.value));
           }
         } else if (valueChangeAttr) {
+          // A controlled let follows its controller, so a controller with no
+          // state source fills a paired scope too.
+          const controller =
+            isPatch() && isPatchFillBinding(binding)
+              ? getSourcesForExpr(node.extra!)
+              : undefined;
+          if (controller && !controller.state) {
+            const filledGuard = getFilledGuard(controller);
+            tag.insertBefore(
+              t.expressionStatement(
+                t.logicalExpression(
+                  "&&",
+                  filledGuard
+                    ? t.logicalExpression(
+                        "&&",
+                        t.cloneNode(valueChangeAttr.value, true),
+                        filledGuard,
+                      )
+                    : t.cloneNode(valueChangeAttr.value, true),
+                  callRuntime(
+                    "_patch_value",
+                    getScopeIdIdentifier(section),
+                    t.stringLiteral(getPatchFillKey(binding)),
+                    getDeclaredBindingExpression(binding),
+                  ),
+                ),
+              ),
+            );
+          }
           const accessor = setScopeProperty(
             findSlot(binding, SlotKind.ChangeHandler),
             t.logicalExpression(

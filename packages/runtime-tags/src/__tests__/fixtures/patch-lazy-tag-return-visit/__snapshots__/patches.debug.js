@@ -1,0 +1,31 @@
+// PATCH
+{
+  "PatchBranch:#main/0": 0
+}
+
+// PATCH
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell;b%b/ D%c%l&b;<!><!><button><!>:<!></button><!>`, {
+  "PatchBranch:#main/0": [{
+    "PatchChild:#childScope/1": {
+      "PatchText:#text/1": "b",
+      "PatchSetup:": {
+        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko_0",
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko_fill0": 0
+      }
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell"]
+}]
+"AwI"
+
+// PATCH holding AwI
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko", {
+  "PatchBranch:#main/0": [{
+    "PatchChild:#childScope/1": {
+      "PatchText:#text/1": "c",
+      "PatchSetup:": {
+        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko_0",
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/child.marko_fill0": 0
+      }
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-return-visit/template.marko_1*shell"]
+}

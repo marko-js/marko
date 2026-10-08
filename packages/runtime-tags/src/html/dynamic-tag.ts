@@ -12,26 +12,31 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { _attr_select_value, _attrs, _attrs_textarea_value } from "./attrs";
-import type { Locals } from "./serializer";
+import { type Locals, registerAccess } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   _el,
   _existing_scope,
   _html,
   _peek_scope_id,
+  _scope_reason,
   _resume,
   _scope,
   _scope_id,
   _script,
   _set_scope_reason,
   CLIENT_ALL,
+  SERVER_ALL,
   applyBranchStart,
   deferBranchStart,
   getChunk,
   getScopeById,
   getState,
+  markContentRendered,
   rendererKey,
   withBranchId,
+  withUnpatched,
+  patchWait,
 } from "./writer";
 
 const voidElementsReg =
@@ -51,11 +56,36 @@ export let _dynamic_tag = (
   markerGuard?: 1 | 0,
   // Passed by a debug build's compiler for a tag variable.
   tagVar?: 1,
+  // `1` pairs and re-renders the tag, `3` pairs it keeping the live branch,
+  // `2` skips it (its renderer derives from a client-owned group).
+  patchPairing?: 1 | 2 | 3,
 ) => {
   const shouldResume = markerGuard !== 0;
+  // A patch entry may target this tag: its branch marks and pairs, while
+  // the child's data still serializes on the tag's own reason.
+  const marks = shouldResume || patchPairing;
+  const pairs = patchPairing === 1 || patchPairing === 3;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
+  // The resumed page renders a tag no patch pairs (as with `writeBranch`),
+  // so the flush waits for its lazy renderer's module, as that render will.
+  if (!pairs && state.writesPatches) {
+    const readyId = (renderer as ServerRenderer)?.[RendererProp.ReadyId];
+    if (readyId) patchWait(state, readyId);
+    return;
+  }
   const branchId = _peek_scope_id();
+  // A null renderer still renders the body: its writes pair too.
+  if (patchPairing && (renderer || content)) {
+    state.pairBranch?.(
+      scopeId,
+      accessor,
+      branchId,
+      undefined,
+      undefined,
+      typeof renderer === "function" ? renderer[RendererProp.Owner] : undefined,
+    );
+  }
   let rendered: boolean;
   let result: unknown;
 
@@ -120,11 +150,14 @@ export let _dynamic_tag = (
                       0,
                       undefined,
                       markerGuard,
+                      undefined,
+                      patchPairing,
                     )
                 : undefined,
               1,
             );
           } else if (renderContent) {
+            // The body is a branch of the native tag's scope: it pairs too.
             _dynamic_tag(
               branchId,
               MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
@@ -133,6 +166,8 @@ export let _dynamic_tag = (
               0,
               undefined,
               markerGuard,
+              undefined,
+              patchPairing,
             );
           }
         }
@@ -165,7 +200,7 @@ export let _dynamic_tag = (
         _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
       }
 
-      if (shouldResume || needsScript) {
+      if (marks || needsScript) {
         _html(
           state.mark(
             ResumeSymbol.BranchEndNativeTag,
@@ -174,7 +209,10 @@ export let _dynamic_tag = (
         );
       }
     };
-    renderNative();
+    // A tag no patch pairs renders unpatched: the resumed page
+    // re-renders it, so no patch fills its reads.
+    if (!pairs && state.patchPage) withUnpatched(renderNative);
+    else renderNative();
 
     // Registered, not written: the getter only reaches the wire when a tag
     // variable holds it. It reads this scope's node visit, not the branch.
@@ -187,12 +225,22 @@ export let _dynamic_tag = (
     }
 
     const chunk = getChunk()!;
-    const beforeBranch = shouldResume ? deferBranchStart(chunk) : undefined;
+    const beforeBranch = marks ? deferBranchStart(chunk) : undefined;
 
     const render = () => {
+      const { state } = chunk.boundary;
+      if (state.writesPatches) markContentRendered(state, renderer || content);
       if (renderer) {
         try {
-          _set_scope_reason(shouldResume ? CLIENT_ALL : 0);
+          // The child's groups are unknown: a patch page writes the tag even
+          // where nothing resumes; elsewhere the client may re-render it.
+          _set_scope_reason(
+            shouldResume || state.writesPatches
+              ? state.patchPage
+                ? SERVER_ALL
+                : CLIENT_ALL
+              : 0,
+          );
           return inputIsArgs
             ? renderer(...(inputOrArgs as unknown[]))
             : renderer(
@@ -209,7 +257,11 @@ export let _dynamic_tag = (
         content();
       }
     };
-    result = shouldResume ? withBranchId(branchId, render) : render();
+    const run =
+      !pairs && state.patchPage ? () => withUnpatched(render) : render;
+    // A kept renderer's body pairs with the live branch, so it renders
+    // outside the branch id context that seeds a constant group's holes.
+    result = marks && patchPairing !== 3 ? withBranchId(branchId, run) : run();
     rendered = _peek_scope_id() !== branchId;
 
     if (beforeBranch !== undefined) {
@@ -227,7 +279,9 @@ export let _dynamic_tag = (
   }
 
   if (rendered) {
-    if (shouldResume) {
+    // A patched tag keeps its key so a patch naming the same renderer pairs
+    // by id alone.
+    if (shouldResume || (patchPairing && typeof renderer === "function")) {
       _scope(scopeId, {
         [AccessorPrefix.ConditionalRenderer + accessor]: rendererKey(renderer),
       });
@@ -240,6 +294,13 @@ export let _dynamic_tag = (
 };
 
 export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
+  // Also called at module load (template definitions), outside any render.
+  const state = getChunk()?.boundary.state;
+  if (state?.writesPatches) (state.withheldContents ??= new Set()).add(id);
+  return content(id, fn, scopeId);
+}
+
+function content(id: string, fn: ServerRenderer, scopeId?: number) {
   fn[RendererProp.Id] = id;
   // The owner id the client derives from `RendererProp.Owner`; both sides key a
   // content instance by it, so they must be written from the same scope.
@@ -258,6 +319,15 @@ export function _content_resume(
   return _resume(_content(id, fn, scopeId), id, scopeId, locals);
 }
 
+// Content with no client renderer elides its slot to `0`.
+export function _content_elide(
+  id: string,
+  fn: ServerRenderer,
+  scopeId: number | undefined,
+) {
+  return registerAccess(_content(id, fn, scopeId), "0");
+}
+
 export const patchDynamicTag = /* @__PURE__ */ (
   (originalDynamicTag) =>
   (patch: (tag: unknown, scopeId: number, accessor: Accessor) => unknown) => {
@@ -270,6 +340,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
       inputIsArgs,
       resume,
       tagVar,
+      patchPairing,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -283,6 +354,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
         inputIsArgs,
         resume,
         tagVar,
+        patchPairing,
       );
     };
   }
