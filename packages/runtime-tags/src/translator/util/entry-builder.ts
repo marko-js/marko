@@ -79,8 +79,8 @@ const builder = {
         if (state.lazy) body.push(getRuntimeFeatureImport("lazy"));
       }
 
-      // The topmost templates with client side work; everything below one of
-      // them (and its client assets) arrives through its imports.
+      // The topmost templates with client side work or resumes; everything
+      // below one of them (and its client assets) arrives through its imports.
       for (const root of state.roots) {
         body.push(t.importDeclaration([], t.stringLiteral(root)));
       }
@@ -175,8 +175,8 @@ const builder = {
 
     const init = !!(programExtra.isInteractive || programExtra.needsCompat);
     const load = !!programExtra.hasClientStatement;
-    // The topmost templates with client side work are what the bundle links;
-    // everything below one of them arrives through its imports.
+    // The topmost templates with client side work or resumes are what the
+    // bundle links; everything below one of them arrives through its imports.
     const isRoot =
       !state.bundled && (init || load || !!programExtra.hasResumes);
 
