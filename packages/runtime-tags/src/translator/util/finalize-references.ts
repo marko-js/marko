@@ -204,7 +204,7 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         // A value retained as written keeps what it reads outside a function,
         // so client code reads those with it.
         forEach(reads, (read) => {
-          if (!read.inFunction && read.extra.exprRoot?.retained) {
+          if (!read.fnRoot && read.extra.exprRoot?.retained) {
             addReasonExprs(getSlot(read.binding), expr);
           }
         });
