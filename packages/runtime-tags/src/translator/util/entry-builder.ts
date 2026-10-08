@@ -30,19 +30,26 @@ interface EntryState {
    * below a root everything arrives through its imports, and a lazy subtree
    * is loaded by its own load entry. */
   bundled: number;
+  /** Depth of enclosing lazy imports, whose load entries bring their assets. */
+  lazyDepth: number;
   roots: string[];
   /** Assets of templates the bundle never loads; the entry imports them. */
   assets: Set<string>;
   /** Assets that arrive through a bundled template's imports; the entry
    * imports them itself only when it links nothing (a server only page). */
   bundledAssets: Set<string>;
-  /** Whether each reached file was only ever seen below a bundled template. */
-  visited: Map<string, boolean>;
+  /** The most eager way each file has been reached. */
+  visited: Map<string, Reach>;
 }
+/** How a file was reached: 0 eagerly, 1 below a bundled template, 2 only
+ * within a lazy subtree. Lower is more eager, so `seen <= reach` means it was
+ * already visited at least as eagerly and is skipped; a file reached more
+ * eagerly than before is re-visited, since it may then own assets or a root. */
+export type Reach = 0 | 1 | 2;
 type EntryFile = t.BabelFile & {
   [kState]?: EntryState;
 };
-type VisitChild = (id: string, bundled?: boolean) => void;
+type VisitChild = (id: string, reach?: Reach) => void;
 const kState: unique symbol = Symbol();
 
 const builder = {
@@ -137,19 +144,18 @@ const builder = {
 
     return body;
   },
-  // Recurses into each reachable template once, resolving and loading it; a
-  // file only ever reached below a bundled template is re-visited if later
-  // reached eagerly, since only then can it become a root itself.
+  // Recurses into each reachable template, re-visiting a file reached more
+  // eagerly than before, since only then can it become a root or own assets.
   // The interop entry passes a `visitChild` to dispatch each file itself.
   visit(
     file: t.BabelFile,
     entryFile: EntryFile,
-    visitChild: VisitChild = (id, bundled = false) => {
+    visitChild: VisitChild = (id, reach = 0) => {
       const state = entryFile[kState]!;
       const resolved = resolveRelativeToEntry(entryFile, file, id);
-      const seenBundled = state.visited.get(resolved);
-      if (seenBundled === false || (seenBundled && bundled)) return;
-      state.visited.set(resolved, bundled);
+      const seen = state.visited.get(resolved);
+      if (seen !== undefined && seen <= reach) return;
+      state.visited.set(resolved, reach);
       const childFile = loadFileForImport(entryFile, resolved);
       if (childFile) builder.visit(childFile, entryFile);
     },
@@ -159,14 +165,12 @@ const builder = {
       load: false,
       lazy: false,
       bundled: 0,
+      lazyDepth: 0,
       roots: [],
       assets: new Set(),
       bundledAssets: new Set(),
       visited: new Map([
-        [
-          resolveRelativePath(entryFile, entryFile.opts.filename as string),
-          false,
-        ],
+        [resolveRelativePath(entryFile, entryFile.opts.filename as string), 0],
       ]),
     });
     const programExtra = file.path.node.extra;
@@ -190,7 +194,7 @@ const builder = {
     }
 
     // Collected during analyze (styles, css imports, etc).
-    if (assetImports) {
+    if (assetImports && !state.lazyDepth) {
       const assets =
         isRoot || state.bundled ? state.bundledAssets : state.assets;
       for (const request of assetImports) {
@@ -203,9 +207,15 @@ const builder = {
     for (const tag of analyzedTags ? [...analyzedTags] : []) {
       // A lazily imported subtree is loaded by its own load entry, never here.
       const lazy = loadImports?.has(tag);
-      if (lazy) state.bundled++;
-      visitChild(tag, !!state.bundled);
-      if (lazy) state.bundled--;
+      if (lazy) {
+        state.bundled++;
+        state.lazyDepth++;
+      }
+      visitChild(tag, state.lazyDepth ? 2 : state.bundled ? 1 : 0);
+      if (lazy) {
+        state.bundled--;
+        state.lazyDepth--;
+      }
     }
     if (isRoot) state.bundled--;
   },

@@ -1,0 +1,19 @@
+# Render
+```html
+<div
+  class="lazy"
+>
+  <span
+    class="shared"
+  >
+    Shared
+  </span>
+</div>
+<section>
+  <span
+    class="shared"
+  >
+    Shared
+  </span>
+</section>
+```

@@ -30,7 +30,7 @@ function $setup($scope) {
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
 
 // child.css
-var child_default = ".child {\n  color: green;\n}\n";
+var child_default$1 = ".child {\n  color: green;\n}\n";
 
 // child.marko
 const $template = "<span class=child> </span>";

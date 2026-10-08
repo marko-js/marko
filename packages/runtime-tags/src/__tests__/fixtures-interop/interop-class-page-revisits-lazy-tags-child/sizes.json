@@ -1,0 +1,30 @@
+{
+  "dom": {
+    "counter.marko.load.mjs": {
+      "min": 90,
+      "brotli": 78
+    },
+    "template.marko.page.mjs": {
+      "total": {
+        "min": 593,
+        "brotli": 284
+      },
+      "files": {
+        "v:template.marko.hydrate-6.js": 108,
+        "v:template.marko.hydrate-5.js": 104
+      }
+    },
+    "counter.mjs": {
+      "min": 1101,
+      "brotli": 589
+    },
+    "shared": {
+      "min": 2129,
+      "brotli": 1121
+    }
+  },
+  "html": {
+    "min": 618,
+    "brotli": 337
+  }
+}
