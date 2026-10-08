@@ -209,7 +209,7 @@ export default {
 
         // The runtime calls bracket the body's statements (rather than taking a
         // callback) so declarations in them stay readable by later statements.
-        for (const replacement of tag.replaceWithMultiple([
+        const statements = [
           t.expressionStatement(showStart),
           ...bodyStatements,
           t.expressionStatement(
@@ -221,7 +221,8 @@ export default {
               ...endArgs,
             ),
           ),
-        ])) {
+        ];
+        for (const replacement of tag.replaceWithMultiple(statements)) {
           replacement.skip();
         }
       },

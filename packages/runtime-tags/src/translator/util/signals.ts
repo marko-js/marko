@@ -1318,19 +1318,18 @@ export function writeHTMLResumeStatements(
             ? getExprIfWritten(closure.section, closureScopesReason, identifier)
             : identifier;
         const changeable = isChangeableDynamicClosure(section, closure);
-        addWriteScopeBuilder(section, (expr) =>
-          callRuntime(
+        addWriteScopeBuilder(section, (expr) => {
+          const resumeId =
+            changeable &&
+            t.stringLiteral(getResumeRegisterId(section, closure, "subscribe"));
+          return callRuntime(
             "_subscribe",
             subscribeArg,
             expr,
-            changeable
-              ? t.stringLiteral(
-                  getResumeRegisterId(section, closure, "subscribe"),
-                )
-              : undefined,
-            changeable ? markerGuard : undefined,
-          ),
-        );
+            resumeId,
+            resumeId && markerGuard,
+          );
+        });
       }
     }
   });
@@ -1464,15 +1463,12 @@ export function writeHTMLResumeStatements(
       }
     }
 
+    const writeCall = writeScopeBuilder
+      ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
+      : callRuntime("_scope", ...writeScopeArgs);
     body.push(
       t.expressionStatement(
-        getExprIfWritten(
-          section,
-          sectionReason,
-          writeScopeBuilder
-            ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
-            : callRuntime("_scope", ...writeScopeArgs),
-        ),
+        getExprIfWritten(section, sectionReason, writeCall),
       ),
     );
   }

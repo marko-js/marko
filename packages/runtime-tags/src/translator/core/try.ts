@@ -135,31 +135,28 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
+        const tryArgs = [
+          getScopeIdIdentifier(section),
+          getScopeAccessorLiteral(nodeBinding),
+          buildContent(tagBody),
+          placeholderSection && buildContent(placeholderTag!.get("body")),
+          catchTag &&
+            (catchSection
+              ? buildContent(catchTag.get("body"))
+              : t.arrowFunctionExpression([], t.blockStatement([]))),
+          placeholderSection &&
+            t.stringLiteral(getResumeRegisterId(placeholderSection, "content")),
+          catchTag &&
+            t.stringLiteral(
+              catchSection
+                ? getResumeRegisterId(catchSection, "content")
+                : getEmptyCatchId(section, nodeBinding),
+            ),
+        ];
+
         tag
           .replaceWith(
-            t.expressionStatement(
-              callRuntime(
-                "_try",
-                getScopeIdIdentifier(section),
-                getScopeAccessorLiteral(nodeBinding),
-                buildContent(tagBody),
-                placeholderSection && buildContent(placeholderTag!.get("body")),
-                catchTag &&
-                  (catchSection
-                    ? buildContent(catchTag.get("body"))
-                    : t.arrowFunctionExpression([], t.blockStatement([]))),
-                placeholderSection &&
-                  t.stringLiteral(
-                    getResumeRegisterId(placeholderSection, "content"),
-                  ),
-                catchTag &&
-                  t.stringLiteral(
-                    catchSection
-                      ? getResumeRegisterId(catchSection, "content")
-                      : getEmptyCatchId(section, nodeBinding),
-                  ),
-              ),
-            ),
+            t.expressionStatement(callRuntime("_try", ...tryArgs)),
           )[0]
           .skip();
       },

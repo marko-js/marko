@@ -245,10 +245,7 @@ export default {
           } else {
             assertValidNativeEventHandlerAttr(tag, attr);
             if (isChangeHandlerAttr) valueExtra.retained = true;
-            if (
-              !isStaticDelimitedAttr(tag, attr) &&
-              !evaluate(attr.value).confident
-            ) {
+            if (isDynamicAttr(tag, attr)) {
               hasDynamicAttributes = true;
               addSetupExpr(tagSection, attr.value);
             } else if (attr.name === "content" && tagName !== "meta") {
@@ -2112,6 +2109,10 @@ function getClassNames(part: DelimitedAttrPart | undefined) {
     : isLiteralPart(part)
       ? part.split(/\s+/).filter(Boolean)
       : [part.join(".")];
+}
+
+function isDynamicAttr(tag: t.NodePath<t.MarkoTag>, attr: t.MarkoAttribute) {
+  return !isStaticDelimitedAttr(tag, attr) && !evaluate(attr.value).confident;
 }
 
 // A value the template holds whole, which then never needs the element.
