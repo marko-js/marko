@@ -55,7 +55,8 @@ export interface Read {
   getter: Getter | undefined;
   comparedTo: t.Node | undefined;
   deferred: boolean;
-  inFunction: boolean;
+  /** The outermost function holding it; none when that escapes into a call. */
+  fnRoot: ReferencedFunctionExtra | undefined;
 }
 
 export interface ExtraRead {
@@ -1072,7 +1073,7 @@ export function addRead(
     ownVar: false,
     comparedTo: undefined,
     deferred: false,
-    inFunction: false,
+    fnRoot: undefined,
   };
   // Content no output renders keeps no binding alive: reads recorded before it
   // was dropped are untracked by `dropContent`, and later ones stop here.
@@ -1221,7 +1222,6 @@ function addReadToExpression(
   if (fnRoot) {
     // Accessor bodies run when the property is observed, not when a function
     // is invoked.
-    read.inFunction = true;
     read.deferred =
       fnRoot.node.type !== "ObjectMethod" || fnRoot.node.kind === "method";
     const fnReadsByExpr = getFunctionReadsByExpression();
@@ -1232,6 +1232,7 @@ function addReadToExpression(
     const fnExtra = (fnRoot.node.extra ??= {}) as ReferencedFunctionExtra;
     fnExtra.section = section;
     fnExtra.exprRoot = rootExtra;
+    read.fnRoot = fnExtra;
     exprFnReads.set(fnExtra, push(exprFnReads.get(fnExtra), read));
   }
 }
