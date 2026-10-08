@@ -24,9 +24,10 @@ import runtimeInfo from "../util/runtime-info";
 import { createScopeReadExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
-import { findSlot, getSlot } from "../util/slots";
+import { getSlot } from "../util/slots";
 import { ALWAYS } from "../util/sources";
 import * as structure from "../util/structure";
+import { getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 // Applies the `>` escape of the runtime `_escape_comment`.
@@ -152,7 +153,7 @@ export default {
       }
 
       if (nodeBinding) {
-        writer.markNode(tag, nodeBinding, findSlot(nodeBinding)?.reason);
+        writer.markNode(tag, nodeBinding, getWriteReason(nodeBinding));
       }
 
       tag.remove();

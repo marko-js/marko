@@ -19,12 +19,12 @@ import {
 } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
-import { findSlot, getSlot } from "../util/slots";
+import { getSlot } from "../util/slots";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import * as structure from "../util/structure";
 import { getTagFacts, isNonHTMLText } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
-import { getWriteGuard } from "../util/write-guard";
+import { getWriteGuard, getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 import * as SiblingText from "./constants/sibling-text";
 import { scopeIdentifier } from "./program";
@@ -154,7 +154,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   } else {
     const section = getSection(placeholder);
     const siblingText = extra[kSiblingText]!;
-    const markerReason = nodeBinding && findSlot(nodeBinding)?.reason;
+    const markerReason = nodeBinding && getWriteReason(nodeBinding);
 
     if (isHTML) {
       if (markerReason) {

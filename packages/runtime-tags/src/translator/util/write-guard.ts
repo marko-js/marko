@@ -1,6 +1,10 @@
 import { types as t } from "@marko/compiler";
 
-import { getDebugNames, getDebugNamesAsIdentifier } from "./bindings";
+import {
+  type Binding,
+  getDebugNames,
+  getDebugNamesAsIdentifier,
+} from "./bindings";
 import { generateUid, getSharedUid } from "./generate-uid";
 import { some } from "./optional";
 import { isConditionalReason, type Reason, type Reasons } from "./reasons";
@@ -11,7 +15,7 @@ import {
   isSameOrChildSection,
   type Section,
 } from "./sections";
-import { type Slot } from "./slots";
+import { findSectionSlot, findSlot, type Slot, SlotKind } from "./slots";
 import { compareSources, type Sources } from "./sources";
 import { createSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
@@ -107,6 +111,17 @@ export function getScopeReasonStatement(section: Section): t.Statement {
   return hasConditionalReason(section)
     ? t.variableDeclaration("const", getSectionGuards(section).declarators)
     : t.expressionStatement(callRuntime("_scope_reason"));
+}
+
+// A binding's write reason: whether, and under which guard, the server
+// writes it.
+export function getWriteReason(binding: Binding) {
+  return findSlot(binding)?.reason;
+}
+
+// A branch's write reason: whether the server writes the scope it resumes.
+export function getBranchWriteReason(section: Section) {
+  return findSectionSlot(section, SlotKind.Branch)?.reason;
 }
 
 export function getWriteGuard(

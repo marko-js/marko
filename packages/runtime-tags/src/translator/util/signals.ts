@@ -77,6 +77,7 @@ import { withLeadingComment } from "./with-comment";
 import {
   getExprIfWritten,
   getWriteGuardForAny,
+  getWriteReason,
   isSameReason,
 } from "./write-guard";
 
@@ -1349,7 +1350,7 @@ export function writeHTMLResumeStatements(
 
   let debugVars: t.ObjectProperty[] | undefined;
   const writeBinding = (binding: Binding) => {
-    const reason = findSlot(binding)?.reason;
+    const reason = getWriteReason(binding);
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
     pendingProperties.delete(accessor);
