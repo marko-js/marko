@@ -57,10 +57,8 @@ const [getSectionGuards] = createSectionState<SectionGuards>(
   }),
 );
 
-// A call site's reason from its groups' 2-bit values: static ones fold into
-// a literal, a dynamic one shifts into its place; only a group past the
-// bit range (15) makes it a keyed object. A group with no value contributes
-// nothing; one known unfed (`0`) still makes the reason an explicit `0`.
+// Packs groups' 2-bit values into a call site's reason (a keyed object past
+// 15 groups); one known `0` still makes the reason an explicit `0`.
 export function buildGroupMask(
   groups: { value: number | t.Expression | undefined; names: string }[],
 ): t.Expression | undefined {

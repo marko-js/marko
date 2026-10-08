@@ -8,11 +8,11 @@ import { buildGroupMask } from "../translator/util/write-guard";
 // A call site's reason as the translator encodes it, read back per group as
 // the html runtime reads it.
 const cases: Record<string, (number | undefined)[]> = {
-  "no fed group": [undefined, 0],
-  "fifteen fed groups": Array(15).fill(1),
-  "fifteen fed groups and a constant": [...Array(15).fill(1), 0],
-  "a fed first group and a constant seventeenth": [1, ...Array(16).fill(0)],
-  "a fed group past fifteen": [...Array(15).fill(0), 1, 0],
+  "no sourced group": [undefined, 0],
+  "fifteen sourced groups": Array(15).fill(1),
+  "fifteen sourced groups and a constant": [...Array(15).fill(1), 0],
+  "a sourced first group and a constant seventeenth": [1, ...Array(16).fill(0)],
+  "a sourced group past fifteen": [...Array(15).fill(0), 1, 0],
 };
 
 describe("runtime-tags/group mask", () => {
