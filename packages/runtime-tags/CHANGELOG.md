@@ -1,5 +1,36 @@
 # @marko/runtime-tags
 
+## 6.4.4
+
+### Patch Changes
+
+- [#4423](https://github.com/marko-js/marko/pull/4423) [`e126a4e`](https://github.com/marko-js/marko/commit/e126a4eff6e5c6181cfde196fa37f272a3683111) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop adding a template to the page's client bundle only because it registers a function the server writes while its input changes. The caller changing that input already bundles it, so a page whose input never changes on the client no longer ships it.
+
+- [#4437](https://github.com/marko-js/marko/pull/4437) [`52d280b`](https://github.com/marko-js/marko/commit/52d280bbea6536efc5c46cebae1cbf719d37212d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Type `class=` and `style=` values to accept `0`, which the runtime already skips like any falsy value, so `class=["a", count && "has-items"]`, `style=[count && { color: "red" }]` and `class={ active: count }` type-check when `count` is a number.
+
+- [#4426](https://github.com/marko-js/marko/pull/4426) [`23a9b8c`](https://github.com/marko-js/marko/commit/23a9b8c2aad8cf0f7c5f39fd252e994aa9dd2d51) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A form reset now also updates the bound value of a controlled field that was rendered outside the document (such as inside a hidden `<show>`) and joined the form later, and a `reset` event dispatched from an element that is not a form no longer throws.
+
+- [#4435](https://github.com/marko-js/marko/pull/4435) [`330986a`](https://github.com/marko-js/marko/commit/330986a264f3fb8a268ca85f79971af801a76bd9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix an embedded render (`$global.renderId`) throwing on the client when a `<try>` body streams behind its `@placeholder`: the render was treated as removed while its body was held back, so the next streamed chunk found no runtime.
+
+- [#4428](https://github.com/marko-js/marko/pull/4428) [`880e4aa`](https://github.com/marko-js/marko/commit/880e4aa81607828400d9e928ede721254d3ca7ee) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Escape `</script`, `<script` and `<!--` in server-rendered `<html-script>` text as `\u003C`, so JSON script types (`application/ld+json`, `importmap`, `speculationrules`) whose data contains them stay valid JSON.
+
+- [#4434](https://github.com/marko-js/marko/pull/4434) [`f97eb7f`](https://github.com/marko-js/marko/commit/f97eb7f4038638f87ec7a870e307903cda4b76f3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Server output now creates one subscriber set for a content body that several sibling branches hoist tag variables through, instead of one per branch, all but the last of which were never written.
+
+- [#4423](https://github.com/marko-js/marko/pull/4423) [`e126a4e`](https://github.com/marko-js/marko/commit/e126a4eff6e5c6181cfde196fa37f272a3683111) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep an imported template in the client bundle when the server writes it to the resume data, as a `<let>` or `<const>` holding it, an attribute a child stores, or a tag variable a child returns it as. A resumed page no longer removes the content of a dynamic tag rendering such a template when it updates.
+
+- [#4422](https://github.com/marko-js/marko/pull/4422) [`6500318`](https://github.com/marko-js/marko/commit/6500318c25730d98620c45c6ddf19d483e707d6c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A tag variable on a lazily loaded tag is now a compile error, and a debug build throws when a dynamic tag with a tag variable renders a lazily loaded template. Such a variable was `undefined` when rendered on the server, and a function it held could not resume.
+
+- [#4429](https://github.com/marko-js/marko/pull/4429) [`366c03e`](https://github.com/marko-js/marko/commit/366c03ee312a561e8fb9036400223158b3a5e0ca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - In development, report a controlled `<select multiple>` whose bound value holds any value without a matching `<option>`, not only one where none match. A bound select or checkbox group value holds only values a rendered option or checkbox has, since resume rebuilds it from the page.
+
+- [#4425](https://github.com/marko-js/marko/pull/4425) [`664e12b`](https://github.com/marko-js/marko/commit/664e12b2ca354f92284bc545f05ba20bcba2449d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Resume a template imported with `load` when the server writes it to the resume data, such as a `<let>` holding it. The server no longer fails to serialize it, and an optimized page no longer removes the content of a dynamic tag rendering it when it updates.
+
+- [#4420](https://github.com/marko-js/marko/pull/4420) [`5330ad4`](https://github.com/marko-js/marko/commit/5330ad4c24ff780eebb9df874ece5683e3ff6496) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A tag variable on a custom tag without a `<return>` is now a compile error, and a debug build throws when a dynamic tag with a tag variable renders content without one. A dynamic tag whose name is falsy now leaves its tag variable `undefined` in the browser, as on the server, including on its first render, instead of keeping the previous tag's value, and no longer takes its body's `<return>`.
+
+- [#4436](https://github.com/marko-js/marko/pull/4436) [`74c5df2`](https://github.com/marko-js/marko/commit/74c5df2331c41e3d39feea232fe0c1b11bc269a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Write the HTML that lazy asset scripts insert (a lazy module's stylesheets copied into the head, a load trigger's module scripts) as a template literal instead of a double-quoted string, so its attribute quotes no longer need escaping and the page is a few bytes smaller per asset.
+
+- Updated dependencies [[`5f2dbee`](https://github.com/marko-js/marko/commit/5f2dbee729b310ef550c8e145478b8c76cca5989), [`a163005`](https://github.com/marko-js/marko/commit/a163005bfbcc5efee947e11c0ed70f0d8add9f81)]:
+  - @marko/compiler@5.42.11
+
 ## 6.4.3
 
 ### Patch Changes
