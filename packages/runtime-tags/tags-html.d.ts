@@ -5939,10 +5939,11 @@ interface CommonAttributes<T extends Element> {
 type AttrMissing = undefined | null | false;
 type AttrClass =
   | AttrMissing
+  | 0
   | string
   | AttrClass[]
-  | Record<string, AttrMissing | boolean>;
-type AttrStyle = AttrMissing | string | Marko.CSS.Properties | AttrStyle[];
+  | Record<string, AttrMissing | boolean | number>;
+type AttrStyle = AttrMissing | 0 | string | Marko.CSS.Properties | AttrStyle[];
 type AttrCrossOrigin = AttrBoolean | "anonymous" | "use-credentials";
 type AttrEventHandler<Event, Target> =
   | AttrMissing
