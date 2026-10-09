@@ -387,72 +387,77 @@ export function setDebugSlotName(obj: WeakKey, accessor: string, name: string) {
   }
 }
 
-export class Serializer {
-  #state = new State();
-  pending(channel?: SerializeChannel) {
-    return hasMatchingMutations(this.#state.mutated, channel?.readyId);
+// A render's serializer: every flush of the render writes through one state.
+export { State as SerializerState };
+
+export function stringifyScopes(
+  state: State,
+  flushes: ScopeFlush[],
+  boundary: Boundary,
+  channel?: SerializeChannel,
+) {
+  try {
+    state.boundary = boundary;
+    state.channel = channel;
+    return writeScopesRoot(state, flushes);
+  } catch (err) {
+    // Flushes run from async callbacks, where a throw would strand the render.
+    abortRender(boundary, err);
+    return "";
+  } finally {
+    state.flushId++;
+    state.buf = [];
   }
-  // Returns the first pending ready channel for fixed-point draining.
-  pendingReadyChannel() {
-    for (const mutation of this.#state.mutated) {
-      if (mutation.channel?.readyId) return mutation.channel;
+}
+
+// Returns the first pending ready channel for fixed-point draining.
+export function pendingReadyChannel(state: State) {
+  for (const mutation of state.mutated) {
+    if (mutation.channel?.readyId) return mutation.channel;
+  }
+}
+
+export function takeChannelDeps(state: State) {
+  const deps = state.channelDeps;
+  state.channelDeps = null;
+  return deps;
+}
+
+export function writeMutation(
+  state: State,
+  value: unknown,
+  object: unknown,
+  property: string,
+  channel?: SerializeChannel,
+) {
+  state.mutated.push({
+    value,
+    object,
+    property,
+    channel,
+  });
+}
+
+// Drops a mutation still to be written; returns whether there was one.
+export function dropMutation(
+  state: State,
+  value: unknown,
+  object: unknown,
+  property: string,
+) {
+  const { mutated } = state;
+  for (let i = 0; i < mutated.length; i++) {
+    const mutation = mutated[i];
+    if (
+      mutation.value === value &&
+      mutation.object === object &&
+      mutation.property === property
+    ) {
+      mutated.splice(i, 1);
+      return true;
     }
   }
-  stringifyScopes(
-    flushes: ScopeFlush[],
-    boundary: Boundary,
-    channel?: SerializeChannel,
-  ) {
-    try {
-      this.#state.boundary = boundary;
-      this.#state.channel = channel;
-      return writeScopesRoot(this.#state, flushes);
-    } catch (err) {
-      // Flushes run from async callbacks, where a throw would strand the render.
-      abortRender(boundary, err);
-      return "";
-    } finally {
-      this.#state.flushId++;
-      this.#state.buf = [];
-    }
-  }
-  written(val: WeakKey) {
-    return this.#state.refs.has(val);
-  }
-  takeChannelDeps() {
-    const deps = this.#state.channelDeps;
-    this.#state.channelDeps = null;
-    return deps;
-  }
-  writeCall(
-    value: unknown,
-    object: unknown,
-    property: string,
-    channel?: SerializeChannel,
-  ) {
-    this.#state.mutated.push({
-      value,
-      object,
-      property,
-      channel,
-    });
-  }
-  // Drops a call still to be written; returns whether there was one.
-  dropCall(value: unknown, object: unknown, property: string) {
-    const { mutated } = this.#state;
-    for (let i = 0; i < mutated.length; i++) {
-      const mutation = mutated[i];
-      if (
-        mutation.value === value &&
-        mutation.object === object &&
-        mutation.property === property
-      ) {
-        mutated.splice(i, 1);
-        return true;
-      }
-    }
-    return false;
-  }
+  return false;
 }
 
 export function register<T extends WeakKey>(
@@ -658,14 +663,14 @@ function writeCallArg(state: State, val: unknown) {
 }
 
 function hasChannelMutations(state: State) {
-  return hasMatchingMutations(state.mutated, state.channel?.readyId);
+  return hasMatchingMutations(state, state.channel?.readyId);
 }
 
-function hasMatchingMutations(
-  mutated: Mutation[],
+export function hasMatchingMutations(
+  state: State,
   readyId: string | undefined,
 ) {
-  for (const mutation of mutated) {
+  for (const mutation of state.mutated) {
     if (mutationMatchesReadyId(mutation, readyId)) return true;
   }
   return false;
@@ -1165,8 +1170,8 @@ function writePromise(state: State, val: Promise<unknown>, ref: Reference) {
     "(p=>p=new Promise((f,r)=>" + pId + "={f,r(e){p.catch(_=>0);r(e)}}))()",
   );
   val.then(
-    (v) => writeAsyncCall(state, boundary, handle, "f", v, channel, pId),
-    (v) => writeAsyncCall(state, boundary, handle, "r", v, channel, pId),
+    (v) => writeAsyncMutation(state, boundary, handle, "f", v, channel, pId),
+    (v) => writeAsyncMutation(state, boundary, handle, "r", v, channel, pId),
   );
   boundary.startAsync();
   return true;
@@ -1795,15 +1800,15 @@ function writeReadableStream(
   const handle = newAsyncHandle(state, ref, iterId);
   const onFulfilled = ({ value, done }: ReadableStreamReadResult<unknown>) => {
     if (done) {
-      writeAsyncCall(state, boundary, handle, "r", value, channel);
+      writeAsyncMutation(state, boundary, handle, "r", value, channel);
     } else if (!boundary.aborted) {
       reader.read().then(onFulfilled, onRejected);
       boundary.startAsync();
-      writeAsyncCall(state, boundary, handle, "f", value, channel);
+      writeAsyncMutation(state, boundary, handle, "f", value, channel);
     }
   };
   const onRejected = (reason: unknown) => {
-    writeAsyncCall(state, boundary, handle, "j", reason, channel);
+    writeAsyncMutation(state, boundary, handle, "j", reason, channel);
   };
 
   state.buf.push(
@@ -1921,15 +1926,15 @@ function writeAsyncGenerator(
   const handle = newAsyncHandle(state, ref, iterId);
   const onFulfilled = ({ value, done }: IteratorResult<unknown>) => {
     if (done) {
-      writeAsyncCall(state, boundary, handle, "r", value, channel);
+      writeAsyncMutation(state, boundary, handle, "r", value, channel);
     } else if (!boundary.aborted) {
       iter.next().then(onFulfilled, onRejected);
       boundary.startAsync();
-      writeAsyncCall(state, boundary, handle, "f", value, channel);
+      writeAsyncMutation(state, boundary, handle, "f", value, channel);
     }
   };
   const onRejected = (reason: unknown) => {
-    writeAsyncCall(state, boundary, handle, "j", reason, channel);
+    writeAsyncMutation(state, boundary, handle, "j", reason, channel);
   };
 
   state.buf.push(
@@ -2020,7 +2025,7 @@ function writeMaybeIterableProps(state: State, val: object, ref: Reference) {
   return sep;
 }
 
-function writeAsyncCall(
+function writeAsyncMutation(
   state: State,
   boundary: Boundary,
   handle: WeakKey,

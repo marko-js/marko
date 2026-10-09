@@ -36,11 +36,17 @@ import {
   type Locals,
   quote,
   register as serializerRegister,
+  dropMutation,
+  hasMatchingMutations,
+  pendingReadyChannel,
   type ScopeFlush,
-  Serializer,
+  SerializerState,
   setDebugInfo,
+  stringifyScopes,
+  takeChannelDeps,
   toAccess,
   toObjectKey,
+  writeMutation,
 } from "./serializer";
 import type { ServerRenderer } from "./template";
 
@@ -913,7 +919,7 @@ export function _subscribe(
   if (subscribers) {
     const { boundary, serializeState } = $chunk;
     const { serializer } = boundary.state;
-    if (!serializeState.readyId && !serializer.written(subscribers)) {
+    if (!serializeState.readyId && !serializer.refs.has(subscribers)) {
       // An unflushed set carries its subscriber in the same payload.
       subscribers.add(scope);
     } else if (resumeId) {
@@ -922,7 +928,7 @@ export function _subscribe(
       _script(scope[K_SCOPE_ID]!, resumeId, markerGuard);
     } else {
       // Flushed or lazy sets add subscribers through their gated channel.
-      serializer.writeCall(scope, subscribers, "add", serializeState);
+      writeMutation(serializer, scope, subscribers, "add", serializeState);
     }
     // Content a `@catch` may drop takes its subscriptions with it.
     if (boundary.withinCatch) {
@@ -1296,14 +1302,15 @@ function tryBoundary(
 
 // The sections of a caught body are gone, so their closures no longer notify
 // them: from a set still to flush directly, else through the set's channel.
-function unsubscribe(subscribed: unknown[], serializer: Serializer) {
+function unsubscribe(subscribed: unknown[], serializer: SerializerState) {
   for (let i = 0; i < subscribed.length; i += 3) {
     const subscribers = subscribed[i] as Set<ScopeInternals>;
     const scope = subscribed[i + 1] as ScopeInternals;
-    if (!serializer.written(subscribers)) {
+    if (!serializer.refs.has(subscribers)) {
       subscribers.delete(scope);
-    } else if (!serializer.dropCall(scope, subscribers, "add")) {
-      serializer.writeCall(
+    } else if (!dropMutation(serializer, scope, subscribers, "add")) {
+      writeMutation(
+        serializer,
         scope,
         subscribers,
         "delete",
@@ -1380,7 +1387,7 @@ export class State implements SerializeState {
   public trailerHTML = "";
   public resumes = "";
   public nonceAttr = "";
-  public serializer = new Serializer();
+  public serializer = new SerializerState();
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, ScopeInternals>();
   // A scope by id, for the locals of registered content once it is sent.
@@ -1921,7 +1928,7 @@ export class Chunk {
     if (readyId && !this.async) {
       const { state } = boundary;
       flushSerializer(boundary, serializeState);
-      const deps = state.serializer.takeChannelDeps();
+      const deps = takeChannelDeps(state.serializer);
       const effects = holdEffects ? "" : this.effects;
       const { resumes } = serializeState;
       const chunkScripts = this.scripts;
@@ -1977,10 +1984,10 @@ export class Chunk {
     // A channel that fails to serialize aborts and stays pending.
     for (
       let channel;
-      !boundary.aborted && (channel = state.serializer.pendingReadyChannel());
+      !boundary.aborted && (channel = pendingReadyChannel(state.serializer));
     ) {
-      const resumes = state.serializer.stringifyScopes([], boundary, channel);
-      const deps = state.serializer.takeChannelDeps();
+      const resumes = stringifyScopes(state.serializer, [], boundary, channel);
+      const deps = takeChannelDeps(state.serializer);
       state.needsMainRuntime = true;
       readyResumeScripts = concatScripts(
         readyResumeScripts,
@@ -2266,7 +2273,7 @@ function joinUncaught(joined: string, held: Chunk) {
 function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
   const { state } = boundary;
   const { serializer } = state;
-  const pending = serializer.pending(serializeState);
+  const pending = hasMatchingMutations(serializer, serializeState.readyId);
   if (serializeState.flushScopes || pending) {
     const { writeScopes, passiveScopes } = serializeState;
     const isBlockingState = serializeState !== state;
@@ -2312,7 +2319,7 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
       }
       serializeState.resumes = concatSequence(
         serializeState.resumes,
-        serializer.stringifyScopes(flushes, boundary, serializeState),
+        stringifyScopes(serializer, flushes, boundary, serializeState),
       );
     }
     serializeState.writeScopes = {};
@@ -2331,7 +2338,7 @@ function flushSerializerGlobals(boundary: Boundary) {
     state.needsMainRuntime = true;
     state.resumes = concatSequence(
       state.resumes,
-      state.serializer.stringifyScopes([[0, globals, globals]], boundary),
+      stringifyScopes(state.serializer, [[0, globals, globals]], boundary),
     );
   }
 }

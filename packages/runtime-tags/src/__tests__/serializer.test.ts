@@ -3,10 +3,15 @@ import { inspect } from "node:util";
 
 import type { ScopeFlush } from "../html/serializer";
 import {
+  hasMatchingMutations,
   K_SCOPE_ID,
+  pendingReadyChannel,
   register,
-  Serializer,
+  SerializerState,
   setDebugInfo,
+  stringifyScopes,
+  takeChannelDeps,
+  writeMutation,
 } from "../html/serializer";
 import type { Boundary } from "../html/writer";
 
@@ -438,7 +443,7 @@ describe("serializer", () => {
       const { boundary, aborted } = abortingBoundary();
       const parent: any = {};
       parent.set = new Set([parent, function unserializable() {}]);
-      new Serializer().stringifyScopes([[1, {}, parent]], boundary);
+      stringifyScopes(new SerializerState(), [[1, {}, parent]], boundary);
       assert.equal(aborted.length, 1);
       assert.match(
         String(aborted[0]),
@@ -1169,14 +1174,15 @@ describe("serializer", () => {
         aborted: false,
         abort() {},
       } as any as Boundary;
-      const ser = new Serializer();
+      const ser = new SerializerState();
       apply(
-        ser.stringifyScopes(
+        stringifyScopes(
+          ser,
           [[1, {}, { f: new Intl.DateTimeFormat("en", { timeZone: tz }) }]],
           boundary,
         ),
       );
-      apply(ser.stringifyScopes([[2, {}, { tz }]], boundary));
+      apply(stringifyScopes(ser, [[2, {}, { tz }]], boundary));
       assert.equal((scopes.get(2) as any).tz, tz);
     });
 
@@ -1192,9 +1198,9 @@ describe("serializer", () => {
         aborted: false,
         abort() {},
       } as any as Boundary;
-      const ser = new Serializer();
-      apply(ser.stringifyScopes([[1, {}, { p: rules }]], boundary));
-      apply(ser.stringifyScopes([[2, {}, { c: categories }]], boundary));
+      const ser = new SerializerState();
+      apply(stringifyScopes(ser, [[1, {}, { p: rules }]], boundary));
+      apply(stringifyScopes(ser, [[2, {}, { c: categories }]], boundary));
       assert.deepEqual((scopes.get(2) as any).c, categories);
     });
 
@@ -1460,7 +1466,7 @@ describe("serializer", () => {
       const formData = new FormData();
       formData.append("text", "ok");
       formData.append("file", new File(["body"], "x.txt"));
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       let aborted: unknown;
       const boundary = {
         aborted: false,
@@ -1468,7 +1474,7 @@ describe("serializer", () => {
           aborted = err;
         },
       } as any as Boundary;
-      serializer.stringifyScopes([[1, {}, { value: formData }]], boundary);
+      stringifyScopes(serializer, [[1, {}, { value: formData }]], boundary);
       assert.ok(aborted instanceof TypeError);
       assert.match((aborted as Error).message, /Unable to serialize/);
     });
@@ -1946,12 +1952,13 @@ describe("serializer", () => {
       const fn = builder(scope);
       register("fn", fn, scope);
       const { scopes, apply } = createSerializeContext({ _: { fn: builder } });
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const boundary = {
         aborted: false,
         abort() {},
       } as any as Boundary;
-      const first = serializer.stringifyScopes(
+      const first = stringifyScopes(
+        serializer,
         [
           [1, scope, { value: 1 }],
           [2, {}, { fn }],
@@ -1960,7 +1967,11 @@ describe("serializer", () => {
       );
       assert.equal(first, `_=>[1,{value:1},{fn:_(1,"fn")}]`);
       apply(first);
-      const second = serializer.stringifyScopes([[3, {}, { scope }]], boundary);
+      const second = stringifyScopes(
+        serializer,
+        [[3, {}, { scope }]],
+        boundary,
+      );
       assert.equal(second, `_=>[3,{scope:_(1)}]`);
       apply(second);
       assert.equal(scopes.get(3)!.scope, scopes.get(1));
@@ -1994,45 +2005,46 @@ describe("serializer", () => {
   describe("channel mutations", () => {
     it("holds back a mutation queued for another ready channel", () => {
       const { boundary } = abortingBoundary();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const a = new Set();
       const b = new Set();
-      serializer.writeCall(1, a, "add", { readyId: "a" });
-      serializer.writeCall(2, b, "add", { readyId: "b" });
+      writeMutation(serializer, 1, a, "add", { readyId: "a" });
+      writeMutation(serializer, 2, b, "add", { readyId: "b" });
 
-      assert.equal(serializer.pending({ readyId: "a" }), true);
-      assert.deepEqual(serializer.pendingReadyChannel(), { readyId: "a" });
+      assert.equal(hasMatchingMutations(serializer, "a"), true);
+      assert.deepEqual(pendingReadyChannel(serializer), { readyId: "a" });
       assert.equal(
-        serializer.stringifyScopes([[1, {}, { a, b }]], boundary, {
+        stringifyScopes(serializer, [[1, {}, { a, b }]], boundary, {
           readyId: "a",
         }),
         `_=>(_([1,{a:_.a=new Set,b:new Set}]),(_.a).add(1),0)`,
       );
 
-      assert.equal(serializer.pending({ readyId: "b" }), true);
+      assert.equal(hasMatchingMutations(serializer, "b"), true);
     });
 
     it("assigns a binding to a mutated object seen for the first time", () => {
       const { boundary } = abortingBoundary();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const set = new Set();
-      serializer.writeCall(1, set, "add", undefined);
+      writeMutation(serializer, 1, set, "add", undefined);
       assert.equal(
-        serializer.stringifyScopes([[1, {}, {}]], boundary),
+        stringifyScopes(serializer, [[1, {}, {}]], boundary),
         `_=>((_.a=new Set).add(1),0)`,
       );
     });
 
     it("aborts when a mutated object or value cannot be serialized", () => {
       const { boundary, aborted } = abortingBoundary();
-      const serializer = new Serializer();
-      serializer.writeCall(
+      const serializer = new SerializerState();
+      writeMutation(
+        serializer,
         function value() {},
         function object() {},
         "add",
         undefined,
       );
-      serializer.stringifyScopes([[1, {}, {}]], boundary);
+      stringifyScopes(serializer, [[1, {}, {}]], boundary);
       assert.equal(aborted.length, 2);
       for (const err of aborted) {
         assert.match(String(err), /Unable to serialize\./);
@@ -2041,12 +2053,12 @@ describe("serializer", () => {
 
     it("aborts when a value is shared between independent ready channels", () => {
       const { boundary, aborted } = abortingBoundary();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const shared = { x: 1 };
-      serializer.stringifyScopes([[1, {}, { shared }]], boundary, {
+      stringifyScopes(serializer, [[1, {}, { shared }]], boundary, {
         readyId: "a",
       });
-      serializer.stringifyScopes([[2, {}, { shared }]], boundary, {
+      stringifyScopes(serializer, [[2, {}, { shared }]], boundary, {
         readyId: "b",
       });
       assert.equal(aborted.length, 1);
@@ -2058,29 +2070,30 @@ describe("serializer", () => {
 
     it("reaches a value serialized by an ancestor ready channel", () => {
       const { boundary, aborted } = abortingBoundary();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const parent = { readyId: "a" };
       const shared = { x: 1 };
-      serializer.stringifyScopes([[1, {}, { shared }]], boundary, parent);
+      stringifyScopes(serializer, [[1, {}, { shared }]], boundary, parent);
       assert.equal(
-        serializer.stringifyScopes([[2, {}, { shared }]], boundary, {
+        stringifyScopes(serializer, [[2, {}, { shared }]], boundary, {
           readyId: "b",
           parent,
         }),
         `_=>[2,{shared:_(1).shared}]`,
       );
-      assert.deepEqual([...serializer.takeChannelDeps()!], ["a"]);
+      assert.deepEqual([...takeChannelDeps(serializer)!], ["a"]);
       assert.deepEqual(aborted, []);
     });
 
     it("keeps a main-stream value reachable after a ready stream reuses it", () => {
       const { boundary, aborted } = abortingBoundary();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const shared = { x: 1 };
       const ready = { readyId: "a" };
-      serializer.stringifyScopes([[1, {}, { shared }]], boundary);
+      stringifyScopes(serializer, [[1, {}, { shared }]], boundary);
       assert.equal(
-        serializer.stringifyScopes(
+        stringifyScopes(
+          serializer,
           [[2, {}, { a: shared, b: shared }]],
           boundary,
           ready,
@@ -2088,7 +2101,7 @@ describe("serializer", () => {
         `_=>[2,{a:_(1).shared,b:_(1).shared}]`,
       );
       assert.equal(
-        serializer.stringifyScopes([[3, {}, { shared }]], boundary),
+        stringifyScopes(serializer, [[3, {}, { shared }]], boundary),
         `_=>[3,{shared:_(1).shared}]`,
       );
       assert.deepEqual(aborted, []);
@@ -2096,22 +2109,22 @@ describe("serializer", () => {
 
     it("claims no id for a main-stream object a ready stream mutates", () => {
       const { boundary, aborted } = abortingBoundary();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const subs = new Set();
       const ready = { readyId: "a" };
-      serializer.stringifyScopes([[1, {}, { subs }]], boundary);
-      serializer.writeCall({ [K_SCOPE_ID]: 2 }, subs, "add", ready);
+      stringifyScopes(serializer, [[1, {}, { subs }]], boundary);
+      writeMutation(serializer, { [K_SCOPE_ID]: 2 }, subs, "add", ready);
       assert.equal(
-        serializer.stringifyScopes([], boundary, ready),
+        stringifyScopes(serializer, [], boundary, ready),
         `_=>((_(1).subs).add(_(2)),0)`,
       );
-      serializer.writeCall({ [K_SCOPE_ID]: 3 }, subs, "add", undefined);
+      writeMutation(serializer, { [K_SCOPE_ID]: 3 }, subs, "add", undefined);
       assert.equal(
-        serializer.stringifyScopes([], boundary),
+        stringifyScopes(serializer, [], boundary),
         `_=>((_.a=_(1).subs).add(_(3)),0)`,
       );
       assert.equal(
-        serializer.stringifyScopes([[4, {}, { subs }]], boundary),
+        stringifyScopes(serializer, [[4, {}, { subs }]], boundary),
         `_=>[4,{subs:_.a}]`,
       );
       assert.deepEqual(aborted, []);
@@ -2119,20 +2132,20 @@ describe("serializer", () => {
 
     it("claims no id for an ancestor channel's object a child channel mutates", () => {
       const { boundary, aborted } = abortingBoundary();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const subs = new Set();
       const parent = { readyId: "a" };
       const child = { readyId: "b", parent };
-      serializer.stringifyScopes([[1, {}, { subs }]], boundary, parent);
-      serializer.writeCall({ [K_SCOPE_ID]: 2 }, subs, "add", child);
+      stringifyScopes(serializer, [[1, {}, { subs }]], boundary, parent);
+      writeMutation(serializer, { [K_SCOPE_ID]: 2 }, subs, "add", child);
       assert.equal(
-        serializer.stringifyScopes([], boundary, child),
+        stringifyScopes(serializer, [], boundary, child),
         `_=>((_(1).subs).add(_(2)),0)`,
       );
-      assert.deepEqual([...serializer.takeChannelDeps()!], ["a"]);
-      serializer.writeCall({ [K_SCOPE_ID]: 3 }, subs, "add", parent);
+      assert.deepEqual([...takeChannelDeps(serializer)!], ["a"]);
+      writeMutation(serializer, { [K_SCOPE_ID]: 3 }, subs, "add", parent);
       assert.equal(
-        serializer.stringifyScopes([], boundary, parent),
+        stringifyScopes(serializer, [], boundary, parent),
         `_=>((_.a=_(1).subs).add(_(3)),0)`,
       );
       assert.deepEqual(aborted, []);
@@ -2140,7 +2153,7 @@ describe("serializer", () => {
 
     it("claims no id for a main-stream value a ready stream writes where no path reaches", async () => {
       const { boundary, aborted } = abortingBoundary();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const shared = { x: 1 };
       const ready = { readyId: "a" };
       // eslint-disable-next-line require-yield
@@ -2148,18 +2161,18 @@ describe("serializer", () => {
         return shared;
       })();
       const p = Promise.resolve(shared);
-      serializer.stringifyScopes([[1, {}, { shared }]], boundary);
+      stringifyScopes(serializer, [[1, {}, { shared }]], boundary);
       assert.equal(
-        serializer.stringifyScopes([[2, {}, { g, p }]], boundary, ready),
+        stringifyScopes(serializer, [[2, {}, { g, p }]], boundary, ready),
         `_=>[2,{g:(function*(a,r){yield*a;return r})([],_(1).shared),p:(p=>p=new Promise((f,r)=>_.a={f,r(e){p.catch(_=>0);r(e)}}))()}]`,
       );
       await tick();
       assert.equal(
-        serializer.stringifyScopes([], boundary, ready),
+        stringifyScopes(serializer, [], boundary, ready),
         `_=>(_.a.f(_(1).shared),0)`,
       );
       assert.equal(
-        serializer.stringifyScopes([[3, {}, { shared }]], boundary),
+        stringifyScopes(serializer, [[3, {}, { shared }]], boundary),
         `_=>[3,{shared:_(1).shared}]`,
       );
       assert.deepEqual(aborted, []);
@@ -2169,14 +2182,15 @@ describe("serializer", () => {
   describe("globals", () => {
     it("references a string first serialized in globals from a later flush", () => {
       const { scopes, apply } = createSerializeContext();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const boundary = {
         aborted: false,
         abort() {},
       } as any as Boundary;
       const msg = "this string is long enough to dedup";
       const globals = { settings: { msg } };
-      const first = serializer.stringifyScopes(
+      const first = stringifyScopes(
+        serializer,
         [[0, globals, globals]],
         boundary,
       );
@@ -2185,7 +2199,8 @@ describe("serializer", () => {
         `_=>[0,{settings:{msg:"this string is long enough to dedup"}}]`,
       );
       apply(first);
-      const second = serializer.stringifyScopes(
+      const second = stringifyScopes(
+        serializer,
         [[1, {}, { data: { text: msg } }]],
         boundary,
       );
@@ -2199,20 +2214,22 @@ describe("serializer", () => {
 
     it("references an object first serialized in globals from a later flush", () => {
       const { scopes, apply } = createSerializeContext();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const boundary = {
         aborted: false,
         abort() {},
       } as any as Boundary;
       const settings = { msg: 1 };
       const globals = { settings };
-      const first = serializer.stringifyScopes(
+      const first = stringifyScopes(
+        serializer,
         [[0, globals, globals]],
         boundary,
       );
       assert.equal(first, `_=>[0,{settings:{msg:1}}]`);
       apply(first);
-      const second = serializer.stringifyScopes(
+      const second = stringifyScopes(
+        serializer,
         [[1, {}, { settings }]],
         boundary,
       );
@@ -2223,14 +2240,15 @@ describe("serializer", () => {
 
     it("references a value shared with globals within the same flush", () => {
       const { scopes, apply } = createSerializeContext();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       const boundary = {
         aborted: false,
         abort() {},
       } as any as Boundary;
       const settings = { msg: 1 };
       const globals = { settings };
-      const payload = serializer.stringifyScopes(
+      const payload = stringifyScopes(
+        serializer,
         [
           [0, globals, globals],
           [1, {}, { settings }],
@@ -2329,7 +2347,7 @@ describe("serializer", () => {
     });
     it("stops following the iterator once the boundary aborts", async () => {
       const { boundary } = abortingBoundary();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       let release!: () => void;
       const gate = new Promise<void>((resolve) => (release = resolve));
       const iter = (async function* () {
@@ -2338,14 +2356,17 @@ describe("serializer", () => {
         yield 2;
       })();
 
-      serializer.stringifyScopes([[1, {}, { iter }]], boundary);
+      stringifyScopes(serializer, [[1, {}, { iter }]], boundary);
       await tick();
-      assert.equal(serializer.stringifyScopes([], boundary), `_=>(_.a.f(1),0)`);
+      assert.equal(
+        stringifyScopes(serializer, [], boundary),
+        `_=>(_.a.f(1),0)`,
+      );
 
       boundary.aborted = true;
       release();
       await tick();
-      assert.equal(serializer.stringifyScopes([], boundary), "");
+      assert.equal(stringifyScopes(serializer, [], boundary), "");
     });
 
     it("partially consumed resumes as an exhausted async generator", async () => {
@@ -2485,24 +2506,24 @@ describe("serializer", () => {
   describe("aborted boundary", () => {
     it("stops reading a ReadableStream", async () => {
       const { boundary } = abortingBoundary();
-      const serializer = new Serializer();
+      const serializer = new SerializerState();
       let ctrl!: ReadableStreamDefaultController<Uint8Array>;
       const stream = new ReadableStream<Uint8Array>({
         start: (c) => (ctrl = c),
       });
 
-      serializer.stringifyScopes([[1, {}, { stream }]], boundary);
+      stringifyScopes(serializer, [[1, {}, { stream }]], boundary);
       ctrl.enqueue(new Uint8Array([1]));
       await tick();
       assert.equal(
-        serializer.stringifyScopes([], boundary),
+        stringifyScopes(serializer, [], boundary),
         `_=>(_.a.f(_.b=new Uint8Array([1])),0)`,
       );
 
       boundary.aborted = true;
       ctrl.enqueue(new Uint8Array([2]));
       await tick();
-      assert.equal(serializer.stringifyScopes([], boundary), "");
+      assert.equal(stringifyScopes(serializer, [], boundary), "");
     });
   });
 
@@ -2791,16 +2812,16 @@ describe("serializer", () => {
   });
 
   it("skips the payload entirely when every scope is empty", () => {
-    const serializer = new Serializer();
+    const serializer = new SerializerState();
     const boundary = {
       aborted: false,
       abort() {},
     } as any as Boundary;
-    assert.equal(serializer.stringifyScopes([[1, {}, {}]], boundary), "");
+    assert.equal(stringifyScopes(serializer, [[1, {}, {}]], boundary), "");
   });
 
   it("handles very large scope flushes within call argument limits", () => {
-    const serializer = new Serializer();
+    const serializer = new SerializerState();
     const boundary = {
       aborted: false,
       abort() {},
@@ -2813,7 +2834,7 @@ describe("serializer", () => {
     // A data-only payload returns its fill as an array literal (no call
     // arguments involved), so even huge flushes stay within engine
     // argument limits.
-    const partials = (0, eval)(serializer.stringifyScopes(flushes, boundary))(
+    const partials = (0, eval)(stringifyScopes(serializer, flushes, boundary))(
       () => {},
     );
     assert.ok(Array.isArray(partials));
@@ -2823,7 +2844,7 @@ describe("serializer", () => {
 
   it("skips the `name` id, which the serialize context cannot reassign", () => {
     // The 909,070th id would otherwise spell `name`.
-    const serializer = new Serializer();
+    const serializer = new SerializerState();
     const { scopes, apply } = createSerializeContext();
     const boundary = {
       aborted: false,
@@ -2835,7 +2856,8 @@ describe("serializer", () => {
         { length: Math.min(remaining, 50_000) },
         () => ({}),
       );
-      payload = serializer.stringifyScopes(
+      payload = stringifyScopes(
+        serializer,
         [[1, {}, { value: objs.flatMap((obj) => [obj, obj]) }]],
         boundary,
       );
@@ -2929,7 +2951,7 @@ function createSerializeContext(ctx: Record<PropertyKey, unknown> = {}) {
 }
 
 function assertSerializer(ctx: Record<PropertyKey, unknown> = {}) {
-  const serializer = new Serializer();
+  const serializer = new SerializerState();
   const { context, scopes, apply } = createSerializeContext(ctx);
   let scopeId = 0;
 
@@ -2966,7 +2988,8 @@ function assertSerializer(ctx: Record<PropertyKey, unknown> = {}) {
       } as any as Boundary;
 
       const id = ++scopeId;
-      const actual = serializer.stringifyScopes(
+      const actual = stringifyScopes(
+        serializer,
         [[id, {}, { value: val }]],
         boundary,
       );
@@ -2980,7 +3003,7 @@ function assertSerializer(ctx: Record<PropertyKey, unknown> = {}) {
           let promiseIndex = 0;
           for (const flush of flushes) {
             await promises[promiseIndex++];
-            const actual = serializer.stringifyScopes([], boundary);
+            const actual = stringifyScopes(serializer, [], boundary);
             assert.equal(normalizePayload(actual), flush);
             apply(actual);
           }
@@ -3008,7 +3031,7 @@ function serialize(val: unknown) {
     abort() {},
   } as any as Boundary;
   return normalizePayload(
-    new Serializer().stringifyScopes([[1, {}, { value: val }]], boundary),
+    stringifyScopes(new SerializerState(), [[1, {}, { value: val }]], boundary),
   );
 }
 
@@ -3018,7 +3041,9 @@ function deserialize<T>(val: T): T {
     aborted: false,
     abort() {},
   } as any as Boundary;
-  apply(new Serializer().stringifyScopes([[1, {}, { value: val }]], boundary));
+  apply(
+    stringifyScopes(new SerializerState(), [[1, {}, { value: val }]], boundary),
+  );
   return scopes.get(1)?.value as T;
 }
 
@@ -3028,13 +3053,13 @@ function assertStringifyScopes(
   ctx?: Record<PropertyKey, unknown>,
 ) {
   const { scopes, apply } = createSerializeContext(ctx);
-  const serializer = new Serializer();
+  const serializer = new SerializerState();
   const boundary = {
     aborted: false,
     state: {},
     abort() {},
   } as any as Boundary;
-  const actual = serializer.stringifyScopes(flushes, boundary);
+  const actual = stringifyScopes(serializer, flushes, boundary);
   assert.equal(actual, serialized);
   apply(actual);
   return scopes;
@@ -3275,7 +3300,7 @@ function abortingBoundary() {
 }
 
 function abortedStringifying(scopes: ScopeFlush[]) {
-  const serializer = new Serializer();
+  const serializer = new SerializerState();
   let aborted: unknown;
   const boundary = {
     aborted: false,
@@ -3283,6 +3308,6 @@ function abortedStringifying(scopes: ScopeFlush[]) {
       aborted = err;
     },
   } as any as Boundary;
-  serializer.stringifyScopes(scopes, boundary);
+  stringifyScopes(serializer, scopes, boundary);
   return (aborted as Error)?.message;
 }
