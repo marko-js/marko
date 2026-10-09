@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.4.5
+
+### Patch Changes
+
+- [#4446](https://github.com/marko-js/marko/pull/4446) [`d7ce62a`](https://github.com/marko-js/marko/commit/d7ce62a8e7abd326172fd43f8290742a4080d524) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keep the assets of a lazily imported template out of a server only page's entry; its load entry brings them.
+
 ## 6.4.4
 
 ### Patch Changes
