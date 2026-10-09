@@ -385,7 +385,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               break;
             } else {
               // Gates can't reach here (only in ready streams, readyIds set);
-              // a payload returns its fill or applies it and ends in `,0`.
+              // a payload returns its scopes or applies them and ends in `,0`.
               const scopes = (serialized as ResumeFn)(serializeContext);
               if (Array.isArray(scopes)) applyScopes(scopes);
             }

@@ -1206,7 +1206,7 @@ function tryBoundary(
     // Without a `@catch` the error ends the enclosing render, like any throw in it.
     if (!catchContent) throw catchBoundary.reason;
     // Sync error. The body's already-written scopes stay in the resume payload
-    // as dead fills; a `@catch` firing is rare enough not to warrant dropping them.
+    // unused; a `@catch` firing is rare enough not to warrant dropping them.
     catchContent(catchBoundary.reason);
     // A rendered `@catch` is not a try, as on the client: it gets no renderers.
     return true;

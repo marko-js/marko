@@ -154,7 +154,7 @@ export function setSectionOwnerResumedByMarker(section: Section) {
   setOwnerResumedByMarker(section, true);
 }
 
-// Registered content's closures its owners' fills may lack, sorted by section:
+// Registered content's closures its owners' scope flushes may lack, by section:
 // one values object per owner down to the content's own.
 export function getContentClosureValues(bodySection: Section) {
   const contentClosures = filter(
@@ -180,7 +180,7 @@ export function getContentClosureValues(bodySection: Section) {
       );
     }
     // Resume walks up through each owner while the payload evaluates, before
-    // any fill could link it, so every level below another links its owner.
+    // any scope flush could link it, so every level below another links its owner.
     if (i) {
       props.push(
         toObjectProperty(
