@@ -209,19 +209,19 @@ The writer's coordinator for a render and for each `<try>` body in it: it
 tracks async work, flushes chunks, and aborts with the boundary it is in.
 
 **Resume**:
-Filling scopes, adopting server-rendered nodes, creating branches, and running
-effects without an initial client rerender.
+Applying scope flushes, adopting server-rendered nodes, creating branches, and
+running effects without an initial client rerender.
 _Avoid_: hydrate, hydration, replay
 
 **Resume payload**:
-Server-emitted JavaScript data and fill operations for required scope slots,
+Server-emitted JavaScript data and scope flushes for required scope slots,
 shared values, and registrations. It is neither JSON nor every server value.
 _Avoid_: component state, JSON payload
 
-**Fill**:
+**Scope flush**:
 A resume-payload batch of scope ids and partial properties, merged into or
 adopted as live scopes.
-_Avoid_: partial, payload chunk
+_Avoid_: fill, partial, payload chunk
 
 **Resume comment**:
 An SSR HTML comment associating existing nodes or ranges with scopes and

@@ -21,9 +21,9 @@ template modules, payload, and markers transitively.
    resume; `write-guard.ts` turns that into what the server writes.
 6. DOM output supplies mostly pure, tree-shakable signals/renderers. HTML output
    writes only the state and markers required by retained client work.
-7. SSR serializes registered ids instead of function source. Resume fills scopes,
-   attaches them to existing DOM, rebuilds branches, then runs effects—no initial
-   client rerender.
+7. SSR serializes registered ids instead of function source. Resume applies
+   scope flushes, attaches them to existing DOM, rebuilds branches, then runs
+   effects—no initial client rerender.
 
 ## Tree-shaking and resume registration
 
@@ -134,7 +134,7 @@ the generation boundary (resumed scopes start at 1; normal client work at 2).
 `writeHTMLResumeStatements()` (`translator/util/signals.ts`) emits only reasoned
 accessors; narrower property reasons get narrower guards. `_scope(id, partial)`
 updates the canonical server scope and current serialize state. Passive values
-ride an existing scope flush without forcing one. Empty fills are omitted and
+ride an existing scope flush without forcing one. Empty scopes are omitted and
 numeric gaps compact monotonically allocated scope ids.
 
 `html/serializer.ts` emits JavaScript expressions, not JSON. It preserves shared
@@ -142,9 +142,9 @@ identity/cycles across stream flushes, scopes (`_(id)`), registered factories
 (`_(scopeId, registryId)`, or `_._[registryId](_(scopeId), locals)` for content
 carrying attribute tag `<for>` params), collections, typed/async values, and
 deferred mutations. A `Reference` records the first buffer position and parent/accessor
-path; only reused values claim short ids. Fill-only payloads return their array;
-payloads with trailing assignments apply the fill through the context and end in
-`0`, preventing an arbitrary final value from being mistaken for a fill.
+path; only reused values claim short ids. Payloads of scopes alone return their
+scopes array; payloads with trailing assignments apply it through the context and
+end in `0`, preventing an arbitrary final value from being mistaken for scopes.
 
 DOM association has two encodings:
 
@@ -155,8 +155,8 @@ DOM association has two encodings:
 
 Unread static DOM needs neither accessor nor marker. Single-node/only-child
 proofs reuse existing nodes/parents; `<!>` separates otherwise ambiguous dynamic
-text/ranges. Resume applies available fills, resolves registered values, visits
-comments, reconstructs branches, and runs effects with `isResuming = 1`.
+text/ranges. Resume applies available scope flushes, resolves registered values,
+visits comments, reconstructs branches, and runs effects with `isResuming = 1`.
 
 Resume visits branch markers only in a bundle that enables branches, which any
 retained `_if`, `_for`, `_show` or dynamic tag runtime does (`withBranches`).
@@ -208,8 +208,8 @@ order, DOM arrival, and effect order must remain aligned.
 - Entry modes: unset for a normal module, `page` for a bootstrap, and `load` for
   a lazy notification. Deprecated `output: "hydrate"` aliases a DOM page entry;
   tests also build a `csr` fresh-render entry.
-- Lifecycle phases: fresh render clones/walks/setups; resume adopts/fills/effects;
-  updates dirty-check/queue.
+- Lifecycle phases: fresh render clones/walks/setups; resume
+  adopts/merges scopes/effects; updates dirty-check/queue.
 - Debug uses readable accessors/assertions; optimize remaps production modules
   and proves actual encoding/tree-shaking. `.debug.ts` pairs must match exports.
 

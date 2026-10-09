@@ -1793,7 +1793,7 @@ describe("serializer", () => {
     it("scoped reference", () => {
       // Registered values invoke their factory through the serialize
       // context (`_(1,"fn")`), which resolves the scope by id. The factory
-      // receives the scope before its fill applies, so it must not read
+      // receives the scope before its scope flush applies, so it must not read
       // from it eagerly.
       const scope = { [K_SCOPE_ID]: 1, value: 1 };
       const builder = (s: typeof scope) => () => s.value;
@@ -2831,7 +2831,7 @@ describe("serializer", () => {
       flushes.push([i, {}, { i }]);
     }
 
-    // A data-only payload returns its fill as an array literal (no call
+    // A data-only payload returns its scopes as an array literal (no call
     // arguments involved), so even huge flushes stay within engine
     // argument limits.
     const partials = (0, eval)(stringifyScopes(serializer, flushes, boundary))(
@@ -2898,7 +2898,7 @@ describe("assertIsDeepSubset", () => {
 
 // Minimal stand-in for the browser's per render serialize context: a
 // callable that resolves scopes by id (optionally invoking a registered
-// factory), applies fill arrays with adopt-or-merge semantics, and carries
+// factory), applies scopes arrays with adopt-or-merge semantics, and carries
 // reference bindings/registry as properties.
 function createSerializeContext(ctx: Record<PropertyKey, unknown> = {}) {
   const scopes = new Map<number, Record<PropertyKey, unknown>>();

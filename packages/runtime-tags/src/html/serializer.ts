@@ -482,17 +482,17 @@ export function getRegistered(val: WeakKey) {
   }
 }
 
-// A payload with only scope data returns the fill array directly
+// A payload with only scope data returns its scopes array directly
 // (`_=>[1,{a},{b},2,{e}]`). When there are trailing expressions (deferred
-// assignments/mutations, which may reference bindings created inside the fill
-// and so must evaluate after it) the fill is applied through the serialize
-// context instead and the payload ends in `,0` so an arbitrary value from
-// its last expression can never be misread as a fill — the browser only
+// assignments/mutations, which may reference bindings created inside the
+// scopes and so must evaluate after them) the scopes apply through the
+// serialize context instead and the payload ends in `,0` so a value from
+// its last expression can never be misread as scopes — the browser only
 // applies a payload's return value when it is an array.
 function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   const { buf } = state;
   let nextSlotId = -1;
-  let fillIndex = -1;
+  let scopesIndex = -1;
 
   for (const flush of flushes) {
     const scopeId = flush[0];
@@ -509,7 +509,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
         nextSlotId === -1
           ? scopeId + ",{"
           : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
-      if (fillIndex === -1) fillIndex = openIndex;
+      if (scopesIndex === -1) scopesIndex = openIndex;
       nextSlotId = scopeId + 1;
       buf.push("}");
     } else {
@@ -520,8 +520,8 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   let extras = "";
   if (state.pendingAssignments.size || hasChannelMutations(state)) {
     extras = ",0)";
-    if (fillIndex !== -1) {
-      buf[fillIndex] = "_([" + buf[fillIndex];
+    if (scopesIndex !== -1) {
+      buf[scopesIndex] = "_([" + buf[scopesIndex];
       buf.push("])");
     }
     writeAssigned(state);
@@ -1559,8 +1559,8 @@ function writeAggregateError(
     state.buf.push(")");
   }
   if (inlined) {
-    // `new AggregateError(arr)` copies arr into a fresh writable `errors` slot,
-    // so relink a shared/fill-deferred array through it to keep identity and fills.
+    // `new AggregateError(arr)` copies arr into a fresh writable `errors` slot, so
+    // an array other references or later assignments reach relinks to the copy.
     const errorsRef = state.refs.get(val.errors as object);
     if (errorsRef?.id) {
       state.pendingAssignments.add(errorsRef);
