@@ -1,5 +1,18 @@
 # Change Log
 
+## 5.39.46
+
+### Patch Changes
+
+- [#4444](https://github.com/marko-js/marko/pull/4444) [`2d29d67`](https://github.com/marko-js/marko/commit/2d29d67ee1e271c61588e3a55a11e0d9807ae79c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop holding on to server rendered components whose DOM is already gone (such as a replaced `<await client-reorder>` placeholder's) once the document has loaded, instead of queueing them for a `DOMContentLoaded` that never fires again.
+
+- [#4444](https://github.com/marko-js/marko/pull/4444) [`cef9ef0`](https://github.com/marko-js/marko/commit/cef9ef0e85276bcc42ed362d1631225d9533aad6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a crash when a component type registers after `<await client-reorder>` replaced a placeholder holding one of its instances, which also left the remaining instances of that type unhydrated.
+
+- [#4443](https://github.com/marko-js/marko/pull/4443) [`44d01d3`](https://github.com/marko-js/marko/commit/44d01d3569c0875a23816090dfc9214c209bc997) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop bundling a template imported `with { load }` into the page's hydrate entry when its importer does not render in the browser (a server only or split component), which loaded it eagerly and ignored its load trigger.
+
+- Updated dependencies [[`d7ce62a`](https://github.com/marko-js/marko/commit/d7ce62a8e7abd326172fd43f8290742a4080d524)]:
+  - @marko/runtime-tags@6.4.5
+
 ## 5.39.45
 
 ### Patch Changes
