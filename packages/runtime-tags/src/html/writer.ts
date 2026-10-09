@@ -1456,6 +1456,11 @@ export class State implements SerializeState {
     return this.runtimePrefix + RuntimeKey.Walk + "()";
   }
 
+  // How a flush's resume data joins what its serialize state holds.
+  addResumes(serializeState: SerializeState, resumes: string) {
+    serializeState.resumes = concatSequence(serializeState.resumes, resumes);
+  }
+
   // Each serialize state only flushes the props it wrote itself; the
   // canonical scope accumulates everything for server side reads.
   queueScope(
@@ -2393,8 +2398,8 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
         // Globals serialize before ready data that may reference them.
         flushSerializerGlobals(boundary);
       }
-      serializeState.resumes = concatSequence(
-        serializeState.resumes,
+      state.addResumes(
+        serializeState,
         stringifyScopes(serializer, flushes, boundary, serializeState),
       );
     }

@@ -321,6 +321,11 @@ class State {
     return this.refs.get(scope) || newScopeReference(this, scope, scopeId);
   }
 
+  // A flushed scope's members, which a serializer state may write differently.
+  writeScopeProps(props: object, ref: Reference) {
+    return writeObjectProps(this, props, ref);
+  }
+
   // The slot a run's first scope starts the client's cursor at.
   scopesCursor(scopeId: number) {
     return scopeId + ",";
@@ -549,7 +554,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
 
     // Empty scopes fold into the next emitted slot's skip count.
     const openIndex = buf.push("") - 1;
-    if (writeObjectProps(state, flush[2], ref)) {
+    if (state.writeScopeProps(flush[2], ref)) {
       // The skip is a SIGNED delta, so a flush that revisits a lower slot
       // steps the cursor back rather than landing in the wrong one.
       buf[openIndex] =
