@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.4.6
+
+### Patch Changes
+
+- [#4447](https://github.com/marko-js/marko/pull/4447) [`f59b77c`](https://github.com/marko-js/marko/commit/f59b77c8783d015c5968bf6173a87e77f6ca7bb7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Render server loop rows and `<try>` bodies with fewer allocations.
+
 ## 6.4.5
 
 ### Patch Changes
