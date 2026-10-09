@@ -32,7 +32,7 @@ export type Signal<T = unknown, U extends Scope = Scope> = (
 type KeyedScopes = Map<unknown, BranchScope> & {
   [x: `${typeof KeyedScopesProp.PreviousKey}${string}`]: unknown;
 };
-type ClosureScopes = Set<Scope> & {
+export type ClosureScopes = Set<Scope> & {
   [ClosureScopesProp.Changed]?: 1;
 };
 

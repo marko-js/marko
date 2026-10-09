@@ -13,7 +13,7 @@ type IntlWithDurationFormat = { DurationFormat?: new () => object } | undefined;
 patchIteratorNext(Generator.prototype);
 patchIteratorNext(AsyncGenerator.prototype);
 
-interface Registered {
+export interface Registered {
   id: string;
   access: string;
   scope: unknown;
@@ -58,7 +58,7 @@ type TypedArray =
   | BigInt64Array
   | BigUint64Array;
 
-const REGISTRY = /* @__PURE__ */ new WeakMap<WeakKey, Registered>();
+export const REGISTRY = /* @__PURE__ */ new WeakMap<WeakKey, Registered>();
 const KNOWN_SYMBOLS = /* @__PURE__ */ (() => {
   const KNOWN_SYMBOLS = new Map<symbol, string>();
   for (const name of Object.getOwnPropertyNames(Symbol)) {
@@ -315,6 +315,64 @@ class State {
   channel: SerializeChannel | undefined = undefined;
   channelDeps: Set<string> | null = null;
   mutated: Mutation[] = [];
+
+  // How a flush's payload is written, which a serializer state may change.
+  scopeRef(scope: WeakKey, scopeId: number) {
+    return this.refs.get(scope) || newScopeReference(this, scope, scopeId);
+  }
+
+  // The slot a run's first scope starts the client's cursor at.
+  scopesCursor(scopeId: number) {
+    return scopeId + ",";
+  }
+
+  writeTrailing(scopesIndex: number) {
+    const { buf } = this;
+    if (~scopesIndex) {
+      buf[scopesIndex] = "_([" + buf[scopesIndex];
+      buf.push("])");
+    }
+    writeAssigned(this);
+    return ",0)";
+  }
+
+  wrapPayload(result: string, extras: string) {
+    const arrow = this.wroteUndefined ? "(_,$)=>" : "_=>";
+    this.wroteUndefined = false;
+    return extras ? arrow + result : arrow + "[" + result + "]";
+  }
+
+  // Registered factories read their self-resolving scope only when invoked.
+  writeScopedRegistration(
+    val: WeakKey,
+    parent: Reference | null,
+    accessor: string,
+    registered: Registered,
+  ) {
+    const ref = new Reference(parent, accessor, this.flushId, this.buf.length);
+    ref.channel = this.channel;
+    this.refs.set(val, ref);
+    if (MARKO_DEBUG) {
+      ref.debug = DEBUG.get(val);
+    }
+
+    // The serialize context resolves both registry id and render-local scope.
+    const scope = registered.scope!;
+    const scopeId = (scope as ScopeInternals)[K_SCOPE_ID]!;
+    trackScope(this, scope, scopeId);
+    const locals = registered.locals?.(this.boundary.state.scope);
+    if (locals) {
+      // Calls the registered factory itself to also pass render-only locals.
+      this.buf.push(registered.access + "(_(" + scopeId + ")");
+      for (const local of locals) {
+        this.buf.push(",");
+        writePlainObject(this, local, newArgReference(this, ref, local));
+      }
+    } else {
+      this.buf.push("_(" + scopeId + "," + quoteRegisterId(registered.id));
+    }
+    this.buf.push(")");
+  }
 }
 
 // A `Map`/`Set` member that references an ancestor cannot be built into the
@@ -326,7 +384,7 @@ interface DeferredCall {
   args: unknown[];
 }
 
-class Reference {
+export class Reference {
   declare debug?: Debug;
   public assignments: null | string[] = null;
   public calls: null | DeferredCall[] = null;
@@ -460,26 +518,16 @@ export function dropMutation(
   return false;
 }
 
+// `access` is the text every occurrence of the value serializes as.
 export function register<T extends WeakKey>(
   id: string,
   val: T,
   scope?: unknown,
   locals?: Locals,
+  access = "_._" + toAccess(toObjectKey(id)),
 ) {
-  REGISTRY.set(val, {
-    id,
-    scope,
-    locals,
-    access: "_._" + toAccess(toObjectKey(id)),
-  });
+  REGISTRY.set(val, { id, scope, locals, access });
   return val;
-}
-
-export function getRegistered(val: WeakKey) {
-  const registered = REGISTRY.get(val);
-  if (registered) {
-    return { id: registered.id, scope: registered.scope };
-  }
 }
 
 // A payload with only scope data returns its scopes array directly
@@ -497,8 +545,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   for (const flush of flushes) {
     const scopeId = flush[0];
     const scope = flush[1];
-    const ref =
-      state.refs.get(scope) || newScopeReference(state, scope, scopeId);
+    const ref = state.scopeRef(scope, scopeId);
 
     // Empty scopes fold into the next emitted slot's skip count.
     const openIndex = buf.push("") - 1;
@@ -507,7 +554,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
       // steps the cursor back rather than landing in the wrong one.
       buf[openIndex] =
         nextSlotId === -1
-          ? scopeId + ",{"
+          ? state.scopesCursor(scopeId) + "{"
           : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
       if (scopesIndex === -1) scopesIndex = openIndex;
       nextSlotId = scopeId + 1;
@@ -519,12 +566,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
 
   let extras = "";
   if (state.pendingAssignments.size || hasChannelMutations(state)) {
-    extras = ",0)";
-    if (scopesIndex !== -1) {
-      buf[scopesIndex] = "_([" + buf[scopesIndex];
-      buf.push("])");
-    }
-    writeAssigned(state);
+    extras = state.writeTrailing(scopesIndex);
   }
 
   let result = extras && "(";
@@ -536,12 +578,10 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   // Everything elided and nothing else to flush.
   if (!result) return "";
 
-  const arrow = state.wroteUndefined ? "(_,$)=>" : "_=>";
-  state.wroteUndefined = false;
-  return extras ? arrow + result : arrow + "[" + result + "]";
+  return state.wrapPayload(result, extras);
 }
 
-function writeAssigned(state: State) {
+export function writeAssigned(state: State) {
   let sep = state.buf.length ? "," : "";
 
   if (state.pendingAssignments.size) {
@@ -789,7 +829,7 @@ function newScopeReference(state: State, val: WeakKey, scopeId: number) {
 
 // An optimized register id is a hashed template id and key in the
 // identifier alphabet; only a debug id (a file path) can need escaping.
-function quoteRegisterId(id: string) {
+export function quoteRegisterId(id: string) {
   return MARKO_DEBUG ? quote(id, 0) : '"' + id + '"';
 }
 
@@ -802,34 +842,7 @@ function writeRegistered(
 ) {
   const { scope } = registered;
   if (scope) {
-    // Registered factories read their self-resolving scope only when invoked.
-    const ref = new Reference(
-      parent,
-      accessor,
-      state.flushId,
-      state.buf.length,
-    );
-    ref.channel = state.channel;
-    state.refs.set(val, ref);
-    if (MARKO_DEBUG) {
-      ref.debug = DEBUG.get(val);
-    }
-
-    // The serialize context resolves both registry id and render-local scope.
-    const scopeId = (scope as ScopeInternals)[K_SCOPE_ID]!;
-    trackScope(state, scope, scopeId);
-    const locals = registered.locals?.(state.boundary.state.scope);
-    if (locals) {
-      // Calls the registered factory itself to also pass render-only locals.
-      state.buf.push(registered.access + "(_(" + scopeId + ")");
-      for (const local of locals) {
-        state.buf.push(",");
-        writePlainObject(state, local, newArgReference(state, ref, local));
-      }
-    } else {
-      state.buf.push("_(" + scopeId + "," + quoteRegisterId(registered.id));
-    }
-    state.buf.push(")");
+    state.writeScopedRegistration(val, parent, accessor, registered);
   } else {
     state.buf.push(registered.access);
   }

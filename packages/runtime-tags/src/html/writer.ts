@@ -176,7 +176,7 @@ function captureContext(chunk: Chunk) {
   }
 }
 
-const kBranchId = Symbol("Branch Id");
+export const kBranchId = Symbol("Branch Id");
 
 const kIsAsync = Symbol("Is Async");
 
@@ -263,8 +263,7 @@ export function _script(
   ) {
     _resume_branch(scopeId);
   }
-  $chunk.boundary.state.needsMainRuntime = true;
-  $chunk.writeEffect(scopeId, registryId);
+  $chunk.boundary.state.queueEffect(scopeId, registryId);
 }
 
 export function _trailers(html: string) {
@@ -451,9 +450,8 @@ export function _var(
 function writeScopePassive(scopeId: number, partialScope: PartialScope) {
   const target = $chunk.serializeState;
   const scope = _scope_with_id(scopeId);
-  const passive = (target.passiveScopes ||= {});
   Object.assign(scope, partialScope);
-  passive[scopeId] = Object.assign(passive[scopeId] || {}, partialScope);
+  $chunk.boundary.state.queuePassiveScope(target, scopeId, partialScope);
   return scope;
 }
 
@@ -518,13 +516,7 @@ export function _for_of(
   forBranches(
     by,
     cb,
-    (each) =>
-      each
-        ? forOf(list, (item, index) => {
-            const itemKey = forOfBy(by, item, index);
-            each(itemKey, itemKey === index, item, index);
-          })
-        : forOf(list, cb),
+    iterateForOf(list, cb, by),
     scopeId,
     accessor,
     branchGuard,
@@ -533,6 +525,20 @@ export function _for_of(
     parentEndTag,
     singleNode,
   );
+}
+
+export function iterateForOf(
+  list: Falsy | Iterable<unknown>,
+  cb: (item: unknown, index: number) => void,
+  by: Falsy | ((item: unknown, index: number) => unknown),
+): LoopIterate<unknown, number> {
+  return (each) =>
+    each
+      ? forOf(list, (item, index) => {
+          const itemKey = forOfBy(by, item, index);
+          each(itemKey, itemKey === index, item, index);
+        })
+      : forOf(list, cb);
 }
 
 export function _for_in(
@@ -550,14 +556,7 @@ export function _for_in(
   forBranches(
     by,
     cb,
-    (each) =>
-      each
-        ? forIn(obj, (key, value) => {
-            // There is no positional index for `for...in`, so the loop key
-            // is always serialized.
-            each(forInBy(by, key, value), false, key, value);
-          })
-        : forIn(obj, cb),
+    iterateForIn(obj, cb, by),
     scopeId,
     accessor,
     branchGuard,
@@ -566,6 +565,21 @@ export function _for_in(
     parentEndTag,
     singleNode,
   );
+}
+
+export function iterateForIn(
+  obj: Falsy | {},
+  cb: (key: string, value: unknown) => void,
+  by: Falsy | ((key: string, v: unknown) => unknown),
+): LoopIterate<string, unknown> {
+  return (each) =>
+    each
+      ? forIn(obj, (key, value) => {
+          // A key is a property name, never the row's index (which the client
+          // assumes for a row with no key), so every row stores its key.
+          each(forInBy(by, key, value), false, key, value);
+        })
+      : forIn(obj, cb);
 }
 
 export function _for_to(
@@ -585,15 +599,7 @@ export function _for_to(
   forBranches(
     by,
     cb,
-    (each) => {
-      let index = 0;
-      return each
-        ? forTo(to, from, step, (value) => {
-            const itemKey = forStepBy(by, value);
-            each(itemKey, itemKey === index++, value);
-          })
-        : forTo(to, from, step, cb);
-    },
+    iterateForTo(to, from, step, cb, by),
     scopeId,
     accessor,
     branchGuard,
@@ -602,6 +608,24 @@ export function _for_to(
     parentEndTag,
     singleNode,
   );
+}
+
+export function iterateForTo(
+  to: number,
+  from: number | Falsy,
+  step: number | Falsy,
+  cb: (index: number) => void,
+  by: Falsy | ((v: number) => unknown),
+): LoopIterate<number> {
+  return (each) => {
+    let index = 0;
+    return each
+      ? forTo(to, from, step, (value) => {
+          const itemKey = forStepBy(by, value);
+          each(itemKey, itemKey === index++, value);
+        })
+      : forTo(to, from, step, cb);
+  };
 }
 
 export function _for_until(
@@ -621,15 +645,7 @@ export function _for_until(
   forBranches(
     by,
     cb,
-    (each) => {
-      let index = 0;
-      return each
-        ? forUntil(to, from, step, (value) => {
-            const itemKey = forStepBy(by, value);
-            each(itemKey, itemKey === index++, value);
-          })
-        : forUntil(to, from, step, cb);
-    },
+    iterateForUntil(to, from, step, cb, by),
     scopeId,
     accessor,
     branchGuard,
@@ -640,14 +656,50 @@ export function _for_until(
   );
 }
 
+export function iterateForUntil(
+  to: number,
+  from: number | Falsy,
+  step: number | Falsy,
+  cb: (index: number) => void,
+  by: Falsy | ((v: number) => unknown),
+): LoopIterate<number> {
+  return (each) => {
+    let index = 0;
+    return each
+      ? forUntil(to, from, step, (value) => {
+          const itemKey = forStepBy(by, value);
+          each(itemKey, itemKey === index++, value);
+        })
+      : forUntil(to, from, step, cb);
+  };
+}
+
+// A loop's iteration: each row's key and `cb` arguments, where its branches
+// resume (`each`).
+export type LoopIterate<A, B = void> = (
+  each: 0 | ((itemKey: unknown, sameAsIndex: boolean, a: A, b: B) => void),
+) => void;
+
+// Asserts, in debug builds, that a keyed loop's keys are unique.
+export function checkLoopKeys<A, B>(
+  cb: (a: A, b: B) => void,
+  iterate: LoopIterate<A, B>,
+): LoopIterate<A, B> {
+  const seenKeys = new Set<unknown>();
+  return (each) =>
+    iterate((itemKey, sameAsIndex, a, b) => {
+      assertValidLoopKey(itemKey, seenKeys);
+      if (each) each(itemKey, sameAsIndex, a, b);
+      else cb(a, b);
+    });
+}
+
 // Shared branch and scope writer for every `_for_*` loop variant: `each`
 // takes a row's `cb` arguments, so no row needs a closure of its own.
-function forBranches<A, B = void>(
+export function forBranches<A, B = void>(
   by: unknown,
   cb: (a: A, b: B) => void,
-  iterate: (
-    each: 0 | ((itemKey: unknown, sameAsIndex: boolean, a: A, b: B) => void),
-  ) => void,
+  iterate: LoopIterate<A, B>,
   scopeId: number,
   accessor: Accessor,
   branchGuard: undefined | number,
@@ -656,16 +708,7 @@ function forBranches<A, B = void>(
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
 ) {
-  if (MARKO_DEBUG && by) {
-    const run = iterate;
-    const seenKeys = new Set<unknown>();
-    iterate = (each) =>
-      run((itemKey, sameAsIndex, a, b) => {
-        assertValidLoopKey(itemKey, seenKeys);
-        if (each) each(itemKey, sameAsIndex, a, b);
-        else cb(a, b);
-      });
-  }
+  if (MARKO_DEBUG && by) iterate = checkLoopKeys(cb, iterate);
 
   if (branchGuard === 0) {
     iterate(0);
@@ -852,20 +895,11 @@ let writeScope = (scopeId: number, partialScope: PartialScope) => {
   const { state } = $chunk.boundary;
   const target = $chunk.serializeState;
   const scope = scopeWithId(state, scopeId);
-  const pending = target.writeScopes[scopeId];
   state.needsMainRuntime = true;
   countResumeWrite($chunk);
   Object.assign(scope, partialScope);
 
-  // Each serialize state only flushes the props it wrote itself; the
-  // canonical scope (above) accumulates everything for server side reads.
-  if (pending && pending !== partialScope) {
-    Object.assign(pending, partialScope);
-  } else {
-    target.writeScopes[scopeId] = partialScope;
-  }
-  target.flushScopes = true;
-
+  state.queueScope(target, scopeId, partialScope);
   return scope;
 };
 
@@ -1141,11 +1175,9 @@ export function _try(
     renderers,
   );
 
-  // Custom and dynamic tags hide from analysis whether the body resumes, so its
-  // render decides: an async or resumable body keeps its marks, others drop them.
-  const rendered = chunk !== $chunk || boundary.resumeWrites !== resumeWrites;
-  applyBranchStart(chunk, beforeBranch, rendered);
-  if (!rendered) return;
+  const keepsMarks = state.keepsTryMarks(chunk, resumeWrites);
+  applyBranchStart(chunk, beforeBranch, keepsMarks);
+  if (!keepsMarks) return;
 
   if (!renderersWritten) renderers();
   $chunk.writeHTML(
@@ -1186,7 +1218,7 @@ function tryPlaceholder(
 // Returns whether it writes the renderers itself: a body whose sync part wrote
 // nothing resumable cannot re-run client side while streaming, so they follow
 // at settle, and only if the settled body (or a fired catch) resumes at all.
-function tryBoundary(
+export function tryBoundary(
   content: () => void,
   catchContent: ServerRenderer | undefined,
   branchId: number,
@@ -1330,7 +1362,7 @@ function clearTryRenderers(branchId: number) {
   });
 }
 
-function writeTryRenderers(
+export function writeTryRenderers(
   branchId: number,
   catchContent: ServerRenderer | undefined,
   placeholderContent: ServerRenderer | undefined,
@@ -1422,6 +1454,58 @@ export class State implements SerializeState {
 
   walkScript() {
     return this.runtimePrefix + RuntimeKey.Walk + "()";
+  }
+
+  // Each serialize state only flushes the props it wrote itself; the
+  // canonical scope accumulates everything for server side reads.
+  queueScope(
+    target: SerializeState,
+    scopeId: number,
+    partialScope: PartialScope,
+  ) {
+    const pending = target.writeScopes[scopeId];
+    if (pending && pending !== partialScope) {
+      Object.assign(pending, partialScope);
+    } else {
+      target.writeScopes[scopeId] = partialScope;
+    }
+    target.flushScopes = true;
+  }
+
+  queuePassiveScope(
+    target: SerializeState,
+    scopeId: number,
+    partialScope: PartialScope,
+  ) {
+    const passive = (target.passiveScopes ||= {});
+    passive[scopeId] = Object.assign(passive[scopeId] || {}, partialScope);
+  }
+
+  queueEffect(scopeId: number, registryId: string) {
+    this.needsMainRuntime = true;
+    $chunk.writeEffect(scopeId, registryId);
+  }
+
+  serializeFlush(boundary: Boundary) {
+    flushSerializer(boundary, this);
+  }
+
+  // Installs the walker runtime and opens this render's data.
+  runtimeScript() {
+    return (
+      WALKER_RUNTIME_CODE +
+      '("' +
+      this.$global.runtimeId +
+      '")("' +
+      this.$global.renderId +
+      '")'
+    );
+  }
+
+  // Custom and dynamic tags hide from analysis whether a try's body resumes, so
+  // its render decides: an async or resumable body keeps its marks.
+  keepsTryMarks(chunk: Chunk, resumeWrites: number) {
+    return chunk !== $chunk || chunk.boundary.resumeWrites !== resumeWrites;
   }
 
   resumeScript(resumes: string) {
@@ -1565,7 +1649,7 @@ export class Boundary {
 
   flush() {
     if (!this.aborted) {
-      flushSerializer(this, this.state);
+      this.state.serializeFlush(this);
     }
 
     return this.count
@@ -1968,7 +2052,7 @@ export class Chunk {
   // abort before the async values serialized in its flush do.
   flushScript(boundary: Boundary) {
     const { state } = boundary;
-    const { $global, runtimePrefix } = state;
+    const { runtimePrefix } = state;
     let needsWalk = state.walkOnNextFlush;
     if (needsWalk) state.walkOnNextFlush = false;
 
@@ -2016,15 +2100,7 @@ export class Chunk {
 
     if (state.needsMainRuntime && !state.hasMainRuntime) {
       state.hasMainRuntime = true;
-      scripts = concatScripts(
-        scripts,
-        WALKER_RUNTIME_CODE +
-          '("' +
-          $global.runtimeId +
-          '")("' +
-          $global.renderId +
-          '")',
-      );
+      scripts = concatScripts(scripts, state.runtimeScript());
     }
 
     scripts = concatScripts(scripts, readyResumeScripts);
