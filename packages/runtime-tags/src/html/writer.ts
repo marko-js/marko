@@ -137,18 +137,26 @@ export function withContext<T, U>(
   cb: (value: U) => T,
   cbValue: U,
 ): T;
-export function withContext<T, U>(
+export function withContext<T, U, V>(
   key: PropertyKey,
   value: unknown,
-  cb: (value?: U) => T,
+  cb: (value: U, value2: V) => T,
+  cbValue: U,
+  cbValue2: V,
+): T;
+export function withContext<T, U, V>(
+  key: PropertyKey,
+  value: unknown,
+  cb: (value?: U, value2?: V) => T,
   cbValue?: U,
+  cbValue2?: V,
 ): T {
   const ctx = ($chunk.context ||= { [kPendingContexts]: 0 } as any);
   const prev = ctx[key];
   ctx[kPendingContexts]++;
   ctx[key] = value;
   try {
-    return cb(cbValue);
+    return cb(cbValue, cbValue2);
   } finally {
     ctx[kPendingContexts]--;
     ctx[key] = prev;
@@ -185,12 +193,19 @@ export function withBranchId<T, U>(
   cb: (value: U) => T,
   cbValue: U,
 ): T;
-export function withBranchId<T, U>(
+export function withBranchId<T, U, V>(
   branchId: number,
-  cb: (value?: U) => T,
+  cb: (value: U, value2: V) => T,
+  cbValue: U,
+  cbValue2: V,
+): T;
+export function withBranchId<T, U, V>(
+  branchId: number,
+  cb: (value?: U, value2?: V) => T,
   cbValue?: U,
+  cbValue2?: V,
 ): T {
-  return withContext(kBranchId, branchId, cb, cbValue);
+  return withContext(kBranchId, branchId, cb, cbValue, cbValue2);
 }
 
 function withIsAsync<T, U>(
@@ -496,11 +511,12 @@ export function _for_of(
 ): void {
   forBranches(
     by,
+    cb,
     (each) =>
       each
         ? forOf(list, (item, index) => {
             const itemKey = forOfBy(by, item, index);
-            each(itemKey, itemKey === index, () => cb(item, index));
+            each(itemKey, itemKey === index, item, index);
           })
         : forOf(list, cb),
     scopeId,
@@ -527,12 +543,13 @@ export function _for_in(
 ): void {
   forBranches(
     by,
+    cb,
     (each) =>
       each
         ? forIn(obj, (key, value) => {
             // There is no positional index for `for...in`, so the loop key
             // is always serialized.
-            each(forInBy(by, key, value), false, () => cb(key, value));
+            each(forInBy(by, key, value), false, key, value);
           })
         : forIn(obj, cb),
     scopeId,
@@ -561,12 +578,13 @@ export function _for_to(
 ): void {
   forBranches(
     by,
+    cb,
     (each) => {
       let index = 0;
       return each
         ? forTo(to, from, step, (value) => {
             const itemKey = forStepBy(by, value);
-            each(itemKey, itemKey === index++, () => cb(value));
+            each(itemKey, itemKey === index++, value);
           })
         : forTo(to, from, step, cb);
     },
@@ -596,12 +614,13 @@ export function _for_until(
 ): void {
   forBranches(
     by,
+    cb,
     (each) => {
       let index = 0;
       return each
         ? forUntil(to, from, step, (value) => {
             const itemKey = forStepBy(by, value);
-            each(itemKey, itemKey === index++, () => cb(value));
+            each(itemKey, itemKey === index++, value);
           })
         : forUntil(to, from, step, cb);
     },
@@ -615,13 +634,13 @@ export function _for_until(
   );
 }
 
-// Shared branch and scope writer for every `_for_*` loop variant.
-function forBranches(
+// Shared branch and scope writer for every `_for_*` loop variant: `each`
+// takes a row's `cb` arguments, so no row needs a closure of its own.
+function forBranches<A, B = void>(
   by: unknown,
+  cb: (a: A, b: B) => void,
   iterate: (
-    each:
-      | 0
-      | ((itemKey: unknown, sameAsIndex: boolean, render: () => void) => void),
+    each: 0 | ((itemKey: unknown, sameAsIndex: boolean, a: A, b: B) => void),
   ) => void,
   scopeId: number,
   accessor: Accessor,
@@ -635,10 +654,10 @@ function forBranches(
     const run = iterate;
     const seenKeys = new Set<unknown>();
     iterate = (each) =>
-      run((itemKey, sameAsIndex, render) => {
+      run((itemKey, sameAsIndex, a, b) => {
         assertValidLoopKey(itemKey, seenKeys);
-        if (each) each(itemKey, sameAsIndex, render);
-        else render();
+        if (each) each(itemKey, sameAsIndex, a, b);
+        else cb(a, b);
       });
   }
 
@@ -666,7 +685,7 @@ function forBranches(
   let flushBranchIds = "";
   let loopScopes: Opt<ScopeInternals>;
 
-  iterate((itemKey, sameAsIndex, render) => {
+  iterate((itemKey, sameAsIndex, a, b) => {
     const branchId = _peek_scope_id();
     if (resumeMarker) {
       if (singleNode) {
@@ -677,18 +696,16 @@ function forBranches(
       }
     }
 
-    withBranchId(branchId, () => {
-      render();
-      // Empty for an unkeyed branch, but the scope it returns is what the
-      // parent's branch list holds and what passive props flush through.
-      const branchScope = writeScope(
-        branchId,
-        resumeKeys && !sameAsIndex ? { [AccessorProp.LoopKey]: itemKey } : {},
-      );
-      if (!resumeMarker) {
-        loopScopes = push(loopScopes, branchScope);
-      }
-    });
+    withBranchId(branchId, cb, a, b);
+    // Empty for an unkeyed branch, but the scope it returns is what the
+    // parent's branch list holds and what passive props flush through.
+    const branchScope = writeScope(
+      branchId,
+      resumeKeys && !sameAsIndex ? { [AccessorProp.LoopKey]: itemKey } : {},
+    );
+    if (!resumeMarker) {
+      loopScopes = push(loopScopes, branchScope);
+    }
   });
 
   if (loopScopes) {
@@ -1177,7 +1194,7 @@ function tryBoundary(
   const catchBoundary = new Boundary(state, undefined, boundary);
   if (catchContent) catchBoundary.withinCatch = true;
   const body = chunk.fork(catchBoundary, null);
-  const bodyEnd = body.render(() => withBranchId(branchId, content));
+  const bodyEnd = body.render(withBranchId, branchId, content);
 
   if (catchBoundary.aborted) {
     // Without a `@catch` the error ends the enclosing render, like any throw in it.
@@ -1732,9 +1749,8 @@ export class Chunk {
     const { effects } = this;
     const beforeBranch = deferBranchStart(this);
     if (
-      this.render(() =>
-        withBranchId(placeholderBranchId, placeholder.render),
-      ) !== this
+      this.render(withBranchId, placeholderBranchId, placeholder.render) !==
+      this
     ) {
       // TODO: eventually this should be allowed.
       // Once it's allowed we'll need check if placeholder needs to be disposed once body complete.
@@ -1750,14 +1766,12 @@ export class Chunk {
     const stateful = this.effects !== effects;
     applyBranchStart(this, beforeBranch, stateful);
     if (stateful) {
-      this.render(() =>
-        writeScope(branchId, {
-          [AccessorProp.PlaceholderBranch]: scopeWithId(
-            state,
-            placeholderBranchId,
-          ),
-        }),
-      );
+      this.render(writeScope, branchId, {
+        [AccessorProp.PlaceholderBranch]: scopeWithId(
+          state,
+          placeholderBranchId,
+        ),
+      });
       this.writeHTML(
         state.mark(
           ResumeSymbol.BranchEnd,
@@ -1865,11 +1879,12 @@ export class Chunk {
 
   render(content: () => void): Chunk;
   render<T>(content: (val: T) => void, val: T): Chunk;
-  render<T>(content: (val?: T) => void, val?: T): Chunk {
+  render<T, U>(content: (val: T, val2: U) => void, val: T, val2: U): Chunk;
+  render<T, U>(content: (val?: T, val2?: U) => void, val?: T, val2?: U): Chunk {
     const prev = $chunk;
     $chunk = this;
     try {
-      content(val);
+      content(val, val2);
       return $chunk;
     } catch (err) {
       this.boundary.abort(err);
