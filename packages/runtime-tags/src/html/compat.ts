@@ -3,7 +3,7 @@ import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import { RendererProp, type Scope } from "../common/types";
 import { writeLoadAsset } from "./assets";
 import { patchDynamicTag } from "./dynamic-tag";
-import { getRegistered, register } from "./serializer";
+import { register, REGISTRY } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   _await,
@@ -84,7 +84,7 @@ export const compat = {
     return function toJSON(this: WeakKey) {
       let compatRegistered = COMPAT_REGISTRY.get(this);
       if (!compatRegistered) {
-        const registered = getRegistered(this);
+        const registered = REGISTRY.get(this);
         if (registered) {
           const scopeId = registered.scope
             ? getScopeId(registered.scope as Scope)
@@ -274,7 +274,7 @@ export const compat = {
     // so leaving it to fail as unserializable reports the split parent instead.
     for (const key in input) {
       const value = input[key];
-      if (typeof value === "function" && !getRegistered(value)) {
+      if (typeof value === "function" && !REGISTRY.has(value)) {
         register(RENDER_BODY_ID, value);
       }
     }
