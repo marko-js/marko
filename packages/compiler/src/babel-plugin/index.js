@@ -23,6 +23,9 @@ import { visitor as migrate } from "./plugins/migrate";
 import { visitor as transform } from "./plugins/transform";
 
 const SOURCE_FILES = new WeakMap();
+// A compile reads every template as of one moment, so a cache entry is checked
+// at most once per compile, and one it created is current.
+let compiles = 0;
 let stripTypesVisitor;
 
 export default (api, markoOpts) => {
@@ -100,6 +103,7 @@ export default (api, markoOpts) => {
       curOpts = opts;
     },
     parserOverride(code) {
+      compiles++;
       const file = getMarkoFile(code, curOpts, markoOpts);
       const finalAst = t.cloneNode(file.ast, true);
       SOURCE_FILES.set(finalAst, file);
@@ -186,13 +190,17 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     if (cached.contentHash !== contentHash) {
       // File content changed, invalidate the cache.
       cached = undefined;
-    } else if (hasStaleDependency(cached, compileCache, markoOpts)) {
+    } else if (
+      cached.checked !== compiles &&
+      hasStaleDependency(cached, compileCache, markoOpts)
+    ) {
       // Some dependency changed, invalidate the cache.
       cached = undefined;
     }
   }
 
   if (cached) {
+    cached.checked = compiles;
     cached.file.markoOpts = markoOpts;
     return cached.file;
   }
@@ -319,6 +327,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     }
 
     compileCache.set(id, {
+      checked: compiles,
       time: Date.now(),
       file,
       contentHash,

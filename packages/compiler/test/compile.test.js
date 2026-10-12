@@ -329,6 +329,30 @@ describe("compiler/compile", () => {
         writeVersionComment: false,
       }).code;
 
+    // A taglib file newer than every entry makes each of them stale, so these
+    // only compile if a compile checks each template once.
+    const writeNewerTaglib = () => {
+      const file = path.join(dir, "marko.json");
+      fs.writeFileSync(file, "{}");
+      const ahead = new Date(Date.now() + 60_000);
+      fs.utimesSync(file, ahead, ahead);
+    };
+
+    it("compiles a child against the analysis its parent read", () => {
+      writeTag("my-child", `<div>\${input.a}</div>\n<return=1/>\n`);
+      fs.writeFileSync(path.join(dir, "template.marko"), `<my-child a=1/>\n`);
+      writeNewerTaglib();
+      assert.match(compileParent(new Map()), /my-child/);
+    });
+
+    it("compiles templates that render each other", () => {
+      writeTag("tag-a", `<if=input.show><tag-b/></if>\n`);
+      writeTag("tag-b", `<if=input.show><tag-a/></if>\n`);
+      fs.writeFileSync(path.join(dir, "template.marko"), `<tag-a show/>\n`);
+      writeNewerTaglib();
+      assert.match(compileParent(new Map()), /tag-a/);
+    });
+
     it("invalidates when an analyzed child changes", () => {
       writeTag("my-child", `<return=1/>\n`);
       const cache = new Map();
