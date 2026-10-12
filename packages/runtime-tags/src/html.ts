@@ -41,23 +41,28 @@ export {
   _to_text,
   _unescaped,
 } from "./html/content";
+export {
+  _await,
+  _for_in,
+  _for_of,
+  _for_to,
+  _for_until,
+  _if,
+  _show_end,
+  _show_start,
+  _try,
+} from "./html/control-flow";
 export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";
 export { forIn, forOf, forTo, forUntil } from "./html/for";
 export { _template } from "./html/template";
 export {
   _attr_content,
-  _await,
   _el,
   _el_resume,
   _existing_scope,
-  _for_in,
-  _for_of,
-  _for_to,
-  _for_until,
   _hoist,
   _html,
   _id,
-  _if,
   _peek_scope_id,
   _resume,
   _resume_branch,
@@ -71,12 +76,9 @@ export {
   _write_guard,
   _write_if,
   _set_scope_reason,
-  _show_end,
-  _show_start,
   _text_resume,
   _subscribe,
   _trailers,
-  _try,
   _var,
   $global,
 } from "./html/writer";

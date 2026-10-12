@@ -2,11 +2,11 @@ import { RENDER_BODY_ID, SET_SCOPE_REGISTER_ID } from "../common/compat-meta";
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import { RendererProp, type Scope } from "../common/types";
 import { writeLoadAsset } from "./assets";
+import { _await } from "./control-flow";
 import { patchDynamicTag } from "./dynamic-tag";
 import { register, REGISTRY } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
-  _await,
   _html,
   _peek_scope_id,
   _scope,
