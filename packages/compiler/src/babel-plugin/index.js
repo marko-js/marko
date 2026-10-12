@@ -180,19 +180,15 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   const contentHash = canCache && new Hash().update(code).digest();
   // A cache is scoped to ONE compilation config: template-id derivation
   // (including `optimizeKnownTemplates`) is part of that contract.
-  let cached = canCache && compileCache.get(id);
+  const cached = canCache && compileCache.get(id);
 
-  if (cached) {
-    if (cached.contentHash !== contentHash) {
-      // File content changed, invalidate the cache.
-      cached = undefined;
-    } else if (hasStaleDependency(cached, compileCache, markoOpts)) {
-      // Some dependency changed, invalidate the cache.
-      cached = undefined;
-    }
-  }
-
-  if (cached) {
+  // Templates this one analyzed are kept until the cache is cleared, which
+  // callers do whenever a file may have changed.
+  if (
+    cached &&
+    cached.contentHash === contentHash &&
+    !hasChangedWatchFile(cached, markoOpts)
+  ) {
     cached.file.markoOpts = markoOpts;
     return cached.file;
   }
@@ -368,41 +364,22 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   }
 }
 
-function hasStaleDependency(cached, compileCache, markoOpts) {
-  const seen = new Set();
-  const pending = [cached.file.metadata.marko];
-  let meta;
-
-  while ((meta = pending.pop())) {
-    for (const watchFile of meta.watchFiles) {
-      if (isNewerThan(watchFile, cached.time, markoOpts)) return true;
+// Taglib files are checked on every hit, so a cache kept across rebuilds still
+// recompiles a template whose taglib changed.
+function hasChangedWatchFile(cached, markoOpts) {
+  for (const watchFile of cached.file.metadata.marko.watchFiles) {
+    // An unreadable file invalidates, since its contribution is unknown.
+    let mtime = Infinity;
+    try {
+      mtime = markoOpts.fileSystem.statSync(watchFile).mtime;
+    } catch {
+      // ignore
     }
 
-    // A child's own analysis feeds this file, so its children count too; a
-    // cached child carries the next level, and an uncached one ends the walk.
-    for (const analyzedTag of meta.analyzedTags || []) {
-      if (seen.has(analyzedTag)) continue;
-      seen.add(analyzedTag);
-      if (isNewerThan(analyzedTag, cached.time, markoOpts)) return true;
-
-      const child = compileCache.get(getTemplateId(markoOpts, analyzedTag));
-      if (child) pending.push(child.file.metadata.marko);
-    }
+    if (mtime > cached.time) return true;
   }
 
   return false;
-}
-
-function isNewerThan(filename, time, markoOpts) {
-  // An unreadable dependency invalidates, since its contribution is unknown.
-  let mtime = Infinity;
-  try {
-    mtime = markoOpts.fileSystem.statSync(filename).mtime;
-  } catch {
-    // ignore
-  }
-
-  return mtime > time;
 }
 
 function shallowClone(data) {

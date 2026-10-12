@@ -299,8 +299,8 @@ describe("compiler/compile", () => {
   });
 
   describe("cache", () => {
-    // Analysis reads through child templates, so an edit below the compiled
-    // file has to invalidate it even though its own content is unchanged.
+    // Analysis reads through child templates, which a cache keeps until its
+    // owner clears it, as bundlers do whenever a file may have changed.
     const STATEFUL = `<let/x=1/>\n<button onClick() { x++ }>bump</button>\n<return=x/>\n`;
 
     let dir;
@@ -314,13 +314,8 @@ describe("compiler/compile", () => {
     });
     afterEach(() => fs.rmSync(dir, { recursive: true, force: true }));
 
-    const writeTag = (name, src) => {
-      const file = path.join(dir, "tags", `${name}.marko`);
-      fs.writeFileSync(file, src);
-      // Pin the mtime ahead so invalidation does not race the clock's resolution.
-      const ahead = new Date(Date.now() + 1000);
-      fs.utimesSync(file, ahead, ahead);
-    };
+    const writeTag = (name, src) =>
+      fs.writeFileSync(path.join(dir, "tags", `${name}.marko`), src);
 
     const compileParent = (cache) =>
       compileFileSync(path.join(dir, "template.marko"), {
@@ -329,22 +324,49 @@ describe("compiler/compile", () => {
         writeVersionComment: false,
       }).code;
 
-    it("invalidates when an analyzed child changes", () => {
+    it("keeps an analyzed child until cleared", () => {
       writeTag("my-child", `<return=1/>\n`);
       const cache = new Map();
       assert.doesNotMatch(compileParent(cache), /_var_resume/);
 
       writeTag("my-child", STATEFUL);
+      assert.doesNotMatch(compileParent(cache), /_var_resume/);
+
+      cache.clear();
       assert.match(compileParent(cache), /_var_resume/);
     });
 
-    it("invalidates when a transitively analyzed template changes", () => {
-      writeTag("my-child", `<my-grandchild/y/>\n<return=y/>\n`);
-      writeTag("my-grandchild", `<return=1/>\n`);
+    it("rereads a changed child when its parent recompiles", () => {
+      writeTag("my-child", `<return=1/>\n`);
       const cache = new Map();
       assert.doesNotMatch(compileParent(cache), /_var_resume/);
 
-      writeTag("my-grandchild", STATEFUL);
+      writeTag("my-child", STATEFUL);
+      fs.appendFileSync(path.join(dir, "template.marko"), `<p>edited</p>\n`);
+      assert.match(compileParent(cache), /_var_resume/);
+    });
+
+    it("invalidates when a taglib file changes", () => {
+      const writeTaglib = (name) => {
+        const file = path.join(dir, "marko.json");
+        fs.writeFileSync(
+          file,
+          JSON.stringify({
+            "<my-child>": { template: `./tags/${name}.marko` },
+          }),
+        );
+        // Pin the mtime ahead so invalidation does not race the clock's resolution.
+        const ahead = new Date(Date.now() + 1000);
+        fs.utimesSync(file, ahead, ahead);
+      };
+      writeTag("stateless", `<return=1/>\n`);
+      writeTag("stateful", STATEFUL);
+      writeTaglib("stateless");
+      const cache = new Map();
+      assert.doesNotMatch(compileParent(cache), /_var_resume/);
+
+      writeTaglib("stateful");
+      taglib.clearCaches();
       assert.match(compileParent(cache), /_var_resume/);
     });
 

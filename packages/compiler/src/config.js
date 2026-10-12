@@ -150,6 +150,7 @@ const config = {
   /**
    * Compiling a Marko template may require other (used) Marko templates to compile.
    * To prevent compiling templates more than once, most of the compilation is cached.
+   * Clear it (or pass a new one) whenever a file it compiled may have changed.
    */
   cache: new Map(),
 
