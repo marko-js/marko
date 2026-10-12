@@ -130,6 +130,9 @@ export default (api, markoOpts) => {
         file.markoOpts = markoOpts;
         file.___taglibLookup = taglibLookup;
         file.___getMarkoFile = getMarkoFile;
+        // Copied, so a template that only translate loads is not kept with the
+        // cached file.
+        file.___analyzedFiles = new Map(sourceFile.___analyzedFiles);
 
         // hydrate output emits only the entry bootstrap, so taglib translators are skipped.
         if (markoOpts.output !== "hydrate") {
@@ -156,6 +159,7 @@ export default (api, markoOpts) => {
         file.markoOpts =
           file.___taglibLookup =
           file.___getMarkoFile =
+          file.___analyzedFiles =
             undefined;
       }
     },
@@ -182,11 +186,13 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   // (including `optimizeKnownTemplates`) is part of that contract.
   let cached = canCache && compileCache.get(id);
 
-  if (cached) {
+  // A template still analyzing is part of the analysis an import cycle led
+  // back from, so it is current.
+  if (cached && cached.file.___compileStage !== "analyze") {
     if (cached.contentHash !== contentHash) {
       // File content changed, invalidate the cache.
       cached = undefined;
-    } else if (hasStaleDependency(cached, compileCache, markoOpts)) {
+    } else if (hasStaleDependency(cached, markoOpts)) {
       // Some dependency changed, invalidate the cache.
       cached = undefined;
     }
@@ -220,6 +226,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     file.markoOpts = markoOpts;
     file.___compileStage = "parse";
     file.___getMarkoFile = getMarkoFile;
+    file.___analyzedFiles = new Map();
     const taglibLookup = (file.___taglibLookup = buildLookup(
       path.dirname(filename),
       translator,
@@ -368,25 +375,22 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   }
 }
 
-function hasStaleDependency(cached, compileCache, markoOpts) {
+function hasStaleDependency(cached, markoOpts) {
   const seen = new Set();
-  const pending = [cached.file.metadata.marko];
-  let meta;
+  const pending = [cached.file];
+  let file;
 
-  while ((meta = pending.pop())) {
-    for (const watchFile of meta.watchFiles) {
+  while ((file = pending.pop())) {
+    for (const watchFile of file.metadata.marko.watchFiles) {
       if (isNewerThan(watchFile, cached.time, markoOpts)) return true;
     }
 
-    // A child's own analysis feeds this file, so its children count too; a
-    // cached child carries the next level, and an uncached one ends the walk.
-    for (const analyzedTag of meta.analyzedTags || []) {
-      if (seen.has(analyzedTag)) continue;
-      seen.add(analyzedTag);
-      if (isNewerThan(analyzedTag, cached.time, markoOpts)) return true;
-
-      const child = compileCache.get(getTemplateId(markoOpts, analyzedTag));
-      if (child) pending.push(child.file.metadata.marko);
+    // A child's own analysis feeds this file, so its children count too.
+    for (const [filename, analyzedFile] of file.___analyzedFiles) {
+      if (seen.has(filename)) continue;
+      seen.add(filename);
+      if (isNewerThan(filename, cached.time, markoOpts)) return true;
+      pending.push(analyzedFile);
     }
   }
 
