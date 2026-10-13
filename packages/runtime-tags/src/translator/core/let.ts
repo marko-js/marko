@@ -29,15 +29,15 @@ import {
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { ensureSection, getSection } from "../util/sections";
 import {
   addValue,
   initValue,
   setSectionDebugVar,
-  setScopeProperty,
-  signalHasStatements,
+  signalHasWork,
+  writeSlot,
 } from "../util/signals";
-import { findSlot, getSlot, SlotKind } from "../util/slots";
+import { findSlot, ensureSlot, SlotKind } from "../util/slots";
 import { ALWAYS } from "../util/sources";
 import translateVar from "../util/translate-var";
 
@@ -87,7 +87,7 @@ export default {
         );
     }
 
-    const tagSection = getOrCreateSection(tag);
+    const tagSection = ensureSection(tag);
     const binding = trackVarReferences(tag, BindingType.let)!;
     const tagExtra = mergeReferences(tagSection, tag.node, [
       valueAttr?.value,
@@ -97,7 +97,7 @@ export default {
     setDerivedFrom(binding, tagExtra);
 
     if (valueChangeAttr) {
-      const changeSlot = getSlot(binding, SlotKind.ChangeHandler);
+      const changeSlot = ensureSlot(binding, SlotKind.ChangeHandler);
       // The runtime reads the change handler at the value's reserved id.
       reserveId(binding, ReservedId.ChangeHandler);
       tagExtra.retained = true;
@@ -122,7 +122,7 @@ export default {
     exit(tag) {
       const { node } = tag;
       // Nothing reads or assigns it and its value was dropped.
-      if (node.extra?.pruned) {
+      if (node.extra?.dropped) {
         tag.remove();
         return;
       }
@@ -169,7 +169,7 @@ export default {
         }
 
         signal.buildAssignment = (valueSection, value) => {
-          if (valueChangeAttr || signalHasStatements(signal)) {
+          if (valueChangeAttr || signalHasWork(signal)) {
             return t.callExpression(signal.identifier, [
               getScopeExpression(valueSection, signal.section),
               value,
@@ -184,7 +184,7 @@ export default {
             tag.insertBefore(t.expressionStatement(valueChangeAttr.value));
           }
         } else if (valueChangeAttr) {
-          const accessor = setScopeProperty(
+          const accessor = writeSlot(
             findSlot(binding, SlotKind.ChangeHandler),
             t.logicalExpression(
               "||",

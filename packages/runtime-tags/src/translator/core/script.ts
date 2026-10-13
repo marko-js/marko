@@ -18,7 +18,7 @@ import {
   getReferencedBindings,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { skip, traverseContains, traverseFindAwait } from "../util/traverse";
@@ -89,7 +89,7 @@ export default {
           const valueExtra = (attr.value.extra ??= {});
           valueExtra.isEffect = true;
           valueExtra.consumed = true;
-          addSetupExpr(getOrCreateSection(tag), attr.value);
+          addSetupExpr(ensureSection(tag), attr.value);
           getProgram().node.extra.isInteractive = true;
         }
       } else {

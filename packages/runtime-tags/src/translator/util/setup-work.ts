@@ -14,14 +14,14 @@ const [getSetupInfo] = createSectionState("setupWork", () => ({
   exprs: new Set<t.NodeExtra>(),
 }));
 
-// Client work the section runs when what `node` references changes, or in
-// setup without a node.
-export function addSetupExpr(section: Section, node?: t.Node) {
-  if (node) {
-    getSetupInfo(section).exprs.add((node.extra ??= {}));
-  } else {
-    getSetupInfo(section).always = true;
-  }
+// Client work the section runs when what `node` references changes.
+export function addSetupExpr(section: Section, node: t.Node) {
+  getSetupInfo(section).exprs.add((node.extra ??= {}));
+}
+
+// Client work the section runs in setup.
+export function addSetupWork(section: Section) {
+  getSetupInfo(section).always = true;
 }
 
 export function finalizeSetupWork() {
@@ -62,7 +62,7 @@ function hasOwnSetupWork(section: Section) {
   }
   for (const expr of info.exprs) {
     const extra = getCanonicalExtra(expr);
-    if (!extra.pruned && !getReferencedBindings(extra)) {
+    if (!extra.dropped && !getReferencedBindings(extra)) {
       return true;
     }
   }

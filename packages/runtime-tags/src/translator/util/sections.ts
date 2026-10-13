@@ -35,7 +35,7 @@ import {
 } from "./reasons";
 import { type Slot } from "./slots";
 import { getReasonForBinding } from "./solve-reasons";
-import { mergeSources, type Sources } from "./sources";
+import { ALWAYS, mergeSources, type Sources } from "./sources";
 import { createSectionState } from "./state";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -53,7 +53,7 @@ export { ContentType, StructureKind };
 // its template and walks identifiers.
 export type StructureRef = StructureSectionRef | StructureExportRef;
 
-// A sibling section's hoisted template/walks constants.
+// A sibling section's declared template/walks constants.
 export interface StructureSectionRef {
   kind: typeof StructureKind.SectionRef;
   section: Section;
@@ -149,7 +149,7 @@ export interface Section {
       }
     | undefined;
   /** Content a known child never reads, which no output renders. */
-  pruned: boolean;
+  dropped: boolean;
   hasAbortSignal: boolean;
   /** Count of distinct `$signal` expression roots; analyze allocates each
    * root's abort id from this so translates read, never re-derive. */
@@ -196,7 +196,7 @@ export const sectionUtil = new Sorted(function compareSections(
   return a.id - b.id;
 });
 
-export function startSection(
+export function ensureBodySection(
   path: t.NodePath<t.MarkoTagBody | t.Program>,
 ): Section | undefined {
   const extra = (path.node.extra ??= {});
@@ -207,7 +207,7 @@ export function startSection(
       ? path.parentPath
       : undefined;
     const parentSection = path.parentPath
-      ? getOrCreateSection(path.parentPath)
+      ? ensureSection(path.parentPath)
       : undefined;
     const sectionName = parentTag
       ? generateUid(
@@ -243,7 +243,7 @@ export function startSection(
       branchExpr: undefined,
       callSections: undefined,
       derives: undefined,
-      pruned: !!extra.pruned,
+      dropped: !!extra.dropped,
       hasAbortSignal: false,
       abortSignalExprs: 0,
       readsOwner: false,
@@ -263,7 +263,7 @@ export function startSection(
   return section;
 }
 
-export function getOrCreateSection(path: t.NodePath<any>) {
+export function ensureSection(path: t.NodePath<any>) {
   let cur = path;
 
   while (true) {
@@ -273,7 +273,7 @@ export function getOrCreateSection(path: t.NodePath<any>) {
         !cur.node.attributeTags &&
         !getTagFacts(cur.parentPath as t.NodePath<t.MarkoTag>).inlineBody)
     ) {
-      return startSection(cur)!;
+      return ensureBodySection(cur)!;
     }
 
     cur = cur.parentPath!;
@@ -286,10 +286,10 @@ export function getSectionForBody(
   return body.node.extra?.section;
 }
 
-// Content analysis pruned is rendered by no output, so translate never visits it.
+// Content analysis dropped is rendered by no output, so translate never visits it.
 // Attribute tags are inputs, not content: an unread one is removed on its own.
-export function removePrunedContent(tag: t.NodePath<t.MarkoTag>) {
-  if (tag.node.body.extra?.pruned) tag.node.body.body = [];
+export function removeDroppedContent(tag: t.NodePath<t.MarkoTag>) {
+  if (tag.node.body.extra?.dropped) tag.node.body.body = [];
 }
 
 export function getSection(path: t.NodePath) {
@@ -477,7 +477,7 @@ export function getRendererReason(section: Section) {
     return derivedReasons || false;
   }
 
-  return true;
+  return ALWAYS;
 }
 
 // Resume restores an optional branch's scopes into its owner, so a change can

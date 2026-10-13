@@ -144,7 +144,7 @@ export default {
           const loadFile = loadFileForImport(file, node.source.value)!;
 
           if (isOutputHTML()) {
-            const wrappedName = getOrCreateHtmlLoadWrapped(
+            const wrappedName = ensureHtmlLoadWrapped(
               getReadyId(loadFile)!,
               t.identifier(local.name),
               loadFile.opts.filename,
@@ -206,7 +206,7 @@ export default {
 
 // Same-file lazy imports of one template share the first wrapper's triggers;
 // diverging triggers only meaningfully conflict across files, out of scope here.
-function getOrCreateHtmlLoadWrapped(
+function ensureHtmlLoadWrapped(
   readyId: string,
   originalIdentifier: t.Expression,
   filename: string,

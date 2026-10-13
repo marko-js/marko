@@ -12,7 +12,7 @@ import {
 } from "../util/references";
 import { callRuntime, importRuntime } from "../util/runtime";
 import { scopeIdentifier } from "../util/scope-read";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { ensureSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 import { createSectionState } from "../util/state";
 import type { TemplateVisitor } from "../util/visitors";
@@ -68,7 +68,7 @@ export default {
       trackGlobalReference(identifier);
     } else if (name === "$signal") {
       assertReferencedInRender(identifier, name);
-      const section = getOrCreateSection(identifier);
+      const section = ensureSection(identifier);
       section.hasAbortSignal = true;
       setReferencesScope(identifier);
       // Stamped on the raw (not canonical) extra: ids stay one-per-root
@@ -124,7 +124,7 @@ export default {
           const exprRoot = identifier.node.extra!.exprRoot!;
           const canonicalExtra = getCanonicalExtra(exprRoot);
           // A dropped expression is never emitted, so it needs no signal or reset.
-          if (canonicalExtra.pruned) break;
+          if (canonicalExtra.dropped) break;
 
           const section = getSection(identifier);
           const exprId = exprRoot[kAbortId]!;
@@ -155,7 +155,7 @@ export default {
 } satisfies TemplateVisitor<t.Identifier>;
 
 // A bare `$global`/`$signal` can be a tag's whole value, which the tag checks
-// for `pruned` after its children translate, so the replacement must keep it.
+// for `dropped` after its children translate, so the replacement must keep it.
 function replaceWithExtra(path: t.NodePath, replacement: t.Expression) {
   replacement.extra = path.node.extra;
   path.replaceWith(replacement);

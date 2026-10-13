@@ -40,7 +40,7 @@ import {
   type AssignedBindingExtra,
   getReferencedBindings,
   getReferencedBindingsInFunction,
-  hasResumableWriter,
+  hasResumableAssignment,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
 } from "./references";
@@ -103,15 +103,15 @@ export interface Signal {
     /** None for a signal that runs on the scope alone. */
     value: t.Expression | undefined;
   }>;
-  intersection: Opt<Signal>;
+  intersections: Opt<Signal>;
   /** Signals this one forwards into: they must declare first when the
    * forward simplifies to a bare, eagerly evaluated reference. */
   forwards: Opt<Signal>;
   render: t.Statement[];
   effect: t.Statement[];
   hasHTMLEffect: boolean;
-  hasSideEffect: boolean;
-  forcePersist: boolean;
+  storesValue: boolean;
+  forceStore: boolean;
   inline: { value: t.Expression | undefined } | undefined;
   export: boolean;
   extraArgs: t.Expression[] | undefined;
@@ -126,10 +126,10 @@ type closureSignalBuilder = (
   render: t.Expression,
 ) => t.Expression;
 // Structured facts about a branch section's closure hop: what kind of
-// branch it is and which accessor (plus branch index) addresses it.
+// branch it is and which node binding (plus branch index) addresses it.
 export type ClosureHop =
-  | { kind: "if"; ref: Binding; index: number }
-  | { kind: "for"; ref: Binding };
+  | { kind: "if"; nodeBinding: Binding; index: number }
+  | { kind: "for"; nodeBinding: Binding };
 export const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",
   () => new Map(),
@@ -147,7 +147,7 @@ export function setClosureSignalBuilder(
 }
 
 export function buildClosureHop(hop: ClosureHop, render: t.Expression) {
-  const accessor = getScopeAccessorLiteral(hop.ref, true);
+  const accessor = getScopeAccessorLiteral(hop.nodeBinding, true);
   return hop.kind === "if"
     ? callRuntime("_if_closure", accessor, t.numericLiteral(hop.index), render)
     : callRuntime("_for_closure", accessor, render);
@@ -167,7 +167,7 @@ export function setSectionOwnerResumedByMarker(section: Section) {
 export function getContentClosureValues(bodySection: Section) {
   const contentClosures = filter(
     getContentClosures(bodySection),
-    isConditionallyWritten,
+    mayBeUnwritten,
   );
   if (!contentClosures) return;
   const scope = generateUidIdentifier("scope");
@@ -203,21 +203,21 @@ export function getContentClosureValues(bodySection: Section) {
   return { scope, levels: levels.reverse() };
 }
 
-function isConditionallyWritten(closure: Binding) {
-  return !isUnconditionalReason(findSlot(closure)?.reason);
+function mayBeUnwritten(closure: Binding) {
+  return !isUnconditionalReason(getWriteReason(closure));
 }
 
 const [getScopeProperties] = createSectionState<
   Map<string, { expression: t.Expression; reason: Reason }>
 >("scopeProperties", () => new Map());
-export function setScopeProperty(
-  found: PlaceSlot | undefined,
+export function writeSlot(
+  slot: PlaceSlot | undefined,
   expression: t.Expression,
 ) {
-  const reason = found?.reason;
+  const reason = slot?.reason;
   if (reason) {
-    const accessor = getSlotAccessor(found!);
-    getScopeProperties(found!.section).set(accessor, {
+    const accessor = getSlotAccessor(slot!);
+    getScopeProperties(slot!.section).set(accessor, {
       expression,
       reason,
     });
@@ -340,14 +340,14 @@ export function getSignal(
         referencedBindings,
         section,
         values: [],
-        intersection: undefined,
+        intersections: undefined,
         forwards: undefined,
         render: [],
         effect: [],
         hasHTMLEffect: false,
         build: undefined,
         export: !!exportName,
-        hasSideEffect: !!(
+        storesValue: !!(
           referencedBindings &&
           (Array.isArray(referencedBindings) ||
             referencedBindings.type === BindingType.dom ||
@@ -357,7 +357,7 @@ export function getSignal(
             referencedBindings.hoists ||
             referencedBindings.localOf)
         ),
-        forcePersist: false,
+        forceStore: false,
         inline: undefined,
         extraArgs: undefined,
         prependStatements: undefined,
@@ -368,7 +368,7 @@ export function getSignal(
     if (isOutputHTML()) {
       return signal;
     } else if (!referencedBindings) {
-      signal.build = () => getSignalFn(signal);
+      signal.build = () => buildSignalFn(signal);
     } else if (Array.isArray(referencedBindings)) {
       const meta = section.intersections!.get(referencedBindings)!;
       subscribe(meta.source || referencedBindings, signal);
@@ -385,19 +385,19 @@ export function getSignal(
           if (inline) {
             memberSignal.inline = inline;
           } else {
-            memberSignal.hasSideEffect = memberSignal.forcePersist = true;
+            memberSignal.storesValue = memberSignal.forceStore = true;
           }
         });
       }
       signal.build = () =>
-        buildIntersection(section, referencedBindings, getSignalFn(signal));
+        buildIntersection(section, referencedBindings, buildSignalFn(signal));
     } else if (
       referencedBindings.section !== section &&
       sectionUtil.has(referencedBindings.closureSections, section)
     ) {
       signal.build = () => {
         const closure = referencedBindings;
-        const render = getSignalFn(signal);
+        const render = buildSignalFn(signal);
         const closureSignalBuilder = getClosureSignalBuilder(section);
 
         if (closureSignalBuilder && !isDynamicClosure(section, closure)) {
@@ -436,27 +436,27 @@ function isChangeableDynamicClosure(section: Section, closure: Binding) {
   return (
     !!sources &&
     isDynamicClosure(section, closure) &&
-    (!sources.state || some(sources.state, hasResumableWriter))
+    (!sources.state || some(sources.state, hasResumableAssignment))
   );
 }
 
 export function initValue(binding: Binding, isLet = false) {
   const section = binding.section;
   const signal = getSignal(section, binding);
-  // Keep persisting the scope slot for lazy reads.
-  if (binding.hasLazyReads) signal.forcePersist = true;
+  // Lazy reads read the value from its scope slot.
+  if (binding.hasLazyReads) signal.forceStore = true;
   signal.build = () => {
     if (isPureMemberForwarder(binding)) {
       return undefined;
     }
 
-    const fn = getSignalFn(signal);
+    const fn = buildSignalFn(signal);
     if (
-      !signal.forcePersist &&
+      !signal.forceStore &&
       (isDirectAlias(binding) ||
-        (!signal.hasSideEffect &&
-          !someAlias(binding, hasAliasSideEffect, binding, true)) ||
-        !signalHasStatements(signal))
+        (!signal.storesValue &&
+          !someAlias(binding, aliasStoresValue, binding, true)) ||
+        !signalHasWork(signal))
     ) {
       return fn;
     }
@@ -478,19 +478,19 @@ function initAliasValue(alias: Binding) {
 }
 
 // A direct alias's work reads the slot of the binding it aliases.
-function hasAliasSideEffect(alias: Binding, binding: Binding) {
-  return alias !== binding && getSignal(alias.section, alias).hasSideEffect;
+function aliasStoresValue(alias: Binding, binding: Binding) {
+  return alias !== binding && getSignal(alias.section, alias).storesValue;
 }
 
-export function signalHasStatements(signal: Signal): boolean {
+export function signalHasWork(signal: Signal): boolean {
   if (
     signal.extraArgs ||
-    signal.forcePersist ||
+    signal.forceStore ||
     signal.render.length ||
     signal.effect.length ||
     signal.hasHTMLEffect ||
     signal.values.length ||
-    signal.intersection
+    signal.intersections
   ) {
     return true;
   }
@@ -522,7 +522,7 @@ function isPureMemberForwarder(binding: Binding): boolean {
     binding.assignments ||
     isForSelectorValue(binding) ||
     findSlot(binding)?.reason ||
-    getSignal(binding.section, binding).hasSideEffect
+    getSignal(binding.section, binding).storesValue
   ) {
     return false;
   }
@@ -582,7 +582,7 @@ function buildIntersection(
   );
 }
 
-export function getSignalFn(signal: Signal): t.Expression {
+export function buildSignalFn(signal: Signal): t.Expression {
   const section = signal.section;
   const binding = signal.referencedBindings;
   const isIntersection = Array.isArray(binding);
@@ -593,7 +593,7 @@ export function getSignalFn(signal: Signal): t.Expression {
   if (isValue) {
     for (const alias of binding.aliases) {
       const aliasSignal = getSignal(alias.section, alias);
-      if (signalHasStatements(aliasSignal)) {
+      if (signalHasWork(aliasSignal)) {
         let value: t.Expression = createScopeReadExpression(binding);
         if (isRest(alias)) {
           const aliasId = t.identifier(alias.name);
@@ -638,7 +638,7 @@ export function getSignalFn(signal: Signal): t.Expression {
     }
     signal.render.push(
       t.expressionStatement(
-        signalHasStatements(value.signal)
+        signalHasWork(value.signal)
           ? t.callExpression(value.signal.identifier, [
               scopeIdentifier,
               ...(value.value ? [value.value] : []),
@@ -652,7 +652,7 @@ export function getSignalFn(signal: Signal): t.Expression {
     );
   }
 
-  forEach(signal.intersection, (intersection) => {
+  forEach(signal.intersections, (intersection) => {
     pushScopeCall(signal.render, intersection.identifier);
   });
 
@@ -695,10 +695,10 @@ export function getSignalFn(signal: Signal): t.Expression {
   }
 
   if (isValue && findSlot(binding)?.reason) {
-    signal.hasSideEffect = true;
+    signal.storesValue = true;
   }
 
-  if (!signal.hasSideEffect) {
+  if (!signal.storesValue) {
     const call = isValue && getOnlyCall(signal.render);
     if (
       call &&
@@ -803,23 +803,23 @@ function isOwnValueRead(node: t.Node, binding: Binding) {
   );
 }
 
-function subscribe(references: ReferencedBindings, subscriber: Signal) {
+function subscribe(references: ReferencedBindings, intersection: Signal) {
   if (references) {
     forEach(references, (binding) => {
       if (binding.type !== BindingType.constant) {
         const source = getCanonicalBinding(binding);
-        const providerSignal = getSignal(subscriber.section, source);
-        providerSignal.hasSideEffect = true;
-        providerSignal.intersection = push(
-          providerSignal.intersection,
-          subscriber,
+        const providerSignal = getSignal(intersection.section, source);
+        providerSignal.storesValue = true;
+        providerSignal.intersections = push(
+          providerSignal.intersections,
+          intersection,
         );
       }
     });
   }
 }
 
-export function replaceNullishAndEmptyFunctionsWith0(
+export function trimEmptyArgs(
   args: (t.Expression | undefined | false)[],
 ): t.Expression[] {
   const len = args.length;
@@ -880,7 +880,7 @@ export function addStatement(
   }
 
   if (!isPure || type === "effect") {
-    signal.hasSideEffect = true;
+    signal.storesValue = true;
   }
 }
 
@@ -923,7 +923,7 @@ export function addValue(
     value.extra &&
     getReferencedBindingsInFunction(value.extra)
   ) {
-    parentSignal.hasSideEffect = true;
+    parentSignal.storesValue = true;
   }
 }
 
@@ -980,7 +980,7 @@ export function writeSignals(section: Section) {
       traverseReplace(value, "value", replaceRenderNode);
     }
 
-    forEach(signal.intersection, writeSignal);
+    forEach(signal.intersections, writeSignal);
 
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {
@@ -1023,7 +1023,7 @@ export function writeSignals(section: Section) {
       }
 
       if (t.isCallExpression(value)) {
-        replaceNullishAndEmptyFunctionsWith0(value.arguments as t.Expression[]);
+        trimEmptyArgs(value.arguments as t.Expression[]);
       }
 
       if (signal.register) {
@@ -1240,7 +1240,7 @@ export function addHTMLEffectCall(
   referencedBindings?: ReferencedBindings,
 ) {
   const signal = getSignal(section, referencedBindings);
-  signal.hasHTMLEffect = signal.hasSideEffect = true;
+  signal.hasHTMLEffect = signal.storesValue = true;
 }
 
 export function writeHTMLResumeStatements(
@@ -1284,15 +1284,12 @@ export function writeHTMLResumeStatements(
               ),
             ]),
           );
-          setScopeProperty(
-            findSlot(closure, SlotKind.ClosureScopes),
-            identifier,
-          );
+          writeSlot(findSlot(closure, SlotKind.ClosureScopes), identifier);
         }
 
         const closureIndex = getDynamicClosureIndex(closure, section);
         if (closureIndex) {
-          setScopeProperty(
+          writeSlot(
             findSlot(closure, SlotKind.ClosureSignalIndex, section),
             t.numericLiteral(closureIndex),
           );
@@ -1754,14 +1751,14 @@ export function replaceRegisteredFunctionNode(node: t.Node) {
     case "ClassMethod":
     case "ClassPrivateMethod":
     case "ObjectMethod": {
-      const replacement = getRegisteredFnExpression(node);
+      const replacement = registerFnExpression(node);
       return replacement && replaceMethodNode(node, replacement);
     }
     case "ArrowFunctionExpression":
     case "FunctionExpression":
-      return getRegisteredFnExpression(node);
+      return registerFnExpression(node);
     case "FunctionDeclaration": {
-      const replacement = getRegisteredFnExpression(node);
+      const replacement = registerFnExpression(node);
       return (
         replacement &&
         t.variableDeclaration("const", [
@@ -1772,7 +1769,7 @@ export function replaceRegisteredFunctionNode(node: t.Node) {
   }
 }
 
-function getRegisteredFnExpression(node: t.Function) {
+function registerFnExpression(node: t.Function) {
   const { extra } = node;
   if (isRegisteredFnExtra(extra)) {
     const id = extra.name;

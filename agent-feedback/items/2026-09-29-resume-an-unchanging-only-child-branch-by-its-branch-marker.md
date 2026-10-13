@@ -2,7 +2,7 @@
 type: perf
 impact: med
 effort: med
-site: packages/runtime-tags/src/translator/util/branch-tag.ts › getBranchEndArgs
+site: packages/runtime-tags/src/translator/util/branch-tag.ts › buildBranchEndArgs
 ---
 
 # Resume an unchanging only-child branch by its branch marker when the template already ships branch visiting

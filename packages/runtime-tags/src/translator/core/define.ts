@@ -18,19 +18,19 @@ import {
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
-  getOrCreateSection,
+  ensureSection,
+  ensureBodySection,
   getSection,
   getSectionForBody,
-  startSection,
 } from "../util/sections";
 import { setTagDerivedFrom } from "../util/set-tag-derived-from";
 import {
   addStatement,
   addValue,
+  buildSignalFn,
   getSignal,
-  getSignalFn,
   initValue,
-  signalHasStatements,
+  signalHasWork,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { propsToExpression, translateAttrs } from "../util/translate-attrs";
@@ -43,7 +43,7 @@ export default {
     assertHasVar(tag);
 
     const tagBody = tag.get("body");
-    const bodySection = startSection(tagBody);
+    const bodySection = ensureBodySection(tagBody);
     const varBinding = trackVarReferences(tag, BindingType.derived);
 
     if (!varBinding) {
@@ -91,7 +91,7 @@ export default {
     }
 
     analyzeAttributeTags(tag);
-    const tagExtra = mergeTagReferences(getOrCreateSection(tag), tag.node);
+    const tagExtra = mergeTagReferences(ensureSection(tag), tag.node);
 
     setDerivedFrom(varBinding, tagExtra);
   },
@@ -141,10 +141,10 @@ export default {
           if (bodySection && hasDirectReferences) {
             const signal = getSignal(bodySection, undefined);
             signal.build = () => {
-              const hasStatements = signalHasStatements(signal);
+              const hasWork = signalHasWork(signal);
               // Call sites skip this setup when analysis proved it a noop, so
-              // statements here mean that proof was wrong.
-              if (hasStatements && !bodySection.hasSetupWork) {
+              // work here means that proof was wrong.
+              if (hasWork && !bodySection.hasSetupWork) {
                 throw new Error(
                   "Marko internal error: analysis marked a `<define>` body's setup as empty but translation produced statements for it. Please open an issue with a reproduction.",
                 );
@@ -155,8 +155,8 @@ export default {
                 // counted (a class API tag); an empty block body would become `0`.
                 return callRuntime(
                   "_child_setup",
-                  hasStatements
-                    ? getSignalFn(signal)
+                  hasWork
+                    ? buildSignalFn(signal)
                     : t.arrowFunctionExpression([], t.numericLiteral(0)),
                 );
               }

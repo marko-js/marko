@@ -38,20 +38,20 @@ import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
-  getOrCreateSection,
+  ensureSection,
+  ensureBodySection,
   getSection,
   getSectionForBody,
-  startSection,
 } from "../util/sections";
 import {
   addValue,
   buildClosureHop,
   getSignal,
-  replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
+  trimEmptyArgs,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import { getSlot, SlotKind } from "../util/slots";
+import { ensureSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
@@ -60,7 +60,7 @@ import * as writer from "../util/writer";
 
 export default {
   analyze(tag) {
-    const tagSection = getOrCreateSection(tag);
+    const tagSection = ensureSection(tag);
     const isAttrTag = tag.node.body.attributeTags;
     const tagBody = tag.get("body");
     const paramsBinding = trackParamsReferences(
@@ -159,7 +159,7 @@ export default {
       );
     }
 
-    const bodySection = startSection(tagBody);
+    const bodySection = ensureBodySection(tagBody);
 
     if (!bodySection) {
       // An empty loop body deliberately compiles the whole tag away (not an
@@ -171,7 +171,7 @@ export default {
     const nodeBinding = structure.controlFlowNode(tag, tagSection);
     const tagExtra = mergeTagReferences(tagSection, tag.node);
 
-    addReasonExprs(getSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
+    addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
 
     if (paramsBinding) {
       setDerivedFrom(paramsBinding, tagExtra);
@@ -280,7 +280,7 @@ export default {
         const tagExtra = node.extra!;
         const referencedBindings = getReferencedBindings(tagExtra);
         const nodeBinding = tagExtra.nodeBinding!;
-        const hop = { kind: "for", ref: nodeBinding } as const;
+        const hop = { kind: "for", nodeBinding } as const;
         setClosureSignalBuilder(tag, hop, (closure, render) => {
           const selectorKeyBinding = getForSelectorKey(bodySection, closure);
           if (!selectorKeyBinding) {
@@ -304,9 +304,7 @@ export default {
               ? forTypeToUnkeyedBranchRuntime(forType)
               : forTypeToBranchRuntime(forType),
             getScopeAccessorLiteral(nodeBinding, true),
-            ...replaceNullishAndEmptyFunctionsWith0(
-              getBranchRendererArgs(bodySection),
-            ),
+            ...trimEmptyArgs(getBranchRendererArgs(bodySection)),
           );
         };
 

@@ -4,7 +4,7 @@ import { type Binding } from "./bindings";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { some } from "./optional";
 import { isStateReason, isUnconditionalReason, type Reasons } from "./reasons";
-import { hasResumableWriter } from "./references";
+import { hasResumableAssignment } from "./references";
 import { callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
 import {
@@ -44,7 +44,7 @@ export function resumeOwnerByMarkerWhenStatic(
   const branchExprReason = findSlot(nodeBinding, SlotKind.BranchExpr)?.reason;
   if (
     isStateReason(branchExprReason) &&
-    some(branchExprReason.state, hasResumableWriter) &&
+    some(branchExprReason.state, hasResumableAssignment) &&
     isUnconditionalReason(getBranchWriteReason(bodySection)) &&
     isUnconditionalReason(getWriteReason(nodeBinding))
   ) {
@@ -61,7 +61,7 @@ export function getBranchResumeArgs(
   const nodeBinding = tag.node.extra!.nodeBinding!;
   const scopeId = getScopeIdIdentifier(tagSection);
   const accessor = getScopeAccessorLiteral(nodeBinding);
-  const endArgs = getBranchEndArgs(
+  const endArgs = buildBranchEndArgs(
     tagSection,
     nodeBinding,
     getOnlyChildParentTagName(tag),
@@ -76,7 +76,7 @@ export function getBranchResumeArgs(
   ];
 }
 
-export function getBranchEndArgs(
+export function buildBranchEndArgs(
   tagSection: Section,
   nodeBinding: Binding,
   onlyChildParentTagName: string | false | undefined,

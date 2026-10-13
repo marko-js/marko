@@ -53,7 +53,7 @@ export function declareConstBefore(
 }
 
 const [getSharedUIDs] = createProgramState(() => new Map<string, string>());
-export function getSharedUid(name: string, section?: Section) {
+export function ensureSharedUid(name: string, section?: Section) {
   const sharedUIDs = getSharedUIDs();
   const nameKey = section ? `${section.id}:${name}` : name;
   let uniqueName = sharedUIDs.get(nameKey);
@@ -65,7 +65,7 @@ export function getSharedUid(name: string, section?: Section) {
   return uniqueName;
 }
 
-export function usedSharedUid(name: string) {
+export function hasSharedUid(name: string) {
   return getSharedUIDs().has(name);
 }
 

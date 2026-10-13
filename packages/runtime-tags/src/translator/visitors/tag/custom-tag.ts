@@ -15,7 +15,10 @@ import {
 import type { LoadTrigger } from "../../../html/assets";
 import { type Binding } from "../../util/bindings";
 import { BindingType, createBinding } from "../../util/bindings";
-import { generateUidIdentifier, getSharedUid } from "../../util/generate-uid";
+import {
+  generateUidIdentifier,
+  ensureSharedUid,
+} from "../../util/generate-uid";
 import { getStaticTagName, getTagName } from "../../util/get-tag-name";
 import {
   knownTagAnalyze,
@@ -33,8 +36,8 @@ import {
   scopeIdentifier,
 } from "../../util/scope-read";
 import {
-  getOrCreateSection,
-  removePrunedContent,
+  ensureSection,
+  removeDroppedContent,
   StructureKind,
 } from "../../util/sections";
 import { addStatement, getSignal } from "../../util/signals";
@@ -90,7 +93,7 @@ export default {
 
       if (
         childSection === programSection &&
-        getOrCreateSection(tag) === programSection
+        ensureSection(tag) === programSection
       ) {
         throw tag
           .get("name")
@@ -115,7 +118,7 @@ export default {
         tagExtra[kLoadTagBinding] = createBinding(
           "#text",
           BindingType.dom,
-          getOrCreateSection(tag),
+          ensureSection(tag),
         );
       }
 
@@ -138,7 +141,7 @@ export default {
   },
   translate: {
     enter(tag) {
-      removePrunedContent(tag);
+      removeDroppedContent(tag);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
@@ -159,7 +162,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   if (t.isStringLiteral(node.name)) {
     const relativePath = getTagRelativePath(tag);
     tagIdentifier = isCircularRequest(getFile(), relativePath)
-      ? t.identifier(getSharedUid("content"))
+      ? t.identifier(ensureSharedUid("content"))
       : importDefault(getFile(), relativePath, getTagName(tag));
   } else {
     tagIdentifier = node.name;

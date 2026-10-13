@@ -13,13 +13,13 @@ import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
 import {
   ContentType,
   getNodeContentType,
-  getOrCreateSection,
+  ensureSection,
   getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
-import { getSlot } from "../util/slots";
+import { ensureSlot } from "../util/slots";
 import {
   getPrevStaticSibling,
   getStaticPlaceholderText,
@@ -52,7 +52,7 @@ export default {
       if (getStaticPlaceholderText(node) === "") return;
 
       if (!isStaticText(node)) {
-        const section = getOrCreateSection(placeholder);
+        const section = ensureSection(placeholder);
         const nodeBinding = ((node.extra ??= {}).nodeBinding = createBinding(
           "#text",
           BindingType.dom,
@@ -60,7 +60,7 @@ export default {
         ));
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
-        addReasonExprs(getSlot(nodeBinding), valueExtra);
+        addReasonExprs(ensureSlot(nodeBinding), valueExtra);
       }
     },
     exit(placeholder) {

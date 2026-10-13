@@ -9,7 +9,7 @@ import { BindingType } from "../../util/bindings";
 import { getAttributeTagParent } from "../../util/get-parent-tag";
 import { isOutputHTML } from "../../util/marko-config";
 import { trackParamsReferences } from "../../util/references";
-import { removePrunedContent, startSection } from "../../util/sections";
+import { ensureBodySection, removeDroppedContent } from "../../util/sections";
 import { writeHTMLResumeStatements } from "../../util/signals";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -21,7 +21,7 @@ export default {
       assertNoVar(tag);
       assertNoArgs(tag);
       const body = tag.get("body");
-      const bodySection = startSection(body);
+      const bodySection = ensureBodySection(body);
       trackParamsReferences(body, BindingType.param);
       if (!findParentTag(tag)) {
         throw tag
@@ -46,12 +46,12 @@ export default {
   translate: {
     enter(tag) {
       // An attribute tag the child never reads was dropped.
-      if (tag.node.extra!.pruned) {
+      if (tag.node.extra!.dropped) {
         tag.remove();
         return;
       }
 
-      removePrunedContent(tag);
+      removeDroppedContent(tag);
 
       if (isOutputHTML()) {
         writer.flushBefore(tag);

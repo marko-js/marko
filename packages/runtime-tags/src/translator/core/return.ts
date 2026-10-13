@@ -19,14 +19,14 @@ import { addReason } from "../util/reasons";
 import { getReferencedBindings } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { scopeIdentifier } from "../util/scope-read";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import {
   addStatement,
   setReturnValueIdentifier,
-  setScopeProperty,
+  writeSlot,
 } from "../util/signals";
-import { findSectionSlot, getSectionSlot, SlotKind } from "../util/slots";
+import { findSectionSlot, ensureSectionSlot, SlotKind } from "../util/slots";
 import { ALWAYS } from "../util/sources";
 import { getTagFacts } from "../util/tag-facts";
 import { translateByTarget } from "../util/visitors";
@@ -83,7 +83,7 @@ export default {
       }
     }
 
-    const section = getOrCreateSection(tag);
+    const section = ensureSection(tag);
     if (section.returnValueExpr) {
       throw tag
         .get("name")
@@ -97,7 +97,10 @@ export default {
       (attrs.valueChange.extra ??= {}).isEffect = true;
       addSetupExpr(section, attrs.valueChange);
       // TODO: this should be based on the parent actually mutating the tag variable.
-      addReason(getSectionSlot(section, SlotKind.ReturnChangeHandler), ALWAYS);
+      addReason(
+        ensureSectionSlot(section, SlotKind.ReturnChangeHandler),
+        ALWAYS,
+      );
     }
 
     addSetupExpr(section, attrs.value);
@@ -111,7 +114,7 @@ export default {
         writer.flushBefore(tag);
 
         if (attrs.valueChange) {
-          setScopeProperty(
+          writeSlot(
             findSectionSlot(section, SlotKind.ReturnChangeHandler),
             t.logicalExpression(
               "||",

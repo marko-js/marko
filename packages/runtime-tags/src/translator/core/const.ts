@@ -22,7 +22,7 @@ import {
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addValue, initValue } from "../util/signals";
 import translateVar from "../util/translate-var";
@@ -62,7 +62,7 @@ export default {
         valueExtra.binding = aliased;
       } else {
         setDerivedFrom(binding, valueExtra);
-        addSetupExpr(getOrCreateSection(tag), valueAttr.value);
+        addSetupExpr(ensureSection(tag), valueAttr.value);
       }
     }
   },
@@ -78,7 +78,7 @@ export default {
         const section = getSection(tag);
 
         // An unread pure value was dropped, so there is nothing to derive.
-        if (varBinding && !varBinding.aliasOf && !value.extra?.pruned) {
+        if (varBinding && !varBinding.aliasOf && !value.extra?.dropped) {
           const derivation = initValue(varBinding)!;
           addValue(
             section,
@@ -87,7 +87,7 @@ export default {
             value,
           );
         }
-      } else if (!varBinding?.pruned || !value.extra?.pruned) {
+      } else if (!varBinding?.pruned || !value.extra?.dropped) {
         translateVar(tag, value);
       }
 

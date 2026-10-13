@@ -95,7 +95,7 @@ export function callRuntime(
 ) {
   const callExpression = t.callExpression(
     importRuntime(name),
-    filterArguments(args),
+    trimFalsyArgs(args),
   );
   if (isOutputDOM() && pureDOMFunctions.has(name)) {
     return t.addComment(callExpression, "leading", "@__PURE__");
@@ -108,7 +108,7 @@ export function dynamicImport(
   ...handlers: Array<t.Expression | Falsy>
 ) {
   const load = t.callExpression(t.import(), [t.stringLiteral(request)]);
-  const args = filterArguments(handlers);
+  const args = trimFalsyArgs(handlers);
   return args.length
     ? t.callExpression(t.memberExpression(load, t.identifier("then")), args)
     : load;
@@ -187,7 +187,7 @@ function assertTranslate(helper: string, name: string) {
   }
 }
 
-function filterArguments<A>(args: (A | Falsy)[]) {
+function trimFalsyArgs<A>(args: (A | Falsy)[]) {
   const filteredArgs = [];
   for (let i = args.length; i--;) {
     const arg = args[i];

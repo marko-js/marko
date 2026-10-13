@@ -5,7 +5,7 @@ import {
   getDebugNames,
   getDebugNamesAsIdentifier,
 } from "./bindings";
-import { generateUid, getSharedUid } from "./generate-uid";
+import { generateUid, ensureSharedUid } from "./generate-uid";
 import { some } from "./optional";
 import { isConditionalReason, type Reason, type Reasons } from "./reasons";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
@@ -126,12 +126,12 @@ export function getBranchWriteReason(section: Section) {
 export function getWriteGuard(
   section: Section,
   reason: undefined | Reason,
-  optional: boolean,
+  omitUnconditional: boolean,
 ) {
   if (!isDynamicWriteGuard(section, reason)) {
     if (!reason) return t.numericLiteral(0);
 
-    return optional
+    return omitUnconditional
       ? undefined
       : withLeadingComment(
           t.numericLiteral(1),
@@ -145,16 +145,16 @@ export function getWriteGuard(
 export function getWriteGuardForAny(
   section: Section,
   reasons: undefined | Reasons,
-  optional: boolean,
+  omitUnconditional: boolean,
 ) {
   if (!Array.isArray(reasons)) {
-    return getWriteGuard(section, reasons, optional);
+    return getWriteGuard(section, reasons, omitUnconditional);
   }
 
   // A static member decides before any dynamic guard is built (and hoisted).
   for (const reason of reasons) {
     if (!isConditionalReason(reason)) {
-      return optional
+      return omitUnconditional
         ? undefined
         : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state));
     }
@@ -282,5 +282,5 @@ function isConditionalSlot(slot: Slot) {
 }
 
 function scopeReasonIdentifier(section: Section) {
-  return t.identifier(getSharedUid(`scope${section.id}_reason`, section));
+  return t.identifier(ensureSharedUid(`scope${section.id}_reason`, section));
 }

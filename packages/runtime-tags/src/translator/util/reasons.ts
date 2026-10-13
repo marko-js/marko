@@ -28,7 +28,7 @@ import {
   type ParamReasonGroups,
   type Section,
 } from "./sections";
-import { getSectionSlot, getSlot, type Slot, SlotKind } from "./slots";
+import { ensureSectionSlot, ensureSlot, type Slot, SlotKind } from "./slots";
 import {
   compareSources,
   ALWAYS,
@@ -57,7 +57,7 @@ export function addReason(slot: Slot, reason: undefined | false | Reason) {
 }
 
 export function addAlwaysRead(binding: Binding) {
-  addReason(getSlot(binding), ALWAYS);
+  addReason(ensureSlot(binding), ALWAYS);
 }
 
 export function addReasonExprs(slot: Slot, expr: Opt<t.NodeExtra>) {
@@ -73,7 +73,7 @@ export function addOwnerReason(
 }
 
 function addOwnerSlotReason(section: Section, reason: Reason) {
-  addReason(getSectionSlot(section, SlotKind.Owner), reason);
+  addReason(ensureSectionSlot(section, SlotKind.Owner), reason);
 }
 
 // Read only when a caller's params (or `$global`) change, so each call site

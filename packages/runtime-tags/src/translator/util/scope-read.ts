@@ -4,7 +4,7 @@ import { type Binding, BindingType } from "./bindings";
 import { generateUidIdentifier } from "./generate-uid";
 import { getAccessorProp } from "./get-accessor-enums";
 import { isOutputDOM } from "./marko-config";
-import { createRead } from "./references";
+import { createResolvedRead } from "./references";
 import { getScopeAccessor } from "./scope-accessor";
 import type { Section } from "./sections";
 import { toMemberExpression } from "./to-property-name";
@@ -46,7 +46,7 @@ export function createScopeReadExpression(
 
   if (section === reference.section && reference.type !== BindingType.dom) {
     const exprExtra = (expr.extra ??= {});
-    exprExtra.read = createRead(reference, undefined);
+    exprExtra.read = createResolvedRead(reference, undefined);
     exprExtra.section = section;
   }
   return expr;

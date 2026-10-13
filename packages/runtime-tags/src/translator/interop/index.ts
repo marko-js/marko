@@ -39,7 +39,7 @@ export function createInteropTranslator(translate5: any) {
     preferAPI: translate5.preferAPI,
     transform: mergeVisitors(translate5.transform, translate6.transform),
     analyze: mergeVisitors(translate5.analyze, translate6.analyze),
-    translate: patchTranslateProgram(
+    translate: withInteropEntryBuilder(
       mergeVisitors(translate5.translate, translate6.translate) as t.Visitor,
     ),
     tagDiscoveryDirs: [
@@ -62,13 +62,13 @@ export function createInteropTranslator(translate5: any) {
     },
   };
 
-  function patchTranslateProgram(visitor: t.Visitor): t.Visitor {
+  function withInteropEntryBuilder(visitor: t.Visitor): t.Visitor {
     type EntryFile = t.BabelFile & {
       [kState]?: {
         has5: boolean;
         has6: boolean;
         needsCompat: boolean;
-        compatFiles: Set<string>;
+        classFnFiles: Set<string>;
       };
     };
     const { Program } = visitor;
@@ -87,7 +87,7 @@ export function createInteropTranslator(translate5: any) {
               sourceMaps: false,
             };
             const { resolveVirtualDependency } = entryFile.markoOpts;
-            const importHydrateProgram = (
+            const importEntryProgram = (
               name: string,
               statements: t.Statement[],
             ) => {
@@ -114,14 +114,14 @@ export function createInteropTranslator(translate5: any) {
                     ),
                   ]
                 : []),
-              ...Array.from(state.compatFiles, (compatFile) =>
-                t.importDeclaration([], t.stringLiteral(compatFile)),
+              ...Array.from(state.classFnFiles, (classFnFile) =>
+                t.importDeclaration([], t.stringLiteral(classFnFile)),
               ),
-              importHydrateProgram(
+              importEntryProgram(
                 "6",
                 translate6.internalEntryBuilder.build(entryFile, true),
               ),
-              importHydrateProgram(
+              importEntryProgram(
                 "5",
                 translate5.internalEntryBuilder.build(entryFile, true),
               ),
@@ -148,7 +148,7 @@ export function createInteropTranslator(translate5: any) {
           has5: false,
           has6: false,
           needsCompat: false,
-          compatFiles: new Set(),
+          classFnFiles: new Set(),
         });
 
         if (isTagsAPI(file)) {
@@ -161,7 +161,7 @@ export function createInteropTranslator(translate5: any) {
           }
           if (file.path.node.extra?.resumesClassFns) {
             // Its Tags resume registrations run when the module itself loads.
-            state.compatFiles.add(
+            state.classFnFiles.add(
               resolveRelativePath(entryFile, file.opts.filename as string),
             );
           }

@@ -64,13 +64,16 @@ function onlyComparesKey(
       let other = false;
       forEach(reads, (read) => {
         const resolved = read.extra.read;
-        const at = resolved && resolvesTo(resolved, canonical);
-        if (!at) return;
-        const keyRead = read.comparedTo?.extra?.read;
-        if (at === 2 || resolved.getter || !readsKey(keyRead, keyBinding)) {
-          other = true;
+        if (!resolved) return;
+        if (resolvesTo(resolved, canonical)) {
+          const keyRead = read.comparedTo?.extra?.read;
+          if (resolved.getter || !readsKey(keyRead, keyBinding)) {
+            other = true;
+          } else {
+            found = true;
+          }
         } else {
-          found = true;
+          other ||= resolvesThrough(resolved, canonical);
         }
       });
       if (other) return false;
@@ -79,19 +82,29 @@ function onlyComparesKey(
   return found;
 }
 
+// Whether the read's binding, past its props, is `canonical`.
 function resolvesTo(
   read: NonNullable<t.NodeExtra["read"]>,
   canonical: Binding,
-): 0 | 1 | 2 {
+) {
+  const binding = getPropertyAlias(read.binding, read.props);
+  return !!binding && getCanonicalBinding(binding) === canonical;
+}
+
+// Whether the read reads a property through `canonical`.
+function resolvesThrough(
+  read: NonNullable<t.NodeExtra["read"]>,
+  canonical: Binding,
+) {
   let binding: Binding | undefined = read.binding;
-  let through: 0 | 2 = 0;
+  let through = false;
   forEach(read.props, (prop) => {
     if (binding) {
-      if (getCanonicalBinding(binding) === canonical) through = 2;
+      through ||= getCanonicalBinding(binding) === canonical;
       binding = binding.propertyAliases.get(prop);
     }
   });
-  return binding && getCanonicalBinding(binding) === canonical ? 1 : through;
+  return through;
 }
 
 function readsKey(read: t.NodeExtra["read"], keyBinding: Binding): boolean {
