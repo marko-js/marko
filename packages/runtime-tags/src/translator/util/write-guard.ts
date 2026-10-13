@@ -11,9 +11,9 @@ import { isConditionalReason, type Reason, type Reasons } from "./reasons";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   getParamReasonGroupIndex,
-  groupParamsBySection,
   isSameOrChildSection,
   type ParamReasonGroup,
+  reduceParamGroups,
   type Section,
 } from "./sections";
 import { findSectionSlot, findSlot, type Slot, SlotKind } from "./slots";
@@ -181,11 +181,27 @@ export function getExprIfWritten<
 
 // Each param group's guard, or-ed together.
 function orEachParamGroup(params: Sources["param"], isGuard: boolean) {
-  let expr: t.Expression | undefined;
-  for (const [section, group] of groupParamsBySection(params)) {
-    expr = orGuard(expr, getOrHoistSectionGuard(section, group, isGuard));
-  }
-  return expr;
+  return reduceParamGroups(
+    params,
+    isGuard ? orWriteGuard : orWriteIf,
+    undefined,
+  );
+}
+
+function orWriteGuard(
+  expr: t.Expression | undefined,
+  section: Section,
+  group: ParamReasonGroup,
+) {
+  return orGuard(expr, getOrHoistSectionGuard(section, group, true));
+}
+
+function orWriteIf(
+  expr: t.Expression | undefined,
+  section: Section,
+  group: ParamReasonGroup,
+) {
+  return orGuard(expr, getOrHoistSectionGuard(section, group, false));
 }
 
 function orGuard(guard: t.Expression | undefined, other: t.Expression) {

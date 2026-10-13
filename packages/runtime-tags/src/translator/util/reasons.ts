@@ -17,7 +17,6 @@ import {
   type Opt,
   type SortedOneMany,
   reduce,
-  some,
 } from "./optional";
 import {
   isReferencedExtra,
@@ -158,42 +157,26 @@ export function mapParamReason(
   exprs: KnownExprs | undefined,
   ownParams: boolean,
 ): Reason | undefined {
-  let params: Sources["param"];
   let mapped: Reason | undefined;
-  let any = false;
-  forEach(reason.param, (param) => {
-    if ((param.section.program === program) === ownParams) {
-      any = true;
-      mapped = exprs
-        ? mergeSources(
-            mapped,
-            getSourcesForExprs(mapParamBindingToExpr(exprs, param)),
-          )
-        : ALWAYS;
-    } else {
-      params = bindingUtil.add(params, param) as Sources["param"];
-    }
+  // The params kept in their own terms: mapping one drops it.
+  const params = bindingUtil.filter(reason.param, (param) => {
+    if ((param.section.program === program) !== ownParams) return true;
+    mapped = exprs
+      ? mergeSources(
+          mapped,
+          getSourcesForExprs(mapParamBindingToExpr(exprs, param)),
+        )
+      : ALWAYS;
+    return false;
   });
   // Another template's state is nothing this one tracks: it is read always.
-  const foreignState = some(reason.state, isForeignBinding);
-  if (!any && !foreignState) return reason;
+  const state = bindingUtil.filter(reason.state, isOwnBinding);
+  const foreignState = state !== reason.state;
+  if (params === reason.param && !foreignState) return reason;
   return mergeSources(
-    mergeSources(
-      mapped,
-      withSources(
-        reason,
-        foreignState
-          ? bindingUtil.filter(reason.state, isOwnBinding)
-          : reason.state,
-        any ? params : reason.param,
-      ),
-    ),
+    mergeSources(mapped, withSources(reason, state, params)),
     foreignState ? ALWAYS : undefined,
   );
-}
-
-function isForeignBinding(binding: Binding) {
-  return !isOwnBinding(binding);
 }
 
 // The call site expressions a child template's params derive from, keyed the

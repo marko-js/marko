@@ -27,6 +27,8 @@ import {
   filter,
   findSorted,
   forEach,
+  first,
+  last,
   type Opt,
   type SortedOneMany,
   push,
@@ -62,7 +64,6 @@ import {
 import {
   forEachSection,
   getDirectClosures,
-  getHighestHoistSection,
   isResumedBranch,
   type Section,
   sectionUtil,
@@ -269,7 +270,7 @@ function resolveBindings() {
     }
 
     if (binding.hoists) {
-      const highestHoistSection = getHighestHoistSection(binding);
+      const highestHoistSection = first(binding.hoists);
       addAlwaysRead(binding);
       binding.section.hoisted = bindingUtil.add(
         binding.section.hoisted,
@@ -353,12 +354,9 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
     if (intersections.length) {
       const sectionAnchors = (anchors = new Map());
       for (const intersection of intersections) {
-        for (let i = intersection.length; i--;) {
-          if (isOwnedBinding(intersection[i])) {
-            sectionAnchors.set(intersection, intersection[i]);
-            break;
-          }
-        }
+        // Members are of the section or its ancestors, so owned ones trail.
+        const anchor = last(intersection);
+        if (isOwnedBinding(anchor)) sectionAnchors.set(intersection, anchor);
       }
 
       // Renders run in id order, so a closure-only intersection must come

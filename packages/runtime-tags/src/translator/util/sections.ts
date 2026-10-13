@@ -326,20 +326,23 @@ export function forEachSection(fn: (section: Section) => void) {
 // see may render later, the closures read in it from outside it.
 export function getContentClosures(section: Section) {
   if (section.branchExpr?.tagNameType === TagNameType.DynamicTag) {
-    return getClosuresFromAbove(section, section.depth);
+    return getClosuresFromAbove(section, section);
   }
 }
 
 function getClosuresFromAbove(
   section: Section,
-  depth: number,
+  top: Section,
 ): ReferencedBindings {
-  let closures = bindingUtil.filter(
+  // Closures are of ancestors, so those above `top` sort before it.
+  let closures = bindingUtil.leadingRun(
     section.referencedClosures,
-    (closure) => closure.section.depth < depth,
+    bindingToSection,
+    sectionUtil.compare,
+    top,
   );
   for (const child of section.children) {
-    closures = bindingUtil.union(closures, getClosuresFromAbove(child, depth));
+    closures = bindingUtil.union(closures, getClosuresFromAbove(child, top));
   }
   return closures;
 }
@@ -515,19 +518,13 @@ export function getDynamicClosureIndex(
 
 export function getDirectClosures(section: Section) {
   if (isResumedBranch(section)) {
-    return bindingUtil.filter(section.referencedClosures, (closure) =>
-      isImmediateOwner(section, closure),
+    return bindingUtil.range(
+      section.referencedClosures,
+      bindingToSection,
+      sectionUtil.compare,
+      section.parent!,
     );
   }
-}
-
-// The outermost section reading a binding through a hoist.
-export function getHighestHoistSection(binding: Binding) {
-  return reduce(binding.hoists, getHigherSection)!;
-}
-
-function getHigherSection(highest: Section | undefined, section: Section) {
-  return highest && highest.depth <= section.depth ? highest : section;
 }
 
 export function isSameOrChildSection(section: Section, other: Section) {
@@ -569,9 +566,7 @@ function ensureSlotReasonGroups(slot: Slot) {
 
 export function ensureReasonGroups(reason: Section["reason"]) {
   if (isConditionalReason(reason)) {
-    for (const [paramSection, params] of groupParamsBySection(reason.param)) {
-      ensureParamReasonGroup(paramSection, params);
-    }
+    forEachParamGroup(reason.param, ensureParamReasonGroup);
   }
 }
 
@@ -598,8 +593,26 @@ export function getParamReasonGroupIndex(
   return index;
 }
 
-export function groupParamsBySection(params: Sources["param"]) {
-  return bindingUtil.groupBy(params, bindingToSection);
+// Params sort by section, so each section's are a run.
+export function forEachParamGroup(
+  params: Sources["param"],
+  fn: (section: Section, group: ParamReasonGroup) => void,
+) {
+  bindingUtil.forEachRun(params, bindingToSection, sectionUtil.compare, fn);
+}
+
+export function reduceParamGroups<R>(
+  params: Sources["param"],
+  fn: (acc: R, section: Section, group: ParamReasonGroup) => R,
+  initial: R,
+) {
+  return bindingUtil.reduceRuns(
+    params,
+    bindingToSection,
+    sectionUtil.compare,
+    fn,
+    initial,
+  );
 }
 
 function bindingToSection(binding: Binding) {

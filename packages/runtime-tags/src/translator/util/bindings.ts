@@ -51,6 +51,8 @@ export interface Binding {
    * hands an expression's reads to the nearest ancestor it also reads. */
   reads: Map<ReferencedExtra, Opt<Read>>;
   aliases: Set<Binding>;
+  /** The sections reading it through a hoist: its own or its ancestors, so
+   * the first is the outermost. */
   hoists: SortedOpt<Section>;
   getters: Map<Getter["hoisted"], boolean>;
   property: string | undefined;
