@@ -42,6 +42,27 @@ export async function buildHostRuntime(outDir: string): Promise<HostRuntime> {
   return { html, dom };
 }
 
+export interface BuildOptions {
+  cache: Map<unknown, unknown>;
+  /** Links the runtime to the host's instance instead of bundling a copy. */
+  host?: HostRuntime;
+  /**
+   * Emits loadable JIT artifacts: a CommonJS server module that takes its
+   * runtime and asset registry from the loading host, and client chunks that
+   * import the host's runtime by URL.
+   */
+  jit?: {
+    hostDomUrl: string;
+    /** The specifier of a module the host already has an instance of; the server build links to it instead of bundling a copy. */
+    linkServer?(file: string): string | undefined;
+    /** A chunk of its own for a client module, so identical code gets one content-hashed URL from every build. */
+    splitClient?(file: string): string | undefined;
+  };
+}
+
+/** The specifier a JIT server module imports its asset flush from; the loading host provides it. */
+export const jitAssetsSpecifier = "cms-jit:assets";
+
 export interface BuildResult {
   /** Server bundle; its default export is the page template. */
   serverFile: string;
@@ -60,8 +81,7 @@ export interface BuildResult {
 export async function buildEntry(
   entryFile: string,
   outDir: string,
-  cache: Map<unknown, unknown>,
-  host?: HostRuntime,
+  { cache, host, jit }: BuildOptions,
 ): Promise<BuildResult> {
   const start = performance.now();
   const cwd = path.dirname(entryFile);
@@ -92,7 +112,9 @@ export async function buildEntry(
     ...shared,
     platform: "browser",
     plugins: [
-      host && hostRuntimePlugin(host.dom),
+      jit
+        ? hostRuntimePlugin(jit.hostDomUrl)
+        : host && hostRuntimePlugin(host.dom),
       virtual.plugin,
       domEntry.plugin,
       remapDebugPlugin(),
@@ -105,6 +127,9 @@ export async function buildEntry(
       minify: true,
       chunkFileNames: "[name]-[hash].mjs",
       entryFileNames: "[name]-[hash].mjs",
+      codeSplitting: jit?.splitClient && {
+        groups: [{ name: (id: string) => jit.splitClient!(id) ?? null }],
+      },
     },
   });
 
@@ -114,7 +139,10 @@ export async function buildEntry(
     input: { page: entryFile + ".page.mjs" },
     platform: "node",
     plugins: [
-      host && hostRuntimePlugin(host.html),
+      jit
+        ? hostRuntimePlugin("@marko/runtime-tags/html")
+        : host && hostRuntimePlugin(host.html),
+      jit?.linkServer && linkPlugin(jit.linkServer),
       virtual.plugin,
       remapDebugPlugin(),
       markoPlugin({ ...compileOpts, output: "html" }),
@@ -128,7 +156,10 @@ export async function buildEntry(
         },
         load: {
           filter: { id: assetRuntimeIdRe },
-          handler: () => `export function flush(g, type, asset) {
+          handler: () =>
+            jit
+              ? `export { flush } from "${jitAssetsSpecifier}";`
+              : `export function flush(g, type, asset) {
   const file = __MARKO_MANIFEST__[asset];
   if (!file || type !== "defer") return "";
   globalThis.__onAssetFlush?.(asset, file);
@@ -143,16 +174,20 @@ export async function buildEntry(
             const id = domEntry.get(chunk.facadeModuleId!);
             if (id) manifest[id] = chunk.fileName;
           }
+          if (jit) return null;
           return meta.magicString!.append(
             `;var __MARKO_MANIFEST__=${JSON.stringify(manifest)}`,
           );
         },
       },
     ],
+    external: jit ? [jitAssetsSpecifier] : undefined,
     output: {
       dir: path.join(outDir, "html"),
       cleanDir: true,
-      entryFileNames: "[name].mjs",
+      format: jit ? "cjs" : "esm",
+      exports: "named",
+      entryFileNames: jit ? "[name].cjs" : "[name].mjs",
     },
   });
 
@@ -163,21 +198,82 @@ export async function buildEntry(
   }
 
   return {
-    serverFile: path.join(outDir, "html", "page.mjs"),
+    serverFile: path.join(outDir, "html", jit ? "page.cjs" : "page.mjs"),
     chunks,
     manifest,
     ms: performance.now() - start,
   };
 }
 
-function hostRuntimePlugin(file: string): Plugin {
+function hostRuntimePlugin(id: string): Plugin {
   return {
     name: "host-runtime",
     resolveId: {
       filter: { id: runtimeRe },
-      handler: () => ({ id: file, external: "absolute" }),
+      handler: () => ({ id, external: "absolute" }),
     },
   };
+}
+
+function linkPlugin(link: (file: string) => string | undefined): Plugin {
+  return {
+    name: "link-host",
+    resolveId: {
+      filter: { id: markoRe },
+      async handler(source, importer) {
+        const resolved = await this.resolve(source, importer, {
+          skipSelf: true,
+        });
+        const specifier = resolved && link(resolved.id);
+        return specifier ? { id: specifier, external: true } : resolved;
+      },
+    },
+  };
+}
+
+/** Server templates the host links JIT builds against, compiled exactly as a JIT build compiles them. */
+export async function buildHostTemplates(
+  files: Record<string, string>,
+  outFile: string,
+  host: HostRuntime,
+) {
+  const entry = "\0host-templates";
+  await build({
+    input: entry,
+    platform: "node",
+    treeshake: true,
+    experimental: { nativeMagicString: true },
+    transform: { define: { MARKO_DEBUG: "false" } },
+    plugins: [
+      hostRuntimePlugin(host.html),
+      remapDebugPlugin(),
+      markoPlugin({
+        optimize: true,
+        modules: "esm",
+        babelConfig: { babelrc: false, configFile: false },
+        output: "html",
+      }),
+      {
+        name: "host-templates",
+        resolveId: {
+          filter: { id: /^\0host-templates$/ },
+          handler: (id) => id,
+        },
+        load: {
+          filter: { id: /^\0host-templates$/ },
+          handler: () =>
+            Object.entries(files)
+              .map(
+                ([name, file]) =>
+                  `export { default as ${JSON.stringify(name)} } from ${JSON.stringify(file)};`,
+              )
+              .join("\n"),
+        },
+      },
+    ],
+    output: { file: outFile, format: "esm" },
+  });
+  return outFile;
 }
 
 function entryLoader(

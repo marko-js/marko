@@ -96,12 +96,10 @@ async function runVariant(
   for (const [key, group] of groups) {
     const dir = path.join(genDir, variant.name, hashValue(key));
     const entryFile = writeEntry(dir, variant.files(group[0]));
-    const result = await buildEntry(
-      entryFile,
-      path.join(dir, "dist"),
+    const result = await buildEntry(entryFile, path.join(dir, "dist"), {
       cache,
       host,
-    );
+    });
     builds.push(result);
     const { default: template } = await import(
       pathToFileURL(result.serverFile).href

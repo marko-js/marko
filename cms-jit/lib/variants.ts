@@ -1,5 +1,5 @@
 import type { CmsPage } from "./pages";
-import { getShape } from "./shape";
+import { getShape, type Shape } from "./shape";
 
 const blockTypes = [
   "hero",
@@ -73,14 +73,7 @@ export const variants: Variant[] = [
     description:
       "JIT per shape (works today): comptime unrolls the section list into known runtime tags; content stays runtime input",
     key: (page) => `shape:${JSON.stringify(getShape(page))}`,
-    files: (page) => ({
-      "shape.json": JSON.stringify(getShape(page)),
-      "page.marko":
-        `comptime import shape from "./shape.json";\n` +
-        document(`<-for|section, i| of=shape.sections>
-${dispatch((type) => `<${type} ...input.sections[i].props/>`)}
-</-for>`),
-    }),
+    files: (page) => shapeFiles(getShape(page)),
     input: (page) => ({ title: page.title, sections: page.sections }),
   },
   {
@@ -99,6 +92,18 @@ ${dispatch((type) => `<-${type} ...section.props/>`)}
     input: (page) => ({ title: page.title }),
   },
 ];
+
+/** The JIT entry for a shape: the section list unrolls at compile time into known runtime tags, and content stays runtime input. */
+export function shapeFiles(shape: Shape): Record<string, string> {
+  return {
+    "shape.json": JSON.stringify(shape),
+    "page.marko":
+      `comptime import shape from "./shape.json";\n` +
+      document(`<-for|section, i| of=shape.sections>
+${dispatch((type) => `<${type} ...input.sections[i].props/>`)}
+</-for>`),
+  };
+}
 
 function toIdentifier(type: string) {
   return type.replace(/(^|-)(\w)/g, (_, _dash, c: string) => c.toUpperCase());

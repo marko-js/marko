@@ -37,10 +37,36 @@ const archetypes: Record<string, Archetype> = {
 
 export const archetypeNames = Object.keys(archetypes);
 
-/** Deterministic CMS payloads: same archetype ⇒ same block types, structural props vary a little. */
-export function generatePages(count: number, seed = 1): CmsPage[] {
+const anySection = [
+  promo,
+  (r: Rand) => hero(r, r.pick(["centered", "split", "minimal"])),
+  (r: Rand) => cardGrid(r, r.pick([2, 3, 4]), 3 + r.int(6)),
+  carousel,
+  faq,
+  (r: Rand) => richText(r, 0),
+];
+
+/**
+ * Deterministic CMS payloads: same archetype ⇒ same block types, structural
+ * props vary a little. A `longTail` share of pages are freeform: any blocks,
+ * in any order, so nearly every one is a shape of its own.
+ */
+export function generatePages(
+  count: number,
+  seed = 1,
+  longTail = 0,
+): CmsPage[] {
   const rand = createRand(seed);
   return Array.from({ length: count }, (_, i) => {
+    if (rand.bool(longTail)) {
+      return {
+        slug: `/freeform/${i}`,
+        title: `freeform page ${i}`,
+        sections: Array.from({ length: 3 + rand.int(5) }, () =>
+          rand.pick(anySection)(rand, i),
+        ),
+      };
+    }
     const archetype = archetypeNames[i % archetypeNames.length];
     return {
       slug: `/${archetype}/${i}`,
