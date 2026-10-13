@@ -95,9 +95,9 @@ function describeUnrenderable(value: unknown) {
 }
 
 export function assertValidLoopKey(key: unknown, seenKeys?: Set<unknown>) {
-  if (typeof key !== "string" && typeof key !== "number") {
+  if ((typeof key !== "string" && typeof key !== "number") || key !== key) {
     throw new Error(
-      `A \`<for>\` tag's \`by\` attribute must return a string or number for each item, but received ${key === null ? "null" : `type "${typeof key}"`}.`,
+      `A \`<for>\` tag's \`by\` attribute must return a string or number for each item, but received ${key === null || key !== key ? key : `type "${typeof key}"`}.`,
     );
   }
 
