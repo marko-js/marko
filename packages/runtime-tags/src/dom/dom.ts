@@ -6,13 +6,13 @@ import {
 } from "../common/errors";
 import {
   escapeStyleValue,
-  getEventHandlerName,
+  getEventType,
   isEventHandler,
-  isNotVoid,
+  isNotNullishOrFalse,
   withDynamicHtml,
   normalizeDynamicRenderer,
-  stringifyClassObject,
-  stringifyStyleObject,
+  stringifyClassEntry,
+  stringifyStyleEntry,
   toDelimitedString,
 } from "../common/helpers";
 import {
@@ -24,8 +24,11 @@ import {
   type Scope,
 } from "../common/types";
 import { trackAbort } from "./abort-signal";
-import { rendererKey, setConditionalRenderer } from "./control-flow";
-import { type ControllableAttrs, controllableScripts } from "./controllable";
+import { rendererKey, setBranch } from "./control-flow";
+import {
+  type ControllableSpreadHelper,
+  controllableScripts,
+} from "./controllable";
 import { _on } from "./event";
 import { parseHTML } from "./parse-html";
 import { createAndSetupBranch, type Renderer } from "./renderer";
@@ -68,7 +71,7 @@ export function _attr_class(element: Element, value: unknown) {
   setAttribute(
     element,
     "class",
-    toDelimitedString(value, " ", stringifyClassObject) || undefined,
+    toDelimitedString(value, " ", stringifyClassEntry) || undefined,
   );
 }
 
@@ -107,7 +110,7 @@ export function _attr_style(element: Element, value: unknown) {
   setAttribute(
     element,
     "style",
-    toDelimitedString(value, ";", stringifyStyleObject) || undefined,
+    toDelimitedString(value, ";", stringifyStyleEntry) || undefined,
   );
 }
 
@@ -178,7 +181,7 @@ export function _attrs(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
-  controllable?: ControllableAttrs,
+  controllable?: ControllableSpreadHelper,
 ) {
   const el = scope[nodeAccessor] as Element;
   for (let i = el.attributes.length; i--;) {
@@ -201,7 +204,7 @@ export function _attrs_content(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
-  controllable?: ControllableAttrs,
+  controllable?: ControllableSpreadHelper,
 ) {
   _attrs(scope, nodeAccessor, nextAttrs, controllable);
   _attr_content(scope, nodeAccessor, nextAttrs?.content);
@@ -224,7 +227,7 @@ export function _attrs_partial(
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
   skip: Record<string, 1>,
-  controllable?: ControllableAttrs,
+  controllable?: ControllableSpreadHelper,
 ) {
   const el = scope[nodeAccessor] as Element;
   const partial: Partial<typeof nextAttrs> = {};
@@ -240,7 +243,7 @@ export function _attrs_partial(
   }
 
   for (const name in nextAttrs) {
-    const key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
+    const key = isEventHandler(name) ? `on-${getEventType(name)}` : name;
     if (!skip[key]) partial[key] = nextAttrs[name];
   }
 
@@ -256,7 +259,7 @@ export function _attrs_partial_content(
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
   skip: Record<string, 1>,
-  controllable?: ControllableAttrs,
+  controllable?: ControllableSpreadHelper,
 ) {
   _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable);
   _attr_content(scope, nodeAccessor, nextAttrs?.content);
@@ -266,7 +269,7 @@ function attrsInternal(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
-  controllable?: ControllableAttrs,
+  controllable?: ControllableSpreadHelper,
 ) {
   const el = scope[nodeAccessor] as Element;
   let events = scope[AccessorPrefix.EventAttributes + nodeAccessor] as
@@ -301,7 +304,7 @@ function attrsInternal(
 
         if (isEventHandler(name)) {
           (events ||= scope[AccessorPrefix.EventAttributes + nodeAccessor] =
-            {})[getEventHandlerName(name)] = value;
+            {})[getEventType(name)] = value;
         } else if (
           !(skip?.test(name) || (name === "content" && el.tagName !== "META"))
         ) {
@@ -326,7 +329,7 @@ export function _attr_content(
     (scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] =
       rendererKey(content))
   ) {
-    setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch);
+    setBranch(scope, nodeAccessor, content, createAndSetupBranch);
     if (content?.[RendererProp.Accessor]) {
       subscribeToScopeSet(
         content[RendererProp.Owner]!,
@@ -424,7 +427,7 @@ function normalizeClientRender(value: any) {
 }
 
 export function normalizeAttrValue(value: unknown) {
-  if (isNotVoid(value)) {
+  if (isNotNullishOrFalse(value)) {
     return value === true ? "" : value + "";
   }
 }

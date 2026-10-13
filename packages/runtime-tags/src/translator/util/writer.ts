@@ -2,10 +2,10 @@ import { types as t } from "@marko/compiler";
 
 import { getScopeIdIdentifier, getSection } from "../util/sections";
 import { type Binding, BindingType } from "./bindings";
-import { isOutputHTML } from "./marko-config";
-import normalizeStringExpression, {
+import buildStringExpression, {
   appendLiteral,
-} from "./normalize-string-expression";
+} from "./build-string-expression";
+import { isOutputHTML } from "./marko-config";
 import type { Reason } from "./reasons";
 import { callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
@@ -38,8 +38,8 @@ function consumeHTML(path: t.NodePath<any>) {
   const section = getSection(path);
   const writes = getWrites(section);
   const trailers = getTrailerWrites(section);
-  const writeResult = normalizeStringExpression(writes.map(unwrapWrite));
-  const trailerResult = normalizeStringExpression(trailers);
+  const writeResult = buildStringExpression(writes.map(unwrapWrite));
+  const trailerResult = buildStringExpression(trailers);
   writes.length = 0;
   writes[0] = "";
   trailers.length = 0;

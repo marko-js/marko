@@ -132,7 +132,7 @@ let _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
 let R = /[\p{L}\p{N}]/gu;
 let inputType = "";
 let controllableScripts = {};
-let controllableRenders = {};
+let controllableSpreadHelpers = {};
 let _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let branchAccessor = "D" + nodeAccessor,
@@ -142,7 +142,7 @@ let _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
     branches.push(_content("", branchesArgs[i++], branchesArgs[i++], branchesArgs[i++])());
   return (scope, newBranch) => {
     newBranch !== (scope[branchAccessor] ?? (scope["A" + nodeAccessor] && 0)) &&
-      setConditionalRenderer(
+      setBranch(
         scope,
         nodeAccessor,
         branches[(scope[branchAccessor] = newBranch)],
@@ -201,7 +201,7 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
       ) {
         let renderer = normalizedRenderer || (getContent ? getContent(scope) : void 0);
         if (
-          (setConditionalRenderer(scope, nodeAccessor, renderer, createBranchWithTagNameOrRenderer),
+          (setBranch(scope, nodeAccessor, renderer, createBranchWithTagNameOrRenderer),
           getTagVar &&
             (normalizedRenderer
               ? ((scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
@@ -216,7 +216,7 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
         ) {
           if (getContent) {
             let content = getContent(scope);
-            (setConditionalRenderer(scope[childScopeAccessor], "a", content, createAndSetupBranch),
+            (setBranch(scope[childScopeAccessor], "a", content, createAndSetupBranch),
               content.f && subscribeToScopeSet(content.e, content.f, scope[childScopeAccessor].Aa));
           }
         } else
@@ -232,7 +232,7 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
             childScope,
             "a",
             (inputIsArgs ? args[0] : args) || {},
-            controllableRenders[childScope.a.tagName],
+            controllableSpreadHelpers[childScope.a.tagName],
           ),
             (childScope.Ia || childScope.Ea) && queueEffect(childScope, dynamicTagScript));
         else if ((normalizedRenderer.g?.(childScope), normalizedRenderer.d)) {
@@ -260,7 +260,7 @@ let _dynamic_tag_content = /*@__PURE__*/ withBranches((nodeAccessor) => {
     rendererAccessor = "D" + nodeAccessor;
   return (scope, renderer) => {
     (scope[rendererAccessor] !== (scope[rendererAccessor] = rendererKey(renderer)) &&
-      (setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch),
+      (setBranch(scope, nodeAccessor, renderer, createAndSetupBranch),
       renderer?.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor])),
       renderer?.g?.(scope[childScopeAccessor]));
   };
@@ -363,10 +363,10 @@ let _for_until_unkeyed = /*@__PURE__*/ loop(([until, from, step], cb) =>
 function _call(fn, v) {
   return (fn(v), v);
 }
-function stringifyClassObject(name, value) {
+function stringifyClassEntry(name, value) {
   return value ? name : "";
 }
-function stringifyStyleObject(name, value) {
+function stringifyStyleEntry(name, value) {
   return value || value === 0 ? escapeStyleAttr(name) + ":" + escapeStyleAttr(value + "") : "";
 }
 function escapeStyleAttr(str) {
@@ -390,10 +390,10 @@ function escapeStyleValue(str) {
 function isEventHandler(name) {
   return /^on[A-Z-]/.test(name);
 }
-function getEventHandlerName(name) {
+function getEventType(name) {
   return name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase();
 }
-function isNotVoid(value) {
+function isNotNullishOrFalse(value) {
   return value != null && value !== !1;
 }
 function isPromise(value) {
@@ -1224,7 +1224,7 @@ function setAttribute(element, name, value) {
     (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
 }
 function _attr_class(element, value) {
-  setAttribute(element, "class", toDelimitedString(value, " ", stringifyClassObject) || void 0);
+  setAttribute(element, "class", toDelimitedString(value, " ", stringifyClassEntry) || void 0);
 }
 function _attr_class_items(element, items) {
   for (let key in items) _attr_class_item(element, key, items[key]);
@@ -1241,7 +1241,7 @@ function _attr_class_names(element, names, value) {
   while ((start = end + 1));
 }
 function _attr_style(element, value) {
-  setAttribute(element, "style", toDelimitedString(value, ";", stringifyStyleObject) || void 0);
+  setAttribute(element, "style", toDelimitedString(value, ";", stringifyStyleEntry) || void 0);
 }
 function _attr_style_items(element, items) {
   for (let key in items) _attr_style_item(element, key, items[key]);
@@ -1305,7 +1305,7 @@ function _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable) {
       el.removeAttribute(name);
   }
   for (let name in nextAttrs) {
-    let key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
+    let key = isEventHandler(name) ? `on-${getEventType(name)}` : name;
     skip[key] || (partial[key] = nextAttrs[name]);
   }
   attrsInternal(scope, nodeAccessor, partial, controllable);
@@ -1334,7 +1334,7 @@ function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
         break;
       default:
         isEventHandler(name)
-          ? ((events ||= scope["I" + nodeAccessor] = {})[getEventHandlerName(name)] = value)
+          ? ((events ||= scope["I" + nodeAccessor] = {})[getEventType(name)] = value)
           : skip?.test(name) ||
             (name === "content" && el.tagName !== "META") ||
             _attr(el, name, value);
@@ -1344,7 +1344,7 @@ function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
 function _attr_content(scope, nodeAccessor, value) {
   let content = normalizeClientRender(value);
   (scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = rendererKey(content)) &&
-    (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
+    (setBranch(scope, nodeAccessor, content, createAndSetupBranch),
     content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor])),
     content?.g?.(scope["A" + nodeAccessor]));
 }
@@ -1359,7 +1359,7 @@ function normalizeClientRender(value) {
   if (renderer && renderer.a) return renderer;
 }
 function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+  if (isNotNullishOrFalse(value)) return value === !0 ? "" : value + "";
 }
 function _lifecycle(scope, thisObj, index = 0) {
   let accessor = "K" + index,
@@ -1411,7 +1411,7 @@ function resolveCursorPosition(inputType, initialPosition, initialValue, updated
 }
 function _attr_input_checked_default(scope, nodeAccessor, checked) {
   let el = scope[nodeAccessor],
-    normalizedChecked = isNotVoid(checked);
+    normalizedChecked = isNotNullishOrFalse(checked);
   if (el.defaultChecked !== normalizedChecked) {
     let restoreValue = scope.H < runId ? el.checked : normalizedChecked;
     ((el.defaultChecked = normalizedChecked),
@@ -1422,10 +1422,10 @@ function _attr_input_checked_default(scope, nodeAccessor, checked) {
  * page carries only the control kinds its tags can be (`_attrs_script`
  * resolves the kind at run time). */
 /** The render pass equivalent, for a tag whose name is only known at run time;
- * a statically named tag passes its claim to `_attrs` instead. */
+ * a statically named tag passes its helper to `_attrs` instead. */
 function _attr_input_checked(scope, nodeAccessor, checked, checkedChange) {
   let el = scope[nodeAccessor],
-    normalizedChecked = isNotVoid(checked);
+    normalizedChecked = isNotNullishOrFalse(checked);
   ((scope["E" + nodeAccessor] = checkedChange),
     (scope["F" + nodeAccessor] = checkedChange ? 0 : 5),
     checkedChange && scope.H < runId
@@ -1613,7 +1613,7 @@ function _attr_select_value_script(scope, nodeAccessor) {
     }
   }
   (syncControllableFormInput(el, hasSelectChanged, onChange),
-    observeOnce(
+    observeControlled(
       scope,
       nodeAccessor,
       {
@@ -1637,10 +1637,10 @@ function getSelectValue(el, multiple) {
   return multiple ? Array.from(el.selectedOptions, (opt) => opt.value) : el.value;
 }
 function _attr_details_or_dialog_open_default(scope, nodeAccessor, open) {
-  scope.H === runId && (scope[nodeAccessor].open = isNotVoid(open));
+  scope.H === runId && (scope[nodeAccessor].open = isNotNullishOrFalse(open));
 }
 function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
-  let normalizedOpen = (scope["G" + nodeAccessor] = isNotVoid(open));
+  let normalizedOpen = (scope["G" + nodeAccessor] = isNotNullishOrFalse(open));
   ((scope["E" + nodeAccessor] = openChange),
     (scope["F" + nodeAccessor] = openChange ? 4 : 5),
     openChange && scope.H < runId
@@ -1649,7 +1649,7 @@ function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
 }
 function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
-  observeOnce(
+  observeControlled(
     scope,
     nodeAccessor,
     {
@@ -1665,7 +1665,7 @@ function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
     },
   );
 }
-function observeOnce(scope, nodeAccessor, init, callback) {
+function observeControlled(scope, nodeAccessor, init, callback) {
   (scope["N" + nodeAccessor] ||= new MutationObserver(callback)).observe(scope[nodeAccessor], init);
 }
 function syncControllableFormInput(el, hasChanged, onChange) {
@@ -1808,12 +1808,12 @@ function _await_promise(nodeAccessor, params) {
                   }
                 }
               })),
-            scheduleAwaitFrame(awaitCounter, scope, () => {
+            countAwait(awaitCounter, scope, () => {
               awaitBranch.V ||
                 (awaitBranch.S.parentNode.insertBefore(scope[nodeAccessor], awaitBranch.S),
                 tempDetachBranch(tryBranch));
             }))
-          : (awaitCounter = addAwaitCounter(scope, tryBranch)));
+          : (awaitCounter = startAwait(scope, tryBranch)));
       let thisPromise = (scope[promiseAccessor] = promise.then(
         (data) => {
           if (thisPromise === scope[promiseAccessor]) {
@@ -1866,13 +1866,13 @@ function _await_content(nodeAccessor, template, walks, setup) {
       typeof scope[promiseAccessor] == "function" && scope[promiseAccessor]());
   };
 }
-function addAwaitCounter(scope, tryBranch = findTryWithPlaceholder(scope)) {
+function startAwait(scope, tryBranch = findTryWithPlaceholder(scope)) {
   if (!tryBranch) return;
   let awaitCounter = tryBranch.O;
   return (
     awaitCounter?.i ||
       (awaitCounter = createAwaitCounter(tryBranch, () => dismissPlaceholder(tryBranch))),
-    scheduleAwaitFrame(awaitCounter, tryBranch, () => {
+    countAwait(awaitCounter, tryBranch, () => {
       (((tryBranch.P = createAndSetupBranch(
         tryBranch.$,
         tryBranch.Q(),
@@ -1885,7 +1885,7 @@ function addAwaitCounter(scope, tryBranch = findTryWithPlaceholder(scope)) {
     awaitCounter
   );
 }
-function scheduleAwaitFrame(awaitCounter, scope, render) {
+function countAwait(awaitCounter, scope, render) {
   awaitCounter.i++ ||
     requestAnimationFrame(
       () => awaitCounter.i && runEffects(prepareEffects(() => queueRender(scope, render, -1))),
@@ -1939,7 +1939,7 @@ function _try(nodeAccessor, template, walks, setup, placeholderContent, catchCon
   let branchAccessor = "A" + nodeAccessor,
     renderer = _content("", template, walks, setup)();
   return (scope) => {
-    setConditionalRenderer(scope, nodeAccessor, renderer, createAndSetupBranch);
+    setBranch(scope, nodeAccessor, renderer, createAndSetupBranch);
     let branch = scope[branchAccessor];
     ((branch.C = nodeAccessor),
       (branch.E = catchContent),
@@ -1956,7 +1956,7 @@ function renderCatch(scope, error) {
       (owner["A" + tryWithCatch.C] = placeholderBranch),
       destroyBranch(tryWithCatch));
     let catchContent = tryWithCatch.E();
-    (setConditionalRenderer(owner, tryWithCatch.C, catchContent, createAndSetupBranch),
+    (setBranch(owner, tryWithCatch.C, catchContent, createAndSetupBranch),
       catchContent.d?.(owner["A" + tryWithCatch.C], [error]));
   } else throw error;
 }
@@ -1979,7 +1979,7 @@ function patchDynamicTag(fn) {
 function dynamicTagScript(branch) {
   _attrs_script(branch, "a");
 }
-function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) {
+function setBranch(scope, nodeAccessor, newRenderer, createBranch) {
   let referenceNode = scope[nodeAccessor],
     prevBranch = scope["A" + nodeAccessor],
     parentNode =
@@ -2234,7 +2234,7 @@ function _load_template(id, load) {
       0,
       0,
       (branch) => {
-        let awaitCounter = addAwaitCounter(branch);
+        let awaitCounter = startAwait(branch);
         ((branch.X ||= /* @__PURE__ */ new Map()),
           (pending ||= load()).then(
             (renderer) => {
@@ -2257,7 +2257,7 @@ function _load_setup(load) {
   return (owner, child, marker) => {
     if (renderer) queueRender(child, insertCached, -1, marker);
     else {
-      let awaitCounter = addAwaitCounter(owner);
+      let awaitCounter = startAwait(owner);
       ((child.X ||= /* @__PURE__ */ new Map()),
         (pending ||= load()).then(
           (mod) => {
@@ -2282,7 +2282,7 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
     },
     remaining;
   if ((remaining = values?.size)) {
-    awaitCounter ||= addAwaitCounter(branch);
+    awaitCounter ||= startAwait(branch);
     let fail = loadFailed(branch, awaitCounter);
     values.forEach(([, apply], promise) =>
       promise.then(

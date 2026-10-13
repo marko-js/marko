@@ -28,8 +28,8 @@ import {
   deferBranchStart,
   getAsyncContent,
   type ScopeInternals,
+  withAsyncContent,
   withBranchId,
-  withIsAsync,
 } from "./writer";
 
 // `<show>` always renders; hidden ranges use `<t>` so the walker reaches them.
@@ -206,7 +206,7 @@ export function iterateForTo(
 }
 
 export function _for_until(
-  to: number,
+  until: number,
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
@@ -222,7 +222,7 @@ export function _for_until(
   forBranches(
     by,
     cb,
-    iterateForUntil(to, from, step, cb, by),
+    iterateForUntil(until, from, step, cb, by),
     scopeId,
     accessor,
     branchGuard,
@@ -234,7 +234,7 @@ export function _for_until(
 }
 
 export function iterateForUntil(
-  to: number,
+  until: number,
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
@@ -243,11 +243,11 @@ export function iterateForUntil(
   return (each) => {
     let index = 0;
     return each
-      ? forUntil(to, from, step, (value) => {
+      ? forUntil(until, from, step, (value) => {
           const itemKey = forStepBy(by, value);
           each(itemKey, itemKey === index++, value);
         })
-      : forUntil(to, from, step, cb);
+      : forUntil(until, from, step, cb);
   };
 }
 
@@ -497,7 +497,11 @@ export function _await<T>(
                 $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
               );
               withBranchId(branchId, () =>
-                withIsAsync({ parent: getAsyncContent(chunk) }, content, value),
+                withAsyncContent(
+                  { parent: getAsyncContent(chunk) },
+                  content,
+                  value,
+                ),
               );
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(
@@ -508,7 +512,7 @@ export function _await<T>(
             } else {
               const renderedSince = _peek_scope_id() !== startId;
               const async: AsyncContent = { parent: getAsyncContent(chunk) };
-              withIsAsync(async, content, value);
+              withAsyncContent(async, content, value);
               // Branches rendered after it while it waited took smaller ids and would adopt
               // its scopes; nothing follows content ending the page or a reordered `<try>` body.
               async.visit =
@@ -564,7 +568,7 @@ export function _try(
     );
   // Whether `tryBoundary` writes the renderers itself once the body settles,
   // or not at all once its `@catch` rendered.
-  const renderersWritten = tryBoundary(
+  const writesRenderers = tryBoundary(
     placeholderContent
       ? () =>
           tryPlaceholder(
@@ -584,7 +588,7 @@ export function _try(
   applyBranchStart(chunk, beforeBranch, keepsMarks);
   if (!keepsMarks) return;
 
-  if (!renderersWritten) renderers();
+  if (!writesRenderers) renderers();
   $chunk.writeHTML(
     state.mark(
       ResumeSymbol.BranchEnd,
@@ -634,17 +638,17 @@ export function tryBoundary(
   const { state } = boundary;
   // Aborts with its parent so a disconnected render strands pending body work;
   // the outer-aborted check in onNext keeps that from firing the catch.
-  const catchBoundary = new Boundary(state, undefined, boundary);
-  if (catchContent) catchBoundary.withinCatch = true;
-  const body = chunk.fork(catchBoundary, null);
+  const bodyBoundary = new Boundary(state, undefined, boundary);
+  if (catchContent) bodyBoundary.withinCatch = true;
+  const body = chunk.fork(bodyBoundary, null);
   const bodyEnd = body.render(withBranchId, branchId, content);
 
-  if (catchBoundary.aborted) {
+  if (bodyBoundary.aborted) {
     // Without a `@catch` the error ends the enclosing render, like any throw in it.
-    if (!catchContent) throw catchBoundary.reason;
+    if (!catchContent) throw bodyBoundary.reason;
     // Sync error. The body's already-written scopes stay in the resume payload
     // unused; a `@catch` firing is rare enough not to warrant dropping them.
-    catchContent(catchBoundary.reason);
+    catchContent(bodyBoundary.reason);
     // A rendered `@catch` is not a try, as on the client: it gets no renderers.
     return true;
   }
@@ -655,7 +659,7 @@ export function tryBoundary(
     return false;
   }
 
-  const renderersAtSettle = !catchBoundary.resumeWrites;
+  const renderersAtSettle = !bodyBoundary.resumeWrites;
   // Forked from the try's chunk: an `_await` in the body replaces the body's
   // context with a copy, on which the branch id would never restore.
   const bodyNext = (bodyEnd.next = chunk.forkRest(boundary));
@@ -671,11 +675,11 @@ export function tryBoundary(
     captureContext(chunk);
   }
 
-  catchBoundary.onNext = () => {
+  bodyBoundary.onNext = () => {
     if (boundary.aborted) return;
-    if (catchBoundary.aborted) {
+    if (bodyBoundary.aborted) {
       if (!reorderId) {
-        boundary.abort(catchBoundary.reason);
+        boundary.abort(bodyBoundary.reason);
         return;
       }
 
@@ -686,7 +690,7 @@ export function tryBoundary(
       // Sync, the catch streams in order where the body was; with content of
       // its own to wait on, it streams as a reorder so nothing after it waits.
       const inOrder =
-        catchChunk === catchChunk.render(catchContent!, catchBoundary.reason);
+        catchChunk === catchChunk.render(catchContent!, bodyBoundary.reason);
       // A throw in the catch reached the enclosing `<try>`, whose catch cut this one.
       if (boundary.aborted) return;
       // A reordered catch names the try's branch for the client to adopt it into.
@@ -724,8 +728,8 @@ export function tryBoundary(
       }
 
       boundary.endAsync();
-    } else if (!catchBoundary.count) {
-      if (renderersAtSettle && catchBoundary.resumeWrites) {
+    } else if (!bodyBoundary.count) {
+      if (renderersAtSettle && bodyBoundary.resumeWrites) {
         bodyEnd.render(renderers);
       }
       chunk.catchRange = null;

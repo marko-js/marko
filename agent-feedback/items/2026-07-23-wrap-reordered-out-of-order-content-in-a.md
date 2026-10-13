@@ -2,7 +2,7 @@
 type: bug
 impact: high
 effort: high
-site: packages/runtime-tags/src/html/writer.ts › Chunk.flushScript
+site: packages/runtime-tags/src/html/writer.ts › Chunk.flush
 ---
 
 # Wrap reordered out-of-order content in a parser-context-legal container

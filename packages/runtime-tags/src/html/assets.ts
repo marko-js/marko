@@ -46,7 +46,7 @@ interface Asset {
   id: string;
   flush: AssetFlush;
   triggers: Trigger[] | undefined;
-  // Kept to write again: a resolver may write each url only once per render.
+  // Kept to write again: an asset flush may write each url only once per render.
   block: string | undefined;
   defer: string | undefined;
   script: string | undefined;
@@ -69,7 +69,7 @@ type AssetFlush = (
   asset: string,
 ) => string;
 
-// Its importer passes the bundler's resolver, so it resolves on a page of either
+// Its importer passes the bundler's asset flush, so it resolves on a page of either
 // API, whichever page entry rendered. It serializes as the template it loads.
 export function withLoadAssets(
   renderer: ServerRenderer,
@@ -101,7 +101,7 @@ export function writeLoadAsset(
 
 export function withPageAssets(
   template: ServerRenderer & Template,
-  runtime: AssetFlush,
+  flush: AssetFlush,
   assetId: string,
   runtimeId?: string,
 ): Template {
@@ -126,7 +126,7 @@ export function withPageAssets(
         );
       }
     }
-    const asset = addAsset(g, assetId, runtime);
+    const asset = addAsset(g, assetId, flush);
     // A page entry rendered after the first flush cleared `__flush__` takes the
     // top-level branch on purpose: co-rendered pages batch assets and flushes.
     if (g.__flush__) {

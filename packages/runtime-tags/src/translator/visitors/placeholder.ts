@@ -1,13 +1,14 @@
 import { types as t } from "@marko/compiler";
 
+import { _escape, _unescaped } from "../../html/content";
 import { BindingType, createBinding } from "../util/bindings";
-import { injectTextCoercion } from "../util/body-to-text-literal";
+import { injectTextCoercion } from "../util/body-to-text";
+import buildStringExpression from "../util/build-string-expression";
 import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
-import normalizeStringExpression from "../util/normalize-string-expression";
 import { addReasonExprs } from "../util/reasons";
 import { getReferencedBindings } from "../util/references";
-import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
 import {
@@ -21,12 +22,12 @@ import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import { ensureSlot } from "../util/slots";
 import {
-  getPrevStaticSibling,
+  followsStaticText,
   getStaticPlaceholderText,
   isStaticText,
 } from "../util/static-text";
 import * as structure from "../util/structure";
-import { getTagFacts, isNonHTMLText } from "../util/tag-facts";
+import { getTagFacts, isInTextBody } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
 import { getWriteGuard, getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
@@ -45,7 +46,7 @@ type HTMLMethod = "_escape" | "_unescaped";
 export default {
   analyze: {
     enter(placeholder) {
-      if (isNonHTMLText(placeholder)) return;
+      if (isInTextBody(placeholder)) return;
 
       const { node } = placeholder;
       const valueExtra = (node.value.extra ??= {});
@@ -64,7 +65,7 @@ export default {
       }
     },
     exit(placeholder) {
-      if (isNonHTMLText(placeholder)) return;
+      if (isInTextBody(placeholder)) return;
 
       const { node } = placeholder;
       const staticText = getStaticPlaceholderText(node);
@@ -94,10 +95,7 @@ export default {
 
       // Adjacent static text merges into one DOM text node, so only the run's
       // first node emits its walk step; later nodes defer to it.
-      if (
-        !isStaticText(node) ||
-        !isStaticText(getPrevStaticSibling(placeholder))
-      ) {
+      if (!isStaticText(node) || !followsStaticText(placeholder)) {
         structure.enterShallow(placeholder);
       }
     },
@@ -108,12 +106,12 @@ export default {
 } satisfies TemplateVisitor<t.MarkoPlaceholder>;
 
 function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
-  if (isNonHTMLText(placeholder)) return;
+  if (isInTextBody(placeholder)) return;
 
   const { node } = placeholder;
   const { value } = node;
   // Restore `_to_text` on a flattened `<if>` now that the output is known.
-  if (node.extra?.rawText) {
+  if (node.extra?.needsTextCoercion) {
     injectTextCoercion(value);
   }
   if (getStaticPlaceholderText(node) === "") {
@@ -138,7 +136,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
 
   if (confident && canWriteHTML) {
     if (isHTML) {
-      write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
+      write`${node.escape ? _escape(computed) : _unescaped(computed)}`;
     }
   } else {
     const section = getSection(placeholder);
@@ -192,7 +190,6 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
 // Produces an expression equivalent to `_escape(value)` that escapes as little as
 // possible: static strings at compile time, dynamic leaves wrapped individually.
 function buildEscapedTextExpression(value: t.Expression): t.Expression {
-  const { _escape } = getHTMLRuntime();
   switch (value.type) {
     case "StringLiteral":
     case "NumericLiteral":
@@ -228,7 +225,7 @@ function buildEscapedTextExpression(value: t.Expression): t.Expression {
           );
         }
       });
-      return normalizeStringExpression(parts) ?? t.stringLiteral("");
+      return buildStringExpression(parts) ?? t.stringLiteral("");
     }
     default:
       return callRuntime("_escape", value);
@@ -236,16 +233,16 @@ function buildEscapedTextExpression(value: t.Expression): t.Expression {
 }
 
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
-  placeholder.node.extra![kSiblingText] = hasSiblingText(placeholder, true)
+  placeholder.node.extra![kSiblingText] = mayMergeWithText(placeholder, true)
     ? SiblingText.Before
-    : hasSiblingText(placeholder, false)
+    : mayMergeWithText(placeholder, false)
       ? SiblingText.After
       : SiblingText.None;
 }
 
 // Whether text the placeholder's text node may merge with is on one side of it,
 // past what renders nothing and out through bodies rendered in place.
-function hasSiblingText(
+function mayMergeWithText(
   placeholder: t.NodePath<t.MarkoPlaceholder>,
   before: boolean,
 ) {

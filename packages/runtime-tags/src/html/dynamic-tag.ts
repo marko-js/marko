@@ -24,7 +24,7 @@ import {
   _scope_id,
   _script,
   _set_scope_reason,
-  CLIENT_ALL,
+  ALL_GROUPS,
   applyBranchStart,
   deferBranchStart,
   getChunk,
@@ -192,7 +192,7 @@ export let _dynamic_tag = (
     const render = () => {
       if (renderer) {
         try {
-          _set_scope_reason(shouldResume ? CLIENT_ALL : 0);
+          _set_scope_reason(shouldResume ? ALL_GROUPS : 0);
           return inputIsArgs
             ? renderer(...(inputOrArgs as unknown[]))
             : renderer(
@@ -268,7 +268,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
       input,
       content,
       inputIsArgs,
-      resume,
+      markerGuard,
       tagVar,
     ) => {
       const patched = patch(tag, scopeId, accessor);
@@ -281,7 +281,7 @@ export const patchDynamicTag = /* @__PURE__ */ (
         input,
         content,
         inputIsArgs,
-        resume,
+        markerGuard,
         tagVar,
       );
     };

@@ -14,7 +14,7 @@ import { distance } from "fastest-levenshtein";
 
 import * as TagNameType from "./constants/tag-name-type";
 import { isAnalyzing } from "./get-compile-stage";
-import { getStaticTagName, getTagName } from "./get-tag-name";
+import { getTagName, getTagNameHint } from "./get-tag-name";
 import { isCoreTag } from "./is-core-tag";
 import { getImportFacts, type LoadImportConfig } from "./tag-import";
 
@@ -55,10 +55,7 @@ const MARKO_FILE_REG = /^<.*>$|\.marko$/;
 // Matches `pre-analyze`, which rewrites a bound PascalCase tag to `<${Name}>`.
 const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 
-export default function analyzeTagNameType(
-  tag: t.NodePath<t.MarkoTag>,
-  allowDynamic?: boolean,
-) {
+export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
   const extra = (tag.node.extra ??= {});
 
   if (extra.tagNameType === undefined) {
@@ -120,9 +117,7 @@ export default function analyzeTagNameType(
     }
   }
 
-  return !allowDynamic && extra[kTagNameDynamic]
-    ? TagNameType.DynamicTag
-    : extra.tagNameType!;
+  return extra[kTagNameDynamic] ? TagNameType.DynamicTag : extra.tagNameType!;
 }
 
 function analyzeExpressionTagName(
@@ -350,7 +345,7 @@ export function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
   return tag
     .get("name")
     .buildCodeFrameError(
-      `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName ?? getStaticTagName(tag.node)}>\`.${didYouMean}`,
+      `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName ?? getTagNameHint(tag.node)}>\`.${didYouMean}`,
     );
 }
 

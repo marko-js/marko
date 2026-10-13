@@ -2,14 +2,6 @@ import { types as t } from "@marko/compiler";
 import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { ReservedId } from "../../common/types";
-import { getSectionRendererIdentifier } from "./binding-has-prop";
-import {
-  type BindingPropTree,
-  getAllKnownPropNames,
-  getBindingPropTree,
-  getPropTreeAt,
-  getSettledPropTree,
-} from "./binding-prop-tree";
 import {
   type Binding,
   BindingType,
@@ -23,8 +15,9 @@ import {
   type ReferencedBindings,
   reserveId,
 } from "./bindings";
+import { setTagContentDerives } from "./content-derives";
 import { generateUidIdentifier } from "./generate-uid";
-import { getStaticTagName, getTagName } from "./get-tag-name";
+import { getTagName, getTagNameHint } from "./get-tag-name";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -34,7 +27,14 @@ import {
 } from "./nested-attribute-tags";
 import { forEach, fromIter, type SortedOpt } from "./optional";
 import {
-  addAlwaysRead,
+  type ParamsTree,
+  getAllKnownPropNames,
+  exposeParamsTree,
+  getParamsTreeAt,
+  getSettledParamsTree,
+} from "./params-tree";
+import {
+  addAlwaysReason,
   addReasonExprs,
   addReason,
   getSourcesForExpr,
@@ -61,18 +61,18 @@ import {
   getScopeOffsetAccessorLiteral,
 } from "./scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "./scope-read";
+import { getSectionRendererIdentifier } from "./section-renderer";
 import {
   ensureSection,
   ensureBodySection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  isSameOrChildSection,
+  isSameOrAncestorSection,
   type ParamReasonGroups,
   type Section,
   sectionUtil,
 } from "./sections";
-import { setTagDerivedFrom } from "./set-tag-derived-from";
 import { addSetupExpr, addSetupWork } from "./setup-work";
 import {
   addStatement,
@@ -109,15 +109,17 @@ const [getKnownTags] = createSectionState(
   () => [] as t.MarkoTagExtra[],
 );
 
-const kContentSection = Symbol("known tag content section");
-const kPropTree = Symbol("known tag prop tree");
+const kChildSection = Symbol("known tag child section");
+const kParamsTree = Symbol("known tag params tree");
 const kKnownExprs = Symbol("known tag exprs");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
-    [kContentSection]?: Section;
+    /** The dom binding a known tag holds its child's scope in. */
+    childScopeBinding?: Binding;
+    [kChildSection]?: Section;
     /** The child's params tree the call site was analyzed against. */
-    [kPropTree]?: BindingPropTree;
+    [kParamsTree]?: ParamsTree;
     [kKnownExprs]?: KnownExprs;
   }
 }
@@ -131,40 +133,44 @@ const [getRecursiveTags] = createProgramState(
 // `childParamsTree` is another template's settled params tree.
 export function knownTagAnalyze(
   tag: t.NodePath<t.MarkoTag>,
-  contentSection: Section,
-  childParamsTree?: BindingPropTree,
+  childSection: Section,
+  childParamsTree?: ParamsTree,
 ) {
   analyzeAttributeTags(tag);
 
   const section = ensureSection(tag);
   const tagBody = tag.get("body");
   const tagExtra = (tag.node.extra ??= {});
-  tagExtra.nodeBinding = createBinding("#childScope", BindingType.dom, section);
+  tagExtra.childScopeBinding = createBinding(
+    "#childScope",
+    BindingType.dom,
+    section,
+  );
   ensureBodySection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
   getKnownTags(section).push(tagExtra);
-  tagExtra[kContentSection] = contentSection;
+  tagExtra[kChildSection] = childSection;
   const varBinding = trackVarReferences(tag, BindingType.derived);
-  const recursive = isSameOrChildSection(contentSection, section);
+  const recursive = isSameOrAncestorSection(childSection, section);
   let exprs: KnownExprs | undefined;
   // A `<define>` body, or the template rendering itself, renders in place of
   // this call.
-  if (contentSection.program === section.program) {
-    contentSection.callSections = sectionUtil.add(
-      contentSection.callSections,
+  if (childSection.program === section.program) {
+    childSection.callSections = sectionUtil.add(
+      childSection.callSections,
       section,
     );
     if (recursive) {
       getRecursiveTags().push(tag);
     } else {
-      exprs = analyzeKnownTagParams(tag, getParamsTree(contentSection));
+      exprs = analyzeKnownTagParams(tag, exposeChildParamsTree(childSection));
     }
   } else {
     exprs = analyzeKnownTagParams(tag, childParamsTree);
   }
 
   if (varBinding) {
-    if (!recursive) assertReturns(tag, contentSection);
+    if (!recursive) assertReturns(tag, childSection);
     // Tag variables emit a `_var` statement in the parent's setup.
     addSetupWork(section);
     const mutatesTagVar = isTagVarAssigned(tag);
@@ -173,14 +179,14 @@ export function knownTagAnalyze(
     const varExpr =
       recursive ||
       (tagExtra.defineBodySection
-        ? contentSection.returnValueExpr
-        : mapParamReasonToExpr(exprs!, getReturnParams(contentSection)));
-    const childScopeBinding = tagExtra.nodeBinding;
+        ? childSection.returnValueExpr
+        : mapParamReasonToExpr(exprs!, getReturnParams(childSection)));
+    const { childScopeBinding } = tagExtra;
     varBinding.returnedBy = childScopeBinding;
     reserveId(childScopeBinding, ReservedId.ScopeOffset);
     setDerivedFrom(varBinding, varExpr);
     if (mutatesTagVar || varExpr === true) {
-      addAlwaysRead(childScopeBinding);
+      addAlwaysReason(childScopeBinding);
     }
     if (varExpr !== true) {
       addReasonExprs(ensureSlot(childScopeBinding), varExpr);
@@ -191,36 +197,34 @@ export function knownTagAnalyze(
 // Every body is analyzed now, so each recursive tag takes its callee's tree.
 export function analyzeRecursiveTags() {
   for (const tag of getRecursiveTags()) {
-    const contentSection = tag.node.extra![kContentSection]!;
-    if (tag.node.var) assertReturns(tag, contentSection);
-    analyzeKnownTagParams(tag, getParamsTree(contentSection));
+    const childSection = tag.node.extra![kChildSection]!;
+    if (tag.node.var) assertReturns(tag, childSection);
+    analyzeKnownTagParams(tag, exposeChildParamsTree(childSection));
   }
 }
 
 // A body in this template is analyzed when its tree is taken: `<define>`
 // rejects hoisted calls, and a recursive tag waits for program exit.
-function getParamsTree(contentSection: Section) {
-  return (
-    contentSection.params && getBindingPropTree(contentSection.params, true)
-  );
+function exposeChildParamsTree(childSection: Section) {
+  return childSection.params && exposeParamsTree(childSection.params, true);
 }
 
 function analyzeKnownTagParams(
   tag: t.NodePath<t.MarkoTag>,
-  propTree: BindingPropTree | undefined,
+  paramsTree: ParamsTree | undefined,
 ) {
   const tagExtra = tag.node.extra!;
   const attrExprs = new Set([tagExtra]);
-  tagExtra[kPropTree] = propTree;
+  tagExtra[kParamsTree] = paramsTree;
   const exprs = (tagExtra[kKnownExprs] = analyzeParams(
     tagExtra,
     getSection(tag),
     tag,
-    propTree,
+    paramsTree,
     attrExprs,
   ));
-  setTagDerivedFrom(tag, propTree?.props?.[0]?.binding, exprs);
-  addReasonExprs(ensureSlot(tagExtra.nodeBinding!), fromIter(attrExprs));
+  setTagContentDerives(tag, paramsTree?.props?.[0]?.binding, exprs);
+  addReasonExprs(ensureSlot(tagExtra.childScopeBinding!), fromIter(attrExprs));
   return exprs;
 }
 
@@ -232,12 +236,12 @@ function getReturnParams(section: Section) {
 }
 
 // A tag variable is the value its tag's content `<return>`s.
-function assertReturns(tag: t.NodePath<t.MarkoTag>, contentSection: Section) {
-  if (!contentSection.returnValueExpr) {
+function assertReturns(tag: t.NodePath<t.MarkoTag>, childSection: Section) {
+  if (!childSection.returnValueExpr) {
     throw tag
       .get("var")
       .buildCodeFrameError(
-        `The \`${getStaticTagName(tag.node)}\` tag does not [\`<return>\`](https://markojs.com/docs/reference/core-tag#return) a value, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or add a \`<return>\` to the tag.`,
+        `The \`${getTagNameHint(tag.node)}\` tag does not [\`<return>\`](https://markojs.com/docs/reference/core-tag#return) a value, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or add a \`<return>\` to the tag.`,
       );
   }
 }
@@ -245,7 +249,7 @@ function assertReturns(tag: t.NodePath<t.MarkoTag>, contentSection: Section) {
 // The child's scope resumes, and with it any tag variable, which HTML wires
 // with `_var` and DOM registers for.
 function isChildScopeResumed(tagExtra: t.MarkoTagExtra) {
-  return !!findSlot(tagExtra.nodeBinding!)?.reason;
+  return !!findSlot(tagExtra.childScopeBinding!)?.reason;
 }
 
 // Arguments a child reads none of are dropped, so the render call passes
@@ -277,24 +281,24 @@ export function knownTagTranslateHTML(
 ) {
   const { node } = tag;
   const tagExtra = node.extra!;
-  const contentSection = tagExtra[kContentSection]!;
-  const propTree = getSettledPropTree(tagExtra[kPropTree]);
+  const childSection = tagExtra[kChildSection]!;
+  const paramsTree = getSettledParamsTree(tagExtra[kParamsTree]);
 
   writeHTMLResumeStatements(tag);
 
   const tagVar = node.var;
   const section = getSection(tag);
 
-  const attrsPropTree = propTree?.props?.[tag.node.arguments?.length || 0];
+  const attrsTree = paramsTree?.props?.[tag.node.arguments?.length || 0];
   const { properties, statements } =
-    (propTree && !propTree.props) || attrsPropTree
-      ? translateAttrs(tag, attrsPropTree)
+    (paramsTree && !paramsTree.props) || attrsTree
+      ? translateAttrs(tag, attrsTree)
       : {
           properties: [],
           statements: [],
         };
 
-  const childScopeBinding = tagExtra.nodeBinding!;
+  const childScopeBinding = tagExtra.childScopeBinding!;
 
   let varStatement: t.Statement | undefined;
   if (isChildScopeResumed(tagExtra)) {
@@ -329,11 +333,11 @@ export function knownTagTranslateHTML(
     }
   }
 
-  if (contentSection.paramReasonGroups) {
+  if (childSection.paramReasonGroups) {
     const childGroupMask = buildChildGroupMask(
       section,
       childScopeBinding,
-      contentSection.paramReasonGroups,
+      childSection.paramReasonGroups,
     );
 
     if (childGroupMask) {
@@ -378,16 +382,16 @@ export function knownTagTranslateDOM(
   const tagSection = getSection(tag);
   const { node } = tag;
   const extra = node.extra!;
-  const propTree = getSettledPropTree(extra[kPropTree]);
-  const childScopeBinding = extra.nodeBinding!;
+  const paramsTree = getSettledParamsTree(extra[kParamsTree]);
+  const childScopeBinding = extra.childScopeBinding!;
 
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
-    const source = initValue(varBinding);
+    const signal = initValue(varBinding);
     // The `_var` setup call below references the signal.
-    source.register = isChildScopeResumed(extra);
-    source.referenced = true;
-    source.buildAssignment = (valueSection, value) =>
+    signal.register = isChildScopeResumed(extra);
+    signal.referenced = true;
+    signal.buildAssignment = (valueSection, value) =>
       buildVarChange(
         createScopeReadExpression(childScopeBinding, valueSection),
         value,
@@ -401,14 +405,14 @@ export function knownTagTranslateDOM(
         "_var",
         scopeIdentifier,
         getScopeAccessorLiteral(childScopeBinding, true),
-        source.identifier,
+        signal.identifier,
       ),
     );
   }
   callSetup?.(tagSection, childScopeBinding);
 
-  if (propTree) {
-    writeParamsToSignals(tag, propTree, getTagName(tag) || "tag", {
+  if (paramsTree) {
+    writeParamsToSignals(tag, paramsTree, getTagName(tag) || "tag", {
       tagSection,
       getBindingIdentifier,
       childScopeBinding,
@@ -416,15 +420,15 @@ export function knownTagTranslateDOM(
   }
 }
 
-export function finalizeKnownTags(section: Section) {
+export function addKnownTagReasons(section: Section) {
   for (const tagExtra of getKnownTags(section)) {
-    const scopeBinding = tagExtra.nodeBinding;
+    const { childScopeBinding } = tagExtra;
     const knownExprs = tagExtra[kKnownExprs];
-    const contentSection = tagExtra[kContentSection]!;
-    if (knownExprs && scopeBinding && contentSection.paramReasonGroups) {
-      for (const group of contentSection.paramReasonGroups) {
+    const childSection = tagExtra[kChildSection]!;
+    if (knownExprs && childScopeBinding && childSection.paramReasonGroups) {
+      for (const group of childSection.paramReasonGroups) {
         addReason(
-          ensureSlot(scopeBinding, SlotKind.ParamGroup, section, group),
+          ensureSlot(childScopeBinding, SlotKind.ParamGroup, section, group),
           getSourcesForExprs(mapParamReasonToExpr(knownExprs, group)),
         );
       }
@@ -436,7 +440,7 @@ export function finalizeKnownTags(section: Section) {
 // setup: a load tag always, any other when that template has setup work.
 export function callsOtherTemplateSetup(section: Section) {
   for (const tagExtra of getKnownTags(section)) {
-    const childSection = tagExtra[kContentSection]!;
+    const childSection = tagExtra[kChildSection]!;
     if (
       tagExtra.tagNameLoad ||
       (childSection.program !== section.program && childSection.hasSetupWork)
@@ -479,20 +483,20 @@ function analyzeParams(
   rootTagExtra: t.MarkoTagExtra,
   section: Section,
   tag: t.NodePath<t.MarkoTag>,
-  propTree: BindingPropTree | undefined,
+  paramsTree: ParamsTree | undefined,
   rootAttrExprs: Set<t.NodeExtra>,
 ): KnownExprs {
   const paramsExpr: KnownExprs = {};
-  if (!propTree) {
+  if (!paramsTree) {
     dropAllTagNodes(tag.node);
     return paramsExpr;
   }
 
-  if (!readsParamsByName(tag, propTree)) {
+  if (!readsParamsByName(tag, paramsTree)) {
     paramsExpr.value = setDerivedFromTag(
       section,
       tag,
-      propTree.binding,
+      paramsTree.binding,
       paramsExpr,
     );
     return paramsExpr;
@@ -503,13 +507,13 @@ function analyzeParams(
   let i = 0;
   if (tag.node.arguments) {
     for (const arg of tag.node.arguments) {
-      const argExport = propTree.props[i];
-      if (argExport) {
+      const argTree = paramsTree.props[i];
+      if (argTree) {
         const argValueExtra = (arg.extra ??= {});
         known[i] = { value: argValueExtra };
         rootAttrExprs.add(argValueExtra);
         addSetupExpr(section, arg);
-        setDerivedFrom(argExport.binding, argValueExtra, paramsExpr);
+        setDerivedFrom(argTree.binding, argValueExtra, paramsExpr);
       } else {
         dropNodes(arg);
       }
@@ -518,13 +522,13 @@ function analyzeParams(
     }
   }
 
-  const attrPropsTree = propTree.props[i];
-  if (attrPropsTree) {
+  const attrsTree = paramsTree.props[i];
+  if (attrsTree) {
     known[i] = analyzeAttrs(
       rootTagExtra,
       section,
       tag,
-      attrPropsTree,
+      attrsTree,
       rootAttrExprs,
       paramsExpr,
     );
@@ -542,16 +546,16 @@ function analyzeAttrs(
   rootTagExtra: t.MarkoTagExtra,
   section: Section,
   tag: t.NodePath<t.MarkoTag>,
-  propTree: BindingPropTree,
+  paramsTree: ParamsTree,
   rootAttrExprs: Set<t.NodeExtra>,
   rootExprs: KnownExprs,
 ): KnownExprs {
   const inputExpr: KnownExprs = {};
-  if (!propTree.props) {
+  if (!paramsTree.props) {
     inputExpr.value = setDerivedFromTag(
       section,
       tag,
-      propTree.binding,
+      paramsTree.binding,
       rootExprs,
     );
     return inputExpr;
@@ -560,7 +564,7 @@ function analyzeAttrs(
   const known: NonNullable<KnownExprs["known"]> = (inputExpr.known = {});
   const attrTagLookup = analyzeAttributeTags(tag);
   const seen = new Set<string>();
-  const remaining = new Set(getAllKnownPropNames(propTree));
+  const remaining = new Set(getAllKnownPropNames(paramsTree));
   const dropReferenceNodes: t.Node[] = [];
   let restReferenceNodes: t.Node[] | undefined;
 
@@ -581,7 +585,7 @@ function analyzeAttrs(
         collectAttrTagReferenceNodes(
           attrTag,
           attrTagLookup,
-          propTree,
+          paramsTree,
           referenceNodes,
           dropReferenceNodes,
         );
@@ -611,7 +615,7 @@ function analyzeAttrs(
       if (child.isMarkoTag()) {
         if (isAttributeTag(child)) {
           const attrTagMeta = attrTagLookup[getTagName(child)];
-          const childAttrTree = getPropTreeAt(propTree, attrTagMeta.name);
+          const childAttrTree = getParamsTreeAt(paramsTree, attrTagMeta.name);
           if (!childAttrTree) {
             dropAttrTag(child.node, dropReferenceNodes);
           } else if (attrTagMeta.dynamic) {
@@ -644,7 +648,7 @@ function analyzeAttrs(
           }
         } else {
           const group = child.node.extra!.attributeTagGroup!;
-          if (hasGroupReads(group, attrTagLookup, propTree)) {
+          if (hasGroupReads(group, attrTagLookup, paramsTree)) {
             analyzeDynamicAttrTagChildGroup(group, child);
           } else {
             dropAttrTag(child.node, dropReferenceNodes);
@@ -663,7 +667,7 @@ function analyzeAttrs(
       let bindings: SortedOpt<Binding>;
       let hasRest = false;
 
-      const trees = getGroupPropTrees(group, attrTagLookup, propTree);
+      const trees = getGroupParamsTrees(group, attrTagLookup, paramsTree);
       for (const [, tree] of trees) {
         if (tree === true) {
           hasRest = true;
@@ -713,7 +717,7 @@ function analyzeAttrs(
     }
   }
 
-  const contentTree = getPropTreeAt(propTree, "content");
+  const contentTree = getParamsTreeAt(paramsTree, "content");
   if (!contentTree) {
     dropContent(tag.node.body);
   } else if (!seen.has("content")) {
@@ -738,7 +742,7 @@ function analyzeAttrs(
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     if (t.isMarkoAttribute(attr)) {
-      const attrTree = getPropTreeAt(propTree, attr.name);
+      const attrTree = getParamsTreeAt(paramsTree, attr.name);
       if (!attrTree || seen.has(attr.name)) {
         // drop references for duplicated attributes and unused attributes.
         dropReferenceNodes.push(attr.value);
@@ -760,7 +764,7 @@ function analyzeAttrs(
         addSetupExpr(section, attr.value);
         setDerivedFrom(attrTree.binding, attrExtra, rootExprs);
         // A cross template child that only ever invokes this input makes the attribute
-        // `invokeOnly`; same-program prop trees may be mid-analysis with incomplete reads, so skipped.
+        // `invokeOnly`; same-program params trees may be mid-analysis with incomplete reads, so skipped.
         if (
           !isOwnBinding(attrTree.binding) &&
           isInvokeOnlyBinding(attrTree.binding)
@@ -771,7 +775,7 @@ function analyzeAttrs(
     } else if (spreadReferenceNodes) {
       spreadReferenceNodes.push(attr.value);
     } else {
-      knownSpread = getSingleKnownSpread(propTree, attributes);
+      knownSpread = getSingleKnownSpread(paramsTree, attributes);
 
       if (knownSpread) {
         // Read prop by prop, so it is written as what those props read.
@@ -786,26 +790,26 @@ function analyzeAttrs(
     for (const prop of remaining) {
       const propBinding = ensurePropertyAlias(knownSpread, prop);
       const propExtra: ReferencedExtra = { section };
-      const attrTree = getPropTreeAt(propTree, prop)!;
+      const attrTree = getParamsTreeAt(paramsTree, prop)!;
 
       known[prop] = { value: propExtra };
       rootAttrExprs.add(propExtra);
       addRead(propExtra, propExtra, propBinding, section, undefined);
       setDerivedFrom(
-        attrTree === true ? propTree.rest!.binding : attrTree.binding,
+        attrTree === true ? paramsTree.rest!.binding : attrTree.binding,
         propExtra,
         rootExprs,
       );
     }
   } else if (spreadReferenceNodes) {
-    if (remaining.size || (propTree.rest && !propTree.rest.props)) {
+    if (remaining.size || (paramsTree.rest && !paramsTree.rest.props)) {
       inputExpr.value = mergeReferences(
         section,
         tag.node,
         spreadReferenceNodes,
       );
       setDerivedFrom(
-        propTree.rest?.binding || propTree.binding,
+        paramsTree.rest?.binding || paramsTree.binding,
         inputExpr.value,
         rootExprs,
       );
@@ -815,7 +819,7 @@ function analyzeAttrs(
   } else {
     if (restReferenceNodes) {
       inputExpr.value = mergeReferences(section, tag.node, restReferenceNodes);
-      setDerivedFrom(propTree.rest!.binding, inputExpr.value, rootExprs);
+      setDerivedFrom(paramsTree.rest!.binding, inputExpr.value, rootExprs);
     }
 
     if (remaining.size) {
@@ -823,7 +827,7 @@ function analyzeAttrs(
       addSetupWork(section);
     }
 
-    if (propTree.rest && !propTree.rest.props) {
+    if (paramsTree.rest && !paramsTree.rest.props) {
       // The rest signal call is keyed by the tag's merged references.
       addSetupExpr(section, tag.node);
     }
@@ -838,13 +842,13 @@ function analyzeAttrs(
 // argument) reads them through every expression in the tag.
 function readsParamsByName(
   tag: t.NodePath<t.MarkoTag>,
-  propTree: BindingPropTree,
-): propTree is BindingPropTree & {
-  props: NonNullable<BindingPropTree["props"]>;
+  paramsTree: ParamsTree,
+): paramsTree is ParamsTree & {
+  props: NonNullable<ParamsTree["props"]>;
 } {
   return (
-    !!propTree.props &&
-    !propTree.rest &&
+    !!paramsTree.props &&
+    !paramsTree.rest &&
     !tag.node.arguments?.some(isSpreadArgument)
   );
 }
@@ -881,22 +885,22 @@ function dropAllTagNodes(tag: t.MarkoTag) {
 function collectAttrTagReferenceNodes(
   attrTag: t.MarkoTag,
   attrTagLookup: AttrTagLookup,
-  propTree: BindingPropTree | true,
+  paramsTree: ParamsTree | true,
   referenceNodes: t.Node[],
   dropReferenceNodes: t.Node[],
 ) {
-  const attrTagTree = getPropTreeAt(
-    propTree,
+  const attrTagTree = getParamsTreeAt(
+    paramsTree,
     attrTagLookup[(attrTag.name as t.StringLiteral).value].name,
   );
   if (attrTagTree) {
-    if (!getPropTreeAt(attrTagTree, "content")) {
+    if (!getParamsTreeAt(attrTagTree, "content")) {
       dropContent(attrTag.body);
     }
     getAllTagReferenceNodes(attrTag, referenceNodes, (nestedAttrTag) =>
       collectAttrTagReferenceNodes(
         nestedAttrTag,
-        attrTag.extra!.attributeTags!,
+        attrTag.extra!.attrTagLookup!,
         attrTagTree,
         referenceNodes,
         dropReferenceNodes,
@@ -930,15 +934,15 @@ type TranslateDOMInfo = {
 
 function writeParamsToSignals(
   tag: t.NodePath<t.MarkoTag>,
-  propTree: BindingPropTree,
-  importAlias: string,
+  paramsTree: ParamsTree,
+  hint: string,
   info: TranslateDOMInfo,
 ) {
-  if (!readsParamsByName(tag, propTree)) {
+  if (!readsParamsByName(tag, paramsTree)) {
     const referencedBindings = getReferencedBindings(tag.node.extra);
     const tagInputIdentifier = info.getBindingIdentifier(
-      propTree.binding,
-      `${importAlias}_params`,
+      paramsTree.binding,
+      `${hint}_params`,
     );
     const translatedAttrs = translateAttrs(tag);
 
@@ -963,14 +967,11 @@ function writeParamsToSignals(
   let i = 0;
   if (tag.node.arguments) {
     for (const arg of tag.node.arguments) {
-      const argExport = propTree.props[i];
-      if (argExport) {
+      const argTree = paramsTree.props[i];
+      if (argTree) {
         writeToSignal(
           info,
-          info.getBindingIdentifier(
-            argExport.binding,
-            `${importAlias}_param_${i}`,
-          ),
+          info.getBindingIdentifier(argTree.binding, `${hint}_param_${i}`),
           getReferencedBindings(arg.extra), // TODO: pretty sure content needs to have the reference group of it's param defaults.
           arg as t.Expression,
           true,
@@ -981,15 +982,15 @@ function writeParamsToSignals(
     }
   }
 
-  const attrPropsTree = propTree.props[i];
-  if (attrPropsTree) {
-    writeAttrsToSignals(tag, attrPropsTree, `${importAlias}_input`, info);
+  const attrsTree = paramsTree.props[i];
+  if (attrsTree) {
+    writeAttrsToSignals(tag, attrsTree, `${hint}_input`, info);
   }
 }
 
 function applyAttrObject(
   tag: t.NodePath<t.MarkoTag>,
-  propTree: BindingPropTree,
+  paramsTree: ParamsTree,
   tagInputIdentifier: t.Identifier,
   info: TranslateDOMInfo,
 ) {
@@ -1008,14 +1009,15 @@ function applyAttrObject(
         translatedProps = appendAttrTag(
           translatedProps,
           t.objectExpression(
-            translateAttrs(attrTag, propTree, undefined, statements).properties,
+            translateAttrs(attrTag, paramsTree, undefined, statements)
+              .properties,
           ),
         );
       }
     }
   } else {
     translatedProps = propsToExpression(
-      translateAttrs(tag, propTree, undefined, statements).properties,
+      translateAttrs(tag, paramsTree, undefined, statements).properties,
     );
   }
 
@@ -1034,15 +1036,15 @@ function applyAttrObject(
 
 function writeAttrsToSignals(
   tag: t.NodePath<t.MarkoTag>,
-  propTree: BindingPropTree,
-  importAlias: string,
+  paramsTree: ParamsTree,
+  hint: string,
   info: TranslateDOMInfo,
 ) {
-  if (!propTree.props) {
+  if (!paramsTree.props) {
     applyAttrObject(
       tag,
-      propTree,
-      info.getBindingIdentifier(propTree.binding, importAlias),
+      paramsTree,
+      info.getBindingIdentifier(paramsTree.binding, hint),
       info,
     );
 
@@ -1052,7 +1054,7 @@ function writeAttrsToSignals(
   const attrTagLookup = analyzeAttributeTags(tag);
   const seen = new Set<string>();
   const tagReferencedBindings = getReferencedBindings(tag.node.extra);
-  const remaining = new Set(getAllKnownPropNames(propTree));
+  const remaining = new Set(getAllKnownPropNames(paramsTree));
   const contentProps: t.ObjectExpression["properties"] = [];
 
   if (attrTagLookup) {
@@ -1084,7 +1086,7 @@ function writeAttrsToSignals(
         index,
         attrTagLookup,
         statements,
-        propTree,
+        paramsTree,
       );
     };
 
@@ -1095,7 +1097,7 @@ function writeAttrsToSignals(
       seen.add(attrTagMeta.name);
       if (
         attrTagMeta.dynamic &&
-        getPropTreeAt(propTree, attrTagMeta.name) === true
+        getParamsTreeAt(paramsTree, attrTagMeta.name) === true
       ) {
         contentProps.push(
           toObjectProperty(attrTagMeta.name, getAttrTagIdentifier(attrTagMeta)),
@@ -1108,7 +1110,7 @@ function writeAttrsToSignals(
       if (child.isMarkoTag()) {
         if (isAttributeTag(child)) {
           const attrTagMeta = attrTagLookup[getTagName(child)];
-          const childAttrTree = getPropTreeAt(propTree, attrTagMeta.name);
+          const childAttrTree = getParamsTreeAt(paramsTree, attrTagMeta.name);
           if (!childAttrTree) {
             // ignore
           } else if (attrTagMeta.dynamic) {
@@ -1146,7 +1148,7 @@ function writeAttrsToSignals(
                 childAttrTree,
                 info.getBindingIdentifier(
                   childAttrTree.binding,
-                  `${importAlias}_${attrTagMeta.name}`,
+                  `${hint}_${attrTagMeta.name}`,
                 ),
                 info,
               );
@@ -1156,13 +1158,13 @@ function writeAttrsToSignals(
             writeAttrsToSignals(
               child,
               childAttrTree,
-              `${importAlias}_${attrTagMeta.name}`,
+              `${hint}_${attrTagMeta.name}`,
               info,
             );
           }
         } else {
           const group = child.node.extra!.attributeTagGroup!;
-          if (hasGroupReads(group, attrTagLookup, propTree)) {
+          if (hasGroupReads(group, attrTagLookup, paramsTree)) {
             i = translateDynamicAttrTagChildInGroup(group, i);
           } else if (getTagName(child) === "if") {
             while (++i < attrTags.length) {
@@ -1185,7 +1187,7 @@ function writeAttrsToSignals(
       group,
       { referencedBindings, statements },
     ] of statementsByGroup) {
-      const trees = getGroupPropTrees(group, attrTagLookup, propTree);
+      const trees = getGroupParamsTrees(group, attrTagLookup, paramsTree);
       const hasRest = trees.some(([, tree]) => tree === true);
 
       addStatement(
@@ -1210,7 +1212,7 @@ function writeAttrsToSignals(
             info,
             info.getBindingIdentifier(
               tree.binding,
-              `${importAlias}_${attrTagMeta.name}`,
+              `${hint}_${attrTagMeta.name}`,
             ),
             hasRest ? tagReferencedBindings : referencedBindings,
             getAttrTagIdentifier(attrTagMeta),
@@ -1220,7 +1222,7 @@ function writeAttrsToSignals(
     }
   }
 
-  const contentTree = getPropTreeAt(propTree, "content");
+  const contentTree = getParamsTreeAt(paramsTree, "content");
   if (!seen.has("content") && contentTree) {
     const bodySection = getSectionForBody(tag.get("body"));
     if (bodySection) {
@@ -1240,7 +1242,7 @@ function writeAttrsToSignals(
           info,
           info.getBindingIdentifier(
             contentTree.binding,
-            `${importAlias}_content`,
+            `${hint}_content`,
             directContent,
           ),
           undefined, // TODO: pretty sure content needs to have the reference group of it's param defaults.
@@ -1260,7 +1262,7 @@ function writeAttrsToSignals(
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     if (t.isMarkoAttribute(attr)) {
-      const attrTree = getPropTreeAt(propTree, attr.name);
+      const attrTree = getParamsTreeAt(paramsTree, attr.name);
       if (!attrTree || seen.has(attr.name)) {
         continue;
       }
@@ -1275,7 +1277,7 @@ function writeAttrsToSignals(
     } else if (hasSpread) {
       attrProps.push(t.spreadElement(attr.value));
     } else {
-      knownSpread = getSingleKnownSpread(propTree, attributes);
+      knownSpread = getSingleKnownSpread(paramsTree, attributes);
       if (!knownSpread) {
         hasSpread = true;
         attrProps.push(t.spreadElement(attr.value));
@@ -1288,16 +1290,11 @@ function writeAttrsToSignals(
 
   for (let i = staticAttrs.length; i--;) {
     const attr = staticAttrs[i];
-    const attrExportIdentifier = getSignalIdentifier(
-      info,
-      propTree,
-      importAlias,
-      attr.name,
-    );
+    const attrSignal = getSignalIdentifier(info, paramsTree, hint, attr.name);
     remaining.delete(attr.name);
     writeToSignal(
       info,
-      attrExportIdentifier,
+      attrSignal,
       getReferencedBindings(attr.value.extra),
       attr.value, // TODO: use spreadBinding property alias after we optimize `in`
       true,
@@ -1306,16 +1303,11 @@ function writeAttrsToSignals(
 
   if (knownSpread) {
     for (const prop of remaining) {
-      const attrExportIdentifier = getSignalIdentifier(
-        info,
-        propTree,
-        importAlias,
-        prop,
-      );
+      const propSignal = getSignalIdentifier(info, paramsTree, hint, prop);
       const propBinding = getPropertyAlias(knownSpread, prop)!;
       writeToSignal(
         info,
-        attrExportIdentifier,
+        propSignal,
         propBinding,
         createScopeReadExpression(propBinding, info.tagSection),
         true,
@@ -1323,13 +1315,13 @@ function writeAttrsToSignals(
     }
   } else if (
     hasSpread &&
-    (remaining.size || (propTree.rest && !propTree.rest.props))
+    (remaining.size || (paramsTree.rest && !paramsTree.rest.props))
   ) {
     const spreadExpr = propsToExpression(inputProps);
     let spreadId = spreadExpr;
 
     if (!isSimpleReference(spreadExpr)) {
-      spreadId = generateUidIdentifier(`${importAlias}_spread`);
+      spreadId = generateUidIdentifier(`${hint}_spread`);
       addStatement("render", info.tagSection, tagReferencedBindings, [
         t.variableDeclaration("const", [
           t.variableDeclarator(spreadId, spreadExpr),
@@ -1340,16 +1332,16 @@ function writeAttrsToSignals(
     for (const name of remaining) {
       writeToSignal(
         info,
-        getSignalIdentifier(info, propTree, importAlias, name),
+        getSignalIdentifier(info, paramsTree, hint, name),
         tagReferencedBindings,
         toMemberExpression(t.cloneNode(spreadId, true), name),
       );
     }
 
-    if (propTree.rest && !propTree.rest.props) {
+    if (paramsTree.rest && !paramsTree.rest.props) {
       const props: t.ObjectPattern["properties"] = [];
-      const restId = t.identifier(propTree.rest.binding.name);
-      forEach(propTree.rest.binding.excludeProperties, (name) => {
+      const restId = t.identifier(paramsTree.rest.binding.name);
+      forEach(paramsTree.rest.binding.excludeProperties, (name) => {
         const propId = toPropertyName(name);
         const shorthand =
           propId.type === "Identifier" && t.isValidIdentifier(name);
@@ -1366,10 +1358,7 @@ function writeAttrsToSignals(
       props.push(t.restElement(restId));
       writeToSignal(
         info,
-        info.getBindingIdentifier(
-          propTree.rest.binding,
-          importAlias + "_$rest",
-        ),
+        info.getBindingIdentifier(paramsTree.rest.binding, hint + "_$rest"),
         tagReferencedBindings,
         t.callExpression(
           t.arrowFunctionExpression([t.objectPattern(props)], restId),
@@ -1382,18 +1371,15 @@ function writeAttrsToSignals(
     for (const name of remaining) {
       writeToSignal(
         info,
-        getSignalIdentifier(info, propTree, importAlias, name),
+        getSignalIdentifier(info, paramsTree, hint, name),
         undefined,
       );
     }
 
-    if (propTree.rest && !propTree.rest.props) {
+    if (paramsTree.rest && !paramsTree.rest.props) {
       writeToSignal(
         info,
-        info.getBindingIdentifier(
-          propTree.rest.binding,
-          importAlias + "_$rest",
-        ),
+        info.getBindingIdentifier(paramsTree.rest.binding, hint + "_$rest"),
         tagReferencedBindings,
         t.objectExpression(inputProps),
         true,
@@ -1424,16 +1410,16 @@ function writeToSignal(
   );
 }
 
-// The child signal setting the prop `name` of `propTree`.
+// The child signal setting the prop `name` of `paramsTree`.
 function getSignalIdentifier(
   info: TranslateDOMInfo,
-  propTree: BindingPropTree,
-  importAlias: string,
+  paramsTree: ParamsTree,
+  hint: string,
   name: string,
 ) {
   return info.getBindingIdentifier(
-    (getPropTreeAt(propTree, name) as BindingPropTree).binding,
-    `${importAlias}_${name}`,
+    (getParamsTreeAt(paramsTree, name) as ParamsTree).binding,
+    `${hint}_${name}`,
   );
 }
 
@@ -1451,23 +1437,23 @@ function isSimpleReference(expr: t.Expression): boolean {
 function hasGroupReads(
   group: AttrTagGroup,
   attrTagLookup: AttrTagLookup,
-  propTree: BindingPropTree,
+  paramsTree: ParamsTree,
 ) {
   return group.some(
-    (name) => !!getPropTreeAt(propTree, attrTagLookup[name].name),
+    (name) => !!getParamsTreeAt(paramsTree, attrTagLookup[name].name),
   );
 }
 
-// The attribute tags of a group the child reads, with the prop tree of each.
-function getGroupPropTrees(
+// The attribute tags of a group the child reads, with the params tree of each.
+function getGroupParamsTrees(
   group: AttrTagGroup,
   attrTagLookup: AttrTagLookup,
-  propTree: BindingPropTree,
+  paramsTree: ParamsTree,
 ) {
-  const trees: [AttrTagMeta, BindingPropTree | true][] = [];
+  const trees: [AttrTagMeta, ParamsTree | true][] = [];
   for (const name of group) {
     const attrTagMeta = attrTagLookup[name];
-    const tree = getPropTreeAt(propTree, attrTagMeta.name);
+    const tree = getParamsTreeAt(paramsTree, attrTagMeta.name);
     if (tree) trees.push([attrTagMeta, tree]);
   }
   return trees;

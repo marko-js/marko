@@ -13,7 +13,7 @@ import {
   assertIdentifierVar,
   assertNoBodyContent,
   assertNoSpreadAttrs,
-  assertValueAttr,
+  assertOnlyValueAttr,
 } from "../util/assert";
 import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
@@ -70,7 +70,12 @@ export default {
     }
 
     assertNoSpreadAttrs(tag);
-    assertValueAttr(tag, false, true, tagVar ? undefined : getDeclarationHint);
+    assertOnlyValueAttr(
+      tag,
+      false,
+      true,
+      tagVar ? undefined : getDeclarationHint,
+    );
     assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);

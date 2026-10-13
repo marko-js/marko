@@ -1,10 +1,10 @@
 import { types as t } from "@marko/compiler";
 
-import { getPropertyPathAlias } from "./binding-has-prop";
 import {
   type Binding,
   BindingType,
   bindingUtil,
+  getDeepestPropertyAlias,
   isOwnBinding,
   type ParamBinding,
   propsUtil,
@@ -56,7 +56,7 @@ export function addReason(slot: Slot, reason: undefined | false | Reason) {
   }
 }
 
-export function addAlwaysRead(binding: Binding) {
+export function addAlwaysReason(binding: Binding) {
   addReason(ensureSlot(binding), ALWAYS);
 }
 
@@ -117,8 +117,8 @@ export function getSourcesForRef(ref: ReferencedBindings) {
   return reduce(ref, mergeBindingSources);
 }
 
-// What reruns the call site expressions passing content to the bindings it
-// feeds, down the property path it lands at.
+// What reruns the call site expressions passing content to the bindings that
+// derive from it, down the property path it lands at.
 export function getSourcesForDerived({
   binding,
   exprs,
@@ -131,7 +131,7 @@ export function getSourcesForDerived({
         getSourcesForExprs(
           mapParamBindingToExpr(
             exprs,
-            getPropertyPathAlias(binding, properties) as ParamBinding,
+            getDeepestPropertyAlias(binding, properties) as ParamBinding,
           ),
         ),
       ),
@@ -249,7 +249,7 @@ function applySlotExprs(slot: Slot) {
   addReason(slot, getSourcesForExprs(slot.reasonExprs));
 }
 
-export function finalizeReason(section: Section) {
+export function mergeSlotReasons(section: Section) {
   section.reason = reduce(section.slots, mergeSlotReason, section.reason);
 }
 

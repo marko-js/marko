@@ -109,12 +109,12 @@ const nativeElementFacts = new Map<string, TagFacts>([
 ]);
 
 // The attributes each controllable element's pair may take, the helper a
-// spread claims them with, and the feature its resume pass needs.
+// spread applies them with, and the feature its resume pass needs.
 export const controllableElements = new Map<
   string,
   {
     attrs: string[];
-    claim: DOMRuntimeHelpers;
+    spreadHelper: DOMRuntimeHelpers;
     feature: DOMRuntimeFeature;
   }
 >([
@@ -129,7 +129,7 @@ export const controllableElements = new Map<
         "value",
         "valueChange",
       ],
-      claim: "_controllable_input",
+      spreadHelper: "_controllable_input",
       feature: "controllable-input",
     },
   ],
@@ -137,7 +137,7 @@ export const controllableElements = new Map<
     "select",
     {
       attrs: ["value", "valueChange"],
-      claim: "_controllable_select",
+      spreadHelper: "_controllable_select",
       feature: "controllable-select",
     },
   ],
@@ -145,7 +145,7 @@ export const controllableElements = new Map<
     "textarea",
     {
       attrs: ["value", "valueChange"],
-      claim: "_controllable_textarea",
+      spreadHelper: "_controllable_textarea",
       feature: "controllable-textarea",
     },
   ],
@@ -153,7 +153,7 @@ export const controllableElements = new Map<
     "details",
     {
       attrs: ["open", "openChange"],
-      claim: "_controllable_open",
+      spreadHelper: "_controllable_open",
       feature: "controllable-open",
     },
   ],
@@ -161,7 +161,7 @@ export const controllableElements = new Map<
     "dialog",
     {
       attrs: ["open", "openChange"],
-      claim: "_controllable_open",
+      spreadHelper: "_controllable_open",
       feature: "controllable-open",
     },
   ],
@@ -195,7 +195,7 @@ export function getTagContentType(tag: t.NodePath<t.MarkoTag>) {
   return typeof content === "function" ? content(tag.node) : content;
 }
 
-export function isNonHTMLText(
+export function isInTextBody(
   child: t.NodePath<t.MarkoPlaceholder | t.MarkoText>,
 ) {
   const body = child.parentPath;

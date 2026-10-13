@@ -7,11 +7,6 @@ import {
 
 import { hasAnalyzeErrors } from "../../util/analyze-errors";
 import { addAssetImport } from "../../util/asset-imports";
-import { isSectionRendererElided } from "../../util/binding-has-prop";
-import {
-  type BindingPropTree,
-  getBindingPropTree,
-} from "../../util/binding-prop-tree";
 import { type Binding, BindingType } from "../../util/bindings";
 import entryBuilder from "../../util/entry-builder";
 import { finalizeReferences } from "../../util/finalize-references";
@@ -23,6 +18,7 @@ import {
   getReadyId,
   isOutputHTML,
 } from "../../util/marko-config";
+import { type ParamsTree, exposeParamsTree } from "../../util/params-tree";
 import { isUnconditionalReason } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
 import {
@@ -31,6 +27,7 @@ import {
   getRuntimePath,
 } from "../../util/runtime";
 import { createScopeIdentifiers } from "../../util/scope-read";
+import { isSectionRendererElided } from "../../util/section-renderer";
 import {
   forEachSection,
   ensureBodySection,
@@ -49,7 +46,7 @@ declare module "@marko/compiler/dist/types" {
     hasResumes?: boolean;
     /** What the template reads of its params (its input is the first), the
      * contract its callers keep. */
-    paramsTree?: BindingPropTree;
+    paramsTree?: ParamsTree;
     /** The names every compile of the template exports its parts under. */
     exportNames?: {
       template: string;
@@ -58,7 +55,8 @@ declare module "@marko/compiler/dist/types" {
       /** The signal of each of the template's param bindings, a property of
        * one included. */
       params: Map<Binding, string>;
-      /** Each content passthrough's `_dynamic_tag_content` signal. */
+      /** The `_dynamic_tag_content` signal of each binding only a name-only
+       * dynamic tag reads. */
       directContent: Map<Binding, string>;
     };
     styleFile?: string;
@@ -115,7 +113,7 @@ export default {
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;
       if (paramsBinding && !paramsBinding.pruned) {
-        programExtra.paramsTree = getBindingPropTree(paramsBinding);
+        programExtra.paramsTree = exposeParamsTree(paramsBinding);
       }
 
       const section = programExtra.section!;

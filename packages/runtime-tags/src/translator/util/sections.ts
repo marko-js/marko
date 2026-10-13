@@ -138,8 +138,8 @@ export interface Section {
   /** For a `<define>` body or a template rendering itself, the sections whose
    * direct calls render it. */
   callSections: SortedOpt<Section>;
-  /** The content's rendering tag (its extra), and each child binding the
-   * content feeds, at `properties`. */
+  /** The content's rendering tag (its extra), and each child binding that
+   * derives from the content, at `properties`. */
   derives:
     | {
         tag: t.MarkoTagExtra;
@@ -324,7 +324,7 @@ export function forEachSection(fn: (section: Section) => void) {
 
 // For content a tag the analysis cannot resolve receives, which code it cannot
 // see may render later, the closures read in it from outside it.
-export function getContentClosures(section: Section) {
+export function getDynamicTagContentClosures(section: Section) {
   if (section.branchExpr?.tagNameType === TagNameType.DynamicTag) {
     return getClosuresFromAbove(section, section);
   }
@@ -364,33 +364,33 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
   }
 }
 
-function getContentInfo(path: t.NodePath<t.Program | t.MarkoTagBody>) {
+function getContentInfo(
+  path: t.NodePath<t.Program | t.MarkoTagBody>,
+): Section["content"] {
   const body = path.get("body");
-  const contentInfo: Section["content"] = {
-    startType: null!,
-    endType: null!,
-    singleChild: true,
-  };
   for (let endIndex = body.length; endIndex--;) {
-    const endType = getNodeContentType(body[endIndex], "endType", contentInfo);
+    const end = body[endIndex];
+    const endType = getNodeContentType(end, "endType");
     if (endType !== null) {
-      contentInfo.endType = endType;
-
-      if (endType === ContentType.Dynamic) {
-        contentInfo.singleChild = false;
-      }
-
       for (let startIndex = 0; startIndex < endIndex; startIndex++) {
         const startType = getNodeContentType(body[startIndex], "startType");
         if (startType !== null) {
-          contentInfo.startType = startType;
-          contentInfo.singleChild = false;
-          return contentInfo;
+          return { startType, endType, singleChild: false };
         }
       }
 
-      contentInfo.startType = getNodeContentType(body[endIndex], "startType")!;
-      return contentInfo;
+      // A lone node's content is that of the section it inlines, or else its
+      // one type at both edges.
+      const inlined =
+        end.type === "MarkoTag" &&
+        getInlinedSection(end as t.NodePath<t.MarkoTag>);
+      return inlined
+        ? inlined.content
+        : {
+            startType: endType,
+            endType,
+            singleChild: endType !== ContentType.Dynamic,
+          };
     }
   }
 
@@ -399,8 +399,7 @@ function getContentInfo(path: t.NodePath<t.Program | t.MarkoTagBody>) {
 
 export function getNodeContentType(
   path: t.NodePath<t.Statement>,
-  extraMember: "startType" | "endType",
-  contentInfo?: Section["content"],
+  edge: "startType" | "endType",
 ) {
   switch (path.type) {
     case "MarkoText":
@@ -416,33 +415,29 @@ export function getNodeContentType(
       return null;
     case "MarkoTag": {
       const tag = path as t.NodePath<t.MarkoTag>;
-      // The section `structure.child` inlines; a load tag renders behind a marker.
-      const tagSection =
-        tag.node.extra?.defineBodySection ||
-        (!isCoreTag(tag) &&
-          analyzeTagNameType(tag) === TagNameType.CustomTag &&
-          !tag.node.extra!.tagNameLoad &&
-          loadFileForTag(tag)!.ast.program.extra.section);
+      const tagSection = getInlinedSection(tag);
       if (!tagSection) return getTagContentType(tag);
-      if (tagSection.content) {
-        if (contentInfo && !tagSection.content.singleChild) {
-          if (extraMember === "endType") {
-            contentInfo.startType = tagSection.content.startType;
-            contentInfo.singleChild = false;
-          }
-        }
-        return tagSection.content[extraMember];
-      }
-      return null;
+      return tagSection.content ? tagSection.content[edge] : null;
     }
   }
 
   return ContentType.Dynamic;
 }
 
+// The section `structure.child` inlines; a load tag renders behind a marker.
+function getInlinedSection(tag: t.NodePath<t.MarkoTag>) {
+  return (
+    tag.node.extra?.defineBodySection ||
+    (!isCoreTag(tag) &&
+      analyzeTagNameType(tag) === TagNameType.CustomTag &&
+      !tag.node.extra!.tagNameLoad &&
+      loadFileForTag(tag)!.ast.program.extra.section)
+  );
+}
+
 export function getRendererReason(section: Section) {
   // A branch's tag reads its renderer.
-  if (isResumedBranch(section)) return false;
+  if (isOptionalBranch(section)) return false;
 
   // Only a component receives a dynamic tag's body as a value; SSR otherwise
   // writes just its id, to compare against the client's renderer.
@@ -482,18 +477,18 @@ export function getRendererReason(section: Section) {
 
 // Resume restores an optional branch's scopes into its owner, so a change can
 // remove them; an `<await>` or `<try>` body serializes its owner link instead.
-export function isResumedBranch(
+export function isOptionalBranch(
   section: Section,
 ): section is Section & { branch: NonNullable<Section["branch"]> } {
   return !!section.branch?.optional;
 }
 
-export function isImmediateOwner(section: Section, binding: Binding) {
+export function isInParentSection(binding: Binding, section: Section) {
   return section.parent?.id === binding.section.id;
 }
 
 export function isDirectClosure(section: Section, closure: Binding) {
-  return !!isResumedBranch(section) && isImmediateOwner(section, closure);
+  return !!isOptionalBranch(section) && isInParentSection(closure, section);
 }
 
 export function isDynamicClosure(section: Section, closure: Binding) {
@@ -517,7 +512,7 @@ export function getDynamicClosureIndex(
 }
 
 export function getDirectClosures(section: Section) {
-  if (isResumedBranch(section)) {
+  if (isOptionalBranch(section)) {
     return bindingUtil.range(
       section.referencedClosures,
       bindingToSection,
@@ -527,7 +522,7 @@ export function getDirectClosures(section: Section) {
   }
 }
 
-export function isSameOrChildSection(section: Section, other: Section) {
+export function isSameOrAncestorSection(section: Section, other: Section) {
   do {
     if (other === section) {
       return true;
@@ -547,7 +542,7 @@ export function getCommonSection(section: Section, other: Section) {
   return a;
 }
 
-export function finalizeParamReasonGroups(section: Section) {
+export function ensureSectionReasonGroups(section: Section) {
   ensureReasonGroups(section.reason);
 
   forEach(section.slots, ensureSlotReasonGroups);

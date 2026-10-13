@@ -13,7 +13,7 @@ import {
   _scope_id,
   _script,
   _set_scope_reason,
-  CLIENT_ALL,
+  ALL_GROUPS,
   $global,
   Boundary,
   Chunk,
@@ -148,7 +148,7 @@ export const compat = {
       for (const reorder of reorders) state.reorder(reorder);
     }
     if (boundary.flush() === FlushStatus.complete) {
-      ({ html, scripts } = chunk.flushScript(boundary));
+      ({ html, scripts } = chunk.flush(boundary));
     }
     if (boundary.aborted) throw boundary.reason;
     if (boundary.count) {
@@ -216,7 +216,7 @@ export const compat = {
     });
 
     head.render(() => {
-      _set_scope_reason(willRerender ? CLIENT_ALL : 0);
+      _set_scope_reason(willRerender ? ALL_GROUPS : 0);
       try {
         renderer(normalizedInput);
       } finally {

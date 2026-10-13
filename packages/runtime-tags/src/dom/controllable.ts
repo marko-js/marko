@@ -2,7 +2,7 @@ import {
   assertHandlerIsFunction,
   assertNoValueBindingOnCheckable,
 } from "../common/errors";
-import { isNotVoid } from "../common/helpers";
+import { isNotNullishOrFalse } from "../common/helpers";
 import {
   type Accessor,
   AccessorPrefix,
@@ -24,7 +24,7 @@ export function _attr_input_checked_default(
   checked: boolean,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
-  const normalizedChecked = isNotVoid(checked);
+  const normalizedChecked = isNotNullishOrFalse(checked);
   if (el.defaultChecked !== normalizedChecked) {
     const restoreValue =
       scope[AccessorProp.Gen] < runId ? el.checked : normalizedChecked;
@@ -42,12 +42,12 @@ export const controllableScripts: {
 } = {};
 
 /** The render pass equivalent, for a tag whose name is only known at run time;
- * a statically named tag passes its claim to `_attrs` instead. */
-export const controllableRenders: {
-  [tagName: string]: ControllableAttrs;
+ * a statically named tag passes its helper to `_attrs` instead. */
+export const controllableSpreadHelpers: {
+  [tagName: string]: ControllableSpreadHelper;
 } = {};
 
-export type ControllableAttrs = (
+export type ControllableSpreadHelper = (
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
@@ -60,7 +60,7 @@ export function _attr_input_checked(
   checkedChange: unknown,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
-  const normalizedChecked = isNotVoid(checked);
+  const normalizedChecked = isNotNullishOrFalse(checked);
   if (MARKO_DEBUG) {
     assertHandlerIsFunction("checkedChange", checkedChange);
   }
@@ -253,8 +253,8 @@ export function _attr_input_value(
   if (valueChange && scope[AccessorProp.Gen] < runId) {
     setInputValue(el, normalizedValue);
   } else {
-    // The raw value, so attribute-backed defaults drop the attribute for void
-    // values like the server does; `_attr_input_value_default` re-normalizes.
+    // The raw value, so attribute-backed defaults drop the attribute for nullish
+    // or false values like the server does; `_attr_input_value_default` re-normalizes.
     setDefault(scope, nodeAccessor, value);
   }
 }
@@ -414,19 +414,24 @@ export function _attr_select_value_script(
   syncControllableFormInput(el, hasSelectChanged, onChange);
   // Fires only for external mutations (Marko renders reconcile first);
   // reporting those after `onChange` restores the value is deliberate.
-  observeOnce(scope, nodeAccessor, { childList: true, subtree: true }, () => {
-    const value = scope[AccessorPrefix.ControlledValue + nodeAccessor];
-    if (
-      Array.isArray(value)
-        ? value.length !== el.selectedOptions.length ||
-          // Order-independent: the controlled order may differ from document
-          // order, which must not count as a change (values are normalized strings).
-          value.some((_, i) => !value.includes(el.selectedOptions[i].value))
-        : el.value !== value
-    ) {
-      onChange();
-    }
-  });
+  observeControlled(
+    scope,
+    nodeAccessor,
+    { childList: true, subtree: true },
+    () => {
+      const value = scope[AccessorPrefix.ControlledValue + nodeAccessor];
+      if (
+        Array.isArray(value)
+          ? value.length !== el.selectedOptions.length ||
+            // Order-independent: the controlled order may differ from document
+            // order, which must not count as a change (values are normalized strings).
+            value.some((_, i) => !value.includes(el.selectedOptions[i].value))
+          : el.value !== value
+      ) {
+        onChange();
+      }
+    },
+  );
 }
 function setSelectValue(
   el: HTMLSelectElement,
@@ -472,7 +477,8 @@ export function _attr_details_or_dialog_open_default(
   open: unknown,
 ) {
   if (scope[AccessorProp.Gen] === runId) {
-    (scope[nodeAccessor] as HTMLDetailsElement).open = isNotVoid(open);
+    (scope[nodeAccessor] as HTMLDetailsElement).open =
+      isNotNullishOrFalse(open);
   }
 }
 export function _attr_details_or_dialog_open(
@@ -482,7 +488,7 @@ export function _attr_details_or_dialog_open(
   openChange: unknown,
 ) {
   const normalizedOpen = (scope[AccessorPrefix.ControlledValue + nodeAccessor] =
-    isNotVoid(open));
+    isNotNullishOrFalse(open));
   if (MARKO_DEBUG) {
     assertHandlerIsFunction("openChange", openChange);
   }
@@ -502,7 +508,7 @@ export function _attr_details_or_dialog_open_script(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLDetailsElement;
-  observeOnce(
+  observeControlled(
     scope,
     nodeAccessor,
     { attributes: true, attributeFilter: ["open"] },
@@ -526,7 +532,7 @@ export function _attr_details_or_dialog_open_script(
 
 // A spread re-render re-runs the setup script; re-observing with the scope's
 // observer updates that registration instead of adding one.
-function observeOnce(
+function observeControlled(
   scope: Scope,
   nodeAccessor: Accessor,
   init: MutationObserverInit,

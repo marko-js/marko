@@ -29,7 +29,7 @@ let channel;
 let _resumed = {};
 let curRenders;
 let readyIds;
-function isNotVoid(value) {
+function isNotNullishOrFalse(value) {
   return value != null && value !== !1;
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
@@ -254,6 +254,6 @@ function _text(node, value) {
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+  if (isNotNullishOrFalse(value)) return value === !0 ? "" : value + "";
 }
 //#endregion

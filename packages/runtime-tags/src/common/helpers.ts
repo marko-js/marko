@@ -1,7 +1,7 @@
 import { RendererProp } from "./accessor.debug";
 
-export const htmlAttrNameReg = /^[^a-z_]|[^a-z0-9._:-]/i;
-export const userAttrNameReg = /^[^a-z_$]|[^a-z0-9._:-]/i;
+export const invalidNativeAttrNameReg = /^[^a-z_]|[^a-z0-9._:-]/i;
+export const invalidAttrNameReg = /^[^a-z_$]|[^a-z0-9._:-]/i;
 const knownWrongAttrs: Record<string, string> = {
   className: "class",
   classList: "class",
@@ -52,12 +52,12 @@ export function _call<T>(fn: (v: T) => unknown, v: T): T {
   return v;
 }
 
-export function stringifyClassObject(name: string, value: unknown) {
+export function stringifyClassEntry(name: string, value: unknown) {
   return value ? name : "";
 }
 
 const warnedStyleKeys = MARKO_DEBUG ? new Set<string>() : undefined;
-export function stringifyStyleObject(name: string, value: unknown) {
+export function stringifyStyleEntry(name: string, value: unknown) {
   if (
     MARKO_DEBUG &&
     /[A-Z]/.test(name) &&
@@ -150,7 +150,7 @@ export const toDelimitedString = function toDelimitedString(
 export function isEventHandler(name: string): name is `on${string}` {
   return /^on[A-Z-]/.test(name);
 }
-export function getEventHandlerName(name: `on${string}`) {
+export function getEventType(name: `on${string}`) {
   return name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase();
 }
 
@@ -159,11 +159,11 @@ export function hasKeys(obj: object) {
   return false;
 }
 
-export function isVoid(value: unknown) {
+export function isNullishOrFalse(value: unknown) {
   return value == null || value === false;
 }
 
-export function isNotVoid(value: unknown) {
+export function isNotNullishOrFalse(value: unknown) {
   return value != null && value !== false;
 }
 

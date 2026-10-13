@@ -9,7 +9,7 @@ import {
 import {
   assertHasBody,
   assertNoSpreadAttrs,
-  assertValueAttr,
+  assertOnlyValueAttr,
 } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
@@ -39,7 +39,7 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import * as structure from "../util/structure";
-import { toFirstExpressionOrBlock } from "../util/to-first-or-block";
+import { toOnlyExpressionOrBlock } from "../util/to-only-or-block";
 import { translateByTarget } from "../util/visitors";
 import { getWriteGuard } from "../util/write-guard";
 import * as writer from "../util/writer";
@@ -59,7 +59,7 @@ export default {
     const { node } = tag;
     const tagBody = tag.get("body");
     const section = ensureSection(tag);
-    const valueAttr = assertValueAttr(tag, true);
+    const valueAttr = assertOnlyValueAttr(tag, true);
     assertHasBody(tag);
     const tagExtra = (tag.node.extra ??= {});
     const nodeBinding = (tagExtra.nodeBinding = createBinding(
@@ -127,7 +127,7 @@ export default {
                 valueAttr.value,
                 t.arrowFunctionExpression(
                   node.body.params,
-                  toFirstExpressionOrBlock(node.body.body),
+                  toOnlyExpressionOrBlock(node.body.body),
                 ),
                 getWriteGuard(section, bodySection?.reason, true),
               ),

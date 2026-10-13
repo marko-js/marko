@@ -37,7 +37,7 @@ export function initBranchSection(
 // The branch id rides the always-rendered resume marker, which resume decodes
 // in a bundle with branches: a branch whose state has a resumable writer keeps
 // its runtime there.
-export function resumeOwnerByMarkerWhenStatic(
+export function resumeOwnerByMarkerWhenUnconditional(
   bodySection: Section,
   nodeBinding: Binding,
 ) {

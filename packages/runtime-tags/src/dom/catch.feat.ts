@@ -14,7 +14,7 @@ import {
 } from "./queue";
 import type { SignalFn } from "./signals";
 
-const handlePendingTry = (
+const deferToPendingTry = (
   fn: SignalFn,
   scope: Scope,
   branch: BranchScope | undefined,
@@ -57,7 +57,7 @@ installCatch(
       if (
         (branch = scope[AccessorProp.ClosestBranch])?.[AccessorProp.Gen] !==
           0 &&
-        !handlePendingTry(fn, scope, branch)
+        !deferToPendingTry(fn, scope, branch)
       ) {
         fn(scope);
       }

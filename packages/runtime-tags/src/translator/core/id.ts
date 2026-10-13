@@ -11,7 +11,7 @@ import {
   assertIdentifierVar,
   assertNoBodyContent,
   assertNoTagVarMutation,
-  assertValueAttr,
+  assertOnlyValueAttr,
 } from "../util/assert";
 import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
@@ -38,7 +38,7 @@ export default {
     assertNoAttributeTags(tag);
     assertHasVar(tag);
     assertIdentifierVar(tag);
-    const valueAttr = assertValueAttr(tag);
+    const valueAttr = assertOnlyValueAttr(tag);
 
     // Minting is unobservable, so a tag without a value is itself the pure
     // value its variable takes, dropped with it when unread.
@@ -82,7 +82,7 @@ export default {
         );
       } else {
         const section = getSection(tag);
-        const source = initValue(node.var!.extra!.binding!);
+        const signal = initValue(node.var!.extra!.binding!);
 
         if (valueAttr) {
           const { value } = valueAttr;
@@ -90,7 +90,7 @@ export default {
           addValue(
             section,
             getReferencedBindings(value.extra),
-            source,
+            signal,
             t.logicalExpression(
               "||",
               value,
@@ -112,7 +112,7 @@ export default {
             ),
           );
         } else {
-          addValue(section, undefined, source, id);
+          addValue(section, undefined, signal, id);
         }
 
         tag.remove();

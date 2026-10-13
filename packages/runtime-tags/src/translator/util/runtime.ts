@@ -2,16 +2,6 @@ import { types as t } from "@marko/compiler";
 import { getFile, getProgram, importNamed } from "@marko/compiler/babel-utils";
 
 import type { Falsy } from "../../common/types";
-import {
-  _attr,
-  _attr_class,
-  _attr_style,
-  _escape,
-  _escape_script,
-  _escape_style,
-  _unescaped,
-} from "../../html";
-import { escapeDoubleQuotedAttrValue } from "../../html/attrs";
 import { isTranslate } from "./get-compile-stage";
 import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
@@ -157,19 +147,6 @@ export function getRuntimeFeatureImport(feature: DOMRuntimeFeature) {
     [],
     t.stringLiteral(`${getRuntimePath("dom")}/${feature}.feat`),
   );
-}
-
-export function getHTMLRuntime() {
-  return {
-    _escape,
-    _unescaped,
-    _attr,
-    _attr_class,
-    _attr_style,
-    _escape_script,
-    _escape_style,
-    escapeDoubleQuotedAttrValue,
-  };
 }
 
 export function getRuntimePath(output: string) {

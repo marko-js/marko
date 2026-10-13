@@ -10,22 +10,30 @@ import {
   getTagDef,
 } from "@marko/compiler/babel-utils";
 
-import { assertExclusiveAttrs } from "../../../common/errors";
 import {
-  getEventHandlerName,
+  assertExclusiveAttrs,
+  lowercaseOnAttrReg,
+} from "../../../common/errors";
+import {
+  getEventType,
   getWrongAttrSuggestion,
   isEventHandler,
-  stringifyClassObject,
-  stringifyStyleObject,
+  stringifyClassEntry,
+  stringifyStyleEntry,
   toDelimitedString,
 } from "../../../common/helpers";
+import {
+  _attr,
+  _attr_class,
+  _attr_style,
+  escapeDoubleQuotedAttrValue,
+} from "../../../html/attrs";
+import * as htmlContent from "../../../html/content";
 import { buildAttrNameError } from "../../util/assert";
 import { BindingType, createBinding } from "../../util/bindings";
-import {
-  bodyToRawTextLiteral,
-  bodyToTextLiteral,
-} from "../../util/body-to-text-literal";
+import { bodyToText, bodyToUncoercedText } from "../../util/body-to-text";
 import { isEndTagWrittenByBranch } from "../../util/branch-tag";
+import buildStringExpression from "../../util/build-string-expression";
 import evaluate from "../../util/evaluate";
 import {
   generateUidIdentifier,
@@ -46,9 +54,8 @@ import {
   getStyleImportRead,
   toModuleReadExpression,
 } from "../../util/module-read";
-import normalizeStringExpression from "../../util/normalize-string-expression";
 import { type Opt, push } from "../../util/optional";
-import { addAlwaysRead, addReasonExprs } from "../../util/reasons";
+import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
   dropNodes,
   mergeReferenceGroup,
@@ -59,7 +66,6 @@ import {
 } from "../../util/references";
 import {
   callRuntime,
-  getHTMLRuntime,
   importRuntime,
   importRuntimeFeature,
 } from "../../util/runtime";
@@ -132,15 +138,15 @@ interface NativeAttrs {
   controllable: Controllable | undefined;
   /** Attributes written as one object with the spreads, in write order. */
   spread: number[] | undefined;
-  /** No attribute sets the nonce the page requires of it. */
-  nonceUnset: boolean;
+  /** Writes the page's nonce on a `<script>` or `<style>` that sets none itself. */
+  injectsNonce: boolean;
 }
 
 type HandlerAttr = t.MarkoAttribute & { name: `on${string}` };
 
 interface Controllable {
   state: "checked" | "checkedValue" | "value" | "open";
-  special: boolean;
+  stateIsAttr: boolean;
   valueMode?: "attribute" | "dynamic";
   attrs: (number | undefined)[];
 }
@@ -178,7 +184,11 @@ export default {
       // wins: classifies them, drops unwritten values, records each value's facts.
       const indexByName: Record<string, number | undefined> =
         Object.create(null);
-      const pairNames = controllableElements.get(tagName)?.attrs;
+      const delimitedAttrMetas: {
+        class?: DelimitedAttrMeta;
+        style?: DelimitedAttrMeta;
+      } = {};
+      const controllableAttrNames = controllableElements.get(tagName)?.attrs;
       let own: number[] | undefined;
       let handlers: number[] | undefined;
       let content: number | undefined;
@@ -202,7 +212,12 @@ export default {
               attributes,
               indexByName,
             );
-            own = addUnpaired(own, pairNames, indexByName, controllable);
+            own = addOwnControllableAttrs(
+              own,
+              controllableAttrNames,
+              indexByName,
+              controllable,
+            );
             if (controllable && !controllable.attrs.every(isDefined)) {
               // The spread may set what an incomplete pair leaves out, so the pair
               // is written with it.
@@ -234,10 +249,18 @@ export default {
             !isEventHandlerAttr && isEventOrChangeHandler(attr.name);
           indexByName[attr.name] = i;
           assertValidNativeAttrName(tag, attr);
-          assertNativeAttrValueType(tag, attr);
-          if (attr.name === "style") warnCamelCaseStyleKeys(tag, attr);
           if (isEventHandlerAttr || isChangeHandlerAttr) {
             assertNativeHandlerAttr(tag, attr);
+          }
+          assertNativeAttrValueType(tag, attr);
+          if (attr.name === "style") warnCamelCaseStyleKeys(tag, attr);
+          let delimitedAttrMeta: DelimitedAttrMeta | undefined;
+          if (attr.name === "class" || attr.name === "style") {
+            delimitedAttrMeta = delimitedAttrMetas[attr.name] =
+              getDelimitedAttrMeta(tag, attr.name, attr.value);
+            if (attr.name === "class") {
+              assertUniqueClassToggles(tag, attr, delimitedAttrMeta);
+            }
           }
 
           if (isEventHandlerAttr) {
@@ -248,9 +271,8 @@ export default {
             hasEventHandlers = true;
             addSetupExpr(tagSection, attr.value);
           } else {
-            assertValidNativeEventHandlerAttr(tag, attr);
             if (isChangeHandlerAttr) valueExtra.retained = true;
-            if (isDynamicAttr(tag, attr)) {
+            if (isDynamicAttr(attr.value, delimitedAttrMeta)) {
               hasDynamicAttributes = true;
               addSetupExpr(tagSection, attr.value);
             } else if (attr.name === "content" && tagName !== "meta") {
@@ -265,7 +287,7 @@ export default {
             content = i;
           } else if (isEventHandlerAttr) {
             (handlers ||= []).push(i);
-          } else if (!pairNames?.includes(attr.name)) {
+          } else if (!controllableAttrNames?.includes(attr.name)) {
             (own ||= []).push(i);
           }
         }
@@ -277,14 +299,19 @@ export default {
         // A pair nothing can update writes as plain attributes.
         if (
           controllable &&
-          !controllable.special &&
+          controllable.stateIsAttr &&
           controllable.attrs[1] === undefined &&
           evaluate(attributes[controllable.attrs.find(isDefined)!].value)
             .confident
         ) {
           controllable = undefined;
         }
-        own = addUnpaired(own, pairNames, indexByName, controllable);
+        own = addOwnControllableAttrs(
+          own,
+          controllableAttrNames,
+          indexByName,
+          controllable,
+        );
       }
 
       // A controllable's change handler is attached like an event handler.
@@ -341,8 +368,9 @@ export default {
 
       handlers?.reverse();
       spread?.reverse();
-      const nonceUnset =
-        isInjectNonceTag(tagName) && indexByName.nonce === undefined;
+      const injectsNonce =
+        (tagName === "script" || tagName === "style") &&
+        indexByName.nonce === undefined;
       const tagExtra = (node.extra ??= {});
 
       let textPlaceholders: undefined | t.Node[];
@@ -364,7 +392,7 @@ export default {
         hasDynamicAttributes ||
         hasEventHandlers ||
         textPlaceholders ||
-        nonceUnset ||
+        injectsNonce ||
         content !== undefined ||
         controllable
       ) {
@@ -428,7 +456,7 @@ export default {
           addSetupExpr(tagSection, textPlaceholders[0]);
         }
 
-        if (nonceUnset && !spread) {
+        if (injectsNonce && !spread) {
           // A nonce statement with no references is written in setup.
           addSetupWork(tagSection);
         }
@@ -439,7 +467,7 @@ export default {
         }
 
         if (hasEventHandlers || isTagVarUsed(tag)) {
-          addAlwaysRead(nodeBinding);
+          addAlwaysReason(nodeBinding);
         }
 
         trackDomVarReferences(tag, nodeBinding);
@@ -461,7 +489,7 @@ export default {
           if (confident) {
             write`${getStaticAttrMarkup(name, computed)}`;
           } else if (name === "class" || name === "style") {
-            const meta = trackDelimitedAttrValue(tag, name, value);
+            const meta = delimitedAttrMetas[name]!;
             const { staticParts } = meta;
             if (getDelimitedAttrItems(name, meta) && staticParts.length) {
               if (staticParts.every(isLiteralPart)) {
@@ -472,7 +500,7 @@ export default {
                   const part = staticParts[i];
                   if (i) write` `;
                   if (isLiteralPart(part)) {
-                    write`${getHTMLRuntime().escapeDoubleQuotedAttrValue(part)}`;
+                    write`${escapeDoubleQuotedAttrValue(part)}`;
                   } else {
                     structure.writeModuleReadTo(tag, part);
                   }
@@ -492,7 +520,7 @@ export default {
         content,
         controllable,
         spread,
-        nonceUnset,
+        injectsNonce,
       };
     },
     exit(tag) {
@@ -504,7 +532,7 @@ export default {
       if (!getTagDef(tag)?.parseOptions?.openTagOnly) {
         const write = structure.writeTo(tag);
         if (tagName !== "textarea" && getTagFacts(tag).textBody) {
-          const textLiteral = bodyToRawTextLiteral(tag.node.body);
+          const textLiteral = bodyToUncoercedText(tag.node.body);
           if (t.isStringLiteral(textLiteral)) {
             write`${textLiteral.value}`;
           }
@@ -525,18 +553,18 @@ export default {
         const tagDef = getTagDef(tag);
         const write = writer.writeTo(tag);
         const tagSection = getSection(tag);
-        const visitAccessor =
+        const nodeAccessor =
           nodeBinding && getScopeAccessorLiteral(nodeBinding);
 
         const { attributes } = tag.node;
         const nativeAttrs = tagExtra[kNativeAttrs]!;
-        const { own, handlers, content, controllable, spread, nonceUnset } =
+        const { own, handlers, content, controllable, spread, injectsNonce } =
           nativeAttrs;
         const contentAttr = attrAt(attributes, content);
         const skipExpression =
           spread && buildSkipExpression(attributes, nativeAttrs);
         let spreadExpression =
-          spread && buildSpreadExpression(attributes, spread, nonceUnset);
+          spread && buildSpreadExpression(attributes, spread, injectsNonce);
 
         // Name the change-handler slot after the attribute the author wrote;
         // other internal slots get generic serializer descriptions instead.
@@ -598,7 +626,7 @@ export default {
 
         write`<${tagName}`;
 
-        if (nonceUnset && !spread) {
+        if (injectsNonce && !spread) {
           write`${callRuntime("_attr_nonce")}`;
         }
 
@@ -607,7 +635,7 @@ export default {
             write`${callRuntime(
               getControllableHelper(tagName, controllable.state),
               getScopeIdIdentifier(tagSection),
-              visitAccessor,
+              nodeAccessor,
               ...controllable.attrs.map(
                 (index) => attrAt(attributes, index)?.value,
               ),
@@ -667,7 +695,7 @@ export default {
               ? callRuntime(
                   "_attr_textarea_value",
                   getScopeIdIdentifier(tagSection),
-                  visitAccessor,
+                  nodeAccessor,
                   value?.value,
                   valueChange.value,
                 )
@@ -681,7 +709,7 @@ export default {
             writeAtStartOfBody = callRuntime(
               "_attrs_textarea_value",
               getScopeIdIdentifier(tagSection),
-              visitAccessor,
+              nodeAccessor,
               spreadIdentifier,
             );
             spreadExpression = spreadIdentifier;
@@ -730,7 +758,7 @@ export default {
                 "_attrs_partial",
                 spreadExpression,
                 skipExpression,
-                visitAccessor,
+                nodeAccessor,
                 getScopeIdIdentifier(tagSection),
                 t.stringLiteral(tagName),
               )}`;
@@ -738,7 +766,7 @@ export default {
               write`${callRuntime(
                 "_attrs",
                 spreadExpression,
-                visitAccessor,
+                nodeAccessor,
                 getScopeIdIdentifier(tagSection),
                 t.stringLiteral(tagName),
               )}`;
@@ -755,7 +783,7 @@ export default {
             t.expressionStatement(
               callRuntime(
                 "_attr_content",
-                visitAccessor,
+                nodeAccessor,
                 getScopeIdIdentifier(tagSection),
                 contentAttr.value,
                 getWriteGuard(
@@ -780,7 +808,7 @@ export default {
                     "_attrs_partial_content",
                     spreadExpression,
                     skipExpression,
-                    visitAccessor,
+                    nodeAccessor,
                     getScopeIdIdentifier(tagSection),
                     t.stringLiteral(tagName),
                     markerGuard,
@@ -790,7 +818,7 @@ export default {
                   callRuntime(
                     "_attrs_content",
                     spreadExpression,
-                    visitAccessor,
+                    nodeAccessor,
                     getScopeIdIdentifier(tagSection),
                     t.stringLiteral(tagName),
                     markerGuard,
@@ -853,10 +881,10 @@ export default {
             // Raw text escapers neutralize multi-character tokens, so the whole
             // body escapes as one string: a `</script` split across adjacent
             // interpolations slips past per-placeholder calls.
-            const body = bodyToTextLiteral(tag.node.body);
+            const body = bodyToText(tag.node.body);
             write`${
               t.isStringLiteral(body)
-                ? getHTMLRuntime()[rawTextHelper](body.value)
+                ? htmlContent[rawTextHelper](body.value)
                 : callRuntime(rawTextHelper, body)
             }`;
           } else {
@@ -895,18 +923,18 @@ export default {
 
         const tagName = getCanonicalTagName(tag);
         const tagSection = getSection(tag);
-        const visitAccessor = getScopeAccessorLiteral(nodeBinding);
+        const nodeAccessor = getScopeAccessorLiteral(nodeBinding);
         const { attributes } = tag.node;
         const nativeAttrs = tagExtra[kNativeAttrs]!;
-        const { own, handlers, content, controllable, spread, nonceUnset } =
+        const { own, handlers, content, controllable, spread, injectsNonce } =
           nativeAttrs;
         const contentAttr = attrAt(attributes, content);
         const skipExpression =
           spread && buildSkipExpression(attributes, nativeAttrs);
         const spreadExpression =
-          spread && buildSpreadExpression(attributes, spread, nonceUnset);
+          spread && buildSpreadExpression(attributes, spread, injectsNonce);
 
-        if (nonceUnset && !spread) {
+        if (injectsNonce && !spread) {
           addStatement(
             "render",
             tagSection,
@@ -946,7 +974,7 @@ export default {
             callRuntime(
               hasChangeHandler ? helper : defaultHelper,
               scopeIdentifier,
-              visitAccessor,
+              nodeAccessor,
               ...values,
             ),
           );
@@ -956,7 +984,7 @@ export default {
               "effect",
               tagSection,
               undefined,
-              callRuntime(`${helper}_script`, scopeIdentifier, visitAccessor),
+              callRuntime(`${helper}_script`, scopeIdentifier, nodeAccessor),
             );
           }
         }
@@ -971,7 +999,7 @@ export default {
               case "class":
               case "style": {
                 if (!confident) {
-                  const meta = trackDelimitedAttrValue(tag, name, value);
+                  const meta = getDelimitedAttrMeta(tag, name, value);
                   const items = getDelimitedAttrItems(name, meta);
                   const calls: t.Expression[] = [];
                   const assert = buildClassTogglesAssert(meta);
@@ -1072,7 +1100,7 @@ export default {
               callRuntime(
                 "_on",
                 createScopeReadExpression(nodeBinding),
-                t.stringLiteral(getEventHandlerName(name)),
+                t.stringLiteral(getEventType(name)),
                 value,
               ),
             );
@@ -1095,7 +1123,7 @@ export default {
             staticName === undefined
               ? undefined
               : controllableElements.get(staticName);
-          const spreadClaim = !controllable && element?.claim;
+          const spreadHelper = !controllable && element?.spreadHelper;
           if (skipExpression) {
             addStatement(
               "render",
@@ -1104,10 +1132,10 @@ export default {
               callRuntime(
                 spreadContent ? "_attrs_partial_content" : "_attrs_partial",
                 scopeIdentifier,
-                visitAccessor,
+                nodeAccessor,
                 spreadExpression,
                 skipExpression,
-                spreadClaim && importRuntime(spreadClaim),
+                spreadHelper && importRuntime(spreadHelper),
               ),
             );
           } else {
@@ -1118,9 +1146,9 @@ export default {
               callRuntime(
                 spreadContent ? "_attrs_content" : "_attrs",
                 scopeIdentifier,
-                visitAccessor,
+                nodeAccessor,
                 spreadExpression,
-                spreadClaim && importRuntime(spreadClaim),
+                spreadHelper && importRuntime(spreadHelper),
               ),
             );
           }
@@ -1136,7 +1164,7 @@ export default {
             "effect",
             tagSection,
             getReferencedBindings(tagExtra),
-            callRuntime("_attrs_script", scopeIdentifier, visitAccessor),
+            callRuntime("_attrs_script", scopeIdentifier, nodeAccessor),
           );
         }
 
@@ -1148,7 +1176,7 @@ export default {
             callRuntime(
               "_attr_content",
               scopeIdentifier,
-              visitAccessor,
+              nodeAccessor,
               contentAttr.value,
             ),
             true,
@@ -1163,10 +1191,7 @@ export default {
 
         if (!openTagOnly) {
           if (tagName !== "textarea" && getTagFacts(tag).textBody) {
-            const textLiteral = bodyToTextLiteral(
-              tag.node.body,
-              tagName === "title",
-            );
+            const textLiteral = bodyToText(tag.node.body, tagName === "title");
             if (!t.isStringLiteral(textLiteral)) {
               addStatement(
                 "render",
@@ -1203,7 +1228,7 @@ function getRelatedControllable(
       if ("checked" in indexByName || "checkedChange" in indexByName) {
         return {
           state: "checked",
-          special: false,
+          stateIsAttr: true,
           attrs: [indexByName.checked, indexByName.checkedChange],
         };
       }
@@ -1214,7 +1239,7 @@ function getRelatedControllable(
       ) {
         return {
           state: "checkedValue",
-          special: true,
+          stateIsAttr: false,
           attrs: [
             indexByName.checkedValue,
             indexByName.checkedValueChange,
@@ -1235,7 +1260,7 @@ function getRelatedControllable(
 
         return {
           state: "value",
-          special: false,
+          stateIsAttr: true,
           attrs: [indexByName.value, indexByName.valueChange],
           valueMode,
         };
@@ -1246,7 +1271,7 @@ function getRelatedControllable(
       if ("value" in indexByName || "valueChange" in indexByName) {
         return {
           state: "value",
-          special: true,
+          stateIsAttr: false,
           attrs: [indexByName.value, indexByName.valueChange],
         };
       }
@@ -1256,7 +1281,7 @@ function getRelatedControllable(
       if ("open" in indexByName || "openChange" in indexByName) {
         return {
           state: "open",
-          special: false,
+          stateIsAttr: true,
           attrs: [indexByName.open, indexByName.openChange],
         };
       }
@@ -1264,15 +1289,15 @@ function getRelatedControllable(
   }
 }
 
-// A pair attribute the element's pair does not take is its own.
-function addUnpaired(
+// A controllable attribute the element's controllable does not take is its own.
+function addOwnControllableAttrs(
   own: number[] | undefined,
-  pairNames: string[] | undefined,
+  controllableAttrNames: string[] | undefined,
   indexByName: Record<string, number | undefined>,
   controllable: Controllable | undefined,
 ) {
-  if (pairNames) {
-    for (const name of pairNames) {
+  if (controllableAttrNames) {
+    for (const name of controllableAttrNames) {
       const index = indexByName[name];
       if (index !== undefined && !controllable?.attrs.includes(index)) {
         (own ||= []).push(index);
@@ -1347,10 +1372,10 @@ function spreadRendersContent(
 function buildSpreadExpression(
   attributes: t.MarkoTag["attributes"],
   spread: number[],
-  nonceUnset: boolean,
+  injectsNonce: boolean,
 ) {
   const props: t.ObjectExpression["properties"] = [];
-  if (nonceUnset) {
+  if (injectsNonce) {
     props.push(
       t.objectProperty(
         t.identifier("nonce"),
@@ -1401,7 +1426,7 @@ function buildSkipExpression(
   if (handlers) {
     for (const index of handlers) {
       const { name } = attributes[index] as HandlerAttr;
-      skipProps.add(`on-${getEventHandlerName(name)}`);
+      skipProps.add(`on-${getEventType(name)}`);
     }
   }
 
@@ -1433,16 +1458,6 @@ function getControllableHelper(tagName: string, state: Controllable["state"]) {
   }
 }
 
-function isInjectNonceTag(tagName: string) {
-  switch (tagName) {
-    case "script":
-    case "style":
-      return true;
-    default:
-      return false;
-  }
-}
-
 function assertValidNativeAttrName(
   tag: t.NodePath<t.MarkoTag>,
   attr: t.MarkoAttribute,
@@ -1462,12 +1477,31 @@ function assertNativeAttrValueType(
   attr: t.MarkoAttribute,
 ) {
   const { name } = attr;
+  if (lowercaseOnAttrReg.test(name)) {
+    const { value } = attr;
+    let invalid = t.isFunction(value);
+    if (!invalid) {
+      const { confident, computed } = evaluate(value);
+      invalid = confident && !!computed && typeof computed !== "string";
+    }
+
+    if (invalid) {
+      const suggestion = "on" + name[2].toUpperCase() + name.slice(3);
+      throw tag.hub.buildError(
+        value,
+        `The \`${name}\` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …). ` +
+          `To attach an event listener, use the \`${suggestion}\` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.`,
+        Error,
+      );
+    }
+    return;
+  }
+
   if (
     name === "class" ||
     name === "style" ||
     name === "content" ||
-    isEventOrChangeHandler(name) ||
-    lowercaseEventHandlerReg.test(name)
+    isEventOrChangeHandler(name)
   ) {
     return;
   }
@@ -1553,32 +1587,6 @@ function assertNativeHandlerAttr(
   }
 }
 
-const lowercaseEventHandlerReg = /^on[a-z]/;
-
-function assertValidNativeEventHandlerAttr(
-  tag: t.NodePath<t.MarkoTag>,
-  attr: t.MarkoAttribute,
-) {
-  if (!lowercaseEventHandlerReg.test(attr.name)) return;
-
-  const { value } = attr;
-  let invalid = t.isFunction(value);
-  if (!invalid) {
-    const { confident, computed } = evaluate(value);
-    invalid = confident && !!computed && typeof computed !== "string";
-  }
-
-  if (invalid) {
-    const suggestion = "on" + attr.name[2].toUpperCase() + attr.name.slice(3);
-    throw tag.hub.buildError(
-      value,
-      `The \`${attr.name}\` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …). ` +
-        `To attach an event listener, use the \`${suggestion}\` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.`,
-      Error,
-    );
-  }
-}
-
 function getCanonicalTagName(tag: t.NodePath<t.MarkoTag>) {
   const tagName = getTagName(tag)!;
   switch (tagName) {
@@ -1656,11 +1664,11 @@ function getRawTextEscapeHelper(tagName: string) {
 function getStaticAttrMarkup(name: string, computed: unknown) {
   switch (name) {
     case "class":
-      return getHTMLRuntime()._attr_class(computed);
+      return _attr_class(computed);
     case "style":
-      return getHTMLRuntime()._attr_style(computed);
+      return _attr_style(computed);
     default:
-      return getHTMLRuntime()._attr(name, computed);
+      return _attr(name, computed);
   }
 }
 
@@ -1717,7 +1725,7 @@ function factorAttrConditional(value: t.Expression): t.Expression {
     const b = alternate.value;
     const end = commonAttrPrefixEnd([a, b]);
     if (end) {
-      return normalizeStringExpression([
+      return buildStringExpression([
         a.slice(0, end),
         t.conditionalExpression(
           value.test,
@@ -1756,7 +1764,7 @@ function buildLogicalAttr(name: string, value: t.Expression) {
     return;
   }
 
-  const attr = getHTMLRuntime()._attr(name, computed);
+  const attr = _attr(name, computed);
   const helper =
     value.operator === "&&"
       ? "_attr_and"
@@ -1793,33 +1801,27 @@ function buildClassAttrExpression(
   tag: t.NodePath<t.MarkoTag>,
   value: t.Expression,
 ) {
-  const meta = trackDelimitedAttrValue(tag, "class", value);
-  if (meta.dynamic) return;
+  const meta = getDelimitedAttrMeta(tag, "class", value);
+  if (meta.needsWholeValue) return;
   const markup = buildClassMarkup(meta);
   const assert = markup && buildClassTogglesAssert(meta);
   return assert ? t.sequenceExpression([assert, markup!]) : markup;
 }
 
-function buildClassMarkup({
-  staticParts,
-  dynamicValues = [],
-}: DelimitedAttrMeta) {
-  if (dynamicValues.length > MAX_PRECOMPUTED_CLASS_TOGGLES) {
+function buildClassMarkup({ staticParts, toggles = [] }: DelimitedAttrMeta) {
+  if (toggles.length > MAX_PRECOMPUTED_CLASS_TOGGLES) {
     if (staticParts.length) {
-      return callRuntime(
-        "_attr_class",
-        buildClassString(staticParts, dynamicValues),
-      );
+      return callRuntime("_attr_class", buildClassString(staticParts, toggles));
     }
     return;
   }
 
   // Every toggle combination's parts, indexed by the toggles bit-packed.
   const combos: DelimitedAttrPart[][] = [];
-  for (let mask = 0; mask < 1 << dynamicValues.length; mask++) {
+  for (let mask = 0; mask < 1 << toggles.length; mask++) {
     const parts = [...staticParts];
-    for (let i = 0; i < dynamicValues.length; i++) {
-      const { key, alternate } = dynamicValues[i];
+    for (let i = 0; i < toggles.length; i++) {
+      const { key, alternate } = toggles[i];
       const part = mask & (1 << i) ? key : alternate;
       if (part) parts.push(part);
     }
@@ -1828,14 +1830,14 @@ function buildClassMarkup({
 
   if (combos.every((parts) => parts.every(isLiteralPart))) {
     return buildPrecomputedClass(
-      combos.map((parts) => getHTMLRuntime()._attr_class(parts.join(" "))),
-      dynamicValues,
+      combos.map((parts) => _attr_class(parts.join(" "))),
+      toggles,
     );
   }
 
-  const table = getHoistedClassMarkup(combos);
-  return dynamicValues.length
-    ? t.memberExpression(table, buildToggleIndex(dynamicValues), true)
+  const table = ensureModuleClassMarkup(combos);
+  return toggles.length
+    ? t.memberExpression(table, buildToggleIndex(toggles), true)
     : table;
 }
 
@@ -1879,25 +1881,25 @@ function buildPrecomputedClass(
     buildToggleIndex(toggles),
     true,
   );
-  return normalizeStringExpression([combos[0].slice(0, end), lookup])!;
+  return buildStringExpression([combos[0].slice(0, end), lookup])!;
 }
 
 // A class with style import reads renders as the module loads: one markup, or a
 // table of every toggle combination, shared by each element writing the same parts.
-const [getHoistedClassMarkups] = createProgramState(
+const [getModuleClassMarkups] = createProgramState(
   () => new Map<string, t.Identifier>(),
 );
-function getHoistedClassMarkup(combos: DelimitedAttrPart[][]) {
+function ensureModuleClassMarkup(combos: DelimitedAttrPart[][]) {
   const key = JSON.stringify(combos);
-  const hoisted = getHoistedClassMarkups();
-  let id = hoisted.get(key);
+  const moduleClassMarkups = getModuleClassMarkups();
+  let id = moduleClassMarkups.get(key);
   if (!id) {
     const markups = combos.map((parts) =>
       parts.length
         ? callRuntime("_attr_class", buildClassString(parts, []))
         : t.stringLiteral(""),
     );
-    hoisted.set(key, (id = generateUidIdentifier("class")));
+    moduleClassMarkups.set(key, (id = generateUidIdentifier("class")));
     getProgram().node.body.push(
       t.markoScriptlet(
         [
@@ -1916,16 +1918,13 @@ function getHoistedClassMarkup(combos: DelimitedAttrPart[][]) {
 }
 
 // Debug output checks a toggled style import read against the value's other names.
-function buildClassTogglesAssert({
-  staticParts,
-  dynamicValues,
-}: DelimitedAttrMeta) {
+function buildClassTogglesAssert({ staticParts, toggles }: DelimitedAttrMeta) {
   if (
     isOptimize() ||
-    !dynamicValues ||
+    !toggles ||
     [
       ...staticParts,
-      ...dynamicValues.flatMap(({ key, alternate }) => [key, alternate]),
+      ...toggles.flatMap(({ key, alternate }) => [key, alternate]),
     ].every((part) => part === undefined || isLiteralPart(part))
   ) {
     return;
@@ -1935,7 +1934,7 @@ function buildClassTogglesAssert({
     "_assert_class_toggles",
     buildClassString(staticParts, []),
     t.arrayExpression(
-      dynamicValues.map(({ key, alternate }) =>
+      toggles.map(({ key, alternate }) =>
         buildClassString(alternate ? [key, alternate] : [key], []),
       ),
     ),
@@ -1982,7 +1981,7 @@ function buildClassString(
       ),
     );
   }
-  return normalizeStringExpression(strs) || t.stringLiteral("");
+  return buildStringExpression(strs) || t.stringLiteral("");
 }
 
 function toClassPartExpression(part: DelimitedAttrPart) {
@@ -2007,9 +2006,9 @@ function toSpacedClassPart(part: DelimitedAttrPart | undefined) {
 // order, and the class names or style properties a value sets.
 interface DelimitedAttrMeta {
   /** An item only the whole-value helper (`_attr_class`/`_attr_style`) can write. */
-  dynamic: boolean;
+  needsWholeValue: boolean;
   staticParts: DelimitedAttrPart[];
-  dynamicValues: DelimitedAttrValue[] | undefined;
+  toggles: DelimitedAttrValue[] | undefined;
 }
 
 /** A literal, or a style import read (class only). */
@@ -2024,8 +2023,8 @@ interface DelimitedAttrValue {
 }
 
 const delimitedAttrStringify = {
-  class: [" ", stringifyClassObject],
-  style: [";", stringifyStyleObject],
+  class: [" ", stringifyClassEntry],
+  style: [";", stringifyStyleEntry],
 } as const;
 
 // A toggled class must not share a name with any other part, since the client adds and
@@ -2033,10 +2032,10 @@ const delimitedAttrStringify = {
 function assertUniqueClassToggles(
   tag: t.NodePath<t.MarkoTag>,
   attr: t.MarkoAttribute,
-  { staticParts, dynamicValues = [] }: DelimitedAttrMeta,
+  { staticParts, toggles = [] }: DelimitedAttrMeta,
 ) {
   const written = new Set(staticParts.flatMap(getClassNames));
-  for (const { key, alternate } of dynamicValues) {
+  for (const { key, alternate } of toggles) {
     // A toggle writes its key or its alternate, never both.
     const names = new Set([...getClassNames(key), ...getClassNames(alternate)]);
     for (const name of names) {
@@ -2060,33 +2059,30 @@ function getClassNames(part: DelimitedAttrPart | undefined) {
       : [part.join(".")];
 }
 
-function isDynamicAttr(tag: t.NodePath<t.MarkoTag>, attr: t.MarkoAttribute) {
-  return !isStaticDelimitedAttr(tag, attr) && !evaluate(attr.value).confident;
-}
-
-// A value the template holds whole, which then never needs the element.
-function isStaticDelimitedAttr(
-  tag: t.NodePath<t.MarkoTag>,
-  attr: t.MarkoAttribute,
+// A class or style value the template holds whole never needs the element.
+function isDynamicAttr(
+  value: t.Expression,
+  delimitedAttrMeta: DelimitedAttrMeta | undefined,
 ) {
-  const { name, value } = attr;
-  if (name !== "class" && name !== "style") return false;
-  const meta = trackDelimitedAttrValue(tag, name, value);
-  if (name === "class") assertUniqueClassToggles(tag, attr, meta);
-  return !meta.dynamic && !meta.dynamicValues;
+  return (
+    (!delimitedAttrMeta ||
+      delimitedAttrMeta.needsWholeValue ||
+      !!delimitedAttrMeta.toggles) &&
+    !evaluate(value).confident
+  );
 }
 
 // The values the client writes one at a time, leaving the template's static part
 // (none when only the whole value can be written); a toggled class repeats no other name.
 function getDelimitedAttrItems(
   name: "class" | "style",
-  { dynamic, dynamicValues }: DelimitedAttrMeta,
+  { needsWholeValue, toggles }: DelimitedAttrMeta,
 ) {
-  if (dynamic) return;
+  if (needsWholeValue) return;
   const items: { key: DelimitedAttrPart; value: t.Expression }[] = [];
-  if (!dynamicValues) return items;
+  if (!toggles) return items;
   const keys = new Set<string>();
-  for (const { key, value, alternate } of dynamicValues) {
+  for (const { key, value, alternate } of toggles) {
     if (
       alternate !== undefined ||
       (name === "style" &&
@@ -2106,21 +2102,21 @@ function isLiteralPart(part: DelimitedAttrPart): part is string {
   return typeof part === "string";
 }
 
-function trackDelimitedAttrValue(
+function getDelimitedAttrMeta(
   tag: t.NodePath<t.MarkoTag>,
   name: "class" | "style",
   value: t.Expression,
 ) {
   const meta: DelimitedAttrMeta = {
-    dynamic: false,
+    needsWholeValue: false,
     staticParts: [],
-    dynamicValues: undefined,
+    toggles: undefined,
   };
-  trackDelimitedAttrItem(tag, name, value, meta);
+  addDelimitedAttrItem(tag, name, value, meta);
   return meta;
 }
 
-function trackDelimitedAttrItem(
+function addDelimitedAttrItem(
   tag: t.NodePath<t.MarkoTag>,
   name: "class" | "style",
   item: t.Expression | t.SpreadElement,
@@ -2129,18 +2125,18 @@ function trackDelimitedAttrItem(
   switch (item.type) {
     case "ArrayExpression":
       for (const child of item.elements) {
-        if (child) trackDelimitedAttrItem(tag, name, child, meta);
+        if (child) addDelimitedAttrItem(tag, name, child, meta);
       }
       return;
     case "SpreadElement":
       if (item.argument.type === "ArrayExpression") {
-        trackDelimitedAttrItem(tag, name, item.argument, meta);
+        addDelimitedAttrItem(tag, name, item.argument, meta);
       } else {
-        meta.dynamic = true;
+        meta.needsWholeValue = true;
       }
       return;
     case "ObjectExpression":
-      trackDelimitedAttrObjectProperties(tag, name, item, meta);
+      addDelimitedAttrObject(tag, name, item, meta);
       return;
   }
 
@@ -2152,24 +2148,24 @@ function trackDelimitedAttrItem(
     const key =
       item.operator === "&&" && getDelimitedAttrPart(tag, name, item.right);
     if (key) {
-      addDynamicValue(meta, key, item.left, undefined);
+      addToggle(meta, key, item.left, undefined);
     } else {
-      meta.dynamic = true;
+      meta.needsWholeValue = true;
     }
   } else if (name === "class" && item.type === "ConditionalExpression") {
     const key = getDelimitedAttrPart(tag, name, item.consequent);
     const alternate = getDelimitedAttrPart(tag, name, item.alternate);
     if (key && alternate !== undefined) {
-      addDynamicValue(meta, key, item.test, alternate || undefined);
+      addToggle(meta, key, item.test, alternate || undefined);
     } else {
-      meta.dynamic = true;
+      meta.needsWholeValue = true;
     }
   } else {
-    meta.dynamic = true;
+    meta.needsWholeValue = true;
   }
 }
 
-function trackDelimitedAttrObjectProperties(
+function addDelimitedAttrObject(
   tag: t.NodePath<t.MarkoTag>,
   name: "class" | "style",
   obj: t.ObjectExpression,
@@ -2182,14 +2178,14 @@ function trackDelimitedAttrObjectProperties(
         : undefined;
     // An empty key writes nothing yet its value still runs.
     if (!key || prop.type !== "ObjectProperty") {
-      meta.dynamic = true;
+      meta.needsWholeValue = true;
       return;
     }
 
     const value = prop.value as t.Expression;
     const { confident, computed } = evaluate(value);
     if (!confident) {
-      addDynamicValue(meta, key, value, undefined);
+      addToggle(meta, key, value, undefined);
     } else if (!isLiteralPart(key)) {
       if (computed) meta.staticParts.push(key);
     } else {
@@ -2238,11 +2234,11 @@ function getDelimitedAttrPart(
   }
 }
 
-function addDynamicValue(
+function addToggle(
   meta: DelimitedAttrMeta,
   key: DelimitedAttrPart,
   value: t.Expression,
   alternate: DelimitedAttrPart | undefined,
 ) {
-  (meta.dynamicValues ||= []).push({ key, value, alternate });
+  (meta.toggles ||= []).push({ key, value, alternate });
 }

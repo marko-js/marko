@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { decodeHTML, getFile } from "@marko/compiler/babel-utils";
 
-import normalizeStringExpression from "../util/normalize-string-expression";
+import buildStringExpression from "../util/build-string-expression";
 
 export function preAnalyze(tag: t.NodePath<t.MarkoTag>) {
   if (tag.node.body.body.length) {
@@ -30,7 +30,7 @@ export function preAnalyze(tag: t.NodePath<t.MarkoTag>) {
       }
     }
 
-    const textValue = normalizeStringExpression(parts);
+    const textValue = buildStringExpression(parts);
     if (textValue) {
       const valueAttr = tag.node.attributes.find(
         (attr) => t.isMarkoAttribute(attr) && attr.name === "value",

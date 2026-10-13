@@ -6,7 +6,7 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent, assertValueAttr } from "../util/assert";
+import { assertNoBodyContent, assertOnlyValueAttr } from "../util/assert";
 import runtimeInfo from "../util/runtime-info";
 import { ensureSection } from "../util/sections";
 import { addSetupExpr, addSetupWork } from "../util/setup-work";
@@ -19,7 +19,7 @@ export default {
     assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
-    const valueAttr = assertValueAttr(tag);
+    const valueAttr = assertOnlyValueAttr(tag);
 
     const section = ensureSection(tag);
     if (valueAttr) {

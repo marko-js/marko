@@ -45,7 +45,7 @@ export interface RenderData {
   w(): void;
   // Deserialize scopes and run scripts ("m" for marko)
   m?(effects: unknown[]): unknown[];
-  // Blocking resumes keyed by ready id.
+  // Ready stream resumes keyed by ready id.
   b?: Record<string, ResumeData>;
   /* --- Used by inline runtime --- */
 

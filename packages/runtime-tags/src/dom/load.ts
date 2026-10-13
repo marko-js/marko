@@ -5,7 +5,7 @@ import {
   type Scope,
   type Template,
 } from "../common/types";
-import { addAwaitCounter, renderCatch } from "./control-flow";
+import { startAwait, renderCatch } from "./control-flow";
 import { queueAsyncRender, queueRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
 import { insertBranchBefore, syncGen } from "./scope";
@@ -41,7 +41,7 @@ export function _load_template(id: string, load: () => Promise<Renderer>) {
     0,
     0,
     (branch) => {
-      const awaitCounter = addAwaitCounter(branch);
+      const awaitCounter = startAwait(branch);
       branch[AccessorProp.Load] ||= new Map() as LoadValues;
       (pending ||= load()).then(
         (renderer) => {
@@ -82,7 +82,7 @@ export function _load_setup(load: () => Promise<LoadModule>) {
       // buffered every input chunk for the batch below.
       queueRender(child, insertCached, -1, marker);
     } else {
-      const awaitCounter = addAwaitCounter(owner);
+      const awaitCounter = startAwait(owner);
       child[AccessorProp.Load] ||= new Map() as LoadValues;
       (pending ||= load()).then(
         (mod) => {
@@ -103,7 +103,7 @@ function insertLoaded(
   renderer: Renderer,
   branch: BranchScope,
   marker: ChildNode,
-  awaitCounter?: ReturnType<typeof addAwaitCounter>,
+  awaitCounter?: ReturnType<typeof startAwait>,
 ) {
   // Read when it inserts: a pending `<try>` moves its range into a fragment
   // while its placeholder shows, and back once it is dismissed.
@@ -126,7 +126,7 @@ function insertLoaded(
   if ((remaining = values?.size as number)) {
     // A module already loaded still waits on its input's chunks, which a pending
     // `<try>` counts before it dismisses its placeholder.
-    awaitCounter ||= addAwaitCounter(branch);
+    awaitCounter ||= startAwait(branch);
     const fail = loadFailed(branch, awaitCounter);
     // Each entry's signal is cached as its chunk lands, so the render
     // applies every entry synchronously.
@@ -155,7 +155,7 @@ function insertLoaded(
 
 function loadFailed(
   scope: BranchScope,
-  awaitCounter?: ReturnType<typeof addAwaitCounter>,
+  awaitCounter?: ReturnType<typeof startAwait>,
 ) {
   return (error: unknown) => {
     if (awaitCounter) {

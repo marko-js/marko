@@ -7,14 +7,17 @@ import {
   type TagDefinition,
 } from "@marko/compiler/babel-utils";
 
-import { htmlAttrNameReg, userAttrNameReg } from "../../../common/helpers";
+import {
+  invalidAttrNameReg,
+  invalidNativeAttrNameReg,
+} from "../../../common/helpers";
+import { _escape } from "../../../html/content";
 import { flattenTextOnlyConditional } from "../../core/if";
 import { preAnalyze as preAnalyzeTextarea } from "../../core/textarea";
 import { buildAttrNameError } from "../../util/assert";
+import buildStringExpression from "../../util/build-string-expression";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
-import { getMarkoRoot, isMarko } from "../../util/get-root";
-import normalizeStringExpression from "../../util/normalize-string-expression";
-import { getHTMLRuntime } from "../../util/runtime";
+import { getMarkoRoot, isMarkoRoot } from "../../util/get-root";
 import {
   isUnresolvedKnownWrongTag,
   tagNotFoundError,
@@ -58,7 +61,7 @@ function normalizeBody(
           normalizeTag(child);
         }
       } else if (child.isMarkoPlaceholder()) {
-        hoistStaticPlaceholderText(child);
+        splitStaticPlaceholderText(child);
       }
     }
   }
@@ -66,15 +69,14 @@ function normalizeBody(
 
 // Moves a placeholder's unconditional leading/trailing static text into adjacent
 // text nodes so it writes statically; only escape-invariant text, since text is raw.
-function hoistStaticPlaceholderText(
+function splitStaticPlaceholderText(
   placeholder: t.NodePath<t.MarkoPlaceholder>,
 ) {
   const { node } = placeholder;
-  const normalized = normalizeStringExpression([node.value]);
+  const normalized = buildStringExpression([node.value]);
   if (!normalized || !t.isTemplateLiteral(normalized)) return;
   node.value = normalized;
 
-  const { _escape } = getHTMLRuntime();
   const { quasis } = normalized;
   const lastIndex = quasis.length - 1;
   const leading = quasis[0].value.cooked ?? "";
@@ -113,7 +115,7 @@ function insertStaticText(
 function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const { name, attributes } = node;
-  let attrNameReg = userAttrNameReg;
+  let invalidNameReg = invalidAttrNameReg;
   if (name.type === "StringLiteral") {
     const tagName = name.value;
     if (
@@ -131,7 +133,7 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
   normalizeBody(tag.get("attributeTags"));
 
   if (node.var) {
-    const insertions = getAssignmentInsertions(node.var);
+    const insertions = moveDefaultsToConstTags(node.var);
     if (insertions) {
       tag.insertAfter(insertions);
     }
@@ -139,7 +141,7 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
 
   // An attribute tag loop's params are the loop callback's own, defaults kept.
   if (node.body.params.length && !node.body.attributeTags) {
-    const insertions = getElementInsertions(node.body.params);
+    const insertions = moveElementDefaultsToConstTags(node.body.params);
     // Nothing reads the params of a tag with no body, so defaults are dropped.
     if (insertions && node.body.body.length) {
       node.body.body = [...insertions, ...node.body.body];
@@ -155,7 +157,7 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
       );
       node.tagDef = nativeTagDef;
     }
-    attrNameReg = htmlAttrNameReg;
+    invalidNameReg = invalidNativeAttrNameReg;
     if (nativeTagDef.parseOptions?.openTagOnly && node.body.body.length) {
       throw tag.hub.buildError(
         node.body.body[0],
@@ -172,13 +174,13 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
     if (t.isMarkoAttribute(attr)) {
       if (attr.bound) {
         // Inject change handler functions from the binding shorthand.
-        attributes.splice(++i, 0, getChangeHandler(tag, attr));
+        attributes.splice(++i, 0, buildChangeHandlerAttr(tag, attr));
         attr.bound = false;
       } else if (attr.modifier != null) {
         attr.name += ":" + attr.modifier;
       }
 
-      if (attrNameReg.test(attr.name)) {
+      if (invalidNameReg.test(attr.name)) {
         if (isUnresolvedKnownWrongTag(tag)) throw tagNotFoundError(tag);
         throw buildAttrNameError(tag, attr, "Invalid attribute name.");
       }
@@ -208,7 +210,7 @@ function getStaticNativeTagDef(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function getChangeHandler(
+function buildChangeHandlerAttr(
   tag: t.NodePath<t.MarkoTag>,
   attr: t.MarkoAttribute,
 ): t.MarkoAttribute {
@@ -261,9 +263,7 @@ function getChangeHandler(
         ? bindingIdentifierPath.parentPath === binding.path
           ? buildChangeHandlerFunction(attr.value, modifier)
           : bindingIdentifierPath.parentPath!.isObjectProperty()
-            ? getChangeHandlerFromObjectPattern(
-                bindingIdentifierPath.parentPath!,
-              )
+            ? ensureDestructuredChangeHandler(bindingIdentifierPath.parentPath!)
             : undefined
         : undefined;
 
@@ -306,7 +306,7 @@ function getChangeHandler(
       );
     }
 
-    const markoRoot = isMarko(binding.path)
+    const markoRoot = isMarkoRoot(binding.path)
       ? binding.path
       : getMarkoRoot(binding.path);
 
@@ -414,9 +414,7 @@ function buildChangeHandlerFunction(
   );
 }
 
-function getChangeHandlerFromObjectPattern(
-  parent: t.NodePath<t.ObjectProperty>,
-) {
+function ensureDestructuredChangeHandler(parent: t.NodePath<t.ObjectProperty>) {
   let changeKey: t.Identifier | undefined;
   const pattern = parent.parentPath as t.NodePath<t.ObjectPattern>;
   const keyName = getStaticKeyName(parent.node);
@@ -456,7 +454,7 @@ function getStaticKeyName(prop: t.ObjectProperty) {
     : getLiteralName(prop.key);
 }
 
-function getAssignmentInsertions(
+function moveDefaultsToConstTags(
   node: t.Node,
   insertions?: t.MarkoTag[] | undefined,
 ) {
@@ -474,15 +472,15 @@ function getAssignmentInsertions(
             (insertions ||= []).push(
               toConstTag(left as any, toFallbackExpr(sourceName, right)),
             );
-            getAssignmentInsertions(left, insertions);
+            moveDefaultsToConstTags(left, insertions);
           } else {
-            insertions = getAssignmentInsertions(prop.value, insertions);
+            insertions = moveDefaultsToConstTags(prop.value, insertions);
           }
         }
       }
       break;
     case "ArrayPattern":
-      insertions = getElementInsertions(node.elements, insertions);
+      insertions = moveElementDefaultsToConstTags(node.elements, insertions);
       break;
   }
 
@@ -490,7 +488,7 @@ function getAssignmentInsertions(
 }
 
 // Tag params are positional like an array pattern's elements.
-function getElementInsertions(
+function moveElementDefaultsToConstTags(
   elements: (t.Node | null)[],
   insertions?: t.MarkoTag[] | undefined,
 ) {
@@ -504,9 +502,9 @@ function getElementInsertions(
         (insertions ||= []).push(
           toConstTag(left as any, toFallbackExpr(sourceName, right)),
         );
-        getAssignmentInsertions(left, insertions);
+        moveDefaultsToConstTags(left, insertions);
       } else {
-        insertions = getAssignmentInsertions(el, insertions);
+        insertions = moveDefaultsToConstTags(el, insertions);
       }
     }
   }

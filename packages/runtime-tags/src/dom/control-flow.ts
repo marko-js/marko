@@ -20,7 +20,7 @@ import {
   type Scope,
 } from "../common/types";
 import { trackAbort } from "./abort-signal";
-import { controllableRenders } from "./controllable";
+import { controllableSpreadHelpers } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
   runEffects,
@@ -133,7 +133,7 @@ export function _await_promise(
         awaitBranch[AccessorProp.PendingRenders] ||= [];
       }
       if (tryBranch !== awaitBranch) {
-        awaitCounter = addAwaitCounter(scope, tryBranch)!;
+        awaitCounter = startAwait(scope, tryBranch)!;
       } else {
         if (!awaitCounter?.i) {
           awaitCounter = createAwaitCounter(tryBranch, () => {
@@ -154,7 +154,7 @@ export function _await_promise(
             }
           });
         }
-        scheduleAwaitFrame(awaitCounter, scope, () => {
+        countAwait(awaitCounter, scope, () => {
           if (!awaitBranch[AccessorProp.DetachedAwait]) {
             awaitBranch[AccessorProp.StartNode].parentNode!.insertBefore(
               scope[nodeAccessor] as Node,
@@ -257,7 +257,7 @@ export function _await_content(
   };
 }
 
-export function addAwaitCounter(
+export function startAwait(
   scope: Scope,
   tryBranch = findTryWithPlaceholder(scope),
 ): AwaitCounter | undefined {
@@ -268,7 +268,7 @@ export function addAwaitCounter(
       dismissPlaceholder(tryBranch),
     );
   }
-  scheduleAwaitFrame(awaitCounter, tryBranch, () => {
+  countAwait(awaitCounter, tryBranch, () => {
     // Parented beside the try for effects and awaits; the try still catches its errors.
     (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
       tryBranch[AccessorProp.Global],
@@ -290,7 +290,7 @@ export function addAwaitCounter(
   return awaitCounter;
 }
 
-function scheduleAwaitFrame(
+function countAwait(
   awaitCounter: AwaitCounter,
   scope: Scope,
   render: () => void,
@@ -397,12 +397,7 @@ export function _try(
 
   // `@catch` and `@placeholder` are static, so this runs once, in setup.
   return (scope: Scope) => {
-    setConditionalRenderer(
-      scope,
-      nodeAccessor as string,
-      renderer,
-      createAndSetupBranch,
-    );
+    setBranch(scope, nodeAccessor as string, renderer, createAndSetupBranch);
     const branch = scope[branchAccessor];
     branch[AccessorProp.BranchAccessor] = nodeAccessor;
     branch[AccessorProp.CatchContent] = catchContent;
@@ -430,7 +425,7 @@ export function renderCatch(scope: Scope, error: unknown) {
       destroyBranch(tryWithCatch);
     }
     const catchContent = tryWithCatch[AccessorProp.CatchContent]();
-    setConditionalRenderer(
+    setBranch(
       owner,
       tryWithCatch[AccessorProp.BranchAccessor],
       catchContent,
@@ -492,7 +487,7 @@ export const _if = /*@__PURE__*/ withBranches(
         ((scope[branchAccessor] as number) ??
           (scope[AccessorPrefix.BranchScopes + nodeAccessor] && 0))
       ) {
-        setConditionalRenderer(
+        setBranch(
           scope,
           nodeAccessor as string,
           branches[(scope[branchAccessor] = newBranch)],
@@ -644,7 +639,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
         // A falsy name renders the body in its place.
         const renderer =
           normalizedRenderer || (getContent ? getContent(scope) : undefined);
-        setConditionalRenderer(
+        setBranch(
           scope,
           nodeAccessor as string,
           renderer,
@@ -671,7 +666,7 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
         if (typeof renderer === "string") {
           if (getContent) {
             const content = getContent(scope);
-            setConditionalRenderer(
+            setBranch(
               scope[childScopeAccessor],
               MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
               content,
@@ -712,7 +707,9 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
             childScope,
             nodeAccessor,
             (inputIsArgs ? args[0] : args) || {},
-            controllableRenders[(childScope[nodeAccessor] as Element).tagName],
+            controllableSpreadHelpers[
+              (childScope[nodeAccessor] as Element).tagName
+            ],
           );
 
           if (
@@ -760,7 +757,7 @@ export const _dynamic_tag_content = /*@__PURE__*/ withBranches(
         scope[rendererAccessor] !==
         (scope[rendererAccessor] = rendererKey(renderer))
       ) {
-        setConditionalRenderer(
+        setBranch(
           scope,
           nodeAccessor as string,
           renderer,
@@ -804,7 +801,7 @@ export function dynamicTagScript(branch: Scope) {
   );
 }
 
-export function setConditionalRenderer<T>(
+export function setBranch<T>(
   scope: Scope,
   nodeAccessor: Accessor,
   newRenderer: T,

@@ -1,7 +1,7 @@
 import {
   assertValidList,
   assertValidRangeBound,
-  assertValidRangeStart,
+  assertOptionalRangeNumber,
 } from "./errors";
 import type { Falsy } from "./types";
 
@@ -35,8 +35,8 @@ export function forTo(
 ) {
   if (MARKO_DEBUG) {
     assertValidRangeBound("to", to);
-    assertValidRangeStart("from", from);
-    assertValidRangeStart("step", step);
+    assertOptionalRangeNumber("from", from);
+    assertOptionalRangeNumber("step", step);
   }
   const start = from || 0;
   const delta = step || 1;
@@ -53,8 +53,8 @@ export function forUntil(
 ) {
   if (MARKO_DEBUG) {
     assertValidRangeBound("until", until);
-    assertValidRangeStart("from", from);
-    assertValidRangeStart("step", step);
+    assertOptionalRangeNumber("from", from);
+    assertOptionalRangeNumber("step", step);
   }
   const start = from || 0;
   const delta = step || 1;

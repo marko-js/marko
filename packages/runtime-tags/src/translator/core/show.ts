@@ -9,7 +9,7 @@ import {
 import {
   assertHasBody,
   assertNoSpreadAttrs,
-  assertValueAttr,
+  assertOnlyValueAttr,
 } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
 import { buildBranchEndArgs } from "../util/branch-tag";
@@ -315,7 +315,7 @@ function assertValidShow(tag: t.NodePath<t.MarkoTag>) {
       );
   }
 
-  assertValueAttr(tag, true, false, getRenameHint);
+  assertOnlyValueAttr(tag, true, false, getRenameHint);
 }
 
 // `<show if=condition>` is the common miss, so name the rename.

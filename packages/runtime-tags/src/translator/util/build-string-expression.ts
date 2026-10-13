@@ -1,48 +1,24 @@
 import { types as t } from "@marko/compiler";
 
-export default function normalizeStringExpression(
+// Joins strings and string expressions into a string literal, a template literal
+// or a lone expression; undefined when there is nothing to join.
+export default function buildStringExpression(
   parts: (string | t.Expression)[],
   useIife?: boolean,
 ): t.Expression | undefined {
-  const strs: string[] = [];
+  // A string before each expression and one after the last.
+  const strs = [""];
   const exprs: t.Expression[] = [];
-  let curStr = "";
-
-  for (let i = 0; i < parts.length; i++) {
-    let content = parts[i];
-
-    if (typeof content === "object") {
-      if (t.isStringLiteral(content)) {
-        content = content.value;
-      } else if (t.isTemplateLiteral(content)) {
-        let nextIndex = i + 1;
-        const exprLen = content.expressions.length;
-        shiftItems(parts, nextIndex, content.quasis.length + exprLen);
-
-        for (let j = 0; j < exprLen; j++) {
-          parts[nextIndex++] = content.quasis[j].value.cooked ?? "";
-          parts[nextIndex++] = content.expressions[j] as t.Expression;
-        }
-
-        parts[nextIndex] = content.quasis[exprLen].value.cooked ?? "";
-        continue;
-      } else {
-        exprs.push(content);
-        strs.push(curStr);
-        curStr = "";
-        continue;
-      }
-    }
-
-    curStr += content;
+  for (const part of parts) {
+    joinPart(strs, exprs, part);
   }
 
+  const curStr = strs[exprs.length];
   if (exprs.length) {
     if (exprs.length === 1 && !curStr && !strs[0]) {
       return exprs[0];
     }
 
-    strs.push(curStr);
     const quasis: t.TemplateElement[] = [];
     for (const str of strs) quasis.push(toTemplateElement(str));
 
@@ -91,8 +67,25 @@ function escapeTemplateRaw(raw: string) {
     .replace(/\$(?=\{)/g, "\\$");
 }
 
-function shiftItems(list: unknown[], start: number, offset: number) {
-  for (let i = list.length - 1; i >= start; i--) {
-    list[i + offset] = list[i];
+// A template literal's strings and expressions join in its place.
+function joinPart(
+  strs: string[],
+  exprs: t.Expression[],
+  part: string | t.Expression,
+) {
+  if (typeof part === "string") {
+    appendLiteral(strs, part);
+  } else if (part.type === "StringLiteral") {
+    appendLiteral(strs, part.value);
+  } else if (part.type === "TemplateLiteral") {
+    const { quasis, expressions } = part;
+    for (let i = 0; i < expressions.length; i++) {
+      appendLiteral(strs, quasis[i].value.cooked ?? "");
+      joinPart(strs, exprs, expressions[i] as t.Expression);
+    }
+    appendLiteral(strs, quasis[expressions.length].value.cooked ?? "");
+  } else {
+    exprs.push(part);
+    strs.push("");
   }
 }

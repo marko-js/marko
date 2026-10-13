@@ -81,8 +81,8 @@ declare module "@marko/compiler/dist/types" {
   }
 
   export interface MarkoTagExtra {
-    /** The dom binding the tag is addressed by: its node, marker or child
-     * scope; an only child control flow tag shares its parent's. */
+    /** The dom binding the tag is addressed by: its node or marker; an only
+     * child control flow tag shares its parent's. */
     nodeBinding?: Binding;
   }
 
@@ -95,10 +95,10 @@ declare module "@marko/compiler/dist/types" {
     section?: Section;
     [kReferencedBindings]?: ReferencedBindings;
     [kLazyBindings]?: ReferencedBindings;
-    /** The bindings it feeds, in the order it feeds them: a call site's
-     * values feed the child template's, so no one template's order sorts them. */
+    /** The bindings it derives, in the order it derives them: call sites
+     * derive a child template's, so no one template's order sorts them. */
     derives?: Opt<Binding>;
-    /** The initial value of the binding it feeds, which keeps it rather than
+    /** The initial value of the binding it derives, which keeps it rather than
      * following it, so the binding derives no sources from it. */
     initialValue?: true;
     /** Its value has no side effect to evaluate, so an unread one can go: an
@@ -1016,7 +1016,7 @@ export function setDerivedFrom(
   exprs?: KnownExprs,
 ) {
   if (isOwnBinding(binding)) {
-    // Each call site of a same template body feeds its params.
+    // A same template body's params derive from each of its call sites.
     const prev = binding.derivedFrom;
     binding.derivedFrom =
       expr === true

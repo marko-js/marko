@@ -259,6 +259,24 @@ function getExistingPropertyAlias(binding: Binding, property: string) {
   return getCanonicalBinding(binding).propertyAliases.get(property);
 }
 
+// The alias a property path leads to, or the deepest one along it that exists.
+export function getDeepestPropertyAlias(
+  binding: Binding,
+  properties: Opt<string>,
+): Binding {
+  let alias = binding;
+  if (Array.isArray(properties)) {
+    for (const property of properties) {
+      const next = alias.propertyAliases.get(property);
+      if (!next) break;
+      alias = next;
+    }
+  } else if (properties !== undefined) {
+    alias = alias.propertyAliases.get(properties) ?? alias;
+  }
+  return alias;
+}
+
 export function compareReferences(
   a: ReferencedBindings,
   b: ReferencedBindings,
@@ -358,7 +376,7 @@ export function someAlias<A>(
 }
 
 // Whether the binding, or a value it aliases (transitively), passes `test`.
-export function someAliased<A>(
+export function someUpToAliasRoot<A>(
   binding: Binding | undefined,
   test: (binding: Binding, arg: A) => boolean,
   arg: A,

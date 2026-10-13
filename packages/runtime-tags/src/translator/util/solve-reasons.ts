@@ -11,15 +11,15 @@ import {
   isDirectAlias,
   isIndexProperty,
   propsUtil,
-  someAliased,
+  someUpToAliasRoot,
 } from "./bindings";
 import {
   createCyclicMemo,
   createCyclicPathMemo,
   type MemoPath,
 } from "./cyclic-memo";
-import { finalizeKnownTags } from "./known-tag";
-import { resolveFunctionReason } from "./module-registrations";
+import { addKnownTagReasons } from "./known-tag";
+import { addFunctionReasons } from "./module-registrations";
 import {
   concat,
   first,
@@ -32,29 +32,28 @@ import {
 import {
   addOwnerReason,
   addReason,
-  finalizeReason,
   getReasonsVersion,
   getSourcesForDerived,
   getSourcesForExpr,
   mapParamReason,
+  mergeSlotReasons,
   type Reason,
 } from "./reasons";
 import {
   type ReferencedExtra,
   getFunctionReadsByExpression,
-  isReferencedExtra,
   getConstantBindingsInFunction,
   getReferencedBindingsInFunction,
   getBindingsDerivedFrom,
 } from "./references";
 import {
-  finalizeParamReasonGroups,
+  ensureSectionReasonGroups,
   forEachSection,
   forEachSectionReverse,
   getDynamicClosureIndex,
   getRendererReason,
   isDynamicClosure,
-  isSameOrChildSection,
+  isSameOrAncestorSection,
   type Section,
 } from "./sections";
 import { findSlot, ensureSlot, SlotKind } from "./slots";
@@ -82,14 +81,14 @@ export function solveReasons(
     );
     forEachSection(addClosureReasons);
     addRegisteredFnReasons(getFunctionReadsByExpression());
-    forEachSectionReverse(finalizeSectionReasons);
+    forEachSectionReverse(solveSectionReasons);
   } while (reasonsVersion !== getReasonsVersion());
 }
 
-function finalizeSectionReasons(section: Section) {
-  finalizeKnownTags(section);
-  finalizeReason(section);
-  finalizeParamReasonGroups(section);
+function solveSectionReasons(section: Section) {
+  addKnownTagReasons(section);
+  mergeSlotReasons(section);
+  ensureSectionReasonGroups(section);
 }
 
 // An intersection member is read when its partners' sources change, unless
@@ -171,7 +170,7 @@ function withoutOwnSources(closure: Binding, sources: Sources | undefined) {
   const state = bindingUtil.difference(sources.state, own.state);
   const param = bindingUtil.filter(
     sources.param,
-    (binding) => !someAliased(binding, isInParams, own.param),
+    (binding) => !someUpToAliasRoot(binding, isInParams, own.param),
   );
   return withSources(sources, state, param);
 }
@@ -192,7 +191,7 @@ function getBranchExprReason(section: Section) {
         reason,
         getBranchExprReasonUntil(
           callSection,
-          isSameOrChildSection(section, callSection)
+          isSameOrAncestorSection(section, callSection)
             ? section
             : section.parent!,
         ),
@@ -248,7 +247,7 @@ function addClosureReasons(section: Section) {
 function addRegisteredFnReasons(
   fnReadsByExpression: ReturnType<typeof getFunctionReadsByExpression>,
 ) {
-  resolveFunctionReason();
+  addFunctionReasons();
   for (const exprFnReads of fnReadsByExpression.values()) {
     for (const fn of exprFnReads.keys()) {
       const reason = fn.reason;
@@ -302,28 +301,23 @@ export function getReasonForBinding(
   return bindingReaders(binding, properties).reason;
 }
 
-// Whether client code reads the value itself, by its readers or by landing
-// where it is passed as is.
-export function getValueReason(extra: t.NodeExtra): undefined | Reason {
-  if (extra.retained) return ALWAYS;
-  const { reason, reads } = readersOfExtra(extra);
-  if (reads) {
-    for (const read of reads) if (read.retained) return ALWAYS;
-  }
-  return reason;
-}
-
 // An expression's `getReasonForBinding`: what rereads its value after resume,
-// which the server writes it for. Unlike `getValueReason`, landing somewhere
-// retained adds nothing: only a function there is read as is.
+// which the server writes it for.
 export function getReasonForExpr(extra: t.NodeExtra): undefined | Reason {
-  return readersOfExtra(extra).reason;
+  return extra.isEffect ? ALWAYS : extraReaders(extra).reason;
 }
 
-function readersOfExtra(extra: t.NodeExtra): Readers {
-  if (extra.isEffect) return ALWAYS_READ;
-  const readers = extraReaders(extra);
-  return isReferencedExtra(extra) ? withLandingRead(readers, extra) : readers;
+// Whether the value lands somewhere retained (itself included), where client
+// code may read a function as is.
+export function landsRetained(extra: t.NodeExtra) {
+  if (extra.retained) return true;
+  if (!extra.isEffect) {
+    const { reads } = extraReaders(extra);
+    if (reads) {
+      for (const read of reads) if (read.retained) return true;
+    }
+  }
+  return false;
 }
 
 function computeExtraReaders(extra: t.NodeExtra): Readers {
@@ -361,7 +355,7 @@ function readersOfDerived(
 ): Readers {
   const linked = bindingReaders(
     binding,
-    getDownstreamPath(extra, binding, part, properties),
+    getDerivedPath(extra, binding, part, properties),
   );
   const exprs = extra.callSiteExprs;
   return linked.reason && exprs
@@ -379,7 +373,7 @@ function readersOfDerived(
 
 // Where a path into `part` lands in a derives `binding`: the same path when
 // it is `part` or spreads it as is, an item's path when iterating it, or whole.
-function getDownstreamPath(
+function getDerivedPath(
   extra: t.NodeExtra,
   binding: Binding,
   part: Binding | undefined,

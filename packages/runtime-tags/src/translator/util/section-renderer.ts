@@ -22,12 +22,12 @@ export function isSectionRendererElided(section: Section) {
         section.derives.properties === "content"
       ) &&
       !some(section.derives.binding, (binding) =>
-        bindingHasProperty(binding, section.derives!.properties),
+        isPropertyPathRead(binding, section.derives!.properties),
       ))
   );
 }
 
-function bindingHasProperty(binding: Binding, properties: Opt<string>) {
+function isPropertyPathRead(binding: Binding, properties: Opt<string>) {
   if (binding.pruned) {
     return false;
   } else if (binding.pruned === undefined) {
@@ -40,33 +40,15 @@ function bindingHasProperty(binding: Binding, properties: Opt<string>) {
   const property = first(properties);
 
   const propBinding = binding.propertyAliases.get(property);
-  if (propBinding && bindingHasProperty(propBinding, rest(properties))) {
+  if (propBinding && isPropertyPathRead(propBinding, rest(properties))) {
     return true;
   }
 
   for (const alias of binding.aliases) {
-    if (bindingHasProperty(alias, properties)) {
+    if (isPropertyPathRead(alias, properties)) {
       return true;
     }
   }
 
   return false;
-}
-
-// The alias a property path leads to, or the deepest one along it that is read.
-export function getPropertyPathAlias(
-  binding: Binding,
-  properties: Opt<string>,
-): Binding {
-  let alias = binding;
-  if (Array.isArray(properties)) {
-    for (const property of properties) {
-      const next = alias.propertyAliases.get(property);
-      if (!next) break;
-      alias = next;
-    }
-  } else if (properties !== undefined) {
-    alias = alias.propertyAliases.get(properties) ?? alias;
-  }
-  return alias;
 }

@@ -161,11 +161,11 @@ export default {
             node.attributes = undefined;
             return;
           } else {
-            const allKnownTagReferences = binding.referencePaths.every(
+            const onlyLoadTagReferences = binding.referencePaths.every(
               (ref) =>
                 t.isMarkoTag(ref.parent) && ref.parent.extra?.tagNameLoad,
             );
-            if (allKnownTagReferences) {
+            if (onlyLoadTagReferences) {
               importDecl.remove();
             } else {
               importRuntimeFeature("catch");

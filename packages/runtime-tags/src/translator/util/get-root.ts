@@ -1,5 +1,5 @@
 import type { types as t } from "@marko/compiler";
-export type MarkoExprRootPath = t.NodePath<
+export type MarkoRootPath = t.NodePath<
   | t.MarkoTag
   | t.MarkoTagBody
   | t.MarkoAttribute
@@ -13,13 +13,13 @@ export type MarkoExprRootPath = t.NodePath<
 export function getMarkoRoot(path: t.NodePath<t.Node>) {
   let curPath: typeof path | null = path;
   do curPath = curPath.parentPath;
-  while (curPath && !isMarko(curPath));
+  while (curPath && !isMarkoRoot(curPath));
   return curPath;
 }
 
 export function getExprRoot(path: t.NodePath<t.Node>) {
   let curPath = path;
-  while (!isMarko(curPath.parentPath!)) {
+  while (!isMarkoRoot(curPath.parentPath!)) {
     curPath = curPath.parentPath!;
   }
 
@@ -37,7 +37,7 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
       >;
   for (
     let curPath: t.NodePath | null = path;
-    curPath && !isMarko(curPath);
+    curPath && !isMarkoRoot(curPath);
     curPath = curPath.parentPath
   ) {
     if (isFunction(curPath)) {
@@ -59,7 +59,7 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
 export function getFnParent(path: t.NodePath<t.Node>) {
   for (
     let curPath: t.NodePath | null = path;
-    curPath && !isMarko(curPath);
+    curPath && !isMarkoRoot(curPath);
     curPath = curPath.parentPath
   ) {
     if (isFunction(curPath)) {
@@ -74,7 +74,7 @@ export function getDeclarationRoot(path: t.NodePath<t.Node>) {
     | t.NodePath<t.FunctionDeclaration | t.VariableDeclaration>;
   for (
     let curPath: t.NodePath | null = path;
-    curPath && !isMarko(curPath);
+    curPath && !isMarkoRoot(curPath);
     curPath = curPath.parentPath
   ) {
     if (isFunctionOrVariableDeclaration(curPath)) {
@@ -85,7 +85,7 @@ export function getDeclarationRoot(path: t.NodePath<t.Node>) {
   return declPath;
 }
 
-export function isMarko(path: t.NodePath<any>): path is MarkoExprRootPath {
+export function isMarkoRoot(path: t.NodePath<any>): path is MarkoRootPath {
   switch (path.type) {
     case "MarkoTag":
     case "MarkoTagBody":

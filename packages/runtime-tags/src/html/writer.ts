@@ -24,26 +24,26 @@ import {
   K_SCOPE_ID,
   type Locals,
   quote,
+  queueCall,
   register as serializerRegister,
-  dropMutation,
-  hasMatchingMutations,
+  dropQueuedCall,
+  hasMatchingCalls,
   pendingReadyChannel,
   type ScopeFlush,
+  type SerializeChannel,
   SerializerState,
   setDebugInfo,
   stringifyScopes,
   takeChannelDeps,
   toAccess,
   toObjectKey,
-  writeMutation,
 } from "./serializer";
 import type { ServerRenderer } from "./template";
 
 export type PartialScope = Record<Accessor, unknown>;
 
-interface SerializeState {
-  readyId?: string;
-  parent?: SerializeState;
+interface Channel extends SerializeChannel {
+  parent?: Channel;
   resumes: string;
   writeScopes: Record<number, PartialScope>;
   passiveScopes?: Record<number, PartialScope>;
@@ -167,9 +167,9 @@ export function captureContext(chunk: Chunk) {
 
 export const kBranchId = Symbol("Branch Id");
 
-const kIsAsync = Symbol("Is Async");
+const kAsyncContent = Symbol("Async Content");
 
-// Async content under `kIsAsync`: the owner `visit` an unmarked `<await>` writes
+// Async content under `kAsyncContent`: the owner `visit` an unmarked `<await>` writes
 // after its content's `end` chunk once anything in it, or in `parent`'s, resumes.
 export interface AsyncContent {
   visit?: string;
@@ -203,12 +203,12 @@ export function withBranchId<T, U, V>(
   return withContext(kBranchId, branchId, cb, cbValue, cbValue2);
 }
 
-export function withIsAsync<T, U>(
+export function withAsyncContent<T, U>(
   async: AsyncContent,
   cb: (value: U) => T,
   value: U,
 ): T {
-  return withContext(kIsAsync, async, cb, value);
+  return withContext(kAsyncContent, async, cb, value);
 }
 
 export function _html(html: string) {
@@ -248,7 +248,7 @@ export function _script(
 ) {
   if (
     markerGuard === 0 &&
-    ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync])
+    ($chunk.channel.readyId || $chunk.context?.[kAsyncContent])
   ) {
     _resume_branch(scopeId);
   }
@@ -300,12 +300,12 @@ export function _hoist(scopeId: number, id: string) {
 export function _el_resume(
   scopeId: number,
   accessor: Accessor,
-  shouldResume?: number,
+  markerGuard?: number,
 ) {
-  if (shouldResume === 0) return "";
+  if (markerGuard === 0) return "";
 
   const { state } = $chunk.boundary;
-  state.needsMainRuntime = true;
+  state.needsWalkerRuntime = true;
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
@@ -313,26 +313,26 @@ export function _text_resume(
   scopeId: number,
   accessor: Accessor,
   val: unknown,
-  shouldResume?: number,
+  markerGuard?: number,
 ) {
-  return markText(scopeId, accessor, _escape(val), shouldResume);
+  return markText(scopeId, accessor, _escape(val), markerGuard);
 }
 
 export function _html_resume(
   scopeId: number,
   accessor: Accessor,
   val: unknown,
-  shouldResume?: number,
+  markerGuard?: number,
 ) {
   const html = _unescaped(val);
   // Markup may parse to several nodes, so it is bracketed for resume to claim
   // the whole range; markup-free text is one node and uses the text encoding.
-  if (shouldResume === 0 || !~html.indexOf("<")) {
-    return markText(scopeId, accessor, html, shouldResume);
+  if (markerGuard === 0 || !~html.indexOf("<")) {
+    return markText(scopeId, accessor, html, markerGuard);
   }
 
   const { state } = $chunk.boundary;
-  state.needsMainRuntime = true;
+  state.needsWalkerRuntime = true;
   return (
     state.mark(ResumeSymbol.HtmlStart, "") +
     html +
@@ -341,19 +341,19 @@ export function _html_resume(
 }
 
 // Empty text writes only an `EmptyText` marker for resume to create the node;
-// `shouldResume` 2 also separates text from a mergeable preceding text node.
+// `markerGuard` 2 also separates text from a mergeable preceding text node.
 function markText(
   scopeId: number,
   accessor: Accessor,
   text: string,
-  shouldResume?: number,
+  markerGuard?: number,
 ) {
-  if (shouldResume === 0) return text;
+  if (markerGuard === 0) return text;
 
   const { state } = $chunk.boundary;
-  state.needsMainRuntime = true;
+  state.needsWalkerRuntime = true;
   return text
-    ? (shouldResume === 2 ? "<!>" : "") +
+    ? (markerGuard === 2 ? "<!>" : "") +
         text +
         state.mark(ResumeSymbol.Node, scopeId + " " + accessor)
     : state.mark(ResumeSymbol.EmptyText, scopeId + " " + accessor);
@@ -379,7 +379,7 @@ export function _attr_content(
     // The client may swap in another instance of this content, with its own
     // loop values, so the content resumes every input it reads.
     try {
-      _set_scope_reason(shouldResume ? CLIENT_ALL : 0);
+      _set_scope_reason(shouldResume ? ALL_GROUPS : 0);
       if (shouldResume) {
         withBranchId(branchId, render);
       } else {
@@ -437,7 +437,7 @@ export function _var(
 }
 
 function writeScopePassive(scopeId: number, partialScope: PartialScope) {
-  const target = $chunk.serializeState;
+  const target = $chunk.channel;
   const scope = _scope_with_id(scopeId);
   Object.assign(scope, partialScope);
   $chunk.boundary.state.queuePassiveScope(target, scopeId, partialScope);
@@ -446,10 +446,11 @@ function writeScopePassive(scopeId: number, partialScope: PartialScope) {
 
 let writeScope = (scopeId: number, partialScope: PartialScope) => {
   const { state } = $chunk.boundary;
-  const target = $chunk.serializeState;
+  const target = $chunk.channel;
   const scope = scopeWithId(state, scopeId);
-  state.needsMainRuntime = true;
+  state.needsWalkerRuntime = true;
   countResumeWrite($chunk);
+  writeAsyncVisits($chunk);
   Object.assign(scope, partialScope);
 
   state.queueScope(target, scopeId, partialScope);
@@ -504,9 +505,9 @@ export function _subscribe(
   markerGuard?: number,
 ) {
   if (subscribers) {
-    const { boundary, serializeState } = $chunk;
+    const { boundary, channel } = $chunk;
     const { serializer } = boundary.state;
-    if (!serializeState.readyId && !serializer.refs.has(subscribers)) {
+    if (!channel.readyId && !serializer.refs.has(subscribers)) {
       // An unflushed set carries its subscriber in the same payload.
       subscribers.add(scope);
     } else if (resumeId) {
@@ -515,11 +516,11 @@ export function _subscribe(
       _script(scope[K_SCOPE_ID]!, resumeId, markerGuard);
     } else {
       // Flushed or lazy sets add subscribers through their gated channel.
-      writeMutation(serializer, scope, subscribers, "add", serializeState);
+      queueCall(serializer, scope, subscribers, "add", channel);
     }
     // Content a `@catch` may drop takes its subscriptions with it.
     if (boundary.withinCatch) {
-      (boundary.subscribed ||= []).push(subscribers, scope, serializeState);
+      (boundary.subscribed ||= []).push(subscribers, scope, channel);
     }
   }
   return scope;
@@ -531,18 +532,18 @@ export type GroupMask = undefined | number | Partial<Record<string, number>>;
 
 // Every group serializes: for a child whose groups the caller cannot see.
 // Bit 0 is never a group's, so no encoded mask equals it.
-export const CLIENT_ALL = 0x2aaaaaab;
+export const ALL_GROUPS = 0x2aaaaaab;
 
 // A group's 2-bit value. A number packs groups 0-14 (a later group makes the
 // reason keyed), except the all sentinel, which covers every group.
-export function maskGroup(mask: GroupMask, group: number) {
-  return mask === CLIENT_ALL
+export function getGroupReason(reason: GroupMask, group: number) {
+  return reason === ALL_GROUPS
     ? 1
-    : typeof mask === "number"
+    : typeof reason === "number"
       ? group < 15
-        ? (mask >>> (1 + 2 * group)) & 3
+        ? (reason >>> (1 + 2 * group)) & 3
         : 0
-      : ((mask as Partial<Record<number, number>>)[group] ?? 0);
+      : ((reason as Partial<Record<number, number>>)[group] ?? 0);
 }
 
 export function _set_scope_reason(reason: GroupMask) {
@@ -555,12 +556,12 @@ export function _scope_reason() {
   return reason;
 }
 
-export function _write_if(condition: GroupMask, key: number) {
-  return condition && maskGroup(condition, key) ? 1 : undefined;
+export function _write_if(reason: GroupMask, group: number) {
+  return reason && getGroupReason(reason, group) ? 1 : undefined;
 }
 
-export function _write_guard(condition: GroupMask, key: number) {
-  return _write_if(condition, key) || 0;
+export function _write_guard(reason: GroupMask, group: number) {
+  return _write_if(reason, group) || 0;
 }
 
 export function writeWaitReady(
@@ -572,7 +573,7 @@ export function writeWaitReady(
   const { boundary } = chunk;
   const body = new Chunk(boundary, null, chunk.context, {
     readyId,
-    parent: chunk.serializeState,
+    parent: chunk.channel,
     resumes: "",
     writeScopes: {},
     flushScopes: false,
@@ -588,7 +589,7 @@ export function writeWaitReady(
     chunk.deferredReady = push(chunk.deferredReady, body);
   } else {
     // The remainder of the render continues after the async body in a chunk
-    // that restores the parent serialize state.
+    // that restores the parent channel.
     bodyEnd.next = chunk.forkRest(boundary);
     chunk.next = body;
   }
@@ -624,13 +625,13 @@ function unsubscribe(subscribed: unknown[], serializer: SerializerState) {
     const scope = subscribed[i + 1] as ScopeInternals;
     if (!serializer.refs.has(subscribers)) {
       subscribers.delete(scope);
-    } else if (!dropMutation(serializer, scope, subscribers, "add")) {
-      writeMutation(
+    } else if (!dropQueuedCall(serializer, scope, subscribers, "add")) {
+      queueCall(
         serializer,
         scope,
         subscribers,
         "delete",
-        subscribed[i + 2] as SerializeState,
+        subscribed[i + 2] as Channel,
       );
     }
   }
@@ -648,7 +649,10 @@ function countResumeWrite(chunk: Chunk) {
   ) {
     boundary.resumeWrites++;
   }
-  // Content settling later still owes each enclosing unmarked await its visit.
+}
+
+// Content settling later still owes each enclosing unmarked await its visit.
+function writeAsyncVisits(chunk: Chunk) {
   for (
     let async = getAsyncContent(chunk);
     async && !async.resumed;
@@ -660,22 +664,22 @@ function countResumeWrite(chunk: Chunk) {
 }
 
 export function getAsyncContent(chunk: Chunk) {
-  return chunk.context?.[kIsAsync] as AsyncContent | undefined;
+  return chunk.context?.[kAsyncContent] as AsyncContent | undefined;
 }
 
 type Mark = Mark.Value;
 
 type RuntimeKey = RuntimeKey.Value;
 
-export class State implements SerializeState {
+export class State implements Channel {
   public tagId = 1;
   public scopeId = 1;
   public reorderId = 1;
   public readyGate = 1;
-  public hasGlobals = false;
-  public needsMainRuntime = false;
-  public hasMainRuntime = false;
-  public hasReadyRuntime = false;
+  public hasWrittenGlobals = false;
+  public needsWalkerRuntime = false;
+  public hasWalkerRuntime = false;
+  public hasWrittenReady = false;
   public hasReorderRuntime = false;
   public hasWrittenResume = false;
   public walkOnNextFlush = false;
@@ -699,7 +703,7 @@ export class State implements SerializeState {
     }
   }
 
-  flushChunk(html: string, scripts: string, pending: number) {
+  joinFlush(html: string, scripts: string, pending: number) {
     const { $global, nonceAttr } = this;
     const { __flush__ } = $global;
 
@@ -719,18 +723,14 @@ export class State implements SerializeState {
     return this.runtimePrefix + RuntimeKey.Walk + "()";
   }
 
-  // How a flush's resume data joins what its serialize state holds.
-  addResumes(serializeState: SerializeState, resumes: string) {
-    serializeState.resumes = concatSequence(serializeState.resumes, resumes);
+  // How a flush's resume data joins what its channel holds.
+  addResumes(channel: Channel, resumes: string) {
+    channel.resumes = concatSequence(channel.resumes, resumes);
   }
 
-  // Each serialize state only flushes the props it wrote itself; the
+  // Each channel only flushes the props it wrote itself; the
   // canonical scope accumulates everything for server side reads.
-  queueScope(
-    target: SerializeState,
-    scopeId: number,
-    partialScope: PartialScope,
-  ) {
+  queueScope(target: Channel, scopeId: number, partialScope: PartialScope) {
     const pending = target.writeScopes[scopeId];
     if (pending && pending !== partialScope) {
       Object.assign(pending, partialScope);
@@ -741,7 +741,7 @@ export class State implements SerializeState {
   }
 
   queuePassiveScope(
-    target: SerializeState,
+    target: Channel,
     scopeId: number,
     partialScope: PartialScope,
   ) {
@@ -750,7 +750,7 @@ export class State implements SerializeState {
   }
 
   queueEffect(scopeId: number, registryId: string) {
-    this.needsMainRuntime = true;
+    this.needsWalkerRuntime = true;
     $chunk.writeEffect(scopeId, registryId);
   }
 
@@ -798,23 +798,23 @@ export class State implements SerializeState {
     if (this.writeReorders) {
       this.writeReorders.push(chunk);
     } else {
-      this.needsMainRuntime = true;
+      this.needsWalkerRuntime = true;
       this.writeReorders = [chunk];
     }
   }
 
-  writeReady(id: string, resumes: string) {
+  readyScript(id: string, resumes: string) {
     const readyKey = toObjectKey(id);
     if (this.readyIds?.has(id)) {
       return this.readyAccess(readyKey) + ".push(" + resumes + ")";
     }
 
     (this.readyIds ||= new Set()).add(id);
-    if (this.hasReadyRuntime) {
+    if (this.hasWrittenReady) {
       return this.readyAccess(readyKey) + "=[" + resumes + "]";
     }
 
-    this.hasReadyRuntime = true;
+    this.hasWrittenReady = true;
     return (
       this.runtimePrefix +
       RuntimeKey.Ready +
@@ -976,21 +976,21 @@ export class Chunk {
   public boundary: Boundary;
   public next: Chunk | null;
   public context: Record<string | symbol, unknown> | null;
-  public serializeState: SerializeState;
+  public channel: Channel;
   constructor(
     boundary: Boundary,
     next: Chunk | null,
     context: Record<string | symbol, unknown> | null,
-    serializeState: SerializeState,
+    channel: Channel,
   ) {
     this.boundary = boundary;
     this.next = next;
     this.context = context;
-    this.serializeState = serializeState;
+    this.channel = channel;
   }
 
   fork(boundary: Boundary, next: Chunk | null) {
-    return new Chunk(boundary, next, this.context, this.serializeState);
+    return new Chunk(boundary, next, this.context, this.channel);
   }
 
   // The rest of the render continues in a fork, ahead of what followed.
@@ -1004,6 +1004,7 @@ export class Chunk {
 
   writeEffect(scopeId: number, registryId: string) {
     countResumeWrite(this);
+    writeAsyncVisits(this);
     if (this.lastEffect === registryId) {
       this.effects = concatEffects(this.effects, scopeId + "");
     } else {
@@ -1038,8 +1039,8 @@ export class Chunk {
 
   deferOwnReady() {
     if (
-      this.serializeState.readyId &&
-      (this.effects || this.scripts || this.serializeState.flushScopes)
+      this.channel.readyId &&
+      (this.effects || this.scripts || this.channel.flushScopes)
     ) {
       // Own resume data precedes nested lazy content that may reference it.
       const deferred = this.fork(this.boundary, null);
@@ -1178,7 +1179,7 @@ export class Chunk {
     }
   }
 
-  // Takes the render's root boundary, as `flushScript` does: the head may be in a
+  // Takes the render's root boundary, as `flush` does: the head may be in a
   // `<try>` body, whose boundary a `@catch` leaves with a throwaway State.
   consume(boundary: Boundary) {
     this.renderPlaceholders(boundary);
@@ -1193,13 +1194,13 @@ export class Chunk {
     this.heldEffects = null;
     // Lazy content heading the stream, pending again or not, held its earlier
     // effects apart; its own data still goes ahead of the content nested in it.
-    if (this.serializeState.readyId && this.effects) followHeldEffects(this);
+    if (this.channel.readyId && this.effects) followHeldEffects(this);
 
     while (cur.next && !cur.async) {
       cur.markCatchRange();
       cur.queueDeferredReorder();
       html += cur.html;
-      if (cur.serializeState.readyId) {
+      if (cur.channel.readyId) {
         deferredReady = push(deferredReady, cur);
       } else {
         if (cur.effects) {
@@ -1219,7 +1220,7 @@ export class Chunk {
 
     cur.deferOwnReady();
     if (effects) {
-      if (cur.serializeState.readyId) {
+      if (cur.channel.readyId) {
         // Lazy content never takes the page's effects.
         heldEffects = holdEffectsOn(heldEffects, effectsEnd!, effects);
       } else if (effectsEnd!.boundary !== cur.boundary) {
@@ -1263,8 +1264,8 @@ export class Chunk {
     reservations?: string[],
     holdEffects?: boolean,
   ) {
-    const { serializeState } = this;
-    const { readyId } = serializeState;
+    const { channel } = this;
+    const { readyId } = channel;
     let scripts = "";
     const held = this.takeDeferredReady();
     if (held) {
@@ -1284,15 +1285,15 @@ export class Chunk {
 
     if (readyId && !this.async) {
       const { state } = boundary;
-      flushSerializer(boundary, serializeState);
+      flushSerializer(boundary, channel);
       const deps = takeChannelDeps(state.serializer);
       const effects = holdEffects ? "" : this.effects;
-      const { resumes } = serializeState;
+      const { resumes } = channel;
       const chunkScripts = this.scripts;
-      serializeState.resumes = this.scripts = "";
+      channel.resumes = this.scripts = "";
       if (effects) this.effects = this.lastEffect = "";
       if (resumes || effects) {
-        state.needsMainRuntime = true;
+        state.needsWalkerRuntime = true;
         const batch = concatSequence(
           depsMarker(deps),
           concatSequence(resumes, effects && `"${effects}"`),
@@ -1300,7 +1301,7 @@ export class Chunk {
         if (reservations) {
           // Main-stream gates reserve ready-batch order until reorders arrive.
           const gate = state.readyGate++;
-          reservations.push(state.writeReady(readyId, gate + ""));
+          reservations.push(state.readyScript(readyId, gate + ""));
           scripts = concatScripts(
             scripts,
             "(b=>b.splice(b.indexOf(" +
@@ -1312,7 +1313,7 @@ export class Chunk {
               ")",
           );
         } else {
-          scripts = concatScripts(scripts, state.writeReady(readyId, batch));
+          scripts = concatScripts(scripts, state.readyScript(readyId, batch));
         }
       }
       scripts = concatScripts(scripts, chunkScripts);
@@ -1323,7 +1324,7 @@ export class Chunk {
 
   // Takes the render's root boundary: a `<try>` body chunk's own may settle or
   // abort before the async values serialized in its flush do.
-  flushScript(boundary: Boundary) {
+  flush(boundary: Boundary) {
     const { state } = boundary;
     const { runtimePrefix } = state;
     let needsWalk = state.walkOnNextFlush;
@@ -1345,10 +1346,10 @@ export class Chunk {
     ) {
       const resumes = stringifyScopes(state.serializer, [], boundary, channel);
       const deps = takeChannelDeps(state.serializer);
-      state.needsMainRuntime = true;
+      state.needsWalkerRuntime = true;
       readyResumeScripts = concatScripts(
         readyResumeScripts,
-        state.writeReady(
+        state.readyScript(
           channel.readyId!,
           concatSequence(depsMarker(deps), resumes),
         ),
@@ -1371,8 +1372,8 @@ export class Chunk {
       html = state.mark(ResumeSymbol.ReorderStart, "") + html;
     }
 
-    if (state.needsMainRuntime && !state.hasMainRuntime) {
-      state.hasMainRuntime = true;
+    if (state.needsWalkerRuntime && !state.hasWalkerRuntime) {
+      state.hasWalkerRuntime = true;
       scripts = concatScripts(scripts, state.runtimeScript());
     }
 
@@ -1530,10 +1531,10 @@ export class Chunk {
 
   flushHTML(boundary: Boundary) {
     const { state } = boundary;
-    this.flushScript(boundary);
+    this.flush(boundary);
     const { html, scripts } = this;
     this.html = this.scripts = "";
-    return state.flushChunk(html, scripts, boundary.count);
+    return state.joinFlush(html, scripts, boundary.count);
   }
 }
 
@@ -1571,8 +1572,7 @@ function followHeldEffects(chunk: Chunk) {
 
 // The later chunk when it is of the same lazy content and boundary.
 function lastHeldOf(held: Chunk, cur: Chunk) {
-  return cur.serializeState === held.serializeState &&
-    cur.boundary === held.boundary
+  return cur.channel === held.channel && cur.boundary === held.boundary
     ? cur
     : held;
 }
@@ -1592,7 +1592,7 @@ function isWithin(boundary: Boundary | undefined, outer: Boundary) {
 // Content reordered in while in-order content still streams waits with the
 // effects that content holds, after the head's own, by boundary.
 function holdReorderEffects(head: Chunk, boundary: Boundary, effects: string) {
-  if (!head.serializeState.readyId) {
+  if (!head.channel.readyId) {
     if (head.effects) {
       head.heldEffects = holdEffectsOn(
         head.heldEffects,
@@ -1619,13 +1619,12 @@ function joinUncaught(joined: string, held: Chunk) {
   return held.boundary.aborted ? joined : concatEffects(joined, held.effects);
 }
 
-function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
+function flushSerializer(boundary: Boundary, channel: Channel) {
   const { state } = boundary;
   const { serializer } = state;
-  const pending = hasMatchingMutations(serializer, serializeState.readyId);
-  if (serializeState.flushScopes || pending) {
-    const { writeScopes, passiveScopes } = serializeState;
-    const isBlockingState = serializeState !== state;
+  const pending = hasMatchingCalls(serializer, channel.readyId);
+  if (channel.flushScopes || pending) {
+    const { writeScopes, passiveScopes } = channel;
     const flushes: ScopeFlush[] = [];
 
     if (passiveScopes) {
@@ -1643,9 +1642,9 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
     }
 
     // Won't fix: globals snapshot once at the first flush; serialized `$global`
-    // values assigned mid-render are dropped — mutation is unsupported by design.
-    if (!isBlockingState && !state.hasGlobals) {
-      state.hasGlobals = true;
+    // values assigned mid-render are dropped — call is unsupported by design.
+    if (!channel.readyId && !state.hasWrittenGlobals) {
+      state.hasWrittenGlobals = true;
       const globals = getFilteredGlobals(state.$global);
       // Globals become scope 0 so we can reference them as `_(0)`.
       if (globals) flushes.push([0, globals, globals]);
@@ -1662,17 +1661,17 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
     }
 
     if (flushes.length || pending) {
-      if (isBlockingState && !state.hasGlobals) {
+      if (channel.readyId && !state.hasWrittenGlobals) {
         // Globals serialize before ready data that may reference them.
         flushSerializerGlobals(boundary);
       }
       state.addResumes(
-        serializeState,
-        stringifyScopes(serializer, flushes, boundary, serializeState),
+        channel,
+        stringifyScopes(serializer, flushes, boundary, channel),
       );
     }
-    serializeState.writeScopes = {};
-    serializeState.flushScopes = false;
+    channel.writeScopes = {};
+    channel.flushScopes = false;
     if (pending) {
       state.walkOnNextFlush = true;
     }
@@ -1683,8 +1682,8 @@ function flushSerializerGlobals(boundary: Boundary) {
   const { state } = boundary;
   const globals = getFilteredGlobals(state.$global);
   if (globals) {
-    state.hasGlobals = true;
-    state.needsMainRuntime = true;
+    state.hasWrittenGlobals = true;
+    state.needsWalkerRuntime = true;
     state.resumes = concatSequence(
       state.resumes,
       stringifyScopes(state.serializer, [[0, globals, globals]], boundary),

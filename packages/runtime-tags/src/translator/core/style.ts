@@ -18,9 +18,9 @@ import MagicString, { type SourceMap } from "magic-string";
 
 import { addAssetImport } from "../util/asset-imports";
 import { BindingType, createBinding } from "../util/bindings";
+import buildStringExpression from "../util/build-string-expression";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputDOM } from "../util/marko-config";
-import normalizeStringExpression from "../util/normalize-string-expression";
 import { type Opt, push } from "../util/optional";
 import { addReasonExprs } from "../util/reasons";
 import { getReferencedBindings, mergeReferences } from "../util/references";
@@ -46,12 +46,12 @@ import { getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 const kStyleImportPath = Symbol("style import path");
-const kDynamicStyleNames = Symbol("dynamic style names");
+const kCustomPropertyNames = Symbol("custom property names");
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kStyleImportPath]?: string | null;
     /** The custom property names of a `<style>`'s interpolated values. */
-    [kDynamicStyleNames]?: string[];
+    [kCustomPropertyNames]?: string[];
   }
 }
 
@@ -60,8 +60,8 @@ const STYLE_EXT_REG = /^style((?:\.[a-zA-Z0-9$_-]+)+)?/;
 const [getStyleCounts] = createProgramState(
   (): Partial<Record<string, number>> => ({}),
 );
-// Running index for dynamic `<style>` interpolation names, program-scoped.
-const [getDynamicStyleNameCount, setDynamicStyleNameCount] = createProgramState(
+// Program-wide index of the next `<style>` custom property name.
+const [getCustomPropertyCount, setCustomPropertyCount] = createProgramState(
   () => 0,
 );
 
@@ -74,7 +74,7 @@ export default {
     const { node } = tag;
     assertNoStyleAttributes(tag);
 
-    const names = collectDynamicStyleNames(tag);
+    const names = createCustomPropertyNames(tag);
 
     if (names) {
       checkStyleInterpolations(tag);
@@ -119,7 +119,7 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
     BindingType.dom,
     section,
   ));
-  node.extra![kDynamicStyleNames] = names;
+  node.extra![kCustomPropertyNames] = names;
 
   const tagExtra = mergeReferences(section, node, []);
   let exprExtras: Opt<t.NodeExtra> = tagExtra;
@@ -130,13 +130,13 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   addReasonExprs(ensureSlot(binding), exprExtras);
 }
 
-function collectDynamicStyleNames(tag: t.NodePath<t.MarkoTag>) {
+function createCustomPropertyNames(tag: t.NodePath<t.MarkoTag>) {
   let names: string[] | undefined;
   for (const child of tag.node.body.body) {
     if (t.isMarkoPlaceholder(child)) {
-      const index = getDynamicStyleNameCount();
-      setDynamicStyleNameCount(index + 1);
-      (names ??= []).push(dynamicStyleName(index));
+      const index = getCustomPropertyCount();
+      setCustomPropertyCount(index + 1);
+      (names ??= []).push(customPropertyName(index));
     } else if (!t.isMarkoText(child)) {
       throw tag.hub.buildError(
         child,
@@ -151,7 +151,7 @@ function collectDynamicStyleNames(tag: t.NodePath<t.MarkoTag>) {
 const styleNameUnsafeReg = /[^a-zA-Z0-9_]/g;
 const encodeStyleNameChar = (c: string) => "-" + c.charCodeAt(0).toString(36);
 
-function dynamicStyleName(index: number) {
+function customPropertyName(index: number) {
   const file = getFile();
   const id = getTemplateId(
     file.markoOpts,
@@ -229,7 +229,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const binding = node.extra?.nodeBinding;
 
   if (binding) {
-    const names = node.extra![kDynamicStyleNames]!;
+    const names = node.extra![kCustomPropertyNames]!;
     const section = getSection(tag);
     const readEl = () => createScopeReadExpression(binding);
 
@@ -306,7 +306,7 @@ function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
 }
 
 function buildStyleDecls(node: t.MarkoTag) {
-  const names = node.extra![kDynamicStyleNames]!;
+  const names = node.extra![kCustomPropertyNames]!;
   const parts: (string | t.Expression)[] = [];
 
   dynamicStyleValues(node).forEach((value, i) => {
@@ -315,7 +315,7 @@ function buildStyleDecls(node: t.MarkoTag) {
     parts.push(";");
   });
 
-  return normalizeStringExpression(parts)!;
+  return buildStringExpression(parts)!;
 }
 
 /**

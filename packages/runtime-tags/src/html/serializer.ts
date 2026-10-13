@@ -37,10 +37,10 @@ export interface SerializeChannel {
   readyId?: string;
   parent?: SerializeChannel;
 }
-interface Mutation {
+interface QueuedCall {
   value: unknown;
   object: unknown;
-  property: string;
+  method: string;
   channel: SerializeChannel | undefined;
   valueId?: string | null;
 }
@@ -310,11 +310,11 @@ class State {
   buf = [] as string[];
   strs = new Map<string, Reference>();
   refs = new WeakMap<WeakKey, Reference>();
-  pendingAssignments = new Set<Reference>();
+  deferredRefs = new Set<Reference>();
   boundary!: Boundary;
   channel: SerializeChannel | undefined = undefined;
   channelDeps: Set<string> | null = null;
-  mutated: Mutation[] = [];
+  queuedCalls: QueuedCall[] = [];
 
   // How a flush's payload is written, which a serializer state may change.
   scopeRef(scope: WeakKey, scopeId: number) {
@@ -337,7 +337,7 @@ class State {
       buf[scopesIndex] = "_([" + buf[scopesIndex];
       buf.push("])");
     }
-    writeAssigned(this);
+    writeDeferred(this);
     return ",0)";
   }
 
@@ -382,7 +382,7 @@ class State {
 
 // A `Map`/`Set` member that references an ancestor cannot be built into the
 // constructor (the ancestor's id isn't assigned yet), so it rides the
-// collection's reference in `pendingAssignments` and emits a post-construction call
+// collection's reference in `deferredRefs` and emits a post-construction call
 // (`.add(v)` / `.set(k, v)`) once every id exists.
 interface DeferredCall {
   method: string;
@@ -475,8 +475,8 @@ export function stringifyScopes(
 
 // Returns the first pending ready channel for fixed-point draining.
 export function pendingReadyChannel(state: State) {
-  for (const mutation of state.mutated) {
-    if (mutation.channel?.readyId) return mutation.channel;
+  for (const call of state.queuedCalls) {
+    if (call.channel?.readyId) return call.channel;
   }
 }
 
@@ -486,37 +486,37 @@ export function takeChannelDeps(state: State) {
   return deps;
 }
 
-export function writeMutation(
+export function queueCall(
   state: State,
   value: unknown,
   object: unknown,
-  property: string,
+  method: string,
   channel?: SerializeChannel,
 ) {
-  state.mutated.push({
+  state.queuedCalls.push({
     value,
     object,
-    property,
+    method,
     channel,
   });
 }
 
-// Drops a mutation still to be written; returns whether there was one.
-export function dropMutation(
+// Drops a queued call still to be written; returns whether there was one.
+export function dropQueuedCall(
   state: State,
   value: unknown,
   object: unknown,
-  property: string,
+  method: string,
 ) {
-  const { mutated } = state;
-  for (let i = 0; i < mutated.length; i++) {
-    const mutation = mutated[i];
+  const { queuedCalls } = state;
+  for (let i = 0; i < queuedCalls.length; i++) {
+    const call = queuedCalls[i];
     if (
-      mutation.value === value &&
-      mutation.object === object &&
-      mutation.property === property
+      call.value === value &&
+      call.object === object &&
+      call.method === method
     ) {
-      mutated.splice(i, 1);
+      queuedCalls.splice(i, 1);
       return true;
     }
   }
@@ -537,7 +537,7 @@ export function register<T extends WeakKey>(
 
 // A payload with only scope data returns its scopes array directly
 // (`_=>[1,{a},{b},2,{e}]`). When there are trailing expressions (deferred
-// assignments/mutations, which may reference bindings created inside the
+// assignments and calls, which may reference bindings created inside the
 // scopes and so must evaluate after them) the scopes apply through the
 // serialize context instead and the payload ends in `,0` so a value from
 // its last expression can never be misread as scopes — the browser only
@@ -570,7 +570,7 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   }
 
   let extras = "";
-  if (state.pendingAssignments.size || hasChannelMutations(state)) {
+  if (state.deferredRefs.size || hasChannelCalls(state)) {
     extras = state.writeTrailing(scopesIndex);
   }
 
@@ -586,12 +586,12 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   return state.wrapPayload(result, extras);
 }
 
-export function writeAssigned(state: State) {
+export function writeDeferred(state: State) {
   let sep = state.buf.length ? "," : "";
 
-  if (state.pendingAssignments.size) {
-    const pending = state.pendingAssignments;
-    state.pendingAssignments = new Set();
+  if (state.deferredRefs.size) {
+    const pending = state.deferredRefs;
+    state.deferredRefs = new Set();
     let buf = "";
     let hasCalls = false;
     for (const ref of pending) {
@@ -624,21 +624,21 @@ export function writeAssigned(state: State) {
     }
   }
 
-  if (hasChannelMutations(state)) {
-    const remaining: Mutation[] = [];
-    for (const mutation of state.mutated) {
-      if (!mutationMatchesReadyId(mutation, state.channel?.readyId)) {
-        remaining.push(mutation);
+  if (hasChannelCalls(state)) {
+    const remaining: QueuedCall[] = [];
+    for (const call of state.queuedCalls) {
+      if (!callMatchesReadyId(call, state.channel?.readyId)) {
+        remaining.push(call);
         continue;
       }
 
-      const hasSeen = state.refs.get(mutation.object as object)?.id;
+      const hasSeen = state.refs.get(call.object as object)?.id;
       const objectStartIndex = state.buf.push(
         state.buf.length === 0 ? "" : ",",
       );
 
-      if (writeProp(state, mutation.object, null, "")) {
-        const objectRef = state.refs.get(mutation.object as object);
+      if (writeProp(state, call.object, null, "")) {
+        const objectRef = state.refs.get(call.object as object);
         if (objectRef && objectRef.scopeId === undefined) {
           if (!objectRef.id && !isAncestorChannelRef(state, objectRef)) {
             objectRef.id = nextRefAccess(state);
@@ -655,18 +655,18 @@ export function writeAssigned(state: State) {
       }
 
       const valueStartIndex = state.buf.push(
-        toAccess(toObjectKey(mutation.property)) + "(",
+        toAccess(toObjectKey(call.method)) + "(",
       );
 
-      if (mutation.value === undefined) {
+      if (call.value === undefined) {
         // Settling with undefined writes no argument (`_.x.f()`).
-      } else if (writeProp(state, mutation.value, null, "")) {
-        // Reused mutation values require eager bindings because they lack an
+      } else if (writeProp(state, call.value, null, "")) {
+        // Reused call arguments require eager bindings because they lack an
         // accessor path.
         const valueRef =
-          typeof mutation.value === "string"
-            ? state.strs.get(mutation.value)
-            : state.refs.get(mutation.value as object);
+          typeof call.value === "string"
+            ? state.strs.get(call.value)
+            : state.refs.get(call.value as object);
         // Scopes never claim a binding (`_(N)` is self-resolving).
         if (
           valueRef &&
@@ -674,7 +674,7 @@ export function writeAssigned(state: State) {
           valueRef.scopeId === undefined &&
           !isAncestorChannelRef(state, valueRef)
         ) {
-          valueRef.id = mutation.valueId || nextRefAccess(state);
+          valueRef.id = call.valueId || nextRefAccess(state);
           state.buf[valueStartIndex] =
             valueRef.id + "=" + state.buf[valueStartIndex];
         }
@@ -684,13 +684,13 @@ export function writeAssigned(state: State) {
 
       state.buf.push(")");
     }
-    state.mutated = remaining;
+    state.queuedCalls = remaining;
   }
 
-  // Serializing call args or channel-mutation values can surface fresh
+  // Serializing call args or queued call arguments can surface fresh
   // circular assignments/calls; drain them into this same payload.
-  if (state.pendingAssignments.size) {
-    writeAssigned(state);
+  if (state.deferredRefs.size) {
+    writeDeferred(state);
   }
 }
 
@@ -701,33 +701,25 @@ function writeCallArg(state: State, val: unknown) {
   } else if (writeProp(state, val, null, "")) {
     // Args have no parent access path, so a later reuse needs an eager id.
     const ref = state.refs.get(val as WeakKey) || state.strs.get(val as string);
-    if (ref) ensureId(state, ref);
+    if (ref) ensureRefAccess(state, ref);
   } else {
     state.buf.push("void 0");
   }
 }
 
-function hasChannelMutations(state: State) {
-  return hasMatchingMutations(state, state.channel?.readyId);
+function hasChannelCalls(state: State) {
+  return hasMatchingCalls(state, state.channel?.readyId);
 }
 
-export function hasMatchingMutations(
-  state: State,
-  readyId: string | undefined,
-) {
-  for (const mutation of state.mutated) {
-    if (mutationMatchesReadyId(mutation, readyId)) return true;
+export function hasMatchingCalls(state: State, readyId: string | undefined) {
+  for (const call of state.queuedCalls) {
+    if (callMatchesReadyId(call, readyId)) return true;
   }
   return false;
 }
 
-function mutationMatchesReadyId(
-  mutation: Mutation,
-  readyId: string | undefined,
-) {
-  return mutation.channel?.readyId
-    ? mutation.channel.readyId === readyId
-    : !readyId;
+function callMatchesReadyId(call: QueuedCall, readyId: string | undefined) {
+  return call.channel?.readyId ? call.channel.readyId === readyId : !readyId;
 }
 
 function writeProp(
@@ -780,8 +772,8 @@ function writeReferenceOr(
     }
 
     if (parent && isCircular(parent, ref)) {
-      ensureId(state, ref);
-      state.pendingAssignments.add(ref);
+      ensureRefAccess(state, ref);
+      state.deferredRefs.add(ref);
       addAssignment(ref, accessId(state, parent) + toAccess(accessor));
       return false;
     }
@@ -1188,8 +1180,8 @@ function writePromise(state: State, val: Promise<unknown>, ref: Reference) {
     "(p=>p=new Promise((f,r)=>" + pId + "={f,r(e){p.catch(_=>0);r(e)}}))()",
   );
   val.then(
-    (v) => writeAsyncMutation(state, boundary, handle, "f", v, channel, pId),
-    (v) => writeAsyncMutation(state, boundary, handle, "r", v, channel, pId),
+    (v) => queueAsyncCall(state, boundary, handle, "f", v, channel, pId),
+    (v) => queueAsyncCall(state, boundary, handle, "r", v, channel, pId),
   );
   boundary.startAsync();
   return true;
@@ -1242,7 +1234,7 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
         (assignments ||= []).push("a[" + i + "][1]");
       }
 
-      needsId ||= isDedupedMember(itemKey) || isDedupedMember(itemValue);
+      needsId ||= isReusableMember(itemKey) || isReusableMember(itemValue);
 
       i = items.push(
         itemValue === undefined
@@ -1288,7 +1280,7 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
         (assignments ||= []).push("a[" + (i + 1) + "]");
       }
 
-      needsId ||= isDedupedMember(itemKey) || isDedupedMember(itemValue);
+      needsId ||= isReusableMember(itemKey) || isReusableMember(itemValue);
 
       i = items.push(itemKey, itemValue);
     }
@@ -1335,7 +1327,7 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
       item = 0;
       (assignments ||= []).push("i[" + i + "]");
     } else {
-      needsId ||= isDedupedMember(item);
+      needsId ||= isReusableMember(item);
     }
 
     i = items.push(item);
@@ -1375,9 +1367,9 @@ function deferCall(
   method: string,
   args: unknown[],
 ) {
-  ensureId(state, ref);
+  ensureRefAccess(state, ref);
   (ref.calls ||= []).push({ method, args });
-  state.pendingAssignments.add(ref);
+  state.deferredRefs.add(ref);
 }
 
 // Reusable Map/Set members bind through their otherwise unreachable backing
@@ -1417,7 +1409,7 @@ function newArgReference(state: State, parent: Reference, val: object) {
   for (const key in val) {
     const member = (val as Record<string, unknown>)[key];
     if (
-      isDedupedMember(member) &&
+      isReusableMember(member) &&
       !(typeof member === "string"
         ? state.strs.has(member)
         : state.refs.has(member as WeakKey))
@@ -1437,7 +1429,7 @@ function newArgReference(state: State, parent: Reference, val: object) {
 }
 
 // Only a reusable non-scope member makes its container need an id.
-function isDedupedMember(val: unknown) {
+function isReusableMember(val: unknown) {
   switch (typeof val) {
     case "object":
       return val !== null && (val as ScopeInternals)[K_SCOPE_ID] === undefined;
@@ -1581,7 +1573,7 @@ function writeAggregateError(
     // an array other references or later assignments reach relinks to the copy.
     const errorsRef = state.refs.get(val.errors as object);
     if (errorsRef?.id) {
-      state.pendingAssignments.add(errorsRef);
+      state.deferredRefs.add(errorsRef);
       addAssignment(errorsRef, accessId(state, ref) + toAccess("errors"));
     }
   }
@@ -1668,7 +1660,7 @@ function writeRequest(state: State, val: Request, ref: Reference) {
   if (seenHeaders) {
     // Dedup against the already-serialized Headers instead of re-emitting the
     // entries inline (which also clobbered its reference).
-    options += sep + "headers:" + ensureId(state, seenHeaders);
+    options += sep + "headers:" + ensureRefAccess(state, seenHeaders);
     sep = ",";
   } else {
     state.refs.set(
@@ -1741,7 +1733,7 @@ function writeResponse(state: State, val: Response, ref: Reference) {
   if (seenHeaders) {
     // Dedup against the already-serialized Headers instead of re-emitting the
     // entries inline (which also clobbered its reference).
-    options += sep + "headers:" + ensureId(state, seenHeaders);
+    options += sep + "headers:" + ensureRefAccess(state, seenHeaders);
   } else {
     state.refs.set(
       val.headers,
@@ -1818,15 +1810,15 @@ function writeReadableStream(
   const handle = newAsyncHandle(state, ref, iterId);
   const onFulfilled = ({ value, done }: ReadableStreamReadResult<unknown>) => {
     if (done) {
-      writeAsyncMutation(state, boundary, handle, "r", value, channel);
+      queueAsyncCall(state, boundary, handle, "r", value, channel);
     } else if (!boundary.aborted) {
       reader.read().then(onFulfilled, onRejected);
       boundary.startAsync();
-      writeAsyncMutation(state, boundary, handle, "f", value, channel);
+      queueAsyncCall(state, boundary, handle, "f", value, channel);
     }
   };
   const onRejected = (reason: unknown) => {
-    writeAsyncMutation(state, boundary, handle, "j", reason, channel);
+    queueAsyncCall(state, boundary, handle, "j", reason, channel);
   };
 
   state.buf.push(
@@ -1858,7 +1850,7 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
       break;
     }
 
-    needsId ||= isDedupedMember(value);
+    needsId ||= isReusableMember(value);
     yields.push(value);
   }
 
@@ -1913,7 +1905,7 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
     state.buf.push(",");
     if (
       writeProp(state, returnValue, ref, "") &&
-      isDedupedMember(returnValue)
+      isReusableMember(returnValue)
     ) {
       // The return value has no accessor path from the generator, so a
       // later reuse can only reach it through an eagerly claimed binding.
@@ -1921,7 +1913,7 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
         typeof returnValue === "string"
           ? state.strs.get(returnValue)
           : state.refs.get(returnValue as WeakKey);
-      if (retRef) ensureId(state, retRef);
+      if (retRef) ensureRefAccess(state, retRef);
     }
   }
 
@@ -1944,15 +1936,15 @@ function writeAsyncGenerator(
   const handle = newAsyncHandle(state, ref, iterId);
   const onFulfilled = ({ value, done }: IteratorResult<unknown>) => {
     if (done) {
-      writeAsyncMutation(state, boundary, handle, "r", value, channel);
+      queueAsyncCall(state, boundary, handle, "r", value, channel);
     } else if (!boundary.aborted) {
       iter.next().then(onFulfilled, onRejected);
       boundary.startAsync();
-      writeAsyncMutation(state, boundary, handle, "f", value, channel);
+      queueAsyncCall(state, boundary, handle, "f", value, channel);
     }
   };
   const onRejected = (reason: unknown) => {
-    writeAsyncMutation(state, boundary, handle, "j", reason, channel);
+    queueAsyncCall(state, boundary, handle, "j", reason, channel);
   };
 
   state.buf.push(
@@ -2043,7 +2035,7 @@ function writeMaybeIterableProps(state: State, val: object, ref: Reference) {
   return sep;
 }
 
-function writeAsyncMutation(
+function queueAsyncCall(
   state: State,
   boundary: Boundary,
   handle: WeakKey,
@@ -2054,10 +2046,10 @@ function writeAsyncMutation(
 ) {
   if (boundary.aborted) return;
 
-  state.mutated.push({
+  state.queuedCalls.push({
     value,
     object: handle,
-    property: method,
+    method,
     channel,
     valueId,
   });
@@ -2186,6 +2178,8 @@ function fromObjectKey(key: string) {
   return key;
 }
 
+// Whether the current channel can read a ref (main's, its own or an ancestor's),
+// recording an ancestor's as a channel it waits on.
 function trackChannel(state: State, ref: Reference) {
   const refReadyId = ref.channel?.readyId;
   if (!refReadyId || refReadyId === state.channel?.readyId) return true;
@@ -2377,11 +2371,11 @@ function writeRef(state: State, ref: Reference) {
     ref.flushId = state.flushId;
     state.buf.push(ref.path);
   } else {
-    state.buf.push(ensureId(state, ref));
+    state.buf.push(ensureRefAccess(state, ref));
   }
 }
 
-function ensureId(state: State, ref: Reference): string {
+function ensureRefAccess(state: State, ref: Reference): string {
   if (ref.scopeId !== undefined) {
     trackChannel(state, ref);
     return "_(" + ref.scopeId + ")";
@@ -2392,15 +2386,15 @@ function ensureId(state: State, ref: Reference): string {
     return ref.id;
   }
 
-  return assignId(state, ref);
+  return claimRefAccess(state, ref);
 }
 
 function accessId(state: State, ref: Reference): string {
-  const id = ensureId(state, ref);
+  const id = ensureRefAccess(state, ref);
   return id === ref.id || ref.scopeId !== undefined ? id : "(" + id + ")";
 }
 
-function assignId(state: State, ref: Reference): string {
+function claimRefAccess(state: State, ref: Reference): string {
   const { pos } = ref;
   if (pos !== null && ref.flushId === state.flushId) {
     ref.id = nextRefAccess(state);

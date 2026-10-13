@@ -3,6 +3,7 @@ import { assertNoArgs, type Tag } from "@marko/compiler/babel-utils";
 
 import { assertHasVar, assertNoTagVarMutation } from "../util/assert";
 import { BindingType } from "../util/bindings";
+import { setTagContentDerives } from "../util/content-derives";
 import { isOutputHTML } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
@@ -23,7 +24,6 @@ import {
   getSection,
   getSectionForBody,
 } from "../util/sections";
-import { setTagDerivedFrom } from "../util/set-tag-derived-from";
 import {
   addStatement,
   addValue,
@@ -54,7 +54,7 @@ export default {
     assertNoTagVarMutation(tag);
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
-    setTagDerivedFrom(tag, varBinding);
+    setTagContentDerives(tag, varBinding);
 
     if (bodySection) {
       // TODO: support destructure

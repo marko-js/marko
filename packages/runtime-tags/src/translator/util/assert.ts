@@ -28,19 +28,19 @@ export function assertNoSpreadAttrs(tag: t.NodePath<t.MarkoTag>) {
 
 // The `value=` attribute of a core tag that supports no other attribute, or
 // also its change handler with `change`; `hint` helps with an unsupported one.
-export function assertValueAttr(
+export function assertOnlyValueAttr(
   tag: t.NodePath<t.MarkoTag>,
   required: true,
   change?: boolean,
   hint?: (attr: t.MarkoAttribute) => string | undefined,
 ): t.MarkoAttribute;
-export function assertValueAttr(
+export function assertOnlyValueAttr(
   tag: t.NodePath<t.MarkoTag>,
   required?: boolean,
   change?: boolean,
   hint?: (attr: t.MarkoAttribute) => string | undefined,
 ): t.MarkoAttribute | undefined;
-export function assertValueAttr(
+export function assertOnlyValueAttr(
   tag: t.NodePath<t.MarkoTag>,
   required?: boolean,
   change?: boolean,
