@@ -46,6 +46,7 @@ const config = {
 const appDir = path.join(__dirname, "app");
 const simDir = path.join(appDir, ".gen", "sim");
 const cdnUrl = "/cdn/";
+const outDir = path.join(__dirname, "out");
 
 main().then(
   () => process.exit(0),
@@ -57,6 +58,7 @@ main().then(
 
 async function main() {
   rmSync(simDir, { recursive: true, force: true });
+  mkdirSync(outDir, { recursive: true });
   const cdnDir = path.join(simDir, "cdn");
   mkdirSync(path.join(cdnDir, "host"), { recursive: true });
   const host = await buildHostRuntime(path.join(simDir, "host"));
@@ -213,10 +215,15 @@ async function main() {
   );
   writeFileSync(
     path.join(
-      __dirname,
-      `simulation${config.prewarm ? "" : "-no-prewarm"}.json`,
+      outDir,
+      `simulation-prewarm${config.prewarm}-link${config.linkTags}.json`,
     ),
     JSON.stringify({ config, timeline }, null, 2) + "\n",
+  );
+  const cdnFiles = readdirSync(cdnDir).filter((file) => file.endsWith(".mjs"));
+  const blockVersions = cdnFiles.filter((file) => file.startsWith("tag-"));
+  console.log(
+    `CDN: ${cdnFiles.length} client files from ${bundler.builds + 1} builds; ${blockVersions.length} of them block chunks (${blockVersions.join(", ") || "none"})`,
   );
   await bundler.close();
 }

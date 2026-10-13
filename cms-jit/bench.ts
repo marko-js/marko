@@ -47,6 +47,7 @@ async function main() {
   );
 
   rmSync(genDir, { recursive: true, force: true });
+  mkdirSync(path.join(__dirname, "out"), { recursive: true });
   const host = sharedRuntime
     ? await buildHostRuntime(path.join(genDir, "host"))
     : undefined;
@@ -68,7 +69,7 @@ async function main() {
       : "every variant renders the same visible markup",
   );
   writeFileSync(
-    path.join(__dirname, "results.json"),
+    path.join(__dirname, "out", "bench.json"),
     JSON.stringify(
       {
         pages: pages.length,
