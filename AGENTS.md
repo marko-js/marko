@@ -49,6 +49,8 @@ Derive before adding. Before a new field, flag, helper, state container, paramet
 
 Every line needs a reason you can name. No guards, `?.`, fallbacks, casts (`as never`, `as any`, or one the type already satisfies), or parameters for states the design rules out; lean on the invariant (`!`, or a `MARKO_DEBUG` assert). Name checks, dependency method overrides, and machine heuristics are hacks: find the structural fix. A perf or config knob ships only with a measured win, and never restates a default.
 
+Don't bend the code around an edge case. Input the design has no reason to support (a `NaN` loop key, say) gets a compile error or a `MARKO_DEBUG` error that rules it out, not runtime handling that every caller pays for in size or speed. Harden the invariant, then rely on it.
+
 Write the direct form. No rest or spread to copy, extend, or strip an object: share one record, or key a collection by the field it lacks. Client runtime code, where bundle size comes first, may keep a spread that `build:sizes` shows is smallest, but it is still a red flag to justify. No function that only forwards, and no type named for a single use. A helper every caller guards takes the `undefined` itself, and a flag is set as `flag ||= condition`.
 
 Names come from the code. Reuse the vocabulary of neighboring code, [`CONTEXT.md`](packages/runtime-tags/CONTEXT.md), and the markojs.com docs; never coin a term the codebase does not already use.
