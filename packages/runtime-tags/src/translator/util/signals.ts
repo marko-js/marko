@@ -9,6 +9,7 @@ import { toAccess } from "../../html/serializer";
 import {
   type Binding,
   BindingType,
+  bindingUtil,
   getCanonicalBinding,
   getDebugName,
   getDebugNames,
@@ -28,7 +29,7 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
-import { filter, forEach, type Opt, push, reduce, some } from "./optional";
+import { forEach, type Opt, push, reduce, some } from "./optional";
 import { getReadReplacement } from "./read-replacement";
 import {
   getNodeReasons,
@@ -165,7 +166,7 @@ export function setSectionOwnerResumedByMarker(section: Section) {
 // Registered content's closures its owners' scope flushes may lack, by section:
 // one values object per owner down to the content's own.
 export function getContentClosureValues(bodySection: Section) {
-  const contentClosures = filter(
+  const contentClosures = bindingUtil.filter(
     getContentClosures(bodySection),
     mayBeUnwritten,
   );

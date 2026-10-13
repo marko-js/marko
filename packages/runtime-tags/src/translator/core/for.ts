@@ -7,7 +7,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoSpreadAttrs } from "../util/assert";
-import { type Binding, BindingType } from "../util/bindings";
+import { type Binding, BindingType, getPropertyAlias } from "../util/bindings";
 import {
   type ForType,
   forTypeToBranchRuntime,
@@ -405,21 +405,18 @@ function getLoopKeyBinding(
 ): Binding | undefined {
   if (!paramsBinding) return;
   if (byAttr) {
-    const keyChain = getByKeyChain(byAttr);
-    if (!keyChain) return;
-    let keyBinding = paramsBinding.propertyAliases.get("0");
-    for (const property of keyChain) {
-      keyBinding = keyBinding?.propertyAliases.get(property);
-    }
-    return keyBinding;
+    const item = paramsBinding.propertyAliases.get("0");
+    return item && getKeyAlias(byAttr, item);
   }
 
   return paramsBinding.propertyAliases.get(forType === "of" ? "1" : "0");
 }
 
-function getByKeyChain(byAttr: t.Expression): string[] | undefined {
+// The alias of the loop item that `by=` reads: a property name, or a function
+// returning a static member chain of its item param.
+function getKeyAlias(byAttr: t.Expression, item: Binding): Binding | undefined {
   if (byAttr.type === "StringLiteral") {
-    return [byAttr.value];
+    return getPropertyAlias(item, byAttr.value);
   }
   if (
     byAttr.type === "ArrowFunctionExpression" ||
@@ -435,17 +432,20 @@ function getByKeyChain(byAttr: t.Expression): string[] | undefined {
           : undefined;
     }
     if (itemParam?.type === "Identifier" && body) {
-      return getStaticMemberChain(body, itemParam.name);
+      return getMemberChainAlias(body, itemParam.name, item);
     }
   }
 }
 
-function getStaticMemberChain(
+// The alias of `item` that `node` reads, when `node` is a static member chain
+// of the identifier `rootName`.
+function getMemberChainAlias(
   node: t.Node,
   rootName: string,
-): string[] | undefined {
+  item: Binding,
+): Binding | undefined {
   if (node.type === "Identifier") {
-    return node.name === rootName ? [] : undefined;
+    return node.name === rootName ? item : undefined;
   }
   if (
     node.type === "MemberExpression" ||
@@ -453,9 +453,8 @@ function getStaticMemberChain(
   ) {
     const property = getMemberExpressionPropString(node);
     if (property !== undefined) {
-      const chain = getStaticMemberChain(node.object, rootName);
-      chain?.push(property);
-      return chain;
+      const object = getMemberChainAlias(node.object, rootName, item);
+      return object && getPropertyAlias(object, property);
     }
   }
 }

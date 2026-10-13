@@ -11,7 +11,7 @@ import {
   type SortedOpt,
   push,
   Sorted,
-  reduce,
+  reduceWhile,
 } from "./optional";
 import {
   type AssignedBindingExtra,
@@ -251,18 +251,12 @@ export function getAssignedObject(binding: Binding) {
 }
 
 // The alias a property path reaches from a binding, if every hop exists.
-export function getPropertyAlias(
-  binding: Binding | undefined,
-  properties: Opt<string>,
-) {
-  return reduce(properties, getExistingPropertyAlias, binding);
+export function getPropertyAlias(binding: Binding, properties: Opt<string>) {
+  return reduceWhile(properties, getExistingPropertyAlias, binding);
 }
 
-function getExistingPropertyAlias(
-  binding: Binding | undefined,
-  property: string,
-) {
-  return binding && getCanonicalBinding(binding).propertyAliases.get(property);
+function getExistingPropertyAlias(binding: Binding, property: string) {
+  return getCanonicalBinding(binding).propertyAliases.get(property);
 }
 
 export function compareReferences(

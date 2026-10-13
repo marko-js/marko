@@ -31,7 +31,9 @@ export class Sorted<T> {
       if (Array.isArray(a)) {
         if (b !== undefined) {
           if (Array.isArray(b)) {
-            return unionSorted(this.compare, a, b) as SortedOpt<U>;
+            return a === b
+              ? a
+              : (unionSorted(this.compare, a, b) as SortedOpt<U>);
           } else {
             return addSorted(this.compare, a, b) as SortedOneMany<U>;
           }
@@ -429,6 +431,24 @@ export function reduce<T, R>(
       ? data.reduce(cb, initial)
       : cb(initial, data, 0)
     : initial;
+}
+
+// `reduce` until the callback returns `undefined`, which it then returns.
+export function reduceWhile<T, R>(
+  data: Opt<T>,
+  cb: (acc: R, item: T) => R | undefined,
+  initial: R,
+): R | undefined {
+  if (Array.isArray(data)) {
+    let acc = initial;
+    for (let i = 0, len = data.length; i < len; i++) {
+      const next = cb(acc, data[i]);
+      if (next === undefined) return next;
+      acc = next;
+    }
+    return acc;
+  }
+  return data !== undefined ? cb(initial, data) : initial;
 }
 
 export function toArray<T, R>(
