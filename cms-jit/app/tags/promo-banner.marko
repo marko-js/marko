@@ -1,0 +1,19 @@
+export interface Input {
+  tone: "info" | "warn" | "sale";
+  dismissible: boolean;
+  message: string;
+  link?: { label: string; href: string };
+}
+
+<let/open=true>
+<if=open>
+  <aside class=["promo", `promo--${input.tone}`]>
+    <span>${input.message}</span>
+    <if=input.link>
+      <a href=input.link.href>${input.link.label}</a>
+    </if>
+    <if=input.dismissible>
+      <button class="promo__close" aria-label="Dismiss" onClick() { open = false; }>×</button>
+    </if>
+  </aside>
+</if>

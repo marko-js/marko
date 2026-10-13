@@ -1,0 +1,30 @@
+{
+  "pages": 48,
+  "shapes": 18,
+  "renderRuns": 4000,
+  "sharedRuntime": true,
+  "rows": [
+    {
+      "variant": "generic-eager",
+      "builds": 1,
+      "first build ms": 408,
+      "warm build ms (avg)": "-",
+      "html B": 4880,
+      "resume B": 925,
+      "client js B (br)": 754,
+      "client files": 1,
+      "render µs": 9
+    },
+    {
+      "variant": "shape",
+      "builds": 18,
+      "first build ms": 96,
+      "warm build ms (avg)": 49,
+      "html B": 4879,
+      "resume B": 925,
+      "client js B (br)": 391,
+      "client files": 1,
+      "render µs": 11
+    }
+  ]
+}

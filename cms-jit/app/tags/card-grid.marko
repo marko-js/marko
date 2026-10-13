@@ -1,0 +1,22 @@
+export interface Input {
+  columns: 2 | 3 | 4;
+  heading?: string;
+  cards: { title: string; body: string; href: string; badge?: string }[];
+}
+
+<section class=["card-grid", `card-grid--${input.columns}`]>
+  <if=input.heading>
+    <h2>${input.heading}</h2>
+  </if>
+  <ul>
+    <for|card| of=input.cards>
+      <li class="card">
+        <if=card.badge>
+          <span class="badge">${card.badge}</span>
+        </if>
+        <h3><a href=card.href>${card.title}</a></h3>
+        <p>${card.body}</p>
+      </li>
+    </for>
+  </ul>
+</section>

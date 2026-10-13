@@ -1,0 +1,22 @@
+export interface Input {
+  variant: "centered" | "split" | "minimal";
+  title: string;
+  subtitle?: string;
+  image?: { src: string; alt: string };
+  cta?: { label: string; href: string };
+}
+
+<section class=["hero", `hero--${input.variant}`]>
+  <if=input.variant === "split" && input.image>
+    <img src=input.image.src alt=input.image.alt>
+  </if>
+  <div class="hero__body">
+    <h1>${input.title}</h1>
+    <if=input.variant !== "minimal" && input.subtitle>
+      <p class="hero__subtitle">${input.subtitle}</p>
+    </if>
+    <if=input.cta>
+      <a class="button" href=input.cta.href>${input.cta.label}</a>
+    </if>
+  </div>
+</section>

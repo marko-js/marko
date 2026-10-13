@@ -1,0 +1,26 @@
+export interface Input {
+  heading: string;
+  multiOpen: boolean;
+  items: { question: string; answer: string }[];
+}
+
+<let/openIndex=-1>
+<section class="faq">
+  <h2>${input.heading}</h2>
+  <for|item, i| of=input.items>
+    <if=input.multiOpen>
+      <details>
+        <summary>${item.question}</summary>
+        <p>${item.answer}</p>
+      </details>
+    </if>
+    <else>
+      <div class="faq__item">
+        <button aria-expanded=String(openIndex === i) onClick() { openIndex = openIndex === i ? -1 : i; }>${item.question}</button>
+        <if=openIndex === i>
+          <p>${item.answer}</p>
+        </if>
+      </div>
+    </else>
+  </for>
+</section>

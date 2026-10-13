@@ -1,0 +1,35 @@
+export interface Input {
+  autoplay: boolean;
+  showDots: boolean;
+  slides: { src: string; alt: string; caption?: string }[];
+}
+
+<let/index=0>
+<const/count=input.slides.length>
+<section class="carousel">
+  <ul class="carousel__track" style={ transform: `translateX(-${index * 100}%)` }>
+    <for|slide| of=input.slides>
+      <li>
+        <img src=slide.src alt=slide.alt loading="lazy">
+        <if=slide.caption>
+          <p>${slide.caption}</p>
+        </if>
+      </li>
+    </for>
+  </ul>
+  <button class="carousel__prev" onClick() { index = (index + count - 1) % count; }>‹</button>
+  <button class="carousel__next" onClick() { index = (index + 1) % count; }>›</button>
+  <if=input.showDots>
+    <ol class="carousel__dots">
+      <for|_, i| until=count>
+        <li><button aria-current=i === index && "true" onClick() { index = i; }>${i + 1}</button></li>
+      </for>
+    </ol>
+  </if>
+  <if=input.autoplay>
+    <script>
+      const id = setInterval(() => { index = (index + 1) % count; }, 5000);
+      $signal.onabort = () => clearInterval(id);
+    </script>
+  </if>
+</section>
