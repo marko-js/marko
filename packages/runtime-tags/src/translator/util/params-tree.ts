@@ -4,29 +4,29 @@ import { type Binding, isTemplateParam, propsUtil } from "./bindings";
 import { generateUid } from "./generate-uid";
 import { forEach, type SortedOpt } from "./optional";
 
-export type BindingPropTree = {
+export type ParamsTree = {
   binding: Binding;
-  props: { [prop: string]: BindingPropTree } | undefined; // TODO: change to "known"
-  rest: BindingPropTree | undefined;
+  props: { [prop: string]: ParamsTree } | undefined; // TODO: change to "known"
+  rest: ParamsTree | undefined;
 };
 
-// Set during analyze on a `<${x}/>` that renders content with no input.
+// Set during analyze on a name-only `<${x}/>`: no input, variable or body.
 // On the tag's extra, which is the expression root a binding's read lands on.
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
-    directContent?: true;
+    nameOnly?: true;
   }
 }
 
 // `bodyAnalyzed`: every read of the binding is recorded, as for a `<define>`
 // body called from outside it.
-export function getBindingPropTree(
+export function exposeParamsTree(
   binding: Binding,
   bodyAnalyzed?: boolean,
-): BindingPropTree {
+): ParamsTree {
   binding.exposed = true;
 
-  const props: BindingPropTree = {
+  const props: ParamsTree = {
     binding,
     props: undefined,
     rest: undefined,
@@ -42,24 +42,21 @@ export function getBindingPropTree(
       }
     }
     if (!restAlias) {
-      props.props = Object.create(null) as { [prop: string]: BindingPropTree };
+      props.props = Object.create(null) as { [prop: string]: ParamsTree };
       for (const [property, alias] of binding.propertyAliases) {
-        props.props[property] = getBindingPropTree(alias, bodyAnalyzed)!;
+        props.props[property] = exposeParamsTree(alias, bodyAnalyzed)!;
       }
     } else if (aliasCount === 1) {
       if (hasSupersetExcludeProperties(binding, restAlias.excludeProperties)) {
-        props.rest = getBindingPropTree(restAlias, bodyAnalyzed);
+        props.rest = exposeParamsTree(restAlias, bodyAnalyzed);
         props.props = Object.create(null) as {
-          [prop: string]: BindingPropTree;
+          [prop: string]: ParamsTree;
         };
 
         forEach(restAlias.excludeProperties, (property) => {
           const propAlias = binding.propertyAliases.get(property);
           if (propAlias) {
-            props.props![property] = getBindingPropTree(
-              propAlias,
-              bodyAnalyzed,
-            )!;
+            props.props![property] = exposeParamsTree(propAlias, bodyAnalyzed)!;
           }
         });
       }
@@ -84,15 +81,15 @@ export function getBindingPropTree(
   return props;
 }
 
-// A binding whose sole consumer is a no-input `<${binding}/>` passthrough is always a
-// `_content(...)` renderer (only known-parent `input`/`<define>` params reach here) — use the leaner `_dynamic_tag_content` signal.
+// A binding read only by a name-only `<${binding}/>` is always a `_content(...)` renderer
+// (only known-parent `input`/`<define>` params reach here) — use the leaner `_dynamic_tag_content` signal.
 function isDirectContentBinding(binding: Binding) {
   if (binding.reads.size !== 1) {
     return false;
   }
 
   const [read] = binding.reads.keys();
-  return read.directContent && read.section === binding.section;
+  return read.nameOnly && read.section === binding.section;
 }
 
 // Pruning keeps an alias of an analyzed body only if something reads it or an
@@ -126,50 +123,50 @@ function hasSupersetExcludeProperties(
 }
 
 // The tree analysis shaped a call site by, less what pruning settled unread.
-export function getSettledPropTree(
-  propTree: BindingPropTree | undefined,
-): BindingPropTree | undefined {
-  if (!propTree || propTree.binding.pruned) return;
-  if (!propTree.props) return propTree;
-  const props = Object.create(null) as { [prop: string]: BindingPropTree };
-  for (const name in propTree.props) {
-    const prop = getSettledPropTree(propTree.props[name]);
+export function getSettledParamsTree(
+  paramsTree: ParamsTree | undefined,
+): ParamsTree | undefined {
+  if (!paramsTree || paramsTree.binding.pruned) return;
+  if (!paramsTree.props) return paramsTree;
+  const props = Object.create(null) as { [prop: string]: ParamsTree };
+  for (const name in paramsTree.props) {
+    const prop = getSettledParamsTree(paramsTree.props[name]);
     if (prop) props[name] = prop;
   }
   return {
-    binding: propTree.binding,
+    binding: paramsTree.binding,
     props,
-    rest: getSettledPropTree(propTree.rest),
+    rest: getSettledParamsTree(paramsTree.rest),
   };
 }
 
-// The prop tree at `name`: `true` when the prop is read only whole or through
+// The params tree at `name`: `true` when the prop is read only whole or through
 // a rest, `undefined` when it is not read.
-export function getPropTreeAt(
-  propTree: BindingPropTree | true,
+export function getParamsTreeAt(
+  paramsTree: ParamsTree | true,
   name: string,
-): BindingPropTree | true | undefined {
-  return propTree === true
+): ParamsTree | true | undefined {
+  return paramsTree === true
     ? true
-    : propTree.props
-      ? propTree.props[name] ||
-        (propTree.rest ? getPropTreeAt(propTree.rest, name) : undefined)
-      : propsUtil.has(propTree.binding.excludeProperties, name)
+    : paramsTree.props
+      ? paramsTree.props[name] ||
+        (paramsTree.rest ? getParamsTreeAt(paramsTree.rest, name) : undefined)
+      : propsUtil.has(paramsTree.binding.excludeProperties, name)
         ? undefined
         : true;
 }
 
-export function getAllKnownPropNames(propTree: BindingPropTree) {
-  const keys = propTree.props ? Object.keys(propTree.props) : [];
+export function getAllKnownPropNames(paramsTree: ParamsTree) {
+  const keys = paramsTree.props ? Object.keys(paramsTree.props) : [];
   // Intentionally shallow: own prop names plus the immediate `rest`'s.
-  if (propTree.rest?.props) {
-    for (const key of Object.keys(propTree.rest.props)) {
+  if (paramsTree.rest?.props) {
+    for (const key of Object.keys(paramsTree.rest.props)) {
       keys.push(key);
     }
   }
   return keys;
 }
 
-export function hasAllKnownProps(propTree: BindingPropTree) {
-  return propTree.props && (!propTree.rest || !!propTree.rest.props);
+export function hasAllKnownProps(paramsTree: ParamsTree) {
+  return paramsTree.props && (!paramsTree.rest || !!paramsTree.rest.props);
 }

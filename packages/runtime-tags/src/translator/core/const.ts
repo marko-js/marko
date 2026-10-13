@@ -9,7 +9,7 @@ import {
   assertHasVar,
   assertNoBodyContent,
   assertNoTagVarMutation,
-  assertValueAttr,
+  assertOnlyValueAttr,
 } from "../util/assert";
 import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
@@ -33,7 +33,7 @@ export default {
     assertNoParams(tag);
     assertNoBodyContent(tag);
     assertHasVar(tag, getVarHint);
-    const valueAttr = assertValueAttr(tag, true);
+    const valueAttr = assertOnlyValueAttr(tag, true);
 
     const valueExtra = (valueAttr.value.extra ??= {});
     valueExtra.pure = evaluate(valueAttr.value).pure;
@@ -79,13 +79,8 @@ export default {
 
         // An unread pure value was dropped, so there is nothing to derive.
         if (varBinding && !varBinding.aliasOf && !value.extra?.dropped) {
-          const derivation = initValue(varBinding)!;
-          addValue(
-            section,
-            getReferencedBindings(value.extra),
-            derivation,
-            value,
-          );
+          const signal = initValue(varBinding)!;
+          addValue(section, getReferencedBindings(value.extra), signal, value);
         }
       } else if (!varBinding?.pruned || !value.extra?.dropped) {
         translateVar(tag, value);

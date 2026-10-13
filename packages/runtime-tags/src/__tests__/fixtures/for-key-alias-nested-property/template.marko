@@ -1,0 +1,5 @@
+<let/obj={ ab: 1 }>
+<for|key| in=obj>
+  <const/k=key/>
+  <button onClick() { obj = { ...obj, cde: 2 } }>${k}:${k.constructor.name}</button>
+</for>

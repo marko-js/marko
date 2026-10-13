@@ -1,35 +1,32 @@
 import { types as t } from "@marko/compiler";
 import { decodeHTML } from "@marko/compiler/babel-utils";
 
-import { toTemplateElement } from "./normalize-string-expression";
+import { toTemplateElement } from "./build-string-expression";
 import { getCanonicalExtra } from "./references";
 import { callRuntime } from "./runtime";
 
-// Marks a flattened `<if>` whose value still holds raw interpolations
+// Marks a flattened `<if>` whose value still holds uncoerced interpolations
 // concatenated with static text, so translate runs `injectTextCoercion`.
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
-    rawText?: true;
+    needsTextCoercion?: true;
   }
 }
 
 // Translate: a text-only body as a JS string, each interpolation coerced with
 // `_to_text`. Used by text-only native tags and html comments. A lone
 // interpolation stays bare — its `_text`/`_text_content` sink coerces it.
-export function bodyToTextLiteral(
-  body: t.MarkoTagBody,
-  decodeEntities = false,
-) {
-  return buildTextLiteral(body, toText, decodeEntities);
+export function bodyToText(body: t.MarkoTagBody, decodeEntities = false) {
+  return buildText(body, toText, decodeEntities);
 }
 
-// Pre-analyze variant: interpolations stay raw (the output-specific `_to_text` import
+// Pre-analyze variant: interpolations stay uncoerced (the output-specific `_to_text` import
 // can't precede translate); a lone interpolation stays bare so the placeholder coerces it.
-export function bodyToRawTextLiteral(body: t.MarkoTagBody) {
-  return buildTextLiteral(body, identity);
+export function bodyToUncoercedText(body: t.MarkoTagBody) {
+  return buildText(body, identity);
 }
 
-// Translate: wrap each raw interpolation from `bodyToRawTextLiteral` in `_to_text`,
+// Translate: wrap each interpolation from `bodyToUncoercedText` in `_to_text`,
 // mutating in place so analyze bindings survive.
 export function injectTextCoercion(expr: t.Expression) {
   switch (expr.type) {
@@ -53,7 +50,7 @@ function identity(value: t.Expression) {
   return value;
 }
 
-function buildTextLiteral(
+function buildText(
   body: t.MarkoTagBody,
   coerce: (value: t.Expression) => t.Expression,
   decodeEntities = false,

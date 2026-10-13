@@ -20,7 +20,7 @@ type AttrTagNames = string[];
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
-    attributeTags?: AttrTagLookup;
+    attrTagLookup?: AttrTagLookup;
     attributeTagGroup?: AttrTagLookup[string]["group"];
   }
 }
@@ -51,13 +51,13 @@ export function getAttrTagPaths(tag: t.NodePath<t.MarkoTag>) {
 }
 
 export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
-  if (tag.node.extra?.attributeTags) return tag.node.extra.attributeTags;
+  if (tag.node.extra?.attrTagLookup) return tag.node.extra.attrTagLookup;
 
   const attrTags = getAttrTagPaths(tag);
   if (!attrTags.length) return;
 
   const tagExtra = (tag.node.extra ??= {});
-  const lookup: AttrTagLookup = (tagExtra.attributeTags = {});
+  const lookup: AttrTagLookup = (tagExtra.attrTagLookup = {});
   const attrTagNodesByName: Record<string, t.NodePath<t.MarkoTag>[]> = {};
   const sampleAttrTagsForControlFlow = new Map<
     t.NodePath<t.MarkoTag>,

@@ -8,12 +8,9 @@ import {
 
 import { assertIdentifierVar } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
-import {
-  bodyToRawTextLiteral,
-  bodyToTextLiteral,
-} from "../util/body-to-text-literal";
+import { bodyToText, bodyToUncoercedText } from "../util/body-to-text";
 import { isOutputHTML } from "../util/marko-config";
-import { addAlwaysRead, addReasonExprs } from "../util/reasons";
+import { addAlwaysReason, addReasonExprs } from "../util/reasons";
 import {
   getReferencedBindings,
   isTagVarUsed,
@@ -71,7 +68,7 @@ export default {
 
       trackDomVarReferences(tag, nodeBinding);
 
-      if (isTagVarUsed(tag)) addAlwaysRead(nodeBinding);
+      if (isTagVarUsed(tag)) addAlwaysReason(nodeBinding);
       addReasonExprs(ensureSlot(nodeBinding), tagExtra);
     }
 
@@ -83,7 +80,7 @@ export default {
     }
     structure.enter(tag);
     write`<!--`;
-    const textLiteral = bodyToRawTextLiteral(tag.node.body);
+    const textLiteral = bodyToUncoercedText(tag.node.body);
     if (t.isStringLiteral(textLiteral)) {
       // Written into parsed markup, so it gets `_escape_comment`'s
       // transform at compile time.
@@ -125,7 +122,7 @@ export default {
         }
         write`-->`;
       } else {
-        const textLiteral = bodyToTextLiteral(tag.node.body);
+        const textLiteral = bodyToText(tag.node.body);
 
         if (!t.isStringLiteral(textLiteral)) {
           addStatement(

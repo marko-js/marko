@@ -7,7 +7,7 @@ import {
   resolveTagImport,
 } from "@marko/compiler/babel-utils";
 
-import { getEventHandlerName, isEventHandler } from "../../common/helpers";
+import { getEventType, isEventHandler } from "../../common/helpers";
 import type { LoadTrigger } from "../../html/assets";
 import { getMarkoOpts } from "./marko-config";
 import { getLiteralName } from "./to-property-name";
@@ -180,7 +180,7 @@ function parseTriggerType(type: string) {
       return type;
     default:
       return isEventHandler(type)
-        ? (`on-${getEventHandlerName(type)}` as const)
+        ? (`on-${getEventType(type)}` as const)
         : undefined;
   }
 }

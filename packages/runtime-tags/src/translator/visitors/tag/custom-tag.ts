@@ -13,13 +13,12 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import type { LoadTrigger } from "../../../html/assets";
-import { type Binding } from "../../util/bindings";
 import { BindingType, createBinding } from "../../util/bindings";
 import {
   generateUidIdentifier,
   ensureSharedUid,
 } from "../../util/generate-uid";
-import { getStaticTagName, getTagName } from "../../util/get-tag-name";
+import { getTagName, getTagNameHint } from "../../util/get-tag-name";
 import {
   knownTagAnalyze,
   knownTagTranslateDOM,
@@ -52,7 +51,6 @@ import { getTagRelativePath, tagNotFoundError } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
 
-const kLoadTagBinding = Symbol("load tag binding");
 // Caches the trigger and attr signal declarations for a load import so they
 // are shared by all tags in a template using that import.
 const [getLoadIdentifiers] = createProgramState(() => ({
@@ -60,12 +58,6 @@ const [getLoadIdentifiers] = createProgramState(() => ({
   signals: new Map<string, t.Identifier>(),
   setups: new Map<string, t.Identifier>(),
 }));
-
-declare module "@marko/compiler/dist/types" {
-  export interface MarkoTagExtra {
-    [kLoadTagBinding]?: Binding;
-  }
-}
 
 export default {
   analyze: {
@@ -98,7 +90,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            `A template that renders itself outside a branch never terminates. Render \`<${getStaticTagName(tag.node)}>\` inside a branch that eventually stops, such as \`<if>\`.`,
+            `A template that renders itself outside a branch never terminates. Render \`<${getTagNameHint(tag.node)}>\` inside a branch that eventually stops, such as \`<if>\`.`,
           );
       }
 
@@ -111,11 +103,11 @@ export default {
           throw tag
             .get("var")
             .buildCodeFrameError(
-              `The \`${getStaticTagName(tag.node)}\` tag is lazily loaded, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or import the tag without \`load\`.`,
+              `The \`${getTagNameHint(tag.node)}\` tag is lazily loaded, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or import the tag without \`load\`.`,
             );
         }
 
-        tagExtra[kLoadTagBinding] = createBinding(
+        tagExtra.nodeBinding = createBinding(
           "#text",
           BindingType.dom,
           ensureSection(tag),
@@ -124,9 +116,9 @@ export default {
 
       knownTagAnalyze(tag, childSection, childExtra.paramsTree);
 
-      const tagName = getStaticTagName(tag.node);
+      const tagName = getTagNameHint(tag.node);
       if (tagExtra.tagNameLoad) {
-        structure.marker(tag, tagExtra[kLoadTagBinding]!);
+        structure.marker(tag, tagExtra.nodeBinding!);
         structure.child(tag, tagName);
         structure.enterShallow(tag);
       } else {
@@ -182,7 +174,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const childSection = childExtra.section!;
   const loadConfig = node.extra?.tagNameLoad;
   const isLoad = !!loadConfig;
-  const tagName = getStaticTagName(node);
+  const tagName = getTagNameHint(node);
 
   if (isLoad) {
     const childFileName = childFile.opts.filename;
@@ -243,7 +235,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           t.callExpression(setupIdent, [
             scopeIdentifier,
             createScopeReadExpression(childBinding, section),
-            createScopeReadExpression(node.extra![kLoadTagBinding]!, section),
+            createScopeReadExpression(node.extra!.nodeBinding!, section),
           ]),
         );
       },

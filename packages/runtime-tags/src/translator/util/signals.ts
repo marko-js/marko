@@ -63,21 +63,21 @@ import {
 } from "./scope-read";
 import {
   forEachAncestorSection,
-  getContentClosures,
+  getDynamicTagContentClosures,
   getDynamicClosureIndex,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
   isDynamicClosure,
-  isImmediateOwner,
-  isResumedBranch,
+  isInParentSection,
+  isOptionalBranch,
   type Section,
   sectionUtil,
 } from "./sections";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
 import { createProgramState, createSectionState } from "./state";
-import { toFirstExpressionOrBlock } from "./to-first-or-block";
+import { toOnlyExpressionOrBlock } from "./to-only-or-block";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
 import { getRestPattern, withRestFallback } from "./translate-var";
 import { traverseReplace } from "./traverse";
@@ -167,7 +167,7 @@ export function setSectionOwnerResumedByMarker(section: Section) {
 // one values object per owner down to the content's own.
 export function getContentClosureValues(bodySection: Section) {
   const contentClosures = bindingUtil.filter(
-    getContentClosures(bodySection),
+    getDynamicTagContentClosures(bodySection),
     mayBeUnwritten,
   );
   if (!contentClosures) return;
@@ -409,7 +409,7 @@ export function getSignal(
           "_closure_get",
           getClosureAccessorLiteral(closure),
           render,
-          isImmediateOwner(section, closure)
+          isInParentSection(closure, section)
             ? undefined
             : t.arrowFunctionExpression(
                 [scopeIdentifier],
@@ -717,7 +717,7 @@ export function buildSignalFn(signal: Signal): t.Expression {
       isValue
         ? [scopeIdentifier, getSignalValueIdentifier(signal)]
         : [scopeIdentifier],
-      toFirstExpressionOrBlock(signal.render),
+      toOnlyExpressionOrBlock(signal.render),
     );
   }
 
@@ -989,7 +989,7 @@ export function writeSignals(section: Section) {
       const effectIdentifier = getSignalEffectIdentifier(signal);
       const effectFn = t.arrowFunctionExpression(
         [scopeIdentifier],
-        toFirstExpressionOrBlock(signal.effect),
+        toOnlyExpressionOrBlock(signal.effect),
       );
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
@@ -1458,7 +1458,7 @@ export function writeHTMLResumeStatements(
   }
 
   const resumeClosestBranch =
-    !isResumedBranch(section) &&
+    !isOptionalBranch(section) &&
     (section.hasAbortSignal ||
       !!section.referencedClosures ||
       (sectionReason && some(section.bindings, isLetBinding)));

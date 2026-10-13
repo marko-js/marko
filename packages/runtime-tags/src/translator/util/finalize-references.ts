@@ -18,8 +18,9 @@ import {
   isDirectAlias,
   propsUtil,
 } from "./bindings";
+import { finalizeContentDerives } from "./content-derives";
 import { generateUid } from "./generate-uid";
-import { finalizeFunctionRegistry } from "./module-registrations";
+import { finalizeRegistrations } from "./module-registrations";
 import {
   addSorted,
   every,
@@ -36,7 +37,7 @@ import {
   some,
 } from "./optional";
 import {
-  addAlwaysRead,
+  addAlwaysReason,
   addOwnerReason,
   addReasonExprs,
   addReason,
@@ -64,14 +65,13 @@ import {
 import {
   forEachSection,
   getDirectClosures,
-  isResumedBranch,
+  isOptionalBranch,
   type Section,
   sectionUtil,
   setReadsOwner,
   StructureKind,
   type StructureOp,
 } from "./sections";
-import { finalizeTagDerivations } from "./set-tag-derived-from";
 import { addSetupWork } from "./setup-work";
 import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
 import { solveReasons } from "./solve-reasons";
@@ -91,7 +91,7 @@ export function finalizeReferences() {
   removeDroppedAssignments();
   excludeAssignedChangeHandlers();
   resolveReads(intersectionsBySection);
-  forEachSection(finalizeTagDerivations);
+  forEachSection(finalizeContentDerives);
   resolveBindings();
   forEachSection(addSectionReasons);
   for (const finalize of getReferenceFinalizers()) {
@@ -99,7 +99,7 @@ export function finalizeReferences() {
   }
   forEachSection(applyReasonExprs);
   solveReasons(intersectionsBySection);
-  finalizeFunctionRegistry();
+  finalizeRegistrations();
   allocateIds(intersectionsBySection);
   getReadsByExpression().clear();
   getFunctionReadsByExpression().clear();
@@ -202,10 +202,10 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
 
       if (expr.isEffect) {
         if (readsValuesOnResume(expr)) {
-          forEach(exprBindings.referencedBindings, addAlwaysRead);
-          forEach(exprBindings.constantBindings, addAlwaysRead);
+          forEach(exprBindings.referencedBindings, addAlwaysReason);
+          forEach(exprBindings.constantBindings, addAlwaysReason);
         }
-        forEach(exprBindings.lazyBindings, addAlwaysRead);
+        forEach(exprBindings.lazyBindings, addAlwaysReason);
       } else {
         // A value retained as written keeps what it reads outside a function,
         // so client code reads those with it.
@@ -279,20 +279,20 @@ function resolveBindings() {
 
     if (binding.hoists) {
       const highestHoistSection = first(binding.hoists);
-      addAlwaysRead(binding);
+      addAlwaysReason(binding);
       binding.section.hoisted = bindingUtil.add(
         binding.section.hoisted,
         binding,
       );
 
-      // Each owner up to the hoist holds its child's scopes, which a
-      // resumed branch's own scopes already are.
+      // Each owner up to the hoist holds its child's scopes, which an
+      // optional branch's own scopes already are.
       for (
         let section = binding.section;
         section !== highestHoistSection;
         section = section.parent!
       ) {
-        if (!isResumedBranch(section)) {
+        if (!isOptionalBranch(section)) {
           addReason(
             ensureSectionSlot(section, SlotKind.Instances, section.parent!),
             ALWAYS,
@@ -324,7 +324,7 @@ function addSectionReasons(section: Section) {
     addOwnerReason(section, closure.section, closure.sources);
   });
 
-  if (isResumedBranch(section)) {
+  if (isOptionalBranch(section)) {
     const closureSources = getSourcesForRef(getDirectClosures(section));
     const branchSlot = ensureSectionSlot(section, SlotKind.Branch);
     addReason(
@@ -607,13 +607,13 @@ function inEmittedExpr({ exprRoot, section }: AssignedBindingExtra) {
 }
 
 // A value with no side effects, or a call site's value, which only the child
-// bindings it feeds observe.
+// bindings derived from it observe.
 function isDroppableValue(expr: t.NodeExtra) {
   return (!!expr.pure || !!expr.callSiteExprs) && !expr.merged && !expr.dropped;
 }
 
-// A value feeding another binding too (one call site's attribute expression
-// feeds each child that reads it) stays while any of them is read.
+// A value several bindings derive from (each child reading one call site's
+// attribute expression) stays while any of them is read.
 function dropUnreadValue(expr: t.NodeExtra) {
   if (isDroppableValue(expr) && every(expr.derives, isPrunedBinding)) {
     dropExtra(expr as ReferencedExtra);
@@ -906,14 +906,15 @@ function resolveConstantReference(binding: Binding): ResolvedRead | undefined {
   return root && createResolvedRead(root, getPropertyPath(binding, root));
 }
 
-// A property of a constant is constant, so it reads through the constant.
+// A property of a constant is constant, so it reads through the outermost
+// constant: a property alias made after its root became one inherits the type.
 function getConstantRoot(binding: Binding): Binding | undefined {
+  let root: Binding | undefined;
   for (let cur = binding; cur.aliasOf; cur = cur.aliasOf) {
-    if (cur.property === undefined && !isDirectAlias(cur)) return;
-    if (cur.aliasOf.type === BindingType.constant) {
-      return cur.aliasOf;
-    }
+    if (cur.property === undefined && !isDirectAlias(cur)) break;
+    if (cur.aliasOf.type === BindingType.constant) root = cur.aliasOf;
   }
+  return root;
 }
 
 function resolveExpressionReference(

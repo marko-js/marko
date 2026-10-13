@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
-import { isSectionRendererElided } from "../../util/binding-has-prop";
 import { BindingType } from "../../util/bindings";
 import { isOptimize } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
@@ -12,9 +11,10 @@ import {
   getSectionInstancesAccessorLiteral,
 } from "../../util/scope-accessor";
 import { scopeIdentifier } from "../../util/scope-read";
+import { isSectionRendererElided } from "../../util/section-renderer";
 import {
   forEachSectionReverse,
-  getContentClosures,
+  getDynamicTagContentClosures,
   getSectionForBody,
   getRendererReason,
   isDynamicClosure,
@@ -182,7 +182,10 @@ export default {
                 ]),
               );
 
-              if (registerReason && getContentClosures(childSection)) {
+              if (
+                registerReason &&
+                getDynamicTagContentClosures(childSection)
+              ) {
                 // Registered with the closures its registration carries, after
                 // any loop values it passes on to the wrapper above.
                 program.node.body.push(

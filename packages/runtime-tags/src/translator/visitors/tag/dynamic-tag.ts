@@ -11,19 +11,19 @@ import {
 
 import { isEventHandler } from "../../../common/helpers";
 import { ReservedId } from "../../../common/types";
-import { getSectionRendererIdentifier } from "../../util/binding-has-prop";
 import {
   type Binding,
   BindingType,
   createBinding,
   reserveId,
 } from "../../util/bindings";
+import { setTagContentDerives } from "../../util/content-derives";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
   getAccessorPrefix,
   getAccessorProp,
 } from "../../util/get-accessor-enums";
-import { getStaticTagName } from "../../util/get-tag-name";
+import { getTagNameHint } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import {
   knownTagAnalyze,
@@ -33,7 +33,7 @@ import {
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
-import { addAlwaysRead, addReasonExprs } from "../../util/reasons";
+import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
   getAllTagReferenceNodes,
   isTagVarUsed,
@@ -57,6 +57,7 @@ import {
   createScopeReadExpression,
   getScopeExpression,
 } from "../../util/scope-read";
+import { getSectionRendererIdentifier } from "../../util/section-renderer";
 import {
   ensureSection,
   ensureBodySection,
@@ -67,7 +68,6 @@ import {
   type Section,
   StructureKind,
 } from "../../util/sections";
-import { setTagDerivedFrom } from "../../util/set-tag-derived-from";
 import {
   addStatement,
   addValue,
@@ -81,7 +81,7 @@ import { ensureSlot } from "../../util/slots";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
 import { isControllableAttr } from "../../util/tag-facts";
-import analyzeTagNameType, {
+import {
   getTagRelativePath,
   TagNameType,
   tagNotFoundError,
@@ -101,19 +101,14 @@ import { getWriteGuard, getWriteReason } from "../../util/write-guard";
 import * as writer from "../../util/writer";
 import * as ClassHydration from "./constants/class-hydration";
 
-// Runtime helpers and features a program adds once, by what each enables.
-const [getAddedRuntime] = createProgramState(() => new Set<string>());
-
-// Class-API interop registrations are idempotent and keyed by the shared
-// renderer, so one per program suffices no matter how many tags reference it.
-const [getCompatRegistrations] = createProgramState<Set<string>>(
-  () => new Set(),
-);
+// Keys of the statements a program adds once: a Class-API interop registration
+// is keyed by its shared renderer, however many tags reference it.
+const [getAddedStatementKeys] = createProgramState(() => new Set<string>());
 const [getCompatBoundaryCalls] = createProgramState<
   Map<string, t.CallExpression>
 >(() => new Map());
-function pushCompatRegistration(key: string, statement: t.Statement) {
-  const keys = getCompatRegistrations();
+function pushStatementOnce(key: string, statement: t.Statement) {
+  const keys = getAddedStatementKeys();
   if (keys.has(key)) return false;
   keys.add(key);
   getProgram().node.body.push(statement);
@@ -146,14 +141,14 @@ export default {
         throw tag
           .get("var")
           .buildCodeFrameError(
-            `The Marko 5 (class API) tag \`${getStaticTagName(node)}\` cannot [\`<return>\`](https://markojs.com/docs/reference/core-tag#return) a value, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or migrate the tag to the tags API.`,
+            `The Marko 5 (class API) tag \`${getTagNameHint(node)}\` cannot [\`<return>\`](https://markojs.com/docs/reference/core-tag#return) a value, so it does not support a [tag variable](https://markojs.com/docs/reference/language#tag-variables). Remove the variable, or migrate the tag to the tags API.`,
           );
       }
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
         knownTagAnalyze(tag, definedBodySection);
 
-        structure.child(tag, getStaticTagName(tag.node), {
+        structure.child(tag, getTagNameHint(tag.node), {
           kind: StructureKind.SectionRef,
           section: definedBodySection,
         });
@@ -205,19 +200,16 @@ export default {
         bodySection.branchExpr = tagExtra;
         // Known templates receive the body as `input.content`, as from a known
         // tag; arguments call them positionally, so the body never reaches them.
-        if (
-          analyzeTagNameType(tag, true) === TagNameType.CustomTag &&
-          !node.arguments
-        ) {
+        if (tagExtra.tagNameType === TagNameType.CustomTag && !node.arguments) {
           // Every attribute merged into the tag's expression, so the tag is
           // the value any prop those templates read.
-          setTagDerivedFrom(tag, getDynamicTagInputBindings(tagExtra), {
+          setTagContentDerives(tag, getDynamicTagInputBindings(tagExtra), {
             value: tagExtra,
           });
         }
       }
       trackParamsReferences(tagBody, BindingType.param);
-      if (usesVar) addAlwaysRead(nodeBinding);
+      if (usesVar) addAlwaysReason(nodeBinding);
       addReasonExprs(ensureSlot(nodeBinding), tagExtra);
 
       if (
@@ -226,7 +218,7 @@ export default {
         !node.attributes.length &&
         !node.body.body.length
       ) {
-        tagExtra.directContent = true;
+        tagExtra.nameOnly = true;
       }
 
       structure.marker(tag, nodeBinding);
@@ -380,7 +372,7 @@ export default {
               )
             : undefined;
           if (isOutputHTML() ? markerReason || classHydration : markerReason) {
-            const pushed = pushCompatRegistration(
+            const pushed = pushStatementOnce(
               classId,
               registration
                 ? t.markoScriptlet([t.expressionStatement(registration)], true)
@@ -404,7 +396,7 @@ export default {
           }
         } else {
           const rendererName = (tagExpression as t.Identifier).name;
-          pushCompatRegistration(
+          pushStatementOnce(
             rendererName,
             t.markoScriptlet(
               [
@@ -617,11 +609,11 @@ export default {
 
         enableDynamicTagVar(tag);
         if (!isClassAPI) {
-          if (hasSpreadOrAttr(tag, isEventOrChangeHandler)) {
+          if (mayHaveNativeAttr(tag, isEventOrChangeHandler)) {
             importRuntimeFeature("dynamic-tag-script");
           }
           // The name resolves at run time, so any control kind is possible.
-          if (hasSpreadOrAttr(tag, isControllableAttr)) {
+          if (mayHaveNativeAttr(tag, isControllableAttr)) {
             importRuntimeFeature("controllable");
           }
         }
@@ -646,28 +638,27 @@ function enableDynamicTagVar(tag: t.NodePath<t.MarkoTag>) {
 
   // A returned or passed on value serializes in another template's scope.
   if (
-    analyzeTagNameType(tag, true) !== TagNameType.CustomTag &&
+    tag.node.extra!.tagNameType !== TagNameType.CustomTag &&
     !tag.node.var.extra!.binding!.pruned
   ) {
     const accessor = getScopeAccessorLiteral(
       tag.node.extra!.nodeBinding!,
       true,
     );
-    if (addRuntimeOnce(`_dynamic_tag_var_resume ${accessor.value}`)) {
-      getProgram().node.body.push(
-        t.expressionStatement(callRuntime("_dynamic_tag_var_resume", accessor)),
-      );
-    }
+    pushStatementOnce(
+      `_dynamic_tag_var_resume ${accessor.value}`,
+      t.expressionStatement(callRuntime("_dynamic_tag_var_resume", accessor)),
+    );
   }
 }
 
 // Whether a native element the name may resolve to gets a spread, or an
 // attribute `test` accepts.
-function hasSpreadOrAttr(
+function mayHaveNativeAttr(
   tag: t.NodePath<t.MarkoTag>,
   test: (name: string) => boolean,
 ) {
-  if (analyzeTagNameType(tag, true) === TagNameType.CustomTag) return false;
+  if (tag.node.extra!.tagNameType === TagNameType.CustomTag) return false;
   for (const attr of tag.node.attributes) {
     if (
       attr.type === "MarkoSpreadAttribute" ||
@@ -677,11 +668,6 @@ function hasSpreadOrAttr(
     }
   }
   return false;
-}
-
-function addRuntimeOnce(key: string) {
-  const added = getAddedRuntime();
-  return !added.has(key) && !!added.add(key);
 }
 
 // The input binding of every template the name may resolve to; none when any is

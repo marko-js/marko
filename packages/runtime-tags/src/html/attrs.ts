@@ -6,12 +6,12 @@ import {
   assertValidAttrValue,
 } from "../common/errors";
 import {
-  getEventHandlerName,
+  getEventType,
   isEventHandler,
-  isNotVoid,
-  isVoid,
-  stringifyClassObject,
-  stringifyStyleObject,
+  isNotNullishOrFalse,
+  isNullishOrFalse,
+  stringifyClassEntry,
+  stringifyStyleEntry,
   toDelimitedString,
 } from "../common/helpers";
 import { type Accessor, AccessorPrefix, ControlledType } from "../common/types";
@@ -30,14 +30,14 @@ import {
 export function _attr_class(value: unknown) {
   return stringAttr(
     "class",
-    toDelimitedString(value, " ", stringifyClassObject),
+    toDelimitedString(value, " ", stringifyClassEntry),
   );
 }
 
 export function _attr_style(value: unknown) {
   return stringAttr(
     "style",
-    toDelimitedString(value, ";", stringifyStyleObject),
+    toDelimitedString(value, ";", stringifyStyleEntry),
   );
 }
 
@@ -80,7 +80,7 @@ export function _attr_select_value(
   }
 
   if (content) {
-    // Normalize a void controlled value to "" so it is distinguishable from an
+    // Normalize a nullish controlled value to "" so it is distinguishable from an
     // uncontrolled select (no context) and matches DOM's `normalizeStrProp`,
     // which selects a `value=""` option for `undefined`/`null` alike.
     const selectedValue = value ?? "";
@@ -150,7 +150,7 @@ export function _attr_textarea_value(
   return _textarea_value(value);
 }
 
-// Unclaimed and void values both render empty, so unlike `_attrs_select_value`
+// Unclaimed, nullish and false values render empty, so unlike `_attrs_select_value`
 // this needs no `in` test; `?.` covers a lone `null`/`undefined` spread.
 export function _attrs_textarea_value(
   scopeId: number,
@@ -212,7 +212,7 @@ export function _attr_input_checked(
       serializeType,
     );
   }
-  return isNotVoid(checked) ? " checked" : "";
+  return isNotNullishOrFalse(checked) ? " checked" : "";
 }
 
 export function _attr_input_checkedValue(
@@ -261,7 +261,7 @@ export function _attr_details_or_dialog_open(
   openChange: unknown,
   serializeType?: 1,
 ) {
-  const normalizedOpen = isNotVoid(open);
+  const normalizedOpen = isNotNullishOrFalse(open);
   if (openChange) {
     writeControlledScope(
       ControlledType.DetailsOrDialogOpen,
@@ -286,7 +286,7 @@ export function _style_html(decls: string) {
 }
 
 export function _attr(name: string, value: unknown) {
-  return isVoid(value) ? "" : nonVoidAttr(name, value);
+  return isNullishOrFalse(value) ? "" : stringifyAttr(name, value);
 }
 
 // `value && attr` / `|| attr` / `?? attr` with the literal side prebuilt as `attr`.
@@ -397,7 +397,7 @@ export function _attrs(
         if (
           name &&
           !(
-            isVoid(value) ||
+            isNullishOrFalse(value) ||
             skip.test(name) ||
             (name === "content" && tagName !== "meta")
           )
@@ -410,9 +410,9 @@ export function _attrs(
               });
             }
 
-            events[getEventHandlerName(name)] = value;
+            events[getEventType(name)] = value;
           } else {
-            result += nonVoidAttr(name, value);
+            result += stringifyAttr(name, value);
           }
         }
         break;
@@ -441,7 +441,7 @@ export function _attrs_partial(
 ) {
   const partial: Partial<typeof data> = {};
   for (const name in data) {
-    const key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
+    const key = isEventHandler(name) ? `on-${getEventType(name)}` : name;
     if (!skip[key]) partial[key] = data[name];
   }
 
@@ -514,7 +514,7 @@ function stringAttr(name: string, value: string) {
   return value && " " + name + attrAssignment(value);
 }
 
-function nonVoidAttr(name: string, value: unknown) {
+function stringifyAttr(name: string, value: unknown) {
   if (MARKO_DEBUG) {
     assertValidAttrValue(name, value);
   }
@@ -593,5 +593,5 @@ function normalizedValueMatches(a: unknown, b: unknown) {
 }
 
 function normalizeStrAttrValue(value: unknown) {
-  return isNotVoid(value) && value !== true ? value + "" : "";
+  return isNotNullishOrFalse(value) && value !== true ? value + "" : "";
 }

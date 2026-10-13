@@ -11,7 +11,7 @@ import { isConditionalReason, type Reason, type Reasons } from "./reasons";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   getParamReasonGroupIndex,
-  isSameOrChildSection,
+  isSameOrAncestorSection,
   type ParamReasonGroup,
   reduceParamGroups,
   type Section,
@@ -259,7 +259,7 @@ function isDynamicWriteGuard(
 function isCrossSection(section: Section, reason: Sources) {
   return some(
     reason.param,
-    (param) => !isSameOrChildSection(param.section, section),
+    (param) => !isSameOrAncestorSection(param.section, section),
   );
 }
 

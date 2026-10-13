@@ -24,13 +24,13 @@ declare module "@marko/compiler/dist/types" {
 
 interface EntryState {
   init: boolean;
-  load: boolean;
+  hasClientStatement: boolean;
   /** Whether a reached template lazily imports another. */
   lazy: boolean;
   /** Depth of enclosing templates whose modules the bundle already loads:
    * below a root everything arrives through its imports, and a lazy subtree
    * is loaded by its own load entry. */
-  bundled: number;
+  bundledDepth: number;
   /** Depth of enclosing lazy imports, whose load entries bring their assets. */
   lazyDepth: number;
   roots: string[];
@@ -67,7 +67,7 @@ const builder = {
       body.push(t.importDeclaration([], t.stringLiteral(asset)));
     }
 
-    if (state.init || state.load) {
+    if (state.init || state.hasClientStatement) {
       if (state.init) {
         body.push(
           t.importDeclaration(
@@ -148,9 +148,9 @@ const builder = {
   ) {
     const state = (entryFile[kState] ||= {
       init: false,
-      load: false,
+      hasClientStatement: false,
       lazy: false,
-      bundled: 0,
+      bundledDepth: 0,
       lazyDepth: 0,
       roots: [],
       assets: new Set(),
@@ -162,14 +162,15 @@ const builder = {
     const { loadImports } = programExtra;
 
     const init = !!(programExtra.isInteractive || programExtra.needsCompat);
-    const load = !!programExtra.hasClientStatement;
+    const hasClientStatement = !!programExtra.hasClientStatement;
     // The topmost templates with client side work or resumes are what the
     // bundle links; everything below one of them arrives through its imports.
     const isRoot =
-      !state.bundled && (init || load || !!programExtra.hasResumes);
+      !state.bundledDepth &&
+      (init || hasClientStatement || !!programExtra.hasResumes);
 
     if (init) state.init = true;
-    if (load) state.load = true;
+    if (hasClientStatement) state.hasClientStatement = true;
     if (loadImports) state.lazy = true;
     if (isRoot) {
       state.roots.push(
@@ -180,28 +181,28 @@ const builder = {
     // Collected during analyze (styles, css imports, etc).
     if (assetImports && !state.lazyDepth) {
       const assets =
-        isRoot || state.bundled ? state.bundledAssets : state.assets;
+        isRoot || state.bundledDepth ? state.bundledAssets : state.assets;
       for (const request of assetImports) {
         assets.add(resolveRelativeToEntry(entryFile, file, request));
       }
     }
 
-    if (isRoot) state.bundled++;
+    if (isRoot) state.bundledDepth++;
     // Copied because loading a child appends this file's own `analyzedTags`.
     for (const tag of analyzedTags ? [...analyzedTags] : []) {
       // A lazily imported subtree is loaded by its own load entry, never here.
       const lazy = loadImports?.has(tag);
       if (lazy) {
-        state.bundled++;
+        state.bundledDepth++;
         state.lazyDepth++;
       }
-      visitChild(tag, state.lazyDepth ? 2 : state.bundled ? 1 : 0);
+      visitChild(tag, state.lazyDepth ? 2 : state.bundledDepth ? 1 : 0);
       if (lazy) {
-        state.bundled--;
+        state.bundledDepth--;
         state.lazyDepth--;
       }
     }
-    if (isRoot) state.bundled--;
+    if (isRoot) state.bundledDepth--;
   },
 };
 

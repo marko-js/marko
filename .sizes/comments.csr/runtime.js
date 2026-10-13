@@ -86,7 +86,7 @@ let _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
     branches.push(_content("", branchesArgs[i++], branchesArgs[i++], branchesArgs[i++])());
   return (scope, newBranch) => {
     newBranch !== (scope[branchAccessor] ?? (scope["A" + nodeAccessor] && 0)) &&
-      setConditionalRenderer(
+      setBranch(
         scope,
         nodeAccessor,
         branches[(scope[branchAccessor] = newBranch)],
@@ -166,7 +166,7 @@ let _for_of_unkeyed = /*@__PURE__*/ /* @__PURE__ */ withBranches(
     };
   },
 )(([all], cb) => forOf(all, (item, i) => cb(i, [item, i])));
-function isNotVoid(value) {
+function isNotNullishOrFalse(value) {
   return value != null && value !== !1;
 }
 function withBranches(runtime) {
@@ -431,7 +431,7 @@ function _text(node, value) {
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function normalizeAttrValue(value) {
-  if (isNotVoid(value)) return value === !0 ? "" : value + "";
+  if (isNotNullishOrFalse(value)) return value === !0 ? "" : value + "";
 }
 function removeChildNodes(startNode, endNode) {
   let stop = endNode.nextSibling;
@@ -457,7 +457,7 @@ function toInsertNode(startNode, endNode) {
     ? startNode
     : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }
-function setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch) {
+function setBranch(scope, nodeAccessor, newRenderer, createBranch) {
   let referenceNode = scope[nodeAccessor],
     prevBranch = scope["A" + nodeAccessor],
     parentNode =

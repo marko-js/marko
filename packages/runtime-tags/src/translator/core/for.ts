@@ -18,7 +18,7 @@ import {
   getForType,
   initBranchSection,
   isSingleNodeBranch,
-  resumeOwnerByMarkerWhenStatic,
+  resumeOwnerByMarkerWhenUnconditional,
 } from "../util/branch-tag";
 import { detectForSelector, getForSelectorKey } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
@@ -224,7 +224,7 @@ export default {
         const bodyStatements = node.body.body as t.Statement[];
         const branchReason = getBranchWriteReason(bodySection);
 
-        resumeOwnerByMarkerWhenStatic(bodySection, nodeBinding);
+        resumeOwnerByMarkerWhenUnconditional(bodySection, nodeBinding);
 
         writeHTMLResumeStatements(tag);
 

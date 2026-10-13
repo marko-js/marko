@@ -6,24 +6,25 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
+import { _escape } from "../../html/content";
 import {
   assertHasBody,
   assertNoSpreadAttrs,
-  assertValueAttr,
+  assertOnlyValueAttr,
   buildAttrsError,
 } from "../util/assert";
-import { bodyToRawTextLiteral } from "../util/body-to-text-literal";
+import { bodyToUncoercedText } from "../util/body-to-text";
 import {
   getBranchResumeArgs,
   initBranchSection,
   isSingleNodeBranch,
-  resumeOwnerByMarkerWhenStatic,
+  resumeOwnerByMarkerWhenUnconditional,
 } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import { addReasonExprs, type Reasons } from "../util/reasons";
 import { getReferencedBindings, mergeReferences } from "../util/references";
-import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
@@ -44,7 +45,7 @@ import { ensureSlot, SlotKind } from "../util/slots";
 import { sourcesUtil } from "../util/sources";
 import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
-import { toFirstStatementOrBlock } from "../util/to-first-or-block";
+import { toOnlyStatementOrBlock } from "../util/to-only-or-block";
 import { translateByTarget } from "../util/visitors";
 import { getBranchWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
@@ -59,6 +60,14 @@ export const IfTag = {
     assertValidCondition(tag);
     // Unlike `<show>`, a compile-time-constant condition is deliberately not folded: too rare to justify the branch-chain rewrite.
     if (tag.node.body.attributeTags) return;
+    if (isCoreTagName(tag, "if")) {
+      // Every branch's section starts at the `<if>`, numbered before the
+      // sections inside them.
+      let branchTag: t.NodePath<t.MarkoTag> | undefined = tag;
+      do {
+        ensureBodySection(branchTag.get("body"));
+      } while ((branchTag = getNextBranchTag(branchTag)));
+    }
     if (isLastBranch(tag)) {
       const branches = getBranches(tag);
       const [ifTag] = branches[0];
@@ -104,7 +113,7 @@ export const IfTag = {
         if (bodySection) {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
-          resumeOwnerByMarkerWhenStatic(
+          resumeOwnerByMarkerWhenUnconditional(
             bodySection,
             ifTag.node.extra!.nodeBinding!,
           );
@@ -132,7 +141,7 @@ export const IfTag = {
             }
 
             const [testAttr] = branchTag.node.attributes;
-            const curStatement = toFirstStatementOrBlock(bodyStatements);
+            const curStatement = toOnlyStatementOrBlock(bodyStatements);
 
             if (testAttr) {
               statement = t.ifStatement(
@@ -286,7 +295,6 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
     return;
   }
 
-  const { _escape } = getHTMLRuntime();
   const branches: t.NodePath<t.MarkoTag>[] = [];
   let tag: t.NodePath<t.MarkoTag> | undefined = rootTag;
 
@@ -317,13 +325,13 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
   }
 
   let expr: t.Expression = t.stringLiteral("");
-  let rawText = false;
+  let needsTextCoercion = false;
   for (let i = branches.length; i--;) {
     const branchTag = branches[i];
-    const text = bodyToRawTextLiteral(branchTag.node.body);
-    // A template literal means static text concatenated with a raw
+    const text = bodyToUncoercedText(branchTag.node.body);
+    // A template literal means static text concatenated with an uncoerced
     // interpolation, which translate must still coerce.
-    rawText ||= t.isTemplateLiteral(text);
+    needsTextCoercion ||= t.isTemplateLiteral(text);
     // `<if=>`, `<else-if=>`, and `<else if=>` all expose the condition at
     // `attributes[0]`; a plain `<else>` has none and stays unconditional.
     const [conditionAttr] = branchTag.node.attributes;
@@ -336,8 +344,8 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
     branches[i].remove();
   }
   const placeholder = t.markoPlaceholder(expr, true);
-  if (rawText) {
-    (placeholder.extra ??= {}).rawText = true;
+  if (needsTextCoercion) {
+    (placeholder.extra ??= {}).needsTextCoercion = true;
   }
   rootTag.replaceWith(placeholder);
 }
@@ -357,10 +365,10 @@ function assertValidCondition(tag: t.NodePath<t.MarkoTag>) {
 
   switch (getTagName(tag)) {
     case "if":
-      assertValueAttr(tag, true);
+      assertOnlyValueAttr(tag, true);
       break;
     case "else-if":
-      assertValueAttr(tag, true);
+      assertOnlyValueAttr(tag, true);
       assertHasPrecedingCondition(tag);
       break;
     case "else":
@@ -408,7 +416,7 @@ function getBranches(tag: t.NodePath<t.MarkoTag>) {
 
     do {
       BRANCHES_LOOKUP.set(curTag, branches);
-      branches.push([curTag, ensureBodySection(curTag.get("body"))]);
+      branches.push([curTag, getSectionForBody(curTag.get("body"))]);
     } while ((curTag = getNextBranchTag(curTag)));
   }
 

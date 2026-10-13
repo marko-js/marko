@@ -104,7 +104,7 @@ when their combined work becomes relevant. Reasons that follow others
 known-tag param groups) are solved together, repeating until none moves; every
 write merges, so they only grow and cycles settle.
 
-Across known tags, `finalizeParamReasonGroups()` groups child parameter
+Across known tags, `ensureSectionReasonGroups()` groups child parameter
 dependencies. The parent calls `_set_scope_reason(...)`; the child consumes
 and clears it with `_scope_reason()`. HTML runtime encoding is two bits per
 group at `1 + 2 * group` (the low bit says the group serializes; a dynamic
@@ -133,7 +133,7 @@ the generation boundary (resumed scopes start at 1; normal client work at 2).
 
 `writeHTMLResumeStatements()` (`translator/util/signals.ts`) emits only reasoned
 accessors; narrower property reasons get narrower guards. `_scope(id, partial)`
-updates the canonical server scope and current serialize state. Passive values
+updates the canonical server scope and current channel. Passive values
 ride an existing scope flush without forcing one. Empty scopes are omitted and
 numeric gaps compact monotonically allocated scope ids.
 
@@ -170,7 +170,7 @@ branches.
 
 In-order content holds every effect written before it, including those of
 reorders that swap in meanwhile and of lazy content's ready batches, and
-releases them with the chunk that completes it (`Chunk.flushScript` in
+releases them with the chunk that completes it (`Chunk.flush` in
 `html/writer.ts`). Nothing runs on the client, so nothing can change, while
 in-order content streams: it resumes exactly as the server rendered it and needs
 no reconciliation. Only content that can arrive after effects ran, a reorder

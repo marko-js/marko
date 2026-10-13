@@ -1,13 +1,9 @@
-import { getWrongAttrSuggestion, htmlAttrNameReg } from "./helpers";
+import { getWrongAttrSuggestion, invalidNativeAttrNameReg } from "./helpers";
 
-const lowercaseEventHandlerReg = /^on[a-z]/;
+export const lowercaseOnAttrReg = /^on[a-z]/;
 
 export function assertValidAttrValue(name: string, value: unknown) {
-  if (
-    value &&
-    typeof value !== "string" &&
-    lowercaseEventHandlerReg.test(name)
-  ) {
+  if (value && typeof value !== "string" && lowercaseOnAttrReg.test(name)) {
     throw new Error(
       `The \`${name}\` attribute must be a string or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …), but received type "${typeof value}". To attach an event listener, use the \`on${name[2].toUpperCase()}${name.slice(3)}\` event handler instead.`,
     );
@@ -122,7 +118,7 @@ export function assertValidList(value: unknown) {
   }
 }
 
-export function assertValidRangeStart(name: string, value: unknown) {
+export function assertOptionalRangeNumber(name: string, value: unknown) {
   // Unlike `to`, a truthy `from`/`step` reaches `start + i * delta` uncoerced,
   // where a non-number `from` concatenates, so debug requires a real number.
   if (value && (typeof value !== "number" || !isFinite(value))) {
@@ -150,7 +146,7 @@ function describeForValue(value: unknown) {
 }
 
 export function assertValidAttrName(name: string) {
-  if (htmlAttrNameReg.test(name)) {
+  if (invalidNativeAttrNameReg.test(name)) {
     throw new Error(`Invalid attribute name: ${JSON.stringify(name)}`);
   }
   const suggestion = getWrongAttrSuggestion(name);

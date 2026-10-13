@@ -1,12 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { isAttributeTag } from "@marko/compiler/babel-utils";
 
-import { getSectionRendererIdentifier } from "./binding-has-prop";
-import {
-  type BindingPropTree,
-  getPropTreeAt,
-  hasAllKnownProps,
-} from "./binding-prop-tree";
 import { type Binding, getCanonicalBinding, propsUtil } from "./bindings";
 import { buildForRuntimeCall, getForType } from "./branch-tag";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
@@ -21,9 +15,15 @@ import {
   getAttrTagPaths,
 } from "./nested-attribute-tags";
 import { type SortedOpt, toArray, toSet } from "./optional";
+import {
+  type ParamsTree,
+  getParamsTreeAt,
+  hasAllKnownProps,
+} from "./params-tree";
 import { callRuntime } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
 import { scopeIdentifier } from "./scope-read";
+import { getSectionRendererIdentifier } from "./section-renderer";
 import {
   getScopeIdIdentifier,
   getSection,
@@ -39,20 +39,20 @@ type ContentKey = "renderBody" | "content";
 
 export function translateAttrs(
   tag: t.NodePath<t.MarkoTag>,
-  propTree: BindingPropTree | true = true,
+  paramsTree: ParamsTree | true = true,
   skip?: SortedOpt<string>,
   statements: t.Statement[] = [],
   contentKey: ContentKey = "content",
 ) {
   const contentProperties: t.ObjectExpression["properties"] = [];
-  const attrTagLookup = tag.node.extra?.attributeTags;
+  const attrTagLookup = tag.node.extra?.attrTagLookup;
   const seen = toSet(skip);
   if (attrTagLookup) {
     for (const name in attrTagLookup) {
       const attrTagMeta = attrTagLookup[name];
       if (
         !seen.has(attrTagMeta.name) &&
-        getPropTreeAt(propTree, attrTagMeta.name)
+        getParamsTreeAt(paramsTree, attrTagMeta.name)
       ) {
         seen.add(attrTagMeta.name);
         if (attrTagMeta.dynamic) {
@@ -86,13 +86,13 @@ export function translateAttrs(
               i,
               attrTagLookup,
               statements,
-              propTree,
+              paramsTree,
               contentKey,
             );
           } else {
             const translatedAttrTag = translateAttrs(
               child,
-              getPropTreeAt(propTree, attrTagMeta.name),
+              getParamsTreeAt(paramsTree, attrTagMeta.name),
               undefined,
               statements,
               contentKey,
@@ -110,7 +110,7 @@ export function translateAttrs(
             i,
             attrTagLookup,
             statements,
-            propTree,
+            paramsTree,
             contentKey,
           );
         }
@@ -118,7 +118,7 @@ export function translateAttrs(
     }
   }
 
-  if (!seen.has(contentKey) && getPropTreeAt(propTree, contentKey)) {
+  if (!seen.has(contentKey) && getParamsTreeAt(paramsTree, contentKey)) {
     const contentExpression = buildContent(tag.get("body"));
     if (contentExpression) {
       const contentProp = t.objectProperty(
@@ -133,7 +133,7 @@ export function translateAttrs(
 
   const { attributes } = tag.node;
   const attrProperties: t.ObjectExpression["properties"] = [];
-  const knownSpread = getSingleKnownSpread(propTree, attributes);
+  const knownSpread = getSingleKnownSpread(paramsTree, attributes);
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     const { value } = attr;
@@ -148,7 +148,10 @@ export function translateAttrs(
       // Analysis drops a value nothing reads, so neither output emits it.
       if (t.isMarkoSpreadAttribute(attr)) {
         attrProperties.push(t.spreadElement(value));
-      } else if (!seen.has(attr.name) && getPropTreeAt(propTree, attr.name)) {
+      } else if (
+        !seen.has(attr.name) &&
+        getParamsTreeAt(paramsTree, attr.name)
+      ) {
         seen.add(attr.name);
         attrProperties.push(toObjectProperty(attr.name, value));
       }
@@ -176,7 +179,7 @@ export function addDynamicAttrTagStatements(
   index: number,
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
-  propTree: BindingPropTree | true,
+  paramsTree: ParamsTree | true,
   contentKey: ContentKey = "content",
 ): number {
   const tag = attrTags[index];
@@ -184,7 +187,7 @@ export function addDynamicAttrTagStatements(
   if (tag.isMarkoTag() && !tag.node.extra!.dropped) {
     if (isAttributeTag(tag)) {
       const attrTagMeta = attrTagLookup[getTagName(tag)];
-      const attrTagTree = getPropTreeAt(propTree, attrTagMeta.name);
+      const attrTagTree = getParamsTreeAt(paramsTree, attrTagMeta.name);
       if (attrTagTree && attrTagMeta.dynamic) {
         const translatedAttrTag = translateAttrs(
           tag,
@@ -214,7 +217,7 @@ export function addDynamicAttrTagStatements(
             index,
             attrTagLookup,
             statements,
-            propTree,
+            paramsTree,
             contentKey,
           );
 
@@ -224,7 +227,7 @@ export function addDynamicAttrTagStatements(
             index,
             attrTagLookup,
             statements,
-            propTree,
+            paramsTree,
             contentKey,
           );
         }
@@ -272,7 +275,7 @@ function translateForAttrTag(
   index: number,
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
-  propTree: BindingPropTree | true,
+  paramsTree: ParamsTree | true,
   contentKey: ContentKey,
 ) {
   const forTag = attrTags[index] as t.NodePath<t.MarkoTag>;
@@ -281,7 +284,7 @@ function translateForAttrTag(
     forTag,
     attrTagLookup,
     bodyStatements,
-    propTree,
+    paramsTree,
     contentKey,
   );
   statements.push(
@@ -301,7 +304,7 @@ function translateIfAttrTag(
   index: number,
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
-  propTree: BindingPropTree | true,
+  paramsTree: ParamsTree | true,
   contentKey: ContentKey,
 ) {
   const ifTag = attrTags[index] as t.NodePath<t.MarkoTag>;
@@ -316,7 +319,7 @@ function translateIfAttrTag(
     ifTag,
     attrTagLookup,
     consequentStatements,
-    propTree,
+    paramsTree,
     contentKey,
   );
 
@@ -333,7 +336,7 @@ function translateIfAttrTag(
             nextTag,
             attrTagLookup,
             alternateStatements,
-            propTree,
+            paramsTree,
             contentKey,
           );
 
@@ -363,7 +366,7 @@ function addAllAttrTagsAsDynamic(
   tag: t.NodePath<t.MarkoTag>,
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
-  propTree: BindingPropTree | true,
+  paramsTree: ParamsTree | true,
   contentKey: ContentKey,
 ) {
   const attrTags = getAttrTagPaths(tag);
@@ -373,7 +376,7 @@ function addAllAttrTagsAsDynamic(
       i,
       attrTagLookup,
       statements,
-      propTree,
+      paramsTree,
       contentKey,
     );
   }
@@ -478,10 +481,10 @@ function getLocalClosureValues(bodySection: Section) {
 
 // The one spread a child reading every prop by name reads, prop by prop.
 export function getSingleKnownSpread(
-  propTree: BindingPropTree | true,
+  paramsTree: ParamsTree | true,
   attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
 ) {
-  if (propTree === true || !hasAllKnownProps(propTree)) return;
+  if (paramsTree === true || !hasAllKnownProps(paramsTree)) return;
   let binding: Binding | undefined;
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];

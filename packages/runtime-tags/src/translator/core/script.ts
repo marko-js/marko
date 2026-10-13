@@ -176,7 +176,7 @@ export default {
   autocomplete: [
     {
       description: "Use to create side effects.",
-      descriptionMoreURL: "https://markojs.com/docs/core-tags/#script",
+      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#script",
     },
   ],
   types: runtimeInfo.name + "/tags/script.d.marko",

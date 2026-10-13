@@ -1,17 +1,17 @@
 import * as assert from "assert/strict";
 
 import {
-  stringifyClassObject,
-  stringifyStyleObject,
+  stringifyClassEntry,
+  stringifyStyleEntry,
   toDelimitedString,
 } from "../common/helpers";
 
 const emptyValues = [undefined, null, false, ""];
 
 const classValue = (val: unknown) =>
-  toDelimitedString(val, " ", stringifyClassObject);
+  toDelimitedString(val, " ", stringifyClassEntry);
 const styleValue = (val: unknown) =>
-  toDelimitedString(val, ";", stringifyStyleObject);
+  toDelimitedString(val, ";", stringifyStyleEntry);
 
 describe("runtime-tags/common/helpers", () => {
   describe("classValue", () => {

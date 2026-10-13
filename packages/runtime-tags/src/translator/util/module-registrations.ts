@@ -15,7 +15,7 @@ import {
   getExprRoot,
   getFnRoot,
   getMarkoRoot,
-  type MarkoExprRootPath,
+  type MarkoRootPath,
 } from "./get-root";
 import isInvokedFunction from "./is-invoked-function";
 import isStatic from "./is-static";
@@ -27,8 +27,8 @@ import {
   type RegisteredFnExtra,
 } from "./references";
 import { callRuntime, getRuntimePath, registerRuntimeValue } from "./runtime";
-import { getReasonForExpr, getValueReason } from "./solve-reasons";
-import { mergeSources } from "./sources";
+import { getReasonForExpr, landsRetained } from "./solve-reasons";
+import { ALWAYS, mergeSources } from "./sources";
 import { createProgramState } from "./state";
 import { getLiteralName, isValidPropertyIdentifier } from "./to-property-name";
 
@@ -76,7 +76,7 @@ const [getReferencesByImport] = createProgramState(
 export function trackFunction(
   fn: t.NodePath<t.Function>,
   fnExtra: RegisteredFnExtra,
-  markoRoot: MarkoExprRootPath,
+  markoRoot: MarkoRootPath,
 ) {
   reserveExportRegisterId(fnExtra, fn, markoRoot);
 
@@ -91,7 +91,7 @@ export function trackFunction(
 }
 
 export function canIgnoreRegister(
-  markoRoot: MarkoExprRootPath,
+  markoRoot: MarkoRootPath,
   exprRoot: t.NodePath<t.Node>,
 ) {
   return (
@@ -107,7 +107,7 @@ export function canIgnoreRegister(
 
 // When client code reads each function; reasons may still grow, so
 // this only widens them and registration waits until they settle.
-export function resolveFunctionReason() {
+export function addFunctionReasons() {
   for (const [fnExtra, exprExtras] of getReferencesByFn()) {
     const reason = resolveReason(exprExtras);
     if (reason) {
@@ -116,10 +116,12 @@ export function resolveFunctionReason() {
   }
 }
 
-export function finalizeFunctionRegistry() {
+export function finalizeRegistrations() {
+  const programExtra = getProgram().node.extra;
   for (const fnExtra of getReferencesByFn().keys()) {
     if (fnExtra.reason) {
       registerFunction(fnExtra);
+      programExtra.isInteractive ||= isUnconditionalReason(fnExtra.reason);
     }
   }
 
@@ -136,7 +138,7 @@ export function finalizeFunctionRegistry() {
         extra.registeredImports ??= new Map();
         extra.registeredImports.set(local, registered);
       }
-      markRegistrationInteractive(reason);
+      programExtra.isInteractive ||= isUnconditionalReason(reason);
     }
   }
 }
@@ -287,7 +289,10 @@ function resolveReason(exprExtras: Set<t.NodeExtra>) {
   for (const exprExtra of exprExtras) {
     const extra = getCanonicalExtra(exprExtra);
     if (!exprExtra.consumed || extra.retained) {
-      reason = mergeSources(reason, getValueReason(extra));
+      reason = mergeSources(
+        reason,
+        landsRetained(extra) ? ALWAYS : getReasonForExpr(extra),
+      );
     }
   }
 
@@ -325,19 +330,13 @@ function isTemplateShipped(
   return false;
 }
 
-// A value written only while a caller changes params ships with that caller,
-// which bundles this template through its imports.
-function markRegistrationInteractive(reason: Reason) {
-  getProgram().node.extra.isInteractive ||= isUnconditionalReason(reason);
-}
-
 // An exported function is always module scoped, so any template that imports it
 // can register it as is; the id is reserved here so every one of them agrees.
 // A function exported under several names still gets one id, keyed by the first.
 function reserveExportRegisterId(
   fnExtra: RegisteredFnExtra,
   fn: t.NodePath<t.Function>,
-  markoRoot: MarkoExprRootPath,
+  markoRoot: MarkoRootPath,
 ) {
   if (!isStatic(markoRoot)) return;
   const exportNames = getExportNames(fn, markoRoot);
@@ -371,10 +370,7 @@ function reserveExportRegisterId(
 
 // Only a function that _is_ an exported value can be registered by an importer,
 // whether it is exported where it is declared or by a later `export { … }`.
-function getExportNames(
-  fn: t.NodePath<t.Function>,
-  markoRoot: MarkoExprRootPath,
-) {
+function getExportNames(fn: t.NodePath<t.Function>, markoRoot: MarkoRootPath) {
   const localName = getExportableName(fn);
   if (localName === undefined) return;
 
@@ -475,7 +471,6 @@ function registerFunction(fnExtra: RegisteredFnExtra) {
     markoOpts,
     opts: { filename },
   } = getFile();
-  markRegistrationInteractive(fnExtra.reason);
   fnExtra.name = generateUid(fnExtra.name);
   fnExtra.registerId =
     fnExtra.exportRegisterId ??

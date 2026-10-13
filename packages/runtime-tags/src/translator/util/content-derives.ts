@@ -9,8 +9,8 @@ import { type KnownExprs } from "./reasons";
 import { getSection, getSectionForBody, type Section } from "./sections";
 import { createSectionState } from "./state";
 
-const [getTagDerivations] = createSectionState(
-  "tag-derivations",
+const [getTagContentDerives] = createSectionState(
+  "tag-content-derives",
   () =>
     new Map<
       t.NodePath<t.MarkoTag>,
@@ -18,18 +18,18 @@ const [getTagDerivations] = createSectionState(
     >(),
 );
 
-export function setTagDerivedFrom(
+export function setTagContentDerives(
   tag: t.NodePath<t.MarkoTag>,
   binding: Opt<Binding>,
   exprs?: KnownExprs,
 ) {
   if (binding) {
-    getTagDerivations(getSection(tag)).set(tag, { binding, exprs });
+    getTagContentDerives(getSection(tag)).set(tag, { binding, exprs });
   }
 }
 
-export function finalizeTagDerivations(section: Section) {
-  for (const [tag, { binding, exprs }] of getTagDerivations(section)) {
+export function finalizeContentDerives(section: Section) {
+  for (const [tag, { binding, exprs }] of getTagContentDerives(section)) {
     setContentDerives(tag, tag.node.extra!, binding, exprs);
   }
 }

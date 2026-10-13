@@ -23,7 +23,7 @@ import {
   forEachSection,
   getScopeIdIdentifier,
   getSection,
-  isResumedBranch,
+  isOptionalBranch,
   type Section,
 } from "../../util/sections";
 import {
@@ -84,7 +84,7 @@ export default {
           while (currentSection && currentSection !== highestHoistSection) {
             const parentSection: Section = currentSection.parent!;
             if (
-              !isResumedBranch(currentSection) &&
+              !isOptionalBranch(currentSection) &&
               !sectionDynamicSubscribers.has(currentSection)
             ) {
               const subscribersIdentifier = generateUidIdentifier(
@@ -236,12 +236,12 @@ function replaceRegisteredFunctionNode(node: t.Node) {
       return buildResumeCall(node);
     case "BlockStatement":
     case "MarkoScriptlet":
-      addRegisteredDeclarations(node.body);
+      registerFunctionDeclarations(node.body);
       break;
   }
 }
 
-function addRegisteredDeclarations(body: t.Statement[]) {
+function registerFunctionDeclarations(body: t.Statement[]) {
   const len = body.length;
   for (let i = 0; i < len; i++) {
     const child = body[i];

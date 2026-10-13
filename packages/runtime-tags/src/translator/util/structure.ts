@@ -3,14 +3,14 @@ import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
 import { ReservedId, WalkCode, WalkRangeSize } from "../../common/types";
 import { type Binding, BindingType, createBinding } from "./bindings";
+import buildStringExpression, {
+  appendLiteral,
+} from "./build-string-expression";
 import * as Step from "./constants/step";
 import { generateUidIdentifier } from "./generate-uid";
 import { getParentTag } from "./get-parent-tag";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { toModuleReadExpression } from "./module-read";
-import normalizeStringExpression, {
-  appendLiteral,
-} from "./normalize-string-expression";
 import {
   ContentType,
   getSection,
@@ -62,7 +62,7 @@ export function child(
   getSection(tag).structure?.push({
     kind: StructureKind.Child,
     name,
-    binding: tag.node.extra!.nodeBinding!,
+    binding: tag.node.extra!.childScopeBinding!,
     renderer,
   });
 }
@@ -312,13 +312,13 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
       return { walks: undefined, writes: undefined };
     }
     const { writes, walks, walkComment } = resolveStructure(section);
-    const walkLiteral = normalizeStringExpression(walks, true);
+    const walkLiteral = buildStringExpression(walks, true);
     if (walkLiteral && (walkLiteral as t.StringLiteral).value !== "") {
       withLeadingComment(walkLiteral, walkComment.join(", "));
     }
     return {
       walks: walkLiteral,
-      writes: normalizeStringExpression(writes, true),
+      writes: buildStringExpression(writes, true),
     };
   },
 );

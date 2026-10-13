@@ -3,15 +3,15 @@ import { inspect } from "node:util";
 
 import type { ScopeFlush } from "../html/serializer";
 import {
-  hasMatchingMutations,
+  hasMatchingCalls,
   K_SCOPE_ID,
   pendingReadyChannel,
+  queueCall,
   register,
   SerializerState,
   setDebugInfo,
   stringifyScopes,
   takeChannelDeps,
-  writeMutation,
 } from "../html/serializer";
 import type { Boundary } from "../html/writer";
 
@@ -2002,16 +2002,16 @@ describe("serializer", () => {
     });
   });
 
-  describe("channel mutations", () => {
-    it("holds back a mutation queued for another ready channel", () => {
+  describe("channel calls", () => {
+    it("holds back a call queued for another ready channel", () => {
       const { boundary } = abortingBoundary();
       const serializer = new SerializerState();
       const a = new Set();
       const b = new Set();
-      writeMutation(serializer, 1, a, "add", { readyId: "a" });
-      writeMutation(serializer, 2, b, "add", { readyId: "b" });
+      queueCall(serializer, 1, a, "add", { readyId: "a" });
+      queueCall(serializer, 2, b, "add", { readyId: "b" });
 
-      assert.equal(hasMatchingMutations(serializer, "a"), true);
+      assert.equal(hasMatchingCalls(serializer, "a"), true);
       assert.deepEqual(pendingReadyChannel(serializer), { readyId: "a" });
       assert.equal(
         stringifyScopes(serializer, [[1, {}, { a, b }]], boundary, {
@@ -2020,14 +2020,14 @@ describe("serializer", () => {
         `_=>(_([1,{a:_.a=new Set,b:new Set}]),(_.a).add(1),0)`,
       );
 
-      assert.equal(hasMatchingMutations(serializer, "b"), true);
+      assert.equal(hasMatchingCalls(serializer, "b"), true);
     });
 
     it("assigns a binding to a mutated object seen for the first time", () => {
       const { boundary } = abortingBoundary();
       const serializer = new SerializerState();
       const set = new Set();
-      writeMutation(serializer, 1, set, "add", undefined);
+      queueCall(serializer, 1, set, "add", undefined);
       assert.equal(
         stringifyScopes(serializer, [[1, {}, {}]], boundary),
         `_=>((_.a=new Set).add(1),0)`,
@@ -2037,7 +2037,7 @@ describe("serializer", () => {
     it("aborts when a mutated object or value cannot be serialized", () => {
       const { boundary, aborted } = abortingBoundary();
       const serializer = new SerializerState();
-      writeMutation(
+      queueCall(
         serializer,
         function value() {},
         function object() {},
@@ -2113,12 +2113,12 @@ describe("serializer", () => {
       const subs = new Set();
       const ready = { readyId: "a" };
       stringifyScopes(serializer, [[1, {}, { subs }]], boundary);
-      writeMutation(serializer, { [K_SCOPE_ID]: 2 }, subs, "add", ready);
+      queueCall(serializer, { [K_SCOPE_ID]: 2 }, subs, "add", ready);
       assert.equal(
         stringifyScopes(serializer, [], boundary, ready),
         `_=>((_(1).subs).add(_(2)),0)`,
       );
-      writeMutation(serializer, { [K_SCOPE_ID]: 3 }, subs, "add", undefined);
+      queueCall(serializer, { [K_SCOPE_ID]: 3 }, subs, "add", undefined);
       assert.equal(
         stringifyScopes(serializer, [], boundary),
         `_=>((_.a=_(1).subs).add(_(3)),0)`,
@@ -2137,13 +2137,13 @@ describe("serializer", () => {
       const parent = { readyId: "a" };
       const child = { readyId: "b", parent };
       stringifyScopes(serializer, [[1, {}, { subs }]], boundary, parent);
-      writeMutation(serializer, { [K_SCOPE_ID]: 2 }, subs, "add", child);
+      queueCall(serializer, { [K_SCOPE_ID]: 2 }, subs, "add", child);
       assert.equal(
         stringifyScopes(serializer, [], boundary, child),
         `_=>((_(1).subs).add(_(2)),0)`,
       );
       assert.deepEqual([...takeChannelDeps(serializer)!], ["a"]);
-      writeMutation(serializer, { [K_SCOPE_ID]: 3 }, subs, "add", parent);
+      queueCall(serializer, { [K_SCOPE_ID]: 3 }, subs, "add", parent);
       assert.equal(
         stringifyScopes(serializer, [], boundary, parent),
         `_=>((_.a=_(1).subs).add(_(3)),0)`,

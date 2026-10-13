@@ -10,7 +10,7 @@ import {
 import {
   assertNoBodyContent,
   assertNoSpreadAttrs,
-  assertValueAttr,
+  assertOnlyValueAttr,
 } from "../util/assert";
 import { generateUidIdentifier } from "../util/generate-uid";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
@@ -64,7 +64,7 @@ export default {
       }
     }
 
-    assertValueAttr(tag, true, true);
+    assertOnlyValueAttr(tag, true, true);
 
     const parentTag = getParentTag(tag);
     if (parentTag) {

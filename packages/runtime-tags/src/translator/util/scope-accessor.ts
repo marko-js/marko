@@ -9,7 +9,7 @@ import { ReservedId } from "../../common/types";
 import { type Binding, BindingType, getCanonicalBinding } from "./bindings";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { isOptimize } from "./marko-config";
-import { isResumedBranch, type Section } from "./sections";
+import { isOptionalBranch, type Section } from "./sections";
 import { type PlaceSlot, SlotKind } from "./slots";
 
 // Where the server writes a slot in its scope.
@@ -162,7 +162,7 @@ function getClosureAccessorId(binding: Binding) {
 function getSectionInstancesAccessor(section: Section) {
   // Only hoists reach the prefix + section id fallback; a reserved numeric id
   // would be a byte shorter, but hoists are too rare for that to pay.
-  return isResumedBranch(section)
+  return isOptionalBranch(section)
     ? getAccessorPrefix().BranchScopes +
         getScopeAccessor(section.branch.nodeBinding)
     : getAccessorPrefix().ClosureScopes + section.id;

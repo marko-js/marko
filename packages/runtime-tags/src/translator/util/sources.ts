@@ -3,7 +3,7 @@ import {
   type ParamBinding,
   bindingUtil,
   compareReferences,
-  someAliased,
+  someUpToAliasRoot,
 } from "./bindings";
 import { Sorted, type SortedOpt } from "./optional";
 
@@ -129,7 +129,7 @@ function unionParamSources(a: Sources["param"], b: Sources["param"]) {
   // when `input` is present); params otherwise treat properties as discrete sources.
   return bindingUtil.filter(
     merged,
-    (binding) => !someAliased(binding.aliasOf, isInParams, merged),
+    (binding) => !someUpToAliasRoot(binding.aliasOf, isInParams, merged),
   );
 }
 

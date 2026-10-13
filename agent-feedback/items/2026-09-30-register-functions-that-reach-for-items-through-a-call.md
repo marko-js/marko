@@ -2,7 +2,7 @@
 type: bug
 impact: low
 effort: med
-site: packages/runtime-tags/src/translator/visitors/function.ts › resolveFunctionReason
+site: packages/runtime-tags/src/translator/util/module-registrations.ts › addFunctionReasons
 ---
 
 # Register functions that reach `<for>` items through a call
