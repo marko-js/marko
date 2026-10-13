@@ -14,6 +14,7 @@ import {
   type OneMany,
   type Opt,
   push,
+  reduceWhile,
   size,
   some,
   Sorted,
@@ -631,6 +632,31 @@ describe("runtime-tags/translator/util/optional", () => {
       assert.equal(some(2, isEven), true);
       assert.equal(some([1, 3, 4] as Opt<number>, isEven), true);
       assert.equal(some([1, 3, 5] as Opt<number>, isEven), false);
+    });
+
+    it("reduceWhile stops at the first undefined the callback returns", () => {
+      const random = createRandom(13);
+      for (let run = 0; run < 400; run++) {
+        const values = Array.from(
+          { length: (random() * 9) | 0 },
+          () => ((random() * 6) | 0) + 1,
+        );
+        const stop = ((random() * 8) | 0) + 1;
+        let calls = 0;
+        const sumUntilStop = (sum: number, n: number) => {
+          calls++;
+          return n === stop ? undefined : sum + n;
+        };
+        const index = values.indexOf(stop);
+        const expected =
+          index === -1 ? values.reduce((sum, n) => sum + n, 0) : undefined;
+        assert.equal(
+          reduceWhile(fromValues(values), sumUntilStop, 0),
+          expected,
+          `[${values}] until ${stop}`,
+        );
+        assert.equal(calls, index === -1 ? values.length : index + 1);
+      }
     });
 
     it("every is vacuously true and checks all Opt shapes", () => {

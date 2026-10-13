@@ -130,7 +130,7 @@ function addIntersectionMemberReason(
     (!isSupersetSources(member, partner) ||
       hasReadIntermediate(member, partner, new Set()))
   ) {
-    if (!isSameOrChildSection(section, member.section)) {
+    if (member.section !== section) {
       addOwnerReason(
         section,
         member.section,

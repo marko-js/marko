@@ -342,9 +342,7 @@ function addSectionReasons(section: Section) {
 function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
   const closureIdEnds = new Map<Section, number>();
   forEachSection((section) => {
-    const { id, bindings } = section;
-    const isOwnedBinding = ({ section }: Binding) => section.id === id;
-    const ownedBindings = filter(bindings, isOwnedBinding);
+    const { bindings } = section;
     const intersectionSources = new Map<Intersection, Binding | undefined>();
     const intersectionMeta = (section.intersections = new Map());
     const intersections = (intersectionsBySection.get(section) || []).filter(
@@ -364,7 +362,9 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
       for (const intersection of intersections) {
         // Members are of the section or its ancestors, so owned ones trail.
         const anchor = last(intersection);
-        if (isOwnedBinding(anchor)) sectionAnchors.set(intersection, anchor);
+        if (anchor.section === section) {
+          sectionAnchors.set(intersection, anchor);
+        }
       }
 
       // Renders run in id order, so a closure-only intersection must come
@@ -403,7 +403,7 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
         returnedBy: getLastOwnSourceReturn(intersection, section),
       });
     };
-    forEach(ownedBindings, (binding) => {
+    forEach(bindings, (binding) => {
       if (walked.has(binding)) return;
       // Unanchored intersections slot in right after the dom ids, ahead of
       // every other owned binding.
@@ -437,7 +437,7 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
     // Closure accessor ids trail the id space, then every ancestor's closure ids,
     // so the closures one section reads never share a signal index key.
     let closureId = section.parent ? closureIdEnds.get(section.parent)! : 0;
-    forEach(ownedBindings, (binding) => {
+    forEach(bindings, (binding) => {
       if (binding.closureSections) {
         closureId = Math.max(closureId, nextId);
         binding.closureId = closureId++;
@@ -713,7 +713,7 @@ function resolveReferencedBindingsInFunction(
     if (getter) {
       // hoisted/getter reads resolve through getters, not signals.
     } else if (binding.type === BindingType.constant) {
-      if (bindingUtil.find(refs, binding)) {
+      if (bindingUtil.has(refs, binding)) {
         constantBindings = bindingUtil.add(constantBindings, binding);
       }
     } else if (

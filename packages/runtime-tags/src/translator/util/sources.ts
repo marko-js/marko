@@ -123,16 +123,14 @@ export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
 
 function unionParamSources(a: Sources["param"], b: Sources["param"]) {
   const merged = bindingUtil.union(a, b);
-  if (merged && Array.isArray(merged)) {
-    // Filter out property aliases already in the merged set (eg drop `input.foo`
-    // when `input` is present); params otherwise treat properties as discrete sources.
-    return bindingUtil.filter(
-      merged,
-      (binding) => !someAliased(binding.aliasOf, isInParams, merged),
-    );
-  }
-
-  return merged;
+  // Every param list is already filtered, so an input returned as is needs none.
+  if (merged === a || merged === b) return merged;
+  // Filter out property aliases already in the merged set (eg drop `input.foo`
+  // when `input` is present); params otherwise treat properties as discrete sources.
+  return bindingUtil.filter(
+    merged,
+    (binding) => !someAliased(binding.aliasOf, isInParams, merged),
+  );
 }
 
 export function isInParams(binding: Binding, params: Sources["param"]) {

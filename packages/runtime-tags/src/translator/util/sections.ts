@@ -536,22 +536,15 @@ export function isSameOrChildSection(section: Section, other: Section) {
   return false;
 }
 
+// A section's ancestors have lower ids, so the higher id steps up.
 export function getCommonSection(section: Section, other: Section) {
-  let ancestor: Section | undefined = section;
-  if (other.depth < section.depth) {
-    ancestor = other;
-    other = section;
+  let a = section;
+  let b = other;
+  while (a !== b) {
+    if (a.id > b.id) a = a.parent!;
+    else b = b.parent!;
   }
-  while (ancestor) {
-    if (other === ancestor || !other.parent) {
-      return ancestor;
-    }
-    other = other.parent;
-    if (other.depth < ancestor.depth) {
-      ancestor = ancestor.parent;
-    }
-  }
-  throw new Error("No common section");
+  return a;
 }
 
 export function finalizeParamReasonGroups(section: Section) {
