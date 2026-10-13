@@ -1,4 +1,4 @@
-import { forEach, type Opt } from "./optional";
+import { type Opt, reduce } from "./optional";
 
 // A memo whose computation may re-ask itself through a cycle: a re-ask
 // answers `cycleAnswer`, and a frame that consumed one does not cache.
@@ -57,11 +57,13 @@ export function createCyclicPathMemo<K extends object, R>(
     let node: PathKeys<K> | undefined = keys.get(key);
     if (!node) keys.set(key, (node = {}));
     if (path === true) return memo((node.all ??= [key, path]));
-    forEach(path, (property) => {
-      let next: PathKeys<K> | undefined = node!.props?.get(property);
-      if (!next) (node!.props ??= new Map()).set(property, (next = {}));
-      node = next;
-    });
-    return memo((node!.value ??= [key, path]));
+    return memo((reduce(path, ensurePropKeys<K>, node).value ??= [key, path]));
   };
+}
+
+// The keys under `property`, made on first use.
+function ensurePropKeys<K>(node: PathKeys<K>, property: string) {
+  let next = node.props?.get(property);
+  if (!next) (node.props ??= new Map()).set(property, (next = {}));
+  return next;
 }
