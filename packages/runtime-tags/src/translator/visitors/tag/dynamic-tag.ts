@@ -58,13 +58,13 @@ import {
   getScopeExpression,
 } from "../../util/scope-read";
 import {
-  getOrCreateSection,
+  ensureSection,
+  ensureBodySection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  removePrunedContent,
+  removeDroppedContent,
   type Section,
-  startSection,
   StructureKind,
 } from "../../util/sections";
 import { setTagDerivedFrom } from "../../util/set-tag-derived-from";
@@ -77,7 +77,7 @@ import {
   type Signal,
   writeHTMLResumeStatements,
 } from "../../util/signals";
-import { getSlot } from "../../util/slots";
+import { ensureSlot } from "../../util/slots";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
 import { isControllableAttr } from "../../util/tag-facts";
@@ -163,7 +163,7 @@ export default {
 
       analyzeAttributeTags(tag);
 
-      const tagSection = getOrCreateSection(tag);
+      const tagSection = ensureSection(tag);
       const inputNodes = getAllTagReferenceNodes(node);
       const tagExtra = mergeReferences(tagSection, node, [
         node.name,
@@ -199,7 +199,7 @@ export default {
         reserveId(nodeBinding, ReservedId.ScopeOffset);
       }
 
-      const bodySection = startSection(tagBody);
+      const bodySection = ensureBodySection(tagBody);
       // The body depends on the whole tag, as a branch body on its condition.
       if (bodySection) {
         bodySection.branchExpr = tagExtra;
@@ -218,7 +218,7 @@ export default {
       }
       trackParamsReferences(tagBody, BindingType.param);
       if (usesVar) addAlwaysRead(nodeBinding);
-      addReasonExprs(getSlot(nodeBinding), tagExtra);
+      addReasonExprs(ensureSlot(nodeBinding), tagExtra);
 
       if (
         !hasVar &&
@@ -254,7 +254,7 @@ export default {
         return;
       }
 
-      removePrunedContent(tag);
+      removeDroppedContent(tag);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }

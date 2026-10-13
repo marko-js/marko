@@ -1,10 +1,10 @@
 import { types as t } from "@marko/compiler";
 
-import { BindingType } from "./bindings";
+import { type Binding, BindingType, getAliasRoot } from "./bindings";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputDOM } from "./marko-config";
 import { reduce, size } from "./optional";
-import { type ExtraRead, isRegisteredFnExtra } from "./references";
+import { type ResolvedRead, isRegisteredFnExtra } from "./references";
 import { callRuntime } from "./runtime";
 import {
   getLocalsScopeAccessor,
@@ -67,7 +67,7 @@ export function getReadReplacement(
 
 // What a DOM read stands for before its props: a value from its scope.
 function getDOMReadBase(
-  read: ExtraRead,
+  read: ResolvedRead,
   section: Section | undefined,
   signal: Signal | undefined,
 ) {
@@ -85,7 +85,7 @@ function getDOMReadBase(
     if (inlined) return t.cloneNode(inlined, true);
   }
 
-  if (signal?.referencedBindings === binding && !signal.hasSideEffect) {
+  if (signal?.referencedBindings === binding && !signal.storesValue) {
     return getSignalValueIdentifier(signal);
   }
 
@@ -107,7 +107,7 @@ function getDOMReadBase(
     );
   }
 
-  if (!isOptimize() && read.ownVar) {
+  if (!isOptimize() && read.inOwnBody && isChildReturnVar(binding)) {
     return callRuntime(
       "_assert_init",
       section ? getScopeExpression(section, binding.section) : scopeIdentifier,
@@ -118,12 +118,17 @@ function getDOMReadBase(
   return createScopeReadExpression(binding, section);
 }
 
+// Only a child's `<return>` sets a tag variable after its body may render.
+function isChildReturnVar(binding: Binding) {
+  return !!getAliasRoot(binding).returnedBy;
+}
+
 // What an HTML read stands for before its props: the expression its binding
 // is declared as. HTML runs the author's code in order, so a read rooted at a
 // name declared in scope reads as written.
 function getHTMLReadBase(
   node: t.Identifier | t.MemberExpression | t.OptionalMemberExpression,
-  { binding, getter }: ExtraRead,
+  { binding, getter }: ResolvedRead,
 ) {
   if (getter?.hoisted) {
     return binding.aliasOf

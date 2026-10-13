@@ -4,7 +4,7 @@ import { getProgram } from "@marko/compiler/babel-utils";
 import { reportAnalyzeError } from "../util/analyze-errors";
 import { isOutputHTML } from "../util/marko-config";
 import { mergeReferences } from "../util/references";
-import { getOrCreateSection } from "../util/sections";
+import { ensureSection } from "../util/sections";
 import { replaceRegisteredFunctionNode } from "../util/signals";
 import { traverseReplace } from "../util/traverse";
 import type { TemplateVisitor } from "../util/visitors";
@@ -22,7 +22,7 @@ export default {
       return;
     }
     mergeReferences(
-      getOrCreateSection(scriptlet),
+      ensureSection(scriptlet),
       scriptlet.node,
       scriptlet.node.body,
     );

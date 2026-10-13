@@ -33,8 +33,8 @@ import {
 import { createScopeIdentifiers } from "../../util/scope-read";
 import {
   forEachSection,
+  ensureBodySection,
   getRendererReason,
-  startSection,
 } from "../../util/sections";
 import { finalizeSetupWork } from "../../util/setup-work";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -79,7 +79,7 @@ export default {
   },
   analyze: {
     enter(program) {
-      startSection(program);
+      ensureBodySection(program);
       trackParamsReferences(program, BindingType.param);
 
       const programExtra = (program.node.extra ??= {});

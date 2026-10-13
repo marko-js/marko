@@ -72,18 +72,18 @@ import {
   scopeIdentifier,
 } from "../../util/scope-read";
 import {
-  getOrCreateSection,
+  ensureSection,
   getScopeIdIdentifier,
   getSection,
   type StructureNode,
 } from "../../util/sections";
-import { addSetupExpr } from "../../util/setup-work";
+import { addSetupExpr, addSetupWork } from "../../util/setup-work";
 import {
   addHTMLEffectCall,
   addStatement,
   setSectionDebugVar,
 } from "../../util/signals";
-import { getSlot } from "../../util/slots";
+import { ensureSlot } from "../../util/slots";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
 import { controllableElements, getTagFacts } from "../../util/tag-facts";
@@ -173,7 +173,7 @@ export default {
 
       const isTextOnly = tagFacts.textBody;
       const { attributes } = tag.node;
-      const tagSection = getOrCreateSection(tag);
+      const tagSection = ensureSection(tag);
       // One pass over the attributes, last to first so a repeated one's last value
       // wins: classifies them, drops unwritten values, records each value's facts.
       const indexByName: Record<string, number | undefined> =
@@ -430,12 +430,12 @@ export default {
 
         if (nonceUnset && !spread) {
           // A nonce statement with no references is written in setup.
-          addSetupExpr(tagSection);
+          addSetupWork(tagSection);
         }
 
         if (controllable?.attrs[1] !== undefined) {
           // Controllable change handlers register an effect in setup.
-          addSetupExpr(tagSection);
+          addSetupWork(tagSection);
         }
 
         if (hasEventHandlers || isTagVarUsed(tag)) {
@@ -444,7 +444,7 @@ export default {
 
         trackDomVarReferences(tag, nodeBinding);
 
-        addReasonExprs(getSlot(nodeBinding), push(exprExtras, tagExtra));
+        addReasonExprs(ensureSlot(nodeBinding), push(exprExtras, tagExtra));
       }
 
       const write = structure.writeTo(tag);

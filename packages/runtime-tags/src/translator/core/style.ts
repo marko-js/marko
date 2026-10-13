@@ -29,12 +29,12 @@ import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
 import {
   getNodeContentType,
-  getOrCreateSection,
+  ensureSection,
   getSection,
 } from "../util/sections";
-import { addSetupExpr } from "../util/setup-work";
+import { addSetupWork } from "../util/setup-work";
 import { addStatement } from "../util/signals";
-import { getSlot } from "../util/slots";
+import { ensureSlot } from "../util/slots";
 import { createProgramState } from "../util/state";
 import * as structure from "../util/structure";
 import {
@@ -81,9 +81,9 @@ export default {
       checkDynamicStylePlacement(tag);
     }
 
-    // Resolve up front so the page entry builder can link it for server-only
+    // Created up front so the page entry builder can link it for server-only
     // templates (which never reach translate); cached on the node for reuse.
-    const importPath = getStyleImportPath(getFile(), node, names);
+    const importPath = createStyleDependency(getFile(), node, names);
     (node.extra ??= {})[kStyleImportPath] = importPath;
     if (importPath) {
       addAssetImport(importPath);
@@ -92,7 +92,7 @@ export default {
     if (names) {
       analyzeDynamicStyle(tag, names);
       // Dynamic styles write their shell statement in setup.
-      addSetupExpr(getOrCreateSection(tag));
+      addSetupWork(ensureSection(tag));
       structure.node(tag, tag.node.extra!.nodeBinding);
       structure.enterShallow(tag);
       structure.writeTo(tag)`<style></style>`;
@@ -113,7 +113,7 @@ export default {
 
 function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   const { node } = tag;
-  const section = getOrCreateSection(tag);
+  const section = ensureSection(tag);
   const binding = (node.extra!.nodeBinding = createBinding(
     "#style",
     BindingType.dom,
@@ -127,7 +127,7 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
     exprExtras = push(exprExtras, (value.extra ??= {}));
   }
 
-  addReasonExprs(getSlot(binding), exprExtras);
+  addReasonExprs(ensureSlot(binding), exprExtras);
 }
 
 function collectDynamicStyleNames(tag: t.NodePath<t.MarkoTag>) {
@@ -319,10 +319,10 @@ function buildStyleDecls(node: t.MarkoTag) {
 }
 
 /**
- * Resolves a `<style>` block's text to its client-side import path by handing
- * the css to the configured `resolveVirtualDependency` hook.
+ * Hands a `<style>` block's css to the configured `resolveVirtualDependency`
+ * hook as a new virtual dependency, returning its client-side import path.
  */
-function getStyleImportPath(
+function createStyleDependency(
   file: t.BabelFile,
   node: t.MarkoTag,
   names: string[] | undefined,

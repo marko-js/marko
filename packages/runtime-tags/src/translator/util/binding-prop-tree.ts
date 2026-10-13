@@ -143,7 +143,9 @@ export function getSettledPropTree(
   };
 }
 
-export function getKnownFromPropTree(
+// The prop tree at `name`: `true` when the prop is read only whole or through
+// a rest, `undefined` when it is not read.
+export function getPropTreeAt(
   propTree: BindingPropTree | true,
   name: string,
 ): BindingPropTree | true | undefined {
@@ -151,7 +153,7 @@ export function getKnownFromPropTree(
     ? true
     : propTree.props
       ? propTree.props[name] ||
-        (propTree.rest ? getKnownFromPropTree(propTree.rest, name) : undefined)
+        (propTree.rest ? getPropTreeAt(propTree.rest, name) : undefined)
       : propsUtil.has(propTree.binding.excludeProperties, name)
         ? undefined
         : true;

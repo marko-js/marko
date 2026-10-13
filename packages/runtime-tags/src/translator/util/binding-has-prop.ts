@@ -10,11 +10,11 @@ export function getSectionRendererIdentifier(section: Section) {
     : t.identifier(section.name);
 }
 
-// A pruned content section, or one only flowing into a binding that never
+// A dropped content section, or one only flowing into a binding that never
 // reads it, has its renderer elided; references to it must be elided in sync.
 export function isSectionRendererElided(section: Section) {
   return (
-    section.pruned ||
+    section.dropped ||
     (!!section.derives &&
       // A falsy dynamic tag name renders its body in place.
       !(

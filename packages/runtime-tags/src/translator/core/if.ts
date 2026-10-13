@@ -27,20 +27,20 @@ import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
-  getOrCreateSection,
+  ensureSection,
+  ensureBodySection,
   getSection,
   getSectionForBody,
   type Section,
-  startSection,
 } from "../util/sections";
 import {
   addValue,
   getSignal,
-  replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
+  trimEmptyArgs,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import { getSlot, SlotKind } from "../util/slots";
+import { ensureSlot, SlotKind } from "../util/slots";
 import { sourcesUtil } from "../util/sources";
 import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
@@ -62,7 +62,7 @@ export const IfTag = {
     if (isLastBranch(tag)) {
       const branches = getBranches(tag);
       const [ifTag] = branches[0];
-      const ifTagSection = getOrCreateSection(ifTag);
+      const ifTagSection = ensureSection(ifTag);
       const ifTagExtra = (ifTag.node.extra ??= {});
       const mergeReferenceNodes: t.Node[] = [];
       // Recorded at the last branch, once every branch's body exists; nothing
@@ -86,7 +86,7 @@ export const IfTag = {
       }
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
-      addReasonExprs(getSlot(nodeBinding, SlotKind.BranchExpr), ifTagExtra);
+      addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), ifTagExtra);
     }
   },
   translate: translateByTarget({
@@ -193,7 +193,7 @@ export const IfTag = {
             if (branchBodySection) {
               setClosureSignalBuilder(branchTag, {
                 kind: "if",
-                ref: nodeBinding,
+                nodeBinding,
                 index: i,
               });
             }
@@ -220,7 +220,7 @@ export const IfTag = {
             return callRuntime(
               "_if",
               getScopeAccessorLiteral(nodeBinding, true),
-              ...replaceNullishAndEmptyFunctionsWith0(rendererArgs),
+              ...trimEmptyArgs(rendererArgs),
             );
           };
           addValue(
@@ -408,7 +408,7 @@ function getBranches(tag: t.NodePath<t.MarkoTag>) {
 
     do {
       BRANCHES_LOOKUP.set(curTag, branches);
-      branches.push([curTag, startSection(curTag.get("body"))]);
+      branches.push([curTag, ensureBodySection(curTag.get("body"))]);
     } while ((curTag = getNextBranchTag(curTag)));
   }
 

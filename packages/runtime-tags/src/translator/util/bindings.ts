@@ -91,7 +91,7 @@ export interface Binding {
   /** In a template's or `<define>`'s params tree, which known call sites set
    * directly. */
   exposed: boolean;
-  /** Read on invocation from its own scope slot, which must persist. */
+  /** Read on invocation from its own scope slot, so its signal stores it. */
   hasLazyReads: boolean;
 }
 
@@ -202,7 +202,7 @@ export function reserveId(binding: Binding, offset: ReservedId) {
 
 // A property of a direct alias is the root's property: one binding, one
 // read, however many local names the value passes through.
-export function getOrCreatePropertyAlias(binding: Binding, property: string) {
+export function ensurePropertyAlias(binding: Binding, property: string) {
   const canonical = getCanonicalBinding(binding);
   return (
     canonical.propertyAliases.get(property) ||

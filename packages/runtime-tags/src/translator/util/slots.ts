@@ -65,7 +65,7 @@ export interface SectionSlot extends BaseSlot {
 const slotUtil = new Sorted<Slot>(compareSlots);
 
 // Analysis makes a slot on first use; translate only finds what analysis made.
-export function getSlot(
+export function ensureSlot(
   binding: Binding,
   kind: BindingSlotKind = SlotKind.Value,
   section?: Section,
@@ -97,7 +97,7 @@ export function findSlot(
   return findIn((section || owner.section).slots, owner.uid, kind, group);
 }
 
-export function getSectionSlot(
+export function ensureSectionSlot(
   owner: Section,
   kind: SectionSlotKind,
   section = owner,

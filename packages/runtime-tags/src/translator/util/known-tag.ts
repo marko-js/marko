@@ -7,7 +7,7 @@ import {
   type BindingPropTree,
   getAllKnownPropNames,
   getBindingPropTree,
-  getKnownFromPropTree,
+  getPropTreeAt,
   getSettledPropTree,
 } from "./binding-prop-tree";
 import {
@@ -16,7 +16,7 @@ import {
   bindingUtil,
   createBinding,
   getDebugNames,
-  getOrCreatePropertyAlias,
+  ensurePropertyAlias,
   getPropertyAlias,
   isInvokeOnlyBinding,
   isOwnBinding,
@@ -62,7 +62,8 @@ import {
 } from "./scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "./scope-read";
 import {
-  getOrCreateSection,
+  ensureSection,
+  ensureBodySection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
@@ -70,18 +71,17 @@ import {
   type ParamReasonGroups,
   type Section,
   sectionUtil,
-  startSection,
 } from "./sections";
 import { setTagDerivedFrom } from "./set-tag-derived-from";
-import { addSetupExpr } from "./setup-work";
+import { addSetupExpr, addSetupWork } from "./setup-work";
 import {
   addStatement,
   getResumeRegisterId,
   initValue,
-  setScopeProperty,
   writeHTMLResumeStatements,
+  writeSlot,
 } from "./signals";
-import { findSlot, getSlot, SlotKind } from "./slots";
+import { findSlot, ensureSlot, SlotKind } from "./slots";
 import { createProgramState, createSectionState } from "./state";
 import {
   toMemberExpression,
@@ -136,11 +136,11 @@ export function knownTagAnalyze(
 ) {
   analyzeAttributeTags(tag);
 
-  const section = getOrCreateSection(tag);
+  const section = ensureSection(tag);
   const tagBody = tag.get("body");
   const tagExtra = (tag.node.extra ??= {});
   tagExtra.nodeBinding = createBinding("#childScope", BindingType.dom, section);
-  startSection(tagBody);
+  ensureBodySection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
   getKnownTags(section).push(tagExtra);
   tagExtra[kContentSection] = contentSection;
@@ -166,7 +166,7 @@ export function knownTagAnalyze(
   if (varBinding) {
     if (!recursive) assertReturns(tag, contentSection);
     // Tag variables emit a `_var` statement in the parent's setup.
-    addSetupExpr(section);
+    addSetupWork(section);
     const mutatesTagVar = isTagVarAssigned(tag);
     // A recursive call's return is taken as always: the content's `<return>`
     // is unsettled here and is not mapped through the call's params.
@@ -182,7 +182,9 @@ export function knownTagAnalyze(
     if (mutatesTagVar || varExpr === true) {
       addAlwaysRead(childScopeBinding);
     }
-    if (varExpr !== true) addReasonExprs(getSlot(childScopeBinding), varExpr);
+    if (varExpr !== true) {
+      addReasonExprs(ensureSlot(childScopeBinding), varExpr);
+    }
   }
 }
 
@@ -218,7 +220,7 @@ function analyzeKnownTagParams(
     attrExprs,
   ));
   setTagDerivedFrom(tag, propTree?.props?.[0]?.binding, exprs);
-  addReasonExprs(getSlot(tagExtra.nodeBinding!), fromIter(attrExprs));
+  addReasonExprs(ensureSlot(tagExtra.nodeBinding!), fromIter(attrExprs));
   return exprs;
 }
 
@@ -254,19 +256,19 @@ function getRenderArgs(
 ) {
   const args = tag.node.arguments;
   const renderArgs: (t.Expression | t.SpreadElement)[] =
-    args?.length && !args.every(isPrunedNode) ? args.map(toRenderArg) : [];
+    args?.length && !args.every(isDroppedNode) ? args.map(toRenderArg) : [];
   if (!renderArgs.length || properties.length) {
     renderArgs.push(propsToExpression(properties));
   }
   return renderArgs;
 }
 
-function isPrunedNode(node: t.Node) {
-  return !!node.extra?.pruned;
+function isDroppedNode(node: t.Node) {
+  return !!node.extra?.dropped;
 }
 
 function toRenderArg(arg: t.Expression | t.SpreadElement) {
-  return isPrunedNode(arg) ? t.buildUndefinedNode() : arg;
+  return isDroppedNode(arg) ? t.buildUndefinedNode() : arg;
 }
 
 export function knownTagTranslateHTML(
@@ -305,7 +307,7 @@ export function knownTagTranslateHTML(
       ]),
     );
 
-    setScopeProperty(
+    writeSlot(
       findSlot(childScopeBinding),
       callRuntime("_existing_scope", peekScopeId),
     );
@@ -422,7 +424,7 @@ export function finalizeKnownTags(section: Section) {
     if (knownExprs && scopeBinding && contentSection.paramReasonGroups) {
       for (const group of contentSection.paramReasonGroups) {
         addReason(
-          getSlot(scopeBinding, SlotKind.ParamGroup, section, group),
+          ensureSlot(scopeBinding, SlotKind.ParamGroup, section, group),
           getSourcesForExprs(mapParamReasonToExpr(knownExprs, group)),
         );
       }
@@ -609,22 +611,19 @@ function analyzeAttrs(
       if (child.isMarkoTag()) {
         if (isAttributeTag(child)) {
           const attrTagMeta = attrTagLookup[getTagName(child)];
-          const childAttrExport = getKnownFromPropTree(
-            propTree,
-            attrTagMeta.name,
-          );
-          if (!childAttrExport) {
-            getAllAttrTagNodes(child.node, dropReferenceNodes);
+          const childAttrTree = getPropTreeAt(propTree, attrTagMeta.name);
+          if (!childAttrTree) {
+            dropAttrTag(child.node, dropReferenceNodes);
           } else if (attrTagMeta.dynamic) {
             analyzeDynamicAttrTagChildGroup(attrTagMeta.group, child);
-          } else if (childAttrExport === true) {
+          } else if (childAttrTree === true) {
             getAllTagReferenceNodes(child.node, (restReferenceNodes ||= []));
             known[attrTagMeta.name] = {
               value: rootTagExtra as ReferencedExtra,
             };
           } else if (
-            childAttrExport.props &&
-            !(attrTagMeta.repeated && childAttrExport.rest)
+            childAttrTree.props &&
+            !(attrTagMeta.repeated && childAttrTree.rest)
           ) {
             // Members read the first occurrence; only a whole read or a rest
             // reaches the others.
@@ -633,12 +632,12 @@ function analyzeAttrs(
                 rootTagExtra,
                 section,
                 child,
-                childAttrExport,
+                childAttrTree,
                 rootAttrExprs,
                 rootExprs,
               );
             } else {
-              getAllAttrTagNodes(child.node, dropReferenceNodes);
+              dropAttrTag(child.node, dropReferenceNodes);
             }
           } else {
             analyzeDynamicAttrTagChildGroup(attrTagMeta.group, child);
@@ -648,7 +647,7 @@ function analyzeAttrs(
           if (hasGroupReads(group, attrTagLookup, propTree)) {
             analyzeDynamicAttrTagChildGroup(group, child);
           } else {
-            getAllAttrTagNodes(child.node, dropReferenceNodes);
+            dropAttrTag(child.node, dropReferenceNodes);
           }
         }
       }
@@ -664,12 +663,12 @@ function analyzeAttrs(
       let bindings: SortedOpt<Binding>;
       let hasRest = false;
 
-      const reads = getGroupReads(group, attrTagLookup, propTree);
-      for (const [, read] of reads) {
-        if (read === true) {
+      const trees = getGroupPropTrees(group, attrTagLookup, propTree);
+      for (const [, tree] of trees) {
+        if (tree === true) {
           hasRest = true;
         } else {
-          bindings = bindingUtil.add(bindings, read.binding);
+          bindings = bindingUtil.add(bindings, tree.binding);
         }
       }
 
@@ -687,8 +686,8 @@ function analyzeAttrs(
         forEach(bindings, (binding) => {
           setDerivedFrom(binding, rootTagExtra, rootExprs);
         });
-        for (const [attrTagMeta, read] of reads) {
-          if (read !== true) remaining.delete(attrTagMeta.name);
+        for (const [attrTagMeta, tree] of trees) {
+          if (tree !== true) remaining.delete(attrTagMeta.name);
         }
 
         for (const name of group) {
@@ -714,21 +713,21 @@ function analyzeAttrs(
     }
   }
 
-  const contentExport = getKnownFromPropTree(propTree, "content");
-  if (!contentExport) {
+  const contentTree = getPropTreeAt(propTree, "content");
+  if (!contentTree) {
     dropContent(tag.node.body);
   } else if (!seen.has("content")) {
     const bodySection = getSectionForBody(tag.get("body"));
     if (bodySection) {
       seen.add("content");
-      if (contentExport === true) {
+      if (contentTree === true) {
         // TODO: update when supporting default params
         known.content = { value: rootTagExtra as ReferencedExtra };
       } else {
         remaining.delete("content");
         known.content = { value: undefined }; // TODO: update when supporting default params
         // The content signal call is applied unconditionally in setup.
-        addSetupExpr(section);
+        addSetupWork(section);
       }
     }
   }
@@ -739,8 +738,8 @@ function analyzeAttrs(
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     if (t.isMarkoAttribute(attr)) {
-      const templateExportAttr = getKnownFromPropTree(propTree, attr.name);
-      if (!templateExportAttr || seen.has(attr.name)) {
+      const attrTree = getPropTreeAt(propTree, attr.name);
+      if (!attrTree || seen.has(attr.name)) {
         // drop references for duplicated attributes and unused attributes.
         dropReferenceNodes.push(attr.value);
         continue;
@@ -750,7 +749,7 @@ function analyzeAttrs(
 
       if (spreadReferenceNodes) {
         spreadReferenceNodes.push(attr.value);
-      } else if (templateExportAttr === true) {
+      } else if (attrTree === true) {
         (restReferenceNodes ||= []).push(attr.value);
         known[attr.name] = { value: rootTagExtra as ReferencedExtra };
       } else {
@@ -759,12 +758,12 @@ function analyzeAttrs(
         known[attr.name] = { value: attrExtra };
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
-        setDerivedFrom(templateExportAttr.binding, attrExtra, rootExprs);
+        setDerivedFrom(attrTree.binding, attrExtra, rootExprs);
         // A cross template child that only ever invokes this input makes the attribute
         // `invokeOnly`; same-program prop trees may be mid-analysis with incomplete reads, so skipped.
         if (
-          !isOwnBinding(templateExportAttr.binding) &&
-          isInvokeOnlyBinding(templateExportAttr.binding)
+          !isOwnBinding(attrTree.binding) &&
+          isInvokeOnlyBinding(attrTree.binding)
         ) {
           attrExtra.invokeOnly = true;
         }
@@ -785,17 +784,15 @@ function analyzeAttrs(
 
   if (knownSpread) {
     for (const prop of remaining) {
-      const propBinding = getOrCreatePropertyAlias(knownSpread, prop);
+      const propBinding = ensurePropertyAlias(knownSpread, prop);
       const propExtra: ReferencedExtra = { section };
-      const templateExportAttr = getKnownFromPropTree(propTree, prop)!;
+      const attrTree = getPropTreeAt(propTree, prop)!;
 
       known[prop] = { value: propExtra };
       rootAttrExprs.add(propExtra);
       addRead(propExtra, propExtra, propBinding, section, undefined);
       setDerivedFrom(
-        templateExportAttr === true
-          ? propTree.rest!.binding
-          : templateExportAttr.binding,
+        attrTree === true ? propTree.rest!.binding : attrTree.binding,
         propExtra,
         rootExprs,
       );
@@ -823,7 +820,7 @@ function analyzeAttrs(
 
     if (remaining.size) {
       // Unset props are applied with no value (and no references) in setup.
-      addSetupExpr(section);
+      addSetupWork(section);
     }
 
     if (propTree.rest && !propTree.rest.props) {
@@ -874,7 +871,7 @@ function dropAllTagNodes(tag: t.MarkoTag) {
   dropContent(tag.body);
   dropNodes(
     getAllTagReferenceNodes(tag, nodes, (attrTag) =>
-      getAllAttrTagNodes(attrTag, nodes),
+      dropAttrTag(attrTag, nodes),
     ),
   );
 }
@@ -888,36 +885,36 @@ function collectAttrTagReferenceNodes(
   referenceNodes: t.Node[],
   dropReferenceNodes: t.Node[],
 ) {
-  const attrTagExport = getKnownFromPropTree(
+  const attrTagTree = getPropTreeAt(
     propTree,
     attrTagLookup[(attrTag.name as t.StringLiteral).value].name,
   );
-  if (attrTagExport) {
-    if (!getKnownFromPropTree(attrTagExport, "content")) {
+  if (attrTagTree) {
+    if (!getPropTreeAt(attrTagTree, "content")) {
       dropContent(attrTag.body);
     }
     getAllTagReferenceNodes(attrTag, referenceNodes, (nestedAttrTag) =>
       collectAttrTagReferenceNodes(
         nestedAttrTag,
         attrTag.extra!.attributeTags!,
-        attrTagExport,
+        attrTagTree,
         referenceNodes,
         dropReferenceNodes,
       ),
     );
   } else {
-    getAllAttrTagNodes(attrTag, dropReferenceNodes);
+    dropAttrTag(attrTag, dropReferenceNodes);
   }
 }
 
 // Neither output emits an attribute tag or control flow the child never reads,
 // nor anything nested in it.
-function getAllAttrTagNodes(tag: t.MarkoTag, nodes: t.Node[]) {
-  nodes.push(tag);
+function dropAttrTag(tag: t.MarkoTag, dropReferenceNodes: t.Node[]) {
+  dropReferenceNodes.push(tag);
   // Control flow holds attribute tags, which this walk reaches, not content.
   if (!tag.body.attributeTags) dropContent(tag.body);
-  return getAllTagReferenceNodes(tag, nodes, (attrTag) =>
-    getAllAttrTagNodes(attrTag, nodes),
+  getAllTagReferenceNodes(tag, dropReferenceNodes, (attrTag) =>
+    dropAttrTag(attrTag, dropReferenceNodes),
   );
 }
 
@@ -1098,7 +1095,7 @@ function writeAttrsToSignals(
       seen.add(attrTagMeta.name);
       if (
         attrTagMeta.dynamic &&
-        getKnownFromPropTree(propTree, attrTagMeta.name) === true
+        getPropTreeAt(propTree, attrTagMeta.name) === true
       ) {
         contentProps.push(
           toObjectProperty(attrTagMeta.name, getAttrTagIdentifier(attrTagMeta)),
@@ -1111,15 +1108,12 @@ function writeAttrsToSignals(
       if (child.isMarkoTag()) {
         if (isAttributeTag(child)) {
           const attrTagMeta = attrTagLookup[getTagName(child)];
-          const childAttrExport = getKnownFromPropTree(
-            propTree,
-            attrTagMeta.name,
-          );
-          if (!childAttrExport) {
+          const childAttrTree = getPropTreeAt(propTree, attrTagMeta.name);
+          if (!childAttrTree) {
             // ignore
           } else if (attrTagMeta.dynamic) {
             i = translateDynamicAttrTagChildInGroup(attrTagMeta.group, i);
-          } else if (childAttrExport === true) {
+          } else if (childAttrTree === true) {
             const statements: t.Statement[] = [];
             const translatedAttrs = translateAttrs(
               child,
@@ -1142,16 +1136,16 @@ function writeAttrsToSignals(
             );
           } else if (
             attrTagMeta.repeated &&
-            (!childAttrExport.props || childAttrExport.rest)
+            (!childAttrTree.props || childAttrTree.rest)
           ) {
             // Like HTML, the first occurrence passes the whole `attrTags` value,
             // since a whole read or a rest reaches the others.
             if (remaining.delete(attrTagMeta.name)) {
               applyAttrObject(
                 child,
-                childAttrExport,
+                childAttrTree,
                 info.getBindingIdentifier(
-                  childAttrExport.binding,
+                  childAttrTree.binding,
                   `${importAlias}_${attrTagMeta.name}`,
                 ),
                 info,
@@ -1161,7 +1155,7 @@ function writeAttrsToSignals(
             remaining.delete(attrTagMeta.name);
             writeAttrsToSignals(
               child,
-              childAttrExport,
+              childAttrTree,
               `${importAlias}_${attrTagMeta.name}`,
               info,
             );
@@ -1191,8 +1185,8 @@ function writeAttrsToSignals(
       group,
       { referencedBindings, statements },
     ] of statementsByGroup) {
-      const reads = getGroupReads(group, attrTagLookup, propTree);
-      const hasRest = reads.some(([, read]) => read === true);
+      const trees = getGroupPropTrees(group, attrTagLookup, propTree);
+      const hasRest = trees.some(([, tree]) => tree === true);
 
       addStatement(
         "render",
@@ -1201,7 +1195,7 @@ function writeAttrsToSignals(
         [
           t.variableDeclaration(
             "let",
-            reads.map(([attrTagMeta]) =>
+            trees.map(([attrTagMeta]) =>
               t.variableDeclarator(getAttrTagIdentifier(attrTagMeta)),
             ),
           ),
@@ -1209,13 +1203,13 @@ function writeAttrsToSignals(
         ],
       );
 
-      for (const [attrTagMeta, read] of reads) {
-        if (read !== true) {
+      for (const [attrTagMeta, tree] of trees) {
+        if (tree !== true) {
           remaining.delete(attrTagMeta.name);
           writeToSignal(
             info,
             info.getBindingIdentifier(
-              read.binding,
+              tree.binding,
               `${importAlias}_${attrTagMeta.name}`,
             ),
             hasRest ? tagReferencedBindings : referencedBindings,
@@ -1226,8 +1220,8 @@ function writeAttrsToSignals(
     }
   }
 
-  const contentExport = getKnownFromPropTree(propTree, "content");
-  if (!seen.has("content") && contentExport) {
+  const contentTree = getPropTreeAt(propTree, "content");
+  if (!seen.has("content") && contentTree) {
     const bodySection = getSectionForBody(tag.get("body"));
     if (bodySection) {
       seen.add("content");
@@ -1235,7 +1229,7 @@ function writeAttrsToSignals(
         getSectionRendererIdentifier(bodySection)!,
         [scopeIdentifier],
       );
-      if (contentExport === true) {
+      if (contentTree === true) {
         contentProps.push(toObjectProperty("content", bodyValue));
       } else {
         remaining.delete("content");
@@ -1245,7 +1239,7 @@ function writeAttrsToSignals(
         writeToSignal(
           info,
           info.getBindingIdentifier(
-            contentExport.binding,
+            contentTree.binding,
             `${importAlias}_content`,
             directContent,
           ),
@@ -1266,14 +1260,14 @@ function writeAttrsToSignals(
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     if (t.isMarkoAttribute(attr)) {
-      const templateExportAttr = getKnownFromPropTree(propTree, attr.name);
-      if (!templateExportAttr || seen.has(attr.name)) {
+      const attrTree = getPropTreeAt(propTree, attr.name);
+      if (!attrTree || seen.has(attr.name)) {
         continue;
       }
 
       seen.add(attr.name);
 
-      if (hasSpread || templateExportAttr === true) {
+      if (hasSpread || attrTree === true) {
         attrProps.push(toObjectProperty(attr.name, attr.value));
       } else {
         staticAttrs.push(attr);
@@ -1438,7 +1432,7 @@ function getSignalIdentifier(
   name: string,
 ) {
   return info.getBindingIdentifier(
-    (getKnownFromPropTree(propTree, name) as BindingPropTree).binding,
+    (getPropTreeAt(propTree, name) as BindingPropTree).binding,
     `${importAlias}_${name}`,
   );
 }
@@ -1460,21 +1454,21 @@ function hasGroupReads(
   propTree: BindingPropTree,
 ) {
   return group.some(
-    (name) => !!getKnownFromPropTree(propTree, attrTagLookup[name].name),
+    (name) => !!getPropTreeAt(propTree, attrTagLookup[name].name),
   );
 }
 
-// The attribute tags of a group the child reads, with what it reads of each.
-function getGroupReads(
+// The attribute tags of a group the child reads, with the prop tree of each.
+function getGroupPropTrees(
   group: AttrTagGroup,
   attrTagLookup: AttrTagLookup,
   propTree: BindingPropTree,
 ) {
-  const reads: [AttrTagMeta, BindingPropTree | true][] = [];
+  const trees: [AttrTagMeta, BindingPropTree | true][] = [];
   for (const name of group) {
     const attrTagMeta = attrTagLookup[name];
-    const read = getKnownFromPropTree(propTree, attrTagMeta.name);
-    if (read) reads.push([attrTagMeta, read]);
+    const tree = getPropTreeAt(propTree, attrTagMeta.name);
+    if (tree) trees.push([attrTagMeta, tree]);
   }
-  return reads;
+  return trees;
 }

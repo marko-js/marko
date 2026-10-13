@@ -45,11 +45,11 @@ import {
 } from "./reasons";
 import {
   type AssignedBindingExtra,
-  type ExtraRead,
   type Read,
   type ReferencedExtra,
-  createGetterRead,
-  createRead,
+  type ResolvedRead,
+  createResolvedGetterRead,
+  createResolvedRead,
   dropExtra,
   getAssignments,
   getCanonicalExtra,
@@ -72,8 +72,8 @@ import {
   type StructureOp,
 } from "./sections";
 import { finalizeTagDerivations } from "./set-tag-derived-from";
-import { addSetupExpr } from "./setup-work";
-import { getSectionSlot, getSlot, SlotKind } from "./slots";
+import { addSetupWork } from "./setup-work";
+import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
 import { solveReasons } from "./solve-reasons";
 import {
   ALWAYS,
@@ -88,7 +88,8 @@ export function finalizeReferences() {
   const intersectionsBySection = new Map<Section, Intersection[]>();
   settleAssignments();
   pruneBindings();
-  dropPrunedAssignments();
+  removeDroppedAssignments();
+  excludeAssignedChangeHandlers();
   resolveReads(intersectionsBySection);
   forEachSection(finalizeTagDerivations);
   resolveBindings();
@@ -126,20 +127,27 @@ function pruneBindings() {
 }
 
 // An assignment inside a value pruning dropped leaves its binding.
-function dropPrunedAssignments() {
-  const excluded = new Set<Binding>();
+function removeDroppedAssignments() {
   for (const idExtra of getAssignments()) {
-    const binding = idExtra.assignment;
     if (!inEmittedExpr(idExtra)) {
+      const binding = idExtra.assignment;
       binding.assignments = filter(binding.assignments, inEmittedExpr);
-    } else if (
-      !excluded.has(binding) &&
+    }
+  }
+}
+
+// Translate pulls an assigned property's change handler out of its pattern, so
+// the rest of that same pattern no longer holds it.
+function excludeAssignedChangeHandlers() {
+  const excluded = new Set<Binding>();
+  for (const { assignment: binding } of getAssignments()) {
+    if (
+      binding.assignments &&
       binding.aliasOf &&
-      binding.property !== undefined
+      binding.property !== undefined &&
+      !excluded.has(binding)
     ) {
       excluded.add(binding);
-      // Translate pulls an assigned property's change handler out of its
-      // pattern, so the rest of that same pattern no longer holds it.
       for (const alias of binding.aliasOf.aliases) {
         if (propsUtil.has(alias.excludeProperties, binding.property)) {
           alias.excludeProperties = propsUtil.add(
@@ -172,7 +180,7 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
       if (!exprBindings.referencedBindings) {
         // With no resolved references, any statement this expression keys
         // lands in its section's setup signal.
-        addSetupExpr(expr.section);
+        addSetupWork(expr.section);
       }
       forEach(exprBindings.lazyBindings, markLazyRead);
       if (exprBindings.closureBindings) {
@@ -203,7 +211,7 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         // so client code reads those with it.
         forEach(reads, (read) => {
           if (!read.fnRoot && read.extra.exprRoot?.retained) {
-            addReasonExprs(getSlot(read.binding), expr);
+            addReasonExprs(ensureSlot(read.binding), expr);
           }
         });
       }
@@ -286,7 +294,7 @@ function resolveBindings() {
       ) {
         if (!isResumedBranch(section)) {
           addReason(
-            getSectionSlot(section, SlotKind.Instances, section.parent!),
+            ensureSectionSlot(section, SlotKind.Instances, section.parent!),
             ALWAYS,
           );
         }
@@ -307,7 +315,7 @@ function resolveBindings() {
 
 function addSectionReasons(section: Section) {
   if (section.isHoistThrough) {
-    addReason(getSectionSlot(section, SlotKind.Scope), ALWAYS);
+    addReason(ensureSectionSlot(section, SlotKind.Scope), ALWAYS);
   }
 
   // A closure's changes reach the section through its owner chain.
@@ -318,7 +326,7 @@ function addSectionReasons(section: Section) {
 
   if (isResumedBranch(section)) {
     const closureSources = getSourcesForRef(getDirectClosures(section));
-    const branchSlot = getSectionSlot(section, SlotKind.Branch);
+    const branchSlot = ensureSectionSlot(section, SlotKind.Branch);
     addReason(
       branchSlot,
       section.isHoistThrough || section.hoisted
@@ -326,7 +334,7 @@ function addSectionReasons(section: Section) {
         : closureSources,
     );
     addReasonExprs(branchSlot, section.branchExpr);
-    addReasonExprs(getSlot(section.branch.nodeBinding), section.branchExpr);
+    addReasonExprs(ensureSlot(section.branch.nodeBinding), section.branchExpr);
   }
 }
 
@@ -591,17 +599,17 @@ export function readsValuesOnResume(expr: t.NodeExtra) {
 
 // Whether an expression (or the one a node's extra sits in) is emitted.
 function isEmitted(exprExtra: t.NodeExtra) {
-  return !getCanonicalExtra(exprExtra).pruned;
+  return !getCanonicalExtra(exprExtra).dropped;
 }
 
 function inEmittedExpr({ exprRoot, section }: AssignedBindingExtra) {
-  return !section.pruned && isEmitted(exprRoot);
+  return !section.dropped && isEmitted(exprRoot);
 }
 
 // A value with no side effects, or a call site's value, which only the child
 // bindings it feeds observe.
 function isDroppableValue(expr: t.NodeExtra) {
-  return (!!expr.pure || !!expr.callSiteExprs) && !expr.merged && !expr.pruned;
+  return (!!expr.pure || !!expr.callSiteExprs) && !expr.merged && !expr.dropped;
 }
 
 // A value feeding another binding too (one call site's attribute expression
@@ -626,17 +634,17 @@ function pruneBinding(binding: Binding): boolean {
   binding.pruned = false;
   for (const read of binding.reads.keys()) pruneDerived(read);
   // Likewise an assignment from such a value.
-  forEach(binding.assignments, pruneWriter);
+  forEach(binding.assignments, pruneAssignmentDerived);
 
   // An expression that also reads an ancestor reads this through it, and one
   // reading a property assigned in place reads it from the object, kept current.
   const assignedObject = getAssignedObject(binding);
   for (const [expr, reads] of binding.reads) {
-    const owner = assignedObject
-      ? getReadOwner(assignedObject, expr) || assignedObject
-      : getReadOwner(binding.aliasOf, expr);
-    if (owner) {
-      owner.reads.set(expr, concat(owner.reads.get(expr), reads));
+    const ancestor = assignedObject
+      ? getNearestReadBy(assignedObject, expr) || assignedObject
+      : getNearestReadBy(binding.aliasOf, expr);
+    if (ancestor) {
+      ancestor.reads.set(expr, concat(ancestor.reads.get(expr), reads));
       binding.reads.delete(expr);
     }
   }
@@ -681,7 +689,7 @@ export function hasEmittedAssignment(binding: Binding) {
   return some(binding.assignments, inEmittedExpr);
 }
 
-function pruneWriter({ exprRoot }: AssignedBindingExtra) {
+function pruneAssignmentDerived({ exprRoot }: AssignedBindingExtra) {
   pruneDerived(exprRoot);
 }
 
@@ -712,7 +720,7 @@ function resolveReferencedBindingsInFunction(
       binding.type !== BindingType.dom &&
       binding.type !== BindingType.global
     ) {
-      closest.add(getReadOwner(binding, expr)!);
+      closest.add(getNearestReadBy(binding, expr)!);
     }
   });
   if (closest.size) {
@@ -722,11 +730,12 @@ function resolveReferencedBindingsInFunction(
   return { referencedBindings, constantBindings };
 }
 
-// The nearest of a binding and its ancestors that holds the expression's
-// reads of it, once pruning has given each read to the binding it resolves to.
-function getReadOwner(binding: Binding | undefined, expr: ReferencedExtra) {
-  while (binding && !binding.reads.has(expr)) binding = binding.aliasOf;
-  return binding;
+// The nearest of a binding and its ancestors that the expression reads, once
+// pruning has given each read to the binding it resolves to.
+function getNearestReadBy(binding: Binding | undefined, expr: ReferencedExtra) {
+  for (let cur = binding; cur; cur = cur.aliasOf) {
+    if (cur.reads.has(expr)) return cur;
+  }
 }
 
 function markLazyRead(binding: Binding) {
@@ -788,7 +797,7 @@ function resolveReferencedBindings(
 
     if (getter) {
       extra.section = expr.section;
-      extra.read = createGetterRead(binding, undefined, getter);
+      extra.read = createResolvedGetterRead(binding, undefined, getter);
       addBindingGetter(binding, getter);
       // A hoisted read calls the getter from the section the getter is in.
       if (getter.hoisted) {
@@ -800,9 +809,9 @@ function resolveReferencedBindings(
     } else {
       const isChangeHandlerRead = extra.assignmentTo === binding;
       if (isChangeHandlerRead) {
-        const aliasRoot = getReadOwner(binding.aliasOf, expr);
-        if (aliasRoot) {
-          binding = aliasRoot;
+        const ancestor = getNearestReadBy(binding.aliasOf, expr);
+        if (ancestor) {
+          binding = ancestor;
         }
       } else if (binding.type !== BindingType.global) {
         extra.section = expr.section;
@@ -892,9 +901,9 @@ function getCanonicalIntersection(
   return intersection;
 }
 
-function resolveConstantReference(binding: Binding): ExtraRead | undefined {
+function resolveConstantReference(binding: Binding): ResolvedRead | undefined {
   const root = getConstantRoot(binding);
-  return root && createRead(root, getPropertyPath(binding, root));
+  return root && createResolvedRead(root, getPropertyPath(binding, root));
 }
 
 // A property of a constant is constant, so it reads through the constant.
@@ -909,15 +918,10 @@ function getConstantRoot(binding: Binding): Binding | undefined {
 
 function resolveExpressionReference(
   expr: ReferencedExtra,
-  { binding, ownVar }: Read,
+  { binding, inOwnBody }: Read,
 ) {
-  const aliasRoot = getReadOwner(binding.aliasOf, expr);
-  return aliasRoot
-    ? createRead(aliasRoot, getPropertyPath(binding, aliasRoot))
-    : createRead(binding, undefined, ownVar && isChildReturnVar(binding));
-}
-
-// Only a child's `<return>` sets a tag variable after its body may render.
-function isChildReturnVar(binding: Binding) {
-  return !!getAliasRoot(binding).returnedBy;
+  const ancestor = getNearestReadBy(binding.aliasOf, expr);
+  return ancestor
+    ? createResolvedRead(ancestor, getPropertyPath(binding, ancestor))
+    : createResolvedRead(binding, undefined, inOwnBody);
 }

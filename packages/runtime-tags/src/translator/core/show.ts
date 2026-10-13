@@ -12,7 +12,7 @@ import {
   assertValueAttr,
 } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
-import { getBranchEndArgs } from "../util/branch-tag";
+import { buildBranchEndArgs } from "../util/branch-tag";
 import evaluate from "../util/evaluate";
 import { declareConstBefore } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
@@ -24,13 +24,13 @@ import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
-  getOrCreateSection,
+  ensureSection,
   getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
-import { addSetupExpr } from "../util/setup-work";
+import { addSetupWork } from "../util/setup-work";
 import { addValue, getSignal } from "../util/signals";
-import { getSlot, SlotKind } from "../util/slots";
+import { ensureSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import { getTagFacts } from "../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
@@ -80,7 +80,7 @@ export default {
 
       assertLegalHiddenContext(tag);
 
-      const tagSection = getOrCreateSection(tag);
+      const tagSection = ensureSection(tag);
 
       // The only-child parent, or the body range's start marker, precedes the
       // body, so it is recorded here.
@@ -100,7 +100,7 @@ export default {
         mergeReferences(tagSection, tag.node, [display]);
       } else {
         // A statically hidden `<show>` still writes its display in setup.
-        addSetupExpr(tagSection);
+        addSetupWork(tagSection);
       }
     },
     exit(tag) {
@@ -130,8 +130,8 @@ export default {
 
       // The node binding settles here, where a range gets its markers.
       if (tagExtra[kStaticDisplay] === undefined) {
-        addReasonExprs(getSlot(nodeBinding), tagExtra);
-        addReasonExprs(getSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
+        addReasonExprs(ensureSlot(nodeBinding), tagExtra);
+        addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
       }
     },
   },
@@ -183,7 +183,7 @@ export default {
         const nodeBinding = tagExtra.nodeBinding!;
         const onlyChildParentTagName = getOnlyChildParentTagName(tag);
         const singleNode = tagExtra[kSingleNodeBody];
-        const endArgs = getBranchEndArgs(
+        const endArgs = buildBranchEndArgs(
           tagSection,
           nodeBinding,
           onlyChildParentTagName,
@@ -200,7 +200,7 @@ export default {
           : callRuntime(
               "_show_start",
               t.cloneNode(display, true),
-              ...getBranchEndArgs(
+              ...buildBranchEndArgs(
                 tagSection,
                 nodeBinding,
                 onlyChildParentTagName,

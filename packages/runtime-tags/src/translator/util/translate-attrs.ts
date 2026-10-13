@@ -4,7 +4,7 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 import { getSectionRendererIdentifier } from "./binding-has-prop";
 import {
   type BindingPropTree,
-  getKnownFromPropTree,
+  getPropTreeAt,
   hasAllKnownProps,
 } from "./binding-prop-tree";
 import { type Binding, getCanonicalBinding, propsUtil } from "./bindings";
@@ -52,7 +52,7 @@ export function translateAttrs(
       const attrTagMeta = attrTagLookup[name];
       if (
         !seen.has(attrTagMeta.name) &&
-        getKnownFromPropTree(propTree, attrTagMeta.name)
+        getPropTreeAt(propTree, attrTagMeta.name)
       ) {
         seen.add(attrTagMeta.name);
         if (attrTagMeta.dynamic) {
@@ -92,7 +92,7 @@ export function translateAttrs(
           } else {
             const translatedAttrTag = translateAttrs(
               child,
-              getKnownFromPropTree(propTree, attrTagMeta.name),
+              getPropTreeAt(propTree, attrTagMeta.name),
               undefined,
               statements,
               contentKey,
@@ -118,7 +118,7 @@ export function translateAttrs(
     }
   }
 
-  if (!seen.has(contentKey) && getKnownFromPropTree(propTree, contentKey)) {
+  if (!seen.has(contentKey) && getPropTreeAt(propTree, contentKey)) {
     const contentExpression = buildContent(tag.get("body"));
     if (contentExpression) {
       const contentProp = t.objectProperty(
@@ -144,14 +144,11 @@ export function translateAttrs(
           t.spreadElement(getDeclaredBindingExpression(knownSpread, true)),
         );
       }
-    } else if (!value.extra?.pruned) {
+    } else if (!value.extra?.dropped) {
       // Analysis drops a value nothing reads, so neither output emits it.
       if (t.isMarkoSpreadAttribute(attr)) {
         attrProperties.push(t.spreadElement(value));
-      } else if (
-        !seen.has(attr.name) &&
-        getKnownFromPropTree(propTree, attr.name)
-      ) {
+      } else if (!seen.has(attr.name) && getPropTreeAt(propTree, attr.name)) {
         seen.add(attr.name);
         attrProperties.push(toObjectProperty(attr.name, value));
       }
@@ -184,14 +181,14 @@ export function addDynamicAttrTagStatements(
 ): number {
   const tag = attrTags[index];
   // Analysis drops control flow holding only attribute tags the child never reads.
-  if (tag.isMarkoTag() && !tag.node.extra!.pruned) {
+  if (tag.isMarkoTag() && !tag.node.extra!.dropped) {
     if (isAttributeTag(tag)) {
       const attrTagMeta = attrTagLookup[getTagName(tag)];
-      const attrTagExport = getKnownFromPropTree(propTree, attrTagMeta.name);
-      if (attrTagExport && attrTagMeta.dynamic) {
+      const attrTagTree = getPropTreeAt(propTree, attrTagMeta.name);
+      if (attrTagTree && attrTagMeta.dynamic) {
         const translatedAttrTag = translateAttrs(
           tag,
-          attrTagExport,
+          attrTagTree,
           undefined,
           statements,
           contentKey,

@@ -26,7 +26,7 @@ import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getPrefixedScopeAccessor } from "../util/scope-accessor";
 import { scopeIdentifier } from "../util/scope-read";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addValue, initValue } from "../util/signals";
 
@@ -54,7 +54,7 @@ export default {
     }
 
     // The id is initialized in setup unless keyed by the value's references.
-    addSetupExpr(getOrCreateSection(tag), valueNode);
+    addSetupExpr(ensureSection(tag), valueNode);
   },
   translate: {
     exit(tag) {
@@ -62,7 +62,7 @@ export default {
       const [valueAttr] = node.attributes;
 
       // Nothing reads it and its value was dropped, so there is no id to mint.
-      if ((valueAttr ? valueAttr.value : node).extra?.pruned) {
+      if ((valueAttr ? valueAttr.value : node).extra?.dropped) {
         tag.remove();
         return;
       }

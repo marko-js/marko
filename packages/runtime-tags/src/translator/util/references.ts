@@ -10,7 +10,7 @@ import {
   bindingUtil,
   createBinding,
   getCanonicalBinding,
-  getOrCreatePropertyAlias,
+  ensurePropertyAlias,
   isRest,
   isIndexProperty,
   isOwnBinding,
@@ -36,7 +36,7 @@ import {
 import { addOwnerReason, type KnownExprs, type Reason } from "./reasons";
 import {
   getCommonSection,
-  getOrCreateSection,
+  ensureSection,
   getSectionForBody,
   type Section,
   setReadsOwner,
@@ -50,7 +50,7 @@ interface ReferencedFunctionExtra extends t.FunctionExtra, ReferencedExtra {}
 export interface Read {
   binding: Binding;
   extra: t.NodeExtra;
-  ownVar: boolean;
+  inOwnBody: boolean;
   getter: Getter | undefined;
   comparedTo: t.Node | undefined;
   deferred: boolean;
@@ -58,10 +58,10 @@ export interface Read {
   fnRoot: ReferencedFunctionExtra | undefined;
 }
 
-export interface ExtraRead {
+export interface ResolvedRead {
   binding: Binding;
   props: Opt<string>;
-  ownVar: boolean;
+  inOwnBody: boolean;
   getter: Getter | undefined;
   /** Set for same-section local reads: the function root that owns the read. */
   localFn?: ReferencedFunctionExtra;
@@ -110,8 +110,8 @@ declare module "@marko/compiler/dist/types" {
     binding?: Binding;
     assignment?: Binding;
     assignmentTo?: Binding;
-    read?: ExtraRead;
-    pruned?: true;
+    read?: ResolvedRead;
+    dropped?: true;
     /** The expression this node sits in: dropped or merged as one. */
     exprRoot?: NodeExtra;
     isEffect?: true;
@@ -153,7 +153,7 @@ declare module "@marko/compiler/dist/types" {
 
 // An attribute tag `<for>` param reaches only the content the loop creates, as a
 // param of that content its call site supplies; nested sections close over it.
-function getOrCreateLocalClosure(local: Binding, section: Section) {
+function ensureLocalClosure(local: Binding, section: Section) {
   while (section.parent !== local.section) section = section.parent!;
   let closure = local.localClosures?.get(section);
   if (!closure) {
@@ -194,7 +194,7 @@ export function trackDomVarReferences(
   }
 
   const babelBinding = tag.scope.getBinding(tagVar.name)!;
-  const section = getOrCreateSection(tag);
+  const section = ensureSection(tag);
 
   binding.originalName = tagVar.name;
 
@@ -214,7 +214,7 @@ export function trackDomVarReferences(
 
   for (const ref of babelBinding.referencePaths as t.NodePath<t.Identifier>[]) {
     assertReferencedInRender(ref, tagVar.name);
-    const refSection = getOrCreateSection(ref);
+    const refSection = ensureSection(ref);
     const invoked = isInvokedFunction(ref);
     const hoisted = isReferenceHoisted(babelBinding.path, ref)
       ? getCommonSection(refSection, binding.section)
@@ -244,7 +244,7 @@ export function trackVarReferences(
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
-    const section = getOrCreateSection(tag);
+    const section = ensureSection(tag);
     let target = aliased && getCanonicalBinding(aliased);
     if (target) {
       const { excludeProperties, restOffset } = target;
@@ -286,7 +286,7 @@ export function trackParamsReferences(
 ) {
   const params = body.node.params!;
   if (body.node.body.length && params.length) {
-    const section = getOrCreateSection(body);
+    const section = ensureSection(body);
     const paramsBinding = ((body.node.extra ??= {}).binding = createBinding(
       generateUid("params"),
       type,
@@ -403,7 +403,7 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
   for (const ref of referencePaths as t.NodePath<t.Identifier>[]) {
     const markoRoot = getMarkoRoot(ref);
     assertReferencedInRender(ref, ref.node.name, markoRoot);
-    const refSection = getOrCreateSection(ref);
+    const refSection = ensureSection(ref);
     // HTML writes a read of an undeclared binding through what it reads from,
     // so where that name is hidden the binding is declared and read by its own.
     if (!binding.declared && !isRest(binding)) {
@@ -449,7 +449,7 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
         );
         const refExtra = (ref.node.extra ??= {});
         refExtra.section = refSection;
-        refExtra.read = createRead(binding, undefined);
+        refExtra.read = createResolvedRead(binding, undefined);
         refExtra.read.localFn = fnExtra;
       }
     }
@@ -522,7 +522,7 @@ function trackAssignment(
   const fnRoot = getFnRoot(fnParent);
   const fnExtra =
     fnRoot && ((fnRoot.node.extra ??= {}) as ReferencedFunctionExtra);
-  const section = getOrCreateSection(assignment);
+  const section = ensureSection(assignment);
   setReferencesScope(assignment);
   forEachIdentifierPath(assignment, (id) => {
     if (id.node.name === binding.name) {
@@ -590,11 +590,7 @@ export function setReferencesScope(path: t.NodePath<any>) {
 
 // One signal-inert root binding per template, minted on first access.
 const [getGlobalBinding] = createProgramState(() =>
-  createBinding(
-    "$global",
-    BindingType.global,
-    getOrCreateSection(getProgram()),
-  ),
+  createBinding("$global", BindingType.global, ensureSection(getProgram())),
 );
 
 // `$global` reads route through the reference graph, so property
@@ -644,7 +640,7 @@ function createBindingsAndTrackReferences(
       break;
     }
     case "ObjectPattern": {
-      const patternBinding = getOrCreatePatternBinding(
+      const patternBinding = ensurePatternBinding(
         lVal,
         type,
         section,
@@ -706,7 +702,7 @@ function createBindingsAndTrackReferences(
       break;
     }
     case "ArrayPattern": {
-      const patternBinding = getOrCreatePatternBinding(
+      const patternBinding = ensurePatternBinding(
         lVal,
         type,
         section,
@@ -773,7 +769,7 @@ function createBindingsAndTrackReferences(
 }
 
 // What a pattern destructures: the value or property it reads, else a new binding.
-function getOrCreatePatternBinding(
+function ensurePatternBinding(
   lVal: t.ObjectPattern | t.ArrayPattern,
   type: BindingType,
   section: Section,
@@ -868,11 +864,11 @@ function trackReference(
       | t.NodePath<t.MemberExpression>
       | t.NodePath<t.OptionalMemberExpression>;
 
-    reference = getOrCreatePropertyAlias(reference, prop);
+    reference = ensurePropertyAlias(reference, prop);
   }
 
   if (reference.type === BindingType.local) {
-    reference = getOrCreateLocalClosure(reference, getOrCreateSection(root));
+    reference = ensureLocalClosure(reference, ensureSection(root));
   }
 
   // The read may resolve elsewhere, but HTML writes one rooted at a declared
@@ -979,7 +975,7 @@ function mergeInto(
           );
         }
       }
-    } else if (extra?.pruned) {
+    } else if (extra?.dropped) {
       /* v8 ignore next -- a dropped reference is never merged into another */
       throw new Error("Cannot merged a dropped reference.");
     }
@@ -1073,14 +1069,14 @@ export function addRead(
     binding,
     extra,
     getter,
-    ownVar: false,
+    inOwnBody: false,
     comparedTo: undefined,
     deferred: false,
     fnRoot: undefined,
   };
   // Content no output renders keeps no binding alive: reads recorded before it
   // was dropped are untracked by `dropContent`, and later ones stop here.
-  if (section.pruned) return read;
+  if (section.dropped) return read;
   binding.reads.set(exprExtra, push(binding.reads.get(exprExtra), read));
   exprExtra.section = section;
   readsByExpression.set(
@@ -1114,7 +1110,7 @@ function forEachNodeExtra(
 }
 
 export function dropExtra(exprExtra: ReferencedExtra) {
-  exprExtra.pruned = true;
+  exprExtra.dropped = true;
   untrackExtra(exprExtra);
 }
 
@@ -1145,11 +1141,11 @@ function untrackExtra(exprExtra: ReferencedExtra) {
 }
 
 // Content no output renders: the expressions in it are untracked, and each body
-// in it is pruned along with its section, whether started or not.
+// in it is dropped along with its section, whether created or not.
 export function dropContent(body: t.MarkoTagBody) {
   const bodyExtra = (body.extra ??= {});
-  bodyExtra.pruned = true;
-  if (bodyExtra.section) bodyExtra.section.pruned = true;
+  bodyExtra.dropped = true;
+  if (bodyExtra.section) bodyExtra.section.dropped = true;
   untrackNodes(body.params);
   dropChildren(body.body);
 }
@@ -1190,14 +1186,14 @@ function addReadToExpression(
   const { node } = root;
   const fnRoot = getFnRoot(root);
   const exprRoot = getExprRoot(fnRoot || root);
-  const section = getOrCreateSection(exprRoot);
+  const section = ensureSection(exprRoot);
   // Reads recorded after the owning expression merged into another node's extra
   // must land on the merge target, else its references split and the read is lost.
   const rootExtra = (exprRoot.node.extra ??= { section }) as ReferencedExtra;
   const exprExtra = getCanonicalExtra(rootExtra);
   // A read tracked after its expression was dropped (`$global`, a hoisted
   // reference) must not keep the binding alive.
-  if (exprExtra.pruned) return;
+  if (exprExtra.dropped) return;
   const extra = (node.extra ??= {});
   extra.exprRoot = rootExtra;
   const read = addRead(exprExtra, extra, binding, section, getter);
@@ -1212,7 +1208,7 @@ function addReadToExpression(
 
   if (!getter && binding.type === BindingType.derived) {
     const babelBinding = root.scope.getBinding(binding.name);
-    read.ownVar =
+    read.inOwnBody =
       !!babelBinding &&
       babelBinding.kind !== "param" &&
       isReferenceInOwnBody(babelBinding.path, root);
@@ -1284,20 +1280,20 @@ export function getAllTagReferenceNodes(
   return referenceNodes;
 }
 
-export function createRead(
+export function createResolvedRead(
   binding: Binding,
   props: Opt<string>,
-  ownVar: boolean = false,
-): ExtraRead {
-  return { binding, props, ownVar, getter: undefined };
+  inOwnBody: boolean = false,
+): ResolvedRead {
+  return { binding, props, inOwnBody, getter: undefined };
 }
 
-export function createGetterRead(
+export function createResolvedGetterRead(
   binding: Binding,
   props: Opt<string>,
   getter: Getter,
-): ExtraRead {
-  return { binding, props, ownVar: false, getter };
+): ResolvedRead {
+  return { binding, props, inOwnBody: false, getter };
 }
 
 export interface ReferencedExtra extends t.NodeExtra {
@@ -1307,7 +1303,7 @@ export interface ReferencedExtra extends t.NodeExtra {
 export function isReferencedExtra(
   extra: t.NodeExtra | undefined,
 ): extra is ReferencedExtra {
-  return !!(extra && !extra.pruned && extra.section);
+  return !!(extra && !extra.dropped && extra.section);
 }
 
 export interface AssignedBindingExtra extends ReferencedExtra {
@@ -1319,11 +1315,11 @@ export interface AssignedBindingExtra extends ReferencedExtra {
 
 // A resumed instance runs only its effects and its registered functions, so
 // only an assignment inside one of those can still write on the client.
-export function hasResumableWriter(binding: Binding) {
-  return some(binding.assignments, isResumableWriter);
+export function hasResumableAssignment(binding: Binding) {
+  return some(binding.assignments, isResumableAssignment);
 }
 
-function isResumableWriter({ exprRoot, fnRoot }: AssignedBindingExtra) {
+function isResumableAssignment({ exprRoot, fnRoot }: AssignedBindingExtra) {
   return !!getCanonicalExtra(exprRoot).isEffect || isRegisteredFnExtra(fnRoot);
 }
 

@@ -18,17 +18,17 @@ import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
-  getOrCreateSection,
+  ensureSection,
+  ensureBodySection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  startSection,
 } from "../util/sections";
 import {
   addValue,
   getResumeRegisterId,
   getSignal,
-  replaceNullishAndEmptyFunctionsWith0,
+  trimEmptyArgs,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import * as structure from "../util/structure";
@@ -81,7 +81,7 @@ export default {
         }
       }
     }
-    const section = getOrCreateSection(tag);
+    const section = ensureSection(tag);
     const tagExtra = mergeTagReferences(section, tag.node);
     const nodeBinding = (tagExtra.nodeBinding = createBinding(
       "#text",
@@ -99,7 +99,7 @@ export default {
         );
     }
 
-    initBranchSection(startSection(tag.get("body"))!, tagExtra, {
+    initBranchSection(ensureBodySection(tag.get("body"))!, tagExtra, {
       nodeBinding,
       optional: false,
     });
@@ -179,7 +179,7 @@ export default {
           return callRuntime(
             "_try",
             getScopeAccessorLiteral(nodeBinding, true),
-            ...replaceNullishAndEmptyFunctionsWith0([
+            ...trimEmptyArgs([
               template,
               walks,
               setup,
@@ -214,19 +214,16 @@ function getTryParts(tag: t.NodePath<t.MarkoTag>) {
     catchTag,
     catchSection: catchTag && getSectionForBody(catchTag.get("body")),
     placeholderTag,
+    // An empty `@placeholder` shows nothing, so it is no placeholder.
     placeholderSection:
       placeholderTag && getSectionForBody(placeholderTag.get("body")),
   };
 }
 
-// An empty `@placeholder` shows nothing, so it is no placeholder; an empty
-// `@catch` still catches.
 function getAttrTag(tag: t.NodePath<t.MarkoTag>, name: string) {
   for (const child of tag.get("attributeTags")) {
     if (child.isMarkoTag() && getTagName(child) === name) {
-      return name === "@catch" || getSectionForBody(child.get("body"))
-        ? child
-        : undefined;
+      return child;
     }
   }
 }

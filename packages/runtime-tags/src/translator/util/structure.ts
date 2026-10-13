@@ -281,10 +281,10 @@ function refContent(ref: StructureRef | undefined) {
 }
 
 // A ref reads this compile's identifier for a renderer part: a sibling
-// section's hoisted constant, or a child export (imported unless this program).
+// section's declared constant, or a child export (imported unless this program).
 function resolveRef(ref: StructureRef, part: "template" | "walks") {
   if (ref.kind === StructureKind.SectionRef) {
-    return getSectionMetaIdentifiers(ref.section)[
+    return declareSectionMeta(ref.section)[
       part === "template" ? "writes" : "walks"
     ];
   }
@@ -308,7 +308,7 @@ interface SectionMeta {
 export const [getSectionMeta] = createSectionState<SectionMeta>(
   "SectionMeta",
   (section) => {
-    if (!section.structure || section.pruned) {
+    if (!section.structure || section.dropped) {
       return { walks: undefined, writes: undefined };
     }
     const { writes, walks, walkComment } = resolveStructure(section);
@@ -324,7 +324,7 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
 );
 
 // Writes the program's template and walks exports, preceded by the constants
-// hoisted for referenced sections. Every needed section meta must exist first.
+// declared for referenced sections. Every needed section meta must exist first.
 export function writeStructureExports(program: t.NodePath<t.Program>) {
   const { walks, writes } = getSectionMeta(getSectionForBody(program)!);
   const exportNames = program.node.extra.exportNames!;
@@ -353,14 +353,14 @@ export function writeStructureExports(program: t.NodePath<t.Program>) {
   }
 }
 
-// Naming a section's parts first resolves its meta, which names the sections
-// it references, so this list is always in dependency order.
+// Declaring a section's parts first resolves its meta, which declares the
+// sections it references, so this list is always in dependency order.
 const [getMetaDecls] = createProgramState<t.VariableDeclarator[]>(() => []);
-const sectionMetaIsIds = new WeakSet<SectionMeta>();
-function getSectionMetaIdentifiers(section: Section) {
+const declaredSectionMetas = new WeakSet<SectionMeta>();
+function declareSectionMeta(section: Section) {
   const meta = getSectionMeta(section);
-  if (!sectionMetaIsIds.has(meta)) {
-    sectionMetaIsIds.add(meta);
+  if (!declaredSectionMetas.has(meta)) {
+    declaredSectionMetas.add(meta);
     const { walks, writes } = meta;
     const decls = getMetaDecls();
 

@@ -8,7 +8,7 @@ import {
 
 import { assertNoBodyContent, assertValueAttr } from "../util/assert";
 import runtimeInfo from "../util/runtime-info";
-import { getOrCreateSection } from "../util/sections";
+import { ensureSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addTagStatement } from "../util/signals";
 
@@ -20,7 +20,7 @@ export default {
     assertNoBodyContent(tag);
     const valueAttr = assertValueAttr(tag, true);
 
-    addSetupExpr(getOrCreateSection(tag), valueAttr.value);
+    addSetupExpr(ensureSection(tag), valueAttr.value);
   },
   translate: {
     exit(tag) {

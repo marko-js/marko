@@ -68,7 +68,7 @@ read of an alias or destructured part as what it reads through, keeping the
 author's member chain; HTML declares a pattern of an aliased value only where it
 holds a rest, as written. Content the child never reads, a tag's or an attribute
 tag's, is dropped whole (`dropContent`): its expressions are untracked and its
-sections marked `Section.pruned`, so reads later recorded in them are not kept.
+sections marked `Section.dropped`, so reads later recorded in them are not kept.
 
 `finalizeReferences()` is the center of analysis. It resolves each expression to
 canonical bindings, separates constant/live/hoisted/lazy reads, prunes unused
@@ -116,7 +116,7 @@ groups, or none. `write-guard.ts` emits/hoists `_write_if` and
 
 Compiler signals are keyed by `undefined` (setup), one binding, or a canonical
 intersection. They accumulate derived forwarding, renders, effects, closures,
-and persistence. Lowering removes empty signals, aliases one-hop forwarders,
+and storage. Lowering removes empty signals, aliases one-hop forwarders,
 uses `_const`/`_let` only when storage/dirty checking is needed, uses `_or` for
 remaining intersections, and registers only resumable effects/functions/
 renderers. DOM and HTML translation consume the same graph; disagreement often
@@ -161,7 +161,7 @@ visits comments, reconstructs branches, and runs effects with `isResuming = 1`.
 Resume visits branch markers only in a bundle that enables branches, which any
 retained `_if`, `_for`, `_show` or dynamic tag runtime does (`withBranches`).
 An unconditionally written branch whose condition reads state with a resumable
-writer (a resumed effect or registered function assigns it) keeps its own
+assignment (one in a resumed effect or registered function) keeps its own
 runtime, so its owner links from its branch marker; any other branch's owner
 comes from the payload, as no template can see whether another one enables
 branches.

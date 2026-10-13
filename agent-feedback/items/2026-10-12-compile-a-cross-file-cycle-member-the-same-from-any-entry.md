@@ -2,7 +2,7 @@
 type: bug
 impact: med
 effort: med
-site: packages/runtime-tags/src/translator/util/sections.ts › startSection
+site: packages/runtime-tags/src/translator/util/sections.ts › ensureBodySection
 ---
 
 # Compile a cross-file cycle member the same from any entry

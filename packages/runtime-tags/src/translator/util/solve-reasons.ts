@@ -57,7 +57,7 @@ import {
   isSameOrChildSection,
   type Section,
 } from "./sections";
-import { findSlot, getSlot, SlotKind } from "./slots";
+import { findSlot, ensureSlot, SlotKind } from "./slots";
 import {
   ALWAYS,
   type Sources,
@@ -137,7 +137,7 @@ function addIntersectionMemberReason(
         mergeSources(member.sources, partner.sources),
       );
     }
-    addReason(getSlot(member), partner.sources);
+    addReason(ensureSlot(member), partner.sources);
   }
 }
 
@@ -181,9 +181,10 @@ function withoutOwnSources(closure: Binding, sources: Sources | undefined) {
 function getBranchExprReason(section: Section) {
   const { derives, branchExpr } = section;
   if (derives) {
-    const registerReason = getRendererReason(section) || undefined;
-    if (registerReason === true) return true;
-    let reason = mergeSources(registerReason, getSourcesForDerived(derives));
+    let reason = mergeSources(
+      getRendererReason(section) || undefined,
+      getSourcesForDerived(derives),
+    );
     // A direct call renders the body in place, so what creates a section from
     // the call up to the define (or the body, for a recursive call) creates it.
     forEach(section.callSections, (callSection) => {
@@ -199,7 +200,7 @@ function getBranchExprReason(section: Section) {
     });
     return reason;
   }
-  return !branchExpr || getSourcesForExpr(branchExpr);
+  return branchExpr ? getSourcesForExpr(branchExpr) : ALWAYS;
 }
 
 // What creates `section`, or a section between it and `ancestor`, anew on the
@@ -207,13 +208,7 @@ function getBranchExprReason(section: Section) {
 function getBranchExprReasonUntil(section: Section, ancestor: Section) {
   let reason: Sources | undefined;
   for (let cur = section; cur !== ancestor; cur = cur.parent!) {
-    const branchExprReason = getBranchExprReason(cur);
-    if (branchExprReason) {
-      reason = mergeSources(
-        reason,
-        branchExprReason === true ? ALWAYS : branchExprReason,
-      );
-    }
+    reason = mergeSources(reason, getBranchExprReason(cur));
   }
   return reason;
 }
@@ -225,7 +220,7 @@ function addClosureReasons(section: Section) {
     const sourceSection = closure.section;
     const branchesReason = getBranchExprReasonUntil(section, sourceSection);
     addReason(
-      getSlot(closure),
+      ensureSlot(closure),
       branchesReason?.always
         ? branchesReason
         : withoutOwnSources(closure, branchesReason),
@@ -236,10 +231,10 @@ function addClosureReasons(section: Section) {
 
       // A constant never changes, so no signal subscribes to it.
       if (closure.sources && closure.type !== BindingType.constant) {
-        addReason(getSlot(closure, SlotKind.ClosureScopes), closure.sources);
+        addReason(ensureSlot(closure, SlotKind.ClosureScopes), closure.sources);
         if (getDynamicClosureIndex(closure, section)) {
           addReason(
-            getSlot(closure, SlotKind.ClosureSignalIndex, section),
+            ensureSlot(closure, SlotKind.ClosureSignalIndex, section),
             closure.sources,
           );
         }
@@ -258,14 +253,14 @@ function addRegisteredFnReasons(
     for (const fn of exprFnReads.keys()) {
       const reason = fn.reason;
       if (reason) {
-        const addRead = (binding: Binding) => {
-          addReason(getSlot(binding), reason);
+        const addReadReason = (binding: Binding) => {
+          addReason(ensureSlot(binding), reason);
           if (binding.section !== fn.section) {
             addOwnerReason(fn.section, binding.section, reason);
           }
         };
-        forEach(getReferencedBindingsInFunction(fn), addRead);
-        forEach(getConstantBindingsInFunction(fn), addRead);
+        forEach(getReferencedBindingsInFunction(fn), addReadReason);
+        forEach(getConstantBindingsInFunction(fn), addReadReason);
       }
     }
   }

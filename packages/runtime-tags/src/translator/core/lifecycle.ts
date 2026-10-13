@@ -13,7 +13,7 @@ import { getReferencedBindings, mergeTagReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { scopeIdentifier } from "../util/scope-read";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { ensureSection, getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { createSectionState } from "../util/state";
 import { propsToExpression, translateAttrs } from "../util/translate-attrs";
@@ -31,7 +31,7 @@ export default {
     assertNoSpreadAttrs(tag);
 
     const { node } = tag;
-    const section = getOrCreateSection(tag);
+    const section = ensureSection(tag);
     for (const attr of node.attributes) {
       (attr.value.extra ??= {}).consumed = true;
     }

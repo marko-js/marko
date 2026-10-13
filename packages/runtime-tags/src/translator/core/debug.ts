@@ -8,8 +8,8 @@ import {
 
 import { assertNoBodyContent, assertValueAttr } from "../util/assert";
 import runtimeInfo from "../util/runtime-info";
-import { getOrCreateSection } from "../util/sections";
-import { addSetupExpr } from "../util/setup-work";
+import { ensureSection } from "../util/sections";
+import { addSetupExpr, addSetupWork } from "../util/setup-work";
 import { addTagStatement } from "../util/signals";
 import { withPreviousLocation } from "../util/with-previous-location";
 
@@ -21,7 +21,12 @@ export default {
     assertNoBodyContent(tag);
     const valueAttr = assertValueAttr(tag);
 
-    addSetupExpr(getOrCreateSection(tag), valueAttr?.value);
+    const section = ensureSection(tag);
+    if (valueAttr) {
+      addSetupExpr(section, valueAttr.value);
+    } else {
+      addSetupWork(section);
+    }
   },
   translate: {
     exit(tag) {

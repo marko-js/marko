@@ -23,9 +23,9 @@ import {
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { createScopeReadExpression } from "../util/scope-read";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { ensureSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
-import { getSlot } from "../util/slots";
+import { ensureSlot } from "../util/slots";
 import * as structure from "../util/structure";
 import { getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
@@ -56,7 +56,7 @@ export default {
       }
     }
     if (needsBinding) {
-      const tagSection = getOrCreateSection(tag);
+      const tagSection = ensureSection(tag);
       const tagExtra = mergeReferences(tagSection, tag.node, referenceNodes);
       nodeBinding = tagExtra.nodeBinding = createBinding(
         "#comment",
@@ -72,7 +72,7 @@ export default {
       trackDomVarReferences(tag, nodeBinding);
 
       if (isTagVarUsed(tag)) addAlwaysRead(nodeBinding);
-      addReasonExprs(getSlot(nodeBinding), tagExtra);
+      addReasonExprs(ensureSlot(nodeBinding), tagExtra);
     }
 
     // The whole client template records here (its text children record none);

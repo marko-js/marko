@@ -23,14 +23,14 @@ import {
 } from "../../util/sections";
 import {
   addStatement,
+  buildSignalFn,
   getResumeRegisterId,
   getSetup,
   getSignal,
-  getSignalFn,
   initValue,
-  replaceNullishAndEmptyFunctionsWith0,
   type Signal,
-  signalHasStatements,
+  signalHasWork,
+  trimEmptyArgs,
   writeRegisteredFns,
   writeSignals,
 } from "../../util/signals";
@@ -51,7 +51,7 @@ export default {
           forEach(childSection.referencedClosures, (closure) => {
             if (closure.type !== BindingType.constant) {
               const closureSignal = getSignal(childSection, closure);
-              if (signalHasStatements(closureSignal)) {
+              if (signalHasWork(closureSignal)) {
                 const invocation = t.expressionStatement(
                   t.callExpression(
                     isDynamicClosure(childSection, closure)
@@ -97,7 +97,7 @@ export default {
             initValue(closure).build = undefined;
           });
           const tagParamsIdentifier =
-            tagParamsSignal && signalHasStatements(tagParamsSignal)
+            tagParamsSignal && signalHasWork(tagParamsSignal)
               ? tagParamsSignal.identifier
               : undefined;
           const { writes } = getSectionMeta(childSection);
@@ -123,12 +123,8 @@ export default {
               forEach(childSection.localClosures, (closure) => {
                 const closureSignal = getSignal(childSection, closure);
                 const key = toPropertyName(getScopeAccessor(closure, true));
-                // A lazily read value is only kept if it is stored here.
-                if (
-                  signalHasStatements(closureSignal) ||
-                  closureSignal.forcePersist
-                ) {
-                  const expr = getSignalFn(closureSignal);
+                if (signalHasWork(closureSignal)) {
+                  const expr = buildSignalFn(closureSignal);
                   // The signal is inlined here, after its section's signals
                   // were written, so what it declares is written with it.
                   if (closureSignal.prependStatements) {
@@ -149,7 +145,7 @@ export default {
               let renderer: t.Expression = callRuntime(
                 "_content",
                 t.stringLiteral(registerId),
-                ...replaceNullishAndEmptyFunctionsWith0([
+                ...trimEmptyArgs([
                   writes,
                   walks,
                   ...markReturn(
@@ -242,7 +238,7 @@ export default {
           callRuntime(
             "_template",
             t.stringLiteral(getFile().metadata.marko.id),
-            ...replaceNullishAndEmptyFunctionsWith0([
+            ...trimEmptyArgs([
               templateIdentifier,
               walksIdentifier,
               ...markReturn(

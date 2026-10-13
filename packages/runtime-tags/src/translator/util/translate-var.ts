@@ -38,13 +38,13 @@ export default function translateVar(
     // A var of another binding declares only the patterns holding a rest; a
     // rest or name its own section declares is declared there alone.
     const section = getSection(tag);
-    let allPruned = true;
+    let sectionDeclares = false;
     forEachIdentifier(tagVar, (id) => {
       const binding = id.extra!.binding!;
       if (binding.pruned) return;
       if (binding.declared) {
         if (binding.section === section) {
-          allPruned = false;
+          sectionDeclares = true;
         } else {
           translateAliasInSection(tag, id, binding, kind);
         }
@@ -52,7 +52,7 @@ export default function translateVar(
         translateRest(tag, id, binding, kind);
       }
     });
-    if (allPruned) return;
+    if (!sectionDeclares) return;
     removeUndeclared(tagVar, section);
     initialValue = getDeclaredBindingExpression(
       initialValue.extra!.binding!,

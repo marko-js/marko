@@ -24,18 +24,18 @@ import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { scopeIdentifier } from "../util/scope-read";
 import {
   getBranchRendererArgs,
-  getOrCreateSection,
+  ensureSection,
+  ensureBodySection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  startSection,
 } from "../util/sections";
-import { addSetupExpr } from "../util/setup-work";
+import { addSetupWork } from "../util/setup-work";
 import {
   addStatement,
   addValue,
   getSignal,
-  replaceNullishAndEmptyFunctionsWith0,
+  trimEmptyArgs,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import * as structure from "../util/structure";
@@ -58,7 +58,7 @@ export default {
     );
     const { node } = tag;
     const tagBody = tag.get("body");
-    const section = getOrCreateSection(tag);
+    const section = ensureSection(tag);
     const valueAttr = assertValueAttr(tag, true);
     assertHasBody(tag);
     const tagExtra = (tag.node.extra ??= {});
@@ -80,7 +80,7 @@ export default {
         );
     }
 
-    const bodySection = startSection(tagBody)!;
+    const bodySection = ensureBodySection(tagBody)!;
     const valueExtra = (valueAttr.value.extra ??= {});
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
@@ -97,7 +97,7 @@ export default {
     });
 
     // The content renderer is initialized unconditionally in setup.
-    addSetupExpr(section);
+    addSetupWork(section);
 
     structure.marker(tag, nodeBinding);
     structure.enterShallow(tag);
@@ -156,7 +156,7 @@ export default {
                 callRuntime(
                   "_await_content",
                   getScopeAccessorLiteral(nodeBinding, true),
-                  ...replaceNullishAndEmptyFunctionsWith0(branchRenderArgs),
+                  ...trimEmptyArgs(branchRenderArgs),
                 ),
               ),
             ]),

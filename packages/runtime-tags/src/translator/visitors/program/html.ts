@@ -4,8 +4,8 @@ import { getFile } from "@marko/compiler/babel-utils";
 import { BindingType } from "../../util/bindings";
 import {
   generateUidIdentifier,
-  getSharedUid,
-  usedSharedUid,
+  ensureSharedUid,
+  hasSharedUid,
 } from "../../util/generate-uid";
 import { getDeclaredBindingExpression } from "../../util/get-declared-binding-expression";
 import isStatic from "../../util/is-static";
@@ -31,8 +31,8 @@ import {
   getBindingGetterIdentifier,
   getHTMLSectionStatements,
   getResumeRegisterId,
-  setScopeProperty,
   writeHTMLResumeStatements,
+  writeSlot,
 } from "../../util/signals";
 import { replaceMethodNode, simplifyFunction } from "../../util/simplify-fn";
 import { findSectionSlot, SlotKind } from "../../util/slots";
@@ -105,7 +105,7 @@ export default {
               addWriteScopeBuilder(currentSection, (expr) =>
                 callRuntime("_subscribe", subscribersIdentifier, expr),
               );
-              setScopeProperty(
+              writeSlot(
                 findSectionSlot(
                   currentSection,
                   SlotKind.Instances,
@@ -154,7 +154,7 @@ export default {
 
       writeModuleRegistrations(program);
 
-      const contentId = usedSharedUid("content") && getSharedUid("content");
+      const contentId = hasSharedUid("content") && ensureSharedUid("content");
       const contentFn = t.arrowFunctionExpression(
         [t.identifier("input")],
         t.blockStatement(renderContent),
@@ -228,12 +228,12 @@ function replaceRegisteredFunctionNode(node: t.Node) {
     case "ClassMethod":
     case "ClassPrivateMethod":
     case "ObjectMethod": {
-      const replacement = getRegisteredFnExpression(node);
+      const replacement = buildResumeCall(node);
       return replacement && replaceMethodNode(node, replacement);
     }
     case "ArrowFunctionExpression":
     case "FunctionExpression":
-      return getRegisteredFnExpression(node);
+      return buildResumeCall(node);
     case "BlockStatement":
     case "MarkoScriptlet":
       addRegisteredDeclarations(node.body);
@@ -262,9 +262,7 @@ function addRegisteredDeclarations(body: t.Statement[]) {
   }
 }
 
-function getRegisteredFnExpression(
-  node: Exclude<t.Function, t.FunctionDeclaration>,
-) {
+function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
   const { extra } = node;
   if (isRegisteredFnExtra(extra)) {
     const referencedLocals = extra.referencedLocalBindingsInFunction;
