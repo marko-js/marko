@@ -1,4 +1,4 @@
-// size: 27545 (min) 10231 (brotli)
+// size: 30798 (min) 11429 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -462,6 +462,9 @@ function run() {
   }
   runEffects(effects);
 }
+function abortRun() {
+  (runId++, (pendingRenders = []), (pendingEffects = []));
+}
 function queueAsyncRender(scope, signal, value) {
   (pendingRenders.length || queueMicrotask(run), queueRender(scope, signal, -1, value));
 }
@@ -847,7 +850,9 @@ function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
-function readyFailed(readyId) {}
+function readyFailed(readyId) {
+  readyIds?.has(readyId);
+}
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
     ((embedRenders = /* @__PURE__ */ new Map()),
@@ -2051,119 +2056,121 @@ function byFirstArg(name) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
-let empty = [];
-let rest = Symbol();
-let classIdToBranch = /* @__PURE__ */ new Map();
-let classEventResolver;
-let scopesByRender = /* @__PURE__ */ new WeakMap();
-let getRenderScopes = ($global) => {
-  init($global.runtimeId);
-  let render = self[$global.runtimeId]?.[$global.renderId],
-    scopes = render && scopesByRender.get(render);
-  return (render && !scopes && scopesByRender.set(render, (scopes = {})), scopes);
+let patchFills = {};
+let patchers = {};
+let patchScope = (patch, live, kinds = patchers) => {
+  for (let key in patch) kinds[key[0]](live, key, patch[key]);
 };
-let compat = {
-  patchDynamicTag,
-  queueEffect,
-  init(warp10Noop) {
-    ((_resumed.$C_s = (scope) => {
-      if (
-        ((getRenderScopes(scope.$)[scope.L] = scope),
-        scope.m5c && classIdToBranch.set(scope.m5c, scope),
-        classEventResolver)
-      )
-        for (let key in scope) {
-          let resolved = classEventResolver(scope[key], scope);
-          resolved !== scope[key] && (scope[key] = resolved);
-        }
-    }),
-      (_resumed.$C_b = warp10Noop));
-  },
-  setClassEventResolver(fn) {
-    classEventResolver = fn;
-  },
-  resumeClassFunction(id, build) {
-    _resumed[id] = build;
-  },
-  getScope($global, scopeId) {
-    return getRenderScopes($global)?.[scopeId];
-  },
-  setRendererId(renderer, id) {
-    renderer.a = id;
-  },
-  isRenderer(renderer) {
-    return renderer.b;
-  },
-  getStartNode(branch) {
-    return branch.S;
-  },
-  getEndNode(branch) {
-    return branch.K;
-  },
-  setScopeNodes(branch, startNode, endNode) {
-    ((branch.S = startNode), (branch.K = endNode));
-  },
-  runComponentEffects() {
-    this.effects && runEffects(this.effects);
-  },
-  runComponentDestroy() {
-    this.scope && destroyBranch(this.scope);
-  },
-  resolveRegistered(value, $global) {
-    return Array.isArray(value) && typeof value[0] == "string"
-      ? getRegisteredWithScope(value[0], getRenderScopes($global)?.[value[1]])
-      : value;
-  },
-  createRenderer(params, clone) {
-    let renderer = _content("", 0, 0, 0, params)();
-    return (
-      (renderer.b = (branch) => {
-        let cloned = clone();
-        ((branch.S = cloned.startNode), (branch.K = cloned.endNode));
-      }),
-      renderer
-    );
-  },
-  render(out, component, renderer, args) {
-    init(out.global.runtimeId);
-    let branch = component.scope,
-      created = 0;
-    if (
-      (!branch &&
-        (branch = classIdToBranch.get(component.id)) &&
-        ((component.scope = branch), classIdToBranch.delete(component.id)),
-      args[0] && typeof args[0] == "object" && "renderBody" in args[0])
-    ) {
-      let input = args[0],
-        normalizedInput = (args[0] = {});
-      for (let key in input) normalizedInput[key === "renderBody" ? "content" : key] = input[key];
-    }
-    let renderBranch = () => {
-      ((branch ||=
-        ((created = 1),
-        (component.scope = createAndSetupBranch(out.global, renderer, renderer.e, document.body)))),
-        renderer.d?.(branch, renderer._ ? args[0] : args));
+let onPatchShell;
+let bindRef;
+function beginPatch(render) {
+  render.w();
+}
+/** The live page's side of `template.patch`: a request's headers (build, held
+ * shells) and its response's apply, run as page code (fetch `same-origin`). */
+function patch($global, signal, replay) {
+  let trees = [],
+    root,
+    commit,
+    reader,
+    responseCtx = (data, id, content) => (id ? bindRef(root, data, id, content) : trees[data]);
+  responseCtx._ = _resumed;
+  let render = curRenders[$global.renderId],
+    stop = () => {
+      render.q === stop && ((render.q = void 0), reader?.cancel().catch((_) => 0));
     };
-    if (((component.effects = rendering ? renderBranch() : prepareEffects(renderBranch)), created))
-      return toInsertNode(branch.S, branch.K);
-  },
-};
+  (render.q?.(), (render.q = stop), signal.addEventListener("abort", stop));
+  let apply = (flush, done) => {
+      if (flush[0] === ";") return (replay || (render.k = flush), done(1));
+      ((patchers.$ ||= applyGlobals), (commit &&= void commit()));
+      let waits = 1,
+        settle = (applied) => waits && (applied ? --waits || done(1) : done((waits = 0)));
+      settle(
+        applyFlush(render, () => {
+          let script = document.createElement("script");
+          ((script.nonce = $global.cspNonce),
+            (script.text = "document.currentScript.f=(_,$)=>(" + flush + ")"),
+            document.head.appendChild(script).remove(),
+            (render.r = [
+              (ctx) => {
+                root = ctx(1);
+                let value = script.f(responseCtx),
+                  flush = Array.isArray(value) ? value : [value],
+                  i = 0;
+                for (; typeof flush[i] == "string";) onPatchShell(flush[i++]);
+                let tree = flush[i];
+                tree && typeof tree == "object" && (trees.push(tree), patchScope(tree, root));
+              },
+            ]));
+        }),
+      );
+    },
+    applyLine = apply;
+  return [
+    { "x-marko-patch": render.n + (render.k || ";") },
+    async (response, onCommit, onApplied, onEnd, onFail) => {
+      let ended,
+        waiting = 0,
+        fail = (why) => {
+          render.q === stop && (stop(), onFail());
+        },
+        done = (applied) =>
+          applied ? render.q === stop && (--waiting || (onApplied(), ended && onEnd())) : fail();
+      if (((commit = onCommit), render.q !== stop || !response.headers.has("x-marko-patch")))
+        return (response.body?.cancel(), fail());
+      reader = response.body.getReader();
+      let decoder = new TextDecoder(),
+        buffered = "";
+      try {
+        for (let read; !(read = await reader.read()).done;) {
+          buffered += decoder.decode(read.value, { stream: !0 });
+          let start = 0;
+          waiting++;
+          for (
+            let at;
+            render.q === stop && (at = buffered.indexOf("\n", start)) >= 0;
+            start = at + 1
+          )
+            (waiting++, applyLine(buffered.slice(start, at), done));
+          ((buffered = buffered.slice(start)), start ? done(1) : waiting--);
+        }
+      } catch {
+        return fail();
+      }
+      render.q === stop && ((ended = 1), buffered + decoder.decode() ? fail() : waiting || onEnd());
+    },
+  ];
+}
+function patchWrite(scope, accessor, value) {
+  (scope[accessor] !== value || !(accessor in scope)) &&
+    ((scope[accessor] = value), ((scope.AA ??= {})[accessor] = runId));
+}
+function applyGlobals(live, _key, value) {
+  for (let key in value) patchWrite(live.$, key, value[key]);
+}
+function applyFlush(render, apply) {
+  let rendered;
+  pendingEffects.unshift(() => (rendered = 1), 0);
+  try {
+    (beginPatch(render), apply(), runEffects(render.m([])), run());
+  } catch (error) {
+    if (!rendered) return (abortRun(), 0);
+    queueMicrotask(() => {
+      throw error;
+    });
+  } finally {
+    render.r.length = 0;
+  }
+  return 1;
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
 let _template = (id, template, walks, setup, inputSignal) => {
   let renderer = _content(id, template, walks, setup, inputSignal)();
   return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
 };
 let noop = (_) => 0;
-function attrTag(attrs) {
-  return ((attrs[Symbol.iterator] = attrTagIterator), (attrs[rest] = empty), attrs);
-}
-function attrTags(first, attrs) {
-  return first
-    ? (first[rest] === empty ? (first[rest] = [attrs]) : first[rest].push(attrs), first)
-    : attrTag(attrs);
-}
-function* attrTagIterator() {
-  (yield this, yield* this[rest]);
-}
+let loads = {};
 function mount(input = {}, reference, position) {
   let branch,
     parentNode = reference,
@@ -2360,5 +2367,272 @@ function _load_race_trigger(...triggers) {
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+/** A load a flush creating the lazy template `id` waits for. The page entry
+ * registers the module's: a module registering its own would bundle it. */
+function _load_lazy(id, load) {
+  Array.isArray(loads[id]) ? loads[id].push(load) : loads[id] ? load() : (loads[id] = [load]);
+}
+/** A lazy child's input signal on a patch page: a flush loads it untriggered,
+ * and a scope it creates applies it now; the page's render waits for a trigger. */
+function _load_signal_patch(load, id, trigger) {
+  let buffered = _load_signal(trigger ? trigger(load) : load),
+    apply = (scope, value) => {
+      (apply._ || buffered)(scope, value);
+    };
+  return (_load_lazy(id, () => load().then((mod) => (apply._ = mod._))), apply);
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let empty = [];
+let rest = Symbol();
+let classIdToBranch = /* @__PURE__ */ new Map();
+let classEventResolver;
+let scopesByRender = /* @__PURE__ */ new WeakMap();
+let getRenderScopes = ($global) => {
+  init($global.runtimeId);
+  let render = self[$global.runtimeId]?.[$global.renderId],
+    scopes = render && scopesByRender.get(render);
+  return (render && !scopes && scopesByRender.set(render, (scopes = {})), scopes);
+};
+let compat = {
+  patchDynamicTag,
+  queueEffect,
+  init(warp10Noop) {
+    ((_resumed.$C_s = (scope) => {
+      if (
+        ((getRenderScopes(scope.$)[scope.L] = scope),
+        scope.m5c && classIdToBranch.set(scope.m5c, scope),
+        classEventResolver)
+      )
+        for (let key in scope) {
+          let resolved = classEventResolver(scope[key], scope);
+          resolved !== scope[key] && (scope[key] = resolved);
+        }
+    }),
+      (_resumed.$C_b = warp10Noop));
+  },
+  setClassEventResolver(fn) {
+    classEventResolver = fn;
+  },
+  resumeClassFunction(id, build) {
+    _resumed[id] = build;
+  },
+  getScope($global, scopeId) {
+    return getRenderScopes($global)?.[scopeId];
+  },
+  setRendererId(renderer, id) {
+    renderer.a = id;
+  },
+  isRenderer(renderer) {
+    return renderer.b;
+  },
+  getStartNode(branch) {
+    return branch.S;
+  },
+  getEndNode(branch) {
+    return branch.K;
+  },
+  setScopeNodes(branch, startNode, endNode) {
+    ((branch.S = startNode), (branch.K = endNode));
+  },
+  runComponentEffects() {
+    this.effects && runEffects(this.effects);
+  },
+  runComponentDestroy() {
+    this.scope && destroyBranch(this.scope);
+  },
+  resolveRegistered(value, $global) {
+    return Array.isArray(value) && typeof value[0] == "string"
+      ? getRegisteredWithScope(value[0], getRenderScopes($global)?.[value[1]])
+      : value;
+  },
+  createRenderer(params, clone) {
+    let renderer = _content("", 0, 0, 0, params)();
+    return (
+      (renderer.b = (branch) => {
+        let cloned = clone();
+        ((branch.S = cloned.startNode), (branch.K = cloned.endNode));
+      }),
+      renderer
+    );
+  },
+  render(out, component, renderer, args) {
+    init(out.global.runtimeId);
+    let branch = component.scope,
+      created = 0;
+    if (
+      (!branch &&
+        (branch = classIdToBranch.get(component.id)) &&
+        ((component.scope = branch), classIdToBranch.delete(component.id)),
+      args[0] && typeof args[0] == "object" && "renderBody" in args[0])
+    ) {
+      let input = args[0],
+        normalizedInput = (args[0] = {});
+      for (let key in input) normalizedInput[key === "renderBody" ? "content" : key] = input[key];
+    }
+    let renderBranch = () => {
+      ((branch ||=
+        ((created = 1),
+        (component.scope = createAndSetupBranch(out.global, renderer, renderer.e, document.body)))),
+        renderer.d?.(branch, renderer._ ? args[0] : args));
+    };
+    if (((component.effects = rendering ? renderBranch() : prepareEffects(renderBranch)), created))
+      return toInsertNode(branch.S, branch.K);
+  },
+};
+let globalJoins = {};
+let closureFillJoins = {};
+function attrTag(attrs) {
+  return ((attrs[Symbol.iterator] = attrTagIterator), (attrs[rest] = empty), attrs);
+}
+function attrTags(first, attrs) {
+  return first
+    ? (first[rest] === empty ? (first[rest] = [attrs]) : first[rest].push(attrs), first)
+    : attrTag(attrs);
+}
+function* attrTagIterator() {
+  (yield this, yield* this[rest]);
+}
+function _fill_global_join(key, id, join) {
+  return (
+    (patchers.$ = patchGlobals),
+    ((globalJoins[key] ??= {})[id] = (scope) => {
+      (join(scope), subscribeToScopeSet(scope.$, "B" + id, scope));
+    })
+  );
+}
+function _fill_global_script(id, fn) {
+  let effect = (_resumed[id] = (scope) => {
+    let ran = (scope.AB ??= {});
+    ran[id] !== runId && ((ran[id] = runId), fn(scope));
+  });
+  return (scope) => queueEffect(scope, effect);
+}
+function patchGlobals(live, key, value) {
+  applyGlobals(live, key, value);
+  let keys = [];
+  for (let key in value) live.$.AA?.[key] === runId && keys.push(key);
+  keys.length && keys.push("");
+  for (let key of keys)
+    for (let id in globalJoins[key])
+      live.$["B" + id]?.forEach(
+        (scope) => scope.H && scope.H !== runId && queueRender(scope, globalJoins[key][id], -1),
+      );
+}
+function fillJoin(key, valueAccessor, join, dispatch) {
+  let prev = patchFills[key],
+    prevFn = prev?._;
+  if (!prev || prevFn) {
+    let fn = prevFn
+      ? (scope) => {
+          (prevFn(scope), dispatch(scope));
+        }
+      : dispatch;
+    (patchFills[key] = _const(valueAccessor, fn))._ = fn;
+  }
+  return join;
+}
+function _fill_join(key, valueAccessor, join, buildDispatch) {
+  return fillJoin(key, valueAccessor, join, buildDispatch?.(join) || join);
+}
+function _fill_join_if(key, valueAccessor, join, ...hops) {
+  let dispatch = join;
+  for (let i = hops.length; i > 0; i -= 2)
+    dispatch = _if_closure(hops[i - 2], hops[i - 1], dispatch);
+  return fillJoin(key, valueAccessor, join, dispatch);
+}
+function _fill_join_for(key, valueAccessor, join, ...hops) {
+  let dispatch = join;
+  for (let i = hops.length; i--;) dispatch = _for_closure(hops[i], dispatch);
+  return fillJoin(key, valueAccessor, join, dispatch);
+}
+function _fill_join_closure(key, valueAccessor, join, index) {
+  let closureJoin = join;
+  closureJoin.c = index;
+  let signals = (closureFillJoins[key] ??= []);
+  return (
+    signals.length ||
+      fillJoin(key, valueAccessor, join, (scope) => {
+        let instances = scope[closureJoin.a];
+        if (instances) {
+          instances._ = 1;
+          let signalIndex = closureJoin.b;
+          for (let childScope of instances)
+            if (childScope.H > 0 && childScope.H < runId) {
+              let sig = signals[childScope[signalIndex] || 0];
+              sig && queueRender(childScope, sig, -1);
+            }
+        }
+      }),
+    (signals[index] = join),
+    join
+  );
+}
+function _fill_join_subscribers(key, valueAccessor, join, closureAccessor, index) {
+  closureAccessor = decodeAccessor(closureAccessor);
+  let instancesAccessor = closureAccessor,
+    signalIndex = "C" + closureAccessor;
+  return fillJoin(key, valueAccessor, join, (scope) => {
+    let instances = scope[instancesAccessor];
+    if (instances) {
+      instances._ = 1;
+      for (let childScope of instances)
+        childScope.H > 0 &&
+          childScope.H < runId &&
+          (childScope[signalIndex] || 0) === index &&
+          queueRender(childScope, join, -1);
+    }
+  });
+}
+function fill(key, signal, id, fillFn) {
+  return ((patchFills[key] = fillFn === void 0 ? signal : _const(id, fillFn || void 0)), signal);
+}
+function _fill_var(id) {
+  patchFills[id] = (scope, value) => getRegisteredWithScope(id, scope)(value);
+}
+function _fill_let(key, id, fn, fillFn) {
+  return fill(key, _let(id, fn), id, fillFn);
+}
+function _fill_let_change(key, id, fn, fillFn) {
+  return fill(key, _let_change(id, fn), id, fillFn ?? fn ?? 0);
+}
+function _fill_const(key, id, fn, fillFn) {
+  return fill(key, _const(id, fn), id, fillFn);
+}
+function _shell_or(initId, id, fn, defaultPending, scopeIdAccessor = "L") {
+  let or = _or(id, fn, defaultPending, scopeIdAccessor),
+    scopeIdKey = scopeIdAccessor === "L" ? scopeIdAccessor : decodeAccessor(scopeIdAccessor);
+  return ((_resumed[initId] = (scope) => queueRender(scope, fn, id, 0, scope[scopeIdKey])), or);
+}
+function _shell_subscribe_closure_get(initId, valueAccessor, fn, getOwnerScope, resumeId) {
+  let closureSignal = _closure_get(valueAccessor, fn, getOwnerScope, resumeId);
+  return (
+    (_resumed[initId] = (scope) =>
+      queueRender(
+        scope,
+        () => {
+          (subscribeToScopeSet(
+            getOwnerScope ? getOwnerScope(scope) : scope._,
+            closureSignal.a,
+            scope,
+          ),
+            closureSignal(scope, 1));
+        },
+        -1,
+      )),
+    closureSignal
+  );
+}
+function _shell_join(id, join) {
+  let prev = _resumed[id];
+  return (
+    (_resumed[id] = prev
+      ? (scope) => {
+          (prev(scope), join(scope));
+        }
+      : join),
+    join
+  );
 }
 //#endregion

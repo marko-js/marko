@@ -8,14 +8,17 @@ import {
 
 import { assertIdentifierVar } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
-import { bodyToText, bodyToUncoercedText } from "../util/body-to-text";
+import { bodyToUncoercedText, bodyToText } from "../util/body-to-text";
 import { isOutputHTML } from "../util/marko-config";
+import { linkHolePatcher, writesPatchHole } from "../util/patch/decisions";
+import { buildPatchTextContent } from "../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../util/reasons";
 import {
   getReferencedBindings,
   isTagVarUsed,
   mergeReferences,
   trackDomVarReferences,
+  isReferencedExtra,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -70,6 +73,10 @@ export default {
 
       if (isTagVarUsed(tag)) addAlwaysReason(nodeBinding);
       addReasonExprs(ensureSlot(nodeBinding), tagExtra);
+      if (referenceNodes.length) {
+        tagExtra.rendersValue = true;
+        linkHolePatcher(tagSection, tagExtra, "patches/text-content");
+      }
     }
 
     // The whole client template records here (its text children record none);
@@ -99,7 +106,26 @@ export default {
       if (isOutputHTML()) {
         const { body } = tag.node.body;
         write`<!--`;
-        if (nodeBinding && isEmptiableCommentBody(body)) {
+        if (
+          nodeBinding &&
+          isReferencedExtra(tagExtra) &&
+          writesPatchHole(tagSection, tagExtra)
+        ) {
+          // An emptiable body still pads, so the resume marker claims no
+          // stray text.
+          const patched = buildPatchTextContent(
+            tagSection,
+            nodeBinding,
+            bodyToText(tag.node.body),
+            "_escape_comment",
+            tagExtra,
+          );
+          write`${
+            isEmptiableCommentBody(body)
+              ? t.logicalExpression("||", patched, t.stringLiteral(" "))
+              : patched
+          }`;
+        } else if (nodeBinding && isEmptiableCommentBody(body)) {
           // A resumable comment must serialize with content, else its trailing
           // resume marker claims a stray text node; pad an empty body with a space.
           if (body.length) {
@@ -123,10 +149,14 @@ export default {
         write`-->`;
       } else {
         const textLiteral = bodyToText(tag.node.body);
+        const patched =
+          !!nodeBinding &&
+          isReferencedExtra(tagExtra) &&
+          writesPatchHole(tagSection, tagExtra);
 
         if (!t.isStringLiteral(textLiteral)) {
           addStatement(
-            "render",
+            patched ? "patch" : "render",
             tagSection,
             getReferencedBindings(tagExtra),
             callRuntime(

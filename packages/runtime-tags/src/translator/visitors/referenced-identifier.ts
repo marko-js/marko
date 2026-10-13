@@ -1,8 +1,10 @@
 import { types as t } from "@marko/compiler";
 
+import { type Binding, BindingType } from "../util/bindings";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getExprRoot } from "../util/get-root";
 import { isOptimize, isOutputHTML } from "../util/marko-config";
+import { some } from "../util/optional";
 import {
   assertReferencedInRender,
   getCanonicalExtra,
@@ -76,7 +78,8 @@ export default {
       const rootExtra = (getExprRoot(identifier).node.extra ??= { section });
       (identifier.node.extra ??= {}).exprRoot = rootExtra;
       if (rootExtra[kAbortId] === undefined) {
-        rootExtra[kAbortId] = section.abortSignalExprs++;
+        rootExtra[kAbortId] =
+          (section.abortSignalExprs ??= []).push(rootExtra) - 1;
       }
     }
   },
@@ -87,12 +90,22 @@ export default {
       case "$global": {
         // An HTML read resolves to the `$global` const the program declares.
         if (isOutputHTML()) break;
+        const key = !isOptimize() && getSignalGlobalKey(identifier);
+        // Only a patch keyed `$global.key` read becomes a tracked binding (a
+        // fill needs an identity); every other shape stays a bag access.
+        if (
+          !key &&
+          (identifier.parent.type === "MemberExpression" ||
+            identifier.parent.type === "OptionalMemberExpression") &&
+          identifier.parent.extra?.read
+        ) {
+          break;
+        }
 
         const globalRead = t.memberExpression(
           scopeIdentifier,
           t.identifier(getAccessorProp().Global),
         );
-        const key = !isOptimize() && getSignalGlobalKey(identifier);
         if (key) {
           identifier.parentPath.replaceWith(
             callRuntime("_global_read", globalRead, t.stringLiteral(key)),
@@ -176,7 +189,16 @@ function getSignalGlobalKey(identifier: t.NodePath<t.Identifier>) {
 
   const { name } = parent.property;
   if (name === "runtimeId" || name === "renderId") return;
-  return getReferencedBindings(getExprRoot(identifier).node.extra)
+  // A patch build's `$global` reads are bindings too; only other reads make
+  // this a reactive read.
+  return some(
+    getReferencedBindings(getExprRoot(identifier).node.extra),
+    isNotGlobalBinding,
+  )
     ? name
     : undefined;
+}
+
+function isNotGlobalBinding(binding: Binding) {
+  return binding.type !== BindingType.global;
 }

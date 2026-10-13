@@ -7,9 +7,14 @@ import debugPlugin from "./build-plugins/debug.mts";
 import declHoistPlugin from "./build-plugins/decl-hoist.mts";
 
 const cwd = path.join(import.meta.dirname, "..");
-const featureEntries = globSync("src/{dom,html}/**/*.feat.ts", { cwd }).map(
-  (file) => file.replaceAll(path.sep, "/").slice("src/".length, -".ts".length),
-);
+// Each runtime's entries beside its own: its feature modules, and the html
+// helpers a patch build imports, all sharing the runtime's chunk.
+const extraEntries = [
+  ...globSync("src/{dom,html}/**/*.feat.ts", { cwd }).map((file) =>
+    file.replaceAll(path.sep, "/").slice("src/".length, -".ts".length),
+  ),
+  "html/patch",
+];
 
 rmSync(path.join(cwd, "dist"), { recursive: true, force: true });
 
@@ -45,7 +50,7 @@ await Promise.all([
         input: {
           [name]: `src/${name}.ts`,
           ...Object.fromEntries(
-            featureEntries
+            extraEntries
               .filter((entry) => entry.startsWith(`${name}/`))
               .map((entry) => [entry, `src/${entry}.ts`]),
           ),

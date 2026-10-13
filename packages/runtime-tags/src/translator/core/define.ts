@@ -45,6 +45,7 @@ export default {
     const tagBody = tag.get("body");
     const bodySection = ensureBodySection(tagBody);
     const varBinding = trackVarReferences(tag, BindingType.derived);
+    if (varBinding) varBinding.stable = true;
 
     if (!varBinding) {
       dropNodes(getAllTagReferenceNodes(tag.node));

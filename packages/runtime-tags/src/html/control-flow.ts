@@ -632,6 +632,9 @@ export function tryBoundary(
   catchContent: ServerRenderer | undefined,
   branchId: number,
   renderers: () => void,
+  // A patch's catch, writing its own entry: the body renders outside the
+  // branch id, nothing of it streams once caught, and nothing reorders.
+  onCatch?: (err: unknown) => void,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
@@ -641,14 +644,16 @@ export function tryBoundary(
   const bodyBoundary = new Boundary(state, undefined, boundary);
   if (catchContent) bodyBoundary.withinCatch = true;
   const body = chunk.fork(bodyBoundary, null);
-  const bodyEnd = body.render(withBranchId, branchId, content);
+  const bodyEnd = onCatch
+    ? body.render(content)
+    : body.render(withBranchId, branchId, content);
 
   if (bodyBoundary.aborted) {
     // Without a `@catch` the error ends the enclosing render, like any throw in it.
     if (!catchContent) throw bodyBoundary.reason;
     // Sync error. The body's already-written scopes stay in the resume payload
     // unused; a `@catch` firing is rare enough not to warrant dropping them.
-    catchContent(bodyBoundary.reason);
+    (onCatch || catchContent)(bodyBoundary.reason);
     // A rendered `@catch` is not a try, as on the client: it gets no renderers.
     return true;
   }
@@ -668,7 +673,7 @@ export function tryBoundary(
 
   // With a catch, markers let it take the body's place once the stream reaches
   // it pending (`markCatchRange`); a body settled or caught first needs none.
-  const reorderId = catchContent ? state.nextReorderId() : "";
+  const reorderId = catchContent && !onCatch ? state.nextReorderId() : "";
   if (reorderId) {
     chunk.catchRange = { id: reorderId, end: bodyEnd };
     // The catch renders later, forked from this chunk.
@@ -678,6 +683,19 @@ export function tryBoundary(
   bodyBoundary.onNext = () => {
     if (boundary.aborted) return;
     if (bodyBoundary.aborted) {
+      if (onCatch) {
+        if (!bodyEnd.consumed) {
+          let cut = body;
+          while (cut.consumed) cut = cut.next!;
+          cut.async = false;
+          cut.next = bodyNext;
+          cut.html = cut.scripts = cut.effects = cut.lastEffect = "";
+          cut.placeholder = cut.reorderId = cut.catchRange = null;
+        }
+        chunk.fork(boundary, null).render(onCatch, bodyBoundary.reason);
+        boundary.endAsync();
+        return;
+      }
       if (!reorderId) {
         boundary.abort(bodyBoundary.reason);
         return;

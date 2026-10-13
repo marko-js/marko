@@ -7,13 +7,21 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
+import type { Falsy } from "../../common/types";
 import { assertHasBody } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
+import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
-import { mergeTagReferences } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import { mayPatchReach, someBindingRead } from "../util/patch/structure";
+import { boundaryAlwaysPairs } from "../util/patch/writers";
+import { mergeTagReferences, onFinalizeReferences } from "../util/references";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -103,6 +111,15 @@ export default {
       nodeBinding,
       optional: false,
     });
+    if (isPatch()) {
+      // A `<try>` a patch may reach applies its body through `patches/try`.
+      onFinalizeReferences(() => {
+        if (mayPatchReach(section)) {
+          linkRuntimeFeature("patches/try");
+          if (attrTags["@catch"]) linkRuntimeFeature("patches/catch");
+        }
+      });
+    }
     structure.marker(tag, nodeBinding);
     structure.enterShallow(tag);
   },
@@ -114,13 +131,14 @@ export default {
       exit(tag) {
         const section = getSection(tag);
         const tagBody = tag.get("body");
+        const bodySection = getSectionForBody(tagBody)!;
         const nodeBinding = tag.node.extra!.nodeBinding!;
         const { catchTag, catchSection, placeholderTag, placeholderSection } =
           getTryParts(tag);
 
         writeHTMLResumeStatements(tag);
 
-        const tryArgs = [
+        const tryArgs: Array<t.Expression | Falsy> = [
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(nodeBinding),
           buildContent(tagBody),
@@ -138,6 +156,19 @@ export default {
                 : getResumeRegisterId(section, nodeBinding, "catch"),
             ),
         ];
+        if (isPatch()) {
+          // A patch pairs by the body's shell; with no catch to rebuild,
+          // an always-pairing body drops it outside divergent contexts.
+          tryArgs.push(
+            t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+            !catchTag &&
+              boundaryAlwaysPairs(bodySection) &&
+              t.numericLiteral(1),
+            !!catchSection?.params &&
+              someBindingRead(catchSection.params, () => true) &&
+              t.numericLiteral(1),
+          );
+        }
 
         tag
           .replaceWith(

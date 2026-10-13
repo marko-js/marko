@@ -3,18 +3,34 @@ import { getFile, getProgram, importNamed } from "@marko/compiler/babel-utils";
 
 import type { Falsy } from "../../common/types";
 import { isTranslate } from "./get-compile-stage";
-import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
+import {
+  getMarkoOpts,
+  isOutputDOM,
+  isOutputHTML,
+  isPatch,
+} from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
 
 export type DOMRuntimeHelpers = keyof typeof import("../../dom");
-export type HTMLRuntimeHelpers = keyof typeof import("../../html");
+export type HTMLRuntimeHelpers = keyof typeof import("../../html/patch");
 
 // Pure despite registering into `_resumed` (`_template`, `_closure_get`): that
 // matters only for a value a serialized register id keeps in the module graph.
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
+  "_fill_join",
+  "_fill_global_join",
+  "_fill_join_closure",
+  "_fill_join_for",
+  "_fill_join_if",
+  "_fill_join_subscribers",
+  "_shell_or",
+  "_shell_subscribe_closure_get",
+  "_fill_const",
+  "_fill_let",
+  "_fill_let_change",
   "_await_content",
   "_child_setup",
   "_if",
@@ -43,6 +59,7 @@ const pureDOMFunctions = new Set<string>([
   "_let_change",
   "_const",
   "_load_signal",
+  "_load_signal_patch",
   "_load_setup",
   "_load_template",
   "_load_visible_trigger",
@@ -83,14 +100,22 @@ export function callRuntime(
   name: DOMRuntimeHelpers | HTMLRuntimeHelpers,
   ...args: Array<Parameters<typeof t.callExpression>[1][number] | Falsy>
 ) {
-  const callExpression = t.callExpression(
-    importRuntime(name),
-    trimFalsyArgs(args),
-  );
-  if (isOutputDOM() && pureDOMFunctions.has(name)) {
-    return t.addComment(callExpression, "leading", "@__PURE__");
+  const callExpression = callRuntimeKept(name, ...args);
+  return isOutputDOM() && pureDOMFunctions.has(name)
+    ? t.addComment(callExpression, "leading", "@__PURE__")
+    : callExpression;
+}
+
+// A registration a shell or a seed names whatever client code reaches it,
+// so tree-shaking keeps it even where the helper is otherwise pure.
+export function callRuntimeKept(
+  name: DOMRuntimeHelpers | HTMLRuntimeHelpers,
+  ...args: Array<Parameters<typeof t.callExpression>[1][number] | Falsy>
+) {
+  if (isOutputDOM() && isPatch() && scopeBoundRegistrations.has(name)) {
+    importRuntimeFeature("patches/bind");
   }
-  return callExpression;
+  return t.callExpression(importRuntime(name), trimFalsyArgs(args));
 }
 
 export function dynamicImport(
@@ -103,6 +128,14 @@ export function dynamicImport(
     ? t.callExpression(t.memberExpression(load, t.identifier("then")), args)
     : load;
 }
+
+// Client registrations of values the server can bind to a scope. A patch may
+// carry one (as an entry or in data), so registering one links its resolution.
+const scopeBoundRegistrations = new Set<string>([
+  "_el",
+  "_hoist_resume",
+  "_var_resume",
+]);
 
 // A `src/{dom,html}/*.feat.ts` module is a compiler-injected side-effect
 // import: it enables optional runtime behavior that referenced imports alone
@@ -121,7 +154,53 @@ export const domRuntimeFeatures = [
   "lazy",
   "placeholder",
 ] as const;
-export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];
+// Listed only for an app compiled with `patches`.
+export const domPatchRuntimeFeatures = [
+  "patches/attr",
+  "patches/attrs",
+  "patches/boundary",
+  "patches/branch",
+  "patches/catch",
+  "patches/child",
+  "patches/control",
+  "patches/control-checked-value",
+  "patches/control-input",
+  "patches/control-open",
+  "patches/control-select",
+  "patches/dynamic-tag",
+  "patches/effect",
+  "patches/effect-signal",
+  "patches/html",
+  "patches/loop",
+  "patches/loop-item",
+  "patches/loop-keyed",
+  "patches/ready",
+  "patches/show",
+  "patches/style",
+  "patches/text",
+  "patches/text-content",
+  "patches/try",
+  "patches/value",
+  "patches/bind",
+  "patches/var",
+] as const;
+export type DOMRuntimeFeature =
+  | (typeof domRuntimeFeatures)[number]
+  | (typeof domPatchRuntimeFeatures)[number];
+
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    /** Client runtime features the template links from analyze. */
+    runtimeFeatures?: Set<DOMRuntimeFeature>;
+  }
+}
+
+// Links a client runtime feature from analyze: the page entry imports it
+// when the template's module never loads, and that module imports it too.
+export function linkRuntimeFeature(feature: DOMRuntimeFeature) {
+  (getProgram().node.extra.runtimeFeatures ??= new Set()).add(feature);
+}
+
 const [getImportedFeatures] = createProgramState(
   () => new Set<DOMRuntimeFeature>(),
 );
@@ -149,11 +228,12 @@ export function getRuntimeFeatureImport(feature: DOMRuntimeFeature) {
   );
 }
 
+// A patch build's templates take the patch entry's html helpers.
 export function getRuntimePath(output: string) {
   const { optimize } = getMarkoOpts();
-  return `${runtimeInfo.name}/${
-    optimize ? "" : "debug/"
-  }${output === "html" ? "html" : "dom"}`;
+  return `${runtimeInfo.name}/${optimize ? "" : "debug/"}${
+    output === "html" ? (isPatch() ? "html/patch" : "html") : "dom"
+  }`;
 }
 
 function assertTranslate(helper: string, name: string) {

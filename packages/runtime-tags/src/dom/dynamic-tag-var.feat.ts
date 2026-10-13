@@ -22,9 +22,12 @@ installDynamicTagVar((scope, branch, scopeKey, renderer) => {
       );
     }
     if (
-      !(renderer[RendererProp.Setup] || renderer[RendererProp.Params])?.[
-        RendererProp.Returns
-      ]
+      !(
+        renderer[RendererProp.Returns] ||
+        (renderer[RendererProp.Setup] || renderer[RendererProp.Params])?.[
+          RendererProp.Returns
+        ]
+      )
     ) {
       throw new Error(
         `A dynamic tag with a [tag variable](https://markojs.com/docs/reference/language#tag-variables) rendered \`${renderer[RendererProp.Id]}\`, which does not [\`<return>\`](https://markojs.com/docs/reference/core-tag#return) a value. Add a \`<return>\` to it, or remove the variable.`,

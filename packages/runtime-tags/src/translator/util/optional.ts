@@ -202,6 +202,25 @@ export class Sorted<T> {
     }
     return false;
   }
+  // Items of `a` also in `b`, walking each once; `a` itself when none drop.
+  intersection<U extends NonNullable<T>>(
+    a: SortedOpt<U>,
+    b: SortedOpt<U>,
+  ): SortedOpt<U> {
+    if (a === undefined || b === undefined) return;
+    if (!Array.isArray(a)) return this.findIndex(b, a) === -1 ? undefined : a;
+    if (!Array.isArray(b)) return this.find(a, b);
+    let result: Opt<U>;
+    for (let i = 0, j = 0; i < a.length && j < b.length;) {
+      const delta = this.compare(a[i], b[j]);
+      if (delta > 0) j++;
+      else {
+        if (!delta) result = push(result, a[i]);
+        i++;
+      }
+    }
+    return (size(result) === a.length ? a : result) as SortedOpt<U>;
+  }
   // Items of `a` not in `b`, walking as `intersects` does; `a` itself when none
   // drop.
   difference<U extends NonNullable<T>>(

@@ -38,7 +38,7 @@ const testUtilChunkName = "test-utils";
 // (chunk file names for those follow the module graph and would churn).
 const sharedChunkKey = "shared";
 const runtimeEntryRe =
-  /^@marko\/runtime-tags\/(?:debug\/)?(dom|html)(?:\/([^/]+)\.feat)?$/;
+  /^@marko\/runtime-tags\/(?:debug\/)?(dom|html)(?:\/(.+)\.feat|\/(patch))?$/;
 const featExt = ".feat.ts";
 interface Diagnostic {
   type: string;
@@ -50,6 +50,7 @@ export async function createServerRunner<T extends Record<string, string>>(
   entries: T,
   config: compiler.Config,
   interop?: boolean,
+  outName = config.optimize ? "optimize" : "debug",
 ): Promise<{
   assets: string;
   runServer(): Promise<Record<keyof T, Template>>;
@@ -63,7 +64,7 @@ export async function createServerRunner<T extends Record<string, string>>(
   diagnostics: { id: string; items: Diagnostic[] }[];
 }> {
   const optimize = !!config.optimize;
-  const out = path.join(cwd, "dist", optimize ? "optimize" : "debug");
+  const out = path.join(cwd, "dist", outName);
   const htmlOut = path.join(out, "html");
   const domOut = path.join(out, "dom");
   const entryNames = Object.keys(entries);
@@ -210,7 +211,11 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
 
             return isPage
               ? code +
-                  `\nimport { run as _run } from "@marko/runtime-tags/dom"\n${
+                  `\nimport { run as _run${
+                    compileOpts.patches ? ", patch as _patch" : ""
+                  } } from "@marko/runtime-tags/dom"\n${
+                    compileOpts.patches ? "globalThis.patch=_patch;\n" : ""
+                  }${
                     interop
                       ? `import { ___componentLookup } from "marko/src/node_modules/@internal/components-util"\nglobalThis.run=()=>{ _run(); Object.values(___componentLookup).forEach((c) => c.update())}`
                       : `globalThis.run=_run`
@@ -484,13 +489,20 @@ function externalRuntimePlugin(optimize: boolean): Plugin {
       async handler(id) {
         // The import's own kind wins over the bundle's, so an html bundle can
         // link dom `*.feat` assets.
-        const [, importKind, feature] = runtimeEntryRe.exec(id)!;
+        const [, importKind, feature, patch] = runtimeEntryRe.exec(id)!;
         const dir = await prebuiltRuntime(
           importKind as "dom" | "html",
           optimize,
         );
         return {
-          id: path.join(dir, feature ? `${feature}.feat.mjs` : "runtime.mjs"),
+          id: path.join(
+            dir,
+            feature
+              ? `${feature}.feat.mjs`
+              : patch
+                ? "patch.mjs"
+                : "runtime.mjs",
+          ),
           external: true,
         };
       },
@@ -528,10 +540,16 @@ async function buildRuntime(kind: "dom" | "html", optimize: boolean) {
   const input: Record<string, string> = {
     runtime: path.join(srcDir, `${kind}.ts`),
   };
-  for (const file of fs.readdirSync(path.join(srcDir, kind))) {
-    if (file.endsWith(featExt)) {
-      input[file.slice(0, -3)] = path.join(srcDir, kind, file);
-    }
+  // A patch build's html entry shares the html runtime's chunk.
+  if (kind === "html") input.patch = path.join(srcDir, "html/patch.ts");
+  for (const file of fs.globSync(`**/*${featExt}`, {
+    cwd: path.join(srcDir, kind),
+  })) {
+    input[file.slice(0, -3).replaceAll(path.sep, "/")] = path.join(
+      srcDir,
+      kind,
+      file,
+    );
   }
   const tmp = `${dir}.${process.pid}`;
   await build({

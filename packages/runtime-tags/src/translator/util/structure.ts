@@ -10,6 +10,7 @@ import * as Step from "./constants/step";
 import { generateUidIdentifier } from "./generate-uid";
 import { getParentTag } from "./get-parent-tag";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
+import { isOutputHTML } from "./marko-config";
 import { toModuleReadExpression } from "./module-read";
 import {
   ContentType,
@@ -22,7 +23,7 @@ import {
   type StructureRef,
 } from "./sections";
 import { createProgramState, createSectionState } from "./state";
-import { importOrSelfReferenceName } from "./tag-import";
+import { importOrSelfReferenceName, type LoadImportConfig } from "./tag-import";
 import { withLeadingComment } from "./with-comment";
 
 const walkCodeToName = {
@@ -58,12 +59,14 @@ export function child(
   tag: t.NodePath<t.MarkoTag>,
   name: string,
   renderer?: StructureRef,
+  load?: LoadImportConfig,
 ) {
   getSection(tag).structure?.push({
     kind: StructureKind.Child,
     name,
     binding: tag.node.extra!.childScopeBinding!,
     renderer,
+    load,
   });
 }
 
@@ -172,7 +175,7 @@ interface ResolvedStructure {
 
 // Resolves a section's structure stream into its inert template markup and the
 // walk string claiming each visited node, including dynamic content edges.
-function resolveStructure(section: Section) {
+function resolveStructure(section: Section, shell: boolean) {
   const resolved: ResolvedStructure = {
     writes: [""],
     walks: [""],
@@ -222,7 +225,14 @@ function resolveStructure(section: Section) {
         }
         case StructureKind.Child: {
           const withVar = hasScopeOffset(op.binding);
-          const content = refContent(op.renderer);
+          // A shell composes a lazy child, as the flush creating it waits for
+          // its module; the dom template leaves one to its own load.
+          const composed = shell && !!op.load;
+          const renderer = op.load && !composed ? undefined : op.renderer;
+          // The walk steps over a lazy child's marker: into the composed
+          // child, or past the one its load renders.
+          if (composed) resolved.steps.push(Step.Enter, Step.Exit);
+          const content = refContent(renderer);
           // A child with no content has no node for the walker to reach.
           if (content) {
             if (textEdge && content.startType === ContentType.Text) {
@@ -232,7 +242,7 @@ function resolveStructure(section: Section) {
               content.endType === ContentType.Text ? "child" : undefined;
             flushSteps(resolved);
           }
-          const template = op.renderer && resolveRef(op.renderer, "template");
+          const template = renderer && resolveRef(renderer, "template");
           if (template) {
             resolved.writes.push(template, "");
           }
@@ -243,11 +253,12 @@ function resolveStructure(section: Section) {
               withVar ? WalkCode.BeginChildWithVar : WalkCode.BeginChild,
             ),
           );
-          const walks = op.renderer && resolveRef(op.renderer, "walks");
+          const walks = renderer && resolveRef(renderer, "walks");
           if (walks) {
             resolved.walks.push(walks, "");
           }
           appendLiteral(resolved.walks, String.fromCharCode(WalkCode.EndChild));
+          if (op.load && !composed) resolved.steps.push(Step.Enter, Step.Exit);
           break;
         }
       }
@@ -264,7 +275,7 @@ function resolveStructure(section: Section) {
 
 // A dom binding reserves only its scope offset, which the walker holds right
 // after the node.
-function hasScopeOffset(nodeBinding: Binding) {
+export function hasScopeOffset(nodeBinding: Binding) {
   return nodeBinding.reserveSize >= ReservedId.ScopeOffset;
 }
 
@@ -313,7 +324,10 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
     if (!section.structure || section.dropped) {
       return { walks: undefined, writes: undefined };
     }
-    const { writes, walks, walkComment } = resolveStructure(section);
+    const { writes, walks, walkComment } = resolveStructure(
+      section,
+      isOutputHTML(),
+    );
     const walkLiteral = buildStringExpression(walks, true);
     if (walkLiteral && (walkLiteral as t.StringLiteral).value !== "") {
       withLeadingComment(walkLiteral, walkComment.join(", "));

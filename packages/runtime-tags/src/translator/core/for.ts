@@ -23,8 +23,16 @@ import {
 import { detectForSelector, getForSelectorKey } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
+import { isPatch } from "../util/marko-config";
 import { fromIter } from "../util/optional";
-import { addReasonExprs } from "../util/reasons";
+import { readsCallerParam } from "../util/patch/decisions";
+import {
+  isStatefulBranch,
+  patchesBranchesAt,
+  recordStructuralParams,
+} from "../util/patch/structure";
+import { getExprWriteOwnership } from "../util/patch/writers";
+import { addReasonExprs, getSourcesForExpr } from "../util/reasons";
 import {
   dropNodes,
   getAllTagReferenceNodes,
@@ -34,7 +42,7 @@ import {
   trackParamsReferences,
   mergeTagReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
@@ -43,6 +51,7 @@ import {
   getSection,
   getSectionForBody,
 } from "../util/sections";
+import { getShellIdArg, registerShellInit } from "../util/shell";
 import {
   addValue,
   buildClosureHop,
@@ -55,7 +64,7 @@ import { ensureSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
-import { getBranchWriteReason } from "../util/write-guard";
+import { getBranchWriteReason, scopePageIdentifier } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 export default {
@@ -194,6 +203,24 @@ export default {
       nodeBinding,
       optional: true,
     });
+
+    if (isPatch()) {
+      onFinalizeReferences(() => {
+        if (patchesBranchesAt(nodeBinding)) {
+          linkRuntimeFeature(
+            isKeyedByIndex(forType!, getKnownAttrValues(tag.node))
+              ? "patches/loop"
+              : "patches/loop-keyed",
+          );
+          recordStructuralParams(getSourcesForExpr(tagExtra));
+          // A collection reading a param a caller passes may be client-sourced
+          // at runtime, and the rows it keeps patch in place.
+          if (readsCallerParam(tagExtra)) {
+            linkRuntimeFeature("patches/loop-item");
+          }
+        }
+      });
+    }
   },
   translate: translateByTarget({
     html: {
@@ -216,12 +243,19 @@ export default {
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
+        const tagSection = getSection(tag);
         const nodeBinding = node.extra!.nodeBinding!;
         const forAttrs = getKnownAttrValues(node);
         const forType = getForType(node)!;
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
+        // A stateful loop compiles as it does on a plain page: no marker
+        // retention, shells, or loop entry.
+        const stateful = isStatefulBranch(bodySection);
+        // A patchable loop keeps its markers: item pairing and insertion
+        // go through branch markers, which elision would remove.
+        const patchChain = patchesBranchesAt(nodeBinding);
         const branchReason = getBranchWriteReason(bodySection);
 
         resumeOwnerByMarkerWhenUnconditional(bodySection, nodeBinding);
@@ -246,13 +280,33 @@ export default {
               tag,
               branchReason,
               isSingleNodeBranch(bodySection),
+              patchChain,
             ),
           );
+
+          if (patchChain) {
+            forTagArgs.push(
+              // Item body shell id so patches can create additions.
+              getShellIdArg(bodySection),
+              // A loop whose expression derives from params yields to the client
+              // when the call site passes state for them.
+              ...getExprWriteOwnership(tagSection, node.extra!),
+            );
+          }
         }
 
-        statements.push(
-          t.expressionStatement(callRuntime(forTagHTMLRuntime, ...forTagArgs)),
+        let statement: t.Statement = t.expressionStatement(
+          callRuntime(forTagHTMLRuntime, ...forTagArgs),
         );
+        if (stateful) {
+          // Patch renders skip the loop: its collection is server-stale, so
+          // a flush writes no loop entry for it.
+          statement = t.ifStatement(
+            scopePageIdentifier(tagSection.program),
+            statement,
+          );
+        }
+        statements.push(statement);
 
         for (const replacement of tag.replaceWithMultiple(statements)) {
           replacement.skip();
@@ -281,17 +335,20 @@ export default {
         const referencedBindings = getReferencedBindings(tagExtra);
         const nodeBinding = tagExtra.nodeBinding!;
         const hop = { kind: "for", nodeBinding } as const;
-        setClosureSignalBuilder(tag, hop, (closure, render) => {
+        setClosureSignalBuilder(tag, hop, (closure, render, shellInitId) => {
           const selectorKeyBinding = getForSelectorKey(bodySection, closure);
           if (!selectorKeyBinding) {
-            return buildClosureHop(hop, render);
+            return buildClosureHop(hop, render, shellInitId);
           }
-          return callRuntime(
-            "_for_selector",
-            getScopeAccessorLiteral(nodeBinding, true),
-            getScopeAccessorLiteral(closure, true),
-            getScopeAccessorLiteral(selectorKeyBinding, true),
-            render,
+          return registerShellInit(
+            shellInitId,
+            callRuntime(
+              "_for_selector",
+              getScopeAccessorLiteral(nodeBinding, true),
+              getScopeAccessorLiteral(closure, true),
+              getScopeAccessorLiteral(selectorKeyBinding, true),
+              render,
+            ),
           );
         });
 

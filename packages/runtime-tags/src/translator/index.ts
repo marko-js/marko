@@ -2,7 +2,7 @@ import type { Config } from "@marko/compiler";
 
 import pkg from "../../package.json" with { type: "json" };
 import coreTagLib from "./core";
-import { domRuntimeFeatures } from "./util/runtime";
+import { domPatchRuntimeFeatures, domRuntimeFeatures } from "./util/runtime";
 import runtimeInfo from "./util/runtime-info";
 import { extractVisitors } from "./util/visitors";
 import MarkoCDATA from "./visitors/cdata";
@@ -61,10 +61,12 @@ export function getRuntimeEntryFiles(
   optimize: boolean,
 ) {
   const runtime = `${runtimeInfo.name}${optimize ? "" : "/debug"}`;
-  if (output === "html") return [`${runtime}/html`];
+  if (output === "html") return [`${runtime}/html`, `${runtime}/html/patch`];
   return [
     `${runtime}/dom`,
-    ...domRuntimeFeatures.map((feature) => `${runtime}/dom/${feature}.feat`),
+    ...[...domRuntimeFeatures, ...domPatchRuntimeFeatures].map(
+      (feature) => `${runtime}/dom/${feature}.feat`,
+    ),
   ];
 }
 

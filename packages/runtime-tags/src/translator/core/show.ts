@@ -18,6 +18,8 @@ import { declareConstBefore } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
+import { linkHolePatcher, writesPatchHole } from "../util/patch/decisions";
+import { getExprWriteOwnership } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { getReferencedBindings, mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
@@ -132,6 +134,8 @@ export default {
       if (tagExtra[kStaticDisplay] === undefined) {
         addReasonExprs(ensureSlot(nodeBinding), tagExtra);
         addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
+        tagExtra.rendersValue = true;
+        linkHolePatcher(tagSection, tagExtra, "patches/show");
       }
     },
   },
@@ -208,6 +212,18 @@ export default {
               ),
             );
 
+        // A patched display's entry names the encoded accessors a created
+        // scope finds the range's markers by.
+        const start = tagExtra[kStartBinding];
+        const end = tagExtra[kEndBinding];
+        const patchArgs = writesPatchHole(tagSection, tagExtra)
+          ? [
+              getScopeAccessorLiteral(nodeBinding, true),
+              start && getScopeAccessorLiteral(start, true),
+              end && getScopeAccessorLiteral(end, true),
+              ...getExprWriteOwnership(tagSection, tagExtra),
+            ]
+          : [];
         // The runtime calls bracket the body's statements (rather than taking a
         // callback) so declarations in them stay readable by later statements.
         const statements = [
@@ -220,6 +236,7 @@ export default {
               getScopeAccessorLiteral(nodeBinding),
               display,
               ...endArgs,
+              ...patchArgs,
             ),
           ),
         ];

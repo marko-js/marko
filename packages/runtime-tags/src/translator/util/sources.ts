@@ -5,7 +5,8 @@ import {
   compareReferences,
   someUpToAliasRoot,
 } from "./bindings";
-import { Sorted, type SortedOpt } from "./optional";
+import { some, Sorted, type SortedOpt } from "./optional";
+import { isCalledBody, isCallerParamAt, type Section } from "./sections";
 
 export interface Sources {
   state: SortedOpt<Binding>;
@@ -131,6 +132,28 @@ function unionParamSources(a: Sources["param"], b: Sources["param"]) {
     merged,
     (binding) => !someUpToAliasRoot(binding.aliasOf, isInParams, merged),
   );
+}
+
+// Whether the sources read a param a caller passes (`isCalledBody`).
+export function hasCallerParamSource(sources: Sources | undefined) {
+  return some(sources?.param, isCallerParam);
+}
+
+// Whether a write in `section` gates on a group of the sources' params.
+export function hasCallerParamSourceAt(
+  sources: Sources | undefined,
+  section: Section,
+) {
+  return some(sources?.param, (param) => isCallerParamAt(param, section));
+}
+
+function isCallerParam(binding: ParamBinding) {
+  return isCalledBody(binding.section);
+}
+
+// Whether the sources read what the server supplies: params or `$global`.
+export function hasParamOrGlobalSource(sources: Sources | undefined) {
+  return !!(sources?.param || sources?.global);
 }
 
 export function isInParams(binding: Binding, params: Sources["param"]) {

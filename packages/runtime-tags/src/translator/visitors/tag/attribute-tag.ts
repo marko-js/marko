@@ -7,6 +7,7 @@ import {
 
 import { BindingType } from "../../util/bindings";
 import { getAttributeTagParent } from "../../util/get-parent-tag";
+import { isCoreTagName } from "../../util/is-core-tag";
 import { isOutputHTML } from "../../util/marko-config";
 import { trackParamsReferences } from "../../util/references";
 import { ensureBodySection, removeDroppedContent } from "../../util/sections";
@@ -39,6 +40,10 @@ export default {
         !parentTag.node.extra!.defineBodySection
       ) {
         bodySection.branchExpr = parentTag.node.extra;
+      }
+      // A `<try>`'s pending and caught content renders on the client.
+      if (bodySection && isCoreTagName(parentTag, "try")) {
+        bodySection.boundaryContent = true;
       }
     },
   },

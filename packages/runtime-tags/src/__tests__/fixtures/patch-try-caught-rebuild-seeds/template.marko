@@ -1,0 +1,12 @@
+static const SITE = "Shop";
+static function throwIt(): string {
+  throw new Error("boom");
+}
+<main>
+  <try>
+    <p>${SITE} ${input.title}</p>
+    <counter/>
+    <if=input.fail>${throwIt()}</if>
+    <@catch>caught</@catch>
+  </try>
+</main>

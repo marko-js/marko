@@ -13,12 +13,21 @@ import {
 } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
+import { isPatch } from "../util/marko-config";
+import { isPatchRendered, mayPatchReach } from "../util/patch/structure";
+import { boundaryAlwaysPairs } from "../util/patch/writers";
+import { getSourcesForExpr } from "../util/reasons";
 import {
   getReferencedBindings,
+  onFinalizeReferences,
   setDerivedFrom,
   trackParamsReferences,
 } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { scopeIdentifier } from "../util/scope-read";
@@ -29,8 +38,10 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  type Section,
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
+import { findShellId } from "../util/shell";
 import {
   addStatement,
   addValue,
@@ -38,6 +49,7 @@ import {
   trimEmptyArgs,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import { hasParamOrGlobalSource } from "../util/sources";
 import * as structure from "../util/structure";
 import { toOnlyExpressionOrBlock } from "../util/to-only-or-block";
 import { translateByTarget } from "../util/visitors";
@@ -81,6 +93,12 @@ export default {
     }
 
     const bodySection = ensureBodySection(tagBody)!;
+    // An await a patch may reach pairs its body through a `PatchChild` entry.
+    if (isPatch()) {
+      onFinalizeReferences(() => {
+        if (mayPatchReach(section)) linkRuntimeFeature("patches/boundary");
+      });
+    }
     const valueExtra = (valueAttr.value.extra ??= {});
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
@@ -94,6 +112,7 @@ export default {
     initBranchSection(bodySection, valueExtra, {
       nodeBinding,
       optional: false,
+      await: true,
     });
 
     // The content renderer is initialized unconditionally in setup.
@@ -114,7 +133,7 @@ export default {
         const nodeBinding = tagExtra.nodeBinding!;
         const tagBody = tag.get("body");
         const section = getSection(tag);
-        const bodySection = getSectionForBody(tagBody);
+        const bodySection = getSectionForBody(tagBody)!;
         writeHTMLResumeStatements(tag);
 
         tag
@@ -129,7 +148,17 @@ export default {
                   node.body.params,
                   toOnlyExpressionOrBlock(node.body.body),
                 ),
-                getWriteGuard(section, bodySection?.reason, true),
+                // A patch page always marks a patchable boundary: the
+                // flush pairs its body through the resumed branch link.
+                isPatchRendered(section)
+                  ? t.numericLiteral(1)
+                  : getWriteGuard(section, bodySection.reason, true),
+                isPatch() && getPendingShellArg(valueAttr.value, bodySection),
+                // An always-pairing body's Pending entry drops its
+                // creation id outside divergent contexts.
+                isPatch() &&
+                  boundaryAlwaysPairs(bodySection) &&
+                  t.numericLiteral(1),
               ),
             ),
           )[0]
@@ -196,3 +225,13 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/await.d.marko",
 } as Tag;
+
+// A thenable of client state alone resolves via `_await_promise`, so a patch
+// skips its Pending entry; any other value's carries the shell id.
+function getPendingShellArg(value: t.Expression, bodySection: Section) {
+  const valueSources = getSourcesForExpr(value.extra!);
+  const shellId = findShellId(bodySection);
+  return valueSources?.state && !hasParamOrGlobalSource(valueSources)
+    ? t.numericLiteral(0)
+    : shellId && t.stringLiteral(shellId);
+}

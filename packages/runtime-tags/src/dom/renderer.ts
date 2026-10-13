@@ -24,12 +24,12 @@ export type Renderer = {
   [RendererProp.LocalClosures]?: SetupFn;
   // A debug build marks a lazily loaded template, for a dynamic tag variable check.
   [RendererProp.Lazy]?: 1;
-};
+} & ReturnMark;
 
 export type SetupFn = ((scope: Scope) => void) & ReturnMark;
 
 // A debug build sets it on the setup, or else the params, of content with a
-// `<return>`: every instance shares them, resumed ones included.
+// `<return>`: every instance shares them; a patch's shell marks its renderer.
 export type ReturnMark = { [RendererProp.Returns]?: 1 };
 
 export function createBranch(

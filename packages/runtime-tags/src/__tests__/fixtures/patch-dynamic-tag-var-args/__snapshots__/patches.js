@@ -1,0 +1,27 @@
+// PATCH
+[`a !a1; D ;<button> </button>`, {
+  fa: ["a", 0, 0, "b0"],
+  cAa: {
+    s: {
+      dU: "a0",
+      va2: 5
+    }
+  }
+}]
+;BAA
+
+// PATCH holding BAA
+{
+  fa: [0, [5], 0, "b0"]
+}
+
+// PATCH holding BAA
+{
+  fa: ["a", 0, 0, "b0"],
+  cAa: {
+    s: {
+      dU: "a0",
+      va2: 7
+    }
+  }
+}

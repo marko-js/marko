@@ -6,7 +6,10 @@ import { decode } from "@jridgewell/sourcemap-codec";
 import * as compiler from "@marko/compiler";
 
 import * as translator from "../translator";
-import { domRuntimeFeatures } from "../translator/util/runtime";
+import {
+  domPatchRuntimeFeatures,
+  domRuntimeFeatures,
+} from "../translator/util/runtime";
 
 const require = createRequire(import.meta.url);
 
@@ -28,10 +31,11 @@ describe("runtime-tags/translator-api", () => {
     it("returns the debug runtime entries when not optimized", () => {
       assert.deepEqual(translator.getRuntimeEntryFiles("html", false), [
         "@marko/runtime-tags/debug/html",
+        "@marko/runtime-tags/debug/html/patch",
       ]);
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", false), [
         "@marko/runtime-tags/debug/dom",
-        ...domRuntimeFeatures.map(
+        ...[...domRuntimeFeatures, ...domPatchRuntimeFeatures].map(
           (feature) => `@marko/runtime-tags/debug/dom/${feature}.feat`,
         ),
       ]);
@@ -40,10 +44,11 @@ describe("runtime-tags/translator-api", () => {
     it("returns the optimized runtime entries when optimized", () => {
       assert.deepEqual(translator.getRuntimeEntryFiles("html", true), [
         "@marko/runtime-tags/html",
+        "@marko/runtime-tags/html/patch",
       ]);
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", true), [
         "@marko/runtime-tags/dom",
-        ...domRuntimeFeatures.map(
+        ...[...domRuntimeFeatures, ...domPatchRuntimeFeatures].map(
           (feature) => `@marko/runtime-tags/dom/${feature}.feat`,
         ),
       ]);
@@ -72,6 +77,45 @@ describe("runtime-tags/translator-api", () => {
       },
     );
     assert.ok(code.includes('"my%20template%3b%22id%22"'), code);
+  });
+
+  it("imports the shared text patch register module", () => {
+    const { code } = compiler.compileSync(
+      "<div>${input.value}</div>",
+      path.join(import.meta.dirname, "tmp.marko"),
+      {
+        ...baseConfig,
+        cache: new Map(),
+        output: "dom",
+        entry: "page",
+        optimize: true,
+        patches: true,
+        linkAssets: { runtime: "asset-runtime", onAsset() {} },
+      },
+    );
+    assert.match(
+      code,
+      /import "@marko\/runtime-tags\/dom\/patches\/text\.feat";/,
+    );
+  });
+
+  it("compiles no build into a patch page's entry", () => {
+    const { code } = compiler.compileSync(
+      "<html><body>${input.value}</body></html>",
+      path.join(import.meta.dirname, "tmp.marko"),
+      {
+        ...baseConfig,
+        cache: new Map(),
+        output: "dom",
+        entry: "page",
+        optimize: true,
+        patches: true,
+        linkAssets: { runtime: "asset-runtime", onAsset() {} },
+      },
+    );
+    // The document's render data names the server's build instead.
+    assert.match(code, /\binit\(\)/);
+    assert.doesNotMatch(code, /build/i);
   });
 
   describe("style blocks with sourceMaps", () => {

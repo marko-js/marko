@@ -1,0 +1,9 @@
+<let/items=[{ id: 1 }, { id: 2 }]/>
+<main>
+  <ul>
+    <for|item| of=items by="id">
+      <li>${item.id}<if=(input.selected === item.id)><span>*</span></if></li>
+    </for>
+  </ul>
+  <button onClick() { items = [...items, { id: items.length + 1 }] }>+</button>
+</main>

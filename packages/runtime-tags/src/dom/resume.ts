@@ -15,6 +15,7 @@ import {
   type BranchScope,
   type EncodedAccessor,
   NodeType,
+  RenderDataProp,
   ResumeSymbol,
   type Scope,
 } from "../common/types";
@@ -24,9 +25,9 @@ import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
-type ResumeFn = (ctx: SerializeContext) => unknown;
-type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
-interface SerializeContext {
+export type ResumeFn = (ctx: SerializeContext) => unknown;
+export type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
+export interface SerializeContext {
   (data: number | (Scope | number)[], registryId?: string): unknown;
   _: Record<string, unknown>;
 }
@@ -59,18 +60,28 @@ export interface RenderData {
   j?: never;
   // Await counter lookup
   p?: Record<string | number, AwaitCounter>;
+  // The server build a patch page's document named (`_patch_build`).
+  [RenderDataProp.PatchBuild]?: string;
+  // The server's account of what this render holds: the opaque token its
+  // last patch response ended with, sent with the next request.
+  [RenderDataProp.PatchToken]?: string;
+  // Its live patch response's stop, which the next one calls: what it left
+  // held never applies once it stopped.
+  [RenderDataProp.PatchResponse]?: () => void;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
 export const _resumed: Record<string, unknown> = {};
-let curRenders: Renders;
+export let curRenders: Renders;
 let embedRenders:
   | undefined
   | Map<Text, [renderId: string, scopes: Record<string | number, Scope>]>;
 // Only assigned by `ready()`, so the lazy stream machinery guarded by
 // `readyIds` checks is dropped from apps without lazy tags.
-let readyIds: undefined | Set<string>;
+export let readyIds: undefined | Set<string>;
 let failedIds: undefined | Set<string>;
+let patchReady: undefined | ((readyId: string) => void);
+let patchReadyFailed: undefined | ((readyId: string) => void);
 // Lazy load support latch, set by `lazy.feat`, which an entry reaching lazy
 // tags imports ahead of resume; other pages fold it and the retention away.
 let lazyEnabled: undefined | 1;
@@ -82,20 +93,34 @@ export function ready(readyId: string) {
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
+  patchReady?.(readyId);
 }
 
-// A lazy module that will never arrive can never deliver its channel's
-// pending resume data: the debug build records the failure per channel
-// (repeat reports fold) and says so instead of staying silent. Production
-// builds compile no reporting call sites, so this strips away entirely.
+export function installReady(
+  onReady: (readyId: string) => void,
+  onFail: (readyId: string) => void,
+) {
+  patchReady = onReady;
+  patchReadyFailed = onFail;
+}
+
+// A channel module that never arrives can never drain its data: the
+// patch feature settles pending flushes and rejects later ones.
 export function readyFailed(readyId: string) {
-  if (MARKO_DEBUG) {
-    if (failedIds?.has(readyId) || readyIds?.has(readyId)) return;
+  // A module a patch loaded itself outlives its document loader's failure.
+  if (readyIds?.has(readyId)) return;
+  // Repeat reports fold in debug.
+  if (MARKO_DEBUG && !failedIds?.has(readyId)) {
     (failedIds ||= new Set()).add(readyId);
     console.error(
       `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
     );
   }
+  patchReadyFailed?.(readyId);
+}
+
+export function isReady(readyId: string) {
+  return !!readyIds?.has(readyId);
 }
 
 export function withLazy() {
@@ -560,8 +585,8 @@ function runResumeEffects(render: RenderData) {
   }
 }
 
-export function getRegisteredWithScope(id: string, scope?: Scope) {
-  return scope ? (_resumed[id] as RegisteredFn)(scope) : _resumed[id];
+export function getRegisteredWithScope<T = unknown>(id: string, scope?: Scope) {
+  return (scope ? (_resumed[id] as RegisteredFn)(scope) : _resumed[id]) as T;
 }
 
 export function _var_resume<T extends Signal<unknown>>(

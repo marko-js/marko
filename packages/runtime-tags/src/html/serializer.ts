@@ -749,7 +749,7 @@ export function hasMatchingCalls(state: State, readyId: string | undefined) {
   return false;
 }
 
-function writeProp(
+export function writeProp(
   state: State,
   val: unknown,
   parent: Reference | null,

@@ -78,6 +78,27 @@ export {
   _to_text,
 } from "./dom/dom";
 export { _on } from "./dom/event";
+export { patch } from "./dom/patches/apply";
+export {
+  _fill_global_join,
+  _fill_global_join as _fill_global_join_resume,
+  _fill_global_script,
+} from "./dom/patches/global";
+export { _load_lazy, _load_signal_patch } from "./dom/patches/load";
+export {
+  _fill_const,
+  _fill_join,
+  _fill_join_closure,
+  _fill_join_for,
+  _fill_join_if,
+  _fill_join_subscribers,
+  _fill_let,
+  _fill_let_change,
+  _fill_var,
+  _shell_join,
+  _shell_or,
+  _shell_subscribe_closure_get,
+} from "./dom/patches/signals";
 export {
   _load_event_trigger,
   _load_idle_trigger,

@@ -1,0 +1,52 @@
+// tags/card/index.marko
+const $template = "<section><h2> </h2><!><button>+</button></section>";
+const $walks = "E l%b l";
+_shells({ b: "b !b0;E l%b ;<section><h2> </h2><!><button>+</button></section>" });
+var card_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	let open = true;
+	_html(`<section><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2>`);
+	if ($scope0_page) _if(() => {
+		{
+			const $scope1_id = _scope_id();
+			_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $wg__input_content);
+			_scope($scope1_id, {});
+			return 0;
+		}
+	}, $scope0_id, "b");
+	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</section>`);
+	_script($scope0_id, "b0");
+	_patch_value($scope0_id, "vb2", open, 1);
+	$scope0_page ? _scope($scope0_id, {
+		g: input.content,
+		h: open
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.content);
+});
+
+// template.marko
+_shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `D/${_w0}&l`)($walks)};${((_w0) => `<main>${_w0}</main>`)($template)}`)() });
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $input_note__closures = /* @__PURE__ */ new Set();
+	_html("<main>");
+	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	const $childScope = _patch_child($scope0_id, "a");
+	card_default({
+		title: input.title,
+		content: _content_resume("a1", () => {
+			_scope_reason();
+			const $scope1_id = _scope_id();
+			_html(`<em>${_text_resume($scope1_id, "a", input.note, $wg__input_note)}</em>`);
+			_subscribe($wi__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0", $wg__input_note);
+			$wg__input_note || _resume_branch($scope1_id);
+		}, $scope0_id)
+	});
+	_html("</main>");
+	$scope0_page ? _scope($scope0_id, {
+		e: input.note,
+		f: $wi__input_note && $input_note__closures,
+		a: _existing_scope($childScope)
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.note);
+}, 1);

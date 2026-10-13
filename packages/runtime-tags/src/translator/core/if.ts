@@ -22,9 +22,24 @@ import {
 } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
-import { addReasonExprs, type Reasons } from "../util/reasons";
-import { getReferencedBindings, mergeReferences } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import { isPatch } from "../util/marko-config";
+import {
+  hasStatefulBranchAt,
+  patchesBranchesAt,
+  recordStructuralParams,
+} from "../util/patch/structure";
+import { getExprWriteOwnership } from "../util/patch/writers";
+import {
+  addReasonExprs,
+  getSourcesForExpr,
+  type Reasons,
+} from "../util/reasons";
+import {
+  getReferencedBindings,
+  mergeReferences,
+  onFinalizeReferences,
+} from "../util/references";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
@@ -34,6 +49,7 @@ import {
   getSectionForBody,
   type Section,
 } from "../util/sections";
+import { getShellIdArg } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -47,7 +63,7 @@ import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { toOnlyStatementOrBlock } from "../util/to-only-or-block";
 import { translateByTarget } from "../util/visitors";
-import { getBranchWriteReason } from "../util/write-guard";
+import { getBranchWriteReason, scopePageIdentifier } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 const BRANCHES_LOOKUP = new WeakMap<
@@ -96,6 +112,14 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), ifTagExtra);
+      if (isPatch()) {
+        onFinalizeReferences(() => {
+          if (patchesBranchesAt(nodeBinding)) {
+            linkRuntimeFeature("patches/branch");
+            recordStructuralParams(getSourcesForExpr(ifTagExtra));
+          }
+        });
+      }
     }
   },
   translate: translateByTarget({
@@ -123,9 +147,19 @@ export const IfTag = {
         if (isLastBranch(tag)) {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
+          const ifTagSection = getSection(ifTag);
+          const ifTagExtra = ifTag.node.extra!;
+          const nodeBinding = ifTagExtra.nodeBinding!;
           const nextTag = tag.getNextSibling();
           let branchReasons: Reasons | undefined;
           let statement: t.Statement | undefined;
+
+          // A stateful chain compiles as it does on a plain page: no marker
+          // retention, shells, or branch entry.
+          const stateful = hasStatefulBranchAt(nodeBinding);
+          // A patchable conditional keeps its markers: the shipped-branch
+          // swap inserts at the marker node, which elision would remove.
+          const patchChain = patchesBranchesAt(nodeBinding);
 
           for (let i = branches.length; i--;) {
             const [branchTag, branchBodySection] = branches[i];
@@ -170,8 +204,27 @@ export const IfTag = {
                   branches.every(([, branchBody]) =>
                     isSingleNodeBranch(branchBody),
                   ),
+                  patchChain,
                 ),
+                // Shell ids per branch index (an absent body ships `0`): the
+                // client creates diverged branches without bundling them.
+                patchChain &&
+                  t.arrayExpression(branches.map(getBranchShellIdArg)),
+                // A chain whose conditions derive from params yields to the
+                // client when the call site passes state for them.
+                ...(patchChain
+                  ? getExprWriteOwnership(ifTagSection, ifTagExtra)
+                  : []),
               ),
+            );
+          }
+
+          if (stateful) {
+            // Patch renders skip the chain: its tests are server-stale, so a
+            // flush writes no branch entry for it.
+            statement = t.ifStatement(
+              scopePageIdentifier(ifTagSection.program),
+              statement!,
             );
           }
 
@@ -424,6 +477,10 @@ function getBranches(tag: t.NodePath<t.MarkoTag>) {
 }
 
 // The `<else-if>` or `<else>` continuing the chain after `tag`, past comments.
+function getBranchShellIdArg([, bodySection]: [unknown, Section | undefined]) {
+  return getShellIdArg(bodySection);
+}
+
 function getNextBranchTag(tag: t.NodePath<t.MarkoTag>) {
   let next = tag.getNextSibling();
   while (next.isMarkoComment()) next = next.getNextSibling();

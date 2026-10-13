@@ -2,10 +2,16 @@ import { types as t } from "@marko/compiler";
 import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
 import { BindingType } from "../../util/bindings";
-import { isOptimize } from "../../util/marko-config";
+import { isOptimize, isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach } from "../../util/optional";
-import { callRuntime, registerRuntimeValue } from "../../util/runtime";
+import { forEach, some } from "../../util/optional";
+import { hasPatchEffect, rerunsEffectOnPatch } from "../../util/patch/refresh";
+import { getReferencedBindings } from "../../util/references";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  registerRuntimeValue,
+} from "../../util/runtime";
 import {
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
@@ -13,6 +19,7 @@ import {
 import { scopeIdentifier } from "../../util/scope-read";
 import { isSectionRendererElided } from "../../util/section-renderer";
 import {
+  forEachSection,
   forEachSectionReverse,
   getDynamicTagContentClosures,
   getSectionForBody,
@@ -45,6 +52,11 @@ import type { TemplateVisitor } from "../../util/visitors";
 export default {
   translate: {
     enter(program) {
+      // A page that loads this module takes the features analyze linked
+      // from it rather than from its entry.
+      for (const feature of program.node.extra.runtimeFeatures || []) {
+        importRuntimeFeature(feature);
+      }
       const section = getSectionForBody(program)!;
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
@@ -165,6 +177,11 @@ export default {
                 renderer = t.addComment(renderer, "leading", "@__PURE__");
               }
 
+              // A flush binds registered content by id (a loop's values ride along).
+              if (registerReason && isPatch()) {
+                importRuntimeFeature("patches/bind");
+              }
+
               if (objProps.length) {
                 renderer = callRuntime(
                   "_content_closures",
@@ -211,6 +228,8 @@ export default {
           }
         }
       });
+
+      if (isPatch()) forEachSection(importPatchEffectFeatures);
 
       const written = writeSignals(section);
       writeRegisteredFns();
@@ -284,4 +303,19 @@ function markReturn(
       ? [callRuntime("_return_setup", setup), params]
       : [setup, callRuntime("_return_setup", params!)]
     : [setup, params];
+}
+
+function importPatchEffectFeatures(section: Section) {
+  if (some(section.bindings, hasPatchEffect)) {
+    importRuntimeFeature("patches/effect");
+  }
+  // An effect a patch re-runs resets its `$signal`s first.
+  if (section.abortSignalExprs?.some(rerunsOnPatch)) {
+    importRuntimeFeature("patches/effect-signal");
+  }
+}
+
+// An effect expression a patch re-runs (its `_patch_effect` entry).
+function rerunsOnPatch(root: t.NodeExtra) {
+  return some(getReferencedBindings(root), rerunsEffectOnPatch);
 }

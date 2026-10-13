@@ -42,7 +42,7 @@ import type { ServerRenderer } from "./template";
 
 export type PartialScope = Record<Accessor, unknown>;
 
-interface Channel extends SerializeChannel {
+export interface Channel extends SerializeChannel {
   parent?: Channel;
   resumes: string;
   writeScopes: Record<number, PartialScope>;
@@ -489,7 +489,7 @@ export function _scope_with_id(scopeId: number) {
   return scopeWithId($chunk.boundary.state, scopeId);
 }
 
-function scopeWithId(state: State, scopeId: number) {
+export function scopeWithId(state: State, scopeId: number) {
   const { scopes } = state;
   let scope = scopes.get(scopeId);
   if (!scope) {
@@ -753,6 +753,11 @@ export class State implements Channel {
 
   serializeFlush(boundary: Boundary) {
     flushSerializer(boundary, this);
+  }
+
+  // The `$global` values the client reads, written once as scope 0.
+  getSerializedGlobals() {
+    return getFilteredGlobals(this.$global);
   }
 
   // Installs the walker runtime and opens this render's data.
@@ -1642,7 +1647,7 @@ function flushSerializer(boundary: Boundary, channel: Channel) {
     // values assigned mid-render are dropped — call is unsupported by design.
     if (!channel.readyId && !state.hasWrittenGlobals) {
       state.hasWrittenGlobals = true;
-      const globals = getFilteredGlobals(state.$global);
+      const globals = state.getSerializedGlobals();
       // Globals become scope 0 so we can reference them as `_(0)`.
       if (globals) flushes.push([0, globals, globals]);
     }
@@ -1677,7 +1682,7 @@ function flushSerializer(boundary: Boundary, channel: Channel) {
 
 function flushSerializerGlobals(boundary: Boundary) {
   const { state } = boundary;
-  const globals = getFilteredGlobals(state.$global);
+  const globals = state.getSerializedGlobals();
   if (globals) {
     state.hasWrittenGlobals = true;
     state.needsWalkerRuntime = true;
