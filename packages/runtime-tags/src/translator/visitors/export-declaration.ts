@@ -1,15 +1,15 @@
 import { types as t } from "@marko/compiler";
-import { getFile, resolveTagImport } from "@marko/compiler/babel-utils";
+import { resolveTagImport } from "@marko/compiler/babel-utils";
 
+import { trackTagImport } from "../util/tag-import";
 import type { TemplateVisitor } from "../util/visitors";
 
-const kTagImport = Symbol("tag import");
 declare module "@marko/compiler/dist/types" {
   export interface ExportNamedDeclarationExtra {
-    [kTagImport]?: string;
+    tagImport?: string;
   }
   export interface ExportAllDeclarationExtra {
-    [kTagImport]?: string;
+    tagImport?: string;
   }
 }
 
@@ -20,18 +20,15 @@ export default {
     if (source) {
       const tagImport = resolveTagImport(exportDecl, source.value);
       if (tagImport) {
-        (node.extra ??= {})[kTagImport] = tagImport;
-        const tags = getFile().metadata.marko.tags!;
-        if (!tags.includes(tagImport)) {
-          tags.push(tagImport);
-        }
+        (node.extra ??= {}).tagImport = tagImport;
+        trackTagImport(tagImport);
       }
     }
   },
   translate: {
     exit(exportDecl) {
       const { node } = exportDecl;
-      const tagImport = node.extra?.[kTagImport];
+      const tagImport = node.extra?.tagImport;
       if (tagImport) {
         node.source!.value = tagImport;
       }

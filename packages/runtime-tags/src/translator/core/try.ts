@@ -7,11 +7,12 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { type Binding, BindingType, createBinding } from "../util/bindings";
+import { assertHasBody } from "../util/assert";
+import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
-import { getAllTagReferenceNodes, mergeReferences } from "../util/references";
+import { mergeTagReferences } from "../util/references";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -21,7 +22,6 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  type Section,
   startSection,
 } from "../util/sections";
 import {
@@ -82,24 +82,14 @@ export default {
       }
     }
     const section = getOrCreateSection(tag);
-    const tagExtra = mergeReferences(
-      section,
-      tag.node,
-      getAllTagReferenceNodes(tag.node),
-    );
+    const tagExtra = mergeTagReferences(section, tag.node);
     const nodeBinding = (tagExtra.nodeBinding = createBinding(
       "#text",
       BindingType.dom,
       section,
     ));
 
-    if (!tag.node.body.body.length) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) requires [body content](https://markojs.com/docs/reference/language#tag-content).",
-        );
-    }
+    assertHasBody(tag);
 
     if (!attrTags) {
       throw tag
@@ -125,15 +115,10 @@ export default {
         const section = getSection(tag);
         const tagBody = tag.get("body");
         const nodeBinding = tag.node.extra!.nodeBinding!;
-        const catchTag = getAttrTag(tag, "@catch");
-        const placeholderTag = getAttrTag(tag, "@placeholder");
-        const catchSection =
-          catchTag && getSectionForBody(catchTag.get("body"));
-        const placeholderSection =
-          placeholderTag && getSectionForBody(placeholderTag.get("body"));
+        const { catchTag, catchSection, placeholderTag, placeholderSection } =
+          getTryParts(tag);
 
-        writer.flushInto(tag);
-        writeHTMLResumeStatements(tagBody);
+        writeHTMLResumeStatements(tag);
 
         const tryArgs = [
           getScopeIdIdentifier(section),
@@ -150,7 +135,7 @@ export default {
             t.stringLiteral(
               catchSection
                 ? getResumeRegisterId(catchSection, "content")
-                : getEmptyCatchId(section, nodeBinding),
+                : getResumeRegisterId(section, nodeBinding, "catch"),
             ),
         ];
 
@@ -166,14 +151,12 @@ export default {
         const nodeBinding = tag.node.extra!.nodeBinding!;
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"))!;
-        const catchTag = getAttrTag(tag, "@catch");
-        const catchSection =
-          catchTag && getSectionForBody(catchTag.get("body"));
-        const placeholderTag = getAttrTag(tag, "@placeholder");
-        const placeholderSection =
-          placeholderTag && getSectionForBody(placeholderTag.get("body"));
+        const { catchTag, catchSection, placeholderSection } = getTryParts(tag);
+        // An empty `@catch` still catches, so it has an empty renderer of its own.
         const emptyCatchId =
-          catchTag && !catchSection && getEmptyCatchId(section, nodeBinding);
+          catchTag &&
+          !catchSection &&
+          getResumeRegisterId(section, nodeBinding, "catch");
         const signal = getSignal(section, nodeBinding, "try");
 
         signal.build = () => {
@@ -224,6 +207,18 @@ export default {
   types: runtimeInfo.name + "/tags/try.d.marko",
 } as Tag;
 
+function getTryParts(tag: t.NodePath<t.MarkoTag>) {
+  const catchTag = getAttrTag(tag, "@catch");
+  const placeholderTag = getAttrTag(tag, "@placeholder");
+  return {
+    catchTag,
+    catchSection: catchTag && getSectionForBody(catchTag.get("body")),
+    placeholderTag,
+    placeholderSection:
+      placeholderTag && getSectionForBody(placeholderTag.get("body")),
+  };
+}
+
 // An empty `@placeholder` shows nothing, so it is no placeholder; an empty
 // `@catch` still catches.
 function getAttrTag(tag: t.NodePath<t.MarkoTag>, name: string) {
@@ -245,9 +240,4 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
       ...body.node.body,
     ]),
   );
-}
-
-// An empty `@catch` still catches, so it has an empty renderer of its own.
-function getEmptyCatchId(section: Section, nodeBinding: Binding) {
-  return getResumeRegisterId(section, nodeBinding, "catch");
 }

@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
-import { finalizeFunctionRegistry } from "../visitors/function";
 import {
   type Binding,
   BindingType,
@@ -20,6 +19,7 @@ import {
   propsUtil,
 } from "./bindings";
 import { generateUid } from "./generate-uid";
+import { finalizeFunctionRegistry } from "./module-registrations";
 import {
   addSorted,
   every,
@@ -34,6 +34,7 @@ import {
   some,
 } from "./optional";
 import {
+  addAlwaysRead,
   addOwnerReason,
   addReasonExprs,
   addReason,
@@ -53,14 +54,15 @@ import {
   getFunctionReadsByExpression,
   getReadsByExpression,
   getReferenceFinalizers,
+  getValueReferences,
   isReferencedExtra,
-  getReferencedBindings,
   setResolvedFunctionReads,
   setResolvedReads,
 } from "./references";
 import {
   forEachSection,
   getDirectClosures,
+  getHighestHoistSection,
   isResumedBranch,
   type Section,
   sectionUtil,
@@ -71,11 +73,7 @@ import {
 import { finalizeTagDerivations } from "./set-tag-derived-from";
 import { addSetupExpr } from "./setup-work";
 import { getSectionSlot, getSlot, SlotKind } from "./slots";
-import {
-  addAlwaysRead,
-  readsValuesOnResume,
-  solveReasons,
-} from "./solve-reasons";
+import { solveReasons } from "./solve-reasons";
 import {
   ALWAYS,
   type Sources,
@@ -166,7 +164,6 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         expr,
         exprBindings.referencedBindings,
         exprBindings.lazyBindings,
-        exprBindings.globalBindings,
       );
       if (exprBindings.globalBindings) {
         getProgram().node.extra.hasGlobalRead = true;
@@ -272,19 +269,8 @@ function resolveBindings() {
     }
 
     if (binding.hoists) {
-      let highestHoistSection!: Section;
-
-      forEach(binding.hoists, (hoistSection) => {
-        if (
-          !highestHoistSection ||
-          hoistSection.depth < highestHoistSection.depth
-        ) {
-          highestHoistSection = hoistSection;
-        }
-
-        addAlwaysRead(binding);
-      });
-
+      const highestHoistSection = getHighestHoistSection(binding);
+      addAlwaysRead(binding);
       binding.section.hoisted = bindingUtil.add(
         binding.section.hoisted,
         binding,
@@ -455,27 +441,6 @@ function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
   });
 }
 
-// The bindings a binding's value is computed from.
-export function getValueInputs(binding: Binding): ReferencedBindings {
-  if (binding.aliasOf) return binding.aliasOf;
-  if (binding.derivedFrom) {
-    return getValueReferences(binding.derivedFrom);
-  }
-}
-
-// The bindings value expressions read, apart from an initial value (which a
-// change never recomputes).
-function getValueReferences(exprs: Opt<t.NodeExtra>): ReferencedBindings {
-  return reduce(exprs, addValueReferences);
-}
-
-function addValueReferences(refs: ReferencedBindings, expr: t.NodeExtra) {
-  // An attribute tag's expression is read through the group it merged into.
-  return isReferencedExtra(getCanonicalExtra(expr)) && !expr.initialValue
-    ? bindingUtil.union(refs, getReferencedBindings(expr))
-    : refs;
-}
-
 function getWalkedBinding(op: StructureOp) {
   return typeof op === "object" &&
     (op.kind === StructureKind.Node || op.kind === StructureKind.Child)
@@ -492,7 +457,7 @@ function getLastOwnSourceReturn(intersection: Intersection, section: Section) {
   const track = (binding: Binding) => {
     if (binding.section === section && !seen.has(binding)) {
       seen.add(binding);
-      const { returnedBy } = getAliasRoot(binding) || binding;
+      const { returnedBy } = getAliasRoot(binding);
       if (returnedBy && (!last || last.id < returnedBy.id)) last = returnedBy;
       if (binding.derivedFrom) {
         forEach(getValueReferences(binding.derivedFrom), track);
@@ -563,7 +528,7 @@ function resolveBindingSources(binding: Binding) {
   switch (binding.type) {
     case BindingType.let: {
       const aliasRoot = getAliasRoot(binding);
-      if (aliasRoot) {
+      if (aliasRoot !== binding) {
         resolveBindingSources(aliasRoot);
         binding.sources = aliasRoot.sources;
       } else if (binding.assignments) {
@@ -585,7 +550,7 @@ function resolveBindingSources(binding: Binding) {
   }
 
   const aliasRoot = getAliasRoot(binding);
-  if (aliasRoot) {
+  if (aliasRoot !== binding) {
     if (!resolvedSources.has(aliasRoot)) {
       resolvedSources.add(aliasRoot);
       resolveDerivedSources(aliasRoot);
@@ -617,7 +582,13 @@ function mergeResolvedSources(sources: Sources | undefined, ref: Binding) {
 }
 
 function getRootIntersection(binding: Binding) {
-  return (getAliasRoot(binding) || binding).intersection;
+  return getAliasRoot(binding).intersection;
+}
+
+// An effect runs on resume with the values it references, unless it reads back
+// a value its tag retained.
+export function readsValuesOnResume(expr: t.NodeExtra) {
+  return !!expr.isEffect && !expr.retained;
 }
 
 // Whether an expression (or the one a node's extra sits in) is emitted.
@@ -655,11 +626,7 @@ function pruneBinding(binding: Binding): boolean {
   // A read from an unread binding's droppable value is no read: judge those
   // bindings first (one met again mid way counts as read).
   binding.pruned = false;
-  for (const read of binding.reads.keys()) {
-    if (isDroppableValue(read)) {
-      forEach(read.derives, pruneBinding);
-    }
-  }
+  for (const read of binding.reads.keys()) pruneDerived(read);
   // Likewise an assignment from such a value.
   forEach(binding.assignments, pruneWriter);
 
@@ -697,7 +664,7 @@ function pruneBinding(binding: Binding): boolean {
   // assignment calls the change handler in the id it reserves.
   shouldPrune &&=
     !binding.reads.size &&
-    !(binding.reserveSize && some(binding.assignments, inEmittedExpr));
+    !(binding.reserveSize && hasEmittedAssignment(binding));
 
   binding.pruned = shouldPrune;
   if (shouldPrune && !hasEmittedAssignment(binding)) {
@@ -757,7 +724,6 @@ function resolveReferencedBindingsInFunction(
   return { referencedBindings, constantBindings };
 }
 
-// The read bindings that alias no other read binding.
 // The nearest of a binding and its ancestors that holds the expression's
 // reads of it, once pruning has given each read to the binding it resolves to.
 function getReadOwner(binding: Binding | undefined, expr: ReferencedExtra) {
@@ -800,7 +766,7 @@ function isLazyRead(
 }
 
 function isParamBinding(binding: Binding) {
-  const root = getAliasRoot(binding) || binding;
+  const root = getAliasRoot(binding);
   return root === root.section.params;
 }
 
@@ -880,43 +846,19 @@ function resolveReferencedBindings(
   lazyBindings = bindingUtil.difference(lazyBindings, referencedBindings);
 
   if (Array.isArray(referencedBindings)) {
-    // Resolve canonical intersection based on the expressions section.
-    // This ensures referential equality between reference binding groups.
-    const intersections = intersectionsBySection.get(expr.section) || [];
-    const intersection = findSorted(
-      compareIntersections,
-      intersections,
+    referencedBindings = getCanonicalIntersection(
+      intersectionsBySection,
+      expr.section,
       referencedBindings,
     );
-    if (intersection) {
-      referencedBindings = intersection;
-    } else {
-      intersectionsBySection.set(
-        expr.section,
-        addSorted(compareIntersections, intersections, referencedBindings),
-      );
-    }
   }
 
   if (referencedBindings && constantBindings) {
-    // Resolve canonical intersection based on the expressions section.
-    // This ensures referential equality between reference binding groups.
-    const intersections = intersectionsBySection.get(expr.section) || [];
-    const combined = bindingUtil.union(
-      referencedBindings,
-      constantBindings,
-    ) as Intersection;
-    const intersection = findSorted(
-      compareIntersections,
-      intersections,
-      combined,
+    getCanonicalIntersection(
+      intersectionsBySection,
+      expr.section,
+      bindingUtil.union(referencedBindings, constantBindings) as Intersection,
     );
-    if (!intersection) {
-      intersectionsBySection.set(
-        expr.section,
-        addSorted(compareIntersections, intersections, combined),
-      );
-    }
   }
 
   return {
@@ -929,6 +871,27 @@ function resolveReferencedBindings(
     closureSection,
     hoistedSection,
   };
+}
+
+// The section's one array equal to `intersection`, recorded when new, so equal
+// reference binding groups are referentially equal.
+function getCanonicalIntersection(
+  intersectionsBySection: Map<Section, Intersection[]>,
+  section: Section,
+  intersection: Intersection,
+) {
+  const intersections = intersectionsBySection.get(section) || [];
+  const canonical = findSorted(
+    compareIntersections,
+    intersections,
+    intersection,
+  );
+  if (canonical) return canonical;
+  intersectionsBySection.set(
+    section,
+    addSorted(compareIntersections, intersections, intersection),
+  );
+  return intersection;
 }
 
 function resolveConstantReference(binding: Binding): ExtraRead | undefined {
@@ -958,5 +921,5 @@ function resolveExpressionReference(
 
 // Only a child's `<return>` sets a tag variable after its body may render.
 function isChildReturnVar(binding: Binding) {
-  return !!(getAliasRoot(binding) || binding).returnedBy;
+  return !!getAliasRoot(binding).returnedBy;
 }

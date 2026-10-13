@@ -2,9 +2,8 @@ import { types as t } from "@marko/compiler";
 import { getFile, getTagDef, type Plugin } from "@marko/compiler/babel-utils";
 
 import { reportAnalyzeError } from "../../util/analyze-errors";
-import * as hooks from "../../util/plugin-hooks";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
-import type { TemplateVisitor } from "../../util/visitors";
+import { enterHook, exitHook, type TemplateVisitor } from "../../util/visitors";
 import AttributeTag from "./attribute-tag";
 import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
@@ -28,7 +27,7 @@ export default {
         const hook = tagDef?.analyzer?.hook as Plugin;
 
         if (hook) {
-          hooks.enter(hook, tag);
+          enterHook(hook, tag);
           return;
         }
 
@@ -60,7 +59,7 @@ export default {
         const hook = getTagDef(tag)?.analyzer?.hook as Plugin;
 
         if (hook) {
-          hooks.exit(hook, tag);
+          exitHook(hook, tag);
           return;
         }
 
@@ -82,7 +81,7 @@ export default {
         if (tagDef.translator.path) {
           getFile().metadata.marko.watchFiles.push(tagDef.translator.path);
         }
-        hooks.enter(tagDef.translator.hook, tag);
+        enterHook(tagDef.translator.hook, tag);
         return;
       }
 
@@ -116,7 +115,7 @@ export default {
       const translator = getTagDef(tag)?.translator;
 
       if (translator) {
-        hooks.exit(translator.hook, tag);
+        exitHook(translator.hook, tag);
         return;
       }
 

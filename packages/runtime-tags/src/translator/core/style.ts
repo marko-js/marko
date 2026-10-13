@@ -26,7 +26,7 @@ import { addReasonExprs } from "../util/reasons";
 import { getReferencedBindings, mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
-import { createScopeReadExpression } from "../util/scope-read";
+import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
 import {
   getNodeContentType,
   getOrCreateSection,
@@ -35,6 +35,7 @@ import {
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import { getSlot } from "../util/slots";
+import { createProgramState } from "../util/state";
 import * as structure from "../util/structure";
 import {
   checkStyleInterpolations,
@@ -43,7 +44,6 @@ import {
 import { translateByTarget } from "../util/visitors";
 import { getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
-import { scopeIdentifier } from "../visitors/program";
 
 const kStyleImportPath = Symbol("style import path");
 const kDynamicStyleNames = Symbol("dynamic style names");
@@ -57,12 +57,13 @@ declare module "@marko/compiler/dist/types" {
 
 const STYLE_EXT_REG = /^style((?:\.[a-zA-Z0-9$_-]+)+)?/;
 // Same-extension <style> block count per program, so each block's virtual file path is distinct.
-const programStyleCounts = new WeakMap<
-  t.Program,
-  Partial<Record<string, number>>
->();
+const [getStyleCounts] = createProgramState(
+  (): Partial<Record<string, number>> => ({}),
+);
 // Running index for dynamic `<style>` interpolation names, program-scoped.
-const programDynamicStyleNameCounts = new WeakMap<t.Program, number>();
+const [getDynamicStyleNameCount, setDynamicStyleNameCount] = createProgramState(
+  () => 0,
+);
 
 export default {
   analyze(tag) {
@@ -133,9 +134,8 @@ function collectDynamicStyleNames(tag: t.NodePath<t.MarkoTag>) {
   let names: string[] | undefined;
   for (const child of tag.node.body.body) {
     if (t.isMarkoPlaceholder(child)) {
-      const program = getProgram().node;
-      const index = programDynamicStyleNameCounts.get(program) ?? 0;
-      programDynamicStyleNameCounts.set(program, index + 1);
+      const index = getDynamicStyleNameCount();
+      setDynamicStyleNameCount(index + 1);
       (names ??= []).push(dynamicStyleName(index));
     } else if (!t.isMarkoText(child)) {
       throw tag.hub.buildError(
@@ -237,12 +237,10 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       "render",
       section,
       undefined,
-      t.expressionStatement(
-        callRuntime(
-          "_style_shell",
-          scopeIdentifier,
-          getScopeAccessorLiteral(binding),
-        ),
+      callRuntime(
+        "_style_shell",
+        scopeIdentifier,
+        getScopeAccessorLiteral(binding),
       ),
       true,
     );
@@ -253,13 +251,11 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         "render",
         section,
         valueRef,
-        t.expressionStatement(
-          callRuntime(
-            "_style_rule_item",
-            readEl(),
-            t.stringLiteral(names[i]),
-            value,
-          ),
+        callRuntime(
+          "_style_rule_item",
+          readEl(),
+          t.stringLiteral(names[i]),
+          value,
         ),
         !valueRef,
       );
@@ -345,9 +341,7 @@ function getStyleImportPath(
     ext = ".module" + ext;
   }
 
-  const program = getProgram().node;
-  let counts = programStyleCounts.get(program);
-  if (!counts) programStyleCounts.set(program, (counts = {}));
+  const counts = getStyleCounts();
   const index = counts[ext] || 0;
   counts[ext] = index + 1;
 

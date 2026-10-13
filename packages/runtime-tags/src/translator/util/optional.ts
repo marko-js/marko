@@ -502,8 +502,6 @@ function joinRepeatable<T>(compare: Compare<T>, a: T, b: T): OneMany<T> {
   return compareResult === 0 ? a : compareResult < 0 ? [a, b] : [b, a];
 }
 
-// Adds to an unordered set: the same value when already present, so a
-// caller can tell by identity that nothing was added.
 export function at<T>(data: Opt<T>, index: number): T | undefined {
   return Array.isArray(data) ? data[index] : index ? undefined : data;
 }

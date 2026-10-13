@@ -10,12 +10,17 @@ import {
 import { htmlAttrNameReg, userAttrNameReg } from "../../../common/helpers";
 import { flattenTextOnlyConditional } from "../../core/if";
 import { preAnalyze as preAnalyzeTextarea } from "../../core/textarea";
+import { buildAttrNameError } from "../../util/assert";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getMarkoRoot, isMarko } from "../../util/get-root";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { getHTMLRuntime } from "../../util/runtime";
-import withPreviousLocation from "../../util/with-previous-location";
-import { isUnresolvedKnownWrongTag, tagNotFoundError } from "../tag/custom-tag";
+import {
+  isUnresolvedKnownWrongTag,
+  tagNotFoundError,
+} from "../../util/tag-name-type";
+import { getLiteralName } from "../../util/to-property-name";
+import { withPreviousLocation } from "../../util/with-previous-location";
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTag {
@@ -175,19 +180,7 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
 
       if (attrNameReg.test(attr.name)) {
         if (isUnresolvedKnownWrongTag(tag)) throw tagNotFoundError(tag);
-        throw tag.hub.buildError(
-          attr.loc?.end &&
-            ({
-              loc: {
-                start: attr.loc.start,
-                end: {
-                  line: attr.loc.start.line,
-                  column: attr.loc.start.column + attr.name.length,
-                },
-              },
-            } as any),
-          "Invalid attribute name.",
-        );
+        throw buildAttrNameError(tag, attr, "Invalid attribute name.");
       }
 
       attr.modifier = null;
@@ -322,12 +315,9 @@ function getChangeHandler(
     }
 
     const changeHandlerId = generateUid(changeAttrName);
-    const changeHandlerConst = t.markoTag(
-      t.stringLiteral("const"),
-      [t.markoAttribute("value", existingChangedAttr.value, null, null, true)],
-      t.markoTagBody([]),
-      null,
+    const changeHandlerConst = toConstTag(
       t.identifier(changeHandlerId),
+      existingChangedAttr.value,
     );
     handlerByModifier.set(
       modifierKey,
@@ -466,15 +456,6 @@ function getStaticKeyName(prop: t.ObjectProperty) {
     : getLiteralName(prop.key);
 }
 
-function getLiteralName(node: t.Node) {
-  switch (node.type) {
-    case "Identifier":
-      return node.name;
-    case "StringLiteral":
-      return node.value;
-  }
-}
-
 function getAssignmentInsertions(
   node: t.Node,
   insertions?: t.MarkoTag[] | undefined,
@@ -535,7 +516,7 @@ function getElementInsertions(
 
 function toFallbackExpr(id: string, fallback: t.Expression) {
   return t.conditionalExpression(
-    t.binaryExpression("!==", buildUndefined(), t.identifier(id)),
+    t.binaryExpression("!==", t.buildUndefinedNode(), t.identifier(id)),
     t.identifier(id),
     fallback,
   );
@@ -549,8 +530,4 @@ function toConstTag(id: t.Identifier, expr: t.Expression) {
     null,
     id,
   );
-}
-
-function buildUndefined() {
-  return t.unaryExpression("void", t.numericLiteral(0));
 }

@@ -3,6 +3,7 @@ import { getFile } from "@marko/compiler/babel-utils";
 
 import { isTranslate } from "./get-compile-stage";
 import type { Section } from "./sections";
+import { createProgramState } from "./state";
 import { traverse } from "./traverse";
 
 const kUidCounts = Symbol("uid counts");
@@ -38,15 +39,22 @@ export function generateUidIdentifier(name?: string) {
   return t.identifier(generateUid(name));
 }
 
-const sharedUIDsForFile = new WeakMap<t.BabelFile, Map<string, string>>();
+// A `const` before the tag holding `expr`, read through the identifier returned.
+export function declareConstBefore(
+  tag: t.NodePath<t.MarkoTag>,
+  name: string,
+  expr: t.Expression,
+) {
+  const id = generateUidIdentifier(name);
+  tag.insertBefore(
+    t.variableDeclaration("const", [t.variableDeclarator(id, expr)]),
+  );
+  return id;
+}
+
+const [getSharedUIDs] = createProgramState(() => new Map<string, string>());
 export function getSharedUid(name: string, section?: Section) {
-  const file = getFile();
-  let sharedUIDs = sharedUIDsForFile.get(file);
-
-  if (!sharedUIDs) {
-    sharedUIDsForFile.set(file, (sharedUIDs = new Map()));
-  }
-
+  const sharedUIDs = getSharedUIDs();
   const nameKey = section ? `${section.id}:${name}` : name;
   let uniqueName = sharedUIDs.get(nameKey);
   if (!uniqueName) {
@@ -58,7 +66,7 @@ export function getSharedUid(name: string, section?: Section) {
 }
 
 export function usedSharedUid(name: string) {
-  return !!sharedUIDsForFile.get(getFile())?.has(name);
+  return getSharedUIDs().has(name);
 }
 
 function getInitialCounts(file: t.BabelFile) {

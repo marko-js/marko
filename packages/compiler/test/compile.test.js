@@ -236,7 +236,7 @@ describe("compiler/compile", () => {
       const [source, marker] = frameLines(err);
       assert.match(source, /^> 1 \| …x+<if>a<\/if>x+…$/);
       assert.equal(marker.indexOf("^"), source.indexOf("if>"));
-      assert.match(marker, /\^\^ The \[`if` tag\]/);
+      assert.match(marker, /\^\^ The \[`<if>` tag\]/);
     });
 
     it("windows the long lines around it to the same columns", () => {

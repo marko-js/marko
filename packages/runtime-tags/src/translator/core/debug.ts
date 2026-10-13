@@ -6,56 +6,29 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent } from "../util/assert";
-import { isOutputHTML } from "../util/marko-config";
-import { getReferencedBindings } from "../util/references";
+import { assertNoBodyContent, assertValueAttr } from "../util/assert";
 import runtimeInfo from "../util/runtime-info";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { getOrCreateSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
-import { addStatement } from "../util/signals";
-import withPreviousLocation from "../util/with-previous-location";
+import { addTagStatement } from "../util/signals";
+import { withPreviousLocation } from "../util/with-previous-location";
 
 export default {
   analyze(tag) {
-    const [valueAttr] = tag.node.attributes;
     assertNoVar(tag);
     assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
-
-    if (
-      tag.node.attributes.length > 1 ||
-      (tag.node.attributes.length === 1 &&
-        (!t.isMarkoAttribute(valueAttr) ||
-          (!valueAttr.default && valueAttr.name !== "value")))
-    ) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<debug>` tag](https://markojs.com/docs/reference/core-tag#debug) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
-        );
-    }
+    const valueAttr = assertValueAttr(tag);
 
     addSetupExpr(getOrCreateSection(tag), valueAttr?.value);
   },
   translate: {
     exit(tag) {
-      const section = getSection(tag);
-      const [valueAttr] = tag.node.attributes;
-      const referencedBindings = getReferencedBindings(valueAttr?.value.extra);
-
-      const statement = withPreviousLocation(t.debuggerStatement(), tag.node);
-
-      if (isOutputHTML()) {
-        // Buffered markup is deliberately not flushed first (`<log>` matches):
-        // source-order interleaving of a dev statement is not worth splitting
-        // the html write.
-        tag.insertBefore(statement);
-      } else {
-        addStatement("render", section, referencedBindings, statement);
-      }
-
-      tag.remove();
+      addTagStatement(
+        tag,
+        withPreviousLocation(t.debuggerStatement(), tag.node),
+      );
     },
   },
   parseOptions: {

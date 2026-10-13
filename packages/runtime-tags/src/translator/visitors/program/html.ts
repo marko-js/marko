@@ -21,6 +21,7 @@ import { callRuntime, importRuntime } from "../../util/runtime";
 import { getLocalsScopeAccessor } from "../../util/scope-accessor";
 import {
   forEachSection,
+  getHighestHoistSection,
   getScopeIdIdentifier,
   getSection,
   isResumedBranch,
@@ -34,17 +35,12 @@ import {
   setScopeProperty,
   writeHTMLResumeStatements,
 } from "../../util/signals";
-import { simplifyFunction } from "../../util/simplify-fn";
+import { replaceMethodNode, simplifyFunction } from "../../util/simplify-fn";
 import { findSectionSlot, SlotKind } from "../../util/slots";
 import { toObjectProperty } from "../../util/to-property-name";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
 import { getScopeReasonStatement } from "../../util/write-guard";
-import { flushInto } from "../../util/writer";
-
-export function getTemplateContentName() {
-  return getSharedUid("content");
-}
 
 export default {
   translate: {
@@ -84,16 +80,7 @@ export default {
         });
 
         forEach(section.hoisted, (binding) => {
-          let highestHoistSection!: Section;
-          forEach(binding.hoists, (hoistSection) => {
-            if (
-              !highestHoistSection ||
-              hoistSection.depth < highestHoistSection.depth
-            ) {
-              highestHoistSection = hoistSection;
-            }
-          });
-
+          const highestHoistSection = getHighestHoistSection(binding);
           let currentSection: Section | undefined = section;
           while (currentSection && currentSection !== highestHoistSection) {
             const parentSection: Section = currentSection.parent!;
@@ -147,7 +134,6 @@ export default {
         );
       }
 
-      flushInto(program);
       writeHTMLResumeStatements(program);
       traverseReplace(program.node, "body", replaceNode);
       const renderContent: t.Statement[] = [];
@@ -169,7 +155,7 @@ export default {
 
       writeModuleRegistrations(program);
 
-      const contentId = usedSharedUid("content") && getTemplateContentName();
+      const contentId = usedSharedUid("content") && getSharedUid("content");
       const contentFn = t.arrowFunctionExpression(
         [t.identifier("input")],
         t.blockStatement(renderContent),
@@ -240,37 +226,15 @@ function replaceBindingReadNode(node: t.Node) {
 
 function replaceRegisteredFunctionNode(node: t.Node) {
   switch (node.type) {
-    case "ClassMethod": {
-      const replacement = getRegisteredFnExpression(node);
-      return (
-        replacement &&
-        t.classProperty(
-          node.key,
-          replacement,
-          undefined,
-          undefined,
-          node.computed,
-          node.static,
-        )
-      );
-    }
-    case "ClassPrivateMethod": {
-      const replacement = getRegisteredFnExpression(node);
-      return (
-        replacement &&
-        t.classPrivateProperty(node.key, replacement, undefined, node.static)
-      );
-    }
+    case "ClassMethod":
+    case "ClassPrivateMethod":
     case "ObjectMethod": {
       const replacement = getRegisteredFnExpression(node);
-      return (
-        replacement && t.objectProperty(node.key, replacement, node.computed)
-      );
+      return replacement && replaceMethodNode(node, replacement);
     }
     case "ArrowFunctionExpression":
-    case "FunctionExpression": {
+    case "FunctionExpression":
       return getRegisteredFnExpression(node);
-    }
     case "BlockStatement":
     case "MarkoScriptlet":
       addRegisteredDeclarations(node.body);

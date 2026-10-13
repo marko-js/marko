@@ -6,15 +6,14 @@ import {
   type Binding,
   BindingType,
   type Getter,
-  type ParamBinding,
   type ReferencedBindings,
   bindingUtil,
   createBinding,
   getCanonicalBinding,
   getOrCreatePropertyAlias,
-  isDirectAlias,
   isRest,
   isIndexProperty,
+  isOwnBinding,
   propsUtil,
   getNearestDeclared,
 } from "./bindings";
@@ -27,14 +26,14 @@ import isStatic from "./is-static";
 import {
   concat,
   forEach,
-  fromIter,
   type OneMany,
   type Opt,
   type SortedOpt,
   push,
+  reduce,
   some,
 } from "./optional";
-import { addOwnerReason, type Reason } from "./reasons";
+import { addOwnerReason, type KnownExprs, type Reason } from "./reasons";
 import {
   getCommonSection,
   getOrCreateSection,
@@ -72,7 +71,6 @@ export interface ExtraRead {
 // and read through the accessors below.
 const kReferencedBindings = Symbol("referenced bindings");
 const kLazyBindings = Symbol("lazy bindings");
-const kGlobalBindings = Symbol("global bindings");
 const kReferencedBindingsInFunction = Symbol("referenced bindings in function");
 const kConstantBindingsInFunction = Symbol("constant bindings in function");
 
@@ -97,7 +95,6 @@ declare module "@marko/compiler/dist/types" {
     section?: Section;
     [kReferencedBindings]?: ReferencedBindings;
     [kLazyBindings]?: ReferencedBindings;
-    [kGlobalBindings]?: ReferencedBindings;
     /** The bindings it feeds, in the order it feeds them: a call site's
      * values feed the child template's, so no one template's order sorts them. */
     derives?: Opt<Binding>;
@@ -361,10 +358,7 @@ function getMarkoRootAsTag(path: t.NodePath) {
   }
 }
 
-export function isReferenceInOwnBody(
-  bindingPath: t.NodePath,
-  reference: t.NodePath,
-) {
+function isReferenceInOwnBody(bindingPath: t.NodePath, reference: t.NodePath) {
   const tag = getMarkoRootAsTag(bindingPath);
   if (!tag) {
     return false;
@@ -524,8 +518,7 @@ function trackAssignment(
 
   // A name for a value another declares (`b` of `{ a: b }` beside `{ a }`) is
   // read as that one, so assigning it assigns that one.
-  let assigned = binding;
-  while (isDirectAlias(assigned)) assigned = assigned.aliasOf!;
+  const assigned = getCanonicalBinding(binding);
   const fnRoot = getFnRoot(fnParent);
   const fnExtra =
     fnRoot && ((fnRoot.node.extra ??= {}) as ReferencedFunctionExtra);
@@ -651,25 +644,15 @@ function createBindingsAndTrackReferences(
       break;
     }
     case "ObjectPattern": {
-      const patternBinding =
-        (property ? aliased!.propertyAliases.get(property) : aliased) ||
-        ((lVal.extra ??= {}).binding = createBinding(
-          generateUid(property || "pattern"),
-          type,
-          section,
-          aliased,
-          property,
-          excludeProperties,
-          lVal.loc,
-        ));
-      // Destructuring throws on a nullish value, so in its own section the
-      // value a pattern destructures never is one.
-      if (patternBinding.section === section) patternBinding.nullable = false;
-
-      const { properties } = lVal;
-      const hasRest =
-        properties.length > 0 &&
-        properties[properties.length - 1].type === "RestElement";
+      const patternBinding = getOrCreatePatternBinding(
+        lVal,
+        type,
+        section,
+        aliased,
+        property,
+        excludeProperties,
+      );
+      const hasRest = lVal.properties.at(-1)?.type === "RestElement";
       // A rest is a new object no read expresses, so its pattern is declared as
       // written, and the parts beside it are read by the names it declares.
       const declaresPattern = declared || hasRest;
@@ -723,27 +706,17 @@ function createBindingsAndTrackReferences(
       break;
     }
     case "ArrayPattern": {
-      const patternBinding =
-        (property ? aliased!.propertyAliases.get(property) : aliased) ||
-        ((lVal.extra ??= {}).binding = createBinding(
-          generateUid(property || "pattern"),
-          type,
-          section,
-          aliased,
-          property,
-          excludeProperties,
-          lVal.loc,
-        ));
-      // Destructuring throws on a nullish value, so in its own section the
-      // value a pattern destructures never is one.
-      if (patternBinding.section === section) patternBinding.nullable = false;
-
-      const { elements } = lVal;
+      const patternBinding = getOrCreatePatternBinding(
+        lVal,
+        type,
+        section,
+        aliased,
+        property,
+        excludeProperties,
+      );
       // A trailing hole (`[a, ,]`) is a null element.
       const declaresPattern =
-        declared ||
-        (elements.length > 0 &&
-          elements[elements.length - 1]?.type === "RestElement");
+        declared || lVal.elements.at(-1)?.type === "RestElement";
 
       // A pattern that is itself a rest argument mirrors the source at
       // shifted indices, so its elements index from the inherited offset.
@@ -773,9 +746,7 @@ function createBindingsAndTrackReferences(
           } else if (t.isLVal(element)) {
             if (element.type === "Identifier") {
               // An array has no property to carry a change handler.
-              const assignment = scope
-                .getBinding(element.name)!
-                .constantViolations.find(isAssignment);
+              const assignment = getAssignment(scope, element.name);
               if (assignment) {
                 throw assignment.buildCodeFrameError(
                   `\`${element.name}\` comes from array destructuring, which has no [change handler](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding), so it cannot be assigned to. Destructure it from an object instead, where assigning it calls the object's \`${element.name}Change\`.`,
@@ -801,17 +772,45 @@ function createBindingsAndTrackReferences(
   }
 }
 
+// What a pattern destructures: the value or property it reads, else a new binding.
+function getOrCreatePatternBinding(
+  lVal: t.ObjectPattern | t.ArrayPattern,
+  type: BindingType,
+  section: Section,
+  aliased: Binding["aliasOf"] | undefined,
+  property: string | undefined,
+  excludeProperties: SortedOpt<string>,
+) {
+  const patternBinding =
+    (property ? aliased!.propertyAliases.get(property) : aliased) ||
+    ((lVal.extra ??= {}).binding = createBinding(
+      generateUid(property || "pattern"),
+      type,
+      section,
+      aliased,
+      property,
+      excludeProperties,
+      lVal.loc,
+    ));
+  // Destructuring throws on a nullish value, so in its own section the
+  // value a pattern destructures never is one.
+  if (patternBinding.section === section) patternBinding.nullable = false;
+  return patternBinding;
+}
+
 function isAssignment(ref: t.NodePath) {
   return ref.type !== "MarkoTag";
+}
+
+function getAssignment(scope: t.Scope, name: string) {
+  return scope.getBinding(name)!.constantViolations.find(isAssignment);
 }
 
 // A rest has no change handler, even one that is all of its value and so
 // read as that value.
 function assertRestNotAssigned(scope: t.Scope, rest: t.LVal) {
   if (rest.type === "Identifier") {
-    const assignment = scope
-      .getBinding(rest.name)!
-      .constantViolations.find(isAssignment);
+    const assignment = getAssignment(scope, rest.name);
     if (assignment) {
       throw assignment.buildCodeFrameError(
         `\`${rest.name}\` is a rest element, which has no [change handler](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding) to receive a new value, so it cannot be assigned to. Assign the properties of the value it is destructured from instead.`,
@@ -837,8 +836,7 @@ function trackReference(
 
     let prop = getMemberExpressionPropString(parent);
     if (isAssignedMember(root.parentPath!)) {
-      let object = reference;
-      while (isDirectAlias(object)) object = object.aliasOf!;
+      const object = getCanonicalBinding(reference);
       if (isRest(object)) {
         throw root.parentPath!.buildCodeFrameError(
           `\`${referencePath.node.name}\` is a rest element, a copy rebuilt from the value it is destructured from whenever that changes, so assigning its members would be lost. Assign the property on that value instead, or keep your own copy in a \`<let>\`.`,
@@ -917,6 +915,11 @@ export function mergeReferences<T extends t.Node>(
     T["extra"]
   > &
     ReferencedExtra;
+}
+
+// Every expression in a tag, read as one.
+export function mergeTagReferences(section: Section, tag: t.MarkoTag) {
+  return mergeReferences(section, tag, getAllTagReferenceNodes(tag));
 }
 
 // Expressions a tag reads as one, with no node of their own to hold the group,
@@ -1016,7 +1019,7 @@ export function setDerivedFrom(
   expr: boolean | Opt<t.NodeExtra>,
   exprs?: KnownExprs,
 ) {
-  if (binding.section.program === getProgram().node.extra.section) {
+  if (isOwnBinding(binding)) {
     // Each call site of a same template body feeds its params.
     const prev = binding.derivedFrom;
     binding.derivedFrom =
@@ -1090,22 +1093,23 @@ export function addRead(
 // A dropped expression is never emitted by either output (its bindings can
 // prune); an untracked one is emitted but read some other way.
 export function dropNodes(node: t.Node | t.Node[]) {
-  if (Array.isArray(node)) {
-    for (const item of node) {
-      dropExtra((item.extra ??= {}) as ReferencedExtra);
-    }
-  } else {
-    dropExtra((node.extra ??= {}) as ReferencedExtra);
-  }
+  forEachNodeExtra(node, dropExtra);
 }
 
 function untrackNodes(node: t.Node | t.Node[]) {
+  forEachNodeExtra(node, untrackExtra);
+}
+
+function forEachNodeExtra(
+  node: t.Node | t.Node[],
+  fn: (extra: ReferencedExtra) => void,
+) {
   if (Array.isArray(node)) {
     for (const item of node) {
-      untrackExtra((item.extra ??= {}) as ReferencedExtra);
+      fn((item.extra ??= {}) as ReferencedExtra);
     }
   } else {
-    untrackExtra((node.extra ??= {}) as ReferencedExtra);
+    fn((node.extra ??= {}) as ReferencedExtra);
   }
 }
 
@@ -1330,6 +1334,7 @@ export function isAssignedBindingExtra(
 }
 
 export interface RegisteredFnExtra extends ReferencedExtra, t.FunctionExtra {
+  exprRoot: t.NodeExtra;
   name: string;
   registerId: string;
   reason: Reason;
@@ -1350,14 +1355,31 @@ export function getReferencedBindings(extra: t.NodeExtra | undefined) {
   return extra && getCanonicalExtra(extra)[kReferencedBindings];
 }
 
-export function getLazyBindings(extra: t.NodeExtra | undefined) {
-  return extra && getCanonicalExtra(extra)[kLazyBindings];
+// The bindings a binding derives from.
+export function getBindingsDerivedFrom(binding: Binding): ReferencedBindings {
+  if (binding.aliasOf) return binding.aliasOf;
+  if (binding.derivedFrom) {
+    return getValueReferences(binding.derivedFrom);
+  }
 }
 
-// The `$global` bindings it reads, which compile verbatim rather than as
-// references: the root for an opaque read, a property alias for a keyed one.
-export function getGlobalBindings(extra: t.NodeExtra | undefined) {
-  return extra && getCanonicalExtra(extra)[kGlobalBindings];
+// The bindings value expressions read, apart from an initial value (which a
+// change never recomputes).
+export function getValueReferences(
+  exprs: Opt<t.NodeExtra>,
+): ReferencedBindings {
+  return reduce(exprs, addValueReferences);
+}
+
+function addValueReferences(refs: ReferencedBindings, expr: t.NodeExtra) {
+  // An attribute tag's expression is read through the group it merged into.
+  return isReferencedExtra(getCanonicalExtra(expr)) && !expr.initialValue
+    ? bindingUtil.union(refs, getReferencedBindings(expr))
+    : refs;
+}
+
+export function getLazyBindings(extra: t.NodeExtra | undefined) {
+  return extra && getCanonicalExtra(extra)[kLazyBindings];
 }
 
 // What a function's body reads when invoked, resolved with its expression.
@@ -1382,11 +1404,9 @@ export function setResolvedReads(
   extra: ReferencedExtra,
   referencedBindings: ReferencedBindings,
   lazyBindings: ReferencedBindings,
-  globalBindings: ReferencedBindings,
 ) {
   extra[kReferencedBindings] = referencedBindings;
   extra[kLazyBindings] = lazyBindings;
-  extra[kGlobalBindings] = globalBindings;
 }
 
 export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {
@@ -1403,66 +1423,4 @@ function addNumericPropertiesUntil(props: SortedOpt<string>, len: number) {
     result = propsUtil.add(result, i + "");
   }
   return result;
-}
-
-// The call site expressions a child template's params derive from, keyed the
-// way the child destructures them; `value` is the whole-value expression.
-export interface KnownExprs {
-  known?: Record<string, KnownExprs>;
-  value?: t.NodeExtra;
-}
-
-export function mapParamReasonToExpr(
-  exprs: KnownExprs,
-  reason: boolean | Opt<ParamBinding>,
-) {
-  if (reason) {
-    if (reason === true) return true;
-    const result = new Set<t.NodeExtra>();
-    forEach(reason, (prop) => {
-      forEach(mapParamBindingToExpr(exprs, prop), (expr) => {
-        result.add(expr);
-      });
-    });
-    return fromIter(result);
-  }
-}
-
-export function mapParamBindingToExpr(
-  exprs: KnownExprs,
-  binding: ParamBinding,
-): Opt<t.NodeExtra> {
-  // Property-less with an aliased binding covers every whole-value link: rests,
-  // rest grains, and aliases.
-  const isWholeAlias =
-    binding.property === undefined && binding.aliasOf !== undefined;
-  const curExpr = getKnownExprsAt(
-    exprs,
-    isWholeAlias ? binding.aliasOf! : binding,
-  );
-
-  if (isWholeAlias) {
-    let result: Opt<t.NodeExtra> = curExpr.value;
-    if (curExpr.known) {
-      for (const key in curExpr.known) {
-        if (!propsUtil.has(binding.excludeProperties, key)) {
-          result = concat(result, curExpr.known[key].value);
-        }
-      }
-    }
-    return result;
-  }
-
-  return curExpr.value;
-}
-
-// The call site's known expressions at `binding`, passing through property-less
-// links; past the props it lists, only the value expression holding it.
-function getKnownExprsAt(exprs: KnownExprs, binding: Binding): KnownExprs {
-  const aliased = binding.aliasOf;
-  if (!aliased) return exprs;
-  const known = getKnownExprsAt(exprs, aliased);
-  return binding.property === undefined || !known.known
-    ? known
-    : (known.known[binding.property] ?? { value: known.value });
 }

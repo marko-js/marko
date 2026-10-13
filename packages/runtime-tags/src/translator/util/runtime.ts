@@ -69,11 +69,7 @@ const [getRuntimeImports] = createProgramState(
 export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
   // The `dom`/`html` import path is only known at translate; emitting it into
   // the cached, output-shared earlier AST leaks one runtime into the other.
-  if (!isTranslate()) {
-    throw new Error(
-      `\`importRuntime(${JSON.stringify(name)})\` may only be called during the translate stage.`,
-    );
-  }
+  assertTranslate("importRuntime", name);
   const { output } = getMarkoOpts();
   const imports = getRuntimeImports();
   let localName = imports.get(name);
@@ -136,18 +132,15 @@ export const domRuntimeFeatures = [
   "placeholder",
 ] as const;
 export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];
-const importedFeatures = new WeakMap<t.Program, Set<string>>();
+const [getImportedFeatures] = createProgramState(
+  () => new Set<DOMRuntimeFeature>(),
+);
 export function importRuntimeFeature(feature: DOMRuntimeFeature) {
-  if (!isTranslate()) {
-    throw new Error(
-      `\`importRuntimeFeature(${JSON.stringify(feature)})\` may only be called during the translate stage.`,
-    );
-  }
-  const program = getProgram();
-  let features = importedFeatures.get(program.node);
-  if (!features) importedFeatures.set(program.node, (features = new Set()));
+  assertTranslate("importRuntimeFeature", feature);
+  const features = getImportedFeatures();
   if (!features.has(feature)) {
     features.add(feature);
+    const program = getProgram();
     const decl = getRuntimeFeatureImport(feature);
     // Kept with the imports, since one among statements splits the bundler's
     // view of the body; a path insert keeps queued sibling keys in sync.
@@ -186,12 +179,20 @@ export function getRuntimePath(output: string) {
   }${output === "html" ? "html" : "dom"}`;
 }
 
+function assertTranslate(helper: string, name: string) {
+  if (!isTranslate()) {
+    throw new Error(
+      `\`${helper}(${JSON.stringify(name)})\` may only be called during the translate stage.`,
+    );
+  }
+}
+
 function filterArguments<A>(args: (A | Falsy)[]) {
   const filteredArgs = [];
   for (let i = args.length; i--;) {
     const arg = args[i];
     if (arg || filteredArgs.length) {
-      filteredArgs[i] = arg || t.unaryExpression("void", t.numericLiteral(0));
+      filteredArgs[i] = arg || t.buildUndefinedNode();
     }
   }
   return filteredArgs as A[];

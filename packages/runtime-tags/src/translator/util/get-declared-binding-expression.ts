@@ -3,6 +3,7 @@ import { types as t } from "@marko/compiler";
 import {
   type Binding,
   getCanonicalBinding,
+  getDeclaredAlias,
   getNearestDeclared,
   isRest,
   propsUtil,
@@ -44,7 +45,7 @@ export function getDeclaredBindingExpression(
   }
 
   if (property !== undefined) {
-    const alias = !getNearestDeclared(aliased) && aliased.declaredAlias;
+    const alias = getDeclaredAlias(aliased);
     if (alias && !propsUtil.has(alias.excludeProperties, property)) {
       return toMemberExpression(
         t.identifier(alias.name),

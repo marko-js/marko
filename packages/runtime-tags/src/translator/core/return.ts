@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 import {
-  assertAllowedAttributes,
   assertNoArgs,
   assertNoParams,
   assertNoVar,
@@ -8,27 +7,30 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent } from "../util/assert";
+import {
+  assertNoBodyContent,
+  assertNoSpreadAttrs,
+  assertValueAttr,
+} from "../util/assert";
 import { generateUidIdentifier } from "../util/generate-uid";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { addReason } from "../util/reasons";
 import { getReferencedBindings } from "../util/references";
 import { callRuntime } from "../util/runtime";
+import { scopeIdentifier } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
-import { addStatement, setScopeProperty } from "../util/signals";
+import {
+  addStatement,
+  setReturnValueIdentifier,
+  setScopeProperty,
+} from "../util/signals";
 import { findSectionSlot, getSectionSlot, SlotKind } from "../util/slots";
 import { ALWAYS } from "../util/sources";
-import { createSectionState } from "../util/state";
 import { getTagFacts } from "../util/tag-facts";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
-import { scopeIdentifier } from "../visitors/program";
-
-const [getSectionReturnValueIdentifier, setReturnValueIdentifier] =
-  createSectionState<t.Identifier | undefined>("returnValue");
-export { getSectionReturnValueIdentifier };
 
 export default {
   analyze(tag) {
@@ -36,7 +38,7 @@ export default {
     assertNoVar(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
-    assertAllowedAttributes(tag, ["value", "valueChange"]);
+    assertNoSpreadAttrs(tag);
 
     let valueAttr: t.MarkoAttribute | undefined;
     let valueChangeAttr: t.MarkoAttribute | undefined;
@@ -61,6 +63,8 @@ export default {
         }
       }
     }
+
+    assertValueAttr(tag, true, true);
 
     const parentTag = getParentTag(tag);
     if (parentTag) {
@@ -89,14 +93,6 @@ export default {
     }
 
     const attrs = getKnownAttrValues(tag.node);
-    if (!attrs.value) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<return>` tag](https://markojs.com/docs/reference/core-tag#return) requires a [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
-        );
-    }
-
     if (attrs.valueChange) {
       (attrs.valueChange.extra ??= {}).isEffect = true;
       addSetupExpr(section, attrs.valueChange);
@@ -120,7 +116,7 @@ export default {
             t.logicalExpression(
               "||",
               attrs.valueChange,
-              t.unaryExpression("void", t.numericLiteral(0)),
+              t.buildUndefinedNode(),
             ),
           );
         }
@@ -148,9 +144,7 @@ export default {
             "render",
             section,
             getReferencedBindings(attrs.value.extra),
-            t.expressionStatement(
-              callRuntime("_return", scopeIdentifier, attrs.value),
-            ),
+            callRuntime("_return", scopeIdentifier, attrs.value),
           );
         }
 
@@ -159,9 +153,7 @@ export default {
             "render",
             section,
             getReferencedBindings(attrs.valueChange.extra),
-            t.expressionStatement(
-              callRuntime("_return_change", scopeIdentifier, attrs.valueChange),
-            ),
+            callRuntime("_return_change", scopeIdentifier, attrs.valueChange),
           );
         }
 

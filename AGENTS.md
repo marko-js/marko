@@ -53,6 +53,8 @@ Don't bend the code around an edge case. Input the design has no reason to suppo
 
 Write the direct form. No rest or spread to copy, extend, or strip an object: share one record, or key a collection by the field it lacks. Client runtime code, where bundle size comes first, may keep a spread that `build:sizes` shows is smallest, but it is still a red flag to justify. No function that only forwards, and no type named for a single use. A helper every caller guards takes the `undefined` itself, and a flag is set as `flag ||= condition`.
 
+Don't add Babel `NodePath` helper calls (`findParent`, `find`, `getFunctionParent`, …): walk `parentPath` and compare node types directly; existing uses are migrated later.
+
 Names come from the code. Reuse the vocabulary of neighboring code, [`CONTEXT.md`](packages/runtime-tags/CONTEXT.md), and the markojs.com docs; never coin a term the codebase does not already use.
 
 Test through existing fixture families; add a test file only when no fixture can reach the behavior. A fix adds a fixture that fails without it.

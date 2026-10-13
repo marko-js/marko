@@ -4,6 +4,7 @@ import { getTagDef } from "@marko/compiler/babel-utils";
 import type coreTags from "../core";
 import * as ContentType from "./constants/content-type";
 import { isCoreTag } from "./is-core-tag";
+import type { DOMRuntimeFeature, DOMRuntimeHelpers } from "./runtime";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 // What analysis knows of a tag before visiting it, for the tags around it.
@@ -107,6 +108,69 @@ const nativeElementFacts = new Map<string, TagFacts>([
   ["optgroup", discardsWrapperChildrenFacts],
 ]);
 
+// The attributes each controllable element's pair may take, the helper a
+// spread claims them with, and the feature its resume pass needs.
+export const controllableElements = new Map<
+  string,
+  {
+    attrs: string[];
+    claim: DOMRuntimeHelpers;
+    feature: DOMRuntimeFeature;
+  }
+>([
+  [
+    "input",
+    {
+      attrs: [
+        "checked",
+        "checkedChange",
+        "checkedValue",
+        "checkedValueChange",
+        "value",
+        "valueChange",
+      ],
+      claim: "_controllable_input",
+      feature: "controllable-input",
+    },
+  ],
+  [
+    "select",
+    {
+      attrs: ["value", "valueChange"],
+      claim: "_controllable_select",
+      feature: "controllable-select",
+    },
+  ],
+  [
+    "textarea",
+    {
+      attrs: ["value", "valueChange"],
+      claim: "_controllable_textarea",
+      feature: "controllable-textarea",
+    },
+  ],
+  [
+    "details",
+    {
+      attrs: ["open", "openChange"],
+      claim: "_controllable_open",
+      feature: "controllable-open",
+    },
+  ],
+  [
+    "dialog",
+    {
+      attrs: ["open", "openChange"],
+      claim: "_controllable_open",
+      feature: "controllable-open",
+    },
+  ],
+]);
+
+const controllableAttrs = new Set(
+  Array.from(controllableElements.values(), (element) => element.attrs).flat(),
+);
+
 export function getTagFacts(tag: t.NodePath<t.MarkoTag>): TagFacts {
   if (isCoreTag(tag)) {
     return coreTagFacts[tag.node.name.value as CoreTagName];
@@ -141,9 +205,12 @@ export function isNonHTMLText(
   );
 }
 
-function isTextOnlyNativeTag(tag: t.NodePath<t.MarkoTag>) {
-  if (analyzeTagNameType(tag) !== TagNameType.NativeTag) return false;
+// Any attr an element's pair may take, which a spread can also carry.
+export function isControllableAttr(name: string) {
+  return controllableAttrs.has(name);
+}
 
+function isTextOnlyNativeTag(tag: t.NodePath<t.MarkoTag>) {
   const def = getTagDef(tag);
   // Have to special case `title` here for the compat with v5 which does not treat title as a text only tag.
   return !!(

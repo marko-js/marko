@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 
-import { localsIdentifier, scopeIdentifier } from "../visitors/program";
 import { BindingType } from "./bindings";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputDOM } from "./marko-config";
@@ -11,7 +10,12 @@ import {
   getLocalsScopeAccessor,
   getScopeAccessorLiteral,
 } from "./scope-accessor";
-import { createScopeReadExpression, getScopeExpression } from "./scope-read";
+import {
+  createScopeReadExpression,
+  getScopeExpression,
+  localsIdentifier,
+  scopeIdentifier,
+} from "./scope-read";
 import type { Section } from "./sections";
 import {
   getBindingGetterIdentifier,
@@ -23,7 +27,7 @@ import {
   getMemberExpressionPropString,
   toMemberExpression,
 } from "./to-property-name";
-import withPreviousLocation from "./with-previous-location";
+import { withPreviousLocation } from "./with-previous-location";
 
 export function getReadReplacement(
   node: t.Identifier | t.MemberExpression | t.OptionalMemberExpression,

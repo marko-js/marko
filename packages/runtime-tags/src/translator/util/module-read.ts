@@ -23,7 +23,7 @@ export interface ModuleRead {
 
 /** The module read an expression is, resolved on first use: translate replaces
  * a `<style/name>` tag. */
-export function getModuleRead(
+function getModuleRead(
   path: t.NodePath,
   expr: t.Expression,
 ): ModuleRead | undefined {

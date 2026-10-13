@@ -6,7 +6,6 @@ import { type Binding, BindingType, createBinding } from "./bindings";
 import * as Step from "./constants/step";
 import { generateUidIdentifier } from "./generate-uid";
 import { getParentTag } from "./get-parent-tag";
-import { importOrSelfReferenceName } from "./import-reference";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { toModuleReadExpression } from "./module-read";
 import normalizeStringExpression, {
@@ -23,6 +22,7 @@ import {
   type StructureRef,
 } from "./sections";
 import { createProgramState, createSectionState } from "./state";
+import { importOrSelfReferenceName } from "./tag-import";
 import { withLeadingComment } from "./with-comment";
 
 const walkCodeToName = {
@@ -172,14 +172,16 @@ interface ResolvedStructure {
 
 // Resolves a section's structure stream into its inert template markup and the
 // walk string claiming each visited node, including dynamic content edges.
-export function resolveStructure(section: Section) {
-  const startDynamic = section.content?.startType === ContentType.Dynamic;
+function resolveStructure(section: Section) {
   const resolved: ResolvedStructure = {
-    writes: [startDynamic ? "<!>" : ""],
+    writes: [""],
     walks: [""],
     walkComment: [],
-    steps: startDynamic ? [Step.Enter, Step.Exit] : [],
+    steps: [],
   };
+  if (section.content?.startType === ContentType.Dynamic) {
+    separate(resolved);
+  }
   let textEdge: undefined | "own" | "child";
 
   for (const op of section.structure!) {
@@ -253,8 +255,7 @@ export function resolveStructure(section: Section) {
   }
 
   if (section.content?.endType === ContentType.Dynamic) {
-    appendLiteral(resolved.writes, "<!>");
-    resolved.steps.push(Step.Enter, Step.Exit);
+    separate(resolved);
   }
 
   flushSteps(resolved);
@@ -356,7 +357,7 @@ export function writeStructureExports(program: t.NodePath<t.Program>) {
 // it references, so this list is always in dependency order.
 const [getMetaDecls] = createProgramState<t.VariableDeclarator[]>(() => []);
 const sectionMetaIsIds = new WeakSet<SectionMeta>();
-export function getSectionMetaIdentifiers(section: Section) {
+function getSectionMetaIdentifiers(section: Section) {
   const meta = getSectionMeta(section);
   if (!sectionMetaIsIds.has(meta)) {
     sectionMetaIsIds.add(meta);

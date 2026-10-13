@@ -6,65 +6,33 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent } from "../util/assert";
-import { isOutputHTML } from "../util/marko-config";
-import { getReferencedBindings } from "../util/references";
+import { assertNoBodyContent, assertValueAttr } from "../util/assert";
 import runtimeInfo from "../util/runtime-info";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { getOrCreateSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
-import { addStatement } from "../util/signals";
+import { addTagStatement } from "../util/signals";
 
 export default {
   analyze(tag) {
-    const [valueAttr] = tag.node.attributes;
     assertNoArgs(tag);
     assertNoVar(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
-
-    if (!valueAttr) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<log>` tag](https://markojs.com/docs/reference/core-tag#log) requires a [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
-        );
-    }
-
-    if (
-      tag.node.attributes.length > 1 ||
-      !t.isMarkoAttribute(valueAttr) ||
-      (!valueAttr.default && valueAttr.name !== "value")
-    ) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<log>` tag](https://markojs.com/docs/reference/core-tag#log) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
-        );
-    }
+    const valueAttr = assertValueAttr(tag, true);
 
     addSetupExpr(getOrCreateSection(tag), valueAttr.value);
   },
   translate: {
     exit(tag) {
-      const section = getSection(tag);
-      const [valueAttr] = tag.node.attributes;
-      const { value } = valueAttr;
-      const referencedBindings = getReferencedBindings(value.extra);
-
-      const statement = t.expressionStatement(
-        t.callExpression(
-          t.memberExpression(t.identifier("console"), t.identifier("log")),
-          [value],
+      addTagStatement(
+        tag,
+        t.expressionStatement(
+          t.callExpression(
+            t.memberExpression(t.identifier("console"), t.identifier("log")),
+            [tag.node.attributes[0].value],
+          ),
         ),
       );
-
-      if (isOutputHTML()) {
-        tag.insertBefore(statement);
-      } else {
-        addStatement("render", section, referencedBindings, statement);
-      }
-
-      tag.remove();
     },
   },
   parseOptions: {

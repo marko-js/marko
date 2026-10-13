@@ -118,10 +118,12 @@ export default {
       const { value } = valueAttr;
       const referencedBindings = getReferencedBindings(value.extra);
 
+      const isFunction =
+        t.isFunctionExpression(value) || t.isArrowFunctionExpression(value);
       // The React `useEffect` habit: a returned cleanup function is discarded,
       // so the effect leaks with no signal at compile or run time.
       if (
-        (t.isFunctionExpression(value) || t.isArrowFunctionExpression(value)) &&
+        isFunction &&
         t.isBlockStatement(value.body) &&
         traverseContains(value.body, isReturnedFunction)
       ) {
@@ -131,8 +133,6 @@ export default {
         });
       }
       if (isOutputDOM()) {
-        const isFunction =
-          t.isFunctionExpression(value) || t.isArrowFunctionExpression(value);
         let inlineBody: t.Statement | t.Statement[] | null = null;
         if (isFunction) {
           if (value.async || value.generator) {
@@ -160,7 +160,7 @@ export default {
           "effect",
           section,
           referencedBindings,
-          inlineBody || t.expressionStatement(t.callExpression(value, [])),
+          inlineBody || t.callExpression(value, []),
         );
       } else {
         addHTMLEffectCall(section, referencedBindings);

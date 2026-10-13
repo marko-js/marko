@@ -1,7 +1,8 @@
 import { types as t } from "@marko/compiler";
 import { decodeHTML } from "@marko/compiler/babel-utils";
 
-import { escapeTemplateRaw } from "./normalize-string-expression";
+import { toTemplateElement } from "./normalize-string-expression";
+import { getCanonicalExtra } from "./references";
 import { callRuntime } from "./runtime";
 
 // Marks a flattened `<if>` whose value still holds raw interpolations
@@ -19,13 +20,13 @@ export function bodyToTextLiteral(
   body: t.MarkoTagBody,
   decodeEntities = false,
 ) {
-  return buildTextLiteral(body, toText, true, decodeEntities);
+  return buildTextLiteral(body, toText, decodeEntities);
 }
 
 // Pre-analyze variant: interpolations stay raw (the output-specific `_to_text` import
 // can't precede translate); a lone interpolation stays bare so the placeholder coerces it.
 export function bodyToRawTextLiteral(body: t.MarkoTagBody) {
-  return buildTextLiteral(body, (value) => value, true);
+  return buildTextLiteral(body, identity);
 }
 
 // Translate: wrap each raw interpolation from `bodyToRawTextLiteral` in `_to_text`,
@@ -48,10 +49,13 @@ function toText(value: t.Expression) {
   return callRuntime("_to_text", value);
 }
 
+function identity(value: t.Expression) {
+  return value;
+}
+
 function buildTextLiteral(
   body: t.MarkoTagBody,
   coerce: (value: t.Expression) => t.Expression,
-  bareSingle: boolean,
   decodeEntities = false,
 ) {
   const templateQuasis: t.TemplateElement[] = [];
@@ -64,7 +68,7 @@ function buildTextLiteral(
       currentQuasi += decodeEntities ? decodeHTML(child.value) : child.value;
     } else if (t.isMarkoPlaceholder(child)) {
       placeholderExtra ||= child.value.extra;
-      templateQuasis.push(templateElement(currentQuasi, false));
+      templateQuasis.push(toTemplateElement(currentQuasi));
       templateExpressions.push(coerce(child.value));
       singleValue = child.value;
       currentQuasi = "";
@@ -72,7 +76,6 @@ function buildTextLiteral(
   }
   if (templateExpressions.length) {
     if (
-      bareSingle &&
       templateExpressions.length === 1 &&
       !currentQuasi &&
       !templateQuasis[0].value.cooked &&
@@ -84,21 +87,11 @@ function buildTextLiteral(
       // static-text branch, which some sinks emit unescaped.
       return singleValue!;
     }
-    templateQuasis.push(templateElement(currentQuasi, true));
+    templateQuasis.push(toTemplateElement(currentQuasi, true));
     const literal = t.templateLiteral(templateQuasis, templateExpressions);
     // Several placeholders render as one, through the group they merged into.
-    literal.extra = placeholderExtra?.merged || placeholderExtra;
+    literal.extra = placeholderExtra && getCanonicalExtra(placeholderExtra);
     return literal;
   }
   return t.stringLiteral(currentQuasi);
-}
-
-function templateElement(value: string, tail: boolean) {
-  return t.templateElement(
-    {
-      raw: escapeTemplateRaw(value),
-      cooked: value,
-    },
-    tail,
-  );
 }

@@ -5,25 +5,18 @@ import {
   assertAttributesOrSingleArg,
   getFile,
   getProgram,
-  getTagDef,
-  getTaglibLookup,
   getTagTemplate,
   importDefault,
   importNamed,
   loadFileForTag,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
-import { distance } from "fastest-levenshtein";
 
 import type { LoadTrigger } from "../../../html/assets";
 import { type Binding } from "../../util/bindings";
 import { BindingType, createBinding } from "../../util/bindings";
-import { generateUidIdentifier } from "../../util/generate-uid";
+import { generateUidIdentifier, getSharedUid } from "../../util/generate-uid";
 import { getStaticTagName, getTagName } from "../../util/get-tag-name";
-import {
-  importOrSelfReferenceName,
-  isCircularRequest,
-} from "../../util/import-reference";
 import {
   knownTagAnalyze,
   knownTagTranslateDOM,
@@ -35,7 +28,10 @@ import {
   dynamicImport,
   importRuntimeFeature,
 } from "../../util/runtime";
-import { createScopeReadExpression } from "../../util/scope-read";
+import {
+  createScopeReadExpression,
+  scopeIdentifier,
+} from "../../util/scope-read";
 import {
   getOrCreateSection,
   removePrunedContent,
@@ -44,11 +40,14 @@ import {
 import { addStatement, getSignal } from "../../util/signals";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
+import {
+  importOrSelfReferenceName,
+  isCircularRequest,
+  type LoadImportConfig,
+} from "../../util/tag-import";
+import { getTagRelativePath, tagNotFoundError } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
-import type { LoadImportConfig } from "../import-declaration";
-import { scopeIdentifier } from "../program";
-import { getTemplateContentName } from "../program/html";
 
 const kLoadTagBinding = Symbol("load tag binding");
 // Caches the trigger and attr signal declarations for a load import so they
@@ -160,7 +159,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   if (t.isStringLiteral(node.name)) {
     const relativePath = getTagRelativePath(tag);
     tagIdentifier = isCircularRequest(getFile(), relativePath)
-      ? t.identifier(getTemplateContentName())
+      ? t.identifier(getSharedUid("content"))
       : importDefault(getFile(), relativePath, getTagName(tag));
   } else {
     tagIdentifier = node.name;
@@ -203,85 +202,46 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       tag,
       (binding) => {
         const signalKey = `${triggerIdent ? triggerIdent.name : ""}\0${childFileName}\0${childExports.params.get(binding)!}`;
-        let signalIdent = signals.get(signalKey);
-        if (!signalIdent) {
-          signalIdent = generateUidIdentifier(
+        return (
+          signals.get(signalKey) ||
+          createLoadIdentifier(
+            signals,
+            signalKey,
             `load_${tagName}_tag_${binding.name}`,
-          );
-          signals.set(signalKey, signalIdent);
-          const loadExpr = t.arrowFunctionExpression(
-            [],
-            dynamicImport(
-              buildLoadSignalVirtualModule(
-                file,
-                childFileName,
-                childExports.params.get(binding)!,
-                binding.name,
-              )!,
-            ),
-          );
-          getProgram().node.body.push(
-            t.variableDeclaration("let", [
-              t.variableDeclarator(
-                signalIdent,
-                callRuntime(
-                  "_load_signal",
-                  triggerIdent
-                    ? t.addComment(
-                        t.callExpression(triggerIdent, [loadExpr]),
-                        "leading",
-                        "@__PURE__",
-                      )
-                    : loadExpr,
-                ),
-              ),
-            ]),
-          );
-        }
-        return signalIdent;
+            "_load_signal",
+            buildLoadSignalVirtualModule(
+              file,
+              childFileName,
+              childExports.params.get(binding)!,
+              binding.name,
+            )!,
+            triggerIdent,
+          )
+        );
       },
       (section, childBinding) => {
         const setupKey = `${triggerIdent ? triggerIdent.name : ""}\0${childFileName}`;
         let setupIdent = setups.get(setupKey);
         if (!setupIdent) {
-          setupIdent = generateUidIdentifier(`load_${tagName}_setup`);
-          setups.set(setupKey, setupIdent);
-          const setupLoadExpr = t.arrowFunctionExpression(
-            [],
-            dynamicImport(
-              buildLoadSetupVirtualModule(file, childFileName, childExports),
-            ),
-          );
           importRuntimeFeature("catch");
-          getProgram().node.body.push(
-            t.variableDeclaration("let", [
-              t.variableDeclarator(
-                setupIdent,
-                callRuntime(
-                  "_load_setup",
-                  triggerIdent
-                    ? t.addComment(
-                        t.callExpression(triggerIdent, [setupLoadExpr]),
-                        "leading",
-                        "@__PURE__",
-                      )
-                    : setupLoadExpr,
-                ),
-              ),
-            ]),
+          setupIdent = createLoadIdentifier(
+            setups,
+            setupKey,
+            `load_${tagName}_setup`,
+            "_load_setup",
+            buildLoadSetupVirtualModule(file, childFileName, childExports),
+            triggerIdent,
           );
         }
         addStatement(
           "render",
           section,
           undefined,
-          t.expressionStatement(
-            t.callExpression(setupIdent, [
-              scopeIdentifier,
-              createScopeReadExpression(childBinding, section),
-              createScopeReadExpression(node.extra![kLoadTagBinding]!, section),
-            ]),
-          ),
+          t.callExpression(setupIdent, [
+            scopeIdentifier,
+            createScopeReadExpression(childBinding, section),
+            createScopeReadExpression(node.extra![kLoadTagBinding]!, section),
+          ]),
         );
       },
     );
@@ -296,11 +256,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
               "render",
               section,
               undefined,
-              t.expressionStatement(
-                t.callExpression(t.identifier(childExports.setup), [
-                  createScopeReadExpression(childBinding, section),
-                ]),
-              ),
+              t.callExpression(t.identifier(childExports.setup), [
+                createScopeReadExpression(childBinding, section),
+              ]),
             );
           }
         : undefined,
@@ -322,16 +280,14 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
               "render",
               section,
               undefined,
-              t.expressionStatement(
-                t.callExpression(
-                  importOrSelfReferenceName(
-                    file,
-                    relativePath,
-                    childExports.setup,
-                    tagName,
-                  ),
-                  [createScopeReadExpression(childBinding, section)],
+              t.callExpression(
+                importOrSelfReferenceName(
+                  file,
+                  relativePath,
+                  childExports.setup,
+                  tagName,
                 ),
+                [createScopeReadExpression(childBinding, section)],
               ),
             );
           }
@@ -352,158 +308,37 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   tag.remove();
 }
 
-export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
-  const { node } = tag;
-  const file = getFile();
-  let relativePath: string | undefined;
-
-  if (t.isStringLiteral(node.name)) {
-    const tagDef = getTagDef(tag);
-    const template =
-      (node.extra?.featureType === "class" && tagDef?.renderer) ||
-      getTagTemplate(tag);
-    relativePath = template && resolveRelativePath(file, template, tagDef);
-  } else if (node.extra?.tagNameImported) {
-    relativePath = node.extra.tagNameImported;
-  }
-
-  if (!relativePath) throw tagNotFoundError(tag);
-
-  return relativePath;
-}
-
-// Tags from other frameworks (or older Marko versions) that deserve a curated
-// pointer instead of a nearest-name suggestion.
-const staticHint =
-  "To declare module level JavaScript, prefix the statement with `static`.";
-const knownWrongTags = new Map([
-  [
-    "slot",
-    "To render content passed to this tag, use a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags): `<${input.content}/>`.",
-  ],
-  [
-    "state",
-    "Reactive state is declared with the [`<let>` tag](https://markojs.com/docs/reference/core-tag#let): `<let/name=initialValue>`.",
-  ],
-  [
-    "fragment",
-    "Marko templates and tag bodies may have multiple root nodes; no fragment wrapper is needed.",
-  ],
-  ["async", staticHint],
-  ["class", staticHint],
-  ["declare", staticHint],
-  ["enum", staticHint],
-  ["function", staticHint],
-  ["interface", staticHint],
-  ["type", staticHint],
-]);
-
-/**
- * A known wrong tag that resolves to nothing, eg `interface P { id: number }`,
- * whose body lands in attribute position before tag resolution would run.
- */
-export function isUnresolvedKnownWrongTag(tag: t.NodePath<t.MarkoTag>) {
-  const tagName = getTagName(tag);
-  return !!tagName && knownWrongTags.has(tagName) && !getTagDef(tag);
-}
-
-export function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
-  const tagName = getTagName(tag);
-  if (tagName && tag.scope.hasBinding(tagName)) {
-    return tag
-      .get("name")
-      .buildCodeFrameError(
-        `Local variables must be in a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags) unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
-      );
-  }
-  let didYouMean = "";
-  const knownWrongTagHint = tagName && knownWrongTags.get(tagName);
-  const proseText = tagName && getProseText(tag);
-  if (knownWrongTagHint) {
-    didYouMean = ` ${knownWrongTagHint}`;
-  } else if (proseText) {
-    // A bare line of words parses as a tag; the author likely meant text.
-    didYouMean = ` If this line is meant to be text, prefix it with \`--\` (e.g. \`-- ${proseText}\`) or wrap it in an element such as \`<p>${proseText}</p>\`.`;
-  } else if (tagName) {
-    didYouMean = getSimilarTagHint(tagName);
-  }
-  return tag
-    .get("name")
-    .buildCodeFrameError(
-      `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName ?? getStaticTagName(tag.node)}>\`.${didYouMean}`,
-    );
-}
-
-// A concise-mode word tag with only boolean word-attributes and no var/params/
-// body is likely stray prose; returns the reconstructed sentence, else undefined.
-const wordReg = /^[A-Za-z]+$/;
-function getProseText(tag: t.NodePath<t.MarkoTag>) {
-  const { node } = tag;
-  const tagName = getTagName(tag);
-  if (
-    !tagName ||
-    !wordReg.test(tagName) ||
-    node.var ||
-    node.body.params.length ||
-    node.body.body.length ||
-    !node.attributes.length ||
-    // An explicit `<Modal open/>` is a deliberate tag, not prose.
-    !isConciseModeTag(node)
-  ) {
-    return;
-  }
-  return collectProseWords(node, tagName);
-}
-
-// HTML mode: `loc` starts on `<`, before the name. Concise mode: they align.
-function isConciseModeTag(node: t.MarkoTag) {
-  const tagLoc = node.loc;
-  const nameLoc = node.name.loc;
-  if (!tagLoc || !nameLoc) return false;
-  return (
-    tagLoc.start.line === nameLoc.start.line &&
-    tagLoc.start.column === nameLoc.start.column
+// Declares a load import's signal or setup, cached under `key` for every tag
+// using it.
+function createLoadIdentifier(
+  cache: Map<string, t.Identifier>,
+  key: string,
+  name: string,
+  runtime: "_load_signal" | "_load_setup",
+  request: string,
+  trigger: t.Identifier | undefined,
+) {
+  const id = generateUidIdentifier(name);
+  cache.set(key, id);
+  const load = t.arrowFunctionExpression([], dynamicImport(request));
+  getProgram().node.body.push(
+    t.variableDeclaration("let", [
+      t.variableDeclarator(
+        id,
+        callRuntime(
+          runtime,
+          trigger
+            ? t.addComment(
+                t.callExpression(trigger, [load]),
+                "leading",
+                "@__PURE__",
+              )
+            : load,
+        ),
+      ),
+    ]),
   );
-}
-
-function collectProseWords(node: t.MarkoTag, tagName: string) {
-  let text = tagName;
-  for (const attr of node.attributes) {
-    if (
-      attr.type !== "MarkoAttribute" ||
-      attr.default ||
-      !wordReg.test(attr.name) ||
-      attr.value.type !== "BooleanLiteral" ||
-      attr.value.value !== true
-    ) {
-      return;
-    }
-    text += " " + attr.name;
-  }
-  return text;
-}
-
-function getSimilarTagHint(tagName: string) {
-  const lookup = getTaglibLookup(getFile());
-  if (lookup.getTag(tagName)) return "";
-  const lowerTagName = tagName.toLowerCase();
-  let closestTag: string | undefined;
-  let closestDistance = 4;
-  for (const name in (lookup as any).merged.tags) {
-    // Edit distance is at least the length difference.
-    const lengthDelta = Math.abs(name.length - tagName.length);
-    if (lengthDelta < closestDistance) {
-      if (!lengthDelta && name.toLowerCase() === lowerTagName) {
-        return ` Tag names are case-sensitive: did you mean \`<${name}>\`?`;
-      }
-      const nameDistance = distance(tagName, name);
-      if (nameDistance < closestDistance) {
-        closestTag = name;
-        closestDistance = nameDistance;
-      }
-    }
-  }
-  return closestTag ? ` Did you mean \`<${closestTag}>\`?` : "";
+  return id;
 }
 
 function buildLoadSetupVirtualModule(

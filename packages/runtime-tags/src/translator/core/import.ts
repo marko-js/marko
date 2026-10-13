@@ -1,27 +1,15 @@
-import {
-  getFile,
-  parseStatements,
-  type Tag,
-} from "@marko/compiler/babel-utils";
+import { type Tag } from "@marko/compiler/babel-utils";
+
+import { parseSingleStatement } from "../util/statement-tag";
 
 export default {
   parse(tag) {
-    const { node } = tag;
-    const statements = parseStatements(
-      getFile(),
-      node.rawValue!,
-      node.start!,
-      node.end!,
-    );
-
-    if (statements.length > 1) {
-      throw tag.hub.buildError(
-        statements[1],
+    tag.replaceWith(
+      parseSingleStatement(
+        tag,
         "The [`<import>` tag](https://markojs.com/docs/reference/language#import) takes a single import statement.",
-      );
-    }
-
-    tag.replaceWith(statements[0]);
+      ),
+    );
   },
   parseOptions: {
     statement: true,

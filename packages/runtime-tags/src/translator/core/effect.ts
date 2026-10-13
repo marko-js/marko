@@ -10,7 +10,7 @@ import {
 
 import { assertNoSpreadAttrs } from "../util/assert";
 import runtimeInfo from "../util/runtime-info";
-import withPreviousLocation from "../util/with-previous-location";
+import { withPreviousLocation } from "../util/with-previous-location";
 
 export default {
   migrate: (tag) => {

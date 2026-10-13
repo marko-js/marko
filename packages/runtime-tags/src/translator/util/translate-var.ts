@@ -3,7 +3,7 @@ import { types as t } from "@marko/compiler";
 import {
   type Binding,
   getCanonicalBinding,
-  getNearestDeclared,
+  getDeclaredAlias,
   isRest,
 } from "./bindings";
 import {
@@ -12,7 +12,9 @@ import {
 } from "./for-each-identifier";
 import { generateUidIdentifier } from "./generate-uid";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
+import { isOptimize } from "./marko-config";
 import { toArray } from "./optional";
+import { importRuntime } from "./runtime";
 import { getSection, type Section } from "./sections";
 import { findSlot } from "./slots";
 import { toMemberExpression, toPropertyName } from "./to-property-name";
@@ -97,6 +99,26 @@ export default function translateVar(
   }
 }
 
+export function isTagVarAssigned(tag: t.NodePath<t.MarkoTag>) {
+  return !!(
+    tag.node.var!.type === "Identifier" &&
+    tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
+  );
+}
+
+// An assignment to a tag variable, which the child's `<return>` receives.
+export function buildVarChange(
+  target: t.Expression,
+  value: t.Expression,
+  varBinding: Binding,
+) {
+  const changeArgs = [target, value];
+  if (!isOptimize()) {
+    changeArgs.push(t.stringLiteral(varBinding.name));
+  }
+  return t.callExpression(importRuntime("_var_change"), changeArgs);
+}
+
 // Removes the parts read through what they alias, keeping what is declared
 // here.
 function removeUndeclared(pattern: t.LVal, section: Section): boolean {
@@ -168,7 +190,7 @@ function translateRest(
   const source = getCanonicalBinding(rest.aliasOf!);
   // A destructured value is only in scope through the names its pattern
   // declares, so a rest of it narrows the rest or copy declared there.
-  const from = (!getNearestDeclared(source) && source.declaredAlias) || source;
+  const from = getDeclaredAlias(source) || source;
   let target: t.NodePath = tag;
   let inPlace = true;
   if (rest.section !== getSection(tag) && findSlot(rest)?.reason) {

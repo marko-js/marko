@@ -11,11 +11,11 @@ import {
   trackGlobalReference,
 } from "../util/references";
 import { callRuntime, importRuntime } from "../util/runtime";
+import { scopeIdentifier } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 import { createSectionState } from "../util/state";
 import type { TemplateVisitor } from "../util/visitors";
-import { scopeIdentifier } from "./program";
 
 const kAbortId = Symbol("abort id");
 declare module "@marko/compiler/dist/types" {
@@ -136,12 +136,10 @@ export default {
               "render",
               section,
               getReferencedBindings(canonicalExtra),
-              t.expressionStatement(
-                t.callExpression(importRuntime("$signalReset"), [
-                  scopeIdentifier,
-                  t.numericLiteral(exprId),
-                ]),
-              ),
+              t.callExpression(importRuntime("$signalReset"), [
+                scopeIdentifier,
+                t.numericLiteral(exprId),
+              ]),
             );
           }
 

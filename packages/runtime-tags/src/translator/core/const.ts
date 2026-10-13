@@ -5,7 +5,12 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent, assertNoTagVarMutation } from "../util/assert";
+import {
+  assertHasVar,
+  assertNoBodyContent,
+  assertNoTagVarMutation,
+  assertValueAttr,
+} from "../util/assert";
 import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
@@ -27,48 +32,8 @@ export default {
     assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
-    const { node } = tag;
-    const [valueAttr] = node.attributes;
-
-    if (!node.var) {
-      const looksLikeDeclaration =
-        !node.attributes.some(
-          (attr) =>
-            t.isMarkoAttribute(attr) && (attr.default || attr.name === "value"),
-        ) &&
-        node.attributes.length === 1 &&
-        t.isMarkoAttribute(node.attributes[0]) &&
-        /^[A-Za-z_$][\w$]*$/.test(node.attributes[0].name);
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          `The [\`<const>\` tag](https://markojs.com/docs/reference/core-tag#const) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables)${
-            looksLikeDeclaration
-              ? `; the variable goes after a slash: \`<const/${(node.attributes[0] as t.MarkoAttribute).name}=...>\`. For a one time module level value, prefix a plain JavaScript statement with \`static\`.`
-              : ", e.g. `<const/doubled=count * 2>`."
-          }`,
-        );
-    }
-
-    if (!valueAttr) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<const>` tag](https://markojs.com/docs/reference/core-tag#const) requires a [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
-        );
-    }
-
-    if (
-      node.attributes.length > 1 ||
-      !t.isMarkoAttribute(valueAttr) ||
-      (!valueAttr.default && valueAttr.name !== "value")
-    ) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<const>` tag](https://markojs.com/docs/reference/core-tag#const) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
-        );
-    }
+    assertHasVar(tag, getVarHint);
+    const valueAttr = assertValueAttr(tag, true);
 
     const valueExtra = (valueAttr.value.extra ??= {});
     valueExtra.pure = evaluate(valueAttr.value).pure;
@@ -141,3 +106,14 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/const.d.marko",
 } as Tag;
+
+function getVarHint(tag: t.NodePath<t.MarkoTag>) {
+  const { attributes } = tag.node;
+  const [attr] = attributes;
+  return attributes.length === 1 &&
+    attr.type === "MarkoAttribute" &&
+    attr.name !== "value" &&
+    /^[A-Za-z_$][\w$]*$/.test(attr.name)
+    ? `The variable goes after a slash: \`<const/${attr.name}=...>\`. For a one time module level value, prefix a plain JavaScript statement with \`static\`.`
+    : "For example: `<const/doubled=count * 2>`.";
+}

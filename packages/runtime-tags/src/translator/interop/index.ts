@@ -9,8 +9,13 @@ import {
 import { generator } from "@marko/compiler/internal/babel";
 
 import * as translate6 from "..";
-import type { Reach } from "../util/entry-builder";
-import { resolveRelativeToEntry } from "../util/resolve-relative-to-entry";
+import {
+  assertVisited,
+  createVisited,
+  markReached,
+  type Reach,
+  resolveRelativeToEntry,
+} from "../util/entry-builder";
 import { getCompatRuntimeFile } from "../util/runtime";
 import { isTagsAPI } from "./feature-detection";
 
@@ -71,11 +76,7 @@ export function createInteropTranslator(translate5: any) {
     const entryBuilder = {
       build(entryFile: EntryFile) {
         const state = entryFile[kState];
-        if (!state) {
-          throw entryFile.path.buildCodeFrameError(
-            "Unable to build hydrate code, no files were visited before finalizing the build",
-          );
-        }
+        assertVisited(entryFile, state);
 
         if (state.has5) {
           if (state.has6) {
@@ -184,19 +185,12 @@ export function createInteropTranslator(translate5: any) {
 
           // Mirrors the Tags builder's own traversal. The Class builder omits
           // the reach, so children inherit how their parent was reached.
-          const visitedFiles = new Map<string, Reach>([
-            [
-              resolveRelativePath(entryFile, entryFile.opts.filename as string),
-              0,
-            ],
-          ]);
+          const visitedFiles = createVisited(entryFile);
           entryBuilder.visit(
             entryFile,
             entryFile,
             function visitChild(resolved: string, reach: Reach = 0) {
-              const seen = visitedFiles.get(resolved);
-              if (seen !== undefined && seen <= reach) return;
-              visitedFiles.set(resolved, reach);
+              if (!markReached(visitedFiles, resolved, reach)) return;
               const file = loadFileForImport(entryFile, resolved);
               if (file) {
                 entryBuilder.visit(file, entryFile, (id, childReach = 0) =>
@@ -228,23 +222,21 @@ function mergeVisit(
   visit5?: t.VisitNode<unknown, any>,
   visit6?: t.VisitNode<unknown, any>,
 ): undefined | t.VisitNode<unknown, t.Node> {
-  const enter5 = getVisitorEnter(visit5);
-  const enter6 = getVisitorEnter(visit6);
-  const enter: undefined | t.VisitNode<unknown, t.Node> =
-    (enter5 || enter6) &&
-    function enter(path, state) {
-      return (isTagsAPI() ? enter6 : enter5)?.call(this, path, state);
-    };
-
-  const exit5 = getVisitorExit(visit5);
-  const exit6 = getVisitorExit(visit6);
-  const exit: undefined | t.VisitNode<unknown, t.Node> =
-    (exit5 || exit6) &&
-    function exit(path, state) {
-      return (isTagsAPI() ? exit6 : exit5)?.call(this, path, state);
-    };
-
+  const enter = mergeHook(getVisitorEnter(visit5), getVisitorEnter(visit6));
+  const exit = mergeHook(getVisitorExit(visit5), getVisitorExit(visit6));
   return exit ? (enter ? { enter, exit } : { exit }) : enter;
+}
+
+function mergeHook(
+  hook5: t.VisitNodeFunction<unknown, any> | undefined,
+  hook6: t.VisitNodeFunction<unknown, any> | undefined,
+): undefined | t.VisitNodeFunction<unknown, t.Node> {
+  return (
+    (hook5 || hook6) &&
+    function (path, state) {
+      return (isTagsAPI() ? hook6 : hook5)?.call(this, path, state);
+    }
+  );
 }
 
 function mergeTaglibs(libs5: Taglibs, libs6: Taglibs) {

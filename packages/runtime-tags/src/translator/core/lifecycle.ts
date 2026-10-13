@@ -7,20 +7,16 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent } from "../util/assert";
+import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import {
-  getAllTagReferenceNodes,
-  mergeReferences,
-  getReferencedBindings,
-} from "../util/references";
+import { getReferencedBindings, mergeTagReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
+import { scopeIdentifier } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { createSectionState } from "../util/state";
 import { propsToExpression, translateAttrs } from "../util/translate-attrs";
-import { scopeIdentifier } from "../visitors/program";
 
 const [getIndex, setIndex] = createSectionState("lifecycleIndex", () => 0);
 
@@ -30,17 +26,16 @@ export default {
     assertNoVar(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
+    // Attribute names go unchecked: everything but the three hooks becomes the
+    // `this` of those hooks, so an unrecognized `on*` is a method, not a typo.
+    assertNoSpreadAttrs(tag);
 
     const { node } = tag;
     const section = getOrCreateSection(tag);
     for (const attr of node.attributes) {
       (attr.value.extra ??= {}).consumed = true;
     }
-    const tagExtra = mergeReferences(
-      section,
-      tag.node,
-      getAllTagReferenceNodes(tag.node),
-    );
+    const tagExtra = mergeTagReferences(section, tag.node);
     tagExtra.isEffect = true;
     // `_lifecycle` registers cleanup via `$signal` at runtime, so the scope
     // must resume with its closest branch linked.
@@ -52,18 +47,6 @@ export default {
         .buildCodeFrameError(
           "The [`<lifecycle>` tag](https://markojs.com/docs/reference/core-tag#lifecycle) requires at least one attribute.",
         );
-    }
-
-    // Attribute names go unchecked: everything but the three hooks becomes the
-    // `this` of those hooks, so an unrecognized `on*` is a method, not a typo.
-    for (const attr of node.attributes) {
-      if (t.isMarkoSpreadAttribute(attr)) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError(
-            "The [`<lifecycle>` tag](https://markojs.com/docs/reference/core-tag#lifecycle) does not support [`...spread` attributes](https://markojs.com/docs/reference/language#spread-attributes).",
-          );
-      }
     }
 
     getProgram().node.extra.isInteractive = true;

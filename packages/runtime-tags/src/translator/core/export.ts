@@ -1,30 +1,19 @@
 import type { types as t } from "@marko/compiler";
-import {
-  getFile,
-  parseStatements,
-  type Tag,
-} from "@marko/compiler/babel-utils";
+import { type Tag } from "@marko/compiler/babel-utils";
+
+import { parseSingleStatement } from "../util/statement-tag";
+import { getLiteralName } from "../util/to-property-name";
 
 export default {
   parse(tag) {
-    const { node } = tag;
-    const statements = parseStatements(
-      getFile(),
-      node.rawValue!,
-      node.start!,
-      node.end!,
+    const statement = parseSingleStatement(
+      tag,
+      "The `<export>` tag takes a single export statement.",
     );
-
-    if (statements.length > 1) {
-      throw tag.hub.buildError(
-        statements[1],
-        "The `<export>` tag takes a single export statement.",
-      );
-    }
 
     // The template is compiled into the default export, so a second one would
     // leave the module with two.
-    const defaultExport = getDefaultExport(statements[0]);
+    const defaultExport = getDefaultExport(statement);
     if (defaultExport) {
       throw tag.hub.buildError(
         defaultExport,
@@ -32,7 +21,7 @@ export default {
       );
     }
 
-    tag.replaceWith(statements[0]);
+    tag.replaceWith(statement);
   },
   parseOptions: {
     statement: true,
@@ -54,11 +43,7 @@ function getDefaultExport(statement: t.Statement) {
     const { exported } = specifier as
       | t.ExportSpecifier
       | t.ExportNamespaceSpecifier;
-    if (
-      exported &&
-      (exported.type === "Identifier" ? exported.name : exported.value) ===
-        "default"
-    ) {
+    if (exported && getLiteralName(exported) === "default") {
       return specifier;
     }
   }

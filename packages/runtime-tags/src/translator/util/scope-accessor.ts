@@ -159,7 +159,7 @@ function getClosureAccessorId(binding: Binding) {
   return id;
 }
 
-export function getSectionInstancesAccessor(section: Section) {
+function getSectionInstancesAccessor(section: Section) {
   // Only hoists reach the prefix + section id fallback; a reserved numeric id
   // would be a byte shorter, but hoists are too rare for that to pay.
   return isResumedBranch(section)

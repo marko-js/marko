@@ -43,6 +43,8 @@ export default function normalizeStringExpression(
     }
 
     strs.push(curStr);
+    const quasis: t.TemplateElement[] = [];
+    for (const str of strs) quasis.push(toTemplateElement(str));
 
     if (useIife) {
       // Note: this is a temporary workaround for https://github.com/rolldown/rolldown/issues/9189
@@ -51,7 +53,7 @@ export default function normalizeStringExpression(
       const args: t.Expression[] = [];
       const params: t.Identifier[] = [];
       const body = t.templateLiteral(
-        strs.map((raw) => t.templateElement({ raw: escapeTemplateRaw(raw) })),
+        quasis,
         exprs.map((expr) => {
           if (expr.type !== "Identifier") return expr;
           const param = t.identifier(`_w${params.length}`);
@@ -68,10 +70,7 @@ export default function normalizeStringExpression(
       return iife;
     }
 
-    return t.templateLiteral(
-      strs.map((raw) => t.templateElement({ raw: escapeTemplateRaw(raw) })),
-      exprs,
-    );
+    return t.templateLiteral(quasis, exprs);
   } else if (curStr) {
     return t.stringLiteral(curStr);
   }
@@ -81,7 +80,11 @@ export function appendLiteral(arr: unknown[], str: string) {
   arr[arr.length - 1] += str;
 }
 
-export function escapeTemplateRaw(raw: string) {
+export function toTemplateElement(value: string, tail?: boolean) {
+  return t.templateElement({ raw: escapeTemplateRaw(value) }, tail);
+}
+
+function escapeTemplateRaw(raw: string) {
   return raw
     .replace(/\\/g, "\\\\")
     .replace(/`/g, "\\`")

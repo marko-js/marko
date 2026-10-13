@@ -13,6 +13,7 @@ import {
   getParamReasonGroupIndex,
   groupParamsBySection,
   isSameOrChildSection,
+  type ParamReasonGroup,
   type Section,
 } from "./sections";
 import { findSectionSlot, findSlot, type Slot, SlotKind } from "./slots";
@@ -138,7 +139,7 @@ export function getWriteGuard(
         );
   }
 
-  return getOrHoist(reason, true);
+  return orEachParamGroup(reason.param, true);
 }
 
 export function getWriteGuardForAny(
@@ -161,8 +162,7 @@ export function getWriteGuardForAny(
 
   let expr!: t.Expression;
   for (const reason of reasons) {
-    const guard = getWriteGuard(section, reason, false)!;
-    expr = expr ? t.logicalExpression("||", expr, guard) : guard;
+    expr = orGuard(expr, getWriteGuard(section, reason, false)!);
   }
 
   return expr;
@@ -176,27 +176,30 @@ export function getExprIfWritten<
     return (reason && expr) as R;
   }
 
-  const guard = getOrHoist(reason, false);
-  return (guard ? t.logicalExpression("&&", guard, expr) : expr) as R;
+  return andGuard(orEachParamGroup(reason.param, false), expr) as R;
 }
 
-function getOrHoist(
-  reason: ConditionalReason,
-  isGuard: boolean,
-): t.Expression | undefined {
+// Each param group's guard, or-ed together.
+function orEachParamGroup(params: Sources["param"], isGuard: boolean) {
   let expr: t.Expression | undefined;
-  for (const [section, params] of groupParamsBySection(reason.param)) {
-    const part = getOrHoistSectionGuard(section, params, isGuard);
-    expr = expr ? t.logicalExpression("||", expr, part) : part;
+  for (const [section, group] of groupParamsBySection(params)) {
+    expr = orGuard(expr, getOrHoistSectionGuard(section, group, isGuard));
   }
-
   return expr;
+}
+
+function orGuard(guard: t.Expression | undefined, other: t.Expression) {
+  return guard ? t.logicalExpression("||", guard, other) : other;
+}
+
+function andGuard(guard: t.Expression | undefined, expr: t.Expression) {
+  return guard ? t.logicalExpression("&&", guard, expr) : expr;
 }
 
 // The first use stays inline; a second hoists it into a shared declarator.
 function getOrHoistSectionGuard(
   section: Section,
-  params: NonNullable<Sources["param"]>,
+  params: ParamReasonGroup,
   isGuard: boolean,
 ): t.Expression {
   if (!section.paramReasonGroups) return scopeReasonIdentifier(section);

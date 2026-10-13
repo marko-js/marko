@@ -27,7 +27,6 @@ export function getExprRoot(path: t.NodePath<t.Node>) {
 }
 
 export function getFnRoot(path: t.NodePath<t.Node>) {
-  let curPath = path;
   let fnPath:
     | undefined
     | t.NodePath<
@@ -36,7 +35,11 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
         | t.ArrowFunctionExpression
         | t.ObjectMember
       >;
-  while (!isMarko(curPath)) {
+  for (
+    let curPath: t.NodePath | null = path;
+    curPath && !isMarko(curPath);
+    curPath = curPath.parentPath
+  ) {
     if (isFunction(curPath)) {
       fnPath = curPath;
     } else {
@@ -48,50 +51,34 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
           break;
       }
     }
-
-    const parentPath = curPath.parentPath;
-    if (parentPath) {
-      curPath = parentPath;
-    } else {
-      break;
-    }
   }
 
   return fnPath;
 }
 
 export function getFnParent(path: t.NodePath<t.Node>) {
-  let curPath = path;
-
-  while (!isMarko(curPath)) {
+  for (
+    let curPath: t.NodePath | null = path;
+    curPath && !isMarko(curPath);
+    curPath = curPath.parentPath
+  ) {
     if (isFunction(curPath)) {
       return curPath;
-    }
-
-    const parentPath = curPath.parentPath;
-    if (parentPath) {
-      curPath = parentPath;
-    } else {
-      break;
     }
   }
 }
 
 export function getDeclarationRoot(path: t.NodePath<t.Node>) {
-  let curPath = path;
   let declPath:
     | undefined
     | t.NodePath<t.FunctionDeclaration | t.VariableDeclaration>;
-  while (!isMarko(curPath)) {
+  for (
+    let curPath: t.NodePath | null = path;
+    curPath && !isMarko(curPath);
+    curPath = curPath.parentPath
+  ) {
     if (isFunctionOrVariableDeclaration(curPath)) {
       declPath = curPath;
-    }
-
-    const parentPath = curPath.parentPath;
-    if (parentPath) {
-      curPath = parentPath;
-    } else {
-      break;
     }
   }
 
