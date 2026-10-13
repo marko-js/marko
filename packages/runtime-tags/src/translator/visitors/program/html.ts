@@ -11,7 +11,7 @@ import { getDeclaredBindingExpression } from "../../util/get-declared-binding-ex
 import isStatic from "../../util/is-static";
 import { getMarkoOpts } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach } from "../../util/optional";
+import { first, forEach } from "../../util/optional";
 import { getReadReplacement } from "../../util/read-replacement";
 import {
   isRegisteredFnExtra,
@@ -21,7 +21,6 @@ import { callRuntime, importRuntime } from "../../util/runtime";
 import { getLocalsScopeAccessor } from "../../util/scope-accessor";
 import {
   forEachSection,
-  getHighestHoistSection,
   getScopeIdIdentifier,
   getSection,
   isResumedBranch,
@@ -80,7 +79,7 @@ export default {
         });
 
         forEach(section.hoisted, (binding) => {
-          const highestHoistSection = getHighestHoistSection(binding);
+          const highestHoistSection = first(binding.hoists!);
           let currentSection: Section | undefined = section;
           while (currentSection && currentSection !== highestHoistSection) {
             const parentSection: Section = currentSection.parent!;
