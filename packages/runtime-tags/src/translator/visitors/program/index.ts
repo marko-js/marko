@@ -15,13 +15,12 @@ import {
 import { type Binding, BindingType } from "../../util/bindings";
 import entryBuilder from "../../util/entry-builder";
 import { finalizeReferences } from "../../util/finalize-references";
-import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
+import { generateUid } from "../../util/generate-uid";
 import getStyleFile from "../../util/get-style-file";
 import { analyzeRecursiveTags } from "../../util/known-tag";
 import {
   getMarkoOpts,
   getReadyId,
-  isOutputDOM,
   isOutputHTML,
 } from "../../util/marko-config";
 import { isUnconditionalReason } from "../../util/reasons";
@@ -31,6 +30,7 @@ import {
   getCompatRuntimeFile,
   getRuntimePath,
 } from "../../util/runtime";
+import { createScopeIdentifiers } from "../../util/scope-read";
 import {
   forEachSection,
   getRendererReason,
@@ -41,9 +41,6 @@ import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
-
-export let scopeIdentifier: t.Identifier;
-export let localsIdentifier: t.Identifier;
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -141,12 +138,7 @@ export default {
   },
   translate: {
     enter(program) {
-      scopeIdentifier = isOutputDOM()
-        ? generateUidIdentifier("scope")
-        : (null as any as t.Identifier);
-      localsIdentifier = isOutputDOM()
-        ? generateUidIdentifier("locals")
-        : (null as any as t.Identifier);
+      createScopeIdentifiers();
       {
         const markoOpts = getMarkoOpts();
         const { output, entry, runtimeId } = markoOpts;

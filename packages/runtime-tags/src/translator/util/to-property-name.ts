@@ -14,6 +14,18 @@ export function getMemberExpressionPropString(
   }
 }
 
+// The name an identifier or string literal (a key, an import or export name) spells.
+export function getLiteralName(node: t.Identifier | t.StringLiteral): string;
+export function getLiteralName(node: t.Node): string | undefined;
+export function getLiteralName(node: t.Node) {
+  switch (node.type) {
+    case "Identifier":
+      return node.name;
+    case "StringLiteral":
+      return node.value;
+  }
+}
+
 export function isValidPropertyIdentifier(name: string) {
   return /^[a-z_$][a-z0-9_$]*$/i.test(name);
 }

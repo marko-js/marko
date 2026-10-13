@@ -9,7 +9,7 @@ import { addReasonExprs } from "../util/reasons";
 import { getReferencedBindings } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
-import { createScopeReadExpression } from "../util/scope-read";
+import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
 import {
   ContentType,
   getNodeContentType,
@@ -20,14 +20,17 @@ import {
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import { getSlot } from "../util/slots";
-import { getPrevStaticSibling, isStaticText } from "../util/static-text";
+import {
+  getPrevStaticSibling,
+  getStaticPlaceholderText,
+  isStaticText,
+} from "../util/static-text";
 import * as structure from "../util/structure";
 import { getTagFacts, isNonHTMLText } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
 import { getWriteGuard, getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 import * as SiblingText from "./constants/sibling-text";
-import { scopeIdentifier } from "./program";
 
 const kSiblingText = Symbol("placeholder has sibling text");
 type SiblingText = SiblingText.Value;
@@ -46,13 +49,7 @@ export default {
 
       const { node } = placeholder;
       const valueExtra = (node.value.extra ??= {});
-      const { confident, computed } = evaluate(node.value);
-      if (
-        confident &&
-        getHTMLRuntime()[node.escape ? "_escape" : "_unescaped"](computed) ===
-          ""
-      )
-        return;
+      if (getStaticPlaceholderText(node) === "") return;
 
       if (!isStaticText(node)) {
         const section = getOrCreateSection(placeholder);
@@ -70,15 +67,12 @@ export default {
       if (isNonHTMLText(placeholder)) return;
 
       const { node } = placeholder;
-      const { confident, computed } = evaluate(node.value);
-      const staticText = confident
-        ? getHTMLRuntime()[node.escape ? "_escape" : "_unescaped"](computed)
-        : undefined;
+      const staticText = getStaticPlaceholderText(node);
       if (staticText === "") return;
 
       const extra = node.extra || {};
-      if (confident && node.escape) {
-        structure.writeTextTo(placeholder, staticText!);
+      if (staticText !== undefined && node.escape) {
+        structure.writeTextTo(placeholder, staticText);
       } else {
         const siblingText = extra[kSiblingText]!;
         const nodeBinding = extra.nodeBinding!;
@@ -109,9 +103,7 @@ export default {
     },
   },
   translate: {
-    exit(placeholder) {
-      translateExit(placeholder);
-    },
+    exit: translateExit,
   },
 } satisfies TemplateVisitor<t.MarkoPlaceholder>;
 
@@ -124,15 +116,12 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   if (node.extra?.rawText) {
     injectTextCoercion(value);
   }
-  const { confident, computed } = evaluate(value);
-
-  if (
-    confident &&
-    getHTMLRuntime()[node.escape ? "_escape" : "_unescaped"](computed) === ""
-  ) {
+  if (getStaticPlaceholderText(node) === "") {
     placeholder.remove();
     return;
   }
+
+  const { confident, computed } = evaluate(value);
 
   const isHTML = isOutputHTML();
   const write = writer.writeTo(placeholder);
@@ -184,20 +173,14 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
         "render",
         section,
         getReferencedBindings(value.extra),
-        t.expressionStatement(
-          method === "_text"
-            ? callRuntime(
-                "_text",
-                createScopeReadExpression(nodeBinding!),
-                value,
-              )
-            : callRuntime(
-                "_html",
-                scopeIdentifier,
-                value,
-                getScopeAccessorLiteral(nodeBinding!),
-              ),
-        ),
+        method === "_text"
+          ? callRuntime("_text", createScopeReadExpression(nodeBinding!), value)
+          : callRuntime(
+              "_html",
+              scopeIdentifier,
+              value,
+              getScopeAccessorLiteral(nodeBinding!),
+            ),
         true,
       );
     }
@@ -253,71 +236,46 @@ function buildEscapedTextExpression(value: t.Expression): t.Expression {
 }
 
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
-  const placeholderExtra = placeholder.node.extra!;
-  let prev = placeholder.getPrevSibling();
-  let prevParent: t.NodePath = placeholder.parentPath;
-  for (;;) {
-    if (!prev.node) {
-      const inlinedTag = getInlinedBodyTag(prevParent);
-      if (inlinedTag) {
-        prev = inlinedTag.getPrevSibling();
-        prevParent = inlinedTag.parentPath;
-        continue;
-      }
-      break;
-    }
-    const contentType = getNodeContentType(
-      prev as t.NodePath<t.Statement>,
-      "endType",
-    );
-    if (contentType === null) {
-      prev = prev.getPrevSibling();
-    } else if (
-      contentType === ContentType.Text ||
-      contentType === ContentType.Dynamic ||
-      contentType === ContentType.Placeholder
-    ) {
-      return (placeholderExtra[kSiblingText] = SiblingText.Before);
-    } else {
-      break;
-    }
-  }
-  if (!prev.node && prevParent.isProgram()) {
-    return (placeholderExtra[kSiblingText] = SiblingText.Before);
-  }
-  let next = placeholder.getNextSibling();
-  let nextParent: t.NodePath = placeholder.parentPath;
-  for (;;) {
-    if (!next.node) {
-      const inlinedTag = getInlinedBodyTag(nextParent);
-      if (inlinedTag) {
-        next = inlinedTag.getNextSibling();
-        nextParent = inlinedTag.parentPath;
-        continue;
-      }
-      break;
-    }
-    const contentType = getNodeContentType(
-      next as t.NodePath<t.Statement>,
-      "startType",
-    );
-    if (contentType === null) {
-      next = next.getNextSibling();
-    } else if (
-      contentType === ContentType.Text ||
-      contentType === ContentType.Dynamic ||
-      contentType === ContentType.Placeholder
-    ) {
-      return (placeholderExtra[kSiblingText] = SiblingText.After);
-    } else {
-      break;
-    }
-  }
-  if (!next.node && nextParent.isProgram()) {
-    return (placeholderExtra[kSiblingText] = SiblingText.After);
-  }
+  placeholder.node.extra![kSiblingText] = hasSiblingText(placeholder, true)
+    ? SiblingText.Before
+    : hasSiblingText(placeholder, false)
+      ? SiblingText.After
+      : SiblingText.None;
+}
 
-  return (placeholderExtra[kSiblingText] = SiblingText.None);
+// Whether text the placeholder's text node may merge with is on one side of it,
+// past what renders nothing and out through bodies rendered in place.
+function hasSiblingText(
+  placeholder: t.NodePath<t.MarkoPlaceholder>,
+  before: boolean,
+) {
+  let sibling = getSibling(placeholder, before);
+  let parent: t.NodePath = placeholder.parentPath;
+  for (;;) {
+    if (!sibling.node) {
+      const inlinedTag = getInlinedBodyTag(parent);
+      if (!inlinedTag) return parent.isProgram();
+      sibling = getSibling(inlinedTag, before);
+      parent = inlinedTag.parentPath;
+    } else {
+      const contentType = getNodeContentType(
+        sibling as t.NodePath<t.Statement>,
+        before ? "endType" : "startType",
+      );
+      if (contentType !== null) {
+        return (
+          contentType === ContentType.Text ||
+          contentType === ContentType.Dynamic ||
+          contentType === ContentType.Placeholder
+        );
+      }
+      sibling = getSibling(sibling, before);
+    }
+  }
+}
+
+function getSibling(path: t.NodePath, before: boolean) {
+  return before ? path.getPrevSibling() : path.getNextSibling();
 }
 
 // The tag rendering `parent` in its own place and section, so the body's

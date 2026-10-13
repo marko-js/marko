@@ -1,6 +1,6 @@
 import type { types as t } from "@marko/compiler";
 
-export default function withPreviousLocation<T extends t.Node>(
+export function withPreviousLocation<T extends t.Node>(
   newNode: T,
   originalNode: t.Node,
 ): T {

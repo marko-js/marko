@@ -1,3 +1,5 @@
+import path from "path";
+
 import { types as t } from "@marko/compiler";
 import {
   getTemplateId,
@@ -5,7 +7,6 @@ import {
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
-import { resolveRelativeToEntry } from "./resolve-relative-to-entry";
 import {
   type DOMRuntimeHelpers,
   getRuntimeFeatureImport,
@@ -55,12 +56,10 @@ const kState: unique symbol = Symbol();
 const builder = {
   build(entryFile: EntryFile, exportInit?: boolean) {
     const state = entryFile[kState];
-    if (!state) {
-      throw entryFile.path.buildCodeFrameError(
-        "Unable to build hydrate code, no files were visited before finalizing the build",
-      );
-    }
+    assertVisited(entryFile, state);
     const body: t.Statement[] = [];
+    const isPage = entryFile.path.node.extra.page;
+    const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
 
     // Client assets (styles, css imports, etc) of a template the bundle does
     // not link are imported directly, so that static routes still ship them.
@@ -69,8 +68,6 @@ const builder = {
     }
 
     if (state.init || state.load) {
-      const isPage = entryFile.path.node.extra.page;
-      const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
       if (state.init) {
         body.push(
           t.importDeclaration(
@@ -91,48 +88,17 @@ const builder = {
       for (const root of state.roots) {
         body.push(t.importDeclaration([], t.stringLiteral(root)));
       }
-
-      if (!state.init) {
-        // Client statements ran when the modules above loaded; with nothing
-        // to resume there is no runtime to initialize.
-        if (exportInit) {
-          body.push(
-            t.exportDefaultDeclaration(
-              t.arrowFunctionExpression([], t.blockStatement([])),
-            ),
-          );
-        }
-        return body;
-      }
-
-      const { runtimeId } = entryFile.markoOpts;
-      const readyId =
-        !isPage && getTemplateId(entryFile.markoOpts, entryFile.opts.filename);
-      const initExpression = t.callExpression(
-        t.identifier(initHelper),
-        readyId
-          ? runtimeId
-            ? [t.stringLiteral(readyId), t.stringLiteral(runtimeId)]
-            : [t.stringLiteral(readyId)]
-          : runtimeId
-            ? [t.stringLiteral(runtimeId)]
-            : [],
-      );
-
-      body.push(
-        exportInit
-          ? t.exportDefaultDeclaration(
-              t.arrowFunctionExpression([], initExpression),
-            )
-          : t.expressionStatement(initExpression),
-      );
     } else {
       // A server only page has no runtime to initialize, so nothing loads
       // the assets of the templates below it either.
       for (const asset of state.bundledAssets) {
         body.push(t.importDeclaration([], t.stringLiteral(asset)));
       }
+    }
 
+    if (!state.init) {
+      // Client statements ran when the modules above loaded; with nothing
+      // to resume there is no runtime to initialize.
       if (exportInit) {
         body.push(
           t.exportDefaultDeclaration(
@@ -140,8 +106,30 @@ const builder = {
           ),
         );
       }
+      return body;
     }
 
+    const { runtimeId } = entryFile.markoOpts;
+    const readyId =
+      !isPage && getTemplateId(entryFile.markoOpts, entryFile.opts.filename);
+    const initExpression = t.callExpression(
+      t.identifier(initHelper),
+      readyId
+        ? runtimeId
+          ? [t.stringLiteral(readyId), t.stringLiteral(runtimeId)]
+          : [t.stringLiteral(readyId)]
+        : runtimeId
+          ? [t.stringLiteral(runtimeId)]
+          : [],
+    );
+
+    body.push(
+      exportInit
+        ? t.exportDefaultDeclaration(
+            t.arrowFunctionExpression([], initExpression),
+          )
+        : t.expressionStatement(initExpression),
+    );
     return body;
   },
   // Recurses into each reachable template, re-visiting a file reached more
@@ -151,13 +139,11 @@ const builder = {
     file: t.BabelFile,
     entryFile: EntryFile,
     visitChild: VisitChild = (id, reach = 0) => {
-      const state = entryFile[kState]!;
       const resolved = resolveRelativeToEntry(entryFile, file, id);
-      const seen = state.visited.get(resolved);
-      if (seen !== undefined && seen <= reach) return;
-      state.visited.set(resolved, reach);
-      const childFile = loadFileForImport(entryFile, resolved);
-      if (childFile) builder.visit(childFile, entryFile);
+      if (markReached(entryFile[kState]!.visited, resolved, reach)) {
+        const childFile = loadFileForImport(entryFile, resolved);
+        if (childFile) builder.visit(childFile, entryFile);
+      }
     },
   ) {
     const state = (entryFile[kState] ||= {
@@ -169,9 +155,7 @@ const builder = {
       roots: [],
       assets: new Set(),
       bundledAssets: new Set(),
-      visited: new Map([
-        [resolveRelativePath(entryFile, entryFile.opts.filename as string), 0],
-      ]),
+      visited: createVisited(entryFile),
     });
     const programExtra = file.path.node.extra;
     const { analyzedTags, assetImports } = file.metadata.marko;
@@ -222,3 +206,48 @@ const builder = {
 };
 
 export default builder;
+
+export function assertVisited<S>(
+  entryFile: t.BabelFile,
+  state: S | undefined,
+): asserts state is S {
+  if (!state) {
+    throw entryFile.path.buildCodeFrameError(
+      "Unable to build hydrate code, no files were visited before finalizing the build",
+    );
+  }
+}
+
+// How eagerly each file has been reached, starting with the entry itself.
+export function createVisited(entryFile: t.BabelFile) {
+  return new Map<string, Reach>([
+    [resolveRelativePath(entryFile, entryFile.opts.filename as string), 0],
+  ]);
+}
+
+export function resolveRelativeToEntry(
+  entryFile: t.BabelFile,
+  file: t.BabelFile,
+  req: string,
+) {
+  return file === entryFile
+    ? resolveRelativePath(file, req)
+    : resolveRelativePath(
+        entryFile,
+        req[0] === "."
+          ? path.join(file.opts.filename as string, "..", req)
+          : req,
+      );
+}
+
+// Records a file reached more eagerly than before, which it then visits again.
+export function markReached(
+  visited: Map<string, Reach>,
+  resolved: string,
+  reach: Reach,
+) {
+  const seen = visited.get(resolved);
+  if (seen !== undefined && seen <= reach) return false;
+  visited.set(resolved, reach);
+  return true;
+}

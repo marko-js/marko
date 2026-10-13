@@ -5,8 +5,7 @@ import {
   getTemplateId,
 } from "@marko/compiler/babel-utils";
 
-import { getSectionReturnValueIdentifier } from "../core/return";
-import { localsIdentifier, scopeIdentifier } from "../visitors/program";
+import { toAccess } from "../../html/serializer";
 import {
   type Binding,
   BindingType,
@@ -14,13 +13,14 @@ import {
   getDebugName,
   getDebugNames,
   getDebugNamesAsIdentifier,
-  getDebugScopeAccess,
+  getDebugAccess,
   type Getter,
   hasNonConstantPropertyAlias,
   type Intersection,
   isDirectAlias,
   isRest,
   type ReferencedBindings,
+  someAlias,
 } from "./bindings";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
@@ -38,6 +38,7 @@ import {
 } from "./reasons";
 import {
   type AssignedBindingExtra,
+  getReferencedBindings,
   getReferencedBindingsInFunction,
   hasResumableWriter,
   isAssignedBindingExtra,
@@ -53,12 +54,18 @@ import {
   getSectionInstancesAccessorLiteral,
   getSlotAccessor,
 } from "./scope-accessor";
-import { createScopeReadExpression, getScopeExpression } from "./scope-read";
+import {
+  createScopeReadExpression,
+  getScopeExpression,
+  localsIdentifier,
+  scopeIdentifier,
+} from "./scope-read";
 import {
   forEachAncestorSection,
   getContentClosures,
   getDynamicClosureIndex,
   getScopeIdIdentifier,
+  getSection,
   getSectionForBody,
   isDynamicClosure,
   isImmediateOwner,
@@ -66,10 +73,10 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import { simplifyFunction } from "./simplify-fn";
+import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
-import { createSectionState } from "./state";
-import { toFirstExpressionOrBlock } from "./to-first-expression-or-block";
+import { createProgramState, createSectionState } from "./state";
+import { toFirstExpressionOrBlock } from "./to-first-or-block";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
 import { getRestPattern, withRestFallback } from "./translate-var";
 import { traverseReplace } from "./traverse";
@@ -80,6 +87,7 @@ import {
   getWriteReason,
   isSameReason,
 } from "./write-guard";
+import { flushInto } from "./writer";
 
 export interface Signal {
   identifier: t.Identifier;
@@ -231,7 +239,7 @@ export function setSectionDebugVar(
   if (!isOptimize()) {
     getSectionDebugVars(section).set(
       accessor,
-      loc ? [name, `${loc.start.line}:${loc.start.column + 1}`] : [name],
+      loc ? [name, getDebugLoc(loc)] : [name],
     );
   }
 }
@@ -260,6 +268,11 @@ export const [getHTMLSectionStatements] = createSectionState<t.Statement[]>(
   "htmlScopeStatements",
   () => [],
 );
+
+// What a section's html renderer returns: its `<return>` value.
+const [getSectionReturnValueIdentifier, setReturnValueIdentifier] =
+  createSectionState<t.Identifier | undefined>("returnValue");
+export { setReturnValueIdentifier };
 
 const [getBindingGetterIdMap] = createSectionState<Map<Binding, t.Identifier>>(
   "bindingGetterIdMap",
@@ -441,7 +454,8 @@ export function initValue(binding: Binding, isLet = false) {
     if (
       !signal.forcePersist &&
       (isDirectAlias(binding) ||
-        (!signal.hasSideEffect && !hasAliasSideEffect(binding)) ||
+        (!signal.hasSideEffect &&
+          !someAlias(binding, hasAliasSideEffect, binding, true)) ||
         !signalHasStatements(signal))
     ) {
       return fn;
@@ -454,33 +468,18 @@ export function initValue(binding: Binding, isLet = false) {
     );
   };
 
-  for (const alias of binding.aliases) {
-    if (alias.type !== BindingType.constant) {
-      initValue(alias);
-    }
-  }
-
-  for (const alias of binding.propertyAliases.values()) {
-    if (alias.type !== BindingType.constant) {
-      initValue(alias);
-    }
-  }
-
+  binding.aliases.forEach(initAliasValue);
+  binding.propertyAliases.forEach(initAliasValue);
   return signal;
 }
 
+function initAliasValue(alias: Binding) {
+  if (alias.type !== BindingType.constant) initValue(alias);
+}
+
 // A direct alias's work reads the slot of the binding it aliases.
-function hasAliasSideEffect(binding: Binding): boolean {
-  for (const alias of binding.aliases) {
-    if (
-      isDirectAlias(alias) &&
-      (getSignal(alias.section, alias).hasSideEffect ||
-        hasAliasSideEffect(alias))
-    ) {
-      return true;
-    }
-  }
-  return false;
+function hasAliasSideEffect(alias: Binding, binding: Binding) {
+  return alias !== binding && getSignal(alias.section, alias).hasSideEffect;
 }
 
 export function signalHasStatements(signal: Signal): boolean {
@@ -528,13 +527,7 @@ function isPureMemberForwarder(binding: Binding): boolean {
     return false;
   }
 
-  for (const alias of binding.propertyAliases.values()) {
-    if (alias.type !== BindingType.constant) {
-      return true;
-    }
-  }
-
-  return false;
+  return hasNonConstantPropertyAlias(binding);
 }
 
 function pushMemberForwards(
@@ -553,18 +546,21 @@ function pushMemberForwards(
       }
     }
   } else {
-    const aliasSignal = getSignal(alias.section, alias);
-    signal.forwards = push(signal.forwards, aliasSignal);
-    signal.render.push(
-      t.expressionStatement(
-        t.callExpression(aliasSignal.identifier, [
-          scopeIdentifier,
-          value,
-          ...getTranslatedExtraArgs(aliasSignal),
-        ]),
-      ),
-    );
+    pushForward(signal, getSignal(alias.section, alias), value);
   }
+}
+
+function pushForward(signal: Signal, target: Signal, value: t.Expression) {
+  signal.forwards = push(signal.forwards, target);
+  signal.render.push(
+    t.expressionStatement(
+      t.callExpression(target.identifier, [
+        scopeIdentifier,
+        value,
+        ...getTranslatedExtraArgs(target),
+      ]),
+    ),
+  );
 }
 
 // A source intersection runs in its source's pass, so it needs no `_or`.
@@ -598,41 +594,18 @@ export function getSignalFn(signal: Signal): t.Expression {
     for (const alias of binding.aliases) {
       const aliasSignal = getSignal(alias.section, alias);
       if (signalHasStatements(aliasSignal)) {
-        signal.forwards = push(signal.forwards, aliasSignal);
+        let value: t.Expression = createScopeReadExpression(binding);
         if (isRest(alias)) {
           const aliasId = t.identifier(alias.name);
-          signal.render.push(
-            t.expressionStatement(
-              t.callExpression(aliasSignal.identifier, [
-                scopeIdentifier,
-                t.callExpression(
-                  t.arrowFunctionExpression(
-                    [getRestPattern(alias, aliasId, binding, true)],
-                    aliasId,
-                  ),
-                  [
-                    withRestFallback(
-                      alias,
-                      binding,
-                      createScopeReadExpression(binding),
-                    ),
-                  ],
-                ),
-                ...getTranslatedExtraArgs(aliasSignal),
-              ]),
+          value = t.callExpression(
+            t.arrowFunctionExpression(
+              [getRestPattern(alias, aliasId, binding, true)],
+              aliasId,
             ),
-          );
-        } else {
-          signal.render.push(
-            t.expressionStatement(
-              t.callExpression(aliasSignal.identifier, [
-                scopeIdentifier,
-                createScopeReadExpression(binding),
-                ...getTranslatedExtraArgs(aliasSignal),
-              ]),
-            ),
+            [withRestFallback(alias, binding, value)],
           );
         }
+        pushForward(signal, aliasSignal, value);
       }
     }
 
@@ -680,11 +653,7 @@ export function getSignalFn(signal: Signal): t.Expression {
   }
 
   forEach(signal.intersection, (intersection) => {
-    signal.render.push(
-      t.expressionStatement(
-        t.callExpression(intersection.identifier, [scopeIdentifier]),
-      ),
-    );
+    pushScopeCall(signal.render, intersection.identifier);
   });
 
   if (isValue && binding.sources) {
@@ -697,24 +666,14 @@ export function getSignalFn(signal: Signal): t.Expression {
           dynamicClosureSignalIdentifier = generateUidIdentifier(
             signal.identifier.name + "__closure",
           );
-
-          signal.render.push(
-            t.expressionStatement(
-              t.callExpression(dynamicClosureSignalIdentifier, [
-                scopeIdentifier,
-              ]),
-            ),
-          );
+          pushScopeCall(signal.render, dynamicClosureSignalIdentifier);
         }
 
         dynamicClosureArgs.push(getSignal(closureSection, binding).identifier);
       } else {
-        signal.render.push(
-          t.expressionStatement(
-            t.callExpression(getSignal(closureSection, binding).identifier, [
-              scopeIdentifier,
-            ]),
-          ),
+        pushScopeCall(
+          signal.render,
+          getSignal(closureSection, binding).identifier,
         );
       }
     });
@@ -732,12 +691,7 @@ export function getSignalFn(signal: Signal): t.Expression {
   }
 
   if (signal.effect.length) {
-    const effectIdentifier = t.identifier(`${signal.identifier.name}__script`);
-    signal.render.push(
-      t.expressionStatement(
-        t.callExpression(effectIdentifier, [scopeIdentifier]),
-      ),
-    );
+    pushScopeCall(signal.render, getSignalEffectIdentifier(signal));
   }
 
   if (isValue && findSlot(binding)?.reason) {
@@ -745,22 +699,17 @@ export function getSignalFn(signal: Signal): t.Expression {
   }
 
   if (!signal.hasSideEffect) {
-    if (isValue && signal.render.length === 1) {
-      const first = signal.render[0];
-      if (first.type === "ExpressionStatement") {
-        const { expression } = first;
-        if (
-          expression.type === "CallExpression" &&
-          expression.callee.type === "Identifier" &&
-          expression.arguments.length === 2 &&
-          expression.arguments[0] === scopeIdentifier &&
-          isOwnValueRead(expression.arguments[1], binding as Binding)
-        ) {
-          // The signal only forwards its scope and value to another signal:
-          // `(scope, value) => fn(scope, value)` is equivalent to `fn`.
-          return expression.callee;
-        }
-      }
+    const call = isValue && getOnlyCall(signal.render);
+    if (
+      call &&
+      call.callee.type === "Identifier" &&
+      call.arguments.length === 2 &&
+      call.arguments[0] === scopeIdentifier &&
+      isOwnValueRead(call.arguments[1], binding)
+    ) {
+      // The signal only forwards its scope and value to another signal:
+      // `(scope, value) => fn(scope, value)` is equivalent to `fn`.
+      return call.callee;
     }
 
     return t.arrowFunctionExpression(
@@ -776,29 +725,48 @@ export function getSignalFn(signal: Signal): t.Expression {
 
 // `(scope) => fn(scope)` is `fn`.
 function toScopeFn(render: t.Statement[]): t.Expression {
-  if (render.length === 1) {
-    const first = render[0];
-    if (first.type === "ExpressionStatement") {
-      const { expression } = first;
-      if (expression.type === "CallExpression") {
-        const args = expression.arguments;
-        if (args.length === 1 && args[0] === scopeIdentifier) {
-          if (
-            expression.callee.type === "MemberExpression" &&
-            expression.callee.property.type === "Identifier" &&
-            expression.callee.property.name === getAccessorProp().Owner
-          ) {
-            // Special case closure reads of `IDENTIFIER._`.
-            return expression.callee.object;
-          }
-
-          return expression.callee as t.Expression;
-        }
-      }
+  const call = getOnlyCall(render);
+  if (
+    call &&
+    call.arguments.length === 1 &&
+    call.arguments[0] === scopeIdentifier
+  ) {
+    if (
+      call.callee.type === "MemberExpression" &&
+      call.callee.property.type === "Identifier" &&
+      call.callee.property.name === getAccessorProp().Owner
+    ) {
+      // Special case closure reads of `IDENTIFIER._`.
+      return call.callee.object;
     }
+
+    return call.callee as t.Expression;
   }
 
   return t.arrowFunctionExpression([scopeIdentifier], t.blockStatement(render));
+}
+
+// The call a render of a single call statement makes.
+function getOnlyCall(render: t.Statement[]) {
+  if (render.length === 1) {
+    const [first] = render;
+    if (
+      first.type === "ExpressionStatement" &&
+      first.expression.type === "CallExpression"
+    ) {
+      return first.expression;
+    }
+  }
+}
+
+function pushScopeCall(render: t.Statement[], callee: t.Expression) {
+  render.push(
+    t.expressionStatement(t.callExpression(callee, [scopeIdentifier])),
+  );
+}
+
+function getSignalEffectIdentifier(signal: Signal) {
+  return t.identifier(`${signal.identifier.name}__script`);
 }
 
 const hasTranslatedExtraArgs = new WeakSet<{ extraArgs?: t.Expression[] }>();
@@ -839,7 +807,7 @@ function subscribe(references: ReferencedBindings, subscriber: Signal) {
   if (references) {
     forEach(references, (binding) => {
       if (binding.type !== BindingType.constant) {
-        const source = (isDirectAlias(binding) && binding.aliasOf) || binding;
+        const source = getCanonicalBinding(binding);
         const providerSignal = getSignal(subscriber.section, source);
         providerSignal.hasSideEffect = true;
         providerSignal.intersection = push(
@@ -892,11 +860,12 @@ export function replaceNullishAndEmptyFunctionsWith0(
   args.length = finalLen || 0;
   return args as t.Expression[];
 }
+// An expression is added as its own statement.
 export function addStatement(
   type: "render" | "effect",
   targetSection: Section,
   referencedBindings: ReferencedBindings,
-  statement: t.Statement | t.Statement[],
+  statement: t.Statement | t.Statement[] | t.Expression,
   isPure?: boolean,
 ): void {
   const signal = getSignal(targetSection, referencedBindings);
@@ -905,12 +874,36 @@ export function addStatement(
   if (Array.isArray(statement)) {
     statements.push(...statement);
   } else {
-    statements.push(statement);
+    statements.push(
+      t.isExpression(statement) ? t.expressionStatement(statement) : statement,
+    );
   }
 
   if (!isPure || type === "effect") {
     signal.hasSideEffect = true;
   }
+}
+
+// Runs a `<log>` or `<debug>` statement where the tag is: in place on the
+// server, and on the client whenever its value changes.
+export function addTagStatement(
+  tag: t.NodePath<t.MarkoTag>,
+  statement: t.Statement,
+) {
+  if (isOutputHTML()) {
+    // Buffered markup is deliberately not flushed first: source-order
+    // interleaving of a dev statement is not worth splitting the html write.
+    tag.insertBefore(statement);
+  } else {
+    addStatement(
+      "render",
+      getSection(tag),
+      getReferencedBindings(tag.node.attributes[0]?.value.extra),
+      statement,
+    );
+  }
+
+  tag.remove();
 }
 
 export function addValue(
@@ -992,9 +985,7 @@ export function writeSignals(section: Section) {
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {
       traverseReplace(signal, "effect", replaceEffectNode);
-      const effectIdentifier = t.identifier(
-        `${signal.identifier.name}__script`,
-      );
+      const effectIdentifier = getSignalEffectIdentifier(signal);
       const effectFn = t.arrowFunctionExpression(
         [scopeIdentifier],
         toFirstExpressionOrBlock(signal.effect),
@@ -1152,85 +1143,83 @@ function pushInstancesAccessor(section: Section, accessors: t.Expression[]) {
 }
 
 export function writeRegisteredFns() {
-  const registeredFns = registeredFnsForProgram.get(getProgram().node);
+  const registeredFns = getRegisteredFns();
   const statements: t.Statement[] = [];
-  if (registeredFns) {
-    for (const registeredFn of registeredFns) {
-      let fn: t.Statement;
-      if (
-        registeredFn.referencedBindings ||
-        registeredFn.referencesScope ||
-        registeredFn.referencedLocals
-      ) {
-        let params: (t.Identifier | t.Pattern)[];
-        let prologue: t.Statement[] | undefined;
-        if (registeredFn.referencedLocals) {
-          // The scope hop stays inside the returned function: resume may call
-          // the factory before its scopes hydrate (stubs fill in place).
-          params = [localsIdentifier];
-          if (registeredFn.referencedBindings || registeredFn.referencesScope) {
-            prologue = [
-              t.variableDeclaration("const", [
-                t.variableDeclarator(
-                  scopeIdentifier,
-                  t.memberExpression(
-                    localsIdentifier,
-                    t.identifier(getAccessorProp().Owner),
-                  ),
+  for (const registeredFn of registeredFns) {
+    let fn: t.Statement;
+    if (
+      registeredFn.referencedBindings ||
+      registeredFn.referencesScope ||
+      registeredFn.referencedLocals
+    ) {
+      let params: (t.Identifier | t.Pattern)[];
+      let prologue: t.Statement[] | undefined;
+      if (registeredFn.referencedLocals) {
+        // The scope hop stays inside the returned function: resume may call
+        // the factory before its scopes hydrate (stubs fill in place).
+        params = [localsIdentifier];
+        if (registeredFn.referencedBindings || registeredFn.referencesScope) {
+          prologue = [
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                scopeIdentifier,
+                t.memberExpression(
+                  localsIdentifier,
+                  t.identifier(getAccessorProp().Owner),
                 ),
-              ]),
-            ];
-          }
-        } else {
-          params = [scopeIdentifier];
+              ),
+            ]),
+          ];
         }
-        // A const arrow (unlike a function declaration) lets the minifier fold
-        // the factory into its lone `_resume` call site.
-        const body = toReturnedFunction(registeredFn.node, prologue);
-        fn = t.variableDeclaration("const", [
-          t.variableDeclarator(
-            t.identifier(registeredFn.id),
-            t.arrowFunctionExpression(
-              params,
-              body.length === 1 && body[0].type === "ReturnStatement"
-                ? body[0].argument!
-                : t.blockStatement(body),
-            ),
-          ),
-        ]);
-      } else if (
-        registeredFn.node.type === "FunctionDeclaration" &&
-        registeredFn.node.id?.name === registeredFn.id
-      ) {
-        fn = registeredFn.node;
       } else {
-        fn = t.functionDeclaration(
-          t.identifier(registeredFn.id),
-          registeredFn.node.params as t.FunctionDeclaration["params"],
-          registeredFn.node.body.type === "BlockStatement"
-            ? registeredFn.node.body
-            : t.blockStatement([t.returnStatement(registeredFn.node.body)]),
-          registeredFn.node.generator,
-          registeredFn.node.async,
-        );
+        params = [scopeIdentifier];
       }
-
-      statements.push(fn);
-    }
-
-    for (const registeredFn of registeredFns) {
-      statements.push(
-        t.expressionStatement(
-          registerRuntimeValue(
-            registeredFn.registerId,
-            t.identifier(registeredFn.id),
+      // A const arrow (unlike a function declaration) lets the minifier fold
+      // the factory into its lone `_resume` call site.
+      const body = toReturnedFunction(registeredFn.node, prologue);
+      fn = t.variableDeclaration("const", [
+        t.variableDeclarator(
+          t.identifier(registeredFn.id),
+          t.arrowFunctionExpression(
+            params,
+            body.length === 1 && body[0].type === "ReturnStatement"
+              ? body[0].argument!
+              : t.blockStatement(body),
           ),
         ),
+      ]);
+    } else if (
+      registeredFn.node.type === "FunctionDeclaration" &&
+      registeredFn.node.id?.name === registeredFn.id
+    ) {
+      fn = registeredFn.node;
+    } else {
+      fn = t.functionDeclaration(
+        t.identifier(registeredFn.id),
+        registeredFn.node.params as t.FunctionDeclaration["params"],
+        registeredFn.node.body.type === "BlockStatement"
+          ? registeredFn.node.body
+          : t.blockStatement([t.returnStatement(registeredFn.node.body)]),
+        registeredFn.node.generator,
+        registeredFn.node.async,
       );
     }
 
-    getProgram().node.body.push(...statements);
+    statements.push(fn);
   }
+
+  for (const registeredFn of registeredFns) {
+    statements.push(
+      t.expressionStatement(
+        registerRuntimeValue(
+          registeredFn.registerId,
+          t.identifier(registeredFn.id),
+        ),
+      ),
+    );
+  }
+
+  getProgram().node.body.push(...statements);
 }
 
 function toReturnedFunction(rawFn: t.Function, prologue?: t.Statement[]) {
@@ -1255,12 +1244,13 @@ export function addHTMLEffectCall(
 }
 
 export function writeHTMLResumeStatements(
-  path: t.NodePath<t.MarkoTagBody | t.Program>,
+  path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>,
 ) {
-  const section = getSectionForBody(path);
+  const bodyPath = flushInto(path);
+  const section = getSectionForBody(bodyPath);
   if (!section) return;
 
-  const body = path.node.body as t.Statement[];
+  const body = bodyPath.node.body as t.Statement[];
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
   // Whether any node of the section writes a marker, as the same argument
@@ -1375,10 +1365,8 @@ export function writeHTMLResumeStatements(
     );
 
     if (debug) {
-      const { root, access } = getDebugScopeAccess(binding);
-      const locExpr =
-        root.loc &&
-        t.stringLiteral(`${root.loc.start.line}:${root.loc.start.column + 1}`);
+      const { root, access } = getDebugAccess(binding, false, toAccess);
+      const locExpr = root.loc && t.stringLiteral(getDebugLoc(root.loc));
       (debugVars ||= []).push(
         toObjectProperty(
           getScopeAccessor(binding),
@@ -1446,9 +1434,7 @@ export function writeHTMLResumeStatements(
       writeScopeArgs.push(
         t.stringLiteral(getFile().opts.filenameRelative as string),
         section.loc && section.loc.start.line != null
-          ? t.stringLiteral(
-              `${section.loc.start.line}:${section.loc.start.column + 1}`,
-            )
+          ? t.stringLiteral(getDebugLoc(section.loc))
           : t.numericLiteral(0),
       );
 
@@ -1752,8 +1738,7 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
   return getSignal(assignment.section, assignment).buildAssignment;
 }
 
-const registeredFnsForProgram = new WeakMap<
-  t.Program,
+const [getRegisteredFns] = createProgramState<
   {
     id: string;
     registerId: string;
@@ -1763,48 +1748,26 @@ const registeredFnsForProgram = new WeakMap<
     referencedBindings: ReferencedBindings;
     referencedLocals: Opt<Binding>;
   }[]
->();
+>(() => []);
 export function replaceRegisteredFunctionNode(node: t.Node) {
   switch (node.type) {
-    case "ClassMethod": {
-      const replacement = getRegisteredFnExpression(node);
-      return (
-        replacement &&
-        t.classProperty(
-          node.key,
-          replacement,
-          undefined,
-          undefined,
-          node.computed,
-          node.static,
-        )
-      );
-    }
-    case "ClassPrivateMethod": {
-      const replacement = getRegisteredFnExpression(node);
-      return (
-        replacement &&
-        t.classPrivateProperty(node.key, replacement, undefined, node.static)
-      );
-    }
+    case "ClassMethod":
+    case "ClassPrivateMethod":
     case "ObjectMethod": {
       const replacement = getRegisteredFnExpression(node);
-      return (
-        replacement && t.objectProperty(node.key, replacement, node.computed)
-      );
+      return replacement && replaceMethodNode(node, replacement);
     }
     case "ArrowFunctionExpression":
-    case "FunctionExpression": {
+    case "FunctionExpression":
       return getRegisteredFnExpression(node);
-    }
     case "FunctionDeclaration": {
       const replacement = getRegisteredFnExpression(node);
-      if (replacement) {
-        return t.variableDeclaration("const", [
+      return (
+        replacement &&
+        t.variableDeclaration("const", [
           t.variableDeclarator(node.id!, replacement),
-        ]);
-      }
-      break;
+        ])
+      );
     }
   }
 }
@@ -1816,12 +1779,7 @@ function getRegisteredFnExpression(node: t.Function) {
     const referencesScope = extra.referencesScope;
     const referencedBindings = getReferencedBindingsInFunction(extra);
     const referencedLocals = extra.referencedLocalBindingsInFunction;
-    let registeredFns = registeredFnsForProgram.get(getProgram().node);
-    if (!registeredFns) {
-      registeredFnsForProgram.set(getProgram().node, (registeredFns = []));
-    }
-
-    registeredFns.push({
+    getRegisteredFns().push({
       id,
       node,
       registerId: extra.registerId,
@@ -1867,4 +1825,8 @@ function appendBindingKey(name: string, binding: Binding, section: Section) {
 
 function isLetBinding(binding: Binding) {
   return binding.type === BindingType.let;
+}
+
+function getDebugLoc({ start }: t.SourceLocation) {
+  return `${start.line}:${start.column + 1}`;
 }

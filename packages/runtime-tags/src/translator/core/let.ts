@@ -7,8 +7,15 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { ReservedId } from "../../common/types";
-import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
-import { BindingType, getDebugScopeAccess, reserveId } from "../util/bindings";
+import { toAccess } from "../../html/serializer";
+import {
+  assertHasVar,
+  assertIdentifierVar,
+  assertNoBodyContent,
+  assertNoSpreadAttrs,
+  assertValueAttr,
+} from "../util/assert";
+import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { hasEmittedAssignment } from "../util/finalize-references";
 import { isOptimize, isOutputDOM } from "../util/marko-config";
@@ -58,49 +65,17 @@ export default {
             );
           }
           valueChangeAttr = attr;
-        } else {
-          const start = attr.loc?.start;
-          const end = attr.loc?.end;
-          let msg =
-            "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler.";
-          if (!tagVar && /^[A-Za-z_$][\w$]*$/.test(attr.name)) {
-            // Written like a JS declaration (`let count = 0;` or `<let count=0>`).
-            msg += ` To declare reactive state, the variable goes after a slash: \`<let/${attr.name}=...>\`. For a one time module level value, prefix a plain JavaScript statement with \`static\`.`;
-          }
-
-          if (start == null || end == null) {
-            throw tag.get("name").buildCodeFrameError(msg);
-          } else {
-            throw tag.hub.buildError(
-              { loc: { start, end } } as unknown as t.Node,
-              msg,
-              Error,
-            );
-          }
         }
       }
     }
 
+    assertNoSpreadAttrs(tag);
+    assertValueAttr(tag, false, true, tagVar ? undefined : getDeclarationHint);
     assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
-    assertNoSpreadAttrs(tag);
-
-    if (!tagVar) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables), e.g. `<let/count=0>`.",
-        );
-    }
-
-    if (!t.isIdentifier(tagVar)) {
-      throw tag
-        .get("var")
-        .buildCodeFrameError(
-          "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) variable cannot be destructured.",
-        );
-    }
+    assertHasVar(tag, "For example: `<let/count=0>`.");
+    assertIdentifierVar(tag);
 
     if (valueChangeAttr && computeNode(valueChangeAttr.value)?.value) {
       throw tag
@@ -214,13 +189,13 @@ export default {
             t.logicalExpression(
               "||",
               valueChangeAttr.value,
-              t.unaryExpression("void", t.numericLiteral(0)),
+              t.buildUndefinedNode(),
             ),
           );
           // Named after the author's binding; other slots are described
           // generically by the serializer instead.
           if (accessor && !isOptimize()) {
-            const { root, access } = getDebugScopeAccess(binding);
+            const { root, access } = getDebugAccess(binding, false, toAccess);
             setSectionDebugVar(
               section,
               accessor,
@@ -246,3 +221,10 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/let.d.marko",
 } as Tag;
+
+// Written like a JS declaration (`let count = 0;` or `<let count=0>`).
+function getDeclarationHint(attr: t.MarkoAttribute) {
+  if (/^[A-Za-z_$][\w$]*$/.test(attr.name)) {
+    return `To declare reactive state, the variable goes after a slash: \`<let/${attr.name}=...>\`. For a one time module level value, prefix a plain JavaScript statement with \`static\`.`;
+  }
+}

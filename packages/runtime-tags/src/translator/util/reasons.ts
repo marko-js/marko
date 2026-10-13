@@ -1,27 +1,26 @@
 import { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
 
 import { getPropertyPathAlias } from "./binding-has-prop";
 import {
   type Binding,
   BindingType,
   bindingUtil,
+  isOwnBinding,
   type ParamBinding,
+  propsUtil,
   type ReferencedBindings,
 } from "./bindings";
 import {
   concat,
   forEach,
+  fromIter,
   type Opt,
-  Sorted,
   type SortedOneMany,
   reduce,
   some,
 } from "./optional";
 import {
   isReferencedExtra,
-  type KnownExprs,
-  mapParamBindingToExpr,
   getCanonicalExtra,
   getReferencedBindings,
 } from "./references";
@@ -30,12 +29,13 @@ import {
   type ParamReasonGroups,
   type Section,
 } from "./sections";
-import { getSectionSlot, type Slot, SlotKind } from "./slots";
+import { getSectionSlot, getSlot, type Slot, SlotKind } from "./slots";
 import {
   compareSources,
   ALWAYS,
   mergeSources,
   type Sources,
+  sourcesUtil,
   withSources,
 } from "./sources";
 
@@ -43,7 +43,6 @@ import {
 // section's dom nodes); a guard answers for the set.
 export type Reasons = SortedOneMany<Sources>;
 
-export const sourcesUtil = new Sorted(compareSources);
 // The `Sources` whose changes lead client code to read something after resume;
 // an `always` one is unconditional but still says what it reads.
 export type Reason = Sources;
@@ -51,11 +50,15 @@ export type Reason = Sources;
 export function addReason(slot: Slot, reason: undefined | false | Reason) {
   if (reason) {
     const curReason = slot.reason;
-    const newReason = mergeReasons(curReason, reason);
+    const newReason = mergeSources(curReason, reason);
     if (curReason !== newReason) {
       setSlotReason(slot, newReason);
     }
   }
+}
+
+export function addAlwaysRead(binding: Binding) {
+  addReason(getSlot(binding), ALWAYS);
 }
 
 export function addReasonExprs(slot: Slot, expr: Opt<t.NodeExtra>) {
@@ -162,7 +165,7 @@ export function mapParamReason(
     if ((param.section.program === program) === ownParams) {
       any = true;
       mapped = exprs
-        ? mergeReasons(
+        ? mergeSources(
             mapped,
             getSourcesForExprs(mapParamBindingToExpr(exprs, param)),
           )
@@ -174,8 +177,8 @@ export function mapParamReason(
   // Another template's state is nothing this one tracks: it is read always.
   const foreignState = some(reason.state, isForeignBinding);
   if (!any && !foreignState) return reason;
-  return mergeReasons(
-    mergeReasons(
+  return mergeSources(
+    mergeSources(
       mapped,
       withSources(
         reason,
@@ -189,28 +192,70 @@ export function mapParamReason(
   );
 }
 
-function isOwnBinding(binding: Binding) {
-  return binding.section.program === getProgram().node.extra.section;
-}
-
 function isForeignBinding(binding: Binding) {
   return !isOwnBinding(binding);
 }
 
-export function mergeReasons(a: Reason, b: undefined | Reason): Reason;
+// The call site expressions a child template's params derive from, keyed the
+// way the child destructures them; `value` is the whole-value expression.
+export interface KnownExprs {
+  known?: Record<string, KnownExprs>;
+  value?: t.NodeExtra;
+}
 
-export function mergeReasons(a: undefined | Reason, b: Reason): Reason;
+export function mapParamReasonToExpr(
+  exprs: KnownExprs,
+  reason: boolean | Opt<ParamBinding>,
+) {
+  if (reason) {
+    if (reason === true) return true;
+    const result = new Set<t.NodeExtra>();
+    forEach(reason, (prop) => {
+      forEach(mapParamBindingToExpr(exprs, prop), (expr) => {
+        result.add(expr);
+      });
+    });
+    return fromIter(result);
+  }
+}
 
-export function mergeReasons(
-  a: undefined | Reason,
-  b: undefined | Reason,
-): Reason | undefined;
+export function mapParamBindingToExpr(
+  exprs: KnownExprs,
+  binding: ParamBinding,
+): Opt<t.NodeExtra> {
+  // Property-less with an aliased binding covers every whole-value link: rests,
+  // rest grains, and aliases.
+  const isWholeAlias =
+    binding.property === undefined && binding.aliasOf !== undefined;
+  const curExpr = getKnownExprsAt(
+    exprs,
+    isWholeAlias ? binding.aliasOf! : binding,
+  );
 
-export function mergeReasons(
-  a: undefined | Reason,
-  b: undefined | Reason,
-): Reason | undefined {
-  return mergeSources(a, b);
+  if (isWholeAlias) {
+    let result: Opt<t.NodeExtra> = curExpr.value;
+    if (curExpr.known) {
+      for (const key in curExpr.known) {
+        if (!propsUtil.has(binding.excludeProperties, key)) {
+          result = concat(result, curExpr.known[key].value);
+        }
+      }
+    }
+    return result;
+  }
+
+  return curExpr.value;
+}
+
+// The call site's known expressions at `binding`, passing through property-less
+// links; past the props it lists, only the value expression holding it.
+function getKnownExprsAt(exprs: KnownExprs, binding: Binding): KnownExprs {
+  const aliased = binding.aliasOf;
+  if (!aliased) return exprs;
+  const known = getKnownExprsAt(exprs, aliased);
+  return binding.property === undefined || !known.known
+    ? known
+    : (known.known[binding.property] ?? { value: known.value });
 }
 
 export function applyReasonExprs(section: Section) {

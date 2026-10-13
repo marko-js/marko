@@ -19,7 +19,6 @@ import {
   addSorted,
   find,
   findIndexSorted,
-  findSorted,
   type OneMany,
   type Opt,
   Sorted,
@@ -29,15 +28,14 @@ import {
 } from "./optional";
 import {
   isConditionalReason,
+  type KnownExprs,
   mapParamReason,
-  mergeReasons,
   type Reason,
   setParamReasonGroups,
 } from "./reasons";
-import { type KnownExprs } from "./references";
 import { type Slot } from "./slots";
 import { getReasonForBinding } from "./solve-reasons";
-import { type Sources } from "./sources";
+import { mergeSources, type Sources } from "./sources";
 import { createSectionState } from "./state";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -459,7 +457,7 @@ export function getRendererReason(section: Section) {
         // A known call site resolves the callee's own params (a same-file
         // `<define>` included); without one only cross-file params are read
         // always.
-        return mergeReasons(
+        return mergeSources(
           reasons,
           reason &&
             (derives.exprs
@@ -523,6 +521,15 @@ export function getDirectClosures(section: Section) {
   }
 }
 
+// The outermost section reading a binding through a hoist.
+export function getHighestHoistSection(binding: Binding) {
+  return reduce(binding.hoists, getHigherSection)!;
+}
+
+function getHigherSection(highest: Section | undefined, section: Section) {
+  return highest && highest.depth <= section.depth ? highest : section;
+}
+
 export function isSameOrChildSection(section: Section, other: Section) {
   do {
     if (other === section) {
@@ -570,14 +577,10 @@ export function ensureReasonGroups(reason: Section["reason"]) {
 
 function ensureParamReasonGroup(section: Section, group: ParamReasonGroup) {
   const { paramReasonGroups } = section;
-  if (!paramReasonGroups) {
-    setParamReasonGroups(section, [group]);
-  } else if (!findSorted(compareReferences, paramReasonGroups, group)) {
-    setParamReasonGroups(
-      section,
-      addSorted(compareReferences, paramReasonGroups, group),
-    );
-  }
+  const groups: ParamReasonGroups = paramReasonGroups
+    ? addSorted(compareReferences, paramReasonGroups, group)
+    : [group];
+  if (groups !== paramReasonGroups) setParamReasonGroups(section, groups);
 }
 
 export function getParamReasonGroupIndex(

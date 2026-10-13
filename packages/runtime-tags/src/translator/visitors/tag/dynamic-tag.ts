@@ -33,7 +33,7 @@ import {
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
-import { addReasonExprs, addReason } from "../../util/reasons";
+import { addAlwaysRead, addReasonExprs } from "../../util/reasons";
 import {
   getAllTagReferenceNodes,
   isTagVarUsed,
@@ -45,7 +45,6 @@ import {
 import {
   callRuntime,
   getCompatRuntimeFile,
-  importRuntime,
   importRuntimeFeature,
   registerRuntimeValue,
 } from "../../util/runtime";
@@ -79,23 +78,28 @@ import {
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import { getSlot } from "../../util/slots";
-import { ALWAYS } from "../../util/sources";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
-import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
+import { isControllableAttr } from "../../util/tag-facts";
+import analyzeTagNameType, {
+  getTagRelativePath,
+  TagNameType,
+  tagNotFoundError,
+} from "../../util/tag-name-type";
 import { toMemberExpression } from "../../util/to-property-name";
 import {
   getTranslatedBodyContentProperty,
   propsToExpression,
   translateAttrs,
 } from "../../util/translate-attrs";
-import translateVar from "../../util/translate-var";
+import translateVar, {
+  buildVarChange,
+  isTagVarAssigned,
+} from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
 import { getWriteGuard, getWriteReason } from "../../util/write-guard";
 import * as writer from "../../util/writer";
 import * as ClassHydration from "./constants/class-hydration";
-import { getTagRelativePath, tagNotFoundError } from "./custom-tag";
-import { controllableFeatureFor, enableControllable } from "./native-tag";
 
 // Runtime helpers and features a program adds once, by what each enables.
 const [getAddedRuntime] = createProgramState(() => new Set<string>());
@@ -213,7 +217,7 @@ export default {
         }
       }
       trackParamsReferences(tagBody, BindingType.param);
-      if (usesVar) addReason(getSlot(nodeBinding), ALWAYS);
+      if (usesVar) addAlwaysRead(nodeBinding);
       addReasonExprs(getSlot(nodeBinding), tagExtra);
 
       if (
@@ -284,17 +288,15 @@ export default {
                   "render",
                   section,
                   undefined,
-                  t.expressionStatement(
-                    t.callExpression(
-                      t.memberExpression(
-                        getSignal(definedBodySection, undefined).identifier,
-                        t.identifier("_"),
-                      ),
-                      [
-                        createScopeReadExpression(childBinding, section),
-                        getScopeExpression(section, definedBodySection.parent!),
-                      ],
+                  t.callExpression(
+                    t.memberExpression(
+                      getSignal(definedBodySection, undefined).identifier,
+                      t.identifier("_"),
                     ),
+                    [
+                      createScopeReadExpression(childBinding, section),
+                      getScopeExpression(section, definedBodySection.parent!),
+                    ],
                   ),
                 );
               } else if (definedBodySection.readsOwner) {
@@ -302,15 +304,13 @@ export default {
                   "render",
                   section,
                   undefined,
-                  t.expressionStatement(
-                    t.assignmentExpression(
-                      "=",
-                      toMemberExpression(
-                        createScopeReadExpression(childBinding, section),
-                        getAccessorProp().Owner,
-                      ),
-                      getScopeExpression(section, definedBodySection.parent!),
+                  t.assignmentExpression(
+                    "=",
+                    toMemberExpression(
+                      createScopeReadExpression(childBinding, section),
+                      getAccessorProp().Owner,
                     ),
+                    getScopeExpression(section, definedBodySection.parent!),
                   ),
                 );
               }
@@ -459,8 +459,7 @@ export default {
       }
 
       if (isOutputHTML()) {
-        writer.flushInto(tag);
-        writeHTMLResumeStatements(tag.get("body"));
+        writeHTMLResumeStatements(tag);
         const markerGuard = getWriteGuard(tagSection, markerReason, true);
         // For a debug build's check that the tag it renders is not lazy.
         const debugTagVar = !isOptimize() && node.var && t.numericLiteral(1);
@@ -545,8 +544,8 @@ export default {
           tagVarSignal = initValue(varBinding);
           tagVarSignal.register = true;
           tagVarSignal.referenced = true;
-          tagVarSignal.buildAssignment = (valueSection, value) => {
-            const changeArgs = [
+          tagVarSignal.buildAssignment = (valueSection, value) =>
+            buildVarChange(
               t.memberExpression(
                 getScopeExpression(tagVarSignal!.section, valueSection),
                 t.stringLiteral(
@@ -556,12 +555,8 @@ export default {
                 true,
               ),
               value,
-            ];
-            if (!isOptimize()) {
-              changeArgs.push(t.stringLiteral(varBinding.name));
-            }
-            return t.callExpression(importRuntime("_var_change"), changeArgs);
-          };
+              varBinding,
+            );
         }
 
         signal.build = () => {
@@ -622,8 +617,13 @@ export default {
 
         enableDynamicTagVar(tag);
         if (!isClassAPI) {
-          enableDynamicTagResume(tag);
-          enableDynamicTagControllables(tag);
+          if (hasSpreadOrAttr(tag, isEventOrChangeHandler)) {
+            importRuntimeFeature("dynamic-tag-script");
+          }
+          // The name resolves at run time, so any control kind is possible.
+          if (hasSpreadOrAttr(tag, isControllableAttr)) {
+            importRuntimeFeature("controllable");
+          }
         }
         addValue(
           section,
@@ -636,23 +636,6 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.MarkoTag>;
-
-// Any attr that `attrsInternal` may claim, which a spread can also carry.
-const controlledAttrs = /^(?:value|checked(?:Value)?|open)(?:Change)?$/;
-/** The name resolves at run time, so any control kind is possible. */
-function enableDynamicTagControllables(tag: t.NodePath<t.MarkoTag>) {
-  if (analyzeTagNameType(tag, true) === TagNameType.CustomTag) return;
-
-  for (const attr of tag.node.attributes) {
-    if (
-      attr.type === "MarkoSpreadAttribute" ||
-      (attr.type === "MarkoAttribute" && controlledAttrs.test(attr.name))
-    ) {
-      enableControllable(controllableFeatureFor(undefined));
-      return;
-    }
-  }
-}
 
 // A branch the tag creates runs its renders before the variable's readers; a
 // native one binds the element, resuming as a getter over the tag's node visit.
@@ -678,17 +661,22 @@ function enableDynamicTagVar(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
-  if (analyzeTagNameType(tag, true) === TagNameType.CustomTag) return;
+// Whether a native element the name may resolve to gets a spread, or an
+// attribute `test` accepts.
+function hasSpreadOrAttr(
+  tag: t.NodePath<t.MarkoTag>,
+  test: (name: string) => boolean,
+) {
+  if (analyzeTagNameType(tag, true) === TagNameType.CustomTag) return false;
   for (const attr of tag.node.attributes) {
     if (
       attr.type === "MarkoSpreadAttribute" ||
-      (attr.type === "MarkoAttribute" && isEventOrChangeHandler(attr.name))
+      (attr.type === "MarkoAttribute" && test(attr.name))
     ) {
-      importRuntimeFeature("dynamic-tag-script");
-      return;
+      return true;
     }
   }
+  return false;
 }
 
 function addRuntimeOnce(key: string) {
@@ -712,11 +700,4 @@ function getDynamicTagInputBindings(tagExtra: t.MarkoTagExtra): Opt<Binding> {
 // something reads the value, or writes it back through the tag.
 function isTagVarResumed(tag: t.NodePath<t.MarkoTag>) {
   return !tag.node.var!.extra!.binding!.pruned || isTagVarAssigned(tag);
-}
-
-function isTagVarAssigned(tag: t.NodePath<t.MarkoTag>) {
-  return !!(
-    tag.node.var!.type === "Identifier" &&
-    tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
-  );
 }

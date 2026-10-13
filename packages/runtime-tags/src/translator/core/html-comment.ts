@@ -6,13 +6,14 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
+import { assertIdentifierVar } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
 import {
   bodyToRawTextLiteral,
   bodyToTextLiteral,
 } from "../util/body-to-text-literal";
 import { isOutputHTML } from "../util/marko-config";
-import { addReasonExprs, addReason } from "../util/reasons";
+import { addAlwaysRead, addReasonExprs } from "../util/reasons";
 import {
   getReferencedBindings,
   isTagVarUsed,
@@ -25,7 +26,6 @@ import { createScopeReadExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 import { getSlot } from "../util/slots";
-import { ALWAYS } from "../util/sources";
 import * as structure from "../util/structure";
 import { getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
@@ -38,19 +38,10 @@ export default {
     assertNoArgs(tag);
     assertNoParams(tag);
     assertNoAttributes(tag);
+    assertIdentifierVar(tag);
 
     const tagVar = tag.node.var;
-    let needsBinding = false;
-    if (tagVar) {
-      if (!t.isIdentifier(tagVar)) {
-        throw tag
-          .get("var")
-          .buildCodeFrameError(
-            "The [`<html-comment>` tag](https://markojs.com/docs/reference/core-tag#html-comment) tag variable cannot be destructured.",
-          );
-      }
-      needsBinding = isTagVarUsed(tag);
-    }
+    let needsBinding = !!tagVar && isTagVarUsed(tag);
 
     let nodeBinding: Binding | undefined;
     const referenceNodes: t.Node[] = [];
@@ -80,7 +71,7 @@ export default {
 
       trackDomVarReferences(tag, nodeBinding);
 
-      if (isTagVarUsed(tag)) addReason(getSlot(nodeBinding), ALWAYS);
+      if (isTagVarUsed(tag)) addAlwaysRead(nodeBinding);
       addReasonExprs(getSlot(nodeBinding), tagExtra);
     }
 
@@ -141,12 +132,10 @@ export default {
             "render",
             tagSection,
             getReferencedBindings(tagExtra),
-            t.expressionStatement(
-              callRuntime(
-                "_text",
-                createScopeReadExpression(nodeBinding!),
-                textLiteral,
-              ),
+            callRuntime(
+              "_text",
+              createScopeReadExpression(nodeBinding!),
+              textLiteral,
             ),
           );
         }

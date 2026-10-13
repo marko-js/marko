@@ -6,7 +6,13 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent, assertNoTagVarMutation } from "../util/assert";
+import {
+  assertHasVar,
+  assertIdentifierVar,
+  assertNoBodyContent,
+  assertNoTagVarMutation,
+  assertValueAttr,
+} from "../util/assert";
 import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
@@ -19,10 +25,10 @@ import {
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getPrefixedScopeAccessor } from "../util/scope-accessor";
+import { scopeIdentifier } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addValue, initValue } from "../util/signals";
-import { scopeIdentifier } from "../visitors/program";
 
 export default {
   analyze(tag) {
@@ -30,38 +36,9 @@ export default {
     assertNoParams(tag);
     assertNoBodyContent(tag);
     assertNoAttributeTags(tag);
-
-    const { node } = tag;
-    const [valueAttr] = node.attributes;
-
-    if (!node.var) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<id>` tag](https://markojs.com/docs/reference/core-tag#id) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables).",
-        );
-    }
-
-    if (!t.isIdentifier(node.var)) {
-      throw tag
-        .get("var")
-        .buildCodeFrameError(
-          "The [`<id>` tag](https://markojs.com/docs/reference/core-tag#id) cannot be destructured.",
-        );
-    }
-
-    if (
-      tag.node.attributes.length > 1 ||
-      (tag.node.attributes.length === 1 &&
-        (!t.isMarkoAttribute(valueAttr) ||
-          (!valueAttr.default && valueAttr.name !== "value")))
-    ) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<id>` tag](https://markojs.com/docs/reference/core-tag#id) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
-        );
-    }
+    assertHasVar(tag);
+    assertIdentifierVar(tag);
+    const valueAttr = assertValueAttr(tag);
 
     // Minting is unobservable, so a tag without a value is itself the pure
     // value its variable takes, dropped with it when unread.

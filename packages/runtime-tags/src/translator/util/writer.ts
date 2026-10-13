@@ -34,7 +34,7 @@ export function writeTo(path: t.NodePath<any>, trailer?: boolean) {
   };
 }
 
-export function consumeHTML(path: t.NodePath<any>) {
+function consumeHTML(path: t.NodePath<any>) {
   const section = getSection(path);
   const writes = getWrites(section);
   const trailers = getTrailerWrites(section);
@@ -76,6 +76,7 @@ export function flushInto(
   if (expr) {
     target.node.body.push(expr as any);
   }
+  return target;
 }
 
 export function markNode(

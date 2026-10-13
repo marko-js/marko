@@ -1,12 +1,26 @@
 import { types as t } from "@marko/compiler";
 
-import { scopeIdentifier } from "../visitors/program";
 import { type Binding, BindingType } from "./bindings";
+import { generateUidIdentifier } from "./generate-uid";
 import { getAccessorProp } from "./get-accessor-enums";
+import { isOutputDOM } from "./marko-config";
 import { createRead } from "./references";
 import { getScopeAccessor } from "./scope-accessor";
 import type { Section } from "./sections";
-import { toPropertyName } from "./to-property-name";
+import { toMemberExpression } from "./to-property-name";
+
+export let scopeIdentifier: t.Identifier;
+export let localsIdentifier: t.Identifier;
+
+// Names the dom output's scope and locals params as its program translates.
+export function createScopeIdentifiers() {
+  scopeIdentifier = isOutputDOM()
+    ? generateUidIdentifier("scope")
+    : (null as any as t.Identifier);
+  localsIdentifier = isOutputDOM()
+    ? generateUidIdentifier("locals")
+    : (null as any as t.Identifier);
+}
 
 export function getScopeExpression(section: Section, targetSection: Section) {
   let scope: t.Expression = scopeIdentifier ?? t.identifier("undefined");
@@ -25,11 +39,9 @@ export function createScopeReadExpression(
   reference: Binding,
   section = reference.section,
 ) {
-  const propName = toPropertyName(getScopeAccessor(reference));
-  const expr = t.memberExpression(
+  const expr = toMemberExpression(
     getScopeExpression(section, reference.section),
-    propName,
-    propName.type !== "Identifier",
+    getScopeAccessor(reference),
   );
 
   if (section === reference.section && reference.type !== BindingType.dom) {

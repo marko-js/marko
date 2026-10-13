@@ -1,8 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { isAttributeTag } from "@marko/compiler/babel-utils";
 
-import { buildForRuntimeCall, getForType } from "../core/for";
-import { scopeIdentifier } from "../visitors/program";
 import { getSectionRendererIdentifier } from "./binding-has-prop";
 import {
   type BindingPropTree,
@@ -10,12 +8,14 @@ import {
   hasAllKnownProps,
 } from "./binding-prop-tree";
 import { type Binding, getCanonicalBinding, propsUtil } from "./bindings";
+import { buildForRuntimeCall, getForType } from "./branch-tag";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
 import { isOutputHTML } from "./marko-config";
 import {
+  type AttrTagMeta,
   type AttrTagLookup,
   getAttrTagIdentifier,
   getAttrTagPaths,
@@ -23,6 +23,7 @@ import {
 import { type SortedOpt, toArray, toSet } from "./optional";
 import { callRuntime } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
+import { scopeIdentifier } from "./scope-read";
 import {
   getScopeIdIdentifier,
   getSection,
@@ -97,26 +98,11 @@ export function translateAttrs(
               contentKey,
             );
 
-            const prevProp = attrTagMeta.repeated
-              ? findObjectProperty(attrTagMeta.name, contentProperties)
-              : undefined;
-            if (prevProp) {
-              prevProp.value = callRuntime(
-                "attrTags",
-                prevProp.value as t.Expression,
-                t.objectExpression(translatedAttrTag.properties),
-              );
-            } else {
-              contentProperties.push(
-                toObjectProperty(
-                  attrTagMeta.name,
-                  callRuntime(
-                    "attrTag",
-                    t.objectExpression(translatedAttrTag.properties),
-                  ),
-                ),
-              );
-            }
+            addAttrTag(
+              contentProperties,
+              attrTagMeta,
+              t.objectExpression(translatedAttrTag.properties),
+            );
           }
         } else {
           i = addDynamicAttrTagStatements(
@@ -147,10 +133,7 @@ export function translateAttrs(
 
   const { attributes } = tag.node;
   const attrProperties: t.ObjectExpression["properties"] = [];
-  const knownSpread =
-    propTree !== true && hasAllKnownProps(propTree)
-      ? getSingleKnownSpread(attributes)
-      : undefined;
+  const knownSpread = getSingleKnownSpread(propTree, attributes);
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     const { value } = attr;
@@ -213,34 +196,18 @@ export function addDynamicAttrTagStatements(
           statements,
           contentKey,
         );
-        if (attrTagMeta.repeated) {
-          statements.push(
-            t.expressionStatement(
-              t.assignmentExpression(
-                "=",
-                getAttrTagIdentifier(attrTagMeta),
-                callRuntime(
-                  "attrTags",
-                  getAttrTagIdentifier(attrTagMeta),
-                  t.objectExpression(translatedAttrTag.properties),
-                ),
+        statements.push(
+          t.expressionStatement(
+            t.assignmentExpression(
+              "=",
+              getAttrTagIdentifier(attrTagMeta),
+              appendAttrTag(
+                attrTagMeta.repeated && getAttrTagIdentifier(attrTagMeta),
+                t.objectExpression(translatedAttrTag.properties),
               ),
             ),
-          );
-        } else {
-          statements.push(
-            t.expressionStatement(
-              t.assignmentExpression(
-                "=",
-                getAttrTagIdentifier(attrTagMeta),
-                callRuntime(
-                  "attrTag",
-                  t.objectExpression(translatedAttrTag.properties),
-                ),
-              ),
-            ),
-          );
-        }
+          ),
+        );
       }
     } else {
       switch (getTagName(tag)) {
@@ -269,6 +236,28 @@ export function addDynamicAttrTagStatements(
   }
 
   return index;
+}
+
+// Adds an attribute tag's props to its parent's: a repeated one folds into
+// the property its earlier occurrences built.
+export function addAttrTag(
+  properties: t.ObjectExpression["properties"],
+  { name, repeated }: AttrTagMeta,
+  props: t.ObjectExpression,
+) {
+  const prev = repeated && findObjectProperty(name, properties);
+  if (prev) prev.value = appendAttrTag(prev.value as t.Expression, props);
+  else properties.push(toObjectProperty(name, appendAttrTag(undefined, props)));
+}
+
+// An attribute tag's value, with the occurrences of it before folded in.
+export function appendAttrTag(
+  prev: t.Expression | undefined | false,
+  props: t.ObjectExpression,
+) {
+  return prev
+    ? callRuntime("attrTags", prev, props)
+    : callRuntime("attrTag", props);
 }
 
 /** Unwraps a lone spread to the spread argument itself, so the result may alias
@@ -490,9 +479,12 @@ function getLocalClosureValues(bodySection: Section) {
   }
 }
 
+// The one spread a child reading every prop by name reads, prop by prop.
 export function getSingleKnownSpread(
+  propTree: BindingPropTree | true,
   attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
 ) {
+  if (propTree === true || !hasAllKnownProps(propTree)) return;
   let binding: Binding | undefined;
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];

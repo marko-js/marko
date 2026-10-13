@@ -10,13 +10,8 @@ export function isStaticText(node?: t.Node) {
   switch (node?.type) {
     case "MarkoText":
       return true;
-    case "MarkoPlaceholder": {
-      if (node.escape) {
-        const { confident, computed } = evaluate(node.value);
-        return confident && getHTMLRuntime()._escape(computed) !== "";
-      }
-      return false;
-    }
+    case "MarkoPlaceholder":
+      return node.escape && !!getStaticPlaceholderText(node);
   }
 }
 
@@ -27,7 +22,7 @@ export function getPrevStaticSibling(path: t.NodePath) {
   while (
     prev.node &&
     (getNodeContentType(prev as t.NodePath<t.Statement>, "endType") === null ||
-      (prev.isMarkoPlaceholder() && isEmptyPlaceholder(prev.node)))
+      (prev.isMarkoPlaceholder() && getStaticPlaceholderText(prev.node) === ""))
   ) {
     prev = prev.getPrevSibling();
   }
@@ -35,14 +30,13 @@ export function getPrevStaticSibling(path: t.NodePath) {
   return prev.node;
 }
 
-// Asking the runtime's own text writers keeps these checks in lockstep with
-// what would render (`""`, `NaN` and `0n` write nothing).
-function isEmptyPlaceholder(placeholder: t.MarkoPlaceholder) {
+// What a placeholder known at compile time writes. Asking the runtime's own text
+// writers keeps these checks in lockstep with it (`""`, `NaN` and `0n` write nothing).
+export function getStaticPlaceholderText(placeholder: t.MarkoPlaceholder) {
   const { confident, computed } = evaluate(placeholder.value);
-  return (
-    confident &&
-    getHTMLRuntime()[placeholder.escape ? "_escape" : "_unescaped"](
+  if (confident) {
+    return getHTMLRuntime()[placeholder.escape ? "_escape" : "_unescaped"](
       computed,
-    ) === ""
-  );
+    );
+  }
 }

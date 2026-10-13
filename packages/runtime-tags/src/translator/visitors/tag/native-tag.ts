@@ -19,6 +19,7 @@ import {
   stringifyStyleObject,
   toDelimitedString,
 } from "../../../common/helpers";
+import { buildAttrNameError } from "../../util/assert";
 import { BindingType, createBinding } from "../../util/bindings";
 import {
   bodyToRawTextLiteral,
@@ -26,7 +27,10 @@ import {
 } from "../../util/body-to-text-literal";
 import { isEndTagWrittenByBranch } from "../../util/branch-tag";
 import evaluate from "../../util/evaluate";
-import { generateUidIdentifier } from "../../util/generate-uid";
+import {
+  generateUidIdentifier,
+  declareConstBefore,
+} from "../../util/generate-uid";
 import {
   getAccessorPrefix,
   getAccessorProp,
@@ -44,7 +48,7 @@ import {
 } from "../../util/module-read";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { type Opt, push } from "../../util/optional";
-import { addReasonExprs, addReason } from "../../util/reasons";
+import { addAlwaysRead, addReasonExprs } from "../../util/reasons";
 import {
   dropNodes,
   mergeReferenceGroup,
@@ -55,7 +59,6 @@ import {
 } from "../../util/references";
 import {
   callRuntime,
-  type DOMRuntimeFeature,
   getHTMLRuntime,
   importRuntime,
   importRuntimeFeature,
@@ -64,7 +67,10 @@ import {
   getPrefixedScopeAccessor,
   getScopeAccessorLiteral,
 } from "../../util/scope-accessor";
-import { createScopeReadExpression } from "../../util/scope-read";
+import {
+  createScopeReadExpression,
+  scopeIdentifier,
+} from "../../util/scope-read";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -78,12 +84,12 @@ import {
   setSectionDebugVar,
 } from "../../util/signals";
 import { getSlot } from "../../util/slots";
-import { ALWAYS } from "../../util/sources";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
-import { getTagFacts } from "../../util/tag-facts";
+import { controllableElements, getTagFacts } from "../../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import {
+  getLiteralName,
   toMemberExpression,
   toObjectProperty,
   toPropertyName,
@@ -92,7 +98,6 @@ import { propsToExpression } from "../../util/translate-attrs";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
 import { getWriteGuard, getWriteReason } from "../../util/write-guard";
 import * as writer from "../../util/writer";
-import { scopeIdentifier } from "../program";
 
 const kNodeOp = Symbol("native tag structure node");
 const kNativeAttrs = Symbol("native tag attrs");
@@ -173,7 +178,7 @@ export default {
       // wins: classifies them, drops unwritten values, records each value's facts.
       const indexByName: Record<string, number | undefined> =
         Object.create(null);
-      const pairNames = controllableAttrNames.get(tagName);
+      const pairNames = controllableElements.get(tagName)?.attrs;
       let own: number[] | undefined;
       let handlers: number[] | undefined;
       let content: number | undefined;
@@ -434,7 +439,7 @@ export default {
         }
 
         if (hasEventHandlers || isTagVarUsed(tag)) {
-          addReason(getSlot(nodeBinding), ALWAYS);
+          addAlwaysRead(nodeBinding);
         }
 
         trackDomVarReferences(tag, nodeBinding);
@@ -571,7 +576,7 @@ export default {
               ] as const) {
                 if (
                   prefix !== getAccessorPrefix().ControlledHandler ||
-                  getSpreadControllableValueProps(tagName)
+                  controllableElements.has(tagName)
                 ) {
                   setSectionDebugVar(
                     tagSection,
@@ -637,17 +642,16 @@ export default {
               helper: "_attr_select_value",
               args: [
                 attrAt(attributes, controllable.attrs[0])?.value ||
-                  buildUndefined(),
+                  t.buildUndefinedNode(),
                 attrAt(attributes, controllable.attrs[1])?.value ||
-                  buildUndefined(),
+                  t.buildUndefinedNode(),
               ],
             });
           } else if (spreadExpression) {
-            const spreadIdentifier = generateUidIdentifier("select_input");
-            tag.insertBefore(
-              t.variableDeclaration("const", [
-                t.variableDeclarator(spreadIdentifier, spreadExpression),
-              ]),
+            const spreadIdentifier = declareConstBefore(
+              tag,
+              "select_input",
+              spreadExpression,
             );
             htmlSelectArgs.set(tag.node, {
               helper: "_attrs_select_value",
@@ -669,11 +673,10 @@ export default {
                 )
               : callRuntime("_textarea_value", value!.value);
           } else if (spreadExpression) {
-            const spreadIdentifier = generateUidIdentifier("textarea_input");
-            tag.insertBefore(
-              t.variableDeclaration("const", [
-                t.variableDeclarator(spreadIdentifier, spreadExpression),
-              ]),
+            const spreadIdentifier = declareConstBefore(
+              tag,
+              "textarea_input",
+              spreadExpression,
             );
             writeAtStartOfBody = callRuntime(
               "_attrs_textarea_value",
@@ -908,12 +911,10 @@ export default {
             "render",
             tagSection,
             undefined,
-            t.expressionStatement(
-              callRuntime(
-                "_attr_nonce",
-                scopeIdentifier,
-                getScopeAccessorLiteral(nodeBinding),
-              ),
+            callRuntime(
+              "_attr_nonce",
+              scopeIdentifier,
+              getScopeAccessorLiteral(nodeBinding),
             ),
             true,
           );
@@ -942,13 +943,11 @@ export default {
             "render",
             tagSection,
             referencedBindings,
-            t.expressionStatement(
-              callRuntime(
-                hasChangeHandler ? helper : defaultHelper,
-                scopeIdentifier,
-                visitAccessor,
-                ...values,
-              ),
+            callRuntime(
+              hasChangeHandler ? helper : defaultHelper,
+              scopeIdentifier,
+              visitAccessor,
+              ...values,
             ),
           );
 
@@ -957,9 +956,7 @@ export default {
               "effect",
               tagSection,
               undefined,
-              t.expressionStatement(
-                callRuntime(`${helper}_script`, scopeIdentifier, visitAccessor),
-              ),
+              callRuntime(`${helper}_script`, scopeIdentifier, visitAccessor),
             );
           }
         }
@@ -1034,7 +1031,7 @@ export default {
                       "render",
                       tagSection,
                       valueReferences,
-                      t.expressionStatement(call),
+                      call,
                       true,
                     );
                   }
@@ -1050,13 +1047,11 @@ export default {
                     "render",
                     tagSection,
                     valueReferences,
-                    t.expressionStatement(
-                      callRuntime(
-                        "_attr",
-                        createScopeReadExpression(nodeBinding),
-                        t.stringLiteral(name),
-                        value,
-                      ),
+                    callRuntime(
+                      "_attr",
+                      createScopeReadExpression(nodeBinding),
+                      t.stringLiteral(name),
+                      value,
                     ),
                     true,
                   );
@@ -1074,13 +1069,11 @@ export default {
               "effect",
               tagSection,
               getReferencedBindings(value.extra),
-              t.expressionStatement(
-                callRuntime(
-                  "_on",
-                  createScopeReadExpression(nodeBinding),
-                  t.stringLiteral(getEventHandlerName(name)),
-                  value,
-                ),
+              callRuntime(
+                "_on",
+                createScopeReadExpression(nodeBinding),
+                t.stringLiteral(getEventHandlerName(name)),
+                value,
               ),
             );
           }
@@ -1096,21 +1089,25 @@ export default {
           const staticName = name.isStringLiteral()
             ? name.node.value
             : undefined;
-          const spreadClaim = !controllable && controllableClaimFor(staticName);
+          // A spread claims its controlled attrs during render, unless a
+          // static attr owns the controllable and so the slots it wrote.
+          const element =
+            staticName === undefined
+              ? undefined
+              : controllableElements.get(staticName);
+          const spreadClaim = !controllable && element?.claim;
           if (skipExpression) {
             addStatement(
               "render",
               tagSection,
               getReferencedBindings(tagExtra),
-              t.expressionStatement(
-                callRuntime(
-                  spreadContent ? "_attrs_partial_content" : "_attrs_partial",
-                  scopeIdentifier,
-                  visitAccessor,
-                  spreadExpression,
-                  skipExpression,
-                  spreadClaim && importRuntime(spreadClaim),
-                ),
+              callRuntime(
+                spreadContent ? "_attrs_partial_content" : "_attrs_partial",
+                scopeIdentifier,
+                visitAccessor,
+                spreadExpression,
+                skipExpression,
+                spreadClaim && importRuntime(spreadClaim),
               ),
             );
           } else {
@@ -1118,26 +1115,28 @@ export default {
               "render",
               tagSection,
               getReferencedBindings(tagExtra),
-              t.expressionStatement(
-                callRuntime(
-                  spreadContent ? "_attrs_content" : "_attrs",
-                  scopeIdentifier,
-                  visitAccessor,
-                  spreadExpression,
-                  spreadClaim && importRuntime(spreadClaim),
-                ),
+              callRuntime(
+                spreadContent ? "_attrs_content" : "_attrs",
+                scopeIdentifier,
+                visitAccessor,
+                spreadExpression,
+                spreadClaim && importRuntime(spreadClaim),
               ),
             );
           }
 
-          enableControllable(controllableFeatureFor(staticName));
+          // `_attrs_script` resolves the control kind at run time, and a
+          // run-time tag name can be any of them.
+          if (staticName === undefined) {
+            importRuntimeFeature("controllable");
+          } else if (element) {
+            importRuntimeFeature(element.feature);
+          }
           addStatement(
             "effect",
             tagSection,
             getReferencedBindings(tagExtra),
-            t.expressionStatement(
-              callRuntime("_attrs_script", scopeIdentifier, visitAccessor),
-            ),
+            callRuntime("_attrs_script", scopeIdentifier, visitAccessor),
           );
         }
 
@@ -1146,13 +1145,11 @@ export default {
             "render",
             tagSection,
             getReferencedBindings(contentAttr.value.extra),
-            t.expressionStatement(
-              callRuntime(
-                "_attr_content",
-                scopeIdentifier,
-                visitAccessor,
-                contentAttr.value,
-              ),
+            callRuntime(
+              "_attr_content",
+              scopeIdentifier,
+              visitAccessor,
+              contentAttr.value,
             ),
             true,
           );
@@ -1175,12 +1172,10 @@ export default {
                 "render",
                 getSection(tag),
                 getReferencedBindings(textLiteral.extra),
-                t.expressionStatement(
-                  callRuntime(
-                    "_text_content",
-                    createScopeReadExpression(nodeBinding!),
-                    textLiteral,
-                  ),
+                callRuntime(
+                  "_text_content",
+                  createScopeReadExpression(nodeBinding!),
+                  textLiteral,
                 ),
                 true,
               );
@@ -1197,19 +1192,6 @@ export default {
     },
   }),
 } satisfies TemplateVisitor<t.MarkoTag>;
-
-function getSpreadControllableValueProps(tagName: string) {
-  switch (tagName) {
-    case "input":
-      return ["value", "checked", "checkedValue"];
-    case "select":
-    case "textarea":
-      return ["value"];
-    case "details":
-    case "dialog":
-      return ["open"];
-  }
-}
 
 function getRelatedControllable(
   tagName: string,
@@ -1281,25 +1263,6 @@ function getRelatedControllable(
       break;
   }
 }
-
-// The attributes an element's controllable pair may take.
-const controllableAttrNames = new Map([
-  [
-    "input",
-    [
-      "checked",
-      "checkedChange",
-      "checkedValue",
-      "checkedValueChange",
-      "value",
-      "valueChange",
-    ],
-  ],
-  ["select", ["value", "valueChange"]],
-  ["textarea", ["value", "valueChange"]],
-  ["details", ["open", "openChange"]],
-  ["dialog", ["open", "openChange"]],
-]);
 
 // A pair attribute the element's pair does not take is its own.
 function addUnpaired(
@@ -1486,19 +1449,10 @@ function assertValidNativeAttrName(
 ) {
   const suggestion = getWrongAttrSuggestion(attr.name);
   if (suggestion) {
-    throw tag.hub.buildError(
-      attr.loc?.end &&
-        ({
-          loc: {
-            start: attr.loc.start,
-            end: {
-              line: attr.loc.start.line,
-              column: attr.loc.start.column + attr.name.length,
-            },
-          },
-        } as any),
+    throw buildAttrNameError(
+      tag,
+      attr,
       `\`${attr.name}\` is not a valid attribute, did you mean \`${suggestion}\`?`,
-      Error,
     );
   }
 }
@@ -1555,12 +1509,7 @@ function warnCamelCaseStyleKeys(
     for (const prop of object.properties) {
       if (prop.type !== "ObjectProperty" || prop.computed) continue;
       const { key } = prop;
-      const name =
-        key.type === "Identifier"
-          ? key.name
-          : key.type === "StringLiteral"
-            ? key.value
-            : undefined;
+      const name = getLiteralName(key);
       if (
         name &&
         !name.startsWith("--") &&
@@ -2296,47 +2245,4 @@ function addDynamicValue(
   alternate: DelimitedAttrPart | undefined,
 ) {
   (meta.dynamicValues ||= []).push({ key, value, alternate });
-}
-
-function buildUndefined() {
-  return t.unaryExpression("void", t.numericLiteral(0));
-}
-
-/** How a spread claims its controlled attrs during render; nothing for the many
- * tags that control nothing, and nothing when a static attr owns the
- * controllable, since then the spread must leave the slots it wrote alone. */
-export function controllableClaimFor(tagName: string | undefined) {
-  switch (tagName) {
-    case "input":
-      return "_controllable_input" as const;
-    case "textarea":
-      return "_controllable_textarea" as const;
-    case "select":
-      return "_controllable_select" as const;
-    case "details":
-    case "dialog":
-      return "_controllable_open" as const;
-  }
-}
-
-/** The resume-pass feature for a tag: `_attrs_script` resolves the control
- * kind at run time, and a run-time tag name can be any of them. */
-export function controllableFeatureFor(tagName: string | undefined) {
-  switch (tagName) {
-    case "input":
-      return "controllable-input" as const;
-    case "textarea":
-      return "controllable-textarea" as const;
-    case "select":
-      return "controllable-select" as const;
-    case "details":
-    case "dialog":
-      return "controllable-open" as const;
-    case undefined:
-      return "controllable" as const;
-  }
-}
-
-export function enableControllable(feature: DOMRuntimeFeature | undefined) {
-  if (feature) importRuntimeFeature(feature);
 }

@@ -6,7 +6,11 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoSpreadAttrs } from "../util/assert";
+import {
+  assertHasBody,
+  assertNoSpreadAttrs,
+  assertValueAttr,
+} from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import {
@@ -17,6 +21,7 @@ import {
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
+import { scopeIdentifier } from "../util/scope-read";
 import {
   getBranchRendererArgs,
   getOrCreateSection,
@@ -34,11 +39,10 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import * as structure from "../util/structure";
-import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
+import { toFirstExpressionOrBlock } from "../util/to-first-or-block";
 import { translateByTarget } from "../util/visitors";
 import { getWriteGuard } from "../util/write-guard";
 import * as writer from "../util/writer";
-import { scopeIdentifier } from "../visitors/program";
 
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
@@ -55,7 +59,8 @@ export default {
     const { node } = tag;
     const tagBody = tag.get("body");
     const section = getOrCreateSection(tag);
-    const [valueAttr] = node.attributes;
+    const valueAttr = assertValueAttr(tag, true);
+    assertHasBody(tag);
     const tagExtra = (tag.node.extra ??= {});
     const nodeBinding = (tagExtra.nodeBinding = createBinding(
       "#text",
@@ -63,37 +68,10 @@ export default {
       section,
     ));
 
-    if (!valueAttr) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) requires a [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
-        );
-    }
-
-    if (
-      node.attributes.length > 1 ||
-      !t.isMarkoAttribute(valueAttr) ||
-      valueAttr.name !== "value"
-    ) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
-        );
-    }
-
-    if (!node.body.body.length) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) requires [content](https://markojs.com/docs/reference/language#tag-content).",
-        );
-    }
-
     if (
       node.body.params.length &&
-      (node.body.params.length > 1 || t.isSpreadElement(node.body.params[0]))
+      (node.body.params.length > 1 ||
+        node.body.params[0].type === "RestElement")
     ) {
       throw tag
         .get("name")
@@ -137,8 +115,7 @@ export default {
         const tagBody = tag.get("body");
         const section = getSection(tag);
         const bodySection = getSectionForBody(tagBody);
-        writer.flushInto(tag);
-        writeHTMLResumeStatements(tagBody);
+        writeHTMLResumeStatements(tag);
 
         tag
           .replaceWith(
@@ -196,9 +173,7 @@ export default {
           "render",
           section,
           undefined,
-          t.expressionStatement(
-            t.callExpression(t.identifier(bodySection.name), [scopeIdentifier]),
-          ),
+          t.callExpression(t.identifier(bodySection.name), [scopeIdentifier]),
         );
 
         addValue(

@@ -27,7 +27,7 @@ export function isSectionRendererElided(section: Section) {
   );
 }
 
-export function bindingHasProperty(binding: Binding, properties: Opt<string>) {
+function bindingHasProperty(binding: Binding, properties: Opt<string>) {
   if (binding.pruned) {
     return false;
   } else if (binding.pruned === undefined) {

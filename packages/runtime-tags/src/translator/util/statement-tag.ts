@@ -1,5 +1,27 @@
 import { types as t } from "@marko/compiler";
-import { getFile, parseBlock, type Tag } from "@marko/compiler/babel-utils";
+import {
+  getFile,
+  parseBlock,
+  parseStatements,
+  type Tag,
+} from "@marko/compiler/babel-utils";
+
+// The one statement an `<import>` or `<export>` tag holds.
+export function parseSingleStatement(tag: t.NodePath<t.MarkoTag>, msg: string) {
+  const { node } = tag;
+  const statements = parseStatements(
+    getFile(),
+    node.rawValue!,
+    node.start!,
+    node.end!,
+  );
+
+  if (statements.length > 1) {
+    throw tag.hub.buildError(statements[1], msg);
+  }
+
+  return statements[0];
+}
 
 // `<static>` runs everywhere, so it gets no target and no "on the ..." suffix.
 export function createStatementTag(keyword: "client" | "server" | "static") {

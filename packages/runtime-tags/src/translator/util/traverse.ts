@@ -42,7 +42,7 @@ export function traverseContains(
   return !!traverseFind(node, check);
 }
 
-export function traverseFind(
+function traverseFind(
   node: undefined | null | t.Node | t.Node[],
   check: (node: t.Node) => void | boolean | typeof skip,
 ): t.Node | undefined {

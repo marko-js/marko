@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
-import { resolveFunctionReason } from "../visitors/function";
 import {
   type Binding,
   BindingType,
@@ -19,9 +18,17 @@ import {
   createCyclicPathMemo,
   type MemoPath,
 } from "./cyclic-memo";
-import { getValueInputs } from "./finalize-references";
 import { finalizeKnownTags } from "./known-tag";
-import { concat, first, forEach, type Opt, rest, some } from "./optional";
+import { resolveFunctionReason } from "./module-registrations";
+import {
+  concat,
+  first,
+  forEach,
+  type OneMany,
+  type Opt,
+  rest,
+  some,
+} from "./optional";
 import {
   addOwnerReason,
   addReason,
@@ -38,6 +45,7 @@ import {
   isReferencedExtra,
   getConstantBindingsInFunction,
   getReferencedBindingsInFunction,
+  getBindingsDerivedFrom,
 } from "./references";
 import {
   finalizeParamReasonGroups,
@@ -140,18 +148,16 @@ function hasReadIntermediate(
   partner: Binding,
   seen: Set<Binding>,
 ): boolean {
-  return some(getValueInputs(member), (input) => {
-    if (seen.has(input) || !sharesSources(input, partner)) return false;
-    seen.add(input);
+  return some(getBindingsDerivedFrom(member), (from) => {
+    if (seen.has(from) || !sharesSources(from, partner)) return false;
+    seen.add(from);
     if (
-      bindingUtil.has(partner.sources!.state, input) ||
-      bindingUtil.has(partner.sources!.param, input as ParamBinding)
+      bindingUtil.has(partner.sources!.state, from) ||
+      bindingUtil.has(partner.sources!.param, from as ParamBinding)
     ) {
       return false;
     }
-    return (
-      !!findSlot(input)?.reason || hasReadIntermediate(input, partner, seen)
-    );
+    return !!findSlot(from)?.reason || hasReadIntermediate(from, partner, seen);
   });
 }
 
@@ -298,7 +304,7 @@ export function getReasonForBinding(
   binding: Binding,
   properties?: Opt<string> | true,
 ): undefined | Reason {
-  return readersOfBinding(binding, properties).reason;
+  return bindingReaders(binding, properties).reason;
 }
 
 // Whether client code reads the value itself, by its readers or by landing
@@ -322,17 +328,7 @@ export function getReasonForExpr(extra: t.NodeExtra): undefined | Reason {
 function readersOfExtra(extra: t.NodeExtra): Readers {
   if (extra.isEffect) return ALWAYS_READ;
   const readers = extraReaders(extra);
-  const reads = isReferencedExtra(extra)
-    ? addLandingRead(readers.reads, extra)
-    : readers.reads;
-  return reads === readers.reads ? readers : { reason: readers.reason, reads };
-}
-
-function readersOfBinding(
-  binding: Binding,
-  properties: Opt<string> | true | undefined,
-): Readers {
-  return bindingReaders(binding, properties);
+  return isReferencedExtra(extra) ? withLandingRead(readers, extra) : readers;
 }
 
 function computeExtraReaders(extra: t.NodeExtra): Readers {
@@ -368,7 +364,7 @@ function readersOfDerived(
   part: Binding | undefined,
   properties: Opt<string> | true | undefined,
 ): Readers {
-  const linked = readersOfBinding(
+  const linked = bindingReaders(
     binding,
     getDownstreamPath(extra, binding, part, properties),
   );
@@ -426,16 +422,6 @@ function isPartOf(binding: Binding, value: Binding | undefined) {
   return !!value && binding.aliasOf === value && !isDirectAlias(binding);
 }
 
-// An effect runs on resume with the values it references, unless it reads back
-// a value its tag retained.
-export function readsValuesOnResume(expr: t.NodeExtra) {
-  return !!expr.isEffect && !expr.retained;
-}
-
-export function addAlwaysRead(binding: Binding) {
-  addReason(getSlot(binding), ALWAYS);
-}
-
 function computeBindingReaders(
   binding: Binding,
   properties: Opt<string> | true | undefined,
@@ -451,7 +437,7 @@ function computeBindingReaders(
   if (properties !== true && aliased) {
     readers = mergeReaders(
       readers,
-      readersOfBinding(
+      bindingReaders(
         aliased,
         properties === undefined
           ? binding.property
@@ -472,44 +458,40 @@ function computeBindingReaders(
       }
       continue;
     }
-    const reads = addLandingRead(readers.reads, expr);
-    if (reads !== readers.reads) {
-      readers = { reason: readers.reason, reads };
-    }
     readers = mergeReaders(
-      readers,
+      withLandingRead(readers, expr),
       readersOfDerives(expr, binding, properties),
     );
   }
   for (const alias of binding.aliases) {
-    readers = mergeReaders(readers, readersOfBinding(alias, properties));
+    readers = mergeReaders(readers, bindingReaders(alias, properties));
   }
   if (properties === undefined) return readers;
   if (properties === true) {
     for (const propBinding of binding.propertyAliases.values()) {
-      readers = mergeReaders(readers, readersOfBinding(propBinding, true));
+      readers = mergeReaders(readers, bindingReaders(propBinding, true));
     }
     return readers;
   }
   const property = first(properties);
   if (propsUtil.has(binding.excludeProperties, property)) return UNREAD;
-  const propBinding = binding.propertyAliases.get(property);
-  if (propBinding) {
-    readers = mergeReaders(
-      readers,
-      readersOfBinding(propBinding, rest(properties)),
-    );
-  }
+  readers = mergePropertyReaders(readers, binding, property, properties);
   for (const alias of binding.aliases) {
-    const propBinding = alias.propertyAliases.get(property);
-    if (propBinding) {
-      readers = mergeReaders(
-        readers,
-        readersOfBinding(propBinding, rest(properties)),
-      );
-    }
+    readers = mergePropertyReaders(readers, alias, property, properties);
   }
   return readers;
+}
+
+function mergePropertyReaders(
+  readers: Readers,
+  owner: Binding,
+  property: string,
+  properties: OneMany<string>,
+) {
+  const propBinding = owner.propertyAliases.get(property);
+  return propBinding
+    ? mergeReaders(readers, bindingReaders(propBinding, rest(properties)))
+    : readers;
 }
 
 function mergeReaders(a: Readers, b: Readers): Readers {
@@ -524,11 +506,10 @@ function mergeReaders(a: Readers, b: Readers): Readers {
 
 // Answers are shared across memo keys: adding copies (at most once per
 // merge), and adding nothing new keeps the identity.
-function addLandingRead(
-  reads: ReadonlySet<ReferencedExtra> | undefined,
-  read: ReferencedExtra,
-) {
-  return reads?.has(read) ? reads : new Set(reads).add(read);
+function withLandingRead(readers: Readers, read: ReferencedExtra): Readers {
+  return readers.reads?.has(read)
+    ? readers
+    : { reason: readers.reason, reads: new Set(readers.reads).add(read) };
 }
 
 function unionReads(

@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { assertNoArgs, type Tag } from "@marko/compiler/babel-utils";
 
-import { assertNoTagVarMutation } from "../util/assert";
+import { assertHasVar, assertNoTagVarMutation } from "../util/assert";
 import { BindingType } from "../util/bindings";
 import { isOutputHTML } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
@@ -10,10 +10,10 @@ import {
   getAllTagReferenceNodes,
   getReferencedBindings,
   isReferenceHoisted,
-  mergeReferences,
   setDerivedFrom,
   trackParamsReferences,
   trackVarReferences,
+  mergeTagReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
@@ -40,13 +40,7 @@ import * as writer from "../util/writer";
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
     assertNoArgs(tag);
-    if (!tag.node.var) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<define>` tag](https://markojs.com/docs/reference/core-tag#define) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables).",
-        );
-    }
+    assertHasVar(tag);
 
     const tagBody = tag.get("body");
     const bodySection = startSection(tagBody);
@@ -97,11 +91,7 @@ export default {
     }
 
     analyzeAttributeTags(tag);
-    const tagExtra = mergeReferences(
-      getOrCreateSection(tag),
-      tag.node,
-      getAllTagReferenceNodes(tag.node),
-    );
+    const tagExtra = mergeTagReferences(getOrCreateSection(tag), tag.node);
 
     setDerivedFrom(varBinding, tagExtra);
   },
@@ -120,8 +110,7 @@ export default {
       const { node } = tag;
       const translatedAttrs = translateAttrs(tag);
       if (isOutputHTML()) {
-        writer.flushInto(tag);
-        writeHTMLResumeStatements(tag.get("body"));
+        writeHTMLResumeStatements(tag);
         translateVar(
           tag,
           propsToExpression(translatedAttrs.properties),

@@ -59,8 +59,7 @@ export default {
     },
     exit(tag) {
       if (isOutputHTML()) {
-        writer.flushInto(tag);
-        writeHTMLResumeStatements(tag.get("body"));
+        writeHTMLResumeStatements(tag);
       }
     },
   },

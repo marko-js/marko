@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
-import { scopeIdentifier } from ".";
 import { isSectionRendererElided } from "../../util/binding-has-prop";
 import { BindingType } from "../../util/bindings";
 import { isOptimize } from "../../util/marko-config";
@@ -12,6 +11,7 @@ import {
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
 } from "../../util/scope-accessor";
+import { scopeIdentifier } from "../../util/scope-read";
 import {
   forEachSectionReverse,
   getContentClosures,

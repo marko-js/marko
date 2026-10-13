@@ -6,11 +6,15 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoSpreadAttrs } from "../util/assert";
+import {
+  assertHasBody,
+  assertNoSpreadAttrs,
+  assertValueAttr,
+} from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
 import { getBranchEndArgs } from "../util/branch-tag";
 import evaluate from "../util/evaluate";
-import { generateUidIdentifier } from "../util/generate-uid";
+import { declareConstBefore } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
@@ -148,13 +152,10 @@ export default {
         const display = tag.node.attributes[0].value;
         if (!t.isIdentifier(display)) {
           // Read once; referenced by both bracketing runtime calls.
-          const displayRef = generateUidIdentifier("show");
-          tag.insertBefore(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(displayRef, display),
-            ]),
+          htmlDisplayRefs.set(
+            tag.node,
+            declareConstBefore(tag, "show", display),
           );
-          htmlDisplayRefs.set(tag.node, displayRef);
         }
       },
       exit(tag) {
@@ -305,7 +306,21 @@ function assertValidShow(tag: t.NodePath<t.MarkoTag>) {
   assertNoParams(tag);
   assertNoSpreadAttrs(tag);
   assertHasBody(tag);
-  assertHasValueAttribute(tag);
+
+  if (tag.node.body.attributeTags) {
+    throw tag
+      .get("name")
+      .buildCodeFrameError(
+        "The [`<show>` tag](https://markojs.com/docs/reference/core-tag#show) does not support [attribute tags](https://markojs.com/docs/reference/language#attribute-tags).",
+      );
+  }
+
+  assertValueAttr(tag, true, false, getRenameHint);
+}
+
+// `<show if=condition>` is the common miss, so name the rename.
+function getRenameHint(attr: t.MarkoAttribute) {
+  return `Use \`<show=condition>\` instead of \`<show ${attr.name}=condition>\`.`;
 }
 
 function assertLegalHiddenContext(tag: t.NodePath<t.MarkoTag>) {
@@ -316,50 +331,6 @@ function assertLegalHiddenContext(tag: t.NodePath<t.MarkoTag>) {
       .get("name")
       .buildCodeFrameError(
         `A [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) cannot be a direct child of \`<${parentName}>\`: hidden content is wrapped in an element that \`<${parentName}>\` discards, which would render the content instead of hiding it. Move the \`<${getTagName(tag)}>\` inside the row or option, or use [\`<if>\`](https://markojs.com/docs/reference/core-tag#if).`,
-      );
-  }
-}
-
-function assertHasBody(tag: t.NodePath<t.MarkoTag>) {
-  if (!tag.node.body.body.length) {
-    throw tag
-      .get("name")
-      .buildCodeFrameError(
-        `The [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) requires [body content](https://markojs.com/docs/reference/language#tag-content).`,
-      );
-  }
-
-  if (tag.node.body.attributeTags) {
-    throw tag
-      .get("name")
-      .buildCodeFrameError(
-        `The [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) does not support [attribute tags](https://markojs.com/docs/reference/language#attribute-tags).`,
-      );
-  }
-}
-
-function assertHasValueAttribute(tag: t.NodePath<t.MarkoTag>) {
-  const { node } = tag;
-  const [valueAttr] = node.attributes;
-
-  if (
-    !t.isMarkoAttribute(valueAttr) ||
-    !(valueAttr.default || valueAttr.name === "value")
-  ) {
-    // `<show if=condition>` is the common miss, so name the rename.
-    const wrongName = t.isMarkoAttribute(valueAttr) && valueAttr.name;
-    throw (
-      wrongName ? tag.get("attributes")[0] : tag.get("name")
-    ).buildCodeFrameError(
-      `The [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) requires the [\`value=\` attribute](https://markojs.com/docs/reference/language#shorthand-value).${wrongName ? ` Use \`<${getTagName(tag)}=condition>\` instead of \`<${getTagName(tag)} ${wrongName}=condition>\`.` : ""}`,
-    );
-  }
-
-  if (node.attributes.length > 1) {
-    throw tag
-      .get("name")
-      .buildCodeFrameError(
-        `The [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) only supports the [\`value=\` attribute](https://markojs.com/docs/reference/language#shorthand-value).`,
       );
   }
 }

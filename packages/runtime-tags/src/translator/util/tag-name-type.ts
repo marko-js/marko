@@ -3,18 +3,20 @@ import {
   getFile,
   getProgram,
   getTagDef,
+  getTaglibLookup,
+  getTagTemplate,
   isNativeTag,
   loadFileForImport,
   loadFileForTag,
+  resolveRelativePath,
 } from "@marko/compiler/babel-utils";
+import { distance } from "fastest-levenshtein";
 
-import {
-  getImportFacts,
-  type LoadImportConfig,
-} from "../visitors/import-declaration";
 import * as TagNameType from "./constants/tag-name-type";
 import { isAnalyzing } from "./get-compile-stage";
+import { getStaticTagName, getTagName } from "./get-tag-name";
 import { isCoreTag } from "./is-core-tag";
+import { getImportFacts, type LoadImportConfig } from "./tag-import";
 
 const kTagNameDynamic = Symbol("tag name dynamic");
 declare module "@marko/compiler/dist/types" {
@@ -268,4 +270,158 @@ function analyzeExpressionTagName(
       extra.tagNameLoad = tagNameLoad;
     }
   }
+}
+
+export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
+  const { node } = tag;
+  const file = getFile();
+  let relativePath: string | undefined;
+
+  if (t.isStringLiteral(node.name)) {
+    const tagDef = getTagDef(tag);
+    const template =
+      (node.extra?.featureType === "class" && tagDef?.renderer) ||
+      getTagTemplate(tag);
+    relativePath = template && resolveRelativePath(file, template, tagDef);
+  } else if (node.extra?.tagNameImported) {
+    relativePath = node.extra.tagNameImported;
+  }
+
+  if (!relativePath) throw tagNotFoundError(tag);
+
+  return relativePath;
+}
+
+// Tags from other frameworks (or older Marko versions) that deserve a curated
+// pointer instead of a nearest-name suggestion.
+const staticHint =
+  "To declare module level JavaScript, prefix the statement with `static`.";
+const knownWrongTags = new Map([
+  [
+    "slot",
+    "To render content passed to this tag, use a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags): `<${input.content}/>`.",
+  ],
+  [
+    "state",
+    "Reactive state is declared with the [`<let>` tag](https://markojs.com/docs/reference/core-tag#let): `<let/name=initialValue>`.",
+  ],
+  [
+    "fragment",
+    "Marko templates and tag bodies may have multiple root nodes; no fragment wrapper is needed.",
+  ],
+  ["async", staticHint],
+  ["class", staticHint],
+  ["declare", staticHint],
+  ["enum", staticHint],
+  ["function", staticHint],
+  ["interface", staticHint],
+  ["type", staticHint],
+]);
+
+/**
+ * A known wrong tag that resolves to nothing, eg `interface P { id: number }`,
+ * whose body lands in attribute position before tag resolution would run.
+ */
+export function isUnresolvedKnownWrongTag(tag: t.NodePath<t.MarkoTag>) {
+  const tagName = getTagName(tag);
+  return !!tagName && knownWrongTags.has(tagName) && !getTagDef(tag);
+}
+
+export function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
+  const tagName = getTagName(tag);
+  if (tagName && tag.scope.hasBinding(tagName)) {
+    return tag
+      .get("name")
+      .buildCodeFrameError(
+        `Local variables must be in a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags) unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
+      );
+  }
+  let didYouMean = "";
+  const knownWrongTagHint = tagName && knownWrongTags.get(tagName);
+  const proseText = tagName && getProseText(tag);
+  if (knownWrongTagHint) {
+    didYouMean = ` ${knownWrongTagHint}`;
+  } else if (proseText) {
+    // A bare line of words parses as a tag; the author likely meant text.
+    didYouMean = ` If this line is meant to be text, prefix it with \`--\` (e.g. \`-- ${proseText}\`) or wrap it in an element such as \`<p>${proseText}</p>\`.`;
+  } else if (tagName) {
+    didYouMean = getSimilarTagHint(tagName);
+  }
+  return tag
+    .get("name")
+    .buildCodeFrameError(
+      `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName ?? getStaticTagName(tag.node)}>\`.${didYouMean}`,
+    );
+}
+
+// A concise-mode word tag with only boolean word-attributes and no var/params/
+// body is likely stray prose; returns the reconstructed sentence, else undefined.
+const wordReg = /^[A-Za-z]+$/;
+function getProseText(tag: t.NodePath<t.MarkoTag>) {
+  const { node } = tag;
+  const tagName = getTagName(tag);
+  if (
+    !tagName ||
+    !wordReg.test(tagName) ||
+    node.var ||
+    node.body.params.length ||
+    node.body.body.length ||
+    !node.attributes.length ||
+    // An explicit `<Modal open/>` is a deliberate tag, not prose.
+    !isConciseModeTag(node)
+  ) {
+    return;
+  }
+  return collectProseWords(node, tagName);
+}
+
+// HTML mode: `loc` starts on `<`, before the name. Concise mode: they align.
+function isConciseModeTag(node: t.MarkoTag) {
+  const tagLoc = node.loc;
+  const nameLoc = node.name.loc;
+  if (!tagLoc || !nameLoc) return false;
+  return (
+    tagLoc.start.line === nameLoc.start.line &&
+    tagLoc.start.column === nameLoc.start.column
+  );
+}
+
+function collectProseWords(node: t.MarkoTag, tagName: string) {
+  let text = tagName;
+  for (const attr of node.attributes) {
+    if (
+      attr.type !== "MarkoAttribute" ||
+      attr.default ||
+      !wordReg.test(attr.name) ||
+      attr.value.type !== "BooleanLiteral" ||
+      attr.value.value !== true
+    ) {
+      return;
+    }
+    text += " " + attr.name;
+  }
+  return text;
+}
+
+function getSimilarTagHint(tagName: string) {
+  const lookup = getTaglibLookup(getFile());
+  if (lookup.getTag(tagName)) return "";
+  const lowerTagName = tagName.toLowerCase();
+  let closestTag: string | undefined;
+  let closestDistance = 4;
+  for (const name in (lookup as any).merged.tags) {
+    // Edit distance is at least the length difference.
+    const lengthDelta = Math.abs(name.length - tagName.length);
+    if (lengthDelta < closestDistance) {
+      if (!lengthDelta && name.toLowerCase() === lowerTagName) {
+        return ` Tag names are case-sensitive: did you mean \`<${name}>\`?`;
+      }
+      const nameDistance = distance(tagName, name);
+      if (nameDistance < closestDistance) {
+        closestTag = name;
+        closestDistance = nameDistance;
+      }
+    }
+  }
+  return closestTag ? ` Did you mean \`<${closestTag}>\`?` : "";
 }

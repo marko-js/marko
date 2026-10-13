@@ -5,7 +5,7 @@ import {
   compareReferences,
   someAliased,
 } from "./bindings";
-import { type SortedOpt } from "./optional";
+import { Sorted, type SortedOpt } from "./optional";
 
 export interface Sources {
   state: SortedOpt<Binding>;
@@ -70,6 +70,8 @@ export function withSources(
     ? createSources(state, param, sources.global, sources.always)
     : undefined;
 }
+
+export const sourcesUtil = new Sorted(compareSources);
 
 export function compareSources(a: Sources, b: Sources) {
   let delta: number;

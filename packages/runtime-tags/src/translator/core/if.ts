@@ -6,7 +6,12 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoSpreadAttrs } from "../util/assert";
+import {
+  assertHasBody,
+  assertNoSpreadAttrs,
+  assertValueAttr,
+  buildAttrsError,
+} from "../util/assert";
 import { bodyToRawTextLiteral } from "../util/body-to-text-literal";
 import {
   getBranchResumeArgs,
@@ -16,15 +21,13 @@ import {
 } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
-import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
-import { addReasonExprs, type Reasons, sourcesUtil } from "../util/reasons";
+import { addReasonExprs, type Reasons } from "../util/reasons";
 import { getReferencedBindings, mergeReferences } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
   getOrCreateSection,
-  getScopeIdIdentifier,
   getSection,
   getSectionForBody,
   type Section,
@@ -38,9 +41,10 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { getSlot, SlotKind } from "../util/slots";
+import { sourcesUtil } from "../util/sources";
 import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
-import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
+import { toFirstStatementOrBlock } from "../util/to-first-or-block";
 import { translateByTarget } from "../util/visitors";
 import { getBranchWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
@@ -104,16 +108,12 @@ export const IfTag = {
             bodySection,
             ifTag.node.extra!.nodeBinding!,
           );
-          writer.flushInto(tag);
-          writeHTMLResumeStatements(tagBody);
+          writeHTMLResumeStatements(tag);
         }
 
         if (isLastBranch(tag)) {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
-          const ifTagSection = getSection(ifTag);
-          const nodeBinding = ifTag.node.extra!.nodeBinding!;
-          const onlyChildParentTagName = getOnlyChildParentTagName(ifTag);
           const nextTag = tag.getNextSibling();
           let branchReasons: Reasons | undefined;
           let statement: t.Statement | undefined;
@@ -143,8 +143,6 @@ export const IfTag = {
             } else {
               statement = curStatement;
             }
-
-            branchTag.remove();
           }
 
           if (branchReasons) {
@@ -157,13 +155,9 @@ export const IfTag = {
               callRuntime(
                 "_if",
                 cbNode,
-                getScopeIdIdentifier(ifTagSection),
-                getScopeAccessorLiteral(nodeBinding),
                 ...getBranchResumeArgs(
-                  ifTagSection,
-                  nodeBinding,
+                  ifTag,
                   branchReasons,
-                  onlyChildParentTagName,
                   branches.every(([, branchBody]) =>
                     isSingleNodeBranch(branchBody),
                   ),
@@ -172,6 +166,9 @@ export const IfTag = {
             );
           }
 
+          for (const [branchTag] of branches) {
+            branchTag.remove();
+          }
           nextTag.insertBefore(statement!);
         }
       },
@@ -291,35 +288,15 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
 
   const { _escape } = getHTMLRuntime();
   const branches: t.NodePath<t.MarkoTag>[] = [];
-  let cur: t.NodePath<any> = rootTag;
+  let tag: t.NodePath<t.MarkoTag> | undefined = rootTag;
 
   do {
-    const tag = cur as t.NodePath<t.MarkoTag>;
     const { node } = tag;
-    const body = node.body.body;
 
-    // Attribute tags or empty bodies fall back to the normal `<if>` handling.
-    if (node.body.attributeTags || !body.length) return;
+    // Attribute tags fall back to the normal `<if>` handling.
+    if (node.body.attributeTags) return;
 
-    const [attr] = node.attributes;
-    if (isCoreTagName(tag, "else")) {
-      // A lone `if=` is `<else if=cond>`, equivalent to `<else-if=cond>`; any
-      // other attribute shape falls back to the normal `<if>` handling.
-      if (
-        node.attributes.length > 1 ||
-        (attr && (!t.isMarkoAttribute(attr) || attr.name !== "if"))
-      ) {
-        return;
-      }
-    } else if (
-      node.attributes.length !== 1 ||
-      !t.isMarkoAttribute(attr) ||
-      !(attr.default || attr.name === "value")
-    ) {
-      return;
-    }
-
-    for (const child of body) {
+    for (const child of node.body.body) {
       if (t.isMarkoText(child)) {
         // A placeholder escapes its value, so only collapse static text that
         // is unaffected by escaping (otherwise e.g. `&amp;` would change).
@@ -332,17 +309,9 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
     }
 
     branches.push(tag);
+  } while ((tag = getNextBranchTag(tag)));
 
-    let next = cur.getNextSibling();
-    while (next.node && next.isMarkoComment()) next = next.getNextSibling();
-    cur = next;
-  } while (
-    cur.node &&
-    (isCoreTagName(cur, "else-if") || isCoreTagName(cur, "else"))
-  );
-
-  // Converting bypasses the analyze phase, so validate first; invalid chains
-  // fall through to the normal handling where the error is reported.
+  // Converting bypasses the analyze phase, so validate first.
   for (const branchTag of branches) {
     assertValidCondition(branchTag);
   }
@@ -388,10 +357,10 @@ function assertValidCondition(tag: t.NodePath<t.MarkoTag>) {
 
   switch (getTagName(tag)) {
     case "if":
-      assertHasValueAttribute(tag);
+      assertValueAttr(tag, true);
       break;
     case "else-if":
-      assertHasValueAttribute(tag);
+      assertValueAttr(tag, true);
       assertHasPrecedingCondition(tag);
       break;
     case "else":
@@ -415,69 +384,18 @@ function assertHasPrecedingCondition(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function assertHasBody(tag: t.NodePath<t.MarkoTag>) {
-  if (!(tag.node.body.body.length || tag.node.attributeTags.length)) {
-    throw tag
-      .get("name")
-      .buildCodeFrameError(
-        `The [\`${getTagName(tag)}\` tag](https://markojs.com/docs/reference/core-tag#if--else) requires [body content](https://markojs.com/docs/reference/language#tag-content).`,
-      );
-  }
-}
-
-function assertHasValueAttribute(tag: t.NodePath<t.MarkoTag>) {
-  const { node } = tag;
-  const [valueAttr] = node.attributes;
-
-  if (
-    !t.isMarkoAttribute(valueAttr) ||
-    !(valueAttr.default || valueAttr.name === "value")
-  ) {
-    throw tag
-      .get("name")
-      .buildCodeFrameError(
-        `The [\`${getTagName(tag)}\` tag](https://markojs.com/docs/reference/core-tag#if--else) requires a [\`value=\` attribute](https://markojs.com/docs/reference/language#shorthand-value).`,
-      );
-  }
-
-  if (node.attributes.length > 1) {
-    const start = node.attributes[1].loc?.start;
-    const end = node.attributes[node.attributes.length - 1].loc?.end;
-    const msg = `The [\`${getTagName(tag)}\` tag](https://markojs.com/docs/reference/core-tag#if--else) only supports the [\`value=\` attribute](https://markojs.com/docs/reference/language#shorthand-value).`;
-
-    if (start == null || end == null) {
-      throw tag.get("name").buildCodeFrameError(msg);
-    } else {
-      throw tag.hub.buildError(
-        { loc: { start, end } } as unknown as t.Node,
-        msg,
-        Error,
-      );
-    }
-  }
-}
-
 function assertOptionalIfAttribute(tag: t.NodePath<t.MarkoTag>) {
-  const { node } = tag;
-  const [ifAttr] = node.attributes;
-
+  const { attributes } = tag.node;
   if (
-    node.attributes.length > 1 ||
-    (ifAttr && (ifAttr as t.MarkoAttribute).name !== "if")
+    attributes.length > 1 ||
+    (attributes.length === 1 && !isIfAttr(attributes[0]))
   ) {
-    const start = node.attributes[0].loc?.start;
-    const end = node.attributes[node.attributes.length - 1].loc?.end;
-    const msg = `The [\`${getTagName(tag)}\` tag](https://markojs.com/docs/reference/core-tag#if--else) only supports an \`if=\` attribute.`;
-
-    if (start == null || end == null) {
-      throw tag.get("name").buildCodeFrameError(msg);
-    } else {
-      throw tag.hub.buildError(
-        { loc: { start, end } } as unknown as t.Node,
-        msg,
-        Error,
-      );
-    }
+    const ifAttr = attributes.find(isIfAttr);
+    throw buildAttrsError(
+      tag,
+      attributes.filter((attr) => attr !== ifAttr),
+      "The [`<else>` tag](https://markojs.com/docs/reference/core-tag#if--else) only supports the `if=` attribute.",
+    );
   }
 }
 
@@ -485,23 +403,32 @@ function getBranches(tag: t.NodePath<t.MarkoTag>) {
   let branches = BRANCHES_LOOKUP.get(tag);
 
   if (!branches) {
-    let curTag: t.NodePath<any> = tag;
+    let curTag: t.NodePath<t.MarkoTag> | undefined = tag;
     branches = [];
 
     do {
       BRANCHES_LOOKUP.set(curTag, branches);
-      branches.push([
-        curTag,
-        startSection((curTag as t.NodePath<t.MarkoTag>).get("body")),
-      ]);
-      while ((curTag = curTag.getNextSibling()).isMarkoComment());
-    } while (isCoreTagName(curTag, "else") || isCoreTagName(curTag, "else-if"));
+      branches.push([curTag, startSection(curTag.get("body"))]);
+    } while ((curTag = getNextBranchTag(curTag)));
   }
 
   return branches;
 }
 
+// The `<else-if>` or `<else>` continuing the chain after `tag`, past comments.
+function getNextBranchTag(tag: t.NodePath<t.MarkoTag>) {
+  let next = tag.getNextSibling();
+  while (next.isMarkoComment()) next = next.getNextSibling();
+  if (isCoreTagName(next, "else-if") || isCoreTagName(next, "else")) {
+    return next;
+  }
+}
+
 function isLastBranch(tag: t.NodePath<t.MarkoTag>) {
   const branches = getBranches(tag);
   return branches[branches.length - 1][0] === tag;
+}
+
+function isIfAttr(attr: t.MarkoTag["attributes"][number]) {
+  return attr.type === "MarkoAttribute" && attr.name === "if";
 }

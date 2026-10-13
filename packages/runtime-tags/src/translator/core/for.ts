@@ -9,7 +9,13 @@ import {
 import { assertNoSpreadAttrs } from "../util/assert";
 import { type Binding, BindingType } from "../util/bindings";
 import {
+  type ForType,
+  forTypeToBranchRuntime,
+  forTypeToRuntime,
+  forTypeToUnkeyedBranchRuntime,
+  getBaseArgsInForTag,
   getBranchResumeArgs,
+  getForType,
   initBranchSection,
   isSingleNodeBranch,
   resumeOwnerByMarkerWhenStatic,
@@ -17,24 +23,22 @@ import {
 import { detectForSelector, getForSelectorKey } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
-import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
 import { fromIter } from "../util/optional";
 import { addReasonExprs } from "../util/reasons";
 import {
   dropNodes,
   getAllTagReferenceNodes,
   getReferencedBindings,
-  mergeReferences,
   onFinalizeReferences,
   setDerivedFrom,
   trackParamsReferences,
+  mergeTagReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
   getOrCreateSection,
-  getScopeIdIdentifier,
   getSection,
   getSectionForBody,
   startSection,
@@ -53,8 +57,6 @@ import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
 import { getBranchWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
-
-type ForType = "in" | "of" | "to" | "until";
 
 export default {
   analyze(tag) {
@@ -167,11 +169,7 @@ export default {
     }
 
     const nodeBinding = structure.controlFlowNode(tag, tagSection);
-    const tagExtra = mergeReferences(
-      tagSection,
-      tag.node,
-      getAllTagReferenceNodes(tag.node),
-    );
+    const tagExtra = mergeTagReferences(tagSection, tag.node);
 
     addReasonExprs(getSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
 
@@ -216,10 +214,8 @@ export default {
         if (tag.node.body.attributeTags) return;
 
         const tagBody = tag.get("body");
-        const tagSection = getSection(tag);
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
-        const onlyChildParentTagName = getOnlyChildParentTagName(tag);
         const nodeBinding = node.extra!.nodeBinding!;
         const forAttrs = getKnownAttrValues(node);
         const forType = getForType(node)!;
@@ -230,8 +226,7 @@ export default {
 
         resumeOwnerByMarkerWhenStatic(bodySection, nodeBinding);
 
-        writer.flushInto(tag);
-        writeHTMLResumeStatements(tagBody);
+        writeHTMLResumeStatements(tag);
 
         const forTagArgs = getBaseArgsInForTag(forType, forAttrs) as (
           | t.Expression
@@ -247,13 +242,9 @@ export default {
         if (branchReason) {
           forTagArgs.push(
             forAttrs.by || t.numericLiteral(0),
-            getScopeIdIdentifier(tagSection),
-            getScopeAccessorLiteral(nodeBinding),
             ...getBranchResumeArgs(
-              tagSection,
-              nodeBinding,
+              tag,
               branchReason,
-              onlyChildParentTagName,
               isSingleNodeBranch(bodySection),
             ),
           );
@@ -409,35 +400,6 @@ export default {
   ],
 } as Tag;
 
-export function buildForRuntimeCall(
-  type: ForType,
-  attrs: Record<string, t.Expression>,
-  params: t.ArrowFunctionExpression["params"],
-  statements: t.Statement[],
-) {
-  return t.expressionStatement(
-    callRuntime(
-      forTypeToRuntime(type),
-      ...getBaseArgsInForTag(type, attrs),
-      t.arrowFunctionExpression(params, t.blockStatement(statements)),
-    ),
-  );
-}
-
-export function getForType(tag: t.MarkoTag): ForType | undefined {
-  for (const attr of tag.attributes) {
-    if (attr.type === "MarkoAttribute") {
-      switch (attr.name) {
-        case "of":
-        case "in":
-        case "to":
-        case "until":
-          return attr.name;
-      }
-    }
-  }
-}
-
 function getLoopKeyBinding(
   byAttr: t.Expression | undefined,
   paramsBinding: Binding | undefined,
@@ -500,32 +462,6 @@ function getStaticMemberChain(
   }
 }
 
-function forTypeToRuntime(type: ForType) {
-  switch (type) {
-    case "of":
-      return "forOf";
-    case "in":
-      return "forIn";
-    case "to":
-      return "forTo";
-    case "until":
-      return "forUntil";
-  }
-}
-
-function forTypeToBranchRuntime(type: ForType) {
-  switch (type) {
-    case "of":
-      return "_for_of";
-    case "in":
-      return "_for_in";
-    case "to":
-      return "_for_to";
-    case "until":
-      return "_for_until";
-  }
-}
-
 // Without `by=`, `of=` keys by index and `to=`/`until=` by value, which is the
 // index only from 0 in steps of 1; such a loop never moves a branch.
 function isKeyedByIndex(type: ForType, attrs: Record<string, t.Expression>) {
@@ -545,39 +481,4 @@ function isKeyedByIndex(type: ForType, attrs: Record<string, t.Expression>) {
 
 function isNumberOrOmitted(node: t.Expression | undefined, value: number) {
   return !node || (node.type === "NumericLiteral" && node.value === value);
-}
-
-function forTypeToUnkeyedBranchRuntime(type: ForType) {
-  switch (type) {
-    case "to":
-      return "_for_to_unkeyed";
-    case "until":
-      return "_for_until_unkeyed";
-    default:
-      return "_for_of_unkeyed";
-  }
-}
-
-function getBaseArgsInForTag(
-  type: ForType,
-  attrs: Record<string, t.Expression>,
-) {
-  switch (type) {
-    case "in":
-      return [attrs.in];
-    case "of":
-      return [attrs.of];
-    case "to":
-      return [
-        attrs.to,
-        attrs.from || t.numericLiteral(0),
-        attrs.step || t.numericLiteral(1),
-      ];
-    case "until":
-      return [
-        attrs.until,
-        attrs.from || t.numericLiteral(0),
-        attrs.step || t.numericLiteral(1),
-      ];
-  }
 }

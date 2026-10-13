@@ -1,10 +1,18 @@
 import { types as t } from "@marko/compiler";
 
 import { type Binding } from "./bindings";
+import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { some } from "./optional";
 import { isStateReason, isUnconditionalReason, type Reasons } from "./reasons";
 import { hasResumableWriter } from "./references";
-import { ContentType, type Section } from "./sections";
+import { callRuntime } from "./runtime";
+import { getScopeAccessorLiteral } from "./scope-accessor";
+import {
+  ContentType,
+  getScopeIdIdentifier,
+  getSection,
+  type Section,
+} from "./sections";
 import { setSectionOwnerResumedByMarker } from "./signals";
 import { findSlot, SlotKind } from "./slots";
 import { createProgramState } from "./state";
@@ -45,20 +53,24 @@ export function resumeOwnerByMarkerWhenStatic(
 }
 
 export function getBranchResumeArgs(
-  tagSection: Section,
-  nodeBinding: Binding,
+  tag: t.NodePath<t.MarkoTag>,
   branchReasons: Reasons,
-  onlyChildParentTagName: string | false | undefined,
   singleNode: boolean,
 ) {
+  const tagSection = getSection(tag);
+  const nodeBinding = tag.node.extra!.nodeBinding!;
+  const scopeId = getScopeIdIdentifier(tagSection);
+  const accessor = getScopeAccessorLiteral(nodeBinding);
   const endArgs = getBranchEndArgs(
     tagSection,
     nodeBinding,
-    onlyChildParentTagName,
+    getOnlyChildParentTagName(tag),
     singleNode,
   );
   const [markerGuard] = endArgs;
   return [
+    scopeId,
+    accessor,
     getWriteGuardForAny(tagSection, branchReasons, !markerGuard),
     ...endArgs,
   ];
@@ -113,4 +125,96 @@ export function isSingleNodeBranch(bodySection: Section | undefined) {
     bodySection?.content?.singleChild &&
     bodySection.content.startType === ContentType.Tag
   );
+}
+
+export type ForType = "in" | "of" | "to" | "until";
+
+export function buildForRuntimeCall(
+  type: ForType,
+  attrs: Record<string, t.Expression>,
+  params: t.ArrowFunctionExpression["params"],
+  statements: t.Statement[],
+) {
+  return t.expressionStatement(
+    callRuntime(
+      forTypeToRuntime(type),
+      ...getBaseArgsInForTag(type, attrs),
+      t.arrowFunctionExpression(params, t.blockStatement(statements)),
+    ),
+  );
+}
+
+export function getForType(tag: t.MarkoTag): ForType | undefined {
+  for (const attr of tag.attributes) {
+    if (attr.type === "MarkoAttribute") {
+      switch (attr.name) {
+        case "of":
+        case "in":
+        case "to":
+        case "until":
+          return attr.name;
+      }
+    }
+  }
+}
+
+export function forTypeToRuntime(type: ForType) {
+  switch (type) {
+    case "of":
+      return "forOf";
+    case "in":
+      return "forIn";
+    case "to":
+      return "forTo";
+    case "until":
+      return "forUntil";
+  }
+}
+
+export function forTypeToBranchRuntime(type: ForType) {
+  switch (type) {
+    case "of":
+      return "_for_of";
+    case "in":
+      return "_for_in";
+    case "to":
+      return "_for_to";
+    case "until":
+      return "_for_until";
+  }
+}
+
+export function forTypeToUnkeyedBranchRuntime(type: ForType) {
+  switch (type) {
+    case "to":
+      return "_for_to_unkeyed";
+    case "until":
+      return "_for_until_unkeyed";
+    default:
+      return "_for_of_unkeyed";
+  }
+}
+
+export function getBaseArgsInForTag(
+  type: ForType,
+  attrs: Record<string, t.Expression>,
+) {
+  switch (type) {
+    case "in":
+      return [attrs.in];
+    case "of":
+      return [attrs.of];
+    case "to":
+      return [
+        attrs.to,
+        attrs.from || t.numericLiteral(0),
+        attrs.step || t.numericLiteral(1),
+      ];
+    case "until":
+      return [
+        attrs.until,
+        attrs.from || t.numericLiteral(0),
+        attrs.step || t.numericLiteral(1),
+      ];
+  }
 }

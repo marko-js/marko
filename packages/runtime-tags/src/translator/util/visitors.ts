@@ -1,7 +1,12 @@
-import type { types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
+import type {
+  EnterExitPlugin,
+  FunctionPlugin,
+  ModulePlugin,
+  Plugin,
+} from "@marko/compiler/babel-utils";
 
 import { isOutputHTML } from "./marko-config";
-import * as hooks from "./plugin-hooks";
 
 export type VisitorType = "migrate" | "transform" | "analyze" | "translate";
 export type TemplateVisitor<T extends t.Node> = Partial<
@@ -38,10 +43,50 @@ export function translateByTarget<T extends t.Node>({
 }) {
   return {
     enter(path: t.NodePath<T>) {
-      hooks.enter(isOutputHTML() ? html : dom, path);
+      enterHook(isOutputHTML() ? html : dom, path);
     },
     exit(path: t.NodePath<T>) {
-      hooks.exit(isOutputHTML() ? html : dom, path);
+      exitHook(isOutputHTML() ? html : dom, path);
     },
   } as const;
+}
+
+export function enterHook<T extends t.Node>(
+  modulePlugin: Plugin | void,
+  path: t.NodePath<T>,
+) {
+  if (modulePlugin) {
+    const plugin = getPlugin(modulePlugin);
+    if (isFunctionPlugin(plugin)) {
+      plugin(path, t);
+    } else if (plugin.enter) {
+      plugin.enter(path, t);
+    }
+  }
+}
+
+export function exitHook<T extends t.Node>(
+  modulePlugin: Plugin | void,
+  path: t.NodePath<T>,
+) {
+  if (modulePlugin) {
+    const plugin = getPlugin(modulePlugin);
+    if (!isFunctionPlugin(plugin) && plugin.exit) {
+      plugin.exit(path, t);
+    }
+  }
+}
+
+function getPlugin(modulePlugin: Plugin) {
+  return isModulePlugin(modulePlugin) ? modulePlugin.default : modulePlugin;
+}
+
+function isModulePlugin(plugin: Plugin): plugin is ModulePlugin {
+  return Boolean((plugin as ModulePlugin).default);
+}
+
+function isFunctionPlugin(
+  plugin: EnterExitPlugin | FunctionPlugin,
+): plugin is FunctionPlugin {
+  return typeof plugin === "function";
 }

@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import { ReservedId } from "../../common/types";
 import { toAccess } from "../../html/serializer";
@@ -46,9 +47,8 @@ export interface Binding {
   /** The expressions its value is computed from, `false` for none; unset when
    * analysis cannot see them, which makes it its own source. */
   derivedFrom: Opt<t.NodeExtra> | false;
-  /** Complete only once `finalizeReferences` runs at program analyze exit. */
-  /** Its reads, by the expression each is in; pruning hands an expression's reads
-   * to the nearest ancestor it also reads, which they then resolve to. */
+  /** Its reads by expression, complete once `finalizeReferences` runs: pruning
+   * hands an expression's reads to the nearest ancestor it also reads. */
   reads: Map<ReferencedExtra, Opt<Read>>;
   aliases: Set<Binding>;
   hoists: SortedOpt<Section>;
@@ -200,16 +200,15 @@ export function reserveId(binding: Binding, offset: ReservedId) {
 
 // A property of a direct alias is the root's property: one binding, one
 // read, however many local names the value passes through.
-
 export function getOrCreatePropertyAlias(binding: Binding, property: string) {
-  while (isDirectAlias(binding)) binding = binding.aliasOf!;
+  const canonical = getCanonicalBinding(binding);
   return (
-    binding.propertyAliases.get(property) ||
+    canonical.propertyAliases.get(property) ||
     createBinding(
-      `${binding.name}_${property.replace(/[^a-zA-Z0-9_$]/g, "_")}`,
-      binding.type,
-      binding.section,
-      binding,
+      canonical.name + toIdentifierAccess(property),
+      canonical.type,
+      canonical.section,
+      canonical,
       property,
     )
   );
@@ -237,8 +236,7 @@ export function getAssignedObject(binding: Binding) {
     alias = alias.aliasOf
   ) {
     if (alias.property !== undefined) {
-      let parent = alias.aliasOf;
-      while (isDirectAlias(parent)) parent = parent.aliasOf!;
+      const parent = getCanonicalBinding(alias.aliasOf);
       if (
         parent.assignedProperties === true ||
         propsUtil.has(parent.assignedProperties, alias.property)
@@ -262,10 +260,7 @@ function getExistingPropertyAlias(
   binding: Binding | undefined,
   property: string,
 ) {
-  while (binding) {
-    if (!isDirectAlias(binding)) return binding.propertyAliases.get(property);
-    binding = binding.aliasOf;
-  }
+  return binding && getCanonicalBinding(binding).propertyAliases.get(property);
 }
 
 export function compareReferences(
@@ -311,13 +306,9 @@ export function compareIntersections(a: Intersection, b: Intersection) {
 }
 
 export function getAliasRoot(binding: Binding) {
-  let alias = binding.aliasOf;
-  while (alias) {
-    if (!alias.aliasOf) return alias;
-    alias = alias.aliasOf;
-  }
-
-  return alias;
+  let root = binding;
+  while (root.aliasOf) root = root.aliasOf;
+  return root;
 }
 
 export const bindingUtil = new Sorted(function compareBindings(
@@ -340,6 +331,7 @@ export const propsUtil = new Sorted(function compareProps(
   return a < b ? -1 : a > b ? 1 : 0;
 });
 
+// A direct alias only ever aliases a canonical binding, so one hop reaches it.
 export function getCanonicalBinding(binding: Binding) {
   const alias = binding.aliasOf;
   if (alias && isDirectAlias(binding)) {
@@ -381,7 +373,6 @@ export function someAliased<A>(
   return false;
 }
 
-// Aliases the whole of another value: no property, no rest exclusions.
 // The nearest binding declared by name that it is, or is read from.
 export function getNearestDeclared(binding: Binding) {
   for (let cur: Binding | undefined = binding; cur; cur = cur.aliasOf) {
@@ -389,6 +380,12 @@ export function getNearestDeclared(binding: Binding) {
   }
 }
 
+// The name a pattern declares for a value no declared name reaches.
+export function getDeclaredAlias(binding: Binding) {
+  return !getNearestDeclared(binding) && binding.declaredAlias;
+}
+
+// Aliases the whole of another value: no property, no rest exclusions.
 export function isDirectAlias(binding: Binding) {
   return (
     binding.aliasOf !== undefined &&
@@ -405,12 +402,24 @@ export function isRest(binding: Binding) {
   );
 }
 
-export function getDebugScopeAccess(binding: Binding) {
+// The binding a debug name starts at, and the access from it to `binding`: a
+// template param's from the params, another's from a located or declared name.
+export function getDebugAccess(
+  binding: Binding,
+  toParam: boolean,
+  formatProperty: (property: string) => string,
+) {
   let root = binding;
   let access = "";
-  while (!(root.loc || root.declared) && root.aliasOf && !isRest(root)) {
+  while (
+    root.aliasOf &&
+    (toParam
+      ? root.aliasOf !== root.section.params
+      : !(root.loc || root.declared)) &&
+    !isRest(root)
+  ) {
     if (root.property !== undefined) {
-      access = toAccess(root.property) + access;
+      access = formatProperty(root.property) + access;
     }
     root = root.aliasOf;
   }
@@ -428,20 +437,11 @@ export function isTemplateParam(binding: Binding) {
 }
 
 export function getDebugName(binding: Binding) {
-  if (isTemplateParam(binding)) {
-    let root = binding;
-    let access = "";
-    while (root.aliasOf !== root.section.params && !isRest(root)) {
-      if (root.property !== undefined) {
-        access = toAccess(root.property) + access;
-      }
-      root = root.aliasOf as ParamBinding;
-    }
-
-    return root.name + access;
-  }
-
-  const { root, access } = getDebugScopeAccess(binding);
+  const { root, access } = getDebugAccess(
+    binding,
+    isTemplateParam(binding),
+    toAccess,
+  );
   return root.name + access;
 }
 
@@ -454,26 +454,17 @@ export function getDebugNamesAsIdentifier(refs: ReferencedBindings) {
 }
 
 function getDebugNameAsIdentifier(binding: Binding) {
-  let root = binding;
-  let access = "";
-
-  if (isTemplateParam(binding)) {
-    while (root.aliasOf !== root.section.params && !isRest(root)) {
-      if (root.property !== undefined) {
-        access = `_${root.property.replace(/[^a-z0-9_$]/gi, "_") + access}`;
-      }
-      root = root.aliasOf as ParamBinding;
-    }
-  } else {
-    while (!(root.loc || root.declared) && root.aliasOf && !isRest(root)) {
-      if (root.property !== undefined) {
-        access = `_${root.property.replace(/[^a-z0-9_$]/gi, "_") + access}`;
-      }
-      root = root.aliasOf;
-    }
-  }
-
+  const { root, access } = getDebugAccess(
+    binding,
+    isTemplateParam(binding),
+    toIdentifierAccess,
+  );
   return root.name + access;
+}
+
+// `_` and the property, each character an identifier cannot hold made `_`.
+function toIdentifierAccess(property: string) {
+  return `_${property.replace(/[^a-z0-9_$]/gi, "_")}`;
 }
 
 // A binding the receiving template can never observe: every read is in an
@@ -496,6 +487,11 @@ function isReadBeyondInvoking(binding: Binding) {
     if (!expr.invokeOnly) return true;
   }
   return false;
+}
+
+// Declared by the template this compiles, not one it calls.
+export function isOwnBinding(binding: Binding) {
+  return binding.section.program === getProgram().node.extra.section;
 }
 
 export function hasNonConstantPropertyAlias(ref: Binding) {

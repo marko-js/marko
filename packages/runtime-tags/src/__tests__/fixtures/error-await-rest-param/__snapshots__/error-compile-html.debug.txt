@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-await-rest-param/template.marko:1:2
+    > 1 | <await|...rest|=Promise.resolve(1)>
+        |  ^^^^^ The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) only supports a single parameter.
+      2 |   ${rest.length}
+      3 | </await>
+      4 |
