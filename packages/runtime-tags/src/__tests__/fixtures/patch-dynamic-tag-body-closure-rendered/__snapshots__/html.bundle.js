@@ -31,7 +31,7 @@ var heading_default = _template("c", (input) => {
 	}, $scope0_id, ($scope) => [{ e: input.depth }]), 0, $wg__input_type, void 0, 2, $scope0_reason, 1);
 	_patch_write($scope0_id, "we", input.depth, 1);
 	$scope0_page && _scope($scope0_id, {
-		e: _write_if($scope0_reason, 1) && input.depth,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.depth,
 		f: _write_if($scope0_reason, 2) && $input_depth__closures
 	});
 });

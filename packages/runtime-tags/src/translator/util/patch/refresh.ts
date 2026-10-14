@@ -36,7 +36,7 @@ import {
   some,
   type SortedOpt,
 } from "../optional";
-import { getSourcesForRef } from "../reasons";
+import { getSourcesForRef, isConditionalReason } from "../reasons";
 import {
   getReferencedBindings,
   type Read,
@@ -935,25 +935,39 @@ export function inContentSection(section: Section | undefined) {
 
 // When a server source changes, `false` unless a patch fills every client read
 // of `binding`, else the rebuilds that leave one unfilled (a fill partner's).
-export function patchFillsClientReads(
+export function patchFillsClientReads(binding: Binding) {
+  return findUnfilledRebuilds(binding, true, false, new Set());
+}
+
+// The same for a closure's subscribers: one in content or a created scope
+// subscribes in its own render context, which its owner cannot test.
+export function patchFillsSubscribedReads(binding: Binding) {
+  return findUnfilledRebuilds(binding, false, false, new Set());
+}
+
+// `throughCreated` counts content and created scopes as reading the closure
+// from their owner; `inFunction` marks a function reading the original value.
+function findUnfilledRebuilds(
   binding: Binding,
-  seen = new Set<Binding>(),
+  throughCreated: boolean,
+  inFunction: boolean,
+  seen: Set<Binding>,
 ): SortedOpt<Sources> | false {
   if (seen.has(binding)) return;
   seen.add(binding);
   let rebuilds: SortedOpt<Sources>;
-  for (const read of binding.reads.keys()) {
-    // A value reaching the client as written (a spread, a handler) runs there.
+  for (const [read, reads] of binding.reads) {
+    // Resumed code reads the slot whenever it runs, as does a function the
+    // value holds wherever a tag retains it or a callee takes it.
+    const readInFunction = inFunction || some(reads, isFnRead);
     if (
       isResumedRead(read) ||
-      read.isEffect ||
-      read.retained ||
-      read.callSiteExprs
+      ((read.retained || read.callSiteExprs) && readInFunction)
     ) {
       return false;
     }
-    // Content (a tag body) renders client side wherever its tag puts it, and
-    // a created scope on the way may init the closure from its owner.
+    // Content renders client side wherever its tag puts it, and a created
+    // scope on the way may init the closure from its owner.
     for (
       let section: Section | undefined = read.section;
       section && section !== binding.section;
@@ -964,7 +978,12 @@ export function patchFillsClientReads(
         closureInitsCreated(binding, section) ||
         isLocalFillClosure(section, binding)
       ) {
-        return false;
+        if (!throughCreated) return false;
+        rebuilds = sourcesUtil.union(
+          rebuilds,
+          getSourcesForRef(getReferencedBindings(read)),
+        );
+        break;
       }
     }
     const refs = getReferencedBindings(read);
@@ -989,11 +1008,13 @@ export function patchFillsClientReads(
         }
       }
     }
+    // A callee keeps its own copy of what a call site passes it.
     if (
+      !read.callSiteExprs &&
       some(read.derives, (derived) => {
         const more =
           derived.section.program === binding.section.program &&
-          patchFillsClientReads(derived, seen);
+          findUnfilledRebuilds(derived, throughCreated, readInFunction, seen);
         if (more === false) return true;
         rebuilds = sourcesUtil.union(rebuilds, more);
         return false;
@@ -1003,16 +1024,20 @@ export function patchFillsClientReads(
     }
   }
   for (const alias of binding.aliases) {
-    const more = patchFillsClientReads(alias, seen);
+    const more = findUnfilledRebuilds(alias, throughCreated, inFunction, seen);
     if (more === false) return false;
     rebuilds = sourcesUtil.union(rebuilds, more);
   }
   for (const alias of binding.propertyAliases.values()) {
-    const more = patchFillsClientReads(alias, seen);
+    const more = findUnfilledRebuilds(alias, throughCreated, inFunction, seen);
     if (more === false) return false;
     rebuilds = sourcesUtil.union(rebuilds, more);
   }
   return rebuilds;
+}
+
+function isFnRead(read: Read) {
+  return !!read.fnRoot;
 }
 
 // A read resumed code renders wherever its scope sits, so no patch fills it
@@ -1053,7 +1078,25 @@ export function ensurePatchReasonGroups(
     ensureCallerParamGroups(getSourcesForRef(join));
   }
   forEach(section.slots, ensureWriteGroups);
+  forEach(section.slots, ensureUnfilledWriteGroups);
   ensureKnownTagPatchGroups(section);
+}
+
+// A page writes a value a patch fills (and its closure set) only where a
+// client feed leaves a read unfilled, by the groups of the reads' rebuilds.
+function ensureUnfilledWriteGroups(slot: Slot) {
+  if (
+    (slot.kind === SlotKind.Value || slot.kind === SlotKind.ClosureScopes) &&
+    slot.owner.type !== BindingType.dom &&
+    isConditionalReason(slot.reason)
+  ) {
+    forEach(
+      (slot.kind === SlotKind.Value
+        ? patchFillsClientReads
+        : patchFillsSubscribedReads)(slot.owner) || undefined,
+      ensureCallerParamGroups,
+    );
+  }
 }
 
 // A patch writes what a node renders or a branch expression picks; handlers

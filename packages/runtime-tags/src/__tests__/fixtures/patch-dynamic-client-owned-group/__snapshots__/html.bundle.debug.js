@@ -23,8 +23,8 @@ var picker_default = _template("__tests__/tags/picker/index.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_label", input.label, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/picker/index.marko_0_input_on#3_input_label#4/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_on: _write_if($scope0_reason, 2) && input.on,
-		input_label: _write_if($scope0_reason, 1) && input.label
+		input_on: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.on,
+		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label
 	}, "__tests__/tags/picker/index.marko", 0, {
 		input_on: ["input.on"],
 		input_label: ["input.label"]

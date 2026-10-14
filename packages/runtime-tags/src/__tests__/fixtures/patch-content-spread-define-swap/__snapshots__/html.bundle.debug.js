@@ -3,7 +3,7 @@ const $template = "<div></div>";
 const $walks = " b";
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0_input_which#4_one#5_two#6; ;<div></div>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_which = _write_if($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_title = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const one = { content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -30,8 +30,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_client_guard($scope0_reason, 1) && _patch_init($scope0_id, "__tests__/template.marko_0_input_which#4_one#5_two#6/init");
 	$scope0_page ? _scope($scope0_id, {
 		input_title: input.title,
-		one: $wi__input_which && one,
-		two: $wi__input_which && two,
+		one: _unfilled_if($scope0_reason, 1) && one,
+		two: _unfilled_if($scope0_reason, 1) && two,
 		"ClosureScopes:input_title/8": $wi__input_title && $input_title__closures
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],

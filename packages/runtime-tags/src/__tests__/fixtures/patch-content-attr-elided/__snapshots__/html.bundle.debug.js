@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
 	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "__tests__/template.marko_0_input_mode#5_frag_content#7/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_note: _write_if($scope0_reason, 2) && input.note,
+		input_note: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		frag_content: _unfilled_if($scope0_reason, 2) && frag?.content,
 		"ClosureScopes:input_note/9": _write_if($scope0_reason, 1) && $input_note__closures
 	}, "__tests__/template.marko", 0, {

@@ -60,6 +60,7 @@ import {
   patchesBranchesAt,
 } from "./patch/structure";
 import {
+  getClosureScopesIfWritten,
   getPatchWriteOwnership,
   getUnfilledValueIfWritten,
   writePatchResumeStatements,
@@ -1833,12 +1834,13 @@ export function writeHTMLResumeStatements(
           // Only an unfilled read subscribes, so the set ships only there.
           writeSlot(
             scopesSlot,
-            getUnfilledValueIfWritten(
-              closure.section,
-              closure,
-              scopesSlot?.reason,
+            (isPatch() &&
+              getClosureScopesIfWritten(
+                closure,
+                scopesSlot?.reason,
+                identifier,
+              )) ||
               identifier,
-            ) || identifier,
           );
         }
 
@@ -1966,8 +1968,11 @@ export function writeHTMLResumeStatements(
   const pendingProperties = getScopeProperties(section);
   const scopeProperties: t.ObjectProperty[] = [];
   const patches = isPatch();
+  // A patch root writes under `$scope_page`, not its reason, so each
+  // property keeps its own guard.
+  const scopeGuardsReason = !patches || !!section.parent;
   const ifWritten = (reason: Reason, expr: t.Expression) => {
-    if (isSameReason(sectionReason, reason)) return expr;
+    if (scopeGuardsReason && isSameReason(sectionReason, reason)) return expr;
     return getExprIfWritten(section, reason, expr);
   };
 
@@ -1981,7 +1986,8 @@ export function writeHTMLResumeStatements(
     scopeProperties.push(
       toObjectProperty(
         accessor,
-        getUnfilledValueIfWritten(section, binding, reason, value) ||
+        (isPatch() &&
+          getUnfilledValueIfWritten(section, binding, reason, value)) ||
           ifWritten(reason, value),
       ),
     );
@@ -2083,10 +2089,9 @@ export function writeHTMLResumeStatements(
       : callRuntime("_scope", ...writeScopeArgs);
     // Child sections gate through their cross-section guards (derived
     // from the root reason, so still binary under patches).
-    const write =
-      patches && !section.parent
-        ? writeCall
-        : getExprIfWritten(section, sectionReason, writeCall);
+    const write = scopeGuardsReason
+      ? getExprIfWritten(section, sectionReason, writeCall)
+      : writeCall;
     body.push(
       t.expressionStatement(
         // A called body's fills take its write's place in a patch render.
@@ -2096,9 +2101,9 @@ export function writeHTMLResumeStatements(
               write,
               toSequenceExpression(fillCalls),
             )
-          : patches && !section.parent
-            ? t.logicalExpression("&&", scopePageIdentifier(section), write)
-            : write,
+          : scopeGuardsReason
+            ? write
+            : t.logicalExpression("&&", scopePageIdentifier(section), write),
       ),
     );
   } else if (fillCalls.length) {

@@ -13,9 +13,9 @@ var panel_default = _template("b", (input) => {
 	_patch_write($scope0_id, "wf", input.items, 1);
 	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "b3");
 	$scope0_page ? _scope($scope0_id, {
-		d: _write_if($scope0_reason, 2) && input.content,
-		e: _write_if($scope0_reason, 1) && input.label,
-		f: _write_if($scope0_reason, 0) && input.items
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.content,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.label,
+		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.items
 	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb0", input.content), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.label), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb2", input.items));
 });
 

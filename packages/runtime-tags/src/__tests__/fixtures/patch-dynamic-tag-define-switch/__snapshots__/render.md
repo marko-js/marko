@@ -47,7 +47,7 @@ UPDATE: .inc::text@0 "a" => "b"
 INSERT: i
 REMOVE: i + button
 UPDATE: i::text " " => "c"
-UPDATE: i::text "a" => "c"
+UPDATE: i::text "" => "c"
 ```
 
 # Update `{"which":true,"label":"d"}`
@@ -63,6 +63,5 @@ UPDATE: i::text "a" => "c"
 INSERT: .inc
 REMOVE: .inc + i
 UPDATE: .inc::text@0 "" => "d"
-UPDATE: .inc::text@0 "a" => "d"
 UPDATE: .inc::text@2 "" => "0"
 ```

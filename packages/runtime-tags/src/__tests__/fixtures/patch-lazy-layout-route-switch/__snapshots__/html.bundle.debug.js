@@ -109,7 +109,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_trailers("</body></html>");
 	$scope0_page ? _scope($scope0_id, {
-		input_list: input.list,
-		"ClosureScopes:input_page/5": $input_page__closures
+		input_list: _unfilled_if($scope0_reason, 1) && input.list,
+		"ClosureScopes:input_page/5": $wi__input_page && $input_page__closures
 	}, "__tests__/template.marko", 0, { input_list: ["input.list"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.list);
 }, 1);

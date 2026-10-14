@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_write($scope2_id, "PatchWrite:handler", handler, 1);
 		_scope($scope2_id, {
 			second,
-			handler: _write_if($scope0_reason, 1) && handler
+			handler: _unfilled_if($scope0_reason, 1) && handler
 		}, "__tests__/template.marko", "3:4", {
 			second: "3:10",
 			handler: "4:12",

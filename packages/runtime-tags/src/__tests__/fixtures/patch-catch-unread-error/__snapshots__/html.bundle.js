@@ -27,5 +27,5 @@ var template_default = _template("a", (input) => {
 		_html("<p>oops</p>");
 	}, void 0, "a5", "a2");
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && $input_promise__closures });
+	$scope0_page && _scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 1);

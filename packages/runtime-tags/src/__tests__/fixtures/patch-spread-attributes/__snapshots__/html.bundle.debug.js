@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#7");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_img: _write_if($scope0_reason, 2) && input.img,
+		input_img: _unfilled_if($scope0_reason, 2) && input.img,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_img: ["input.img"],

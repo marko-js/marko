@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		g: input.title,
 		i: count,
-		j: _write_if($scope0_reason, 1) && extra,
+		j: _unfilled_if($scope0_reason, 1) && extra,
 		l: _write_if($scope0_reason, 0) && $input_title__closures
 	}) : _filled_guard($scope0_reason, 0) && _content_withheld("a0") && _patch_value($scope0_id, "va5", input.title);
 }, 1);

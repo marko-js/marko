@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 	_patch_value($scope0_id, "va6", items, 1);
 	$scope0_page && _scope($scope0_id, {
 		f: items,
-		g: _write_if($scope0_reason, 0) && $input_promise__closures,
+		g: _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $input_promise__closures,
 		h: $items__closures
 	});
 }, 1);

@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a3");
 	_patch_write($scope0_id, "wf", input.p, 1);
 	$scope0_page && _scope($scope0_id, {
-		f: _write_if($scope0_reason, 1) && input.p,
+		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.p,
 		g: _write_if($scope0_reason, 2) && $input_p__closures
 	});
 }, 1);

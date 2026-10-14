@@ -3,7 +3,7 @@ const $template$1 = "<section></section><div id=partial></div>";
 const $walks$1 = " b b";
 _shells({ "__tests__/tags/frag-host.marko": "__tests__/tags/frag-host.marko !__tests__/tags/frag-host.marko_0_input_mode#5_one#6_two#7; b ;<section></section><div id=partial></div>" });
 var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_mode = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_b__closures = new Set();
 	const one = { content: _content_resume("__tests__/tags/frag-host.marko_2*content", () => {
@@ -28,8 +28,8 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	_client_guard($scope0_reason, 1) && _patch_init($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#5_one#6_two#7/init");
 	$scope0_page ? _scope($scope0_id, {
 		input_b: input.b,
-		one: $wi__input_mode && one,
-		two: $wi__input_mode && two,
+		one: _unfilled_if($scope0_reason, 1) && one,
+		two: _unfilled_if($scope0_reason, 1) && two,
 		"ClosureScopes:input_b/9": _write_if($scope0_reason, 0) && $input_b__closures
 	}, "__tests__/tags/frag-host.marko", 0, {
 		input_b: ["input.b"],

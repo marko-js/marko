@@ -52,7 +52,7 @@ var template_default = _template("b", (input) => {
 	_script($scope0_id, "b1");
 	_patch_value($scope0_id, "vb3", n, 1);
 	$scope0_page ? _scope($scope0_id, {
-		h: _write_if($scope0_reason, 0) && input.label,
+		h: _unfilled_if($scope0_reason, 0) && input.label,
 		i: n
 	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb2", input.label);
 }, 1);

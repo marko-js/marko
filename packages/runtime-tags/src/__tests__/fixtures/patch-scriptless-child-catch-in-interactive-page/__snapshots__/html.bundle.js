@@ -27,7 +27,7 @@ var card_default = _template("b", (input) => {
 		_html(`<b>${_text_resume($scope2_id, "a", err.message, $wg__err_message)}</b>`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, void 0, "b5", "b2", void 0, 1);
-	$scope0_page && _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && $input_promise__closures });
+	$scope0_page && _scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 });
 
 // template.marko

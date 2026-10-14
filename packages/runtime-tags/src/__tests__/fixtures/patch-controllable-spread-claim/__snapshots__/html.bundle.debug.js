@@ -16,8 +16,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_attrs#4_input_on#5/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_attrs: _write_if($scope0_reason, 2) && input.attrs,
-		input_on: _write_if($scope0_reason, 1) && input.on
+		input_attrs: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.attrs,
+		input_on: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.on
 	}, "__tests__/template.marko", 0, {
 		input_attrs: ["input.attrs"],
 		input_on: ["input.on"],

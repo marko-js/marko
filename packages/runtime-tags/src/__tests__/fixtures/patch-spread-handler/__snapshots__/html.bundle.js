@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	_html(`<em>${_text_resume($scope0_id, "b", count)}</em></main>`);
 	_patch_value($scope0_id, "va4", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		f: _write_if($scope0_reason, 0) && input.attrs,
+		f: _unfilled_if($scope0_reason, 0) && input.attrs,
 		g: count
 	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va3", input.attrs);
 }, 1);

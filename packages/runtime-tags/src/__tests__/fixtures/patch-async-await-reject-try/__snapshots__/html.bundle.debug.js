@@ -34,5 +34,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "7:6");
 	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", void 0, 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/template.marko", 0);
+	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1);

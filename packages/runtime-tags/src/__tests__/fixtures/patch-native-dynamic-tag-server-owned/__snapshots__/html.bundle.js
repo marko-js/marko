@@ -4,7 +4,7 @@ _shells({
 	a: "a !a2;b%b D ;<!><!><button> </button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -22,9 +22,9 @@ var template_default = _template("a", (input) => {
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a5");
 	_patch_value($scope0_id, "va6", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		f: $wi__input_label && input.on,
-		g: _write_if($scope0_reason, 1) && input.label,
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.on,
+		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
 		i: count,
-		j: $wi__input_label && $input_label__closures
+		j: _write_if($scope0_reason, 2) && $input_label__closures
 	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.on), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.label));
 }, 1);

@@ -24,8 +24,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_write($scope1_id, "PatchWrite:valueChange", valueChange, 1);
 		_client_guard($scope1_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_value#3_valueChange#4/init");
 		$scope1_page ? _scope($scope1_id, {
-			value: _write_if($scope1_reason, 2) && value,
-			valueChange: _write_if($scope1_reason, 0) && valueChange
+			value: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 1)) && value,
+			valueChange: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 2)) && valueChange
 		}, "__tests__/template.marko", "1:2", {
 			value: "2:12",
 			valueChange: "2:19",

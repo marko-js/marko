@@ -30,8 +30,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_show#5_input_label#6/init");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", n, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_show: _write_if($scope0_reason, 2) && input.show,
-		input_label: _write_if($scope0_reason, 1) && input.label,
+		input_show: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show,
+		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
 		n
 	}, "__tests__/template.marko", 0, {
 		input_show: ["input.show"],

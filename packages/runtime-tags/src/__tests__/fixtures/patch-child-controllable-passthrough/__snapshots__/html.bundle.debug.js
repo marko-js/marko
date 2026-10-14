@@ -27,7 +27,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/counter/index.marko_1*shell"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { input_onCount: input.onCount }, "__tests__/tags/counter/index.marko", 0, { input_onCount: ["input.onCount"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/counter/index.marko_fill0", input.onCount);
+	$scope0_page ? _scope($scope0_id, { input_onCount: _write_if($scope0_reason, 0) && input.onCount }, "__tests__/tags/counter/index.marko", 0, { input_onCount: ["input.onCount"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/counter/index.marko_fill0", input.onCount);
 });
 
 // tags/middle/index.marko

@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a3");
 	_patch_value($scope0_id, "va5", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		g: _write_if($scope0_reason, 1) && input.promise,
+		g: _unfilled_if($scope0_reason, 1) && input.promise,
 		h: count
 	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.promise);
 }, 1);

@@ -31,7 +31,7 @@ var child_default = _template("a", (input) => {
 		_html(`<b>${_text_resume($scope3_id, "a", e.message, $wg__e_message)}</b>`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 	}, "a5", "a6", "a2", void 0, 1);
-	$scope0_page && _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && $input_p__closures });
+	$scope0_page && _scope($scope0_id, { e: $wi__input_p && _unfilled_if($scope0_reason, 0) && $input_p__closures });
 });
 
 // template.marko
@@ -58,5 +58,5 @@ var template_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { e: input.p }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.p);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.p }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.p);
 }, 1);

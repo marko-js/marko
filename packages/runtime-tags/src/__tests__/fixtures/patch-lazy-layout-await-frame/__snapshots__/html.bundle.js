@@ -167,7 +167,7 @@ var template_default = _template("e", (input) => {
 		$wg__input_page || $wi__input_page__OR__input_list && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	$scope0_page ? _scope($scope0_id, {
-		e: $wi__input_page && input.list,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.list,
 		f: $wi__input_page && $input_page__closures,
 		g: _write_if($scope0_reason, 2) && $input_list__closures,
 		a: _existing_scope($childScope4)

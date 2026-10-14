@@ -24,7 +24,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:two", two, 1);
 	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#4_one#5_two#6/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_b: _write_if($scope0_reason, 2) && input.b,
+		input_b: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.b,
 		one: _unfilled_if($scope0_reason, 2) && one,
 		two: _unfilled_if($scope0_reason, 2) && two,
 		"ClosureScopes:input_b/8": _write_if($scope0_reason, 1) && $input_b__closures

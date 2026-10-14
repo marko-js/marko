@@ -58,7 +58,7 @@ var template_default = _template("c", (input) => {
 	_script($scope0_id, "c3");
 	_patch_value($scope0_id, "vc5", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		f: _write_if($scope0_reason, 1) && input.label,
+		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
 		g: count,
 		h: _write_if($scope0_reason, 2) && $input_label__closures,
 		i: $count__closures

@@ -45,6 +45,6 @@ var template_default = _template("b", (input) => {
 	}, void 0, "b5", void 0, "b2", 1);
 	$scope0_page && _scope($scope0_id, {
 		b: _existing_scope($childScope),
-		g: $wi__input_promise && $input_promise__closures
+		g: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures
 	});
 }, 1);

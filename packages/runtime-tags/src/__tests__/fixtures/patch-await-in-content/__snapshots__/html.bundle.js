@@ -19,7 +19,7 @@ _shells({
 	a: /*@__PURE__*/ (() => `a !a7;${((_w0) => ` D l/${_w0}&`)("D%l")};${((_w0) => `<button> </button>${_w0}`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_promise__OR__input_msg = _write_if($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_promise__OR__input_msg = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -53,10 +53,10 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wg", input.msg, 1);
 	_patch_value($scope0_id, "va8", count, 1);
 	$scope0_page && _scope($scope0_id, {
-		g: $wi__input_promise && input.msg,
+		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.msg,
 		h: count,
 		j: _write_if($scope0_reason, 2) && $input_msg__closures,
-		i: $wi__input_promise && $input_promise__closures,
+		i: _write_if($scope0_reason, 1) && $input_promise__closures,
 		c: _existing_scope($childScope)
 	});
 }, 1);

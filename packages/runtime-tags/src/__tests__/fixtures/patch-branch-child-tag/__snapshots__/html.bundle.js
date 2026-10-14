@@ -16,7 +16,7 @@ _shells({
 	a1: "a1,<em>closed</em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		} else {
 			const $scope2_id = _scope_id();
 			_html("<em>closed</em>");
-			$wi__input_show && _scope($scope2_id, {});
+			_write_if($scope0_reason, 1) && _scope($scope2_id, {});
 			return 1;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a0", "a1"], $scope0_reason, 1);
@@ -45,8 +45,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	_patch_value($scope0_id, "va5", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		g: $wi__input_show && input.title,
-		h: $wi__input_show && input.note,
+		g: _unfilled_if($scope0_reason, 1) && input.title,
+		h: _unfilled_if($scope0_reason, 1) && input.note,
 		i: count
 	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va3", input.title), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.note));
 }, 1);

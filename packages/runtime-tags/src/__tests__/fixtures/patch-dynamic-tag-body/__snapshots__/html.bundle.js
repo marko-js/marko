@@ -34,9 +34,9 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wf", input.cls, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a6");
 	$scope0_page ? _scope($scope0_id, {
-		e: _write_if($scope0_reason, 4) && input.tag,
-		f: _write_if($scope0_reason, 3) && input.cls,
-		i: _write_if($scope0_reason, 5) && input.note,
+		e: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.tag,
+		f: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.cls,
+		i: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 6)) && input.note,
 		j: _write_if($scope0_reason, 6) && $input_note__closures
 	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va3", input.tag), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va4", input.cls), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "va5", input.note));
 }, 1);

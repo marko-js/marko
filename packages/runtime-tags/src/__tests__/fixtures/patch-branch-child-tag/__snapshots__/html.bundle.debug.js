@@ -18,7 +18,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell,<em>closed</em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		} else {
 			const $scope2_id = _scope_id();
 			_html("<em>closed</em>");
-			$wi__input_show && _scope($scope2_id, {}, "__tests__/template.marko", "6:4");
+			_write_if($scope0_reason, 1) && _scope($scope2_id, {}, "__tests__/template.marko", "6:4");
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 1);
@@ -47,8 +47,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_title: $wi__input_show && input.title,
-		input_note: $wi__input_show && input.note,
+		input_title: _unfilled_if($scope0_reason, 1) && input.title,
+		input_note: _unfilled_if($scope0_reason, 1) && input.note,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],

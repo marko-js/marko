@@ -27,7 +27,7 @@ var frag_host_default = _template("b", (input) => {
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b0", 0, 0);
 	$scope0_page ? _scope($scope0_id, {
-		d: _write_if($scope0_reason, 2) && input.note,
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		f: _write_if($scope0_reason, 1) && $input_note__closures
 	}) : _filled_guard($scope0_reason, 1) && _content_withheld("b1") && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb3", input.note);
 });

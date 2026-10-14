@@ -32,7 +32,7 @@ _shells({
 	a1: /*@__PURE__*/ ((_w0) => `a1;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	const $p_name__closures = /* @__PURE__ */ new Set();
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 		});
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
-			l: $wi__input_items && $for_content__item_id__closures,
+			l: _write_if($scope0_reason, 1) && $for_content__item_id__closures,
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 1);
@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 	_patch_value($scope0_id, "va6", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		g: count,
-		i: $wi__input_items && p?.name,
+		i: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && p?.name,
 		j: $count__closures,
 		k: _write_if($scope0_reason, 0) && $p_name__closures
 	}) : _filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", p?.name);

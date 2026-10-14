@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		input_title: input.title,
 		count,
-		extra: _write_if($scope0_reason, 1) && extra,
+		extra: _unfilled_if($scope0_reason, 1) && extra,
 		"ClosureScopes:input_title/11": _write_if($scope0_reason, 0) && $input_title__closures
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],

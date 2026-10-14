@@ -46,8 +46,8 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wj", handler, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.title,
-		j: _write_if($scope0_reason, 2) && handler,
+		j: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && handler,
 		k: $wi__input_title && $input_title__closures,
-		l: $wi__input_title && $handler2__closures
+		l: $wi__input_title && _unfilled_if($scope0_reason, 3) && $handler2__closures
 	}) : _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "wf", input.title);
 }, 1);

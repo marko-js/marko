@@ -11,8 +11,8 @@ var tab_editor_default = _template("__tests__/tags/tab-editor.marko", (input) =>
 	_patch_write($scope0_id, "PatchWrite:input_tabChange", input.tabChange, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/tab-editor.marko_0_input_tab#3_input_tabChange#4/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_tab: _write_if($scope0_reason, 2) && input.tab,
-		input_tabChange: _write_if($scope0_reason, 1) && input.tabChange
+		input_tab: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.tab,
+		input_tabChange: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.tabChange
 	}, "__tests__/tags/tab-editor.marko", 0, {
 		input_tab: ["input.tab"],
 		input_tabChange: ["input.tabChange"]

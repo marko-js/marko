@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id), 0, $wg__input_mode, void 0, 2, $scope0_reason, 1);
 	_html("</main>");
 	$scope0_page ? _scope($scope0_id, {
-		input_text: _write_if($scope0_reason, 1) && input.text,
+		input_text: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.text,
 		"ClosureScopes:input_text/5": _write_if($scope0_reason, 2) && $input_text__closures
 	}, "__tests__/template.marko", 0, { input_text: ["input.text"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.text);
 }, 1);

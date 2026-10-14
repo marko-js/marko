@@ -89,7 +89,7 @@ _shells({
 	"__tests__/template.marko_5*shell": "__tests__/template.marko_5*shell,<p>home</p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_page__OR__input_wide__OR__input_note = _write_if($scope0_reason, 0), $wg__input_page = _write_guard($scope0_reason, 2), $wi__input_page = _write_if($scope0_reason, 2), $wi__input_wide = _write_if($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 5), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_page__OR__input_wide__OR__input_note = _write_if($scope0_reason, 0), $wg__input_page = _write_guard($scope0_reason, 2), $wi__input_wide = _write_if($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 5), $wi__input_page = _write_if($scope0_reason, 2), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_wide__closures = new Set();
 	const $input_note__closures = new Set();
@@ -159,9 +159,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_5*shell", "__tests__/template.marko_1*shell"], $scope0_reason, 2);
 	_trailers("</body></html>");
 	$scope0_page ? _scope($scope0_id, {
-		input_list: $wi__input_page && input.list,
-		input_wide: $wi__input_page && input.wide,
-		input_note: $wi__input_page && input.note,
+		input_list: _unfilled_if($scope0_reason, 2) && input.list,
+		input_wide: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.wide,
+		input_note: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 5)) && input.note,
 		"ClosureScopes:input_wide/9": $wi__input_wide && $input_wide__closures,
 		"ClosureScopes:input_note/10": $wi__input_note && $input_note__closures,
 		"ClosureScopes:input_page/7": $wi__input_page && $input_page__closures

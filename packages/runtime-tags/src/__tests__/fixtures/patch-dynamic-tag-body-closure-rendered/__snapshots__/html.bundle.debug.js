@@ -42,7 +42,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	}, $scope0_id, ($scope) => [{ input_depth: input.depth }]), 0, $wg__input_type, void 0, 2, $scope0_reason, 1);
 	_patch_write($scope0_id, "PatchWrite:input_depth", input.depth, 1);
 	$scope0_page && _scope($scope0_id, {
-		input_depth: _write_if($scope0_reason, 1) && input.depth,
+		input_depth: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.depth,
 		"ClosureScopes:input_depth/5": _write_if($scope0_reason, 2) && $input_depth__closures
 	}, "__tests__/tags/heading.marko", 0, { input_depth: ["input.depth"] });
 });

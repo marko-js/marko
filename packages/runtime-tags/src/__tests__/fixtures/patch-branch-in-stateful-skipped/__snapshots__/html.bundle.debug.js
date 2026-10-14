@@ -14,9 +14,9 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_items", input.items, 1);
 	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "__tests__/tags/panel.marko_0_input_content#3_input_label#4_input_items#5/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_content: _write_if($scope0_reason, 2) && input.content,
-		input_label: _write_if($scope0_reason, 1) && input.label,
-		input_items: _write_if($scope0_reason, 0) && input.items
+		input_content: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.content,
+		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.label,
+		input_items: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.items
 	}, "__tests__/tags/panel.marko", 0, {
 		input_content: ["input.content"],
 		input_label: ["input.label"],

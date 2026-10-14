@@ -7,7 +7,7 @@ _shells({
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 1), $wi__input = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const $input__closures = /* @__PURE__ */ new Set();
@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 			_html("<span>inner</span>");
 		}, void 0, "a6", "a2");
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a7");
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a8");
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input__closures, _scope($scope1_id, { _: $wi__input && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a8");
 	}, void 0, (err) => {
 		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();
@@ -44,6 +44,6 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
 		f: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures,
-		e: _unfilled_if($scope0_reason, 0) && $input__closures
+		e: $wi__input && _unfilled_if($scope0_reason, 0) && $input__closures
 	});
 }, 1);

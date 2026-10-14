@@ -28,7 +28,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 		_html(`<b>${_text_resume($scope2_id, "#text/0", err.message, $wg__err_message)}</b>`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/tags/card/index.marko", "5:4");
 	}, void 0, "__tests__/tags/card/index.marko_2*content", "__tests__/tags/card/index.marko_1*content", void 0, 1);
-	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/tags/card/index.marko", 0);
+	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/tags/card/index.marko", 0);
 });
 
 // template.marko

@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a3");
 	_patch_value($scope0_id, "va5", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		k: _write_if($scope0_reason, 2) && input.img,
+		k: _unfilled_if($scope0_reason, 2) && input.img,
 		l: count
 	}) : _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va4", input.img);
 }, 1);

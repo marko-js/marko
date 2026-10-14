@@ -78,7 +78,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_write($scope0_id, "wf", input.text, 1);
 	$scope0_page && _scope($scope0_id, {
-		f: _write_if($scope0_reason, 2) && input.text,
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.text,
 		g: $wi__input_text && $input_text__closures,
 		a: _existing_scope($childScope)
 	});

@@ -22,7 +22,7 @@ _shells({
 	b: /*@__PURE__*/ (() => `b;${((_w0, _w1) => `D/${_w0}&/${_w1}&%l`)(" b", " b")};${((_w0, _w1) => `<main>${_w0}${_w1}<!></main>`)($template, $template)}`)()
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label__OR__input_promise = _write_if($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_label__OR__input_promise = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $item__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -69,10 +69,10 @@ var template_default = _template("b", (input) => {
 	_html("</main>");
 	_patch_write($scope0_id, "wh", item, 1);
 	$scope0_page && _scope($scope0_id, {
-		h: $wi__input_promise && item,
+		h: _unfilled_if($scope0_reason, 2) && item,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2),
-		j: _write_if($scope0_reason, 1) && $item__closures,
-		i: $wi__input_promise && _unfilled_if($scope0_reason, 2) && $input_promise__closures
+		j: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $item__closures,
+		i: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_promise__closures
 	});
 }, 1);

@@ -127,8 +127,8 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/wrap.marko_1*shell"], $scope0_reason, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_items: input.items,
-		input_selected: input.selected
+		input_items: _unfilled_if($scope0_reason, 1) && input.items,
+		input_selected: _unfilled_if($scope0_reason, 1) && input.selected
 	}, "__tests__/tags/wrap.marko", 0, {
 		input_items: ["input.items"],
 		input_selected: ["input.selected"]

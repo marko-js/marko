@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, ($scope) => [{ input_x: input.x }]), 0, $wg__input_wrap, void 0, 2, $scope0_reason, 1);
 	_patch_write($scope0_id, "PatchWrite:input_x", input.x, 1);
 	$scope0_page && _scope($scope0_id, {
-		input_x: _write_if($scope0_reason, 1) && input.x,
+		input_x: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.x,
 		"ClosureScopes:input_x/5": _write_if($scope0_reason, 2) && $input_x__closures
 	}, "__tests__/template.marko", 0, { input_x: ["input.x"] });
 }, 1);

@@ -19,7 +19,7 @@ _shells({
 	c2: "c2;D%c%;<li><!>:<!></li>"
 });
 var template_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_on__OR__input_items__OR__input_label = _write_if($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_on = _write_if($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_on__OR__input_items__OR__input_label = _write_if($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_items__closures = /* @__PURE__ */ new Set();
@@ -57,12 +57,12 @@ var template_default = _template("c", (input) => {
 	_script($scope0_id, "c6");
 	_patch_value($scope0_id, "vc9", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		f: $wi__input_on && input.items,
-		g: _write_if($scope0_reason, 0) && input.label,
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.items,
+		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.label,
 		h: count,
 		k: _write_if($scope0_reason, 4) && $input_label__closures,
 		j: _write_if($scope0_reason, 3) && $input_items__closures,
-		i: $wi__input_on && $input_on__closures,
+		i: _write_if($scope0_reason, 2) && $input_on__closures,
 		a: _existing_scope($childScope)
 	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vc7", input.items), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "vc8", input.label));
 }, 1);

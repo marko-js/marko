@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", tab, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_x: _write_if($scope0_reason, 0) && input.x,
+		input_x: _unfilled_if($scope0_reason, 0) && input.x,
 		tab
 	}, "__tests__/template.marko", 0, {
 		input_x: ["input.x"],

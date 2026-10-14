@@ -50,6 +50,6 @@ var template_default = _template("a", (input) => {
 	$scope0_page && _scope($scope0_id, {
 		h: count,
 		c: _existing_scope($childScope),
-		i: $wi__input_promise && $input_promise__closures
+		i: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures
 	});
 }, 1);

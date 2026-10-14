@@ -17,7 +17,7 @@ _shells({
 	a1: /*@__PURE__*/ ((_w0) => `a1;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_items__OR__input_prefix = _write_if($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_items__OR__input_prefix = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_prefix__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
@@ -38,13 +38,13 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id) });
 		_scope($scope1_id, {
 			_: $wi__input_items__OR__input_prefix && _scope_with_id($scope0_id),
-			g: $wi__input_items && $for_content__item__closures,
+			g: _write_if($scope0_reason, 1) && $for_content__item__closures,
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a")}`);
 	$scope0_page ? _scope($scope0_id, {
-		e: $wi__input_items && input.prefix,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.prefix,
 		f: _write_if($scope0_reason, 2) && $input_prefix__closures
 	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.prefix);
 }, 1);

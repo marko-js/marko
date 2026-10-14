@@ -64,7 +64,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", items, 1);
 	$scope0_page && _scope($scope0_id, {
 		items,
-		"ClosureScopes:input_promise/6": _write_if($scope0_reason, 0) && $input_promise__closures,
+		"ClosureScopes:input_promise/6": _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $input_promise__closures,
 		"ClosureScopes:items/7": $items__closures
 	}, "__tests__/template.marko", 0, { items: "1:6" });
 }, 1);

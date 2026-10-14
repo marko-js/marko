@@ -30,10 +30,10 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wg", Other, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a8");
 	$scope0_page ? _scope($scope0_id, {
-		d: _write_if($scope0_reason, 2) && input.label,
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
 		e: $wi__input_label && input.which,
-		f: Counter,
-		g: Other,
+		f: $wi__input_label__OR__input_which && Counter,
+		g: $wi__input_label__OR__input_which && Other,
 		i: $wi__input_label && $input_label__closures
 	}) : (_filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "va5", input.label) : (_content_withheld("a0") && _client_guard($scope0_reason, 0) || _content_withheld("a3") && _client_guard($scope0_reason, 0)) && _patch_value($scope0_id, "va6", input.label)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.which));
 }, 1);

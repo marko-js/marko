@@ -48,8 +48,8 @@ var mid_default = _template("__tests__/tags/mid.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/mid.marko_1*shell"], $scope0_reason, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_flag: input.flag,
-		input_label: input.label
+		input_flag: _unfilled_if($scope0_reason, 1) && input.flag,
+		input_label: _unfilled_if($scope0_reason, 1) && input.label
 	}, "__tests__/tags/mid.marko", 0, {
 		input_flag: ["input.flag"],
 		input_label: ["input.label"]

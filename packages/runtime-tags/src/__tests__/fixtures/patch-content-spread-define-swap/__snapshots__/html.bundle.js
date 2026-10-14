@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a4; ;<div></div>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_which = _write_if($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_title = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const one = { content: _content_resume("a0", () => {
@@ -28,8 +28,8 @@ var template_default = _template("a", (input) => {
 	_client_guard($scope0_reason, 1) && _patch_init($scope0_id, "a6");
 	$scope0_page ? _scope($scope0_id, {
 		d: input.title,
-		f: $wi__input_which && one,
-		g: $wi__input_which && two,
+		f: _unfilled_if($scope0_reason, 1) && one,
+		g: _unfilled_if($scope0_reason, 1) && two,
 		i: $wi__input_title && $input_title__closures
 	}) : _filled_guard($scope0_reason, 0) && (_content_withheld("a0") || _content_withheld("a2")) && _patch_value($scope0_id, "va5", input.title);
 }, 1);

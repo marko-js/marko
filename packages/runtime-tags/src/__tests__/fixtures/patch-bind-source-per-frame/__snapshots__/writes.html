@@ -6,17 +6,15 @@
   WALKER_RUNTIME("M")("_").n = "";
   M._.r = [_ => [1, {
     f: "a",
-    j: _(1, "a0"),
-    k: new Set,
-    l: new Set
+    k: new Set
   }], _ => [2, {
     Ia: {
-      click: _(1).j
+      click: _(1, "a0")
     },
     _: _(1)
   }], _ => [3, {
     Ia: {
-      click: _.a = _(1).j
+      click: _(2).Ia.click
     },
     _: _(1),
     Ck: 1,

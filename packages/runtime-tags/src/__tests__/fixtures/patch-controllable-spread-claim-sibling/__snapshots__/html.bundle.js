@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wg", input.on, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a5");
 	$scope0_page ? _scope($scope0_id, {
-		f: _write_if($scope0_reason, 2) && input.attrs,
-		g: _write_if($scope0_reason, 1) && input.on
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.attrs,
+		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.on
 	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.attrs), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.on));
 }, 1);

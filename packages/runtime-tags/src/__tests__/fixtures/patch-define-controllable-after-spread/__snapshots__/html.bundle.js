@@ -22,8 +22,8 @@ var template_default = _template("a", (input) => {
 		_patch_write($scope1_id, "we", valueChange, 1);
 		_client_guard($scope1_reason, 0) && _patch_init($scope1_id, "a6");
 		$scope1_page ? _scope($scope1_id, {
-			d: _write_if($scope1_reason, 2) && value,
-			e: _write_if($scope1_reason, 0) && valueChange
+			d: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 1)) && value,
+			e: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 2)) && valueChange
 		}) : (_filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 2) && _patch_value($scope1_id, "va4", value), _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_value($scope1_id, "va5", valueChange));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 0) << 7);

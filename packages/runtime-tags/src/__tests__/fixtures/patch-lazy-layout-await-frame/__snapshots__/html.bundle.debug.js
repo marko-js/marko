@@ -172,7 +172,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wg__input_page || $wi__input_page__OR__input_list && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	$scope0_page ? _scope($scope0_id, {
-		input_list: $wi__input_page && input.list,
+		input_list: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.list,
 		"ClosureScopes:input_page/5": $wi__input_page && $input_page__closures,
 		"ClosureScopes:input_list/6": _write_if($scope0_reason, 2) && $input_list__closures,
 		"#childScope/0": _existing_scope($childScope4)

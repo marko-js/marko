@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_label: _write_if($scope0_reason, 0) && input.label,
+		input_label: _unfilled_if($scope0_reason, 0) && input.label,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],

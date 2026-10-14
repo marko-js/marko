@@ -28,8 +28,8 @@ var picker_default = _template("b", (input) => {
 	_patch_let_change($scope0_id, "vb5", refreshing, "di", $refreshingChange, $scope0_reason, 0);
 	_patch_value($scope0_id, "vb6", catalog, 1);
 	$scope0_page ? _scope($scope0_id, {
-		e: _write_if($scope0_reason, 2) && input.refreshing,
-		f: _write_if($scope0_reason, 1) && input.refreshingChange,
+		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.refreshing,
+		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.refreshingChange,
 		k: load,
 		i: $refreshingChange
 	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb2", input.refreshing), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", input.refreshingChange));

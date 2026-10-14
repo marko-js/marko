@@ -10,13 +10,6 @@
   WALKER_RUNTIME("M")("_").patchBuild = "";
   M._.r = [_ => [1, {
       "ConditionalRenderer:#text/0": "div",
-      input_p: (p => p = new Promise((f, r) => _.a = {
-        f,
-        r(e) {
-          p.catch(_ => 0);
-          r(e)
-        }
-      }))(),
       "ClosureScopes:input_p/8": new Set,
       "ClosureScopes:input_q/9": new Set,
       "#childScope/1": _(4)
@@ -30,7 +23,7 @@
       "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_2*content 1"
     }, {
       _: _(1)
-    }], _ => (_.a.f("1"), 0),
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_0 1"
   ];
   M._.w()

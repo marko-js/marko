@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_write($scope0_id, "PatchWrite:input_p", input.p, 1);
 	$scope0_page && _scope($scope0_id, {
-		input_p: _write_if($scope0_reason, 1) && input.p,
+		input_p: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.p,
 		"ClosureScopes:input_p/8": _write_if($scope0_reason, 2) && $input_p__closures,
 		"ClosureScopes:input_q/9": $wi__input_q && $input_q__closures,
 		"#childScope/1": _existing_scope($childScope)

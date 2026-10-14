@@ -21,7 +21,7 @@ _shells({
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_2*shell;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_note = _write_if($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 4), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_note = _write_if($scope0_reason, 3), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	_html("<main>");
@@ -64,8 +64,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 4), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 4);
 	_html("</main>");
 	$scope0_page ? _scope($scope0_id, {
-		input_note: $wi__input_show && input.note,
-		input_t2: $wi__input_show && input.t2,
+		input_note: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 3)) && input.note,
+		input_t2: _unfilled_if($scope0_reason, 4) && input.t2,
 		"ClosureScopes:input_note/8": $wi__input_note && $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {

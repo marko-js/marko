@@ -27,7 +27,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { input_on: input.on }, "__tests__/tags/child.marko", 0, { input_on: ["input.on"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.on);
+	$scope0_page ? _scope($scope0_id, { input_on: _write_if($scope0_reason, 0) && input.on }, "__tests__/tags/child.marko", 0, { input_on: ["input.on"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.on);
 });
 
 // tags/store.marko

@@ -50,7 +50,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $childScope = _patch_child($scope0_id, "#childScope/0");
 	list_default({ item: $item });
 	$scope0_page ? _scope($scope0_id, {
-		input_show: _write_if($scope0_reason, 1) && input.show,
+		input_show: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.show,
 		"ClosureScopes:input_show/5": $wi__input_show && $input_show__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/tags/child.marko", 0, { input_show: ["input.show"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.show);

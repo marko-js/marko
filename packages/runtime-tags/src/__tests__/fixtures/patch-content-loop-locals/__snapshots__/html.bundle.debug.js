@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", n, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_show: _write_if($scope0_reason, 0) && input.show,
+		input_show: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show,
 		n,
 		"ClosureScopes:input_show/8": _write_if($scope0_reason, 1) && $input_show__closures,
 		"ClosureScopes:n/9": $n__closures,

@@ -8,15 +8,13 @@
 <script>
   WALKER_RUNTIME("M")("_").patchBuild = "";
   M._.r = [_ => [1, {
-      item: _.a = {
-        label: "a"
-      },
       "#childScope/0": _(2),
-      "#childScope/1": _(3),
-      "ClosureScopes:item/9": new Set
+      "#childScope/1": _(3)
     }, {
       input_name: "a",
-      input_item: _.a
+      input_item: _.a = {
+        label: "a"
+      }
     }, {
       input_name: "b",
       input_item: _.a

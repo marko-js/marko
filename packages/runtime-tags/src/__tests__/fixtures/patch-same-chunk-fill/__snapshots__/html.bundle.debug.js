@@ -52,6 +52,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$scope0_page && _scope($scope0_id, {
 		count,
 		"#childScope/2": _existing_scope($childScope),
-		"ClosureScopes:input_promise/8": $wi__input_promise && $input_promise__closures
+		"ClosureScopes:input_promise/8": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures
 	}, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

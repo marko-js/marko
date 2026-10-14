@@ -32,5 +32,5 @@ var template_default = _template("a", (input) => {
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 	}, "a5", "a6", "a2", void 0, 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && $input_promise__closures });
+	$scope0_page && _scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 1);

@@ -83,7 +83,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_write($scope0_id, "PatchWrite:input_text", input.text, 1);
 	$scope0_page && _scope($scope0_id, {
-		input_text: _write_if($scope0_reason, 2) && input.text,
+		input_text: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.text,
 		"ClosureScopes:input_text/6": $wi__input_text && $input_text__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { input_text: ["input.text"] });

@@ -27,12 +27,12 @@ var list_default = _template("c", (input) => {
 		_client_guard($scope0_reason, 0) && _var($scope1_id, "b", $childScope, "c1");
 		_html(`<p>${_patch_text($scope1_id, "c", label, void 0, $scope0_reason, 0)}</p>`);
 		_scope($scope1_id, {
-			e: _write_if($scope0_reason, 2) && item,
+			e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c0", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { e: _write_if($scope0_reason, 1) && input.suffix }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc2", input.suffix);
+	$scope0_page ? _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.suffix }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc2", input.suffix);
 });
 
 // template.marko

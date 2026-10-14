@@ -29,5 +29,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<p>oops</p>");
 	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content");
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/template.marko", 0);
+	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1);

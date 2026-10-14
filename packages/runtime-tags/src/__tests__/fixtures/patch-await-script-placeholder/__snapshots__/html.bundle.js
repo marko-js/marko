@@ -30,5 +30,5 @@ var template_default = _template("a", (input) => {
 		_html("loading");
 	}, void 0, "a6", void 0, "a2", 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { e: $input_promise__closures });
+	$scope0_page && _scope($scope0_id, { e: $wi__input_promise && $input_promise__closures });
 }, 1);

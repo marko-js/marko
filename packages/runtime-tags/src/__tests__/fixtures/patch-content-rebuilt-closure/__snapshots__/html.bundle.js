@@ -49,7 +49,7 @@ var child_default = _template("b", (input) => {
 	const $childScope = _patch_child($scope0_id, "a");
 	list_default({ item: $item });
 	$scope0_page ? _scope($scope0_id, {
-		e: _write_if($scope0_reason, 1) && input.show,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.show,
 		f: $wi__input_show && $input_show__closures,
 		a: _existing_scope($childScope)
 	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", input.show);

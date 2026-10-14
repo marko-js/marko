@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_tag#5_input_title#6/init");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", n, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_tag: _write_if($scope0_reason, 2) && input.tag,
+		input_tag: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.tag,
 		input_title: input.title,
 		n
 	}, "__tests__/template.marko", 0, {

@@ -31,8 +31,8 @@ var template_default = _template("c", (input) => {
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "c3");
 	_patch_value($scope0_id, "vc4", n, 1);
 	$scope0_page ? _scope($scope0_id, {
-		f: _write_if($scope0_reason, 2) && input.mode,
-		g: _write_if($scope0_reason, 1) && input.label,
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.mode,
+		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
 		i: n
 	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vc1", input.mode), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc2", input.label));
 }, 1);

@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell;Db%;<strong>B:<!></strong>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_alt__OR__input_note = _write_if($scope0_reason, 1), $wg__input_alt = _write_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 3), $wi__input_note = _write_if($scope0_reason, 6), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_alt__OR__input_note = _write_if($scope0_reason, 1), $wg__input_alt = _write_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 3), $wi__input_note = _write_if($scope0_reason, 6), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	const $input_alt__closures = new Set();
@@ -69,9 +69,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#main/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $wg__input_show)}`);
 	$scope0_page ? _scope($scope0_id, {
-		input_title: $wi__input_show && input.title,
-		input_alt: $wi__input_show && input.alt,
-		input_note: _write_if($scope0_reason, 0) && input.note,
+		input_title: _unfilled_if($scope0_reason, 3) && input.title,
+		input_alt: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5)) && input.alt,
+		input_note: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 6)) && input.note,
 		"ClosureScopes:input_note/9": $wi__input_note && $input_note__closures,
 		"ClosureScopes:input_alt/8": _write_if($scope0_reason, 5) && $input_alt__closures
 	}, "__tests__/template.marko", 0, {

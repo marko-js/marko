@@ -44,8 +44,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_label", input.label, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_which#6_input_label#7/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_which: _write_if($scope0_reason, 2) && input.which,
-		input_label: _write_if($scope0_reason, 1) && input.label,
+		input_which: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.which,
+		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_which: ["input.which"],

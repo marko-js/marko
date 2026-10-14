@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		_patch_write($scope2_id, "we", handler, 1);
 		_scope($scope2_id, {
 			d: second,
-			e: _write_if($scope0_reason, 1) && handler
+			e: _unfilled_if($scope0_reason, 1) && handler
 		});
 	}, 1, "a1", 1);
 	_html("</main>");

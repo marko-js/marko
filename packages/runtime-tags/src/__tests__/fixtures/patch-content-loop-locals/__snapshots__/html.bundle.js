@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	_patch_value($scope0_id, "va6", n, 1);
 	$scope0_page ? _scope($scope0_id, {
-		g: _write_if($scope0_reason, 0) && input.show,
+		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show,
 		h: n,
 		i: _write_if($scope0_reason, 1) && $input_show__closures,
 		j: $n__closures,

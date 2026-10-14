@@ -6,7 +6,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b D ;<!><!><button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let count = 0;
@@ -24,10 +24,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_on#5_input_label#6/init");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_on: $wi__input_label && input.on,
-		input_label: _write_if($scope0_reason, 1) && input.label,
+		input_on: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.on,
+		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
 		count,
-		"ClosureScopes:input_label/9": $wi__input_label && $input_label__closures
+		"ClosureScopes:input_label/9": _write_if($scope0_reason, 2) && $input_label__closures
 	}, "__tests__/template.marko", 0, {
 		input_on: ["input.on"],
 		input_label: ["input.label"],

@@ -38,9 +38,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_cls", input.cls, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_tag#4_input_cls#5/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_tag: _write_if($scope0_reason, 4) && input.tag,
-		input_cls: _write_if($scope0_reason, 3) && input.cls,
-		input_note: _write_if($scope0_reason, 5) && input.note,
+		input_tag: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.tag,
+		input_cls: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.cls,
+		input_note: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 6)) && input.note,
 		"ClosureScopes:input_note/9": _write_if($scope0_reason, 6) && $input_note__closures
 	}, "__tests__/template.marko", 0, {
 		input_tag: ["input.tag"],

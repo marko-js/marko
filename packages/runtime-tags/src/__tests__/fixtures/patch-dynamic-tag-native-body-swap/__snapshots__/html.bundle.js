@@ -23,7 +23,7 @@ var template_default = _template("b", (input) => {
 	}, $scope0_id, ($scope) => [{ e: input.x }]), 0, $wg__input_wrap, void 0, 2, $scope0_reason, 1);
 	_patch_write($scope0_id, "we", input.x, 1);
 	$scope0_page && _scope($scope0_id, {
-		e: _write_if($scope0_reason, 1) && input.x,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.x,
 		f: _write_if($scope0_reason, 2) && $input_x__closures
 	});
 }, 1);

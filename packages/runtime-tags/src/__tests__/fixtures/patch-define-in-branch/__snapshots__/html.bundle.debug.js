@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#ul/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $wg__input_show)}`);
 	$scope0_page ? _scope($scope0_id, {
-		input_suffix: _write_if($scope0_reason, 2) && input.suffix,
+		input_suffix: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.suffix,
 		"ClosureScopes:input_suffix/5": _write_if($scope0_reason, 1) && $input_suffix__closures
 	}, "__tests__/template.marko", 0, { input_suffix: ["input.suffix"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.suffix);
 }, 1);

@@ -52,9 +52,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:handler", handler, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_title: input.title,
-		handler: _write_if($scope0_reason, 2) && handler,
+		handler: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && handler,
 		"ClosureScopes:input_title/10": $wi__input_title && $input_title__closures,
-		"ClosureScopes:handler/11": $wi__input_title && $handler2__closures
+		"ClosureScopes:handler/11": $wi__input_title && _unfilled_if($scope0_reason, 3) && $handler2__closures
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		handler: "2:8"

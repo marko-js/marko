@@ -28,8 +28,8 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 	_patch_let_change($scope0_id, "PatchValue:__tests__/tags/picker.marko_fill2", refreshing, "PatchBind:TagVariableChange:refreshing", $refreshingChange, $scope0_reason, 0);
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/picker.marko_fill3", catalog, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_refreshing: _write_if($scope0_reason, 2) && input.refreshing,
-		input_refreshingChange: _write_if($scope0_reason, 1) && input.refreshingChange,
+		input_refreshing: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.refreshing,
+		input_refreshingChange: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.refreshingChange,
 		load,
 		"TagVariableChange:refreshing": $refreshingChange
 	}, "__tests__/tags/picker.marko", 0, {

@@ -3,7 +3,7 @@ const $template = "<section></section><div id=partial></div>";
 const $walks = " b b";
 _shells({ b: "b !b3; b ;<section></section><div id=partial></div>" });
 var frag_host_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_mode = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const one = { content: _content_resume("b0", () => {
@@ -28,8 +28,8 @@ var frag_host_default = _template("b", (input) => {
 	_client_guard($scope0_reason, 1) && _patch_init($scope0_id, "b5");
 	$scope0_page ? _scope($scope0_id, {
 		e: input.b,
-		g: $wi__input_mode && one,
-		h: $wi__input_mode && two,
+		g: _unfilled_if($scope0_reason, 1) && one,
+		h: _unfilled_if($scope0_reason, 1) && two,
 		j: _write_if($scope0_reason, 0) && $input_b__closures
 	}) : _filled_guard($scope0_reason, 0) && _content_withheld("b1") && _patch_value($scope0_id, "vb4", input.b);
 });

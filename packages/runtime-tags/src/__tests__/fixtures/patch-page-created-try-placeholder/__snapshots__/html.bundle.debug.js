@@ -56,8 +56,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_promise", input.promise, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_page#3_input_promise#4/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_page: _write_if($scope0_reason, 2) && input.page,
-		input_promise: _write_if($scope0_reason, 1) && input.promise
+		input_page: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.page,
+		input_promise: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.promise
 	}, "__tests__/template.marko", 0, {
 		input_page: ["input.page"],
 		input_promise: ["input.promise"]

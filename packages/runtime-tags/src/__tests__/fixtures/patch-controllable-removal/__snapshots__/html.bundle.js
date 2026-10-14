@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a1;E l ;<main><h1> </h1><input></main>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_value__OR__input_wire = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const handler = _resume((next) => {
 		document.querySelector("main").dataset.got = next;
@@ -13,8 +13,8 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wh", handler, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a4");
 	$scope0_page ? _scope($scope0_id, {
-		f: _write_if($scope0_reason, 3) && input.value,
-		g: $wi__input_value__OR__input_wire && input.wire,
-		h: $wi__input_value__OR__input_wire && handler
+		f: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.value,
+		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.wire,
+		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && handler
 	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va2", input.value), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.wire));
 }, 1);

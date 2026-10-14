@@ -62,8 +62,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_patch_write($scope0_id, "PatchWrite:Row", Row, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_label: input.label,
-		Row
+		input_label: _unfilled_if($scope0_reason, 0) && input.label,
+		Row: _unfilled_if($scope0_reason, 0) && Row
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		Row: "1:9"

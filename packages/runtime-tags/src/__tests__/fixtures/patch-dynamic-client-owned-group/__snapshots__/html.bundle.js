@@ -20,8 +20,8 @@ var picker_default = _template("c", (input) => {
 	_patch_write($scope0_id, "we", input.label, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "c2");
 	$scope0_page ? _scope($scope0_id, {
-		d: _write_if($scope0_reason, 2) && input.on,
-		e: _write_if($scope0_reason, 1) && input.label
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.on,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label
 	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vc0", input.on), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc1", input.label));
 });
 

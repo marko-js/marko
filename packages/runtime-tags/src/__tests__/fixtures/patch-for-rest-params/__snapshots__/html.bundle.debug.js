@@ -12,11 +12,11 @@ var my_for_default = _template("__tests__/tags/my-for.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", input.content, [...args], 0, 1, $wg__input_to__OR__input_content, void 0, 1, $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {
-			args: _write_if($scope0_reason, 2) && args,
+			args: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && args,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/my-for.marko", "1:2", { args: "1:6" });
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/my-for.marko_1*shell", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { input_content: _write_if($scope0_reason, 1) && input.content }, "__tests__/tags/my-for.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/my-for.marko_fill0", input.content);
+	$scope0_page ? _scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.content }, "__tests__/tags/my-for.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/my-for.marko_fill0", input.content);
 });
 
 // template.marko

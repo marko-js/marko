@@ -41,8 +41,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#main/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $wg__input_show)}`);
 	$scope0_page ? _scope($scope0_id, {
-		input_title: input.title,
-		input_start: input.start
+		input_title: _unfilled_if($scope0_reason, 1) && input.title,
+		input_start: _unfilled_if($scope0_reason, 1) && input.start
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		input_start: ["input.start"]

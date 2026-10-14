@@ -29,7 +29,7 @@ _shells({
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `D%b/${_w0}&%l`)(" b")};${((_w0) => `<main><!>${_w0}<!></main>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label__OR__input_promise = _write_if($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_label__OR__input_promise = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $item__closures = new Set();
 	const $input_promise__closures = new Set();
@@ -70,9 +70,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	_patch_write($scope0_id, "PatchWrite:item", item, 1);
 	$scope0_page && _scope($scope0_id, {
-		item: $wi__input_promise && item,
+		item: _unfilled_if($scope0_reason, 2) && item,
 		"#childScope/1": _existing_scope($childScope),
-		"ClosureScopes:item/9": _write_if($scope0_reason, 1) && $item__closures,
-		"ClosureScopes:input_promise/8": $wi__input_promise && _unfilled_if($scope0_reason, 2) && $input_promise__closures
+		"ClosureScopes:item/9": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $item__closures,
+		"ClosureScopes:input_promise/8": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_promise__closures
 	}, "__tests__/template.marko", 0, { item: "3:8" });
 }, 1);

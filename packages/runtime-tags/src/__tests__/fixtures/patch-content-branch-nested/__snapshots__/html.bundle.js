@@ -18,7 +18,7 @@ _shells({
 	a2: /*@__PURE__*/ (() => `a2;${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 4), $wi__input_a__OR__input_b__OR__input_label__OR__input_text = _write_if($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 3), $wi__input_a__OR__input_b = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 4), $wi__input_a__OR__input_b__OR__input_label__OR__input_text = _write_if($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 3), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_text__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -58,9 +58,9 @@ var template_default = _template("a", (input) => {
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_a)}`);
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 3) && input.b,
-		f: $wi__input_a__OR__input_b && input.label,
-		g: $wi__input_a__OR__input_b && input.text,
+		f: _unfilled_if($scope0_reason, 0) && input.label,
+		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 6)) && input.text,
 		j: _write_if($scope0_reason, 6) && $input_text__closures,
-		i: _write_if($scope0_reason, 5) && $input_label__closures
+		i: _write_if($scope0_reason, 5) && _unfilled_if($scope0_reason, 5) && $input_label__closures
 	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va6", input.b), _filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 4)) && _patch_value($scope0_id, "va7", input.label), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 4)) && _patch_value($scope0_id, "va8", input.text));
 }, 1);

@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wf", input.a, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a2");
 	$scope0_page ? _scope($scope0_id, {
-		e: _write_if($scope0_reason, 2) && input.which,
-		f: _write_if($scope0_reason, 1) && input.a
+		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.which,
+		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.a
 	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va0", input.which), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va1", input.a));
 }, 1);

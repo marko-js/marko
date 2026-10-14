@@ -17,7 +17,7 @@ var frag_host_default = _template("b", (input) => {
 	_patch_write($scope0_id, "wg", frag?.content, 1);
 	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "b3");
 	$scope0_page ? _scope($scope0_id, {
-		d: _write_if($scope0_reason, 2) && input.note,
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		g: _unfilled_if($scope0_reason, 2) && frag?.content,
 		i: _write_if($scope0_reason, 1) && $input_note__closures
 	}) : _filled_guard($scope0_reason, 1) && _content_withheld("b0") && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb2", input.note);

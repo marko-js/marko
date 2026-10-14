@@ -39,7 +39,7 @@ var template_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	$scope0_page ? _scope($scope0_id, {
-		e: input.attrs,
-		f: input.label
+		e: _unfilled_if($scope0_reason, 1) && input.attrs,
+		f: _unfilled_if($scope0_reason, 1) && input.label
 	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.attrs), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", input.label));
 }, 1);

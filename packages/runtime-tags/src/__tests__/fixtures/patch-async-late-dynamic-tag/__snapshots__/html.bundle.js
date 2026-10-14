@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a7");
 	_patch_write($scope0_id, "wg", input.p, 1);
 	$scope0_page && _scope($scope0_id, {
-		g: _write_if($scope0_reason, 1) && input.p,
+		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.p,
 		i: _write_if($scope0_reason, 2) && $input_p__closures,
 		j: $wi__input_q && $input_q__closures,
 		b: _existing_scope($childScope)

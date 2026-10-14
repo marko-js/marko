@@ -23,7 +23,7 @@ var frag_host_default = _template("b", (input) => {
 	_patch_write($scope0_id, "wg", two, 1);
 	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "b4");
 	$scope0_page ? _scope($scope0_id, {
-		d: _write_if($scope0_reason, 2) && input.b,
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.b,
 		f: _unfilled_if($scope0_reason, 2) && one,
 		g: _unfilled_if($scope0_reason, 2) && two,
 		i: _write_if($scope0_reason, 1) && $input_b__closures

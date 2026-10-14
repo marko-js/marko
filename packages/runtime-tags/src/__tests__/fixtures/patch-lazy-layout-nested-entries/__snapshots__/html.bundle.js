@@ -87,7 +87,7 @@ _shells({
 	d4: "d4,<p>home</p>"
 });
 var template_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_page__OR__input_wide__OR__input_note = _write_if($scope0_reason, 0), $wg__input_page = _write_guard($scope0_reason, 2), $wi__input_page = _write_if($scope0_reason, 2), $wi__input_wide = _write_if($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 5), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_page__OR__input_wide__OR__input_note = _write_if($scope0_reason, 0), $wg__input_page = _write_guard($scope0_reason, 2), $wi__input_wide = _write_if($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 5), $wi__input_page = _write_if($scope0_reason, 2), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_wide__closures = /* @__PURE__ */ new Set();
 	const $input_note__closures = /* @__PURE__ */ new Set();
@@ -157,9 +157,9 @@ var template_default = _template("d", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["d4", "d1"], $scope0_reason, 2);
 	_trailers("</body></html>");
 	$scope0_page ? _scope($scope0_id, {
-		e: $wi__input_page && input.list,
-		f: $wi__input_page && input.wide,
-		g: $wi__input_page && input.note,
+		e: _unfilled_if($scope0_reason, 2) && input.list,
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.wide,
+		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 5)) && input.note,
 		j: $wi__input_wide && $input_wide__closures,
 		k: $wi__input_note && $input_note__closures,
 		h: $wi__input_page && $input_page__closures

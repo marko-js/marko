@@ -18,7 +18,6 @@ import {
   getPatchKey,
 } from "../get-accessor-enums";
 import { getDeclaredBindingExpression } from "../get-declared-binding-expression";
-import { isPatch } from "../marko-config";
 import { forEach, type Opt, type SortedOpt, toArray } from "../optional";
 import { getSourcesForExpr, getSourcesForRef, type Reason } from "../reasons";
 import { getReferencedBindings } from "../references";
@@ -76,6 +75,7 @@ import {
   isPatchWriteBinding,
   patchCreates,
   patchFillsClientReads,
+  patchFillsSubscribedReads,
   splitsContentFill,
   subscribesCreated,
 } from "./refresh";
@@ -397,7 +397,34 @@ export function getUnfilledValueIfWritten(
   reason: Reason | undefined,
   expr: t.Expression,
 ) {
-  const rebuilds = isPatch() && patchFillsClientReads(binding);
+  return buildUnfilledIfWritten(
+    section,
+    reason,
+    expr,
+    patchFillsClientReads(binding),
+  );
+}
+
+// A closure's scope set, which ships only where an unfilled read subscribes.
+export function getClosureScopesIfWritten(
+  closure: Binding,
+  reason: Reason | undefined,
+  expr: t.Expression,
+) {
+  return buildUnfilledIfWritten(
+    closure.section,
+    reason,
+    expr,
+    patchFillsSubscribedReads(closure),
+  );
+}
+
+function buildUnfilledIfWritten(
+  section: Section,
+  reason: Reason | undefined,
+  expr: t.Expression,
+  rebuilds: SortedOpt<Sources> | false,
+) {
   if (rebuilds === false || !isDynamicWriteGuard(section, reason)) return;
   return t.logicalExpression(
     "&&",
@@ -694,7 +721,7 @@ function gatePatchWrite(
 // read unfilled; a patch renders every other read itself.
 function getPatchWrite(section: Section, binding: Binding) {
   const write = buildPatchWrite(section, binding);
-  const rebuilds = patchFillsClientReads(binding);
+  const rebuilds = patchFillsSubscribedReads(binding);
   return rebuilds === false
     ? write
     : t.logicalExpression(

@@ -29,5 +29,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "9:6");
 	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", void 0, 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_boom/4": _unfilled_if($scope0_reason, 0) && $input_boom__closures }, "__tests__/template.marko", 0);
+	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_boom/4": $wi__input_boom && _unfilled_if($scope0_reason, 0) && $input_boom__closures }, "__tests__/template.marko", 0);
 }, 1);

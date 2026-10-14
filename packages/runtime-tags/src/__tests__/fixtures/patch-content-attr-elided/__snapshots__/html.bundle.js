@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wh", frag?.content, 1);
 	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "a3");
 	$scope0_page ? _scope($scope0_id, {
-		e: _write_if($scope0_reason, 2) && input.note,
+		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		h: _unfilled_if($scope0_reason, 2) && frag?.content,
 		j: _write_if($scope0_reason, 1) && $input_note__closures
 	}) : _filled_guard($scope0_reason, 1) && _content_withheld("a0") && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va2", input.note);

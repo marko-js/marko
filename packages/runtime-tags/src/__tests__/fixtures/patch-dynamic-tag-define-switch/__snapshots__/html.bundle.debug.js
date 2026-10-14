@@ -32,10 +32,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:Other", Other, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_label#3_input_which#4_Counter#5_Other#6/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_label: _write_if($scope0_reason, 2) && input.label,
+		input_label: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
 		input_which: $wi__input_label && input.which,
-		Counter,
-		Other,
+		Counter: $wi__input_label__OR__input_which && Counter,
+		Other: $wi__input_label__OR__input_which && Other,
 		"ClosureScopes:input_label/8": $wi__input_label && $input_label__closures
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],

@@ -11,7 +11,9 @@
     "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko": [
       _ => [2, {
         input_name: "a",
-        input_item: _(1).item
+        input_item: {
+          label: "a"
+        }
       }],
       "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4 2"
     ]
@@ -20,16 +22,12 @@
     "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko"
     ].push(_ => [6, {
       input_name: "c",
-      input_item: _(1).item
+      input_item: _(2).input_item
     }],
     "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4 6"
     );
   M._.r = [_ => [1, {
-    item: {
-      label: "a"
-    },
-    "#childScope/1": _(2),
-    "ClosureScopes:item/9": new Set
+    "#childScope/1": _(2)
   }, 2, {
     _: _(1),
     "#PlaceholderContent": _._[

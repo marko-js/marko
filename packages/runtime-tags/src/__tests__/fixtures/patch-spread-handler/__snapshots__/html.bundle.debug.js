@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<em>${_text_resume($scope0_id, "#text/1", count)}</em></main>`);
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_attrs: _write_if($scope0_reason, 0) && input.attrs,
+		input_attrs: _unfilled_if($scope0_reason, 0) && input.attrs,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_attrs: ["input.attrs"],

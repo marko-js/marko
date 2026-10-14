@@ -48,6 +48,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1);
 	$scope0_page && _scope($scope0_id, {
 		"#childScope/1": _existing_scope($childScope),
-		"ClosureScopes:input_promise/6": $wi__input_promise && $input_promise__closures
+		"ClosureScopes:input_promise/6": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures
 	}, "__tests__/template.marko", 0);
 }, 1);

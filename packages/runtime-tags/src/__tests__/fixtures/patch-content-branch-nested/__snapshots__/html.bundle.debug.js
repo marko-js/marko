@@ -20,7 +20,7 @@ _shells({
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell;${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 4), $wi__input_a__OR__input_b__OR__input_label__OR__input_text = _write_if($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 3), $wi__input_a__OR__input_b = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 4), $wi__input_a__OR__input_b__OR__input_label__OR__input_text = _write_if($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 3), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_text__closures = new Set();
 	const $input_label__closures = new Set();
@@ -60,10 +60,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $wg__input_a)}`);
 	$scope0_page ? _scope($scope0_id, {
 		input_b: _unfilled_if($scope0_reason, 3) && input.b,
-		input_label: $wi__input_a__OR__input_b && input.label,
-		input_text: $wi__input_a__OR__input_b && input.text,
+		input_label: _unfilled_if($scope0_reason, 0) && input.label,
+		input_text: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 6)) && input.text,
 		"ClosureScopes:input_text/9": _write_if($scope0_reason, 6) && $input_text__closures,
-		"ClosureScopes:input_label/8": _write_if($scope0_reason, 5) && $input_label__closures
+		"ClosureScopes:input_label/8": _write_if($scope0_reason, 5) && _unfilled_if($scope0_reason, 5) && $input_label__closures
 	}, "__tests__/template.marko", 0, {
 		input_b: ["input.b"],
 		input_label: ["input.label"],
