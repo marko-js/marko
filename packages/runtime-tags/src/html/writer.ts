@@ -625,14 +625,11 @@ function unsubscribe(subscribed: unknown[], serializer: SerializerState) {
     const scope = subscribed[i + 1] as ScopeInternals;
     if (!serializer.refs.has(subscribers)) {
       subscribers.delete(scope);
-    } else if (!dropQueuedCall(serializer, scope, subscribers, "add")) {
-      queueCall(
-        serializer,
-        scope,
-        subscribers,
-        "delete",
-        subscribed[i + 2] as Channel,
-      );
+    } else {
+      const channel = subscribed[i + 2] as Channel;
+      if (!dropQueuedCall(serializer, scope, subscribers, "add", channel)) {
+        queueCall(serializer, scope, subscribers, "delete", channel);
+      }
     }
   }
 }
