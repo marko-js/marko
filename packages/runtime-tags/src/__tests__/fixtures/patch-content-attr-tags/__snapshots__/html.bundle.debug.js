@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<b>${_patch_text($scope1_id, "#text/0", input.h, void 0, $scope0_reason, 0)}</b>`);
-			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_h#0:3/init");
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_h#0:3/init");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_h__closures, _scope($scope1_id, { _: $wi__input_h && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:6"));
 		}, $scope0_id) }),
 		footer: attrTag({ content: _content_elide("__tests__/template.marko_2*content", () => {

@@ -25,7 +25,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, "__tests__/tags/child.marko", 0, {
 		input_label: ["input.label"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _content_withheld("__tests__/tags/child.marko_1*content") && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.label);
 	_resume_branch($scope0_id);
 	return $return;
 });

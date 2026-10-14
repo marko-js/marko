@@ -1,12 +1,11 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-try-nested-await/template.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-try-nested-await/template.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-try-nested-await/template.marko_5*content;D ;<em> </em>`, {
+{
   "PatchChild:BranchScopes:#text/0": [{
     "PatchChild:BranchScopes:#text/0": [{
-      "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-try-nested-await/template.marko_5*content",
+      "PatchPending:#text/0": 1,
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "bye"
       }
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-try-nested-await/template.marko_2*content", "packages/runtime-tags/src/__tests__/fixtures/patch-async-try-nested-await/template.marko_4*content"]
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-try-nested-await/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-async-try-nested-await/template.marko_3*content"]
-}]
-;CxY
+    }, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-async-try-nested-await/template.marko_4*content"]
+  }, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-async-try-nested-await/template.marko_3*content"]
+}

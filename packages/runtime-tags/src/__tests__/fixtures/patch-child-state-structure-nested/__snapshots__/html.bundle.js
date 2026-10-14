@@ -17,7 +17,7 @@ var panel_default = _template("b", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html(`<em>${_patch_text($scope2_id, "a", input.title, void 0, $scope0_reason, 4)}</em>`);
-					_client_guard($scope0_reason, 4) && _patch_init($scope2_id, "b2");
+					_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, "b2");
 					_subscribe(_unfilled_if($scope0_reason, 4) && $input_title__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_inner__OR__input_title && _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 4) && "b3");
 					return 0;
 				}

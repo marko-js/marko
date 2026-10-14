@@ -34,6 +34,7 @@ INSERT: main > b + i
 ## Console
 ```
 LOG "detail" "b"
+LOG "detail" "b"
 ```
 
 # Update
@@ -62,7 +63,7 @@ UPDATE: main > button::text "0" => "1"
 ```html
 <main>
   <b>
-    SHOWN_y
+    SHOWN_x
   </b>
   <button>
     1
@@ -71,19 +72,14 @@ UPDATE: main > button::text "0" => "1"
 ```
 ## Change
 ```
-INSERT: main > p
-REMOVE: p + b
-REMOVE: p + i
-INSERT: main > b
-REMOVE: main > b + p
-UPDATE: main > b::text " " => "SHOWN_y"
+REMOVE: main > b + i
 ```
 
 # Update `{"error":{},"detail":"c"}`
 ```html
 <main>
   <b>
-    SHOWN_z
+    SHOWN_x
   </b>
   <i>
     c
@@ -95,12 +91,8 @@ UPDATE: main > b::text " " => "SHOWN_y"
 ```
 ## Change
 ```
-INSERT: main > p
-REMOVE: p + b
-INSERT: main > b
-REMOVE: main > i + p
-UPDATE: main > b::text " " => "SHOWN_z"
 INSERT: main > b + i
+UPDATE: main > i::text " " => "c"
 ```
 ## Console
 ```

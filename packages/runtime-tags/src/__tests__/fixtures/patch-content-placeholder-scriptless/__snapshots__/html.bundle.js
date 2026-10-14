@@ -19,7 +19,7 @@ var card_default = _template("b", (input) => {
 			_scope_id();
 			_html("<span>done</span>");
 		}, 1, "b0");
-		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "b4");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "b4");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b5", 0);
 		$wi__input_promise && _resume_branch($scope2_id);
 	}, () => {
@@ -60,5 +60,5 @@ var template_default = _template("a", (input) => {
 		e: input.note,
 		f: _write_if($scope0_reason, 1) && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 1) && _content_withheld("a1") && _patch_value($scope0_id, "va2", input.note);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.note);
 }, 1);

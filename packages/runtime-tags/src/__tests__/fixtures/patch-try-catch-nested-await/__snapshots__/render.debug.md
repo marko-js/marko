@@ -27,18 +27,3 @@ UPDATE: main > span::text " " => "boom"
 ```
 
 # Update `{"a":{},"b":{}}`
-```html
-<main>
-  <em>
-    a3
-  </em>
-  <strong>
-    b3
-  </strong>
-</main>
-```
-## Change
-```
-REMOVE: main > strong + span
-INSERT: main > :is(em, strong)
-```

@@ -41,7 +41,7 @@ var child_default = _template("b", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b1"], $scope0_reason, 2);
-			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "b2");
+			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "b2");
 			$wi__input_items__OR__input_show && _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			$wg__input_show || $wi__input_items__OR__input_show && _resume_branch($scope1_id);
 		}, $scope0_id) });

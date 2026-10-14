@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					card_default({ user });
 					_scope($scope7_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "8:6");
 				}, 1, "__tests__/template.marko_7*content");
-				_client_guard($scope0_reason, 5) && _patch_init($scope3_id, "__tests__/template.marko_3_input_card#0:9/init");
+				_unfilled_if($scope0_reason, 5) && _patch_init($scope3_id, "__tests__/template.marko_3_input_card#0:9/init");
 				$wi__input_show__OR__input_card && _subscribe(_unfilled_if($scope0_reason, 5) && $input_card__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "7:4"), _client_guard($scope0_reason, 5) && "__tests__/template.marko_3_input_card#0:9/subscribe", 0);
 				$wi__input_show__OR__input_card && _resume_branch($scope3_id);
 			}, void 0, (err) => {

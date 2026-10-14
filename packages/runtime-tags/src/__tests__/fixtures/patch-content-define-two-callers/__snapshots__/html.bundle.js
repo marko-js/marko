@@ -59,5 +59,5 @@ var template_default = _template("a", (input) => {
 		i: $wi__input_title && $input_title__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
-	}) : _filled_guard($scope0_reason, 1) && _content_withheld("a4") && _patch_value($scope0_id, "va8", input.title);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va8", input.title);
 }, 1);

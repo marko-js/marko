@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "a", count)}:${_patch_text($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</em>`);
-			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a1");
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "a1");
 			_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		}, $scope0_id)
 	});

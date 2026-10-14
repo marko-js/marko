@@ -34,15 +34,3 @@ UPDATE: main > b::text " " => "boom"
 ```
 
 # Update `{"show":true,"p":{}}`
-```html
-<main>
-  <em>
-    c
-  </em>
-</main>
-```
-## Change
-```
-REMOVE: main > em + b
-INSERT: main > em
-```

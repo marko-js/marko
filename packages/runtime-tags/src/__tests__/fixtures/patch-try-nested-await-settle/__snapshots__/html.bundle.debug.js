@@ -26,10 +26,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<strong>${_patch_text($scope4_id, "#text/0", b, void 0, $scope0_reason, 2)}</strong>`);
 				_scope($scope4_id, {}, "__tests__/template.marko", "5:8");
 			}, 1, "__tests__/template.marko_4*content", 1);
-			_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_b#0:4/init");
+			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_b#0:4/init");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_b__closures, _scope($scope2_id, { _: $wi__input_a__OR__input_b && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_2_input_b#0:4/subscribe");
 		}, 1, "__tests__/template.marko_2*content", 1);
-		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_a#0:3/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_a#0:3/init");
 		$wi__input_a__OR__input_b && _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_a#0:3/subscribe", 0);
 		$wi__input_a__OR__input_b && _resume_branch($scope1_id);
 	}, () => {

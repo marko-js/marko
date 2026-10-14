@@ -3,7 +3,11 @@
 <script>
   WALKER_RUNTIME("M")("_").patchBuild = "";
   REORDER_RUNTIME(M._);
-  M._.r = [
+  M._.r = [_ => [3, {
+      "#PlaceholderContent": _._[
+        "packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_4*content"
+        ]
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_0 1"
   ];
   M._.w()
@@ -16,10 +20,5 @@
     href="?q=a&amp;i=2">2<!--M_$7 #text/1--></a><!--M_$7 #a/0--><!--M_]5 #text/0 7--><!--M_]3 #text/0 5-->
 </t>
 <script>
-  M._.r.push(_ => [3, {
-    "#PlaceholderContent": _._[
-      "packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_4*content"
-      ]
-  }]);
   M._.w()
 </script>

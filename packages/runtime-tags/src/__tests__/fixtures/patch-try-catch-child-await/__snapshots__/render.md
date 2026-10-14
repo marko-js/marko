@@ -27,20 +27,3 @@ UPDATE: main > b::text " " => "boom"
 ```
 
 # Update `{"promise":{}}`
-```html
-<main>
-  <div
-    class="ld"
-  >
-    <em>
-      three
-    </em>
-  </div>
-</main>
-```
-## Change
-```
-INSERT: main > .ld
-REMOVE: .ld + b
-INSERT: .ld > em
-```

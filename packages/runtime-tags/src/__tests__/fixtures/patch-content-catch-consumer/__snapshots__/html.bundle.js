@@ -16,7 +16,7 @@ var wrapper_default = _template("c", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "a", input.fail ? boom$1() : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "c2");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "c2");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "c3");
 	}, void 0, () => {
 		_scope_reason();
@@ -24,7 +24,7 @@ var wrapper_default = _template("c", (input) => {
 		_dynamic_tag($scope1_id, "a", input.fallback, {}, 0, 0, $wg__input_fallback);
 		_subscribe($wi__input_fallback && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c1", $wg__input_fallback);
 		$wg__input_fallback || _resume_branch($scope1_id);
-	}, void 0, "c4", "c0");
+	}, void 0, "c4", "c0", 1);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.fallback,
 		f: $wi__input_fallback && $input_fallback__closures,
@@ -50,7 +50,7 @@ var error_wrapper_default = _template("b", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "a", input.fail ? boom() : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "b2");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "b2");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b3");
 	}, void 0, (err) => {
 		_scope_reason();
@@ -58,7 +58,7 @@ var error_wrapper_default = _template("b", (input) => {
 		_html(`<b>${_patch_text($scope1_id, "a", err.message)}</b>`);
 		_dynamic_tag($scope1_id, "b", input.fallback, {}, 0, 0, _write_guard($scope0_reason, 0), void 0, 2, $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");
-	}, void 0, "b4", "b0", void 0, "");
+	}, void 0, "b4", "b0", 1, "");
 	$scope0_page ? _scope($scope0_id, {
 		d: input.fallback,
 		f: _write_if($scope0_reason, 0) && $input_fallback__closures,
@@ -110,5 +110,5 @@ var template_default = _template("a", (input) => {
 		k: $count__closures,
 		c: _existing_scope($childScope),
 		d: _existing_scope($childScope2)
-	}) : _filled_guard($scope0_reason, 1) && (_content_withheld("a2") || _content_withheld("a5")) && _patch_value($scope0_id, "va7", input.label);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.label);
 }, 1);

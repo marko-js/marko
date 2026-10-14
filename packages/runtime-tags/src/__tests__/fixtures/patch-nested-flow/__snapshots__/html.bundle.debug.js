@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (input.detail) {
 					const $scope2_id = _scope_id();
 					_html(`<small>${_patch_text($scope2_id, "#text/0", input.detail, void 0, $scope0_reason, 3)}</small>`);
-					_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_detail#0:7/init");
+					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_detail#0:7/init");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_detail__closures, _scope($scope2_id, { _: $wi__input_summary__OR__input_detail && _scope_with_id($scope1_id) }, "__tests__/template.marko", "15:8"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_detail#0:7/subscribe");
 					return 0;
 				}

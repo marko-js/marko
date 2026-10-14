@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 			if (open) {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_patch_text($scope2_id, "a", input.title, void 0, $scope0_reason, 0)}</em>`);
-				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a2");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a2");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, { _: ($wi__input_title || $wi__open) && _scope_with_id($scope1_id) }), "a3");
 				return 0;
 			}

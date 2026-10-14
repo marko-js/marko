@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_resume($scope2_id, "a", count)} ${_patch_text($scope2_id, "b", input.label, 2, $scope0_reason, 1)}</p>`);
-				_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "a2");
+				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "a2");
 				_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a3"), "a4");
 			}, void 0, () => {
 				_scope_reason();

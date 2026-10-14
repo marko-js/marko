@@ -24,10 +24,10 @@ var template_default = _template("a", (input) => {
 			_await($scope2_id, "a", value, (v) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_patch_text($scope3_id, "a", id, void 0, $scope1_reason, 0)}:${_patch_text($scope3_id, "b", v, 2, $scope1_reason, 1)}:${_text_resume($scope3_id, "c", count, 2)}</p>`);
-				_client_guard($scope1_reason, 0) && _patch_init($scope3_id, "a5");
+				_unfilled_if($scope1_reason, 0) && _patch_init($scope3_id, "a5");
 				_subscribe(_unfilled_if($scope1_reason, 0) && $wi__id && $Info_content__id__closures, _subscribe($count__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), "a6"), "a7");
 			}, 1, "a0");
-			_client_guard($scope1_reason, 1) && _patch_init($scope2_id, "a8");
+			_unfilled_if($scope1_reason, 1) && _patch_init($scope2_id, "a8");
 			_subscribe(_unfilled_if($scope1_reason, 1) && $wi__value && $Info_content__value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope1_reason, 1) && "a9", 0);
 			_resume_branch($scope2_id);
 		}, () => {

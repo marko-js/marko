@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 				if (input.detail) {
 					const $scope2_id = _scope_id();
 					_html(`<small>${_patch_text($scope2_id, "a", input.detail, void 0, $scope0_reason, 3)}</small>`);
-					_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a4");
+					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "a4");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_detail__closures, _scope($scope2_id, { _: $wi__input_summary__OR__input_detail && _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a5");
 					return 0;
 				}

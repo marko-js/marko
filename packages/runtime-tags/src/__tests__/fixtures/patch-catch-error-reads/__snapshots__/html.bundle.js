@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			_html(`<em>${_patch_text($scope4_id, "a", v, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope4_id, {});
 		}, 1, "a0", 1);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a4");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a4");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a5", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, void 0, (err) => {
@@ -32,19 +32,19 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b>`);
 		_scope($scope3_id, {});
-	}, void 0, "a6", "a3", void 0, "");
+	}, void 0, "a6", "a3", 1, "");
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "a7");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "a7");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a8");
 	}, void 0, ({ cause }) => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
 		_html(`<i>${_patch_text($scope5_id, "a", cause.code)}</i>`);
 		_scope($scope5_id, {});
-	}, void 0, "a9", "a1", void 0, "");
+	}, void 0, "a9", "a1", 1, "");
 	_html(`<button>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a10");
 	_patch_value($scope0_id, "va11", count, 1);

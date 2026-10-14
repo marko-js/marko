@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope1_reason = _scope_reason();
 				const $scope1_id = _scope_id();
 				_html(_patch_text($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 0));
-				_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:4/init");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:4/init");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: $wi__input_label && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4"));
 			}, $scope0_id)
 		}),
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(_patch_text($scope2_id, "#text/0", input.label, void 0, $scope0_reason, 0));
-			_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:4/init");
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:4/init");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, {
 				_: $wi__input_label && _scope_with_id($scope0_id),
 				"ClosureSignalIndex:input_label/6": $wi__input_label && 1

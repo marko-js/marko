@@ -16,15 +16,15 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>${_patch_text($scope1_id, "a", input.message, void 0, $scope0_reason, 1)}${_patch_text($scope1_id, "b", input.boom ? boom() : "", 2, $scope0_reason, 2)}</em>`);
-		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a1");
-		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a2");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "a1");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "a2");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_boom__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_message__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a3"), _client_guard($scope0_reason, 2) && "a4");
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<b>${_patch_text($scope2_id, "a", err.message)}</b>`);
 		_scope($scope2_id, {});
-	}, void 0, "a5", "a0", void 0, "");
+	}, void 0, "a5", "a0", 1, "");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
 		f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_message__closures,

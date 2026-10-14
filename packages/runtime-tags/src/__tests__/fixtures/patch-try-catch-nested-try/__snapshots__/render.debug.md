@@ -27,20 +27,3 @@ UPDATE: main > span::text " " => "boom"
 ```
 
 # Update `{"promise":{}}`
-```html
-<main>
-  <em>
-    ok
-  </em>
-  <strong>
-    v3
-  </strong>
-</main>
-```
-## Change
-```
-INSERT: main > em
-REMOVE: main > strong + span
-UPDATE: main > em::text " " => "ok"
-INSERT: main > em + strong
-```

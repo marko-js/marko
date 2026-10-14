@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 					_scope_reason();
 					const $scope2_id = _scope_id();
 					_html(`<em>${_patch_text($scope2_id, "a", input.note, void 0, $scope0_reason, 4)}</em>`);
-					_client_guard($scope0_reason, 4) && _patch_init($scope2_id, "a2");
+					_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, "a2");
 					_subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }));
 				}, $scope1_id)
 			});

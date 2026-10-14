@@ -68,19 +68,3 @@ UPDATE: main > button::text "1" => "2"
 ```
 
 # Update `{"message":"back"}`
-```html
-<main>
-  <em>
-    back
-  </em>
-  <button>
-    2
-  </button>
-</main>
-```
-## Change
-```
-INSERT: main > em
-REMOVE: main > em + b
-UPDATE: main > em::text "" => "back"
-```

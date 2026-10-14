@@ -51,7 +51,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 							return 1;
 						}
 					}, $scope3_id, "#text/0", 1, $wg__input_down, void 0, void 0, void 0, ["__tests__/page.marko_4*shell", "__tests__/page.marko_5*shell"], $scope0_reason, 0);
-					_client_guard($scope0_reason, 0) && _patch_init($scope3_id, "__tests__/page.marko_3_input_down#0:3/init");
+					_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, "__tests__/page.marko_3_input_down#0:3/init");
 					$wi__input_down && _subscribe(_unfilled_if($scope0_reason, 0) && $input_down__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/page.marko", "6:8"));
 					return 0;
 				}

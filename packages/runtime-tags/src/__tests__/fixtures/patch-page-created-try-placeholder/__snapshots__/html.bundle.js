@@ -26,7 +26,7 @@ var b_default = _template("b", (input) => {
 			_html(`<p>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 0)}</p>`);
 			_scope($scope3_id, {});
 		}, 1, "b0", 1);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "b3");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "b3");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "b4", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {

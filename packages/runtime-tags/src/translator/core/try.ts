@@ -117,11 +117,19 @@ export default {
       optional: false,
     });
     if (isPatch()) {
-      // A `<try>` a patch may reach applies its body through `patches/try`.
+      // A `<try>` a patch may reach applies its body through `patches/try`, and
+      // a `@catch` a patch creates from its renderer, `patches/catch-created`.
       onFinalizeReferences(() => {
         if (mayPatchReach(section)) {
           linkRuntimeFeature("patches/try");
-          if (attrTags["@catch"]) linkRuntimeFeature("patches/catch");
+          if (attrTags["@catch"]) {
+            const { catchSection } = getTryParts(tag);
+            linkRuntimeFeature(
+              catchSection && isCreatableBody(catchSection)
+                ? "patches/catch-created"
+                : "patches/catch",
+            );
+          }
         }
       });
     }
@@ -162,13 +170,11 @@ export default {
             ),
         ];
         if (isPatch()) {
-          // A patch pairs by the body's shell; with no catch to rebuild,
-          // an always-pairing body drops it outside divergent contexts.
+          // A patch creates from the body's shell; an always-pairing body
+          // drops it outside divergent contexts.
           tryArgs.push(
             t.stringLiteral(getResumeRegisterId(bodySection, "content")),
-            !catchTag &&
-              boundaryAlwaysPairs(bodySection) &&
-              t.numericLiteral(1),
+            boundaryAlwaysPairs(bodySection) && t.numericLiteral(1),
             // A catch the flush creates mounts the effects reading its error;
             // else the client renders it from its error, sent where it reads it.
             catchSection &&

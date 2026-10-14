@@ -34,12 +34,12 @@ var template_default = _template("a", (input) => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
 					_html(`<em>${_patch_text($scope2_id, "a", input.note, void 0, $scope0_reason, 3)}</em>`);
-					_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a2");
+					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "a2");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_note && _scope_with_id($scope1_id) }));
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a1"], $scope0_reason, 2);
-			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a3");
+			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "a3");
 			$wi__input_show__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			$wg__input_show || $wi__input_show__OR__input_note && _resume_branch($scope1_id);
 		}, $scope0_id)

@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html(`<p>${_patch_text($scope3_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_client_guard($scope0_reason, 1) && _patch_init($scope3_id, "__tests__/template.marko_3_input_error#0:6/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, "__tests__/template.marko_3_input_error#0:6/init");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope3_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_3_input_error#0:6/subscribe");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason(), $wi__err_message = _write_if($scope1_reason, 0);
@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<span>${_patch_text($scope2_id, "#text/0", err.message)} ${_text_resume($scope2_id, "#text/1", count, 2)} ${_patch_text($scope2_id, "#text/2", input.label, 2, $scope0_reason, 0)}</span>`);
-			_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:5/init");
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:5/init");
 			_subscribe(_unfilled_if() && $wi__err_message && $catch_content__err_message__closures, _subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "9:6"))));
 		}, $scope1_id) });
 		_scope($scope1_id, {
@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:err_message/11": $wi__err_message && $catch_content__err_message__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "8:4");
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_3*content", void 0, "");
+	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_3*content", 1, "");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", count, 1);
 	$scope0_page ? _scope($scope0_id, {

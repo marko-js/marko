@@ -46,5 +46,5 @@ var template_default = _template("a", (input) => {
 		f: count,
 		h: _write_if($scope0_reason, 0) && $input_title__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _content_withheld("a0") && _patch_value($scope0_id, "va3", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va3", input.title);
 }, 1);

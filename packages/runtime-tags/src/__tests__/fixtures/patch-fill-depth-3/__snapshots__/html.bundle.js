@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 							_: _scope_with_id($scope2_id)
 						}), _client_guard($scope0_reason, 4) && "a3"), "a4");
 					}, (item) => item, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "a2", $scope0_reason, 3);
-					_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a5");
+					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "a5");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a6");
 					return 0;
 				}

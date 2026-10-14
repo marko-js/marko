@@ -78,8 +78,8 @@ var file_host_default = _template("b", (input) => {
 			files: input.files,
 			filesChange: input.filesChange
 		});
-		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b1");
-		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "b2");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "b1");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "b2");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_filesChange__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_files__closures, _scope($scope1_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)

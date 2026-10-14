@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 			_patch_effect($scope3_id, "ea3", "c");
 			_scope($scope3_id, { c: value });
 		}, 1, "a0", 1);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a4");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a4");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a5", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {

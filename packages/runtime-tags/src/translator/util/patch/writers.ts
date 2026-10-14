@@ -18,8 +18,13 @@ import {
   getPatchKey,
 } from "../get-accessor-enums";
 import { getDeclaredBindingExpression } from "../get-declared-binding-expression";
-import { forEach, type Opt, type SortedOpt, toArray } from "../optional";
-import { getSourcesForExpr, getSourcesForRef, type Reason } from "../reasons";
+import { forEach, type Opt, some, type SortedOpt, toArray } from "../optional";
+import {
+  getSourcesForExpr,
+  getSourcesForRef,
+  isUnconditionalReason,
+  type Reason,
+} from "../reasons";
 import { getReferencedBindings } from "../references";
 import {
   callRuntime,
@@ -179,6 +184,7 @@ export function writePatchResumeStatements(
       t.expressionStatement(
         buildClientInit(
           section,
+          "_client_guard",
           getSourcesForRef(join),
           getResumeRegisterId(section, join, "init"),
         ),
@@ -186,7 +192,8 @@ export function writePatchResumeStatements(
     );
   }
 
-  // A created content scope subscribes to the client-sourced root params.
+  // A created content scope subscribes to the root params no patch fills
+  // there: client-sourced ones, or any in unpatched structure (a `@catch`).
   if (patchCreates(section)) {
     forEach(section.referencedClosures, (closure) => {
       if (subscribesCreated(section, closure)) {
@@ -194,6 +201,7 @@ export function writePatchResumeStatements(
           t.expressionStatement(
             buildClientInit(
               section,
+              "_unfilled_if",
               closure.sources,
               getResumeRegisterId(section, closure, "init"),
             ),
@@ -455,7 +463,7 @@ function buildUnfilledIfWritten(
 }
 
 // A boundary branch every patch page renders, so it pairs without creating;
-// the server drops the elision at render where a catch or branch encloses.
+// the server drops the elision at render where a branch encloses.
 export function boundaryAlwaysPairs(bodySection: Section) {
   if (!getSectionWriteReason(bodySection)) return false;
   for (let s: Section | undefined = bodySection; s; s = s.parent) {
@@ -551,15 +559,16 @@ export function buildPatchTextContent(
   );
 }
 
-// A created scope runs the init where the client owns the sources' groups.
+// A created scope runs the init where `check` holds for the sources' groups.
 export function buildClientInit(
   section: Section,
+  check: "_client_guard" | "_unfilled_if",
   sources: Sources | undefined,
   initId: string,
 ) {
   return t.logicalExpression(
     "&&",
-    getCallerGroupGuard(section, "_client_guard", sources)!,
+    getCallerGroupGuard(section, check, sources)!,
     callPatchRuntime("_patch_init", section, initId),
   );
 }
@@ -708,23 +717,32 @@ function gatePatchWrite(
       "_filled_guard",
       conditions.fills,
     );
+    // Content client code renders unconditionally (a `@catch` or
+    // `@placeholder` may, at any time) is never rendered for good: it fills.
+    const always = some(conditions.contents, rendersUnconditionally);
     let withheld: t.Expression | undefined;
-    forEach(conditions.contents, (content) => {
-      let term: t.Expression = callRuntime(
-        "_content_withheld",
-        t.stringLiteral(getResumeRegisterId(content, "content")),
-      );
-      // Live on the client only where what renders it is the client's.
-      const reason = getRendererReason(content);
-      const client = reason && getClientGuard(section, reason);
-      if (client) term = t.logicalExpression("&&", term, client);
-      withheld = orGuard(withheld, term);
-    });
-    if (contentWrite && withheld) {
-      const content = otherwise
-        ? t.conditionalExpression(withheld, contentWrite, otherwise)
-        : t.logicalExpression("&&", withheld, contentWrite);
+    if (!always) {
+      forEach(conditions.contents, (content) => {
+        let term: t.Expression = callRuntime(
+          "_content_withheld",
+          t.stringLiteral(getResumeRegisterId(content, "content")),
+        );
+        // Live on the client only where what renders it is the client's.
+        const reason = getRendererReason(content);
+        const client = reason && getClientGuard(section, reason);
+        if (client) term = t.logicalExpression("&&", term, client);
+        withheld = orGuard(withheld, term);
+      });
+    }
+    if (contentWrite && (always || withheld)) {
+      const content = !withheld
+        ? contentWrite
+        : otherwise
+          ? t.conditionalExpression(withheld, contentWrite, otherwise)
+          : t.logicalExpression("&&", withheld, contentWrite);
       expr = needed ? t.conditionalExpression(needed, write, content) : content;
+      needed = undefined;
+    } else if (always) {
       needed = undefined;
     } else if (withheld) {
       needed = orGuard(needed, withheld);
@@ -736,6 +754,11 @@ function gatePatchWrite(
     }
   }
   return andGuard(guard, expr);
+}
+
+function rendersUnconditionally(content: Section) {
+  const reason = getRendererReason(content);
+  return !!reason && isUnconditionalReason(reason);
 }
 
 // A capture only patch-filled reads use is kept fresh where it is still

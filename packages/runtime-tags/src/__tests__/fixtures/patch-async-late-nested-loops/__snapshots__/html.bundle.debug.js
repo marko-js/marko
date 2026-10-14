@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(`<em>${_patch_text($scope4_id, "#text/0", group.id, void 0, $scope0_reason, 0)}.${_patch_text($scope4_id, "#text/1", v, 2, $scope0_reason, 0)}</em>`);
 					_scope($scope4_id, { _: $wi__input_groups && _scope_with_id($scope3_id) }, "__tests__/template.marko", "6:12");
 				}, 1, "__tests__/template.marko_4*content");
-				_client_guard($scope0_reason, 0) && _patch_init($scope3_id, "__tests__/template.marko_3_item_promise#2:3/init");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, "__tests__/template.marko_3_item_promise#2:3/init");
 				$wi__input_groups && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:10"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_3_item_promise#2:3/subscribe", 0);
 				$wi__input_groups && _resume_branch($scope3_id);
 			}, void 0, (err) => {

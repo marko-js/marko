@@ -14,7 +14,8 @@
   },
   "PatchChild:BranchScopes:#section/1": {
     "PatchText:#text/0": "b"
-  }
+  },
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-spread/template.marko_fill0": "b"
 }
 
 // PATCH
@@ -31,5 +32,6 @@
   },
   "PatchChild:BranchScopes:#section/1": {
     "PatchText:#text/0": "c"
-  }
+  },
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-spread/template.marko_fill0": "c"
 }

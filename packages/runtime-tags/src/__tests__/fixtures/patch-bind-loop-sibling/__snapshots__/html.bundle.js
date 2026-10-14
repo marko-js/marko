@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 					return 0;
 				}
 			}, $scope2_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
-			_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a6");
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a6");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
 				M: _unfilled_if($scope0_reason, 0) && other,
 				_: _scope_with_id($scope1_id)

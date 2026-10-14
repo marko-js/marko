@@ -1,6 +1,5 @@
 // PATCH
-[`a0;D ;<p> </p>`, {
-  cAc: [{}, "a0", "a5"],
+{
   kc: [{
     ca: {
       ta: "SHOWN_message1",
@@ -11,12 +10,10 @@
     }
   }, "a5"],
   va7: "b"
-}]
-;BgE
+}
 
-// PATCH holding BgE
+// PATCH
 {
-  cAc: [{}, "a0", "a5"],
   kc: [{
     ca: {
       ta: "SHOWN_message2",
@@ -29,17 +26,16 @@
   va7: "c"
 }
 
-// PATCH holding BgE
+// PATCH
 {
   cAc: [{
     ta: "ok"
-  }, "a0", "a5"],
+  }, 0, "a5"],
   va7: "d"
 }
 
-// PATCH holding BgE
+// PATCH
 {
-  cAc: [{}, "a0", "a5"],
   kc: [{
     ca: {
       ta: "SHOWN_message3",

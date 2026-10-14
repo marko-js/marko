@@ -39,13 +39,13 @@ var template_default = _template("a", (input) => {
 						if (input.alt) {
 							const $scope3_id = _scope_id();
 							_html(`<em>A:${_patch_text($scope3_id, "a", input.note, 2, $scope0_reason, 6)}</em>`);
-							_client_guard($scope0_reason, 6) && _patch_init($scope3_id, "a4");
+							_unfilled_if($scope0_reason, 6) && _patch_init($scope3_id, "a4");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope3_id, { _: $wi__input_show__OR__input_alt__OR__input_note && _scope_with_id($scope2_id) }));
 							return 0;
 						} else {
 							const $scope4_id = _scope_id();
 							_html(`<strong>B:${_patch_text($scope4_id, "a", input.note, 2, $scope0_reason, 6)}</strong>`);
-							_client_guard($scope0_reason, 6) && _patch_init($scope4_id, "a5");
+							_unfilled_if($scope0_reason, 6) && _patch_init($scope4_id, "a5");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope4_id, {
 								_: $wi__input_show__OR__input_alt__OR__input_note && _scope_with_id($scope2_id),
 								Cj: $wi__input_note && 1
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 							return 1;
 						}
 					}, $scope2_id, "a", 1, $wg__input_alt, void 0, void 0, void 0, ["a2", "a3"], $scope0_reason, 5);
-					_client_guard($scope0_reason, 5) && _patch_init($scope2_id, "a6");
+					_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, "a6");
 					$wi__input_show__OR__input_alt__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 5) && $input_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					$wg__input_alt || $wi__input_show__OR__input_alt__OR__input_note && _resume_branch($scope2_id);
 				}, $scope1_id)

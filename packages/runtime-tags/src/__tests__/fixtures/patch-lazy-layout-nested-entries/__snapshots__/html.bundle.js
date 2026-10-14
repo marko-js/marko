@@ -117,8 +117,8 @@ var template_default = _template("d", (input) => {
 								wide: input.wide,
 								note: input.note
 							});
-							_client_guard($scope0_reason, 4) && _patch_init($scope3_id, "d5");
-							_client_guard($scope0_reason, 5) && _patch_init($scope3_id, "d6");
+							_unfilled_if($scope0_reason, 4) && _patch_init($scope3_id, "d5");
+							_unfilled_if($scope0_reason, 5) && _patch_init($scope3_id, "d6");
 							_subscribe(_unfilled_if($scope0_reason, 5) && $input_note__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_wide__closures, _scope($scope3_id, {
 								_: $wi__input_page__OR__input_wide__OR__input_note && _scope_with_id($scope2_id),
 								b: _existing_scope($childScope)
@@ -132,8 +132,8 @@ var template_default = _template("d", (input) => {
 								wide: input.wide,
 								note: input.note
 							});
-							_client_guard($scope0_reason, 4) && _patch_init($scope4_id, "d7");
-							_client_guard($scope0_reason, 5) && _patch_init($scope4_id, "d8");
+							_unfilled_if($scope0_reason, 4) && _patch_init($scope4_id, "d7");
+							_unfilled_if($scope0_reason, 5) && _patch_init($scope4_id, "d8");
 							_subscribe(_unfilled_if($scope0_reason, 5) && $input_note__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_wide__closures, _scope($scope4_id, {
 								_: $wi__input_page__OR__input_wide__OR__input_note && _scope_with_id($scope2_id),
 								b: _existing_scope($childScope2),
@@ -143,7 +143,7 @@ var template_default = _template("d", (input) => {
 							return 1;
 						}
 					}, $scope2_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["d2", "d3"], $scope0_reason, 2);
-					_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "d9");
+					_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "d9");
 					$wi__input_page__OR__input_wide__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 2) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					$wg__input_page || $wi__input_page__OR__input_wide__OR__input_note && _resume_branch($scope2_id);
 				}, $scope1_id)

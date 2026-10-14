@@ -36,20 +36,13 @@ UPDATE: div > span::text@15 "" => "0"
 </button>
 <div>
   <span>
-    SHOWN_message2 0 c
+    SHOWN_message1 0 c
   </span>
 </div>
 ```
 ## Change
 ```
-INSERT: button + p
-REMOVE: p + div
-INSERT: button + div
-REMOVE: div + p
-INSERT: div > span
-UPDATE: div > span::text@0 "" => "SHOWN_message2"
-UPDATE: div > span::text@17 "" => "c"
-UPDATE: div > span::text@15 "" => "0"
+UPDATE: div > span::text@17 "b" => "c"
 ```
 
 # Update `{"label":"d"}`
@@ -57,15 +50,15 @@ UPDATE: div > span::text@15 "" => "0"
 <button>
   0
 </button>
-<p>
-  ok
-</p>
+<div>
+  <span>
+    SHOWN_message1 0 d
+  </span>
+</div>
 ```
 ## Change
 ```
-INSERT: button + p
-REMOVE: p + div
-UPDATE: p::text " " => "ok"
+UPDATE: div > span::text@17 "c" => "d"
 ```
 
 # Update
@@ -76,13 +69,16 @@ container.querySelector("button").click();
 <button>
   1
 </button>
-<p>
-  ok
-</p>
+<div>
+  <span>
+    SHOWN_message1 1 d
+  </span>
+</div>
 ```
 ## Change
 ```
 UPDATE: button::text "0" => "1"
+UPDATE: div > span::text@15 "0" => "1"
 ```
 
 # Update `{"error":{},"label":"e"}`
@@ -92,16 +88,11 @@ UPDATE: button::text "0" => "1"
 </button>
 <div>
   <span>
-    SHOWN_message3 1 e
+    SHOWN_message1 1 e
   </span>
 </div>
 ```
 ## Change
 ```
-INSERT: button + div
-REMOVE: div + p
-INSERT: div > span
-UPDATE: div > span::text@0 "" => "SHOWN_message3"
-UPDATE: div > span::text@17 "" => "e"
-UPDATE: div > span::text@15 "" => "1"
+UPDATE: div > span::text@17 "d" => "e"
 ```

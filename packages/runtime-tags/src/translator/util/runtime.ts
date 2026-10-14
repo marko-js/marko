@@ -161,6 +161,7 @@ export const domPatchRuntimeFeatures = [
   "patches/boundary",
   "patches/branch",
   "patches/catch",
+  "patches/catch-created",
   "patches/child",
   "patches/control",
   "patches/control-checked-value",

@@ -86,8 +86,8 @@ var file_host_default = _template("__tests__/tags/file-host.marko", (input) => {
 			files: input.files,
 			filesChange: input.filesChange
 		});
-		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/file-host.marko_1_input_files#0:3/init");
-		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/file-host.marko_1_input_filesChange#0:4/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/file-host.marko_1_input_files#0:3/init");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/file-host.marko_1_input_filesChange#0:4/init");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_filesChange__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_files__closures, _scope($scope1_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)

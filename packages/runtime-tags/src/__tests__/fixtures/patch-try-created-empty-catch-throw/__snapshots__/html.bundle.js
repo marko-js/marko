@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 				}, 1, "a0");
 				const $childScope = _patch_child($scope2_id, "b");
 				counter_default({});
-				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a4");
+				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "a4");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope2_id, {
 					_: $wi__input_show__OR__input_promise && _scope_with_id($scope1_id),
 					b: _existing_scope($childScope)

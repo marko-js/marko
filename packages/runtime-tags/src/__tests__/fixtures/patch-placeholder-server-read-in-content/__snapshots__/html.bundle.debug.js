@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope4_id = _scope_id();
 				_html("<div id=done>done</div>");
 			}, 1, "__tests__/template.marko_4*content");
-			_client_guard($scope0_reason, 1) && _patch_init($scope3_id, "__tests__/template.marko_3_input_promise#0:6/init");
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, "__tests__/template.marko_3_input_promise#0:6/init");
 			$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"));
 			$wi__input_promise && _resume_branch($scope3_id);
 		}, () => {

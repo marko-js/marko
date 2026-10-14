@@ -1,17 +1,16 @@
 // PATCH
-[`a0;D%b%;<em><!><!></em>`, {
+{
   cAa: [{
     ta: "ok",
     tb: ""
-  }, "a0", "a5"]
-}]
-;BAE
+  }, 0, "a5"]
+}
 
-// PATCH holding BAE
+// PATCH
 {
   cAa: [{
     ta: "y"
-  }, "a0", "a5"],
+  }, 0, "a5"],
   ka: [{
     ta: "boom"
   }, "a5"]

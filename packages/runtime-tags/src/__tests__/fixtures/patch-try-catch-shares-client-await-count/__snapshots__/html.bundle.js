@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 				_html(`<b>${_patch_text($scope6_id, "a", a, void 0, $scope0_reason, 0)}</b>`);
 				_scope($scope6_id, {});
 			}, 1, "a0", 1);
-			_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a4");
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a4");
 			$wi__input_a && _subscribe(_unfilled_if($scope0_reason, 0) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 0) && "a5", 0);
 			$wi__input_a && _resume_branch($scope2_id);
 		}, void 0, (e) => {
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			const $scope5_id = _scope_id();
 			_html(`<s>${_patch_text($scope5_id, "a", e.message)}</s>`);
 			_scope($scope5_id, {});
-		}, void 0, "a6", "a2", void 0, "");
+		}, void 0, "a6", "a2", 1, "");
 		if ($scope0_page) _if(() => {}, $scope1_id, "b");
 		_html("</div>");
 		_subscribe($pending__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a8");

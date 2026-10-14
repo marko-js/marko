@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 						if (input.html) {
 							const $scope3_id = _scope_id();
 							_html(`<div>${_patch_html($scope3_id, "a", input.html, void 0, $scope0_reason, 2)}</div><div class=y>${_patch_html($scope3_id, "b", input.html, void 0, $scope0_reason, 2)}</div>`);
-							_client_guard($scope0_reason, 2) && _patch_init($scope3_id, "a4");
+							_unfilled_if($scope0_reason, 2) && _patch_init($scope3_id, "a4");
 							_subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope3_id, {
 								_: $wi__input_show__OR__input_html && _scope_with_id($scope2_id),
 								Cg: $wi__input_html && 1
@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 						if (input.html) {
 							const $scope4_id = _scope_id();
 							_html(_patch_html($scope4_id, "a", input.html, void 0, $scope0_reason, 2));
-							_client_guard($scope0_reason, 2) && _patch_init($scope4_id, "a6");
+							_unfilled_if($scope0_reason, 2) && _patch_init($scope4_id, "a6");
 							_subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope4_id, {
 								_: $wi__input_show__OR__input_html && _scope_with_id($scope2_id),
 								Cg: $wi__input_html && 2
@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 							return 0;
 						}
 					}, $scope2_id, "b", 1, $wg__input_html, void 0, void 0, void 0, ["a3"], $scope0_reason, 2);
-					_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a8");
+					_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "a8");
 					$wi__input_show__OR__input_html && _subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a9", $wg__input_html);
 					return 0;
 				}

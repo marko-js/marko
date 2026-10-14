@@ -91,7 +91,7 @@ var template_default = _template("a", (input) => {
 			_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
 			const $childScope = _patch_child($scope1_id, "a");
 			panel_default({ rows: input.rows });
-			_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "a1");
+			_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, "a1");
 			_subscribe(_unfilled_if($scope0_reason, 4) && $input_rows__closures, _scope($scope1_id, {
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)

@@ -1,22 +1,19 @@
 // PATCH
-[`a3;D l%;<em> </em><!><!>`, {
-  cAa: [{}, "a3", "a9"],
+{
   ka: [{
     ta: "boom"
   }, "a9"]
-}]
-;CgQ
+}
 
-// PATCH holding CgQ
-[`a2;b%;<!><!><!>`, `a0;D ;<strong> </strong>`, {
+// PATCH
+{
   cAa: [{
     ta: "ok",
     cAb: [{
-      pa: "a0",
+      pa: 1,
       cAa: {
         ta: "v3"
       }
-    }, "a2", "a6"]
-  }, "a3", "a9"]
-}]
-;Cxo
+    }, 0, "a6"]
+  }, 0, "a9"]
+}

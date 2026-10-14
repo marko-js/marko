@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<em>${_patch_text($scope3_id, "#text/0", value, void 0, $scope0_reason, 1)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "3:6");
 		}, 1, "__tests__/template.marko_3*content", 1);
-		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_input_promise#0:4/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_input_promise#0:4/init");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_promise#0:4/subscribe", 0);
 		$wi__input_promise && _resume_branch($scope2_id);
 	}, void 0, (err) => {
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<em>${_text_resume($scope1_id, "#text/0", input.title, $wg__input_title)}</em>`);
 		_subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:6"), "__tests__/template.marko_1_input_title#0:3/subscribe", $wg__input_title);
 		$wg__input_title || _resume_branch($scope1_id);
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content");
+	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1);
 	_html("</main>");
 	$scope0_page ? _scope($scope0_id, {
 		input_title: input.title,

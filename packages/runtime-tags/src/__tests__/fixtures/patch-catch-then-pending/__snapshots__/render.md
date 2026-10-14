@@ -31,9 +31,9 @@ UPDATE: main > p::text " " => "b"
 # Update `{"promise":{"value":2},"detail":"c"}`
 ```html
 <main>
-  <span>
-    ok
-  </span>
+  <p>
+    c
+  </p>
   <button>
     0
   </button>
@@ -41,6 +41,5 @@ UPDATE: main > p::text " " => "b"
 ```
 ## Change
 ```
-REMOVE: main > span + p
-INSERT: main > span
+UPDATE: main > p::text "b" => "c"
 ```

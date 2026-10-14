@@ -7,11 +7,10 @@ import {
 } from "../../utils/resolve";
 
 // The patch's last frame applies before the outer body lands; the inner body
-// the document then catches rejects the patch, which never reported applied.
+// the document then catches keeps its `@catch`, and the patch applies.
 export const config: TestConfig = {
   patches: true,
   patch_while_streaming: true,
-  expect_rejection: true,
   steps: () => [
     {
       msg: "a",

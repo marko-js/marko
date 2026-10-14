@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "b", 1, _write_guard($scope1_reason, 0), void 0, void 0, void 0, ["a1"], $scope1_reason, 0);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a2");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a2");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, { _: ($wi__input_x || $wi__n) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a3");
 	}, $scope0_id) };
 	_set_scope_reason(0);

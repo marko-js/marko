@@ -1,13 +1,10 @@
 import type { TestConfig } from "../../main.test";
 import { flush, resolveAfter, wait } from "../../utils/resolve";
 
-// A rejected boundary followed by a flush whose await is still pending:
-// the pending UI replaces the live catch content, then the settle lands.
+// A rejected boundary followed by a flush whose await is still pending: the
+// live catch stays through the pending flush and its settle.
 export const config: TestConfig = {
   patches: true,
-  // A patch re-renders a caught `<try>` from the server, which recovers;
-  // a client render keeps its `@catch`.
-  skip_csr: true,
   skip_fresh_render: true,
   steps: () => [
     { promise: Promise.resolve(), detail: "a" },

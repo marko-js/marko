@@ -45,7 +45,7 @@ var template_default = _template("c", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(_patch_text($scope2_id, "a", input.label, void 0, $scope0_reason, 2));
-				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "c2");
+				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "c2");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }));
 			}, $scope1_id)
 		});

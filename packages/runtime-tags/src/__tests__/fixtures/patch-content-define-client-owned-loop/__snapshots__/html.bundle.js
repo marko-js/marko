@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_for_of(items, (item) => {
 			const $scope2_id = _scope_id();
 			_html(`<li>${_patch_text($scope2_id, "a", item, void 0, $scope1_reason, 0)}${_patch_text($scope2_id, "b", input.suffix, 2, $scope0_reason, 0)}</li>`);
-			_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a2");
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a2");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_suffix__closures, _scope($scope2_id, { _: ($wi__input_suffix || $wi__items) && _scope_with_id($scope1_id) }), "a3");
 		}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope1_reason, 0);
 		_html(`</ul>${_el_resume($scope1_id, "a")}`);

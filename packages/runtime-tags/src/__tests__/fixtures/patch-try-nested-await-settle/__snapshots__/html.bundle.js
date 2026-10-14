@@ -24,10 +24,10 @@ var template_default = _template("a", (input) => {
 				_html(`<strong>${_patch_text($scope4_id, "a", b, void 0, $scope0_reason, 2)}</strong>`);
 				_scope($scope4_id, {});
 			}, 1, "a0", 1);
-			_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a5");
+			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "a5");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_b__closures, _scope($scope2_id, { _: $wi__input_a__OR__input_b && _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a6");
 		}, 1, "a2", 1);
-		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a7");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "a7");
 		$wi__input_a__OR__input_b && _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a8", 0);
 		$wi__input_a__OR__input_b && _resume_branch($scope1_id);
 	}, () => {

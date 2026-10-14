@@ -1,18 +1,17 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-try-sync-throw/template.marko_1*content;D%b%;<em><!><!></em>`, {
+{
   "PatchChild:BranchScopes:#text/0": [{
     "PatchText:#text/0": "x"
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-sync-throw/template.marko_1*content", _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-sync-throw/template.marko_2*content"],
+  }, 0, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-sync-throw/template.marko_2*content"],
   "PatchCatch:#text/0": [{
     "PatchText:#text/0": "boom"
   }, _.a]
-}]
-;BAE
+}
 
-// PATCH holding BAE
+// PATCH
 {
   "PatchChild:BranchScopes:#text/0": [{
     "PatchText:#text/0": "back",
     "PatchText:#text/1": ""
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-sync-throw/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-try-sync-throw/template.marko_2*content"]
+  }, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-try-sync-throw/template.marko_2*content"]
 }

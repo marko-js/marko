@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							_: _scope_with_id($scope2_id)
 						}, "__tests__/template.marko", "5:8", { "#LoopKey": "5:12" }), _client_guard($scope0_reason, 4) && "__tests__/template.marko_3_input_suffix#0:7/subscribe"), "__tests__/template.marko_3_count#0:8/subscribe");
 					}, (item) => item, $scope2_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
-					_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_items#0:6/init");
+					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_items#0:6/init");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_items#0:6/subscribe");
 					return 0;
 				}

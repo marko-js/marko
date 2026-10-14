@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<p>${_patch_text($scope1_id, "#text/2", label, void 0, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
 		_patch_write($scope1_id, "PatchWrite:value", value, 1);
 		_client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_suffix#0:4_value#5/init");
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_suffix#0:4/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_suffix#0:4/init");
 		$scope1_page ? _subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			value: $wi__input_suffix && value,
 			_: ($wi__input_suffix || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),

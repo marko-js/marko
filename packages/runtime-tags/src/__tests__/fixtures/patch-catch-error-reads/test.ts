@@ -9,9 +9,6 @@ const error = (id: string) =>
 // reads, never the `Error` or the rest of its `cause`.
 export const config: TestConfig = {
   patches: true,
-  // A patch re-renders a caught `<try>` from the server, which recovers;
-  // a client render keeps its `@catch`.
-  skip_csr: true,
   steps: [
     { promise: Promise.resolve("ok") },
     {

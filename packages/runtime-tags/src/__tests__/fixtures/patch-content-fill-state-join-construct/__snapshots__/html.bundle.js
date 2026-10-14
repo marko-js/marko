@@ -50,8 +50,8 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<span>${_patch_text($scope2_id, "a", p.name, void 0, $scope0_reason, 0)}/${_text_resume($scope2_id, "b", count, 2)}/${_patch_text($scope2_id, "c", item.id, 2, $scope0_reason, 1)}</span>`);
-				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a2");
-				_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "a3");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a2");
+				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "a3");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item_id__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $p_name__closures, _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }))));
 			}, $scope1_id)
 		});

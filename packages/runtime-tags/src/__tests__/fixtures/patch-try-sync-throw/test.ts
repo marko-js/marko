@@ -5,12 +5,9 @@ const click = (document: Document) => {
 };
 
 // A sync throw inside a patched `<try>` body renders `@catch`, as a
-// document does; the next patch takes the body back.
+// document does; the next patch keeps it.
 export const config: TestConfig = {
   patches: true,
-  // A patch re-renders a caught `<try>` from the server, which recovers;
-  // a client render keeps its `@catch`.
-  skip_csr: true,
   steps: [
     { message: "ok" },
     click,

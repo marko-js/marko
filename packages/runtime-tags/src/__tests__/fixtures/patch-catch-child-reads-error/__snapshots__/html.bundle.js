@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "a3");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "a3");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a4");
 	}, void 0, (err) => {
 		_scope_reason();
@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		}), "a1"), "a2");
-	}, void 0, "a5", "a0", void 0, "");
+	}, void 0, "a5", "a0", 1, "");
 	_script($scope0_id, "a6");
 	_patch_value($scope0_id, "va8", count, 1);
 	$scope0_page ? _scope($scope0_id, {

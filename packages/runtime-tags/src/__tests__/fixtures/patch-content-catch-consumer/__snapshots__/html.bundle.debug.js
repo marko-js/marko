@@ -17,7 +17,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "#text/0", input.fail ? boom$1() : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/wrapper.marko_2_input_fail#0:4/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/wrapper.marko_2_input_fail#0:4/init");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }, "__tests__/tags/wrapper.marko", "4:2"), _client_guard($scope0_reason, 1) && "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe");
 	}, void 0, () => {
 		const $scope1_reason = _scope_reason();
@@ -25,7 +25,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", input.fallback, {}, 0, 0, $wg__input_fallback);
 		_subscribe($wi__input_fallback && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/wrapper.marko", "6:4"), "__tests__/tags/wrapper.marko_1_input_fallback#0:3/subscribe", $wg__input_fallback);
 		$wg__input_fallback || _resume_branch($scope1_id);
-	}, void 0, "__tests__/tags/wrapper.marko_1*content", "__tests__/tags/wrapper.marko_2*content");
+	}, void 0, "__tests__/tags/wrapper.marko_1*content", "__tests__/tags/wrapper.marko_2*content", 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_fallback: input.fallback,
 		"ClosureScopes:input_fallback/5": $wi__input_fallback && $input_fallback__closures,
@@ -52,7 +52,7 @@ var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (inp
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "#text/0", input.fail ? boom() : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/init");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }, "__tests__/tags/error-wrapper.marko", "4:2"), _client_guard($scope0_reason, 1) && "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
@@ -60,7 +60,7 @@ var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (inp
 		_html(`<b>${_patch_text($scope1_id, "#text/0", err.message)}</b>`);
 		_dynamic_tag($scope1_id, "#text/1", input.fallback, {}, 0, 0, _write_guard($scope0_reason, 0), void 0, 2, $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/error-wrapper.marko", "6:4"), "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe");
-	}, void 0, "__tests__/tags/error-wrapper.marko_1*content", "__tests__/tags/error-wrapper.marko_2*content", void 0, "");
+	}, void 0, "__tests__/tags/error-wrapper.marko_1*content", "__tests__/tags/error-wrapper.marko_2*content", 1, "");
 	$scope0_page ? _scope($scope0_id, {
 		input_fallback: input.fallback,
 		"ClosureScopes:input_fallback/5": _write_if($scope0_reason, 0) && $input_fallback__closures,
@@ -117,5 +117,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 1) && (_content_withheld("__tests__/template.marko_1*content") || _content_withheld("__tests__/template.marko_2*content")) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label);
 }, 1);

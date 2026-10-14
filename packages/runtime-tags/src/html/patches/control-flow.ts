@@ -32,7 +32,6 @@ import {
   getChunk,
   getState,
   withBranchId,
-  withContext,
 } from "../writer";
 import {
   addSetupId,
@@ -42,7 +41,6 @@ import {
   entryKey,
   groupSources,
   inCreatable,
-  kCaught,
   keptRow,
   openScopePatch,
   pairBranch,
@@ -456,7 +454,7 @@ export function _await<T>(
   // the body's content id, letting a created scope build the await branch.
   if (patchContent === 0) return;
   // A created scope builds the body from this shell, even when settled; an
-  // always-pairing body outside creatable structure is built only by a rebuild.
+  // always-pairing body outside creatable structure only pairs.
   const elide = alwaysPairs && !inCreatable();
   if (!elide) shipShell(state, patchContent);
   writePatch(
@@ -476,7 +474,7 @@ export function _await<T>(
 }
 
 // A patch pairs the try's body with the live branch (carrying its creation
-// payload unless the try always pairs) and a caught body writes its catch.
+// payload where a flush may create it) and a body that throws writes its catch.
 export function _try(
   scopeId: number,
   accessor: Accessor,
@@ -496,7 +494,7 @@ export function _try(
       accessor,
       content,
       placeholderContent,
-      catchContent,
+      catchContent && ((err) => withUnpatched(catchContent, err)),
       placeholderId,
       catchId,
     );
@@ -505,19 +503,22 @@ export function _try(
   if (placeholderContent) _scope_id();
   const branchId = _peek_scope_id();
   // The entry carries the creation payload (body shell, slot ids) unless the
-  // try always pairs: no catch, outside divergent branches and caught bodies.
+  // try always pairs outside divergent branches; one that only pairs still
+  // names its catch, so a caught try leaves the entry.
   const create = !alwaysPairs || inCreatable();
+  const slotIds =
+    create && placeholderId ? [catchId, placeholderId] : [catchId];
   pairBranch(
     state,
     scopeId,
     accessor,
     branchId,
     create ? bodyId : undefined,
-    create ? (placeholderId ? [catchId, placeholderId] : [catchId]) : undefined,
+    create || catchId ? slotIds : undefined,
     scopeId,
   );
-  // A try this flush may create, or rebuild from its catch, needs its entry
-  // even when its body writes nothing.
+  // A try this flush may create needs its entry even when its body writes
+  // nothing.
   if (create) ensureScopePatch(state, branchId);
   const chunk = getChunk()!;
   const beforeBranch = deferBranchStart(chunk);
@@ -530,36 +531,30 @@ export function _try(
   // A patch shows `@placeholder` from received client state and creates
   // `@catch` in its entry, so no document reorder rides the flush stream.
   const writesRenderers = catchContent
-    ? tryBoundary(
-        () => withContext(kCaught, 1, content),
-        catchContent,
-        branchId,
-        renderers,
-        (err) => {
-          // A body that threw before claiming its id keeps it paired.
-          if (_peek_scope_id() === branchId) _scope_id();
-          // A catch no flush creates renders on the client from its error, sent
-          // whole (as message and cause) where its code reads it.
-          writePatch(
-            state,
-            scopeId,
-            entryKey(PatchKey.Catch, accessor),
-            typeof catchEffects === "string"
-              ? writeCatch(
-                  state,
-                  scopeId,
-                  accessor,
-                  catchContent,
-                  err,
-                  catchId!,
-                  catchEffects,
-                )
-              : catchEffects
-                ? [err]
-                : [],
-          );
-        },
-      )
+    ? tryBoundary(content, catchContent, branchId, renderers, (err) => {
+        // A body that threw before claiming its id keeps it paired.
+        if (_peek_scope_id() === branchId) _scope_id();
+        // A catch no flush creates renders on the client from its error, sent
+        // whole (as message and cause) where its code reads it.
+        writePatch(
+          state,
+          scopeId,
+          entryKey(PatchKey.Catch, accessor),
+          typeof catchEffects === "string"
+            ? writeCatch(
+                state,
+                scopeId,
+                accessor,
+                catchContent,
+                err,
+                catchId!,
+                catchEffects,
+              )
+            : catchEffects
+              ? [err]
+              : [],
+        );
+      })
     : (content(), false);
   applyBranchStart(chunk, beforeBranch, true);
   if (!writesRenderers) renderers();
@@ -582,7 +577,7 @@ function writeCatch(
     link: entryKey(AccessorPrefix.BranchScopes, accessor),
   };
   const patch = openScopePatch(state, catchBranchId);
-  withBranchId(catchBranchId, catchContent, err);
+  withBranchId(catchBranchId, withUnpatched, catchContent, err);
   if (effectIds) addSetupId(state, catchBranchId, effectIds, 1);
   return patchNode(state, [patch, catchId]);
 }

@@ -81,19 +81,6 @@ UPDATE: i::text " " => "b"
 ```
 ## Change
 ```
-INSERT: button + p
-REMOVE: p + em
-UPDATE: p::text " " => "ok"
-INSERT: em + p
-REMOVE: p + b
-REMOVE: p + i
-UPDATE: p::text " " => "ok"
-REMOVE: em + p
-INSERT: em + b
-REMOVE: i + p
-UPDATE: b::text " " => "SHOWN_message"
-INSERT: button + em
-INSERT: b + i
-UPDATE: em::text " " => "c"
-UPDATE: i::text " " => "c"
+UPDATE: em::text "b" => "c"
+UPDATE: i::text "b" => "c"
 ```

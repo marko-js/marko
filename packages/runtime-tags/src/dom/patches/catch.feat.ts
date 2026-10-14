@@ -5,13 +5,11 @@ import {
   AccessorProp,
   type BranchScope,
   PatchKey,
-  RendererProp,
   type Scope,
 } from "../../common/types";
 import "../catch.feat";
 import { renderCatch } from "../control-flow";
-import { patchers, patchScope, withCreating } from "./apply";
-import { getContent } from "./shells";
+import { patchers } from "./apply";
 
 declare module "./apply" {
   interface PatchValues {
@@ -19,19 +17,12 @@ declare module "./apply" {
   }
 }
 
-// A catch destroys the body as a client throw does, releasing its awaits'
-// counts; the try's next entry rebuilds it (`patches/try`). A content id
-// creates the `@catch` from its renderer and its patch, the error unread;
-// else it renders from the error.
-patchers[PatchKey.Catch] = withBranches((scope, key, [value, catchId]) => {
-  const link = (AccessorPrefix.BranchScopes +
-    key.slice(PatchKey.Catch.length)) as Accessor;
-  if (catchId) {
-    (scope[link] as BranchScope)[AccessorProp.CatchContent] = () =>
-      Object.create(getContent(catchId)!, { [RendererProp.Params]: {} });
-    renderCatch(scope[link] as BranchScope);
-    withCreating(patchScope, value as Scope, scope[link] as Scope);
-  } else {
-    renderCatch(scope[link] as BranchScope, value);
-  }
+// A catch destroys the body as a client throw does, rendering from what its
+// code reads of the error; a page creating one keeps `patches/catch-created`'s.
+patchers[PatchKey.Catch] ||= withBranches((scope, key, [error]) => {
+  const branch = scope[
+    (AccessorPrefix.BranchScopes + key.slice(PatchKey.Catch.length)) as Accessor
+  ] as BranchScope;
+  // A caught try keeps the `@catch` it shows.
+  if (branch[AccessorProp.CatchContent]) renderCatch(branch, error);
 });

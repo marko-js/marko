@@ -21,17 +21,17 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html(`<span>${_patch_text($scope4_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
-				_client_guard($scope0_reason, 0) && _patch_init($scope4_id, "a4");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope4_id, "a4");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $await_content__value__closures, _scope($scope4_id, { _: $wi__input_promise && _scope_with_id($scope3_id) }), _client_guard($scope0_reason, 0) && "a5");
 			}, void 0, (err) => {
 				_scope_reason();
 				const $scope5_id = _scope_id();
 				_html(`<em>${_patch_text($scope5_id, "a", err.message)}</em>`);
 				_scope($scope5_id, {});
-			}, void 0, "a6", "a0", void 0, "");
+			}, void 0, "a6", "a0", 1, "");
 			$wi__input_promise && _scope($scope3_id, { f: _unfilled_if($scope0_reason, 0) && $await_content__value__closures });
 		}, 1, "a1", 1);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a7");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a7");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a8", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {

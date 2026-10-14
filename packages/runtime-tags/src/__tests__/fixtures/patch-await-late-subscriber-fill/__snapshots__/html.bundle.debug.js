@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<div id=done>${_text_resume($scope2_id, "#text/0", input.label + n)}</div>`);
 			_subscribe($n__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"), "__tests__/template.marko_2_input_label#0:6/subscribe"), "__tests__/template.marko_2_n#0:7/subscribe");
 		}, 1, "__tests__/template.marko_2*content", 1);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:5/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:5/init");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_promise#0:5/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, () => {

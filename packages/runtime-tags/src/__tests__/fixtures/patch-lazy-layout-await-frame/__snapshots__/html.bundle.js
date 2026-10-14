@@ -146,7 +146,7 @@ var template_default = _template("e", (input) => {
 								return 1;
 							}
 						}, $scope3_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["e4", "e5"], $scope0_reason, 1);
-						_client_guard($scope0_reason, 1) && _patch_init($scope3_id, "e6");
+						_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, "e6");
 						$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope3_id, {
 							_: _scope_with_id($scope2_id),
 							Cf: 1
@@ -154,7 +154,7 @@ var template_default = _template("e", (input) => {
 						$wg__input_page || $wi__input_page && _resume_branch($scope3_id);
 					}, $scope2_id)
 				});
-				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "e7");
+				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "e7");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_list__closures, _scope($scope2_id, {
 					_: $wi__input_page__OR__input_list && _scope_with_id($scope1_id),
 					b: _existing_scope($childScope3)
@@ -162,7 +162,7 @@ var template_default = _template("e", (input) => {
 				return 1;
 			}
 		}, $scope1_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["e3", "e2"], $scope0_reason, 1);
-		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "e8");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "e8");
 		$wi__input_page__OR__input_list && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wg__input_page || $wi__input_page__OR__input_list && _resume_branch($scope1_id);
 	}, $scope0_id) });

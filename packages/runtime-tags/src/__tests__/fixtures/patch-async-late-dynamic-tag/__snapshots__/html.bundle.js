@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 			_html(`<b>${_patch_text($scope4_id, "a", w, void 0, $scope0_reason, 3)}</b>`);
 			_scope($scope4_id, {});
 		}, 1, "a0");
-		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a6");
+		_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "a6");
 		$wi__input_q && _subscribe(_unfilled_if($scope0_reason, 3) && $input_q__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
 		$wi__input_q && _resume_branch($scope2_id);
 	}, $scope0_id) });

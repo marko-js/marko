@@ -58,22 +58,8 @@ UPDATE: em::text@2 "" => "0"
 ```
 ## Change
 ```
-INSERT: button + p
-REMOVE: p + em
-REMOVE: em + p
-INSERT: em + p
-REMOVE: p + b
-REMOVE: p + i
-INSERT: em + b
-REMOVE: i + p
-UPDATE: b::text " " => "SHOWN_message"
-INSERT: b + i
-UPDATE: i::text@0 "" => "c"
-UPDATE: i::text@2 "" => "0"
 UPDATE: i::text@0 "b" => "c"
-INSERT: button + em
-UPDATE: em::text@0 "" => "c"
-UPDATE: em::text@2 "" => "0"
+UPDATE: em::text@0 "b" => "c"
 ```
 
 # Update `{"fail":false,"label":"d"}`
@@ -81,22 +67,20 @@ UPDATE: em::text@2 "" => "0"
 <button>
   0
 </button>
-<p>
-  ok
-</p>
-<p>
-  ok
-</p>
+<em>
+  d 0
+</em>
+<b>
+  SHOWN_message
+</b>
+<i>
+  d 0
+</i>
 ```
 ## Change
 ```
-INSERT: button + p
-REMOVE: p:nth-of-type(1) + em
-UPDATE: p:nth-of-type(1)::text " " => "ok"
-INSERT: p:nth-of-type(1) + p
-REMOVE: p:nth-of-type(2) + b
-REMOVE: p:nth-of-type(2) + i
-UPDATE: p:nth-of-type(2)::text " " => "ok"
+UPDATE: i::text@0 "c" => "d"
+UPDATE: em::text@0 "c" => "d"
 ```
 
 # Update
@@ -107,16 +91,21 @@ container.querySelector("button").click();
 <button>
   1
 </button>
-<p>
-  ok
-</p>
-<p>
-  ok
-</p>
+<em>
+  d 1
+</em>
+<b>
+  SHOWN_message
+</b>
+<i>
+  d 1
+</i>
 ```
 ## Change
 ```
 UPDATE: button::text "0" => "1"
+UPDATE: i::text@2 "0" => "1"
+UPDATE: em::text@2 "0" => "1"
 ```
 
 # Update `{"fail":true,"label":"e"}`
@@ -136,15 +125,6 @@ UPDATE: button::text "0" => "1"
 ```
 ## Change
 ```
-REMOVE: em + p
-INSERT: em + b
-REMOVE: i + p
-UPDATE: b::text " " => "SHOWN_message"
-INSERT: b + i
-UPDATE: i::text@0 "" => "e"
-UPDATE: i::text@2 "" => "1"
 UPDATE: i::text@0 "d" => "e"
-INSERT: button + em
-UPDATE: em::text@0 "" => "e"
-UPDATE: em::text@2 "" => "1"
+UPDATE: em::text@0 "d" => "e"
 ```

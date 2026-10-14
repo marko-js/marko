@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (open) {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_patch_text($scope2_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</em>`);
-				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_title#0:4/init");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_title#0:4/init");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, { _: ($wi__input_title || $wi__open) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_input_title#0:4/subscribe");
 				return 0;
 			}

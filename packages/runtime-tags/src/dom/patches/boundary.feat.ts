@@ -123,7 +123,7 @@ function onStreamLanded(fn: () => void, tryBranch: Scope) {
     complete() || (queueEffect(tryBranch[AccessorProp.Owner]!, fn), schedule());
 }
 // The body's patch waits for the stream to land it, its await counted as
-// settled; if the document rendered the catch instead, it rejects.
+// settled; a catch the document rendered instead keeps the try, as applied.
 function holdForStream(
   scope: Scope,
   key: string,
@@ -141,10 +141,10 @@ function holdForStream(
       settle(
         // A later response superseded this one: settled as applied.
         response !== render[RenderDataProp.PatchResponse] ||
-          (scope[link] &&
-            applyInFrame(wait, render, () =>
-              patchScope({ [key]: value } as Scope, scope),
-            )),
+          !scope[link] ||
+          applyInFrame(wait, render, () =>
+            patchScope({ [key]: value } as Scope, scope),
+          ),
       ),
     scope,
   );

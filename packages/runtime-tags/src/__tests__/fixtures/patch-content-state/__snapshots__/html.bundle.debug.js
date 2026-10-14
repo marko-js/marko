@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "#text/0", count)}:${_patch_text($scope1_id, "#text/1", input.note, 2, $scope0_reason, 1)}</em>`);
-			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_note#0:5/init");
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_note#0:5/init");
 			_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4")));
 		}, $scope0_id)
 	});

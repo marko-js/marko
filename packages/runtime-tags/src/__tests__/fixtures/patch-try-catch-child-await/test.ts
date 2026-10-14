@@ -1,13 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// A child template's await under the page's caught `<try>`: the caught
-// body renders in a context the child's boundary reads at runtime, so its
-// entries carry their payload and the rebuild after the catch creates it.
+// A child template's await under the page's `<try>`: once a rejection shows
+// the `@catch`, a patch whose await resolves leaves it in place.
 export const config: TestConfig = {
   patches: true,
-  // A patch re-renders a caught `<try>` from the server, which recovers;
-  // a client render keeps its `@catch`.
-  skip_csr: true,
+  // A caught `<try>` keeps its `@catch`, which a fresh render of a later
+  // input lacks.
+  skip_fresh_render: true,
   steps: () => [
     { promise: Promise.resolve("one") },
     { promise: Promise.reject(new Error("boom")) },

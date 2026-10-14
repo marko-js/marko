@@ -30,7 +30,7 @@ var b_default = _template("__tests__/b.marko", (input) => {
 			_html(`<p>${_patch_text($scope3_id, "#text/0", value, void 0, $scope0_reason, 0)}</p>`);
 			_scope($scope3_id, {}, "__tests__/b.marko", "3:4");
 		}, 1, "__tests__/b.marko_3*content", 1);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/b.marko_1_input_promise#0:4/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/b.marko_1_input_promise#0:4/init");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/b.marko", "2:2"), _client_guard($scope0_reason, 0) && "__tests__/b.marko_1_input_promise#0:4/subscribe", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {

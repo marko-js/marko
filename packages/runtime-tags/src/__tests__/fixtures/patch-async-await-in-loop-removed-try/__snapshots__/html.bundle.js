@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 			items,
 			promise: input.promise
 		});
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a1");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a1");
 		_subscribe($items__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)

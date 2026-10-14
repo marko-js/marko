@@ -5,9 +5,9 @@ import { navigate, rejectAfter } from "../../utils/resolve";
 // `@catch` resolve by id once the child's module registers them.
 export const config: TestConfig = {
   patches: true,
-  // A patch re-renders a caught `<try>` from the server, which recovers;
-  // a client render keeps its `@catch`.
-  skip_csr: true,
+  // A caught `<try>` keeps its `@catch`, which a fresh render of a later
+  // input lacks.
+  skip_fresh_render: true,
   steps: () => [
     { show: false },
     { show: true, p: Promise.resolve("a") },

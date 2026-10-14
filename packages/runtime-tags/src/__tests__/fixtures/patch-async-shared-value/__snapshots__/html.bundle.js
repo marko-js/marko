@@ -52,13 +52,13 @@ var template_default = _template("b", (input) => {
 				name: "c",
 				item
 			});
-			_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "b3");
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "b3");
 			_subscribe(_unfilled_if($scope0_reason, 1) && $item__closures, _scope($scope2_id, {
 				_: $wi__input_label__OR__input_promise && _scope_with_id($scope1_id),
 				b: _existing_scope($childScope3)
 			}), _client_guard($scope0_reason, 1) && "b4");
 		}, 1, "b0", 1);
-		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "b5");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "b5");
 		$wi__input_label__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "b6", 0);
 		$wi__input_label__OR__input_promise && _resume_branch($scope1_id);
 	}, () => {

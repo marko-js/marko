@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 					_html(`<b>${_patch_text($scope4_id, "a", a, void 0, $scope0_reason, 3)}</b>`);
 					_scope($scope4_id, {});
 				}, 1, "a1");
-				_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a6");
+				_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "a6");
 				_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 3) && $input_fast__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a7", 0);
 				return 0;
 			}
@@ -38,8 +38,8 @@ var template_default = _template("a", (input) => {
 			_scope($scope5_id, {});
 		}, 1, "a0", 1);
 		_html("</div>");
-		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a8");
-		_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "a9");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "a8");
+		_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, "a9");
 		$wi__input_show__OR__input_fast__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 4) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a10", $wg__input_show), _client_guard($scope0_reason, 4) && "a11", $wg__input_show);
 		$wg__input_show || $wi__input_show__OR__input_fast__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {

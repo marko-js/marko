@@ -24,16 +24,3 @@ UPDATE: main > b::text " " => "boom"
 ```
 
 # Update `{"message":"back"}`
-```html
-<main>
-  <em>
-    back
-  </em>
-</main>
-```
-## Change
-```
-INSERT: main > em
-REMOVE: main > em + b
-UPDATE: main > em::text "" => "back"
-```

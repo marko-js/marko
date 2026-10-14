@@ -30,13 +30,13 @@ var template_default = _template("a", (input) => {
 				_await($scope3_id, "a", input.inner, (b) => {
 					const $scope4_id = _scope_id();
 					_html(`<div id=inner>${_patch_text($scope4_id, "a", input.msg, void 0, $scope0_reason, 4)} ${_patch_text($scope4_id, "b", b, 2, $scope0_reason, 5)}</div>`);
-					_client_guard($scope0_reason, 4) && _patch_init($scope4_id, "a8");
+					_unfilled_if($scope0_reason, 4) && _patch_init($scope4_id, "a8");
 					_subscribe(_unfilled_if($scope0_reason, 4) && $input_msg__closures, _scope($scope4_id, {
 						_: $wi__input_outer__OR__input_msg__OR__input_inner && _scope_with_id($scope3_id),
 						Cm: $wi__input_msg && 1
 					}), _client_guard($scope0_reason, 4) && "a9");
 				}, 1, "a1", 1);
-				_client_guard($scope0_reason, 5) && _patch_init($scope3_id, "a10");
+				_unfilled_if($scope0_reason, 5) && _patch_init($scope3_id, "a10");
 				$wi__input_outer__OR__input_msg__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 5) && $input_inner__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 5) && "a11", 0);
 				$wi__input_outer__OR__input_msg__OR__input_inner && _resume_branch($scope3_id);
 			}, () => {
@@ -47,11 +47,11 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("<em>inner failed</em>");
-			}, "a12", "a13", "a3");
-			_client_guard($scope0_reason, 4) && _patch_init($scope2_id, "a14");
+			}, "a12", "a13", "a3", 1);
+			_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, "a14");
 			_subscribe(_unfilled_if($scope0_reason, 4) && $input_msg__closures, _scope($scope2_id, { _: $wi__input_outer__OR__input_msg__OR__input_inner && _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 4) && "a15");
 		}, 1, "a4", 1);
-		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "a16");
+		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "a16");
 		$wi__input_outer__OR__input_msg__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 3) && $input_outer__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "a17", 0);
 		$wi__input_outer__OR__input_msg__OR__input_inner && _resume_branch($scope1_id);
 	}, () => {
@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 	_await($scope0_id, "d", input.last, (c) => {
 		const $scope5_id = _scope_id();
 		_html(`<span id=last>${_patch_text($scope5_id, "a", input.msg, void 0, $scope0_reason, 4)} ${_patch_text($scope5_id, "b", c, 2, $scope0_reason, 6)}</span>`);
-		_client_guard($scope0_reason, 4) && _patch_init($scope5_id, "a19");
+		_unfilled_if($scope0_reason, 4) && _patch_init($scope5_id, "a19");
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_msg__closures, _scope($scope5_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			Cm: $wi__input_msg && 2

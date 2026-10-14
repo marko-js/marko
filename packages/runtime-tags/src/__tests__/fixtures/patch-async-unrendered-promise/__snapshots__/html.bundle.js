@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 					card_default({ user });
 					_scope($scope7_id, { a: _existing_scope($childScope) });
 				}, 1, "a1");
-				_client_guard($scope0_reason, 5) && _patch_init($scope3_id, "a8");
+				_unfilled_if($scope0_reason, 5) && _patch_init($scope3_id, "a8");
 				$wi__input_show__OR__input_card && _subscribe(_unfilled_if($scope0_reason, 5) && $input_card__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 5) && "a9", 0);
 				$wi__input_show__OR__input_card && _resume_branch($scope3_id);
 			}, void 0, (err) => {

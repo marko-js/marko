@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 					_html("<span>inner</span>");
 					_script($scope2_id, "a2", 0);
 					_patch_effect($scope2_id, "ea2", "1 c 2 g");
-					_client_guard($scope0_reason, 4) && _patch_init($scope2_id, "a3");
+					_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, "a3");
 					_subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 4) && "a4", 0);
 					return 0;
 				}

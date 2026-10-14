@@ -37,13 +37,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_await($scope2_id, "#text/0", Promise.resolve(input.value), () => {
 					const $scope3_id = _scope_id();
 					_html(`<em>${_patch_text($scope3_id, "#text/0", input.value, void 0, $scope0_reason, 2)}</em>`);
-					_client_guard($scope0_reason, 2) && _patch_init($scope3_id, "__tests__/template.marko_3_input_value#0:4/init");
+					_unfilled_if($scope0_reason, 2) && _patch_init($scope3_id, "__tests__/template.marko_3_input_value#0:4/init");
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, {
 						_: $wi__input_show__OR__input_value && _scope_with_id($scope2_id),
 						"ClosureSignalIndex:input_value/5": $wi__input_value && 1
 					}, "__tests__/template.marko", "4:8"));
 				}, 1, "__tests__/template.marko_3*content");
-				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_value#0:4/init");
+				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_value#0:4/init");
 				$wi__input_show__OR__input_value && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
 				$wi__input_show__OR__input_value && _resume_branch($scope2_id);
 			}, $scope1_id) });

@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_html(`<p>A:${_patch_text($scope4_id, "a", v, 2, $scope0_reason, 0)}</p>`);
 			_scope($scope4_id, {});
 		}, 1, "a0", 1);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a3");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a3");
 		$wi__input_a && _subscribe(_unfilled_if($scope0_reason, 0) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a4", 0);
 		$wi__input_a && _resume_branch($scope1_id);
 	}, () => {
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("caught-a");
-	}, "a5", "a6", "a2");
+	}, "a5", "a6", "a2", 1);
 	_script($scope0_id, "a7");
 	_patch_value($scope0_id, "va8", n, 1);
 	$scope0_page && _scope($scope0_id, {

@@ -38,13 +38,13 @@ var template_default = _template("a", (input) => {
 					_await($scope3_id, "a", Promise.resolve(input.value), () => {
 						const $scope4_id = _scope_id();
 						_html(`<em>${_patch_text($scope4_id, "a", input.value, void 0, $scope0_reason, 2)}</em>`);
-						_client_guard($scope0_reason, 2) && _patch_init($scope4_id, "a5");
+						_unfilled_if($scope0_reason, 2) && _patch_init($scope4_id, "a5");
 						_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope4_id, {
 							_: $wi__input_show__OR__input_value && _scope_with_id($scope3_id),
 							Cf: $wi__input_value && 1
 						}));
 					}, 1, "a0");
-					_client_guard($scope0_reason, 2) && _patch_init($scope3_id, "a6");
+					_unfilled_if($scope0_reason, 2) && _patch_init($scope3_id, "a6");
 					$wi__input_show__OR__input_value && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 					$wi__input_show__OR__input_value && _resume_branch($scope3_id);
 				}, () => {

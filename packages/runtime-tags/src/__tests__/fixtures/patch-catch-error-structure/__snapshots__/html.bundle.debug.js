@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<p>${_patch_text($scope1_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_error#0:5/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_error#0:5/init");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_error__closures, _scope($scope1_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_error#0:5/subscribe");
 	}, void 0, (err) => {
 		const $scope2_reason = _scope_reason();
@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, 0, $scope2_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_5*shell");
 		_script($scope2_id, "__tests__/template.marko_2");
 		_scope($scope2_id, { err_message: _unfilled_if($scope2_reason, 0) && err?.message }, "__tests__/template.marko", "8:6", { err_message: ["err.message", "8:13"] });
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", void 0, "");
+	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, "");
 	_html(`<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", count, 1);

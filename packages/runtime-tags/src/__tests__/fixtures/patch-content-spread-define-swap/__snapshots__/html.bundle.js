@@ -31,5 +31,5 @@ var template_default = _template("a", (input) => {
 		f: _unfilled_if($scope0_reason, 1) && one,
 		g: _unfilled_if($scope0_reason, 1) && two,
 		i: $wi__input_title && $input_title__closures
-	}) : _filled_guard($scope0_reason, 0) && (_content_withheld("a0") || _content_withheld("a2")) && _patch_value($scope0_id, "va5", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va5", input.title);
 }, 1);

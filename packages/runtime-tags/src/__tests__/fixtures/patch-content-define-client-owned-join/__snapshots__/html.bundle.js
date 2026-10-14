@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		_html(`<p>${_patch_text($scope1_id, "a", n + input.suffix, void 0, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
 		_patch_write($scope1_id, "wd", n, 1);
 		_client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && _patch_init($scope1_id, "a2");
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a3");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a3");
 		$scope1_page ? _subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && n,
 			_: ($wi__input_suffix || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)

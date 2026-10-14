@@ -8,13 +8,14 @@ const click = (container: Document) => {
 };
 
 // A `@catch` passes content reading a member of its error, the page's state
-// and a param to a child with no client code, which renders it, as a patch
-// throws, throws again, recovers and throws.
+// and a param to a child with no client code, which renders it: the first
+// error a patch shows stays as later patches throw again, render the body or
+// throw after a click, and the rest updates.
 export const config: TestConfig = {
   patches: true,
-  // A patch re-renders a caught `<try>` from the server, which recovers;
-  // a client render keeps its `@catch`.
-  skip_csr: true,
+  // A caught `<try>` keeps its `@catch`, which a fresh render of a later
+  // input lacks.
+  skip_fresh_render: true,
   steps: [
     { label: "a" },
     { error: error("1"), label: "b" },

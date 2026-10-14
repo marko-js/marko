@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<p>${_patch_text($scope1_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_error#0:3/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_error#0:3/init");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_error__closures, _scope($scope1_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_error#0:3/subscribe");
 	}, void 0, (err) => {
 		_scope_reason();
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope2_id, "__tests__/template.marko_2");
 		_patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill0", shown, 1);
 		_scope($scope2_id, { shown }, "__tests__/template.marko", "7:6", { shown: "8:12" });
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", void 0, "");
+	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, "");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_error/4": $wi__input_error && _unfilled_if($scope0_reason, 0) && $input_error__closures }, "__tests__/template.marko", 0);
 }, 1);

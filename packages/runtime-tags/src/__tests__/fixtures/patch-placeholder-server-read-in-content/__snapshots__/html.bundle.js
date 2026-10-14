@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 				_scope_id();
 				_html("<div id=done>done</div>");
 			}, 1, "a0");
-			_client_guard($scope0_reason, 1) && _patch_init($scope3_id, "a4");
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, "a4");
 			$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }));
 			$wi__input_promise && _resume_branch($scope3_id);
 		}, () => {

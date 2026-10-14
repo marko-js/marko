@@ -92,7 +92,7 @@ var template_default = _template("e", (input) => {
 							return 1;
 						}
 					}, $scope3_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["e4", "e5"], $scope0_reason, 0);
-					_client_guard($scope0_reason, 0) && _patch_init($scope3_id, "e6");
+					_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, "e6");
 					$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
 						Ce: 1
@@ -106,7 +106,7 @@ var template_default = _template("e", (input) => {
 				return 1;
 			}
 		}, $scope1_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["e3", "e2"], $scope0_reason, 0);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "e7");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "e7");
 		$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wg__input_page || $wi__input_page && _resume_branch($scope1_id);
 	}, $scope0_id) });

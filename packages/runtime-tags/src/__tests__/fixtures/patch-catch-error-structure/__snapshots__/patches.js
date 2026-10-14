@@ -1,6 +1,5 @@
 // PATCH
-[`a0;D ;<p> </p>`, `a1;Db%;<b>missing <!></b>`, `a3;D ;<span> </span>`, {
-  cAa: [{}, "a0", "a7"],
+[`a1;Db%;<b>missing <!></b>`, `a3;D ;<span> </span>`, {
   ka: [{
     ba: [{
       ta: "SHOWN_a"
@@ -12,11 +11,10 @@
     }, "a3"]
   }, "a7"]
 }]
-;CxY
+;CxQ
 
-// PATCH holding CxY
+// PATCH holding CxQ
 [`a2,<i>failed</i>`, {
-  cAa: [{}, "a0", "a7"],
   ka: [{
     ba: [1, {}, "a2"],
     lb: [{
@@ -24,11 +22,11 @@
     }, "a3"]
   }, "a7"]
 }]
-;Cx4
+;Cxw
 
-// PATCH holding Cx4
+// PATCH holding Cxw
 {
   cAa: [{
     ta: "ok"
-  }, "a0", "a7"]
+  }, 0, "a7"]
 }

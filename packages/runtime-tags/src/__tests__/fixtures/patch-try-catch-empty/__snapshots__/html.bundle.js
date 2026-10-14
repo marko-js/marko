@@ -19,10 +19,10 @@ var template_default = _template("a", (input) => {
 			_html(`<em>${_patch_text($scope2_id, "a", value, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope2_id, {});
 		}, 1, "a0", 1);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a3");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a3");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a4", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
-	}, void 0, () => {}, void 0, "a5", "a2");
+	}, void 0, () => {}, void 0, "a5", "a2", 1);
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a6");
 	_patch_value($scope0_id, "va7", n, 1);

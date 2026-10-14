@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<b>${_patch_text($scope6_id, "#text/0", a, void 0, $scope0_reason, 0)}</b>`);
 				_scope($scope6_id, {}, "__tests__/template.marko", "6:10");
 			}, 1, "__tests__/template.marko_6*content", 1);
-			_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_a#0:4/init");
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_a#0:4/init");
 			$wi__input_a && _subscribe(_unfilled_if($scope0_reason, 0) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:8"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_input_a#0:4/subscribe", 0);
 			$wi__input_a && _resume_branch($scope2_id);
 		}, void 0, (e) => {
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope5_id = _scope_id();
 			_html(`<s>${_patch_text($scope5_id, "#text/0", e.message)}</s>`);
 			_scope($scope5_id, {}, "__tests__/template.marko", "7:10");
-		}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", void 0, "");
+		}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", 1, "");
 		if ($scope0_page) _if(() => {
 			if (pending) {
 				const $scope3_id = _scope_id();

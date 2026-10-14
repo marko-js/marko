@@ -95,21 +95,16 @@ function getPatchReadyIds() {
   return getChunk()!.context?.[kReadyIds] as string[] | undefined;
 }
 
-// Set while a patch renders a body a `@catch` can replace: nothing under it
-// is provably live on the client, so boundaries there ship their payload.
-export const kCaught = Symbol("Caught");
-
 // The branch a patch renders whose expression nothing behind can change.
 const kKeptBranch = Symbol("Kept Branch");
 
 // Whether a flush may create the scopes rendering here: in a branch not kept
-// (the client decides by divergence), or a body a `@catch` can replace.
+// (the client decides by divergence).
 export function inCreatable() {
   const context = getChunk()?.context;
   return (
-    (context?.[kBranchId] !== undefined &&
-      context[kBranchId] !== context[kKeptBranch]) ||
-    !!context?.[kCaught]
+    context?.[kBranchId] !== undefined &&
+    context[kBranchId] !== context[kKeptBranch]
   );
 }
 
@@ -232,11 +227,8 @@ export function ensureScopePatch(
           state,
           parent,
           entryKey(PatchKey.Child, hop),
-          contentId
-            ? patchNode(
-                state,
-                slotIds ? [patch, contentId, ...slotIds] : [patch, contentId],
-              )
+          slotIds
+            ? patchNode(state, [patch, contentId || 0, ...slotIds])
             : patch,
         );
       } else {
@@ -324,7 +316,8 @@ export class PatchRenderState extends State {
     return withNonce;
   }
 
-  // A try outside unpatched structure keeps its marks for a rebuild.
+  // A try outside unpatched structure keeps its marks, which patches pair
+  // through whether it shows its body or its `@catch`.
   override keepsTryMarks(chunk: Chunk, resumeWrites: number) {
     return !inUnpatched() || super.keepsTryMarks(chunk, resumeWrites);
   }

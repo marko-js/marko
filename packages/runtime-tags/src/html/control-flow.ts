@@ -664,7 +664,11 @@ export function tryBoundary(
     return false;
   }
 
-  const renderersAtSettle = !bodyBoundary.resumeWrites;
+  // Marks kept whatever the body does (a patch page's) let a patch pair the
+  // body before it settles, telling it from a catch by its renderers.
+  const renderersAtSettle =
+    !bodyBoundary.resumeWrites &&
+    !state.keepsTryMarks(chunk, boundary.resumeWrites);
   // Forked from the try's chunk: an `_await` in the body replaces the body's
   // context with a copy, on which the branch id would never restore.
   const bodyNext = (bodyEnd.next = chunk.forkRest(boundary));

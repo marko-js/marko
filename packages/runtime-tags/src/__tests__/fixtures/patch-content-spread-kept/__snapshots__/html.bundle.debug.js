@@ -30,7 +30,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 		input_b: ["input.b"],
 		one: "1:9",
 		"EventAttributes:#section/0": ["...{ content: input.mode ? one : null }", "2:13"]
-	}) : (_filled_guard($scope0_reason, 0) && _content_withheld("__tests__/tags/frag-host.marko_1*content") && _patch_value($scope0_id, "PatchValue:__tests__/tags/frag-host.marko_fill0", input.mode), _filled_guard($scope0_reason, 1) && _content_withheld("__tests__/tags/frag-host.marko_1*content") && _patch_value($scope0_id, "PatchValue:__tests__/tags/frag-host.marko_fill1", input.b));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/frag-host.marko_fill0", input.mode), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/frag-host.marko_fill1", input.b));
 });
 
 // template.marko

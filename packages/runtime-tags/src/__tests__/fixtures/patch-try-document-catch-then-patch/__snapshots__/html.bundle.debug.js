@@ -18,15 +18,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.message, void 0, $scope0_reason, 1)}${_patch_text($scope1_id, "#text/1", input.boom ? boom() : "", 2, $scope0_reason, 2)}</em>`);
-		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_message#0:3/init");
-		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_boom#0:4/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_message#0:3/init");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_boom#0:4/init");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_boom__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_message__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_message#0:3/subscribe"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_boom#0:4/subscribe");
 	}, void 0, (err) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<b>${_patch_text($scope2_id, "#text/0", err.message)}</b>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "7:6");
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", void 0, "");
+	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, "");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
 		"ClosureScopes:input_message/5": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_message__closures,

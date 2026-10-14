@@ -32,16 +32,14 @@ UPDATE: strong::text@17 "" => "b"
   0
 </button>
 <small>
-  SHOWN_message2 0 c
+  SHOWN_message1 0 c
 </small>
 ```
 ## Change
 ```
-INSERT: button + p
-REMOVE: p + strong
-REMOVE: small + p
 INSERT: button + small
-UPDATE: small::text@0 "" => "SHOWN_message2"
+REMOVE: small + strong
+UPDATE: small::text@0 "" => "SHOWN_message1"
 UPDATE: small::text@15 "" => "0"
 UPDATE: small::text@17 "" => "c"
 ```
@@ -51,15 +49,13 @@ UPDATE: small::text@17 "" => "c"
 <button>
   0
 </button>
-<p>
-  ok
-</p>
+<small>
+  SHOWN_message1 0 d
+</small>
 ```
 ## Change
 ```
-INSERT: button + p
-REMOVE: p + small
-UPDATE: p::text " " => "ok"
+UPDATE: small::text@17 "c" => "d"
 ```
 
 # Update
@@ -70,13 +66,14 @@ container.querySelector("button").click();
 <button>
   1
 </button>
-<p>
-  ok
-</p>
+<small>
+  SHOWN_message1 1 d
+</small>
 ```
 ## Change
 ```
 UPDATE: button::text "0" => "1"
+UPDATE: small::text@15 "0" => "1"
 ```
 
 # Update `{"large":true,"error":{},"label":"e"}`
@@ -85,14 +82,14 @@ UPDATE: button::text "0" => "1"
   1
 </button>
 <strong>
-  SHOWN_message3 1 e
+  SHOWN_message1 1 e
 </strong>
 ```
 ## Change
 ```
-REMOVE: strong + p
 INSERT: button + strong
-UPDATE: strong::text@0 "" => "SHOWN_message3"
+REMOVE: strong + small
+UPDATE: strong::text@0 "" => "SHOWN_message1"
 UPDATE: strong::text@15 "" => "1"
 UPDATE: strong::text@17 "" => "e"
 ```

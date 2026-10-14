@@ -1,24 +1,23 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_1*content;/D%l&;<div class=ld><!></div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/tags/loader.marko_1*content;D ;<em> </em>`, {
-  "PatchChild:BranchScopes:#text/0": [{
-    "PatchChild:#childScope/0": {
-      "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/tags/loader.marko_1*content"
-    }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_1*content", _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_2*content"],
-  "PatchCatch:#text/0": [{
-    "PatchText:#text/0": "boom"
-  }, _.a]
-}]
-;CxQ
-
-// PATCH holding CxQ
 {
   "PatchChild:BranchScopes:#text/0": [{
     "PatchChild:#childScope/0": {
-      "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/tags/loader.marko_1*content",
+      "PatchPending:#text/0": 1
+    }
+  }, 0, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_2*content"],
+  "PatchCatch:#text/0": [{
+    "PatchText:#text/0": "boom"
+  }, _.a]
+}
+
+// PATCH
+{
+  "PatchChild:BranchScopes:#text/0": [{
+    "PatchChild:#childScope/0": {
+      "PatchPending:#text/0": 1,
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "three"
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_2*content"]
+  }, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_2*content"]
 }

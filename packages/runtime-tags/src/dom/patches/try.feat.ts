@@ -13,15 +13,14 @@ import { patchers, patchScope, withCreating } from "./apply";
 import { getContent, getContentFactory } from "./shells";
 
 // A boundary entry `[patch, contentId, catchId?, placeholderId?]` creates its
-// branch if missing or replaced by its catch; a live one only pairs the patch.
+// branch if missing; a live one pairs the patch unless its catch replaced it.
 const applyChild = patchers[PatchKey.Child]!;
 patchers[PatchKey.Child] = (scope, key, value) => {
   if (Array.isArray(value)) {
     const link = key.slice(PatchKey.Child.length) as Accessor;
     const accessor = link.slice(AccessorPrefix.BranchScopes.length);
     const [patch, contentId, catchId, placeholderId] = value;
-    // A live try with a catch keeps its `CatchContent`; a catch branch has none.
-    if (!scope[link] || (catchId && !scope[link][AccessorProp.CatchContent])) {
+    if (!scope[link]) {
       const renderer = getContent(contentId)!;
       setBranch(scope, accessor, renderer, createAndSetupBranch);
       const branch = scope[link] as BranchScope;
@@ -39,9 +38,12 @@ patchers[PatchKey.Child] = (scope, key, value) => {
       } else {
         patchScope(patch, branch);
       }
-      return;
+    } else if (!catchId || scope[link][AccessorProp.CatchContent]) {
+      // A caught try keeps its `@catch` (no `CatchContent`) until the try
+      // itself is created anew, as on a client render.
+      applyChild(scope, key, patch);
     }
-    return applyChild(scope, key, patch);
+  } else {
+    applyChild(scope, key, value);
   }
-  applyChild(scope, key, value);
 };

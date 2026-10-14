@@ -39,16 +39,16 @@ var template_default = _template("c", (input) => {
 					_for_of(input.items, (x) => {
 						const $scope3_id = _scope_id();
 						_html(`<li>${_patch_text($scope3_id, "a", x, void 0, $scope0_reason, 3)}:${_patch_text($scope3_id, "b", input.label, 2, $scope0_reason, 4)}</li>`);
-						_client_guard($scope0_reason, 4) && _patch_init($scope3_id, "c3");
+						_unfilled_if($scope0_reason, 4) && _patch_init($scope3_id, "c3");
 						_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope3_id, { _: $wi__input_on__OR__input_items__OR__input_label && _scope_with_id($scope2_id) }));
 					}, 0, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "c2", $scope0_reason, 3);
 					_html(`</ul>${_el_resume($scope2_id, "a")}`);
-					_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "c4");
+					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "c4");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: $wi__input_on__OR__input_items__OR__input_label && _scope_with_id($scope1_id) }));
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $wg__input_on, void 0, void 0, void 0, ["c1"], $scope0_reason, 2);
-			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "c5");
+			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "c5");
 			$wi__input_on__OR__input_items__OR__input_label && _subscribe(_unfilled_if($scope0_reason, 2) && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			$wg__input_on || $wi__input_on__OR__input_items__OR__input_label && _resume_branch($scope1_id);
 		}, $scope0_id)

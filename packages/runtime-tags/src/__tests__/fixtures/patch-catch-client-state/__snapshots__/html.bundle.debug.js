@@ -17,7 +17,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/panel.marko_2_input_error#0:4/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/panel.marko_2_input_error#0:4/init");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "4:2"), _client_guard($scope0_reason, 1) && "__tests__/tags/panel.marko_2_input_error#0:4/subscribe");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
@@ -37,7 +37,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			err_message: ["err.message", "6:11"],
 			n: "7:10"
 		}), _client_guard($scope0_reason, 0) && "__tests__/tags/panel.marko_1_input_label#0:3/subscribe");
-	}, void 0, "__tests__/tags/panel.marko_1*content", "__tests__/tags/panel.marko_2*content", void 0, "");
+	}, void 0, "__tests__/tags/panel.marko_1*content", "__tests__/tags/panel.marko_2*content", 1, "");
 	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,
 		"ClosureScopes:input_label/5": $wi__input_label && $input_label__closures,

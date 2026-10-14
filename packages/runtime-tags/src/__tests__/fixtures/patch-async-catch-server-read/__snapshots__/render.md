@@ -32,7 +32,5 @@ UPDATE: main > em::text " " => "second"
 ```
 ## Change
 ```
-REMOVE: main > em
-INSERT: main > em
-UPDATE: main > em::text " " => "third"
+UPDATE: main > em::text "second" => "third"
 ```

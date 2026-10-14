@@ -1,0 +1,35 @@
+// PATCH
+{
+  "PatchCatch:#text/2": [{
+    "PatchChild:#childScope/0": {
+      "PatchText:#text/0": "b",
+      "PatchSetup:": {
+        "PatchText:#text/1": "0"
+      },
+      "PatchText:#text/2": "L2"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_1*content"],
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_fill0": "L2"
+}
+
+// PATCH
+{
+  "PatchCatch:#text/2": [{
+    "PatchChild:#childScope/0": {
+      "PatchText:#text/0": "c",
+      "PatchSetup:": {
+        "PatchText:#text/1": "0"
+      },
+      "PatchText:#text/2": "L3"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_1*content"],
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_fill0": "L3"
+}
+
+// PATCH
+{
+  "PatchChild:BranchScopes:#text/2": [{
+    "PatchText:#text/0": "ok"
+  }, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_1*content"],
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_fill0": "L4"
+}

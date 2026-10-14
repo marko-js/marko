@@ -53,14 +53,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope2_reason = _scope_reason();
 					const $scope2_id = _scope_id();
 					_html(`${_patch_text($scope2_id, "#text/0", input.label, void 0, $scope0_reason, 0)}!${_text_resume($scope2_id, "#text/1", count, 2)}`);
-					_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:4/init");
+					_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:4/init");
 					_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, {
 						_: _scope_with_id($scope1_id),
 						"ClosureSignalIndex:input_label/6": $wi__input_label && 1
 					}, "__tests__/template.marko", "6:6")));
 				}, $scope1_id)
 			});
-			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:4/init");
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:4/init");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)

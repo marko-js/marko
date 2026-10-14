@@ -22,8 +22,8 @@ var template_default = _template("a", (input) => {
 			_html(`<em>${_patch_text($scope3_id, "a", related, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a1", 1);
-		_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "a5");
-		_client_guard($scope0_reason, 5) && _patch_init($scope1_id, "a6");
+		_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, "a5");
+		_unfilled_if($scope0_reason, 5) && _patch_init($scope1_id, "a6");
 		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 4) && "a7", 0), _client_guard($scope0_reason, 5) && "a8", 0);
 		$wi__input_related__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {

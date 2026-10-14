@@ -24,6 +24,4 @@
 ## Change
 ```
 UPDATE: main > p:nth-of-type(1)::text "a" => "b"
-REMOVE: main > p
-INSERT: main > p:nth-of-type(1) + p
 ```

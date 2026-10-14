@@ -32,7 +32,7 @@ var template_default = _template("c", (input) => {
 				_scope_reason();
 				const $scope1_id = _scope_id();
 				_html(_patch_text($scope1_id, "a", input.label, void 0, $scope0_reason, 0));
-				_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "c2");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "c2");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: $wi__input_label && _scope_with_id($scope0_id) }));
 			}, $scope0_id)
 		}),
@@ -40,7 +40,7 @@ var template_default = _template("c", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(_patch_text($scope2_id, "a", input.label, void 0, $scope0_reason, 0));
-			_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "c3");
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "c3");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, {
 				_: $wi__input_label && _scope_with_id($scope0_id),
 				Cg: $wi__input_label && 1

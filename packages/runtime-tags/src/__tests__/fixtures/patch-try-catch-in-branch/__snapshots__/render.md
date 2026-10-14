@@ -33,19 +33,6 @@ UPDATE: main > b::text " " => "boom"
 ```
 
 # Update `{"show":true,"message":"back"}`
-```html
-<main>
-  <em>
-    back
-  </em>
-</main>
-```
-## Change
-```
-INSERT: main > em
-REMOVE: main > em + b
-UPDATE: main > em::text "" => "back"
-```
 
 # Update `{"show":false}`
 ```html
@@ -53,7 +40,7 @@ UPDATE: main > em::text "" => "back"
 ```
 ## Change
 ```
-REMOVE: main > em
+REMOVE: main > b
 ```
 
 # Update `{"show":true,"message":"again"}`

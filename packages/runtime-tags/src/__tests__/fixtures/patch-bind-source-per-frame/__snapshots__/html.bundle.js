@@ -22,8 +22,8 @@ var template_default = _template("a", (input) => {
 			onClick: handler
 		}, "a", $scope1_id, "button", void 0, $scope0_reason, 3)}>one</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a5");
-		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "a6");
-		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "a7");
+		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "a6");
+		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "a7");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_title__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "a8"), _client_guard($scope0_reason, 3) && "a9");
 	}, 1, "a2", 1);
 	_await($scope0_id, "b", input.two, () => {
@@ -34,8 +34,8 @@ var template_default = _template("a", (input) => {
 			onClick: handler
 		}, "a", $scope2_id, "button", void 0, $scope0_reason, 3)}>two</button>${_el_resume($scope2_id, "a")}`);
 		_script($scope2_id, "a10");
-		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a11");
-		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a12");
+		_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "a11");
+		_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "a12");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_title__closures, _scope($scope2_id, {
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 			Ck: $wi__input_title && 1,

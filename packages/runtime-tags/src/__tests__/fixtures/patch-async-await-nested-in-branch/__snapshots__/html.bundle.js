@@ -21,10 +21,10 @@ var template_default = _template("a", (input) => {
 				_await($scope2_id, "a", input.inner, (inner) => {
 					const $scope3_id = _scope_id();
 					_html(`<em>${_patch_text($scope3_id, "a", outer, void 0, $scope0_reason, 4)}:${_patch_text($scope3_id, "b", inner, 2, $scope0_reason, 5)}</em>`);
-					_client_guard($scope0_reason, 4) && _patch_init($scope3_id, "a5");
+					_unfilled_if($scope0_reason, 4) && _patch_init($scope3_id, "a5");
 					_subscribe(_unfilled_if($scope0_reason, 4) && $await_content__outer__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 4) && "a6");
 				}, 1, "a0");
-				_client_guard($scope0_reason, 5) && _patch_init($scope2_id, "a7");
+				_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, "a7");
 				$wi__input_show__OR__input_outer__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 5) && $input_inner__closures, _scope($scope2_id, {
 					c: _unfilled_if($scope0_reason, 5) && outer,
 					_: _scope_with_id($scope1_id),

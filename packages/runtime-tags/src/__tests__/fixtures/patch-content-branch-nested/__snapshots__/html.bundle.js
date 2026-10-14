@@ -38,11 +38,11 @@ var template_default = _template("a", (input) => {
 							_scope_reason();
 							const $scope3_id = _scope_id();
 							_html(`<em>${_patch_text($scope3_id, "a", input.text, void 0, $scope0_reason, 6)}</em>`);
-							_client_guard($scope0_reason, 6) && _patch_init($scope3_id, "a3");
+							_unfilled_if($scope0_reason, 6) && _patch_init($scope3_id, "a3");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope2_id) }));
 						}, $scope2_id)
 					});
-					_client_guard($scope0_reason, 5) && _patch_init($scope2_id, "a4");
+					_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, "a4");
 					_subscribe(_unfilled_if($scope0_reason, 5) && $input_label__closures, _scope($scope2_id, {
 						_: $wi__input_a__OR__input_b__OR__input_label__OR__input_text && _scope_with_id($scope1_id),
 						a: _existing_scope($childScope)

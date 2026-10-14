@@ -14,13 +14,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.message, void 0, $scope0_reason, 0)}</em>`);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_message#0:3/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_message#0:3/init");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_message__closures, _scope($scope1_id, { _: $wi__input_message && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_message#0:3/subscribe");
 	}, void 0, () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<em>bad</em>");
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content");
+	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_message/4": $wi__input_message && _unfilled_if($scope0_reason, 0) && $input_message__closures }, "__tests__/template.marko", 0);
 }, 1);

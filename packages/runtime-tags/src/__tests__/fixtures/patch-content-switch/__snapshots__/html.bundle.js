@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 			} else if (input.kind === "b") {
 				const $scope2_id = _scope_id();
 				_html(`<i>B:${_patch_text($scope2_id, "a", input.kind, 2, $scope0_reason, 0)}</i>`);
-				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a4");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a4");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_kind__closures, _scope($scope2_id, {
 					_: $wi__input_kind && _scope_with_id($scope1_id),
 					Ci: $wi__input_kind && 1
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 				return 1;
 			}
 		}, $scope1_id, "a", 1, $wg__input_kind, void 0, void 0, void 0, ["a3", "a2"], $scope0_reason, 0);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a5");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a5");
 		$wi__input_kind && _subscribe(_unfilled_if($scope0_reason, 0) && $input_kind__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wg__input_kind || $wi__input_kind && _resume_branch($scope1_id);
 	}, $scope0_id) });

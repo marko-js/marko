@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_html("<span>ok</span>");
 		}, 1, "a0");
-		_client_guard($scope0_reason, 1) && _patch_init($scope3_id, "a5");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, "a5");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a6", 0);
 		$wi__input_promise && _resume_branch($scope3_id);
 	}, void 0, () => {
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", $wg__input_detail, $wg__input_detail, 0, 0, 1);
 		_subscribe($wi__input_detail && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a4", $wg__input_detail);
 		$wg__input_detail || _resume_branch($scope1_id);
-	}, void 0, "a7", "a2");
+	}, void 0, "a7", "a2", 1);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a8");
 	_patch_value($scope0_id, "va10", count, 1);

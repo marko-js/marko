@@ -1,19 +1,20 @@
 // PATCH
-[`a0;D ;<p> </p>`, `a1 !a2;D ;<i> </i>`, {
-  cAa: [{}, "a0", "a8"],
+[`a1 !a2;D ;<i> </i>`, {
   ka: [{
     ta: "SHOWN_x",
     bb: [{
-      ta: "b"
+      ta: "b",
+      s: {
+        i: "a3"
+      }
     }, "a1"]
   }, "a8"],
   va10: "b"
 }]
-;BwY
+;BgI
 
-// PATCH holding BwY
+// PATCH holding BgI
 {
-  cAa: [{}, "a0", "a8"],
   ka: [{
     ta: "SHOWN_y",
     bb: 0
@@ -21,13 +22,15 @@
   va10: ""
 }
 
-// PATCH holding BwY
+// PATCH holding BgI
 {
-  cAa: [{}, "a0", "a8"],
   ka: [{
     ta: "SHOWN_z",
     bb: [{
-      ta: "c"
+      ta: "c",
+      s: {
+        i: "a3"
+      }
     }, "a1"]
   }, "a8"],
   va10: "c"

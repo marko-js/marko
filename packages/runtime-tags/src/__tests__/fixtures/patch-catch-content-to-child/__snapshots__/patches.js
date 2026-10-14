@@ -1,51 +1,57 @@
 // PATCH
-[`a0;D ;<p> </p>`, `a1 a11;D%c%c%;<span><!> <!> <!></span>`, {
-  cAc: [{}, "a0", "a5"],
+[`a1 a11;D%c%c%;<span><!> <!> <!></span>`, {
   kc: [{
     ca: {
       fa: "^^a1",
       cAa: {
         ta: "SHOWN_message1",
-        tc: "b"
+        tc: "b",
+        s: {
+          i: "a2"
+        }
       }
     }
   }, "a5"],
   va7: "b"
 }]
-;CQY
+;CAI
 
-// PATCH holding CQY
+// PATCH holding CAI
 {
-  cAc: [{}, "a0", "a5"],
   kc: [{
     ca: {
       fa: "^^a1",
       cAa: {
         ta: "SHOWN_message2",
-        tc: "c"
+        tc: "c",
+        s: {
+          i: "a2"
+        }
       }
     }
   }, "a5"],
   va7: "c"
 }
 
-// PATCH holding CQY
+// PATCH holding CAI
 {
   cAc: [{
     ta: "ok"
-  }, "a0", "a5"],
+  }, 0, "a5"],
   va7: "d"
 }
 
-// PATCH holding CQY
+// PATCH holding CAI
 {
-  cAc: [{}, "a0", "a5"],
   kc: [{
     ca: {
       fa: "^^a1",
       cAa: {
         ta: "SHOWN_message3",
-        tc: "e"
+        tc: "e",
+        s: {
+          i: "a2"
+        }
       }
     }
   }, "a5"],

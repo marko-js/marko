@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-// A scriptless `<@catch>` renders server-side per rejection flush, so its
-// request reads are current at materialization, on every rejection.
+// A `@catch` reading a request value and none of its error renders on the
+// client at the first rejection; a later one keeps it, updating the value.
 export const config: TestConfig = {
   patches: true,
   steps: [

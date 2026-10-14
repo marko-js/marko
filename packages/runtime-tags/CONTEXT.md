@@ -362,11 +362,18 @@ _Avoid_: server-side/client-side value, owned read
 **Unpatched structure**:
 Structure patch renders skip and so never fill: stateful structure, a
 branch or loop whose expression derives from a client-owned group, a dynamic tag
-site a patch never pairs, a `@catch` reading none of its error. The html
-writer tracks it at render as context (`withUnpatched`, `inUnpatched`) because
-a child template cannot see how its parent reached it; analyze names the
-static cases `inResumedStructure`.
+site a patch never pairs, a `@catch` (one reading its error is written once, by
+the patch creating it). The html writer tracks it at render as context
+(`withUnpatched`, `inUnpatched`) because a child template cannot see how its
+parent reached it; analyze names the static cases `inResumedStructure`.
 _Avoid_: client-owned structure, client-selected
+
+**Caught try**:
+A `<try>` whose `@catch` took its body's place, in the document, on a client
+error or in a patch. Like a `<let>`, it is page state: it stays caught until the
+try itself is created anew, so a patch never rebuilds its body or replaces its
+catch, and the catch follows the page through fills, as unpatched structure does.
+_Avoid_: recovered try
 
 **Structural-or-global param**:
 A structural param, or one whose reads mix with `$global` — the value

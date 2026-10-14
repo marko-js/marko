@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_patch_text($scope1_id, "a", attrs.x, void 0, $scope1_reason, 0)} ${_patch_text($scope1_id, "b", input.title, 2, $scope0_reason, 1)}</em>`);
-		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a1");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "a1");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_title__closures, _scope($scope1_id, { _: $wi__input_title && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a2");
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);

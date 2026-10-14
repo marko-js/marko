@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_html(`<em>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 1)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a0", 1);
-		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "a4");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "a4");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a5", 0);
 		$wi__input_promise && _resume_branch($scope2_id);
 	}, void 0, (err) => {
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_text_resume($scope1_id, "a", input.title, $wg__input_title)}</em>`);
 		_subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3", $wg__input_title);
 		$wg__input_title || _resume_branch($scope1_id);
-	}, void 0, "a6", "a2");
+	}, void 0, "a6", "a2", 1);
 	_html("</main>");
 	$scope0_page ? _scope($scope0_id, {
 		d: input.title,

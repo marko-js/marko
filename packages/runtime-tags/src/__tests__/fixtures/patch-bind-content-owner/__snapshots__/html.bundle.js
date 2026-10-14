@@ -64,7 +64,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a5");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a5");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id) });

@@ -8,13 +8,13 @@ const click = (container: Document) => {
 };
 
 // A dynamic tag a `@catch` renders reads a member of its error, the page's
-// state and a param, as a patch throws, throws into the other tag, recovers
-// and throws.
+// state and a param: the first error a patch shows stays as later patches
+// switch the tag, render the body or throw again, and the rest updates.
 export const config: TestConfig = {
   patches: true,
-  // A patch re-renders a caught `<try>` from the server, which recovers;
-  // a client render keeps its `@catch`.
-  skip_csr: true,
+  // A caught `<try>` keeps its `@catch`, which a fresh render of a later
+  // input lacks.
+  skip_fresh_render: true,
   steps: [
     { large: true, label: "a" },
     { large: true, error: error("1"), label: "b" },

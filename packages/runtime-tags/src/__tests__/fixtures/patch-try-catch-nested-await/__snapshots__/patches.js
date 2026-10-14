@@ -1,18 +1,17 @@
 // PATCH
-[`a4;b%;<!><!><!>`, `a2;D l%;<em> </em><!><!>`, {
+{
   cAa: [{
-    pa: "a2"
-  }, "a4", "a9"],
+    pa: 1
+  }, 0, "a9"],
   ka: [{
     ta: "boom"
   }, "a9"]
-}]
-;DSg
+}
 
-// PATCH holding DSg
+// PATCH
 [`a0;D ;<strong> </strong>`, {
   cAa: [{
-    pa: "a2",
+    pa: 1,
     cAa: {
       ta: "a3",
       pb: "a0",
@@ -20,6 +19,6 @@
         ta: "b3"
       }
     }
-  }, "a4", "a9"]
+  }, 0, "a9"]
 }]
-;DSo
+;DAE

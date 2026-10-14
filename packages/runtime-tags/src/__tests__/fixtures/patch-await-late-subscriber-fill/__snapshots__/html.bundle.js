@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 			_html(`<div id=done>${_text_resume($scope2_id, "a", input.label + n)}</div>`);
 			_subscribe($n__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a3"), "a4");
 		}, 1, "a0", 1);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a5");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a5");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a6", 0);
 		_resume_branch($scope1_id);
 	}, () => {

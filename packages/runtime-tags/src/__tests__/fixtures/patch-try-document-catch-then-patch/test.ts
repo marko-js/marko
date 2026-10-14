@@ -1,12 +1,12 @@
 import type { TestConfig } from "../../main.test";
 
-// The document rendered the `@catch` (a sync throw); a patch whose body
-// renders cleanly rebuilds the try, and a later throw catches again.
+// The document rendered the `@catch` (a sync throw); later patches keep it,
+// whether their body renders cleanly or throws again.
 export const config: TestConfig = {
   patches: true,
-  // A patch re-renders a caught `<try>` from the server, which recovers;
-  // a client render keeps its `@catch`.
-  skip_csr: true,
+  // A caught `<try>` keeps its `@catch`, which a fresh render of a later
+  // input lacks.
+  skip_fresh_render: true,
   steps: [
     { message: "x", boom: true },
     { message: "ok" },
