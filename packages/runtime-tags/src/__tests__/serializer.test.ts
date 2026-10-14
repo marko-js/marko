@@ -3,6 +3,7 @@ import { inspect } from "node:util";
 
 import type { ScopeFlush } from "../html/serializer";
 import {
+  dropQueuedCall,
   hasMatchingCalls,
   K_SCOPE_ID,
   pendingReadyChannel,
@@ -439,6 +440,77 @@ describe("serializer", () => {
       assert.equal(rt.map.get(rt), undefined);
     });
 
+    it("writes a Map's members only from the first deferred one on", () => {
+      const root: any = {};
+      root.small = new Map<unknown, unknown>([
+        ["a", 1],
+        [root, 2],
+        ["b", 3],
+      ]);
+      root.large = createPaddedMap();
+      root.large.set(root, 25);
+      root.large.set("after", 26);
+      assertStringify(
+        root,
+        `_.c={small:_.a=new Map([["a",1]]),large:_.b=(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),new Map))(["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24])},_.a.set(_.c,2),_.a.set("b",3),_.b.set(_.c,25),_.b.set("after",26)`,
+      );
+    });
+
+    it("writes a large Map whose first entry defers as `new Map`", () => {
+      const root: any = {};
+      root.map = new Map<unknown, unknown>([
+        ["self", root],
+        ...createPaddedMap(),
+      ]);
+      assertStringify(
+        root,
+        `_.b={map:_.a=new Map},_.a.set("self",_.b),_.a.set("0",0),_.a.set("1",1),_.a.set("2",2),_.a.set("3",3),_.a.set("4",4),_.a.set("5",5),_.a.set("6",6),_.a.set("7",7),_.a.set("8",8),_.a.set("9",9),_.a.set("a",10),_.a.set("b",11),_.a.set("c",12),_.a.set("d",13),_.a.set("e",14),_.a.set("f",15),_.a.set("g",16),_.a.set("h",17),_.a.set("i",18),_.a.set("j",19),_.a.set("k",20),_.a.set("l",21),_.a.set("m",22),_.a.set("n",23),_.a.set("o",24)`,
+      );
+    });
+
+    it("writes a flush's cycle assignments before its deferred members", () => {
+      const root: any = {};
+      root.set = new Set([root]);
+      root.child = { root };
+      assertStringify(
+        root,
+        `_.b={set:_.a=new Set,child:_.c={}},_.c.root=_.b,_.a.add(_.b)`,
+      );
+    });
+
+    it("leaves trailing undefined args off a deferred call", () => {
+      const root: any = {};
+      root.set = new Set([root, undefined]);
+      root.map = new Map<unknown, unknown>([
+        [root, undefined],
+        [undefined, root],
+      ]);
+      root.noArgs = new Map<unknown, unknown>([
+        [root, root],
+        [undefined, undefined],
+      ]);
+      const scopes = assertStringifyScopes(
+        [[1, {}, { root }]],
+        `(_,$)=>(_([1,{root:_.d={set:_.a=new Set,map:_.b=new Map,noArgs:_.c=new Map}}]),_.a.add(_.d),_.a.add(),_.b.set(_.d),_.b.set($,_.d),_.c.set(_.d,_.d),_.c.set(),0)`,
+      );
+      const rt = scopes.get(1)!.root as any;
+      assert.deepEqual([...rt.set], [rt, undefined]);
+      assert.deepEqual(
+        [...rt.map],
+        [
+          [rt, undefined],
+          [undefined, rt],
+        ],
+      );
+      assert.deepEqual(
+        [...rt.noArgs],
+        [
+          [rt, rt],
+          [undefined, undefined],
+        ],
+      );
+    });
+
     it("aborts on an unserializable member that follows a deferred one", () => {
       const { boundary, aborted } = abortingBoundary();
       const parent: any = {};
@@ -460,7 +532,7 @@ describe("serializer", () => {
           [1, scope, { value: 1 }],
           [2, {}, { parent }],
         ],
-        `_=>(_([1,{value:1},{parent:_.b={set:_.a=new Set([])}}]),_.a.add(_.b),_.a.add(_(1)),0)`,
+        `_=>(_([1,{value:1},{parent:_.b={set:_.a=new Set}}]),_.a.add(_.b),_.a.add(_(1)),0)`,
       );
       assert.ok((scopes.get(2)!.parent as any).set.has(scopes.get(1)));
     });
@@ -2012,15 +2084,109 @@ describe("serializer", () => {
       queueCall(serializer, 2, b, "add", { readyId: "b" });
 
       assert.equal(hasMatchingCalls(serializer, "a"), true);
+      assert.equal(hasMatchingCalls(serializer, "b"), true);
       assert.deepEqual(pendingReadyChannel(serializer), { readyId: "a" });
       assert.equal(
         stringifyScopes(serializer, [[1, {}, { a, b }]], boundary, {
           readyId: "a",
         }),
-        `_=>(_([1,{a:_.a=new Set,b:new Set}]),(_.a).add(1),0)`,
+        `_=>(_([1,{a:_.a=new Set,b:new Set}]),_.a.add(1),0)`,
       );
 
       assert.equal(hasMatchingCalls(serializer, "b"), true);
+    });
+
+    it("drops only the queued call it undoes", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new SerializerState();
+      const subs = new Set();
+      const ready = { readyId: "a" };
+      const kept = { [K_SCOPE_ID]: 3 };
+      const dropped = { [K_SCOPE_ID]: 4 };
+      const droppedReady = { [K_SCOPE_ID]: 5 };
+      stringifyScopes(serializer, [[1, {}, { subs }]], boundary);
+      queueCall(serializer, { [K_SCOPE_ID]: 2 }, subs, "add", ready);
+      queueCall(serializer, droppedReady, subs, "add", ready);
+      queueCall(serializer, kept, subs, "add", undefined);
+      queueCall(serializer, dropped, subs, "add", undefined);
+      assert.equal(
+        dropQueuedCall(serializer, dropped, subs, "add", undefined),
+        true,
+      );
+      assert.equal(
+        dropQueuedCall(serializer, dropped, subs, "add", undefined),
+        false,
+      );
+      assert.equal(
+        dropQueuedCall(serializer, kept, subs, "delete", undefined),
+        false,
+      );
+      assert.equal(
+        dropQueuedCall(serializer, droppedReady, subs, "add", ready),
+        true,
+      );
+      assert.equal(
+        stringifyScopes(serializer, [], boundary),
+        `_=>((_.a=_(1).subs).add(_(3)),0)`,
+      );
+      assert.equal(
+        stringifyScopes(serializer, [], boundary, ready),
+        `_=>(_.a.add(_(2)),0)`,
+      );
+      assert.deepEqual(aborted, []);
+    });
+
+    it("holds ready streams' calls in order while main flushes", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new SerializerState();
+      const subs = new Set();
+      const a = { readyId: "a" };
+      const b = { readyId: "b" };
+      stringifyScopes(serializer, [[1, {}, { subs }]], boundary);
+      queueCall(serializer, { [K_SCOPE_ID]: 2 }, subs, "add", b);
+      queueCall(serializer, { [K_SCOPE_ID]: 3 }, subs, "add", undefined);
+      queueCall(serializer, { [K_SCOPE_ID]: 4 }, subs, "add", a);
+      queueCall(serializer, { [K_SCOPE_ID]: 5 }, subs, "add", b);
+      assert.equal(hasMatchingCalls(serializer, undefined), true);
+      assert.equal(
+        stringifyScopes(serializer, [], boundary),
+        `_=>((_.a=_(1).subs).add(_(3)),0)`,
+      );
+      assert.equal(hasMatchingCalls(serializer, undefined), false);
+      assert.equal(pendingReadyChannel(serializer), b);
+      assert.equal(
+        stringifyScopes(serializer, [], boundary, b),
+        `_=>(_.a.add(_(2)),_.a.add(_(5)),0)`,
+      );
+      assert.equal(pendingReadyChannel(serializer), a);
+      assert.equal(
+        stringifyScopes(serializer, [], boundary, a),
+        `_=>(_.a.add(_(4)),0)`,
+      );
+      assert.equal(pendingReadyChannel(serializer), undefined);
+      assert.deepEqual(aborted, []);
+    });
+
+    it("wraps a queued call's object only when it writes an assignment", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new SerializerState();
+      const subs = new Set();
+      stringifyScopes(serializer, [[1, {}, { subs }]], boundary);
+      assert.equal(
+        stringifyScopes(serializer, [[2, {}, { subs }]], boundary),
+        `_=>[2,{subs:_(1).subs}]`,
+      );
+      queueCall(serializer, { [K_SCOPE_ID]: 3 }, subs, "delete", undefined);
+      assert.equal(
+        stringifyScopes(serializer, [], boundary),
+        `_=>((_.a=_(1).subs).delete(_(3)),0)`,
+      );
+      queueCall(serializer, { [K_SCOPE_ID]: 4 }, subs, "delete", undefined);
+      assert.equal(
+        stringifyScopes(serializer, [], boundary),
+        `_=>(_.a.delete(_(4)),0)`,
+      );
+      assert.deepEqual(aborted, []);
     });
 
     it("assigns a binding to a mutated object seen for the first time", () => {
@@ -2116,7 +2282,7 @@ describe("serializer", () => {
       queueCall(serializer, { [K_SCOPE_ID]: 2 }, subs, "add", ready);
       assert.equal(
         stringifyScopes(serializer, [], boundary, ready),
-        `_=>((_(1).subs).add(_(2)),0)`,
+        `_=>(_(1).subs.add(_(2)),0)`,
       );
       queueCall(serializer, { [K_SCOPE_ID]: 3 }, subs, "add", undefined);
       assert.equal(
@@ -2140,13 +2306,32 @@ describe("serializer", () => {
       queueCall(serializer, { [K_SCOPE_ID]: 2 }, subs, "add", child);
       assert.equal(
         stringifyScopes(serializer, [], boundary, child),
-        `_=>((_(1).subs).add(_(2)),0)`,
+        `_=>(_(1).subs.add(_(2)),0)`,
       );
       assert.deepEqual([...takeChannelDeps(serializer)!], ["a"]);
       queueCall(serializer, { [K_SCOPE_ID]: 3 }, subs, "add", parent);
       assert.equal(
         stringifyScopes(serializer, [], boundary, parent),
         `_=>((_.a=_(1).subs).add(_(3)),0)`,
+      );
+      assert.deepEqual(aborted, []);
+    });
+
+    it("claims no id for a main-stream value a ready stream's deferred call writes", () => {
+      const { boundary, aborted } = abortingBoundary();
+      const serializer = new SerializerState();
+      const shared = { x: 1 };
+      const ready = { readyId: "a" };
+      const root: any = {};
+      root.set = new Set([root, shared]);
+      stringifyScopes(serializer, [[1, {}, { shared }]], boundary);
+      assert.equal(
+        stringifyScopes(serializer, [[2, {}, { root }]], boundary, ready),
+        `_=>(_([2,{root:_.b={set:_.a=new Set}}]),_.a.add(_.b),_.a.add(_(1).shared),0)`,
+      );
+      assert.equal(
+        stringifyScopes(serializer, [[3, {}, { shared }]], boundary),
+        `_=>[3,{shared:_(1).shared}]`,
       );
       assert.deepEqual(aborted, []);
     });

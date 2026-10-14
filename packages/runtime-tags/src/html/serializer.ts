@@ -37,12 +37,22 @@ export interface SerializeChannel {
   readyId?: string;
   parent?: SerializeChannel;
 }
+// A `Map`'s or `Set`'s first member that references an ancestor (a `Map`'s as
+// its entry), and the live iteration past it.
+interface DeferredMembers {
+  collection: Map<unknown, unknown> | Set<unknown>;
+  first: unknown;
+  rest: Iterable<unknown>;
+}
+
+// A call on an object that may already be written, held until its channel
+// flushes; a settled promise's value takes the promise's id (`valueId`).
 interface QueuedCall {
+  method: string;
   value: unknown;
   object: unknown;
-  method: string;
   channel: SerializeChannel | undefined;
-  valueId?: string | null;
+  valueId: string | null;
 }
 
 type TypedArray =
@@ -314,7 +324,10 @@ class State {
   boundary!: Boundary;
   channel: SerializeChannel | undefined = undefined;
   channelDeps: Set<string> | null = null;
+  // Calls queued for main, which every main flush writes, and for ready
+  // streams in the order they queued.
   queuedCalls: QueuedCall[] = [];
+  queuedReadyCalls: QueuedCall[] = [];
 
   // How a flush's payload is written, which a serializer state may change.
   scopeRef(scope: WeakKey, scopeId: number) {
@@ -380,19 +393,10 @@ class State {
   }
 }
 
-// A `Map`/`Set` member that references an ancestor cannot be built into the
-// constructor (the ancestor's id isn't assigned yet), so it rides the
-// collection's reference in `deferredRefs` and emits a post-construction call
-// (`.add(v)` / `.set(k, v)`) once every id exists.
-interface DeferredCall {
-  method: string;
-  args: unknown[];
-}
-
 export class Reference {
   declare debug?: Debug;
   public assignments: null | string[] = null;
-  public calls: null | DeferredCall[] = null;
+  public deferredMembers: null | DeferredMembers = null;
   public scopeId: number | undefined = undefined;
   public channel: SerializeChannel | undefined = undefined;
   public parent: Reference | null;
@@ -475,9 +479,8 @@ export function stringifyScopes(
 
 // Returns the first pending ready channel for fixed-point draining.
 export function pendingReadyChannel(state: State) {
-  for (const call of state.queuedCalls) {
-    if (call.channel?.readyId) return call.channel;
-  }
+  const calls = state.queuedReadyCalls;
+  return calls.length ? calls[0].channel : undefined;
 }
 
 export function takeChannelDeps(state: State) {
@@ -493,11 +496,12 @@ export function queueCall(
   method: string,
   channel?: SerializeChannel,
 ) {
-  state.queuedCalls.push({
+  (channel?.readyId ? state.queuedReadyCalls : state.queuedCalls).push({
+    method,
     value,
     object,
-    method,
     channel,
+    valueId: null,
   });
 }
 
@@ -507,8 +511,11 @@ export function dropQueuedCall(
   value: unknown,
   object: unknown,
   method: string,
+  channel: SerializeChannel | undefined,
 ) {
-  const { queuedCalls } = state;
+  const queuedCalls = channel?.readyId
+    ? state.queuedReadyCalls
+    : state.queuedCalls;
   for (let i = 0; i < queuedCalls.length; i++) {
     const call = queuedCalls[i];
     if (
@@ -600,7 +607,7 @@ export function writeDeferred(state: State) {
         ref.assignments = null;
         sep = ",";
       }
-      hasCalls ||= ref.calls !== null;
+      hasCalls ||= ref.deferredMembers !== null;
     }
     if (buf) state.buf.push(buf);
 
@@ -608,83 +615,52 @@ export function writeDeferred(state: State) {
     // their args directly — walk the same set afterwards.
     if (hasCalls) {
       for (const ref of pending) {
-        if (!ref.calls) continue;
-        for (const { method, args } of ref.calls) {
-          state.buf.push(
-            (state.buf.length ? "," : "") + ref.id + "." + method + "(",
-          );
-          for (let a = 0; a < args.length; a++) {
-            if (a) state.buf.push(",");
-            writeCallArg(state, args[a]);
-          }
-          state.buf.push(")");
+        const members = ref.deferredMembers;
+        if (members) {
+          writeDeferredMembers(state, ref.id!, members);
+          ref.deferredMembers = null;
         }
-        ref.calls = null;
       }
     }
   }
 
-  if (hasChannelCalls(state)) {
+  const readyId = state.channel?.readyId;
+  let calls = state.queuedCalls;
+  if (readyId) {
+    calls = [];
     const remaining: QueuedCall[] = [];
-    for (const call of state.queuedCalls) {
-      if (!callMatchesReadyId(call, state.channel?.readyId)) {
-        remaining.push(call);
-        continue;
-      }
-
-      const hasSeen = state.refs.get(call.object as object)?.id;
-      const objectStartIndex = state.buf.push(
-        state.buf.length === 0 ? "" : ",",
-      );
-
-      if (writeProp(state, call.object, null, "")) {
-        const objectRef = state.refs.get(call.object as object);
-        if (objectRef && objectRef.scopeId === undefined) {
-          if (!objectRef.id && !isAncestorChannelRef(state, objectRef)) {
-            objectRef.id = nextRefAccess(state);
-            state.buf[objectStartIndex] =
-              "(" + objectRef.id + "=" + state.buf[objectStartIndex];
-            state.buf.push(")");
-          } else if (!hasSeen) {
-            state.buf[objectStartIndex] = "(" + state.buf[objectStartIndex];
-            state.buf.push(")");
-          }
-        }
-      } else {
-        state.buf.push("void 0");
-      }
-
-      const valueStartIndex = state.buf.push(
-        toAccess(toObjectKey(call.method)) + "(",
-      );
-
-      if (call.value === undefined) {
-        // Settling with undefined writes no argument (`_.x.f()`).
-      } else if (writeProp(state, call.value, null, "")) {
-        // Reused call arguments require eager bindings because they lack an
-        // accessor path.
-        const valueRef =
-          typeof call.value === "string"
-            ? state.strs.get(call.value)
-            : state.refs.get(call.value as object);
-        // Scopes never claim a binding (`_(N)` is self-resolving).
-        if (
-          valueRef &&
-          !valueRef.id &&
-          valueRef.scopeId === undefined &&
-          !isAncestorChannelRef(state, valueRef)
-        ) {
-          valueRef.id = call.valueId || nextRefAccess(state);
-          state.buf[valueStartIndex] =
-            valueRef.id + "=" + state.buf[valueStartIndex];
-        }
-      } else {
-        state.buf.push("void 0");
-      }
-
-      state.buf.push(")");
+    for (const call of state.queuedReadyCalls) {
+      (call.channel!.readyId === readyId ? calls : remaining).push(call);
     }
-    state.queuedCalls = remaining;
+    state.queuedReadyCalls = remaining;
+  } else if (calls.length) {
+    state.queuedCalls = [];
+  }
+
+  for (const call of calls) {
+    const objectStartIndex = state.buf.push(state.buf.length === 0 ? "" : ",");
+
+    if (writeProp(state, call.object, null, "")) {
+      const objectRef = state.refs.get(call.object as object)!;
+      if (!objectRef.id && !isAncestorChannelRef(state, objectRef)) {
+        objectRef.id = nextRefAccess(state);
+        state.buf[objectStartIndex] =
+          "(" + objectRef.id + "=" + state.buf[objectStartIndex];
+        state.buf.push(")");
+      } else if (objectRef.id && state.buf[objectStartIndex] !== objectRef.id) {
+        // Its id was claimed where it was written here, as `id=path`.
+        state.buf[objectStartIndex] = "(" + state.buf[objectStartIndex];
+        state.buf.push(")");
+      }
+    } else {
+      state.buf.push("void 0");
+    }
+
+    state.buf.push("." + call.method + "(");
+    if (call.value !== undefined) {
+      writeCallArg(state, call.value, call.valueId);
+    }
+    state.buf.push(")");
   }
 
   // Serializing call args or queued call arguments can surface fresh
@@ -694,14 +670,68 @@ export function writeDeferred(state: State) {
   }
 }
 
-function writeCallArg(state: State, val: unknown) {
+function writeDeferredMembers(
+  state: State,
+  id: string,
+  { collection, first, rest }: DeferredMembers,
+) {
+  if (collection instanceof Map) {
+    writeDeferredEntry(state, id, first as [unknown, unknown]);
+    for (const entry of rest) {
+      writeDeferredEntry(state, id, entry as [unknown, unknown]);
+    }
+  } else {
+    writeDeferredMember(state, id, first);
+    for (const member of rest) writeDeferredMember(state, id, member);
+  }
+}
+
+// Writes `.set(k, v)`, leaving a trailing undefined arg off since a missing
+// argument is undefined.
+function writeDeferredEntry(
+  state: State,
+  id: string,
+  [key, value]: [unknown, unknown],
+) {
+  state.buf.push("," + id + ".set(");
+  if (key !== undefined || value !== undefined) {
+    writeCallArg(state, key, null);
+  }
+  if (value !== undefined) {
+    state.buf.push(",");
+    writeCallArg(state, value, null);
+  }
+  state.buf.push(")");
+}
+
+function writeDeferredMember(state: State, id: string, member: unknown) {
+  state.buf.push("," + id + ".add(");
+  if (member !== undefined) writeCallArg(state, member, null);
+  state.buf.push(")");
+}
+
+// An arg has no parent access path, so a later reuse needs an eager id,
+// claimed inline (a queued call's `valueId` when it has one).
+function writeCallArg(state: State, val: unknown, valueId: string | null) {
+  const startIndex = state.buf.length;
   if (val === undefined) {
     state.wroteUndefined = true;
     state.buf.push("$");
   } else if (writeProp(state, val, null, "")) {
-    // Args have no parent access path, so a later reuse needs an eager id.
-    const ref = state.refs.get(val as WeakKey) || state.strs.get(val as string);
-    if (ref) ensureRefAccess(state, ref);
+    const ref =
+      typeof val === "string"
+        ? state.strs.get(val)
+        : state.refs.get(val as WeakKey);
+    if (
+      ref &&
+      !ref.id &&
+      // Scopes never claim a binding (`_(N)` is self-resolving).
+      ref.scopeId === undefined &&
+      !isAncestorChannelRef(state, ref)
+    ) {
+      ref.id = valueId || nextRefAccess(state);
+      state.buf[startIndex] = ref.id + "=" + state.buf[startIndex];
+    }
   } else {
     state.buf.push("void 0");
   }
@@ -712,14 +742,11 @@ function hasChannelCalls(state: State) {
 }
 
 export function hasMatchingCalls(state: State, readyId: string | undefined) {
-  for (const call of state.queuedCalls) {
-    if (callMatchesReadyId(call, readyId)) return true;
+  if (!readyId) return state.queuedCalls.length > 0;
+  for (const call of state.queuedReadyCalls) {
+    if (call.channel!.readyId === readyId) return true;
   }
   return false;
-}
-
-function callMatchesReadyId(call: QueuedCall, readyId: string | undefined) {
-  return call.channel?.readyId ? call.channel.readyId === readyId : !readyId;
 }
 
 function writeProp(
@@ -1204,24 +1231,23 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
   const items: unknown[] = [];
   let assignments: undefined | string[];
   let needsId: undefined | boolean;
-  // Once an entry must defer, every later entry defers too so insertion order
-  // is preserved.
-  let deferring = false;
   let i = 0;
 
   // Small maps cost less as constructor entries than with the reduce runtime.
+  const entries = val.entries();
   if (val.size < 25) {
-    for (let [itemKey, itemValue] of val) {
+    for (const entry of entries) {
+      let [itemKey, itemValue] = entry;
       if (
-        !deferring &&
-        ((itemKey !== val && isAncestorMember(state, ref, itemKey)) ||
-          (itemValue !== val && isAncestorMember(state, ref, itemValue)))
+        (itemKey !== val && isAncestorMember(state, ref, itemKey)) ||
+        (itemValue !== val && isAncestorMember(state, ref, itemValue))
       ) {
-        deferring = true;
-      }
-      if (deferring) {
-        deferCall(state, ref, "set", [itemKey, itemValue]);
-        continue;
+        deferMembers(state, ref, val, entry, entries);
+        if (!i) {
+          state.buf.push("new Map");
+          return true;
+        }
+        break;
       }
 
       if (itemKey === val) {
@@ -1257,17 +1283,18 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
       needsId,
     );
   } else {
-    for (let [itemKey, itemValue] of val) {
+    for (const entry of entries) {
+      let [itemKey, itemValue] = entry;
       if (
-        !deferring &&
-        ((itemKey !== val && isAncestorMember(state, ref, itemKey)) ||
-          (itemValue !== val && isAncestorMember(state, ref, itemValue)))
+        (itemKey !== val && isAncestorMember(state, ref, itemKey)) ||
+        (itemValue !== val && isAncestorMember(state, ref, itemValue))
       ) {
-        deferring = true;
-      }
-      if (deferring) {
-        deferCall(state, ref, "set", [itemKey, itemValue]);
-        continue;
+        deferMembers(state, ref, val, entry, entries);
+        if (!i) {
+          state.buf.push("new Map");
+          return true;
+        }
+        break;
       }
 
       if (itemKey === val) {
@@ -1310,17 +1337,16 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
   const items: (unknown | undefined)[] = [];
   let assignments: undefined | string[];
   let needsId: undefined | boolean;
-  let deferring = false;
   let i = 0;
-  for (let item of val) {
-    // Once a member must defer, every later member defers too so insertion
-    // order is preserved.
-    if (!deferring && item !== val && isAncestorMember(state, ref, item)) {
-      deferring = true;
-    }
-    if (deferring) {
-      deferCall(state, ref, "add", [item]);
-      continue;
+  const members = val.values();
+  for (let item of members) {
+    if (item !== val && isAncestorMember(state, ref, item)) {
+      deferMembers(state, ref, val, item, members);
+      if (!i) {
+        state.buf.push("new Set");
+        return true;
+      }
+      break;
     }
 
     if (item === val) {
@@ -1361,14 +1387,17 @@ function isAncestorMember(state: State, container: Reference, member: unknown) {
   return ref !== undefined && isCircular(container, ref);
 }
 
-function deferCall(
+// The ancestor's id isn't assigned yet, so this member and every later one, to
+// keep insertion order, are added by calls at the end of this flush.
+function deferMembers(
   state: State,
   ref: Reference,
-  method: string,
-  args: unknown[],
+  collection: Map<unknown, unknown> | Set<unknown>,
+  first: unknown,
+  rest: Iterable<unknown>,
 ) {
   ensureRefAccess(state, ref);
-  (ref.calls ||= []).push({ method, args });
+  ref.deferredMembers = { collection, first, rest };
   state.deferredRefs.add(ref);
 }
 
@@ -2046,10 +2075,10 @@ function queueAsyncCall(
 ) {
   if (boundary.aborted) return;
 
-  state.queuedCalls.push({
+  (channel?.readyId ? state.queuedReadyCalls : state.queuedCalls).push({
+    method,
     value,
     object: handle,
-    method,
     channel,
     valueId,
   });
