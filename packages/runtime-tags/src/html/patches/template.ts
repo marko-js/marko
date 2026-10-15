@@ -89,7 +89,8 @@ export type PatchHeaders =
 
 /** What a request asks of the server's build: `"patch"` from its own page, or
  * `"stale"` from another build's (any, until `setPatchBuild` names one), to
- * answer before rendering anything. */
+ * answer before rendering anything.
+ * @experimental The patch protocol may change in a minor release. */
 export function patchRequest(headers: PatchHeaders) {
   const value = readHeader(headers, "x-marko-patch");
   return value == null
@@ -101,7 +102,8 @@ export function patchRequest(headers: PatchHeaders) {
 
 /** The headers to add for a request of `kind`: every page varies on the
  * request, and a patch is uncached JavaScript marked with its build, which the
- * page checks against its own. */
+ * page checks against its own.
+ * @experimental The patch protocol may change in a minor release. */
 export function patchResponseHeaders(
   kind: ReturnType<typeof patchRequest>,
 ): Record<string, string> {

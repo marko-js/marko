@@ -107,6 +107,9 @@ export interface Template {
     position?: InsertPosition,
   ): MountedTemplate;
   render(input?: Input): RenderedTemplate;
+  /** Renders a patch of a page built with `patches` for a request its
+   * `patchRequest` answered `"patch"`, under `patchResponseHeaders`.
+   * @experimental The patch protocol may change in a minor release. */
   patch(
     input?: Input,
     headers?:
