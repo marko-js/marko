@@ -21,6 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "#text/0", item)}`);
+		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id();
 		badge_default({ text: input.note });
 		_html("</li>");

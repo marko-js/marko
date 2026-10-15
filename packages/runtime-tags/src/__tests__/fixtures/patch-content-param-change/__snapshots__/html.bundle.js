@@ -35,6 +35,7 @@ var template_default = _template("a", (input) => {
 	wrapper_default({ content: _content_resume("a2", ({ value }) => {
 		const $scope1_reason = _scope_reason(), $wg__value = _write_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();
+		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id();
 		let label = labeler_default({ title: value + input.suffix });
 		_var($scope1_id, "b", $childScope, "a0");

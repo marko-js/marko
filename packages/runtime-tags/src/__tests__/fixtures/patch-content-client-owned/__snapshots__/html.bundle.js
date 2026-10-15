@@ -23,6 +23,7 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 			const $childScope = _peek_scope_id();
 			card_default({
 				title: input.title,

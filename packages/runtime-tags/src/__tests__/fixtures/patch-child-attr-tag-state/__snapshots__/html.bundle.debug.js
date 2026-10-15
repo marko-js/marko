@@ -39,6 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(10);
 			const $childScope = _peek_scope_id();
 			tabs_default({ tab: attrTag({ on }) });
 			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "4:4");

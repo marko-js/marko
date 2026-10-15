@@ -9,7 +9,7 @@ const $if_content__input_value__OR__$global_brand__script = _fill_global_script(
 	}
 });
 _fill_global_join_resume("brand", "__tests__/template.marko_1_input_value#0:6_$global_brand#1/global", $if_content__input_value__OR__$global_brand__script);
-const $if_content__input_value__OR__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_1_input_value#0:6_$global_brand#1/global", /*@__PURE__*/ _or(2, $if_content__input_value__OR__$global_brand__script));
+const $if_content__input_value__OR__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_1_input_value#0:6_$global_brand#1/global", $if_content__input_value__OR__$global_brand__script);
 const $if_content__input_value = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_value__OR__$global_brand);
 const $if_content__setup = $if_content__input_value;
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);

@@ -63,7 +63,6 @@ import {
   writesPatchHole,
   writesPatchSite,
   isStableExpr,
-  isAttrSetSpread,
   writesPatchControl,
   writesPatchHandler,
   mergeWriteSources,
@@ -480,7 +479,7 @@ export default {
           hasDynamicAttributes &&
           isBranchPathSection(tagSection)
         ) {
-          if (spread && isAttrSetSpread(tagName)) {
+          if (spread) {
             onFinalizeReferences(() => {
               if (writesPatchHole(tagSection, tagExtra)) {
                 linkRuntimeFeature("patches/attrs");
@@ -512,7 +511,7 @@ export default {
 
           spreadExtra.rendersContent = true;
           spreadExtra.rendersValue = true;
-          if (isAttrSetSpread(tagName)) spreadExtra.attrSetSpread = true;
+          spreadExtra.attrSetSpread = true;
           // Functions in native tag attrs are only ever invoked (handlers)
           // or stringified from static source, so reads inside can be lazy.
           spreadExtra.invokeOnly = true;
@@ -956,8 +955,7 @@ export default {
           addHTMLEffectCall(tagSection, getReferencedBindings(tagExtra));
 
           if (!spreadContent) {
-            const patches =
-              isAttrSetSpread(tagName) && writesPatchHole(tagSection, tagExtra);
+            const patches = writesPatchHole(tagSection, tagExtra);
             if (skipExpression) {
               write`${callRuntime(
                 patches ? "_patch_attrs_partial" : "_attrs_partial",
@@ -1038,8 +1036,7 @@ export default {
             nodeBinding && getWriteReason(nodeBinding),
             true,
           );
-          const patches =
-            isAttrSetSpread(tagName) && writesPatchHole(tagSection, tagExtra);
+          const patches = writesPatchHole(tagSection, tagExtra);
           const contentArgs = patches
             ? [
                 markerGuard,

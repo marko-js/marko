@@ -72,6 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(0);
 			feed_list_default({
 				items: [{ id: "c" }],
 				data: { q: "client" }

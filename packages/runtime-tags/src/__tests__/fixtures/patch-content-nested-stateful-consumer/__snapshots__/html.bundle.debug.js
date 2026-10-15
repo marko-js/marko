@@ -23,6 +23,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id();
 			grand_default({ content: input.content });
 			_scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 1) && _existing_scope($childScope) }, "__tests__/tags/card/index.marko", "4:4");

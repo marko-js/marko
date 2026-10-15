@@ -918,7 +918,12 @@ function buildIntersection(
   fn: t.Expression,
 ) {
   const { source, id, returnedBy } = section.intersections!.get(intersection)!;
-  if (source) return fn;
+  // A `$global` member never arrives: the globals object holds it already.
+  let arrivals = 0;
+  forEach(intersection, (member) => {
+    if (getCanonicalBinding(member).type !== BindingType.global) arrivals++;
+  });
+  if (source || (arrivals === 1 && !returnedBy)) return fn;
   // A created scope's flush runs the join by its init id (`getCreatedJoins`).
   const shellInitId =
     initsCreatedJoin(section, intersection) &&
@@ -928,9 +933,7 @@ function buildIntersection(
     ...(shellInitId ? [t.stringLiteral(shellInitId)] : []),
     t.numericLiteral(id),
     fn,
-    returnedBy || intersection.length > 2
-      ? t.numericLiteral(intersection.length - 1)
-      : undefined,
+    returnedBy || arrivals > 2 ? t.numericLiteral(arrivals - 1) : undefined,
     returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true),
   );
 }

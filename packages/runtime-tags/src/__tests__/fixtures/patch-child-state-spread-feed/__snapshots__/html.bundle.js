@@ -37,10 +37,13 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
+			_set_scope_reason(10);
 			const $childScope = _peek_scope_id();
 			tabs_default({ tab: attrTag({ on }) });
+			_set_scope_reason(10);
 			const $childScope2 = _peek_scope_id();
 			tabs_default({ tab: attrTag({ ...o }) });
+			_set_scope_reason(10);
 			const $childScope3 = _peek_scope_id();
 			tabs_default({ tab: { on } });
 			_scope($scope1_id, {

@@ -54,6 +54,7 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {
 		{
 			const $scope3_id = _scope_id();
+			_set_scope_reason(0);
 			widget_default({ content: _content_elide("a0", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();

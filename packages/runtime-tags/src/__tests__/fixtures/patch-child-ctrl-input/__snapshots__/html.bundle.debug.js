@@ -33,6 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(10);
 			const $childScope = _peek_scope_id();
 			field_default({
 				value: text,

@@ -8,7 +8,9 @@ const $if_content__setup = ($scope) => {
 	$if_content__summary._($scope);
 	_attr_nonce($scope, "#style/0");
 };
-const $for_content__item__OR__$global = /*@__PURE__*/ _fill_global_join("", "__tests__/template.marko_1_item#2_$global#3/global", /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/0"], collect($scope.$global, $scope.item))));
+const $for_content__item__OR__$global = /*@__PURE__*/ _fill_global_join("", "__tests__/template.marko_1_item#2_$global#3/global", ($scope) => {
+	_text($scope["#text/0"], collect($scope.$global, $scope.item));
+});
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__item__OR__$global);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<p> </p>", "D ", 0, $for_content__$params);

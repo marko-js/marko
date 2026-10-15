@@ -1,0 +1,17 @@
+<select>
+  <option value=a>A<!--M_$1 #text/2--></option><!--M_$1 #option/1-->
+  <option value=b selected>b</option>
+  <option value=c>c</option><!--M_$1 #option/3-->
+</select><!--M_$1 #select/0--><span>b<!--M_$1 #text/4--></span><button>t</button><!--M_$1 #button/5-->
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "";
+  M._.r = [_ => [1, {
+      "ControlledHandler:#select/0": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/patch-option-spread/template.marko_0/valueChange"
+        ),
+      v: "b"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-option-spread/template.marko_0_input_c#10 1 packages/runtime-tags/src/__tests__/fixtures/patch-option-spread/template.marko_0_input_a#8 1 packages/runtime-tags/src/__tests__/fixtures/patch-option-spread/template.marko_0 1"
+  ];
+  M._.w()
+</script>

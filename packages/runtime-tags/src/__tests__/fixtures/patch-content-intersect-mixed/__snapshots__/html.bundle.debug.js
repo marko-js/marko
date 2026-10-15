@@ -29,6 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(0);
 			box_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();

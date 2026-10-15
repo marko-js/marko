@@ -24,6 +24,7 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
+			_set_scope_reason(0);
 			wrap_default({ content: _content_elide("a0", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();

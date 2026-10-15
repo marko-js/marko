@@ -98,12 +98,6 @@ export function writesPatchHandler(tagSection: Section, value: t.Expression) {
   }
 }
 
-// A spread patches as the attribute set (content rides a dynamic tag
-// entry); an `<option>` spread renders through its select's value.
-export function isAttrSetSpread(tagName: string) {
-  return tagName !== "option";
-}
-
 // A hole a patch writes: in patch-written structure and not state-sourced.
 export function writesPatchHole(
   section: Section,

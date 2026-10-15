@@ -17,6 +17,7 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
+			_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
 			const $childScope = _peek_scope_id();
 			badge.content(...input.parts);
 			_scope($scope1_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });

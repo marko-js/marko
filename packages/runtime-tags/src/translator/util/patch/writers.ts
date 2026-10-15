@@ -22,6 +22,7 @@ import { forEach, type Opt, some, type SortedOpt, toArray } from "../optional";
 import {
   getSourcesForExpr,
   getSourcesForRef,
+  isConditionalReason,
   isUnconditionalReason,
   type Reason,
 } from "../reasons";
@@ -597,7 +598,9 @@ export function getPatchWriteOwnership(
   // Never changes: the write only seeds a created scope, as under a group
   // mask of `0`.
   if (stable) return [t.numericLiteral(0), t.numericLiteral(0)];
-  const groups = getCallerParamGroupsAt(sources?.param, section);
+  // A state-mixed write has no caller group (`ensureCallerParamGroups`).
+  if (!isConditionalReason(sources)) return [];
+  const groups = getCallerParamGroupsAt(sources.param, section);
   if (groups.length > 1) {
     // A `<define>` body's group beside its template's: one mask composes
     // them, as a call site composes its child's.
@@ -605,7 +608,7 @@ export function getPatchWriteOwnership(
       buildGroupMask([
         {
           value: buildComposedGroupValue(groups),
-          names: getDebugNames(sources!.param),
+          names: getDebugNames(sources.param),
         },
       ])!,
       t.numericLiteral(0),

@@ -410,10 +410,9 @@ export function knownTagTranslateHTML(
   if (childSection.paramReasonGroups) {
     let childGroupMask: t.Expression | undefined;
     if (isPatch()) {
-      // An instance in stateful structure, which patch renders skip, takes
-      // the all-server default; elsewhere the scope reason carries ownership.
-      const groups =
-        !inStatefulBranch(section) && getParamGroupSources(tagExtra);
+      // The scope reason carries ownership, which an instance in stateful
+      // structure (patch renders skip it) needs for what its page resumes.
+      const groups = getParamGroupSources(tagExtra);
       if (groups) {
         childGroupMask = buildOwnershipMaskExpr(
           section,

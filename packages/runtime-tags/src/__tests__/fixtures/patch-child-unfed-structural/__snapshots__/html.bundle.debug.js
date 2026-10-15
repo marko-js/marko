@@ -32,8 +32,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(_mask_group($scope0_reason, 1) << 3);
 			const $childScope = _peek_scope_id();
 			badge_default({ text: input.a });
+			_set_scope_reason(_mask_group($scope0_reason, 2) << 3);
 			const $childScope2 = _peek_scope_id();
 			badge_default({
 				open: true,

@@ -24,6 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(0);
 			widget_default({ label: "fixed" });
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;

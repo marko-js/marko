@@ -21,6 +21,7 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {
 		{
 			const $scope1_id = _scope_id();
+			_set_scope_reason(0);
 			widget_default({ label: "fixed" });
 			_scope($scope1_id, {});
 			return 0;

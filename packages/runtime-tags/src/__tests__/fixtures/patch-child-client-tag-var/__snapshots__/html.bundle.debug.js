@@ -27,6 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 			const $childScope = _peek_scope_id();
 			let w = widget_default({ label: input.label });
 			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_w#3/var");

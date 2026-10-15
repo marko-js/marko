@@ -57,6 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope3_id = _scope_id();
+			_set_scope_reason(0);
 			widget_default({ content: _content_elide("__tests__/template.marko_4*content", () => {
 				const $scope4_reason = _scope_reason();
 				const $scope4_id = _scope_id();

@@ -40,6 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(0);
 			struct_default({ mode: false });
 			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
