@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A client-owned chain inside a server-owned branch: patches still reach
-// it, but the outer shell drops, so revealing it rejects to navigation.
+// it, and revealing the outer branch creates it from its shell.
 export const config: TestConfig = {
   patches: true,
   steps: [

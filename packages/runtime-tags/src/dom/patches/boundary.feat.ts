@@ -93,7 +93,7 @@ function attachDetachedAwait(
   const awaitBranch = scope[
     AccessorPrefix.BranchScopes + accessor
   ] as BranchScope;
-  const renderer = awaitBranch?.[AccessorProp.DetachedAwait] as Renderer;
+  const renderer = awaitBranch[AccessorProp.DetachedAwait] as Renderer;
   if (!renderer) return applyChildPatch();
   awaitBranch[AccessorProp.PendingScopes] =
     awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);

@@ -99,13 +99,12 @@ export class PatchSerializerState extends SerializerState {
   // its scope by the links down from the page root (written root first).
   writeScopePath(scopeId: number, id: string) {
     if (scopeId === ROOT_SCOPE_ID) return;
-    const link = this.render.patchLinks?.[scopeId];
-    // Failing the render answers with a document instead of a wrong patch.
-    if (!link) {
-      throw MARKO_DEBUG
-        ? new Error(`A patch cannot deliver the scoped registration "${id}".`)
-        : new Error();
+    if (MARKO_DEBUG && !this.render.patchLinks?.[scopeId]) {
+      throw new Error(
+        `A patch cannot deliver the scoped registration "${id}".`,
+      );
     }
+    const link = this.render.patchLinks![scopeId];
     this.writeScopePath(link.parent, id);
     if (link.parent !== ROOT_SCOPE_ID) this.buf.push(",");
     // Accessors are compiler-made (nothing to escape); a loop key is data.

@@ -164,8 +164,8 @@ export function getShellIdArg(section: Section | undefined) {
 // A branch's shell is its resolved structure (known child templates
 // included); anything else leaves it shell-less, so divergence fails closed.
 const isShellExpressible = createCyclicMemo(
+  isStructureExpressible,
   // A template cycle never resolves to a finite shell.
-  (section: Section) => !!section.structure && isStructureExpressible(section),
   false,
 );
 

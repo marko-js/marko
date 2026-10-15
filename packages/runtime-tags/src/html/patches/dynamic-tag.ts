@@ -17,7 +17,6 @@ import {
   getState,
 } from "../writer";
 import {
-  type PatchLink,
   PatchRenderState,
   PatchUpdateState,
   SERVER_ALL,
@@ -302,17 +301,19 @@ function ownerPrefix(
   let hops = "";
   let relative: string | undefined;
   for (let cur = ownerId; cur !== ROOT_SCOPE_ID;) {
-    const link: PatchLink | undefined = state.patchLinks?.[cur];
-    if (typeof link?.link !== "string") {
-      if (relative) return relative;
-      // Failing the render answers with a document instead of a wrong patch.
-      throw MARKO_DEBUG
-        ? new Error(
-            link
-              ? `Content defined in a \`<for>\` row was rendered outside the row. Only a side effect during render, which Marko does not support, can move it there.`
-              : `A patch cannot reach the owner scope ${ownerId} of dynamic tag content.`,
-          )
-        : new Error();
+    if (MARKO_DEBUG && !state.patchLinks?.[cur]) {
+      throw new Error(
+        `A patch cannot reach the owner scope ${ownerId} of dynamic tag content.`,
+      );
+    }
+    const link = state.patchLinks![cur];
+    if (typeof link.link !== "string") {
+      if (MARKO_DEBUG && !relative) {
+        throw new Error(
+          `Content defined in a \`<for>\` row was rendered outside the row. Only a side effect during render, which Marko does not support, can move it there.`,
+        );
+      }
+      return relative!;
     }
     hops = link.link + " " + hops;
     cur = link.parent;

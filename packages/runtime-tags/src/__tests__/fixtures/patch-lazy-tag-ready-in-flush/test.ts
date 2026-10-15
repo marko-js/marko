@@ -11,7 +11,6 @@ export const config: TestConfig = {
   patches: true,
   patch_while_streaming: true,
   equivalent: false,
-  skip_optimize: true,
   steps: () => [
     { label: "top", a: Promise.resolve("a1"), b: resolveAfter("b1", 1) },
     navigate(() => ({

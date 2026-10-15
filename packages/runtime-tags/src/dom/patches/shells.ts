@@ -106,13 +106,13 @@ export const registerShell = (shell: string) => {
   const factory = _content(id, ...parts);
   if (registered) _resumed[id] = registered;
   shells[id] = Object.assign(
-    (owner?: Scope) => {
-      const renderer: Renderer = Object.assign(factory(owner), {
-        [RendererProp.Shell]: parts,
-      });
-      if (returns) renderer[RendererProp.Returns] = 1;
-      return renderer;
-    },
+    (owner?: Scope) =>
+      Object.assign(
+        factory(owner),
+        returns
+          ? { [RendererProp.Shell]: parts, [RendererProp.Returns]: 1 }
+          : { [RendererProp.Shell]: parts },
+      ),
     { [RendererProp.Shell]: parts },
   );
   return id;

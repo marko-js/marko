@@ -5,8 +5,7 @@ const click = (document: Document) => {
 };
 
 // A content body switching arms (static, with a hole, none) at a
-// server-owned and a client-owned site (own prop each: a shared prop's
-// fill channel cannot also patch-write, so it fails closed).
+// server-owned and a client-owned site.
 export const config: TestConfig = {
   patches: true,
   steps: [

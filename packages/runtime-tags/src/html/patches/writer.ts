@@ -64,7 +64,7 @@ export function walkMarkers(state: State) {
 const kUnpatched = Symbol("Unpatched");
 
 export function inUnpatched() {
-  return !!getChunk()?.context?.[kUnpatched];
+  return !!getChunk()!.context?.[kUnpatched];
 }
 
 export function withUnpatched<T>(cb: () => T): T;
@@ -95,7 +95,7 @@ export function _script(
   markerGuard?: number,
   client?: 0 | 1,
 ) {
-  const context = getChunk()?.context;
+  const context = getChunk()!.context;
   if (
     !(getState() instanceof PatchUpdateState) ||
     (context?.[kSetUp] !== undefined && context[kSetUp] === context[kBranchId]
@@ -134,7 +134,7 @@ const kKeptBranch = Symbol("Kept Branch");
 // Whether a flush may create the scopes rendering here: in a branch not kept
 // (the client decides by divergence).
 export function inCreatable() {
-  const context = getChunk()?.context;
+  const context = getChunk()!.context;
   return (
     context?.[kBranchId] !== undefined &&
     context[kBranchId] !== context[kKeptBranch]
@@ -375,8 +375,6 @@ export class PatchRenderState extends State {
 // A patch's globals keep undefined-valued keys (they overwrite, where a resume
 // elides) but not the nonce: the document's CSP decides the live page's.
 export function patchGlobals($global: Record<string, unknown>) {
-  if (!$global) return 0;
-
   const serializedGlobals = $global.serializedGlobals as
     | string[]
     | Record<string, boolean>
