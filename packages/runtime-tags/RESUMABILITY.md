@@ -98,12 +98,14 @@ patch, fill, structural param, shell).
   while in-order content streams, since that content holds every effect.
 - **Transport.** `patch($global, signal)` gives a navigation's request headers
   and the apply for its response, which the signal stops. `x-marko-patch` is `<build>;<held-shell token>`:
-  the server's build (the integration sets it once, `_patch_build`) as the
+  the server's build (the integration names it once, `setPatchBuild`) as the
   document's render data named it. A server reads a request with
   `patchRequest(headers)`: another build's (`"stale"`) is answered before
   running anything, and its own (`"patch"`) with
-  `template.patch(input, headers)` under `patchResponseHeaders`, one flush per
-  line; a last line of `;` and the token names what the page now holds.
+  `template.patch(input, headers)` under `patchResponseHeaders`, whose
+  `x-marko-patch` names the build again for the page to check, one flush per
+  line; every response ends with a `;` line, followed by the token when the
+  shells it sent changed what the page holds.
   `apply(response, onCommit, onApplied, onEnd, onFail)` reads the body's lines
   as frames: `onCommit` right before the first changes the page, `onApplied`
   whenever every frame so far has applied, `onEnd` once the body ended and all

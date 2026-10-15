@@ -56,6 +56,7 @@ export {
 export { _client_return, _content_withheld } from "./patches/dynamic-tag";
 export { _shells } from "./patches/shells";
 export { patchRequest, patchResponseHeaders } from "./patches/template";
+export { setPatchBuild } from "./patches/writer";
 export {
   _client_guard,
   _fill_global_subscribe,
@@ -63,7 +64,6 @@ export {
   _mask_group,
   _page_render,
   _patch_bind,
-  _patch_build,
   _patch_child,
   _patch_effect,
   _patch_init,

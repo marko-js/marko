@@ -20,7 +20,7 @@ async function refusedFrame(document: Document) {
   try {
     await new Promise<void>((resolve) =>
       apply(
-        new Response("{}\n", { headers: { "x-marko-patch": "1" } }),
+        new Response("{}\n", { headers: { "x-marko-patch": "b" } }),
         () => calls.push("commit"),
         () => calls.push("applied"),
         () => resolve(void calls.push("end")),

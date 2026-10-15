@@ -12,7 +12,7 @@ import { decodeHeld } from "./token";
 import {
   PatchRenderState,
   PatchUpdateState,
-  patchBuildPrefix,
+  patchBuild,
   patchGlobals,
   patchNode,
   ensureScopePatch,
@@ -50,6 +50,11 @@ function renderPatch(
       "Marko patches only render page templates; this template renders embedded, so request it as a document.",
     );
   }
+  if (!patchBuild) {
+    throw new Error(
+      "Marko patches render only once the server names its build with `setPatchBuild`.",
+    );
+  }
   // Globals re-ship every flush, undefined included, so the live page's
   // `$global` never reads stale.
   const root = (input: unknown) => {
@@ -83,18 +88,20 @@ export type PatchHeaders =
   | { get(name: string): string | null };
 
 /** What a request asks of the server's build: `"patch"` from its own page, or
- * `"stale"` from another build's, to answer before rendering anything. */
+ * `"stale"` from another build's (any, until `setPatchBuild` names one), to
+ * answer before rendering anything. */
 export function patchRequest(headers: PatchHeaders) {
   const value = readHeader(headers, "x-marko-patch");
   return value == null
     ? undefined
-    : value.startsWith(patchBuildPrefix)
+    : patchBuild && value.startsWith(patchBuild + ";")
       ? ("patch" as const)
       : ("stale" as const);
 }
 
 /** The headers to add for a request of `kind`: every page varies on the
- * request, and a patch is uncached JavaScript marked as a patch. */
+ * request, and a patch is uncached JavaScript marked with its build, which the
+ * page checks against its own. */
 export function patchResponseHeaders(
   kind: ReturnType<typeof patchRequest>,
 ): Record<string, string> {
@@ -103,7 +110,7 @@ export function patchResponseHeaders(
         vary: "x-marko-patch",
         "content-type": "text/javascript;charset=UTF-8",
         "cache-control": "no-store",
-        "x-marko-patch": "1",
+        "x-marko-patch": patchBuild!,
       }
     : { vary: "x-marko-patch" };
 }

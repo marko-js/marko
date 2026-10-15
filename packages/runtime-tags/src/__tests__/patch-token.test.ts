@@ -1,9 +1,13 @@
 import assert from "node:assert/strict";
 
 import { _shells, rawShells } from "../html/patches/shells";
-import { patchRequest, patchResponseHeaders } from "../html/patches/template";
+import {
+  _template_patch,
+  patchRequest,
+  patchResponseHeaders,
+} from "../html/patches/template";
 import { decodeHeld, encodeHeld } from "../html/patches/token";
-import { _patch_build } from "../html/patches/writer";
+import { setPatchBuild } from "../html/patches/writer";
 
 describe("patch token", () => {
   it("names held shells by registry index, as a bitmap when shorter", () => {
@@ -64,22 +68,25 @@ describe("patch token", () => {
   });
 
   it("tells a patch request of another build", () => {
-    _patch_build("b1");
-    try {
-      assert.equal(patchRequest({ "x-marko-patch": "b0;CxU" }), "stale");
-      assert.equal(patchRequest({ "x-marko-patch": "b1;CxU" }), "patch");
-      assert.equal(patchRequest({ "x-marko-patch": "b1;" }), "patch");
-      assert.equal(patchRequest({ "x-marko-patch": "" }), "stale");
-      assert.equal(patchRequest(new Headers()), undefined);
-    } finally {
-      _patch_build("");
-    }
+    // Until a build is named, every request is another build's, and no
+    // patch renders.
+    assert.equal(patchRequest({ "x-marko-patch": ";" }), "stale");
+    assert.throws(
+      () => _template_patch("t", () => {}, 1).patch({}),
+      /setPatchBuild/,
+    );
+    setPatchBuild("b1");
+    assert.equal(patchRequest({ "x-marko-patch": "b0;CxU" }), "stale");
+    assert.equal(patchRequest({ "x-marko-patch": "b1;CxU" }), "patch");
+    assert.equal(patchRequest({ "x-marko-patch": "b1;" }), "patch");
+    assert.equal(patchRequest({ "x-marko-patch": "" }), "stale");
+    assert.equal(patchRequest(new Headers()), undefined);
   });
 
-  it("varies every page on the request and marks a patch", () => {
+  it("varies every page on the request and marks a patch with its build", () => {
     assert.deepEqual(patchResponseHeaders(undefined), {
       vary: "x-marko-patch",
     });
-    assert.equal(patchResponseHeaders("patch")["x-marko-patch"], "1");
+    assert.equal(patchResponseHeaders("patch")["x-marko-patch"], "b1");
   });
 });

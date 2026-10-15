@@ -13,7 +13,7 @@ async function replay(document: Document) {
   const before = token();
   await new Promise<void>((resolve, reject) =>
     patch({ renderId: "_" }, signal, 1)[1](
-      new Response(";older\n", { headers: { "x-marko-patch": "1" } }),
+      new Response(";older\n", { headers: { "x-marko-patch": "b" } }),
       () => {},
       () => {},
       resolve,

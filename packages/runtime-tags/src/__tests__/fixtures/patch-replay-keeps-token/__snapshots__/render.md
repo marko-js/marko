@@ -26,7 +26,7 @@ const { patch } = document.defaultView
   const before = token();
   await new Promise((resolve, reject) =>
  patch({ renderId: "_" }, signal, 1)[1](
-   new Response(";older\n", { headers: { "x-marko-patch": "1" } }),
+   new Response(";older\n", { headers: { "x-marko-patch": "b" } }),
    () => {},
    () => {},
    resolve,

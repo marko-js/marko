@@ -132,6 +132,9 @@ export type TestConfig = {
   /** Patch: applies a step's patch while the document is still
    * streaming; by default the remaining flushes land first. */
   patch_while_streaming?: boolean;
+  /** Patch: the build the server names after the document renders (a deploy),
+   * which every patch it renders carries. */
+  patch_build?: string;
   /** Patch: a known bug, described here, leaves the patched page unlike a
    * client render of the same steps; the csr test fails once they agree. */
   csr_divergence?: string;
@@ -466,13 +469,14 @@ function testFixtures(interop?: true) {
             // The document each patch is measured against (same input).
             const freshDocs: string[] = [];
             const logs: ConsoleRecord[][] = [];
-            let template!: Awaited<
-              ReturnType<typeof runner.runServer>
-            >["template"];
+            let server!: Awaited<ReturnType<typeof runner.runServer>>;
+            let template!: (typeof server)["template"];
             const capture = captureConsole();
 
             try {
-              ({ template } = await runner.runServer());
+              ({ template } = server = await runner.runServer());
+              // A patch server names its build, as an integration does.
+              server.setPatchBuild?.("b");
               if (abortController) {
                 input.$global = {
                   ...(input.$global as any),
@@ -688,7 +692,10 @@ function testFixtures(interop?: true) {
                     // One response per input, as a navigation is, from build
                     // `b`; it stops the one before at once.
                     const previous = response;
-                    response = streamPatch(patch, pageGlobal);
+                    if (config.patch_build) {
+                      server.setPatchBuild!(config.patch_build);
+                    }
+                    response = streamPatch(patch, pageGlobal, server);
                     previous?.superseded();
                     const { headers } = response;
                     // The token follows the build.
@@ -1197,6 +1204,8 @@ function formatClientPage(document: Document, compareDefaults?: boolean) {
 function streamPatch(
   patch: typeof import("@marko/runtime-tags/dom/patch").patch,
   $global: Parameters<typeof patch>[0],
+  // The server that rendered the patch, whatever the request's build.
+  server: Partial<Pick<typeof import("../html/patch"), "patchResponseHeaders">>,
 ) {
   const encoder = new TextEncoder();
   const navigation = new AbortController();
@@ -1237,7 +1246,7 @@ function streamPatch(
         },
         { highWaterMark: 0 },
       ),
-      { headers: { "x-marko-patch": "1" } },
+      { headers: server.patchResponseHeaders!("patch") },
     ),
     report(() => {}),
     report(() => {

@@ -271,16 +271,17 @@ export function patch(
             ? fail("a frame did not apply")
             : fail();
       commit = onCommit;
-      // A server marks a patch; anything else (a 412 names another build) is
-      // a document the caller loads, and a stopped response is not read.
+      // A server marks a patch with its build; anything else (another build's,
+      // or a 412) is a document the caller loads, and a stopped response is not read.
       if (
         render[RenderDataProp.PatchResponse] !== stop ||
-        !response.headers.has("x-marko-patch")
+        response.headers.get("x-marko-patch") !==
+          render[RenderDataProp.PatchBuild]
       ) {
         response.body?.cancel();
         return MARKO_DEBUG
           ? fail(
-              response.status === 412
+              response.status === 412 || response.headers.has("x-marko-patch")
                 ? "the server runs another build than this page's"
                 : "the response is not a patch",
             )

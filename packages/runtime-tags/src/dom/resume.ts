@@ -60,7 +60,7 @@ export interface RenderData {
   j?: never;
   // Await counter lookup
   p?: Record<string | number, AwaitCounter>;
-  // The server build a patch page's document named (`_patch_build`).
+  // The server build a patch page's document named (`setPatchBuild`).
   [RenderDataProp.PatchBuild]?: string;
   // The server's account of what this render holds: the opaque token its
   // last patch response ended with, sent with the next request.

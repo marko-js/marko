@@ -38,20 +38,22 @@ import { PatchSerializerState } from "./serializer";
 import { quotedShell, rawShells } from "./shells";
 import { encodeHeld } from "./token";
 
-// The server's build, set once by the integration: what a patch page's render
-// data names, and the prefix of its requests' header (`patchRequest`).
-let patchBuildData = "." + RenderDataProp.PatchBuild + '=""';
+// The server's build: what a patch page's render data names, the prefix of
+// its requests' header (`patchRequest`) and the mark of a patch it answers.
+export let patchBuild: string | undefined;
 
-export let patchBuildPrefix = ";";
-
-export function _patch_build(build: string) {
-  if (MARKO_DEBUG && /["\\<;]/.test(build)) {
+/** Names the build this server renders, once, before it renders a patch page.
+ * Every page names it and every patch request and patch carries it, so a page
+ * of another build is never patched (its request answers `"stale"`), and
+ * patches render only once a build is named. The id must change whenever the
+ * server or client output does; it is written raw in a script and in headers. */
+export function setPatchBuild(build: string) {
+  if (MARKO_DEBUG && !/^[^"\\<;\0-\x1f\x7f]+$/.test(build)) {
     throw new Error(
-      `Invalid patch build id ${JSON.stringify(build)}: it is written raw in a script and a header, so it cannot hold " \\ < or ;.`,
+      `Invalid patch build id ${JSON.stringify(build)}: it is written raw in a script and in headers, so it must be non-empty and cannot hold " \\ < ; or control characters.`,
     );
   }
-  patchBuildData = "." + RenderDataProp.PatchBuild + '="' + build + '"';
-  patchBuildPrefix = build + ";";
+  patchBuild = build;
 }
 
 // Markers a patch pairs through, walked even on a page with no other client
@@ -345,7 +347,14 @@ export class PatchRenderState extends State {
   // A patch page's render data names the server's build, which its patch
   // requests lead with.
   override runtimeScript() {
-    return super.runtimeScript() + patchBuildData;
+    return (
+      super.runtimeScript() +
+      "." +
+      RenderDataProp.PatchBuild +
+      '="' +
+      patchBuild +
+      '"'
+    );
   }
 
   // The client stamps the document's nonce on the scripts and styles patches

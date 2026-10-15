@@ -45,6 +45,16 @@ interface Diagnostic {
   label: string;
 }
 
+// A fixture's templates, and for a patch build the server's build and the
+// headers of the patches it answers.
+type ServerModule<T> = Record<keyof T, Template> &
+  Partial<
+    Pick<
+      typeof import("../../html/patch"),
+      "patchResponseHeaders" | "setPatchBuild"
+    >
+  >;
+
 export async function createServerRunner<T extends Record<string, string>>(
   cwd: string,
   entries: T,
@@ -53,7 +63,7 @@ export async function createServerRunner<T extends Record<string, string>>(
   outName = config.optimize ? "optimize" : "debug",
 ): Promise<{
   assets: string;
-  runServer(): Promise<Record<keyof T, Template>>;
+  runServer(): Promise<ServerModule<T>>;
   disposeServer(): void;
   clientRunner?: (
     ctx: any,
@@ -103,14 +113,14 @@ export async function createServerRunner<T extends Record<string, string>>(
         )
     : undefined;
 
-  let server: Promise<Record<keyof T, Template>> | undefined;
+  let server: Promise<ServerModule<T>> | undefined;
   return {
     assets: domOut,
     // Memoized so server module state lives across a fixture's renders, as on
     // a real server; disposed by the fixture teardown because mocha's suite
     // graph can retain this runner for the whole run.
     runServer: () =>
-      (server ||= importEvictable<Record<keyof T, Template>>(
+      (server ||= importEvictable<ServerModule<T>>(
         path.join(htmlOut, "main.mjs"),
       )),
     disposeServer: () => {
@@ -248,7 +258,10 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
             (name) =>
               `export { default as ${name} } from "${entries[name] + pageExt}";`,
           )
-          .join("\n"),
+          .join("\n") +
+          (config.patches
+            ? `\nexport { patchResponseHeaders, setPatchBuild } from "@marko/runtime-tags/html/patch";`
+            : ""),
       ),
     },
     platform: "node",
