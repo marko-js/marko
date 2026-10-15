@@ -9,7 +9,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	const doubled = count * 2;
 	_html(`<button>probe</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/probe.marko_0");
-	_script($scope0_id, "__tests__/tags/probe.marko_0_count#1_doubled#2", void 0, 1);
+	_script($scope0_id, "__tests__/tags/probe.marko_0_count#1_doubled#2", 1, 1);
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/probe.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, {
 		count,

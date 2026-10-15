@@ -12,7 +12,7 @@ var menu_default = _template("__tests__/tags/menu.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchWrite:it_onPick", it?.onPick, !_server_guard($scope0_reason, 0));
 		_html(`<button${_patch_attr_class($scope1_id, "PatchAttr:#button/0 class", "b" + it.id, $scope0_reason, 0)}>${_patch_text($scope1_id, "#text/1", it.label, void 0, $scope0_reason, 0)}</button>${_el_resume($scope1_id, "#button/0")}`);
-		_script($scope1_id, "__tests__/tags/menu.marko_1_it_onPick#5", void 0, _client_guard($scope0_reason, 0));
+		_script($scope1_id, "__tests__/tags/menu.marko_1_it_onPick#5", 1, _client_guard($scope0_reason, 0));
 		_server_guard($scope0_reason, 0) && _patch_effect($scope1_id, "PatchEffect:__tests__/tags/menu.marko_1_it_onPick#5", "it_onPick");
 		_scope($scope1_id, { it_onPick: it?.onPick }, "__tests__/tags/menu.marko", "1:2", { it_onPick: ["it.onPick", "1:6"] });
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/menu.marko_1*shell", $scope0_reason, 0);

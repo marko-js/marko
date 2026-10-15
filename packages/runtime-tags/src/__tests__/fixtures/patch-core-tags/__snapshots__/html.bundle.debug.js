@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	console.log(input.title);
 	_html(`<main${_patch_attr($scope0_id, "PatchAttr:#main/0 data-id", "data-id", uid, 0, 0)}><p>${_text_resume($scope0_id, "#text/1", count)}</p><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>${_el_resume($scope0_id, "#main/0", 0)}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_input_value#5_count#7", void 0, 1);
+	_script($scope0_id, "__tests__/template.marko_0_input_value#5_count#7", 1, 1);
 	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_input_value#5_count#7", "input_value");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", count, 1);
 	$scope0_page ? _scope($scope0_id, {

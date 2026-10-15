@@ -6,7 +6,7 @@ var probe_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let seen = "";
 	_html(`<p>${_text_resume($scope0_id, "a", seen)}</p>`);
-	_script($scope0_id, "b0", void 0, _client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2));
+	_script($scope0_id, "b0", 1, _client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2));
 	(_server_guard($scope0_reason, 1) || _server_guard($scope0_reason, 2)) && _patch_effect($scope0_id, "eb0", "d e");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b1");
 	_patch_value($scope0_id, "vb2", seen, 1);

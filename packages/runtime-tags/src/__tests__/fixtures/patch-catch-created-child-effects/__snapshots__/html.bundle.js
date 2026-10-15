@@ -4,9 +4,9 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html(`<span>${_patch_text($scope0_id, "a", input.message, void 0, $scope0_reason, 0)}</span>`);
-	_script($scope0_id, "b0", void 0, _client_guard($scope0_reason, 2));
-	_script($scope0_id, "b1", void 0, _client_guard($scope0_reason, 1));
-	_script($scope0_id, "b2", void 0, _client_guard($scope0_reason, 0));
+	_script($scope0_id, "b0", 1, _client_guard($scope0_reason, 2));
+	_script($scope0_id, "b1", 1, _client_guard($scope0_reason, 1));
+	_script($scope0_id, "b2", 1, _client_guard($scope0_reason, 0));
 	_script($scope0_id, "b3");
 	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "eb2", "d");
 	_server_guard($scope0_reason, 1) && _patch_effect($scope0_id, "eb1", "e");

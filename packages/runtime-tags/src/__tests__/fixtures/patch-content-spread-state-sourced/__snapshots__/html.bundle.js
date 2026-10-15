@@ -13,7 +13,7 @@ var box_default = _template("b", (input) => {
 	}, "a", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "a")}<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b0");
-	_script($scope0_id, "b1", void 0, 1);
+	_script($scope0_id, "b1", 1, 1);
 	_patch_value($scope0_id, "vb3", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		d: input,

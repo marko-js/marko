@@ -1995,14 +1995,17 @@ export function writeHTMLResumeStatements(
   for (let i = allSignals.length; i--;) {
     if (allSignals[i].hasHTMLEffect) {
       const signalRefs = allSignals[i].referencedBindings;
+      const clientGuard =
+        isPatch() && getEffectClientGuard(section, signalRefs);
       body.push(
         t.expressionStatement(
           callRuntime(
             "_script",
             scopeIdIdentifier,
             t.stringLiteral(getResumeRegisterId(section, signalRefs)),
-            markerGuard,
-            isPatch() && getEffectClientGuard(section, signalRefs),
+            // `_script` reads only a `0` guard, so `1` stands in for none.
+            clientGuard ? markerGuard || t.numericLiteral(1) : markerGuard,
+            clientGuard,
           ),
         ),
       );

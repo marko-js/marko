@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				...input.attrs,
 				class: on ? "on" : "off"
 			}, "#a/0", $scope1_id, "a")}>go</a>${_el_resume($scope1_id, "#a/0")}`);
-			_script($scope1_id, "__tests__/template.marko_1_input_attrs#0:5_on#0:6", void 0, 1);
+			_script($scope1_id, "__tests__/template.marko_1_input_attrs#0:5_on#0:6", 1, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4", { "EventAttributes:#a/0": ["...{ ...input.attrs, class: on ? \"on\" : \"off\" }", "4:11"] });
 			return 0;
 		}

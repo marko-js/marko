@@ -16,7 +16,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	_html("<section");
 	_patch_attrs_content({ content: input.mode ? one : null }, "#section/0", $scope0_id, "section", void 0, void 0, $scope0_reason, 0);
 	_html(`</section>${_el_resume($scope0_id, "#section/0")}`);
-	_script($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#3_one#5", void 0, 1);
+	_script($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#3_one#5", 1, 1);
 	_patch_write($scope0_id, "PatchWrite:one", one, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#3_one#5/init");
 	$scope0_page ? _scope($scope0_id, {

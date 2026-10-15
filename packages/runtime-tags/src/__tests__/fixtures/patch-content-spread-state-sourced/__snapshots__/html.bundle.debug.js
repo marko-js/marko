@@ -13,7 +13,7 @@ var box_default = _template("__tests__/tags/box.marko", (input) => {
 	}, "#div/0", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/box.marko_0");
-	_script($scope0_id, "__tests__/tags/box.marko_0_input#3_count#4", void 0, 1);
+	_script($scope0_id, "__tests__/tags/box.marko_0_input#3_count#4", 1, 1);
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/box.marko_fill1", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input,

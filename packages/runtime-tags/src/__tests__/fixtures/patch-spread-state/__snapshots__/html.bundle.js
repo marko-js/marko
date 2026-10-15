@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 				...input.attrs,
 				class: "off"
 			}, "a", $scope1_id, "a")}>go</a>${_el_resume($scope1_id, "a")}`);
-			_script($scope1_id, "a1", void 0, 1);
+			_script($scope1_id, "a1", 1, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

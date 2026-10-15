@@ -9,7 +9,7 @@ var probe_default = _template("b", (input) => {
 	const doubled = 10;
 	_html(`<button>probe</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_script($scope0_id, "b1", void 0, 1);
+	_script($scope0_id, "b1", 1, 1);
 	_patch_value($scope0_id, "vb2", count, 1);
 	$scope0_page && _scope($scope0_id, {
 		b: count,

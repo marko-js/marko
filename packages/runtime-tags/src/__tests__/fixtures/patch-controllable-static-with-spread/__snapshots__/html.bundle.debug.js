@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/valueChange", $scope0_id),
 		...input.rest
 	}, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}<p>${_text_resume($scope0_id, "#text/1", text)}</p>`);
-	_script($scope0_id, "__tests__/template.marko_0_input_rest#4_text#5", void 0, 1);
+	_script($scope0_id, "__tests__/template.marko_0_input_rest#4_text#5", 1, 1);
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", text, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_rest: input.rest,

@@ -6,8 +6,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html(`<span>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)} ${_patch_text($scope0_id, "#text/1", input.count, 2, $scope0_reason, 1)}</span>`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_count#5", void 0, _client_guard($scope0_reason, 1));
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_label#4", void 0, _client_guard($scope0_reason, 0));
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_count#5", 1, _client_guard($scope0_reason, 1));
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_label#4", 1, _client_guard($scope0_reason, 0));
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/child.marko_0_input_label#4", "input_label");
 	_server_guard($scope0_reason, 1) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/child.marko_0_input_count#5", "input_count");
