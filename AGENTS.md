@@ -57,7 +57,7 @@ Don't add Babel `NodePath` helper calls (`findParent`, `find`, `getFunctionParen
 
 Names come from the code. Reuse the vocabulary of neighboring code, [`CONTEXT.md`](packages/runtime-tags/CONTEXT.md), and the markojs.com docs; never coin a term the codebase does not already use.
 
-Test through existing fixture families; add a test file only when no fixture can reach the behavior. A fix adds a fixture that fails without it.
+Test through existing fixture families; add a test file only when no fixture can reach the behavior. A fix adds a fixture that fails without it, and so does every branch or statement a change adds: revert each one and confirm a fixture fails. Code no fixture needs is deleted, never kept behind a fixture that passes either way.
 
 Marko language reference: <https://markojs.com/llms.txt> lists every docs page; append `.md` to any docs URL for markdown.
 

@@ -188,6 +188,14 @@ export interface KnownExprs {
 
 export function mapParamReasonToExpr(
   exprs: KnownExprs,
+  reason: Opt<ParamBinding>,
+): Opt<t.NodeExtra>;
+export function mapParamReasonToExpr(
+  exprs: KnownExprs,
+  reason: boolean | Opt<ParamBinding>,
+): Opt<t.NodeExtra> | true;
+export function mapParamReasonToExpr(
+  exprs: KnownExprs,
   reason: boolean | Opt<ParamBinding>,
 ) {
   if (reason) {
