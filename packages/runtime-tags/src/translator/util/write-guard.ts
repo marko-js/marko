@@ -31,9 +31,16 @@ export function isSameReason(a: Reason | undefined, b: Reason | undefined) {
   );
 }
 
+// The runtime checks a section's guard for a param reason group calls, by the
+// prefix their hoisted guards are named with.
+const groupCheckPrefixes = {
+  _write_guard: "wg",
+  _write_if: "wi",
+} satisfies Partial<Record<HTMLRuntimeHelpers, string>>;
+type GroupCheck = keyof typeof groupCheckPrefixes;
+
 interface SectionGuards {
-  if: GuardHoists;
-  guard: GuardHoists;
+  hoists: Map<GroupCheck, GuardHoists>;
   declarators: t.VariableDeclarator[];
 }
 
@@ -47,8 +54,7 @@ interface GuardHoists {
 const [getSectionGuards] = createSectionState<SectionGuards>(
   "sectionGuards",
   (section) => ({
-    if: createGuardHoists(),
-    guard: createGuardHoists(),
+    hoists: new Map(),
     declarators: [
       t.variableDeclarator(
         scopeReasonIdentifier(section),
@@ -139,7 +145,7 @@ export function getWriteGuard(
         );
   }
 
-  return orEachParamGroup(reason.param, true);
+  return orEachParamGroup(reason.param, "_write_guard");
 }
 
 export function getWriteGuardForAny(
@@ -176,32 +182,17 @@ export function getExprIfWritten<
     return (reason && expr) as R;
   }
 
-  return andGuard(orEachParamGroup(reason.param, false), expr) as R;
+  return andGuard(orEachParamGroup(reason.param, "_write_if"), expr) as R;
 }
 
-// Each param group's guard, or-ed together.
-function orEachParamGroup(params: Sources["param"], isGuard: boolean) {
+// Each param group's `check`, or-ed together.
+function orEachParamGroup(params: Sources["param"], check: GroupCheck) {
   return reduceParamGroups(
     params,
-    isGuard ? orWriteGuard : orWriteIf,
+    (expr: t.Expression | undefined, section, group) =>
+      orGuard(expr, getOrHoistSectionGuard(section, group, check)),
     undefined,
   );
-}
-
-function orWriteGuard(
-  expr: t.Expression | undefined,
-  section: Section,
-  group: ParamReasonGroup,
-) {
-  return orGuard(expr, getOrHoistSectionGuard(section, group, true));
-}
-
-function orWriteIf(
-  expr: t.Expression | undefined,
-  section: Section,
-  group: ParamReasonGroup,
-) {
-  return orGuard(expr, getOrHoistSectionGuard(section, group, false));
 }
 
 function orGuard(guard: t.Expression | undefined, other: t.Expression) {
@@ -216,18 +207,19 @@ function andGuard(guard: t.Expression | undefined, expr: t.Expression) {
 function getOrHoistSectionGuard(
   section: Section,
   params: ParamReasonGroup,
-  isGuard: boolean,
+  check: GroupCheck,
 ): t.Expression {
   if (!section.paramReasonGroups) return scopeReasonIdentifier(section);
 
   const state = getSectionGuards(section);
-  const tracking = isGuard ? state.guard : state.if;
+  let tracking = state.hoists.get(check);
+  if (!tracking) state.hoists.set(check, (tracking = createGuardHoists()));
   const index = getParamReasonGroupIndex(section, params);
   const name = tracking.names.get(index);
   if (name) return t.identifier(name);
 
   const guard = callRuntime(
-    (isGuard ? "_write_guard" : "_write_if") satisfies HTMLRuntimeHelpers,
+    check,
     scopeReasonIdentifier(section),
     withLeadingComment(t.numericLiteral(index), getDebugNames(params)),
   );
@@ -239,7 +231,7 @@ function getOrHoistSectionGuard(
   }
 
   const hoisted = generateUid(
-    `${isGuard ? "wg" : "wi"}__${getDebugNamesAsIdentifier(params)}`,
+    `${groupCheckPrefixes[check]}__${getDebugNamesAsIdentifier(params)}`,
   );
   tracking.names.set(index, hoisted);
   tracking.pending.delete(index);
