@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-template-includes-itself-through-define/template.marko:3:16
+      1 | import Self from "./template.marko"
+      2 |
+    > 3 | <define/Inner><Self/></define>
+        |                ^^^^ A template that renders itself outside a branch never terminates. Render `<Self>` inside a branch that eventually stops, such as `<if>`.
+      4 | <define/Outer><Inner/></define>
+      5 | <div><Outer/></div>
+      6 |

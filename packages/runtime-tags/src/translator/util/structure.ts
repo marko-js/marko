@@ -290,14 +290,16 @@ function resolveRef(ref: StructureRef, part: "template" | "walks") {
   }
   const name = ref.program.exportNames![part];
   // Sections survive the per-compile AST clone; the extra objects do not.
-  return ref.program.section === getProgram().node.extra.section
-    ? t.identifier(name)
-    : importOrSelfReferenceName(
-        getFile(),
-        ref.path,
-        name,
-        `${ref.hint}_${part}`,
-      );
+  if (ref.program.section === getProgram().node.extra.section) {
+    declareOwnExports();
+    return t.identifier(name);
+  }
+  return importOrSelfReferenceName(
+    getFile(),
+    ref.path,
+    name,
+    `${ref.hint}_${part}`,
+  );
 }
 
 interface SectionMeta {
@@ -323,12 +325,17 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
   },
 );
 
-// Writes the program's template and walks exports, preceded by the constants
-// declared for referenced sections. Every needed section meta must exist first.
+// Writes the program's template and walks exports between the constants they
+// read and the constants that read them. Every needed section meta must exist first.
 export function writeStructureExports(program: t.NodePath<t.Program>) {
   const { walks, writes } = getSectionMeta(getSectionForBody(program)!);
   const exportNames = program.node.extra.exportNames!;
-  const decls = getMetaDecls();
+  const { decls, exportsAt = decls.length } = getMetaDecls();
+  if (exportsAt < decls.length) {
+    program.node.body.unshift(
+      t.variableDeclaration("const", decls.slice(exportsAt)),
+    );
+  }
   program.node.body.unshift(
     t.exportNamedDeclaration(
       t.variableDeclaration("const", [
@@ -348,21 +355,26 @@ export function writeStructureExports(program: t.NodePath<t.Program>) {
     ),
   );
 
-  if (decls.length) {
-    program.node.body.unshift(t.variableDeclaration("const", decls));
+  if (exportsAt) {
+    program.node.body.unshift(
+      t.variableDeclaration("const", decls.slice(0, exportsAt)),
+    );
   }
 }
 
 // Declaring a section's parts first resolves its meta, which declares the
 // sections it references, so this list is always in dependency order.
-const [getMetaDecls] = createProgramState<t.VariableDeclarator[]>(() => []);
+const [getMetaDecls] = createProgramState<{
+  decls: t.VariableDeclarator[];
+  exportsAt?: number;
+}>(() => ({ decls: [] }));
 const declaredSectionMetas = new WeakSet<SectionMeta>();
 function declareSectionMeta(section: Section) {
   const meta = getSectionMeta(section);
   if (!declaredSectionMetas.has(meta)) {
     declaredSectionMetas.add(meta);
     const { walks, writes } = meta;
-    const decls = getMetaDecls();
+    const { decls } = getMetaDecls();
 
     if (walks) {
       meta.walks = generateUidIdentifier(`${section.name}__walks`);
@@ -375,6 +387,16 @@ function declareSectionMeta(section: Section) {
   }
 
   return meta;
+}
+
+// The program's exports take their place in the list at their first reader,
+// after the sections their own meta declares.
+function declareOwnExports() {
+  const state = getMetaDecls();
+  if (state.exportsAt === undefined) {
+    getSectionMeta(getProgram().node.extra.section!);
+    state.exportsAt = state.decls.length;
+  }
 }
 
 function flushSteps({ walks, walkComment, steps }: ResolvedStructure) {

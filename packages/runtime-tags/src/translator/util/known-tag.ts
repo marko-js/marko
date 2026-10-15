@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { isAttributeTag } from "@marko/compiler/babel-utils";
+import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { ReservedId } from "../../common/types";
 import {
@@ -198,8 +198,27 @@ export function knownTagAnalyze(
 export function analyzeRecursiveTags() {
   for (const tag of getRecursiveTags()) {
     const childSection = tag.node.extra![kChildSection]!;
+    assertTerminates(tag, childSection);
     if (tag.node.var) assertReturns(tag, childSection);
     analyzeKnownTagParams(tag, exposeChildParamsTree(childSection));
+  }
+}
+
+// A recursive tag reached from its callee through calls alone, with no branch
+// between them, renders that callee again on every render.
+function assertTerminates(tag: t.NodePath<t.MarkoTag>, childSection: Section) {
+  const callers = new Set([getSection(tag)]);
+  for (const caller of callers) {
+    if (caller === childSection) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          `A ${childSection === getProgram().node.extra.section ? "template" : "`<define>`"} that renders itself outside a branch never terminates. Render \`<${getTagNameHint(tag.node)}>\` inside a branch that eventually stops, such as \`<if>\`.`,
+        );
+    }
+    forEach(caller.callSections, (callSection) => {
+      callers.add(callSection);
+    });
   }
 }
 
