@@ -33,9 +33,16 @@ export function isSameReason(a: Reason | undefined, b: Reason | undefined) {
   );
 }
 
+// The runtime checks a section's guard for a param reason group calls, by the
+// prefix their hoisted guards are named with.
+const groupCheckPrefixes = {
+  _write_guard: "wg",
+  _write_if: "wi",
+} satisfies Partial<Record<HTMLRuntimeHelpers, string>>;
+type GroupCheck = keyof typeof groupCheckPrefixes;
+
 interface SectionGuards {
-  if: GuardHoists;
-  guard: GuardHoists;
+  hoists: Map<GroupCheck, GuardHoists>;
   declarators: t.VariableDeclarator[];
   page?: true;
   read?: true;
@@ -51,8 +58,7 @@ interface GuardHoists {
 const [getSectionGuards] = createSectionState<SectionGuards>(
   "sectionGuards",
   (section) => ({
-    if: createGuardHoists(),
-    guard: createGuardHoists(),
+    hoists: new Map(),
     declarators: [
       t.variableDeclarator(
         reasonIdentifier(section),
@@ -159,7 +165,7 @@ export function getWriteGuard(
         );
   }
 
-  return getDynamicGuard(section, reason, true);
+  return getDynamicGuard(section, reason, "_write_guard");
 }
 
 export function getWriteGuardForAny(
@@ -196,7 +202,7 @@ export function getExprIfWritten<
     return (reason && expr) as R;
   }
 
-  return andGuard(getDynamicGuard(section, reason, false), expr) as R;
+  return andGuard(getDynamicGuard(section, reason, "_write_if"), expr) as R;
 }
 
 // The global dimension has no param slots: it is patch-only, where a
@@ -204,9 +210,9 @@ export function getExprIfWritten<
 function getDynamicGuard(
   section: Section,
   reason: ConditionalReason,
-  isGuard: boolean,
+  check: GroupCheck,
 ) {
-  const paramGuard = orEachParamGroup(reason.param, isGuard);
+  const paramGuard = orEachParamGroup(reason.param, check);
   if (!reason.global) return paramGuard;
   const globalGuard = scopePageIdentifier(getReasonSection(section));
   return paramGuard
@@ -277,29 +283,14 @@ export function buildComposedGroupValue(groups: [Section, ParamReasonGroup][]) {
   return value!;
 }
 
-// Each param group's guard, or-ed together.
-function orEachParamGroup(params: Sources["param"], isGuard: boolean) {
+// Each param group's `check`, or-ed together.
+function orEachParamGroup(params: Sources["param"], check: GroupCheck) {
   return reduceParamGroups(
     params,
-    isGuard ? orWriteGuard : orWriteIf,
+    (expr: t.Expression | undefined, section, group) =>
+      orGuard(expr, getOrHoistSectionGuard(section, group, check)),
     undefined,
   );
-}
-
-function orWriteGuard(
-  expr: t.Expression | undefined,
-  section: Section,
-  group: ParamReasonGroup,
-) {
-  return orGuard(expr, getOrHoistSectionGuard(section, group, true));
-}
-
-function orWriteIf(
-  expr: t.Expression | undefined,
-  section: Section,
-  group: ParamReasonGroup,
-) {
-  return orGuard(expr, getOrHoistSectionGuard(section, group, false));
 }
 
 export function orGuard(guard: t.Expression | undefined, other: t.Expression) {
@@ -317,20 +308,18 @@ export function andGuard(
 function getOrHoistSectionGuard(
   section: Section,
   params: ParamReasonGroup,
-  isGuard: boolean,
+  check: GroupCheck,
 ): t.Expression {
   if (!section.paramReasonGroups) return scopeReasonIdentifier(section);
 
   const state = getSectionGuards(section);
-  const tracking = isGuard ? state.guard : state.if;
+  let tracking = state.hoists.get(check);
+  if (!tracking) state.hoists.set(check, (tracking = createGuardHoists()));
   const index = getParamReasonGroupIndex(section, params);
   const name = tracking.names.get(index);
   if (name) return t.identifier(name);
 
-  const guard = callRuntime(
-    (isGuard ? "_write_guard" : "_write_if") satisfies HTMLRuntimeHelpers,
-    ...getGroupArgs(section, params, index),
-  );
+  const guard = callRuntime(check, ...getGroupArgs(section, params, index));
   const pending = tracking.pending.get(index);
   if (!pending) {
     const expr = t.parenthesizedExpression(guard);
@@ -339,7 +328,7 @@ function getOrHoistSectionGuard(
   }
 
   const hoisted = generateUid(
-    `${isGuard ? "wg" : "wi"}__${getDebugNamesAsIdentifier(params)}`,
+    `${groupCheckPrefixes[check]}__${getDebugNamesAsIdentifier(params)}`,
   );
   tracking.names.set(index, hoisted);
   tracking.pending.delete(index);
