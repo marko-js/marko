@@ -1,0 +1,9 @@
+<let/open=true>
+<button onClick() { open = !open }>${input.depth}</button>
+<define/Label|{ depth }|><b>${depth}</b></define>
+<define/Child|{ depth }|><tree depth=depth - 1/></define>
+<define/Level|{ depth }|><Child depth=depth/></define>
+<if=open && input.depth>
+  <Level depth=input.depth/>
+</if>
+<Label depth=input.depth/>

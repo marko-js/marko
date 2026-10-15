@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-define-tag-includes-itself/template.marko:1:22
+    > 1 | <define/Loop><span/><Loop/></define>
+        |                      ^^^^ A `<define>` that renders itself outside a branch never terminates. Render `<Loop>` inside a branch that eventually stops, such as `<if>`.
+      2 | <if=input.show>
+      3 |   <Loop/>
+      4 | </if>

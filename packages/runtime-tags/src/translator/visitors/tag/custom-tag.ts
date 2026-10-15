@@ -78,21 +78,9 @@ export default {
 
       const tagExtra = (tag.node.extra ??= {});
       const programExtra = getProgram().node.extra;
-      const programSection = programExtra.section!;
       const childProgram = childFile.ast.program;
       const childExtra = childProgram.extra;
       const childSection = childExtra.section!;
-
-      if (
-        childSection === programSection &&
-        ensureSection(tag) === programSection
-      ) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError(
-            `A template that renders itself outside a branch never terminates. Render \`<${getTagNameHint(tag.node)}>\` inside a branch that eventually stops, such as \`<if>\`.`,
-          );
-      }
 
       if (childExtra.page) {
         programExtra.page ??= true;
