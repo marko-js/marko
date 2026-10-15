@@ -3,9 +3,7 @@ const $template = "<!><!><!>";
 const $walks = "b%/&c";
 let $load_Route_setup = /*@__PURE__*/ _load_setup(() => import("./v:route-cl.marko.setup.mjs"));
 let $load_Route_tag_input_n = /*@__PURE__*/ _load_signal_patch(() => import("./v:route-cl.marko.input_n.mjs"), "ready:__tests__/tags/route-cl.marko");
-const $global_n = /*@__PURE__*/ _fill_global_join("n", "__tests__/template.marko_0_$global_n#3/global", ($scope) => {
-	$load_Route_tag_input_n($scope["#childScope/1"], Number($scope.$global.n || 5));
-});
+const $global_n = /*@__PURE__*/ _fill_global_join("n", "__tests__/template.marko_0_$global_n#3/global", ($scope) => $load_Route_tag_input_n($scope["#childScope/1"], Number($scope.$global.n || 5)));
 function $setup($scope) {
 	$load_Route_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$global_n($scope);

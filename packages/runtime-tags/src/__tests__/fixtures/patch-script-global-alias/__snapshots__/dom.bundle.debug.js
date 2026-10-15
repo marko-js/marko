@@ -6,9 +6,7 @@ const $brand = /*@__PURE__*/ _const("brand", ($scope) => {
 	$brand__script($scope);
 	_text($scope["#text/0"], $scope.brand);
 });
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_0_$global_brand#3/global", ($scope) => {
-	$brand($scope, $scope.$global.brand);
-});
+const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_0_$global_brand#3/global", ($scope) => $brand($scope, $scope.$global.brand));
 function $setup($scope) {
 	$global_brand($scope);
 }

@@ -11,9 +11,7 @@ function $setup($scope) {
 	$qty($scope, 1);
 }
 const $price = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "price", $qty__OR__price);
-const $price__OR__tax = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "price", ($scope) => {
-	_text($scope["#text/0"], $scope.price + $scope.input_item_price * .1);
-});
+const $price__OR__tax = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "price", ($scope) => _text($scope["#text/0"], $scope.price + $scope.input_item_price * .1));
 const $input_item_price = /*@__PURE__*/ _const("input_item_price", ($scope) => {
 	$price($scope, $scope.input_item_price);
 	$price__OR__tax($scope);

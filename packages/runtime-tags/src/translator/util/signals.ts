@@ -1401,6 +1401,7 @@ export function writeSignals(section: Section) {
       // Once a join registers a creatable body's init, each wrapper is kept too.
       let kept = false;
       if (isPatch()) {
+        const unwrapped = value;
         const binding = signal.referencedBindings;
         if (Array.isArray(binding)) {
           ({ value, kept } = wrapJoinFills(signal, binding, value));
@@ -1408,6 +1409,14 @@ export function writeSignals(section: Section) {
           value = wrapClosureFill(signal, binding, value);
         }
         value = wrapGlobalJoins(signal, globalJoinKeys, value, kept);
+        // A wrapper takes the signal as a callback whose result goes unused.
+        if (
+          value !== unwrapped &&
+          t.isArrowFunctionExpression(built) &&
+          t.isBlockStatement(built.body)
+        ) {
+          built.body = toOnlyExpressionOrBlock(built.body.body);
+        }
       }
 
       if (signal.register) {

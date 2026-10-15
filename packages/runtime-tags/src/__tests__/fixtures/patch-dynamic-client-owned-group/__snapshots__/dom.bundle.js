@@ -2,9 +2,7 @@
 const $template = "<em><!> <!></em>";
 const $walks = "D%c%l";
 const $input_label = ($scope, input_label) => _text($scope.a, input_label);
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "b0", ($scope) => {
-	_text($scope.b, $scope.$.brand);
-});
+const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "b0", ($scope) => _text($scope.b, $scope.$.brand));
 const $input = ($scope, input) => $input_label($scope, input.label);
 function $setup($scope) {
 	$global_brand($scope);

@@ -1,16 +1,12 @@
 // tags/brand.marko
 const $template = "<b> </b>";
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "b0", ($scope) => {
-	_text($scope.a, $scope.$.brand);
-});
+const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "b0", ($scope) => _text($scope.a, $scope.$.brand));
 function $setup($scope) {
 	$global_brand($scope);
 }
 
 // template.marko
-const $if_content__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "a0", ($scope) => {
-	_text($scope.a, $scope.$.brand);
-});
+const $if_content__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "a0", ($scope) => _text($scope.a, $scope.$.brand));
 const $if_content__setup = ($scope) => {
 	$setup($scope.b);
 	$if_content__$global_brand($scope);

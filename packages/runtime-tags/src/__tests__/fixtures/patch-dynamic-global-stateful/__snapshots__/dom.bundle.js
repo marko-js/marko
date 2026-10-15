@@ -1,9 +1,7 @@
 // card.marko
 const $template = "<em> </em>";
 const $walks = "D l";
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "a0", ($scope) => {
-	_text($scope.a, $scope.$.brand);
-});
+const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "a0", ($scope) => _text($scope.a, $scope.$.brand));
 function $setup($scope) {
 	$global_brand($scope);
 }

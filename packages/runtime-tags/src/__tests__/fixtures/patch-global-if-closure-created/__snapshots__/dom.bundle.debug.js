@@ -1,9 +1,7 @@
 // tags/badge.marko
 const $template$1 = "<button class=b>o</button><!><!>";
 const $walks$1 = " b%c";
-const $if_content__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/tags/badge.marko_1_$global_brand#2/global", ($scope) => {
-	_text($scope["#text/0"], $scope.$global.brand);
-});
+const $if_content__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/tags/badge.marko_1_$global_brand#2/global", ($scope) => _text($scope["#text/0"], $scope.$global.brand));
 const $if_content__setup$1 = ($scope) => $if_content__$global_brand($scope);
 const $if$1 = /*@__PURE__*/ _if("#text/1", "<p> </p>", "D ", $if_content__setup$1);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/badge.marko_fill0", "open/2", ($scope) => $if$1($scope, $scope.open ? 0 : 1));

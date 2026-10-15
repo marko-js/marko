@@ -1,7 +1,5 @@
 // template.marko
-const $if_content__input_name__OR__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "a1", /*@__PURE__*/ _fill_join_if("a3", 4, ($scope) => {
-	_text($scope.b, $scope._.e + ":" + $scope.$.brand);
-}, 1, 0));
+const $if_content__input_name__OR__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "a1", /*@__PURE__*/ _fill_join_if("a3", 4, ($scope) => _text($scope.b, $scope._.e + ":" + $scope.$.brand), 1, 0));
 const $if_content__input_name = /*@__PURE__*/ _if_closure(1, 0, $if_content__input_name__OR__$global_brand);
 const $if_content__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "a0", ($scope) => {
 	_text($scope.a, $scope.$.brand);

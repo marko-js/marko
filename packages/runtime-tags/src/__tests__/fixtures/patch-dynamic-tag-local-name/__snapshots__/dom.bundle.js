@@ -1,9 +1,7 @@
 // tags/alpha.marko
 const $template$1 = "<i>A <!></i>";
 const $walks$1 = "Db%l";
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "b0", ($scope) => {
-	_text($scope.a, $scope.$.brand);
-});
+const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "b0", ($scope) => _text($scope.a, $scope.$.brand));
 function $setup($scope) {
 	$global_brand($scope);
 }

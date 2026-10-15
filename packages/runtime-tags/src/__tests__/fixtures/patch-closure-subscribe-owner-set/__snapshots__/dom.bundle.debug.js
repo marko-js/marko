@@ -81,9 +81,7 @@ const $p = /*@__PURE__*/ _fill_const("__tests__/shop.marko_fill0", "p", ($scope)
 	$p_rate($scope, $scope.p?.rate);
 	$p_owned($scope, $scope.p?.owned);
 }, $p__closure);
-const $global_data_player = /*@__PURE__*/ _fill_global_join("data", "__tests__/shop.marko_0_$global_data_player#9/global", ($scope) => {
-	$p($scope, $scope.$global.data?.player);
-});
+const $global_data_player = /*@__PURE__*/ _fill_global_join("data", "__tests__/shop.marko_0_$global_data_player#9/global", ($scope) => $p($scope, $scope.$global.data?.player));
 const $now__closure = /*@__PURE__*/ _closure($for_content2__now);
 const $now = /*@__PURE__*/ _fill_let("__tests__/shop.marko_fill2", "now/11", ($scope) => {
 	_text($scope["#text/1"], $scope.now);
