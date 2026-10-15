@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		nonce: _patch_nonce(),
 		...input.attrs
 	}, "#style/1", $scope0_id, "style", 2, $scope0_reason, 1)}>${_patch_text_content($scope0_id, "PatchTextContent:#style/1", `p.u { --page: ${_to_text(input.page)} }`, _escape_style, $scope0_reason, 0)}</style>${_el_resume($scope0_id, "#style/1")}`);
-	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5");
+	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5", void 0, 1);
 	$scope0_page ? _scope($scope0_id, { input_attrs: _unfilled_if($scope0_reason, 0) && input.attrs }, "__tests__/template.marko", 0, {
 		input_attrs: ["input.attrs"],
 		"EventAttributes:#style/1": ["...input.attrs", "8:16"]

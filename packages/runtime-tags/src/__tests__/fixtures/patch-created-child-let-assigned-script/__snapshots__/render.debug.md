@@ -10,5 +10,4 @@
 ```
 INSERT: button
 UPDATE: body[data-count] null => "6/10"
-UPDATE: body[data-count] "6/10" => "6/10"
 ```

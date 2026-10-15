@@ -31,6 +31,7 @@ import {
 } from "./sections";
 import { getResumeRegisterId, getSignals } from "./signals";
 import { getSectionMeta, trimTrailingExits } from "./structure";
+import { getWriteReason } from "./write-guard";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -257,12 +258,17 @@ export function wrapShellJoin(
   );
 }
 
-// An effect a created scope's own renders queue (an init, seed, or item
-// write cascades into it): its setup ids leave it to those renders.
+// An effect a created scope's own renders queue (an init, seed, or item write cascades into
+// it; its own `<let>` only where seeded whole): its setup ids leave it to those renders.
 export function isQueuedOnCreate(section: Section, refs: ReferencedBindings) {
   return (
-    !!getSourcesForRef(refs)?.state ||
-    some(refs, (ref) => ref.section === section && isPatchFillBinding(ref))
+    some(
+      getSourcesForRef(refs)?.state,
+      (state) =>
+        state.section !== section ||
+        !!state.assignments ||
+        !!getWriteReason(state),
+    ) || some(refs, (ref) => ref.section === section && isPatchFillBinding(ref))
   );
 }
 

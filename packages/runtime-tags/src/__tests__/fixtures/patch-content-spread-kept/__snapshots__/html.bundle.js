@@ -15,7 +15,7 @@ var frag_host_default = _template("b", (input) => {
 	_html("<section");
 	_patch_attrs_content({ content: input.mode ? one : null }, "a", $scope0_id, "section", void 0, void 0, $scope0_reason, 0);
 	_html(`</section>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "b3");
+	_script($scope0_id, "b3", void 0, 1);
 	_patch_write($scope0_id, "wf", one, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b6");
 	$scope0_page ? _scope($scope0_id, {

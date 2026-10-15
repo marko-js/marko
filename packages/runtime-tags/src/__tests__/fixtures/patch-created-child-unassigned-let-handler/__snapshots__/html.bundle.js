@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template = "<em> </em><button>set</button>";
 const $walks = "D l b";
-_shells({ b: "b !;D l ;<em> </em><button>set</button>" });
+_shells({ b: "b !b0;D l ;<em> </em><button>set</button>" });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

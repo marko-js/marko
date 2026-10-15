@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		title: input.title,
 		class: input.cls
 	}, "a", $scope0_id, "a", void 0, $scope0_reason, 4)}>x</a>${_el_resume($scope0_id, "a")}<img${_patch_attr($scope0_id, "ab src", "src", `${input.url}?w=${input.width}`, $scope0_reason, 2)}>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 2))}`);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a0", void 0, 1);
 	_patch_write($scope0_id, "we", input.url, 1);
 	_patch_write($scope0_id, "wf", input.title, 1);
 	_patch_write($scope0_id, "wg", input.cls, 1);

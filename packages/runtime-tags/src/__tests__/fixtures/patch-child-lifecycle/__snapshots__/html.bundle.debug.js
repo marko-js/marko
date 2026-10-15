@@ -7,7 +7,7 @@ var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let mounted = 0;
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/1", mounted, 2)}</p>`);
-	_script($scope0_id, "__tests__/tags/widget/index.marko_0_mounted#5");
+	_script($scope0_id, "__tests__/tags/widget/index.marko_0_mounted#5", void 0, 1);
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/widget/index.marko_fill0", mounted, 1);
 	$scope0_page && _scope($scope0_id, { mounted }, "__tests__/tags/widget/index.marko", 0, { mounted: "1:6" });
 });

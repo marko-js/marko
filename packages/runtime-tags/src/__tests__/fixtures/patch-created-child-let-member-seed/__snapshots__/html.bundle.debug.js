@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<em> </em><button>set</button>";
 const $walks$1 = "D l b";
-_shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !;D l ;<em> </em><button>set</button>" });
+_shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !__tests__/tags/child.marko_0_user_name_length#7;D l ;<em> </em><button>set</button>" });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

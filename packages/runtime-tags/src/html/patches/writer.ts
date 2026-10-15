@@ -88,8 +88,8 @@ export function withRendererSetUp<U>(cb: (value: U) => void, value: U) {
   );
 }
 
-// A created `@catch`'s renderer queues the effects of the scopes it sets up
-// but those only reading values the patch writes (`client` is `0`).
+// A patch mounts an effect where no creation queues it (`client` is `1` where one does): a
+// created `@catch`'s renderer queues all but those reading only patch-written values (`0`).
 export function _script(
   scopeId: number,
   registryId: string,
@@ -98,9 +98,10 @@ export function _script(
 ) {
   const context = getChunk()?.context;
   if (
-    context?.[kSetUp] === undefined ||
-    context[kSetUp] !== context[kBranchId] ||
-    client === 0
+    !(getState() instanceof PatchUpdateState) ||
+    (context?.[kSetUp] !== undefined && context[kSetUp] === context[kBranchId]
+      ? client === 0
+      : client !== 1)
   ) {
     _base_script(scopeId, registryId, markerGuard);
   }

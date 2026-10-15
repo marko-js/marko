@@ -36,5 +36,4 @@ UPDATE: span::text " " => "11"
 ## Console
 ```
 LOG "n" 11
-LOG "n" 11
 ```

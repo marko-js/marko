@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:total", total, 1);
 	_html(`<div>${_patch_text($scope0_id, "#text/3", total)}</div>${_el_resume($scope0_id, "#div/2")}<button>+</button>${_el_resume($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_total#9");
+	_script($scope0_id, "__tests__/template.marko_0_total#9", void 0, 1);
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", n, 1);
 	$scope0_page ? _scope($scope0_id, {
 		n,

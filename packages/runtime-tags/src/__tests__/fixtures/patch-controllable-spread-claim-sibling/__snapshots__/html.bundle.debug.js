@@ -11,8 +11,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		checked: input.on
 	}, "#input/0", $scope0_id, "input", 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<input${_patch_attrs(input.attrs, "#input/1", $scope0_id, "input", 1, $scope0_reason, 1)}>${_el_resume($scope0_id, "#input/1")}<p id=out>-</p><button>interactive</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5");
-	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5_input_on#6");
+	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5", void 0, 1);
+	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5_input_on#6", void 0, 1);
 	_patch_write($scope0_id, "PatchWrite:input_attrs", input.attrs, 1);
 	_patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_attrs#5_input_on#6/init");

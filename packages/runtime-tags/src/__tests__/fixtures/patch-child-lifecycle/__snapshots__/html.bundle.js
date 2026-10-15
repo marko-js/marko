@@ -5,7 +5,7 @@ var widget_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let mounted = 0;
 	_html(`<p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "b", mounted, 2)}</p>`);
-	_script($scope0_id, "b0");
+	_script($scope0_id, "b0", void 0, 1);
 	_patch_value($scope0_id, "vb1", mounted, 1);
 	$scope0_page && _scope($scope0_id, { f: mounted });
 });

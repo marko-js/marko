@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			const seen = count + 1;
 			_html(`<p>Seen ${_text_resume($scope1_id, "#text/0", seen, 2)}</p>`);
-			_script($scope1_id, "__tests__/template.marko_1_seen#1");
+			_script($scope1_id, "__tests__/template.marko_1_seen#1", void 0, 1);
 			_scope($scope1_id, {
 				seen,
 				_: _scope_with_id($scope0_id)

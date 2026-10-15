@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wj", total, 1);
 	_html(`<div>${_patch_text($scope0_id, "d", total)}</div>${_el_resume($scope0_id, "c")}<button>+</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a5");
-	_script($scope0_id, "a6");
+	_script($scope0_id, "a6", void 0, 1);
 	_patch_value($scope0_id, "va8", n, 1);
 	$scope0_page ? _scope($scope0_id, {
 		i: n,

@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope0_id),
 		...input.rest
 	}, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}<p>${_text_resume($scope0_id, "b", text)}</p>`);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a1", void 0, 1);
 	_patch_value($scope0_id, "va3", text, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.rest,

@@ -128,7 +128,7 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import { registerShellInit, wrapShellJoin } from "./shell";
+import { isQueuedOnCreate, registerShellInit, wrapShellJoin } from "./shell";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
 import { mergeSources, type Sources } from "./sources";
@@ -797,9 +797,10 @@ function isPureMemberForwarder(binding: Binding): boolean {
   return hasNonConstantPropertyAlias(binding);
 }
 
-// Whether a client group feeds a value a patch writes for the effect (`0` if
-// none does), or undefined where it reads none: a renderer queues it itself.
+// `1` where a created scope's renders queue the effect, else whether a client group feeds a
+// value a patch writes for it (`0` if none does), or undefined where it reads none.
 function getEffectClientGuard(section: Section, refs: ReferencedBindings) {
+  if (isQueuedOnCreate(section, refs)) return t.numericLiteral(1);
   const read = filter(refs, rerunsEffectOnPatch);
   if (read) {
     return (

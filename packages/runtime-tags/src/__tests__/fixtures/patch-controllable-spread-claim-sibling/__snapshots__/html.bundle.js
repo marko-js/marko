@@ -9,8 +9,8 @@ var template_default = _template("a", (input) => {
 		checked: input.on
 	}, "a", $scope0_id, "input", 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}<input${_patch_attrs(input.attrs, "b", $scope0_id, "input", 1, $scope0_reason, 1)}>${_el_resume($scope0_id, "b")}<p id=out>-</p><button>interactive</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
-	_script($scope0_id, "a1");
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a1", void 0, 1);
+	_script($scope0_id, "a2", void 0, 1);
 	_patch_write($scope0_id, "wf", input.attrs, 1);
 	_patch_write($scope0_id, "wg", input.on, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a5");
