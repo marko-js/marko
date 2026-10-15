@@ -40,7 +40,7 @@ const $data = /*@__PURE__*/ _const("data", ($scope) => {
 });
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", /*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1), /*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks$1), $for_content__setup, $for_content__$params);
 const $data_items = ($scope, data_items) => $for($scope, [data_items]);
-const $global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/template.marko_0_$global_data#4/global", ($scope) => $data($scope, $scope.$global.data));
+const $global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/template.marko_0_$global_data#4", ($scope) => $data($scope, $scope.$global.data));
 const $hovered = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "hovered/5", $for_content__hovered);
 function $setup($scope) {
 	$hovered($scope, undefined);

@@ -68,6 +68,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	const $childScope = _patch_child($scope0_id, "#childScope/1");
 	$Route_withLoadAssets({ n: Number($global$1.n || 5) });
-	_fill_global_subscribe("__tests__/template.marko_0_$global_n#3/global", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_n#3", $scope0_id);
 	$scope0_page && _scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

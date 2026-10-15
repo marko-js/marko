@@ -6,12 +6,12 @@ function withDrops(base, drops, id) {
 	return base + (drops[id] ?? 0);
 }
 const $for_content2__live = ($scope, live) => _attr_class_item($scope.a, "short", live < 2);
-const $for_content2__proj__OR__now__OR__have = _fill_join("a9", 10, _shell_join("a14", /*@__PURE__*/ _or(7, ($scope) => $for_content2__live($scope, $scope.g + $scope._._._.l * $scope._._._.k), 2)), ($join) => /*@__PURE__*/ _for_closure(3, /*@__PURE__*/ _if_closure(0, 0, /*@__PURE__*/ _for_closure(0, $join))));
+const $for_content2__proj__OR__now__OR__have = /*@__PURE__*/ _fill_join("a9", 10, /*@__PURE__*/ _shell_join("a14", /*@__PURE__*/ _or(7, ($scope) => $for_content2__live($scope, $scope.g + $scope._._._.l * $scope._._._.k), 2)), ($join) => /*@__PURE__*/ _for_closure(3, /*@__PURE__*/ _if_closure(0, 0, /*@__PURE__*/ _for_closure(0, $join))));
 const $for_content2__have = /*@__PURE__*/ _const(6, ($scope) => {
 	_text($scope.c, $scope.g);
 	$for_content2__proj__OR__now__OR__have($scope);
 });
-const $for_content2__p__OR__drops__OR__part = _fill_join("a3", 4, _fill_join("a8", 4, _shell_join("a13", /*@__PURE__*/ _or(5, ($scope) => $for_content2__have($scope, withDrops(bankCount($scope._._._.e, $scope.e), $scope._._._.m, $scope.e)), 2)), ($join2) => /*@__PURE__*/ _for_closure(3, /*@__PURE__*/ _if_closure(0, 0, /*@__PURE__*/ _for_closure(0, $join2)))));
+const $for_content2__p__OR__drops__OR__part = /*@__PURE__*/ _fill_join("a3", 4, /*@__PURE__*/ _fill_join("a8", 4, /*@__PURE__*/ _shell_join("a13", /*@__PURE__*/ _or(5, ($scope) => $for_content2__have($scope, withDrops(bankCount($scope._._._.e, $scope.e), $scope._._._.m, $scope.e)), 2)), ($join2) => /*@__PURE__*/ _for_closure(3, /*@__PURE__*/ _if_closure(0, 0, /*@__PURE__*/ _for_closure(0, $join2)))));
 const $for_content2__now = _resumed.a15 = /*@__PURE__*/ _closure_get(16, $for_content2__proj__OR__now__OR__have, ($scope) => $scope._._._, "a4");
 const $for_content2__drops = _resumed.a16 = /*@__PURE__*/ _closure_get(17, $for_content2__p__OR__drops__OR__part, ($scope) => $scope._._._, "a5");
 const $now__closure = /*@__PURE__*/ _closure($for_content2__now);

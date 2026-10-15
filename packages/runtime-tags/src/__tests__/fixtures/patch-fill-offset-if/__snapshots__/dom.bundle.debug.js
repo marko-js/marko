@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><h1> </h1><!><button>+</button></main>";
 const $walks = "E l%b l";
-const $if_content2__input_title__OR__count = _fill_join_if("__tests__/template.marko_fill1", "input_title", _shell_join("__tests__/template.marko_2_input_title#0:8/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.input_title + "@" + $scope._._.count))), "#text/1", 0, "#text/0", 0);
+const $if_content2__input_title__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill1", "input_title", /*@__PURE__*/ _shell_join("__tests__/template.marko_2_input_title#0:8/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.input_title + "@" + $scope._._.count))), "#text/1", 0, "#text/0", 0);
 const $if_content2__input_title = /*@__PURE__*/ _closure_get("input_title/11", $if_content2__input_title__OR__count, ($scope) => $scope._._, "__tests__/template.marko_2_input_title#0:8/subscribe");
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_title($scope);

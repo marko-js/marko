@@ -1,7 +1,6 @@
 // tags/logger.marko
 const $template = "<div></div>";
-const $global_brand__script = _fill_global_script("b1", ($scope) => document.querySelector("div").dataset.log = "ran:" + $scope.$.brand);
-_fill_global_join("brand", "b0", $global_brand__script);
+const $global_brand__script = _fill_global_script("b0", ($scope) => document.querySelector("div").dataset.log = "ran:" + $scope.$.brand, "brand");
 const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "b0", $global_brand__script);
 function $setup($scope) {
 	$global_brand($scope);

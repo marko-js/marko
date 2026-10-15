@@ -37,16 +37,28 @@ export function _fill_global_join<T extends SignalFn>(
   }) as unknown as T;
 }
 
-// Like `_script`, but runs once per run however many triggers reach it.
-export function _fill_global_script(id: string, fn: (scope: Scope) => void) {
+// Like `_script`, but runs once per run however many triggers reach it, and a
+// change to one of its `$global` keys re-runs it on every scope it ran on.
+export function _fill_global_script(
+  id: string,
+  fn: (scope: Scope) => void,
+  ...keys: string[]
+) {
   const effect = (_resumed[id] = (scope: Scope) => {
     const ran = (scope[AccessorProp.GlobalScriptRuns] ??= {});
     if (ran[id] !== runId) {
       ran[id] = runId;
       fn(scope);
     }
+    subscribeToScopeSet(
+      scope[AccessorProp.Global] as unknown as Scope,
+      AccessorPrefix.ClosureScopes + id,
+      scope,
+    );
   });
-  return (scope: Scope) => queueEffect(scope, effect);
+  const queue = (scope: Scope) => queueEffect(scope, effect);
+  for (const key of keys) _fill_global_join(key, id, queue);
+  return queue;
 }
 
 // A page with `$global` joins: a changed key queues its joins for every

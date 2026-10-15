@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "7:4", { item_id: ["item.id", "7:8"] });
 	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell");
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_data#4/global", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_data#4", $scope0_id);
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", hovered, 1);
 	$scope0_page && _scope($scope0_id, { hovered }, "__tests__/template.marko", 0, { hovered: "5:6" });
 }, 1);

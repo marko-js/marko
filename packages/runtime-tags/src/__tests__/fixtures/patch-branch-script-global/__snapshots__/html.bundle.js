@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a: "a;E l%;<main><h1> </h1><!></main>",
-	a0: "a0 a5!a2,<p>promo</p>"
+	a0: "a0 !a1,<p>promo</p>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -13,12 +13,12 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
 			_fill_global_subscribe("a1", $scope1_id, 1);
-			_script($scope1_id, "a2", 0);
+			_script($scope1_id, "a1", 0);
 			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a0"], $scope0_reason, 0);
 	_html("</main>");
-	_fill_global_subscribe("a3", $scope0_id);
+	_fill_global_subscribe("a2", $scope0_id);
 	$scope0_page && _scope($scope0_id, {});
 }, 1);

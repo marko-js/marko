@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_html("<em>static</em>");
 		}, 1, "__tests__/template.marko_3*content");
-		_fill_global_subscribe("__tests__/template.marko_1_$global_promise#2/global", $scope1_id);
+		_fill_global_subscribe("__tests__/template.marko_1_$global_promise#2", $scope1_id);
 	}, void 0, () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();

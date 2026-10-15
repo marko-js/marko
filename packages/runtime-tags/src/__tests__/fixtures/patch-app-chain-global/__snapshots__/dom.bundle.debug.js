@@ -20,7 +20,7 @@ const $pattern2 = ($scope, $pattern) => {
 };
 const $q = ($scope, q) => _text($scope["#text/1"], q);
 const $issues = ($scope, issues) => _text($scope["#text/2"], issues ? "!" : "");
-const $global_search = /*@__PURE__*/ _fill_global_join("search", "__tests__/page-b.marko_0_$global_search#8/global", ($scope) => $pattern2($scope, $scope.$global.search));
+const $global_search = /*@__PURE__*/ _fill_global_join("search", "__tests__/page-b.marko_0_$global_search#8", ($scope) => $pattern2($scope, $scope.$global.search));
 const $count = /*@__PURE__*/ _fill_let("__tests__/page-b.marko_fill0", "count/9", ($scope) => _text($scope["#text/3"], $scope.count));
 const $setup__script = _script("__tests__/page-b.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
@@ -56,9 +56,8 @@ const $Layout_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", 0,
 const $Layout_content__input_page = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_page#0:3/init", "input_page/5", ($scope) => $Layout_content__if($scope, $scope._.input_page <= 0 ? 0 : 1), 0, "__tests__/template.marko_1_input_page#0:3/subscribe");
 const $Layout_content__setup = $Layout_content__input_page;
 const $Layout_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $Layout_content__setup);
-const $global2__script = _fill_global_script("__tests__/template.marko_0_$global#4", ($scope) => $scope.$global.log?.("router"));
-_fill_global_join_resume("", "__tests__/template.marko_0_$global#4/global", $global2__script);
-const $global2 = /*@__PURE__*/ _fill_global_join("", "__tests__/template.marko_0_$global#4/global", $global2__script);
+const $global2__script = _fill_global_script("__tests__/template.marko_0_$global#4", ($scope) => $scope.$global.log?.("router"), "");
+const $global2 = /*@__PURE__*/ _fill_global_join("", "__tests__/template.marko_0_$global#4", $global2__script);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $Layout_content($scope));

@@ -1,6 +1,6 @@
 // tags/badge/index.marko
 const $template = "<span> </span>";
-_shells({ b: "b !b1;D ;<span> </span>" });
+_shells({ b: "b !b0;D ;<span> </span>" });
 var badge_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_page = _page_render();
@@ -8,7 +8,7 @@ var badge_default = _template("b", (input) => {
 	const $global$1 = $global();
 	_html(`<span>${_patch_text($scope0_id, "a", $global$1.brand)}</span>`);
 	_fill_global_subscribe("b0", $scope0_id, 1);
-	_script($scope0_id, "b1");
+	_script($scope0_id, "b0");
 	$scope0_page && _scope($scope0_id, {});
 });
 

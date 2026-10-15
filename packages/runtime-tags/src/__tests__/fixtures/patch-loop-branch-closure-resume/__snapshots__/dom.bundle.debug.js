@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 const $walks = "b%/&c";
 let $load_Route_setup = /*@__PURE__*/ _load_setup(() => import("./v:route-cl.marko.setup.mjs"));
 let $load_Route_tag_input_n = /*@__PURE__*/ _load_signal_patch(() => import("./v:route-cl.marko.input_n.mjs"), "ready:__tests__/tags/route-cl.marko");
-const $global_n = /*@__PURE__*/ _fill_global_join("n", "__tests__/template.marko_0_$global_n#3/global", ($scope) => $load_Route_tag_input_n($scope["#childScope/1"], Number($scope.$global.n || 5)));
+const $global_n = /*@__PURE__*/ _fill_global_join("n", "__tests__/template.marko_0_$global_n#3", ($scope) => $load_Route_tag_input_n($scope["#childScope/1"], Number($scope.$global.n || 5)));
 function $setup($scope) {
 	$load_Route_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$global_n($scope);
@@ -13,7 +13,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/sub.marko
 const $template$1 = "<!><!><button class=inc>+</button>";
 const $walks$1 = "b%b b";
-const $if_content__input_n__OR__g = _fill_join("__tests__/tags/sub.marko_fill0", "input_n", _shell_join("__tests__/tags/sub.marko_2_input_n#0:5/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.g - $scope._._.input_n))), ($join) => /*@__PURE__*/ _for_closure("#text/0", /*@__PURE__*/ _if_closure("#text/0", 0, $join)));
+const $if_content__input_n__OR__g = /*@__PURE__*/ _fill_join("__tests__/tags/sub.marko_fill0", "input_n", /*@__PURE__*/ _shell_join("__tests__/tags/sub.marko_2_input_n#0:5/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.g - $scope._._.input_n))), ($join) => /*@__PURE__*/ _for_closure("#text/0", /*@__PURE__*/ _if_closure("#text/0", 0, $join)));
 const $if_content__input_n = /*@__PURE__*/ _closure_get("input_n/7", $if_content__input_n__OR__g, ($scope) => $scope._._, "__tests__/tags/sub.marko_2_input_n#0:5/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__input_n($scope);

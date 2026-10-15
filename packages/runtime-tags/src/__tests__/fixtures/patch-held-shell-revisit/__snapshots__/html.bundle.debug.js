@@ -82,7 +82,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"));
 		$wg__input_page || $wi__input_page && _resume_branch($scope1_id);
 	}, $scope0_id) });
-	_fill_global_subscribe("__tests__/template.marko_0_$global#4/global", $scope0_id, 1);
+	_fill_global_subscribe("__tests__/template.marko_0_$global#4", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0_$global#4");
 	$scope0_page && _scope($scope0_id, {
 		"ClosureScopes:input_page/5": $wi__input_page && _unfilled_if($scope0_reason, 0) && $input_page__closures,

@@ -1,11 +1,11 @@
 // PATCH
-[`a0 !a2,<p>promo</p>`, {
+[`a0 !a1,<p>promo</p>`, {
   $: {
     brand: "Marko"
   },
   ta: "Store",
   bb: [{
-    ea2: "1 g"
+    ea1: "1 g"
   }, "a0"],
   wg: "b"
 }]
@@ -18,7 +18,7 @@
   },
   ta: "Store!",
   bb: [{
-    ea2: "1 g"
+    ea1: "1 g"
   }, "a0"],
   wg: "b"
 }
@@ -30,7 +30,7 @@
   },
   ta: "Store",
   bb: [{
-    ea2: "1 g"
+    ea1: "1 g"
   }, "a0"],
   wg: "b"
 }
@@ -42,7 +42,7 @@
   },
   ta: "Store",
   bb: [{
-    ea2: "1 g"
+    ea1: "1 g"
   }, "a0"],
   wg: "c"
 }

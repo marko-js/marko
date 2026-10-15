@@ -1,9 +1,9 @@
 // template.marko
 const $template = "<main><button>t</button><!></main>";
 const $walks = "D b%l";
-const $if_content__input_name__OR__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_1_input_name#0:4_$global_brand#3/global", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_name", ($scope) => _text($scope["#text/1"], $scope._.input_name + ":" + _global_read($scope.$global, "brand")), "#text/1", 0));
+const $if_content__input_name__OR__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_1_input_name#0:4_$global_brand#3", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_name", ($scope) => _text($scope["#text/1"], $scope._.input_name + ":" + _global_read($scope.$global, "brand")), "#text/1", 0));
 const $if_content__input_name = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_name__OR__$global_brand);
-const $if_content__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_1_$global_brand#3/global", ($scope) => {
+const $if_content__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_1_$global_brand#3", ($scope) => {
 	_text($scope["#text/0"], $scope.$global.brand);
 	$if_content__input_name__OR__$global_brand($scope);
 });

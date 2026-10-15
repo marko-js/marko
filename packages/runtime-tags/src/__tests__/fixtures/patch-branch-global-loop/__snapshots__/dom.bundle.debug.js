@@ -29,7 +29,7 @@ const $pattern2 = ($scope, $pattern) => {
 const $search_q = /*@__PURE__*/ _const("search_q", $else_content__search_q);
 const $if = /*@__PURE__*/ _if("#text/0", "<p>invalid</p>", 0, 0, "<div></div>", " ", $else_content__setup);
 const $issues = ($scope, issues) => $if($scope, issues ? 0 : 1);
-const $global_search = /*@__PURE__*/ _fill_global_join("search", "__tests__/template.marko_0_$global_search#6/global", ($scope) => $pattern2($scope, $scope.$global.search));
+const $global_search = /*@__PURE__*/ _fill_global_join("search", "__tests__/template.marko_0_$global_search#6", ($scope) => $pattern2($scope, $scope.$global.search));
 function $setup($scope) {
 	$global_search($scope);
 }

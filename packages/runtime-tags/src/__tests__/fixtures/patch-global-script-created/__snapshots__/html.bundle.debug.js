@@ -7,7 +7,7 @@ var logger_default = _template("__tests__/tags/logger.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html("<div></div>");
-	_fill_global_subscribe("__tests__/tags/logger.marko_0_$global_brand#1/global", $scope0_id, 1);
+	_fill_global_subscribe("__tests__/tags/logger.marko_0_$global_brand#1", $scope0_id, 1);
 	_script($scope0_id, "__tests__/tags/logger.marko_0_$global_brand#1", 0);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/logger.marko", 0);
 });

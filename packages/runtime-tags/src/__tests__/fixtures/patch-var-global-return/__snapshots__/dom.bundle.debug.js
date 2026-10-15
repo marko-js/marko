@@ -2,7 +2,7 @@
 const $template$1 = "<span>t</span>";
 const $walks$1 = "b";
 const $g = /*@__PURE__*/ _const("g", ($scope) => _return($scope, $scope.g));
-const $global_locale = /*@__PURE__*/ _fill_global_join("locale", "__tests__/tags/tagger/index.marko_0_$global_locale#2/global", ($scope) => $g($scope, $scope.$global.locale + "!"));
+const $global_locale = /*@__PURE__*/ _fill_global_join("locale", "__tests__/tags/tagger/index.marko_0_$global_locale#2", ($scope) => $g($scope, $scope.$global.locale + "!"));
 function $setup$1($scope) {
 	$global_locale($scope);
 }

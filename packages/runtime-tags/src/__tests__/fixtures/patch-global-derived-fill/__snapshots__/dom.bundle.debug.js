@@ -8,7 +8,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__count = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.count));
 const $greeting = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "greeting", $if_content__greeting);
-const $input_name__OR__$global_prefix = /*@__PURE__*/ _fill_global_join("prefix", "__tests__/template.marko_0_input_name#4_$global_prefix#7/global", ($scope) => $greeting($scope, _global_read($scope.$global, "prefix") + ":" + $scope.input_name));
+const $input_name__OR__$global_prefix = /*@__PURE__*/ _fill_global_join("prefix", "__tests__/template.marko_0_input_name#4_$global_prefix#7", ($scope) => $greeting($scope, _global_read($scope.$global, "prefix") + ":" + $scope.input_name));
 const $input_name = /*@__PURE__*/ _const("input_name", $input_name__OR__$global_prefix);
 const $if = /*@__PURE__*/ _if("#text/1", "<span><!> <!></span>", "D%c%", $if_content__setup);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "count/8", ($scope) => {

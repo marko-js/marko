@@ -21,9 +21,8 @@ const $global_brand__script = _fill_global_script("__tests__/template.marko_0_$g
 		const el = document.querySelector("main");
 		el.dataset.g = (el.dataset.g || "") + "[" + $scope.$global.brand + "]";
 	}
-});
-_fill_global_join_resume("brand", "__tests__/template.marko_0_$global_brand#30/global", $global_brand__script);
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_0_$global_brand#30/global", ($scope) => {
+}, "brand");
+const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_0_$global_brand#30", ($scope) => {
 	$global_brand__script($scope);
 	_text($scope["#text/13"], $scope.$global.brand);
 });

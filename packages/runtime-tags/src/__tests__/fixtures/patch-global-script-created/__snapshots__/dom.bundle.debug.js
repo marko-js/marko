@@ -1,9 +1,8 @@
 // tags/logger.marko
 const $template$1 = "<div></div>";
 const $walks$1 = "b";
-const $global_brand__script = _fill_global_script("__tests__/tags/logger.marko_0_$global_brand#1", ($scope) => document.querySelector("div").dataset.log = "ran:" + $scope.$global.brand);
-_fill_global_join_resume("brand", "__tests__/tags/logger.marko_0_$global_brand#1/global", $global_brand__script);
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/tags/logger.marko_0_$global_brand#1/global", $global_brand__script);
+const $global_brand__script = _fill_global_script("__tests__/tags/logger.marko_0_$global_brand#1", ($scope) => document.querySelector("div").dataset.log = "ran:" + $scope.$global.brand, "brand");
+const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/tags/logger.marko_0_$global_brand#1", $global_brand__script);
 function $setup$1($scope) {
 	$global_brand($scope);
 }

@@ -11,7 +11,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 const $for_content__x = ($scope, x) => _text($scope["#text/0"], x);
-const $for_content__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/child.marko_2_$global_brand#5/global", ($scope) => _text($scope["#text/1"], $scope.$global.brand));
+const $for_content__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/child.marko_2_$global_brand#5", ($scope) => _text($scope["#text/1"], $scope.$global.brand));
 const $for_content__$params = ($scope, $params2) => $for_content__x($scope, $params2[0]);
 const $for_content__setup = ($scope) => $for_content__$global_brand($scope);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<i><!><!></i>", "D%b%", $for_content__setup, $for_content__$params);

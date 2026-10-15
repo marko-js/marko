@@ -14,8 +14,8 @@ var site_footer_default = /*@__PURE__*/ _template("__tests__/tags/site-footer.ma
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<main><h1> </h1><p> </p>${_w0}${_w1}${_w2}</main>`)($template$2, $template$3, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `E l D l/${_w0}&/${_w1}&/${_w2}&l`)($walks$2, $walks$3, "D l");
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
-const $global_locale = /*@__PURE__*/ _fill_global_join("locale", "__tests__/template.marko_0_$global_locale#12/global", ($scope) => _attr($scope["#p/1"], "title", $scope.$global.locale));
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_0_$global_brand#13/global", ($scope) => _text($scope["#text/2"], $scope.$global.brand));
+const $global_locale = /*@__PURE__*/ _fill_global_join("locale", "__tests__/template.marko_0_$global_locale#12", ($scope) => _attr($scope["#p/1"], "title", $scope.$global.locale));
+const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_0_$global_brand#13", ($scope) => _text($scope["#text/2"], $scope.$global.brand));
 function $setup($scope) {
 	$setup$2($scope["#childScope/3"]);
 	$setup$3($scope["#childScope/4"]);

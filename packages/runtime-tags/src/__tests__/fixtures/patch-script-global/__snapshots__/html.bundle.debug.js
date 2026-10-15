@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", $global$1.brand)}</h1></main>`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#2/global", $scope0_id, 1);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#2", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0_$global_brand#2");
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

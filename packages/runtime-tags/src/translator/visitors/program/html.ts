@@ -15,7 +15,6 @@ import { first, forEach, mapToString } from "../../util/optional";
 import {
   getCreateInitClosures,
   getPatchFillBindings,
-  getSectionGlobalReads,
   patchCreates,
 } from "../../util/patch/refresh";
 import { getReadReplacement } from "../../util/read-replacement";
@@ -45,7 +44,6 @@ import {
   getBindingGetterIdentifier,
   getHTMLSectionStatements,
   getResumeRegisterId,
-  getSignals,
   writeHTMLResumeStatements,
   writeSlot,
 } from "../../util/signals";
@@ -372,17 +370,9 @@ function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
 // The inits a created scope of the section runs, as the shell grammar's
 // space-joined ids.
 function getCreateInitIds(section: Section) {
-  let ids = mapToString(getCreateInitClosures(section), " ", (closure) =>
+  return mapToString(getCreateInitClosures(section), " ", (closure) =>
     getResumeRegisterId(section, closure, "init"),
   );
-  if (patchCreates(section)) {
-    forEach(getSectionGlobalReads(section), (binding) => {
-      if (getSignals(section).get(binding)?.hasHTMLEffect) {
-        ids += (ids && " ") + getResumeRegisterId(section, binding, "init");
-      }
-    });
-  }
-  return ids;
 }
 
 // A dynamic tag's patch leaves its variable to the client where the rendered

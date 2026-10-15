@@ -12,7 +12,7 @@ var badge_default = _template("__tests__/tags/badge.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "#text/0", $global$1.brand, $scope0_page)}</p>`);
-			_fill_global_subscribe("__tests__/tags/badge.marko_1_$global_brand#2/global", $scope1_id, 1);
+			_fill_global_subscribe("__tests__/tags/badge.marko_1_$global_brand#2", $scope1_id, 1);
 			_scope($scope1_id, {}, "__tests__/tags/badge.marko", "3:2");
 			return 0;
 		}

@@ -1,6 +1,6 @@
 // template.marko
 const $if_content__input_attrs__OR__on__script = _script("a1", ($scope) => _attrs_script($scope, "a"));
-const $if_content__input_attrs__OR__on = _fill_join_if("a3", 5, _shell_join("a6", /*@__PURE__*/ _or(1, ($scope) => {
+const $if_content__input_attrs__OR__on = /*@__PURE__*/ _fill_join_if("a3", 5, /*@__PURE__*/ _shell_join("a6", /*@__PURE__*/ _or(1, ($scope) => {
 	_attrs($scope, "a", {
 		...$scope._.f,
 		class: $scope._.g ? "on" : "off"

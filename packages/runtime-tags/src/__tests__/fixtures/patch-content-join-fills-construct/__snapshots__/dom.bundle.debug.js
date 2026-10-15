@@ -77,7 +77,7 @@ const $for_content__item_n = /*@__PURE__*/ _fill_const("__tests__/page.marko_fil
 const $bonus__closure = /*@__PURE__*/ _closure($aside_content__bonus);
 const $bonus = _var_resume("__tests__/page.marko_0_bonus#7/var", /*@__PURE__*/ _const("bonus", $bonus__closure));
 const $p = ($scope, p) => $p_base($scope, p?.base);
-const $global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/page.marko_0_$global_data#11/global", ($scope) => $p($scope, $scope.$global.data));
+const $global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/page.marko_0_$global_data#11", ($scope) => $p($scope, $scope.$global.data));
 const $setup__script = _script("__tests__/page.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	_var_change($scope["#childScope/0"], 5, "bonus");
 }));

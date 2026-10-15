@@ -2,7 +2,7 @@
 const $template = "<ul></ul>";
 const $walks = " b";
 const $setup = () => {};
-const $if_content__n__OR__m = _fill_join_if("__tests__/template.marko_fill2", "m", _shell_join("__tests__/template.marko_2_m#1:3/init", /*@__PURE__*/ _or(2, ($scope) => _text($scope["#text/1"], $scope._["#LoopKey"] + $scope._.n + $scope._.m))), "#li/0", 0);
+const $if_content__n__OR__m = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill2", "m", /*@__PURE__*/ _shell_join("__tests__/template.marko_2_m#1:3/init", /*@__PURE__*/ _or(2, ($scope) => _text($scope["#text/1"], $scope._["#LoopKey"] + $scope._.n + $scope._.m))), "#li/0", 0);
 const $if_content__n = _resumed["__tests__/template.marko_2_n#1:2/init"] = /*@__PURE__*/ _if_closure("#li/0", 0, $if_content__n__OR__m);
 const $if_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$for_content__n($scope._, +$scope._.n + 1);

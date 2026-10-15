@@ -1,5 +1,5 @@
 // template.marko
-_shells({ a: "a !a1,<h1>Hello</h1>" });
+_shells({ a: "a !a0,<h1>Hello</h1>" });
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_page = _page_render();
@@ -7,6 +7,6 @@ var template_default = _template("a", (input) => {
 	$global();
 	_html("<h1>Hello</h1>");
 	_fill_global_subscribe("a0", $scope0_id, 1);
-	_script($scope0_id, "a1", 0);
+	_script($scope0_id, "a0", 0);
 	$scope0_page && _scope($scope0_id, {});
 }, 1);

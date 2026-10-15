@@ -92,7 +92,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 			"#childScope/0": _existing_scope($childScope3)
 		}, "__tests__/page.marko", "4:2", { item_n: ["item.n", "4:6"] });
 	}, 0, $scope0_id, "#text/3", 1, void 0, void 0, void 0, void 0, "__tests__/page.marko_1*shell", $scope0_reason, 0);
-	_fill_global_subscribe("__tests__/page.marko_0_$global_data#11/global", $scope0_id);
+	_fill_global_subscribe("__tests__/page.marko_0_$global_data#11", $scope0_id);
 	_script($scope0_id, "__tests__/page.marko_0");
 	$scope0_page ? _scope($scope0_id, {
 		bonus,

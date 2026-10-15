@@ -78,11 +78,7 @@ export {
   _to_text,
 } from "./dom/dom";
 export { _on } from "./dom/event";
-export {
-  _fill_global_join,
-  _fill_global_join as _fill_global_join_resume,
-  _fill_global_script,
-} from "./dom/patches/global";
+export { _fill_global_join, _fill_global_script } from "./dom/patches/global";
 export { _load_lazy, _load_signal_patch } from "./dom/patches/load";
 export {
   _fill_const,

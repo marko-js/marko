@@ -71,8 +71,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope3 = _patch_child($scope0_id, "#childScope/5");
 	site_footer_default({ year: input.year });
 	_html("</main>");
-	_fill_global_subscribe("__tests__/template.marko_0_$global_locale#12/global", $scope0_id);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#13/global", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_locale#12", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#13", $scope0_id);
 	$scope0_page && _scope($scope0_id, {
 		"#childScope/3": _existing_scope($childScope),
 		"#childScope/4": _existing_scope($childScope2),

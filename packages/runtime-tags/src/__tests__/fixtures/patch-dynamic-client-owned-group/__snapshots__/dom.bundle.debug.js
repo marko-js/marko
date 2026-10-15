@@ -2,7 +2,7 @@
 const $template$2 = "<em><!> <!></em>";
 const $walks$2 = "D%c%l";
 const $input_label$2 = ($scope, input_label) => _text($scope["#text/0"], input_label);
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/tags/picker/card.marko_0_$global_brand#6/global", ($scope) => _text($scope["#text/1"], $scope.$global.brand));
+const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/tags/picker/card.marko_0_$global_brand#6", ($scope) => _text($scope["#text/1"], $scope.$global.brand));
 const $input$2 = ($scope, input) => $input_label$2($scope, input.label);
 function $setup$2($scope) {
 	$global_brand($scope);

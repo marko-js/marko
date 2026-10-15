@@ -26,6 +26,7 @@ const pureDOMFunctions = new Set<string>([
   "_fill_join_for",
   "_fill_join_if",
   "_fill_join_subscribers",
+  "_shell_join",
   "_shell_or",
   "_shell_subscribe_closure_get",
   "_fill_const",

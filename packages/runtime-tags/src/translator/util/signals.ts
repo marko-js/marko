@@ -587,7 +587,6 @@ export function getGlobalJoins(section: Section) {
         const id = getResumeRegisterId(
           section,
           Array.isArray(refs) ? refs : binding,
-          "global",
         );
         const prev = joins.get(id);
         joins.set(
@@ -618,27 +617,19 @@ function getGlobalJoinKeys(signal: Signal) {
     : undefined;
 }
 
-function getGlobalJoinId(signal: Signal) {
-  return getResumeRegisterId(
-    signal.section,
-    signal.referencedBindings,
-    "global",
-  );
-}
-
 // Wraps a signal reading `$global` keys as each key's join: pure, so the
 // consumer's own retention decides whether a changed key has a reader.
 function wrapGlobalJoins(
   signal: Signal,
   keys: string[] | undefined,
   value: t.Expression,
-  kept: boolean,
 ): t.Expression {
   let expr = value;
   if (keys) {
-    const id = getGlobalJoinId(signal);
+    // The effect's register id, under which its registration joins these keys.
+    const id = getResumeRegisterId(signal.section, signal.referencedBindings);
     for (const key of keys) {
-      expr = (kept ? callRuntimeKept : callRuntime)(
+      expr = callRuntime(
         "_fill_global_join",
         t.stringLiteral(key),
         t.stringLiteral(id),
@@ -646,39 +637,7 @@ function wrapGlobalJoins(
       );
     }
   }
-  // A scope a flush creates runs the join of a key its effects read as a shell
-  // init, so a later change re-runs them; shells name it, so it stays bundled.
-  const binding = signal.referencedBindings;
-  if (
-    binding &&
-    !Array.isArray(binding) &&
-    binding.type === BindingType.global &&
-    patchCreates(signal.section) &&
-    signal.effect.length
-  ) {
-    expr = wrapShellJoin(signal.section, binding, expr);
-  }
   return expr;
-}
-
-// An effect on its own scope joins alone first; where the client renders the
-// signal, the signal's join under the same id replaces it and runs the effect.
-function getGlobalEffectJoins(
-  signal: Signal,
-  keys: string[],
-  effect: t.Identifier,
-) {
-  const id = getGlobalJoinId(signal);
-  return keys.map((key) =>
-    t.expressionStatement(
-      callRuntime(
-        "_fill_global_join_resume",
-        t.stringLiteral(key),
-        t.stringLiteral(id),
-        effect,
-      ),
-    ),
-  );
 }
 
 export function initValue(binding: Binding, isLet = false) {
@@ -1391,8 +1350,8 @@ export function writeSignals(section: Section) {
         [scopeIdentifier],
         toOnlyExpressionOrBlock(signal.effect),
       );
-      // An effect reading `$global` keys can be reached by a render and by
-      // a changed key in one run: `_fill_global_script` runs it once.
+      // An effect reading `$global` keys runs once per run however many reach
+      // it, and its registration carries the keys whose change re-runs it.
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
         callRuntime(
@@ -1401,6 +1360,7 @@ export function writeSignals(section: Section) {
             getResumeRegisterId(section, signal.referencedBindings),
           ),
           effectFn,
+          ...(globalJoinKeys || []).map((key) => t.stringLiteral(key)),
         ),
       );
     }
@@ -1431,17 +1391,15 @@ export function writeSignals(section: Section) {
         trimEmptyArgs(built.arguments as t.Expression[]);
       }
 
-      // Once a join registers a creatable body's init, each wrapper is kept too.
-      let kept = false;
       if (isPatch()) {
         const unwrapped = value;
         const binding = signal.referencedBindings;
         if (Array.isArray(binding)) {
-          ({ value, kept } = wrapJoinFills(signal, binding, value));
+          value = wrapJoinFills(signal, binding, value);
         } else if (binding) {
           value = wrapClosureFill(signal, binding, value);
         }
-        value = wrapGlobalJoins(signal, globalJoinKeys, value, kept);
+        value = wrapGlobalJoins(signal, globalJoinKeys, value);
         // A wrapper takes the signal as a callback whose result goes unused.
         if (
           value !== unwrapped &&
@@ -1453,7 +1411,7 @@ export function writeSignals(section: Section) {
       }
 
       if (signal.register) {
-        value = (kept ? callRuntimeKept : callRuntime)(
+        value = callRuntime(
           "_var_resume",
           t.stringLiteral(
             getResumeRegisterId(section, signal.referencedBindings, "var"),
@@ -1489,15 +1447,6 @@ export function writeSignals(section: Section) {
 
     if (effectDeclarator) {
       signalStatements.push(t.variableDeclaration("const", [effectDeclarator]));
-      if (globalJoinKeys) {
-        signalStatements.push(
-          ...getGlobalEffectJoins(
-            signal,
-            globalJoinKeys,
-            effectDeclarator.id as t.Identifier,
-          ),
-        );
-      }
     }
 
     if (signalDeclaration) {
@@ -1512,7 +1461,7 @@ export function writeSignals(section: Section) {
 }
 
 // A join's fill members register on its declaration, so tree-shaking keeps
-// each with the join; `kept` once one registers a creatable body's init.
+// each with the join.
 function wrapJoinFills(
   signal: Signal,
   join: Intersection,
@@ -1520,7 +1469,6 @@ function wrapJoinFills(
 ) {
   const { section } = signal;
   let expr = value;
-  let kept = false;
   let creates: boolean | undefined;
   let stateful: boolean | undefined;
   for (const ref of join) {
@@ -1534,7 +1482,7 @@ function wrapJoinFills(
       continue;
     }
     if (member.section === section) {
-      expr = (kept ? callRuntimeKept : callRuntime)(
+      expr = callRuntime(
         "_fill_join",
         t.stringLiteral(getPatchFillKey(member)),
         getScopeAccessorLiteral(member, true),
@@ -1549,12 +1497,9 @@ function wrapJoinFills(
         fillJoinsIn(member, section) &&
         (creates ??= patchCreates(section))
       ) {
-        // A shell names a creatable body's inits whatever client code
-        // reaches the join that registers them, so it is never shaken.
         expr = wrapShellJoin(section, member, expr);
-        kept = true;
       }
-      expr = (kept ? callRuntimeKept : callRuntime)(
+      expr = callRuntime(
         helper,
         t.stringLiteral(getPatchFillKey(member)),
         getScopeAccessorLiteral(member, true),
@@ -1574,7 +1519,7 @@ function wrapJoinFills(
       );
     }
   }
-  return { value: expr, kept };
+  return expr;
 }
 
 // The fill join over the branch hops from `section` up to `owner`, each from

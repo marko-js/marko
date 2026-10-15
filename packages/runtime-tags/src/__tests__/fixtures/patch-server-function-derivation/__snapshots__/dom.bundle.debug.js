@@ -35,7 +35,7 @@ const $data = /*@__PURE__*/ _const("data", ($scope) => {
 	$summary($scope, summarize($scope.data));
 	$data__OR__summary($scope);
 });
-const $global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/tags/panel.marko_0_$global_data#7/global", ($scope) => $data($scope, $scope.$global.data));
+const $global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/tags/panel.marko_0_$global_data#7", ($scope) => $data($scope, $scope.$global.data));
 const $pending_length = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill1", "pending_length", $if_content__pending_length);
 const $count = /*@__PURE__*/ _fill_let("__tests__/tags/panel.marko_fill2", "count/12", ($scope) => {
 	_text($scope["#text/1"], $scope.count);

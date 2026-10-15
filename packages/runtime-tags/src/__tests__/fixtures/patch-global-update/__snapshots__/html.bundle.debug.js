@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	let read = "";
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", $global$1.brand)}</h1><button>read</button>${_el_resume($scope0_id, "#button/1")}<p>${_text_resume($scope0_id, "#text/2", read)}</p></main>`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#5/global", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#5", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", read, 1);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);

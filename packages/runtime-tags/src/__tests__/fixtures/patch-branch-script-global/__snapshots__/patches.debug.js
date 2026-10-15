@@ -8,7 +8,7 @@
 }
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-global/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-global/template.marko_1_$global_brand#1/init!packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-global/template.marko_1_$global_brand#1,<p>promo</p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-global/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-global/template.marko_1_$global_brand#1,<p>promo</p>`, {
   "$global:": {
     brand: "Fresh"
   },

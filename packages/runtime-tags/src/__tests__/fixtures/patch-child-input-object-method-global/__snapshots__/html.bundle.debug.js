@@ -26,7 +26,7 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_text_length, void 0, void 0, void 0, ["__tests__/tags/code-block.marko_1*shell", "__tests__/tags/code-block.marko_2*shell"], $scope0_reason, 3);
-	_fill_global_subscribe("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8/global", $scope0_id);
+	_fill_global_subscribe("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", $scope0_id);
 	$scope0_page ? _scope($scope0_id, {
 		input_cursor: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.cursor,
 		input_text: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && input.text,

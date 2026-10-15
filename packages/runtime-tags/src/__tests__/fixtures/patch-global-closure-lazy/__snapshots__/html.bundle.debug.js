@@ -19,7 +19,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 			_for_of([1, 2], (x) => {
 				const $scope2_id = _scope_id();
 				_html(`<i>${_patch_text($scope2_id, "#text/0", x, void 0, 0, 0)}${_patch_text($scope2_id, "#text/1", $global$1.brand, 2)}</i>`);
-				_fill_global_subscribe("__tests__/child.marko_2_$global_brand#5/global", $scope2_id);
+				_fill_global_subscribe("__tests__/child.marko_2_$global_brand#5", $scope2_id);
 				_scope($scope2_id, {}, "__tests__/child.marko", "5:4");
 			}, 0, $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/child.marko_2*shell", 0, 0);
 			_scope($scope1_id, {}, "__tests__/child.marko", "4:2");

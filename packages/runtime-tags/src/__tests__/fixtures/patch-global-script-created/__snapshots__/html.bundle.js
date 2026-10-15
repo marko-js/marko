@@ -1,5 +1,5 @@
 // tags/logger.marko
-_shells({ b: "b !b1,<div></div>" });
+_shells({ b: "b !b0,<div></div>" });
 var logger_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_page = _page_render();
@@ -7,7 +7,7 @@ var logger_default = _template("b", (input) => {
 	$global();
 	_html("<div></div>");
 	_fill_global_subscribe("b0", $scope0_id, 1);
-	_script($scope0_id, "b1", 0);
+	_script($scope0_id, "b0", 0);
 	$scope0_page && _scope($scope0_id, {});
 });
 
