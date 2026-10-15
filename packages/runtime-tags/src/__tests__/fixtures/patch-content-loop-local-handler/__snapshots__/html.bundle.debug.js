@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "PatchWrite:x_name", x?.name);
 			_html(`<button${_patch_attr_class($scope1_id, "PatchAttr:#button/0 class", "b" + x.id)}>${_patch_text($scope1_id, "#text/1", x.name)}</button>${_el_resume($scope1_id, "#button/0")}<span></span>${_el_resume($scope1_id, "#span/2")}`);
-			_script($scope1_id, "__tests__/template.marko_1_x_name#4");
+			_script($scope1_id, "__tests__/template.marko_1_x_name#4", void 0, 0);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_patch_effect($scope1_id, "PatchEffect:__tests__/template.marko_1_x_name#4", "x_name");
 			_scope($scope1_id, {

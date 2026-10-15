@@ -1,8 +1,5 @@
 // PATCH
 {
-  cAa: [{
-    ta: "x"
-  }, 0, "a5"],
   ka: [{
     ta: "boom"
   }, "a5"]

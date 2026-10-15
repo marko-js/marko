@@ -4,7 +4,6 @@ b, [`a0;b%b//Db%l& b&b;<!><!><p>sel=<!></p><button>+</button><!>`, {
     cb: {
       ca: {
         s: {
-          ta: "0",
           wd: 0,
           de: ["b0", 1],
           i: "c2",

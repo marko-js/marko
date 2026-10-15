@@ -3,9 +3,6 @@
   "PatchCatch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "SHOWN_message1",
-      "PatchSetup:": {
-        "PatchText:#text/1": "0"
-      },
       "PatchText:#text/2": "b"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-child-reads-error/template.marko_1*content"],
@@ -17,9 +14,6 @@
   "PatchCatch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "SHOWN_message2",
-      "PatchSetup:": {
-        "PatchText:#text/1": "0"
-      },
       "PatchText:#text/2": "c"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-child-reads-error/template.marko_1*content"],
@@ -39,9 +33,6 @@
   "PatchCatch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "SHOWN_message3",
-      "PatchSetup:": {
-        "PatchText:#text/1": "0"
-      },
       "PatchText:#text/2": "e"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-child-reads-error/template.marko_1*content"],

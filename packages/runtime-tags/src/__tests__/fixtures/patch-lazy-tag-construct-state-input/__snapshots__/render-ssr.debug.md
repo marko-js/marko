@@ -24,6 +24,7 @@
 ## Change
 ```
 INSERT: main > span
+UPDATE: main > span::text " " => "b0"
 ```
 
 # Update

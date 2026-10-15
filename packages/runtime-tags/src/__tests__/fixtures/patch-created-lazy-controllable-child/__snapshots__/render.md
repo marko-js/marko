@@ -12,6 +12,7 @@
 ## Change
 ```
 INSERT: p, button
+UPDATE: p::text@4 "" => "0"
 ```
 
 # Update

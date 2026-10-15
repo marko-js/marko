@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html("<span>inner</span>");
-					_script($scope2_id, "__tests__/template.marko_2_input_suffix#0:6_label#1:2", 0);
+					_script($scope2_id, "__tests__/template.marko_2_input_suffix#0:6_label#1:2", 0, _client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 2));
 					(_server_guard($scope0_reason, 4) || _server_guard($scope0_reason, 2)) && _patch_effect($scope2_id, "PatchEffect:__tests__/template.marko_2_input_suffix#0:6_label#1:2", "1 label 2 input_suffix");
 					_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, "__tests__/template.marko_2_input_suffix#0:6/init");
 					_subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_2_input_suffix#0:6/subscribe", 0);

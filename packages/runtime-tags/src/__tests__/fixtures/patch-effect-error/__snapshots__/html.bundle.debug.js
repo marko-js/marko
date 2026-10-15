@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</p><button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_input_label#5");
+	_script($scope0_id, "__tests__/template.marko_0_input_label#5", void 0, _client_guard($scope0_reason, 0));
 	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_input_label#5", "input_label");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", count, 1);
 	$scope0_page ? _scope($scope0_id, {

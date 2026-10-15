@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let clicks = 0;
 	_html(`<button>${_text_resume($scope0_id, "b", clicks)}</button>${_el_resume($scope0_id, "a")}<p></p>${_el_resume($scope0_id, "c")}`);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a0", void 0, _client_guard($scope0_reason, 0));
 	_script($scope0_id, "a1");
 	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "ea0", "f!0");
 	_patch_value($scope0_id, "va2", clicks, 1);

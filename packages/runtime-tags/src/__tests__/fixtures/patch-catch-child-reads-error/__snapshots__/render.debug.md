@@ -22,8 +22,8 @@
 INSERT: button + span
 REMOVE: span + p
 UPDATE: span::text@0 "" => "SHOWN_message1"
-UPDATE: span::text@15 "" => "0"
 UPDATE: span::text@17 "" => "b"
+UPDATE: span::text@15 "" => "0"
 ```
 
 # Update `{"error":{},"label":"c"}`

@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const label = input.title + "!";
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchWrite:label", label, !_server_guard($scope0_reason, 1));
 			_html("<p>shown</p>");
-			_script($scope1_id, "__tests__/template.marko_1_label#0", 0);
+			_script($scope1_id, "__tests__/template.marko_1_label#0", 0, _client_guard($scope0_reason, 1));
 			_server_guard($scope0_reason, 1) && _patch_effect($scope1_id, "PatchEffect:__tests__/template.marko_1_label#0", "label");
 			_scope($scope1_id, {
 				label,

@@ -10,7 +10,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 		items: []
 	};
 	_html("<p>probe</p>");
-	_script($scope0_id, "__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5", 0);
+	_script($scope0_id, "__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5", 0, _client_guard($scope0_reason, 0));
 	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5", "input_label opts_items opts_label");
 	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,

@@ -31,7 +31,16 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML, isPatch } from "./marko-config";
-import { every, forEach, last, type Opt, push, reduce, some } from "./optional";
+import {
+  every,
+  filter,
+  forEach,
+  last,
+  type Opt,
+  push,
+  reduce,
+  some,
+} from "./optional";
 import {
   initsCreatedJoin,
   fillJoinsIn,
@@ -51,6 +60,7 @@ import {
   inContentSection,
   isBranchChainTo,
   closureCarriesFill,
+  rerunsEffectOnPatch,
 } from "./patch/refresh";
 import {
   inResumedStructure,
@@ -63,6 +73,7 @@ import {
   getClosureScopesIfWritten,
   getPatchWriteOwnership,
   getUnfilledValueIfWritten,
+  orCallerGroupGuards,
   writePatchResumeStatements,
 } from "./patch/writers";
 import { getReadReplacement } from "./read-replacement";
@@ -784,6 +795,27 @@ function isPureMemberForwarder(binding: Binding): boolean {
   }
 
   return hasNonConstantPropertyAlias(binding);
+}
+
+// Whether a client group feeds a value a patch writes for the effect (`0` if
+// none does), or undefined where it reads none: a renderer queues it itself.
+function getEffectClientGuard(section: Section, refs: ReferencedBindings) {
+  const read = filter(refs, rerunsEffectOnPatch);
+  if (read) {
+    return (
+      orCallerGroupGuards(
+        section,
+        undefined,
+        "_client_guard",
+        reduce(read, pushCanonicalSources),
+      ) || t.numericLiteral(0)
+    );
+  }
+}
+
+function pushCanonicalSources(list: Opt<Sources>, binding: Binding) {
+  const { sources } = getCanonicalBinding(binding);
+  return sources ? push(list, sources) : list;
 }
 
 // A forward a patch renders is a patch statement, like a hole it writes.
@@ -1969,6 +2001,7 @@ export function writeHTMLResumeStatements(
             scopeIdIdentifier,
             t.stringLiteral(getResumeRegisterId(section, signalRefs)),
             markerGuard,
+            isPatch() && getEffectClientGuard(section, signalRefs),
           ),
         ),
       );

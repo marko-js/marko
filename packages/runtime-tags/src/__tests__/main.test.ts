@@ -126,9 +126,8 @@ export type TestConfig = {
   runtime_id?: string;
   /** Compiles the fixture with the `patches` compiler option. */
   patches?: boolean;
-  /** Patch: never render a step's input as a document (client effects
-   * leave state a fresh render lacks, or an input no document can serialize),
-   * so patches compare against the initial document instead. */
+  /** Patch: compare with the initial document, never a fresh one of a step's input: a caught `<try>`
+   * keeps its `@catch`, client effects leave state, or no document serializes the input. */
   skip_fresh_render?: boolean;
   /** Patch: applies a step's patch while the document is still
    * streaming; by default the remaining flushes land first. */

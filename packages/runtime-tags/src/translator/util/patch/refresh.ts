@@ -81,6 +81,7 @@ import {
   isStableExpr,
 } from "./decisions";
 import {
+  catchSetupRenders,
   getBranchOf,
   getParamRebuildChain,
   inResumedStructure,
@@ -231,7 +232,8 @@ export function isCreatedScopeSeed(binding: Binding) {
     // Neither a fill reaching its reads nor a write: a join fill's value
     // seeds the join's init.
     !fillsReads(binding) &&
-    !hasPatchWriteReads(binding)
+    !hasPatchWriteReads(binding) &&
+    !catchSetupRenders(section, binding.sources)
   );
 }
 

@@ -12,9 +12,7 @@
 // PATCH holding BwY
 {
   ba: [{
-    cAa: [{
-      ta: "x"
-    }, "a0", "a6"],
+    cAa: [{}, "a0", "a6"],
     ka: [{
       ta: "boom"
     }, "a6"]

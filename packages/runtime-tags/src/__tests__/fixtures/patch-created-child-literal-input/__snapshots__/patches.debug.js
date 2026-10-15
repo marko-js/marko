@@ -4,8 +4,7 @@
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/2": {
         "PatchSetup:": {
-          "PatchText:#text/0": "Switch",
-          "PatchText:#text/1": "0"
+          "PatchText:#text/0": "Switch"
         }
       },
       "PatchSetup:": {

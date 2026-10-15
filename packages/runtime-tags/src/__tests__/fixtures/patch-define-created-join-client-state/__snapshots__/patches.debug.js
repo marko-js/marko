@@ -3,7 +3,6 @@
   "PatchBranch:#text/1": [{
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchText:#text/0": "5",
         "PatchWrite:input_a": 0,
         "PatchWrite:input_b": 5,
         "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-join-client-state/template.marko_2_input_a#3_input_b#4/init"

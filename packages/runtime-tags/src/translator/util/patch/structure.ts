@@ -251,6 +251,18 @@ export function inUnreadCatch(section: Section) {
   return false;
 }
 
+// What a `@catch` a patch creates renders through its renderer's setup:
+// whatever reads none of its error (its params).
+export function catchSetupRenders(
+  section: Section,
+  sources: Sources | undefined,
+) {
+  return (
+    section.boundaryContent === "catch" &&
+    !some(sources?.param, (param) => param.section === section)
+  );
+}
+
 // Whether a patch renders the branches or loop rows at the node: it writes
 // the node's section, and none is stateful (a chain with one is the client's).
 export function patchesBranchesAt(binding: Binding) {

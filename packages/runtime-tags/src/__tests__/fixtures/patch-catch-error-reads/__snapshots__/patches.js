@@ -1,8 +1,6 @@
 // PATCH
 {
-  cAa: [{
-    pa: 1
-  }, 0, "a6"],
+  cAa: 0,
   kb: [{
     ta: "SHOWN_code2"
   }, "a9"],

@@ -1,8 +1,6 @@
 // PATCH
 [`a0,<span>ok</span>`, {
-  cAa: [{
-    pa: "a0"
-  }, 0, "a7"],
+  cAa: 0,
   va9: "b",
   ka: []
 }]

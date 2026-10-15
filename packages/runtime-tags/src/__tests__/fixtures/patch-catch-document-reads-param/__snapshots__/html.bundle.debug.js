@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<b>${_patch_text($scope1_id, "#text/0", err.message)} ${_patch_text($scope1_id, "#text/1", input.label, 2, $scope0_reason, 0)}</b>`);
+		_html(`<b>${_patch_text($scope1_id, "#text/0", err.message)} ${_text_resume($scope1_id, "#text/1", input.label, 2)}</b>`);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), "__tests__/template.marko_1_input_label#0:3/subscribe");
 	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, "");
 	$scope0_page ? _scope($scope0_id, {

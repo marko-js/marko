@@ -43,13 +43,16 @@ import {
   inCreatable,
   keptRow,
   openScopePatch,
+  linkScopePatch,
   pairBranch,
+  peekScopePatch,
   ensureFills,
   patchNode,
   ensureScopePatch,
   shipShell,
   walkMarkers,
   withKeptBranchId,
+  withRendererSetUp,
   withUnpatched,
   writePatch,
 } from "./writer";
@@ -517,9 +520,6 @@ export function _try(
     create || catchId ? slotIds : undefined,
     scopeId,
   );
-  // A try this flush may create needs its entry even when its body writes
-  // nothing.
-  if (create) ensureScopePatch(state, branchId);
   const chunk = getChunk()!;
   const beforeBranch = deferBranchStart(chunk);
   const renderers = (): void =>
@@ -530,10 +530,42 @@ export function _try(
     );
   // A patch shows `@placeholder` from received client state and creates
   // `@catch` in its entry, so no document reorder rides the flush stream.
-  const writesRenderers = catchContent
-    ? tryBoundary(content, catchContent, branchId, renderers, (err) => {
+  let writesRenderers = false;
+  if (catchContent) {
+    // A catch replaces a body that throws, so its patch links only once its sync
+    // part renders unthrown; a later throw empties a creatable entry, else voids it.
+    const body = openScopePatch(state, branchId);
+    // Its shell ships ahead of those its body ships, as the entry leads them.
+    if (create) shipShell(state, bodyId);
+    let entry: unknown[] | undefined;
+    let settled = false;
+    writesRenderers = tryBoundary(
+      content,
+      catchContent,
+      branchId,
+      renderers,
+      (err) => {
+        settled = true;
         // A body that threw before claiming its id keeps it paired.
         if (_peek_scope_id() === branchId) _scope_id();
+        if (!entry) {
+          if (create) linkScopePatch(state, branchId, patchNode(state, {}));
+        } else if (peekScopePatch(state, branchId) === body) {
+          // Still in the frame to go out (a frame sent it pending otherwise).
+          if (create) {
+            entry[0] = patchNode(state, {});
+          } else {
+            writePatch(
+              state,
+              scopeId,
+              entryKey(
+                PatchKey.Child,
+                entryKey(AccessorPrefix.BranchScopes, accessor),
+              ),
+              0,
+            );
+          }
+        }
         // A catch no flush creates renders on the client from its error, sent
         // whole (as message and cause) where its code reads it.
         writePatch(
@@ -554,8 +586,23 @@ export function _try(
               ? [err]
               : [],
         );
-      })
-    : (content(), false);
+      },
+      () => {
+        settled = true;
+        if (!entry && (create || hasKeys(body))) {
+          linkScopePatch(state, branchId, body);
+        }
+      },
+    );
+    if (!settled && (create || hasKeys(body))) {
+      entry = linkScopePatch(state, branchId, body);
+    }
+  } else {
+    // A try this flush may create needs its entry even when its body writes
+    // nothing.
+    if (create) ensureScopePatch(state, branchId);
+    content();
+  }
   applyBranchStart(chunk, beforeBranch, true);
   if (!writesRenderers) renderers();
 }
@@ -577,7 +624,7 @@ function writeCatch(
     link: entryKey(AccessorPrefix.BranchScopes, accessor),
   };
   const patch = openScopePatch(state, catchBranchId);
-  withBranchId(catchBranchId, withUnpatched, catchContent, err);
+  withBranchId(catchBranchId, withRendererSetUp, catchContent, err);
   if (effectIds) addSetupId(state, catchBranchId, effectIds, 1);
   return patchNode(state, [patch, catchId]);
 }

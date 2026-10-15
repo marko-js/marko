@@ -22,5 +22,5 @@ d.querySelector("button").click();
 ## Change
 ```
 INSERT: button + p
-UPDATE: p::text@2 "5" => "6"
+UPDATE: p::text@2 "" => "6"
 ```

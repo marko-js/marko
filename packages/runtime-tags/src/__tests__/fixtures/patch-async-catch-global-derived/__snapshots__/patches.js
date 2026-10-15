@@ -3,9 +3,7 @@
   $: {
     brand: "bmce"
   },
-  cAa: [{
-    pa: 1
-  }, 0, "a5"],
+  cAa: 0,
   va8: "bmce!",
   ka: []
 }

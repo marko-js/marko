@@ -42,7 +42,6 @@ UPDATE: main > button::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: em::text "ok" => "x"
 INSERT: main > b
 REMOVE: main > b + em
 UPDATE: main > b::text " " => "boom"

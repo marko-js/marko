@@ -13,12 +13,9 @@
 // PATCH holding CxY
 {
   "PatchBranch:#text/2": [{
-    "PatchChild:BranchScopes:#text/0": [{
-      "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_4*content"
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_3*content", _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_2*content"],
+    "PatchChild:BranchScopes:#text/0": [{}, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_3*content", _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_2*content"],
     "PatchCatch:#text/0": [{
-      "PatchText:#text/0": "boom",
-      "PatchText:#text/1": "c"
+      "PatchText:#text/0": "boom"
     }, _.a]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_1*shell"],
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_fill0": "c"

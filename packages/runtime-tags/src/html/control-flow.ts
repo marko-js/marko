@@ -635,6 +635,8 @@ export function tryBoundary(
   // A patch's catch, writing its own entry: the body renders outside the
   // branch id, nothing of it streams once caught, and nothing reorders.
   onCatch?: (err: unknown) => void,
+  // A patch's body that settled without throwing.
+  onSettle?: () => void,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
@@ -661,6 +663,7 @@ export function tryBoundary(
   if (body === bodyEnd) {
     // Sync success
     chunk.append(body);
+    onSettle?.();
     return false;
   }
 
@@ -753,6 +756,7 @@ export function tryBoundary(
         bodyEnd.render(renderers);
       }
       chunk.catchRange = null;
+      if (onSettle) bodyEnd.render(onSettle);
       boundary.endAsync();
     } else {
       boundary.onNext();

@@ -22,8 +22,8 @@
 INSERT: button + span
 REMOVE: span + p
 UPDATE: span::text@0 "" => "b"
-UPDATE: span::text@2 "" => "0"
 UPDATE: span::text@4 "" => "L2"
+UPDATE: span::text@2 "" => "0"
 ```
 
 # Update

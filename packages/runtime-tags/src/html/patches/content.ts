@@ -61,8 +61,8 @@ function keepsMarker(
   return groupSources(owned, group!) ? markerGuard : 0;
 }
 
-// A text-only body carries plain text (html output escapes per namespace);
-// a `<style>` interpolation's write doubles as the escaped output.
+// A `<style>` interpolation's write doubles as the escaped output; its entry
+// also writes a created scope's style shell, so it seeds even a client value.
 export function _patch_style(
   scopeId: number,
   key: string,
@@ -70,12 +70,13 @@ export function _patch_style(
   owned?: GroupMask,
   group?: number,
 ) {
-  const fills = ensureFills(scopeId, owned, group!);
+  const fills = ensureFills(scopeId, owned, group!, 1);
   return fills === undefined
     ? _escape_style_value(value)
     : writeFill(fills, key, normalizePatchValue(value));
 }
 
+// A text-only body carries plain text (html output escapes per namespace).
 export function _patch_text_content(
   scopeId: number,
   key: string,

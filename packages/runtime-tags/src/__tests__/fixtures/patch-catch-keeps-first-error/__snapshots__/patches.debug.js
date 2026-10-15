@@ -3,9 +3,6 @@
   "PatchCatch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "b",
-      "PatchSetup:": {
-        "PatchText:#text/1": "0"
-      },
       "PatchText:#text/2": "L2"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_1*content"],
@@ -17,9 +14,6 @@
   "PatchCatch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "c",
-      "PatchSetup:": {
-        "PatchText:#text/1": "0"
-      },
       "PatchText:#text/2": "L3"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-keeps-first-error/template.marko_1*content"],

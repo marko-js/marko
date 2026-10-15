@@ -11,7 +11,7 @@ var menu_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "wf", it?.onPick, !_server_guard($scope0_reason, 0));
 		_html(`<button${_patch_attr_class($scope1_id, "aa class", "b" + it.id, $scope0_reason, 0)}>${_patch_text($scope1_id, "b", it.label, void 0, $scope0_reason, 0)}</button>${_el_resume($scope1_id, "a")}`);
-		_script($scope1_id, "b1");
+		_script($scope1_id, "b1", void 0, _client_guard($scope0_reason, 0));
 		_server_guard($scope0_reason, 0) && _patch_effect($scope1_id, "eb1", "f");
 		_scope($scope1_id, { f: it?.onPick });
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b0", $scope0_reason, 0);

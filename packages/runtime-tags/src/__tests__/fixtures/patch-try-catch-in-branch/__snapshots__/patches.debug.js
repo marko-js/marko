@@ -12,9 +12,7 @@
 // PATCH holding BwY
 {
   "PatchBranch:#main/0": [{
-    "PatchChild:BranchScopes:#text/0": [{
-      "PatchText:#text/0": "x"
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-in-branch/template.marko_2*content", _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-in-branch/template.marko_3*content"],
+    "PatchChild:BranchScopes:#text/0": [{}, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-in-branch/template.marko_2*content", _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-in-branch/template.marko_3*content"],
     "PatchCatch:#text/0": [{
       "PatchText:#text/0": "boom"
     }, _.a]

@@ -23,17 +23,11 @@
     "PatchLoopItem:#text/0": [
       [0, 1], {
         "PatchChild:BranchScopes:#text/0": {
-          "PatchSetup:": {
-            "PatchText:#text/0": "1"
-          },
           "PatchText:#text/1": "b"
         }
       },
       [1, 2], {
         "PatchChild:BranchScopes:#text/0": {
-          "PatchSetup:": {
-            "PatchText:#text/0": "2"
-          },
           "PatchText:#text/1": "b"
         }
       }

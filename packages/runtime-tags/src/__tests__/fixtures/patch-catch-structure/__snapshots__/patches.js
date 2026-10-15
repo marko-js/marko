@@ -10,9 +10,7 @@
 
 // PATCH holding CAE
 {
-  cAa: [{
-    pa: "a0"
-  }, 0, "a7"],
+  cAa: 0,
   va9: "c",
   ka: []
 }

@@ -1,8 +1,7 @@
 // PATCH
 {
   ka: [{
-    ta: "SHOWN_two",
-    tb: "b"
+    ta: "SHOWN_two"
   }, "a4"],
   va5: "b"
 }

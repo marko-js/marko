@@ -18,7 +18,6 @@
 ```
 ## Change
 ```
-UPDATE: p::text@5 "a" => "b"
 INSERT: main::text("caught")
 REMOVE: main::text + p
 REMOVE: main::text + button

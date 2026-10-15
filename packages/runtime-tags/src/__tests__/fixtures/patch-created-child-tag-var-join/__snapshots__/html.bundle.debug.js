@@ -8,7 +8,7 @@ var file_store_default = _template("__tests__/tags/file-store.marko", (input) =>
 	const $scope0_id = _scope_id();
 	let files = [];
 	const $return = files;
-	_script($scope0_id, "__tests__/tags/file-store.marko_0_input_value#2", 0);
+	_script($scope0_id, "__tests__/tags/file-store.marko_0_input_value#2", 0, _client_guard($scope0_reason, 0));
 	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/file-store.marko_0_input_value#2", "input_value");
 	const $valueChange2 = _patch_bind($scope0_id, "PatchBind:#TagVariableChange", _resume((_new_files) => {
 		files = _new_files;

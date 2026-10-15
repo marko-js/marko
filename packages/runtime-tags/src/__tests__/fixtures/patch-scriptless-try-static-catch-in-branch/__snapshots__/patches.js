@@ -14,9 +14,7 @@
 // PATCH holding Cxo
 {
   ba: [{
-    cAa: [{
-      pa: "a0"
-    }, "a2", "a6"],
+    cAa: [{}, "a2", "a6"],
     ka: []
   }, "a3"]
 }

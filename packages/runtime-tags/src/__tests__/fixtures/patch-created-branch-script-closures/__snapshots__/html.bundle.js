@@ -13,7 +13,7 @@ var level_watch_default = _template("b", (input) => {
 	_if(() => {
 		if (input.projection) {
 			const $scope1_id = _scope_id();
-			_script($scope1_id, "b1", 0);
+			_script($scope1_id, "b1", 0, _client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3));
 			(_server_guard($scope0_reason, 1) || _server_guard($scope0_reason, 2) || _server_guard($scope0_reason, 3)) && _patch_effect($scope1_id, "eb1", "1 g h i");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;

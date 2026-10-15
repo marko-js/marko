@@ -6,7 +6,7 @@ var row_default = _template("__tests__/tags/row.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html(`<li><span>${_patch_text($scope0_id, "#text/0", input.item.name, void 0, $scope0_reason, 0)}</span><button>Pick</button>${_el_resume($scope0_id, "#button/1")}</li>`);
-	_script($scope0_id, "__tests__/tags/row.marko_0_input_onPick#6");
+	_script($scope0_id, "__tests__/tags/row.marko_0_input_onPick#6", void 0, _client_guard($scope0_reason, 1));
 	_server_guard($scope0_reason, 1) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/row.marko_0_input_onPick#6", "input_onPick");
 	$scope0_page ? _scope($scope0_id, { input_onPick: input.onPick }, "__tests__/tags/row.marko", 0, { input_onPick: ["input.onPick"] }) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_onPick", input.onPick, !_server_guard($scope0_reason, 1));
 });

@@ -4,8 +4,7 @@
     ca: {
       cc: {
         s: {
-          ta: "Switch",
-          tb: "0"
+          ta: "Switch"
         }
       },
       s: {

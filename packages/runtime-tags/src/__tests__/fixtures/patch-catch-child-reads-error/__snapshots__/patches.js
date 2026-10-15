@@ -3,9 +3,6 @@
   kc: [{
     ca: {
       ta: "SHOWN_message1",
-      s: {
-        tb: "0"
-      },
       tc: "b"
     }
   }, "a5"],
@@ -17,9 +14,6 @@
   kc: [{
     ca: {
       ta: "SHOWN_message2",
-      s: {
-        tb: "0"
-      },
       tc: "c"
     }
   }, "a5"],
@@ -39,9 +33,6 @@
   kc: [{
     ca: {
       ta: "SHOWN_message3",
-      s: {
-        tb: "0"
-      },
       tc: "e"
     }
   }, "a5"],

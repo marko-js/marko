@@ -17,7 +17,6 @@
 ```
 ## Change
 ```
-UPDATE: em::text "ok" => "x"
 INSERT: main > b
 REMOVE: main > b + em
 UPDATE: main > b::text " " => "boom"

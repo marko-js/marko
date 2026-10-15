@@ -19,6 +19,7 @@ import {
   State,
   _attr_content as _base_attr_content,
   _resume_locals as _base_resume_locals,
+  _script as _base_script,
   _subscribe as _base_subscribe,
   _var as _base_var,
   _html,
@@ -71,6 +72,38 @@ export function withUnpatched<T>(cb: () => T): T;
 export function withUnpatched<T, U>(cb: (value: U) => T, value: U): T;
 export function withUnpatched<T, U>(cb: (value?: U) => T, value?: U): T {
   return withContext(kUnpatched, 1, cb, value);
+}
+
+// The branch of a `@catch` a patch creates from its renderer, whose setup sets
+// up the scopes rendering directly in it (its own and its children's).
+const kSetUp = Symbol("Set Up");
+
+export function withRendererSetUp<U>(cb: (value: U) => void, value: U) {
+  return withContext(
+    kSetUp,
+    getChunk()!.context![kBranchId],
+    withUnpatched<void, U>,
+    cb,
+    value,
+  );
+}
+
+// A created `@catch`'s renderer queues the effects of the scopes it sets up
+// but those only reading values the patch writes (`client` is `0`).
+export function _script(
+  scopeId: number,
+  registryId: string,
+  markerGuard?: number,
+  client?: 0 | 1,
+) {
+  const context = getChunk()?.context;
+  if (
+    context?.[kSetUp] === undefined ||
+    context[kSetUp] !== context[kBranchId] ||
+    client === 0
+  ) {
+    _base_script(scopeId, registryId, markerGuard);
+  }
 }
 
 // The lazy modules a patch render is inside: a write there makes the flush
@@ -215,41 +248,50 @@ export function ensureScopePatch(
   const patches = ensurePatchTree(state);
   let patch = patches[scopeId];
   if (!patch) {
-    const link = state.patchLinks?.[scopeId];
-    patch = patches[scopeId] = patchNode(state, {});
-    if (link) {
-      // A scope writing after its parent's structural entry re-links through
-      // it; a paired branch ignores the creation ids its child entry carries.
-      const { parent, link: hop, content: contentId, slots: slotIds } = link;
-      if (typeof hop === "string") {
-        if (contentId) shipShell(state, contentId);
-        writePatch(
-          state,
-          parent,
-          entryKey(PatchKey.Child, hop),
-          slotIds
-            ? patchNode(state, [patch, contentId || 0, ...slotIds])
-            : patch,
-        );
-      } else {
-        (
-          (ensureScopePatch(state, parent)[
-            entryKey(PatchKey.LoopItem, hop[0])
-          ] ??= patchNode(state, [])) as unknown[]
-        ).push(hop[1], patch);
-      }
-    } else if (scopeId === ROOT_SCOPE_ID) {
-      // Every other patch nests inside an ancestor's structural entry rooted
-      // here (`queueScope` is patch-inert, so the root registers directly).
-      _scope(scopeId, patch);
-      // A lazy module is named only by the frame that first needs it.
-      state.patchFlushReadyIds = undefined;
-      const { channel } = getChunk()!;
-      channel.writeScopes[scopeId] = patch;
-      channel.flushScopes = true;
-    }
+    linkScopePatch(
+      state,
+      scopeId,
+      (patch = patches[scopeId] = patchNode(state, {})),
+    );
   }
   return patch;
+}
+
+// Hangs a scope's patch off its parent's entry, or roots it; returns an entry
+// that carries creation ids beside the patch.
+export function linkScopePatch(
+  state: PatchUpdateState,
+  scopeId: number,
+  patch: Record<string, unknown>,
+): unknown[] | undefined {
+  const link = state.patchLinks?.[scopeId];
+  if (link) {
+    // A scope writing after its parent's structural entry re-links through
+    // it; a paired branch ignores the creation ids its child entry carries.
+    const { parent, link: hop, content: contentId, slots: slotIds } = link;
+    if (typeof hop === "string") {
+      if (contentId) shipShell(state, contentId);
+      const entry =
+        slotIds && patchNode(state, [patch, contentId || 0, ...slotIds]);
+      writePatch(state, parent, entryKey(PatchKey.Child, hop), entry || patch);
+      return entry;
+    } else {
+      (
+        (ensureScopePatch(state, parent)[
+          entryKey(PatchKey.LoopItem, hop[0])
+        ] ??= patchNode(state, [])) as unknown[]
+      ).push(hop[1], patch);
+    }
+  } else if (scopeId === ROOT_SCOPE_ID) {
+    // Every other patch nests inside an ancestor's structural entry rooted
+    // here (`queueScope` is patch-inert, so the root registers directly).
+    _scope(scopeId, patch);
+    // A lazy module is named only by the frame that first needs it.
+    state.patchFlushReadyIds = undefined;
+    const { channel } = getChunk()!;
+    channel.writeScopes[scopeId] = patch;
+    channel.flushScopes = true;
+  }
 }
 
 // The frame holding the current root names the lazy modules it is the first of
@@ -560,16 +602,21 @@ export function _unfilled_if(owned?: GroupMask, group?: number) {
   return bits & 1 || (bits && inUnpatched()) ? 1 : undefined;
 }
 
-// Where a hole's fill goes: the scope's patch if server-owned, else a created
-// scope's setup envelope (`0` if none); a page render (`undefined`) writes html.
-export function ensureFills(scopeId: number, mask: GroupMask, group: number) {
+// Where a hole's fill goes: the scope's patch if server-owned, else a created scope's setup
+// envelope unless a client source delivers it (`setup`: still), else `0`; a page writes html.
+export function ensureFills(
+  scopeId: number,
+  mask: GroupMask,
+  group: number,
+  setup?: 1,
+) {
   const state = getState();
   if (!(state instanceof PatchUpdateState)) {
     walkMarkers(getState());
     return;
   }
   const owned = groupSources(mask, group);
-  if (owned !== 2 && !inCreatable()) return 0;
+  if (owned !== 2 && ((owned && !setup) || !inCreatable())) return 0;
   const patch = ensureScopePatch(state, scopeId);
   return owned === 2 ? patch : ensurePatchSetup(state, patch);
 }

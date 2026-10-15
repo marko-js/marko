@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wi", label, 1);
 	_html(`<button>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a2", void 0, _client_guard($scope0_reason, 0));
 	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "ea2", "i");
 	_patch_value($scope0_id, "va3", count, 1);
 	$scope0_page ? _scope($scope0_id, {

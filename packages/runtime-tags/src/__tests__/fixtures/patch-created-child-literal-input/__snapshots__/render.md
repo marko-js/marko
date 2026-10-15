@@ -15,6 +15,7 @@
 ```
 INSERT: button, .title
 UPDATE: button::text " " => "0"
+UPDATE: .title::text@7 "" => "0"
 ```
 
 # Update

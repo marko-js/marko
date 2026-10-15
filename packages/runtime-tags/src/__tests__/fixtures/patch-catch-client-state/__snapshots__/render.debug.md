@@ -32,9 +32,8 @@ container.querySelector(selector).click();
 ```
 INSERT: .rename + .inc
 REMOVE: .inc + p
-UPDATE: .inc::text@0 "" => "label!: SHOWN_x"
 UPDATE: .inc::text@16 "" => "0"
-UPDATE: .inc::text@0 "label: SHOWN_x" => "label!: SHOWN_x"
+UPDATE: .inc::text@0 "" => "label!: SHOWN_x"
 ```
 
 # Update

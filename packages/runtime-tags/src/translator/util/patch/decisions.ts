@@ -26,6 +26,7 @@ import { findSlot, SlotKind, type Slot } from "../slots";
 import { hasCallerParamSource, mergeSources, type Sources } from "../sources";
 import { TagNameType } from "../tag-name-type";
 import {
+  catchSetupRenders,
   isBranchPathSection,
   writesPatchIn,
   isKnownChildNode,
@@ -98,12 +99,17 @@ export function writesPatchHandler(tagSection: Section, value: t.Expression) {
   }
 }
 
-// A hole a patch writes: in patch-written structure and not state-sourced.
+// A hole a patch writes: in patch-written structure, not state-sourced, and
+// not one a `@catch`'s setup renders.
 export function writesPatchHole(
   section: Section,
   extra: t.NodeExtra | undefined,
 ) {
-  return writesPatchIn(section) && !isStateSourcedExpr(extra);
+  return (
+    writesPatchIn(section) &&
+    !isStateSourcedExpr(extra) &&
+    !catchSetupRenders(section, getWriteSources(extra))
+  );
 }
 
 // A read rendering a hole a patch fills: its value renders into its node in
