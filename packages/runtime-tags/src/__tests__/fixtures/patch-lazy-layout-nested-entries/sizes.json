@@ -13,8 +13,8 @@
       "brotli": 81
     },
     "template.marko.page.mjs": {
-      "min": 1807,
-      "brotli": 833
+      "min": 1825,
+      "brotli": 847
     },
     "page-a.mjs": {
       "min": 402,

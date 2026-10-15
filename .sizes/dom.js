@@ -2073,7 +2073,7 @@ function patch($global, signal, replay) {
     root,
     commit,
     reader,
-    responseCtx = (data, id, content) => (id ? bindRef(root, data, id, content) : trees[data]);
+    responseCtx = (data, id, bound) => (id ? bindRef(root, data, id, bound) : trees[data]);
   responseCtx._ = _resumed;
   let render = curRenders[$global.renderId],
     stop = () => {

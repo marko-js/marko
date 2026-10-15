@@ -7,10 +7,8 @@
       "PatchBranch:#text/0": [{
         "PatchDynamicTag:#text/0": "#childScope/0 packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-loop-locals/tags/src.marko_1*content",
         "PatchChild:BranchScopes:#text/0": {
-          "PatchText:#text/1": "b",
-          "PatchSetup:": {
-            "PatchWrite:t": "b"
-          }
+          "PatchWrite:t": "b",
+          "PatchText:#text/1": "b"
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-loop-locals/tags/view.marko_2*shell"]
     }, {

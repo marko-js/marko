@@ -143,13 +143,13 @@ function isPatchRefreshableBinding(binding: Binding) {
   );
 }
 
-// A scope a flush writes into: a called body or paired/created branch on the
-// branch path outside stateful structure (the client's), or a boundary body.
+// A scope a flush writes into: a called body, a boundary body, or a branch or
+// attribute tag `<for>` content on the branch path outside stateful structure.
 function isPatchWrittenSection(section: Section) {
   return (
     (isCalledBody(section) && !inResumedStructure(section)) ||
     section.branch?.optional === false ||
-    (!!section.branch?.optional &&
+    ((!!section.branch?.optional || !!section.localClosures) &&
       isBranchPathSection(section) &&
       !isStatefulBranch(section))
   );

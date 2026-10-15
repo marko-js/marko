@@ -13,14 +13,17 @@ import {
   type Boundary,
   type Chunk,
   type GroupMask,
+  type PartialScope,
   type ScopeInternals,
   type Channel,
   State,
   _attr_content as _base_attr_content,
+  _resume_locals as _base_resume_locals,
   _subscribe as _base_subscribe,
   _var as _base_var,
   _html,
   _peek_scope_id,
+  _resume,
   _scope,
   getChunk,
   getState,
@@ -738,14 +741,26 @@ function bindEntry(state: PatchUpdateState, scopeId: number, value: unknown) {
   const up = bound && findOwnerDepth(state, scopeId, bound[K_SCOPE_ID]);
   if (up !== undefined) {
     // Render-only locals (a loop's values) ride along, as the document's
-    // call to the registered factory passes them.
+    // call to the registered factory passes them; a function's ride its reference.
     const locals = registered!.locals?.(state.scope);
-    return locals
-      ? [registered!.id, up, ...locals]
-      : up
-        ? [registered!.id, up]
-        : registered!.id;
+    if (!locals) return up ? [registered!.id, up] : registered!.id;
+    if ((value as ServerRenderer)[RendererProp.Id]) {
+      return [registered!.id, up, ...locals];
+    }
   }
+}
+
+// A patch has no client scope for a function's render-only locals: they ride
+// its reference to the owner (`PatchSerializerState.writeScopedRegistration`).
+export function _resume_locals<T extends WeakKey>(
+  val: T,
+  id: string,
+  locals: PartialScope,
+  ownerScopeId?: number,
+): T {
+  return getState() instanceof PatchUpdateState
+    ? _resume(val, id, ownerScopeId ?? ROOT_SCOPE_ID, () => [locals])
+    : _base_resume_locals(val, id, locals, ownerScopeId);
 }
 
 // A patched scope write: setup entries nest under `s` AFTER the seeds, so

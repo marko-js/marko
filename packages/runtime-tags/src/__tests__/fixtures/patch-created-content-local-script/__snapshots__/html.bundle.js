@@ -29,9 +29,10 @@ var template_default = _template("a", (input) => {
 		$item = attrTags($item, { content: _content_elide("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
+			_patch_write($scope1_id, "wa", label);
 			_html("<p>item</p>");
 			_script($scope1_id, "a1", 0);
-			_patch_write($scope1_id, "wa", label, 1);
+			_patch_effect($scope1_id, "ea1", "a");
 			_scope($scope1_id, { a: label });
 		}, $scope0_id) });
 	});

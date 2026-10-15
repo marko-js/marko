@@ -21,6 +21,7 @@ export {
 export { _template_patch as _template } from "./patches/template";
 export {
   _attr_content,
+  _resume_locals,
   _subscribe,
   _var,
   _write_guard,

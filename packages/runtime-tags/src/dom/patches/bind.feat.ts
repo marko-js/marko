@@ -39,8 +39,9 @@ patchers[PatchKey.BindValue] = resolvedFill(patchers);
 createPatchers[PatchKey.BindValue] = resolvedFill(createPatchers);
 
 // Any other bound registration is its scope's path from the page root,
-// walked on use since the flush may not have created that scope yet.
-installBindRef((root, path, id, content) => {
+// walked on use since the flush may not have created that scope yet; a
+// function closing over render-only locals takes them as its scope instead.
+installBindRef((root, path, id, bound) => {
   const resolve = () => {
     let scope = root;
     for (const hop of path) {
@@ -51,7 +52,7 @@ installBindRef((root, path, id, content) => {
     }
     return scope;
   };
-  return content
+  return bound === 1
     ? Object.defineProperty(
         getRegisteredWithScope<(owner?: Scope) => Renderer>(id)(),
         RendererProp.Owner,
@@ -60,7 +61,7 @@ installBindRef((root, path, id, content) => {
     : (...args: unknown[]) =>
         getRegisteredWithScope<(...args: unknown[]) => unknown>(
           id,
-          resolve(),
+          bound ? ((bound[AccessorProp.Owner] = resolve()), bound) : resolve(),
         )(...args);
 });
 

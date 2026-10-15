@@ -106,10 +106,10 @@ export let frameWait: () => (applied: unknown) => void;
 export type PatchHop = string | [accessor: string, at: LoopItemAt];
 export type LoopItemAt = number | [index: number, key: unknown];
 
-// `_(path, id, content?)` in a frame: a registration bound to the scope `path`
-// reaches from the page root, resolved by `patches/bind`.
+// `_(path, id, content or locals?)` in a frame: a registration bound to the
+// scope `path` reaches from the page root, resolved by `patches/bind`.
 let bindRef:
-  | ((root: Scope, path: PatchHop[], id: string, content?: 1) => unknown)
+  | ((root: Scope, path: PatchHop[], id: string, bound?: 1 | Scope) => unknown)
   | undefined;
 export function installBindRef(resolve: NonNullable<typeof bindRef>) {
   bindRef = resolve;
@@ -157,9 +157,13 @@ export function patch(
   let root: Scope;
   let commit: (() => void) | undefined;
   let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
-  const responseCtx = ((data: number | PatchHop[], id?: string, content?: 1) =>
+  const responseCtx = ((
+    data: number | PatchHop[],
+    id?: string,
+    bound?: 1 | Scope,
+  ) =>
     id
-      ? bindRef!(root, data as PatchHop[], id, content)
+      ? bindRef!(root, data as PatchHop[], id, bound)
       : trees[data as number]) as SerializeContext;
   responseCtx._ = _resumed;
   // The signal, a failure or the next `patch()` stops the response at once:

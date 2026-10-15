@@ -9,6 +9,7 @@ import {
   quoteRegisterId,
   toObjectKey,
   writeDeferred,
+  writeLocalArgs,
   writeProp,
 } from "../serializer";
 import type { ScopeInternals } from "../writer";
@@ -68,11 +69,12 @@ export class PatchSerializerState extends SerializerState {
   }
 
   // Only content is marked: it resolves to a renderer as the flush parses,
-  // while a function stays a call made on use (its module may load later).
+  // while a function stays a call made on use (its module may load later),
+  // taking the render-only locals it closes over as its scope.
   override writeScopedRegistration(
     val: WeakKey,
-    _parent: Reference | null,
-    _accessor: string,
+    parent: Reference | null,
+    accessor: string,
     registered: Registered,
   ) {
     this.buf.push("_([");
@@ -80,13 +82,17 @@ export class PatchSerializerState extends SerializerState {
       (registered.scope as ScopeInternals)[K_SCOPE_ID]!,
       registered.id,
     );
-    this.buf.push(
-      "]," +
-        quoteRegisterId(registered.id) +
-        ((val as { [RendererProp.Id]?: string })[RendererProp.Id]
-          ? ",1)"
-          : ")"),
-    );
+    this.buf.push("]," + quoteRegisterId(registered.id));
+    if ((val as { [RendererProp.Id]?: string })[RendererProp.Id]) {
+      this.buf.push(",1");
+    } else if (registered.locals) {
+      writeLocalArgs(
+        this,
+        new Reference(parent, accessor, this.flushId, this.buf.length),
+        registered.locals(this.boundary.state.scope),
+      );
+    }
+    this.buf.push(")");
   }
 
   // Patch scope ids have no client-side map, so a bound registration names
@@ -94,13 +100,11 @@ export class PatchSerializerState extends SerializerState {
   writeScopePath(scopeId: number, id: string) {
     if (scopeId === ROOT_SCOPE_ID) return;
     const link = this.render.patchLinks?.[scopeId];
+    // Failing the render answers with a document instead of a wrong patch.
     if (!link) {
-      if (MARKO_DEBUG) {
-        throw new Error(
-          `A patch cannot deliver the scoped registration "${id}".`,
-        );
-      }
-      return;
+      throw MARKO_DEBUG
+        ? new Error(`A patch cannot deliver the scoped registration "${id}".`)
+        : new Error();
     }
     this.writeScopePath(link.parent, id);
     if (link.parent !== ROOT_SCOPE_ID) this.buf.push(",");

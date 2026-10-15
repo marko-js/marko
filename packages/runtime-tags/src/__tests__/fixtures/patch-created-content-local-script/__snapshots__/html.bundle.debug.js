@@ -32,9 +32,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$item = attrTags($item, { content: _content_elide("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
+			_patch_write($scope1_id, "PatchWrite:label", label);
 			_html("<p>item</p>");
 			_script($scope1_id, "__tests__/template.marko_1_label#0", 0);
-			_patch_write($scope1_id, "PatchWrite:label", label, 1);
+			_patch_effect($scope1_id, "PatchEffect:__tests__/template.marko_1_label#0", "label");
 			_scope($scope1_id, { label }, "__tests__/template.marko", "3:6", { label: "2:8" });
 		}, $scope0_id) });
 	});

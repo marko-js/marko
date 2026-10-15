@@ -21,9 +21,9 @@ var src_default = _template("c", (input) => {
 		$tab = attrTags($tab, { content: _content_elide("c0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
+			_patch_write($scope1_id, "wc", t);
 			_html(`<button>${_patch_text($scope1_id, "b", t)}</button>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "c1");
-			_patch_write($scope1_id, "wc", t, 1);
 			_scope($scope1_id, { c: t });
 		}, $scope0_id) });
 	});

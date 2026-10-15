@@ -306,14 +306,14 @@ function ownerPrefix(
     const link: PatchLink | undefined = state.patchLinks?.[cur];
     if (typeof link?.link !== "string") {
       if (relative) return relative;
-      if (MARKO_DEBUG) {
-        throw new Error(
-          link
-            ? `Content defined in a \`<for>\` row was rendered outside the row. Only a side effect during render, which Marko does not support, can move it there.`
-            : `A patch cannot reach the owner scope ${ownerId} of dynamic tag content.`,
-        );
-      }
-      return "^";
+      // Failing the render answers with a document instead of a wrong patch.
+      throw MARKO_DEBUG
+        ? new Error(
+            link
+              ? `Content defined in a \`<for>\` row was rendered outside the row. Only a side effect during render, which Marko does not support, can move it there.`
+              : `A patch cannot reach the owner scope ${ownerId} of dynamic tag content.`,
+          )
+        : new Error();
     }
     hops = link.link + " " + hops;
     cur = link.parent;
