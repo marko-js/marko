@@ -43,17 +43,18 @@ function renderPatch(
   input: TemplateInput = {},
   headers?: PatchHeaders,
 ): RenderedTemplate {
-  // Patches answer page navigations only; an embedded render (a micro-frame)
-  // has no page whose shells the token could name.
-  if (this[RendererProp.Embed]) {
-    throw new Error(
-      "Marko patches only render page templates; this template renders embedded, so request it as a document.",
-    );
-  }
-  if (!patchBuild) {
-    throw new Error(
-      "Marko patches render only once the server names its build with `setPatchBuild`.",
-    );
+  if (MARKO_DEBUG) {
+    // An embedded render (a micro-frame) has no page whose shells a token names.
+    if (this[RendererProp.Embed]) {
+      throw new Error(
+        "Marko patches only render page templates; this template renders embedded, so request it as a document.",
+      );
+    }
+    if (!patchBuild) {
+      throw new Error(
+        "Marko patches render only once the server names its build with `setPatchBuild`.",
+      );
+    }
   }
   // Globals re-ship every flush, undefined included, so the live page's
   // `$global` never reads stale.
@@ -87,19 +88,13 @@ export type PatchHeaders =
   | Record<string, string | undefined>
   | { get(name: string): string | null };
 
-/** What a request asks of the server's build, to answer before rendering
- * anything. A patch request ends its query with a bare `~` (`?~`, or `&~` after
- * other parameters), which this strips from `url` in place so the app sees the
- * page's own URL, and names the page's build in `x-marko-patch`: `"patch"` from
- * its own build, `"stale"` from another's (any, until `setPatchBuild` names
- * one). Without the marker (dropped, moved or rewritten by a cache or proxy) it
- * is a document request (`undefined`).
+/** A `~`-marked request's kind, `"patch"` or another build's `"stale"`; strips the marker from `url`.
  * @experimental The patch protocol may change in a minor release. */
 export function patchRequest(headers: PatchHeaders, url: URL) {
   const { search } = url;
-  const marked = patchMarkerReg.test(search);
-  if (marked) url.search = search.slice(0, -2);
-  const value = marked ? readHeader(headers, "x-marko-patch") : null;
+  if (!patchMarkerReg.test(search)) return;
+  url.search = search.slice(0, -2);
+  const value = readHeader(headers, "x-marko-patch");
   return value == null
     ? undefined
     : patchBuild && value.startsWith(patchBuild + ";")
@@ -111,11 +106,7 @@ export function patchRequest(headers: PatchHeaders, url: URL) {
 // cache keys on, with the separator before it.
 const patchMarkerReg = /[?&]~$/;
 
-/** The headers to add for a request of `kind`: a patch is uncached JavaScript
- * marked with its build, which the page checks against its own; another
- * build's request is refused before any handler runs, uncached, with status 412
- * and no body, so the page loads the document (or submits a form natively); a
- * document needs none, as the request's `~` marker keys a patch apart in caches.
+/** Headers for a request of `kind`: an uncached patch marked with its build, or another build's 412 refusal.
  * @experimental The patch protocol may change in a minor release. */
 export function patchResponseHeaders(
   kind: ReturnType<typeof patchRequest>,

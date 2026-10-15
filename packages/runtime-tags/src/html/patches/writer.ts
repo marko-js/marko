@@ -42,11 +42,7 @@ import { encodeHeld } from "./token";
 // its requests' header (`patchRequest`) and the mark of a patch it answers.
 export let patchBuild: string | undefined;
 
-/** Names the build this server renders, once, before it renders a patch page.
- * Every page names it and every patch request and patch carries it, so a page
- * of another build is never patched (its request answers `"stale"`), and
- * patches render only once a build is named. The id must change whenever the
- * server or client output does; it is written raw in a script and in headers.
+/** Names this server's build, which must change with any server or client output, before a patch page renders.
  * @experimental The patch protocol may change in a minor release. */
 export function setPatchBuild(build: string) {
   if (MARKO_DEBUG && !/^[^"\\<;\0-\x1f\x7f]+$/.test(build)) {

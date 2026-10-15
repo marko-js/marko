@@ -139,8 +139,7 @@ export function getLoopItem(
 /** The live page's `$global`: names its render and holds its document's nonce. */
 export type PatchGlobal = { renderId: string; cspNonce?: string };
 
-/** The live page's side of `template.patch`: a request's headers (build, held
- * shells) and its response's apply, run as page code (fetch `same-origin`).
+/** The page's side of `template.patch`: a request's headers and its response's apply.
  * @experimental The patch protocol may change in a minor release. */
 export function patch(
   $global: PatchGlobal,
