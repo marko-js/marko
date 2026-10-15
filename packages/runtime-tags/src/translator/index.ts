@@ -56,17 +56,19 @@ export const taglibs = [
   ],
 ];
 
+// The output's main entry first: a patch build's is its `patch` entry, the
+// runtime with that side of the protocol.
 export function getRuntimeEntryFiles(
   output: Config["output"],
   optimize: boolean,
   patches: boolean,
 ) {
   const runtime = `${runtimeInfo.name}${optimize ? "" : "/debug"}`;
-  const patchEntry = patches ? [`${runtime}/${output}/patch`] : [];
-  if (output === "html") return [`${runtime}/html`, ...patchEntry];
+  const entry = `${runtime}/${output}`;
+  const entries = patches ? [`${entry}/patch`, entry] : [entry];
+  if (output === "html") return entries;
   return [
-    `${runtime}/dom`,
-    ...patchEntry,
+    ...entries,
     ...(patches
       ? [...domRuntimeFeatures, ...domPatchRuntimeFeatures]
       : domRuntimeFeatures

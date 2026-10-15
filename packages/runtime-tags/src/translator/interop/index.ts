@@ -60,8 +60,8 @@ export function createInteropTranslator(translate5: any) {
       patches: boolean,
     ) {
       return [
-        ...translate5.getRuntimeEntryFiles(output, optimize),
         ...translate6.getRuntimeEntryFiles(output, optimize, patches),
+        ...translate5.getRuntimeEntryFiles(output, optimize),
       ];
     },
   };

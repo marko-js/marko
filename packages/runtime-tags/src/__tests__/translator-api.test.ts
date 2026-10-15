@@ -52,14 +52,14 @@ describe("runtime-tags/translator-api", () => {
       ]);
     });
 
-    it("adds each side's patch entry and features for a patch build", () => {
+    it("leads with each side's patch entry for a patch build", () => {
       assert.deepEqual(translator.getRuntimeEntryFiles("html", true, true), [
-        "@marko/runtime-tags/html",
         "@marko/runtime-tags/html/patch",
+        "@marko/runtime-tags/html",
       ]);
       assert.deepEqual(translator.getRuntimeEntryFiles("dom", true, true), [
-        "@marko/runtime-tags/dom",
         "@marko/runtime-tags/dom/patch",
+        "@marko/runtime-tags/dom",
         ...[...domRuntimeFeatures, ...domPatchRuntimeFeatures].map(
           (feature) => `@marko/runtime-tags/dom/${feature}.feat`,
         ),
@@ -70,9 +70,9 @@ describe("runtime-tags/translator-api", () => {
       const interop = require("marko/translator") as ReturnType<
         typeof import("../translator/interop").createInteropTranslator
       >;
-      const entries = interop.getRuntimeEntryFiles("html", false, false);
-      assert.ok(entries.includes("@marko/runtime-tags/debug/html"));
-      assert.ok(entries.length > 1);
+      const entries = interop.getRuntimeEntryFiles("html", false, true);
+      assert.equal(entries[0], "@marko/runtime-tags/debug/html/patch");
+      assert.ok(entries.length > 2);
     });
   });
 
