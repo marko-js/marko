@@ -273,7 +273,7 @@ export function patch(
             : fail();
       commit = onCommit;
       // A server marks a patch with its build; anything else (another build's,
-      // or a 412) is a document the caller loads, and a stopped response is not read.
+      // or its refusal) is a document the caller loads; a stopped one is not read.
       if (
         render[RenderDataProp.PatchResponse] !== stop ||
         response.headers.get("x-marko-patch") !==

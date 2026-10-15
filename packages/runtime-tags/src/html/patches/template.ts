@@ -101,8 +101,10 @@ export function patchRequest(headers: PatchHeaders) {
 }
 
 /** The headers to add for a request of `kind`: every page varies on the
- * request, and a patch is uncached JavaScript marked with its build, which the
- * page checks against its own.
+ * request; a patch is uncached JavaScript marked with its build, which the
+ * page checks against its own; and another build's request is refused before
+ * any handler runs, uncached, with status 412 and no body, so the page loads
+ * the document (or submits a form natively).
  * @experimental The patch protocol may change in a minor release. */
 export function patchResponseHeaders(
   kind: ReturnType<typeof patchRequest>,
@@ -114,7 +116,12 @@ export function patchResponseHeaders(
         "cache-control": "no-store",
         "x-marko-patch": patchBuild!,
       }
-    : { vary: "x-marko-patch" };
+    : kind === "stale"
+      ? {
+          vary: "x-marko-patch",
+          "cache-control": "no-store",
+        }
+      : { vary: "x-marko-patch" };
 }
 
 function readHeader(headers: PatchHeaders, name: string) {

@@ -83,10 +83,14 @@ describe("patch token", () => {
     assert.equal(patchRequest(new Headers()), undefined);
   });
 
-  it("varies every page on the request and marks a patch with its build", () => {
+  it("varies every page on the request, marks a patch with its build and refuses another build's", () => {
     assert.deepEqual(patchResponseHeaders(undefined), {
       vary: "x-marko-patch",
     });
     assert.equal(patchResponseHeaders("patch")["x-marko-patch"], "b1");
+    assert.deepEqual(patchResponseHeaders("stale"), {
+      vary: "x-marko-patch",
+      "cache-control": "no-store",
+    });
   });
 });
