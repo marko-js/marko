@@ -29,8 +29,8 @@
 ```
 ## Change
 ```
-REMOVE: div
 INSERT: span
+REMOVE: span + div
 ```
 
 # Update `{"text":"xaxb","$global":{"theme":"u"}}`
@@ -52,6 +52,6 @@ INSERT: span
 ```
 ## Change
 ```
-REMOVE: span
 INSERT: div
+REMOVE: div + span
 ```

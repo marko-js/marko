@@ -23,8 +23,8 @@
 ```
 ## Change
 ```
-REMOVE: p
 INSERT: nav, main
+REMOVE: main + p
 INSERT: nav > :is(a, a)
 ```
 
@@ -43,8 +43,8 @@ INSERT: nav > :is(a, a)
 ```
 ## Change
 ```
-REMOVE: main > h1
 INSERT: main > h1
+REMOVE: main > h1 + h1
 REMOVE: nav > a + a
 ```
 
@@ -56,7 +56,7 @@ REMOVE: nav > a + a
 ```
 ## Change
 ```
-REMOVE: nav
-REMOVE: main
 INSERT: p
+REMOVE: p + nav
+REMOVE: p + main
 ```

@@ -62,7 +62,6 @@ UPDATE: button::text "open" => "close"
 ## Change
 ```
 INSERT: ul > li:nth-of-type(1) + li
-UPDATE: ul > li:nth-of-type(2) > button::text@2 "" => "0"
 ```
 
 # Update
@@ -121,5 +120,4 @@ UPDATE: ul > li:nth-of-type(1) > button::text@2 "0" => "1"
 ```
 REMOVE: ul > li
 INSERT: ul > li:nth-of-type(1) + li
-UPDATE: ul > li:nth-of-type(2) > button::text@2 "" => "0"
 ```

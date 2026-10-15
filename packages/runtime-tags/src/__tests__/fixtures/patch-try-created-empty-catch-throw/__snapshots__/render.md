@@ -16,9 +16,7 @@
 ```
 ## Change
 ```
-INSERT: main > button
-INSERT: main > em
-UPDATE: main > button::text " " => "ok"
+INSERT: main > :is(em, button)
 ```
 
 # Update

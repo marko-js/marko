@@ -16,7 +16,6 @@
 ## Change
 ```
 INSERT: main > section
-INSERT: main > section > em
 ```
 
 # Update `{"show":true,"value":"y"}`
@@ -56,5 +55,4 @@ REMOVE: main > section
 ## Change
 ```
 INSERT: main > section
-INSERT: main > section > em
 ```

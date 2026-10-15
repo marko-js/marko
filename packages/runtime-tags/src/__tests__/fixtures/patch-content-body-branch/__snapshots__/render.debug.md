@@ -55,8 +55,8 @@ UPDATE: main > section > strong::text@2 "x" => "y"
 ```
 ## Change
 ```
-REMOVE: main > section > h2 + strong
 INSERT: main > section > h2 + em
+REMOVE: main > section > em + strong
 ```
 
 # Update `{"show":true,"title":"v","alt":true,"note":"z"}`

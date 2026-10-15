@@ -17,5 +17,4 @@
 ## Change
 ```
 INSERT: main
-UPDATE: main > button::text@2 "" => "0"
 ```

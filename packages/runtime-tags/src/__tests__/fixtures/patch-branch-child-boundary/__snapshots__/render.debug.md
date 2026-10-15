@@ -19,7 +19,6 @@
 ```
 ## Change
 ```
-REMOVE: main > em
 INSERT: main > .ld
-INSERT: .ld::text("one")
+REMOVE: main > em
 ```

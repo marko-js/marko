@@ -39,9 +39,8 @@
 ```
 ## Change
 ```
-REMOVE: p
 INSERT: nav, main
-UPDATE: main > button::text " " => "0"
+REMOVE: main + p
 UPDATE: main > section:nth-of-type(1) > span::text@3 "" => "0"
 UPDATE: main > section:nth-of-type(2) > span::text@3 "" => "0"
 INSERT: nav > a
@@ -69,13 +68,12 @@ INSERT: nav > a
 ```
 ## Change
 ```
-REMOVE: main > h1
-REMOVE: main > section
-REMOVE: main > section
-REMOVE: main > button
 INSERT: main > :is(h1, p, p, button)
+REMOVE: main > button + h1
+REMOVE: main > button + section
+REMOVE: main > button + section
+REMOVE: main > button + button
 UPDATE: nav > a::text "x" => "y"
-UPDATE: main > button::text " " => "0"
 ```
 
 # Update `{"page":2,"note":"b2","list":{"value":["z"]}}`
@@ -112,13 +110,12 @@ UPDATE: main > button::text " " => "0"
 ```
 ## Change
 ```
-REMOVE: main > h1
-REMOVE: main > p
-REMOVE: main > p
-REMOVE: main > button
 INSERT: main > :is(h1, section, section, button)
+REMOVE: main > button + h1
+REMOVE: main > button + p
+REMOVE: main > button + p
+REMOVE: main > button + button
 UPDATE: nav > a::text "y" => "z"
-UPDATE: main > button::text " " => "0"
 UPDATE: main > section:nth-of-type(1) > span::text@3 "" => "0"
 UPDATE: main > section:nth-of-type(2) > span::text@3 "" => "0"
 ```

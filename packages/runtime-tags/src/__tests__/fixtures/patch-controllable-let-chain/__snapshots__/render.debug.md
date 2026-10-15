@@ -12,5 +12,4 @@
 ## Change
 ```
 INSERT: input, input
-UPDATE: input:nth-of-type(2)[value] null => "y"
 ```

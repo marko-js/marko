@@ -20,7 +20,6 @@
 ```
 INSERT: section
 UPDATE: p::text "a" => "b"
-INSERT: section > b
 ```
 
 # Update `{"show":false,"label":"c"}`
@@ -50,5 +49,4 @@ UPDATE: p::text "b" => "c"
 ```
 INSERT: section
 UPDATE: p::text "c" => "d"
-INSERT: section > b
 ```

@@ -32,9 +32,8 @@
 ```
 ## Change
 ```
-REMOVE: p
 INSERT: nav, main
-UPDATE: main > button::text " " => "0"
+REMOVE: main + p
 INSERT: nav > :is(a, a)
 ```
 
@@ -56,11 +55,11 @@ INSERT: nav > :is(a, a)
 ```
 ## Change
 ```
-REMOVE: main > h1
-REMOVE: main > p
-REMOVE: main > p
-REMOVE: main > button
 INSERT: main > :is(h1, p)
+REMOVE: main > p + h1
+REMOVE: main > p + p
+REMOVE: main > p + p
+REMOVE: main > p + button
 REMOVE: nav > a + a
 ```
 
@@ -85,11 +84,10 @@ REMOVE: nav > a + a
 ```
 ## Change
 ```
-REMOVE: main > h1
-REMOVE: main > p
 INSERT: main > :is(h1, p, button)
+REMOVE: main > button + h1
+REMOVE: main > button + p
 UPDATE: nav > a::text "x" => "z"
-UPDATE: main > button::text " " => "0"
 ```
 
 # Update `{"page":0}`
@@ -100,7 +98,7 @@ UPDATE: main > button::text " " => "0"
 ```
 ## Change
 ```
-REMOVE: nav
-REMOVE: main
 INSERT: p
+REMOVE: p + nav
+REMOVE: p + main
 ```

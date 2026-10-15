@@ -37,8 +37,8 @@
 ```
 ## Change
 ```
-REMOVE: main > section:nth-of-type(1) > b
 INSERT: main > section:nth-of-type(1) > i
+REMOVE: main > section:nth-of-type(1) > i + b
 ```
 
 # Update
@@ -139,7 +139,7 @@ REMOVE: main > section:nth-of-type(2) > b
 ```
 ## Change
 ```
-REMOVE: main > section:nth-of-type(1) > i
 INSERT: main > section:nth-of-type(1) > b
+REMOVE: main > section:nth-of-type(1) > b + i
 INSERT: main > section:nth-of-type(2) > b
 ```

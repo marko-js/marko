@@ -69,33 +69,32 @@ function create(
   branchPatch: Scope,
   shellId: string,
 ) {
-  // An only-child conditional's accessor holds its container element rather
-  // than a marker (mirrors `setBranch`'s anchoring).
+  // Anchored as `setBranch` does: in an only-child conditional's container,
+  // else before the live branch (a client render removed the marker) or marker.
   const marker = scope[
     branchKey.slice(AccessorPrefix.BranchScopes.length) as Accessor
   ] as Comment | Element;
-  const inside = marker.nodeType === NodeType.Element;
-  const parentNode = inside
-    ? (marker as Element)
-    : (marker.parentNode as Element);
-  const branch = createAndSetupBranch(
+  const liveBranch = scope[branchKey] as BranchScope | undefined;
+  const anchor =
+    marker.nodeType > NodeType.Element
+      ? liveBranch?.[AccessorProp.StartNode] || marker
+      : null;
+  const parentNode = (anchor ? anchor.parentNode : marker) as Element;
+  const branch = (scope[branchKey] = createAndSetupBranch(
     scope[AccessorProp.Global],
     getContent(shellId)!,
     scope,
     parentNode,
-  );
-  // Created before the live branch goes, as `setBranch` does.
-  if (scope[branchKey]) {
-    removeAndDestroyBranch(scope[branchKey] as BranchScope);
-  }
-  scope[branchKey] = branch;
+  ));
   // Nested entries create recursively (no live children); applied before
   // insertion so a script's attributes (its nonce) are set when it runs.
   withCreating(patchScope, branchPatch, branch as Scope);
   insertChildNodes(
     parentNode,
-    inside ? null : marker,
+    anchor,
     branch[AccessorProp.StartNode],
     branch[AccessorProp.EndNode],
   );
+  // The live branch goes once the new one is in, as `setBranch` does.
+  if (liveBranch) removeAndDestroyBranch(liveBranch);
 }

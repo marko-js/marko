@@ -19,8 +19,6 @@
 ## Change
 ```
 INSERT: main > :is(button, .child)
-UPDATE: main > button::text " " => "0"
-UPDATE: .child::text@6 "" => "0"
 ```
 
 # Update

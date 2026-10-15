@@ -31,9 +31,8 @@
 ```
 ## Change
 ```
-REMOVE: main > button
 INSERT: main > .b
-UPDATE: .b::text@2 "" => "0"
+REMOVE: .b + button
 ```
 
 # Update `{"page":0}`
@@ -53,9 +52,8 @@ UPDATE: .b::text@2 "" => "0"
 ```
 ## Change
 ```
-REMOVE: main > button
 INSERT: main > .a
-UPDATE: .a::text@2 "" => "0"
+REMOVE: .a + button
 ```
 
 # Update `{"page":1}`
@@ -75,7 +73,6 @@ UPDATE: .a::text@2 "" => "0"
 ```
 ## Change
 ```
-REMOVE: main > button
 INSERT: main > .b
-UPDATE: .b::text@2 "" => "0"
+REMOVE: .b + button
 ```

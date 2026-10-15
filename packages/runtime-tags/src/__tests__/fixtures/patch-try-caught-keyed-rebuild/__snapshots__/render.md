@@ -40,7 +40,6 @@ REMOVE: main::text + button
 ```
 REMOVE: main::text("caught")
 INSERT: main > :is(p, button)
-UPDATE: main > button::text " " => "0"
 ```
 
 # Update

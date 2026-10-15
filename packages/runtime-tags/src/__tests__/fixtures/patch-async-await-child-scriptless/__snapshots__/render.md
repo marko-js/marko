@@ -19,8 +19,8 @@
 ```
 ## Change
 ```
-REMOVE: main > em
 INSERT: main > .pill
+REMOVE: main > em
 ```
 
 # Update `{"show":true,"promise":{}}`

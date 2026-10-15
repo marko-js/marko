@@ -62,6 +62,6 @@ UPDATE: i::text "" => "c"
 ```
 INSERT: .inc
 REMOVE: .inc + i
-UPDATE: .inc::text@0 "" => "d"
 UPDATE: .inc::text@2 "" => "0"
+UPDATE: .inc::text@0 "" => "d"
 ```

@@ -54,9 +54,8 @@ UPDATE: header > button::text "open" => "close"
 ```
 ## Change
 ```
-REMOVE: main > button
 INSERT: main > .b
-UPDATE: .b::text@2 "" => "0"
+REMOVE: .b + button
 ```
 
 # Update
@@ -99,9 +98,8 @@ UPDATE: .b::text@2 "0" => "1"
 ```
 ## Change
 ```
-REMOVE: main > button
 INSERT: main > .a
-UPDATE: .a::text@2 "" => "0"
+REMOVE: .a + button
 ```
 
 # Update

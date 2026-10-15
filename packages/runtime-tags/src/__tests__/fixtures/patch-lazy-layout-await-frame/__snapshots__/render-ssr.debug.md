@@ -40,8 +40,8 @@
 ```
 ## Change
 ```
-REMOVE: main > p
 INSERT: main > :is(nav, article)
+REMOVE: main > article + p
 INSERT: main > nav > :is(a, a, svg)
 ```
 
@@ -72,8 +72,8 @@ INSERT: main > nav > :is(a, a, svg)
 ```
 ## Change
 ```
-REMOVE: main > article > h1
 INSERT: main > article > h1
+REMOVE: main > article > h1 + h1
 UPDATE: main > nav > a::text "x" => "z"
 REMOVE: main > nav > a + a
 UPDATE: main > nav > svg[viewBox] "x" => "z"
@@ -93,7 +93,7 @@ UPDATE: main > nav > svg > path[d] "x" => "z"
 ```
 ## Change
 ```
-REMOVE: main > nav
-REMOVE: main > article
 INSERT: main > p
+REMOVE: main > p + nav
+REMOVE: main > p + article
 ```

@@ -28,8 +28,8 @@
 ```
 ## Change
 ```
-REMOVE: main > p
 INSERT: main > :is(nav, article)
+REMOVE: main > article + p
 ```
 
 # Update `{"page":2}`
@@ -50,8 +50,8 @@ INSERT: main > :is(nav, article)
 ```
 ## Change
 ```
-REMOVE: main > article > h1
 INSERT: main > article > h1
+REMOVE: main > article > h1 + h1
 ```
 
 # Update `{"page":0}`
@@ -67,7 +67,7 @@ INSERT: main > article > h1
 ```
 ## Change
 ```
-REMOVE: main > nav
-REMOVE: main > article
 INSERT: main > p
+REMOVE: main > p + nav
+REMOVE: main > p + article
 ```

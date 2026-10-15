@@ -77,6 +77,6 @@ UPDATE: main > p::text "Fresh@1" => "Fresh@2"
 ```
 ## Change
 ```
-REMOVE: main > p
 INSERT: main > p
+REMOVE: main > p + p
 ```

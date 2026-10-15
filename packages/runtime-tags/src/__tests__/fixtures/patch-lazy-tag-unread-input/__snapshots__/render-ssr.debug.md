@@ -28,5 +28,4 @@
 ```
 UPDATE: div:nth-of-type(1)::text@0 "SHOWN_name1" => "SHOWN_name2"
 INSERT: div:nth-of-type(1) + div
-UPDATE: div:nth-of-type(2)::text@13 "" => "0"
 ```

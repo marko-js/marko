@@ -85,7 +85,6 @@ REMOVE: ul > li::text + button
 ## Change
 ```
 INSERT: ul > li::text + :is(span, button)
-UPDATE: ul > li > span::text " " => "0"
 ```
 
 # Update `{"items":[{"id":2,"label":"Milk","detailed":true},{"id":1,"label":"Fuji Apples","detailed":true}]}`
@@ -114,5 +113,4 @@ UPDATE: ul > li > span::text " " => "0"
 ## Change
 ```
 INSERT: ul > li
-UPDATE: ul > li:nth-of-type(1) > span::text " " => "0"
 ```

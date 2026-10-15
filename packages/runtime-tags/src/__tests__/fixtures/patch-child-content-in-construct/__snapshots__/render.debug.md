@@ -31,5 +31,4 @@ REMOVE: section
 ## Change
 ```
 INSERT: button, section
-UPDATE: button::text " " => "0"
 ```

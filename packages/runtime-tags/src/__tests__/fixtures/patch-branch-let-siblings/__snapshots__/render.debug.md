@@ -187,7 +187,6 @@ REMOVE: main > h1 + button
 ## Change
 ```
 INSERT: main > h1 + :is(.pa, .ba)
-UPDATE: .pa::text@2 "" => "0"
 ```
 
 # Update

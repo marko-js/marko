@@ -31,8 +31,8 @@
 ```
 ## Change
 ```
-REMOVE: .inc + p
 INSERT: .inc + ul
+REMOVE: ul + p
 INSERT: div > p
 ```
 
@@ -50,7 +50,7 @@ INSERT: div > p
 ```
 ## Change
 ```
-REMOVE: .inc + ul
 INSERT: .inc + p
+REMOVE: p + ul
 REMOVE: div > p
 ```

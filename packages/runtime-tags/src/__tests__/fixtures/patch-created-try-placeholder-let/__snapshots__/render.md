@@ -39,5 +39,4 @@ REMOVE: main > h1 + button
 ```
 UPDATE: main > h1::text "b" => "c"
 INSERT: main > h1 + button
-UPDATE: main > button::text " " => "open"
 ```

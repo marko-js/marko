@@ -67,7 +67,6 @@
 UPDATE: main > div:nth-of-type(1) > h2::text "A" => "B"
 UPDATE: main > div:nth-of-type(1) > p::text "n1" => ""
 INSERT: main > div:nth-of-type(1) + div
-UPDATE: main > div:nth-of-type(2) > button::text " " => "show"
 ```
 
 # Update `{"props":{"title":"B","note":"n2"},"show":true,"more":{"note":"m2"}}`

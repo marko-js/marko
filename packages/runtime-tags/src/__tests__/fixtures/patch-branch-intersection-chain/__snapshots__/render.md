@@ -80,8 +80,8 @@ UPDATE: main > div > p::text@2 "Store #1" => "Store! #1"
 ```
 ## Change
 ```
-REMOVE: main > div > p
 INSERT: main > div > p
+REMOVE: main > div > p
 UPDATE: main > div > p::text@2 "" => "Store! @1"
 ```
 
@@ -150,8 +150,8 @@ UPDATE: main > div > p::text@2 "Plaza @1" => "Plaza @2"
 ```
 ## Change
 ```
+INSERT: p + p
 REMOVE: main > div > p
-INSERT: main > div > p
 UPDATE: main > div > p::text@5 "" => "2"
 ```
 

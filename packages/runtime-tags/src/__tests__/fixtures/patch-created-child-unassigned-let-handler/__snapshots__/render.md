@@ -17,7 +17,6 @@
 ## Change
 ```
 INSERT: main > :is(em, button)
-UPDATE: main > em::text " " => "0"
 ```
 
 # Update

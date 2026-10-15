@@ -67,6 +67,6 @@ INSERT: section, section
 ```
 ## Change
 ```
-REMOVE: section:nth-of-type(2) > div > span + p
 INSERT: section:nth-of-type(2) > div > span + p
+REMOVE: section:nth-of-type(2) > div > p + p
 ```

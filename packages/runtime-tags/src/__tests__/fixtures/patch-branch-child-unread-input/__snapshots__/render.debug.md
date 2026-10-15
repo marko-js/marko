@@ -29,10 +29,9 @@
 ```
 ## Change
 ```
-REMOVE: .inc + div
 INSERT: .inc + section
+REMOVE: section + div
 INSERT: section + :is(div, button)
-UPDATE: button:nth-of-type(2)::text " " => "SHOWN_name2o"
 ```
 
 # Update `{"admin":false,"adminData":{"title":"SECRET_title3","rows":["SECRET_row3"]},"user":{"name":"SHOWN_name3","bio":"BIO_3","passwordHash":"SECRET_hash3"},"more":false,"props":{"user":{"name":"SHOWN_name3p","bio":"BIO_3p","passwordHash":"SECRET_hash3p"}},"other":{"name":"SHOWN_name3o","bio":"BIO_3o","passwordHash":"SECRET_hash3o"}}`
@@ -48,8 +47,8 @@ UPDATE: button:nth-of-type(2)::text " " => "SHOWN_name2o"
 ```
 ## Change
 ```
-REMOVE: .inc + section
 INSERT: .inc + div
+REMOVE: div + section
 REMOVE: div + div
 REMOVE: div + button
 ```

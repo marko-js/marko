@@ -91,8 +91,8 @@ UPDATE: div > p:nth-of-type(3)::text "a3" => "b3"
 ```
 ## Change
 ```
-REMOVE: div
 INSERT: p
+REMOVE: p + div
 ```
 
 # Update `{"$global":{"search":[{"q":"c"}],"serializedGlobals":["search"]}}`
@@ -120,9 +120,6 @@ INSERT: p
 ```
 ## Change
 ```
-REMOVE: p
 INSERT: div
-UPDATE: div > p:nth-of-type(1) > button::text " " => "0"
-UPDATE: div > p:nth-of-type(2) > button::text " " => "0"
-UPDATE: div > p:nth-of-type(3) > button::text " " => "0"
+REMOVE: div + p
 ```

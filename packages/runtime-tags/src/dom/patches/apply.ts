@@ -8,7 +8,14 @@ import {
   RenderDataProp,
   type Scope,
 } from "../../common/types";
-import { abortRun, pendingEffects, run, runEffects, runId } from "../queue";
+import {
+  abortRun,
+  pendingEffects,
+  run,
+  runEffects,
+  runId,
+  startRun,
+} from "../queue";
 import {
   curRenders,
   type RenderData,
@@ -369,9 +376,13 @@ function applyFlush(render: RenderData, apply: () => void): Applied {
   pendingEffects.unshift(() => (rendered = 1), 0);
   try {
     beginPatch(render);
+    // Entries apply as a render does: a live `<let>` keeps its value, and a
+    // fresh one takes its seed.
+    startRun();
     apply();
-    runEffects(render.m!([]));
+    const effects = render.m!([]);
     run();
+    runEffects(effects);
   } catch (error) {
     if (!rendered) {
       // The flush did not apply faithfully, so the caller navigates.

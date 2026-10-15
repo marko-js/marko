@@ -8,8 +8,8 @@
 # Update `{"page":1,"attrs":{"data-x":"1"},"$global":{"cspNonce":"patch1"}}`
 ## Change
 ```
-REMOVE: p
 INSERT: style, style
+REMOVE: p
 UPDATE: style[data-x] "0" => "1"
 REMOVE: style::text("p.u { --page: 0 }")
 INSERT: style::text("p.u { --page: 1 }")

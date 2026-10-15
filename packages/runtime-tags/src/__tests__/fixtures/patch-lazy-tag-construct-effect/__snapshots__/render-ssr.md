@@ -19,7 +19,6 @@
 ## Change
 ```
 INSERT: main > :is(div, button)
-UPDATE: main > button::text@2 "" => "0"
 ```
 
 # Update

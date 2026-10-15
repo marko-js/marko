@@ -21,10 +21,9 @@
 ```
 ## Change
 ```
-REMOVE: main > link
-REMOVE: main > button
 INSERT: main > .b
-UPDATE: .b::text@2 "" => "0"
+REMOVE: .b + link
+REMOVE: .b + button
 ```
 
 # Update `{"page":0}`
@@ -39,7 +38,6 @@ UPDATE: .b::text@2 "" => "0"
 ```
 ## Change
 ```
-REMOVE: main > button
 INSERT: main > .a
-UPDATE: .a::text@2 "" => "0"
+REMOVE: .a + button
 ```

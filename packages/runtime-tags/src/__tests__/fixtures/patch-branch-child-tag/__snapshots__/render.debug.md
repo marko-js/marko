@@ -44,8 +44,8 @@ UPDATE: main > button::text "0" => "1"
 ```
 ## Change
 ```
-REMOVE: main > em
 INSERT: main > .badge
+REMOVE: .badge + em
 ```
 
 # Update `{"show":true,"title":"c","note":"n"}`
@@ -101,6 +101,6 @@ UPDATE: main > button::text "1" => "2"
 ```
 ## Change
 ```
-REMOVE: main > span
 INSERT: main > em
+REMOVE: main > em + span
 ```

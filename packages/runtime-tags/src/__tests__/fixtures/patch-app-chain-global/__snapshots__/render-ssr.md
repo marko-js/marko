@@ -31,9 +31,8 @@
 ```
 ## Change
 ```
-REMOVE: main > button
 INSERT: main > .b
-UPDATE: .b::text@5 "" => "0"
+REMOVE: .b + button
 ```
 
 # Update
@@ -120,9 +119,8 @@ UPDATE: .b::text@6 "1" => "2"
 ```
 ## Change
 ```
-REMOVE: main > button
 INSERT: main > .a
-UPDATE: .a::text@2 "" => "0"
+REMOVE: .a + button
 ```
 
 # Update `{"page":1,"$global":{"search":["c",false]}}`
@@ -142,9 +140,8 @@ UPDATE: .a::text@2 "" => "0"
 ```
 ## Change
 ```
-REMOVE: main > button
 INSERT: main > .b
-UPDATE: .b::text@5 "" => "0"
+REMOVE: .b + button
 ```
 
 # Update

@@ -13,9 +13,8 @@
 ```
 ## Change
 ```
-REMOVE: h1
 INSERT: button
-UPDATE: button::text " " => "0"
+REMOVE: button + h1
 ```
 
 # Update `{"page":2,"error":{}}`
@@ -26,6 +25,6 @@ UPDATE: button::text " " => "0"
 ```
 ## Change
 ```
-REMOVE: button
 INSERT: h1
+REMOVE: h1 + button
 ```

@@ -147,7 +147,6 @@ REMOVE: .root + button
 ## Change
 ```
 INSERT: .root + :is(p, .inner)
-UPDATE: div > p::text@5 "" => "0"
 ```
 
 # Update

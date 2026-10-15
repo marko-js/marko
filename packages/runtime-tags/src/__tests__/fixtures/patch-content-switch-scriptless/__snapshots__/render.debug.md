@@ -21,8 +21,8 @@
 ```
 ## Change
 ```
-REMOVE: main > section > b
 INSERT: main > section > i
+REMOVE: main > section > i + b
 ```
 
 # Update `{}`
