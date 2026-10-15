@@ -544,10 +544,18 @@ export function addKnownTagReasons(section: Section) {
     const childSection = tagExtra[kChildSection]!;
     if (knownExprs && childScopeBinding && childSection.paramReasonGroups) {
       for (const group of childSection.paramReasonGroups) {
-        addReason(
-          ensureSlot(childScopeBinding, SlotKind.ParamGroup, section, group),
-          getSourcesForExprs(mapParamReasonToExpr(knownExprs, group)),
-        );
+        // Sources settle before solving, so a group maps once: a later pass
+        // only meets the groups it added.
+        if (!findSlot(childScopeBinding, SlotKind.ParamGroup, section, group)) {
+          const slot = ensureSlot(
+            childScopeBinding,
+            SlotKind.ParamGroup,
+            section,
+            group,
+          );
+          slot.reasonExprs = mapParamReasonToExpr(knownExprs, group);
+          addReason(slot, getSourcesForExprs(slot.reasonExprs));
+        }
       }
     }
   }
