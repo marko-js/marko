@@ -87,18 +87,29 @@ export type PatchHeaders =
   | Record<string, string | undefined>
   | { get(name: string): string | null };
 
-/** What a request asks of the server's build: `"patch"` from its own page, or
- * `"stale"` from another build's (any, until `setPatchBuild` names one), to
- * answer before rendering anything.
+/** What a request asks of the server's build, to answer before rendering
+ * anything. A patch request ends its query with a bare `~` (`?~`, or `&~` after
+ * other parameters), which this strips from `url` in place so the app sees the
+ * page's own URL, and names the page's build in `x-marko-patch`: `"patch"` from
+ * its own build, `"stale"` from another's (any, until `setPatchBuild` names
+ * one). Without the marker (dropped, moved or rewritten by a cache or proxy) it
+ * is a document request (`undefined`).
  * @experimental The patch protocol may change in a minor release. */
-export function patchRequest(headers: PatchHeaders) {
-  const value = readHeader(headers, "x-marko-patch");
+export function patchRequest(headers: PatchHeaders, url: URL) {
+  const { search } = url;
+  const marked = patchMarkerReg.test(search);
+  if (marked) url.search = search.slice(0, -2);
+  const value = marked ? readHeader(headers, "x-marko-patch") : null;
   return value == null
     ? undefined
     : patchBuild && value.startsWith(patchBuild + ";")
       ? ("patch" as const)
       : ("stale" as const);
 }
+
+// The marker the router appends last to a patch request's query, which a
+// cache keys on, with the separator before it.
+const patchMarkerReg = /[?&]~$/;
 
 /** The headers to add for a request of `kind`: every page varies on the
  * request; a patch is uncached JavaScript marked with its build, which the

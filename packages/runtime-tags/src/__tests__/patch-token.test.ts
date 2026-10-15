@@ -10,6 +10,13 @@ import { decodeHeld, encodeHeld } from "../html/patches/token";
 import { setPatchBuild } from "../html/patches/writer";
 
 describe("patch token", () => {
+  // A patch request's URL as the router sends it: the marker last in its query.
+  const marked = (path = "/") =>
+    new URL(
+      path + (path.includes("?") ? "&" : "?") + "~#top",
+      "https://x.test",
+    );
+
   it("names held shells by registry index, as a bitmap when shorter", () => {
     _shells({ d: "d;;", d0: "d0;;", d2: "d2;;", b13: "b13;;", ab5: "ab5;;" });
     const ids = new Set(["d", "d2", "ab5"]);
@@ -70,17 +77,52 @@ describe("patch token", () => {
   it("tells a patch request of another build", () => {
     // Until a build is named, every request is another build's, and no
     // patch renders.
-    assert.equal(patchRequest({ "x-marko-patch": ";" }), "stale");
+    assert.equal(patchRequest({ "x-marko-patch": ";" }, marked()), "stale");
     assert.throws(
       () => _template_patch("t", () => {}, 1).patch({}),
       /setPatchBuild/,
     );
     setPatchBuild("b1");
-    assert.equal(patchRequest({ "x-marko-patch": "b0;CxU" }), "stale");
-    assert.equal(patchRequest({ "x-marko-patch": "b1;CxU" }), "patch");
-    assert.equal(patchRequest({ "x-marko-patch": "b1;" }), "patch");
-    assert.equal(patchRequest({ "x-marko-patch": "" }), "stale");
-    assert.equal(patchRequest(new Headers()), undefined);
+    assert.equal(
+      patchRequest({ "x-marko-patch": "b0;CxU" }, marked()),
+      "stale",
+    );
+    assert.equal(
+      patchRequest({ "x-marko-patch": "b1;CxU" }, marked()),
+      "patch",
+    );
+    assert.equal(patchRequest({ "x-marko-patch": "b1;" }, marked()), "patch");
+    assert.equal(patchRequest({ "x-marko-patch": "" }, marked()), "stale");
+    assert.equal(patchRequest(new Headers(), marked()), undefined);
+  });
+
+  it("takes only a request whose URL ends with the marker as a patch, and strips it", () => {
+    const headers = { "x-marko-patch": "b1;" };
+    const url = marked("/p?q=a%20b");
+    assert.equal(patchRequest(headers, url), "patch");
+    assert.equal(url.href, "https://x.test/p?q=a%20b#top");
+    const bare = marked("/p");
+    assert.equal(patchRequest(headers, bare), "patch");
+    assert.equal(bare.href, "https://x.test/p#top");
+    // A cache or proxy that dropped, moved or rewrote the marker leaves a
+    // document's request, its URL untouched.
+    for (const href of [
+      "https://x.test/p?q=1",
+      "https://x.test/p?~&q=1",
+      "https://x.test/p?~=",
+      "https://x.test/p?q=1&~=",
+      "https://x.test/p?%7E",
+      "https://x.test/p?x~",
+      "https://x.test/p?q=~",
+    ]) {
+      const url = new URL(href);
+      assert.equal(patchRequest(headers, url), undefined, href);
+      assert.equal(url.href, href);
+    }
+    // A marked URL without the header is a document's, the marker still stripped.
+    const headerless = marked("/p");
+    assert.equal(patchRequest(new Headers(), headerless), undefined);
+    assert.equal(headerless.href, "https://x.test/p#top");
   });
 
   it("varies every page on the request, marks a patch with its build and refuses another build's", () => {

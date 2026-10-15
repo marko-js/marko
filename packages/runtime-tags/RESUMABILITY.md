@@ -99,10 +99,13 @@ patch, fill, structural param, shell).
 - **Transport.** `patch($global, signal)` gives a navigation's request headers
   and the apply for its response, which the signal stops. `x-marko-patch` is `<build>;<held-shell token>`:
   the server's build (the integration names it once, `setPatchBuild`) as the
-  document's render data named it. A server reads a request with
-  `patchRequest(headers)`: another build's (`"stale"`) is answered before
-  running anything, a 412 with no body under `patchResponseHeaders("stale")`,
-  and its own (`"patch"`) with
+  document's render data named it. The caller ends the request's query with
+  a bare `~` (`?~`, or `&~` after other parameters), so a cache keys a patch
+  apart from its page's document. A server reads a request with
+  `patchRequest(headers, url)`, which strips that marker from `url` and takes
+  a request without it as a document's; another build's (`"stale"`) is
+  answered before running anything, a 412 with no body under
+  `patchResponseHeaders("stale")`, and its own (`"patch"`) with
   `template.patch(input, headers)` under `patchResponseHeaders`, whose
   `x-marko-patch` names the build again for the page to check, one flush per
   line; every response ends with a `;` line, followed by the token when the
