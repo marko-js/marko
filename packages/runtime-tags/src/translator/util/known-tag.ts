@@ -170,26 +170,24 @@ export function knownTagAnalyze(
   }
 
   if (varBinding) {
-    if (!recursive) assertReturns(tag, childSection);
     // Tag variables emit a `_var` statement in the parent's setup.
     addSetupWork(section);
-    const mutatesTagVar = isTagVarAssigned(tag);
-    // A recursive call's return is taken as always: the content's `<return>`
-    // is unsettled here and is not mapped through the call's params.
-    const varExpr =
-      recursive ||
-      (tagExtra.defineBodySection
-        ? childSection.returnValueExpr
-        : mapParamReasonToExpr(exprs!, getReturnParams(childSection)));
     const { childScopeBinding } = tagExtra;
-    varBinding.returnedBy = childScopeBinding;
+    varBinding.returnedBy = {
+      scope: childScopeBinding,
+      section: childSection,
+      exprs,
+    };
     reserveId(childScopeBinding, ReservedId.ScopeOffset);
-    setDerivedFrom(varBinding, varExpr);
-    if (mutatesTagVar || varExpr === true) {
-      addAlwaysReason(childScopeBinding);
-    }
-    if (varExpr !== true) {
-      addReasonExprs(ensureSlot(childScopeBinding), varExpr);
+    if (isTagVarAssigned(tag)) addAlwaysReason(childScopeBinding);
+    // A recursive call's var derives once its content's `<return>` settles.
+    if (!recursive) {
+      assertReturns(tag, childSection);
+      const varExpr = tagExtra.defineBodySection
+        ? childSection.returnValueExpr
+        : mapParamReasonToExpr(exprs!, getReturnParams(childSection));
+      setDerivedFrom(varBinding, varExpr);
+      if (varExpr === true) addAlwaysReason(childScopeBinding);
     }
   }
 }
@@ -199,8 +197,16 @@ export function analyzeRecursiveTags() {
   for (const tag of getRecursiveTags()) {
     const childSection = tag.node.extra![kChildSection]!;
     assertTerminates(tag, childSection);
-    if (tag.node.var) assertReturns(tag, childSection);
-    analyzeKnownTagParams(tag, exposeChildParamsTree(childSection));
+    const exprs = analyzeKnownTagParams(
+      tag,
+      exposeChildParamsTree(childSection),
+    );
+    if (tag.node.var) {
+      assertReturns(tag, childSection);
+      const varBinding = tag.node.var.extra!.binding!;
+      varBinding.returnedBy!.exprs = exprs;
+      setDerivedFrom(varBinding, childSection.returnValueExpr);
+    }
   }
 }
 

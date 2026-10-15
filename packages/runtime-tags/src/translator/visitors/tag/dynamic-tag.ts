@@ -190,7 +190,9 @@ export default {
       ));
 
       if (hasVar) {
-        trackVarReferences(tag, BindingType.derived)!.returnedBy = nodeBinding;
+        trackVarReferences(tag, BindingType.derived)!.returnedBy = {
+          scope: nodeBinding,
+        };
         reserveId(nodeBinding, ReservedId.ScopeOffset);
       }
 

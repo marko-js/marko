@@ -13,6 +13,7 @@ import {
   Sorted,
   reduceWhile,
 } from "./optional";
+import { type KnownExprs } from "./reasons";
 import {
   type AssignedBindingExtra,
   type Read,
@@ -67,9 +68,11 @@ export interface Binding {
   /** For an array rest, the source index it starts at: `rest[0]` of
    * `[a, ...rest]` is the source's `[1]`. */
   restOffset: number | undefined;
-  /** For a tag variable a child's `<return>` writes, the node binding of the
-   * tag rendering that child. */
-  returnedBy: Binding | undefined;
+  /** For a tag variable a `<return>` writes, the call's scope binding and, for
+   * a known tag, its body and the expressions it passes. */
+  returnedBy:
+    | { scope: Binding; section?: Section; exprs?: KnownExprs }
+    | undefined;
   /** Scope ids it holds right after its own, up to its highest `ReservedId`:
    * a controllable `<let>`'s change handler, or a tag's scope offset. */
   reserveSize: number;

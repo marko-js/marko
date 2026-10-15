@@ -1,0 +1,11 @@
+<define/Rec|input|>
+  <if=input.depth>
+    <Rec/child depth=input.depth - 1 label=input.label/>
+    <span>${child}</span>
+  </if>
+  <return=input.label/>
+</define>
+<let/label="a"/>
+<Rec depth=1 label="x"/>
+<Rec depth=1 label=label/>
+<button onClick() { label += "a" }>${label}</button>
