@@ -111,28 +111,24 @@ export function patchRequest(headers: PatchHeaders, url: URL) {
 // cache keys on, with the separator before it.
 const patchMarkerReg = /[?&]~$/;
 
-/** The headers to add for a request of `kind`: every page varies on the
- * request; a patch is uncached JavaScript marked with its build, which the
- * page checks against its own; and another build's request is refused before
- * any handler runs, uncached, with status 412 and no body, so the page loads
- * the document (or submits a form natively).
+/** The headers to add for a request of `kind`: a patch is uncached JavaScript
+ * marked with its build, which the page checks against its own; another
+ * build's request is refused before any handler runs, uncached, with status 412
+ * and no body, so the page loads the document (or submits a form natively); a
+ * document needs none, as the request's `~` marker keys a patch apart in caches.
  * @experimental The patch protocol may change in a minor release. */
 export function patchResponseHeaders(
   kind: ReturnType<typeof patchRequest>,
 ): Record<string, string> {
   return kind === "patch"
     ? {
-        vary: "x-marko-patch",
         "content-type": "text/javascript;charset=UTF-8",
         "cache-control": "no-store",
         "x-marko-patch": patchBuild!,
       }
     : kind === "stale"
-      ? {
-          vary: "x-marko-patch",
-          "cache-control": "no-store",
-        }
-      : { vary: "x-marko-patch" };
+      ? { "cache-control": "no-store" }
+      : {};
 }
 
 function readHeader(headers: PatchHeaders, name: string) {

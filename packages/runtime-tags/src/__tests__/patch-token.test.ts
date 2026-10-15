@@ -125,13 +125,14 @@ describe("patch token", () => {
     assert.equal(headerless.href, "https://x.test/p#top");
   });
 
-  it("varies every page on the request, marks a patch with its build and refuses another build's", () => {
-    assert.deepEqual(patchResponseHeaders(undefined), {
-      vary: "x-marko-patch",
+  it("marks a patch with its build, refuses another build's uncached and leaves a document as is", () => {
+    assert.deepEqual(patchResponseHeaders(undefined), {});
+    assert.deepEqual(patchResponseHeaders("patch"), {
+      "content-type": "text/javascript;charset=UTF-8",
+      "cache-control": "no-store",
+      "x-marko-patch": "b1",
     });
-    assert.equal(patchResponseHeaders("patch")["x-marko-patch"], "b1");
     assert.deepEqual(patchResponseHeaders("stale"), {
-      vary: "x-marko-patch",
       "cache-control": "no-store",
     });
   });
