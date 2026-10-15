@@ -7,12 +7,13 @@ import debugPlugin from "./build-plugins/debug.mts";
 import declHoistPlugin from "./build-plugins/decl-hoist.mts";
 
 const cwd = path.join(import.meta.dirname, "..");
-// Each runtime's entries beside its own: its feature modules, and the html
-// helpers a patch build imports, all sharing the runtime's chunk.
+// Each runtime's entries beside its own: its feature modules and its patch
+// entry, all sharing the runtime's chunk.
 const extraEntries = [
   ...globSync("src/{dom,html}/**/*.feat.ts", { cwd }).map((file) =>
     file.replaceAll(path.sep, "/").slice("src/".length, -".ts".length),
   ),
+  "dom/patch",
   "html/patch",
 ];
 

@@ -78,7 +78,6 @@ export {
   _to_text,
 } from "./dom/dom";
 export { _on } from "./dom/event";
-export { patch } from "./dom/patches/apply";
 export {
   _fill_global_join,
   _fill_global_join as _fill_global_join_resume,

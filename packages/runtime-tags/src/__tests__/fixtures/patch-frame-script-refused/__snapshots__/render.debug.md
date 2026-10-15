@@ -19,7 +19,7 @@ UPDATE: p::text "a" => "b"
 # Update
 ```js
 const { patch } = document.defaultView
-                                                   
+                                                         
 ;
   const [, apply] = patch(
  { renderId: "_", cspNonce: "doc" },

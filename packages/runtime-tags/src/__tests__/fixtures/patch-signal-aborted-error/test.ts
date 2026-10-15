@@ -6,7 +6,7 @@ import type { TestConfig } from "../../main.test";
 // debug builds rather than handled.
 function abortedSignal(document: Document) {
   const { patch } = document.defaultView as unknown as {
-    patch: typeof import("@marko/runtime-tags/dom").patch;
+    patch: typeof import("@marko/runtime-tags/dom/patch").patch;
   };
   const controller = new AbortController();
   controller.abort();

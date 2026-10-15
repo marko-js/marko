@@ -59,14 +59,18 @@ export const taglibs = [
 export function getRuntimeEntryFiles(
   output: Config["output"],
   optimize: boolean,
+  patches: boolean,
 ) {
   const runtime = `${runtimeInfo.name}${optimize ? "" : "/debug"}`;
-  if (output === "html") return [`${runtime}/html`, `${runtime}/html/patch`];
+  const patchEntry = patches ? [`${runtime}/${output}/patch`] : [];
+  if (output === "html") return [`${runtime}/html`, ...patchEntry];
   return [
     `${runtime}/dom`,
-    ...[...domRuntimeFeatures, ...domPatchRuntimeFeatures].map(
-      (feature) => `${runtime}/dom/${feature}.feat`,
-    ),
+    ...patchEntry,
+    ...(patches
+      ? [...domRuntimeFeatures, ...domPatchRuntimeFeatures]
+      : domRuntimeFeatures
+    ).map((feature) => `${runtime}/dom/${feature}.feat`),
   ];
 }
 

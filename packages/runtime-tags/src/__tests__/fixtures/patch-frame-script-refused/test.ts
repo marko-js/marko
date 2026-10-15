@@ -7,7 +7,7 @@ import type { TestConfig } from "../../main.test";
 // caller loads the document. Debug builds name the nonce the policy must allow.
 async function refusedFrame(document: Document) {
   const { patch } = document.defaultView as unknown as {
-    patch: typeof import("@marko/runtime-tags/dom").patch;
+    patch: typeof import("@marko/runtime-tags/dom/patch").patch;
   };
   const [, apply] = patch(
     { renderId: "_", cspNonce: "doc" },

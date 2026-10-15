@@ -557,7 +557,8 @@ function testFixtures(interop?: true) {
 
             await browser.runAsyncScripts(() => tracker.logRender(input));
             const { patch, run } =
-              browser.ctx as typeof import("@marko/runtime-tags/dom");
+              browser.ctx as typeof import("@marko/runtime-tags/dom") &
+                typeof import("@marko/runtime-tags/dom/patch");
             // The live page's `$global`: a patch page's document serializes
             // its nonce, which every patch keeps.
             const pageGlobal = {
@@ -1195,7 +1196,7 @@ function formatClientPage(document: Document, compareDefaults?: boolean) {
 // A patch response whose body the harness streams one flush at a time, each
 // sent once the page has read the one before.
 function streamPatch(
-  patch: typeof import("@marko/runtime-tags/dom").patch,
+  patch: typeof import("@marko/runtime-tags/dom/patch").patch,
   $global: Parameters<typeof patch>[0],
 ) {
   const encoder = new TextEncoder();

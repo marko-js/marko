@@ -211,10 +211,10 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
 
             return isPage
               ? code +
-                  `\nimport { run as _run${
-                    compileOpts.patches ? ", patch as _patch" : ""
-                  } } from "@marko/runtime-tags/dom"\n${
-                    compileOpts.patches ? "globalThis.patch=_patch;\n" : ""
+                  `\nimport { run as _run } from "@marko/runtime-tags/dom"\n${
+                    compileOpts.patches
+                      ? `import { patch as _patch } from "@marko/runtime-tags/dom/patch"\nglobalThis.patch=_patch;\n`
+                      : ""
                   }${
                     interop
                       ? `import { ___componentLookup } from "marko/src/node_modules/@internal/components-util"\nglobalThis.run=()=>{ _run(); Object.values(___componentLookup).forEach((c) => c.update())}`
@@ -540,8 +540,8 @@ async function buildRuntime(kind: "dom" | "html", optimize: boolean) {
   const input: Record<string, string> = {
     runtime: path.join(srcDir, `${kind}.ts`),
   };
-  // A patch build's html entry shares the html runtime's chunk.
-  if (kind === "html") input.patch = path.join(srcDir, "html/patch.ts");
+  // A patch build's entry shares its runtime's chunk.
+  input.patch = path.join(srcDir, kind, "patch.ts");
   for (const file of fs.globSync(`**/*${featExt}`, {
     cwd: path.join(srcDir, kind),
   })) {

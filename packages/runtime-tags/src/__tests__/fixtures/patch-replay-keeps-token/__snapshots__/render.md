@@ -19,7 +19,7 @@ INSERT: main > b
 # Update
 ```js
 const { patch } = document.defaultView
-                                                   
+                                                         
 ;
   const signal = new AbortController().signal;
   const token = () => patch({ renderId: "_" }, signal)[0]["x-marko-patch"];

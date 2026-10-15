@@ -8,7 +8,7 @@
 # Update
 ```js
 const { patch } = document.defaultView
-                                                   
+                                                         
 ;
   const controller = new AbortController();
   controller.abort();

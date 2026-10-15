@@ -29,25 +29,37 @@ const fixture = (name: string) =>
 describe("runtime-tags/translator-api", () => {
   describe("getRuntimeEntryFiles", () => {
     it("returns the debug runtime entries when not optimized", () => {
-      assert.deepEqual(translator.getRuntimeEntryFiles("html", false), [
+      assert.deepEqual(translator.getRuntimeEntryFiles("html", false, false), [
         "@marko/runtime-tags/debug/html",
-        "@marko/runtime-tags/debug/html/patch",
       ]);
-      assert.deepEqual(translator.getRuntimeEntryFiles("dom", false), [
+      assert.deepEqual(translator.getRuntimeEntryFiles("dom", false, false), [
         "@marko/runtime-tags/debug/dom",
-        ...[...domRuntimeFeatures, ...domPatchRuntimeFeatures].map(
+        ...domRuntimeFeatures.map(
           (feature) => `@marko/runtime-tags/debug/dom/${feature}.feat`,
         ),
       ]);
     });
 
     it("returns the optimized runtime entries when optimized", () => {
-      assert.deepEqual(translator.getRuntimeEntryFiles("html", true), [
+      assert.deepEqual(translator.getRuntimeEntryFiles("html", true, false), [
+        "@marko/runtime-tags/html",
+      ]);
+      assert.deepEqual(translator.getRuntimeEntryFiles("dom", true, false), [
+        "@marko/runtime-tags/dom",
+        ...domRuntimeFeatures.map(
+          (feature) => `@marko/runtime-tags/dom/${feature}.feat`,
+        ),
+      ]);
+    });
+
+    it("adds each side's patch entry and features for a patch build", () => {
+      assert.deepEqual(translator.getRuntimeEntryFiles("html", true, true), [
         "@marko/runtime-tags/html",
         "@marko/runtime-tags/html/patch",
       ]);
-      assert.deepEqual(translator.getRuntimeEntryFiles("dom", true), [
+      assert.deepEqual(translator.getRuntimeEntryFiles("dom", true, true), [
         "@marko/runtime-tags/dom",
+        "@marko/runtime-tags/dom/patch",
         ...[...domRuntimeFeatures, ...domPatchRuntimeFeatures].map(
           (feature) => `@marko/runtime-tags/dom/${feature}.feat`,
         ),
@@ -58,7 +70,7 @@ describe("runtime-tags/translator-api", () => {
       const interop = require("marko/translator") as ReturnType<
         typeof import("../translator/interop").createInteropTranslator
       >;
-      const entries = interop.getRuntimeEntryFiles("html", false);
+      const entries = interop.getRuntimeEntryFiles("html", false, false);
       assert.ok(entries.includes("@marko/runtime-tags/debug/html"));
       assert.ok(entries.length > 1);
     });

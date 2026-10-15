@@ -6,7 +6,7 @@ import type { TestConfig } from "../../main.test";
 // does) ends with the token of its own time: the page keeps its newer one.
 async function replay(document: Document) {
   const { patch } = document.defaultView as unknown as {
-    patch: typeof import("@marko/runtime-tags/dom").patch;
+    patch: typeof import("@marko/runtime-tags/dom/patch").patch;
   };
   const signal = new AbortController().signal;
   const token = () => patch({ renderId: "_" }, signal)[0]["x-marko-patch"];
