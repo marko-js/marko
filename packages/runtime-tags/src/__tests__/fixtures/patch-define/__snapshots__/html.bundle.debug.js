@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");
 	thing.content({ x: input.n });
-	_html(`<div${_patch_attr_class($scope0_id, "PatchAttr:#div/1 class", [input.cls, { on: input.on }], $scope0_reason, 0)}${_patch_attr_style($scope0_id, "PatchAttr:#div/1 style", { color: input.color }, $scope0_reason, 5)}>x</div>${_el_resume($scope0_id, "#div/1")}`);
+	_html(`<div${_patch_attr_class($scope0_id, "PatchAttr:#div/1 class", [input.cls, { on: input.on }], $scope0_reason, 0)}${_patch_attr_style($scope0_id, "PatchAttr:#div/1 style", { color: input.color }, $scope0_reason, 5)}>x</div>${_el_resume($scope0_id, "#div/1", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 5))}`);
 	_patch_write($scope0_id, "PatchWrite:input_cls", input.cls, 1);
 	_patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_cls#6_input_on#7/init");
@@ -33,5 +33,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_cls: ["input.cls"],
 		input_on: ["input.on"]
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.cls), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.on));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.cls, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.on, !_server_guard($scope0_reason, 4)));
 }, 1);

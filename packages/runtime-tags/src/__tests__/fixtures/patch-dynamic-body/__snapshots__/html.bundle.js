@@ -41,5 +41,5 @@ var template_default = _template("c", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.text,
 		f: _write_if($scope0_reason, 2) && $input_text__closures
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc2", input.text);
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc2", input.text, !_server_guard($scope0_reason, 2));
 }, 1);

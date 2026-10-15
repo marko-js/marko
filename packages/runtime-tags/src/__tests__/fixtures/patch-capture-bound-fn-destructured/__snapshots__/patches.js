@@ -1,8 +1,7 @@
 // PATCH
 {
   ca: {
-    tb: "b",
-    df: ["a0", 1]
+    tb: "b"
   },
   wd: "b"
 }

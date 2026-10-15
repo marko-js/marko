@@ -19,5 +19,5 @@ var template_default = _template("a", (input) => {
 		e: input.color,
 		f: input.x,
 		g: s
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va1", input.color), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va2", input.x));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va1", input.color, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va2", input.x, !_server_guard($scope0_reason, 2)));
 }, 1);

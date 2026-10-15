@@ -47,7 +47,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	const $return = { btn: $btn_getter };
 	$scope0_page && _scope($scope0_id, {
 		"ClosureScopes:1": $wrapper_content__subscribers,
-		"ClosureScopes:input_a11yText/4": $wi__input_a11yText && $input_a11yText__closures,
+		"ClosureScopes:input_a11yText/4": $wi__input_a11yText && _unfilled_if($scope0_reason, 0) && $input_a11yText__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/tags/child/index.marko", 0);
 	return $return;

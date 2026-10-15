@@ -35,7 +35,7 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 		input_cursor: ["input.cursor"],
 		input_text: ["input.text"],
 		highlight: "1:8"
-	}) : (_filled_guard($scope0_reason, 2) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/code-block.marko_fill0", input.text), _filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/code-block.marko_fill1", highlight), _filled_guard($scope0_reason, 1) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && _patch_write($scope0_id, "PatchWrite:input_cursor", input.cursor));
+	}) : (_filled_guard($scope0_reason, 2) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/code-block.marko_fill0", input.text, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/code-block.marko_fill1", highlight, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 1) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && _patch_write($scope0_id, "PatchWrite:input_cursor", input.cursor, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko

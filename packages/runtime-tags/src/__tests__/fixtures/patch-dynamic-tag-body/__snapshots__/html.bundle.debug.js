@@ -46,5 +46,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_tag: ["input.tag"],
 		input_cls: ["input.cls"],
 		input_note: ["input.note"]
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.tag), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.cls), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.note));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.tag, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.cls, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.note, !_server_guard($scope0_reason, 6)));
 }, 1);

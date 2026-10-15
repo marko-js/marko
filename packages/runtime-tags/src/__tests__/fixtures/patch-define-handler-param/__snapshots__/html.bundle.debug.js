@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$scope1_page ? _scope($scope1_id, {
 			id,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "2:2", { id: "2:16" }) : _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchWrite:id", id);
+		}, "__tests__/template.marko", "2:2", { id: "2:16" }) : _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchWrite:id", id, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");

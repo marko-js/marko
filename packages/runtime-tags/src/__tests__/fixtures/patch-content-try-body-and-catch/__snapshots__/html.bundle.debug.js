@@ -35,7 +35,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		input_content: input.content,
 		"ClosureScopes:input_content/5": $wi__input_content && $input_content__closures,
 		"ClosureScopes:input_fail/6": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_fail__closures
-	}, "__tests__/tags/wrapper.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/wrapper.marko_fill0", input.content);
+	}, "__tests__/tags/wrapper.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/wrapper.marko_fill0", input.content, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
@@ -69,5 +69,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

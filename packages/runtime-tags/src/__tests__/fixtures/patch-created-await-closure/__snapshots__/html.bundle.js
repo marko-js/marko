@@ -29,5 +29,5 @@ var template_default = _template("a", (input) => {
 		f: _unfilled_if($scope0_reason, 0) && input.promise,
 		g: count,
 		i: $count__closures
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va5", input.promise);
+	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va5", input.promise, !_server_guard($scope0_reason, 1));
 }, 1);

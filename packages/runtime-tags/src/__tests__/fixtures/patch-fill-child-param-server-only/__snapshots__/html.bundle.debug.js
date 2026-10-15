@@ -5,7 +5,7 @@ _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko; D ;<a> </a>" 
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<a${_patch_attr($scope0_id, "PatchAttr:#a/0 href", "href", input.href, $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "#a/0")}`);
+	_html(`<a${_patch_attr($scope0_id, "PatchAttr:#a/0 href", "href", input.href, $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "#a/0", _mask_group($scope0_reason, 0))}`);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 });
 

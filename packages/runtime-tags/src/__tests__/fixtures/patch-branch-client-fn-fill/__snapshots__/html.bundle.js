@@ -15,5 +15,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.title,
 		f: getTitle
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", getTitle), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.title));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", getTitle, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.title, !_server_guard($scope0_reason, 0)));
 }, 1);

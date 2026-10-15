@@ -15,7 +15,7 @@ _shells({
 	a: "a !a1;D%b ;<main><!><button>+</button></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 1), $scope0_page = _page_render(), $wi__input_note = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 2), $scope0_page = _page_render(), $wi__input_note = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let open = input.open;
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id();
 			card_default({
 				title: input.title,
@@ -35,17 +35,17 @@ var template_default = _template("a", (input) => {
 					$wg__input_note || _resume_branch($scope2_id);
 				}, $scope1_id)
 			});
-			_scope($scope1_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });
+			_scope($scope1_id, { a: _write_if($scope0_reason, 1) && _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	_patch_value($scope0_id, "va4", open, 1);
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va4", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.title,
 		g: input.note,
 		h: open,
 		j: $wi__input_note && $input_note__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.title), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va3", input.note));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.title, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.note, !_server_guard($scope0_reason, 2)));
 }, 1);

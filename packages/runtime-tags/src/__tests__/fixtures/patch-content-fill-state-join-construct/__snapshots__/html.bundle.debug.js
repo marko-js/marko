@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
-			"ClosureScopes:item_id/11": _write_if($scope0_reason, 1) && $for_content__item_id__closures,
+			"ClosureScopes:item_id/11": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $for_content__item_id__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "4:4");
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
@@ -69,11 +69,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		count,
-		p_name: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && p?.name,
+		p_name: _unfilled_if($scope0_reason, 1) && p?.name,
 		"ClosureScopes:count/9": $count__closures,
-		"ClosureScopes:p_name/10": _write_if($scope0_reason, 0) && $p_name__closures
+		"ClosureScopes:p_name/10": _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $p_name__closures
 	}, "__tests__/template.marko", 0, {
 		count: "1:6",
 		p_name: ["p.name", "2:8"]
-	}) : _filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", p?.name);
+	}) : _filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", p?.name, !_server_guard($scope0_reason, 0));
 }, 1);

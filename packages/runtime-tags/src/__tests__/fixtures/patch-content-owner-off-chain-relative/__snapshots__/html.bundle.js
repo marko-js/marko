@@ -67,7 +67,7 @@ var view_default = _template("e", (input) => {
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "e0", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.selected }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "ve2", input.selected);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.selected }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "ve2", input.selected, !_server_guard($scope0_reason, 2));
 });
 
 // tags/page.marko
@@ -121,7 +121,7 @@ var wrap_default = _template("f", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 1) && input.items,
 		f: _unfilled_if($scope0_reason, 1) && input.selected
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vf1", input.items), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vf2", input.selected));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vf1", input.items, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vf2", input.selected, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

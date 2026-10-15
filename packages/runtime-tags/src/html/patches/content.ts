@@ -5,6 +5,7 @@ import {
   entryKey,
   normalizePatchValue,
   ensureFills,
+  groupSources,
   writeFill,
 } from "./writer";
 
@@ -18,9 +19,14 @@ export function _patch_text(
 ) {
   const fills = ensureFills(scopeId, owned, group!);
   // The patch write doubles as the output writer, so the text rides the
-  // same resume marking a plain placeholder gets.
+  // same resume marking a plain placeholder gets, but for a constant group's.
   return fills === undefined
-    ? _text_resume(scopeId, accessor, value, markerGuard)
+    ? _text_resume(
+        scopeId,
+        accessor,
+        value,
+        keepsMarker(markerGuard, owned, group),
+      )
     : writeFill(fills, entryKey(PatchKey.Text, accessor), _to_text(value));
 }
 
@@ -36,8 +42,23 @@ export function _patch_html(
 ) {
   const fills = ensureFills(scopeId, owned, group!);
   return fills === undefined
-    ? _html_resume(scopeId, accessor, value, markerGuard)
+    ? _html_resume(
+        scopeId,
+        accessor,
+        value,
+        keepsMarker(markerGuard, owned, group),
+      )
     : writeFill(fills, entryKey(PatchKey.Html, accessor), _unescaped(value));
+}
+
+// A hole of a constant group needs no marker: no patch fills it on a live
+// scope, no client code changes it, and a created one finds it by its walk.
+function keepsMarker(
+  markerGuard: number | undefined,
+  owned?: GroupMask,
+  group?: number,
+) {
+  return groupSources(owned, group!) ? markerGuard : 0;
 }
 
 // A text-only body carries plain text (html output escapes per namespace);

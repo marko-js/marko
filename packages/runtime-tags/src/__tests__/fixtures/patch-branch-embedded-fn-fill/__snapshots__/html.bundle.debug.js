@@ -30,5 +30,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_title: ["input.title"],
 		api: "1:8",
 		api_label: ["api.label", "1:8"]
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", api), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", api.label), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_title", input.title));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", api, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", api.label, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_title", input.title, !_server_guard($scope0_reason, 0)));
 }, 1);

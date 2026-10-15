@@ -45,9 +45,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a1"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	$scope0_page ? _scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
-		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.inner,
-		g: _write_if($scope0_reason, 2) && $input_note__closures,
-		h: _write_if($scope0_reason, 3) && $input_inner__closures
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.note), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.inner));
+		e: _unfilled_if($scope0_reason, 1) && input.note,
+		f: _unfilled_if($scope0_reason, 1) && input.inner,
+		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_note__closures,
+		h: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_inner__closures
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.note, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.inner, !_server_guard($scope0_reason, 3)));
 }, 1);

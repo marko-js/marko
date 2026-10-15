@@ -10,6 +10,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#30/global", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0_input_label#28");
 	_script($scope0_id, "__tests__/template.marko_0_$global_brand#30");
-	_patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_input_label#28", "input_label");
-	$scope0_page ? _scope($scope0_id, { input_label: input.label }, "__tests__/template.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 12) && _patch_write($scope0_id, "PatchWrite:input_label", input.label);
+	_server_guard($scope0_reason, 12) && _patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_input_label#28", "input_label");
+	$scope0_page ? _scope($scope0_id, { input_label: input.label }, "__tests__/template.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 12) && _patch_write($scope0_id, "PatchWrite:input_label", input.label, !_server_guard($scope0_reason, 12));
 }, 1);

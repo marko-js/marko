@@ -23,5 +23,5 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
-	$scope0_page ? _scope($scope0_id, { f: _unfilled_if($scope0_reason, 1) && input.promise }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.promise);
+	$scope0_page ? _scope($scope0_id, { f: _unfilled_if($scope0_reason, 1) && input.promise }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.promise, !_server_guard($scope0_reason, 2));
 }, 1);

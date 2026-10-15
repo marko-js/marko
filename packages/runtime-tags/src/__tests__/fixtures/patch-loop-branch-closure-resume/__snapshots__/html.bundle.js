@@ -32,7 +32,7 @@ var sub_default = _template("c", (input) => {
 		g,
 		h: $wi__input_n && $input_n__closures,
 		i: $g__closures
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc5", input.n);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc5", input.n, !_server_guard($scope0_reason, 1));
 });
 
 // tags/route-cl.marko

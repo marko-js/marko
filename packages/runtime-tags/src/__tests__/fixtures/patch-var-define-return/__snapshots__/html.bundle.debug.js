@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "2:2", {
 			a: "2:15",
 			b: "2:18"
-		}) : (_filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 2) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill2", a), _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill3", b));
+		}) : (_filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 2) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill2", a, !_server_guard($scope1_reason, 1)), _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill3", b, !_server_guard($scope1_reason, 2)));
 		return $return;
 	}, $scope0_id) };
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);

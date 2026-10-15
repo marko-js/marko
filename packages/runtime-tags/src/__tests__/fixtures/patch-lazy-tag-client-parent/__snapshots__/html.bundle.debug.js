@@ -38,7 +38,7 @@ var wrapper_default = _template("__tests__/components/wrapper.marko", (input) =>
 		}
 	}, $scope0_id, "#section/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/components/wrapper.marko_1*shell"], $scope0_reason, 0);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { input_label: _unfilled_if($scope0_reason, 0) && input.label }, "__tests__/components/wrapper.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/components/wrapper.marko_fill0", input.label);
+	$scope0_page ? _scope($scope0_id, { input_label: _unfilled_if($scope0_reason, 0) && input.label }, "__tests__/components/wrapper.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/components/wrapper.marko_fill0", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
@@ -71,5 +71,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_show: ["input.show"],
 		input_label: ["input.label"]
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.show), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.show, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

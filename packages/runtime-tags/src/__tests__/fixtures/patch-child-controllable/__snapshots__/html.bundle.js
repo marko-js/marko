@@ -23,7 +23,7 @@ var counter_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { e: _write_if($scope0_reason, 0) && input.onCount }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb3", input.onCount);
+	$scope0_page ? _scope($scope0_id, { e: _write_if($scope0_reason, 0) && input.onCount }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb3", input.onCount, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let last = 0;
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "b", last, 2)}</p>`);
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | ($scope0_page ? 0 : 0) << 3);
 	const $childScope = _patch_child($scope0_id, "c");
 	counter_default({
 		show: input.show,

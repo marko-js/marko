@@ -87,8 +87,8 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		g: input.inner,
 		h: open,
-		i: $wi__input_kind && $input_kind__closures,
+		i: $wi__input_kind && _unfilled_if($scope0_reason, 0) && $input_kind__closures,
 		a: _existing_scope($childScope),
 		j: $wi__input_inner && $input_inner__closures
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.inner);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.inner, !_server_guard($scope0_reason, 1));
 }, 1);

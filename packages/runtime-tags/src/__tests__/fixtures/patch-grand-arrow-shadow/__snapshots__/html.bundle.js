@@ -6,7 +6,7 @@ var widget_default = _template("b", (input) => {
 	const label = () => "t:" + input.title;
 	_html(`<p>${_patch_text($scope0_id, "a", label(), void 0, $scope0_reason, 0)}</p><button>run</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b0");
-	$scope0_page ? _scope($scope0_id, { e: input.title }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.title);
+	$scope0_page ? _scope($scope0_id, { e: input.title }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.title, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -23,5 +23,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.title,
 		f: show
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

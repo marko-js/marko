@@ -30,5 +30,5 @@ var template_default = _template("a", (input) => {
 		e: input.x,
 		f: s,
 		g: _write_if($scope0_reason, 0) && $input_x__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va4", input.x);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va4", input.x, !_server_guard($scope0_reason, 0));
 }, 1);

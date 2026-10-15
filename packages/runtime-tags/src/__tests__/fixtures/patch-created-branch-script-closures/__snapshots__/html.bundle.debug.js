@@ -14,7 +14,7 @@ var level_watch_default = _template("__tests__/tags/level-watch.marko", (input) 
 		if (input.projection) {
 			const $scope1_id = _scope_id();
 			_script($scope1_id, "__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9", 0);
-			_patch_effect($scope1_id, "PatchEffect:__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9", "1 input_projection_skill input_baseXp input_playerId");
+			(_server_guard($scope0_reason, 1) || _server_guard($scope0_reason, 2) || _server_guard($scope0_reason, 3)) && _patch_effect($scope1_id, "PatchEffect:__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9", "1 input_projection_skill input_baseXp input_playerId");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/level-watch.marko", "4:2");
 			return 0;
 		}
@@ -31,7 +31,7 @@ var level_watch_default = _template("__tests__/tags/level-watch.marko", (input) 
 		input_baseXp: ["input.baseXp"],
 		input_playerId: ["input.playerId"],
 		shown: "2:6"
-	}) : (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_projection_skill", input.projection?.skill), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchWrite:input_baseXp", input.baseXp), _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "PatchWrite:input_playerId", input.playerId));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_projection_skill", input.projection?.skill, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchWrite:input_baseXp", input.baseXp, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "PatchWrite:input_playerId", input.playerId, !_server_guard($scope0_reason, 3)));
 });
 
 // tags/route-play.marko

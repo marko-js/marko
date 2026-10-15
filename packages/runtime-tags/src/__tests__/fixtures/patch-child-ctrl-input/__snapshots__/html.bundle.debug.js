@@ -17,7 +17,7 @@ var field_default = _template("__tests__/tags/field/index.marko", (input) => {
 		input_value: ["input.value"],
 		input_valueChange: ["input.valueChange"],
 		"ControlledHandler:#input/0": ["valueChange"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/field/index.marko_fill0", input.value), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/field/index.marko_fill1", input.valueChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/field/index.marko_fill0", input.value, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/field/index.marko_fill1", input.valueChange, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(10);
+			_set_scope_reason(10 | ($scope0_page ? 0 : 0) << 5);
 			const $childScope = _peek_scope_id();
 			field_default({
 				value: text,

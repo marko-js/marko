@@ -8,9 +8,9 @@ var probe_default = _template("b", (input) => {
 	let settled = false;
 	_html(`<div>${_text_resume($scope0_id, "b", "pending")}</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_patch_effect($scope0_id, "eb0", "e");
+	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "eb0", "e");
 	_patch_value($scope0_id, "vb1", settled, 1);
-	$scope0_page ? _scope($scope0_id, { e: input.promise }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.promise);
+	$scope0_page ? _scope($scope0_id, { e: input.promise }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.promise, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

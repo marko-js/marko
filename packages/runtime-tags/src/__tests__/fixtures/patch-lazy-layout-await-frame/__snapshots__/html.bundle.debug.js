@@ -25,12 +25,12 @@ var icon_default = _template("__tests__/tags/icon.marko", (input) => {
 	_if(() => {
 		if (input.name) {
 			const $scope1_id = _scope_id();
-			_html(`<path${_patch_attr($scope1_id, "PatchAttr:#path/0 d", "d", input.name, $scope0_reason, 0)}></path>${_el_resume($scope1_id, "#path/0")}`);
+			_html(`<path${_patch_attr($scope1_id, "PatchAttr:#path/0 d", "d", input.name, $scope0_reason, 0)}></path>${_el_resume($scope1_id, "#path/0", _mask_group($scope0_reason, 0))}`);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/icon.marko", "2:4");
 			return 0;
 		}
 	}, $scope0_id, "#svg/0", 1, void 0, void 0, void 0, void 0, ["__tests__/tags/icon.marko_1*shell"], $scope0_reason, 0);
-	_html(`</svg>${_el_resume($scope0_id, "#svg/0")}`);
+	_html(`</svg>${_el_resume($scope0_id, "#svg/0", _mask_group($scope0_reason, 0))}`);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/icon.marko", 0);
 });
 
@@ -172,9 +172,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wg__input_page || $wi__input_page__OR__input_list && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	$scope0_page ? _scope($scope0_id, {
-		input_list: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.list,
-		"ClosureScopes:input_page/5": $wi__input_page && $input_page__closures,
-		"ClosureScopes:input_list/6": _write_if($scope0_reason, 2) && $input_list__closures,
+		input_list: _unfilled_if($scope0_reason, 1) && input.list,
+		"ClosureScopes:input_page/5": $wi__input_page && _unfilled_if($scope0_reason, 1) && $input_page__closures,
+		"ClosureScopes:input_list/6": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_list__closures,
 		"#childScope/0": _existing_scope($childScope4)
-	}, "__tests__/template.marko", 0, { input_list: ["input.list"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.list);
+	}, "__tests__/template.marko", 0, { input_list: ["input.list"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.list, !_server_guard($scope0_reason, 2));
 }, 1);

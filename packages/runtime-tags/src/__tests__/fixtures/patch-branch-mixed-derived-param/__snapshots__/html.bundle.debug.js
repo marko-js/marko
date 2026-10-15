@@ -25,5 +25,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		count: "1:6",
 		limit: "2:8"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", limit);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", limit, !_server_guard($scope0_reason, 0));
 }, 1);

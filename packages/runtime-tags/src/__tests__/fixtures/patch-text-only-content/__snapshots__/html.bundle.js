@@ -4,11 +4,11 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let x = 1;
-	_html(`<script${_attr_nonce()}>${_escape_script(`window.log = [${_to_text(x)}, "${_to_text(input.title)}"]`)}<\/script>${_el_resume($scope0_id, "a")}<style${_attr_nonce()}>${_patch_text_content($scope0_id, "mb", `.a { color: ${_to_text(input.color)} }`, _escape_style, $scope0_reason, 1)}</style>${_el_resume($scope0_id, "b")}<title>${_patch_text_content($scope0_id, "mc", `${_to_text(input.title)} | site`, _escape, $scope0_reason, 0)}</title>${_el_resume($scope0_id, "c")}<!--${_patch_text_content($scope0_id, "md", input.title, _escape_comment, $scope0_reason, 0) || " "}-->${_el_resume($scope0_id, "d")}<button>+</button>${_el_resume($scope0_id, "e")}`);
+	_html(`<script${_attr_nonce()}>${_escape_script(`window.log = [${_to_text(x)}, "${_to_text(input.title)}"]`)}<\/script>${_el_resume($scope0_id, "a")}<style${_attr_nonce()}>${_patch_text_content($scope0_id, "mb", `.a { color: ${_to_text(input.color)} }`, _escape_style, $scope0_reason, 1)}</style>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 1))}<title>${_patch_text_content($scope0_id, "mc", `${_to_text(input.title)} | site`, _escape, $scope0_reason, 0)}</title>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 0))}<!--${_patch_text_content($scope0_id, "md", input.title, _escape_comment, $scope0_reason, 0) || " "}-->${_el_resume($scope0_id, "d", _mask_group($scope0_reason, 0))}<button>+</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a0");
 	_patch_value($scope0_id, "va2", x, 1);
 	$scope0_page ? _scope($scope0_id, {
 		h: input.title,
 		j: x
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

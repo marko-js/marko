@@ -19,7 +19,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	}, $scope0_id) };
 	_html("<section>");
 	_patch_attr_content("#section/0", $scope0_id, input.mode ? one : two, void 0, $scope0_reason, 2);
-	_html(`</section>${_el_resume($scope0_id, "#section/0")}`);
+	_html(`</section>${_el_resume($scope0_id, "#section/0", _mask_group($scope0_reason, 2))}`);
 	_patch_write($scope0_id, "PatchWrite:one", one, 1);
 	_patch_write($scope0_id, "PatchWrite:two", two, 1);
 	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#4_one#5_two#6/init");
@@ -32,7 +32,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 		input_b: ["input.b"],
 		one: "1:9",
 		two: "2:9"
-	}) : _filled_guard($scope0_reason, 1) && _content_withheld("__tests__/tags/frag-host.marko_1*content") && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/frag-host.marko_fill0", input.b);
+	}) : _filled_guard($scope0_reason, 1) && _content_withheld("__tests__/tags/frag-host.marko_1*content") && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/frag-host.marko_fill0", input.b, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

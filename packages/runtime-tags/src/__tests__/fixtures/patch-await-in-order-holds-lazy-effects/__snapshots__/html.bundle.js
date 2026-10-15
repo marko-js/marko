@@ -10,7 +10,7 @@ var child_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.valueChange,
 		f: input.value
-	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.valueChange), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wf", input.value));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.valueChange, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wf", input.value, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko
@@ -24,7 +24,7 @@ var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let value = 0;
-	_set_scope_reason(8);
+	_set_scope_reason(8 | ($scope0_page ? 0 : 0) << 1);
 	const $childScope = _patch_child($scope0_id, "b");
 	$Child_withLoadAssets({
 		value,

@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id) });
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
-			l: $wi__err_message && $catch_content__err_message__closures,
+			l: $wi__err_message && _unfilled_if($scope1_reason, 0) && $catch_content__err_message__closures,
 			a: _existing_scope($childScope)
 		});
 	}, void 0, "a5", "a0", 1, "");
@@ -59,5 +59,5 @@ var template_default = _template("a", (input) => {
 		i: _write_if($scope0_reason, 0) && $input_label__closures,
 		k: $count__closures,
 		j: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

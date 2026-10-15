@@ -15,7 +15,7 @@ var price_card_default = _template("__tests__/tags/price-card.marko", (input) =>
 	}, "__tests__/tags/price-card.marko", 0, {
 		input_label: ["input.label"],
 		qty: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/price-card.marko_fill0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/price-card.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
 });
 
 // tags/promo-tag.marko
@@ -35,7 +35,7 @@ var promo_tag_default = _template("__tests__/tags/promo-tag.marko", (input) => {
 	}, "__tests__/tags/promo-tag.marko", 0, {
 		input_text: ["input.text"],
 		seen: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/promo-tag.marko_fill0", input.text);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/promo-tag.marko_fill0", input.text, !_server_guard($scope0_reason, 0));
 });
 
 // tags/site-footer.marko

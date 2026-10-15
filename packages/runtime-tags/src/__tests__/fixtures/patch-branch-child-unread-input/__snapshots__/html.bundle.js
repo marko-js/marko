@@ -33,7 +33,7 @@ var toggle_default = _template("d", (input) => {
 		f: input.user?.bio,
 		g: input.user?.name,
 		h: open
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vd1", input.user?.bio), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vd2", input.user?.name));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vd1", input.user?.bio, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vd2", input.user?.name, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko
@@ -96,5 +96,5 @@ var template_default = _template("a", (input) => {
 		l: _unfilled_if($scope0_reason, 4) && input.other,
 		m: n,
 		n: _unfilled_if($scope0_reason, 4) && input.props?.user
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.adminData), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.user), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va6", input.other), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va7", input.props?.user));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.adminData, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.user, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va6", input.other, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va7", input.props?.user, !_server_guard($scope0_reason, 6)));
 }, 1);

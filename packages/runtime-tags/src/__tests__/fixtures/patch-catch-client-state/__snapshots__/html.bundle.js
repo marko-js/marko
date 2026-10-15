@@ -38,7 +38,7 @@ var panel_default = _template("b", (input) => {
 		d: input.label,
 		f: $wi__input_label && $input_label__closures,
 		g: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb8", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb8", input.label, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

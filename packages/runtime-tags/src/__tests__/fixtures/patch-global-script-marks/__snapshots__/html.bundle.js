@@ -8,6 +8,6 @@ var template_default = _template("a", (input) => {
 	_fill_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
-	_patch_effect($scope0_id, "ea1", "a2");
-	$scope0_page ? _scope($scope0_id, { a2: input.label }) : _filled_guard($scope0_reason, 12) && _patch_write($scope0_id, "wa2", input.label);
+	_server_guard($scope0_reason, 12) && _patch_effect($scope0_id, "ea1", "a2");
+	$scope0_page ? _scope($scope0_id, { a2: input.label }) : _filled_guard($scope0_reason, 12) && _patch_write($scope0_id, "wa2", input.label, !_server_guard($scope0_reason, 12));
 }, 1);

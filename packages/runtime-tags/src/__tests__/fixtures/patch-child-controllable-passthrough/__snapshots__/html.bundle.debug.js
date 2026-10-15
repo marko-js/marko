@@ -27,7 +27,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/counter/index.marko_1*shell"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { input_onCount: _write_if($scope0_reason, 0) && input.onCount }, "__tests__/tags/counter/index.marko", 0, { input_onCount: ["input.onCount"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/counter/index.marko_fill0", input.onCount);
+	$scope0_page ? _scope($scope0_id, { input_onCount: _write_if($scope0_reason, 0) && input.onCount }, "__tests__/tags/counter/index.marko", 0, { input_onCount: ["input.onCount"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/counter/index.marko_fill0", input.onCount, !_server_guard($scope0_reason, 1));
 });
 
 // tags/middle/index.marko
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let last = 0;
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "#text/1", last, 2)}</p>`);
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | ($scope0_page ? 0 : 0) << 3);
 	const $childScope = _patch_child($scope0_id, "#childScope/2");
 	middle_default({
 		show: input.show,

@@ -19,7 +19,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 1), $scope0_page = _page_render(), $wi__input_note = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 2), $scope0_page = _page_render(), $wi__input_note = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	let open = input.open;
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id();
 			card_default({
 				title: input.title,
@@ -39,13 +39,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					$wg__input_note || _resume_branch($scope2_id);
 				}, $scope1_id)
 			});
-			_scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 1) && _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", open, 1);
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_title: input.title,
 		input_note: input.note,
@@ -55,5 +55,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_title: ["input.title"],
 		input_note: ["input.note"],
 		open: "1:6"
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.note));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.note, !_server_guard($scope0_reason, 2)));
 }, 1);

@@ -38,5 +38,5 @@ var template_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		g: input.label,
 		h: n
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.label);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

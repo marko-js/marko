@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_html("<section>");
 	_patch_attr_content("c", $scope0_id, input.on ? frag.content : null, void 0, $scope0_reason, 2);
-	_html(`</section>${_el_resume($scope0_id, "c")}`);
+	_html(`</section>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 2))}`);
 	_script($scope0_id, "a2");
 	_patch_write($scope0_id, "wk", frag?.content, 1);
 	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "a4");
@@ -24,5 +24,5 @@ var template_default = _template("a", (input) => {
 		i: n,
 		k: _unfilled_if($scope0_reason, 2) && frag?.content,
 		m: _write_if($scope0_reason, 1) && $input_rec_name__closures
-	}) : _filled_guard($scope0_reason, 1) && _content_withheld("a0") && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.rec?.name);
+	}) : _filled_guard($scope0_reason, 1) && _content_withheld("a0") && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.rec?.name, !_server_guard($scope0_reason, 1));
 }, 1);

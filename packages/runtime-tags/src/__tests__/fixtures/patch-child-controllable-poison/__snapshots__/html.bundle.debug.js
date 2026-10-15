@@ -33,7 +33,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 	}, "__tests__/tags/counter/index.marko", 0, {
 		input_onCount: ["input.onCount"],
 		input_step: ["input.step"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/counter/index.marko_fill0", input.onCount), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchWrite:input_step", input.step));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/counter/index.marko_fill0", input.onCount, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchWrite:input_step", input.step, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

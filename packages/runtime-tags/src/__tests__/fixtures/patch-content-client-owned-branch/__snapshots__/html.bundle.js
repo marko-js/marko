@@ -15,7 +15,7 @@ var panel_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_open, void 0, void 0, void 0, ["b0"], $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.body }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.body);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.body }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.body, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
@@ -45,5 +45,5 @@ var template_default = _template("a", (input) => {
 		f: count,
 		g: _write_if($scope0_reason, 0) && $input_title__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va3", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va3", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

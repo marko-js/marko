@@ -53,10 +53,10 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wg", input.msg, 1);
 	_patch_value($scope0_id, "va8", count, 1);
 	$scope0_page && _scope($scope0_id, {
-		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.msg,
+		g: _unfilled_if($scope0_reason, 1) && input.msg,
 		h: count,
-		j: _write_if($scope0_reason, 2) && $input_msg__closures,
-		i: _write_if($scope0_reason, 1) && $input_promise__closures,
+		j: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_msg__closures,
+		i: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_promise__closures,
 		c: _existing_scope($childScope)
 	});
 }, 1);

@@ -48,5 +48,5 @@ var template_default = _template("a", (input) => {
 		i: _unfilled_if($scope0_reason, 0) && input.more,
 		j: count,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.more);
+	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.more, !_server_guard($scope0_reason, 1));
 }, 1);

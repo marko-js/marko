@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "#text/1", clicks)}</button>${_el_resume($scope0_id, "#button/0")}<p></p>${_el_resume($scope0_id, "#p/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0_input_label#5");
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_input_label#5", "input_label!0");
+	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_input_label#5", "input_label!0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", clicks, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,
@@ -17,5 +17,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		clicks: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_label", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

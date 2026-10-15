@@ -88,7 +88,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_fill_global_subscribe("__tests__/template.marko_0_$global#4/global", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0_$global#4");
 	$scope0_page && _scope($scope0_id, {
-		"ClosureScopes:input_page/5": $wi__input_page && $input_page__closures,
+		"ClosureScopes:input_page/5": $wi__input_page && _unfilled_if($scope0_reason, 0) && $input_page__closures,
 		"#childScope/0": _existing_scope($childScope3)
 	}, "__tests__/template.marko", 0);
 }, 1);

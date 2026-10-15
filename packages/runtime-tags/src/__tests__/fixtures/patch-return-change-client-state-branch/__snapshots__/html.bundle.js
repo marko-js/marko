@@ -17,7 +17,7 @@ var counter_box_default = _template("b", (input) => {
 		f: input.onB,
 		g: mode,
 		U: $valueChange
-	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.onA), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wf", input.onB));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.onA, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wf", input.onB, !_server_guard($scope0_reason, 1)));
 	return $return;
 });
 
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(0);
+			_set_scope_reason(($scope0_page ? 0 : 0) << 1 | ($scope0_page ? 0 : 0) << 3);
 			const $childScope = _patch_child($scope1_id, "a");
 			counter_box_default({
 				onA: _resume(function(v) {

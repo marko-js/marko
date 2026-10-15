@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			value: $wi__input_suffix && value,
 			_: ($wi__input_suffix || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
-		}, "__tests__/template.marko", "2:2", { value: "2:15" }), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "__tests__/template.marko_1_input_suffix#0:4/subscribe") : _filled_guard($scope1_reason, 0) && _client_guard($scope0_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill2", value);
+		}, "__tests__/template.marko", "2:2", { value: "2:15" }), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "__tests__/template.marko_1_input_suffix#0:4/subscribe") : _filled_guard($scope1_reason, 0) && _client_guard($scope0_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill2", value, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope2 = _patch_child($scope0_id, "#childScope/0");
@@ -56,5 +56,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_suffix: ["input.suffix"],
 		n: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.suffix);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.suffix, !_server_guard($scope0_reason, 0));
 }, 1);

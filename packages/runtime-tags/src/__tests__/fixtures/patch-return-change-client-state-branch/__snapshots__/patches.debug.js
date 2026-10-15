@@ -6,10 +6,10 @@
         0: "packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1_count#6/var",
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/tags/counter-box/index.marko_0",
         "PatchBind:#TagVariableChange": [_.a = "packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1/onA", 1],
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/tags/counter-box/index.marko_fill0": "a"
-      },
-      "PatchBind:input_onA": [_.a, 1],
-      "PatchBind:input_onB": ["packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1/onB", 1]
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/tags/counter-box/index.marko_fill0": "a",
+        "PatchBind:input_onA": [_.a, 1],
+        "PatchBind:input_onB": ["packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1/onB", 1]
+      }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1*shell"]
 }]

@@ -17,7 +17,7 @@ var mixer_default = _template("__tests__/tags/mixer/index.marko", (input) => {
 	}, "__tests__/tags/mixer/index.marko", 0, {
 		input_value: ["input.value"],
 		local: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/mixer/index.marko_fill0", input.value);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/mixer/index.marko_fill0", input.value, !_server_guard($scope0_reason, 0));
 	return $return;
 });
 

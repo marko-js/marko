@@ -15,14 +15,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const label = input.title + "!";
-			_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchWrite:label", label);
+			_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchWrite:label", label, !_server_guard($scope0_reason, 2));
 			_html(`<p>${_patch_text($scope1_id, "#text/0", label, void 0, $scope0_reason, 2)}</p>`);
 			_if(() => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html("<span>inner</span>");
 					_script($scope2_id, "__tests__/template.marko_2_input_suffix#0:6_label#1:2", 0);
-					_patch_effect($scope2_id, "PatchEffect:__tests__/template.marko_2_input_suffix#0:6_label#1:2", "1 label 2 input_suffix");
+					(_server_guard($scope0_reason, 4) || _server_guard($scope0_reason, 2)) && _patch_effect($scope2_id, "PatchEffect:__tests__/template.marko_2_input_suffix#0:6_label#1:2", "1 label 2 input_suffix");
 					_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, "__tests__/template.marko_2_input_suffix#0:6/init");
 					_subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_2_input_suffix#0:6/subscribe", 0);
 					return 0;
@@ -45,5 +45,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_title: ["input.title"],
 		input_inner: ["input.inner"],
 		input_suffix: ["input.suffix"]
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.inner), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "PatchWrite:input_suffix", input.suffix));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.inner, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "PatchWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 4)));
 }, 1);

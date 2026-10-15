@@ -5,7 +5,7 @@ _shells({ b: "b;D D ;<section><h2> </h2></section>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2${_patch_attr_class($scope0_id, "aa class", input.title, $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.title, void 0, $scope0_reason, 0)}</h2>${_el_resume($scope0_id, "a")}</section>`);
+	_html(`<section><h2${_patch_attr_class($scope0_id, "aa class", input.title, $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.title, void 0, $scope0_reason, 0)}</h2>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}</section>`);
 	$scope0_page && _scope($scope0_id, {});
 });
 
@@ -39,5 +39,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		f: _unfilled_if($scope0_reason, 0) && input.note,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.note);
+	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

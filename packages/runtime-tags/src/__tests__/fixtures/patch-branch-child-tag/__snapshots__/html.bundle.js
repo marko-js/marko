@@ -48,5 +48,5 @@ var template_default = _template("a", (input) => {
 		g: _unfilled_if($scope0_reason, 1) && input.title,
 		h: _unfilled_if($scope0_reason, 1) && input.note,
 		i: count
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va3", input.title), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.note));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va3", input.title, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.note, !_server_guard($scope0_reason, 3)));
 }, 1);

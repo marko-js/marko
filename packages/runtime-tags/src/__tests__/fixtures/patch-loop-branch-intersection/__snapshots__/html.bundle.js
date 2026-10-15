@@ -35,5 +35,5 @@ var template_default = _template("a", (input) => {
 		h: count,
 		j: $wi__input_suffix && $input_suffix__closures,
 		k: $count__closures
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va5", input.flag), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va6", input.suffix));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va5", input.flag, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va6", input.suffix, !_server_guard($scope0_reason, 2)));
 }, 1);

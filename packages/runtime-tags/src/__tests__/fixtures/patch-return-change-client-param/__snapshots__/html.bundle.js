@@ -11,7 +11,7 @@ var counter_box_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		d: input.onChange,
 		U: $valueChange
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.onChange);
+	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.onChange, !_server_guard($scope0_reason, 0));
 	return $return;
 });
 

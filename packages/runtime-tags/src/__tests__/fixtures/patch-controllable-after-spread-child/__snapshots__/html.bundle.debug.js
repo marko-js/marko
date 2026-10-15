@@ -22,7 +22,7 @@ var text_field_default = _template("__tests__/tags/text-field.marko", (input) =>
 		value: "1:10",
 		valueChange: "1:17",
 		"ControlledHandler:#input/0": ["valueChange", "2:29"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/text-field.marko_fill0", value), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/text-field.marko_fill1", valueChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/text-field.marko_fill0", value, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/text-field.marko_fill1", valueChange, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -32,7 +32,7 @@ _shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0) => `__tests__/templat
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 0) << 7);
+	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3 | ($scope0_page ? 0 : 0) << 5 | _mask_group($scope0_reason, 0) << 7);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");
 	text_field_default({
 		placeholder: input.hint,

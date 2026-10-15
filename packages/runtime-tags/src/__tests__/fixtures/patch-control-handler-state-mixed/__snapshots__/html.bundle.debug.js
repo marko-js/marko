@@ -38,5 +38,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_a: ["input.a"],
 		s: "1:6",
 		cm: "3:8"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.a);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.a, !_server_guard($scope0_reason, 0));
 }, 1);

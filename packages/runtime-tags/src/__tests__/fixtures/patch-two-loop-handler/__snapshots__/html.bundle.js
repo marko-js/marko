@@ -20,5 +20,5 @@ var template_default = _template("a", (input) => {
 		_scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 2);
 	_html("</main>");
-	$scope0_page ? _scope($scope0_id, { f: input.title }) : _filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "va3", input.title) : _patch_write($scope0_id, "wf", input.title));
+	$scope0_page ? _scope($scope0_id, { f: input.title }) : _filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "va3", input.title, !_server_guard($scope0_reason, 1)) : _patch_write($scope0_id, "wf", input.title, !_server_guard($scope0_reason, 1)));
 }, 1);

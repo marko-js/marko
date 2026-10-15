@@ -7,10 +7,10 @@
           "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controllable-input/tags/demo-card.marko_0_input_tab#4_input_tabChange#5/init!packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controllable-input/tags/demo-card.marko_0",
           "PatchWrite:input_tab": 0,
           "PatchBind:input_tabChange": [_.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controllable-input/tags/page-b.marko_0/tabChange", 1],
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controllable-input/tags/demo-card.marko_fill2": 0
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controllable-input/tags/demo-card.marko_fill2": 0,
+          "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controllable-input/tags/demo-card.marko_fill1": [_.a, 1]
         },
-        "PatchBind:TagVariableChange:selected": [_.a, 1],
-        "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controllable-input/tags/demo-card.marko_fill1": [_.a, 1]
+        "PatchBind:TagVariableChange:selected": [_.a, 1]
       },
       "PatchSetup:": {
         "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controllable-input/tags/page-b.marko_fill0": 0

@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 	});
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
-		f: $wi__input_note && $input_note__closures,
+		f: $wi__input_note && _unfilled_if($scope0_reason, 1) && $input_note__closures,
 		a: _existing_scope($childScope)
 	});
 }, 1);

@@ -24,7 +24,7 @@ var rows_default = _template("__tests__/tags/rows.marko", (input) => {
 			_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id)
 		}, "__tests__/tags/rows.marko", "1:2", { "#LoopKey": ["item.id", "1:6"] });
 	}, "id", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/rows.marko_1*shell", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { input_promise: _unfilled_if($scope0_reason, 1) && input.promise }, "__tests__/tags/rows.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/rows.marko_fill0", input.promise);
+	$scope0_page ? _scope($scope0_id, { input_promise: _unfilled_if($scope0_reason, 1) && input.promise }, "__tests__/tags/rows.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/rows.marko_fill0", input.promise, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

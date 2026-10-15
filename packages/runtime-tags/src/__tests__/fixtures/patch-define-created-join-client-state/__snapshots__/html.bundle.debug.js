@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "1:2", {
 			input_a: ["input.a", "1:20"],
 			input_b: ["input.b", "1:20"]
-		}) : (_filled_guard($scope2_reason, 1) && _client_guard($scope2_reason, 2) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill2", input.a), _filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill3", input.b));
+		}) : (_filled_guard($scope2_reason, 1) && _client_guard($scope2_reason, 2) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill2", input.a, !_server_guard($scope2_reason, 1)), _filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill3", input.b, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id) };
 	let tab = 0;
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/0")}`);
@@ -52,5 +52,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_x: ["input.x"],
 		tab: "4:6"
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.x);
+	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.x, !_server_guard($scope0_reason, 1));
 }, 1);

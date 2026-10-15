@@ -70,13 +70,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $wg__input_show)}`);
 	$scope0_page ? _scope($scope0_id, {
 		input_title: _unfilled_if($scope0_reason, 3) && input.title,
-		input_alt: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5)) && input.alt,
-		input_note: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 6)) && input.note,
-		"ClosureScopes:input_note/9": $wi__input_note && $input_note__closures,
-		"ClosureScopes:input_alt/8": _write_if($scope0_reason, 5) && $input_alt__closures
+		input_alt: _unfilled_if($scope0_reason, 3) && input.alt,
+		input_note: _unfilled_if($scope0_reason, 0) && input.note,
+		"ClosureScopes:input_note/9": $wi__input_note && _unfilled_if($scope0_reason, 6) && $input_note__closures,
+		"ClosureScopes:input_alt/8": _write_if($scope0_reason, 5) && _unfilled_if($scope0_reason, 5) && $input_alt__closures
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		input_alt: ["input.alt"],
 		input_note: ["input.note"]
-	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.alt), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.note));
+	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.alt, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.note, !_server_guard($scope0_reason, 6)));
 }, 1);

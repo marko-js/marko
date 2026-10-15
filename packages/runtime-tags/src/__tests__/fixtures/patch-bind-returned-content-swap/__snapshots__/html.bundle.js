@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 		d: count,
 		f: _write_if($scope0_reason, 0) && $input_label__closures,
 		g: $count__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb4", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb4", input.label, !_server_guard($scope0_reason, 0));
 	_resume_branch($scope0_id);
 	return $return;
 });

@@ -28,7 +28,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 	}, 0, $scope0_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 1);
 	_script($scope0_id, "__tests__/tags/list.marko_0_input_onPick#5");
 	_script($scope0_id, "__tests__/tags/list.marko_0");
-	_patch_effect($scope0_id, "PatchEffect:__tests__/tags/list.marko_0_input_onPick#5", "input_onPick");
+	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/list.marko_0_input_onPick#5", "input_onPick");
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/list.marko_fill0", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_onPick: input.onPick,
@@ -36,7 +36,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 	}, "__tests__/tags/list.marko", 0, {
 		input_onPick: ["input.onPick"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_onPick", input.onPick);
+	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_onPick", input.onPick, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -44,10 +44,10 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !;${((_w0) => `/${_w0}&b`)($walks$1)};${((_w0) => `${_w0}<!>`)($template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 0), $wi__input_note = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 0), $scope0_page = _page_render(), $wi__input_note = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(($scope0_page ? _mask_group($scope0_reason, 0) : 0) << 1 | _mask_group($scope0_reason, 1) << 3);
 	let $item;
 	forOf(input.labels, (label) => {
 		$item = attrTags($item, { content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -69,5 +69,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_note: input.note,
 		"ClosureScopes:input_note/5": $wi__input_note && $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note);
+	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 0));
 }, 1);

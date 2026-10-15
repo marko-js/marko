@@ -27,5 +27,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_prefix: ["input.prefix"],
 		n: "1:6",
 		label: "2:8"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.prefix);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.prefix, !_server_guard($scope0_reason, 0));
 }, 1);

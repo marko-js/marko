@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__isOpen, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope1_reason, 0);
-		$scope1_page ? _write_if($scope1_reason, 0) && _scope($scope1_id, { label: _unfilled_if($scope1_reason, 0) && label }, "__tests__/template.marko", "2:2", { label: "2:25" }) : _filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", label);
+		$scope1_page ? _write_if($scope1_reason, 0) && _scope($scope1_id, { label: _unfilled_if($scope1_reason, 0) && label }, "__tests__/template.marko", "2:2", { label: "2:25" }) : _filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", label, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	_set_scope_reason(2 | _mask_group($scope0_reason, 0) << 3);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");

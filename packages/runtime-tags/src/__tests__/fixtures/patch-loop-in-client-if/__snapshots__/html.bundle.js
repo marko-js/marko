@@ -17,5 +17,5 @@ var template_default = _template("a", (input) => {
 		g: show,
 		h: items,
 		i: $wi__input_note && $input_note__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.note);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 0));
 }, 1);

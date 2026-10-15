@@ -60,8 +60,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope1_id)
 		});
 		_scope($scope1_id, {
-			"ClosureScopes:item_n/7": $wi__input_items && $for_content__item_n__closures,
-			"ClosureScopes:item_alt/6": $wi__input_items && $for_content__item_alt__closures,
+			"ClosureScopes:item_n/7": $wi__input_items && _unfilled_if($scope0_reason, 0) && $for_content__item_n__closures,
+			"ClosureScopes:item_alt/6": $wi__input_items && _unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "2:4");
 	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);

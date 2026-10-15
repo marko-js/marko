@@ -30,7 +30,7 @@ var counter_default = _template("d", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.base,
 		f: tick
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vd1", input.base);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vd1", input.base, !_server_guard($scope0_reason, 0));
 });
 
 // tags/panel.marko
@@ -82,7 +82,7 @@ var page_default = _template("a", (input) => {
 		a: _existing_scope($childScope),
 		k: $live__closures,
 		d: _existing_scope($childScope3)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va3", input.base);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va3", input.base, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -107,5 +107,5 @@ var template_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.base }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.base);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.base }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.base, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, {
 		count,
-		"ClosureScopes:input_note/7": _write_if($scope0_reason, 1) && $input_note__closures,
+		"ClosureScopes:input_note/7": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_note__closures,
 		"ClosureScopes:count/8": $count__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });

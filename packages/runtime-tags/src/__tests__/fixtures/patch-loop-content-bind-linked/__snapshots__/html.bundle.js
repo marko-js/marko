@@ -28,21 +28,21 @@ var list_default = _template("b", (input) => {
 	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "b0", $scope0_reason, 1);
 	_script($scope0_id, "b2");
 	_script($scope0_id, "b3");
-	_patch_effect($scope0_id, "eb2", "f");
+	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "eb2", "f");
 	_patch_value($scope0_id, "vb4", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.onPick,
 		h: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wf", input.onPick);
+	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wf", input.onPick, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
 _shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 0), $wi__input_note = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 0), $scope0_page = _page_render(), $wi__input_note = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(($scope0_page ? _mask_group($scope0_reason, 0) : 0) << 1 | _mask_group($scope0_reason, 1) << 3);
 	let $item;
 	forOf(input.labels, (label) => {
 		$item = attrTags($item, { content: _content_resume("a2", () => {
@@ -64,5 +64,5 @@ var template_default = _template("a", (input) => {
 		d: input.note,
 		f: $wi__input_note && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va3", input.note);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va3", input.note, !_server_guard($scope0_reason, 0));
 }, 1);

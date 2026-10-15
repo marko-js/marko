@@ -9,7 +9,7 @@ import {
   isStateSourced,
 } from "../bindings";
 import { isPatch } from "../marko-config";
-import { every, some } from "../optional";
+import { every, forEach, type Opt, push, some } from "../optional";
 import { getSourcesForExpr, getSourcesForRef } from "../reasons";
 import {
   getCanonicalExtra,
@@ -196,10 +196,38 @@ export function isPatchKeyed(section: Section, binding: Binding) {
   }
   if (isKnownChildNode(binding)) return isPatchRendered(section);
   if (getLoopBody(binding) && patchesBranchesAt(binding)) return true;
+  return rendersPatchedValues(section, binding);
+}
+
+// A node patch-keyed only for the values rendered into it, which nothing pairs
+// through: what keys it is their groups'.
+export function isPatchKeyedByValues(section: Section, binding: Binding) {
+  return (
+    isPatch() &&
+    binding.section === section &&
+    !isKnownChildNode(binding) &&
+    !(getLoopBody(binding) && patchesBranchesAt(binding)) &&
+    rendersPatchedValues(section, binding)
+  );
+}
+
+function rendersPatchedValues(section: Section, binding: Binding) {
   return (
     writesPatchIn(section) &&
     some(findSlot(binding)?.reasonExprs, rendersServerValue)
   );
+}
+
+// The write sources of each server value rendered into the node.
+export function getRenderedValueSources(binding: Binding) {
+  let sources: Opt<Sources>;
+  forEach(findSlot(binding)!.reasonExprs, (expr) => {
+    if (rendersServerValue(expr)) {
+      const exprSources = getWriteSources(expr);
+      if (exprSources) sources = push(sources, exprSources);
+    }
+  });
+  return sources;
 }
 
 // A slot a patch keys an entry on: a node's, or the body of a branch or loop

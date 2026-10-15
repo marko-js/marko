@@ -37,7 +37,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 		two: "2:9",
 		"EventAttributes:#section/0": ["...{ content: input.mode ? one : two }", "3:13"],
 		"EventAttributes:#div/1": ["...{ content: input.mode ? two : one }", "4:9"]
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/frag-host.marko_fill0", input.b);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/frag-host.marko_fill0", input.b, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

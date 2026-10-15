@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, {
 		count,
-		"ClosureScopes:input_promise/10": $wi__input_promise && $input_promise__closures,
+		"ClosureScopes:input_promise/10": $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

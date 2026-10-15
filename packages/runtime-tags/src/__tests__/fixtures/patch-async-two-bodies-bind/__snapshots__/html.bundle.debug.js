@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 1, "__tests__/template.marko_1*content", 1);
 	_await($scope0_id, "#text/1", input.second, (second) => {
 		const $scope2_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "PatchWrite:second", second);
+		_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "PatchWrite:second", second, !_server_guard($scope0_reason, 1));
 		const handler = _resume((event) => event.target.dataset.seen = second, "__tests__/template.marko_2/handler", $scope2_id);
 		_html(`<button${_patch_attrs({
 			title: second,

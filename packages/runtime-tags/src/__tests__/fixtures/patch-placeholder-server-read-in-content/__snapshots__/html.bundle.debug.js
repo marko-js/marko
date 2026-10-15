@@ -58,10 +58,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_msg: input.msg,
 		count,
 		"ClosureScopes:input_msg/8": $wi__input_msg && $input_msg__closures,
-		"ClosureScopes:input_promise/9": $wi__input_promise && $input_promise__closures,
+		"ClosureScopes:input_promise/9": $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_msg: ["input.msg"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.msg);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.msg, !_server_guard($scope0_reason, 0));
 }, 1);

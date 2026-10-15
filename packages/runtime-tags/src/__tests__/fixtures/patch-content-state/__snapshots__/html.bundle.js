@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 	_patch_value($scope0_id, "va3", count, 1);
 	$scope0_page && _scope($scope0_id, {
 		g: count,
-		h: _write_if($scope0_reason, 1) && $input_note__closures,
+		h: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_note__closures,
 		i: $count__closures,
 		a: _existing_scope($childScope)
 	});

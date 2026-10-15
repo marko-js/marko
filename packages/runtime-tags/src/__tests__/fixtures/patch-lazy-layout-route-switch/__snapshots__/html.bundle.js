@@ -106,6 +106,6 @@ var template_default = _template("d", (input) => {
 	_trailers("</body></html>");
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 1) && input.list,
-		f: $wi__input_page && $input_page__closures
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vd6", input.list);
+		f: $wi__input_page && _unfilled_if($scope0_reason, 1) && $input_page__closures
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vd6", input.list, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			f: $wi__input_suffix && value,
 			_: ($wi__input_suffix || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
-		}), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "a5") : _filled_guard($scope1_reason, 0) && _client_guard($scope0_reason, 0) && _patch_value($scope1_id, "va2", value);
+		}), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "a5") : _filled_guard($scope1_reason, 0) && _client_guard($scope0_reason, 0) && _patch_value($scope1_id, "va2", value, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope2 = _patch_child($scope0_id, "a");
@@ -50,5 +50,5 @@ var template_default = _template("a", (input) => {
 		f: n,
 		g: $wi__input_suffix && $input_suffix__closures,
 		a: _existing_scope($childScope2)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.suffix);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.suffix, !_server_guard($scope0_reason, 0));
 }, 1);

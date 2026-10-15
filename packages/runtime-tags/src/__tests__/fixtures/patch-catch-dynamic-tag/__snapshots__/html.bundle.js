@@ -63,5 +63,5 @@ var template_default = _template("a", (input) => {
 		k: $wi__input_label && $input_label__closures,
 		m: $count__closures,
 		l: $wi__input_error && _unfilled_if($scope0_reason, 2) && $input_error__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va9", input.large), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va10", input.label));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va9", input.large, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va10", input.label, !_server_guard($scope0_reason, 1)));
 }, 1);

@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) });
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
-		e: $wi__input_kind && $input_kind__closures,
+		e: $wi__input_kind && _unfilled_if($scope0_reason, 0) && $input_kind__closures,
 		a: _existing_scope($childScope)
 	});
 }, 1);

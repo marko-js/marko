@@ -45,5 +45,5 @@ var template_default = _template("b", (input) => {
 		j: _unfilled_if($scope0_reason, 1) && input.user2,
 		k: n,
 		d: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.user2);
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.user2, !_server_guard($scope0_reason, 2));
 }, 1);

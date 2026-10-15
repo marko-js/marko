@@ -61,12 +61,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		input_b: _unfilled_if($scope0_reason, 3) && input.b,
 		input_label: _unfilled_if($scope0_reason, 0) && input.label,
-		input_text: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 6)) && input.text,
-		"ClosureScopes:input_text/9": _write_if($scope0_reason, 6) && $input_text__closures,
+		input_text: _unfilled_if($scope0_reason, 0) && input.text,
+		"ClosureScopes:input_text/9": _write_if($scope0_reason, 6) && _unfilled_if($scope0_reason, 6) && $input_text__closures,
 		"ClosureScopes:input_label/8": _write_if($scope0_reason, 5) && _unfilled_if($scope0_reason, 5) && $input_label__closures
 	}, "__tests__/template.marko", 0, {
 		input_b: ["input.b"],
 		input_label: ["input.label"],
 		input_text: ["input.text"]
-	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.b), _filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 4)) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.label), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 4)) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.text));
+	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.b, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 4)) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.label, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 4)) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.text, !_server_guard($scope0_reason, 6)));
 }, 1);

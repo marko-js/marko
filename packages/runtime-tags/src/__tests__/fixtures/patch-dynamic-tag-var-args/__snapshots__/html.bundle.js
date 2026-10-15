@@ -2,8 +2,7 @@
 _shells({ a: "a !a1; D ;<button> </button>" });
 _client_return("a");
 var counter_default = _template("a", (input) => {
-	_scope_reason();
-	const $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = input;
 	_html(`<button>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
@@ -12,7 +11,7 @@ var counter_default = _template("a", (input) => {
 	const $valueChange2 = _patch_bind($scope0_id, "dU", _resume(function(v) {
 		n = v;
 	}, "a0", $scope0_id) || void 0, 0, 0);
-	_patch_value($scope0_id, "va2", n, 1);
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", n, 1);
 	$scope0_page && _scope($scope0_id, {
 		e: n,
 		U: $valueChange2
@@ -36,5 +35,5 @@ var template_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.on,
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.start
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb1", input.on), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.start));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb1", input.on, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.start, !_server_guard($scope0_reason, 2)));
 }, 1);

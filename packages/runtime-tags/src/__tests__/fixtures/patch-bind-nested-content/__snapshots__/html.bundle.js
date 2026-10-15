@@ -83,7 +83,7 @@ var template_default = _template("a", (input) => {
 		j: $wi__input_show && store?.set,
 		a: _existing_scope($childScope),
 		l: $store_set__closures,
-		k: $wi__input_show && $input_show__closures,
+		k: $wi__input_show && _unfilled_if($scope0_reason, 0) && $input_show__closures,
 		d: _existing_scope($childScope3)
 	});
 }, 1);

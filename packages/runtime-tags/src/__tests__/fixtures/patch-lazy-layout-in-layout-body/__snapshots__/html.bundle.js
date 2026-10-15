@@ -111,7 +111,7 @@ var template_default = _template("e", (input) => {
 		$wg__input_page || $wi__input_page && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	$scope0_page && _scope($scope0_id, {
-		e: $wi__input_page && $input_page__closures,
+		e: $wi__input_page && _unfilled_if($scope0_reason, 0) && $input_page__closures,
 		a: _existing_scope($childScope4)
 	});
 }, 1);

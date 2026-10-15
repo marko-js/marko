@@ -45,5 +45,5 @@ var template_default = _template("c", (input) => {
 		h: $wi__input_on && $input_on__closures,
 		j: $count__closures,
 		a: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc6", input.on), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc7", input.label));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc6", input.on, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc7", input.label, !_server_guard($scope0_reason, 1)));
 }, 1);

@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$scope1_page ? _subscribe($open__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "2:2", { label: "2:17" }), "__tests__/template.marko_1_open#0:5/subscribe") : _filled_guard($scope1_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", label);
+		}, "__tests__/template.marko", "2:2", { label: "2:17" }), "__tests__/template.marko_1_open#0:5/subscribe") : _filled_guard($scope1_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", label, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");

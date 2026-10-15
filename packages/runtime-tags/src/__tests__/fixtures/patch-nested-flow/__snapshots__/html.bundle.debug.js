@@ -68,5 +68,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_detail: _unfilled_if($scope0_reason, 2) && input.detail,
 		"ClosureScopes:input_detail/10": _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_detail__closures,
 		"#childScope/2": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_detail: ["input.detail"] }) : _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.detail);
+	}, "__tests__/template.marko", 0, { input_detail: ["input.detail"] }) : _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.detail, !_server_guard($scope0_reason, 3));
 }, 1);

@@ -64,12 +64,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 4), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 4);
 	_html("</main>");
 	$scope0_page ? _scope($scope0_id, {
-		input_note: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 3)) && input.note,
+		input_note: _unfilled_if($scope0_reason, 4) && input.note,
 		input_t2: _unfilled_if($scope0_reason, 4) && input.t2,
-		"ClosureScopes:input_note/8": $wi__input_note && $input_note__closures,
+		"ClosureScopes:input_note/8": $wi__input_note && _unfilled_if($scope0_reason, 3) && $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_note: ["input.note"],
 		input_t2: ["input.t2"]
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.t2));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.t2, !_server_guard($scope0_reason, 5)));
 }, 1);

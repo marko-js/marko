@@ -30,7 +30,7 @@ var counter_default = _template("d", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.base,
 		f: tick
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vd1", input.base);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vd1", input.base, !_server_guard($scope0_reason, 0));
 });
 
 // tags/panel.marko
@@ -119,5 +119,5 @@ var template_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.items }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.items);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.items }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.items, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -40,7 +40,7 @@ var child_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { e: _write_if($scope0_reason, 0) && input.on }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb3", input.on);
+	$scope0_page ? _scope($scope0_id, { e: _write_if($scope0_reason, 0) && input.on }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb3", input.on, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

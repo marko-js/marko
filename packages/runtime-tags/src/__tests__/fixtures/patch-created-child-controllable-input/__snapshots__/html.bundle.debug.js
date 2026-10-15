@@ -23,7 +23,7 @@ var demo_card_default = _template("__tests__/tags/demo-card.marko", (input) => {
 		input_tabChange: ["input.tabChange"],
 		selected: "2:6",
 		"TagVariableChange:selected": ["selectedChange", "2:6"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/demo-card.marko_fill0", input.tab), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/demo-card.marko_fill1", input.tabChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/demo-card.marko_fill0", input.tab, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/demo-card.marko_fill1", input.tabChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/page-b.marko
@@ -34,7 +34,7 @@ var page_b_default = _template("__tests__/tags/page-b.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let tab = 0;
-	_set_scope_reason(10);
+	_set_scope_reason(10 | ($scope0_page ? 0 : 0) << 5);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");
 	demo_card_default({
 		tab,

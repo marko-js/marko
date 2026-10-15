@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 		f: input.msg,
 		h: count,
 		i: $wi__input_msg && $input_msg__closures,
-		j: $wi__input_promise && $input_promise__closures,
+		j: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures,
 		c: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.msg);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.msg, !_server_guard($scope0_reason, 0));
 }, 1);

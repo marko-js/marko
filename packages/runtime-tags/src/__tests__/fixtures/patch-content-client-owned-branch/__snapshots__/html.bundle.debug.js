@@ -16,7 +16,7 @@ var panel_default = _template("__tests__/tags/panel/index.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_open, void 0, void 0, void 0, ["__tests__/tags/panel/index.marko_1*shell"], $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { input_body: _unfilled_if($scope0_reason, 1) && input.body }, "__tests__/tags/panel/index.marko", 0, { input_body: ["input.body"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/panel/index.marko_fill0", input.body);
+	$scope0_page ? _scope($scope0_id, { input_body: _unfilled_if($scope0_reason, 1) && input.body }, "__tests__/tags/panel/index.marko", 0, { input_body: ["input.body"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/panel/index.marko_fill0", input.body, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
@@ -51,5 +51,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

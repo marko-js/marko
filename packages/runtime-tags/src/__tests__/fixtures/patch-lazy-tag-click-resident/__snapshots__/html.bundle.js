@@ -10,7 +10,7 @@ var child_default = _template("a", (input) => {
 		onClick: handler
 	}, "a", $scope0_id, "button", void 0, $scope0_reason, 0)}>go</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
-	$scope0_page ? _scope($scope0_id, { d: input.title }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.title);
+	$scope0_page ? _scope($scope0_id, { d: input.title }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.title, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -40,5 +40,5 @@ var template_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.title }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.title);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.title }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.title, !_server_guard($scope0_reason, 1));
 }, 1);

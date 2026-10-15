@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope3_id, "a", 1, $wg__open, void 0, void 0, void 0, ["a1"], $scope3_reason, 1);
-		$scope3_page ? _write_if($scope3_reason, 1) && _scope($scope3_id, { e: _unfilled_if($scope3_reason, 1) && body }) : _filled_guard($scope3_reason, 2) && _client_guard($scope3_reason, 1) && _patch_value($scope3_id, "va2", body);
+		$scope3_page ? _write_if($scope3_reason, 1) && _scope($scope3_id, { e: _unfilled_if($scope3_reason, 1) && body }) : _filled_guard($scope3_reason, 2) && _client_guard($scope3_reason, 1) && _patch_value($scope3_id, "va2", body, !_server_guard($scope3_reason, 2));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);
@@ -59,5 +59,5 @@ var template_default = _template("a", (input) => {
 		i: $wi__input_title && $input_title__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va8", input.title);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va8", input.title, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -106,7 +106,7 @@ var page_b_default = _template("c", (input) => {
 	$scope0_page && _scope($scope0_id, {
 		g: count,
 		i: $count__closures,
-		j: _write_if($scope0_reason, 0) && $p__closures
+		j: _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $p__closures
 	});
 });
 
@@ -189,10 +189,10 @@ var template_default = _template("d", (input) => {
 	_trailers("</body></html>");
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 3) && input.list,
-		f: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5)) && input.wide,
-		g: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 6)) && input.note,
-		j: _write_if($scope0_reason, 5) && $input_wide__closures,
-		k: $wi__input_note && $input_note__closures,
-		h: $wi__input_page && $input_page__closures
-	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vd9", input.list), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vd10", input.wide), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vd11", input.note));
+		f: _unfilled_if($scope0_reason, 3) && input.wide,
+		g: _unfilled_if($scope0_reason, 3) && input.note,
+		j: _write_if($scope0_reason, 5) && _unfilled_if($scope0_reason, 5) && $input_wide__closures,
+		k: $wi__input_note && _unfilled_if($scope0_reason, 6) && $input_note__closures,
+		h: $wi__input_page && _unfilled_if($scope0_reason, 3) && $input_page__closures
+	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vd9", input.list, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vd10", input.wide, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vd11", input.note, !_server_guard($scope0_reason, 6)));
 }, 1);

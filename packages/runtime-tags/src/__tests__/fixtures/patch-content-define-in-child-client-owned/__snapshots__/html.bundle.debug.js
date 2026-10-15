@@ -33,7 +33,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		input_title: input.title,
 		"ClosureScopes:input_title/5": $wi__input_title && $input_title__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/tags/wrap.marko", 0, { input_title: ["input.title"] }) : _filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/wrap.marko_fill0", input.title);
+	}, "__tests__/tags/wrap.marko", 0, { input_title: ["input.title"] }) : _filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/wrap.marko_fill0", input.title, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

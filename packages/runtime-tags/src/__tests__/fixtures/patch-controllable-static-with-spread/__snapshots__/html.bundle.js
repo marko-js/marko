@@ -16,5 +16,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.rest,
 		f: _write_if($scope0_reason, 0) && text
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.rest);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.rest, !_server_guard($scope0_reason, 0));
 }, 1);

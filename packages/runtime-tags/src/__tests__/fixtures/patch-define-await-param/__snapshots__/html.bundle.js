@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			i: $wi__id && $Info_content__id__closures,
 			j: $wi__value && _unfilled_if($scope1_reason, 1) && $Info_content__value__closures
-		}) : _filled_guard($scope1_reason, 0) && _patch_value($scope1_id, "va11", id);
+		}) : _filled_guard($scope1_reason, 0) && _patch_value($scope1_id, "va11", id, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
 	const $childScope = _patch_child($scope0_id, "a");

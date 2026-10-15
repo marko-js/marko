@@ -48,12 +48,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#main/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $wg__input_show)}`);
 	$scope0_page ? _scope($scope0_id, {
-		input_note: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
-		input_inner: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.inner,
-		"ClosureScopes:input_note/6": _write_if($scope0_reason, 2) && $input_note__closures,
-		"ClosureScopes:input_inner/7": _write_if($scope0_reason, 3) && $input_inner__closures
+		input_note: _unfilled_if($scope0_reason, 1) && input.note,
+		input_inner: _unfilled_if($scope0_reason, 1) && input.inner,
+		"ClosureScopes:input_note/6": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_note__closures,
+		"ClosureScopes:input_inner/7": _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_inner__closures
 	}, "__tests__/template.marko", 0, {
 		input_note: ["input.note"],
 		input_inner: ["input.inner"]
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.inner));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.inner, !_server_guard($scope0_reason, 3)));
 }, 1);

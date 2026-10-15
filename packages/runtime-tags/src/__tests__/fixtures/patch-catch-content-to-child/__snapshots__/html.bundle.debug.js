@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id) });
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
-			"ClosureScopes:err_message/11": $wi__err_message && $catch_content__err_message__closures,
+			"ClosureScopes:err_message/11": $wi__err_message && _unfilled_if($scope1_reason, 0) && $catch_content__err_message__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "8:4");
 	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_3*content", 1, "");
@@ -66,5 +66,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		count: "4:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

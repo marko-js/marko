@@ -24,9 +24,9 @@ var template_default = _template("a", (input) => {
 		$scope1_page ? _scope($scope1_id, {
 			d: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 1)) && value,
 			e: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 2)) && valueChange
-		}) : (_filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 2) && _patch_value($scope1_id, "va4", value), _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_value($scope1_id, "va5", valueChange));
+		}) : (_filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 2) && _patch_value($scope1_id, "va4", value, !_server_guard($scope1_reason, 1)), _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_value($scope1_id, "va5", valueChange, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 0) << 7);
+	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3 | ($scope0_page ? 0 : 0) << 5 | _mask_group($scope0_reason, 0) << 7);
 	const $childScope = _patch_child($scope0_id, "a");
 	TextField.content({
 		placeholder: input.hint,

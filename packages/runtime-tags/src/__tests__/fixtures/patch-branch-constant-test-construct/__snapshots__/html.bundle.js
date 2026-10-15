@@ -62,7 +62,7 @@ var page_default = _template("a", (input) => {
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", 0, 0);
-	$scope0_page && _scope($scope0_id, { e: $wi__input_down && $input_down__closures });
+	$scope0_page && _scope($scope0_id, { e: $wi__input_down && _unfilled_if($scope0_reason, 0) && $input_down__closures });
 });
 
 // template.marko
@@ -86,5 +86,5 @@ var template_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.down }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.down);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.down }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.down, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -52,5 +52,5 @@ var template_default = _template("a", (input) => {
 		i: _write_if($scope0_reason, 0) && $input_label__closures,
 		k: $count__closures,
 		j: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

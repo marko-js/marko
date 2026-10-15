@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<a${_patch_attr($scope1_id, "aa href", "href", input.href, $scope0_reason, 3)}${_patch_attr($scope1_id, "aa hidden", "hidden", input.hidden, $scope0_reason, 4)}>${_patch_text($scope1_id, "b", input.label, void 0, $scope0_reason, 5)}</a>${_el_resume($scope1_id, "a")}`);
+			_html(`<a${_patch_attr($scope1_id, "aa href", "href", input.href, $scope0_reason, 3)}${_patch_attr($scope1_id, "aa hidden", "hidden", input.hidden, $scope0_reason, 4)}>${_patch_text($scope1_id, "b", input.label, void 0, $scope0_reason, 5)}</a>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 3) || _mask_group($scope0_reason, 4))}`);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}
@@ -20,5 +20,5 @@ var template_default = _template("a", (input) => {
 		g: _unfilled_if($scope0_reason, 2) && input.href,
 		h: _unfilled_if($scope0_reason, 2) && input.hidden,
 		i: _unfilled_if($scope0_reason, 2) && input.label
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va1", input.href), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va2", input.hidden), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.label));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va1", input.href, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va2", input.hidden, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.label, !_server_guard($scope0_reason, 5)));
 }, 1);

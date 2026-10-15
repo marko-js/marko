@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) });
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
-		"ClosureScopes:input_kind/4": $wi__input_kind && $input_kind__closures,
+		"ClosureScopes:input_kind/4": $wi__input_kind && _unfilled_if($scope0_reason, 0) && $input_kind__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0);
 }, 1);

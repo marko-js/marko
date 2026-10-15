@@ -54,5 +54,5 @@ var template_default = _template("a", (input) => {
 		e: input.note,
 		f: $wi__input_note && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.note);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

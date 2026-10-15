@@ -21,5 +21,5 @@ var template_default = _template("a", (input) => {
 		f: input.prefix,
 		h: n,
 		j: _write_if($scope0_reason, 1) && label
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.prefix);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.prefix, !_server_guard($scope0_reason, 0));
 }, 1);

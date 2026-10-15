@@ -17,10 +17,10 @@
       "PatchChild:#childScope/2": {
         "PatchSetup:": {
           "PatchAttr:#div/0 class": "c",
-          "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4"
+          "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4",
+          "PatchWrite:input_name": "c"
         },
         "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4": _(0)["PatchChild:#childScope/1"]["PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4"],
-        "PatchWrite:input_name": "c",
         "PatchWrite:input_item": _(0)["PatchChild:#childScope/1"]["PatchWrite:input_item"]
       }
     }

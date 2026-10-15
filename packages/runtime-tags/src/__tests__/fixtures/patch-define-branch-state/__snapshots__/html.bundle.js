@@ -13,16 +13,16 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		let n = input.start;
-		_html(`<div class=counter><span>${_patch_text($scope2_id, "a", input.label, void 0, $scope2_reason, 0)}: ${_text_resume($scope2_id, "b", n, 2)}</span><button class=inc>+</button>${_el_resume($scope2_id, "c")}</div>`);
+		_html(`<div class=counter><span>${_patch_text($scope2_id, "a", input.label, void 0, $scope2_reason, 1)}: ${_text_resume($scope2_id, "b", n, 2)}</span><button class=inc>+</button>${_el_resume($scope2_id, "c")}</div>`);
 		_script($scope2_id, "a2");
-		_patch_value($scope2_id, "va3", n, 1);
+		_filled_guard($scope2_reason, 0) && _patch_value($scope2_id, "va3", n, 1);
 		_scope($scope2_id, { h: n });
 	}, $scope0_id) };
 	_html("<main>");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+			_set_scope_reason(_mask_group($scope0_reason, 3) << 1 | _mask_group($scope0_reason, 2) << 3);
 			const $childScope = _patch_child($scope1_id, "a");
 			Counter.content({
 				label: input.title,
@@ -39,5 +39,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 1) && input.title,
 		f: _unfilled_if($scope0_reason, 1) && input.start
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.title), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.start));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.title, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.start, !_server_guard($scope0_reason, 3)));
 }, 1);

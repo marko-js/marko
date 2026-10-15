@@ -6,6 +6,6 @@ var template_default = _template("a", (input) => {
 	const x = _id();
 	const z = input.z || _id();
 	const y = _id();
-	_html(`<div${_patch_attr($scope0_id, "aa id", "id", z, $scope0_reason, 0)}>${_patch_text($scope0_id, "b", x, void 0, 0, 0)} ${_patch_text($scope0_id, "c", y, 2, 0, 0)} ${_patch_text($scope0_id, "d", z, 2, $scope0_reason, 0)}</div>${_el_resume($scope0_id, "a")}`);
+	_html(`<div${_patch_attr($scope0_id, "aa id", "id", z, $scope0_reason, 0)}>${_patch_text($scope0_id, "b", x, void 0, 0, 0)} ${_patch_text($scope0_id, "c", y, 2, 0, 0)} ${_patch_text($scope0_id, "d", z, 2, $scope0_reason, 0)}</div>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
 	$scope0_page && _scope($scope0_id, {});
 }, 1);

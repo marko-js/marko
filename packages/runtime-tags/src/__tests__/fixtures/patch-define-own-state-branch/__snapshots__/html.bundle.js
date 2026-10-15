@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		$scope1_page ? _scope($scope1_id, {
 			e: label,
 			f: open
-		}) : _filled_guard($scope1_reason, 0) && _patch_value($scope1_id, "va2", label);
+		}) : _filled_guard($scope1_reason, 0) && _patch_value($scope1_id, "va2", label, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "a");

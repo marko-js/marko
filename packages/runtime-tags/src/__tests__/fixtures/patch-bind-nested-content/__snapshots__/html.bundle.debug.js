@@ -91,7 +91,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		store_set: $wi__input_show && store?.set,
 		"#childScope/0": _existing_scope($childScope),
 		"ClosureScopes:store_set/11": $store_set__closures,
-		"ClosureScopes:input_show/10": $wi__input_show && $input_show__closures,
+		"ClosureScopes:input_show/10": $wi__input_show && _unfilled_if($scope0_reason, 0) && $input_show__closures,
 		"#childScope/3": _existing_scope($childScope3)
 	}, "__tests__/template.marko", 0, { store_set: ["store.set", "1:8"] });
 }, 1);

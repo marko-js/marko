@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<em${_patch_attr_class($scope1_id, "PatchAttr:#em/0 class", input.tone, $scope0_reason, 0)}>note</em>${_el_resume($scope1_id, "#em/0")}`);
+			_html(`<em${_patch_attr_class($scope1_id, "PatchAttr:#em/0 class", input.tone, $scope0_reason, 0)}>note</em>${_el_resume($scope1_id, "#em/0", _mask_group($scope0_reason, 0))}`);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4");
 			return 0;
 		}
@@ -31,5 +31,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_tone: ["input.tone"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.tone);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.tone, !_server_guard($scope0_reason, 0));
 }, 1);

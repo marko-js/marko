@@ -36,5 +36,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_title: input.title,
 		"ClosureScopes:input_title/5": $wi__input_title && $input_title__closures,
 		"ClosureScopes:input_promise/6": $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures
-	}, "__tests__/template.marko", 0, { input_title: ["input.title"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title);
+	}, "__tests__/template.marko", 0, { input_title: ["input.title"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

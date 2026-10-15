@@ -253,10 +253,9 @@ export function writeDynamicTagEntry(
         : id
           ? (renderer as ServerRenderer)[RendererProp.Owner]
           : undefined;
-      // A renderer the client builds from its shell takes no input: the
-      // flush's entries for its scope render what the input would.
-      const shell =
-        id && !boundScope && shipShell(state as PatchUpdateState, id);
+      // A renderer the client builds from its shell (bound to its owner by the
+      // id's prefix) takes no input: the flush's entries render what it would.
+      const shell = id && shipShell(state as PatchUpdateState, id);
       if (contentId) shipShell(state as PatchUpdateState, contentId);
       const native = typeof renderer === "string";
       const entry: unknown[] = [

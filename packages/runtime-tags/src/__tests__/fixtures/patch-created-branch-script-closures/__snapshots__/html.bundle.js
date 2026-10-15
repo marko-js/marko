@@ -14,7 +14,7 @@ var level_watch_default = _template("b", (input) => {
 		if (input.projection) {
 			const $scope1_id = _scope_id();
 			_script($scope1_id, "b1", 0);
-			_patch_effect($scope1_id, "eb1", "1 g h i");
+			(_server_guard($scope0_reason, 1) || _server_guard($scope0_reason, 2) || _server_guard($scope0_reason, 3)) && _patch_effect($scope1_id, "eb1", "1 g h i");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
@@ -26,7 +26,7 @@ var level_watch_default = _template("b", (input) => {
 		h: input.baseXp,
 		i: input.playerId,
 		j: shown
-	}) : (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wg", input.projection?.skill), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "wh", input.baseXp), _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "wi", input.playerId));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wg", input.projection?.skill, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "wh", input.baseXp, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "wi", input.playerId, !_server_guard($scope0_reason, 3)));
 });
 
 // tags/route-play.marko

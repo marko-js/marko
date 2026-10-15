@@ -17,7 +17,7 @@ var field_default = _template("__tests__/tags/field/index.marko", (input) => {
 		input_value: ["input.value"],
 		input_valueChange: ["input.valueChange"],
 		"ControlledHandler:#input/0": ["valueChange", "1:26"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/field/index.marko_fill0", input.value), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/field/index.marko_fill1", input.valueChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/field/index.marko_fill0", input.value, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/field/index.marko_fill1", input.valueChange, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -56,5 +56,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_prefix: ["input.prefix"],
 		handle: "1:8",
 		open: "4:6"
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", handle), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_prefix", input.prefix));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", handle, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_prefix", input.prefix, !_server_guard($scope0_reason, 0)));
 }, 1);

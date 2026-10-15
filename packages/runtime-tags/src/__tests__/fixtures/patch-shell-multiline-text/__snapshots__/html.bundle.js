@@ -18,5 +18,5 @@ line 3</pre><p>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_reason
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a0"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.note }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.note);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.note }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

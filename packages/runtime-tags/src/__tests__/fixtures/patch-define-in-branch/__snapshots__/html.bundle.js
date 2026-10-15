@@ -38,5 +38,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.suffix,
 		f: _write_if($scope0_reason, 1) && $input_suffix__closures
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va4", input.suffix);
+	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va4", input.suffix, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -27,5 +27,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
 	_html("</main>");
-	$scope0_page ? _scope($scope0_id, { input_value: _unfilled_if($scope0_reason, 2) && input.value }, "__tests__/template.marko", 0, { input_value: ["input.value"] }) : _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.value);
+	$scope0_page ? _scope($scope0_id, { input_value: _unfilled_if($scope0_reason, 2) && input.value }, "__tests__/template.marko", 0, { input_value: ["input.value"] }) : _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.value, !_server_guard($scope0_reason, 3));
 }, 1);

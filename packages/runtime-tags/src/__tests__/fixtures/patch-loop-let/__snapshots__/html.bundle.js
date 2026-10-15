@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		let votes = item.start;
 		_html(`<li>${_patch_text($scope1_id, "a", item.label, void 0, $scope0_reason, 0)}<span>${_text_resume($scope1_id, "b", votes)}</span><button>+</button>${_el_resume($scope1_id, "c")}</li>`);
 		_script($scope1_id, "a1");
-		_patch_value($scope1_id, "va2", votes, 1);
+		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "va2", votes, 1);
 		_scope($scope1_id, { h: votes });
 	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);

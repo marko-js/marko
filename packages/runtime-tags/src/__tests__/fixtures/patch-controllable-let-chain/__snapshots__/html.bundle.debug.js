@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				b = _new_b;
 			}, "__tests__/template.marko_1/valueChange2", $scope1_id), void 0, void 0, void 0, "PatchBind:ControlledHandler:#input/1")}>${_el_resume($scope1_id, "#input/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
-			_patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", a, 1);
+			_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", a, 1);
 			_patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill2", b, 1);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2", {
 				"ControlledHandler:#input/0": ["valueChange"],
@@ -28,5 +28,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { input_text: _write_if($scope0_reason, 0) && input.text }, "__tests__/template.marko", 0, { input_text: ["input.text"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.text);
+	$scope0_page ? _scope($scope0_id, { input_text: _write_if($scope0_reason, 0) && input.text }, "__tests__/template.marko", 0, { input_text: ["input.text"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.text, !_server_guard($scope0_reason, 1));
 }, 1);

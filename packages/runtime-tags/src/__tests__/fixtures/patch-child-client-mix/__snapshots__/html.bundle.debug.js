@@ -41,5 +41,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_suffix: ["input.suffix"],
 		count: "1:6",
 		show: "2:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.suffix);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.suffix, !_server_guard($scope0_reason, 0));
 }, 1);

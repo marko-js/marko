@@ -23,7 +23,7 @@ var disclosure_default = _template("__tests__/tags/disclosure.marko", (input) =>
 	}, "__tests__/tags/disclosure.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/disclosure.marko_fill0", input.content);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/disclosure.marko_fill0", input.content, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -47,5 +47,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_suffix: input.suffix,
 		"ClosureScopes:input_suffix/4": $wi__input_suffix && $input_suffix__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_suffix: ["input.suffix"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.suffix);
+	}, "__tests__/template.marko", 0, { input_suffix: ["input.suffix"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.suffix, !_server_guard($scope0_reason, 0));
 }, 1);

@@ -24,5 +24,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.keyField,
 		f: items
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.keyField);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.keyField, !_server_guard($scope0_reason, 0));
 }, 1);

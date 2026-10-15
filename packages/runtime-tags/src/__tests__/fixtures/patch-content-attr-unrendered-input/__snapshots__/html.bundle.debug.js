@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_html("<section>");
 	_patch_attr_content("#section/2", $scope0_id, input.on ? frag.content : null, void 0, $scope0_reason, 2);
-	_html(`</section>${_el_resume($scope0_id, "#section/2")}`);
+	_html(`</section>${_el_resume($scope0_id, "#section/2", _mask_group($scope0_reason, 2))}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
 	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "__tests__/template.marko_0_input_on#7_frag_content#10/init");
@@ -30,5 +30,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_rec_name: ["input.rec.name"],
 		n: "1:6",
 		frag_content: ["frag.content", "3:9"]
-	}) : _filled_guard($scope0_reason, 1) && _content_withheld("__tests__/template.marko_1*content") && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.rec?.name);
+	}) : _filled_guard($scope0_reason, 1) && _content_withheld("__tests__/template.marko_1*content") && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.rec?.name, !_server_guard($scope0_reason, 1));
 }, 1);

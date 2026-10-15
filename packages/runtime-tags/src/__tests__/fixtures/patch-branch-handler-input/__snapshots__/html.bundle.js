@@ -17,5 +17,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a0"], $scope0_reason, 1);
 	_html("</main>");
-	$scope0_page ? _scope($scope0_id, { g: input.tag }) : _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "wg", input.tag);
+	$scope0_page ? _scope($scope0_id, { g: input.tag }) : _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "wg", input.tag, !_server_guard($scope0_reason, 2));
 }, 1);

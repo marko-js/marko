@@ -7,10 +7,10 @@ var template_default = _template("a", (input) => {
 	_html(`<div></div>${_el_resume($scope0_id, "a")}<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
-	_patch_effect($scope0_id, "ea1", "e!0");
+	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "ea1", "e!0");
 	_patch_value($scope0_id, "va2", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.label,
 		f: count
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

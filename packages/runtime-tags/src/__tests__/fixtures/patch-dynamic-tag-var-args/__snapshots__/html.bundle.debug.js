@@ -13,7 +13,7 @@ var counter_default = _template("__tests__/counter.marko", (input) => {
 	const $valueChange2 = _patch_bind($scope0_id, "PatchBind:#TagVariableChange", _resume(function(v) {
 		n = v;
 	}, "__tests__/counter.marko_0/valueChange", $scope0_id) || void 0, 0, 0);
-	_patch_value($scope0_id, "PatchValue:__tests__/counter.marko_fill0", n, 1);
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/counter.marko_fill0", n, 1);
 	$scope0_page && _scope($scope0_id, {
 		n,
 		"#TagVariableChange": $valueChange2
@@ -42,5 +42,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_on: ["input.on"],
 		input_start: ["input.start"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.on), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.start));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.on, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.start, !_server_guard($scope0_reason, 2)));
 }, 1);

@@ -17,11 +17,11 @@ var template_default = _template("a", (input) => {
 				b = _new_b;
 			}, "a1", $scope1_id), void 0, void 0, void 0, "dEb")}>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a3");
-			_patch_value($scope1_id, "va4", a, 1);
+			_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "va4", a, 1);
 			_patch_value($scope1_id, "va5", b, 1);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { e: _write_if($scope0_reason, 0) && input.text }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va6", input.text);
+	$scope0_page ? _scope($scope0_id, { e: _write_if($scope0_reason, 0) && input.text }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va6", input.text, !_server_guard($scope0_reason, 1));
 }, 1);

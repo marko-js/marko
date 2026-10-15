@@ -16,7 +16,7 @@ var tab_editor_default = _template("__tests__/tags/tab-editor.marko", (input) =>
 	}, "__tests__/tags/tab-editor.marko", 0, {
 		input_tab: ["input.tab"],
 		input_tabChange: ["input.tabChange"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/tab-editor.marko_fill0", input.tab), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/tab-editor.marko_fill1", input.tabChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/tab-editor.marko_fill0", input.tab, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/tab-editor.marko_fill1", input.tabChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/route-pg.marko
@@ -27,7 +27,7 @@ var route_pg_default = _template("__tests__/tags/route-pg.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let tab = 0;
-	_set_scope_reason(10);
+	_set_scope_reason(10 | ($scope0_page ? 0 : 0) << 5);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");
 	tab_editor_default({
 		tab,

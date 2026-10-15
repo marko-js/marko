@@ -39,7 +39,7 @@ var toggle_default = _template("__tests__/tags/toggle.marko", (input) => {
 		input_user_bio: ["input.user.bio"],
 		input_user_name: ["input.user.name"],
 		open: "1:6"
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/toggle.marko_fill0", input.user?.bio), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/toggle.marko_fill1", input.user?.name));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/toggle.marko_fill0", input.user?.bio, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/toggle.marko_fill1", input.user?.name, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko
@@ -110,5 +110,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_other: ["input.other"],
 		n: "1:6",
 		input_props_user: ["input.props.user"]
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.adminData), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.user), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.other), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill4", input.props?.user));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.adminData, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.user, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.other, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill4", input.props?.user, !_server_guard($scope0_reason, 6)));
 }, 1);

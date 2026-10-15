@@ -42,7 +42,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		input_label: input.label,
 		"ClosureScopes:input_label/5": $wi__input_label && $input_label__closures,
 		"ClosureScopes:input_error/6": $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}, "__tests__/tags/panel.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill0", input.label);
+	}, "__tests__/tags/panel.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

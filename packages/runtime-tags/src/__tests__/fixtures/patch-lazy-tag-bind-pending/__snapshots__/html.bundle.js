@@ -10,7 +10,7 @@ var child_default = _template("a", (input) => {
 		onClick: handler
 	}, "a", $scope0_id, "button", void 0, $scope0_reason, 0)}>go</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
-	$scope0_page ? _scope($scope0_id, { d: input.title }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.title);
+	$scope0_page ? _scope($scope0_id, { d: input.title }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.title, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

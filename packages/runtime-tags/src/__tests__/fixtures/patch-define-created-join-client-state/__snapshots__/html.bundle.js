@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 		$scope2_page ? _scope($scope2_id, {
 			d: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && input.a,
 			e: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 2)) && input.b
-		}) : (_filled_guard($scope2_reason, 1) && _client_guard($scope2_reason, 2) && _patch_value($scope2_id, "va2", input.a), _filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "va3", input.b));
+		}) : (_filled_guard($scope2_reason, 1) && _client_guard($scope2_reason, 2) && _patch_value($scope2_id, "va2", input.a, !_server_guard($scope2_reason, 1)), _filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "va3", input.b, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id) };
 	let tab = 0;
 	_html(`<button>+</button>${_el_resume($scope0_id, "a")}`);
@@ -44,5 +44,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		f: _unfilled_if($scope0_reason, 0) && input.x,
 		g: tab
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va6", input.x);
+	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va6", input.x, !_server_guard($scope0_reason, 1));
 }, 1);

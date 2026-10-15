@@ -8,6 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = input.n;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", n, 1);
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", n, 1);
 	$scope0_page && _scope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "1:6" });
 }, 1);

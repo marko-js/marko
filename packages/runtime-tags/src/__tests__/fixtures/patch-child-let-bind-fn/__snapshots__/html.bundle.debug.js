@@ -37,7 +37,7 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 		input_refreshingChange: ["input.refreshingChange"],
 		load: "3:8",
 		"TagVariableChange:refreshing": ["refreshingChange", "1:6"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker.marko_fill0", input.refreshing), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker.marko_fill1", input.refreshingChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker.marko_fill0", input.refreshing, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker.marko_fill1", input.refreshingChange, !_server_guard($scope0_reason, 2)));
 	return $return;
 });
 
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let busy = false;
-	_set_scope_reason(0);
+	_set_scope_reason(($scope0_page ? 0 : 0) << 1 | ($scope0_page ? 0 : 0) << 5);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");
 	let refresh = picker_default({ refreshingChange: _resume(function(v) {
 		busy = v;

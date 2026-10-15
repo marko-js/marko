@@ -27,7 +27,7 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { forEach, fromIter, reduce, type SortedOpt } from "./optional";
+import { every, forEach, fromIter, reduce, type SortedOpt } from "./optional";
 import {
   type ParamsTree,
   getAllKnownPropNames,
@@ -59,6 +59,7 @@ import {
   dropNodes,
   getAllTagReferenceNodes,
   getReferencedBindings,
+  isRegisteredFnExtra,
   mergeReferences,
   type ReferencedExtra,
   setDerivedFrom,
@@ -134,6 +135,7 @@ import {
   getClientGuard,
   getWriteGuard,
   getWriteReason,
+  scopePageIdentifier,
 } from "./write-guard";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
@@ -643,6 +645,9 @@ export interface ParamGroupSources {
   /** The call site's sources for this group (fn-body reads included;
    * survives any force on the key). */
   sources: Sources | undefined;
+  /** Every expression is a function the call site's scope registers, so the
+   * value is fixed for that scope's life. */
+  scopeBound: boolean;
 }
 
 // A tag analyzed as a known child template (vs a `<define>` var's tag).
@@ -658,13 +663,14 @@ export function getParamGroupSources(
   const knownExprs = tagExtra[kKnownExprs];
   const groups = tagExtra[kChildSection]?.paramReasonGroups;
   if (knownExprs && tagExtra.childScopeBinding && groups) {
-    return groups.map((params) => ({
-      params,
-      sources: reduce(
-        mapParamReasonToExpr(knownExprs, params),
-        mergeAllSourcesForExpr,
-      ),
-    }));
+    return groups.map((params) => {
+      const exprs = mapParamReasonToExpr(knownExprs, params);
+      return {
+        params,
+        sources: reduce(exprs, mergeAllSourcesForExpr),
+        scopeBound: !!exprs && every(exprs, isRegisteredFnExtra),
+      };
+    });
   }
 }
 
@@ -676,28 +682,22 @@ function buildOwnershipMaskExpr(
   reasonGroups: ParamReasonGroups,
   groups: ParamGroupSources[],
 ): t.Expression | undefined {
-  const values = groups.map(({ sources }, i) => {
-    if (sources?.state) return hasParamOrGlobalSource(sources) ? 3 : 1;
-    // Params this section's callers pass compose their groups' bits at render.
-    const callerGroups = getCallerParamGroupsAt(sources?.param, section);
-    if (callerGroups.length) {
-      const composed = buildComposedGroupValue(callerGroups);
-      // A `$global` source adds a static server bit beside the composition.
-      return sources!.global
-        ? t.binaryExpression("|", t.numericLiteral(2), composed)
-        : composed;
-    }
-    if (isUngatedGroup(sources)) return 2;
-    // A constant group (a call-site constant) the child still reads
-    // client-side is the server's to supply; one it never reads ships not.
-    return findSlot(
-      childScopeBinding,
-      SlotKind.ParamGroup,
+  const values = groups.map(({ sources, scopeBound }, i) => {
+    const value = getGroupSourcesValue(
       section,
+      childScopeBinding,
       reasonGroups[i],
-    )?.reason
-      ? 2
-      : 0;
+      sources,
+    );
+    // A function its scope registers is fixed for the child's life: a page
+    // writes it as its sources say, a patch seeds it as a constant.
+    return scopeBound
+      ? t.conditionalExpression(
+          scopePageIdentifier(section.program),
+          typeof value === "number" ? t.numericLiteral(value) : value,
+          t.numericLiteral(0),
+        )
+      : value;
   });
   if (values.every(isServerOnly)) return;
   return buildGroupMask(
@@ -706,6 +706,33 @@ function buildOwnershipMaskExpr(
       names: getDebugNames(groups[i].params),
     })),
   );
+}
+
+// A group's bits from its call site's sources: state's, its callers' composed
+// at render, else the server's, or none for a constant the child never reads.
+function getGroupSourcesValue(
+  section: Section,
+  childScopeBinding: Binding,
+  group: ParamReasonGroup,
+  sources: Sources | undefined,
+): number | t.Expression {
+  if (sources?.state) return hasParamOrGlobalSource(sources) ? 3 : 1;
+  // Params this section's callers pass compose their groups' bits at render.
+  const callerGroups = getCallerParamGroupsAt(sources?.param, section);
+  if (callerGroups.length) {
+    const composed = buildComposedGroupValue(callerGroups);
+    // A `$global` source adds a static server bit beside the composition.
+    return sources!.global
+      ? t.binaryExpression("|", t.numericLiteral(2), composed)
+      : composed;
+  }
+  if (isUngatedGroup(sources)) return 2;
+  // A constant group (a call-site constant) the child still reads
+  // client-side is the server's to supply; one it never reads ships not.
+  return findSlot(childScopeBinding, SlotKind.ParamGroup, section, group)
+    ?.reason
+    ? 2
+    : 0;
 }
 
 // The server alone contributes the group, as the all-server default says.

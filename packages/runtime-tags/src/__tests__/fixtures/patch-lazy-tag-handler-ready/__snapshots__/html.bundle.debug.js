@@ -14,7 +14,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, { input_title: input.title }, "__tests__/child.marko", 0, {
 		input_title: ["input.title"],
 		"EventAttributes:#button/0": ["...{ title: input.title, onClick: handler }", "2:12"]
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_title", input.title);
+	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

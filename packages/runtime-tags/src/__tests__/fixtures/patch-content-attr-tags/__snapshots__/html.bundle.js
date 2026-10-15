@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	});
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
-		e: $wi__input_h && $input_h__closures,
+		e: $wi__input_h && _unfilled_if($scope0_reason, 0) && $input_h__closures,
 		a: _existing_scope($childScope)
 	});
 }, 1);

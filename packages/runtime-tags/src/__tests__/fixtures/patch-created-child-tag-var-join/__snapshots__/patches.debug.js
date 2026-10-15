@@ -7,12 +7,11 @@
           0: "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/route-pg.marko_0_files#3/var",
           "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_0_input_value#2",
           "PatchBind:#TagVariableChange": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_0/valueChange",
-          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_fill0": _.a = []
-        },
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_0_input_value#2": "input_value",
-        "PatchWrite:input_value": [{
-          path: "a"
-        }]
+          "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_fill0": _.a = [],
+          "PatchWrite:input_value": [{
+            path: "a"
+          }]
+        }
       },
       "PatchChild:#childScope/2": {
         "PatchChild:#childScope/0": {
@@ -23,10 +22,10 @@
                 "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-tabs.marko_0_input_files#4_input_filesChange#5/init!packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-tabs.marko_0",
                 "PatchWrite:input_files": _.a,
                 "PatchBind:input_filesChange": [_.b = "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/route-pg.marko_0/filesChange", 3],
-                "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-tabs.marko_fill2": _.a
+                "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-tabs.marko_fill2": _.a,
+                "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-tabs.marko_fill1": [_.b, 3]
               },
-              "PatchBind:TagVariableChange:tabs": [_.b, 3],
-              "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-tabs.marko_fill1": [_.b, 3]
+              "PatchBind:TagVariableChange:tabs": [_.b, 3]
             },
             "PatchSetup:": {
               "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-host.marko_1_input_files#0:3/init"

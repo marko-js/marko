@@ -12,7 +12,7 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 	const $valueChange2 = _patch_bind($scope0_id, "PatchBind:#TagVariableChange", _resume(function(v) {
 		count = v;
 	}, "__tests__/tags/counter-box/index.marko_0/valueChange", $scope0_id) || void 0, 0, 0);
-	_patch_value($scope0_id, "PatchValue:__tests__/tags/counter-box/index.marko_fill0", count, 1);
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/counter-box/index.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, { "#TagVariableChange": $valueChange2 }, "__tests__/tags/counter-box/index.marko", 0);
 	return $return;
 });
@@ -29,6 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(0);
 			const $childScope = _peek_scope_id();
 			let count = counter_box_default({ start: 1 });
 			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_count#4/var");

@@ -12,11 +12,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<input${_patch_input_value($scope1_id, "#input/0", input.value, void 0, "PatchControl:2#input/0", $scope0_reason, 2)}>${_el_resume($scope1_id, "#input/0")}`);
+			_html(`<input${_patch_input_value($scope1_id, "#input/0", input.value, void 0, "PatchControl:2#input/0", $scope0_reason, 2)}>${_el_resume($scope1_id, "#input/0", _mask_group($scope0_reason, 2))}`);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html("</main>");
-	$scope0_page ? _scope($scope0_id, { input_value: _unfilled_if($scope0_reason, 1) && input.value }, "__tests__/template.marko", 0, { input_value: ["input.value"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.value);
+	$scope0_page ? _scope($scope0_id, { input_value: _unfilled_if($scope0_reason, 1) && input.value }, "__tests__/template.marko", 0, { input_value: ["input.value"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.value, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -9,5 +9,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "#text/1", out, 2)}</p><button>go</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", out, 1);
-	$scope0_page ? _scope($scope0_id, { input_items: input.items }, "__tests__/template.marko", 0, { input_items: ["input.items"] }) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_items", input.items);
+	$scope0_page ? _scope($scope0_id, { input_items: input.items }, "__tests__/template.marko", 0, { input_items: ["input.items"] }) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_items", input.items, !_server_guard($scope0_reason, 1));
 }, 1);

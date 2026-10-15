@@ -87,7 +87,7 @@ var template_default = _template("d", (input) => {
 	_fill_global_subscribe("d4", $scope0_id, 1);
 	_script($scope0_id, "d5");
 	$scope0_page && _scope($scope0_id, {
-		f: $wi__input_page && $input_page__closures,
+		f: $wi__input_page && _unfilled_if($scope0_reason, 0) && $input_page__closures,
 		a: _existing_scope($childScope3)
 	});
 }, 1);

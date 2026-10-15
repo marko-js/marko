@@ -4,7 +4,7 @@ _shells({ b: "b;D ;<svg viewBox=\"0 0 1 1\"><title></title></svg>" });
 var icon_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<svg viewBox="0 0 1 1"><title>${_patch_text_content($scope0_id, "ma", input.name, _escape, $scope0_reason, 0)}</title>${_el_resume($scope0_id, "a")}</svg>`);
+	_html(`<svg viewBox="0 0 1 1"><title>${_patch_text_content($scope0_id, "ma", input.name, _escape, $scope0_reason, 0)}</title>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}</svg>`);
 	$scope0_page && _scope($scope0_id, {});
 });
 
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 		const $childScope = _patch_child($scope1_id, "b");
 		icon_default({ name: item.icon });
-		_html(`<span>${_patch_text($scope1_id, "c", item.label, void 0, $scope0_reason, 1)}</span></a>${_el_resume($scope1_id, "a")}`);
+		_html(`<span>${_patch_text($scope1_id, "c", item.label, void 0, $scope0_reason, 1)}</span></a>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 1))}`);
 		_scope($scope1_id, {
 			f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && item?.href,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
@@ -42,5 +42,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, $wg__input_page, void 0, void 0, void 0, ["a1"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "b", $wg__input_page)}`);
-	$scope0_page ? _scope($scope0_id, { f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.path }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.path);
+	$scope0_page ? _scope($scope0_id, { f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.path }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.path, !_server_guard($scope0_reason, 2));
 }, 1);

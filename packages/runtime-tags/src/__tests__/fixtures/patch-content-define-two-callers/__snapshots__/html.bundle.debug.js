@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope3_id, "#text/0", 1, $wg__open, void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope3_reason, 1);
-		$scope3_page ? _write_if($scope3_reason, 1) && _scope($scope3_id, { body: _unfilled_if($scope3_reason, 1) && body }, "__tests__/template.marko", "2:2", { body: "2:23" }) : _filled_guard($scope3_reason, 2) && _client_guard($scope3_reason, 1) && _patch_value($scope3_id, "PatchValue:__tests__/template.marko_fill2", body);
+		$scope3_page ? _write_if($scope3_reason, 1) && _scope($scope3_id, { body: _unfilled_if($scope3_reason, 1) && body }, "__tests__/template.marko", "2:2", { body: "2:23" }) : _filled_guard($scope3_reason, 2) && _client_guard($scope3_reason, 1) && _patch_value($scope3_id, "PatchValue:__tests__/template.marko_fill2", body, !_server_guard($scope3_reason, 2));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);
@@ -64,5 +64,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 1));
 }, 1);

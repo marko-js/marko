@@ -592,6 +592,12 @@ export function _filled_guard(mask: GroupMask, group: number) {
   return owned === 2 || (owned === 0 && inCreatable()) ? 1 : 0;
 }
 
+// On where the server alone feeds the group: a patch writes its values in
+// place; a constant's only seed a created scope.
+export function _server_guard(mask: GroupMask, group: number) {
+  return groupSources(mask, group) === 2 ? 1 : 0;
+}
+
 // Page-side group guards (a patch serializes no resume data): any
 // contribution, client or server, can change — the group's data serializes.
 export function _write_if(mask: GroupMask, group: number) {

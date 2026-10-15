@@ -15,7 +15,7 @@ var feed_list_default = _template("b", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "vb2", item?.id);
-		_html(`<li${hovered === item.id ? " class=hovered" : ""}><a${_patch_attr($scope1_id, "ab href", "href", link(input.data, item.id), $scope0_reason, 0)}>${_patch_text($scope1_id, "c", item.id, void 0, $scope0_reason, 1)}</a>${_el_resume($scope1_id, "b")}</li>${_el_resume($scope1_id, "a")}`);
+		_html(`<li${hovered === item.id ? " class=hovered" : ""}><a${_patch_attr($scope1_id, "ab href", "href", link(input.data, item.id), $scope0_reason, 0)}>${_patch_text($scope1_id, "c", item.id, void 0, $scope0_reason, 1)}</a>${_el_resume($scope1_id, "b", _mask_group($scope0_reason, 0))}</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b1");
 		_scope($scope1_id, {
 			f: item?.id,
@@ -27,7 +27,7 @@ var feed_list_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.data,
 		f: _write_if($scope0_reason, 1) && hovered
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", input.data);
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", input.data, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

@@ -25,5 +25,5 @@ var template_default = _template("a", (input) => {
 		h: $wi__input_upper && low,
 		j: pick,
 		k: open
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va3", input.upper), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va4", up), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va5", low), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va6", pick), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "we", input.title));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va3", input.upper, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va4", up, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va5", low, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va6", pick, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "we", input.title, !_server_guard($scope0_reason, 1)));
 }, 1);

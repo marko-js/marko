@@ -24,12 +24,12 @@ var icon_default = _template("f", (input) => {
 	_if(() => {
 		if (input.name) {
 			const $scope1_id = _scope_id();
-			_html(`<path${_patch_attr($scope1_id, "aa d", "d", input.name, $scope0_reason, 0)}></path>${_el_resume($scope1_id, "a")}`);
+			_html(`<path${_patch_attr($scope1_id, "aa d", "d", input.name, $scope0_reason, 0)}></path>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, ["f0"], $scope0_reason, 0);
-	_html(`</svg>${_el_resume($scope0_id, "a")}`);
+	_html(`</svg>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
 	$scope0_page && _scope($scope0_id, {});
 });
 
@@ -167,9 +167,9 @@ var template_default = _template("e", (input) => {
 		$wg__input_page || $wi__input_page__OR__input_list && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	$scope0_page ? _scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.list,
-		f: $wi__input_page && $input_page__closures,
-		g: _write_if($scope0_reason, 2) && $input_list__closures,
+		e: _unfilled_if($scope0_reason, 1) && input.list,
+		f: $wi__input_page && _unfilled_if($scope0_reason, 1) && $input_page__closures,
+		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_list__closures,
 		a: _existing_scope($childScope4)
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "ve9", input.list);
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "ve9", input.list, !_server_guard($scope0_reason, 2));
 }, 1);

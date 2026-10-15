@@ -15,7 +15,7 @@ var tagged_default = _template("__tests__/tags/tagged/index.marko", (input) => {
 	}, "__tests__/tags/tagged/index.marko", 0, {
 		input_tag: ["input.tag"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_tag", input.tag);
+	}) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_tag", input.tag, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

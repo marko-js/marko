@@ -56,10 +56,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_msg", input.msg, 1);
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, {
-		input_msg: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.msg,
+		input_msg: _unfilled_if($scope0_reason, 1) && input.msg,
 		count,
-		"ClosureScopes:input_msg/9": _write_if($scope0_reason, 2) && $input_msg__closures,
-		"ClosureScopes:input_promise/8": _write_if($scope0_reason, 1) && $input_promise__closures,
+		"ClosureScopes:input_msg/9": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_msg__closures,
+		"ClosureScopes:input_promise/8": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_promise__closures,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_msg: ["input.msg"],

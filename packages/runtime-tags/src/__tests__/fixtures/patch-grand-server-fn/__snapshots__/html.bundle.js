@@ -32,5 +32,5 @@ var template_default = _template("a", (input) => {
 		e: input.title,
 		f: fmt,
 		g: show
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", fmt), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.title));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", fmt, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.title, !_server_guard($scope0_reason, 0)));
 }, 1);

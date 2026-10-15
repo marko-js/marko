@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_script($scope1_id, "__tests__/template.marko_1_input_title#0:5", 0);
-		_patch_effect($scope1_id, "PatchEffect:__tests__/template.marko_1_input_title#0:5", "1 input_title");
+		_server_guard($scope0_reason, 1) && _patch_effect($scope1_id, "PatchEffect:__tests__/template.marko_1_input_title#0:5", "1 input_title");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_for_of(input.items2, (item) => {
@@ -22,5 +22,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4");
 	}, 0, $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
 	_html("</main>");
-	$scope0_page ? _scope($scope0_id, { input_title: input.title }, "__tests__/template.marko", 0, { input_title: ["input.title"] }) : _filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title) : _patch_write($scope0_id, "PatchWrite:input_title", input.title));
+	$scope0_page ? _scope($scope0_id, { input_title: input.title }, "__tests__/template.marko", 0, { input_title: ["input.title"] }) : _filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 1)) : _patch_write($scope0_id, "PatchWrite:input_title", input.title, !_server_guard($scope0_reason, 1)));
 }, 1);

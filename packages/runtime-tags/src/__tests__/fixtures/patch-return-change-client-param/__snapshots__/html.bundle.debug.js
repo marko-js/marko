@@ -12,7 +12,7 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 	$scope0_page ? _scope($scope0_id, {
 		input_onChange: input.onChange,
 		"#TagVariableChange": $valueChange
-	}, "__tests__/tags/counter-box/index.marko", 0, { input_onChange: ["input.onChange"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_onChange", input.onChange);
+	}, "__tests__/tags/counter-box/index.marko", 0, { input_onChange: ["input.onChange"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_onChange", input.onChange, !_server_guard($scope0_reason, 0));
 	return $return;
 });
 

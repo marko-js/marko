@@ -14,12 +14,12 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 	const $return = count;
 	const $valueChange2 = _patch_bind($scope0_id, "PatchBind:#TagVariableChange", read(input.reads) || _resume(function(v) {
 		count = v;
-	}, "__tests__/tags/counter-box/index.marko_0/valueChange", $scope0_id) || void 0, $scope0_reason, 0);
-	_patch_value($scope0_id, "PatchValue:__tests__/tags/counter-box/index.marko_fill0", count, 1);
+	}, "__tests__/tags/counter-box/index.marko_0/valueChange", $scope0_id) || void 0, $scope0_reason, 1);
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/counter-box/index.marko_fill0", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_reads: input.reads,
 		"#TagVariableChange": $valueChange2
-	}, "__tests__/tags/counter-box/index.marko", 0, { input_reads: ["input.reads"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_reads", input.reads);
+	}, "__tests__/tags/counter-box/index.marko", 0, { input_reads: ["input.reads"] }) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_reads", input.reads, !_server_guard($scope0_reason, 1));
 	return $return;
 });
 

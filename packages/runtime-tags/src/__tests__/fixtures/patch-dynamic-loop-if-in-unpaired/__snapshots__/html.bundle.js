@@ -57,12 +57,12 @@ var template_default = _template("c", (input) => {
 	_script($scope0_id, "c6");
 	_patch_value($scope0_id, "vc9", count, 1);
 	$scope0_page ? _scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.items,
-		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.label,
+		f: _unfilled_if($scope0_reason, 2) && input.items,
+		g: _unfilled_if($scope0_reason, 0) && input.label,
 		h: count,
-		k: _write_if($scope0_reason, 4) && $input_label__closures,
-		j: _write_if($scope0_reason, 3) && $input_items__closures,
-		i: _write_if($scope0_reason, 2) && $input_on__closures,
+		k: _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 4) && $input_label__closures,
+		j: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_items__closures,
+		i: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_on__closures,
 		a: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vc7", input.items), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "vc8", input.label));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vc7", input.items, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "vc8", input.label, !_server_guard($scope0_reason, 4)));
 }, 1);

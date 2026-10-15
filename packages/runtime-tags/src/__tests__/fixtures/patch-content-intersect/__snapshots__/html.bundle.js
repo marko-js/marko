@@ -33,5 +33,5 @@ var template_default = _template("a", (input) => {
 		g: open,
 		h: $wi__input_a && $input_a__closures,
 		i: $wi__input_b && $input_b__closures
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.a), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.b));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.a, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.b, !_server_guard($scope0_reason, 2)));
 }, 1);

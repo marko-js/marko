@@ -21,7 +21,7 @@ var card_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		g: input.content,
 		h: open
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.content);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
@@ -45,5 +45,5 @@ var template_default = _template("a", (input) => {
 		d: input.note,
 		e: $wi__input_note && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.note);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 0));
 }, 1);

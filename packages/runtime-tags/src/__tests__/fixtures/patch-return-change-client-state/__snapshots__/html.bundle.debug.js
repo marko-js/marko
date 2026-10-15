@@ -21,7 +21,7 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 		input_onA: ["input.onA"],
 		input_onB: ["input.onB"],
 		mode: "1:6"
-	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_onA", input.onA), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_onB", input.onB));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_onA", input.onA, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_onB", input.onB, !_server_guard($scope0_reason, 1)));
 	return $return;
 });
 
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let last = "none";
-	_set_scope_reason(0);
+	_set_scope_reason(($scope0_page ? 0 : 0) << 1 | ($scope0_page ? 0 : 0) << 3);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");
 	let count = counter_box_default({
 		onA: _resume(function(v) {

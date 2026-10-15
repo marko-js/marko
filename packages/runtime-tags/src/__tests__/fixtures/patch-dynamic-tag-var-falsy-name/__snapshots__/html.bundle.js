@@ -45,7 +45,7 @@ var child_default = _template("b", (input) => {
 	const $return = { btn: $btn_getter };
 	$scope0_page && _scope($scope0_id, {
 		B1: $wrapper_content__subscribers,
-		e: $wi__input_a11yText && $input_a11yText__closures,
+		e: $wi__input_a11yText && _unfilled_if($scope0_reason, 0) && $input_a11yText__closures,
 		a: _existing_scope($childScope)
 	});
 	return $return;

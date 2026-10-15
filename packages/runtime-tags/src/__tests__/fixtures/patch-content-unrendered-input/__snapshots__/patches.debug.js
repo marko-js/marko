@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/panel.marko_1*shell;D ;<li> </li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/gate.marko_1*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/wrapper.marko_1*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/template.marko_1*content;/ b&;<ul></ul>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/panel.marko_1*shell;D ;<li> </li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/gate.marko_1*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/wrapper.marko_1*shell;b%;<!><!><!>`, {
   "PatchChild:#childScope/2": {
     "PatchBranch:#text/0": [{
       "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/template.marko_1*content",
@@ -21,9 +21,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/wrapper.marko_1*shell"]
   }
 }]
-;E1I
+;E1IB
 
-// PATCH holding E1I
+// PATCH holding E1IB
 [`packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/gate.marko_2*shell;b%;<!><!><!>`, {
   "PatchChild:#childScope/2": {
     "PatchBranch:#text/0": [1, {
@@ -37,4 +37,4 @@
     "PatchBranch:#div/0": 0
   }
 }]
-;E1Y
+;E1YB

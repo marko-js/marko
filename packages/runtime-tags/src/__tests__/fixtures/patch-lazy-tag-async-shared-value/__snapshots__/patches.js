@@ -17,10 +17,10 @@ a, {
       cc: {
         s: {
           "aa class": "c",
-          i: "!a0"
+          i: "!a0",
+          wd: "c"
         },
         ea0: "d e",
-        wd: "c",
         we: _(0).cb.we
       }
     }

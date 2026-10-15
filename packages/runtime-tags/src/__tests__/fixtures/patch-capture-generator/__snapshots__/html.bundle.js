@@ -7,5 +7,5 @@ var template_default = _template("a", (input) => {
 	_html(`<p>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "b", out, 2)}</p><button>go</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	_patch_value($scope0_id, "va1", out, 1);
-	$scope0_page ? _scope($scope0_id, { g: input.items }) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wg", input.items);
+	$scope0_page ? _scope($scope0_id, { g: input.items }) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wg", input.items, !_server_guard($scope0_reason, 1));
 }, 1);

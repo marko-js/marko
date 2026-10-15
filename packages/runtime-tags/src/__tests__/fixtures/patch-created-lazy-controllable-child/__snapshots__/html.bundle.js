@@ -13,7 +13,7 @@ var tab_editor_default = _template("c", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.tab,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.tabChange
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vc0", input.tab), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc1", input.tabChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vc0", input.tab, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc1", input.tabChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/route-pg.marko
@@ -25,7 +25,7 @@ var route_pg_default = _template("b", (input) => {
 	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let tab = 0;
-	_set_scope_reason(10);
+	_set_scope_reason(10 | ($scope0_page ? 0 : 0) << 5);
 	const $childScope = _patch_child($scope0_id, "a");
 	tab_editor_default({
 		tab,

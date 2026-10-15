@@ -18,7 +18,7 @@ var frag_host_default = _template("b", (input) => {
 		}, $scope1_id) };
 		_html("<section>");
 		_patch_attr_content("a", $scope1_id, i || input.mode ? frag.content : null, void 0, $scope0_reason, 2);
-		_html(`</section>${_el_resume($scope1_id, "a")}`);
+		_html(`</section>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 2))}`);
 		_patch_write($scope1_id, "we", frag?.content, 1);
 		_scope($scope1_id, {
 			c: _unfilled_if($scope0_reason, 2) && i,
@@ -29,7 +29,7 @@ var frag_host_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		f: _write_if($scope0_reason, 1) && $input_note__closures
-	}) : _filled_guard($scope0_reason, 1) && _content_withheld("b1") && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb3", input.note);
+	}) : _filled_guard($scope0_reason, 1) && _content_withheld("b1") && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb3", input.note, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

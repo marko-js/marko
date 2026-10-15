@@ -7,13 +7,13 @@ var probe_default = _template("b", (input) => {
 	let seen = "";
 	_html(`<p>${_text_resume($scope0_id, "a", seen)}</p>`);
 	_script($scope0_id, "b0");
-	_patch_effect($scope0_id, "eb0", "d e");
+	(_server_guard($scope0_reason, 1) || _server_guard($scope0_reason, 2)) && _patch_effect($scope0_id, "eb0", "d e");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b1");
 	_patch_value($scope0_id, "vb2", seen, 1);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.opts,
 		e: input.label
-	}) : (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wd", input.opts), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "we", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wd", input.opts, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "we", input.label, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

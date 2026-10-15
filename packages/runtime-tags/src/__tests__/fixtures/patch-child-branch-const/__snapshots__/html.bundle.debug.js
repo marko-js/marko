@@ -12,7 +12,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<h2${_patch_attr_class($scope1_id, "PatchAttr:#h2/0 class", input.title, $scope0_reason, 2)}>${_patch_text($scope1_id, "#text/1", input.title, void 0, $scope0_reason, 2)}</h2>${_el_resume($scope1_id, "#h2/0")}<p>${_patch_text($scope1_id, "#text/2", input.note, void 0, $scope0_reason, 3)}</p>`);
+			_html(`<h2${_patch_attr_class($scope1_id, "PatchAttr:#h2/0 class", input.title, $scope0_reason, 2)}>${_patch_text($scope1_id, "#text/1", input.title, void 0, $scope0_reason, 2)}</h2>${_el_resume($scope1_id, "#h2/0", _mask_group($scope0_reason, 2))}<p>${_patch_text($scope1_id, "#text/2", input.note, void 0, $scope0_reason, 3)}</p>`);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4");
 			return 0;
 		}
@@ -24,7 +24,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	}, "__tests__/tags/card/index.marko", 0, {
 		input_title: ["input.title"],
 		input_note: ["input.note"]
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill0", input.title), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill1", input.note));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill0", input.title, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill1", input.note, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

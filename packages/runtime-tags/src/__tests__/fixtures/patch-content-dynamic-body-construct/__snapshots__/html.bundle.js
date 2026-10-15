@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 2) && input.title,
-		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.note,
-		h: _write_if($scope0_reason, 4) && $input_note__closures
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.title), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va4", input.note));
+		f: _unfilled_if($scope0_reason, 2) && input.note,
+		h: _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 4) && $input_note__closures
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.title, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va4", input.note, !_server_guard($scope0_reason, 4)));
 }, 1);

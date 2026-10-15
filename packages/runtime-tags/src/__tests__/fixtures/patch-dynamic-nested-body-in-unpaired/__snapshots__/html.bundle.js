@@ -70,7 +70,7 @@ var template_default = _template("c", (input) => {
 	_patch_value($scope0_id, "vc5", count, 1);
 	$scope0_page && _scope($scope0_id, {
 		f: count,
-		g: $wi__input_label && $input_label__closures,
+		g: $wi__input_label && _unfilled_if($scope0_reason, 0) && $input_label__closures,
 		h: $count__closures,
 		a: _existing_scope($childScope2)
 	});

@@ -7,7 +7,7 @@ var file_store_default = _template("d", (input) => {
 	let files = [];
 	const $return = files;
 	_script($scope0_id, "d1", 0);
-	_patch_effect($scope0_id, "ed1", "c");
+	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "ed1", "c");
 	const $valueChange2 = _patch_bind($scope0_id, "dU", _resume((_new_files) => {
 		files = _new_files;
 	}, "d0", $scope0_id) || void 0, 0, 0);
@@ -15,7 +15,7 @@ var file_store_default = _template("d", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		c: input.value,
 		U: $valueChange2
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wc", input.value);
+	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wc", input.value, !_server_guard($scope0_reason, 0));
 	_resume_branch($scope0_id);
 	return $return;
 });
@@ -40,7 +40,7 @@ var file_tabs_default = _template("e", (input) => {
 		f: _write_if($scope0_reason, 1) && input.filesChange,
 		h: tabs,
 		i: $tabsChange
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "ve1", input.files), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "ve2", input.filesChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "ve1", input.files, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "ve2", input.filesChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/file-panes.marko
@@ -86,8 +86,8 @@ var file_host_default = _template("b", (input) => {
 		})));
 	}, $scope0_id) }) });
 	$scope0_page && _scope($scope0_id, {
-		f: _write_if($scope0_reason, 1) && $input_files__closures,
-		g: _write_if($scope0_reason, 2) && $input_filesChange__closures,
+		f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_files__closures,
+		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_filesChange__closures,
 		a: _existing_scope($childScope2)
 	});
 });
@@ -104,7 +104,7 @@ var route_pg_default = _template("f", (input) => {
 	const $childScope = _patch_child($scope0_id, "a");
 	let files = file_store_default({ value: [{ path: "a" }] });
 	_var($scope0_id, "b", $childScope, "f1");
-	_set_scope_reason(10);
+	_set_scope_reason(10 | ($scope0_page ? 0 : 0) << 5);
 	const $childScope2 = _patch_child($scope0_id, "c");
 	file_host_default({
 		files,

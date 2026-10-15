@@ -35,7 +35,7 @@ var sub_default = _template("__tests__/tags/sub.marko", (input) => {
 	}, "__tests__/tags/sub.marko", 0, {
 		input_n: ["input.n"],
 		g: "2:6"
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/sub.marko_fill0", input.n);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/sub.marko_fill0", input.n, !_server_guard($scope0_reason, 1));
 });
 
 // tags/route-cl.marko

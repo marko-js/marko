@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let on$1 = false;
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}<div${$class}></div><div${$class2[0]}></div>${_el_resume($scope0_id, "b")}<div${_patch_attr_class($scope0_id, "ac class", [item, input.lit && "on"], $scope0_reason, 0)}></div>${_el_resume($scope0_id, "c")}<div${_patch_attr_class($scope0_id, "ad class", { ["on"]: input.lit }, $scope0_reason, 0)}></div>${_el_resume($scope0_id, "d")}<div${_patch_attr_class($scope0_id, "ae class", input.lit ? "on" : "box", $scope0_reason, 0)}></div>${_el_resume($scope0_id, "e")}`);
+	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}<div${$class}></div><div${$class2[0]}></div>${_el_resume($scope0_id, "b")}<div${_patch_attr_class($scope0_id, "ac class", [item, input.lit && "on"], $scope0_reason, 0)}></div>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 0))}<div${_patch_attr_class($scope0_id, "ad class", { ["on"]: input.lit }, $scope0_reason, 0)}></div>${_el_resume($scope0_id, "d", _mask_group($scope0_reason, 0))}<div${_patch_attr_class($scope0_id, "ae class", input.lit ? "on" : "box", $scope0_reason, 0)}></div>${_el_resume($scope0_id, "e", _mask_group($scope0_reason, 0))}`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

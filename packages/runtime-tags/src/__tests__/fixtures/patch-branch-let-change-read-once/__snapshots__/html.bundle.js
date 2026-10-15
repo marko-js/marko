@@ -42,5 +42,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		f: $wi__input_show__OR__input_start && input.start,
 		h: $wi__input_show__OR__input_start && onCount
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.start);
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.start, !_server_guard($scope0_reason, 2));
 }, 1);

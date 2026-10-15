@@ -9,7 +9,7 @@ var file_store_default = _template("__tests__/tags/file-store.marko", (input) =>
 	let files = [];
 	const $return = files;
 	_script($scope0_id, "__tests__/tags/file-store.marko_0_input_value#2", 0);
-	_patch_effect($scope0_id, "PatchEffect:__tests__/tags/file-store.marko_0_input_value#2", "input_value");
+	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/file-store.marko_0_input_value#2", "input_value");
 	const $valueChange2 = _patch_bind($scope0_id, "PatchBind:#TagVariableChange", _resume((_new_files) => {
 		files = _new_files;
 	}, "__tests__/tags/file-store.marko_0/valueChange", $scope0_id) || void 0, 0, 0);
@@ -17,7 +17,7 @@ var file_store_default = _template("__tests__/tags/file-store.marko", (input) =>
 	$scope0_page ? _scope($scope0_id, {
 		input_value: input.value,
 		"#TagVariableChange": $valueChange2
-	}, "__tests__/tags/file-store.marko", 0, { input_value: ["input.value"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_value", input.value);
+	}, "__tests__/tags/file-store.marko", 0, { input_value: ["input.value"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_value", input.value, !_server_guard($scope0_reason, 0));
 	_resume_branch($scope0_id);
 	return $return;
 });
@@ -47,7 +47,7 @@ var file_tabs_default = _template("__tests__/tags/file-tabs.marko", (input) => {
 		input_filesChange: ["input.filesChange"],
 		tabs: "1:6",
 		"TagVariableChange:tabs": ["tabsChange", "1:6"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/file-tabs.marko_fill0", input.files), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/file-tabs.marko_fill1", input.filesChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/file-tabs.marko_fill0", input.files, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/file-tabs.marko_fill1", input.filesChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/file-panes.marko
@@ -94,8 +94,8 @@ var file_host_default = _template("__tests__/tags/file-host.marko", (input) => {
 		}, "__tests__/tags/file-host.marko", "2:4")));
 	}, $scope0_id) }) });
 	$scope0_page && _scope($scope0_id, {
-		"ClosureScopes:input_files/5": _write_if($scope0_reason, 1) && $input_files__closures,
-		"ClosureScopes:input_filesChange/6": _write_if($scope0_reason, 2) && $input_filesChange__closures,
+		"ClosureScopes:input_files/5": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_files__closures,
+		"ClosureScopes:input_filesChange/6": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_filesChange__closures,
 		"#childScope/0": _existing_scope($childScope2)
 	}, "__tests__/tags/file-host.marko", 0);
 });
@@ -111,7 +111,7 @@ var route_pg_default = _template("__tests__/tags/route-pg.marko", (input) => {
 	const $childScope = _patch_child($scope0_id, "#childScope/0");
 	let files = file_store_default({ value: [{ path: "a" }] });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/route-pg.marko_0_files#3/var");
-	_set_scope_reason(10);
+	_set_scope_reason(10 | ($scope0_page ? 0 : 0) << 5);
 	const $childScope2 = _patch_child($scope0_id, "#childScope/2");
 	file_host_default({
 		files,

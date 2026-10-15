@@ -4,14 +4,14 @@ _shells({ a: "a !a0; ;<div></div>" });
 var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<div${_patch_attr_class($scope0_id, "aa class", input.name, $scope0_reason, 1)}></div>${_el_resume($scope0_id, "a")}`);
+	_html(`<div${_patch_attr_class($scope0_id, "aa class", input.name, $scope0_reason, 1)}></div>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 1))}`);
 	_script($scope0_id, "a0");
-	_patch_effect($scope0_id, "ea0", "d e");
+	(_server_guard($scope0_reason, 1) || _server_guard($scope0_reason, 2)) && _patch_effect($scope0_id, "ea0", "d e");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a1");
 	$scope0_page ? _scope($scope0_id, {
 		d: input.name,
 		e: input.item
-	}) : (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wd", input.name), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "we", input.item));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wd", input.name, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "we", input.item, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

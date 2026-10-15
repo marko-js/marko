@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
 	const $childScope = _patch_child($scope0_id, "a");
 	thing.content({ x: input.n });
-	_html(`<div${_patch_attr_class($scope0_id, "ab class", [input.cls, { on: input.on }], $scope0_reason, 0)}${_patch_attr_style($scope0_id, "ab style", { color: input.color }, $scope0_reason, 5)}>x</div>${_el_resume($scope0_id, "b")}`);
+	_html(`<div${_patch_attr_class($scope0_id, "ab class", [input.cls, { on: input.on }], $scope0_reason, 0)}${_patch_attr_style($scope0_id, "ab style", { color: input.color }, $scope0_reason, 5)}>x</div>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 5))}`);
 	_patch_write($scope0_id, "wg", input.cls, 1);
 	_patch_write($scope0_id, "wh", input.on, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a5");
@@ -28,5 +28,5 @@ var template_default = _template("a", (input) => {
 		h: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.on,
 		k: $wi__input_title && $input_title__closures,
 		a: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va3", input.cls), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va4", input.on));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va3", input.cls, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va4", input.on, !_server_guard($scope0_reason, 4)));
 }, 1);

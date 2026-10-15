@@ -70,5 +70,6 @@ export {
   _patch_nonce,
   _patch_value,
   _patch_write,
+  _server_guard,
   _unfilled_if,
 } from "./patches/writer";

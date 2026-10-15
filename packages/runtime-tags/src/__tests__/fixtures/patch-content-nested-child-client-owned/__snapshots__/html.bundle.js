@@ -21,7 +21,7 @@ var grand_default = _template("c", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.content,
 		f: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc1", input.content);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc1", input.content, !_server_guard($scope0_reason, 0));
 });
 
 // tags/child/index.marko
@@ -63,5 +63,5 @@ var template_default = _template("a", (input) => {
 		e: input.note,
 		f: $wi__input_note && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.note);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

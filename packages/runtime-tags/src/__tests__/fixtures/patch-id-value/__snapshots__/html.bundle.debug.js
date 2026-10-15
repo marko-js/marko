@@ -8,6 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const x = _id();
 	const z = input.z || _id();
 	const y = _id();
-	_html(`<div${_patch_attr($scope0_id, "PatchAttr:#div/0 id", "id", z, $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", x, void 0, 0, 0)} ${_patch_text($scope0_id, "#text/2", y, 2, 0, 0)} ${_patch_text($scope0_id, "#text/3", z, 2, $scope0_reason, 0)}</div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`<div${_patch_attr($scope0_id, "PatchAttr:#div/0 id", "id", z, $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", x, void 0, 0, 0)} ${_patch_text($scope0_id, "#text/2", y, 2, 0, 0)} ${_patch_text($scope0_id, "#text/3", z, 2, $scope0_reason, 0)}</div>${_el_resume($scope0_id, "#div/0", _mask_group($scope0_reason, 0))}`);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

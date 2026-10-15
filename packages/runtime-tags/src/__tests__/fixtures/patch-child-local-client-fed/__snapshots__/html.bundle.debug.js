@@ -32,7 +32,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, "__tests__/tags/child.marko", 0, {
 		input_label: ["input.label"],
 		c: "1:6"
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.label);
+	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

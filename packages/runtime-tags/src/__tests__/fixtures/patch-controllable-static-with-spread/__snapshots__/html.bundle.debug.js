@@ -23,5 +23,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		text: "1:6",
 		"ControlledHandler:#input/0": ["...input.rest", "2:23"],
 		"EventAttributes:#input/0": ["...input.rest", "2:23"]
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.rest);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.rest, !_server_guard($scope0_reason, 0));
 }, 1);

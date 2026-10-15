@@ -13,7 +13,7 @@ var card_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.content,
 		f: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0));
 });
 
 // tags/heading.marko

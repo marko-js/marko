@@ -36,7 +36,7 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 	}, "__tests__/tags/layout.marko", 0, {
 		input_content: ["input.content"],
 		input_row: ["input.row"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/tags/layout.marko_fill0", input.content), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/tags/layout.marko_fill1", input.row));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/tags/layout.marko_fill0", input.content, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/tags/layout.marko_fill1", input.row, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

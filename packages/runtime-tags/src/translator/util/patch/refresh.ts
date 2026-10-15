@@ -37,6 +37,7 @@ import {
   type SortedOpt,
 } from "../optional";
 import {
+  getSourcesForExpr,
   getSourcesForRef,
   isConditionalReason,
   isUnconditionalReason,
@@ -147,11 +148,13 @@ function isPatchRefreshableBinding(binding: Binding) {
   );
 }
 
-// A scope a flush writes into: a called body, a boundary body, or a branch or
-// attribute tag `<for>` content on the branch path outside stateful structure.
+// A scope a flush writes into: a called body or content with params it creates from a shell,
+// a boundary body, or branch or attribute tag `<for>` content outside stateful structure.
 function isPatchWrittenSection(section: Section) {
   return (
-    (isCalledBody(section) && !inResumedStructure(section)) ||
+    ((isCalledBody(section) ||
+      (section.contentShell === true && !!section.params)) &&
+      !inResumedStructure(section)) ||
     section.branch?.optional === false ||
     (section.boundaryContent === "catch" && !inResumedStructure(section)) ||
     ((!!section.branch?.optional || !!section.localClosures) &&
@@ -358,7 +361,7 @@ function computeFillReadKind(
         }
         readSection = readSection.parent;
       }
-      if (effect || !calledBody) continue;
+      if (effect) continue;
       // An `<await>` value re-fires no promise client-side: the boundary's
       // own flushes carry its settlement.
       if (
@@ -368,6 +371,7 @@ function computeFillReadKind(
       ) {
         conditions = mergeConditions(conditions, { contents: content });
       }
+      if (!calledBody) continue;
       // Only structure rebuilt from OTHER caller params can leave this read
       // unfilled, as a caller's ownership bits decide at render; those of a
       // `<define>` body outside the binding's are what its calls pass.
@@ -517,6 +521,27 @@ function consumerMayWithhold(content: Section) {
     }
   }
   return false;
+}
+
+// Content a known child renders only in its root, by a dynamic tag reading
+// nothing else: it renders where its tag does, in its owner's patch context.
+function rendersWithOwner(content: Section) {
+  const { derives } = content;
+  return (
+    !!derives &&
+    isKnownTagExtra(derives.tag) &&
+    !isStatefulBranch(content) &&
+    !someContentRead(derives.binding, derives.properties, rendersApart)
+  );
+}
+
+// A read rendering the content in structure or beside other inputs, or using
+// it any other way than passing it on.
+function rendersApart(read: ReferencedExtra) {
+  return read.rendersContent || read.nameOnly
+    ? !!read.section.parent ||
+        Array.isArray(getReferencedBindings(read.merged || read))
+    : !read.derives;
 }
 
 // The read is an `<await>`'s value: its body is a boundary child of the
@@ -1003,7 +1028,7 @@ function findUnfilledRebuilds(
       section = section.parent
     ) {
       if (
-        !section.branch ||
+        (!section.branch && !rendersWithOwner(section)) ||
         closureInitsCreated(binding, section) ||
         isLocalFillClosure(section, binding)
       ) {
@@ -1106,6 +1131,12 @@ export function ensurePatchReasonGroups(
   forEach(section.bindings, (binding) => {
     if (isPatchFillOrWrite(binding)) {
       ensureCallerParamGroups(getSourcesForRef(binding));
+    }
+    // A created scope's `<let>` seeds by who feeds its init.
+    if (binding.type === BindingType.let && binding.derivedFrom) {
+      ensureCallerParamGroups(
+        getSourcesForExpr(binding.derivedFrom as t.NodeExtra),
+      );
     }
   });
   // Created joins run by group, and a page ships a patch-filled join's

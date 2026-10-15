@@ -33,5 +33,5 @@ var template_default = _template("a", (input) => {
 		g: count,
 		h: $wi__input_message && $input_message__closures,
 		i: $count__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.message);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.message, !_server_guard($scope0_reason, 0));
 }, 1);

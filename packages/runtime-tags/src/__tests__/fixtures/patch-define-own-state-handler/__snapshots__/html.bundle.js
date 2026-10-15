@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		_html(`<button>${_text_resume($scope1_id, "b", shown)}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
 		_patch_value($scope1_id, "va2", shown, 1);
-		$scope1_page ? _scope($scope1_id, { e: label }) : _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "we", label);
+		$scope1_page ? _scope($scope1_id, { e: label }) : _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "we", label, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "a");

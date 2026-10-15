@@ -15,7 +15,7 @@ var leaf_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_flag, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.label }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.label);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.label }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // tags/mid.marko
@@ -48,7 +48,7 @@ var mid_default = _template("c", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 1) && input.flag,
 		f: _unfilled_if($scope0_reason, 1) && input.label
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc1", input.flag), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc2", input.label));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc1", input.flag, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc2", input.label, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

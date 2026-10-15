@@ -6,9 +6,9 @@ var pill_default = _template("__tests__/tags/pill.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = input.start;
-	_html(`<b class=pill>${_patch_text($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/1", n, 2)}</b><button class=inc>+</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<b class=pill>${_patch_text($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 1)}:${_text_resume($scope0_id, "#text/1", n, 2)}</b><button class=inc>+</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/pill.marko_0");
-	_patch_value($scope0_id, "PatchValue:__tests__/tags/pill.marko_fill0", n, 1);
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/pill.marko_fill0", n, 1);
 	$scope0_page && _scope($scope0_id, { n }, "__tests__/tags/pill.marko", 0, { n: "1:6" });
 });
 
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "#text/0", input.promise, (value) => {
 				const $scope3_id = _scope_id();
-				_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+				_set_scope_reason(_mask_group($scope0_reason, 2) << 3);
 				const $childScope = _patch_child($scope3_id, "#childScope/0");
 				pill_default({
 					text: value,
@@ -49,5 +49,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#main/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { input_promise: _unfilled_if($scope0_reason, 1) && input.promise }, "__tests__/template.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.promise);
+	$scope0_page ? _scope($scope0_id, { input_promise: _unfilled_if($scope0_reason, 1) && input.promise }, "__tests__/template.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.promise, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__isOpen, void 0, void 0, void 0, ["a1"], $scope1_reason, 0);
-		$scope1_page ? _write_if($scope1_reason, 0) && _scope($scope1_id, { e: _unfilled_if($scope1_reason, 0) && label }) : _filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 0) && _patch_value($scope1_id, "va2", label);
+		$scope1_page ? _write_if($scope1_reason, 0) && _scope($scope1_id, { e: _unfilled_if($scope1_reason, 0) && label }) : _filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 0) && _patch_value($scope1_id, "va2", label, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	_set_scope_reason(2 | _mask_group($scope0_reason, 0) << 3);
 	const $childScope = _patch_child($scope0_id, "a");

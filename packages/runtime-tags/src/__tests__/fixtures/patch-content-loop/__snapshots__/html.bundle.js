@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id) });
 		_html("</li>");
 		_scope($scope1_id, {
-			e: $wi__input_items && $for_content__item_text__closures,
+			e: $wi__input_items && _unfilled_if($scope0_reason, 0) && $for_content__item_text__closures,
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 0);

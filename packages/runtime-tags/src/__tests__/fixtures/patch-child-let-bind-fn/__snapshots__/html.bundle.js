@@ -32,7 +32,7 @@ var picker_default = _template("b", (input) => {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.refreshingChange,
 		k: load,
 		i: $refreshingChange
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb2", input.refreshing), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", input.refreshingChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb2", input.refreshing, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", input.refreshingChange, !_server_guard($scope0_reason, 2)));
 	return $return;
 });
 
@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let busy = false;
-	_set_scope_reason(0);
+	_set_scope_reason(($scope0_page ? 0 : 0) << 1 | ($scope0_page ? 0 : 0) << 5);
 	const $childScope = _patch_child($scope0_id, "a");
 	let refresh = picker_default({ refreshingChange: _resume(function(v) {
 		busy = v;

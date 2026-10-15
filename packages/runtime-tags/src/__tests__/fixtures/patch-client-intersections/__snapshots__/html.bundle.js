@@ -12,7 +12,7 @@ var price_card_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.label,
 		f: qty
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.label);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.label, !_server_guard($scope0_reason, 0));
 });
 
 // tags/promo-tag.marko
@@ -29,7 +29,7 @@ var promo_tag_default = _template("c", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.text,
 		f: seen
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc1", input.text);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc1", input.text, !_server_guard($scope0_reason, 0));
 });
 
 // tags/site-footer.marko

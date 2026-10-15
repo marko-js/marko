@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<style${_attr_nonce()}>${_patch_text_content($scope0_id, "ma", `.x { color: ${_to_text(input.on ? "red" : "blue")} }`, _escape_style, $scope0_reason, 0)}</style>${_el_resume($scope0_id, "a")}<script${_attr_nonce()}>${_patch_text_content($scope0_id, "mb", `window.__label = ${_to_text(JSON.stringify(input.label))};`, _escape_script, $scope0_reason, 1)}<\/script>${_el_resume($scope0_id, "b")}<p class=x>${_patch_text($scope0_id, "c", input.label, void 0, $scope0_reason, 1)} ${_text_resume($scope0_id, "d", count, 2)}</p><button>+</button>${_el_resume($scope0_id, "e")}`);
+	_html(`<style${_attr_nonce()}>${_patch_text_content($scope0_id, "ma", `.x { color: ${_to_text(input.on ? "red" : "blue")} }`, _escape_style, $scope0_reason, 0)}</style>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<script${_attr_nonce()}>${_patch_text_content($scope0_id, "mb", `window.__label = ${_to_text(JSON.stringify(input.label))};`, _escape_script, $scope0_reason, 1)}<\/script>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 1))}<p class=x>${_patch_text($scope0_id, "c", input.label, void 0, $scope0_reason, 1)} ${_text_resume($scope0_id, "d", count, 2)}</p><button>+</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a0");
 	_patch_value($scope0_id, "va1", count, 1);
 	$scope0_page && _scope($scope0_id, { j: count });

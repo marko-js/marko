@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		$scope1_page ? _write_if($scope1_reason, 0) && _scope($scope1_id, {
 			c: _write_if($scope1_reason, 2) && a,
 			d: _write_if($scope1_reason, 1) && b
-		}) : (_filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 2) && _patch_value($scope1_id, "va1", a), _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_value($scope1_id, "va2", b));
+		}) : (_filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 2) && _patch_value($scope1_id, "va1", a, !_server_guard($scope1_reason, 1)), _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_value($scope1_id, "va2", b, !_server_guard($scope1_reason, 2)));
 		return $return;
 	}, $scope0_id) };
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);

@@ -20,7 +20,7 @@ var disclosure_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.content,
 		f: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -42,5 +42,5 @@ var template_default = _template("a", (input) => {
 		d: input.suffix,
 		e: $wi__input_suffix && $input_suffix__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.suffix);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.suffix, !_server_guard($scope0_reason, 0));
 }, 1);

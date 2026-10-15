@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a3"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	$scope0_page ? _scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.value,
-		f: $wi__input_value && $input_value__closures
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va6", input.value);
+		e: _unfilled_if($scope0_reason, 1) && input.value,
+		f: $wi__input_value && _unfilled_if($scope0_reason, 2) && $input_value__closures
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va6", input.value, !_server_guard($scope0_reason, 2));
 }, 1);

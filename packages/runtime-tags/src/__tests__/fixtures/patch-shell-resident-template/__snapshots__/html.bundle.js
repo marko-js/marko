@@ -34,7 +34,7 @@ var chooser_default = _template("d", (input) => {
 		e: input.Tag,
 		f: input.label,
 		g: show
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vd1", input.Tag), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "vd2", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vd1", input.Tag, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "vd2", input.label, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -56,5 +56,5 @@ var template_default = _template("c", (input) => {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.which,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
 		b: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vc0", input.which), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc1", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vc0", input.which, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc1", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

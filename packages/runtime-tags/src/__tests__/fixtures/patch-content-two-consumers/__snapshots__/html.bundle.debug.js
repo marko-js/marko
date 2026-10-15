@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
-		"ClosureScopes:input_note/5": $wi__input_note && $input_note__closures,
+		"ClosureScopes:input_note/5": $wi__input_note && _unfilled_if($scope0_reason, 1) && $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0);
 }, 1);

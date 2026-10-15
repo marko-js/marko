@@ -12,7 +12,7 @@ var tagged_default = _template("__tests__/tagged.marko", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "#text/1", label)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tagged.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/tagged.marko_fill0", label, 1);
-	$scope0_page ? _scope($scope0_id, { input_node: input.node }, "__tests__/tagged.marko", 0, { input_node: ["input.node"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_node", input.node);
+	$scope0_page ? _scope($scope0_id, { input_node: input.node }, "__tests__/tagged.marko", 0, { input_node: ["input.node"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_node", input.node, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

@@ -6,6 +6,8 @@ import buildStringExpression, {
   appendLiteral,
 } from "./build-string-expression";
 import { isOutputHTML } from "./marko-config";
+import { isPatchKeyedByValues } from "./patch/decisions";
+import { getValueNodeMarkerGuard } from "./patch/writers";
 import type { Reason } from "./reasons";
 import { callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
@@ -100,7 +102,9 @@ export function markNode(
         "_el_resume",
         getScopeIdIdentifier(section),
         getScopeAccessorLiteral(nodeBinding),
-        getWriteGuard(section, reason, true),
+        (isPatchKeyedByValues(section, nodeBinding) &&
+          getValueNodeMarkerGuard(section, nodeBinding)) ||
+          getWriteGuard(section, reason, true),
       )}`;
     }
   }

@@ -44,5 +44,5 @@ var template_default = _template("a", (input) => {
 		i: count,
 		j: _write_if($scope0_reason, 2) && $input_title__closures,
 		k: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_promise__closures
-	}) : (_filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va9", input.title), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va10", input.promise));
+	}) : (_filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va9", input.title, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va10", input.promise, !_server_guard($scope0_reason, 3)));
 }, 1);

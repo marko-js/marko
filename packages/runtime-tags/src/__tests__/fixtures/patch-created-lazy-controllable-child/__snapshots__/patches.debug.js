@@ -7,9 +7,9 @@
           "PatchText:#text/0": "0",
           "PatchWrite:input_tab": 0,
           "PatchBind:input_tabChange": [_.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/route-pg.marko_0/tabChange", 1],
-          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/tab-editor.marko_0_input_tab#3_input_tabChange#4/init"
-        },
-        "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/tab-editor.marko_fill1": [_.a, 1]
+          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/tab-editor.marko_0_input_tab#3_input_tabChange#4/init",
+          "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/tab-editor.marko_fill1": [_.a, 1]
+        }
       },
       "PatchSetup:": {
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/route-pg.marko_0",

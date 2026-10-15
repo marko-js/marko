@@ -13,7 +13,7 @@ var child_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.item,
 		f: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.item);
+	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.item, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -37,5 +37,5 @@ var template_default = _template("b", (input) => {
 		h: item,
 		i: count,
 		d: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wh", item);
+	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wh", item, !_server_guard($scope0_reason, 0));
 }, 1);

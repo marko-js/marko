@@ -3,7 +3,7 @@ const $template$1 = "<!><!><button>+</button>";
 const $walks$1 = "b%b b";
 _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko !__tests__/tags/card.marko_0;b%b ;<!><!><button>+</button>" });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let open = input.open;
 	if ($scope0_page) _if(() => {
@@ -16,14 +16,14 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, $scope0_id, "#text/0");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	_patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill1", open, 1);
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill1", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_content: input.content,
 		open
 	}, "__tests__/tags/card.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill0", input.content);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill0", input.content, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
@@ -31,10 +31,10 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks$1);
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !;${((_w0) => `b/${_w0}&`)($walks$1)};${((_w0) => `<!>${_w0}`)($template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 0), $wi__input_note = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
-	_set_scope_reason(0);
+	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");
 	card_default({
 		open: input.open,
@@ -50,5 +50,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_note: input.note,
 		"ClosureScopes:input_note/5": $wi__input_note && $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note);
+	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

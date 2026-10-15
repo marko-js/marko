@@ -36,7 +36,7 @@ var wrapper_default = _template("c", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["c0"], $scope0_reason, 0);
 	_html(`</section>${_el_resume($scope0_id, "a", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.label }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc1", input.label);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.label }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc1", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
@@ -52,5 +52,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		d: input.show,
 		e: input.label
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va1", input.show), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va2", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va1", input.show, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va2", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

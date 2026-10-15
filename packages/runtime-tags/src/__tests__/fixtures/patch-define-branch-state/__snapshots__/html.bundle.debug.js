@@ -15,16 +15,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		let n = input.start;
-		_html(`<div class=counter><span>${_patch_text($scope2_id, "#text/0", input.label, void 0, $scope2_reason, 0)}: ${_text_resume($scope2_id, "#text/1", n, 2)}</span><button class=inc>+</button>${_el_resume($scope2_id, "#button/2")}</div>`);
+		_html(`<div class=counter><span>${_patch_text($scope2_id, "#text/0", input.label, void 0, $scope2_reason, 1)}: ${_text_resume($scope2_id, "#text/1", n, 2)}</span><button class=inc>+</button>${_el_resume($scope2_id, "#button/2")}</div>`);
 		_script($scope2_id, "__tests__/template.marko_2");
-		_patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill2", n, 1);
+		_filled_guard($scope2_reason, 0) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill2", n, 1);
 		_scope($scope2_id, { n }, "__tests__/template.marko", "1:2", { n: "2:8" });
 	}, $scope0_id) };
 	_html("<main>");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+			_set_scope_reason(_mask_group($scope0_reason, 3) << 1 | _mask_group($scope0_reason, 2) << 3);
 			const $childScope = _patch_child($scope1_id, "#childScope/0");
 			Counter.content({
 				label: input.title,
@@ -44,5 +44,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		input_start: ["input.start"]
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.start));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.start, !_server_guard($scope0_reason, 3)));
 }, 1);

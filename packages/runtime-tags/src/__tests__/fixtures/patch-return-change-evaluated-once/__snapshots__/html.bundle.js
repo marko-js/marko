@@ -14,12 +14,12 @@ var counter_box_default = _template("b", (input) => {
 	const $return = count;
 	const $valueChange2 = _patch_bind($scope0_id, "dU", read(input.reads) || _resume(function(v) {
 		count = v;
-	}, "b0", $scope0_id) || void 0, $scope0_reason, 0);
-	_patch_value($scope0_id, "vb1", count, 1);
+	}, "b0", $scope0_id) || void 0, $scope0_reason, 1);
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.reads,
 		U: $valueChange2
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.reads);
+	}) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "we", input.reads, !_server_guard($scope0_reason, 1));
 	return $return;
 });
 

@@ -25,7 +25,7 @@ var card_default = _template("__tests__/card.marko", (input) => {
 	}, "__tests__/card.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/card.marko_fill0", input.content);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/card.marko_fill0", input.content, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -49,5 +49,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_label: input.label,
 		"ClosureScopes:input_label/4": $wi__input_label && $input_label__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label);
+	}, "__tests__/template.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

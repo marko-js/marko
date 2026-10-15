@@ -19,5 +19,5 @@ var template_default = _template("a", (input) => {
 		g: _write_if($scope0_reason, 0) && sessions,
 		h: ws,
 		j: _write_if($scope0_reason, 1) && shown
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va1", input.active), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", ws));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va1", input.active, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", ws, !_server_guard($scope0_reason, 0)));
 }, 1);

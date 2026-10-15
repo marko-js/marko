@@ -15,10 +15,10 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.promise, (value) => {
 			const $scope3_id = _scope_id();
-			_filled_guard($scope0_reason, 0) && _patch_write($scope3_id, "wc", value);
+			_filled_guard($scope0_reason, 0) && _patch_write($scope3_id, "wc", value, !_server_guard($scope0_reason, 0));
 			_html(`<span id=v>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
 			_script($scope3_id, "a3");
-			_patch_effect($scope3_id, "ea3", "c");
+			_server_guard($scope0_reason, 0) && _patch_effect($scope3_id, "ea3", "c");
 			_scope($scope3_id, { c: value });
 		}, 1, "a0", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a4");

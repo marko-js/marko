@@ -10,12 +10,12 @@ var probe_default = _template("b", (input) => {
 	};
 	_html("<p>probe</p>");
 	_script($scope0_id, "b0", 0);
-	_patch_effect($scope0_id, "eb0", "c e f");
+	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "eb0", "c e f");
 	$scope0_page ? _scope($scope0_id, {
 		c: input.label,
 		e: opts.items,
 		f: opts.label
-	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wc", input.label), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", opts.items), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wf", opts.label));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wc", input.label, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", opts.items, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wf", opts.label, !_server_guard($scope0_reason, 0)));
 });
 
 // template.marko
@@ -39,5 +39,5 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a0"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.label }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.label);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.label }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va1", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

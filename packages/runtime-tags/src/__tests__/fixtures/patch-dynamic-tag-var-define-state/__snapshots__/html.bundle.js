@@ -43,5 +43,5 @@ var template_default = _template("a", (input) => {
 		h: $wi__input_label__OR__input_which && Counter,
 		i: $wi__input_label__OR__input_which && Other,
 		l: $wi__input_label && $input_label__closures
-	}) : (_filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "va6", input.label) : (_content_withheld("a0") && _client_guard($scope0_reason, 0) || _content_withheld("a3") && _client_guard($scope0_reason, 0)) && _patch_value($scope0_id, "va7", input.label)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va8", input.which));
+	}) : (_filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "va6", input.label, !_server_guard($scope0_reason, 1)) : (_content_withheld("a0") && _client_guard($scope0_reason, 0) || _content_withheld("a3") && _client_guard($scope0_reason, 0)) && _patch_value($scope0_id, "va7", input.label)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va8", input.which, !_server_guard($scope0_reason, 2)));
 }, 1);

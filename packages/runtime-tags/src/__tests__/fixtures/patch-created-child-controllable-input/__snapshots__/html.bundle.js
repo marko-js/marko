@@ -18,7 +18,7 @@ var demo_card_default = _template("b", (input) => {
 		f: _write_if($scope0_reason, 1) && input.tabChange,
 		h: selected,
 		i: $selectedChange
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb1", input.tab), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.tabChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb1", input.tab, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.tabChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/page-b.marko
@@ -30,7 +30,7 @@ var page_b_default = _template("c", (input) => {
 	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let tab = 0;
-	_set_scope_reason(10);
+	_set_scope_reason(10 | ($scope0_page ? 0 : 0) << 5);
 	const $childScope = _patch_child($scope0_id, "a");
 	demo_card_default({
 		tab,

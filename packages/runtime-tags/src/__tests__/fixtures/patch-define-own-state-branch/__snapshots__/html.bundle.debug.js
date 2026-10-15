@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "1:2", {
 			label: "1:17",
 			open: "2:8"
-		}) : _filled_guard($scope1_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill0", label);
+		}) : _filled_guard($scope1_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill0", label, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");

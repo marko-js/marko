@@ -33,5 +33,5 @@ var template_default = _template("a", (input) => {
 		h: _unfilled_if($scope0_reason, 1) && input.inner,
 		i: count,
 		k: $count__closures
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.inner);
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.inner, !_server_guard($scope0_reason, 2));
 }, 1);

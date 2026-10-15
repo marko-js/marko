@@ -35,5 +35,5 @@ var template_default = _template("a", (input) => {
 		i: Panel,
 		k: $wi__input_title && $input_title__closures,
 		a: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va4", input.title), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.dyn));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va4", input.title, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.dyn, !_server_guard($scope0_reason, 1)));
 }, 1);

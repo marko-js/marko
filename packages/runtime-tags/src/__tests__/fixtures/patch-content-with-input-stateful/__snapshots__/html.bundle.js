@@ -3,7 +3,7 @@ const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
 _shells({ b: "b !b0;b%b ;<!><!><button>+</button>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let open = input.open;
 	if ($scope0_page) _if(() => {
@@ -16,20 +16,20 @@ var card_default = _template("b", (input) => {
 	}, $scope0_id, "a");
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "vb2", open, 1);
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb2", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.content,
 		g: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
 _shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `b/${_w0}&`)($walks)};${((_w0) => `<!>${_w0}`)($template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 0), $wi__input_note = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
-	_set_scope_reason(0);
+	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "a");
 	card_default({
 		open: input.open,
@@ -45,5 +45,5 @@ var template_default = _template("a", (input) => {
 		e: input.note,
 		f: $wi__input_note && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.note);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

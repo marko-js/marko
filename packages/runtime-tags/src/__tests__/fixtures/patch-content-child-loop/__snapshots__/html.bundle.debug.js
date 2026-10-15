@@ -17,7 +17,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 		_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4");
 	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/card/index.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
-	$scope0_page ? _scope($scope0_id, { input_content: _unfilled_if($scope0_reason, 0) && input.content }, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill0", input.content);
+	$scope0_page ? _scope($scope0_id, { input_content: _unfilled_if($scope0_reason, 0) && input.content }, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill0", input.content, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

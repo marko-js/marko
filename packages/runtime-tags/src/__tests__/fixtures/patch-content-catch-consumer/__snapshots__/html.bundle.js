@@ -29,7 +29,7 @@ var wrapper_default = _template("c", (input) => {
 		d: input.fallback,
 		f: $wi__input_fallback && $input_fallback__closures,
 		g: $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc5", input.fallback);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc5", input.fallback, !_server_guard($scope0_reason, 0));
 });
 
 // tags/error-wrapper.marko
@@ -63,7 +63,7 @@ var error_wrapper_default = _template("b", (input) => {
 		d: input.fallback,
 		f: _write_if($scope0_reason, 0) && $input_fallback__closures,
 		g: $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb5", input.fallback);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb5", input.fallback, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -110,5 +110,5 @@ var template_default = _template("a", (input) => {
 		k: $count__closures,
 		c: _existing_scope($childScope),
 		d: _existing_scope($childScope2)
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.label);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

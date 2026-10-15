@@ -9,7 +9,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<button>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}: ${_text_resume($scope0_id, "#text/2", shown, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", shown, 1);
-	$scope0_page ? _scope($scope0_id, { input }, "__tests__/tags/child.marko", 0, { input: 0 }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input", input);
+	$scope0_page ? _scope($scope0_id, { input }, "__tests__/tags/child.marko", 0, { input: 0 }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input", input, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -28,5 +28,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_label", input.label);
+	}, "__tests__/template.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

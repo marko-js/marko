@@ -5,7 +5,7 @@ _shells({ b: "b; D ;<a> </a>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<a${_patch_attr($scope0_id, "aa href", "href", input.href, $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "a")}`);
+	_html(`<a${_patch_attr($scope0_id, "aa href", "href", input.href, $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
 	$scope0_page && _scope($scope0_id, {});
 });
 
@@ -46,7 +46,7 @@ var feed_list_default = _template("c", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: $wi__input_items && input.data,
 		f: $wi__input_items && hovered
-	}) : _filled_guard($scope0_reason, 2) && (_client_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 1)) && _patch_value($scope0_id, "vc3", input.data);
+	}) : _filled_guard($scope0_reason, 2) && (_client_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 1)) && _patch_value($scope0_id, "vc3", input.data, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

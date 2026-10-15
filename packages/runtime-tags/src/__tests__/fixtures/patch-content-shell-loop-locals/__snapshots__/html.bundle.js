@@ -61,7 +61,7 @@ var view_default = _template("d", (input) => {
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "d0", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.selected }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vd2", input.selected);
+	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.selected }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vd2", input.selected, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

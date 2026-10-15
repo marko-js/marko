@@ -18,7 +18,15 @@ import {
   getPatchKey,
 } from "../get-accessor-enums";
 import { getDeclaredBindingExpression } from "../get-declared-binding-expression";
-import { forEach, type Opt, some, type SortedOpt, toArray } from "../optional";
+import {
+  every,
+  forEach,
+  type Opt,
+  push,
+  some,
+  type SortedOpt,
+  toArray,
+} from "../optional";
 import {
   getSourcesForExpr,
   getSourcesForRef,
@@ -40,6 +48,7 @@ import {
   getRendererReason,
   getScopeIdIdentifier,
   isCalledBody,
+  isCallerParamAt,
   type ParamReasonGroup,
   type Section,
 } from "../sections";
@@ -50,6 +59,7 @@ import {
   getSignals,
   toSequenceExpression,
 } from "../signals";
+import { findSlot } from "../slots";
 import { type Sources, sourcesUtil } from "../sources";
 import { createProgramState } from "../state";
 import {
@@ -64,6 +74,7 @@ import {
   orGuard,
 } from "../write-guard";
 import {
+  getRenderedValueSources,
   getWriteSources,
   isStableExpr,
   isStableWrite,
@@ -102,7 +113,12 @@ export function writePatchResumeStatements(
         gatePatchWrite(
           section,
           binding,
-          buildPatchValue(section, binding),
+          buildPatchValue(
+            section,
+            binding,
+            undefined,
+            getConstantSeed(section, binding),
+          ),
           isPatchWriteBinding(binding)
             ? getPatchWrite(section, binding)
             : undefined,
@@ -136,12 +152,21 @@ export function writePatchResumeStatements(
   for (const signal of getSignals(section).values()) {
     if (signal.hasHTMLEffect) {
       const byHops: string[][] = [];
+      // Only a value the patch writes in place re-runs it: a server group's.
+      let written: Opt<Sources>;
+      let always = false;
       forEach(signal.referencedBindings, (binding) => {
         const root = getCanonicalBinding(binding);
         if (hasPatchEffect(root)) {
           (byHops[section.depth - root.section.depth] ??= []).push(
             getScopeAccessor(root),
           );
+          const sources = getSourcesForRef(root);
+          if (sources && getPatchWriteOwnership(section, sources).length) {
+            written = push(written, sources);
+          } else {
+            always = true;
+          }
         }
       });
       let accessors = "";
@@ -154,12 +179,21 @@ export function writePatchResumeStatements(
         const aborts = getAbortIds(section, signal.referencedBindings);
         body.push(
           t.expressionStatement(
-            callPatchRuntime(
-              "_patch_effect",
-              section,
-              getPatchKey().Effect +
-                getResumeRegisterId(section, signal.referencedBindings),
-              t.stringLiteral(aborts ? accessors + "!" + aborts : accessors),
+            andGuard(
+              !always &&
+                orCallerGroupGuards(
+                  section,
+                  undefined,
+                  "_server_guard",
+                  written,
+                ),
+              callPatchRuntime(
+                "_patch_effect",
+                section,
+                getPatchKey().Effect +
+                  getResumeRegisterId(section, signal.referencedBindings),
+                t.stringLiteral(aborts ? accessors + "!" + aborts : accessors),
+              ),
             ),
           ),
         );
@@ -355,18 +389,27 @@ function buildLetChangeWrites(
   ];
 }
 
-// A created scope's `<let>` seeds what the document writes of it: all of it
-// where assigned or written whole, else each member the document writes.
+// A created scope's `<let>` seeds what the document writes of it (whole where assigned or
+// written whole, else each member) where no client source feeds its init, which sets it.
 function buildLetSeeds(section: Section, binding: Binding) {
   const seed = t.numericLiteral(1);
+  const guard = getCallerGroupGuard(
+    section,
+    "_filled_guard",
+    getSourcesForExpr(binding.derivedFrom as t.NodeExtra),
+  );
   if (binding.assignments || getWriteReason(binding)) {
-    return [buildPatchValue(section, binding, undefined, seed)];
+    return [
+      andGuard(guard, buildPatchValue(section, binding, undefined, seed)),
+    ];
   }
   const writes: t.Expression[] = [];
   const addMemberSeeds = (member: Binding) => {
     for (const alias of member.propertyAliases.values()) {
       if (getWriteReason(alias)) {
-        writes.push(buildPatchWrite(section, alias, undefined, seed));
+        writes.push(
+          andGuard(guard, buildPatchWrite(section, alias, undefined, seed)),
+        );
       } else {
         addMemberSeeds(alias);
       }
@@ -474,6 +517,31 @@ export function boundaryAlwaysPairs(bodySection: Section) {
     if (s !== bodySection && !s.branch && s.parent) return false;
   }
   return true;
+}
+
+// A value-keyed node's marker: where a value's group is not constant (none fills or changes
+// a constant's), or always where client code reads the node for more than those values.
+export function getValueNodeMarkerGuard(section: Section, binding: Binding) {
+  const rendered = getRenderedValueSources(binding);
+  const callerOnly = (sources: Sources) =>
+    !sources.state &&
+    !sources.always &&
+    !sources.global &&
+    every(sources.param, (param) => isCallerParamAt(param, section));
+  const client = findSlot(binding)!.reason;
+  if (
+    every(rendered, callerOnly) &&
+    (!client ||
+      (callerOnly(client) &&
+        every(client.param, (param) =>
+          some(rendered, (sources) => bindingUtil.has(sources.param, param)),
+        )))
+  ) {
+    return (
+      orCallerGroupGuards(section, undefined, "_mask_group", rendered) ||
+      t.numericLiteral(0)
+    );
+  }
 }
 
 // A patch writer's call: the scope it writes, then its entry key.
@@ -767,7 +835,12 @@ function rendersUnconditionally(content: Section) {
 // A capture only patch-filled reads use is kept fresh where it is still
 // read unfilled; a patch renders every other read itself.
 function getPatchWrite(section: Section, binding: Binding) {
-  const write = buildPatchWrite(section, binding);
+  const write = buildPatchWrite(
+    section,
+    binding,
+    undefined,
+    getConstantSeed(section, binding),
+  );
   const rebuilds = patchFillsSubscribedReads(binding);
   return rebuilds === false
     ? write
@@ -776,6 +849,14 @@ function getPatchWrite(section: Section, binding: Binding) {
         getUnfilledGuard(section, undefined, rebuilds, true),
         write,
       );
+}
+
+// A constant group's value seeds a created scope alone: a live one holds it.
+function getConstantSeed(section: Section, binding: Binding) {
+  const args = getPatchWriteOwnership(section, getSourcesForRef(binding));
+  if (args.length) {
+    return t.unaryExpression("!", callRuntime("_server_guard", ...args));
+  }
 }
 
 // Locals whose declaration already wrote their fill or write

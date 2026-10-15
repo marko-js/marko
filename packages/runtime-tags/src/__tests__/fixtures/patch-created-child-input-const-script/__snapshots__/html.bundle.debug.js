@@ -11,7 +11,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	};
 	_html("<p>probe</p>");
 	_script($scope0_id, "__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5", 0);
-	_patch_effect($scope0_id, "PatchEffect:__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5", "input_label opts_items opts_label");
+	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5", "input_label opts_items opts_label");
 	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,
 		opts_items: opts.items,
@@ -20,7 +20,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 		input_label: ["input.label"],
 		opts_items: ["opts.items", "1:8"],
 		opts_label: ["opts.label", "1:8"]
-	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_label", input.label), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:opts_items", opts.items), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:opts_label", opts.label));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_label", input.label, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:opts_items", opts.items, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:opts_label", opts.label, !_server_guard($scope0_reason, 0)));
 });
 
 // template.marko
@@ -46,5 +46,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { input_label: _unfilled_if($scope0_reason, 0) && input.label }, "__tests__/template.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label);
+	$scope0_page ? _scope($scope0_id, { input_label: _unfilled_if($scope0_reason, 0) && input.label }, "__tests__/template.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

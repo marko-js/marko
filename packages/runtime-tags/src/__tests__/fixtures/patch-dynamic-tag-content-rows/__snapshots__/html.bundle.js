@@ -33,7 +33,7 @@ var layout_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		i: _unfilled_if($scope0_reason, 3) && input.content,
 		l: _unfilled_if($scope0_reason, 3) && input.row
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vb2", input.content), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vb3", input.row));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vb2", input.content, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vb3", input.row, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

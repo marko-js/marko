@@ -27,7 +27,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	}, "__tests__/tags/wrap.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/wrap.marko_fill0", input.content);
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/wrap.marko_fill0", input.content, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -55,5 +55,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_promise: input.promise,
 		"ClosureScopes:input_promise/4": $wi__input_promise && $input_promise__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.promise);
+	}, "__tests__/template.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.promise, !_server_guard($scope0_reason, 0));
 }, 1);

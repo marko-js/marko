@@ -90,11 +90,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		input_inner: input.inner,
 		open,
-		"ClosureScopes:input_kind/8": $wi__input_kind && $input_kind__closures,
+		"ClosureScopes:input_kind/8": $wi__input_kind && _unfilled_if($scope0_reason, 0) && $input_kind__closures,
 		"#childScope/0": _existing_scope($childScope),
 		"ClosureScopes:input_inner/9": $wi__input_inner && $input_inner__closures
 	}, "__tests__/template.marko", 0, {
 		input_inner: ["input.inner"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.inner);
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.inner, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -29,5 +29,5 @@ var template_default = _template("b", (input) => {
 		f: input.label,
 		g: open,
 		i: $wi__input_label && $input_label__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb2", input.show), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", input.label));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb2", input.show, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", input.label, !_server_guard($scope0_reason, 1)));
 }, 1);

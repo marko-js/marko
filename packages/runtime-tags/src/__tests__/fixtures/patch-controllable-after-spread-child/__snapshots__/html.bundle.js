@@ -17,7 +17,7 @@ var text_field_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && value,
 		e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && valueChange
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb2", value), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", valueChange));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb2", value, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", valueChange, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -25,7 +25,7 @@ _shells({ a: /*@__PURE__*/ ((_w0) => `a;${((_w0) => `/${_w0}&`)(" b")};${_w0}`)(
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 0) << 7);
+	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3 | ($scope0_page ? 0 : 0) << 5 | _mask_group($scope0_reason, 0) << 7);
 	const $childScope = _patch_child($scope0_id, "a");
 	text_field_default({
 		placeholder: input.hint,

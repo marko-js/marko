@@ -8,7 +8,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	let seen = "";
 	_html(`<p>${_text_resume($scope0_id, "#text/0", seen)}</p>`);
 	_script($scope0_id, "__tests__/tags/probe.marko_0_input_opts#3_input_label#4");
-	_patch_effect($scope0_id, "PatchEffect:__tests__/tags/probe.marko_0_input_opts#3_input_label#4", "input_opts input_label");
+	(_server_guard($scope0_reason, 1) || _server_guard($scope0_reason, 2)) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/probe.marko_0_input_opts#3_input_label#4", "input_opts input_label");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/probe.marko_0_input_opts#3_input_label#4/init");
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/probe.marko_fill0", seen, 1);
 	$scope0_page ? _scope($scope0_id, {
@@ -17,7 +17,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	}, "__tests__/tags/probe.marko", 0, {
 		input_opts: ["input.opts"],
 		input_label: ["input.label"]
-	}) : (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_opts", input.opts), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchWrite:input_label", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_opts", input.opts, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchWrite:input_label", input.label, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

@@ -47,5 +47,5 @@ var template_default = _template("a", (input) => {
 		l: $wi__input_suffix && $input_suffix__closures,
 		m: $count__closures,
 		k: _write_if($scope0_reason, 3) && $input_items__closures
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va8", input.inner), _filled_guard($scope0_reason, 3) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "va9", input.items), _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "va10", input.suffix));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va8", input.inner, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "va9", input.items, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "va10", input.suffix, !_server_guard($scope0_reason, 4)));
 }, 1);

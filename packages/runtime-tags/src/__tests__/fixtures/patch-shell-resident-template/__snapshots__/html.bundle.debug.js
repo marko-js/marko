@@ -47,7 +47,7 @@ var chooser_default = _template("__tests__/tags/chooser.marko", (input) => {
 		input_Tag: ["input.Tag"],
 		input_label: ["input.label"],
 		show: "1:6"
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/chooser.marko_fill0", input.Tag), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/chooser.marko_fill1", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/chooser.marko_fill0", input.Tag, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/chooser.marko_fill1", input.label, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -74,5 +74,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_which: ["input.which"],
 		input_label: ["input.label"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.which), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.label));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.which, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

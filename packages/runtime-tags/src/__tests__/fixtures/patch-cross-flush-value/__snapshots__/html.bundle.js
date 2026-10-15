@@ -12,7 +12,7 @@ var tagged_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		g: input.tag,
 		i: count
-	}) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wg", input.tag);
+	}) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wg", input.tag, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

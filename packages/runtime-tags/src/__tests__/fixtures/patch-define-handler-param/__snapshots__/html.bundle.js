@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		$scope1_page ? _scope($scope1_id, {
 			e: id,
 			_: _scope_with_id($scope0_id)
-		}) : _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "we", id);
+		}) : _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "we", id, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "a");

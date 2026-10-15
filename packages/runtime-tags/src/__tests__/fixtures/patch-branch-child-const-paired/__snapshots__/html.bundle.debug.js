@@ -5,7 +5,7 @@ _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;D 
 var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2${_patch_attr_class($scope0_id, "PatchAttr:#h2/0 class", input.title, $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", input.title, void 0, $scope0_reason, 0)}</h2>${_el_resume($scope0_id, "#h2/0")}</section>`);
+	_html(`<section><h2${_patch_attr_class($scope0_id, "PatchAttr:#h2/0 class", input.title, $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", input.title, void 0, $scope0_reason, 0)}</h2>${_el_resume($scope0_id, "#h2/0", _mask_group($scope0_reason, 0))}</section>`);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 });
 
@@ -41,5 +41,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		input_note: _unfilled_if($scope0_reason, 0) && input.note,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note);
+	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

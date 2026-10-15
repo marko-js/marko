@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope2_id, "a", 1, $wg__show, void 0, void 0, void 0, ["a1"], $scope2_reason, 1);
 		_html(`</section>${_el_resume($scope2_id, "a", $wg__show)}`);
-		$scope2_page ? _write_if($scope2_reason, 1) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 1) && content }) : _filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "va2", content);
+		$scope2_page ? _write_if($scope2_reason, 1) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 1) && content }) : _filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "va2", content, !_server_guard($scope2_reason, 2));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);

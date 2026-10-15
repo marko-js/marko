@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
-		"ClosureScopes:input_h/4": $wi__input_h && $input_h__closures,
+		"ClosureScopes:input_h/4": $wi__input_h && _unfilled_if($scope0_reason, 0) && $input_h__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0);
 }, 1);
