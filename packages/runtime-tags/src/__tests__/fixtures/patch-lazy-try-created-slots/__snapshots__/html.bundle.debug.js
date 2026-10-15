@@ -27,11 +27,11 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html("<i>loading</i>");
 	}, (e) => {
-		const $scope3_reason = _scope_reason(), $wg__e_message = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<b>${_text_resume($scope3_id, "#text/0", e.message, $wg__e_message)}</b>`);
-		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/child.marko", "6:4");
-	}, "__tests__/child.marko_2*content", "__tests__/child.marko_3*content", "__tests__/child.marko_1*content", void 0, 1);
+		_html(`<b>${_patch_text($scope3_id, "#text/0", e.message)}</b>`);
+		_scope($scope3_id, {}, "__tests__/child.marko", "6:4");
+	}, "__tests__/child.marko_2*content", "__tests__/child.marko_3*content", "__tests__/child.marko_1*content", void 0, "");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_p/4": $wi__input_p && _unfilled_if($scope0_reason, 0) && $input_p__closures }, "__tests__/child.marko", 0);
 });
 

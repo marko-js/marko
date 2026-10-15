@@ -5,6 +5,8 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-reject-try/template.marko_2*content"]
 }]
 {
-  "PatchCatch:#text/0": [new Error("boom")]
+  "PatchCatch:#text/0": [{
+    "PatchText:#text/0": "boom"
+  }, _(0)["PatchChild:BranchScopes:#text/0"][2]]
 }
 ;CQo

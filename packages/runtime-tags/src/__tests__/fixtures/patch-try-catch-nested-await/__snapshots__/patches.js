@@ -3,7 +3,9 @@
   cAa: [{
     pa: "a2"
   }, "a4", "a9"],
-  ka: [new Error("boom")]
+  ka: [{
+    ta: "boom"
+  }, "a9"]
 }]
 ;DSg
 

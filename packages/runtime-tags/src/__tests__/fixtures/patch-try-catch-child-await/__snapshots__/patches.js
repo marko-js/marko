@@ -5,7 +5,9 @@
       pa: "b0"
     }
   }, "a0", "a3"],
-  ka: [new Error("boom")]
+  ka: [{
+    ta: "boom"
+  }, "a3"]
 }]
 ;Cwo
 

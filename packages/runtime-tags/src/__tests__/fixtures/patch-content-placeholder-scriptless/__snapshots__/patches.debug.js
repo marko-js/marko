@@ -5,6 +5,7 @@
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-placeholder-scriptless/tags/card/index.marko_3*content",
       "PatchChild:BranchScopes:#text/0": {}
     }
-  }
+  },
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-placeholder-scriptless/template.marko_fill0": "y"
 }]
 ;CgM

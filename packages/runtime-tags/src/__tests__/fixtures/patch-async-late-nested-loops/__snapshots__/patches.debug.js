@@ -49,7 +49,9 @@
 {
   "PatchLoopItem:#text/0": [_(2)["PatchLoopItem:#text/0"][0], {
     "PatchLoopItem:#section/0": [1, {
-      "PatchCatch:#text/0": [new Error("nope")]
+      "PatchCatch:#text/0": [{
+        "PatchText:#text/0": "nope"
+      }, _.c]
     }]
   }]
 }

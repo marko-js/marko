@@ -9,7 +9,9 @@
 }]
 {
   cAa: {
-    ka: [new Error("boom")]
+    ka: [{
+      ta: "boom"
+    }, "a8"]
   }
 }
 {

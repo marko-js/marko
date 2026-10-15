@@ -7,7 +7,7 @@ _shells({
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 2), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -27,12 +27,11 @@ var template_default = _template("a", (input) => {
 				$wi__input_show__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 3) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a6", 0);
 				$wi__input_show__OR__input_promise && _resume_branch($scope3_id);
 			}, void 0, (err) => {
-				const $scope2_reason = _scope_reason(), $wg__err_message = _write_guard($scope2_reason, 0);
+				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "a", err.message, $wg__err_message)} ${_text_resume($scope2_id, "b", input.title, $wg__input_title * 2)}</em>`);
-				_subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a4", $wg__input_title || $wg__err_message);
-				$wg__input_title || $wg__err_message || _resume_branch($scope2_id);
-			}, void 0, "a7", "a2", void 0, 1);
+				_html(`<em>${_patch_text($scope2_id, "a", err.message)} ${_patch_text($scope2_id, "b", input.title, 2, $scope0_reason, 2)}</em>`);
+				_subscribe(_unfilled_if($scope0_reason, 2) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a4");
+			}, void 0, "a7", "a2", void 0, "");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
@@ -43,7 +42,7 @@ var template_default = _template("a", (input) => {
 		g: input.title,
 		h: _unfilled_if($scope0_reason, 1) && input.promise,
 		i: count,
-		j: $wi__input_title && $input_title__closures,
+		j: _write_if($scope0_reason, 2) && $input_title__closures,
 		k: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_promise__closures
 	}) : (_filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va9", input.title), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va10", input.promise));
 }, 1);

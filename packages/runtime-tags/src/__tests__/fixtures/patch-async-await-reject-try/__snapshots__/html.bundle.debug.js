@@ -28,11 +28,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html("loading");
 	}, (err) => {
-		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<em>${_text_resume($scope3_id, "#text/0", err.message, $wg__err_message)}</em>`);
-		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "7:6");
-	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", void 0, 1);
+		_html(`<em>${_patch_text($scope3_id, "#text/0", err.message)}</em>`);
+		_scope($scope3_id, {}, "__tests__/template.marko", "7:6");
+	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", void 0, "");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1);

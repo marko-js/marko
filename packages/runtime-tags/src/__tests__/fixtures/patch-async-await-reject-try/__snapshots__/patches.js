@@ -5,6 +5,8 @@
   }, "a2", "a6", "a5"]
 }]
 {
-  ka: [new Error("boom")]
+  ka: [{
+    ta: "boom"
+  }, "a6"]
 }
 ;CQo

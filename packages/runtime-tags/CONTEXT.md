@@ -226,7 +226,9 @@ _Avoid_: hydrate, hydration, replay
 **Created scope**:
 A scope a patch creates from a shell where the live page has none, seeded by
 its fills and set up by registered ids (`inits…!effects…`) in place of a
-renderer's setup; a live scope the patch writes into is _paired_. The same
+renderer's setup; a live scope the patch writes into is _paired_. A `@catch`
+creates from its registered renderer instead, whose setup runs: the patch
+stands in for its error, mounting by id the effects that read it. The same
 word as a client render's `createBranch`; the patch is just who creates.
 _Avoid_: construct, rebuild
 
@@ -360,9 +362,10 @@ _Avoid_: server-side/client-side value, owned read
 **Unpatched structure**:
 Structure patch renders skip and so never fill: stateful structure, a
 branch or loop whose expression derives from a client-owned group, a dynamic tag
-site a patch never pairs. The html writer tracks it at render as context
-(`withUnpatched`, `inUnpatched`) because a child template cannot see how
-its parent reached it; analyze names the static cases `inResumedStructure`.
+site a patch never pairs, a `@catch` reading none of its error. The html
+writer tracks it at render as context (`withUnpatched`, `inUnpatched`) because
+a child template cannot see how its parent reached it; analyze names the
+static cases `inResumedStructure`.
 _Avoid_: client-owned structure, client-selected
 
 **Structural-or-global param**:
@@ -381,9 +384,10 @@ no shell, and a kept branch with nothing filled ships no entry.
 _Avoid_: static branch, frozen rows
 
 **Branch path**:
-The root section and every section below it not crossing boundary content
-(`isBranchPathSection`). Outside stateful structure, its text and attr
-holes emit direct patch writes (`writesPatchIn`).
+The root section and every section below it not crossing a `@placeholder`
+(`isBranchPathSection`). Outside stateful structure and a `@catch` reading
+none of its error, its text and attr holes emit direct patch writes
+(`writesPatchIn`), a `@catch`'s into the scope its flush creates.
 _Avoid_: capture path, patch section
 
 **Patch fill**:

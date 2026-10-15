@@ -3,7 +3,9 @@
   cAa: [{
     ta: "x"
   }, "a0", "a5"],
-  ka: [new Error("boom")]
+  ka: [{
+    ta: "boom"
+  }, "a5"]
 }]
 ;BAE
 

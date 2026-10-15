@@ -26,7 +26,9 @@
 {
   "PatchChild:BranchScopes:#main/0": {
     "PatchChild:#childScope/1": {
-      "PatchCatch:#text/0": [new Error("boom")]
+      "PatchCatch:#text/0": [{
+        "PatchText:#text/0": "boom"
+      }, _(0)["PatchBranch:#main/0"][0]["PatchChild:#childScope/1"]["PatchChild:BranchScopes:#text/0"][2]]
     }
   }
 }

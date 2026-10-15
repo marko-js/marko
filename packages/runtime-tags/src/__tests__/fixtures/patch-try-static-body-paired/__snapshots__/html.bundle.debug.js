@@ -24,11 +24,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html("<b>static</b>");
 	}, void 0, (e) => {
-		const $scope4_reason = _scope_reason(), $wg__e_message = _write_guard($scope4_reason, 0);
+		const $scope4_reason = _scope_reason();
 		const $scope4_id = _scope_id();
-		_html(`<s>${_text_resume($scope4_id, "#text/0", e.message, $wg__e_message)}</s>`);
-		_write_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "9:6");
-	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_3*content", void 0, 1);
+		_html(`<s>${_patch_text($scope4_id, "#text/0", e.message)}</s>`);
+		_scope($scope4_id, {}, "__tests__/template.marko", "9:6");
+	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_3*content", void 0, "");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

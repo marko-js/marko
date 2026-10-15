@@ -35,6 +35,7 @@ import {
   withContext,
 } from "../writer";
 import {
+  addSetupId,
   PatchRenderState,
   PatchUpdateState,
   _client_guard,
@@ -486,7 +487,7 @@ export function _try(
   catchId?: string,
   bodyId?: string,
   alwaysPairs?: 1,
-  catchReadsError?: 1,
+  catchEffects?: string | 1,
 ) {
   const state = getState();
   if (!(state instanceof PatchUpdateState)) {
@@ -526,8 +527,8 @@ export function _try(
       catchContent && _resume(catchContent, catchId!),
       placeholderContent && _resume(placeholderContent, placeholderId!),
     );
-  // A patch shows `@placeholder`/`@catch` from received client state, so no
-  // document reorder rides the flush stream.
+  // A patch shows `@placeholder` from received client state and creates
+  // `@catch` in its entry, so no document reorder rides the flush stream.
   const writesRenderers = catchContent
     ? tryBoundary(
         () => withContext(kCaught, 1, content),
@@ -537,16 +538,51 @@ export function _try(
         (err) => {
           // A body that threw before claiming its id keeps it paired.
           if (_peek_scope_id() === branchId) _scope_id();
-          // Only a `@catch` reading its error ships it, as a document does.
+          // A catch no flush creates renders on the client from its error, sent
+          // whole (as message and cause) where its code reads it.
           writePatch(
             state,
             scopeId,
             entryKey(PatchKey.Catch, accessor),
-            catchReadsError ? [err] : [],
+            typeof catchEffects === "string"
+              ? writeCatch(
+                  state,
+                  scopeId,
+                  accessor,
+                  catchContent,
+                  err,
+                  catchId!,
+                  catchEffects,
+                )
+              : catchEffects
+                ? [err]
+                : [],
           );
         },
       )
     : (content(), false);
   applyBranchStart(chunk, beforeBranch, true);
   if (!writesRenderers) renderers();
+}
+
+// The `@catch` renders as a branch the flush creates in the body's place, from
+// its renderer and fills: only what client code reads of the error ships.
+function writeCatch(
+  state: PatchUpdateState,
+  scopeId: number,
+  accessor: Accessor,
+  catchContent: ServerRenderer,
+  err: unknown,
+  catchId: string,
+  effectIds: string,
+) {
+  const catchBranchId = _peek_scope_id();
+  (state.patchLinks ??= {})[catchBranchId] = {
+    parent: scopeId,
+    link: entryKey(AccessorPrefix.BranchScopes, accessor),
+  };
+  const patch = openScopePatch(state, catchBranchId);
+  withBranchId(catchBranchId, catchContent, err);
+  if (effectIds) addSetupId(state, catchBranchId, effectIds, 1);
+  return patchNode(state, [patch, catchId]);
 }

@@ -11,16 +11,15 @@ import { getDeclaredBindingExpression } from "../../util/get-declared-binding-ex
 import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { first, forEach, mapToString, some } from "../../util/optional";
+import { first, forEach, mapToString } from "../../util/optional";
 import {
   getCreateInitClosures,
   getPatchFillBindings,
   getSectionGlobalReads,
-  isPatchFillBinding,
   patchCreates,
 } from "../../util/patch/refresh";
 import { getReadReplacement } from "../../util/read-replacement";
-import { getSourcesForExpr, getSourcesForRef } from "../../util/reasons";
+import { getSourcesForExpr } from "../../util/reasons";
 import {
   isRegisteredFnExtra,
   getReferencedBindingsInFunction,
@@ -39,6 +38,7 @@ import {
   getShellId,
   getShippedShellId,
   getSectionEffectRegisterIds,
+  isQueuedOnCreate,
 } from "../../util/shell";
 import {
   addWriteScopeBuilder,
@@ -195,16 +195,8 @@ export default {
               patchCreates(section))
           ) {
             marker = getCreateInitIds(section);
-            // An effect the created scope's own renders queue (an init, seed,
-            // or item write cascades into it) is left out: those renders run it.
-            const effectIds = getSectionEffectRegisterIds(
-              section,
-              (refs) =>
-                !!getSourcesForRef(refs)?.state ||
-                some(
-                  refs,
-                  (ref) => ref.section === section && isPatchFillBinding(ref),
-                ),
+            const effectIds = getSectionEffectRegisterIds(section, (refs) =>
+              isQueuedOnCreate(section, refs),
             );
             if (effectIds) marker += "!" + effectIds;
             marker ||= getPatchFillBindings(section) ? "!" : "";

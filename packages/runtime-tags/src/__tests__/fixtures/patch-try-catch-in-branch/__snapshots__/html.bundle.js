@@ -24,11 +24,11 @@ var template_default = _template("a", (input) => {
 				_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a3");
 				_subscribe(_unfilled_if($scope0_reason, 3) && $input_boom__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_message__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_message__OR__input_boom && _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a4"), _client_guard($scope0_reason, 3) && "a5");
 			}, void 0, (err) => {
-				const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
+				_scope_reason();
 				const $scope3_id = _scope_id();
-				_html(`<b>${_text_resume($scope3_id, "a", err.message, $wg__err_message)}</b>`);
-				_write_if($scope3_reason, 0) && _scope($scope3_id, {});
-			}, void 0, "a6", "a0", void 0, 1);
+				_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b>`);
+				_scope($scope3_id, {});
+			}, void 0, "a6", "a0", void 0, "");
 			$wi__input_show__OR__input_message__OR__input_boom && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

@@ -22,11 +22,11 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		_html("<b>static</b>");
 	}, void 0, (e) => {
-		const $scope4_reason = _scope_reason(), $wg__e_message = _write_guard($scope4_reason, 0);
+		_scope_reason();
 		const $scope4_id = _scope_id();
-		_html(`<s>${_text_resume($scope4_id, "a", e.message, $wg__e_message)}</s>`);
-		_write_if($scope4_reason, 0) && _scope($scope4_id, {});
-	}, void 0, "a3", "a0", void 0, 1);
+		_html(`<s>${_patch_text($scope4_id, "a", e.message)}</s>`);
+		_scope($scope4_id, {});
+	}, void 0, "a3", "a0", void 0, "");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {});
 }, 1);

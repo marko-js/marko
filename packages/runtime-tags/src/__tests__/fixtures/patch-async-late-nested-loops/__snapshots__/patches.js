@@ -49,7 +49,9 @@
 {
   ra: [_(2).ra[0], {
     ra: [1, {
-      ka: [new Error("nope")]
+      ka: [{
+        ta: "nope"
+      }, "a7"]
     }]
   }]
 }

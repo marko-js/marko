@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 2), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $input_promise__closures = new Set();
@@ -29,12 +29,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				$wi__input_show__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 3) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_3_input_promise#0:7/subscribe", 0);
 				$wi__input_show__OR__input_promise && _resume_branch($scope3_id);
 			}, void 0, (err) => {
-				const $scope2_reason = _scope_reason(), $wg__err_message = _write_guard($scope2_reason, 0);
+				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "#text/0", err.message, $wg__err_message)} ${_text_resume($scope2_id, "#text/1", input.title, $wg__input_title * 2)}</em>`);
-				_subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6"), "__tests__/template.marko_2_input_title#0:6/subscribe", $wg__input_title || $wg__err_message);
-				$wg__input_title || $wg__err_message || _resume_branch($scope2_id);
-			}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", void 0, 1);
+				_html(`<em>${_patch_text($scope2_id, "#text/0", err.message)} ${_patch_text($scope2_id, "#text/1", input.title, 2, $scope0_reason, 2)}</em>`);
+				_subscribe(_unfilled_if($scope0_reason, 2) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6"), "__tests__/template.marko_2_input_title#0:6/subscribe");
+			}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", void 0, "");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}
@@ -45,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_title: input.title,
 		input_promise: _unfilled_if($scope0_reason, 1) && input.promise,
 		count,
-		"ClosureScopes:input_title/9": $wi__input_title && $input_title__closures,
+		"ClosureScopes:input_title/9": _write_if($scope0_reason, 2) && $input_title__closures,
 		"ClosureScopes:input_promise/10": _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_promise__closures
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],

@@ -29,11 +29,11 @@ var template_default = _template("a", (input) => {
 				$wi__input_groups && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 0) && "a6", 0);
 				$wi__input_groups && _resume_branch($scope3_id);
 			}, void 0, (err) => {
-				const $scope5_reason = _scope_reason(), $wg__err_message = _write_guard($scope5_reason, 0);
+				_scope_reason();
 				const $scope5_id = _scope_id();
-				_html(`<b>${_text_resume($scope5_id, "a", err.message, $wg__err_message)}</b>`);
-				_write_if($scope5_reason, 0) && _scope($scope5_id, {});
-			}, void 0, "a7", "a2", void 0, 1);
+				_html(`<b>${_patch_text($scope5_id, "a", err.message)}</b>`);
+				_scope($scope5_id, {});
+			}, void 0, "a7", "a2", void 0, "");
 			$wi__input_groups && _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				g: _unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures

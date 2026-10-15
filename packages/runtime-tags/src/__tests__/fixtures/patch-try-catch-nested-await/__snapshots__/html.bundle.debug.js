@@ -33,11 +33,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wi__input_a__OR__input_b && _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_a#0:3/subscribe", 0);
 		$wi__input_a__OR__input_b && _resume_branch($scope1_id);
 	}, void 0, (err) => {
-		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<span>${_text_resume($scope3_id, "#text/0", err.message, $wg__err_message)}</span>`);
-		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "9:6");
-	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", void 0, 1);
+		_html(`<span>${_patch_text($scope3_id, "#text/0", err.message)}</span>`);
+		_scope($scope3_id, {}, "__tests__/template.marko", "9:6");
+	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", void 0, "");
 	_html("</main>");
 	_patch_write($scope0_id, "PatchWrite:input_b", input.b, 1);
 	$scope0_page && _scope($scope0_id, {

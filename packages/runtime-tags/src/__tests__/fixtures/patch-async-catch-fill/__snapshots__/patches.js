@@ -4,6 +4,9 @@
     pa: "a0"
   }, "a2", "a6"],
   va8: "second",
-  ka: [new Error("boom")]
+  ka: [{
+    ta: "second",
+    tb: "boom"
+  }, "a6"]
 }]
 ;CQo

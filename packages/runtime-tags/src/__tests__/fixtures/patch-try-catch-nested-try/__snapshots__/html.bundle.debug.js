@@ -38,11 +38,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input#0:2/init");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input__closures, _scope($scope1_id, { _: $wi__input && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input#0:2/subscribe");
 	}, void 0, (err) => {
-		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<span>${_text_resume($scope3_id, "#text/0", err.message, $wg__err_message)}</span>`);
-		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "11:6");
-	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", void 0, 1);
+		_html(`<span>${_patch_text($scope3_id, "#text/0", err.message)}</span>`);
+		_scope($scope3_id, {}, "__tests__/template.marko", "11:6");
+	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", void 0, "");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
 		"ClosureScopes:input_promise/5": $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures,

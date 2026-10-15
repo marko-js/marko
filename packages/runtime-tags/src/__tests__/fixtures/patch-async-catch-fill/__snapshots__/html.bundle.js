@@ -6,7 +6,7 @@ _shells({
 	a: "a !a7;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -24,19 +24,18 @@ var template_default = _template("a", (input) => {
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a5", 0);
 		$wi__input_promise && _resume_branch($scope2_id);
 	}, void 0, (err) => {
-		const $scope1_reason = _scope_reason(), $wg__err_message = _write_guard($scope1_reason, 0);
+		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<p>${_text_resume($scope1_id, "a", input.title, $wg__input_title)} ${_text_resume($scope1_id, "b", err.message, $wg__err_message * 2)}</p>`);
-		_subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3", $wg__input_title || $wg__err_message);
-		$wg__input_title || $wg__err_message || _resume_branch($scope1_id);
-	}, void 0, "a6", "a2", void 0, 1);
+		_html(`<p>${_patch_text($scope1_id, "a", input.title, void 0, $scope0_reason, 0)} ${_patch_text($scope1_id, "b", err.message, 2)}</p>`);
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3");
+	}, void 0, "a6", "a2", void 0, "");
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a7");
 	_patch_value($scope0_id, "va9", n, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.title,
 		h: n,
-		i: $wi__input_title && $input_title__closures,
+		i: _write_if($scope0_reason, 0) && $input_title__closures,
 		j: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures
 	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va8", input.title);
 }, 1);

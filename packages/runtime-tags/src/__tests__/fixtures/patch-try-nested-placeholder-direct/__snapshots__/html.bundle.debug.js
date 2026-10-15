@@ -32,11 +32,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope4_id = _scope_id();
 			_html("inner");
 		}, (err) => {
-			const $scope5_reason = _scope_reason(), $wg__err_message = _write_guard($scope5_reason, 0);
+			const $scope5_reason = _scope_reason();
 			const $scope5_id = _scope_id();
-			_html(`<em>${_text_resume($scope5_id, "#text/0", err.message, $wg__err_message)}</em>`);
-			_write_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "6:8");
-		}, "__tests__/template.marko_4*content", "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", void 0, 1);
+			_html(`<em>${_patch_text($scope5_id, "#text/0", err.message)}</em>`);
+			_scope($scope5_id, {}, "__tests__/template.marko", "6:8");
+		}, "__tests__/template.marko_4*content", "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", void 0, "");
 		$wi__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 	}, () => {
 		_scope_reason();

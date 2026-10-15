@@ -16,7 +16,10 @@
     cAa: [{
       pa: "a0"
     }, "a2", "a7"],
-    ka: [new Error("boom")]
+    ka: [{
+      ta: "boom",
+      tb: "c"
+    }, "a7"]
   }, "a3"],
   va9: "c"
 }

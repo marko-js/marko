@@ -26,7 +26,9 @@ a, {
 {
   cAa: {
     cb: {
-      ka: [new Error("boom")]
+      ka: [{
+        ta: "boom"
+      }, "a6"]
     }
   }
 }

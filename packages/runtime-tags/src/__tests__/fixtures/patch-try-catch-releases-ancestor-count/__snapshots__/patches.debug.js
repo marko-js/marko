@@ -9,7 +9,9 @@
 }]
 {
   "PatchChild:BranchScopes:#text/0": {
-    "PatchCatch:#text/0": [new Error("boom")]
+    "PatchCatch:#text/0": [{
+      "PatchText:#text/0": "boom"
+    }, _(0)["PatchChild:BranchScopes:#text/0"]["PatchChild:BranchScopes:#text/0"][2]]
   }
 }
 {

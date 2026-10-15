@@ -69,7 +69,7 @@ export function someContentRead(
 }
 // `seen` keeps every binding walked: `leaf` reads no path, so one that held
 // no match never will, and a cycle stops where it started.
-export function someBindingRead(
+function someBindingRead(
   binding: Binding,
   leaf: (read: ReferencedExtra) => boolean,
   seen = new Set<Binding>(),
@@ -202,10 +202,14 @@ export function hasStructuralParam(group: ParamReasonGroup) {
   return bindingUtil.intersects(group, first(group).section.structuralParams);
 }
 
-// Structure resumed code renders on its own: boundary content, or a
-// stateful branch's body (patch renders skip both).
+// Structure resumed code renders on its own, which patch renders skip: boundary
+// content, a stateful branch's body, or a `@catch` reading none of its error.
 export function inResumedStructure(section: Section) {
-  return !isBranchPathSection(section) || inStatefulBranch(section);
+  return (
+    !isBranchPathSection(section) ||
+    inStatefulBranch(section) ||
+    inUnreadCatch(section)
+  );
 }
 
 // Whether a patch writes the section's holes directly. Finalize or later:
@@ -228,12 +232,23 @@ export function isBranchSectionChain(section: Section, owner: Section) {
 }
 
 // Sections whose holes patch-write directly: every level down to them links
-// structurally, except boundary content (rendered outside the patch) and dropped content.
+// structurally, except a `@placeholder` (rendered outside the patch) and dropped content.
 export function isBranchPathSection(section: Section) {
   for (let cur = section; cur.parent; cur = cur.parent) {
-    if (cur.boundaryContent || cur.dropped) return false;
+    if (cur.boundaryContent === "placeholder" || cur.dropped) return false;
   }
   return true;
+}
+
+// A `@catch` (inclusive) reading none of its error: the client renders it from
+// its renderer and closures, as from any throw. Finalize or later.
+export function inUnreadCatch(section: Section) {
+  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
+    if (cur.boundaryContent === "catch" && (!cur.params || cur.params.pruned)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 // Whether a patch renders the branches or loop rows at the node: it writes

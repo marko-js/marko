@@ -6,16 +6,20 @@ import { type ReferencedBindings } from "./bindings";
 import buildStringExpression from "./build-string-expression";
 import { createCyclicMemo } from "./cyclic-memo";
 import { isOptimize } from "./marko-config";
+import { some } from "./optional";
 import {
   contentIsPatched,
   contentMayCreate,
+  isPatchFillBinding,
   sectionHasServerEffect,
 } from "./patch/refresh";
 import {
   inStatefulBranch,
+  inUnreadCatch,
   isBranchPathSection,
   isStatefulBranch,
 } from "./patch/structure";
+import { getSourcesForRef } from "./reasons";
 import { callRuntime, registerRuntimeValue } from "./runtime";
 import {
   forEachSection,
@@ -84,12 +88,13 @@ export function buildShells() {
     }
   });
   forEachSection((section) => {
-    // A flush may create any branch-path body but a stateful one; a template
-    // including itself outside a branch has no finite shell, so ships none.
+    // A flush may create a branch-path body, none stateful or in a catch the
+    // client renders; a template including itself outside a branch has none.
     if (
       section.branch?.optional &&
       isBranchPathSection(section) &&
-      !isStatefulBranch(section)
+      !isStatefulBranch(section) &&
+      !inUnreadCatch(section)
     ) {
       addShell(shells, section, "shell");
     }
@@ -249,6 +254,15 @@ export function wrapShellJoin(
     "_shell_join",
     t.stringLiteral(getResumeRegisterId(section, ref, "init")),
     value,
+  );
+}
+
+// An effect a created scope's own renders queue (an init, seed, or item
+// write cascades into it): its setup ids leave it to those renders.
+export function isQueuedOnCreate(section: Section, refs: ReferencedBindings) {
+  return (
+    !!getSourcesForRef(refs)?.state ||
+    some(refs, (ref) => ref.section === section && isPatchFillBinding(ref))
   );
 }
 

@@ -17,11 +17,11 @@ var template_default = _template("a", (input) => {
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a1");
 		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_message__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a2"), "a3");
 	}, void 0, (err) => {
-		const $scope2_reason = _scope_reason(), $wg__err_message = _write_guard($scope2_reason, 0);
+		_scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<b>${_text_resume($scope2_id, "a", err.message, $wg__err_message)}</b>`);
-		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "a4", "a0", void 0, 1);
+		_html(`<b>${_patch_text($scope2_id, "a", err.message)}</b>`);
+		_scope($scope2_id, {});
+	}, void 0, "a4", "a0", void 0, "");
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a5");
 	_patch_value($scope0_id, "va6", count, 1);

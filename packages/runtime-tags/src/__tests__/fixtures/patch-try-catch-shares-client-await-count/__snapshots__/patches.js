@@ -8,7 +8,9 @@
 }]
 {
   cAa: {
-    ka: [new Error("boom")]
+    ka: [{
+      ta: "boom"
+    }, "a6"]
   }
 }
 ;Cwo

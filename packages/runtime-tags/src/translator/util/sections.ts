@@ -179,8 +179,8 @@ export interface Section {
       }
     | undefined;
   /** A `<try>`'s `@catch` or `@placeholder`: content that always
-   * registers, so its slot names it by id. */
-  boundaryContent: boolean;
+   * registers, so its slot names it by id. A patch renders a `@catch`. */
+  boundaryContent: false | "catch" | "placeholder";
   /** A content body shipped as a shell, created by id from a dynamic tag
    * entry. */
   contentShell: boolean;

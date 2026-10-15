@@ -29,11 +29,11 @@ var template_default = _template("a", (input) => {
 			$wi__input_a && _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a7", 0);
 			$wi__input_a && _resume_branch($scope2_id);
 		}, void 0, (err) => {
-			const $scope4_reason = _scope_reason(), $wg__err_message = _write_guard($scope4_reason, 0);
+			_scope_reason();
 			const $scope4_id = _scope_id();
-			_html(`<s>${_text_resume($scope4_id, "a", err.message, $wg__err_message)}</s>`);
-			_write_if($scope4_reason, 0) && _scope($scope4_id, {});
-		}, void 0, "a8", "a3", void 0, 1);
+			_html(`<s>${_patch_text($scope4_id, "a", err.message)}</s>`);
+			_scope($scope4_id, {});
+		}, void 0, "a8", "a3", void 0, "");
 		_await($scope1_id, "b", input.b, (b) => {
 			const $scope6_id = _scope_id();
 			_html(`<em>${_patch_text($scope6_id, "a", b, void 0, $scope0_reason, 2)}</em>`);

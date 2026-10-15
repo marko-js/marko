@@ -36,7 +36,11 @@ import {
   some,
   type SortedOpt,
 } from "../optional";
-import { getSourcesForRef, isConditionalReason } from "../reasons";
+import {
+  getSourcesForRef,
+  isConditionalReason,
+  isUnconditionalReason,
+} from "../reasons";
 import {
   getReferencedBindings,
   type Read,
@@ -149,6 +153,7 @@ function isPatchWrittenSection(section: Section) {
   return (
     (isCalledBody(section) && !inResumedStructure(section)) ||
     section.branch?.optional === false ||
+    (section.boundaryContent === "catch" && !inResumedStructure(section)) ||
     ((!!section.branch?.optional || !!section.localClosures) &&
       isBranchPathSection(section) &&
       !isStatefulBranch(section))
@@ -197,10 +202,12 @@ function getPatchFill(binding: Binding): true | FillConditions | undefined {
     : undefined;
 }
 
-// A branch or boundary body on the branch path: a flush may create its
-// scopes (a boundary's when it settles or rebuilds after a catch).
+// A body a flush may create: a branch or boundary body on the branch path (a
+// boundary's as it settles or rebuilds), or a `@catch` whose holes it writes.
 export function isCreatableBody(section: Section) {
-  return !!section.branch && isBranchPathSection(section);
+  return section.boundaryContent === "catch"
+    ? !inResumedStructure(section)
+    : !!section.branch && isBranchPathSection(section);
 }
 
 // A value a created scope gets from no other channel (a resumed one reads it
@@ -217,11 +224,22 @@ export function isCreatedScopeSeed(binding: Binding) {
     binding.type !== BindingType.constant &&
     !binding.sources?.state &&
     // A branch's own params arrive with its structure.
-    !(isSectionParam(binding) && !binding.localOf && !isCalledBody(section)) &&
+    !(isSectionParam(binding) && !binding.localOf && !seedsParam(binding)) &&
     // Neither a fill reaching its reads nor a write: a join fill's value
     // seeds the join's init.
     !fillsReads(binding) &&
     !hasPatchWriteReads(binding)
+  );
+}
+
+// A param a created scope gets as a seed, as no structure brings it: a called
+// body's, or a member of a `@catch`'s error its code joins with a caller's.
+function seedsParam(binding: Binding) {
+  const { section } = binding;
+  return (
+    isCalledBody(section) ||
+    (section.boundaryContent === "catch" &&
+      hasCallerParamSourceAt(findSlot(binding)?.reason, section))
   );
 }
 
@@ -477,14 +495,18 @@ function fillsUnrebuiltReads(binding: Binding) {
   return fill === true || (!!fill?.contents && !fill.rebuilds);
 }
 
-// Whether the consumer may withhold the content, which the runtime decides:
-// client state may reach its structural params, through `<define>` calls too.
+// Whether the consumer may withhold the content, as the runtime decides: client
+// code renders it on its own, or client state reaches its structural params.
 function consumerMayWithhold(content: Section) {
+  const reason = getRendererReason(content);
+  // Read unconditionally, its renderer renders wherever the consumer puts it
+  // (a `@catch` on a client error, say), apart from any patch render.
+  if (reason && isUnconditionalReason(reason)) return true;
   const consumer = content.derives!.tag;
   // A `<define>` var passed on (its direct tags classify on their own)
   // may reach any consumer, so the runtime decides.
   if (!isKnownTagExtra(consumer)) {
-    return !!getRendererReason(content);
+    return !!reason;
   }
   for (const { params, sources } of getParamGroupSources(consumer) || []) {
     if (
@@ -561,7 +583,7 @@ export function initsCreatedJoin(section: Section, intersection: Intersection) {
   const sources = getSourcesForRef(intersection);
   return (
     isPatch() &&
-    isCalledBody(section) &&
+    (isCalledBody(section) || section.boundaryContent === "catch") &&
     !sources?.state &&
     hasCallerParamSourceAt(sources, section)
   );
@@ -756,7 +778,7 @@ export const contentIsPatched = createCyclicMemo((section: Section) => {
 function isPatchedContentRead(read: ReferencedExtra) {
   return (
     isPatchedSite(read) ||
-    read.section.boundaryContent ||
+    !!read.section.boundaryContent ||
     read.section.branch?.optional === false
   );
 }
@@ -931,11 +953,11 @@ export function isBranchChainTo(section: Section, owner: Section) {
   return true;
 }
 
-// Whether the section is content a consumer renders (inclusive): a
-// consumer may withhold it, so server values inside register their fills.
+// Whether the section is content a consumer (or a `<try>`) renders, inclusive:
+// the consumer may withhold it, so server values inside register their fills.
 export function inContentSection(section: Section | undefined) {
   for (let cur = section; cur?.parent; cur = cur.parent) {
-    if (!cur.branch && cur.derives) return true;
+    if (!cur.branch && (cur.derives || cur.boundaryContent)) return true;
   }
   return false;
 }

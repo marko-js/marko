@@ -30,11 +30,11 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_html("inner");
 		}, (err) => {
-			const $scope5_reason = _scope_reason(), $wg__err_message = _write_guard($scope5_reason, 0);
+			_scope_reason();
 			const $scope5_id = _scope_id();
-			_html(`<em>${_text_resume($scope5_id, "a", err.message, $wg__err_message)}</em>`);
-			_write_if($scope5_reason, 0) && _scope($scope5_id, {});
-		}, "a6", "a7", "a2", void 0, 1);
+			_html(`<em>${_patch_text($scope5_id, "a", err.message)}</em>`);
+			_scope($scope5_id, {});
+		}, "a6", "a7", "a2", void 0, "");
 		$wi__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {
 		_scope_reason();

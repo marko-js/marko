@@ -38,7 +38,7 @@ var card_default = _template("b", (input) => {
 });
 
 // template.marko
-_shells({ a: /*@__PURE__*/ (() => `a;${((_w0) => `D/${_w0}&l`)("D%l")};${((_w0) => `<main>${_w0}</main>`)($template)}`)() });
+_shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `D/${_w0}&l`)("D%l")};${((_w0) => `<main>${_w0}</main>`)($template)}`)() });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -52,14 +52,13 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</em>`);
-			_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a0");
+			_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
 		}, $scope0_id)
 	});
 	_html("</main>");
-	_patch_write($scope0_id, "we", input.note, 1);
-	$scope0_page && _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		e: input.note,
 		f: _write_if($scope0_reason, 1) && $input_note__closures,
 		a: _existing_scope($childScope)
-	});
+	}) : _filled_guard($scope0_reason, 1) && _content_withheld("a1") && _patch_value($scope0_id, "va2", input.note);
 }, 1);

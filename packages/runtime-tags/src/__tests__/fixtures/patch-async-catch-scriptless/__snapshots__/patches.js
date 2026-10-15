@@ -3,6 +3,8 @@
   cAa: [{
     pa: "a0"
   }, "a2", "a5"],
-  ka: [new Error("boom")]
+  ka: [{
+    ta: "boom"
+  }, "a5"]
 }]
 ;CQo

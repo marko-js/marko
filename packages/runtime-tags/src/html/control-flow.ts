@@ -674,11 +674,9 @@ export function tryBoundary(
   // With a catch, markers let it take the body's place once the stream reaches
   // it pending (`markCatchRange`); a body settled or caught first needs none.
   const reorderId = catchContent && !onCatch ? state.nextReorderId() : "";
-  if (reorderId) {
-    chunk.catchRange = { id: reorderId, end: bodyEnd };
-    // The catch renders later, forked from this chunk.
-    captureContext(chunk);
-  }
+  if (reorderId) chunk.catchRange = { id: reorderId, end: bodyEnd };
+  // The catch renders later, forked from this chunk.
+  if (catchContent) captureContext(chunk);
 
   bodyBoundary.onNext = () => {
     if (boundary.aborted) return;

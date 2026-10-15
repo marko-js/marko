@@ -1,7 +1,9 @@
 // PATCH
 [`a3;D l%;<em> </em><!><!>`, {
   cAa: [{}, "a3", "a9"],
-  ka: [new Error("boom")]
+  ka: [{
+    ta: "boom"
+  }, "a9"]
 }]
 ;CgQ
 

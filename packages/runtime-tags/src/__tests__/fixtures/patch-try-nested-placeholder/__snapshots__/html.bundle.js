@@ -24,11 +24,11 @@ var template_default = _template("a", (input) => {
 				_client_guard($scope0_reason, 0) && _patch_init($scope4_id, "a4");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $await_content__value__closures, _scope($scope4_id, { _: $wi__input_promise && _scope_with_id($scope3_id) }), _client_guard($scope0_reason, 0) && "a5");
 			}, void 0, (err) => {
-				const $scope5_reason = _scope_reason(), $wg__err_message = _write_guard($scope5_reason, 0);
+				_scope_reason();
 				const $scope5_id = _scope_id();
-				_html(`<em>${_text_resume($scope5_id, "a", err.message, $wg__err_message)}</em>`);
-				_write_if($scope5_reason, 0) && _scope($scope5_id, {});
-			}, void 0, "a6", "a0", void 0, 1);
+				_html(`<em>${_patch_text($scope5_id, "a", err.message)}</em>`);
+				_scope($scope5_id, {});
+			}, void 0, "a6", "a0", void 0, "");
 			$wi__input_promise && _scope($scope3_id, { f: _unfilled_if($scope0_reason, 0) && $await_content__value__closures });
 		}, 1, "a1", 1);
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a7");

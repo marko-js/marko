@@ -12,5 +12,7 @@
   cAa: [{
     ta: "y"
   }, "a0", "a5"],
-  ka: [new Error("boom")]
+  ka: [{
+    ta: "boom"
+  }, "a5"]
 }
