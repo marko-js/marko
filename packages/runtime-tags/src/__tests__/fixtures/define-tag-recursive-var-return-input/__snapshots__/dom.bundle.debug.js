@@ -1,0 +1,42 @@
+// template.marko
+const $Rec_content__walks = "b%c";
+const $Rec_content__template = "<!><!><!>";
+const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<button> </button>`)($Rec_content__template, $Rec_content__template);
+const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& D l`)($Rec_content__walks, $Rec_content__walks);
+const $if_content__input_depth = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Rec_content__tag_input_depth($scope["#childScope/0"], $scope._.input_depth - 1));
+const $if_content__setup = ($scope) => {
+	$if_content__input_depth._($scope);
+	$if_content__input_label._($scope);
+	_var($scope, "#childScope/0", $if_content__child);
+};
+const $if_content__input_label = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Rec_content__tag_input_label($scope["#childScope/0"], $scope._.input_label));
+const $if_content__child = _var_resume("__tests__/template.marko_2_child#3/var", ($scope, child) => _text($scope["#text/2"], child));
+const $Rec_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<span> </span>`)($Rec_content__template), /*@__PURE__*/ ((_w0) => `b0${_w0}&D l`)($Rec_content__walks), $if_content__setup);
+const $Rec_content__tag_input_depth = /*@__PURE__*/ _const("input_depth", ($scope) => {
+	$Rec_content__if($scope, $scope.input_depth ? 0 : 1);
+	$if_content__input_depth($scope);
+});
+const $Rec_content__tag_input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
+	_return($scope, $scope.input_label);
+	$if_content__input_label($scope);
+});
+const $Rec_content__$params = ($scope, $params2) => $Rec_content__input($scope, $params2[0]);
+const $Rec_content__input = ($scope, input) => {
+	$Rec_content__tag_input_depth($scope, input.depth);
+	$Rec_content__tag_input_label($scope, input.label);
+};
+const $label = /*@__PURE__*/ _let("label/4", ($scope) => {
+	$Rec_content__tag_input_label($scope["#childScope/1"], $scope.label);
+	_text($scope["#text/3"], $scope.label);
+});
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
+	$label($scope, $scope.label + "a");
+}));
+function $setup($scope) {
+	$Rec_content__tag_input_depth($scope["#childScope/0"], 1);
+	$Rec_content__tag_input_label($scope["#childScope/0"], "x");
+	$Rec_content__tag_input_depth($scope["#childScope/1"], 1);
+	$label($scope, "a");
+	$setup__script($scope);
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

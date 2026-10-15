@@ -43,6 +43,7 @@ import {
   addReason,
   applyReasonExprs,
   getSourcesForRef,
+  mapParamBindingToExpr,
 } from "./reasons";
 import {
   type AssignedBindingExtra,
@@ -81,6 +82,7 @@ import {
   createSources,
   globalSources,
   mergeSources,
+  withSources,
 } from "./sources";
 import { createProgramState } from "./state";
 
@@ -464,7 +466,9 @@ function getLastOwnSourceReturn(intersection: Intersection, section: Section) {
     if (binding.section === section && !seen.has(binding)) {
       seen.add(binding);
       const { returnedBy } = getAliasRoot(binding);
-      if (returnedBy && (!last || last.id < returnedBy.id)) last = returnedBy;
+      if (returnedBy && (!last || last.id < returnedBy.scope.id)) {
+        last = returnedBy.scope;
+      }
       if (binding.derivedFrom) {
         forEach(getValueReferences(binding.derivedFrom), track);
       }
@@ -579,6 +583,39 @@ function resolveDerivedSources(binding: Binding) {
     binding.intersection = Array.isArray(refs)
       ? refs
       : refs && getRootIntersection(refs);
+    const { returnedBy } = binding;
+    if (returnedBy) {
+      if (binding.sources) {
+        mapReturnedParams(binding, binding.sources, returnedBy);
+      }
+      // The tag's child scope resumes for its variable when its sources change.
+      addReason(ensureSlot(returnedBy.scope), binding.sources);
+    }
+  }
+}
+
+// A tag variable reads a `<define>` body's params through its call, so it
+// takes their sources from the expressions the call passes.
+function mapReturnedParams(
+  binding: Binding,
+  sources: Sources,
+  { section, exprs }: NonNullable<Binding["returnedBy"]>,
+) {
+  let mapped: Sources | undefined;
+  const params = bindingUtil.filter(sources.param, (param) => {
+    if (param.section !== section) return true;
+    mapped = reduce(
+      getValueReferences(mapParamBindingToExpr(exprs!, param)),
+      mergeResolvedSources,
+      mapped,
+    );
+    return false;
+  });
+  if (params !== sources.param) {
+    binding.sources = mergeSources(
+      mapped,
+      withSources(sources, sources.state, params),
+    );
   }
 }
 

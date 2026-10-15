@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Wrapper = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
+		_scope_reason();
 		const $return = input.value;
 		return $return;
 	}, $scope0_id) };
@@ -22,11 +22,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (open) {
 			const $scope2_id = _scope_id();
 			let value = child_default({});
-			const $childScope = _peek_scope_id();
 			let wrapped = Wrapper.content({ value });
-			_var($scope2_id, "#scopeOffset/3", $childScope, "__tests__/template.marko_2_wrapped#6/var");
-			_html(`<div>Value: ${_text_resume($scope2_id, "#text/4", wrapped, 2)}</div>`);
-			_scope($scope2_id, { "#childScope/2": _existing_scope($childScope) }, "__tests__/template.marko", "7:2");
+			_html(`<div>Value: ${_escape(wrapped)}</div>`);
+			_scope($scope2_id, {}, "__tests__/template.marko", "7:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");

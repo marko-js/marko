@@ -1,0 +1,23 @@
+# Render `{"a":1}`
+```html
+<span
+  data-value="2"
+>
+  2
+</span>
+<span
+  data-value="2"
+>
+  2
+</span>
+<span
+  data-value="2"
+>
+  2
+</span>
+<span
+  data-value="3"
+>
+  3
+</span>
+```

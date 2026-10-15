@@ -1,0 +1,11 @@
+<define/Inc|{ a }|>
+  <return=a + 1/>
+</define>
+<Inc/x a=input.a/>
+<show-value value=x/>
+<if=(x > 1)>
+  <show-value value=x/>
+</if>
+<for|i| until=x>
+  <show-value value=i + x/>
+</for>
