@@ -265,7 +265,7 @@ export function writePatchResumeStatements(
       letChanges.delete(binding);
       for (const write of change
         ? buildLetChangeWrites(section, binding, change)
-        : [buildPatchValue(section, binding, undefined, t.numericLiteral(1))]) {
+        : buildLetSeeds(section, binding)) {
         body.push(t.expressionStatement(write));
       }
     });
@@ -344,6 +344,27 @@ function buildLetChangeWrites(
       ...bindOwnership,
     ),
   ];
+}
+
+// A created scope's `<let>` seeds what the document writes of it: all of it
+// where assigned or written whole, else each member the document writes.
+function buildLetSeeds(section: Section, binding: Binding) {
+  const seed = t.numericLiteral(1);
+  if (binding.assignments || getWriteReason(binding)) {
+    return [buildPatchValue(section, binding, undefined, seed)];
+  }
+  const writes: t.Expression[] = [];
+  const addMemberSeeds = (member: Binding) => {
+    for (const alias of member.propertyAliases.values()) {
+      if (getWriteReason(alias)) {
+        writes.push(buildPatchWrite(section, alias, undefined, seed));
+      } else {
+        addMemberSeeds(alias);
+      }
+    }
+  };
+  addMemberSeeds(binding);
+  return writes;
 }
 
 // Plain fill write of a branch local with no state source, gated at runtime

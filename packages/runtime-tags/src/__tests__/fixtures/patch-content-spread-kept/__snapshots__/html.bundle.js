@@ -2,7 +2,7 @@
 const $template = "<section></section>";
 _shells({ b: "b !; ;<section></section>" });
 var frag_host_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_mode = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_mode__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
@@ -21,8 +21,8 @@ var frag_host_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		d: input.mode,
 		e: input.b,
-		f: $wi__input_mode && one,
-		h: $wi__input_mode && $input_mode__closures,
+		f: _unfilled_if($scope0_reason, 0) && one,
+		h: _write_if($scope0_reason, 0) && $input_mode__closures,
 		i: _write_if($scope0_reason, 1) && $input_b__closures
 	}) : (_filled_guard($scope0_reason, 0) && _content_withheld("b0") && _patch_value($scope0_id, "vb4", input.mode), _filled_guard($scope0_reason, 1) && _content_withheld("b0") && _patch_value($scope0_id, "vb5", input.b));
 });

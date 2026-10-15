@@ -4,7 +4,7 @@
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-handler/tags/child.marko_0_x_length#6",
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-handler/tags/child.marko_fill0": "abc",
+        "PatchWrite:x_length": 3,
         "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-handler/tags/child.marko_fill1": 0
       }
     }

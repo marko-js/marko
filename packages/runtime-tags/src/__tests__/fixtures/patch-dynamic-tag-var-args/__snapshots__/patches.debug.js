@@ -12,7 +12,7 @@
 
 // PATCH holding BAA
 {
-  "PatchDynamicTag:#text/0": [0, [5], 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/template.marko_0_n#8/var"]
+  "PatchDynamicTag:#text/0": [0, 0, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-args/template.marko_0_n#8/var"]
 }
 
 // PATCH holding BAA

@@ -1,8 +1,6 @@
 // PATCH
 {
-  "PatchDynamicTag:#text/2": [0, {
-    label: "a"
-  }]
+  "PatchDynamicTag:#text/2": 0
 }
 
 // PATCH

@@ -112,6 +112,12 @@ export function writesPatchHole(
   return writesPatchIn(section) && !isStateSourcedExpr(extra);
 }
 
+// A read rendering a hole a patch fills: its value renders into its node in
+// patch-written structure, with no state source.
+export function isFilledHole(read: ReferencedExtra) {
+  return !!read.rendersValue && writesPatchHole(read.section, read);
+}
+
 // A state-sourced value recomputes through the signal graph, not a patch:
 // its reads or its loop keys have a state source.
 export function isStateSourcedExpr(extra: t.NodeExtra | undefined) {

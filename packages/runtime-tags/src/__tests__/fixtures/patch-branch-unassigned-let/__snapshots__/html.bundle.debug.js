@@ -15,7 +15,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			let seen = count + 1;
 			_html(`<p>Seen ${_text_resume($scope1_id, "#text/0", seen, 2)}</p>`);
-			_patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", seen, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}

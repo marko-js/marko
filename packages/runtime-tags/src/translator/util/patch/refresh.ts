@@ -69,7 +69,12 @@ import {
   sourcesUtil,
 } from "../sources";
 import { createProgramState } from "../state";
-import { getWriteSources, isPatchedSite, isStableExpr } from "./decisions";
+import {
+  getWriteSources,
+  isFilledHole,
+  isPatchedSite,
+  isStableExpr,
+} from "./decisions";
 import {
   getBranchOf,
   getParamRebuildChain,
@@ -291,8 +296,10 @@ function computeFillReadKind(
         getOtherInputs(sources, binding);
       if (others) {
         // A nested member's own fill (a loop row's, joined with state) also
-        // re-runs the join, with whatever value the scope holds.
-        const fills = reduce(getReferencedBindings(read), addNestedMemberFill);
+        // re-runs the join, unless the join is a hole the flush fills itself.
+        const fills = isFilledHole(read)
+          ? undefined
+          : reduce(getReferencedBindings(read), addNestedMemberFill);
         conditions = mergeConditions(conditions, { joins: others, fills });
       }
       // A join with a param of a body outside the binding's is computed where
@@ -988,16 +995,23 @@ function findUnfilledRebuilds(
     }
     const refs = getReferencedBindings(read);
     if (Array.isArray(refs)) {
+      const filledHole = isFilledHole(read);
       for (const ref of refs) {
         const partner = getCanonicalBinding(ref);
         if (partner === binding) continue;
         const fill = getPatchFill(partner);
         if (fill) {
-          if (fill === true || fill.contents || fill.fills) return false;
-          rebuilds = sourcesUtil.union(
-            sourcesUtil.union(rebuilds, fill.rebuilds),
-            fill.joins,
-          );
+          // A partner's fill re-runs the join client side, unless the flush
+          // fills the join's hole itself.
+          if (!filledHole && (fill === true || fill.contents || fill.fills)) {
+            return false;
+          }
+          if (fill !== true) {
+            rebuilds = sourcesUtil.union(
+              sourcesUtil.union(rebuilds, fill.rebuilds),
+              fill.joins,
+            );
+          }
         }
         // A caller param fills where its call's ownership bits say, at render.
         if (hasCallerParamSource(partner.sources)) {

@@ -3,7 +3,7 @@ const $template$1 = "<section></section>";
 const $walks$1 = " b";
 _shells({ "__tests__/tags/frag-host.marko": "__tests__/tags/frag-host.marko !; ;<section></section>" });
 var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_mode = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_mode__closures = new Set();
 	const $input_b__closures = new Set();
@@ -22,8 +22,8 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		input_mode: input.mode,
 		input_b: input.b,
-		one: $wi__input_mode && one,
-		"ClosureScopes:input_mode/7": $wi__input_mode && $input_mode__closures,
+		one: _unfilled_if($scope0_reason, 0) && one,
+		"ClosureScopes:input_mode/7": _write_if($scope0_reason, 0) && $input_mode__closures,
 		"ClosureScopes:input_b/8": _write_if($scope0_reason, 1) && $input_b__closures
 	}, "__tests__/tags/frag-host.marko", 0, {
 		input_mode: ["input.mode"],

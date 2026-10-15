@@ -12,7 +12,7 @@
 
 // PATCH holding BAA
 {
-  fa: [0, [5], 0, "b0"]
+  fa: [0, 0, 0, "b0"]
 }
 
 // PATCH holding BAA

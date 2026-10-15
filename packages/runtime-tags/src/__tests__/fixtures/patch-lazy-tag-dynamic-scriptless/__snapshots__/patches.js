@@ -9,9 +9,7 @@ a, [`a;D ;<p class=child> </p>`, {
 
 // PATCH holding BAA
 {
-  fa: [0, {
-    label: "b"
-  }]
+  fa: 0
 }
 
 // PATCH holding BAA

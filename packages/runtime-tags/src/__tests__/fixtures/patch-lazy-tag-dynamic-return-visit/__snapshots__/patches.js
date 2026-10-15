@@ -1,8 +1,6 @@
 // PATCH
 {
-  fc: [0, {
-    label: "a"
-  }]
+  fc: 0
 }
 
 // PATCH

@@ -9,9 +9,7 @@
 
 // PATCH holding BAA
 {
-  "PatchDynamicTag:#text/0": [0, {
-    label: "b"
-  }]
+  "PatchDynamicTag:#text/0": 0
 }
 
 // PATCH holding BAA

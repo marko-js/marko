@@ -54,7 +54,7 @@ export function _patch_attr(
   const fills = ensureFills(scopeId, owned, group!);
   return fills === undefined
     ? _attr(name, value)
-    : writeFill(fills, key, attrValue(value));
+    : writeFill(fills, key, normalizeAttrValue(value));
 }
 
 // Class/style normalize on the server into the same string the dom helper
@@ -105,7 +105,7 @@ export function _patch_attr_option_value(
   const fills = ensureFills(scopeId, owned, group!);
   return fills === undefined
     ? _attr_option_value(value)
-    : writeFill(fills, key, attrValue(value));
+    : writeFill(fills, key, normalizeAttrValue(value));
 }
 
 function patchStringAttr(
@@ -122,7 +122,9 @@ function patchStringAttr(
     : writeFill(fills, key, value || undefined);
 }
 
-function attrValue(value: unknown) {
+// An attribute's value as the client's `_attr` sets it: `""` for `true`, none
+// for nullish or `false`, else its string.
+function normalizeAttrValue(value: unknown) {
   if (isNotNullishOrFalse(value)) return value === true ? "" : value + "";
 }
 

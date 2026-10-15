@@ -20,10 +20,6 @@
     },
     title: "SHOWN_t2"
   }],
-  "PatchDynamicTag:#text/5": [0, {
-    user: {
-      secret: "SECRET_hidden2"
-    }
-  }]
+  "PatchDynamicTag:#text/5": 0
 }]
 ;BgE

@@ -265,7 +265,7 @@ export function writeDynamicTagEntry(
               ? ""
               : ownerPrefix(state, scopeId, ownerId)) + id
           : renderer || 0,
-        (!shell && args) || 0,
+        (!shell && renderer && args) || 0,
         contentId,
         varId,
       ];

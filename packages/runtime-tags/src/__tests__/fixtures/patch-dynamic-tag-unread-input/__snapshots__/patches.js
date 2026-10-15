@@ -20,10 +20,6 @@
     },
     title: "SHOWN_t2"
   }],
-  ff: [0, {
-    user: {
-      secret: "SECRET_hidden2"
-    }
-  }]
+  ff: 0
 }]
 ;BgE

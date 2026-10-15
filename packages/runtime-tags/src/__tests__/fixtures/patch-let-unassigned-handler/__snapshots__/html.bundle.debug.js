@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html(`<main><em>${_text_resume($scope0_id, "#text/0", count)}</em><button>set</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0_x_length#6");
-	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", x, 1);
+	_patch_write($scope0_id, "PatchWrite:x_length", x?.length, 1);
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", count, 1);
 	$scope0_page && _scope($scope0_id, { x_length: x?.length }, "__tests__/template.marko", 0, { x_length: ["x.length", "1:6"] });
 }, 1);

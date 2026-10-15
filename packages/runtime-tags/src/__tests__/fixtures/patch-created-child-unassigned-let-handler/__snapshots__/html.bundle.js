@@ -10,8 +10,8 @@ var child_default = _template("b", (input) => {
 	let count = 0;
 	_html(`<em>${_text_resume($scope0_id, "a", count)}</em><button>set</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b0");
-	_patch_value($scope0_id, "vb1", x, 1);
-	_patch_value($scope0_id, "vb2", count, 1);
+	_patch_write($scope0_id, "wg", x?.length, 1);
+	_patch_value($scope0_id, "vb1", count, 1);
 	$scope0_page && _scope($scope0_id, { g: x?.length });
 });
 
