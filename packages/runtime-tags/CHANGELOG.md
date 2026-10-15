@@ -1,5 +1,28 @@
 # @marko/runtime-tags
 
+## 6.4.6
+
+### Patch Changes
+
+- [#4460](https://github.com/marko-js/marko/pull/4460) [`076fd9a`](https://github.com/marko-js/marko/commit/076fd9ad56e5dfcfcc85d63f4a044050275845f2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reject a rest parameter on `<await>`, which only takes its resolved value.
+
+- [#4460](https://github.com/marko-js/marko/pull/4460) [`076fd9a`](https://github.com/marko-js/marko/commit/076fd9ad56e5dfcfcc85d63f4a044050275845f2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Word core tag attribute, body and tag variable errors the same way.
+
+- [#4469](https://github.com/marko-js/marko/pull/4469) [`825188a`](https://github.com/marko-js/marko/commit/825188a99605e58ff5c4fefe9b235dba4e85877a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A `<define>` whose body renders its own template no longer throws "Cannot access '$walks' before initialization" when the module loads. A `<define>` that renders itself, or its template, outside a branch is now a compile error instead of a module that throws or a compiler stack overflow.
+
+- [#4458](https://github.com/marko-js/marko/pull/4458) [`dfef2b8`](https://github.com/marko-js/marko/commit/dfef2b8e51fb99e78e0d7a120e80950c42dd4bca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a `<for>` whose `by` returns `NaN` as an invalid key in dev builds.
+
+- [#4464](https://github.com/marko-js/marko/pull/4464) [`2e4cdb6`](https://github.com/marko-js/marko/commit/2e4cdb6a93f450eef9cbbaf723d6bc0c7a213812) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix client code that read a property of a property of a `<for>` loop key through an alias, such as `${k.constructor.name}` after `<const/k=key/>`: it read a scope value that does not exist and threw.
+
+- [#4447](https://github.com/marko-js/marko/pull/4447) [`f59b77c`](https://github.com/marko-js/marko/commit/f59b77c8783d015c5968bf6173a87e77f6ca7bb7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Render server loop rows and `<try>` bodies with fewer allocations.
+
+- [#4464](https://github.com/marko-js/marko/pull/4464) [`2e4cdb6`](https://github.com/marko-js/marko/commit/2e4cdb6a93f450eef9cbbaf723d6bc0c7a213812) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Link the `<script>` tag's editor autocomplete to its current docs page.
+
+- [#4466](https://github.com/marko-js/marko/pull/4466) [`d3439e9`](https://github.com/marko-js/marko/commit/d3439e915d77592b5935558e0cc067238c3e84ce) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Write the server's deferred and queued serializer calls through one emitter with fewer allocations, and drop needless bytes from the payload: `new Set`/`new Map` for a collection whose members all defer, and no parentheses around a queued call's object unless its write assigns it.
+
+- Updated dependencies [[`c4b375a`](https://github.com/marko-js/marko/commit/c4b375aa5bba1b184797a362744f116630efda47)]:
+  - @marko/compiler@5.42.12
+
 ## 6.4.5
 
 ### Patch Changes
