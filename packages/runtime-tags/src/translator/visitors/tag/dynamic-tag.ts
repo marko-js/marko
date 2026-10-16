@@ -81,7 +81,7 @@ import {
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import { ensureSlot } from "../../util/slots";
-import { createProgramState } from "../../util/state";
+import { createOutputState } from "../../util/state";
 import * as structure from "../../util/structure";
 import { isControllableAttr } from "../../util/tag-facts";
 import {
@@ -106,8 +106,8 @@ import * as ClassHydration from "./constants/class-hydration";
 
 // Keys of the statements a program adds once: a Class-API interop registration
 // is keyed by its shared renderer, however many tags reference it.
-const [getAddedStatementKeys] = createProgramState(() => new Set<string>());
-const [getCompatBoundaryCalls] = createProgramState<
+const [getAddedStatementKeys] = createOutputState(() => new Set<string>());
+const [getCompatBoundaryCalls] = createOutputState<
   Map<string, t.CallExpression>
 >(() => new Map());
 function pushStatementOnce(key: string, statement: t.Statement) {

@@ -5,7 +5,7 @@ import type { Falsy } from "../../common/types";
 import { isTranslate } from "./get-compile-stage";
 import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
-import { createProgramState } from "./state";
+import { createOutputState } from "./state";
 import { toMemberExpression } from "./to-property-name";
 
 export type DOMRuntimeHelpers = keyof typeof import("../../dom");
@@ -52,7 +52,7 @@ const pureDOMFunctions = new Set<string>([
   "_load_race_trigger",
 ] satisfies DOMRuntimeHelpers[]);
 
-const [getRuntimeImports] = createProgramState(
+const [getRuntimeImports] = createOutputState(
   () => new Map<DOMRuntimeHelpers | HTMLRuntimeHelpers, string>(),
 );
 
@@ -122,7 +122,7 @@ export const domRuntimeFeatures = [
   "placeholder",
 ] as const;
 export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];
-const [getImportedFeatures] = createProgramState(
+const [getImportedFeatures] = createOutputState(
   () => new Set<DOMRuntimeFeature>(),
 );
 export function importRuntimeFeature(feature: DOMRuntimeFeature) {

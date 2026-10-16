@@ -36,7 +36,7 @@ import {
 import { type Slot } from "./slots";
 import { getReasonForBinding } from "./solve-reasons";
 import { ALWAYS, mergeSources, type Sources } from "./sources";
-import { createSectionState } from "./state";
+import { createOutputSectionState } from "./state";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -138,6 +138,8 @@ export interface Section {
   /** For a `<define>` body or a template rendering itself, the sections whose
    * direct calls render it. */
   callSections: SortedOpt<Section>;
+  /** The known tags rendering in it, in analyze order. */
+  knownTags: t.MarkoTagExtra[] | undefined;
   /** The content's rendering tag (its extra), and each child binding that
    * derives from the content, at `properties`. */
   derives:
@@ -242,6 +244,7 @@ export function ensureBodySection(
       content: getContentInfo(path),
       branchExpr: undefined,
       callSections: undefined,
+      knownTags: undefined,
       derives: undefined,
       dropped: !!extra.dropped,
       hasAbortSignal: false,
@@ -302,20 +305,19 @@ export function getSection(path: t.NodePath) {
   return section;
 }
 
-export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
-  "scopeIdIdentifier",
+export const [getScopeIdIdentifier] = createOutputSectionState<t.Identifier>(
   (section) => generateUidIdentifier(`scope${section.id}_id`),
 );
 
 export const [getBranchRendererArgs, setBranchRendererArgs] =
-  createSectionState<
+  createOutputSectionState<
     [
       template?: t.Expression,
       walks?: t.Expression,
       setup?: t.Expression,
       params?: t.Expression,
     ]
-  >("rendererExpression");
+  >();
 
 export function forEachSection(fn: (section: Section) => void) {
   const { sections } = getProgram().node.extra;

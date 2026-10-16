@@ -15,7 +15,7 @@ import {
 } from "./sections";
 import { setSectionOwnerResumedByMarker } from "./signals";
 import { findSlot, SlotKind } from "./slots";
-import { createProgramState } from "./state";
+import { createOutputState } from "./state";
 import {
   getBranchWriteReason,
   getWriteGuard,
@@ -117,7 +117,7 @@ export function buildBranchEndArgs(
 }
 
 // Elements whose only child branch writes their end tag, after its marker.
-const [getBranchEndTags] = createProgramState(() => new Set<Binding>());
+const [getBranchEndTags] = createOutputState(() => new Set<Binding>());
 export function isEndTagWrittenByBranch(nodeBinding: Binding | undefined) {
   return !!nodeBinding && getBranchEndTags().has(nodeBinding);
 }

@@ -1,4 +1,5 @@
 import { type Opt, reduce } from "./optional";
+import { createAnalysisState } from "./state";
 
 // A memo whose computation may re-ask itself through a cycle: a re-ask
 // answers `cycleAnswer`, and a frame that consumed one does not cache.
@@ -35,35 +36,51 @@ export function createCyclicMemo<K extends object, R>(
   };
 }
 
+// The memo per analysis, whose answers every output reads; `reset` starts
+// them afresh.
+export function createAnalysisMemo<K extends object, R>(
+  compute: (key: K) => R,
+  cycleAnswer: R,
+) {
+  const create = () => createCyclicMemo(compute, cycleAnswer);
+  const [getMemo, setMemo] = createAnalysisState(create);
+  return [(key: K) => getMemo()(key), () => setMemo(create())] as const;
+}
+
 // The same memo keyed by an object and a property path (`true` for every
 // property): each path interns one key, so a value's answer per path
 // shares one cycle protocol.
-export type MemoPath = Opt<string> | true;
+type MemoPath = Opt<string> | true;
 interface PathKeys<K> {
   value?: [K, MemoPath];
   all?: [K, MemoPath];
   props?: Map<string, PathKeys<K>>;
 }
-export function createCyclicPathMemo<K extends object, R>(
+export function createAnalysisPathMemo<K extends object, R>(
   compute: (key: K, path: MemoPath) => R,
   cycleAnswer: R,
-): (key: K, path: MemoPath) => R {
+) {
   const keys = new WeakMap<K, PathKeys<K>>();
-  const memo = createCyclicMemo(
+  const [memo, reset] = createAnalysisMemo(
     ([key, path]: [K, MemoPath]) => compute(key, path),
     cycleAnswer,
   );
-  return (key, path) => {
-    let node: PathKeys<K> | undefined = keys.get(key);
-    if (!node) keys.set(key, (node = {}));
-    if (path === true) return memo((node.all ??= [key, path]));
-    return memo((reduce(path, ensurePropKeys<K>, node).value ??= [key, path]));
-  };
+  return [
+    (key: K, path: MemoPath) => {
+      let pathKeys: PathKeys<K> | undefined = keys.get(key);
+      if (!pathKeys) keys.set(key, (pathKeys = {}));
+      if (path === true) return memo((pathKeys.all ??= [key, path]));
+      return memo(
+        (reduce(path, ensurePropKeys<K>, pathKeys).value ??= [key, path]),
+      );
+    },
+    reset,
+  ] as const;
 }
 
 // The keys under `property`, made on first use.
-function ensurePropKeys<K>(node: PathKeys<K>, property: string) {
-  let next = node.props?.get(property);
-  if (!next) (node.props ??= new Map()).set(property, (next = {}));
+function ensurePropKeys<K>(pathKeys: PathKeys<K>, property: string) {
+  let next = pathKeys.props?.get(property);
+  if (!next) (pathKeys.props ??= new Map()).set(property, (next = {}));
   return next;
 }

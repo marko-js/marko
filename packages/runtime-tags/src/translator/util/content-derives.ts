@@ -7,10 +7,9 @@ import { analyzeAttributeTags, getAttrTagPaths } from "./nested-attribute-tags";
 import { concat, type OneMany, type Opt } from "./optional";
 import { type KnownExprs } from "./reasons";
 import { getSection, getSectionForBody, type Section } from "./sections";
-import { createSectionState } from "./state";
+import { createAnalysisSectionState } from "./state";
 
-const [getTagContentDerives] = createSectionState(
-  "tag-content-derives",
+const [getTagContentDerives] = createAnalysisSectionState(
   () =>
     new Map<
       t.NodePath<t.MarkoTag>,

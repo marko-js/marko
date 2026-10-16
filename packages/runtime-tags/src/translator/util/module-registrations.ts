@@ -29,7 +29,7 @@ import {
 import { callRuntime, getRuntimePath, registerRuntimeValue } from "./runtime";
 import { getReasonForExpr, landsRetained } from "./solve-reasons";
 import { ALWAYS, mergeSources } from "./sources";
-import { createProgramState } from "./state";
+import { createAnalysisState } from "./state";
 import { getLiteralName, isValidPropertyIdentifier } from "./to-property-name";
 
 const kRegisteredExports = Symbol("registered exports");
@@ -54,10 +54,10 @@ export interface RegisteredExport {
   filename: string;
 }
 
-const [getReferencesByFn] = createProgramState(
+const [getReferencesByFn] = createAnalysisState(
   () => new Map<RegisteredFnExtra, Set<t.NodeExtra>>(),
 );
-const [getReferencesByImport] = createProgramState(
+const [getReferencesByImport] = createAnalysisState(
   () =>
     new Map<
       {

@@ -89,7 +89,7 @@ import {
   setSectionDebugVar,
 } from "../../util/signals";
 import { ensureSlot } from "../../util/slots";
-import { createProgramState } from "../../util/state";
+import { createOutputState } from "../../util/state";
 import * as structure from "../../util/structure";
 import { controllableElements, getTagFacts } from "../../util/tag-facts";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
@@ -1876,7 +1876,7 @@ function buildPrecomputedClass(
 
 // A class with style import reads renders as the module loads: one markup, or a
 // table of every toggle combination, shared by each element writing the same parts.
-const [getModuleClassMarkups] = createProgramState(
+const [getModuleClassMarkups] = createOutputState(
   () => new Map<string, t.Identifier>(),
 );
 function ensureModuleClassMarkup(combos: DelimitedAttrPart[][]) {

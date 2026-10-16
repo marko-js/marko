@@ -84,7 +84,7 @@ import {
   mergeSources,
   withSources,
 } from "./sources";
-import { createProgramState } from "./state";
+import { createAnalysisState } from "./state";
 
 export function finalizeReferences() {
   const intersectionsBySection = new Map<Section, Intersection[]>();
@@ -528,7 +528,7 @@ function resolveIntersectionSource(
     : undefined;
 }
 
-const [getResolvedSources] = createProgramState(() => new Set<Binding>());
+const [getResolvedSources] = createAnalysisState(() => new Set<Binding>());
 
 function resolveBindingSources(binding: Binding) {
   const resolvedSources = getResolvedSources();

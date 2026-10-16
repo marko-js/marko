@@ -14,7 +14,7 @@ import { callRuntime, importRuntime } from "../util/runtime";
 import { scopeIdentifier } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
-import { createSectionState } from "../util/state";
+import { createOutputSectionState } from "../util/state";
 import type { TemplateVisitor } from "../util/visitors";
 
 const kAbortId = Symbol("abort id");
@@ -32,10 +32,9 @@ declare module "@marko/compiler/dist/types" {
 // each id on its expression root's extra, so translates are REQUIRED to
 // agree by construction — they read, never allocate. The only
 // per-translate state is which roots already emitted their `$signalReset`
-// this pass (`createSectionState` keys off the current program; each
-// translate works on a fresh AST clone).
-const [getAbortResetEmitted] = createSectionState<Set<t.NodeExtra>>(
-  "abortResetEmitted",
+// in the output being built (`createOutputSectionState`; each translate works
+// on a fresh AST clone).
+const [getAbortResetEmitted] = createOutputSectionState<Set<t.NodeExtra>>(
   () => new Set<t.NodeExtra>(),
 );
 

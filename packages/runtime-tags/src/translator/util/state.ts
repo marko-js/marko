@@ -1,42 +1,69 @@
-import type { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
 import type { Section } from "./sections";
 
-// One value per program: analyze runs on the cached file and each output
-// translates its own clone, so analyze state never reaches translate.
-export function createProgramState<T>(init: () => T) {
-  const map = new WeakMap<t.NodePath<t.Program>, T>();
+// One value per output being built: each output translates its own clone, so
+// what one output builds never reaches another (analyze's pass has its own).
+export function createOutputState<T>(init: () => T) {
+  return createKeyedState(getProgram, init);
+}
+
+// One value per analysis, which every output shares: a clone's program extra
+// still holds the analyzed root section.
+export function createAnalysisState<T>(init: () => T) {
+  return createKeyedState(getAnalysisRoot, init);
+}
+
+function getAnalysisRoot() {
+  return getProgram().node.extra!.section!;
+}
+
+function createKeyedState<K extends object, T>(getKey: () => K, init: () => T) {
+  const map = new WeakMap<K, T>();
   return [
     () => {
-      let state = map.get(getProgram());
-      // Cached states are never falsy, so `!state` reliably means "not yet cached".
-      if (!state) {
-        map.set(getProgram(), (state = init()));
+      const key = getKey();
+      let state = map.get(key);
+      if (state === undefined && !map.has(key)) {
+        map.set(key, (state = init()));
       }
-      return state;
+      return state as T;
     },
     (value: T) => {
-      map.set(getProgram(), value);
+      map.set(getKey(), value);
     },
   ] as const;
 }
 
-// Kept on `program.state`, which each traversal pass resets.
-export function createSectionState<T = unknown>(
-  key: string,
+// One value per section in each output being built.
+export function createOutputSectionState<T = unknown>(
   init?: ((section: Section) => T) | (() => T),
 ) {
+  return createSectionState(createOutputState, init);
+}
+
+// One value per section in the analysis, which every output shares.
+export function createAnalysisSectionState<T = unknown>(
+  init?: ((section: Section) => T) | (() => T),
+) {
+  return createSectionState(createAnalysisState, init);
+}
+
+function createSectionState<T>(
+  createState: typeof createOutputState,
+  init: ((section: Section) => T) | (() => T) | undefined,
+) {
+  const [getBySection] = createState(() => new Map<Section, T>());
   return [
     (section: Section): T => {
-      const arrayOfSectionData = (getProgram().state[key] ??= {});
-      const sectionData = (arrayOfSectionData[section.id] ??=
-        init && init(section));
-      return sectionData as T;
+      const bySection = getBySection();
+      let value = bySection.get(section);
+      if (value == null && init)
+        bySection.set(section, (value = init(section)));
+      return value as T;
     },
     (section: Section, value: T): void => {
-      const arrayOfSectionData = (getProgram().state[key] ??= {});
-      arrayOfSectionData[section.id] = value;
+      getBySection().set(section, value);
     },
   ] as const;
 }

@@ -41,7 +41,7 @@ import {
   StructureKind,
 } from "../../util/sections";
 import { addStatement, getSignal } from "../../util/signals";
-import { createProgramState } from "../../util/state";
+import { createOutputState } from "../../util/state";
 import * as structure from "../../util/structure";
 import {
   importOrSelfReferenceName,
@@ -54,7 +54,7 @@ import * as writer from "../../util/writer";
 
 // Caches the trigger and attr signal declarations for a load import so they
 // are shared by all tags in a template using that import.
-const [getLoadIdentifiers] = createProgramState(() => ({
+const [getLoadIdentifiers] = createOutputState(() => ({
   triggers: new Map<LoadImportConfig, t.Identifier>(),
   signals: new Map<string, t.Identifier>(),
   setups: new Map<string, t.Identifier>(),

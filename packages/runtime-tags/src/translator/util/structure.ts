@@ -21,7 +21,7 @@ import {
   type StructureNode,
   type StructureRef,
 } from "./sections";
-import { createProgramState, createSectionState } from "./state";
+import { createOutputState, createOutputSectionState } from "./state";
 import { importOrSelfReferenceName } from "./tag-import";
 import { withLeadingComment } from "./with-comment";
 
@@ -307,8 +307,7 @@ interface SectionMeta {
   writes: t.Expression | undefined;
 }
 
-export const [getSectionMeta] = createSectionState<SectionMeta>(
-  "SectionMeta",
+export const [getSectionMeta] = createOutputSectionState<SectionMeta>(
   (section) => {
     if (!section.structure || section.dropped) {
       return { walks: undefined, writes: undefined };
@@ -364,7 +363,7 @@ export function writeStructureExports(program: t.NodePath<t.Program>) {
 
 // Declaring a section's parts first resolves its meta, which declares the
 // sections it references, so this list is always in dependency order.
-const [getMetaDecls] = createProgramState<{
+const [getMetaDecls] = createOutputState<{
   decls: t.VariableDeclarator[];
   exportsAt?: number;
 }>(() => ({ decls: [] }));

@@ -9,14 +9,13 @@ import { isOutputHTML } from "./marko-config";
 import type { Reason } from "./reasons";
 import { callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
-import { createSectionState } from "./state";
+import { createOutputSectionState } from "./state";
 import { getWriteGuard } from "./write-guard";
 
 type Write = string | t.Expression | (() => undefined | string | t.Expression);
-const [getWrites] = createSectionState<Write[]>("writes", () => [""]);
+const [getWrites] = createOutputSectionState<Write[]>(() => [""]);
 
-const [getTrailerWrites] = createSectionState<(string | t.Expression)[]>(
-  "trailerWrites",
+const [getTrailerWrites] = createOutputSectionState<(string | t.Expression)[]>(
   () => [""],
 );
 

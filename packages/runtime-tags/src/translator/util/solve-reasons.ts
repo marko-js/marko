@@ -13,11 +13,7 @@ import {
   propsUtil,
   someUpToAliasRoot,
 } from "./bindings";
-import {
-  createCyclicMemo,
-  createCyclicPathMemo,
-  type MemoPath,
-} from "./cyclic-memo";
+import { createAnalysisMemo, createAnalysisPathMemo } from "./cyclic-memo";
 import { addKnownTagReasons } from "./known-tag";
 import { addFunctionReasons } from "./module-registrations";
 import {
@@ -75,7 +71,9 @@ export function solveReasons(
   let reasonsVersion: number;
   do {
     reasonsVersion = getReasonsVersion();
-    resetReaders();
+    // Answers read the reasons of the moment, so each pass asks afresh.
+    resetExtraReaders();
+    resetBindingReaders();
     forEachSection((section) =>
       addIntersectionReasons(section, intersectionsBySection.get(section)),
     );
@@ -279,20 +277,17 @@ const ALWAYS_READ: Readers = {
   reads: undefined,
 };
 
-let extraReaders: (extra: t.NodeExtra) => Readers;
+const [extraReaders, resetExtraReaders] = createAnalysisMemo(
+  computeExtraReaders,
+  UNREAD,
+);
 
-let bindingReaders: (binding: Binding, path: MemoPath) => Readers;
-
-resetReaders();
-
-// Answers read the reasons of the moment, so each pass that grows
-// them asks afresh.
-function resetReaders() {
-  extraReaders = createCyclicMemo(computeExtraReaders, UNREAD);
-  // A binding's answer is per asked path: the value itself, one of its
-  // properties (a destructured part), or the whole with every property.
-  bindingReaders = createCyclicPathMemo(computeBindingReaders, UNREAD);
-}
+// A binding's answer is per asked path: the value itself, one of its
+// properties (a destructured part), or the whole with every property.
+const [bindingReaders, resetBindingReaders] = createAnalysisPathMemo(
+  computeBindingReaders,
+  UNREAD,
+);
 
 export function getReasonForBinding(
   binding: Binding,

@@ -81,7 +81,7 @@ import {
   writeSlot,
 } from "./signals";
 import { findSlot, ensureSlot, SlotKind } from "./slots";
-import { createProgramState, createSectionState } from "./state";
+import { createAnalysisState } from "./state";
 import {
   toMemberExpression,
   toObjectProperty,
@@ -103,11 +103,6 @@ import { buildGroupMask, getWriteGuard } from "./write-guard";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
 
-const [getKnownTags] = createSectionState(
-  "known tags",
-  () => [] as t.MarkoTagExtra[],
-);
-
 const kChildSection = Symbol("known tag child section");
 const kParamsTree = Symbol("known tag params tree");
 const kKnownExprs = Symbol("known tag exprs");
@@ -125,7 +120,7 @@ declare module "@marko/compiler/dist/types" {
 
 // A recursive tag (a `<define>` or template rendering itself) waits for its
 // body's analysis, as a call after a `<define>` does by position.
-const [getRecursiveTags] = createProgramState(
+const [getRecursiveTags] = createAnalysisState(
   () => [] as t.NodePath<t.MarkoTag>[],
 );
 
@@ -147,7 +142,7 @@ export function knownTagAnalyze(
   );
   ensureBodySection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
-  getKnownTags(section).push(tagExtra);
+  (section.knownTags ||= []).push(tagExtra);
   tagExtra[kChildSection] = childSection;
   const varBinding = trackVarReferences(tag, BindingType.derived);
   const recursive = isSameOrAncestorSection(childSection, section);
@@ -446,7 +441,7 @@ export function knownTagTranslateDOM(
 }
 
 export function addKnownTagReasons(section: Section) {
-  for (const tagExtra of getKnownTags(section)) {
+  for (const tagExtra of section.knownTags || []) {
     const { childScopeBinding } = tagExtra;
     const knownExprs = tagExtra[kKnownExprs];
     const childSection = tagExtra[kChildSection]!;
@@ -472,7 +467,7 @@ export function addKnownTagReasons(section: Section) {
 // A known tag rendering another template calls its setup in the section's
 // setup: a load tag always, any other when that template has setup work.
 export function callsOtherTemplateSetup(section: Section) {
-  for (const tagExtra of getKnownTags(section)) {
+  for (const tagExtra of section.knownTags || []) {
     const childSection = tagExtra[kChildSection]!;
     if (
       tagExtra.tagNameLoad ||

@@ -5,7 +5,7 @@ import { generateUid } from "./generate-uid";
 import { getParentTag } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
 import { isConditionTag } from "./is-core-tag";
-import { createProgramState } from "./state";
+import { createOutputState } from "./state";
 
 export interface AttrTagMeta {
   name: string;
@@ -27,7 +27,7 @@ declare module "@marko/compiler/dist/types" {
 
 // Per program because the analyze-owned meta outlives the per-output AST
 // clone, and each translate mints its own uids from its own counters.
-const [getAttrTagIdentifiers] = createProgramState(
+const [getAttrTagIdentifiers] = createOutputState(
   () => new WeakMap<AttrTagLookup[string], string>(),
 );
 export function getAttrTagIdentifier(
