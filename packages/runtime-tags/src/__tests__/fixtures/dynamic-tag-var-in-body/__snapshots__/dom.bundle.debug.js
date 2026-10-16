@@ -19,7 +19,7 @@ const $Child_content__setHtml__script = _script("__tests__/template.marko_1_setH
 const $Child_content__setHtml = /*@__PURE__*/ _closure_get("setHtml/3", $Child_content__setHtml__script);
 const $Child_content__setup = $Child_content__setHtml;
 const $Child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", 0, 0, $Child_content__setup);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $Child_content, () => $setHtml);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $Child_content, ($_) => $setHtml);
 const $setHtml__closure = /*@__PURE__*/ _closure($Child_content__setHtml);
 const $setHtml = _var_resume("__tests__/template.marko_0_setHtml#2/var", /*@__PURE__*/ _const("setHtml", $setHtml__closure));
 function $setup($scope) {

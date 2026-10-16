@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div></div>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_foo__OR__input_bar = /*@__PURE__*/ _or(5, ($scope) => _attr($scope["#div/0"], "nested", `a ${$scope.input_foo + ` nested ${$scope.input_bar}`} b`));
 const $input_foo = /*@__PURE__*/ _const("input_foo", ($scope) => {
 	_attr_class($scope["#div/0"], $scope.input_foo);

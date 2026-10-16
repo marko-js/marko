@@ -5,12 +5,12 @@ const $inputtag_content3 = _content("__tests__/template.marko_3*content", "alias
 const $inputtag_content2 = _content("__tests__/template.marko_2*content", "inline");
 const $inputtag_content = _content("__tests__/template.marko_1*content", "spread");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtag_content);
-const $input_tag__OR__attrs = /*@__PURE__*/ _or(10, ($scope) => $dynamicTag($scope, $scope.input_tag, () => ({
+const $input_tag__OR__attrs = /*@__PURE__*/ _or(10, ($scope) => $dynamicTag($scope, $scope.input_tag, ($_) => ({
 	...$scope.attrs,
 	id: "spread"
 })));
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/2", $inputtag_content3);
-const $input_tag__OR__aliased = /*@__PURE__*/ _or(11, ($scope) => $dynamicTag3($scope, $scope.input_tag, () => ({
+const $input_tag__OR__aliased = /*@__PURE__*/ _or(11, ($scope) => $dynamicTag3($scope, $scope.input_tag, ($_) => ({
 	...$scope.attrs,
 	id: "aliased"
 })));
@@ -19,7 +19,7 @@ const $attrs2 = /*@__PURE__*/ _const("attrs", ($scope) => {
 	$input_tag__OR__aliased($scope);
 });
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/1", $inputtag_content2);
-const $input_tag__OR__n = /*@__PURE__*/ _or(8, ($scope) => $dynamicTag2($scope, $scope.input_tag, () => ({
+const $input_tag__OR__n = /*@__PURE__*/ _or(8, ($scope) => $dynamicTag2($scope, $scope.input_tag, ($_) => ({
 	onClick: $onClick($scope),
 	id: "inline"
 })));

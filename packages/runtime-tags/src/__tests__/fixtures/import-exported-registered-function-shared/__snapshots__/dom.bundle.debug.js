@@ -1,7 +1,7 @@
 // tags/greeting.marko
 const $template$2 = "<div> </div>";
 const $walks$2 = "D l";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 function shout(message) {
 	return message.toUpperCase() + "!";
 }

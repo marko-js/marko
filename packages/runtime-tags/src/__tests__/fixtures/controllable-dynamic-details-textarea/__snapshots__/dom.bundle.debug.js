@@ -2,7 +2,7 @@
 const $template = "<!><!><output><!>/<!></output>";
 const $walks = "b%bD%c%l";
 const $detailsTag_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $detailsTag_content__text__OR__textareaTag = /*@__PURE__*/ _or(1, ($scope) => $detailsTag_content__dynamicTag($scope, $scope._.textareaTag, () => ({
+const $detailsTag_content__text__OR__textareaTag = /*@__PURE__*/ _or(1, ($scope) => $detailsTag_content__dynamicTag($scope, $scope._.textareaTag, ($_) => ({
 	value: $scope._.text,
 	valueChange: $valueChange($scope)
 })));
@@ -14,7 +14,7 @@ const $detailsTag_content__setup = ($scope) => {
 const $detailsTag_content__textareaTag = /*@__PURE__*/ _closure_get("textareaTag/9", $detailsTag_content__text__OR__textareaTag);
 const $detailsTag_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<summary>toggle</summary><!><!>", "b%", $detailsTag_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $detailsTag_content);
-const $open__OR__detailsTag = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.detailsTag, () => ({
+const $open__OR__detailsTag = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.detailsTag, ($_) => ({
 	open: $scope.open,
 	openChange: $openChange($scope)
 })));

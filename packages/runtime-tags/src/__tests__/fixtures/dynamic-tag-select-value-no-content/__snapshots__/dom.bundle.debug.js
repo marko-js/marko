@@ -2,7 +2,7 @@
 const $template = "<!><!><output> </output>";
 const $walks = "b%bD l";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $tag__OR__v = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.tag, () => ({
+const $tag__OR__v = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.tag, ($_) => ({
 	value: $scope.v,
 	valueChange: $valueChange($scope)
 })));

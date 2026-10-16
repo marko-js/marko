@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();
@@ -42,7 +42,7 @@ const $msg = /*@__PURE__*/ _let("msg/2", ($scope) => _text($scope["#text/1"], $s
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $splitbutton_content);
 function $setup($scope) {
 	$msg($scope, "hello");
-	$dynamicTag($scope, _marko_template, () => ({ onClick: $onClick($scope) }));
+	$dynamicTag($scope, _marko_template, ($_) => ({ onClick: $onClick($scope) }));
 }
 const $onClick = ($scope) => function() {
 	$msg($scope, "");

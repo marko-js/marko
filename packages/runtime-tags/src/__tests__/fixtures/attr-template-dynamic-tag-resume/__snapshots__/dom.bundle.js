@@ -7,7 +7,7 @@ var child_default = /*@__PURE__*/ _template("b", $template, "D l", 0, $input);
 
 // tags/wrapper.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $input_type__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.d, () => ({ value: $scope.e })));
+const $input_type__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.d, ($_) => ({ value: $scope.e })));
 const $input_value = /*@__PURE__*/ _const(4, $input_type__OR__input_value);
 
 // tags/v:child.marko.register-default.js

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div></div>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $if_content3__input_value = /*@__PURE__*/ _closure_get("value2/7", ($scope) => _text($scope["#text/0"], $scope._._.value2), ($scope) => $scope._._, "__tests__/template.marko_3_value2#0:5/subscribe");
 const $if_content3__setup = $if_content3__input_value;
 const $if_content2__input_value = /*@__PURE__*/ _closure_get("value1/6", ($scope) => _text($scope["#text/0"], $scope._._.value1), ($scope) => $scope._._, "__tests__/template.marko_2_value1#0:4/subscribe");

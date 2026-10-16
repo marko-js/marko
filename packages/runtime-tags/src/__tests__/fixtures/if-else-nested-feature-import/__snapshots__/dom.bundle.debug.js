@@ -8,7 +8,7 @@ const $el_getter = /*@__PURE__*/ _hoist("$el", [
 	"ConditionalRenderer:#text/0",
 	0
 ]);
-const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content, () => $if_content__$el);
+const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content, ($_) => $if_content__$el);
 const $if_content__input_type = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_type));
 const $if_content__setup = $if_content__input_type;
 const $if_content__$el = _var_resume("__tests__/template.marko_1_$el#2/var", /*@__PURE__*/ _const("$el", ($scope) => _assert_hoist($scope.$el)));

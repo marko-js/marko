@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!><div> </div>";
 const $walks = "b%b%bD l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $if = /*@__PURE__*/ _if("#text/0", "Hello");
 const $if2 = /*@__PURE__*/ _if("#text/1", "World");
 const $input_a__OR__input_b = /*@__PURE__*/ _or(7, ($scope) => {

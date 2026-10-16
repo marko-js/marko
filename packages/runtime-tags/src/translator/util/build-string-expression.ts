@@ -39,6 +39,7 @@ export default function buildStringExpression(
         }),
       );
       const iife = t.callExpression(
+        // No unused parameter: the minifier inlines this only while it takes none.
         t.arrowFunctionExpression(params, body),
         args,
       );

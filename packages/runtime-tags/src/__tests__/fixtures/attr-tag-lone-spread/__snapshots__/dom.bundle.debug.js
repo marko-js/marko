@@ -3,7 +3,7 @@ const $Row_content__walks = "D l";
 const $Row_content__template = "<div> </div>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<div>added=<!></div>`)($Row_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&Db%l`)($Row_content__walks);
-const $setup = () => {};
+const $setup = ($_) => {};
 const $Row_content__input_cell_label = ($scope, input_cell_label) => _text($scope["#text/0"], input_cell_label);
 const $Row_content__$params = ($scope, $params2) => $Row_content__input($scope, $params2[0]);
 const $Row_content__input = ($scope, input) => $Row_content__input_cell($scope, input.cell);

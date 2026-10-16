@@ -6,7 +6,7 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
+var v_template_marko_hydrate_6_default = ($_) => init$1();
 
 // components/class-host/component-browser.js
 var import_components = require_components();

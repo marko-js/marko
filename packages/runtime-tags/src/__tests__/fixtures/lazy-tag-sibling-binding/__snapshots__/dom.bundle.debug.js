@@ -43,12 +43,12 @@ var child_s_default = /*@__PURE__*/ _template("__tests__/child-s.marko", $templa
 // template.marko
 const $template = "<button class=main>main:<!></button><!><!><!>";
 const $walks = " Db%l%/&b%/&c";
-let $load_ChildS_setup = /*@__PURE__*/ _load_setup(() => import("./v:child-s.marko.setup.mjs"));
-let $load_ChildS_tag_input_holder = /*@__PURE__*/ _load_signal(() => import("./v:child-s.marko.input_holder.mjs"));
-let $load_ChildS_tag_input_isShared = /*@__PURE__*/ _load_signal(() => import("./v:child-s.marko.input_isShared.mjs"));
-let $load_ChildB_setup = /*@__PURE__*/ _load_setup(() => import("./v:child-b.marko.setup.mjs"));
-let $load_ChildB_tag_input_inner = /*@__PURE__*/ _load_signal(() => import("./v:child-b.marko.input_inner.mjs"));
-let $load_ChildB_tag_input_isInner = /*@__PURE__*/ _load_signal(() => import("./v:child-b.marko.input_isInner.mjs"));
+let $load_ChildS_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child-s.marko.setup.mjs"));
+let $load_ChildS_tag_input_holder = /*@__PURE__*/ _load_signal(($_) => import("./v:child-s.marko.input_holder.mjs"));
+let $load_ChildS_tag_input_isShared = /*@__PURE__*/ _load_signal(($_) => import("./v:child-s.marko.input_isShared.mjs"));
+let $load_ChildB_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child-b.marko.setup.mjs"));
+let $load_ChildB_tag_input_inner = /*@__PURE__*/ _load_signal(($_) => import("./v:child-b.marko.input_inner.mjs"));
+let $load_ChildB_tag_input_isInner = /*@__PURE__*/ _load_signal(($_) => import("./v:child-b.marko.input_isInner.mjs"));
 const $shared = /*@__PURE__*/ _let("shared/6", ($scope) => {
 	$load_ChildS_tag_input_holder($scope["#childScope/3"], $scope.shared);
 	$load_ChildS_tag_input_isShared($scope["#childScope/3"], $isShared($scope));

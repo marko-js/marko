@@ -7,6 +7,7 @@ import {
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
+import { getUnusedParamIdentifier } from "./generate-uid";
 import {
   type DOMRuntimeHelpers,
   getRuntimeFeatureImport,
@@ -102,7 +103,10 @@ const builder = {
       if (exportInit) {
         body.push(
           t.exportDefaultDeclaration(
-            t.arrowFunctionExpression([], t.blockStatement([])),
+            t.arrowFunctionExpression(
+              [getUnusedParamIdentifier()],
+              t.blockStatement([]),
+            ),
           ),
         );
       }
@@ -126,7 +130,10 @@ const builder = {
     body.push(
       exportInit
         ? t.exportDefaultDeclaration(
-            t.arrowFunctionExpression([], initExpression),
+            t.arrowFunctionExpression(
+              [getUnusedParamIdentifier()],
+              initExpression,
+            ),
           )
         : t.expressionStatement(initExpression),
     );

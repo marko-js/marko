@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template = "<div><!></div>";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, 0, 0, 1);
-const $input_content__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.d, () => [$scope.e]));
+const $input_content__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.d, ($_) => [$scope.e]));
 const $content = /*@__PURE__*/ _const(3, $input_content__OR__input_value);
 const $value = /*@__PURE__*/ _const(4, $input_content__OR__input_value);
 

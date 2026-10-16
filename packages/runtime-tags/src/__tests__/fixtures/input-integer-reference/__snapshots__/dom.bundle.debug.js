@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!> <!>";
 const $walks = "%c%b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value = ($scope, input_value) => {
 	_text($scope["#text/0"], input_value);
 	$input_value_($scope, input_value?.[0]);

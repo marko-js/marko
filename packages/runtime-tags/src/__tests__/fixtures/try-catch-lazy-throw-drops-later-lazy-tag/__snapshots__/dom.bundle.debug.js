@@ -14,8 +14,8 @@ var counter_default = /*@__PURE__*/ _template("__tests__/counter.marko", $templa
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-let $load_Thrower_setup = /*@__PURE__*/ _load_setup(() => import("./v:thrower.marko.setup.mjs"));
-let $load_Counter_setup = /*@__PURE__*/ _load_setup(() => import("./v:counter.marko.setup.mjs"));
+let $load_Thrower_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:thrower.marko.setup.mjs"));
+let $load_Counter_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:counter.marko.setup.mjs"));
 const $await_content2__d = ($scope, d) => _text($scope["#text/0"], d);
 const $await_content2__$params = ($scope, $params4) => $await_content2__d($scope, $params4[0]);
 const $await_content__setup = ($scope) => {

@@ -1,7 +1,7 @@
 // tags/meta-tag.marko
 const $template$1 = "<meta>";
 const $walks$1 = " b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_attrs__script = _script("__tests__/tags/meta-tag.marko_0_input_attrs#3", ($scope) => _attrs_script($scope, "#meta/0"));
 const $input_attrs = /*@__PURE__*/ _const("input_attrs", ($scope) => {
 	_attrs($scope, "#meta/0", $scope.input_attrs);

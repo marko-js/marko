@@ -1,7 +1,7 @@
 // tags/child/index.marko
 const $template$3 = "<span><!> <!> <!></span>";
 const $walks$3 = "D%c%c%l";
-const $setup$3 = () => {};
+const $setup$3 = ($_) => {};
 const $input_item_foo = ($scope, input_item_foo) => _text($scope["#text/0"], input_item_foo);
 const $input_item_n = ($scope, input_item_n) => _text($scope["#text/1"], input_item_n);
 const $input_item_sub_x = ($scope, input_item_sub_x) => _text($scope["#text/2"], input_item_sub_x);
@@ -17,7 +17,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", 
 // tags/child-rest/index.marko
 const $template$2 = "<span><!> <!></span>";
 const $walks$2 = "D%c%l";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $foo = ($scope, foo) => _text($scope["#text/0"], foo);
 const $rest = ($scope, rest) => _text($scope["#text/1"], JSON.stringify(rest));
 const $input$1 = ($scope, input) => $item2($scope, input.item);
@@ -30,7 +30,7 @@ var child_rest_default = /*@__PURE__*/ _template("__tests__/tags/child-rest/inde
 // tags/child-for/index.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $for_content__item_foo = ($scope, item_foo) => _text($scope["#text/0"], item_foo);
 const $for_content__item_sub_x = ($scope, item_sub_x) => _text($scope["#text/1"], item_sub_x);
 const $for_content__$params = ($scope, $params2) => {

@@ -1,7 +1,7 @@
 // tags/greeting.marko
 const $template$2 = "<div> </div>";
 const $walks$2 = "D l";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 function shout(message) {
 	return message.toUpperCase() + "!";
 }
@@ -12,7 +12,7 @@ var greeting_default = /*@__PURE__*/ _template("__tests__/tags/greeting.marko", 
 // tags/greetings.marko
 const $template$1 = "<div>greetings</div>";
 const $walks$1 = "b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 var greetings_default = /*@__PURE__*/ _template("__tests__/tags/greetings.marko", $template$1, "b");
 
 // tags/v:greeting.marko.register-shout.js

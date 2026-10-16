@@ -1,7 +1,7 @@
 // tags/child-a/index.marko
 const $template$2 = "<div><!> <!> <!></div>";
 const $walks$2 = "D%c%c%l";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $input_a$1 = ($scope, input_a) => _text($scope["#text/0"], input_a);
 const $input_b$1 = ($scope, input_b) => _text($scope["#text/1"], input_b);
 const $input_c = ($scope, input_c) => _text($scope["#text/2"], input_c);
@@ -15,7 +15,7 @@ var child_a_default = /*@__PURE__*/ _template("__tests__/tags/child-a/index.mark
 // tags/child-c/index.marko
 const $template$1 = "<div><!> <!></div>";
 const $walks$1 = "D%c%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_a = ($scope, input_a) => _text($scope["#text/0"], input_a);
 const $input_b = ($scope, input_b) => _text($scope["#text/1"], input_b);
 const $input$1 = ($scope, input) => {

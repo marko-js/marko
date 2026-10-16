@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $Level_content__walks = /*@__PURE__*/ ((_w0) => `D l/${_w0}&b`)("b%c");
 const $Level_content__template = /*@__PURE__*/ ((_w0) => `<span> </span>${_w0}<!>`)($template$1);
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $Level_content__depth = ($scope, depth) => {
 	_text($scope["#text/0"], depth);
 	$input_depth($scope["#childScope/1"], depth - 1);

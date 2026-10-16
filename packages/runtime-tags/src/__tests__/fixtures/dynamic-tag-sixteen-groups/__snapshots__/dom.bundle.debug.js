@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<div id=d0></div><div id=d1></div><div id=d2></div><div id=d3></div><div id=d4></div><div id=d5></div><div id=d6></div><div id=d7></div><div id=d8></div><div id=d9></div><div id=d10></div><div id=d11></div><div id=d12></div><div id=d13></div><div id=d14></div><div id=d15></div>";
 const $walks$1 = " b b b b b b b b b b b b b b b b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $p = ($scope, p0) => _attr($scope["#div/0"], "data-p", p0);
 const $p2 = ($scope, p1) => _attr($scope["#div/1"], "data-p", p1);
 const $p3 = ($scope, p2) => _attr($scope["#div/2"], "data-p", p2);
@@ -42,7 +42,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = "<button id=inc></button><!><!>";
 const $walks = " b%c";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $n = /*@__PURE__*/ _let("n/2", ($scope) => $dynamicTag($scope, $scope.n >= 0 ? child_default : null, () => ({
+const $n = /*@__PURE__*/ _let("n/2", ($scope) => $dynamicTag($scope, $scope.n >= 0 ? child_default : null, ($_) => ({
 	p0: `v0-${$scope.n}`,
 	p1: `v1-${$scope.n}`,
 	p2: `v2-${$scope.n}`,

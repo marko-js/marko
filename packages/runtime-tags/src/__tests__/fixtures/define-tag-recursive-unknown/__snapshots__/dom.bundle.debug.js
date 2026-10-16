@@ -6,7 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Foo_content__walks);
 const $else_content__input_message = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/0"], JSON.stringify($scope._.input_message)));
 const $else_content__setup = $else_content__input_message;
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__Foo__OR__input_bar = /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, 0 || $scope._._.Foo, () => ({ message: $scope._.input_bar })));
+const $if_content__Foo__OR__input_bar = /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, 0 || $scope._._.Foo, ($_) => ({ message: $scope._.input_bar })));
 const $if_content__Foo = /*@__PURE__*/ _closure_get("Foo/2", $if_content__Foo__OR__input_bar, ($scope) => $scope._._);
 const $if_content__setup = ($scope) => {
 	$if_content__Foo($scope);

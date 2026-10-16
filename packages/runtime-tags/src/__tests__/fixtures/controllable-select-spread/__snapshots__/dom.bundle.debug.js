@@ -1,7 +1,7 @@
 // tags/my-select.marko
 const $template$1 = "<select></select>";
 const $walks$1 = " b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input__script = _script("__tests__/tags/my-select.marko_0_input#2", ($scope) => _attrs_script($scope, "#select/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_content($scope, "#select/0", $scope.input, _controllable_select);

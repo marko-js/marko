@@ -38,7 +38,7 @@ const $classlayout_content__onBump = /*@__PURE__*/ _const(4);
 const $classlayout_content = _content("a0", "<button id=tags> </button>", " D ", $classlayout_content__setup, $classlayout_content__$params);
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
+var v_template_marko_hydrate_6_default = ($_) => init$1();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();

@@ -4,6 +4,7 @@ import { assertNoArgs, type Tag } from "@marko/compiler/babel-utils";
 import { assertHasVar, assertNoTagVarMutation } from "../util/assert";
 import { BindingType } from "../util/bindings";
 import { setTagContentDerives } from "../util/content-derives";
+import { getUnusedParamIdentifier } from "../util/generate-uid";
 import { isOutputHTML } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
@@ -157,7 +158,10 @@ export default {
                   "_child_setup",
                   hasWork
                     ? buildSignalFn(signal)
-                    : t.arrowFunctionExpression([], t.numericLiteral(0)),
+                    : t.arrowFunctionExpression(
+                        [getUnusedParamIdentifier()],
+                        t.numericLiteral(0),
+                      ),
                 );
               }
             };

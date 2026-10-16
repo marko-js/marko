@@ -1,7 +1,7 @@
 // tags/child/index.marko
 const $template$1 = "<div><!>:<!></div>";
 const $walks$1 = "D%c%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $first = ($scope, first) => _text($scope["#text/0"], first);
 const $rest = ($scope, rest) => _text($scope["#text/1"], Object.keys(rest).join(","));
 const $input$1 = ($scope, input) => {

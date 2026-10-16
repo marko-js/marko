@@ -1,6 +1,6 @@
 // tags/custom-tag.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2);
-const $input_content__OR__input_name__OR__x = /*@__PURE__*/ _or(8, ($scope) => $dynamicTag($scope, $scope.f, () => ({
+const $input_content__OR__input_name__OR__x = /*@__PURE__*/ _or(8, ($scope) => $dynamicTag($scope, $scope.f, ($_) => ({
 	count: $scope.h,
 	name: $scope.g
 })), 2);

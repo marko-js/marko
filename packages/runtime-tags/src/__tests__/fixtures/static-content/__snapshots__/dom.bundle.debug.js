@@ -11,7 +11,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/inner.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content$1 = $dynamicTag;

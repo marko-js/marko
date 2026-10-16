@@ -1,14 +1,14 @@
 // tags/child.marko
 const $template$1 = "<!>";
 const $walks$1 = "%b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input$1 = ($scope, input) => _text($scope["#text/0"], JSON.stringify(input));
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "<!>", "%b", 0, $input$1);
 
 // template.marko
 const $template = "<!>";
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("%b");
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	let $item;
 	forUntil(1, 0, 1, (i) => {

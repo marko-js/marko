@@ -1,7 +1,7 @@
 // tags/custom-tag.marko
 const $template$1 = "<div></div><!><!>";
 const $walks$1 = " b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $if_content__input_test_style = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _attr_style($scope["#div/0"], $scope._.input_test_style));
 const $if_content__setup = ($scope) => {
 	$if_content__input_test_style._($scope);
@@ -41,7 +41,7 @@ function $setup($scope) {
 	$input_test($scope["#childScope/3"]);
 	$input_style($scope["#childScope/4"], "color: green");
 	$input_test($scope["#childScope/4"]);
-	$dynamicTag($scope, TestTag, () => ({
+	$dynamicTag($scope, TestTag, ($_) => ({
 		style: { color: "green" },
 		test: attrTag({
 			style: { color: "green" },

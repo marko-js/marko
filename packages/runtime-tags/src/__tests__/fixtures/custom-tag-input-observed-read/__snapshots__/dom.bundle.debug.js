@@ -1,7 +1,7 @@
 // tags/show-result/index.marko
 const $template$1 = "<div class=result> </div>";
 const $walks$1 = "D l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input = ($scope, input) => _text($scope["#text/0"], input.get());
 var show_result_default = /*@__PURE__*/ _template("__tests__/tags/show-result/index.marko", $template$1, "D l", 0, $input);
 

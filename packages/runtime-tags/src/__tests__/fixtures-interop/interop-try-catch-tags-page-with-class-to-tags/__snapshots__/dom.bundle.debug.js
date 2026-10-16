@@ -23,7 +23,7 @@ function $setup($scope) {
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => {};
+var v_template_marko_hydrate_6_default = ($_) => {};
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();
@@ -33,7 +33,7 @@ var v_template_marko_hydrate_5_default = () => (0, import_components.init)();
 var import_vdom = require_vdom();
 const $template = "<div id=tags>tags</div>";
 const $walks = "b";
-const $setup = () => {};
+const $setup = ($_) => {};
 var tags_child_default = /*@__PURE__*/ _template("__tests__/tags/tags-child.marko", $template, "b");
 
 // components/class-wrap.marko

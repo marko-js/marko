@@ -1,7 +1,7 @@
 // tags/n2.marko
 const $template$3 = "<div class=n2> </div>";
 const $walks$3 = "D l";
-const $setup$3 = () => {};
+const $setup$3 = ($_) => {};
 const $input_label$2 = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input$2 = ($scope, input) => $input_label$2($scope, input.label);
 var n2_default = /*@__PURE__*/ _template("__tests__/tags/n2.marko", $template$3, "D l", 0, $input$2);
@@ -40,7 +40,7 @@ var n1_default = /*@__PURE__*/ _template("__tests__/tags/n1.marko", $template$1,
 const $template = "<button>clicks <!></button><button class=swap>swap</button><!><!>";
 const $walks = " Db%l b%c";
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $await_content__clicks__OR__tag__OR__body = /*@__PURE__*/ _or(3, ($scope) => $await_content__dynamicTag($scope, $scope._._.tag, () => ({ label: `${$scope.body} ${$scope._._.clicks}` })), 2);
+const $await_content__clicks__OR__tag__OR__body = /*@__PURE__*/ _or(3, ($scope) => $await_content__dynamicTag($scope, $scope._._.tag, ($_) => ({ label: `${$scope.body} ${$scope._._.clicks}` })), 2);
 const $await_content__clicks = /*@__PURE__*/ _closure_get("clicks/6", $await_content__clicks__OR__tag__OR__body, ($scope) => $scope._._, "__tests__/template.marko_3_clicks#0:4/subscribe");
 const $await_content__setup = ($scope) => {
 	$await_content__clicks($scope);

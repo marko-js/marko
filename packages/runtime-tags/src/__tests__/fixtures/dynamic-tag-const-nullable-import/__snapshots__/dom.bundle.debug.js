@@ -1,7 +1,7 @@
 // tags/custom-tag.marko
 const $template$1 = "<div class=custom>custom <!> body</div>";
 const $walks$1 = "Db%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_content = ($scope, input_content) => _text($scope["#text/0"], input_content ? "with" : "without");
 const $input = ($scope, input) => $input_content($scope, input.content);
 var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, $walks$1, 0, $input);

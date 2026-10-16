@@ -2,7 +2,7 @@
 var import_vdom = require_vdom();
 const $template$1 = "";
 const $walks$1 = "";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_x$1 = /*@__PURE__*/ _const("input_x", ($scope) => _return($scope, $scope.input_x));
 const $input$1 = ($scope, input) => $input_x$1($scope, input.x);
 var tags_return_default = /*@__PURE__*/ _template("__tests__/components/tags-return.marko", "", "", 0, /*@__PURE__*/ _return_setup($input$1));

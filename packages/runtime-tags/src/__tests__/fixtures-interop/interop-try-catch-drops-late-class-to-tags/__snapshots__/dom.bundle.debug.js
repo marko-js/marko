@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var v_template_marko_hydrate_5_default = () => {};
@@ -58,7 +58,7 @@ const $await_content = /*@__PURE__*/ _await_content("#text/1", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
 const $try_content__setup = ($scope) => {
 	$await_content($scope);
-	$try_content__dynamicTag($scope, _marko_template, () => ({ value: resolveAfter("class", 2) }));
+	$try_content__dynamicTag($scope, _marko_template, ($_) => ({ value: resolveAfter("class", 2) }));
 	$try_content__await_promise($scope, rejectAfter(new Error("ERROR!"), 1));
 };
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%b%", $try_content__setup, 0, $catch_content);

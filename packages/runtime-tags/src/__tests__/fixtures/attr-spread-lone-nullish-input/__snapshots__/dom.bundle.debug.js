@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<input>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $attrs__script = _script("__tests__/template.marko_0_attrs#3", ($scope) => _attrs_script($scope, "#input/0"));
 const $attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	_attrs($scope, "#input/0", $scope.attrs, _controllable_input);

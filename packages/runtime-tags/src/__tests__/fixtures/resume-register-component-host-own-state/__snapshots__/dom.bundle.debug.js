@@ -20,7 +20,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // tags/plain.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag$1;
@@ -30,7 +30,7 @@ var plain_default = /*@__PURE__*/ _template("__tests__/tags/plain.marko", $templ
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $inputcardCardPlain_content = _content("__tests__/template.marko_1*content", "component host: registered");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputcardCardPlain_content);
 const $input_card = ($scope, input_card) => $dynamicTag($scope, input_card ? card_default : plain_default);

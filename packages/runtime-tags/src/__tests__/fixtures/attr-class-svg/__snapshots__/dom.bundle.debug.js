@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<svg class=icon><circle cx=50 cy=50 r=40></circle></svg>";
 const $walks = " D l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $active = ($scope, active) => {
 	_attr_class_item($scope["#svg/0"], "active", active);
 	_attr_class($scope["#circle/1"], active ? "on" : "off");

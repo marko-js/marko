@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();
@@ -48,7 +48,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%/&b%c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content__setup = ($scope) => $await_content__dynamicTag($scope, _marko_template);
 const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!>", "b%", $await_content__setup);

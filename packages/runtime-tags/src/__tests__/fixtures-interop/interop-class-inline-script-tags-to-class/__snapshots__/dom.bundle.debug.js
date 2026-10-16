@@ -31,7 +31,7 @@ function $setup($scope) {
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => {};
+var v_template_marko_hydrate_6_default = ($_) => {};
 
 // v:template.marko.hydrate-5.js
 var v_template_marko_hydrate_5_default = () => {};

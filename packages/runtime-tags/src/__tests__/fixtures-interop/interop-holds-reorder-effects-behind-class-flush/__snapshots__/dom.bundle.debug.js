@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();
@@ -9,7 +9,7 @@ var v_template_marko_hydrate_5_default = () => (0, import_components.init)();
 var import_vdom = require_vdom();
 const $template$1 = "<span>child</span>";
 const $walks$1 = "b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 var tags_child_default = /*@__PURE__*/ _template("__tests__/components/tags-child.marko", $template$1, "b");
 
 // components/class-wrap.marko

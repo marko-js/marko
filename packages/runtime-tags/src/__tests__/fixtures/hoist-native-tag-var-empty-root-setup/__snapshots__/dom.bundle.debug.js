@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $if_content2__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$el_getter($scope._)().textContent = "clicked";
 }));

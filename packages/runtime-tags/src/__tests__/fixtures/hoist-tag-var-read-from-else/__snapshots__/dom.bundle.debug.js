@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $else_content__label = /*@__PURE__*/ _let("label/2", ($scope) => _text($scope["#text/1"], $scope.label));
 const $else_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$else_content__label($scope, `${$getLabel_getter($scope._)()}:${[...$getLabel_getter($scope._)].length}`);

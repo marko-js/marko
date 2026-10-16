@@ -1,7 +1,7 @@
 // tags/btn.marko
 const $template$2 = "<button></button>";
 const $walks$2 = " b";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $input__script = _script("__tests__/tags/btn.marko_0_input#2", ($scope) => _attrs_script($scope, "#button/0"));
 const $input$1 = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_content($scope, "#button/0", $scope.input);
@@ -12,7 +12,7 @@ var btn_default = /*@__PURE__*/ _template("__tests__/tags/btn.marko", $template$
 // tags/child.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $for_content__item = ($scope, item) => $input$1($scope["#childScope/0"], {
 	...item,
 	class: "item"

@@ -1,13 +1,13 @@
 // tags/static-child.marko
 const $template$2 = "<span>static</span>";
 const $walks$2 = "b";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 var static_child_default = /*@__PURE__*/ _template("__tests__/tags/static-child.marko", $template$2, "b");
 
 // tags/label-child.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_item_label = ($scope, input_item_label) => _text($scope["#text/0"], input_item_label);
 const $input = ($scope, input) => $input_item($scope, input.item);
 const $input_item = ($scope, input_item) => $input_item_label($scope, input_item?.label);

@@ -1,7 +1,7 @@
 // tags/my-const.marko
 const $template$2 = "";
 const $walks$2 = "";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => _return($scope, $scope.input_value));
 const $input$2 = ($scope, input) => $input_value($scope, input.value);
 var my_const_default = /*@__PURE__*/ _template("__tests__/tags/my-const.marko", "", "", 0, /*@__PURE__*/ _return_setup($input$2));

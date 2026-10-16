@@ -50,7 +50,7 @@ var grid_row_default = /*@__PURE__*/ _template("__tests__/tags/grid-row.marko", 
 // tags/grid.marko
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $for_content__setup = ($scope) => {
 	$setup$3($scope["#childScope/0"]);
 	$input_index($scope["#childScope/0"], $scope["#LoopKey"]);

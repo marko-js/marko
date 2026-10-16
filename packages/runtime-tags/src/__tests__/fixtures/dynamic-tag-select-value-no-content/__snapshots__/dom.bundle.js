@@ -1,6 +1,6 @@
 // template.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $tag__OR__v = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.f, () => ({
+const $tag__OR__v = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.f, ($_) => ({
 	value: $scope.g,
 	valueChange: $valueChange($scope)
 })));

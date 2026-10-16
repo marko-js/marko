@@ -461,7 +461,7 @@ export function _lifecycle(
     } else {
       Object.assign(thisObj, thisObj.onMount?.());
     }
-    trackAbort(scope, accessor, () => thisObj.onDestroy?.());
+    trackAbort(scope, accessor, (_?: never) => thisObj.onDestroy?.());
   }
 }
 

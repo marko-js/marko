@@ -8,7 +8,7 @@ const $getLabel_getter = _hoist_resume("a1", 0, [
 	0
 ]);
 const $else_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(2, $inputdyn_content);
-const $else_content__input_dyn__OR__count = /*@__PURE__*/ _or(4, ($scope) => $else_content__dynamicTag($scope, $scope._.e, () => ({ count: $scope.d })));
+const $else_content__input_dyn__OR__count = /*@__PURE__*/ _or(4, ($scope) => $else_content__dynamicTag($scope, $scope._.e, ($_) => ({ count: $scope.d })));
 const $else_content__count = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$else_content__input_dyn__OR__count($scope);

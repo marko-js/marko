@@ -1,7 +1,7 @@
 // child.marko
 const $template = "<span class=child> </span>";
 const $walks = "D l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "D l", 0, $input);
@@ -9,8 +9,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<pre id=log></pre><!><!>";
 const $walks = "b%c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $await_content__setup__script = _script("__tests__/template.marko_3", ($scope) => document.getElementById("log").textContent += document.querySelector(".child")?.textContent);
 const $await_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);

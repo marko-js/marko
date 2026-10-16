@@ -15,7 +15,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/child.marko
 const $template = "<div><!></div>";
 const $walks = " D%l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
 const $rest__script = _script("__tests__/tags/child.marko_0_rest#5", ($scope) => _attrs_script($scope, "#div/0"));
 const $rest = /*@__PURE__*/ _const("rest", ($scope) => {

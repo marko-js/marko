@@ -1,7 +1,7 @@
 // tags/store.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $list$1 = /*@__PURE__*/ _let("list/3", ($scope) => _return($scope, {
 	list: $scope.list,
 	listChange: $_return($scope),

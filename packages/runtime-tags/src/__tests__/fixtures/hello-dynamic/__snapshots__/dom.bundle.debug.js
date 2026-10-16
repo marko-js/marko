@@ -1,7 +1,7 @@
 // template.marko
 const $template = "Hello <!>! Hello <!>! Hello <!>!";
 const $walks = "b%c%c%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_name = ($scope, input_name) => {
 	_text($scope["#text/0"], input_name);
 	_html($scope, input_name, "#text/1");

@@ -55,7 +55,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/hello/index.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $for_content3__attrs__script = _script("__tests__/tags/hello/index.marko_3_attrs#5", ($scope) => _attrs_script($scope, "#div/0"));
 const $for_content3__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	_attrs_partial($scope, "#div/0", $scope.attrs, { class: 1 });

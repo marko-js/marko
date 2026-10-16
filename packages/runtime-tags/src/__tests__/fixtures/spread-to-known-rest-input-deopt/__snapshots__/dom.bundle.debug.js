@@ -1,7 +1,7 @@
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b b");
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	const $child_input_spread = {
 		"data-foo": 1,
@@ -15,7 +15,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/child.marko
 const $template = " <span></span>";
 const $walks = "b b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_class__OR__rest__script = _script("__tests__/tags/child.marko_0__class#3_rest#4", ($scope) => _attrs_script($scope, "#span/0"));
 const $input_class__OR__rest = /*@__PURE__*/ _or(5, ($scope) => {
 	_attrs_content($scope, "#span/0", {

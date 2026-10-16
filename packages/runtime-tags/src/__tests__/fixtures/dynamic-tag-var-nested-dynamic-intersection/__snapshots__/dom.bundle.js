@@ -21,7 +21,7 @@ var grandchild_default = /*@__PURE__*/ _template("c", $template$1, "D l", $setup
 const $template = "<!><!><!>";
 const $walks = "b1c";
 _dynamic_tag_var_resume(0);
-const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag(0, 0, () => $g);
+const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag(0, 0, ($_) => $g);
 const $Inner = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag$1($scope, $scope.c));
 function $setup($scope) {
 	$Inner($scope, grandchild_default);
@@ -33,7 +33,7 @@ var child_default = /*@__PURE__*/ _template("b", $template, "b1c", $setup);
 _dynamic_tag_var_resume(0);
 const $a__OR__v_n = /*@__PURE__*/ _or(9, ($scope) => _text($scope.d, $scope.f + ":" + $scope.i), 1, 1);
 const $a = /*@__PURE__*/ _let(5, $a__OR__v_n);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, 0, () => $v);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, 0, ($_) => $v);
 const $Tag = /*@__PURE__*/ _let(6, ($scope) => $dynamicTag($scope, $scope.g));
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.c, "click", function() {

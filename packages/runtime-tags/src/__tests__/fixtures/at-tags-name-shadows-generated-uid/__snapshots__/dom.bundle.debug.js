@@ -1,7 +1,7 @@
 // tags/child/index.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $for_content__s_a = ($scope, s_a) => _text($scope["#text/0"], s_a);
 const $for_content__$params = ($scope, $params2) => $for_content__s_a($scope, $params2[0]?.a);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", " ", " ", 0, $for_content__$params);

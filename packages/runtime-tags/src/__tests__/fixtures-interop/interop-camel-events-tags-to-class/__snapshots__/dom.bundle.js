@@ -24,7 +24,7 @@ const $onValueChanged = ($scope) => function(value) {
 _resumed.a0 = $onValueChanged;
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
+var v_template_marko_hydrate_6_default = ($_) => init$1();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();

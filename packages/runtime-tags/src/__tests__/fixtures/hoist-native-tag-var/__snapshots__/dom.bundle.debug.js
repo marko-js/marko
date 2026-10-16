@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 let id = 0;
 const $input__script = _script("__tests__/tags/child.marko_0_input#1", ($scope) => $scope.input.value()?.classList.add(`child${id++}`));
 const $input$1 = /*@__PURE__*/ _const("input", $input__script);

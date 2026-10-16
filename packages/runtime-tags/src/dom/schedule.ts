@@ -8,7 +8,7 @@ export function schedule() {
     if (MARKO_DEBUG) {
       if ((console as any).createTask) {
         const task = (console as any).createTask("queue");
-        runTask = () => task.run(run);
+        runTask = (_?: never) => task.run(run);
       } else {
         runTask = run;
       }
@@ -36,7 +36,7 @@ function flushAndWaitFrame() {
 function triggerMacroTask() {
   if (!channel) {
     channel = new MessageChannel();
-    channel.port1.onmessage = () => {
+    channel.port1.onmessage = (_) => {
       isScheduled = 0;
       if (MARKO_DEBUG) {
         const run = runTask!;

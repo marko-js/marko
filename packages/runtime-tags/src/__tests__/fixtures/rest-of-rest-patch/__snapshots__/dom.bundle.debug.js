@@ -1,7 +1,7 @@
 // tags/echo/index.marko
 const $template$1 = "<em><!><!></em>";
 const $walks$1 = "D%b%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $skip = ($scope, skip) => _text($scope["#text/0"], skip);
 const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input = ($scope, input) => {

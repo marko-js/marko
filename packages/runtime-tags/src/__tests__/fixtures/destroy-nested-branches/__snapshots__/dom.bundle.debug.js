@@ -21,7 +21,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/child.marko
 const $template = "<p> </p>";
 const $walks = "D l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $name__script = _script("__tests__/tags/child.marko_0_name#3", ($scope) => {
 	_lifecycle($scope, { onDestroy: function() {
 		console.log(`lifecycle ${$scope.name} destroyed`);

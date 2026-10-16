@@ -1,7 +1,7 @@
 // tags/inner.marko
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $for_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $for_content__cell_content = $for_content__dynamicTag$1;
 const $for_content__$params$1 = ($scope, $params2) => $for_content__cell_content($scope, $params2[0]?.content);
@@ -13,7 +13,7 @@ var inner_default = /*@__PURE__*/ _template("__tests__/tags/inner.marko", $templ
 // tags/outer.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $for_content__row_content = $for_content__dynamicTag;
 const $for_content__$params = ($scope, $params2) => $for_content__row_content($scope, $params2[0]?.content);

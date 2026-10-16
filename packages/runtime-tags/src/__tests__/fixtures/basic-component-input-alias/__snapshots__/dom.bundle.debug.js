@@ -1,7 +1,7 @@
 // tags/my-button.marko
 const $template$1 = "<button> </button>";
 const $walks$1 = " D l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $onClick__script = _script("__tests__/tags/my-button.marko_0_onClick#5", ($scope) => _on($scope["#button/0"], "click", $scope.onClick));
 const $onClick$1 = /*@__PURE__*/ _const("onClick", $onClick__script);
 const $text = ($scope, text) => _text($scope["#text/1"], text);

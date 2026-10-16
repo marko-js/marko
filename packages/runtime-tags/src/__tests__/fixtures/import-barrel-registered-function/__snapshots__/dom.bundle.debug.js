@@ -1,7 +1,7 @@
 // tags/extras.marko
 const $template$3 = "";
 const $walks$3 = "";
-const $setup$3 = () => {};
+const $setup$3 = ($_) => {};
 function gamma(message) {
 	return message + "-g";
 }
@@ -10,7 +10,7 @@ var extras_default = /*@__PURE__*/ _template("__tests__/tags/extras.marko", "", 
 // tags/handlers.marko
 const $template$2 = "";
 const $walks$2 = "";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 function alpha(message) {
 	return message + "-a";
 }
@@ -22,7 +22,7 @@ var handlers_default = /*@__PURE__*/ _template("__tests__/tags/handlers.marko", 
 // tags/barrel.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 var barrel_default = /*@__PURE__*/ _template("__tests__/tags/barrel.marko", "", "");
 
 // tags/v:handlers.marko.register-beta.js

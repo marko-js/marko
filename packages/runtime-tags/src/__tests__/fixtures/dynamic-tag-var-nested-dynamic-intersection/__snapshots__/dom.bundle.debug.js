@@ -21,7 +21,7 @@ var grandchild_default = /*@__PURE__*/ _template("__tests__/tags/grandchild.mark
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b1c";
 _dynamic_tag_var_resume("#text/0");
-const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $g);
+const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $g);
 const $Inner = /*@__PURE__*/ _let("Inner/2", ($scope) => $dynamicTag$1($scope, $scope.Inner));
 function $setup$1($scope) {
 	$Inner($scope, grandchild_default);
@@ -35,7 +35,7 @@ const $walks = "b1b D l b";
 _dynamic_tag_var_resume("#text/0");
 const $a__OR__v_n = /*@__PURE__*/ _or(9, ($scope) => _text($scope["#text/3"], $scope.a + ":" + $scope.v_n), 1, "#scopeOffset/1");
 const $a = /*@__PURE__*/ _let("a/5", $a__OR__v_n);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $v);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $v);
 const $Tag = /*@__PURE__*/ _let("Tag/6", ($scope) => $dynamicTag($scope, $scope.Tag));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/2"], "click", function() {

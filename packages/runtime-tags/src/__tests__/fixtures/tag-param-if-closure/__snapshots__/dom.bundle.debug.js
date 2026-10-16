@@ -4,7 +4,7 @@ const $Foo_content2__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<button>Increment</button>${_w0}<!>`)($Foo_content2__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)($Foo_content2__walks);
 const $Foo_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);
-const $Foo_content2__input_content__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $Foo_content2__dynamicTag($scope, $scope.input_content, () => [$scope.input_value]));
+const $Foo_content2__input_content__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $Foo_content2__dynamicTag($scope, $scope.input_content, ($_) => [$scope.input_value]));
 const $Foo_content2__input_content = /*@__PURE__*/ _const("input_content", $Foo_content2__input_content__OR__input_value);
 const $Foo_content2__input_value = /*@__PURE__*/ _const("input_value", $Foo_content2__input_content__OR__input_value);
 const $Foo_content2__$params = ($scope, $params2) => $Foo_content2__input($scope, $params2[0]);

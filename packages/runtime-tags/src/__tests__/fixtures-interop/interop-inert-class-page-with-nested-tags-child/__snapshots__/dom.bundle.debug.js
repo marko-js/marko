@@ -1,7 +1,7 @@
 // tags/tags-label.marko
 const $template = "<span> </span>";
 const $walks = "D l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_text = ($scope, input_text) => _text($scope["#text/0"], input_text);
 const $input = ($scope, input) => $input_text($scope, input.text);
 var tags_label_default = /*@__PURE__*/ _template("__tests__/tags/tags-label.marko", $template, "D l", 0, $input);
@@ -45,7 +45,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var v_template_marko_hydrate_5_default = () => {};

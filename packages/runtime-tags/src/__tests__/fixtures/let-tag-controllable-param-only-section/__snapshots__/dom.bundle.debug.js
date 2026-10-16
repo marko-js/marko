@@ -1,7 +1,7 @@
 // tags/ctl.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $if_content__count = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/1"], $scope._.count));
 const $if_content__setup__script = _script("__tests__/tags/ctl.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope._, 5);

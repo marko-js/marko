@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div></div>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $for_content__setup = ($scope) => _attr($scope["#span/0"], "id", $scope["#LoopKey"]);
 const $for_content__child_text = ($scope, child_text) => _text($scope["#text/1"], child_text);
 const $for_content__$params = ($scope, $params2) => $for_content__child_text($scope, $params2[0]?.text);

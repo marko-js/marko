@@ -1,7 +1,7 @@
 // tags/let-global.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const subsByKey = {};
 const $value = /*@__PURE__*/ _let("value/3", ($scope) => _return($scope, $scope.value));
 const $input_value__script = _script("__tests__/tags/let-global.marko_0_input_value#2", ($scope) => {

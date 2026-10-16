@@ -1,7 +1,7 @@
 // tags/my-button.marko
 const $template$1 = "<button></button>";
 const $walks$1 = " b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input__script = _script("__tests__/tags/my-button.marko_0_input#2", ($scope) => _attrs_script($scope, "#button/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_content($scope, "#button/0", $scope.input);

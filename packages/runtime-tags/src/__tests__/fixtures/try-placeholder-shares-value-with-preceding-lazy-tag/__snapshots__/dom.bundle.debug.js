@@ -20,8 +20,8 @@ const cache = { n: 1 };
 function getShared() {
 	return cache;
 }
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_shared = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_shared.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_shared = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_shared.mjs"));
 const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $placeholder_content__shared = /*@__PURE__*/ _const("shared");

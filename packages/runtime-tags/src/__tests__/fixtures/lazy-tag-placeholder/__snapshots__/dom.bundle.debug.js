@@ -1,7 +1,7 @@
 // child.marko
 const $template = "<span> </span>";
 const $walks = "D l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "D l", 0, $input);
@@ -9,8 +9,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<!><!><button>click</button>";
 const $walks = "b%b b";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $placeholder_content = _content("__tests__/template.marko_2*content", "loading...");
 const $try_content__count = /*@__PURE__*/ _closure_get("count/6", ($scope) => $load_Child_tag_input_value($scope["#childScope/1"], $scope._.count), 0, "__tests__/template.marko_1_count#0:5/subscribe");
 const $try_content__setup = ($scope) => {

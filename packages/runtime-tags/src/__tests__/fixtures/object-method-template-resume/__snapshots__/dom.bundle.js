@@ -7,7 +7,7 @@ var child_default = /*@__PURE__*/ _template("b", $template, "D l", 0, $input);
 
 // template.marko
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $if_content__count__OR__picker = /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.d.get(), () => ({ value: $scope._.c })));
+const $if_content__count__OR__picker = /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.d.get(), ($_) => ({ value: $scope._.c })));
 const $if_content__count = /*@__PURE__*/ _if_closure(0, 0, $if_content__count__OR__picker);
 const $if_content__setup = ($scope) => {
 	$if_content__count._($scope);

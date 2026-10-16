@@ -39,8 +39,8 @@ var b_default = /*@__PURE__*/ _template("__tests__/tags/b.marko", $template$1, $
 // template.marko
 const $template = "<!><!><button> </button>";
 const $walks = "b1b D l";
-const $setup = () => {};
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $pattern2);
+const $setup = ($_) => {};
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $pattern2);
 const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern#7/var", ($scope, $pattern) => {
 	$value($scope, $pattern.value);
 	$valueChange2($scope, $pattern.valueChange);

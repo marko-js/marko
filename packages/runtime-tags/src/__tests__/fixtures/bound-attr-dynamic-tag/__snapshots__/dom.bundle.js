@@ -20,12 +20,12 @@ const $b = /*@__PURE__*/ _let(5, ($scope) => {
 	$a__OR__b($scope);
 });
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $state_a__OR__state_aChange__OR__tag = /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.m, () => ({
+const $state_a__OR__state_aChange__OR__tag = /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.m, ($_) => ({
 	value: $scope.i,
 	valueChange: $scope.j
 })), 2);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag(1);
-const $state_b__OR__state_bChange__OR__tag = /*@__PURE__*/ _or(14, ($scope) => $dynamicTag2($scope, $scope.m, () => ({
+const $state_b__OR__state_bChange__OR__tag = /*@__PURE__*/ _or(14, ($scope) => $dynamicTag2($scope, $scope.m, ($_) => ({
 	value: $scope.k,
 	valueChange: $scope.l
 })), 2);

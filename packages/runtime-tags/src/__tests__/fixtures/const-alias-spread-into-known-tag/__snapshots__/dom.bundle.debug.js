@@ -1,7 +1,7 @@
 // tags/child/index.marko
 const $template$1 = "<div> </div>";
 const $walks$1 = " D l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_class = ($scope, input_class) => _attr_class($scope["#div/0"], input_class);
 const $input_value = ($scope, input_value) => _text($scope["#text/1"], input_value);
 const $input = ($scope, input) => {

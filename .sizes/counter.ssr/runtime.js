@@ -1,4 +1,4 @@
-// size: 2360 (min) 1204 (brotli)
+// size: 2356 (min) 1199 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
@@ -101,7 +101,7 @@ function flushAndWaitFrame() {
 function triggerMacroTask() {
   (channel ||
     ((channel = new MessageChannel()),
-    (channel.port1.onmessage = () => {
+    (channel.port1.onmessage = (_) => {
       ((isScheduled = 0), run());
     })),
     channel.port2.postMessage(0));
@@ -137,7 +137,7 @@ function init(runtimeId = "M") {
             scopeLookup = {},
             getScope = (id) =>
               scopeLookup[id] || (+id ? initScope((scopeLookup[id] = { L: +id })) : initGlobal()),
-            initGlobal = () =>
+            initGlobal = (_) =>
               (scopeLookup[0] ||= {
                 runtimeId,
                 renderId,
@@ -166,7 +166,7 @@ function init(runtimeId = "M") {
                   ? _resumed[registryId](getScope(data))
                   : getScope(data)
                 : applyScopes(data),
-            nextToken = () =>
+            nextToken = (_) =>
               (lastToken = visitText.slice(
                 lastTokenIndex,
                 (lastTokenIndex =
@@ -213,7 +213,7 @@ function init(runtimeId = "M") {
                       : visit.previousSibling));
               return ((visits.length = retained), effects);
             }),
-            (render.w = () => {
+            (render.w = (_) => {
               (walk(), runResumeEffects(render));
             }),
             render

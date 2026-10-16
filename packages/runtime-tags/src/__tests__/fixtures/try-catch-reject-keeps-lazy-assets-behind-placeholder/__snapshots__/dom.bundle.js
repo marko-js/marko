@@ -1,6 +1,6 @@
 // template.marko
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $placeholder_content = _content("b0", "loading");
 const $catch_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope.b, $scope.a);
@@ -18,7 +18,7 @@ var child_exports = /* @__PURE__ */ __exportAll({
 	$walks: () => "D l"
 });
 const $template = "<span> </span>";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value__script = _script("a0", ($scope) => console.log("loaded " + $scope.d));
 const $input_value = /*@__PURE__*/ _const(3, ($scope) => {
 	_text($scope.a, $scope.d);

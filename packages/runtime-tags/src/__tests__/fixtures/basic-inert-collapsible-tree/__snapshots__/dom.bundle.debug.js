@@ -1,7 +1,7 @@
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_comments = ($scope, input_comments) => $input_comments$1($scope["#childScope/0"], input_comments);
 const $input_path = ($scope, input_path) => $input_path$1($scope["#childScope/0"], input_path);
 const $input = ($scope, input) => {
@@ -13,7 +13,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/comments.marko
 const $template = "<ul></ul>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $if_content__comment_comments = /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => $input_comments($scope["#childScope/0"], $scope._.comment_comments));
 const $if_content__setup = ($scope) => {
 	$if_content__comment_comments._($scope);

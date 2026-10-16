@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div></div>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for = /*@__PURE__*/ _for_to("#div/0", "<!>, ", "%", $for_content__setup);
 const $input_from__OR__input_to__OR__input_step = /*@__PURE__*/ _or(6, ($scope) => $for($scope, [

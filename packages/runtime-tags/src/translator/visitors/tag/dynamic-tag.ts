@@ -18,7 +18,10 @@ import {
   reserveId,
 } from "../../util/bindings";
 import { setTagContentDerives } from "../../util/content-derives";
-import { generateUidIdentifier } from "../../util/generate-uid";
+import {
+  generateUidIdentifier,
+  getUnusedParamIdentifier,
+} from "../../util/generate-uid";
 import {
   getAccessorPrefix,
   getAccessorProp,
@@ -559,7 +562,10 @@ export default {
             getScopeAccessorLiteral(nodeBinding, true),
             bodySection && getSectionRendererIdentifier(bodySection),
             tagVarSignal
-              ? t.arrowFunctionExpression([], tagVarSignal.identifier)
+              ? t.arrowFunctionExpression(
+                  [getUnusedParamIdentifier()],
+                  tagVarSignal.identifier,
+                )
               : undefined,
             hasTagArgs && t.numericLiteral(1),
           );
@@ -598,7 +604,7 @@ export default {
           ) {
             signal.extraArgs = [
               t.arrowFunctionExpression(
-                [],
+                [getUnusedParamIdentifier()],
                 statements.length
                   ? t.blockStatement(
                       statements.concat(t.returnStatement(argsOrInput)),

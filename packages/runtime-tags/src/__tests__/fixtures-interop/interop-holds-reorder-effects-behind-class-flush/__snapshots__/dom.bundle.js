@@ -26,7 +26,7 @@ const $catch_content__setup = _script("a0", ($scope) => console.log("catch effec
 const $catch_content = _content("a2", 0, 0, $catch_content__setup);
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
+var v_template_marko_hydrate_6_default = ($_) => init$1();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();

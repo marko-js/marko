@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $if_content__bar = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.bar("foo")));
 const $if_content__setup = $if_content__bar;
 const $bar2 = /*@__PURE__*/ _const("bar", $if_content__bar);

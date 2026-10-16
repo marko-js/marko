@@ -1,26 +1,26 @@
 {
   "dom": {
     "counter.marko.load.mjs": {
-      "min": 90,
-      "brotli": 78
+      "min": 89,
+      "brotli": 73
     },
     "template.marko.page.mjs": {
       "total": {
-        "min": 593,
-        "brotli": 284
+        "min": 592,
+        "brotli": 287
       },
       "files": {
-        "v:template.marko.hydrate-6.js": 108,
+        "v:template.marko.hydrate-6.js": 110,
         "v:template.marko.hydrate-5.js": 104
       }
     },
     "counter.mjs": {
-      "min": 1101,
-      "brotli": 589
+      "min": 1100,
+      "brotli": 590
     },
     "shared": {
-      "min": 2129,
-      "brotli": 1121
+      "min": 2126,
+      "brotli": 1119
     }
   },
   "html": {

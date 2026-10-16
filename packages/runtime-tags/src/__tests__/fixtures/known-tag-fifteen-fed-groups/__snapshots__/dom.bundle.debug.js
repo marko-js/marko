@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p>";
 const $walks$1 = "D lD lD lD lD lD lD lD lD lD lD lD lD lD lD lD lD l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_a = ($scope, input_a0) => _text($scope["#text/0"], input_a0);
 const $input_a2 = ($scope, input_a1) => _text($scope["#text/1"], input_a1);
 const $input_a3 = ($scope, input_a2) => _text($scope["#text/2"], input_a2);

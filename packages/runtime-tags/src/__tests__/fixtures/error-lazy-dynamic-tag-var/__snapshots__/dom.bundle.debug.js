@@ -10,9 +10,9 @@ var some_default = /*@__PURE__*/ _template("__tests__/tags/some.marko", "", "", 
 // template.marko
 const $template = "<!><!><p> </p>";
 const $walks = "b1bD l";
-const Some = /*@__PURE__*/ _load_template("__tests__/tags/some.marko", () => import("./some.mjs").then((mod) => mod.default));
+const Some = /*@__PURE__*/ _load_template("__tests__/tags/some.marko", ($_) => import("./some.mjs").then((mod) => mod.default));
 _dynamic_tag_var_resume("#text/0");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $v);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $v);
 const $Tag = /*@__PURE__*/ _let("Tag/3", ($scope) => $dynamicTag($scope, $scope.Tag));
 function $setup($scope) {
 	$Tag($scope, Some);

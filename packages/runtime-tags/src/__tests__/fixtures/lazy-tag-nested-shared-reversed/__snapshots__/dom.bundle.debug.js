@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%/&c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 function $setup($scope) {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 }
@@ -10,8 +10,8 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // child.marko
 const $template = "<button class=child>child:<!></button><!><!>";
 const $walks = " Db%l%/&c";
-let $load_GrandChild_setup = /*@__PURE__*/ _load_setup(() => import("./v:grand-child.marko.setup.mjs"));
-let $load_GrandChild_tag_input_obj = /*@__PURE__*/ _load_signal(() => import("./v:grand-child.marko.input_obj.mjs"));
+let $load_GrandChild_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:grand-child.marko.setup.mjs"));
+let $load_GrandChild_tag_input_obj = /*@__PURE__*/ _load_signal(($_) => import("./v:grand-child.marko.input_obj.mjs"));
 const $obj = /*@__PURE__*/ _let("obj/4", ($scope) => {
 	$load_GrandChild_tag_input_obj($scope["#childScope/3"], $scope.obj);
 	$obj_name($scope, $scope.obj?.name);

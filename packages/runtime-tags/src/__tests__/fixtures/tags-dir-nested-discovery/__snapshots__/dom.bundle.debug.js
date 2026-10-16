@@ -1,13 +1,13 @@
 // tags/icons/icon-star.marko
 const $template$2 = "<span class=icon-star>star</span>";
 const $walks$2 = "b";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 var icon_star_default = /*@__PURE__*/ _template("__tests__/tags/icons/icon-star.marko", $template$2, "b");
 
 // tags/util/greeting.marko
 const $template$1 = "<p>Hello, <!>!</p>";
 const $walks$1 = "Db%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_name = ($scope, input_name) => _text($scope["#text/0"], input_name);
 const $input = ($scope, input) => $input_name($scope, input.name);
 var greeting_default = /*@__PURE__*/ _template("__tests__/tags/util/greeting.marko", $template$1, $walks$1, 0, $input);

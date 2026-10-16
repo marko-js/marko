@@ -1,7 +1,7 @@
 // tags/list/index.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $for_content__row = $for_content__dynamicTag;
 const $for_content__$params = ($scope, $params2) => $for_content__row($scope, $params2[0]);
@@ -13,7 +13,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $setup = () => {};
+const $setup = ($_) => {};
 const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span> </span>", "D "), { x($scope) {
 	_text($scope["#text/0"], $scope.x);
 } });

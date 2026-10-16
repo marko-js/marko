@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<div> </div><span> </span><p> </p>";
 const $walks$1 = "D lD lD l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_name__OR__input_write__script = _script("__tests__/tags/child.marko_0_name#5_write#6", ($scope) => {
 	$scope.write(`mounted ${$scope.name}`);
 	$signal($scope, 0).onabort = () => {

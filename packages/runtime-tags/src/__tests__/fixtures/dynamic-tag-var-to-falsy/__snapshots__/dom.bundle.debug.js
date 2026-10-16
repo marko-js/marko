@@ -10,7 +10,7 @@ function $setup($scope) {
 	$clicks($scope, 0);
 	$setup__script($scope);
 }
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $el);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $el);
 const $el = _var_resume("__tests__/template.marko_0_el#8/var", /*@__PURE__*/ _const("el"));
 const $input_tag = $dynamicTag;
 const $input = ($scope, input) => $input_tag($scope, input.tag);

@@ -22,12 +22,12 @@ const $b = /*@__PURE__*/ _let("b/5", ($scope) => {
 	$a__OR__b($scope);
 });
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $state_a__OR__state_aChange__OR__tag = /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.tag, () => ({
+const $state_a__OR__state_aChange__OR__tag = /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.tag, ($_) => ({
 	value: $scope.state_a,
 	valueChange: $scope.state_aChange
 })), 2);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $state_b__OR__state_bChange__OR__tag = /*@__PURE__*/ _or(14, ($scope) => $dynamicTag2($scope, $scope.tag, () => ({
+const $state_b__OR__state_bChange__OR__tag = /*@__PURE__*/ _or(14, ($scope) => $dynamicTag2($scope, $scope.tag, ($_) => ({
 	value: $scope.state_b,
 	valueChange: $scope.state_bChange
 })), 2);

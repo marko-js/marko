@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button><!> <!></button>";
 const $walks = "D%c%l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $b = ($scope, b) => {
 	_text($scope["#text/0"], b);
 	$input_a_b($scope, b);

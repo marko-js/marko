@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();
@@ -47,7 +47,7 @@ const $template = "<button></button><!><!>";
 const $walks = " b%c";
 _resumed["__tests__/components/class-wrap.marko"] = _marko_template;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $y = /*@__PURE__*/ _let("y/2", ($scope) => $dynamicTag($scope, _marko_template, () => ({ value: $scope.y })));
+const $y = /*@__PURE__*/ _let("y/2", ($scope) => $dynamicTag($scope, _marko_template, ($_) => ({ value: $scope.y })));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$y($scope, +$scope.y + 1);
 }));

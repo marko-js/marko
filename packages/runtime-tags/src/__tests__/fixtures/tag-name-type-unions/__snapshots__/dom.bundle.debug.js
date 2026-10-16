@@ -1,7 +1,7 @@
 // tags/a/index.marko
 const $template$2 = "<div>A <!></div>";
 const $walks$2 = "Db%l";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $input_label$1 = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input$1 = ($scope, input) => $input_label$1($scope, input.label);
 var a_default = /*@__PURE__*/ _template("__tests__/tags/a/index.marko", $template$2, $walks$2, 0, $input$1);
@@ -9,7 +9,7 @@ var a_default = /*@__PURE__*/ _template("__tests__/tags/a/index.marko", $templat
 // tags/b/index.marko
 const $template$1 = "<div>B <!></div>";
 const $walks$1 = "Db%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
 var b_default = /*@__PURE__*/ _template("__tests__/tags/b/index.marko", $template$1, $walks$1, 0, $input);
@@ -28,11 +28,11 @@ const $dynamicTag4 = /*@__PURE__*/ _dynamic_tag("#text/4");
 const $dynamicTag5 = /*@__PURE__*/ _dynamic_tag("#text/5", $xdivA_content);
 const $dynamicTag6 = /*@__PURE__*/ _dynamic_tag("#text/6");
 const $x = /*@__PURE__*/ _let("x/7", ($scope) => {
-	$dynamicTag($scope, $scope.x ? "div" : undefined, () => ({ id: "d1" }));
+	$dynamicTag($scope, $scope.x ? "div" : undefined, ($_) => ({ id: "d1" }));
 	$dynamicTag2($scope, $scope.x ? "div" : "span");
-	$dynamicTag4($scope, $scope.x ? a_default : b_default, () => ({ label: "ab" }));
-	$dynamicTag5($scope, $scope.x ? "div" : a_default, () => ({ label: "ad" }));
-	$dynamicTag6($scope, $scope.x ? localTag : a_default, () => ({ label: "la" }));
+	$dynamicTag4($scope, $scope.x ? a_default : b_default, ($_) => ({ label: "ab" }));
+	$dynamicTag5($scope, $scope.x ? "div" : a_default, ($_) => ({ label: "ad" }));
+	$dynamicTag6($scope, $scope.x ? localTag : a_default, ($_) => ({ label: "la" }));
 });
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/3", $navigator_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

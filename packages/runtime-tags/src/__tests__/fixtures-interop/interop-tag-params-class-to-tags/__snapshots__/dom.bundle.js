@@ -3,7 +3,7 @@ var import_vdom = require_vdom();
 const $template = "<button id=tags> </button><div><!></div>";
 const $walks = " D lD%l";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2, 0, 0, 1);
-const $input_content__OR__count = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.f, () => [$scope.g, "hello"]));
+const $input_content__OR__count = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.f, ($_) => [$scope.g, "hello"]));
 const $count = /*@__PURE__*/ _let(6, ($scope) => {
 	_text($scope.b, $scope.g);
 	$input_content__OR__count($scope);

@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();
@@ -57,7 +57,7 @@ _resumed["__tests__/components/class-counter.marko"] = _marko_template;
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/3");
 const $count = /*@__PURE__*/ _let("count/4", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
-	$dynamicTag2($scope, _marko_template, () => ({ count: $scope.count }));
+	$dynamicTag2($scope, _marko_template, ($_) => ({ count: $scope.count }));
 });
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
@@ -65,7 +65,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$count($scope, 0);
-	$dynamicTag($scope, _marko_template$1, () => ({ value: "Hello World" }));
+	$dynamicTag($scope, _marko_template$1, ($_) => ({ value: "Hello World" }));
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

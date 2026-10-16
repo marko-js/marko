@@ -1,12 +1,12 @@
 // tags/child.marko
 const $template$1 = "<!><!><!><!>";
 const $walks$1 = "b%b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/1", 0, 0, 1);
 const $input_content = ($scope, input_content) => {
-	$dynamicTag($scope, input_content, () => [undefined]);
-	$dynamicTag2($scope, input_content, () => ["given"]);
+	$dynamicTag($scope, input_content, ($_) => [undefined]);
+	$dynamicTag2($scope, input_content, ($_) => ["given"]);
 };
 const $input = ($scope, input) => $input_content($scope, input.content);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, 0, $input);

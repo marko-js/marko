@@ -130,7 +130,7 @@ export function getDebugKey(index: number, node: Node | string) {
   return index;
 }
 
-const walkNextNode = () => {
+const walkNextNode = (_?: never) => {
   if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
   while (!currentNode.nextSibling && currentNode.parentNode) {
     currentNode = currentNode.parentNode;
@@ -138,5 +138,5 @@ const walkNextNode = () => {
   walkNextSibling();
 };
 
-const walkNextSibling = () =>
+const walkNextSibling = (_?: never) =>
   (currentNode = currentNode.nextSibling || currentNode);

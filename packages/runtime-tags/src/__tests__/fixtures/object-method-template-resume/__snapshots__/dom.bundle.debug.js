@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", 0, $input);
@@ -10,7 +10,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = "<!><!><button>inc</button>";
 const $walks = "b%b b";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__count__OR__picker = /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.picker.get(), () => ({ value: $scope._.count })));
+const $if_content__count__OR__picker = /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.picker.get(), ($_) => ({ value: $scope._.count })));
 const $if_content__count = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__count__OR__picker);
 const $if_content__setup = ($scope) => {
 	$if_content__count._($scope);

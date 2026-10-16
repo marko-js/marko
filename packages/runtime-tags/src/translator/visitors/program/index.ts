@@ -10,7 +10,7 @@ import { addAssetImport } from "../../util/asset-imports";
 import { type Binding, BindingType } from "../../util/bindings";
 import entryBuilder from "../../util/entry-builder";
 import { finalizeReferences } from "../../util/finalize-references";
-import { generateUid } from "../../util/generate-uid";
+import { generateUid, getUnusedParamIdentifier } from "../../util/generate-uid";
 import getStyleFile from "../../util/get-style-file";
 import { analyzeRecursiveTags } from "../../util/known-tag";
 import {
@@ -187,14 +187,14 @@ export default {
               dynamicImport(
                 resolveRelativePath(entryFile, filename),
                 t.arrowFunctionExpression(
-                  [],
+                  [getUnusedParamIdentifier()],
                   t.callExpression(t.identifier("ready"), [
                     t.stringLiteral(readyId),
                   ]),
                 ),
                 report &&
                   t.arrowFunctionExpression(
-                    [],
+                    [getUnusedParamIdentifier()],
                     t.callExpression(t.identifier("readyFailed"), [
                       t.stringLiteral(readyId),
                     ]),

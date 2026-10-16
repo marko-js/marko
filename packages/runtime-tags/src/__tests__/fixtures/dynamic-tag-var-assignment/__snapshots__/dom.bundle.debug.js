@@ -25,7 +25,7 @@ const $walks = "b1b b";
 function getCounter() {
 	return counter_default;
 }
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $count);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $count);
 const $count = _var_resume("__tests__/template.marko_0_count#3/var", ($scope, count) => {});
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	_var_change($scope["BranchScopes:#text/0"], 0, "count");

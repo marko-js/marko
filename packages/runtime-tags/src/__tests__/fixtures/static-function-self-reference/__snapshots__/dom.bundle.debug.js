@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div>hello</div>";
 const $walks = "b";
-const $setup = () => {};
+const $setup = ($_) => {};
 function tick() {
 	requestAnimationFrame(tick);
 }

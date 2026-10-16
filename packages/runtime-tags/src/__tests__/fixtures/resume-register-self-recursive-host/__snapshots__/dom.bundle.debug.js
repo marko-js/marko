@@ -1,7 +1,7 @@
 // tags/plain.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag$1;
@@ -21,6 +21,6 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", $inputdepthSelfPlain_content);
-const $input_depth = ($scope, input_depth) => $dynamicTag($scope, input_depth ? template_default : plain_default, () => ({ depth: 0 }));
+const $input_depth = ($scope, input_depth) => $dynamicTag($scope, input_depth ? template_default : plain_default, ($_) => ({ depth: 0 }));
 const $input = ($scope, input) => $input_depth($scope, input.depth);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

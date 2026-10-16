@@ -1,6 +1,6 @@
 // tags/custom-tag.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(3, 0, 0, 1);
-const $input_content__OR__x__OR__y = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.g, () => [$scope.h, $scope.i]), 2);
+const $input_content__OR__x__OR__y = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.g, ($_) => [$scope.h, $scope.i]), 2);
 const $x = /*@__PURE__*/ _let(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	$input_content__OR__x__OR__y($scope);

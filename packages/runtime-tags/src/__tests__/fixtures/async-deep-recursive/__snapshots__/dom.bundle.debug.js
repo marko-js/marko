@@ -1,7 +1,7 @@
 // tags/recurse.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $placeholder_content = _content("__tests__/tags/recurse.marko_4*content", "LOADING...");
 const $await_content__input_level = /*@__PURE__*/ _closure_get("input_level/4", ($scope) => $input_level($scope["#childScope/0"], $scope._._._.input_level - 1), ($scope) => $scope._._._, "__tests__/tags/recurse.marko_3_input_level#0:3/subscribe");
 const $await_content__setup = $await_content__input_level;

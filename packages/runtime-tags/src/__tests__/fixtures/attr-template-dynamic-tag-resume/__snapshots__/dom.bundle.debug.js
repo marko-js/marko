@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$2 = "<span> </span>";
 const $walks$2 = "D l";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $input_value$1 = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input$1 = ($scope, input) => $input_value$1($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, "D l", 0, $input$1);
@@ -9,9 +9,9 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // tags/wrapper.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_type__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_type, () => ({ value: $scope.input_value })));
+const $input_type__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_type, ($_) => ({ value: $scope.input_value })));
 const $input_type = /*@__PURE__*/ _const("input_type", $input_type__OR__input_value);
 const $input_value = /*@__PURE__*/ _const("input_value", $input_type__OR__input_value);
 const $input = ($scope, input) => {

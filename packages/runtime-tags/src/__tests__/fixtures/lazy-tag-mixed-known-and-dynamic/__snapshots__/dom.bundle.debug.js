@@ -1,7 +1,7 @@
 // child.marko
 const $template = "<span> </span>";
 const $walks = "D l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "D l", 0, $input);
@@ -9,11 +9,11 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button class=toggle>Toggle</button><button class=inc>Inc</button><!><!><!>";
 const $walks = " b b%/&b%c";
-const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", () => import("./child.mjs").then((mod) => mod.default));
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", ($_) => import("./child.mjs").then((mod) => mod.default));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/4");
-const $show__OR__value = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.show ? Child : null, () => ({ value: $scope.value })));
+const $show__OR__value = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.show ? Child : null, ($_) => ({ value: $scope.value })));
 const $show = /*@__PURE__*/ _let("show/5", $show__OR__value);
 const $value = /*@__PURE__*/ _let("value/6", ($scope) => {
 	$load_Child_tag_input_value($scope["#childScope/3"], $scope.value);

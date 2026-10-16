@@ -1,9 +1,9 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $tagName_content = _content("__tests__/template.marko_1*content", "Hello World");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $tagName_content);
-const $tagName = ($scope, tagName) => $dynamicTag($scope, tagName, () => ({ class: ["a", "b"] }));
+const $tagName = ($scope, tagName) => $dynamicTag($scope, tagName, ($_) => ({ class: ["a", "b"] }));
 const $input = ($scope, input) => $tagName($scope, input.tagName);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

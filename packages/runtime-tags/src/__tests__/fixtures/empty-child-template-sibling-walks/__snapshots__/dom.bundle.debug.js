@@ -1,7 +1,7 @@
 // tags/effect-only.marko
 const $template$3 = "";
 const $walks$3 = "";
-const $setup$3 = () => {};
+const $setup$3 = ($_) => {};
 const $input_n__script = _script("__tests__/tags/effect-only.marko_0_input_n#2", ($scope) => console.log($scope.input_n));
 const $input_n = /*@__PURE__*/ _const("input_n", $input_n__script);
 const $input = ($scope, input) => $input_n($scope, input.n);
@@ -10,13 +10,13 @@ var effect_only_default = /*@__PURE__*/ _template("__tests__/tags/effect-only.ma
 // tags/text-end.marko
 const $template$2 = "<b></b>tail";
 const $walks$2 = "c";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 var text_end_default = /*@__PURE__*/ _template("__tests__/tags/text-end.marko", $template$2, "c");
 
 // tags/text-start.marko
 const $template$1 = "head<b></b>";
 const $walks$1 = "c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 var text_start_default = /*@__PURE__*/ _template("__tests__/tags/text-start.marko", $template$1, "c");
 
 // template.marko

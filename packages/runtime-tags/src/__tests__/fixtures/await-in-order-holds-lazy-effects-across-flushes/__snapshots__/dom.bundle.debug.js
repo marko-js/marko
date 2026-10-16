@@ -41,10 +41,10 @@ var reordered_default = /*@__PURE__*/ _template("__tests__/reordered.marko", $te
 // template.marko
 const $template = "<div id=log></div><!><!><!><!><!>";
 const $walks = "b%/&b%b%b%c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_id = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_id.mjs"));
-let $load_Reordered_setup = /*@__PURE__*/ _load_setup(() => import("./v:reordered.marko.setup.mjs"));
-let $load_Reordered_tag_input_id = /*@__PURE__*/ _load_signal(() => import("./v:reordered.marko.input_id.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_id = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_id.mjs"));
+let $load_Reordered_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:reordered.marko.setup.mjs"));
+let $load_Reordered_tag_input_id = /*@__PURE__*/ _load_signal(($_) => import("./v:reordered.marko.input_id.mjs"));
 const $await_content3__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };

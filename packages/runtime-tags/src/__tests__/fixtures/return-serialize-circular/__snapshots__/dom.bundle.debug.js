@@ -1,7 +1,7 @@
 // tags/setter.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_value__OR__setter = /*@__PURE__*/ _or(5, ($scope) => _return($scope, ($scope.input_value, $scope.setter)));
 const $setter2 = /*@__PURE__*/ _const("setter", $input_value__OR__setter);
 const $input_valueChange = /*@__PURE__*/ _const("input_valueChange", ($scope) => $setter2($scope, $setter($scope)));

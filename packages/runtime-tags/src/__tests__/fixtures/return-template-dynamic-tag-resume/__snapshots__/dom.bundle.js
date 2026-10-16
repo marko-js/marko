@@ -10,7 +10,7 @@ _resumed.b = child_default;
 
 // template.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2);
-const $Tag__OR__count = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.e, () => ({ value: $scope.f })), 1, 1);
+const $Tag__OR__count = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.e, ($_) => ({ value: $scope.f })), 1, 1);
 const $count = /*@__PURE__*/ _let(5, $Tag__OR__count);
 const $setup__script = _script("a0", ($scope) => _on($scope.d, "click", function() {
 	$count($scope, +$scope.f + 1);

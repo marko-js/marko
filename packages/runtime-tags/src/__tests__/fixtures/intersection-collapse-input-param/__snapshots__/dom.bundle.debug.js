@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $doubled__OR__tripled = ($scope) => {
 	_text($scope["#text/0"], $scope.input_n * 2 + $scope.input_n * 3);
 };

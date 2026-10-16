@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$2 = "<input>";
 const $walks$2 = " b";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => _attr_input_value_default($scope, "#input/0", $scope.input_value));
 const $input_class$1 = ($scope, input_class) => _attr_class($scope["#input/0"], input_class);
 const $input$1 = ($scope, input) => {
@@ -38,7 +38,7 @@ function $setup($scope) {
 	$input($scope["#childScope/0"], { class: "foo" });
 	$setup$1($scope["#childScope/1"]);
 	$input($scope["#childScope/1"], { value: undefined });
-	$dynamicTag($scope, Wrap, () => ({
+	$dynamicTag($scope, Wrap, ($_) => ({
 		class: "bar",
 		value: "abcd"
 	}));

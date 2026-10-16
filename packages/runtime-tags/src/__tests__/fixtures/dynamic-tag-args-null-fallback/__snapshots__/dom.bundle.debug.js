@@ -1,7 +1,7 @@
 // tags/custom-tag.marko
 const $template$1 = "<div>tag <!></div>";
 const $walks$1 = "Db%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_ = ($scope, input_0) => _text($scope["#text/0"], input_0);
 const $input = ($scope, input) => $input_($scope, input[0]);
 var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag.marko", $template$1, $walks$1, 0, $input);
@@ -11,7 +11,7 @@ const $template = "<!><!><button></button>";
 const $walks = "b%b b";
 const $x_content = _content("__tests__/template.marko_1*content", "Fallback Body");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $x_content, 0, 1);
-const $x = /*@__PURE__*/ _let("x/2", ($scope) => $dynamicTag($scope, $scope.x, () => [
+const $x = /*@__PURE__*/ _let("x/2", ($scope) => $dynamicTag($scope, $scope.x, ($_) => [
 	1,
 	2,
 	{ content: $x_content($scope) }

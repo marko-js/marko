@@ -27,7 +27,7 @@ _resumed.b = _marko_template;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $x = /*@__PURE__*/ _let(4, ($scope) => _text($scope.c, $scope.e));
 const $y = /*@__PURE__*/ _let(3, ($scope) => {
-	$dynamicTag($scope, _marko_template, () => ({ value: $scope.d }));
+	$dynamicTag($scope, _marko_template, ($_) => ({ value: $scope.d }));
 	$x($scope, $scope.d);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
@@ -35,7 +35,7 @@ const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function
 }));
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
+var v_template_marko_hydrate_6_default = ($_) => init$1();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();

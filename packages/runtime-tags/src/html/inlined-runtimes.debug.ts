@@ -58,7 +58,7 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
       (placeholders[id] = placeholder).i++;
     } else if (node.tagName == "T" && (id = node.getAttribute(runtime.i))) {
       nextSibling = node.nextSibling;
-      onNextSibling = () => {
+      onNextSibling = (_) => {
         node.remove();
         placeholderRoot || replace(id, node);
         placeholder.c();
@@ -91,7 +91,7 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
       // repurpose "op" for callbacks ...carefully
       if ((op = runtime.j[id])) {
         placeholderCb = placeholder.c;
-        placeholder.c = () => placeholderCb() || op(runtime.r);
+        placeholder.c = (_) => placeholderCb() || op(runtime.r);
       }
     }
   };

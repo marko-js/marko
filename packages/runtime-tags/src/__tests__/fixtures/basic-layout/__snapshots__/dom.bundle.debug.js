@@ -1,7 +1,7 @@
 // tags/layout.marko
 const $template$1 = "<body><!></body>";
 const $walks$1 = "D%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $content = $dynamicTag;

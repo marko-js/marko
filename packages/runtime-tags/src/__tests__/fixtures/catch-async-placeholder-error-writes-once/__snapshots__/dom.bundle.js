@@ -1,5 +1,5 @@
 // template.marko
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
 const $catch_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope.c, $scope.b);

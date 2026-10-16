@@ -1,7 +1,7 @@
 // tags/title.marko
 const $template$2 = "<div class=title><!></div>";
 const $walks$2 = "D%l";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $input_content_direct$1 = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content$1 = $dynamicTag$1;
@@ -11,7 +11,7 @@ var title_default = /*@__PURE__*/ _template("__tests__/tags/title.marko", $templ
 // tags/textarea.marko
 const $template$1 = "<div class=textarea><!></div>";
 const $walks$1 = "D%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;

@@ -1,7 +1,7 @@
 // tags/checkbox.marko
 const $template$1 = "<input>";
 const $walks$1 = " b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input__script = _script("__tests__/tags/checkbox.marko_0_input#2", ($scope) => _attrs_script($scope, "#input/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs($scope, "#input/0", {

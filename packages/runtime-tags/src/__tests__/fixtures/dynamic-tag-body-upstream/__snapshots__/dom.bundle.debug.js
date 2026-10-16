@@ -1,7 +1,7 @@
 // tags/child/index.marko
 const $template$1 = "<em> </em>";
 const $walks$1 = "D l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_foo$1 = ($scope, input_foo) => _text($scope["#text/0"], input_foo);
 const $input$1 = ($scope, input) => $input_foo$1($scope, input.foo);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, "D l", 0, $input$1);

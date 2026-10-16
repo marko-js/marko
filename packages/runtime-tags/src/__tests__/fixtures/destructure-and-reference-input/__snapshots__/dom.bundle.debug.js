@@ -14,7 +14,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/child.marko
 const $template = "<div><!></div><div> </div>";
 const $walks = " D%lD l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $rest__script = _script("__tests__/tags/child.marko_0_rest#6", ($scope) => _attrs_script($scope, "#div/0"));
 const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
 	_attrs($scope, "#div/0", $scope.rest);

@@ -19,7 +19,7 @@ const $Message_content__input = ($scope, input) => {
 	$Message_content__input_after($scope, input.after);
 };
 const $Wrap_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $Wrap_content__as__OR__onClick__OR__content = /*@__PURE__*/ _or(6, ($scope) => $Wrap_content__dynamicTag($scope, $scope.as, () => ({
+const $Wrap_content__as__OR__onClick__OR__content = /*@__PURE__*/ _or(6, ($scope) => $Wrap_content__dynamicTag($scope, $scope.as, ($_) => ({
 	onClick: $scope.onClick,
 	content: $scope.content
 })), 2);

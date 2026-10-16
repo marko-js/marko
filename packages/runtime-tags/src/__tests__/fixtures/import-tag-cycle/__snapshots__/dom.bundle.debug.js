@@ -1,11 +1,11 @@
 // tags/cyc-b.marko
 const $template$2 = "<span>b <!></span><!><!>";
 const $walks$2 = "Db%l%c";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_depth$1 = ($scope, input_depth) => {
 	_text($scope["#text/0"], input_depth);
-	$dynamicTag($scope, cyc_a_default, () => ({ depth: input_depth + 1 }));
+	$dynamicTag($scope, cyc_a_default, ($_) => ({ depth: input_depth + 1 }));
 };
 const $input$1 = ($scope, input) => $input_depth$1($scope, input.depth);
 var cyc_b_default = /*@__PURE__*/ _template("__tests__/tags/cyc-b.marko", $template$2, $walks$2, 0, $input$1);
@@ -13,7 +13,7 @@ var cyc_b_default = /*@__PURE__*/ _template("__tests__/tags/cyc-b.marko", $templ
 // tags/cyc-a.marko
 const $template$1 = "<div>a <!></div><!><!>";
 const $walks$1 = "Db%l%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $if_content__input_depth = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_depth$1($scope["#childScope/0"], $scope._.input_depth + 1));
 const $if_content__setup = $if_content__input_depth;
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$2), $if_content__setup);

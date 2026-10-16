@@ -34,7 +34,7 @@ const $walks = "b%c";
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $await_content__value = ($scope, value) => {
 	_text($scope["#text/0"], value);
-	$await_content__dynamicTag($scope, _marko_template$1, () => ({ value }));
+	$await_content__dynamicTag($scope, _marko_template$1, ($_) => ({ value }));
 };
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<div id=tags> </div><!><!>", "D l%");

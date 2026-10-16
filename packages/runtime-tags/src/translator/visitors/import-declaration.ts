@@ -9,7 +9,7 @@ import {
 
 import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
-import { generateUid } from "../util/generate-uid";
+import { generateUid, getUnusedParamIdentifier } from "../util/generate-uid";
 import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
 import {
   resolveRegisteredExport,
@@ -170,7 +170,7 @@ export default {
             } else {
               importRuntimeFeature("catch");
               const load = t.arrowFunctionExpression(
-                [],
+                [getUnusedParamIdentifier()],
                 dynamicImport(
                   resolveRelativePath(file, loadFile.opts.filename),
                   t.arrowFunctionExpression(

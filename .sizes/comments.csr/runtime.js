@@ -1,4 +1,4 @@
-// size: 5866 (min) 2576 (brotli)
+// size: 5860 (min) 2578 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
@@ -69,12 +69,12 @@ let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
       walkNextSibling();
     } else storedMultiplier = currentMultiplier * 10 + value - 117;
 };
-let walkNextNode = () => {
+let walkNextNode = (_) => {
   if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
   for (; !currentNode.nextSibling && currentNode.parentNode;) currentNode = currentNode.parentNode;
   walkNextSibling();
 };
-let walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode);
+let walkNextSibling = (_) => (currentNode = currentNode.nextSibling || currentNode);
 let _resumed = {};
 let cloneCache = {};
 let _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
@@ -290,7 +290,7 @@ function flushAndWaitFrame() {
 function triggerMacroTask() {
   (channel ||
     ((channel = new MessageChannel()),
-    (channel.port1.onmessage = () => {
+    (channel.port1.onmessage = (_) => {
       ((isScheduled = 0), run());
     })),
     channel.port2.postMessage(0));
@@ -322,7 +322,7 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
       let scopes = toArray(ownerScope[scopeAccessor]);
       queueRender(
         ownerScope,
-        () => {
+        (_) => {
           for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
         },
         -1,
@@ -511,7 +511,7 @@ function mount(input = {}, reference, position) {
   }
   let curValue,
     args = this.d,
-    effects = prepareEffects(() => {
+    effects = prepareEffects((_) => {
       ((branch = createBranch($global, this, void 0, parentNode)),
         (branch.T = (newValue) => {
           curValue = newValue;
@@ -533,7 +533,7 @@ function mount(input = {}, reference, position) {
         args &&
           (newInput.$global && ({ $global, ...newInput } = newInput),
           runEffects(
-            prepareEffects(() => {
+            prepareEffects((_) => {
               args(branch, newInput);
             }),
           ));
