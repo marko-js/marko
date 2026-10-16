@@ -20,6 +20,7 @@ const { spawn } = require("node:child_process");
 const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
+const { createInterface } = require("node:readline");
 const { setTimeout: sleep } = require("node:timers/promises");
 
 const { aliases, types } = require("mocha/lib/cli/run-option-metadata");
@@ -74,6 +75,9 @@ const SLOT_COUNT = Math.max(
   Math.min(CORES, Math.floor(os.totalmem() / WORKER_MEM)),
 );
 const SLOT_POLL_MS = 1000;
+// Twice the longest timeout a spec sets (60s): workers name each hook and test as
+// it starts, so only one stuck where mocha's timeouts can't fire is this quiet.
+const WORKER_IDLE_SECONDS = 120;
 // Many slots per worker (not one) so the packer can hand a worker that also
 // carries a slow spec file proportionally fewer fixtures. Slots are just env
 // numbers — more of them costs nothing (still one process per worker), it only
@@ -222,7 +226,23 @@ async function runBins(bins, slicedFiles, mochaArgs) {
 }
 
 const heldSlots = new Set();
-process.on("exit", () => heldSlots.forEach(releaseSlot));
+// Workers stop with the runner, signalled or not, or a hung one spins on as an
+// orphan; the signal is then re-raised so the caller still sees it.
+const workers = new Set();
+process.on("exit", stopAll);
+for (const signal of ["SIGHUP", "SIGINT", "SIGTERM"]) {
+  process.once(signal, () => {
+    stopAll();
+    process.kill(process.pid, signal);
+  });
+}
+
+// SIGKILL: rolldown's bundled signal-exit listens for the catchable signals, and
+// a worker stuck in a synchronous loop never runs those listeners.
+function stopAll() {
+  heldSlots.forEach(releaseSlot);
+  for (const child of workers) child.kill("SIGKILL");
+}
 
 async function acquireSlot(running) {
   for (;;) {
@@ -314,7 +334,11 @@ function runProcess(bin, index, slicedFiles, mochaArgs, skipped) {
     "--exit",
   ];
   args.push(...mochaArgs);
-  const env = { ...process.env, MARKO_TEST_WORKER_MEM: String(WORKER_MEM) };
+  const env = {
+    ...process.env,
+    MARKO_TEST_WORKER_MEM: String(WORKER_MEM),
+    MARKO_TEST_NAMES_FD: "3",
+  };
   if (skipped) env.MARKO_TEST_SKIPPED = String(skipped);
   if (bin.slots.length) {
     args.push(...slicedFiles);
@@ -324,10 +348,34 @@ function runProcess(bin, index, slicedFiles, mochaArgs, skipped) {
   }
   args.push(...bin.files);
 
-  const child = spawn(process.execPath, args, { cwd: ROOT, env });
+  const child = spawn(process.execPath, args, {
+    cwd: ROOT,
+    env,
+    stdio: ["pipe", "pipe", "pipe", "pipe"],
+  });
+  workers.add(child);
   let output = "";
+  let lastStarted = "none";
+  // Counted in ticks, so time the runner spends suspended (Ctrl-Z) adds one
+  // second, not the whole stop.
+  let quietSeconds = 0;
+  const idle = setInterval(() => {
+    if (++quietSeconds < WORKER_IDLE_SECONDS) return;
+    clearInterval(idle);
+    output += `\nworker ${index + 1} hung: no output for ${WORKER_IDLE_SECONDS}s, last started: ${lastStarted}\n`;
+    child.kill("SIGKILL");
+  }, 1000);
   child.stdout.on("data", (d) => (output += d));
   child.stderr.on("data", (d) => (output += d));
+  // The names are diagnostics: a broken channel loses them, not the run.
+  child.stdio[3].on("error", () => {});
+  createInterface({ input: child.stdio[3] }).on(
+    "line",
+    (name) => (lastStarted = name),
+  );
+  for (const stream of child.stdio.slice(1)) {
+    stream.on("data", () => (quietSeconds = 0));
+  }
 
   return new Promise((resolve) => {
     child.on("error", (err) => {
@@ -340,6 +388,8 @@ function runProcess(bin, index, slicedFiles, mochaArgs, skipped) {
     function finish(code) {
       if (done) return;
       done = true;
+      clearInterval(idle);
+      workers.delete(child);
       const passing = Number(/(\d+) passing/.exec(output)?.[1] ?? 0);
       // `mocha-autotest` pulls in `it-fails`, which rewrites mocha's epilogue:
       // real failures print as "N unexpectedly failing" (while "N failing as

@@ -4,6 +4,7 @@
 // alive): past the budget, unstarted suites go to a fresh process.
 // Suites run in a fixed order, so the handoff is just how many are finished.
 const fs = require("fs");
+const path = require("path");
 const v8 = require("v8");
 const { PerformanceObserver, constants } = require("perf_hooks");
 
@@ -11,6 +12,7 @@ const RECYCLE_EXIT_CODE = 75;
 const skipped = Number(process.env.MARKO_TEST_SKIPPED) || 0;
 const heapBudget = v8.getHeapStatistics().heap_size_limit / 2;
 const rssBudget = Number(process.env.MARKO_TEST_WORKER_MEM) || Infinity;
+const namesFd = Number(process.env.MARKO_TEST_NAMES_FD);
 // Pruning stale snapshots needs one complete run, so an update never hands off.
 const canRecycle = !process.env.UPDATE_EXPECTATIONS;
 let liveHeap = 0;
@@ -50,6 +52,23 @@ exports.mochaHooks = {
     }
   },
 };
+
+// Under the runner, names each hook (but the fileless root's) and test as it
+// starts, so the runner can say where a hung worker stopped.
+if (namesFd) {
+  exports.mochaGlobalSetup = function () {
+    this.on("hook", announce).on("test", announce);
+  };
+}
+
+function announce(runnable) {
+  if (runnable.file) {
+    fs.writeSync(
+      namesFd,
+      `${runnable.fullTitle()} (${path.relative("", runnable.file)})\n`,
+    );
+  }
+}
 
 process.on("exit", () => {
   if (!recycling || !ran) return;
