@@ -442,7 +442,7 @@ export function renderCatch(scope: Scope, error?: unknown) {
 
 // `ParentBranch` links a branch to its enclosing one (on resume through the serialized
 // closest branch id and markers), and a `@placeholder` is parented beside its `<try>`.
-function findTryWithPlaceholder(scope: Scope) {
+export function findTryWithPlaceholder(scope: Scope) {
   let branch = scope[AccessorProp.ClosestBranch];
   while (branch && !branch[AccessorProp.PlaceholderContent]) {
     branch = branch[AccessorProp.ParentBranch];

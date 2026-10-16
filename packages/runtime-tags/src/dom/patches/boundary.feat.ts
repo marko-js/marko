@@ -12,13 +12,18 @@ import {
   RendererProp,
   type Scope,
 } from "../../common/types";
-import { _await_promise } from "../control-flow";
-import { queueEffect, queueRender, rendering } from "../queue";
+import { _await_promise, findTryWithPlaceholder } from "../control-flow";
+import {
+  queueAsyncRender,
+  queueEffect,
+  queueRender,
+  rendering,
+} from "../queue";
 import "./loop-item.feat";
 import "./try.feat";
 import { _content, createBranch, type Renderer } from "../renderer";
-import { schedule } from "../schedule";
 import { collectScopes, insertBranchBefore, syncGen } from "../scope";
+import type { Signal } from "../signals";
 import { applyInFrame, frameWait } from "./apply";
 import { patchers, patchRender, patchScope, withCreating } from "./apply";
 import { getContent } from "./shells";
@@ -57,12 +62,12 @@ patchers[PatchKey.Pending] = (scope, key, value) => {
       (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,
     )(scope, patchPending);
   if (!scope[link]) {
-    // A streaming document keeps its own pending UI until the body lands, as a
-    // deferred value would, unless a settle drops it or a catch destroyed the try.
-    if ((scope[AccessorProp.AwaitCounter] as AwaitCounter)?.m) {
+    // The walk has not reached this await: the document keeps its pending UI until
+    // the body lands, as a deferred value would, unless a settle or a catch drops it.
+    if (!scope[accessor as Accessor]) {
       const deferred = (scope[promise] = () =>
-        deferred === scope[promise] && scope[AccessorProp.Gen] && pend());
-      return onStreamLanded(deferred, scope);
+        deferred === scope[promise] && pend());
+      return onStreamLanded(scope, deferred);
     }
     // A created scope has no live await branch: the entry's id names the body
     // content shell its flush shipped. Mirrors `_await_content`.
@@ -115,12 +120,24 @@ function attachDetachedAwait(
   awaitBranch[AccessorProp.DetachedAwait] = 0;
 }
 
-// Runs `fn` after the reorder's walk links a streaming try's body and runs
-// its closures; queued on the owner, since the try's own effects park.
-function onStreamLanded(fn: () => void, tryBranch: Scope) {
+// Queues `signal` as a render once the reorder's walk links the body of the
+// streaming try holding `scope`, as `_await_promise` does a deferred value.
+function onStreamLanded<T>(scope: Scope, signal: Signal<T>, value?: T) {
+  // A custom tag's child the walk has not reached links to its branch only
+  // through its owners.
+  while (!scope[AccessorProp.ClosestBranch]) {
+    if (MARKO_DEBUG && !scope[AccessorProp.Owner]) break;
+    scope = scope[AccessorProp.Owner]!;
+  }
+  const tryBranch = findTryWithPlaceholder(scope)!;
+  if (MARKO_DEBUG && !tryBranch) {
+    throw new Error(
+      "A patch reached an `<await>` whose in-order content is still streaming. Start patches from an effect, which in-order content holds until it completes (RESUMABILITY.md, Timing).",
+    );
+  }
   const complete = (tryBranch[AccessorProp.AwaitCounter] as AwaitCounter).c;
   (tryBranch[AccessorProp.AwaitCounter] as AwaitCounter).c = () =>
-    complete() || (queueEffect(tryBranch[AccessorProp.Owner]!, fn), schedule());
+    complete() || queueAsyncRender(scope, signal, value);
 }
 // The body's patch waits for the stream to land it, its await counted as
 // settled; a catch the document rendered instead keeps the try, as applied.
@@ -136,17 +153,16 @@ function holdForStream(
   const response = render[RenderDataProp.PatchResponse];
   const wait = frameWait;
   const settle = wait();
-  onStreamLanded(
-    () =>
-      settle(
-        // A later response superseded this one: settled as applied.
-        response !== render[RenderDataProp.PatchResponse] ||
-          !scope[link] ||
-          applyInFrame(wait, render, () =>
-            patchScope({ [key]: value } as Scope, scope),
-          ),
-      ),
-    scope,
+  // A flush applies outside a run's renders, so in that run's effects.
+  onStreamLanded(scope, queueEffect, () =>
+    settle(
+      // A later response superseded this one: settled as applied.
+      response !== render[RenderDataProp.PatchResponse] ||
+        !scope[link] ||
+        applyInFrame(wait, render, () =>
+          patchScope({ [key]: value } as Scope, scope),
+        ),
+    ),
   );
 }
 
@@ -154,23 +170,19 @@ const applyChild = patchers[PatchKey.Child]!;
 patchers[PatchKey.Child] = (scope, key, value) => {
   const link = key.slice(PatchKey.Child.length) as Accessor;
   const accessor = link.slice(AccessorPrefix.BranchScopes.length);
-  // A custom tag's child (no branch link) has nothing pending to settle.
+  // A custom tag's child (no branch link) has nothing pending to settle, nor
+  // has a try, whose entry carries its creation payload (`patches/try`).
   if (
-    MARKO_DEBUG
+    (MARKO_DEBUG
       ? !link.startsWith(AccessorPrefix.BranchScopes)
-      : link[0] !== AccessorPrefix.BranchScopes
+      : link[0] !== AccessorPrefix.BranchScopes) ||
+    Array.isArray(value)
   ) {
     return applyChild(scope, key, value);
   }
-  // Only a resumed counter carries the render's marker hook: the document
-  // owns the pending UI, and its reorder completes the counter.
-  if (!scope[link] && (scope[AccessorProp.AwaitCounter] as AwaitCounter)?.m) {
+  // An await the document has not linked yet still streams its body.
+  if (!scope[link]) {
     return holdForStream(scope, key, link, accessor, value as Scope);
-  }
-  // A try's entry carries its creation payload (`patches/try`); a try has
-  // nothing pending to settle.
-  if (Array.isArray(value)) {
-    return applyChild(scope, key, value);
   }
   // A newly created await body may itself initialize nested boundaries.
   // Run that setup before applying the settled child patch.

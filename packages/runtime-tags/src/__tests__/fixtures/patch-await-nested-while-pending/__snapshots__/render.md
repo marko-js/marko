@@ -48,35 +48,15 @@ UPDATE: #outer::text@0 "a" => "b"
 <div
   id="inner"
 >
-  a i
-</div>
-```
-## Change
-```
-INSERT: #inner::text("a")
-INSERT: #inner::text@0 + ::text(" ")
-INSERT: #inner::text@1 + ::text("i")
-REMOVE: em
-INSERT: #outer + #inner
-```
-
-# Update
-```html
-<button>
-  0
-</button>
-<div
-  id="outer"
->
-  b o
-</div>
-<div
-  id="inner"
->
   b i
 </div>
 ```
 ## Change
 ```
+INSERT: #inner::text("b")
+INSERT: #inner::text@0 + ::text(" ")
+INSERT: #inner::text@1 + ::text("i")
+REMOVE: em
+INSERT: #outer + #inner
 UPDATE: #inner::text@0 "a" => "b"
 ```

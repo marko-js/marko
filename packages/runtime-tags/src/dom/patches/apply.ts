@@ -11,6 +11,7 @@ import {
 import {
   abortRun,
   pendingEffects,
+  rendering,
   run,
   runEffects,
   runId,
@@ -370,6 +371,11 @@ export function applyInFrame(
 // Applies flush data (a response's frame, or one left waiting on a module or a
 // streaming body) as its own flush run.
 function applyFlush(render: RenderData, apply: () => void): Applied {
+  if (MARKO_DEBUG && rendering) {
+    throw new Error(
+      "A patch flush applied inside a render instead of its own run.",
+    );
+  }
   let rendered: unknown;
   // First of the run's effects, so it runs once every render is done; queued
   // before the flush queues anything, the shift moves nothing.
