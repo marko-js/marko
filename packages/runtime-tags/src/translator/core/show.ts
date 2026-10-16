@@ -19,7 +19,7 @@ import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
 import { addReasonExprs } from "../util/reasons";
-import { getReferencedBindings, mergeReferences } from "../util/references";
+import { mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -257,7 +257,7 @@ export default {
             endBinding ? getScopeAccessorLiteral(endBinding, true) : undefined,
           );
         };
-        addValue(tagSection, getReferencedBindings(tagExtra), signal, display);
+        addValue(tagSection, tagExtra, signal, display);
 
         tag.remove();
       },

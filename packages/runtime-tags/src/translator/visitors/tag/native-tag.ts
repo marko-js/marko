@@ -62,7 +62,6 @@ import {
   mergeReferences,
   trackDomVarReferences,
   isTagVarUsed,
-  getReferencedBindings,
 } from "../../util/references";
 import {
   callRuntime,
@@ -736,10 +735,7 @@ export default {
 
         if (handlers) {
           for (const index of handlers) {
-            addHTMLEffectCall(
-              tagSection,
-              getReferencedBindings(attributes[index].value.extra),
-            );
+            addHTMLEffectCall(tagSection, attributes[index].value.extra);
           }
         }
 
@@ -750,7 +746,7 @@ export default {
           spreadRendersContent(tag, contentAttr, isTextOnly);
 
         if (spreadExpression) {
-          addHTMLEffectCall(tagSection, getReferencedBindings(tagExtra));
+          addHTMLEffectCall(tagSection, tagExtra);
 
           if (!spreadContent) {
             if (skipExpression) {
@@ -955,9 +951,10 @@ export default {
             helper,
             controllable,
           );
-          const referencedBindings = getReferencedBindings(
-            attrAt(attributes, controllable.attrs.find(isDefined))!.value.extra,
-          );
+          const valueExtra = attrAt(
+            attributes,
+            controllable.attrs.find(isDefined),
+          )!.value.extra;
           const values = (
             hasChangeHandler
               ? controllable.attrs
@@ -970,7 +967,7 @@ export default {
           addStatement(
             "render",
             tagSection,
-            referencedBindings,
+            valueExtra,
             callRuntime(
               hasChangeHandler ? helper : defaultHelper,
               scopeIdentifier,
@@ -993,7 +990,6 @@ export default {
           for (const index of own) {
             const { name, value } = attributes[index] as t.MarkoAttribute;
             const { confident } = evaluate(value);
-            const valueReferences = getReferencedBindings(value.extra);
 
             switch (name) {
               case "class":
@@ -1055,13 +1051,7 @@ export default {
                   }
 
                   for (const call of calls) {
-                    addStatement(
-                      "render",
-                      tagSection,
-                      valueReferences,
-                      call,
-                      true,
-                    );
+                    addStatement("render", tagSection, value.extra, call, true);
                   }
                 }
                 break;
@@ -1074,7 +1064,7 @@ export default {
                   addStatement(
                     "render",
                     tagSection,
-                    valueReferences,
+                    value.extra,
                     callRuntime(
                       "_attr",
                       createScopeReadExpression(nodeBinding),
@@ -1096,7 +1086,7 @@ export default {
             addStatement(
               "effect",
               tagSection,
-              getReferencedBindings(value.extra),
+              value.extra,
               callRuntime(
                 "_on",
                 createScopeReadExpression(nodeBinding),
@@ -1128,7 +1118,7 @@ export default {
             addStatement(
               "render",
               tagSection,
-              getReferencedBindings(tagExtra),
+              tagExtra,
               callRuntime(
                 spreadContent ? "_attrs_partial_content" : "_attrs_partial",
                 scopeIdentifier,
@@ -1142,7 +1132,7 @@ export default {
             addStatement(
               "render",
               tagSection,
-              getReferencedBindings(tagExtra),
+              tagExtra,
               callRuntime(
                 spreadContent ? "_attrs_content" : "_attrs",
                 scopeIdentifier,
@@ -1163,7 +1153,7 @@ export default {
           addStatement(
             "effect",
             tagSection,
-            getReferencedBindings(tagExtra),
+            tagExtra,
             callRuntime("_attrs_script", scopeIdentifier, nodeAccessor),
           );
         }
@@ -1172,7 +1162,7 @@ export default {
           addStatement(
             "render",
             tagSection,
-            getReferencedBindings(contentAttr.value.extra),
+            contentAttr.value.extra,
             callRuntime(
               "_attr_content",
               scopeIdentifier,
@@ -1196,7 +1186,7 @@ export default {
               addStatement(
                 "render",
                 getSection(tag),
-                getReferencedBindings(textLiteral.extra),
+                textLiteral.extra,
                 callRuntime(
                   "_text_content",
                   createScopeReadExpression(nodeBinding!),

@@ -25,7 +25,6 @@ import {
   onFinalizeReferences,
   setDerivedFrom,
   trackVarReferences,
-  getReferencedBindings,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
@@ -147,18 +146,13 @@ export default {
       const unused = binding.pruned && !hasEmittedAssignment(binding);
 
       if (isOutputDOM()) {
-        const referencedBindings = getReferencedBindings(tag.node.extra);
+        const tagExtra = tag.node.extra;
         if (unused) {
           // Its impure values run only for what they do, inline as an unread
           // `<const>`'s.
           for (const attr of [valueAttr, valueChangeAttr]) {
             if (attr && !evaluate(attr.value).pure) {
-              addValue(
-                section,
-                referencedBindings,
-                initValue(binding)!,
-                attr.value,
-              );
+              addValue(section, tagExtra, initValue(binding)!, attr.value);
             }
           }
           tag.remove();
@@ -167,7 +161,7 @@ export default {
 
         const signal = initValue(binding, true);
 
-        addValue(section, referencedBindings, signal, valueAttr.value);
+        addValue(section, tagExtra, signal, valueAttr.value);
 
         if (valueChangeAttr) {
           signal.extraArgs = [valueChangeAttr.value];

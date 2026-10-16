@@ -16,7 +16,6 @@ import { generateUidIdentifier } from "../util/generate-uid";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { addReason } from "../util/reasons";
-import { getReferencedBindings } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { scopeIdentifier } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
@@ -146,7 +145,7 @@ export default {
           addStatement(
             "render",
             section,
-            getReferencedBindings(attrs.value.extra),
+            attrs.value.extra,
             callRuntime("_return", scopeIdentifier, attrs.value),
           );
         }
@@ -155,7 +154,7 @@ export default {
           addStatement(
             "render",
             section,
-            getReferencedBindings(attrs.valueChange.extra),
+            attrs.valueChange.extra,
             callRuntime("_return_change", scopeIdentifier, attrs.valueChange),
           );
         }

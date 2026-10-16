@@ -12,7 +12,6 @@ import {
   getPropertyAlias,
   isInvokeOnlyBinding,
   isOwnBinding,
-  type ReferencedBindings,
   reserveId,
 } from "./bindings";
 import { setTagContentDerives } from "./content-derives";
@@ -40,6 +39,7 @@ import {
   getSourcesForExpr,
   getSourcesForExprs,
   type KnownExprs,
+  getKnownExprsAt,
   mapParamReasonToExpr,
 } from "./reasons";
 import {
@@ -47,7 +47,6 @@ import {
   dropContent,
   dropNodes,
   getAllTagReferenceNodes,
-  getReferencedBindings,
   mergeReferences,
   type ReferencedExtra,
   setDerivedFrom,
@@ -439,6 +438,7 @@ export function knownTagTranslateDOM(
   if (paramsTree) {
     writeParamsToSignals(tag, paramsTree, getTagName(tag) || "tag", {
       tagSection,
+      knownExprs: extra[kKnownExprs]!,
       getBindingIdentifier,
       childScopeBinding,
     });
@@ -957,6 +957,7 @@ function dropAttrTag(tag: t.MarkoTag, dropReferenceNodes: t.Node[]) {
 
 type TranslateDOMInfo = {
   tagSection: Section;
+  knownExprs: KnownExprs;
   getBindingIdentifier: (
     binding: Binding,
     preferredName?: string,
@@ -972,7 +973,7 @@ function writeParamsToSignals(
   info: TranslateDOMInfo,
 ) {
   if (!readsParamsByName(tag, paramsTree)) {
-    const referencedBindings = getReferencedBindings(tag.node.extra);
+    const tagExtra = tag.node.extra;
     const tagInputIdentifier = info.getBindingIdentifier(
       paramsTree.binding,
       `${hint}_params`,
@@ -983,7 +984,7 @@ function writeParamsToSignals(
       addStatement(
         "render",
         info.tagSection,
-        referencedBindings,
+        tagExtra,
         translatedAttrs.statements,
       );
     }
@@ -991,7 +992,7 @@ function writeParamsToSignals(
     writeToSignal(
       info,
       tagInputIdentifier,
-      referencedBindings,
+      tagExtra,
       t.arrayExpression(getRenderArgs(tag, translatedAttrs.properties)),
     );
     return;
@@ -1005,7 +1006,7 @@ function writeParamsToSignals(
         writeToSignal(
           info,
           info.getBindingIdentifier(argTree.binding, `${hint}_param_${i}`),
-          getReferencedBindings(arg.extra), // TODO: pretty sure content needs to have the reference group of it's param defaults.
+          arg.extra, // TODO: pretty sure content needs to have the reference group of it's param defaults.
           arg as t.Expression,
           true,
         );
@@ -1027,7 +1028,7 @@ function applyAttrObject(
   tagInputIdentifier: t.Identifier,
   info: TranslateDOMInfo,
 ) {
-  const referencedBindings = getReferencedBindings(tag.node.extra);
+  const tagExtra = tag.node.extra;
   const statements: t.Statement[] = [];
   let translatedProps: t.Expression | undefined;
 
@@ -1055,16 +1056,10 @@ function applyAttrObject(
   }
 
   if (statements.length) {
-    addStatement("render", info.tagSection, referencedBindings, statements);
+    addStatement("render", info.tagSection, tagExtra, statements);
   }
 
-  writeToSignal(
-    info,
-    tagInputIdentifier,
-    referencedBindings,
-    translatedProps!,
-    true,
-  );
+  writeToSignal(info, tagInputIdentifier, tagExtra, translatedProps!, true);
 }
 
 function writeAttrsToSignals(
@@ -1086,7 +1081,7 @@ function writeAttrsToSignals(
 
   const attrTagLookup = analyzeAttributeTags(tag);
   const seen = new Set<string>();
-  const tagReferencedBindings = getReferencedBindings(tag.node.extra);
+  const tagExtra = tag.node.extra;
   const remaining = new Set(getAllKnownPropNames(paramsTree));
   const contentProps: t.ObjectExpression["properties"] = [];
 
@@ -1095,7 +1090,7 @@ function writeAttrsToSignals(
     const statementsByGroup = new Map<
       AttrTagGroup,
       {
-        referencedBindings: ReferencedBindings;
+        expr: t.NodeExtra | undefined;
         statements: t.Statement[];
       }
     >();
@@ -1109,7 +1104,7 @@ function writeAttrsToSignals(
       if (!statements) {
         statements = [];
         statementsByGroup.set(group, {
-          referencedBindings: getReferencedBindings(child.node.extra),
+          expr: child.node.extra,
           statements,
         });
       }
@@ -1157,12 +1152,7 @@ function writeAttrsToSignals(
               statements,
             );
 
-            addStatement(
-              "render",
-              info.tagSection,
-              tagReferencedBindings,
-              statements,
-            );
+            addStatement("render", info.tagSection, tagExtra, statements);
 
             addAttrTag(
               contentProps,
@@ -1216,27 +1206,19 @@ function writeAttrsToSignals(
       }
     }
 
-    for (const [
-      group,
-      { referencedBindings, statements },
-    ] of statementsByGroup) {
+    for (const [group, { expr, statements }] of statementsByGroup) {
       const trees = getGroupParamsTrees(group, attrTagLookup, paramsTree);
       const hasRest = trees.some(([, tree]) => tree === true);
 
-      addStatement(
-        "render",
-        info.tagSection,
-        hasRest ? tagReferencedBindings : referencedBindings,
-        [
-          t.variableDeclaration(
-            "let",
-            trees.map(([attrTagMeta]) =>
-              t.variableDeclarator(getAttrTagIdentifier(attrTagMeta)),
-            ),
+      addStatement("render", info.tagSection, hasRest ? tagExtra : expr, [
+        t.variableDeclaration(
+          "let",
+          trees.map(([attrTagMeta]) =>
+            t.variableDeclarator(getAttrTagIdentifier(attrTagMeta)),
           ),
-          ...statements,
-        ],
-      );
+        ),
+        ...statements,
+      ]);
 
       for (const [attrTagMeta, tree] of trees) {
         if (tree !== true) {
@@ -1247,7 +1229,7 @@ function writeAttrsToSignals(
               tree.binding,
               `${hint}_${attrTagMeta.name}`,
             ),
-            hasRest ? tagReferencedBindings : referencedBindings,
+            hasRest ? tagExtra : expr,
             getAttrTagIdentifier(attrTagMeta),
           );
         }
@@ -1328,7 +1310,7 @@ function writeAttrsToSignals(
     writeToSignal(
       info,
       attrSignal,
-      getReferencedBindings(attr.value.extra),
+      attr.value.extra,
       attr.value, // TODO: use spreadBinding property alias after we optimize `in`
       true,
     );
@@ -1341,7 +1323,10 @@ function writeAttrsToSignals(
       writeToSignal(
         info,
         propSignal,
-        propBinding,
+        getKnownExprsAt(
+          info.knownExprs,
+          (getParamsTreeAt(paramsTree, prop) as ParamsTree).binding,
+        ).value,
         createScopeReadExpression(propBinding, info.tagSection),
         true,
       );
@@ -1355,7 +1340,7 @@ function writeAttrsToSignals(
 
     if (!isSimpleReference(spreadExpr)) {
       spreadId = generateUidIdentifier(`${hint}_spread`);
-      addStatement("render", info.tagSection, tagReferencedBindings, [
+      addStatement("render", info.tagSection, tagExtra, [
         t.variableDeclaration("const", [
           t.variableDeclarator(spreadId, spreadExpr),
         ]),
@@ -1366,7 +1351,7 @@ function writeAttrsToSignals(
       writeToSignal(
         info,
         getSignalIdentifier(info, paramsTree, hint, name),
-        tagReferencedBindings,
+        tagExtra,
         toMemberExpression(t.cloneNode(spreadId, true), name),
       );
     }
@@ -1392,7 +1377,7 @@ function writeAttrsToSignals(
       writeToSignal(
         info,
         info.getBindingIdentifier(paramsTree.rest.binding, hint + "_$rest"),
-        tagReferencedBindings,
+        tagExtra,
         t.callExpression(
           t.arrowFunctionExpression([t.objectPattern(props)], restId),
           [spreadId],
@@ -1413,7 +1398,7 @@ function writeAttrsToSignals(
       writeToSignal(
         info,
         info.getBindingIdentifier(paramsTree.rest.binding, hint + "_$rest"),
-        tagReferencedBindings,
+        tagExtra,
         t.objectExpression(inputProps),
         true,
       );
@@ -1422,11 +1407,11 @@ function writeAttrsToSignals(
 }
 
 // Calls a child signal with the child scope (and the value it takes) when
-// `referencedBindings` change.
+// what `expr` references changes.
 function writeToSignal(
   info: TranslateDOMInfo,
   signal: t.Identifier,
-  referencedBindings: ReferencedBindings,
+  expr: t.NodeExtra | undefined,
   value?: t.Expression,
   isPure?: boolean,
 ) {
@@ -1437,7 +1422,7 @@ function writeToSignal(
   addStatement(
     "render",
     info.tagSection,
-    referencedBindings,
+    expr,
     t.callExpression(signal, value ? [scope, value] : [scope]),
     isPure,
   );

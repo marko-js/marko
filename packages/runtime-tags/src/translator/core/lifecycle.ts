@@ -9,7 +9,7 @@ import {
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import { getReferencedBindings, mergeTagReferences } from "../util/references";
+import { mergeTagReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { scopeIdentifier } from "../util/scope-read";
@@ -56,7 +56,6 @@ export default {
       const { node } = tag;
       const section = getSection(tag);
       const tagExtra = node.extra!;
-      const referencedBindings = getReferencedBindings(tagExtra);
 
       if (isOutputDOM()) {
         const translatedAttrs = translateAttrs(tag);
@@ -72,14 +71,9 @@ export default {
             ),
           ),
         );
-        addStatement(
-          "effect",
-          section,
-          referencedBindings,
-          translatedAttrs.statements,
-        );
+        addStatement("effect", section, tagExtra, translatedAttrs.statements);
       } else {
-        addHTMLEffectCall(section, referencedBindings);
+        addHTMLEffectCall(section, tagExtra);
       }
 
       tag.remove();

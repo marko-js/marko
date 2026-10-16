@@ -246,18 +246,17 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     );
 
     dynamicStyleValues(node).forEach((value, i) => {
-      const valueRef = getReferencedBindings(value.extra);
       addStatement(
         "render",
         section,
-        valueRef,
+        value.extra,
         callRuntime(
           "_style_rule_item",
           readEl(),
           t.stringLiteral(names[i]),
           value,
         ),
-        !valueRef,
+        !getReferencedBindings(value.extra),
       );
     });
   }
