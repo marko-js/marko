@@ -15,10 +15,10 @@ import runtimeInfo from "../util/runtime-info";
 import { scopeIdentifier } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
-import { createSectionState } from "../util/state";
+import { createOutputSectionState } from "../util/state";
 import { propsToExpression, translateAttrs } from "../util/translate-attrs";
 
-const [getIndex, setIndex] = createSectionState("lifecycleIndex", () => 0);
+const [getIndex, setIndex] = createOutputSectionState(() => 0);
 
 export default {
   analyze(tag) {

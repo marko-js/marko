@@ -18,7 +18,7 @@ import {
 } from "./sections";
 import { findSectionSlot, findSlot, type Slot, SlotKind } from "./slots";
 import { compareSources, type Sources } from "./sources";
-import { createSectionState } from "./state";
+import { createOutputSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 
 type ConditionalReason = Sources & { state: undefined };
@@ -51,8 +51,7 @@ interface GuardHoists {
   pending: Map<number, t.ParenthesizedExpression>;
 }
 
-const [getSectionGuards] = createSectionState<SectionGuards>(
-  "sectionGuards",
+const [getSectionGuards] = createOutputSectionState<SectionGuards>(
   (section) => ({
     hoists: new Map(),
     declarators: [

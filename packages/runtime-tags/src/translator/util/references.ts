@@ -42,7 +42,7 @@ import {
   setReadsOwner,
 } from "./sections";
 import { ALWAYS } from "./sources";
-import { createProgramState } from "./state";
+import { createAnalysisState } from "./state";
 import { getMemberExpressionPropString } from "./to-property-name";
 
 interface ReferencedFunctionExtra extends t.FunctionExtra, ReferencedExtra {}
@@ -78,6 +78,8 @@ declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     /** An expression reads `$global`, so HTML output declares a const for it. */
     hasGlobalRead?: true;
+    /** The template's `$global`: a signal-inert root binding, made on its first read. */
+    globalBinding?: Binding;
   }
 
   export interface MarkoTagExtra {
@@ -588,15 +590,17 @@ export function setReferencesScope(path: t.NodePath<any>) {
   }
 }
 
-// One signal-inert root binding per template, minted on first access.
-const [getGlobalBinding] = createProgramState(() =>
-  createBinding("$global", BindingType.global, ensureSection(getProgram())),
-);
-
 // `$global` reads route through the reference graph, so property
 // aliases record the keys read.
 export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
-  trackReference(path, getGlobalBinding());
+  trackReference(
+    path,
+    (getProgram().node.extra!.globalBinding ??= createBinding(
+      "$global",
+      BindingType.global,
+      ensureSection(getProgram()),
+    )),
+  );
 }
 
 function createBindingsAndTrackReferences(
@@ -1035,19 +1039,19 @@ export function setDerivedFrom(
   }
 }
 
-export const [getAssignments] = createProgramState<AssignedBindingExtra[]>(
+export const [getAssignments] = createAnalysisState<AssignedBindingExtra[]>(
   () => [],
 );
 
-export const [getReadsByExpression] = createProgramState(
+export const [getReadsByExpression] = createAnalysisState(
   () => new Map<ReferencedExtra, Opt<Read>>(),
 );
 
-export const [getFunctionReadsByExpression] = createProgramState(
+export const [getFunctionReadsByExpression] = createAnalysisState(
   () => new Map<ReferencedExtra, Map<ReferencedFunctionExtra, OneMany<Read>>>(),
 );
 
-export const [getReferenceFinalizers] = createProgramState<(() => void)[]>(
+export const [getReferenceFinalizers] = createAnalysisState<(() => void)[]>(
   () => [],
 );
 

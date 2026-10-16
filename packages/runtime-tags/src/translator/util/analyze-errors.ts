@@ -1,12 +1,14 @@
 import type { types as t } from "@marko/compiler";
 import { diagnosticError, getFile } from "@marko/compiler/babel-utils";
 
-import { createProgramState } from "./state";
+import { createAnalysisState } from "./state";
 
 // Recorded as diagnostics rather than thrown so one compile reports every
 // mistake, and `errorRecovery` editors keep them as recoverable diagnostics.
 
-const [hasAnalyzeErrors, setHasAnalyzeErrors] = createProgramState(() => false);
+const [hasAnalyzeErrors, setHasAnalyzeErrors] = createAnalysisState(
+  () => false,
+);
 export { hasAnalyzeErrors };
 
 export function reportAnalyzeError(

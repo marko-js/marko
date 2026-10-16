@@ -76,7 +76,7 @@ import {
 } from "./sections";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
-import { createProgramState, createSectionState } from "./state";
+import { createOutputState, createOutputSectionState } from "./state";
 import { toOnlyExpressionOrBlock } from "./to-only-or-block";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
 import { getRestPattern, withRestFallback } from "./translate-var";
@@ -131,13 +131,11 @@ type closureSignalBuilder = (
 export type ClosureHop =
   | { kind: "if"; nodeBinding: Binding; index: number }
   | { kind: "for"; nodeBinding: Binding };
-export const [getSignals] = createSectionState<Map<unknown, Signal>>(
-  "signals",
+export const [getSignals] = createOutputSectionState<Map<unknown, Signal>>(
   () => new Map(),
 );
-const [getClosureSignalBuilder, _setClosureSignalBuilder] = createSectionState<
-  closureSignalBuilder | undefined
->("queue");
+const [getClosureSignalBuilder, _setClosureSignalBuilder] =
+  createOutputSectionState<closureSignalBuilder | undefined>();
 export function setClosureSignalBuilder(
   tag: t.NodePath<t.MarkoTag>,
   hop: ClosureHop,
@@ -156,9 +154,8 @@ export function buildClosureHop(hop: ClosureHop, render: t.Expression) {
 
 // A branch section whose scope ids ride a resume marker carrying the parent scope
 // id when its scopes serialize, so the client links the owner and `_` is not serialized.
-const [getOwnerResumedByMarker, setOwnerResumedByMarker] = createSectionState<
-  true | undefined
->("ownerResumedByMarker");
+const [getOwnerResumedByMarker, setOwnerResumedByMarker] =
+  createOutputSectionState<true | undefined>();
 export function setSectionOwnerResumedByMarker(section: Section) {
   setOwnerResumedByMarker(section, true);
 }
@@ -208,9 +205,9 @@ function mayBeUnwritten(closure: Binding) {
   return !isUnconditionalReason(getWriteReason(closure));
 }
 
-const [getScopeProperties] = createSectionState<
+const [getScopeProperties] = createOutputSectionState<
   Map<string, { expression: t.Expression; reason: Reason }>
->("scopeProperties", () => new Map());
+>(() => new Map());
 export function writeSlot(
   slot: PlaceSlot | undefined,
   expression: t.Expression,
@@ -226,9 +223,9 @@ export function writeSlot(
   }
 }
 
-const [getSectionDebugVars] = createSectionState<
+const [getSectionDebugVars] = createOutputSectionState<
   Map<string, [name: string, loc?: string]>
->("sectionDebugVars", () => new Map());
+>(() => new Map());
 // Names a runtime-serialized internal slot (eg a controllable's handler) in
 // debug "Unable to serialize" errors; these never pass through `writeScope`.
 export function setSectionDebugVar(
@@ -246,9 +243,9 @@ export function setSectionDebugVar(
 }
 
 const [getSectionWriteScopeBuilder, setSectionWriteScopeBuilder] =
-  createSectionState<undefined | ((expr: t.Expression) => t.Expression)>(
-    "sectionWriteScopeBuilder",
-  );
+  createOutputSectionState<
+    undefined | ((expr: t.Expression) => t.Expression)
+  >();
 export function addWriteScopeBuilder(
   section: Section,
   builder: (writeCall: t.Expression) => t.Expression,
@@ -265,20 +262,18 @@ const htmlDynamicClosureInstancesIdentifier = new WeakMap<
   t.Identifier
 >();
 
-export const [getHTMLSectionStatements] = createSectionState<t.Statement[]>(
-  "htmlScopeStatements",
-  () => [],
-);
+export const [getHTMLSectionStatements] = createOutputSectionState<
+  t.Statement[]
+>(() => []);
 
 // What a section's html renderer returns: its `<return>` value.
 const [getSectionReturnValueIdentifier, setReturnValueIdentifier] =
-  createSectionState<t.Identifier | undefined>("returnValue");
+  createOutputSectionState<t.Identifier | undefined>();
 export { setReturnValueIdentifier };
 
-const [getBindingGetterIdMap] = createSectionState<Map<Binding, t.Identifier>>(
-  "bindingGetterIdMap",
-  () => new Map(),
-);
+const [getBindingGetterIdMap] = createOutputSectionState<
+  Map<Binding, t.Identifier>
+>(() => new Map());
 
 export function getBindingGetterIdentifier(
   binding: Binding,
@@ -1731,7 +1726,7 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
   return getSignal(assignment.section, assignment).buildAssignment;
 }
 
-const [getRegisteredFns] = createProgramState<
+const [getRegisteredFns] = createOutputState<
   {
     id: string;
     registerId: string;

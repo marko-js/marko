@@ -3,7 +3,7 @@ import { getFile } from "@marko/compiler/babel-utils";
 
 import { isTranslate } from "./get-compile-stage";
 import type { Section } from "./sections";
-import { createProgramState } from "./state";
+import { createOutputState } from "./state";
 import { traverse } from "./traverse";
 
 const kUidCounts = Symbol("uid counts");
@@ -52,7 +52,7 @@ export function declareConstBefore(
   return id;
 }
 
-const [getSharedUIDs] = createProgramState(() => new Map<string, string>());
+const [getSharedUIDs] = createOutputState(() => new Map<string, string>());
 export function ensureSharedUid(name: string, section?: Section) {
   const sharedUIDs = getSharedUIDs();
   const nameKey = section ? `${section.id}:${name}` : name;

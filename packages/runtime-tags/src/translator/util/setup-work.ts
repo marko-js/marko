@@ -4,12 +4,12 @@ import { callsOtherTemplateSetup } from "./known-tag";
 import { forEach } from "./optional";
 import { getCanonicalExtra, getReferencedBindings } from "./references";
 import { forEachSection, type Section } from "./sections";
-import { createSectionState } from "./state";
+import { createAnalysisSectionState } from "./state";
 
 // Client work keyed by nothing, or by an expression reading no binding, runs in
 // the section's setup, which callers skip when analysis found none.
 
-const [getSetupInfo] = createSectionState("setupWork", () => ({
+const [getSetupInfo] = createAnalysisSectionState(() => ({
   always: false,
   exprs: new Set<t.NodeExtra>(),
 }));

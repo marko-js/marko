@@ -22,7 +22,7 @@ import {
   importRuntime,
   importRuntimeFeature,
 } from "../util/runtime";
-import { createProgramState } from "../util/state";
+import { createOutputState } from "../util/state";
 import {
   getImportFacts,
   getLoadAttr,
@@ -38,9 +38,7 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-const [getHtmlLoadWrapped] = createProgramState(
-  () => new Map<string, string>(),
-);
+const [getHtmlLoadWrapped] = createOutputState(() => new Map<string, string>());
 
 export default {
   analyze(importDecl) {

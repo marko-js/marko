@@ -21,7 +21,7 @@ import {
 } from "./references";
 import { type Section } from "./sections";
 import { type Sources } from "./sources";
-import { createProgramState } from "./state";
+import { createAnalysisState } from "./state";
 
 type BindingType = BindingType.Value;
 export { BindingType };
@@ -121,9 +121,9 @@ export interface Getter {
   invoked: boolean;
 }
 
-export const [getBindings] = createProgramState(() => new Set<Binding>());
+export const [getBindings] = createAnalysisState(() => new Set<Binding>());
 
-const [getNextBindingId, setNextBindingId] = createProgramState(() => 0);
+const [getNextBindingId, setNextBindingId] = createAnalysisState(() => 0);
 
 export function createBinding(
   name: string,

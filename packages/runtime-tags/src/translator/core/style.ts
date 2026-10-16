@@ -35,7 +35,7 @@ import {
 import { addSetupWork } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import { ensureSlot } from "../util/slots";
-import { createProgramState } from "../util/state";
+import { createAnalysisState } from "../util/state";
 import * as structure from "../util/structure";
 import {
   checkStyleInterpolations,
@@ -57,11 +57,11 @@ declare module "@marko/compiler/dist/types" {
 
 const STYLE_EXT_REG = /^style((?:\.[a-zA-Z0-9$_-]+)+)?/;
 // Same-extension <style> block count per program, so each block's virtual file path is distinct.
-const [getStyleCounts] = createProgramState(
+const [getStyleCounts] = createAnalysisState(
   (): Partial<Record<string, number>> => ({}),
 );
 // Program-wide index of the next `<style>` custom property name.
-const [getCustomPropertyCount, setCustomPropertyCount] = createProgramState(
+const [getCustomPropertyCount, setCustomPropertyCount] = createAnalysisState(
   () => 0,
 );
 
