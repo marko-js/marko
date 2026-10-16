@@ -1127,10 +1127,7 @@ function pushInstancesAccessor(section: Section, accessors: t.Expression[]) {
   // The branches of an `<if>` chain share one slot, so the read checks which renders.
   accessors.push(
     branch?.index !== undefined &&
-      section.parent!.children.some(
-        (child) =>
-          child !== section && child.branch?.nodeBinding === branch.nodeBinding,
-      )
+      Array.isArray(branch.nodeBinding.branchBodies)
       ? t.arrayExpression([
           instancesAccessor,
           t.stringLiteral(
