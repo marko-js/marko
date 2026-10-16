@@ -1,4 +1,4 @@
-// size: 27501 (min) 10237 (brotli)
+// size: 27521 (min) 10247 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1256,7 +1256,7 @@ function _style_shell(scope, nodeAccessor) {
     id = _id(scope);
   (_attr_nonce(scope, nodeAccessor),
     _attr(element, "class", id),
-    _text_content(element, "." + id + "~*{}"));
+    _text_content(element, "." + id + "~*{" + (element.textContent || "}")));
 }
 function _style_rule_item(element, name, value) {
   let text = element.textContent,
