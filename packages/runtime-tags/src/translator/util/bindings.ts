@@ -70,6 +70,9 @@ export interface Binding {
   /** For a tag variable a child's `<return>` writes, the node binding of the
    * tag rendering that child. */
   returnedBy: Binding | undefined;
+  /** For the node a control flow tag renders at, the bodies it renders there:
+   * an `<if>` chain's in order, a loop's, an `<await>`'s, a `<try>`'s. */
+  branchBodies: Opt<Section>;
   /** Scope ids it holds right after its own, up to its highest `ReservedId`:
    * a controllable `<let>`'s change handler, or a tag's scope offset. */
   reserveSize: number;
@@ -167,6 +170,7 @@ export function createBinding(
     localClosures: undefined,
     restOffset,
     returnedBy: undefined,
+    branchBodies: undefined,
     reserveSize: 0,
     scopeAccessor: undefined,
     nullable:

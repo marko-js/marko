@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { type Binding } from "./bindings";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
-import { some } from "./optional";
+import { push, some } from "./optional";
 import { isStateReason, isUnconditionalReason, type Reasons } from "./reasons";
 import { hasResumableAssignment } from "./references";
 import { callRuntime } from "./runtime";
@@ -32,6 +32,10 @@ export function initBranchSection(
 ) {
   bodySection.branchExpr = branchExpr;
   bodySection.branch = branch;
+  branch.nodeBinding.branchBodies = push(
+    branch.nodeBinding.branchBodies,
+    bodySection,
+  );
 }
 
 // The branch id rides the always-rendered resume marker, which resume decodes
