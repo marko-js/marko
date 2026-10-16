@@ -1,5 +1,5 @@
 // template.marko
-let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ (/* @__PURE__ */ _load_event_trigger("click", "#load"))(() => import("./v:child.marko.setup.mjs")));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ (/* @__PURE__ */ _load_event_trigger("click", "#load"))(($_) => import("./v:child.marko.setup.mjs")));
 const $await_content__value = ($scope, value) => _text($scope.a, value);
 const $await_content__$params = ($scope, $params3) => $await_content__value($scope, $params3[0]);
 const $await_content = /*@__PURE__*/ _await_content(2, " ", " ");
@@ -22,7 +22,7 @@ const $setup__script = _script("b3", ($scope) => _on($scope.a, "click", function
 
 // child.marko
 const $template = "<span>child</span>";
-const $setup = () => {};
+const $setup = ($_) => {};
 throw new Error("load failed");
 
 // v:child.marko.setup.js

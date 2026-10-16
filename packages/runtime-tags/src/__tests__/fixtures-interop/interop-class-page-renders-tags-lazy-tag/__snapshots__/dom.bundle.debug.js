@@ -1,7 +1,7 @@
 // tags/lazy.marko
 const $template = "<span id=lazy> </span>";
 const $walks = "D l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var lazy_default = /*@__PURE__*/ _template("__tests__/tags/lazy.marko", $template, "D l", 0, $input);
@@ -10,8 +10,8 @@ var lazy_default = /*@__PURE__*/ _template("__tests__/tags/lazy.marko", $templat
 var import_vdom = require_vdom();
 const $template = "<!><!><!>";
 const $walks = "b%/&c";
-let $load_Lazy_setup = /*@__PURE__*/ _load_setup(() => import("./v:lazy.marko.setup.mjs"));
-let $load_Lazy_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:lazy.marko.input_value.mjs"));
+let $load_Lazy_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy.marko.setup.mjs"));
+let $load_Lazy_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:lazy.marko.input_value.mjs"));
 function $setup($scope) {
 	$load_Lazy_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Lazy_tag_input_value($scope["#childScope/1"], "x");

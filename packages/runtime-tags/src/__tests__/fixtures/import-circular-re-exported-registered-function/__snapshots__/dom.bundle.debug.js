@@ -1,7 +1,7 @@
 // tags/chain-b.marko
 const $template$2 = "<div>b</div>";
 const $walks$2 = "b";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 function bFn(message) {
 	return message + "-b";
 }
@@ -10,7 +10,7 @@ var chain_b_default = /*@__PURE__*/ _template("__tests__/tags/chain-b.marko", $t
 // tags/chain-a.marko
 const $template$1 = "<div>a</div>";
 const $walks$1 = "b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 function aFn(message) {
 	return message + "-a";
 }

@@ -9,12 +9,12 @@ const $labelspan_content__setup = ($scope) => {
 };
 const $labelspan_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", 0, 0, /*@__PURE__*/ _return_setup($labelspan_content__setup));
 const $labelbutton_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "content");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $labelbutton_content, () => $btn);
-const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/2", $labelspan_content, () => $value);
-const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/4", 0, () => $other);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $labelbutton_content, ($_) => $btn);
+const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/2", $labelspan_content, ($_) => $value);
+const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/4", 0, ($_) => $other);
 const $label = /*@__PURE__*/ _let("label/11", ($scope) => {
 	_attr_input_value_default($scope, "#input/9", $scope.label);
-	$dynamicTag($scope, $scope.label && "button", () => ({ "aria-label": $scope.label }));
+	$dynamicTag($scope, $scope.label && "button", ($_) => ({ "aria-label": $scope.label }));
 	$dynamicTag2($scope, $scope.label && "span");
 	$dynamicTag3($scope, !$scope.label && "span");
 });

@@ -2,8 +2,8 @@
 var import_vdom = require_vdom();
 const $template = "<div class=lazy><!></div>";
 const $walks = "D%/&l";
-let $load_Counter_setup = /*@__PURE__*/ _load_setup(() => import("./v:counter.marko.setup.mjs"));
-let $load_Counter_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:counter.marko.input_value.mjs"));
+let $load_Counter_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:counter.marko.setup.mjs"));
+let $load_Counter_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:counter.marko.input_value.mjs"));
 function $setup($scope) {
 	$load_Counter_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Counter_tag_input_value($scope["#childScope/1"], 0);
@@ -32,7 +32,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var v_template_marko_hydrate_5_default = () => {};

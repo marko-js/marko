@@ -29,7 +29,7 @@ const deferToPendingTry = (
         ((branch[AccessorProp.PendingEffectScopes] ||=
           (branch[AccessorProp.AwaitCounter].m &&
             ((complete: AwaitCounter["c"]) =>
-              (branch[AccessorProp.AwaitCounter]!.c = () =>
+              (branch[AccessorProp.AwaitCounter]!.c = (_?: never) =>
                 complete() ||
                 queueAsyncRender(branch!, queueEffect, runPendingEffects)))(
               branch[AccessorProp.AwaitCounter].c,

@@ -10,7 +10,7 @@ installDynamicTagVar((scope, branch, scopeKey, renderer) => {
   branch[AccessorProp.BranchRenders] = createBranchRenders(scope, scopeKey);
   // A native branch has no renderer to call `_return`.
   if (typeof renderer === "string") {
-    branch[AccessorProp.TagVariable]!(() =>
+    branch[AccessorProp.TagVariable]!((_?: never) =>
       MARKO_DEBUG
         ? _el_read(branch[AccessorProp.StartNode])
         : branch[AccessorProp.StartNode],

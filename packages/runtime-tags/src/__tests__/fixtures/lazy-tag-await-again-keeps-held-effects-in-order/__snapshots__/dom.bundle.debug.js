@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div id=log></div><!><!>";
 const $walks = "b%/&c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 function $setup($scope) {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 }
@@ -10,7 +10,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/log-effect.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_id__script = _script("__tests__/tags/log-effect.marko_0_input_id#2", ($scope) => document.getElementById("log").textContent += "[" + $scope.input_id + "]");
 const $input_id = /*@__PURE__*/ _const("input_id", $input_id__script);
 const $input = ($scope, input) => $input_id($scope, input.id);

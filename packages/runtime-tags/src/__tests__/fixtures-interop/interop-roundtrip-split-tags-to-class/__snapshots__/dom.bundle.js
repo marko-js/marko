@@ -30,7 +30,7 @@ _resumed.b = _marko_template;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	_text($scope.b, $scope.c);
-	$dynamicTag($scope, _marko_template, () => ({
+	$dynamicTag($scope, _marko_template, ($_) => ({
 		value: $scope.c,
 		onIncrement: $onIncrement($scope)
 	}));
@@ -41,7 +41,7 @@ const $onIncrement = ($scope) => function() {
 _resumed.a0 = $onIncrement;
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
+var v_template_marko_hydrate_6_default = ($_) => init$1();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();

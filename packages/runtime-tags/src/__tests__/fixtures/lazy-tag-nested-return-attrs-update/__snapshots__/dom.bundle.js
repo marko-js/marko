@@ -1,6 +1,6 @@
 // template.marko
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_label.mjs"));
 const $if_content__n = /*@__PURE__*/ _if_closure(2, 0, ($scope) => $load_Child_tag_input_label($scope.b, `x${$scope._.e}`));
 const $if_content__setup = ($scope) => {
 	$if_content__n._($scope);

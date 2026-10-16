@@ -14,7 +14,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 const $await_content__x = ($scope, x) => _text($scope["#text/0"], x);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");

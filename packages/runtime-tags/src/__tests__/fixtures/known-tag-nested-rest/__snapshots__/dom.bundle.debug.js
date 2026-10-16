@@ -1,7 +1,7 @@
 // tags/leaf.marko
 const $template$2 = "<div>val <!></div>";
 const $walks$2 = "Db%l";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $input_data_val = ($scope, input_data_val) => _text($scope["#text/0"], input_data_val);
 const $input$1 = ($scope, input) => $input_data($scope, input.data);
 const $input_data = ($scope, input_data) => $input_data_val($scope, input_data?.val);
@@ -10,7 +10,7 @@ var leaf_default = /*@__PURE__*/ _template("__tests__/tags/leaf.marko", $templat
 // tags/mid.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<p><!> <!></p>${_w0}`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `D%c%l/${_w0}&`)($walks$2);
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $first = ($scope, first) => _text($scope["#text/0"], first);
 const $keep = ($scope, keep) => _text($scope["#text/1"], keep);
 const $rest = ($scope, rest) => $input_data($scope["#childScope/2"], rest);

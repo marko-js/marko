@@ -1,7 +1,7 @@
 // template.marko
 const $template = /*@__PURE__*/ (() => `<div class="${void 0}">Hello</div>`)();
 const $walks = "b";
-const $setup = () => {};
+const $setup = ($_) => {};
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b");
 
 // v:template.marko.module.css

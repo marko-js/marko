@@ -1,6 +1,6 @@
 // template.marko
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_shared = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_shared.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_shared = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_shared.mjs"));
 const $placeholder_content3__shared = /*@__PURE__*/ _const(4, ($scope) => $load_Child_tag_input_shared($scope.b, $scope.e));
 const $placeholder_content3__count = /*@__PURE__*/ _let(5, ($scope) => _text($scope.d, $scope.f));
 const $placeholder_content3__setup__script = _script("b0", ($scope) => _on($scope.c, "click", function() {

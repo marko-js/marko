@@ -51,7 +51,7 @@ _content_resume($inputuseClassClassLayoutsection_content);
 const $count = /*@__PURE__*/ _let(5, /* @__PURE__ */ _closure($inputuseClassClassLayoutsection_content__count));
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
+var v_template_marko_hydrate_6_default = ($_) => init$1();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();

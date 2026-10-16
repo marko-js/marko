@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $for_content__item__script = _script("__tests__/tags/child.marko_1_item#2", ($scope) => _attrs_script($scope, "#button/0"));
 const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
 	_attrs_content($scope, "#button/0", $scope.item);
@@ -16,7 +16,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // tags/wrap.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_item = ($scope, input_item) => $input_list($scope["#childScope/0"], input_item);
 const $input = ($scope, input) => $input_item($scope, input.item);
 var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$1, $walks$1, 0, $input);

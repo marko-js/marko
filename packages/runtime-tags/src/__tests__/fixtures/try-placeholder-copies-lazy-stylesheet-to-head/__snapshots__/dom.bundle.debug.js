@@ -1,8 +1,8 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $placeholder_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_value($scope["#childScope/1"], "loading");
@@ -36,7 +36,7 @@ var child_default$1 = ".child {\n  color: green;\n}\n";
 // child.marko
 const $template = "<span class=child> </span>";
 const $walks = "D l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "D l", 0, $input);

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%/&c";
-let $load_Parent_setup = /*@__PURE__*/ _load_setup(() => import("./v:parent.marko.setup.mjs"));
+let $load_Parent_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:parent.marko.setup.mjs"));
 function $setup($scope) {
 	$load_Parent_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 }
@@ -25,8 +25,8 @@ var nested_default = /*@__PURE__*/ _template("__tests__/nested.marko", $template
 // parent.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-let $load_Nested_setup = /*@__PURE__*/ _load_setup(() => import("./v:nested.marko.setup.mjs"));
-let $load_Nested_tag_input_shared = /*@__PURE__*/ _load_signal(() => import("./v:nested.marko.input_shared.mjs"));
+let $load_Nested_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:nested.marko.setup.mjs"));
+let $load_Nested_tag_input_shared = /*@__PURE__*/ _load_signal(($_) => import("./v:nested.marko.input_shared.mjs"));
 const $await_content__shared = /*@__PURE__*/ _const("shared", ($scope) => $load_Nested_tag_input_shared($scope["#childScope/4"], $scope.shared));
 const $await_content__count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/2"], $scope.count));
 const $await_content__setup__script = _script("__tests__/parent.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {

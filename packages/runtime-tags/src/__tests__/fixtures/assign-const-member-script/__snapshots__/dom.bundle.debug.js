@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<pre></pre>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $opts__script = _script("__tests__/template.marko_0_opts#4", ($scope) => {
 	{
 		if ($scope.opts) {

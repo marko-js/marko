@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $if_content2__read_getter = /*@__PURE__*/ _hoist("read");
 const $if_content2__read = /*@__PURE__*/ _const("read", ($scope) => _assert_hoist($scope.read));
 const $if_content2__input_label = /*@__PURE__*/ _closure_get("input_label/7", ($scope) => $if_content2__read($scope, $read($scope)), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe");

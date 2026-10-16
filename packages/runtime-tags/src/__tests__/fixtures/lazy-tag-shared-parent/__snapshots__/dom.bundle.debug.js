@@ -10,8 +10,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // tags/parent-a.marko
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%/&c";
-let $load_Child_setup$1 = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_value$1 = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_setup$1 = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_value$1 = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 function $setup$2($scope) {
 	$load_Child_setup$1($scope, $scope["#childScope/1"], $scope["#text/0"]);
 }
@@ -22,8 +22,8 @@ var parent_a_default = /*@__PURE__*/ _template("__tests__/tags/parent-a.marko", 
 // tags/parent-b.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%/&c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 function $setup$1($scope) {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 }

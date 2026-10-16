@@ -1,7 +1,7 @@
 // tags/echo/index.marko
 const $template$1 = "<em> </em>";
 const $walks$1 = "D l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
 var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo/index.marko", $template$1, "D l", 0, $input);

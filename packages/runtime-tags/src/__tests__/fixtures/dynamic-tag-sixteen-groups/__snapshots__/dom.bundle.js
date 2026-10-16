@@ -39,7 +39,7 @@ var child_default = /*@__PURE__*/ _template("b", $template, $walks, 0, $input);
 
 // template.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $n = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag($scope, $scope.c >= 0 ? child_default : null, () => ({
+const $n = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag($scope, $scope.c >= 0 ? child_default : null, ($_) => ({
 	p0: `v0-${$scope.c}`,
 	p1: `v1-${$scope.c}`,
 	p2: `v2-${$scope.c}`,

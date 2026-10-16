@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();
@@ -33,7 +33,7 @@ const $received = /*@__PURE__*/ _let("received/2", ($scope) => _text($scope["#te
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 function $setup($scope) {
 	$received($scope, "none");
-	$dynamicTag($scope, _marko_template, () => ({
+	$dynamicTag($scope, _marko_template, ($_) => ({
 		onLabel: "the-label",
 		onValueChanged: $onValueChanged($scope)
 	}));

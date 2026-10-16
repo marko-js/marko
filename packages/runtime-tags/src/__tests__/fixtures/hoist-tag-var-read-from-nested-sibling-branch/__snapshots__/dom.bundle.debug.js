@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $if_content3__label = /*@__PURE__*/ _let("label/2", ($scope) => _text($scope["#text/1"], $scope.label));
 const $if_content3__setup__script = _script("__tests__/template.marko_3", ($scope) => _on($scope["#button/0"], "click", function() {
 	$if_content3__label($scope, String($if_content__getLabel_getter($scope._)()));

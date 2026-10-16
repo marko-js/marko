@@ -2,7 +2,7 @@
 const $template = "<!><!><button id=swap>swap</button><button id=read>read</button><output> </output>";
 const $walks = "b1b b bD l";
 _dynamic_tag_var_resume("#text/0");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $el);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $el);
 const $tag = /*@__PURE__*/ _let("tag/5", ($scope) => $dynamicTag($scope, $scope.tag));
 const $text = /*@__PURE__*/ _let("text/6", ($scope) => _text($scope["#text/4"], $scope.text));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {

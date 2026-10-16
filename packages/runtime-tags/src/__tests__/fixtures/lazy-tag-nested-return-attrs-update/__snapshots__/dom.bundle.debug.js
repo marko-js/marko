@@ -34,8 +34,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button class=mount>mount</button><button class=inc>inc</button><!><!>";
 const $walks = " b b%c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_label.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_label.mjs"));
 const $if_content__n = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], `x${$scope._.n}`));
 const $if_content__setup = ($scope) => {
 	$if_content__n._($scope);

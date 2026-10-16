@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => {};
+var v_template_marko_hydrate_6_default = ($_) => {};
 
 // components/tags-child.marko
 var import_vdom = require_vdom();

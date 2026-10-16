@@ -36,7 +36,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $
 const $c = /*@__PURE__*/ _const("c", $for_content__c);
 const $b__OR__v = /*@__PURE__*/ _or(8, ($scope) => $c($scope, ($scope.v ? $scope.v.n : 0) + $scope.b), 1, "#scopeOffset/1");
 const $b = /*@__PURE__*/ _let("b/4", $b__OR__v);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $v);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $v);
 const $Tag = /*@__PURE__*/ _let("Tag/5", ($scope) => $dynamicTag($scope, $scope.Tag));
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<button> </button>", " D ", $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/6", ($scope) => $for($scope, [$scope.items]));

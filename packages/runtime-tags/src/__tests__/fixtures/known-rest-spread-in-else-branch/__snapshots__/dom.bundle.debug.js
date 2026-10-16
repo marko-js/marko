@@ -14,7 +14,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/child.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $else_content__input_button_a11yText = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _attr($scope["#div/0"], "aria-label", $scope._.a11yText));
 const $else_content__setup = ($scope) => {
 	$else_content__input_button_a11yText._($scope);

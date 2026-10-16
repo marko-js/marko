@@ -1,7 +1,7 @@
 // tags/custom-tag.marko
 const $template$1 = "<div>Child: <!></div>";
 const $walks$1 = "Db%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_text($scope["#text/0"], $scope.input);
 	_return($scope, $scope.input);
@@ -13,10 +13,10 @@ const $template = "<button>Count: <!></button><!><div>Parent: <!></div>";
 const $walks = " Db%l1bDb%l";
 const tags = [custom_tag_default];
 _dynamic_tag_var_resume("#text/2");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", 0, () => $y, 1);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", 0, ($_) => $y, 1);
 const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
-	$dynamicTag($scope, tags[0], () => [$scope.x]);
+	$dynamicTag($scope, tags[0], ($_) => [$scope.x]);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$x($scope, +$scope.x + 1);

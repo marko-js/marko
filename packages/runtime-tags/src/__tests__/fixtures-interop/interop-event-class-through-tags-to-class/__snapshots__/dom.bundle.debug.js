@@ -22,10 +22,10 @@ _marko_template$1.Component = (0, import_defineComponent.default)(_marko_compone
 // components/tags-child.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 _resumed["__tests__/components/class-child.marko"] = _marko_template$1;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_onChange = /*@__PURE__*/ _const("input_onChange", ($scope) => $dynamicTag($scope, _marko_template$1, () => ({ "on-change": $onchange($scope) })));
+const $input_onChange = /*@__PURE__*/ _const("input_onChange", ($scope) => $dynamicTag($scope, _marko_template$1, ($_) => ({ "on-change": $onchange($scope) })));
 const $input = ($scope, input) => $input_onChange($scope, input.onChange);
 const $onchange = ($scope) => function() {
 	$scope.input_onChange?.();

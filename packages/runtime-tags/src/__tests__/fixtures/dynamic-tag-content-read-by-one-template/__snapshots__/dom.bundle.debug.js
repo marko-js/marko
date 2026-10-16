@@ -1,7 +1,7 @@
 // tags/a.marko
 const $template$2 = "<div>A <!></div>";
 const $walks$2 = "Db%l";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $input_x = ($scope, input_x) => _text($scope["#text/0"], input_x);
 const $input$1 = ($scope, input) => $input_x($scope, input.x);
 var a_default = /*@__PURE__*/ _template("__tests__/tags/a.marko", $template$2, $walks$2, 0, $input$1);
@@ -9,7 +9,7 @@ var a_default = /*@__PURE__*/ _template("__tests__/tags/a.marko", $template$2, $
 // tags/b.marko
 const $template$1 = "<span>B <!></span>";
 const $walks$1 = "Db%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag$1;
@@ -21,7 +21,7 @@ const $template = "<!><!><button></button>";
 const $walks = "b%b b";
 const $useBBA_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "Hello");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $useBBA_content);
-const $useB = /*@__PURE__*/ _let("useB/2", ($scope) => $dynamicTag($scope, $scope.useB ? b_default : a_default, () => ({ x: 1 })));
+const $useB = /*@__PURE__*/ _let("useB/2", ($scope) => $dynamicTag($scope, $scope.useB ? b_default : a_default, ($_) => ({ x: 1 })));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$useB($scope, !$scope.useB);
 }));

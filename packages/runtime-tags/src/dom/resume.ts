@@ -107,7 +107,7 @@ export function initEmbedded(readyId: string, runtimeId?: string) {
     embedRenders = new Map();
     // Checks each embedded render's anchor on every batch: pages hold few embeds
     // and isConnected is cheap, so filtering by mutation records saves nothing.
-    new MutationObserver(() => {
+    new MutationObserver((_) => {
       for (const [anchor, [renderId, scopes]] of embedRenders!) {
         if (!anchor.isConnected) {
           embedRenders!.delete(anchor);
@@ -157,7 +157,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           (+id
             ? initScope((scopeLookup[id] = { [AccessorProp.Id]: +id } as Scope))
             : (initGlobal() as unknown as Scope));
-        const initGlobal = () =>
+        const initGlobal = (_?: never) =>
           (scopeLookup[0] ||= {
             runtimeId,
             renderId,
@@ -341,7 +341,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             }
           };
         };
-        const nextToken = () =>
+        const nextToken = (_?: never) =>
           (lastToken = visitText.slice(
             lastTokenIndex,
             (lastTokenIndex =
@@ -527,7 +527,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           return effects;
         };
 
-        render.w = () => {
+        render.w = (_?: never) => {
           walk();
           runResumeEffects(render);
         };
@@ -574,10 +574,11 @@ export function _var_resume<T extends Signal<unknown>>(
 
 export function _el(id: string, accessor: EncodedAccessor) {
   if (MARKO_DEBUG) {
-    return (_resumed[id] = (scope: Scope) => () => _el_read(scope[accessor]));
+    return (_resumed[id] = (scope: Scope) => (_?: never) =>
+      _el_read(scope[accessor]));
   } else {
     accessor = decodeAccessor(accessor as number);
-    return (_resumed[id] = (scope: Scope) => () => scope[accessor]);
+    return (_resumed[id] = (scope: Scope) => (_?: never) => scope[accessor]);
   }
 }
 
@@ -585,9 +586,11 @@ export function _el(id: string, accessor: EncodedAccessor) {
 // holds the element, or the branch marker after it when branches resume.
 export function _dynamic_tag_var_resume(accessor: EncodedAccessor) {
   if (!MARKO_DEBUG) accessor = decodeAccessor(accessor as number);
-  _resumed[DYNAMIC_TAG_VAR_REGISTER_ID + accessor] = (scope: Scope) => () => {
-    const node = scope[accessor] as ChildNode;
-    const el = node.nodeType === NodeType.Comment ? node.previousSibling : node;
-    return MARKO_DEBUG ? _el_read(el) : el;
-  };
+  _resumed[DYNAMIC_TAG_VAR_REGISTER_ID + accessor] =
+    (scope: Scope) => (_?: never) => {
+      const node = scope[accessor] as ChildNode;
+      const el =
+        node.nodeType === NodeType.Comment ? node.previousSibling : node;
+      return MARKO_DEBUG ? _el_read(el) : el;
+    };
 }

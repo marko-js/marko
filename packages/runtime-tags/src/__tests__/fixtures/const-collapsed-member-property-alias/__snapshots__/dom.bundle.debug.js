@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<p> </p>";
 const $walks = "D l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $xs = /*@__PURE__*/ _const("xs", ($scope) => $xs_length($scope, $scope.xs.length));
 const $many = /*@__PURE__*/ _const("many");
 const $xs_length = ($scope, xs_length) => $many($scope, xs_length > 1);

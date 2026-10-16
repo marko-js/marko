@@ -22,7 +22,7 @@ const $walks = "b1b D l b b";
 _dynamic_tag_var_resume("#text/0");
 const $a__OR__v_n = /*@__PURE__*/ _or(10, ($scope) => _text($scope["#text/3"], $scope.a + ":" + $scope.v_n), 1, "#scopeOffset/1");
 const $a = /*@__PURE__*/ _let("a/6", $a__OR__v_n);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $v);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $v);
 const $Tag = /*@__PURE__*/ _let("Tag/7", ($scope) => $dynamicTag($scope, $scope.Tag));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/2"], "click", function() {

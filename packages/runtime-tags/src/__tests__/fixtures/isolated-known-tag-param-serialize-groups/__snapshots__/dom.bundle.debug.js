@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<div> </div><div> </div>";
 const $walks$1 = "D lD l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_a$1 = ($scope, input_a) => _text($scope["#text/0"], input_a);
 const $input_b$1 = ($scope, input_b) => _text($scope["#text/1"], input_b);
 const $input$1 = ($scope, input) => {
@@ -15,7 +15,7 @@ const $Child_content__walks = "D lD l";
 const $Child_content__template = "<div> </div><div> </div>";
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<!>`)($template$1, $Child_content__template);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&b`)($walks$1, $Child_content__walks);
-const $setup = () => {};
+const $setup = ($_) => {};
 const $Child_content__input_a = ($scope, input_a) => _text($scope["#text/0"], input_a);
 const $Child_content__input_b = ($scope, input_b) => _text($scope["#text/1"], input_b);
 const $Child_content__$params = ($scope, $params2) => $Child_content__input($scope, $params2[0]);

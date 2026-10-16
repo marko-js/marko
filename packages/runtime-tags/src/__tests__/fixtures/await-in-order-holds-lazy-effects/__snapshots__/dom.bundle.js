@@ -1,5 +1,5 @@
 // template.marko
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $await_content__v = ($scope, v) => _text($scope.a, v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $await_promise = /*@__PURE__*/ _await_promise(2, $await_content__$params);

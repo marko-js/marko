@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div><!> <!></div>";
 const $walks = "D%c%l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $pattern2 = ($scope, $pattern) => {
 	$a($scope, $pattern.a);
 	$pattern_b($scope, $pattern.b);

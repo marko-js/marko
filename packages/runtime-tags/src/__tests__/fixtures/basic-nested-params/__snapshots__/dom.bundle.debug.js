@@ -1,9 +1,9 @@
 // tags/child.marko
 const $template$1 = "<div><!></div>";
 const $walks$1 = "D%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);
-const $input_content__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.content, () => [$scope.value]));
+const $input_content__OR__input_value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.content, ($_) => [$scope.value]));
 const $content = /*@__PURE__*/ _const("content", $input_content__OR__input_value);
 const $value = /*@__PURE__*/ _const("value", $input_content__OR__input_value);
 const $input = ($scope, input) => {

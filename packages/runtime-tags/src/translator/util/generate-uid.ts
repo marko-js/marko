@@ -65,6 +65,12 @@ export function ensureSharedUid(name: string, section?: Section) {
   return uniqueName;
 }
 
+// A parameter nothing reads, for a generated arrow that would take none:
+// `e=>` minifies a byte under `()=>`.
+export function getUnusedParamIdentifier() {
+  return t.identifier(ensureSharedUid("_"));
+}
+
 export function hasSharedUid(name: string) {
   return getSharedUIDs().has(name);
 }

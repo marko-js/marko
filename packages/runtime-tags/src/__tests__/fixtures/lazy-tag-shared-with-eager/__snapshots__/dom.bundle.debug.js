@@ -2,7 +2,7 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%/&c";
 const $load_LazyPart_trigger = /*@__PURE__*/ _load_visible_trigger("body");
-let $load_LazyPart_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_LazyPart_trigger(() => import("./v:lazy-part.marko.setup.mjs")));
+let $load_LazyPart_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_LazyPart_trigger(($_) => import("./v:lazy-part.marko.setup.mjs")));
 function $setup$2($scope) {
 	$load_LazyPart_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 }

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div>content</div>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_x__OR__input_fallback = /*@__PURE__*/ _or(7, ($scope) => _attr($scope["#div/0"], "lang", $scope.input_x ? "en" : $scope.input_fallback));
 const $input_x = /*@__PURE__*/ _const("input_x", ($scope) => {
 	_attr($scope["#div/0"], "title", $scope.input_x ? "active" : "idle");

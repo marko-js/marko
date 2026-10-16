@@ -16,10 +16,10 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/wrapper.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $inputAsdiv_content = _content("__tests__/tags/wrapper.marko_1*content", "hi");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputAsdiv_content);
-const $input_as__OR__htmlInput = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.inputAs || "div", () => $scope.htmlInput));
+const $input_as__OR__htmlInput = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.inputAs || "div", ($_) => $scope.htmlInput));
 const $inputAs = /*@__PURE__*/ _const("inputAs", $input_as__OR__htmlInput);
 const $htmlInput = /*@__PURE__*/ _const("htmlInput", $input_as__OR__htmlInput);
 const $input = ($scope, input) => {

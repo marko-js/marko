@@ -1,13 +1,13 @@
 // child.marko
 const $template$1 = "<div class=child>Child</div>";
 const $walks$1 = "b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template$1, "b");
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div class=page>Page</div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)("b");
-const $setup = () => {};
+const $setup = ($_) => {};
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks);
 
 // page.css

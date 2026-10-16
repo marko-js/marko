@@ -1,9 +1,9 @@
 // tags/hello/index.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);
-const $input_item = ($scope, input_item) => $dynamicTag($scope, input_item, () => [1]);
+const $input_item = ($scope, input_item) => $dynamicTag($scope, input_item, ($_) => [1]);
 const $input = ($scope, input) => $input_item($scope, input.item);
 var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello/index.marko", $template$1, "b%c", 0, $input);
 

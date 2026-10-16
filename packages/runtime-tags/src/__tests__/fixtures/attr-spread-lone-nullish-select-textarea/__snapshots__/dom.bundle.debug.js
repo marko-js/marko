@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<select><option value=one>one</option><option value>empty</option></select><textarea></textarea>";
 const $walks = " b b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $attrs__script = _script("__tests__/template.marko_0_attrs#4", ($scope) => {
 	_attrs_script($scope, "#select/0");
 	_attrs_script($scope, "#textarea/1");

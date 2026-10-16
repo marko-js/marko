@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<span> </span><!><!>";
 const $walks = "D l%c";
-const $setup = () => {};
+const $setup = ($_) => {};
 function makeHandler() {
 	return () => {};
 }

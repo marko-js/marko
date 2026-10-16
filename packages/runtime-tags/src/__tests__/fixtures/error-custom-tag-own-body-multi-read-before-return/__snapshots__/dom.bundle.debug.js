@@ -1,9 +1,9 @@
 // tags/child.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b1c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 _dynamic_tag_var_resume("#text/0");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $r);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $r);
 const $r = _var_resume("__tests__/tags/child.marko_0_r#5/var", /*@__PURE__*/ _const("r", ($scope) => _return($scope, $scope.r)));
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);

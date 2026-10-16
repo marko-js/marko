@@ -1,7 +1,7 @@
 // tags/log-effect.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_id__script = _script("__tests__/tags/log-effect.marko_0_input_id#2", ($scope) => document.getElementById("log").textContent += "[" + $scope.input_id + "]");
 const $input_id = /*@__PURE__*/ _const("input_id", $input_id__script);
 const $input = ($scope, input) => $input_id($scope, input.id);

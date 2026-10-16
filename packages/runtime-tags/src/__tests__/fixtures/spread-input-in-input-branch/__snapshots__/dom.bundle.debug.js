@@ -1,7 +1,7 @@
 // tags/my-btn.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $else_content__input__script = _script("__tests__/tags/my-btn.marko_2_input#0:2", ($scope) => _attrs_script($scope, "#button/0"));
 const $else_content__input = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => {
 	_attrs_content($scope, "#button/0", $scope._.input);

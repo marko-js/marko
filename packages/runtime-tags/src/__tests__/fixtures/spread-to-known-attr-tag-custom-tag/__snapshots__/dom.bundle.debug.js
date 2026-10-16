@@ -1,7 +1,7 @@
 // tags/wrap.marko
 const $template$1 = $template$2;
 const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $_class = ($scope, _class) => $input_class($scope["#childScope/0"], _class);
 const $rest_option = ($scope, rest_option) => $input_option($scope["#childScope/0"], rest_option);
 const $input = ($scope, input) => {
@@ -35,7 +35,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/child.marko
 const $template = "<select></select>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $for_content__option__script = _script("__tests__/tags/child.marko_1_option#2", ($scope) => _attrs_script($scope, "#option/0"));
 const $for_content__option = /*@__PURE__*/ _const("option", ($scope) => {
 	_attrs_content($scope, "#option/0", $scope.option);

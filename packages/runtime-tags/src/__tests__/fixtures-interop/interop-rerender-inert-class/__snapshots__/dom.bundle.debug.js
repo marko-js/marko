@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var v_template_marko_hydrate_5_default = () => {};
@@ -29,7 +29,7 @@ const $template = "<button id=tags>Tags</button><!><!>";
 const $walks = " b%c";
 _resumed["__tests__/components/class-display.marko"] = _marko_template;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $msg = /*@__PURE__*/ _let("msg/2", ($scope) => $dynamicTag($scope, _marko_template, () => ({ value: $scope.msg })));
+const $msg = /*@__PURE__*/ _let("msg/2", ($scope) => $dynamicTag($scope, _marko_template, ($_) => ({ value: $scope.msg })));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$msg($scope, $scope.msg + "!");
 }));

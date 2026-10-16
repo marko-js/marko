@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $if_content__input__script = _script("__tests__/tags/child.marko_1_input#0:2", ($scope) => _lifecycle($scope, { onDestroy: function() {
 	$scope._.input.log().append(`destroyed ${$scope._.input.item}`);
 } }));

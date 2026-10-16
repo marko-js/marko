@@ -6,7 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Foo_content__walks);
 const $else_content__input_message = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/0"], $scope._.input_message));
 const $else_content__setup = $else_content__input_message;
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__Foo = /*@__PURE__*/ _closure_get("Foo/2", ($scope) => $if_content__dynamicTag($scope, 0 || $scope._._.Foo, () => ({ message: "done" })), ($scope) => $scope._._);
+const $if_content__Foo = /*@__PURE__*/ _closure_get("Foo/2", ($scope) => $if_content__dynamicTag($scope, 0 || $scope._._.Foo, ($_) => ({ message: "done" })), ($scope) => $scope._._);
 const $if_content__setup = $if_content__Foo;
 const $Foo_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup, " ", " ", $else_content__setup);
 const $Foo_content__input_depth = ($scope, input_depth) => $Foo_content__if($scope, input_depth ? 0 : 1);

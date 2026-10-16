@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div><!>/<!> <!>/<!> <!></div>";
 const $walks = "D%c%c%c%c%l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $nullish = ($scope, nullish) => {
 	$nullish_label($scope, nullish.label);
 	$nullish_size($scope, nullish.size);

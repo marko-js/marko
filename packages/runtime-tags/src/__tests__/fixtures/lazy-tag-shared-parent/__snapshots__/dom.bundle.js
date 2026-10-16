@@ -1,9 +1,9 @@
 // tags/parent-a.marko
-let $load_Child_tag_input_value$1 = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_tag_input_value$1 = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $input_value$1 = ($scope, input_value) => $load_Child_tag_input_value$1($scope.b, input_value);
 
 // tags/parent-b.marko
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $input_value = ($scope, input_value) => $load_Child_tag_input_value($scope.b, input_value * 2);
 
 // template.marko

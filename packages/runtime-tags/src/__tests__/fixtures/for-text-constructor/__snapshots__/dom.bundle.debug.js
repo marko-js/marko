@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div></div>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $for = /*@__PURE__*/ _for_of_unkeyed("#div/0", "constructor");
 const $input_words = ($scope, input_words) => $for($scope, [input_words]);
 const $input = ($scope, input) => $input_words($scope, input.words);

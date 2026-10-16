@@ -7,7 +7,7 @@ var a_default = /*@__PURE__*/ _template("b", $template, $walks, 0, $input);
 
 // template.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, /* @__PURE__ */ _content("a1", "Hello"));
-const $show = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag($scope, $scope.c && a_default, () => ({
+const $show = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag($scope, $scope.c && a_default, ($_) => ({
 	x: 1,
 	item: attrTag({})
 })));

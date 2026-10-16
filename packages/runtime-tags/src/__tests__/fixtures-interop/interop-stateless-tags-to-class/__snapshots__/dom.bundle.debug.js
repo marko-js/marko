@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();
@@ -43,7 +43,7 @@ const $walks = "b%c";
 const $mybutton_content = _content("__tests__/template.marko_1*content", "Say Hi");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $mybutton_content);
 function $setup($scope) {
-	$dynamicTag($scope, _marko_template, () => ({ onClick: $onClick }));
+	$dynamicTag($scope, _marko_template, ($_) => ({ onClick: $onClick }));
 }
 function $onClick() {
 	document.getElementById("display").innerHTML = "Hi!";

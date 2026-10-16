@@ -1,7 +1,7 @@
 // tags/sections.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__content = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.content));
 const $if_content__setup = $if_content__content;

@@ -1,7 +1,7 @@
 // tags/list.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for = /*@__PURE__*/ _for_to_unkeyed("#text/0", "<li>item <!></li>", "Db%", $for_content__setup);
 const $count$1 = ($scope, count) => $for($scope, [

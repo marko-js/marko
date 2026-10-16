@@ -13,7 +13,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/echo.marko
 const $template$1 = "<div class=echo><!></div>";
 const $walks$1 = "D%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
@@ -23,7 +23,7 @@ var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo.marko", $templat
 // tags/my-box.marko
 const $template = /*@__PURE__*/ ((_w0) => `<div></div>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("D%l");
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_head__script = _script("__tests__/tags/my-box.marko_0_input_head#4", ($scope) => _attrs_script($scope, "#div/0"));
 const $input_head = /*@__PURE__*/ _const("input_head", ($scope) => {
 	_attrs_content($scope, "#div/0", $scope.input_head);

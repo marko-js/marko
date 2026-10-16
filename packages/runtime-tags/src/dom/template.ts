@@ -32,7 +32,7 @@ export const _template = (
   renderer.mount = mount;
   (renderer as any)._ = renderer; // This is added exclusively for the compat layer and also to differentiate a Template from a Renderer
   if (MARKO_DEBUG) {
-    renderer.render = () => {
+    renderer.render = (_) => {
       throw new Error(
         `render() is not implemented for the DOM compilation of a Marko template`,
       );
@@ -104,7 +104,7 @@ function mount(
 
   let curValue: unknown;
   const args = this[RendererProp.Params];
-  const effects = prepareEffects(() => {
+  const effects = prepareEffects((_?: never) => {
     branch = createBranch(
       $global as any as Scope[typeof AccessorProp.Global],
       this,
@@ -140,7 +140,7 @@ function mount(
         // than reaching the input signal as an ordinary property.
         if (newInput.$global) ({ $global, ...newInput } = newInput);
         runEffects(
-          prepareEffects(() => {
+          prepareEffects((_?: never) => {
             args(branch, newInput);
           }),
         );

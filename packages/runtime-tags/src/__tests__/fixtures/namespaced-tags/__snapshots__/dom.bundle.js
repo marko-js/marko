@@ -18,8 +18,8 @@ const $Parent = /*@__PURE__*/ _let(11, ($scope) => {
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2, $Child_content);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag(4, $Child_content2);
 const $Child = /*@__PURE__*/ _let(12, ($scope) => {
-	$dynamicTag($scope, $scope.m, () => ({ href: "#bar" }));
-	$dynamicTag2($scope, $scope.m, () => ({ href: "#bar" }));
+	$dynamicTag($scope, $scope.m, ($_) => ({ href: "#bar" }));
+	$dynamicTag2($scope, $scope.m, ($_) => ({ href: "#bar" }));
 	$Parent__OR__Child($scope);
 });
 const $setup__script = _script("a5", ($scope) => {

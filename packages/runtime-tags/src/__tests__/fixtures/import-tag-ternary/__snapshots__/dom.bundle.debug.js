@@ -1,13 +1,13 @@
 // tags/baz.marko
 const $template$2 = "<div>baz</div>";
 const $walks$2 = "b";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 var baz_default = /*@__PURE__*/ _template("__tests__/tags/baz.marko", $template$2, "b");
 
 // tags/foo.marko
 const $template$1 = "<div>foo</div>";
 const $walks$1 = "b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 var foo_default = /*@__PURE__*/ _template("__tests__/tags/foo.marko", $template$1, "b");
 
 // template.marko

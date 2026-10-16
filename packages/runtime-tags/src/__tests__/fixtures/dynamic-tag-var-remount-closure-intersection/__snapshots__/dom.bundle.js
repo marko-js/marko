@@ -27,7 +27,7 @@ const $for_content__setup__script = _script("a1", ($scope) => _on($scope.a, "cli
 const $c = /*@__PURE__*/ _const(9, $for_content__c);
 const $b__OR__v = /*@__PURE__*/ _or(8, ($scope) => $c($scope, ($scope.h ? $scope.h.n : 0) + $scope.e), 1, 1);
 const $b = /*@__PURE__*/ _let(4, $b__OR__v);
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, 0, () => $v);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, 0, ($_) => $v);
 const $Tag = /*@__PURE__*/ _let(5, ($scope) => $dynamicTag($scope, $scope.f));
 const $setup__script = _script("a2", ($scope) => _on($scope.d, "click", function() {
 	$Tag($scope, $scope.f ? null : child_default);

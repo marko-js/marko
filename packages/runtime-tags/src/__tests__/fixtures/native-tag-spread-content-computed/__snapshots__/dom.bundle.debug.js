@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 function same(item) {
 	return item;
 }

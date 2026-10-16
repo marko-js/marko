@@ -80,7 +80,7 @@ export function _attr_input_checked_script(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
-  syncControllableFormInput(el, hasCheckboxChanged, () => {
+  syncControllableFormInput(el, hasCheckboxChanged, (_) => {
     const checkedChange = scope[
       AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
@@ -161,7 +161,7 @@ export function _attr_input_checkedValue_script(
     }
   }
 
-  syncControllableFormInput(el, hasCheckboxChanged, () => {
+  syncControllableFormInput(el, hasCheckboxChanged, (_) => {
     const checkedValueChange = scope[
       AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
@@ -316,7 +316,7 @@ export function _attr_select_value_default(
     ? value.map(normalizeStrProp)
     : normalizeStrProp(value);
 
-  pendingEffects.unshift(() => {
+  pendingEffects.unshift((_: Scope) => {
     for (const opt of el.options) {
       const selected = multiple
         ? normalizedValue.includes(opt.value)
@@ -356,14 +356,14 @@ export function _attr_select_value(
 
   if (MARKO_DEBUG && valueChange) {
     pendingEffects.unshift(
-      () => assertSelectValueMatchesOption(el, normalizedValue, value),
+      (_: Scope) => assertSelectValueMatchesOption(el, normalizedValue, value),
       scope,
     );
   }
 
   if (valueChange && existing) {
     pendingEffects.unshift(
-      () => setSelectValue(el, normalizedValue, multiple),
+      (_: Scope) => setSelectValue(el, normalizedValue, multiple),
       scope,
     );
   } else {
@@ -375,7 +375,7 @@ export function _attr_select_value_script(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLSelectElement;
-  const onChange = () => {
+  const onChange = (_?: Event) => {
     const valueChange = scope[
       AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
@@ -418,7 +418,7 @@ export function _attr_select_value_script(
     scope,
     nodeAccessor,
     { childList: true, subtree: true },
-    () => {
+    (_) => {
       const value = scope[AccessorPrefix.ControlledValue + nodeAccessor];
       if (
         Array.isArray(value)
@@ -512,7 +512,7 @@ export function _attr_details_or_dialog_open_script(
     scope,
     nodeAccessor,
     { attributes: true, attributeFilter: ["open"] },
-    () => {
+    (_) => {
       const openChange = scope[
         AccessorPrefix.ControlledHandler + nodeAccessor
       ] as undefined | ((value: unknown) => unknown);
@@ -575,7 +575,7 @@ function handleFormReset(ev: Event) {
     }
   }
 
-  requestAnimationFrame(() => {
+  requestAnimationFrame((_) => {
     if (!ev.defaultPrevented) {
       for (const change of handlers) {
         change();

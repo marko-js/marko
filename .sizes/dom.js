@@ -1,4 +1,4 @@
-// size: 27545 (min) 10231 (brotli)
+// size: 27501 (min) 10237 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -93,12 +93,12 @@ let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
       walkNextSibling();
     } else storedMultiplier = currentMultiplier * 10 + value - 117;
 };
-let walkNextNode = () => {
+let walkNextNode = (_) => {
   if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
   for (; !currentNode.nextSibling && currentNode.parentNode;) currentNode = currentNode.parentNode;
   walkNextSibling();
 };
-let walkNextSibling = () => (currentNode = currentNode.nextSibling || currentNode);
+let walkNextSibling = (_) => (currentNode = currentNode.nextSibling || currentNode);
 let _resumed = {};
 let curRenders;
 let embedRenders;
@@ -612,7 +612,7 @@ function flushAndWaitFrame() {
 function triggerMacroTask() {
   (channel ||
     ((channel = new MessageChannel()),
-    (channel.port1.onmessage = () => {
+    (channel.port1.onmessage = (_) => {
       ((isScheduled = 0), run());
     })),
     channel.port2.postMessage(0));
@@ -672,7 +672,7 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
       let scopes = toArray(ownerScope[scopeAccessor]);
       queueRender(
         ownerScope,
-        () => {
+        (_) => {
           for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
         },
         -1,
@@ -692,7 +692,7 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
         let nextKey = ownerScope[ownerValueAccessor];
         queueRender(
           ownerScope,
-          () => {
+          (_) => {
             let map = keyedScopes(ownerScope, scopeAccessor, mapAccessor, keyValueAccessor);
             if (map && prevKeyProp in map) {
               let prevScope = map.get(map[prevKeyProp]),
@@ -832,7 +832,7 @@ function _hoist(...path) {
     (path = path.map((p) => (typeof p == "number" ? decodeAccessor(p) : p))),
     (scope) => {
       let fn = (...args) => traverse(scope, path, args).next().value;
-      return ((fn[Symbol.iterator] = () => traverse(scope, path, [])), fn);
+      return ((fn[Symbol.iterator] = (_) => traverse(scope, path, [])), fn);
     }
   );
 }
@@ -851,7 +851,7 @@ function readyFailed(readyId) {}
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
     ((embedRenders = /* @__PURE__ */ new Map()),
-    new MutationObserver(() => {
+    new MutationObserver((_) => {
       for (let [anchor, [renderId, scopes]] of embedRenders)
         if (!anchor.isConnected) {
           (embedRenders.delete(anchor), delete curRenders[renderId]);
@@ -877,7 +877,7 @@ function init(runtimeId = "M") {
             pending = [],
             getScope = (id) =>
               scopeLookup[id] || (+id ? initScope((scopeLookup[id] = { L: +id })) : initGlobal()),
-            initGlobal = () =>
+            initGlobal = (_) =>
               (scopeLookup[0] ||= {
                 runtimeId,
                 renderId,
@@ -992,7 +992,7 @@ function init(runtimeId = "M") {
                     branchStarts.push(visit))
                   : pending.push(visitScope);
               },
-            nextToken = () =>
+            nextToken = (_) =>
               (lastToken = visitText.slice(
                 lastTokenIndex,
                 (lastTokenIndex =
@@ -1083,7 +1083,7 @@ function init(runtimeId = "M") {
                 effects
               );
             }),
-            (render.w = () => {
+            (render.w = (_) => {
               (walk(), runResumeEffects(render));
             }),
             render
@@ -1114,11 +1114,13 @@ function _var_resume(id, signal) {
   return ((_resumed[id] = (scope) => (value) => signal(scope, value)), signal);
 }
 function _el(id, accessor) {
-  return ((accessor = decodeAccessor(accessor)), (_resumed[id] = (scope) => () => scope[accessor]));
+  return (
+    (accessor = decodeAccessor(accessor)), (_resumed[id] = (scope) => (_) => scope[accessor])
+  );
 }
 function _dynamic_tag_var_resume(accessor) {
   ((accessor = decodeAccessor(accessor)),
-    (_resumed["-" + accessor] = (scope) => () => {
+    (_resumed["-" + accessor] = (scope) => (_) => {
       let node = scope[accessor];
       return node.nodeType === 8 ? node.previousSibling : node;
     }));
@@ -1368,7 +1370,7 @@ function _lifecycle(scope, thisObj, index = 0) {
     ? (Object.assign(instance, thisObj), instance.onUpdate?.())
     : ((scope[accessor] = thisObj),
       Object.assign(thisObj, thisObj.onMount?.()),
-      trackAbort(scope, accessor, () => thisObj.onDestroy?.()));
+      trackAbort(scope, accessor, (_) => thisObj.onDestroy?.()));
 }
 function removeChildNodes(startNode, endNode) {
   let stop = endNode.nextSibling;
@@ -1434,7 +1436,7 @@ function _attr_input_checked(scope, nodeAccessor, checked, checkedChange) {
 }
 function _attr_input_checked_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
-  syncControllableFormInput(el, hasCheckboxChanged, () => {
+  syncControllableFormInput(el, hasCheckboxChanged, (_) => {
     let checkedChange = scope["E" + nodeAccessor];
     if (checkedChange) {
       let newValue = el.checked;
@@ -1479,7 +1481,7 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
     (scope["G" + nodeAccessor]
       ? scope["G" + nodeAccessor].push(el.value)
       : (scope["G" + nodeAccessor] = el.value)),
-    syncControllableFormInput(el, hasCheckboxChanged, () => {
+    syncControllableFormInput(el, hasCheckboxChanged, (_) => {
       let checkedValueChange = scope["E" + nodeAccessor];
       if (checkedValueChange) {
         let controlledValueKey = "G" + nodeAccessor,
@@ -1566,7 +1568,7 @@ function _attr_select_value_default(scope, nodeAccessor, value) {
     live = scope.H < runId,
     multiple = Array.isArray(value),
     normalizedValue = multiple ? value.map(normalizeStrProp) : normalizeStrProp(value);
-  pendingEffects.unshift(() => {
+  pendingEffects.unshift((_) => {
     for (let opt of el.options) {
       let selected = multiple ? normalizedValue.includes(opt.value) : opt.value === normalizedValue;
       opt.defaultSelected !== selected &&
@@ -1585,12 +1587,12 @@ function _attr_select_value(scope, nodeAccessor, value, valueChange) {
   ((scope["E" + nodeAccessor] = valueChange),
     (scope["F" + nodeAccessor] = valueChange ? 3 : 5),
     valueChange && existing
-      ? pendingEffects.unshift(() => setSelectValue(el, normalizedValue, multiple), scope)
+      ? pendingEffects.unshift((_) => setSelectValue(el, normalizedValue, multiple), scope)
       : _attr_select_value_default(scope, nodeAccessor, normalizedValue));
 }
 function _attr_select_value_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
-    onChange = () => {
+    onChange = (_) => {
       let valueChange = scope["E" + nodeAccessor];
       if (valueChange) {
         let oldValue = scope["G" + nodeAccessor],
@@ -1620,7 +1622,7 @@ function _attr_select_value_script(scope, nodeAccessor) {
         childList: !0,
         subtree: !0,
       },
-      () => {
+      (_) => {
         let value = scope["G" + nodeAccessor];
         (Array.isArray(value)
           ? value.length !== el.selectedOptions.length ||
@@ -1656,7 +1658,7 @@ function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
       attributes: !0,
       attributeFilter: ["open"],
     },
-    () => {
+    (_) => {
       let openChange = scope["E" + nodeAccessor];
       if (openChange && el.open === !scope["G" + nodeAccessor]) {
         let newValue = el.open;
@@ -1681,7 +1683,7 @@ function handleChange(ev) {
 function handleFormReset(ev) {
   let handlers = [];
   for (let el of ev.target.elements || []) el._ && el.c(el) && handlers.push(el._);
-  requestAnimationFrame(() => {
+  requestAnimationFrame((_) => {
     if (!ev.defaultPrevented) for (let change of handlers) change();
   });
 }
@@ -1773,12 +1775,12 @@ function _await_promise(nodeAccessor, params) {
           (isPromise(promise) && findTryWithPlaceholder(scope)) ||
           awaitBranch;
       if (!tryBranch) {
-        let deferred = (scope[promiseAccessor] = () =>
+        let deferred = (scope[promiseAccessor] = (_) =>
             deferred === scope[promiseAccessor] && awaitPromise(scope, promise)),
           awaitCounter = findTryWithPlaceholder(scope)?.O;
         if (awaitCounter?.i) {
           let complete = awaitCounter.c;
-          awaitCounter.c = () => complete() || queueAsyncRender(scope, deferred);
+          awaitCounter.c = (_) => complete() || queueAsyncRender(scope, deferred);
         }
         return;
       }
@@ -1789,7 +1791,7 @@ function _await_promise(nodeAccessor, params) {
       let awaitCounter = tryBranch.O;
       scope[tryAccessor] ||
         ((scope[tryAccessor] = tryBranch),
-        trackAbort(scope, promiseAccessor, () => {
+        trackAbort(scope, promiseAccessor, (_) => {
           ((scope[promiseAccessor] = 0),
             scope[tryAccessor] &&
               queueAsyncRender(scope[tryAccessor], completeAwaitCounter, awaitCounter));
@@ -1797,7 +1799,7 @@ function _await_promise(nodeAccessor, params) {
         awaitBranch && (awaitBranch.W ||= []),
         tryBranch === awaitBranch
           ? (awaitCounter?.i ||
-              (awaitCounter = createAwaitCounter(tryBranch, () => {
+              (awaitCounter = createAwaitCounter(tryBranch, (_) => {
                 if (tryBranch === scope[branchAccessor]) {
                   let anchor = scope[nodeAccessor];
                   if (anchor.parentNode) {
@@ -1808,7 +1810,7 @@ function _await_promise(nodeAccessor, params) {
                   }
                 }
               })),
-            countAwait(awaitCounter, scope, () => {
+            countAwait(awaitCounter, scope, (_) => {
               awaitBranch.V ||
                 (awaitBranch.S.parentNode.insertBefore(scope[nodeAccessor], awaitBranch.S),
                 tempDetachBranch(tryBranch));
@@ -1820,7 +1822,7 @@ function _await_promise(nodeAccessor, params) {
             let referenceNode = scope[nodeAccessor];
             ((scope[promiseAccessor] = 0),
               scope[branchAccessor]
-                ? queueAsyncRender(scope, () => {
+                ? queueAsyncRender(scope, (_) => {
                     if (!scope[promiseAccessor]) {
                       awaitBranch = resolveAwait(scope, referenceNode, data);
                       let pendingRenders = awaitBranch.W;
@@ -1854,7 +1856,7 @@ function _await_content(nodeAccessor, template, walks, setup) {
     renderer = _content("", template, walks, setup)();
   return (scope) => {
     let pendingScopes = collectScopes(
-      () =>
+      (_) =>
         ((scope[branchAccessor] = createBranch(
           scope.$,
           renderer,
@@ -1871,8 +1873,8 @@ function startAwait(scope, tryBranch = findTryWithPlaceholder(scope)) {
   let awaitCounter = tryBranch.O;
   return (
     awaitCounter?.i ||
-      (awaitCounter = createAwaitCounter(tryBranch, () => dismissPlaceholder(tryBranch))),
-    countAwait(awaitCounter, tryBranch, () => {
+      (awaitCounter = createAwaitCounter(tryBranch, (_) => dismissPlaceholder(tryBranch))),
+    countAwait(awaitCounter, tryBranch, (_) => {
       (((tryBranch.P = createAndSetupBranch(
         tryBranch.$,
         tryBranch.Q(),
@@ -1888,7 +1890,7 @@ function startAwait(scope, tryBranch = findTryWithPlaceholder(scope)) {
 function countAwait(awaitCounter, scope, render) {
   awaitCounter.i++ ||
     requestAnimationFrame(
-      () => awaitCounter.i && runEffects(prepareEffects(() => queueRender(scope, render, -1))),
+      (_) => awaitCounter.i && runEffects(prepareEffects((_) => queueRender(scope, render, -1))),
     );
 }
 function queueCompleteAwaitCounter(tryBranch, awaitCounter) {
@@ -2138,7 +2140,7 @@ let compat = {
         normalizedInput = (args[0] = {});
       for (let key in input) normalizedInput[key === "renderBody" ? "content" : key] = input[key];
     }
-    let renderBranch = () => {
+    let renderBranch = (_) => {
       ((branch ||=
         ((created = 1),
         (component.scope = createAndSetupBranch(out.global, renderer, renderer.e, document.body)))),
@@ -2194,7 +2196,7 @@ function mount(input = {}, reference, position) {
   }
   let curValue,
     args = this.d,
-    effects = prepareEffects(() => {
+    effects = prepareEffects((_) => {
       ((branch = createBranch($global, this, void 0, parentNode)),
         (branch.T = (newValue) => {
           curValue = newValue;
@@ -2216,7 +2218,7 @@ function mount(input = {}, reference, position) {
         args &&
           (newInput.$global && ({ $global, ...newInput } = newInput),
           runEffects(
-            prepareEffects(() => {
+            prepareEffects((_) => {
               args(branch, newInput);
             }),
           ));
@@ -2246,7 +2248,7 @@ function _load_template(id, load) {
             loadFailed(branch, awaitCounter),
           ));
       },
-      _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d || noop }))),
+      _load_signal((_) => (pending ||= load()).then((r) => ({ _: r.d || noop }))),
     );
   return lazyTemplate;
 }
@@ -2272,12 +2274,12 @@ function _load_setup(load) {
   };
 }
 function insertLoaded(renderer, branch, marker, awaitCounter) {
-  let parent = () => marker.parentNode,
+  let parent = (_) => marker.parentNode,
     values = branch.X,
-    clone = () => {
+    clone = (_) => {
       (syncGen(branch), renderer.b(branch, parent().namespaceURI), (branch.X = 0));
     },
-    insert = () => {
+    insert = (_) => {
       (insertBranchBefore(branch, parent(), marker), marker.remove(), awaitCounter?.c());
     },
     remaining;
@@ -2320,7 +2322,7 @@ function _load_signal(load) {
 }
 function _load_visible_trigger(selector, options) {
   let pending, el;
-  return (load) => () =>
+  return (load) => (_) =>
     (pending ||= new Promise(
       (resolve) =>
         (el = getSelectorOrResolve(selector, resolve)) &&
@@ -2333,21 +2335,21 @@ function _load_visible_trigger(selector, options) {
 }
 function _load_idle_trigger(options) {
   let pending;
-  return (load) => () =>
+  return (load) => (_) =>
     (pending ||= new Promise((resolve) =>
       (self.requestIdleCallback || resolve)(resolve, options),
     )).then(load);
 }
 function _load_event_trigger(event, selector) {
   let pending;
-  return (load) => () =>
+  return (load) => (_) =>
     (pending ||= new Promise((resolve) =>
       getSelectorOrResolve(selector, resolve)?.addEventListener(event, resolve, { once: !0 }),
     )).then(load);
 }
 function _load_media_trigger(query) {
   let pending, mql;
-  return (load) => () =>
+  return (load) => (_) =>
     (pending ||= new Promise((resolve) =>
       (mql = matchMedia(query)).matches
         ? resolve()
@@ -2356,7 +2358,7 @@ function _load_media_trigger(query) {
 }
 function _load_race_trigger(...triggers) {
   let pending;
-  return (load) => () => (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
+  return (load) => (_) => (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();

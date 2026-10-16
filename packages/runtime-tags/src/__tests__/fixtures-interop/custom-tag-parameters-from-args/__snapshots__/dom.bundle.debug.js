@@ -25,7 +25,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var v_template_marko_hydrate_5_default = () => {};
@@ -34,7 +34,7 @@ var v_template_marko_hydrate_5_default = () => {};
 const $template = "<button class=inc><!>,<!></button><!><!>";
 const $walks = " D%c%l%c";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/3", 0, 0, 1);
-const $input_content__OR__x__OR__y = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.input_content, () => [$scope.x, $scope.y]), 2);
+const $input_content__OR__x__OR__y = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.input_content, ($_) => [$scope.x, $scope.y]), 2);
 const $x = /*@__PURE__*/ _let("x/7", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$input_content__OR__x__OR__y($scope);

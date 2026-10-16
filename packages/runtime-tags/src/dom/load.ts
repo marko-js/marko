@@ -60,7 +60,7 @@ export function _load_template(id: string, load: () => Promise<Renderer>) {
     },
     // A template reading no input has no params signal; the loaded value
     // still has to count as applied so the content inserts.
-    _load_signal(() =>
+    _load_signal((_?: never) =>
       (pending ||= load()).then((r) => ({
         _: r[RendererProp.Params] || noop,
       })),
@@ -107,17 +107,17 @@ function insertLoaded(
 ) {
   // Read when it inserts: a pending `<try>` moves its range into a fragment
   // while its placeholder shows, and back once it is dismissed.
-  const parent = () => marker.parentNode as Element,
+  const parent = (_?: never) => marker.parentNode as Element,
     values = branch[AccessorProp.Load] as LoadValues,
     // Clone in the run that sets up: nested scopes take the generation of
     // the run that creates them, and a `<let>` seeded by setup in a later
     // run is dropped as stale, taking the nested tag's `<return>` with it.
-    clone = () => {
+    clone = (_?: never) => {
       syncGen(branch);
       renderer[RendererProp.Clone]!(branch, parent().namespaceURI!);
       branch[AccessorProp.Load] = 0;
     },
-    insert = () => {
+    insert = (_?: never) => {
       insertBranchBefore(branch, parent(), marker);
       marker.remove();
       awaitCounter?.c();
@@ -198,7 +198,7 @@ export function _load_visible_trigger(
 ): LoadTrigger {
   let pending: Promise<unknown> | undefined;
   let el: Element | undefined;
-  return (load) => () =>
+  return (load) => (_?: never) =>
     (pending ||= new Promise(
       (resolve) =>
         (el = getSelectorOrResolve(selector, resolve)) &&
@@ -215,7 +215,7 @@ export function _load_idle_trigger(options?: {
   timeout?: number;
 }): LoadTrigger {
   let pending: Promise<unknown> | undefined;
-  return (load) => () =>
+  return (load) => (_?: never) =>
     (pending ||= new Promise((resolve) =>
       (self.requestIdleCallback || resolve)(resolve, options),
     )).then(load);
@@ -226,7 +226,7 @@ export function _load_event_trigger(
   selector: string,
 ): LoadTrigger {
   let pending: Promise<unknown> | undefined;
-  return (load) => () =>
+  return (load) => (_?: never) =>
     (pending ||= new Promise((resolve) =>
       getSelectorOrResolve(selector, resolve)?.addEventListener(
         event,
@@ -239,7 +239,7 @@ export function _load_event_trigger(
 export function _load_media_trigger(query: string): LoadTrigger {
   let pending: Promise<unknown> | undefined;
   let mql: MediaQueryList;
-  return (load) => () =>
+  return (load) => (_?: never) =>
     (pending ||= new Promise((resolve) =>
       (mql = matchMedia(query)).matches
         ? (resolve as () => void)()
@@ -249,7 +249,7 @@ export function _load_media_trigger(query: string): LoadTrigger {
 
 export function _load_race_trigger(...triggers: LoadTrigger[]): LoadTrigger {
   let pending: Promise<unknown> | undefined;
-  return (load) => () =>
+  return (load) => (_?: never) =>
     (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
 }
 

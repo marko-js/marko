@@ -1,7 +1,7 @@
 // tags/custom-tag/index.marko
 const $template$1 = "<div>x: <!> y: <!></div>";
 const $walks$1 = "Db%c%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $x_value = ($scope, x_value) => _text($scope["#text/0"], x_value);
 const $y_value = ($scope, y_value) => _text($scope["#text/1"], y_value);
 const $input$1 = ($scope, input) => {
@@ -15,7 +15,7 @@ var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag/inde
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $setup = () => {};
+const $setup = ($_) => {};
 const $cond = /*@__PURE__*/ _const("cond", ($scope) => {
 	let $x$1, $y$1;
 	if ($scope.cond) {

@@ -17,6 +17,7 @@ import { BindingType, createBinding } from "../../util/bindings";
 import {
   generateUidIdentifier,
   ensureSharedUid,
+  getUnusedParamIdentifier,
 } from "../../util/generate-uid";
 import { getTagName, getTagNameHint } from "../../util/get-tag-name";
 import {
@@ -303,7 +304,10 @@ function createLoadIdentifier(
 ) {
   const id = generateUidIdentifier(name);
   cache.set(key, id);
-  const load = t.arrowFunctionExpression([], dynamicImport(request));
+  const load = t.arrowFunctionExpression(
+    [getUnusedParamIdentifier()],
+    dynamicImport(request),
+  );
   getProgram().node.body.push(
     t.variableDeclaration("let", [
       t.variableDeclarator(

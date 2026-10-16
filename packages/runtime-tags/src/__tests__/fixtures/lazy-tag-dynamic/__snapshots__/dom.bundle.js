@@ -1,7 +1,7 @@
 // template.marko
-const Child = /*@__PURE__*/ _load_template("a", () => import("./child.mjs").then((mod) => mod.default));
+const Child = /*@__PURE__*/ _load_template("a", ($_) => import("./child.mjs").then((mod) => mod.default));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2);
-const $show__OR__value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.d ? Child : null, () => ({
+const $show__OR__value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.d ? Child : null, ($_) => ({
 	label: "x",
 	value: $scope.e
 })));

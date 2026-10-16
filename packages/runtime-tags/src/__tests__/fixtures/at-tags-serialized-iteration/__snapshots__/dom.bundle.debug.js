@@ -10,7 +10,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/list.marko
 const $template = "<div></div>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_item__script = _script("__tests__/tags/list.marko_0_input_item#3", ($scope) => _el_read($scope["#div/0"]).textContent = [...$scope.input_item].map((item) => item.label).join("|"));
 const $input_item = /*@__PURE__*/ _const("input_item", $input_item__script);
 const $input = ($scope, input) => $input_item($scope, input.item);

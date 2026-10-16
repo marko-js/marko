@@ -1,7 +1,7 @@
 // tags/my-box.marko
 const $template$1 = "<section></section><footer></footer>";
 const $walks$1 = " b b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_head__script = _script("__tests__/tags/my-box.marko_0_input_head#4", ($scope) => _attrs_script($scope, "#section/0"));
 const $input_head = /*@__PURE__*/ _const("input_head", ($scope) => {
 	_attrs_content($scope, "#section/0", $scope.input_head);

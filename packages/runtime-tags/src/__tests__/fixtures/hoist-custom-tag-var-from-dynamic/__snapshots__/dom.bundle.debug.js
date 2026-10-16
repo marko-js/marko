@@ -1,7 +1,7 @@
 // tags/thing.marko
 const $template$2 = "<!><!><!><!>";
 const $walks$2 = "b%b%c";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $dynamicTag2$1 = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_content = ($scope, input_content) => {

@@ -26,7 +26,7 @@ _content_resume($mybutton_content);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, $mybutton_content);
 const $count__closure = /*@__PURE__*/ _closure($mybutton_content__count);
 const $count = /*@__PURE__*/ _let(1, ($scope) => {
-	$dynamicTag($scope, _marko_template, () => ({ onClick: $onClick($scope) }));
+	$dynamicTag($scope, _marko_template, ($_) => ({ onClick: $onClick($scope) }));
 	$count__closure($scope);
 });
 const $onClick = ($scope) => function() {
@@ -35,7 +35,7 @@ const $onClick = ($scope) => function() {
 _resumed.a0 = $onClick;
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
+var v_template_marko_hydrate_6_default = ($_) => init$1();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();

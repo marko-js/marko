@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<!><!><p> </p>";
 const $walks$1 = "b%bD l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $for_content__it_content = $for_content__dynamicTag;
 const $for_content__$params = ($scope, $params2) => $for_content__it_content($scope, $params2[0]?.content);

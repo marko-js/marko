@@ -1,7 +1,7 @@
 // child.marko
 const $template = "<div><!>: <!></div>";
 const $walks = "D%c%l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input_value = ($scope, input_value) => _text($scope["#text/1"], input_value);
 const $input = ($scope, input) => {
@@ -13,9 +13,9 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button class=toggle>Toggle</button><button class=inc>Inc</button><!><!>";
 const $walks = " b b%c";
-const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", () => import("./child.mjs").then((mod) => mod.default));
+const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", ($_) => import("./child.mjs").then((mod) => mod.default));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
-const $show__OR__value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.show ? Child : null, () => ({
+const $show__OR__value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.show ? Child : null, ($_) => ({
 	label: "x",
 	value: $scope.value
 })));

@@ -1,7 +1,7 @@
 // tags/hello/index.marko
 const $template$1 = "<!><!><!><!>";
 const $walks$1 = "b%b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_other_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $for_content__item_content = $for_content__dynamicTag;

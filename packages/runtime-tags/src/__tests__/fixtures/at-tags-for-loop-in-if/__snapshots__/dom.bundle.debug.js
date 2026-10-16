@@ -1,7 +1,7 @@
 // tags/list.marko
 const $template$2 = "<div></div>";
 const $walks$2 = " b";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $for_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $for_content__item_content$1 = $for_content__dynamicTag$1;
 const $for_content__$params$1 = ($scope, $params2) => $for_content__item_content$1($scope, $params2[0]?.content);
@@ -13,7 +13,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 // tags/labeled-list.marko
 const $template$1 = "<div><!><!></div>";
 const $walks$1 = "D%b%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $for_content__item_content = $for_content__dynamicTag;
 const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);

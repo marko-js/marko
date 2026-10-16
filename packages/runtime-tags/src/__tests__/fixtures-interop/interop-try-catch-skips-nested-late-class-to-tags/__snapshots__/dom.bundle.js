@@ -75,7 +75,7 @@ const $catch_content__$params = ($scope, $params2) => $catch_content__err_messag
 const $catch_content = _content("a0", "caught <!>", "b%", 0, $catch_content__$params);
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var v_template_marko_hydrate_5_default = () => {};

@@ -1,7 +1,7 @@
 // tags/child/index.marko
 const $template$1 = "X<span></span>";
 const $walks$1 = "b b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_class = ($scope, input_class) => _attr_class($scope["#span/0"], input_class);
 const $input = ($scope, input) => $input_class($scope, input.class);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, "b b", 0, $input);

@@ -1,7 +1,7 @@
 // child.marko
 const $template = "<section><!></section>";
 const $walks = "D%l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_item_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_item_content = $dynamicTag;
@@ -12,8 +12,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button>inc</button><!><!>";
 const $walks = " b%/&c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_item_content = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_item_content.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_item_content = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_item_content.mjs"));
 const $item_content__value_a__OR__value_b = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.value_a + $scope._.value_b));
 const $item_content__value_a = /*@__PURE__*/ _closure_get("value_a/6", $item_content__value_a__OR__value_b, 0, "__tests__/template.marko_1_value_a#0:4/subscribe");
 const $item_content__setup = ($scope) => {

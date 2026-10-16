@@ -2,7 +2,7 @@
 const $template$1 = "<button class=inc> </button><!><!>";
 const $walks$1 = " D l%c";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", 0, 0, 1);
-const $input_content__OR__x = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_content, () => [$scope.x]));
+const $input_content__OR__x = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_content, ($_) => [$scope.x]));
 const $x = /*@__PURE__*/ _let("x/6", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$input_content__OR__x($scope);

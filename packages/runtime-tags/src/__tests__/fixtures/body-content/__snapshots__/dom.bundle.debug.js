@@ -1,7 +1,7 @@
 // tags/FancyButton.marko
 const $template$1 = "<button><!></button>";
 const $walks$1 = " D%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
 const $attrs__script = _script("__tests__/tags/FancyButton.marko_0_attrs#5", ($scope) => _attrs_script($scope, "#button/0"));
 const $attrs = /*@__PURE__*/ _const("attrs", ($scope) => {

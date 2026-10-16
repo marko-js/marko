@@ -1,7 +1,7 @@
 // tags/hello/index.marko
 const $template$1 = "<header><!></header><main><!></main><footer><!></footer>";
 const $walks$1 = " D%lD%l D%l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_header_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/2");
 const $input_footer_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/4");
@@ -37,7 +37,7 @@ const $header_content = _content("__tests__/template.marko_2*content", "Header c
 const $x_content = _content("__tests__/template.marko_1*content", "Body content");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $x_content);
 function $setup($scope) {
-	$dynamicTag($scope, x, () => ({
+	$dynamicTag($scope, x, ($_) => ({
 		header: attrTag({
 			class: "my-header",
 			content: $header_content($scope)

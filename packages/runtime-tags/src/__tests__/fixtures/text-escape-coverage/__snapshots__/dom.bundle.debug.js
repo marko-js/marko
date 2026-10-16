@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div> </div><div> </div><div>before mid <!> end after</div>";
 const $walks = "D lD lDb%l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_a = ($scope, input_a) => _text($scope["#text/0"], input_a ? null : 1);
 const $input_b = ($scope, input_b) => _text($scope["#text/1"], input_b ? true : "x<y");
 const $input_c = ($scope, input_c) => _text($scope["#text/2"], `${input_c}`);

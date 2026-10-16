@@ -2,8 +2,8 @@
 var import_vdom = require_vdom();
 const $template = "<!><!><!>";
 const $walks = "b%/&c";
-let $load_Lazy_setup$1 = /*@__PURE__*/ _load_setup(() => import("./v:lazy-child.marko.setup.mjs"));
-let $load_Lazy_tag_input_value$1 = /*@__PURE__*/ _load_signal(() => import("./v:lazy-child.marko.input_value.mjs"));
+let $load_Lazy_setup$1 = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy-child.marko.setup.mjs"));
+let $load_Lazy_tag_input_value$1 = /*@__PURE__*/ _load_signal(($_) => import("./v:lazy-child.marko.input_value.mjs"));
 function $setup($scope) {
 	$load_Lazy_setup$1($scope, $scope.b, $scope.a);
 	$load_Lazy_tag_input_value$1($scope.b, "class");
@@ -27,8 +27,8 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-let $load_Lazy_setup = /*@__PURE__*/ _load_setup(() => import("./v:lazy-child.marko.setup.mjs"));
-let $load_Lazy_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:lazy-child.marko.input_value.mjs"));
+let $load_Lazy_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy-child.marko.setup.mjs"));
+let $load_Lazy_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:lazy-child.marko.input_value.mjs"));
 const $catch_content__setup = ($scope) => {
 	$load_Lazy_setup($scope, $scope.b, $scope.a);
 	$load_Lazy_tag_input_value($scope.b, "catch");
@@ -38,7 +38,7 @@ const $catch_content__$params = ($scope, $params2) => $catch_content__err_messag
 const $catch_content = _content("a0", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__$params);
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
+var v_template_marko_hydrate_6_default = ($_) => init$1();
 
 // v:template.marko.hydrate-5.js
 var import_components = require_components();
@@ -46,7 +46,7 @@ var v_template_marko_hydrate_5_default = () => (0, import_components.init)();
 
 // tags/lazy-child.marko
 const $template = "<span> </span>";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value__script = _script("c0", ($scope) => console.log("loaded " + $scope.d));
 const $input_value = /*@__PURE__*/ _const(3, ($scope) => {
 	_text($scope.a, $scope.d);

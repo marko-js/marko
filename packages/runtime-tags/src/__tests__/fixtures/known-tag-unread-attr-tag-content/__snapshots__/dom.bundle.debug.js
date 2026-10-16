@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$2 = "<span> </span><!><!>";
 const $walks$2 = "D l%c";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $input_item_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
 const $input_a = ($scope, input_a) => _text($scope["#text/0"], input_a);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
@@ -16,7 +16,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // tags/static-child.marko
 const $template$1 = "<span>static</span>";
 const $walks$1 = "b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 var static_child_default = /*@__PURE__*/ _template("__tests__/tags/static-child.marko", $template$1, "b");
 
 // template.marko

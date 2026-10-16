@@ -1,13 +1,13 @@
 // tags/leaf.marko
 const $template$2 = "<span>leaf</span>";
 const $walks$2 = "b";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 var leaf_default = /*@__PURE__*/ _template("__tests__/tags/leaf.marko", $template$2, "b");
 
 // tags/tree.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<div> </div><!>${_w0}`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `D l%b/${_w0}&`)("b");
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $if_content__input_depth = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_depth($scope["#childScope/0"], $scope._.input_depth - 1));
 const $if_content__setup = $if_content__input_depth;
 const $if = /*@__PURE__*/ _if("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);

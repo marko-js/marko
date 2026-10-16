@@ -10,7 +10,7 @@ var leaf_default = /*@__PURE__*/ _template("__tests__/tags/leaf.marko", $templat
 // tags/wrapper.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $if_content__setup$1 = ($scope) => {
 	$setup$2($scope["#childScope/0"]);
 };

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-let $load_Thrower_setup = /*@__PURE__*/ _load_setup(() => import("./v:thrower.marko.setup.mjs"));
+let $load_Thrower_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:thrower.marko.setup.mjs"));
 const $await_content3__c = ($scope, c) => _text($scope["#text/0"], c);
 const $await_content3__$params = ($scope, $params5) => $await_content3__c($scope, $params5[0]);
 const $await_content3 = /*@__PURE__*/ _await_content("#text/2", " ", " ");

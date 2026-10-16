@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => {};
+var v_template_marko_hydrate_6_default = ($_) => {};
 
 // components/split-counter/component-browser.js
 var require_component_browser = /* @__PURE__ */ __commonJSMin(((exports, module) => {

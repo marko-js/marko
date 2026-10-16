@@ -7,12 +7,12 @@ const $inputitemType_content = _content("__tests__/template.marko_4*content", "i
 _content_resume($inputitemType_content);
 const $inputtype_content = _content("__tests__/template.marko_3*content", "body");
 const $item_getter = _hoist_resume("__tests__/template.marko_0_$item#2:3/hoist", "$item", "BranchScopes:#text/1");
-const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputitemType_content, () => $for_content__$item);
+const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputitemType_content, ($_) => $for_content__$item);
 const $for_content__input_itemType = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__dynamicTag($scope, $scope._.input_itemType));
 const $for_content__setup = $for_content__input_itemType;
 const $for_content__$item = _var_resume("__tests__/template.marko_2_$item#3/var", /*@__PURE__*/ _const("$item", ($scope) => _assert_hoist($scope.$item)));
 const $el_getter = /*@__PURE__*/ _hoist("$el", "BranchScopes:#text/0");
-const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content, () => $if_content__$el);
+const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content, ($_) => $if_content__$el);
 const $if_content__input_type = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_type));
 const $if_content__setup = $if_content__input_type;
 const $if_content__$el = _var_resume("__tests__/template.marko_1_$el#2/var", /*@__PURE__*/ _const("$el", ($scope) => _assert_hoist($scope.$el)));

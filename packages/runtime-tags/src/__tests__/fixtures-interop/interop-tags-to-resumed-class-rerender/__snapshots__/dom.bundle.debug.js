@@ -1,5 +1,5 @@
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var v_template_marko_hydrate_5_default = () => {};
@@ -29,7 +29,7 @@ const $template = "<button id=tags> </button><button id=toggle>toggle</button><!
 const $walks = " D l b%c";
 _resumed["__tests__/components/message.marko"] = _marko_template;
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__count = /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $if_content__dynamicTag($scope, _marko_template, () => ({ value: $scope._.count })));
+const $if_content__count = /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $if_content__dynamicTag($scope, _marko_template, ($_) => ({ value: $scope._.count })));
 const $if_content__setup = $if_content__count;
 const $count = /*@__PURE__*/ _let("count/4", ($scope) => {
 	_text($scope["#text/1"], $scope.count);

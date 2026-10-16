@@ -8,7 +8,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<div id=log></div><!><!>";
 const $walks = "b%c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);

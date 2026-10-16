@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<span>child`\"'</span><span>${value}</span>";
 const $walks$1 = "c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const value = "No!!";
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "c", $setup$1);
 

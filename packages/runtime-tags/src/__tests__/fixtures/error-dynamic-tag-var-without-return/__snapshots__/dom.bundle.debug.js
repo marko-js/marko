@@ -1,7 +1,7 @@
 // tags/none.marko
 const $template$2 = "<span>none</span>";
 const $walks$2 = "b";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 var none_default = /*@__PURE__*/ _template("__tests__/tags/none.marko", $template$2, "b");
 
 // tags/some.marko
@@ -17,7 +17,7 @@ var some_default = /*@__PURE__*/ _template("__tests__/tags/some.marko", "", "", 
 const $template = "<!><!><p> </p><button></button>";
 const $walks = "b1bD l b";
 _dynamic_tag_var_resume("#text/0");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $v);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $v);
 const $Tag = /*@__PURE__*/ _let("Tag/4", ($scope) => $dynamicTag($scope, $scope.Tag));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$Tag($scope, none_default);

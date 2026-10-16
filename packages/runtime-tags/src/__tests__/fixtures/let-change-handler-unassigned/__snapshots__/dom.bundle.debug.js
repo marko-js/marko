@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $value = /*@__PURE__*/ _let_change("value/6", ($scope) => _text($scope["#text/0"], $scope.value));
 const $input_initial__OR__input_onValue = /*@__PURE__*/ _or(5, ($scope) => $value($scope, $scope.initial, $scope.onValue));
 const $initial$1 = /*@__PURE__*/ _const("initial", $input_initial__OR__input_onValue);

@@ -1,7 +1,7 @@
 // tags/tree.marko
 const $template$1 = "<!><!><span> </span>";
 const $walks$1 = "b%bD l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $if_content__input_depth = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_depth($scope["#childScope/0"], $scope._.input_depth - 1));
 const $if_content__setup = ($scope) => {
 	$if_content__input_depth._($scope);

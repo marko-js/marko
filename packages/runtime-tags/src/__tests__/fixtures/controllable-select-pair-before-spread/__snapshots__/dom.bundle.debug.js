@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<select><option value=a>A</option><option value=b>B</option><option value=c>C</option></select>";
 const $walks = " b";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value__OR__input_valueChange__OR__input_attrs__script = _script("__tests__/template.marko_0_input_value#3_input_valueChange#4_input_attrs#5", ($scope) => _attrs_script($scope, "#select/0"));
 const $input_value__OR__input_valueChange__OR__input_attrs = /*@__PURE__*/ _or(6, ($scope) => {
 	_attrs($scope, "#select/0", {

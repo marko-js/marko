@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><div> </div>";
 const $walks = "b%bD l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $if_content__b = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/1"], $scope._.b));
 const $if_content__setup = ($scope) => {
 	$if_content__b._($scope);

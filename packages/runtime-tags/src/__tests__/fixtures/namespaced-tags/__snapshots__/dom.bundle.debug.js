@@ -25,8 +25,8 @@ const $Parent = /*@__PURE__*/ _let("Parent/11", ($scope) => {
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", $Child_content);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/4", $Child_content2);
 const $Child = /*@__PURE__*/ _let("Child/12", ($scope) => {
-	$dynamicTag($scope, $scope.Child, () => ({ href: "#bar" }));
-	$dynamicTag2($scope, $scope.Child, () => ({ href: "#bar" }));
+	$dynamicTag($scope, $scope.Child, ($_) => ({ href: "#bar" }));
+	$dynamicTag2($scope, $scope.Child, ($_) => ({ href: "#bar" }));
 	$Parent__OR__Child($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {

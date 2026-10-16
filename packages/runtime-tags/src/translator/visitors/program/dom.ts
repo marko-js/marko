@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
 import { BindingType } from "../../util/bindings";
+import { getUnusedParamIdentifier } from "../../util/generate-uid";
 import { isOptimize } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
@@ -226,7 +227,10 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 setupIdentifier,
-                t.arrowFunctionExpression([], t.blockStatement([])),
+                t.arrowFunctionExpression(
+                  [getUnusedParamIdentifier()],
+                  t.blockStatement([]),
+                ),
               ),
             ]),
           ),

@@ -31,7 +31,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/show-value.marko
 const $template = "<span> </span>";
 const $walks = " D l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value__script = _script("__tests__/tags/show-value.marko_0_input_value#4", ($scope) => _el_read($scope["#span/0"]).dataset.value = String($scope.input_value));
 const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
 	_text($scope["#text/1"], $scope.input_value);

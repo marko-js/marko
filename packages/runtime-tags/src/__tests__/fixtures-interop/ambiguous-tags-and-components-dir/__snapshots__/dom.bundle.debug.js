@@ -2,7 +2,7 @@
 var import_vdom = require_vdom();
 const $template = "<h1>Hello tags</h1>";
 const $walks = "b";
-const $setup = () => {};
+const $setup = ($_) => {};
 var hello_tags_default = /*@__PURE__*/ _template("__tests__/tags/hello-tags.marko", $template, "b");
 
 // components/hello-components.marko

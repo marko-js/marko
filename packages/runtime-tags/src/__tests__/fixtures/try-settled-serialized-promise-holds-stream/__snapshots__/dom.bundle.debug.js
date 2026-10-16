@@ -26,7 +26,7 @@ var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<html><head></head><body>${_w0}<!><!></body></html>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `DbD/${_w0}&%b%m`)($walks$1);
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 const $await_content2__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content2__$params = ($scope, $params4) => $await_content2__v($scope, $params4[0]);
 const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);

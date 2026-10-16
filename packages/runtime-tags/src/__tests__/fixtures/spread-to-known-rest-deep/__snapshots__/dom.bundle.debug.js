@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$3 = "<input>";
 const $walks$3 = " b";
-const $setup$3 = () => {};
+const $setup$3 = ($_) => {};
 const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => _attr_input_value_default($scope, "#input/0", $scope.input_value));
 const $input_class = ($scope, input_class) => _attr_class($scope["#input/0"], input_class);
 const $input$2 = ($scope, input) => {
@@ -13,7 +13,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // tags/wrap.marko
 const $template$2 = $template$3;
 const $walks$2 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $value = ($scope, value) => $input_value($scope["#childScope/0"], value);
 const $rest_class$1 = ($scope, rest_class) => $input_class($scope["#childScope/0"], rest_class);
 const $input$1 = ($scope, input) => {

@@ -1,7 +1,7 @@
 // tags/inner.marko
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
-const $setup$2 = () => {};
+const $setup$2 = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content$1 = $dynamicTag;

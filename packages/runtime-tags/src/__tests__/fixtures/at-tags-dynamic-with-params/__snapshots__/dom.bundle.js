@@ -1,6 +1,6 @@
 // tags/hello/index.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, 0, 0, 1);
-const $input_item = ($scope, input_item) => $dynamicTag($scope, input_item, () => [1]);
+const $input_item = ($scope, input_item) => $dynamicTag($scope, input_item, ($_) => [1]);
 
 // template.marko
 const $item_content__y = ($scope, y) => _text($scope.a, y);

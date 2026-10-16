@@ -1,7 +1,7 @@
 // tags/note.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_label__script = _script("__tests__/tags/note.marko_0_input_label#3", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		console.log("mounted", $scope.input_label);

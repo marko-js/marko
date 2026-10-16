@@ -1,8 +1,8 @@
 // components/tags-child.marko
 const $template = "<!><!><!>";
 const $walks = "b%/&c";
-let $load_Lazy_setup = /*@__PURE__*/ _load_setup(() => import("./v:lazy.marko.setup.mjs"));
-let $load_Lazy_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:lazy.marko.input_value.mjs"));
+let $load_Lazy_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy.marko.setup.mjs"));
+let $load_Lazy_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:lazy.marko.input_value.mjs"));
 function $setup($scope) {
 	$load_Lazy_setup($scope, $scope.b, $scope.a);
 	$load_Lazy_tag_input_value($scope.b, "x");
@@ -27,7 +27,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 
 // tags/lazy.marko
 const $template = "<span id=lazy> </span>";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value = ($scope, input_value) => _text($scope.a, input_value);
 
 // tags/v:lazy.marko.setup.js

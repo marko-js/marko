@@ -1,7 +1,7 @@
 // child.marko
 const $template = "<section><!></section>";
 const $walks = "D%l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content = $dynamicTag;
@@ -11,8 +11,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button>toggle</button><!><!>";
 const $walks = " b%/&c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_content = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_content.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_content = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_content.mjs"));
 const $Child_content__if = /*@__PURE__*/ _if("#text/0", "shown");
 const $Child_content__show = /*@__PURE__*/ _closure_get("show/4", ($scope) => $Child_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#0:3/subscribe");
 const $Child_content__setup = $Child_content__show;

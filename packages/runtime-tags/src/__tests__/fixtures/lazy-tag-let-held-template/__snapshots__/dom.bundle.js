@@ -1,7 +1,7 @@
 // template.marko
-const Child = _load_template("a", () => import("./child.mjs").then((mod) => mod.default));
+const Child = _load_template("a", ($_) => import("./child.mjs").then((mod) => mod.default));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $count__OR__Tag = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.d, () => ({ value: $scope.c })));
+const $count__OR__Tag = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.d, ($_) => ({ value: $scope.c })));
 const $count = /*@__PURE__*/ _let(2, $count__OR__Tag);
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, +$scope.c + 1);

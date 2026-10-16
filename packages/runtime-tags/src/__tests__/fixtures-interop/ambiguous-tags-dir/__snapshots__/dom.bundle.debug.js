@@ -1,11 +1,11 @@
 // tags/hello.marko
 const $template$1 = "<h1>Hello world</h1>";
 const $walks$1 = "b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 var hello_default = /*@__PURE__*/ _template("__tests__/tags/hello.marko", $template$1, "b");
 
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b");
-const $setup = () => {};
+const $setup = ($_) => {};
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks);

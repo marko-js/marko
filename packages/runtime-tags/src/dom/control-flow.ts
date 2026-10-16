@@ -95,13 +95,14 @@ export function _await_promise(
     if (!tryBranch) {
       // `_await_content` creates the branch, or resume adopts a streamed one
       // as its `@placeholder` completes; either runs the deferred latest value.
-      const deferred = (scope[promiseAccessor] = () =>
+      const deferred = (scope[promiseAccessor] = (_?: Scope) =>
         deferred === scope[promiseAccessor] && awaitPromise(scope, promise));
       const awaitCounter =
         findTryWithPlaceholder(scope)?.[AccessorProp.AwaitCounter];
       if (awaitCounter?.i) {
         const complete = awaitCounter.c;
-        awaitCounter.c = () => complete() || queueAsyncRender(scope, deferred);
+        awaitCounter.c = (_?: never) =>
+          complete() || queueAsyncRender(scope, deferred);
       }
       return;
     }
@@ -119,7 +120,7 @@ export function _await_promise(
       scope[tryAccessor] = tryBranch;
       // Destroying the await drops its value and releases its count after the
       // flush's renders, so an await swapped in keeps the `@placeholder` up.
-      trackAbort(scope, promiseAccessor, () => {
+      trackAbort(scope, promiseAccessor, (_?: never) => {
         scope[promiseAccessor] = 0;
         if (scope[tryAccessor]) {
           queueAsyncRender(
@@ -136,7 +137,7 @@ export function _await_promise(
         awaitCounter = startAwait(scope, tryBranch)!;
       } else {
         if (!awaitCounter?.i) {
-          awaitCounter = createAwaitCounter(tryBranch, () => {
+          awaitCounter = createAwaitCounter(tryBranch, (_?: never) => {
             if (tryBranch === scope[branchAccessor]) {
               const anchor = scope[nodeAccessor] as ChildNode;
               if (anchor.parentNode) {
@@ -154,7 +155,7 @@ export function _await_promise(
             }
           });
         }
-        countAwait(awaitCounter, scope, () => {
+        countAwait(awaitCounter, scope, (_) => {
           if (!awaitBranch[AccessorProp.DetachedAwait]) {
             awaitBranch[AccessorProp.StartNode].parentNode!.insertBefore(
               scope[nodeAccessor] as Node,
@@ -182,7 +183,7 @@ export function _await_promise(
             awaitCounter!.c();
             run();
           } else {
-            queueAsyncRender(scope, () => {
+            queueAsyncRender(scope, (_) => {
               // A value that went pending meanwhile supersedes this one and
               // settles through the count it holds.
               if (!scope[promiseAccessor]) {
@@ -240,7 +241,7 @@ export function _await_content(
   const renderer = _content("", template, walks, setup)();
   return (scope: Scope) => {
     const pendingScopes = collectScopes(
-      () =>
+      (_?: never) =>
         ((scope[branchAccessor] = createBranch(
           scope[AccessorProp.Global],
           renderer,
@@ -264,11 +265,11 @@ export function startAwait(
   if (!tryBranch) return;
   let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
   if (!awaitCounter?.i) {
-    awaitCounter = createAwaitCounter(tryBranch, () =>
+    awaitCounter = createAwaitCounter(tryBranch, (_?: never) =>
       dismissPlaceholder(tryBranch),
     );
   }
-  countAwait(awaitCounter, tryBranch, () => {
+  countAwait(awaitCounter, tryBranch, (_) => {
     // Parented beside the try for effects and awaits; the try still catches its errors.
     (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
       tryBranch[AccessorProp.Global],
@@ -293,13 +294,15 @@ export function startAwait(
 function countAwait(
   awaitCounter: AwaitCounter,
   scope: Scope,
-  render: () => void,
+  render: (scope: Scope) => void,
 ) {
   if (!awaitCounter.i++) {
     requestAnimationFrame(
-      () =>
+      (_) =>
         awaitCounter.i &&
-        runEffects(prepareEffects(() => queueRender(scope, render, -1))),
+        runEffects(
+          prepareEffects((_?: never) => queueRender(scope, render, -1)),
+        ),
     );
   }
 }

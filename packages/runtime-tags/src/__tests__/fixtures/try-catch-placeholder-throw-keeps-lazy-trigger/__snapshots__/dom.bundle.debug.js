@@ -11,8 +11,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 const $template = "<!><!><!><!>";
 const $walks = "b%b%/&c";
 const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
-let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(() => import("./v:child.marko.input_value.mjs")));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.input_value.mjs")));
 const $await_content2__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content2__$params = ($scope, $params4) => $await_content2__v($scope, $params4[0]);
 const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);

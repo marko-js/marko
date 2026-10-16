@@ -15,9 +15,9 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/ui-field.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);
-const $input_content__OR__input_description = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_content, () => [{ d: $scope.input_description }]));
+const $input_content__OR__input_description = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_content, ($_) => [{ d: $scope.input_description }]));
 const $input_content = /*@__PURE__*/ _const("input_content", $input_content__OR__input_description);
 const $input_description = /*@__PURE__*/ _const("input_description", $input_content__OR__input_description);
 const $input$1 = ($scope, input) => {

@@ -147,7 +147,7 @@ export function _for_closure(
     // before any row's own renders.
     queueRender(
       ownerScope,
-      () => {
+      (_) => {
         for (const scope of scopes as BranchScope[]) {
           if (scope[AccessorProp.Gen] > 0 && scope[AccessorProp.Gen] < runId) {
             fn(scope);
@@ -182,7 +182,7 @@ export function _for_selector(
       const nextKey = ownerScope[ownerValueAccessor];
       queueRender(
         ownerScope,
-        () => {
+        (_) => {
           const map = keyedScopes(
             ownerScope,
             scopeAccessor,
@@ -497,7 +497,7 @@ export function _hoist<T>(...path: HoistStep[]) {
     // fast path costs more runtime bytes than its latency savings justify.
     const fn: Hoisted<T> = (...args) =>
       traverse<T>(scope, path, args).next().value as T;
-    fn[Symbol.iterator] = () => traverse<T>(scope, path, []);
+    fn[Symbol.iterator] = (_?: never) => traverse<T>(scope, path, []);
     return fn;
   };
 }

@@ -136,7 +136,7 @@ export const compat = {
       }
     }
 
-    const renderBranch = () => {
+    const renderBranch = (_?: never) => {
       if (!branch) {
         created = 1;
         // The insertion point is still virtual here, so a template rooted at a

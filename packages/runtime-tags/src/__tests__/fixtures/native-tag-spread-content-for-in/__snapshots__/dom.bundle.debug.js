@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $if_content__tag__script = _script("__tests__/tags/child.marko_2_tag#1:3", ($scope) => _attrs_script($scope, "#div/0"));
 const $if_content__tag = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	_attrs_content($scope, "#div/0", {

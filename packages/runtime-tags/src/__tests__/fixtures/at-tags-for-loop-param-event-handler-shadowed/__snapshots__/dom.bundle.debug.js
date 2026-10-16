@@ -1,7 +1,7 @@
 // tags/my-menu/index.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $for_content__item__script = _script("__tests__/tags/my-menu/index.marko_1_item#2", ($scope) => _attrs_script($scope, "#button/0"));
 const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
 	_attrs_content($scope, "#button/0", $scope.item);

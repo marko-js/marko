@@ -4,7 +4,7 @@ const $walks$1 = "Db%l%c";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $input_depth$1 = ($scope, input_depth) => {
 	_text($scope.a, input_depth);
-	$dynamicTag($scope, cyc_a_default, () => ({ depth: input_depth + 1 }));
+	$dynamicTag($scope, cyc_a_default, ($_) => ({ depth: input_depth + 1 }));
 };
 
 // tags/cyc-a/index.marko

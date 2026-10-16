@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_x__OR__input_y = /*@__PURE__*/ _or(4, ($scope) => _return($scope, $scope.input_x + $scope.input_y));
 const $input_x = /*@__PURE__*/ _const("input_x", $input_x__OR__input_y);
 const $input_y = /*@__PURE__*/ _const("input_y", $input_x__OR__input_y);

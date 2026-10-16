@@ -27,8 +27,8 @@ var other_default = /*@__PURE__*/ _template("__tests__/other.marko", $template, 
 // template.marko
 const $template = "<!><!><!><!><!>";
 const $walks = "b%/&b%b%c";
-let $load_Other_setup = /*@__PURE__*/ _load_setup(() => import("./v:other.marko.setup.mjs"));
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
+let $load_Other_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:other.marko.setup.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 const $await_content2__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content2__$params = ($scope, $params4) => $await_content2__v($scope, $params4[0]);
 const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);

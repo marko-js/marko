@@ -16,8 +16,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<button class=parent>parent: <!></button><!><!>";
 const $walks = " Db%l%/&c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $value = /*@__PURE__*/ _let("value/4", ($scope) => {
 	_text($scope["#text/1"], $scope.value);
 	$load_Child_tag_input_value($scope["#childScope/3"], $scope.value);

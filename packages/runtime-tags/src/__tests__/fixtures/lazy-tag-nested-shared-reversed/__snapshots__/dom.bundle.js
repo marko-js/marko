@@ -1,5 +1,5 @@
 // child.marko
-let $load_GrandChild_tag_input_obj = /*@__PURE__*/ _load_signal(() => import("./v:grand-child.marko.input_obj.mjs"));
+let $load_GrandChild_tag_input_obj = /*@__PURE__*/ _load_signal(($_) => import("./v:grand-child.marko.input_obj.mjs"));
 const $obj = /*@__PURE__*/ _let(4, ($scope) => {
 	$load_GrandChild_tag_input_obj($scope.d, $scope.e);
 	$obj_name($scope, $scope.e?.name);

@@ -1,7 +1,7 @@
 // tags/noop.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_v__script = _script("__tests__/tags/noop.marko_0_input_v#2", ($scope) => void $scope.input_v);
 const $input_v = /*@__PURE__*/ _const("input_v", $input_v__script);
 const $input = ($scope, input) => $input_v($scope, input.v);

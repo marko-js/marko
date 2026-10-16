@@ -1,7 +1,7 @@
 // tags/custom-tag.marko
 const $template$1 = "<div></div><!><!>";
 const $walks$1 = " b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $if_content__input_test_class = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _attr_class($scope["#div/0"], $scope._.input_test_class));
 const $if_content__setup = ($scope) => {
 	$if_content__input_test_class._($scope);
@@ -39,7 +39,7 @@ const $input_c__OR__input_d = /*@__PURE__*/ _or(10, ($scope) => {
 		b: $scope.c,
 		d: $scope.d
 	}]);
-	$dynamicTag($scope, TestTag, () => ({
+	$dynamicTag($scope, TestTag, ($_) => ({
 		class: ["a", {
 			b: $scope.c,
 			d: $scope.d

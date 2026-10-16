@@ -1,7 +1,7 @@
 // tags/resume-root.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $inputas_content = _content("__tests__/tags/resume-root.marko_1*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b"));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputas_content);
 const $input_as = $dynamicTag;
@@ -11,7 +11,7 @@ var resume_root_default = /*@__PURE__*/ _template("__tests__/tags/resume-root.ma
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!><html><head><title>Revisit</title></head><body><!>${_w0}</body></html>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `bDbD%/&b/${_w0}&m`)("b%c");
-let $load_LazyWrap_setup = /*@__PURE__*/ _load_setup(() => import("./v:lazy-wrap.marko.setup.mjs"));
+let $load_LazyWrap_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy-wrap.marko.setup.mjs"));
 function $setup($scope) {
 	$load_LazyWrap_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$input_as($scope["#childScope/2"], "section");
@@ -21,13 +21,13 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/lazy-wrap.marko
 const $template = /*@__PURE__*/ ((_w0) => `<div class=lazy>${_w0}</div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("b");
-const $setup = () => {};
+const $setup = ($_) => {};
 var lazy_wrap_default = /*@__PURE__*/ _template("__tests__/tags/lazy-wrap.marko", $template, $walks);
 
 // tags/shared.marko
 const $template = "<span class=shared>Shared</span>";
 const $walks = "b";
-const $setup = () => {};
+const $setup = ($_) => {};
 var shared_default = /*@__PURE__*/ _template("__tests__/tags/shared.marko", $template, "b");
 
 // tags/v:lazy-wrap.marko.setup.js

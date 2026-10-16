@@ -8,7 +8,7 @@ var custom_tag_default = /*@__PURE__*/ _template("b", $template, $walks, 0, $inp
 // template.marko
 const $x_content = _content("a0", "Fallback Body");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, $x_content, 0, 1);
-const $x = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag($scope, $scope.c, () => [
+const $x = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag($scope, $scope.c, ($_) => [
 	1,
 	2,
 	{ content: $x_content($scope) }

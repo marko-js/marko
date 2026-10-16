@@ -10,7 +10,7 @@ const $Message_content__input_before__OR__input_after = /*@__PURE__*/ _or(5, ($s
 const $Message_content__input_before = /*@__PURE__*/ _const(3, $Message_content__input_before__OR__input_after);
 const $Message_content__input_after = /*@__PURE__*/ _const(4, $Message_content__input_before__OR__input_after);
 const $Wrap_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $Wrap_content__as__OR__onClick__OR__content = /*@__PURE__*/ _or(6, ($scope) => $Wrap_content__dynamicTag($scope, $scope.d, () => ({
+const $Wrap_content__as__OR__onClick__OR__content = /*@__PURE__*/ _or(6, ($scope) => $Wrap_content__dynamicTag($scope, $scope.d, ($_) => ({
 	onClick: $scope.e,
 	content: $scope.f
 })), 2);

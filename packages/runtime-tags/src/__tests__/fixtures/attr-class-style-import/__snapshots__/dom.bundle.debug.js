@@ -7,7 +7,7 @@ const tone = { warn: "warn" };
 // tags/input-toggle.marko
 const $template$1 = /*@__PURE__*/ (() => `<div class="${item}"></div>`)();
 const $walks$1 = " b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $input_on = ($scope, input_on) => {
 	_assert_class_toggles(item, ["on"]);
 	_attr_class_names($scope["#div/0"], "on", input_on);

@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $valueChange2__script = _script("__tests__/tags/child.marko_0_$valueChange#3", ($scope) => $scope.$valueChange(2));
 const $valueChange2 = /*@__PURE__*/ _const("$valueChange", $valueChange2__script);
 const $rest__script = _script("__tests__/tags/child.marko_0_rest#4", ($scope) => _attrs_script($scope, "#div/0"));

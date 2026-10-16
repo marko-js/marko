@@ -1,7 +1,7 @@
 // child.marko
 const $template = "<span> </span>";
 const $walks = "D l";
-const $setup = () => {};
+const $setup = ($_) => {};
 const $input_value__script = _script("__tests__/child.marko_0_input_value#3", ($scope) => console.log("loaded " + $scope.input_value));
 const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
 	_text($scope["#text/0"], $scope.input_value);
@@ -13,8 +13,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.setup.mjs"));
-let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $await_content3__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content3__$params = ($scope, $params6) => $await_content3__v($scope, $params6[0]);
 const $await_content2__v = ($scope, v) => _text($scope["#text/0"], v);

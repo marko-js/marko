@@ -20,7 +20,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 _resumed.b = _marko_template;
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $if_content__count = /*@__PURE__*/ _if_closure(3, 0, ($scope) => $if_content__dynamicTag($scope, _marko_template, () => ({ value: $scope._.e })));
+const $if_content__count = /*@__PURE__*/ _if_closure(3, 0, ($scope) => $if_content__dynamicTag($scope, _marko_template, ($_) => ({ value: $scope._.e })));
 const $if_content__setup = $if_content__count;
 const $count = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.b, $scope.e);
@@ -38,7 +38,7 @@ const $setup__script = _script("a0", ($scope) => {
 });
 
 // v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
+var v_template_marko_hydrate_6_default = ($_) => init();
 
 // v:template.marko.hydrate-5.js
 var v_template_marko_hydrate_5_default = () => {};

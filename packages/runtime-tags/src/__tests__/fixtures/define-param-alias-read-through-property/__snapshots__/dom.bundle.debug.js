@@ -3,7 +3,7 @@ const $D_content__walks = "D l";
 const $D_content__template = "<div> </div>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($D_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($D_content__walks);
-const $setup = () => {};
+const $setup = ($_) => {};
 const $D_content__input_x = ($scope, input_x) => _text($scope["#text/0"], input_x);
 const $D_content__$params = ($scope, $params2) => $D_content__input($scope, $params2[0]);
 const $D_content__input = ($scope, input) => $D_content__input_x($scope, input.x);

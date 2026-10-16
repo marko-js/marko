@@ -1,7 +1,7 @@
 // tags/custom-tag/index.marko
 const $template$1 = "<!><!><div> </div>";
 const $walks$1 = "b%bD l";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 const $content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $content = $dynamicTag;
@@ -16,7 +16,7 @@ var custom_tag_default = /*@__PURE__*/ _template("__tests__/tags/custom-tag/inde
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks$1);
-const $setup = () => {};
+const $setup = ($_) => {};
 const $thing_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "Goodbye");
 const $thing_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "Hello");
 const $x = /*@__PURE__*/ _const("x", ($scope) => {

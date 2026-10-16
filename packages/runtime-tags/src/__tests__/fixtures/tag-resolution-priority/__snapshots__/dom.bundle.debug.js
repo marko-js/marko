@@ -1,7 +1,7 @@
 // tags/foo.marko
 const $template$1 = "<span></span>";
 const $walks$1 = "b";
-const $setup$1 = () => {};
+const $setup$1 = ($_) => {};
 var foo_default = /*@__PURE__*/ _template("__tests__/tags/foo.marko", $template$1, "b");
 
 // template.marko
