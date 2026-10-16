@@ -102,7 +102,7 @@ export function markNode(
         "_el_resume",
         getScopeIdIdentifier(section),
         getScopeAccessorLiteral(nodeBinding),
-        (isPatchKeyedByValues(section, nodeBinding) &&
+        (isPatchKeyedByValues(nodeBinding) &&
           getValueNodeMarkerGuard(section, nodeBinding)) ||
           getWriteGuard(section, reason, true),
       )}`;

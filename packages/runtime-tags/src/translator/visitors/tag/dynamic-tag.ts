@@ -30,10 +30,13 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML, isPatch } from "../../util/marko-config";
+import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
-import { writesPatchDynamicTag } from "../../util/patch/decisions";
+import {
+  linkHolePatcher,
+  writesPatchDynamicTag,
+} from "../../util/patch/decisions";
 import { getExprWriteOwnership } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
@@ -43,10 +46,8 @@ import {
   trackParamsReferences,
   trackVarReferences,
   getReferencedBindings,
-  onFinalizeReferences,
 } from "../../util/references";
 import {
-  linkRuntimeFeature,
   callRuntime,
   getCompatRuntimeFile,
   importRuntimeFeature,
@@ -193,15 +194,9 @@ export default {
         BindingType.dom,
         tagSection,
       ));
-      // The dynamic tag entry applies without this template's dom module;
-      // decided once references and structure resolve, as translate decides.
-      if (isPatch() && node.name.type !== "StringLiteral") {
-        onFinalizeReferences(() => {
-          if (writesPatchDynamicTag(tag, tagSection)) {
-            linkRuntimeFeature("patches/dynamic-tag");
-            if (fillsTagVar(tag)) linkRuntimeFeature("patches/value");
-          }
-        });
+      // The dynamic tag entry applies without this template's dom module.
+      if (node.name.type !== "StringLiteral") {
+        linkHolePatcher(tagSection, tagExtra, "patches/dynamic-tag");
       }
 
       if (hasVar) {
@@ -724,10 +719,4 @@ function getDynamicTagInputBindings(tagExtra: t.MarkoTagExtra): Opt<Binding> {
 // something reads the value, or writes it back through the tag.
 function isTagVarResumed(tag: t.NodePath<t.MarkoTag>) {
   return !tag.node.var!.extra!.binding!.pruned || isTagVarAssigned(tag);
-}
-
-// A patch fills a resumed variable through its registration with what the
-// tag renders, unless the rendered template's own state drives its return.
-function fillsTagVar(tag: t.NodePath<t.MarkoTag>) {
-  return !!tag.node.var && isTagVarResumed(tag);
 }

@@ -5,11 +5,7 @@
   },
   "PatchChild:#childScope/3": {
     "PatchCatch:#text/0": [{
-      "PatchText:#text/0": "SHOWN_message",
-      "PatchDynamicTag:#text/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-content-catch-consumer/template.marko_2*content",
-      "PatchChild:BranchScopes:#text/1": {
-        "PatchText:#text/0": "b"
-      }
+      "PatchText:#text/0": "SHOWN_message"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-catch-consumer/tags/error-wrapper.marko_1*content"]
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-catch-consumer/template.marko_fill0": "b"
@@ -22,11 +18,7 @@
   },
   "PatchChild:#childScope/3": {
     "PatchCatch:#text/0": [{
-      "PatchText:#text/0": "SHOWN_message",
-      "PatchDynamicTag:#text/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-content-catch-consumer/template.marko_2*content",
-      "PatchChild:BranchScopes:#text/1": {
-        "PatchText:#text/0": "c"
-      }
+      "PatchText:#text/0": "SHOWN_message"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-catch-consumer/tags/error-wrapper.marko_1*content"]
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-catch-consumer/template.marko_fill0": "c"
@@ -54,11 +46,7 @@
   },
   "PatchChild:#childScope/3": {
     "PatchCatch:#text/0": [{
-      "PatchText:#text/0": "SHOWN_message",
-      "PatchDynamicTag:#text/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-content-catch-consumer/template.marko_2*content",
-      "PatchChild:BranchScopes:#text/1": {
-        "PatchText:#text/0": "e"
-      }
+      "PatchText:#text/0": "SHOWN_message"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-catch-consumer/tags/error-wrapper.marko_1*content"]
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-catch-consumer/template.marko_fill0": "e"

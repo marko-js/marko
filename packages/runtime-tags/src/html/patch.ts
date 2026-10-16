@@ -1,7 +1,11 @@
 export * from "../html";
 // Main's helpers, as a patch build runs them.
 export { withLoadAssets } from "./patches/assets";
-export { _attrs_content, _attrs_partial_content } from "./patches/attrs";
+export {
+  _attr_content,
+  _attrs_content,
+  _attrs_partial_content,
+} from "./patches/attrs";
 export {
   _await,
   _for_in,
@@ -20,7 +24,6 @@ export {
 } from "./patches/dynamic-tag";
 export { _template_patch as _template } from "./patches/template";
 export {
-  _attr_content,
   _resume_locals,
   _script,
   _subscribe,

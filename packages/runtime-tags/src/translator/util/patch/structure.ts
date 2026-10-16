@@ -227,12 +227,7 @@ export function patchesBranchesAt(binding: Binding) {
 }
 
 export function hasStatefulBranchAt(binding: Binding) {
-  for (const child of binding.section.children) {
-    if (child.branch?.nodeBinding === binding && isStatefulBranch(child)) {
-      return true;
-    }
-  }
-  return false;
+  return some(binding.branchBodies, isStatefulBranch);
 }
 
 // A known child renders at the node, which holds the child's scope.
@@ -252,8 +247,3 @@ const [getKnownChildNodes] = createSectionState(
     return nodes;
   },
 );
-
-// The child section a read is the branch expression of, if any.
-export function getBranchOf(read: ReferencedExtra) {
-  return read.section.children.find((child) => child.branchExpr === read);
-}

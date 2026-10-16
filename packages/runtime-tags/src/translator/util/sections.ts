@@ -383,9 +383,7 @@ export const [getBranchRendererArgs, setBranchRendererArgs] =
 // The `<for>` body rendered at a node, once per item: an optional branch
 // outside an `<if>` chain, which numbers its branches.
 export function getLoopBody(binding: Binding) {
-  return binding.section.children.find(
-    (child) => child.branch?.nodeBinding === binding && isLoopBody(child),
-  );
+  return find(binding.branchBodies, isLoopBody);
 }
 
 function isLoopBody(section: Section) {

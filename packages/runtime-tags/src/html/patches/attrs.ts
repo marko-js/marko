@@ -29,7 +29,6 @@ import {
 } from "../writer";
 import { writeDynamicTagEntry, pairsContent } from "./dynamic-tag";
 import {
-  _attr_content,
   _patch_bind,
   entryKey,
   normalizePatchValue,
@@ -196,6 +195,17 @@ function writeAttrsFill(
   return "";
 }
 
+// Content no patch entry names renders as an unpaired dynamic tag's does.
+export function _attr_content(
+  nodeAccessor: Accessor,
+  scopeId: number,
+  content: unknown,
+  markerGuard?: 1 | 0,
+) {
+  renderPatchedContent(nodeAccessor, scopeId, content, markerGuard, 2);
+}
+
+// Main's spread content helpers call main's `_attr_content`, not this one.
 export function _attrs_content(
   data: Record<string, unknown>,
   nodeAccessor: Accessor,

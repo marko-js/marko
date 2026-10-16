@@ -61,17 +61,12 @@ import { type Opt, push } from "../../util/optional";
 import {
   linkHolePatcher,
   writesPatchHole,
-  writesPatchSite,
-  isStableExpr,
-  writesPatchControl,
   writesPatchHandler,
-  mergeWriteSources,
 } from "../../util/patch/decisions";
 import {
   buildPatchTextContent,
   callPatchRuntime,
   getExprWriteOwnership,
-  getPatchWriteOwnership,
 } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
@@ -81,14 +76,12 @@ import {
   trackDomVarReferences,
   isTagVarUsed,
   getReferencedBindings,
-  onFinalizeReferences,
   getCanonicalExtra,
 } from "../../util/references";
 import {
   callRuntime,
   importRuntime,
   importRuntimeFeature,
-  linkRuntimeFeature,
 } from "../../util/runtime";
 import {
   getPrefixedScopeAccessor,
@@ -113,7 +106,6 @@ import {
   setSectionDebugVar,
 } from "../../util/signals";
 import { ensureSlot } from "../../util/slots";
-import { type Sources } from "../../util/sources";
 import { createProgramState } from "../../util/state";
 import * as structure from "../../util/structure";
 import { controllableElements, getTagFacts } from "../../util/tag-facts";
@@ -450,13 +442,8 @@ export default {
         if (content !== undefined) {
           const contentExtra = (attributes[content].value.extra ??= {});
           contentExtra.contentAttr = true;
-          if (isPatch()) {
-            onFinalizeReferences(() => {
-              if (writesPatchSite(tagSection, contentExtra)) {
-                linkRuntimeFeature("patches/dynamic-tag");
-              }
-            });
-          }
+          contentExtra.rendersContent = true;
+          linkHolePatcher(tagSection, contentExtra, "patches/dynamic-tag");
         }
 
         for (const indexes of [own, controllable?.attrs, [content]]) {
@@ -473,35 +460,26 @@ export default {
             }
           }
         }
-        if (isPatch() && hasDynamicAttributes) {
-          if (spread) {
-            onFinalizeReferences(() => {
-              if (writesPatchHole(tagSection, tagExtra)) {
-                linkRuntimeFeature("patches/attrs");
-                if (
-                  spreadRendersContent(
-                    tag,
-                    attrAt(attributes, content),
-                    isTextOnly,
-                  )
-                ) {
-                  linkRuntimeFeature("patches/dynamic-tag");
-                }
-                // A spread owning the element's controllable (no static one
-                // survives the merge) re-claims it at run time.
-                if (!controllable && controllableElements.has(tagName)) {
-                  linkRuntimeFeature("controllable");
-                }
-              }
-            });
-          }
-        }
-
         if (spread) {
           const spreadExtra = mergeReferences(
             tagSection,
             tag.node,
             spread.map((index) => attributes[index].value),
+          );
+          linkHolePatcher(
+            tagSection,
+            spreadExtra,
+            "patches/attrs",
+            spreadRendersContent(
+              tag,
+              attrAt(attributes, content),
+              isTextOnly,
+            ) && "patches/dynamic-tag",
+            // A spread owning the element's controllable (no static one
+            // survives the merge) re-claims it at run time.
+            !controllable &&
+              controllableElements.has(tagName) &&
+              "controllable",
           );
 
           spreadExtra.rendersContent = true;
@@ -517,26 +495,18 @@ export default {
           const values = controllable.attrs.map((index) =>
             index === undefined ? undefined : attributes[index].value,
           );
-          exprExtras = mergeReferenceGroup(tagSection, values);
+          const controlExtra = mergeReferenceGroup(tagSection, values);
+          exprExtras = controlExtra;
           if (values.some((value) => value?.extra?.rendersValue)) {
-            exprExtras.rendersValue = true;
+            controlExtra.rendersValue = true;
           }
           // A patched control's entries apply through these features.
-          if (isPatch()) {
-            onFinalizeReferences(() => {
-              if (
-                writesPatchControl(
-                  tagSection,
-                  getPatchControlExtras(attributes, controllable),
-                )
-              ) {
-                linkRuntimeFeature("patches/control");
-                linkRuntimeFeature(
-                  getPatchControlFeature(tagName, controllable),
-                );
-              }
-            });
-          }
+          linkHolePatcher(
+            tagSection,
+            controlExtra,
+            "patches/control",
+            getPatchControlFeature(tagName, controllable),
+          );
         }
 
         if (own) {
@@ -590,22 +560,6 @@ export default {
 
       write`<${tagName}`;
 
-      if (own && isPatch()) {
-        onFinalizeReferences(() => {
-          if (
-            own.some((index) =>
-              writesAttrPatchHole(
-                tag,
-                tagSection,
-                attributes[index] as t.MarkoAttribute,
-              ),
-            )
-          ) {
-            linkRuntimeFeature("patches/attr");
-          }
-        });
-      }
-
       if (own) {
         for (const index of own) {
           const { name, value } = attributes[index] as t.MarkoAttribute;
@@ -614,6 +568,9 @@ export default {
             write`${getStaticAttrMarkup(name, computed)}`;
           } else if (name === "class" || name === "style") {
             const meta = delimitedAttrMetas[name]!;
+            if (isDynamicAttr(value, meta)) {
+              linkHolePatcher(tagSection, value.extra!, "patches/attr");
+            }
             const { staticParts } = meta;
             if (getDelimitedAttrItems(name, meta) && staticParts.length) {
               if (staticParts.every(isLiteralPart)) {
@@ -632,6 +589,8 @@ export default {
                 write`"`;
               }
             }
+          } else {
+            linkHolePatcher(tagSection, value.extra!, "patches/attr");
           }
         }
       }
@@ -762,26 +721,22 @@ export default {
           const changeAttr = attrAt(attributes, controllable.attrs[1]);
           const bindsHandler =
             !!changeAttr && writesPatchHandler(tagSection, changeAttr.value);
-          const controlExtras = getPatchControlExtras(attributes, controllable);
-          const writesControl = writesPatchControl(tagSection, controlExtras);
+          // The control's attributes read as one group.
+          const controlExtra = attrAt(
+            attributes,
+            controllable.attrs.find(isDefined),
+          )!.value.extra!;
+          const writesControl = writesPatchHole(tagSection, controlExtra);
           controlArgs = controllable.attrs.map(
             (index) => attrAt(attributes, index)?.value,
           );
           if (writesControl || bindsHandler) {
             // A param-sourced control value writes only under server ownership.
             const [owned, group] = writesControl
-              ? getPatchWriteOwnership(
-                  tagSection,
-                  controlExtras.reduce<Sources | undefined>(
-                    mergeWriteSources,
-                    undefined,
-                  ),
-                  // A constant control only seeds a scope the flush creates.
-                  controlExtras.every(isStableExpr),
-                )
+              ? getExprWriteOwnership(tagSection, controlExtra)
               : [];
             const [bindOwned, bindGroup] = bindsHandler
-              ? getExprWriteOwnership(tagSection, changeAttr!.value.extra)
+              ? getExprWriteOwnership(tagSection, changeAttr!.value.extra!)
               : [];
             patchArgs = [
               writesControl &&
@@ -917,7 +872,7 @@ export default {
                   name,
                 ...(helper === "_patch_attr" ? [t.stringLiteral(name)] : []),
                 value,
-                ...getExprWriteOwnership(tagSection, value.extra),
+                ...getExprWriteOwnership(tagSection, value.extra!),
               )}`;
             } else if (tagName === "option" && name === "value") {
               write`${callRuntime("_attr_option_value", value)}`;
@@ -1000,11 +955,11 @@ export default {
             nodeBinding && getWriteReason(nodeBinding),
             true,
           );
-          // A `content=` with no state source re-renders from a dynamic tag
-          // entry, like a dynamic tag (the client signal shape is the same).
+          // A `content=` a patch writes re-renders from a dynamic tag entry, like
+          // a dynamic tag (the client signal shape is the same).
           (tag.node.body.body as t.Statement[]) = [
             t.expressionStatement(
-              writesPatchSite(tagSection, contentAttr.value.extra)
+              writesPatchHole(tagSection, contentAttr.value.extra)
                 ? callRuntime(
                     "_patch_attr_content",
                     nodeAccessor,
@@ -1013,7 +968,7 @@ export default {
                     markerGuard,
                     ...getExprWriteOwnership(
                       tagSection,
-                      contentAttr.value.extra,
+                      contentAttr.value.extra!,
                     ),
                   )
                 : callRuntime(
@@ -1477,23 +1432,6 @@ export default {
     },
   }),
 } satisfies TemplateVisitor<t.MarkoTag>;
-
-// The extras of the control attributes present; a group entry also carries
-// `value` so each node compares client-side.
-function getPatchControlExtras(
-  attributes: t.MarkoTag["attributes"],
-  controllable: Controllable,
-) {
-  const [value, , groupValue] = controllable.attrs;
-  const extras: t.NodeExtra[] = [];
-  for (const index of controllable.state === "checkedValue"
-    ? [value, groupValue]
-    : [value]) {
-    const extra = attrAt(attributes, index)?.value.extra;
-    if (extra) extras.push(extra);
-  }
-  return extras;
-}
 
 function getPatchControlFeature(tagName: string, controllable: Controllable) {
   switch (controllable.state) {

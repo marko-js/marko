@@ -5,11 +5,7 @@
   },
   cd: {
     ka: [{
-      ta: "SHOWN_message",
-      fb: "^^^a5",
-      cAb: {
-        ta: "b"
-      }
+      ta: "SHOWN_message"
     }, "b3"]
   },
   va7: "b"
@@ -22,11 +18,7 @@
   },
   cd: {
     ka: [{
-      ta: "SHOWN_message",
-      fb: "^^^a5",
-      cAb: {
-        ta: "c"
-      }
+      ta: "SHOWN_message"
     }, "b3"]
   },
   va7: "c"
@@ -54,11 +46,7 @@
   },
   cd: {
     ka: [{
-      ta: "SHOWN_message",
-      fb: "^^^a5",
-      cAb: {
-        ta: "e"
-      }
+      ta: "SHOWN_message"
     }, "b3"]
   },
   va7: "e"

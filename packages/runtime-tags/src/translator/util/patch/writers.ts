@@ -77,8 +77,6 @@ import {
   getRenderedValueSources,
   getWriteSources,
   isStableExpr,
-  isStableWrite,
-  isStateSourcedExpr,
 } from "./decisions";
 import {
   getCreatedJoins,
@@ -592,6 +590,7 @@ export function buildReturnChangeBind(
   handler: t.Expression,
   extra: t.NodeExtra,
 ) {
+  const sources = getWriteSources(extra);
   return callPatchRuntime(
     "_patch_bind",
     section,
@@ -599,8 +598,8 @@ export function buildReturnChangeBind(
     handler,
     ...getPatchWriteOwnership(
       section,
-      getWriteSources(extra),
-      isStableExpr(extra) || isStateSourcedExpr(extra),
+      sources,
+      isStableExpr(extra) || !!sources?.state,
     ),
   );
 }
@@ -639,15 +638,11 @@ export function buildClientInit(
 
 // Ownership args for an expression's write in `section`; a value fixed for the
 // scope's lifetime (constant, `<id>`, `<define>`) only seeds a created scope.
-export function getExprWriteOwnership(
-  section: Section,
-  extra: t.NodeExtra | undefined,
-) {
-  const sources = getWriteSources(extra);
+export function getExprWriteOwnership(section: Section, extra: t.NodeExtra) {
   return getPatchWriteOwnership(
     section,
-    sources,
-    !!extra && isStableWrite(extra, sources),
+    getWriteSources(extra),
+    isStableExpr(extra),
   );
 }
 

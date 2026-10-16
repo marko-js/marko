@@ -815,14 +815,14 @@ function patchRenders(signal: Signal): boolean {
   return signal.patchRendered;
 }
 
-// A loop or branch chain a patch renders whenever it writes the scope: its
-// bodies are the signal's branch sections.
-function patchesStructure({ section, referencedBindings }: Signal) {
-  return section.children.some(
-    (child) =>
-      child.branch?.optional &&
-      child.branch.nodeBinding === referencedBindings &&
-      patchesBranchesAt(child.branch.nodeBinding),
+// A loop or branch chain a patch renders whenever it writes the scope: the
+// signal's binding is the node its optional bodies render at.
+function patchesStructure({ referencedBindings }: Signal) {
+  return (
+    !!referencedBindings &&
+    !Array.isArray(referencedBindings) &&
+    some(referencedBindings.branchBodies, isOptionalBranch) &&
+    patchesBranchesAt(referencedBindings)
   );
 }
 
@@ -1437,6 +1437,8 @@ export function writeSignals(section: Section) {
       }
 
       if (signal.register) {
+        // A variable's fill applies by the value patcher, imported beside it.
+        if (signal.register === "fill") importRuntimeFeature("patches/value");
         value = callRuntime(
           signal.register === "fill" ? "_fill_var_resume" : "_var_resume",
           t.stringLiteral(

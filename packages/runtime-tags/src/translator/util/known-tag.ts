@@ -35,7 +35,7 @@ import {
   getParamsTreeAt,
   getSettledParamsTree,
 } from "./params-tree";
-import { isPatchKeyed } from "./patch/decisions";
+import { isPatchKeyedSlot } from "./patch/decisions";
 import {
   patchWrites,
   hasStructuralParam,
@@ -402,7 +402,7 @@ export function knownTagTranslateHTML(
       // A patch-keyed ref writes the child scope even when a param-only reason's
       // group is constant; the wiring resolves only where it is client-sourced.
       const varGuard =
-        isPatchKeyed(section, childScopeBinding) &&
+        isPatchKeyedSlot(findSlot(childScopeBinding)!) &&
         getClientGuard(section, childScopeReason);
       varStatement = t.expressionStatement(andGuard(varGuard, varCall));
     }

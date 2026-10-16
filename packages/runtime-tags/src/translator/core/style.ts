@@ -251,7 +251,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
               getPatchKey().Style + getScopeAccessor(binding) + " " + names[i],
               value,
               ...(writesPatchHole(section, value.extra)
-                ? getExprWriteOwnership(section, value.extra)
+                ? getExprWriteOwnership(section, value.extra!)
                 : [t.numericLiteral(0), t.numericLiteral(0)]),
             )
           : callRuntime("_escape_style_value", value),

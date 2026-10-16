@@ -137,14 +137,14 @@ export function getBranchWriteReason(section: Section) {
 // The reason a slot writes with (its write reason): its reason, always where
 // a patch keys an entry on it.
 export function getSlotWriteReason(slot: Slot | undefined) {
-  return slot && isPatch() && isPatchKeyedSlot(slot)
+  return slot && isPatchKeyedSlot(slot)
     ? mergeSources(ALWAYS, slot.reason)
     : slot?.reason;
 }
 
 // A scope is written when any slot in it is, a patch-keyed node's included.
 export function getSectionWriteReason(section: Section) {
-  return hasPatchKeyedNodes(section)
+  return isPatch() && hasPatchKeyedNodes(section)
     ? mergeSources(ALWAYS, section.reason)
     : section.reason;
 }

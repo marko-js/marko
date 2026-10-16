@@ -20,7 +20,6 @@ import {
   PatchRenderState,
   PatchUpdateState,
   SERVER_ALL,
-  _attr_content,
   _patch_value,
   entryKey,
   findOwnerDepth,

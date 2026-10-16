@@ -79,7 +79,6 @@ import {
 } from "./decisions";
 import {
   catchSetupRenders,
-  getBranchOf,
   patchWrites,
   patchWritesScope,
   hasStructuralParam,
@@ -601,7 +600,9 @@ function rendersApart(read: ReferencedExtra) {
 // The read is an `<await>`'s value: its body is a boundary child of the
 // read's section with the read as its branch expression.
 function isBoundaryValueRead(read: ReferencedExtra) {
-  return getBranchOf(read)?.branch?.optional === false;
+  return read.section.children.some(
+    (child) => child.branchExpr === read && child.branch?.optional === false,
+  );
 }
 
 function mergeConditions(

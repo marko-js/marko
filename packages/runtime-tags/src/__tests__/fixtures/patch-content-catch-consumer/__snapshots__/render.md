@@ -32,13 +32,12 @@ REMOVE: em + p
 INSERT: em + b
 REMOVE: i + p
 UPDATE: b::text " " => "SHOWN_message"
-INSERT: b + i
-UPDATE: i::text@0 "" => "b"
-UPDATE: i::text@2 "" => "0"
-UPDATE: i::text@0 "a" => "b"
 INSERT: button + em
+INSERT: b + i
 UPDATE: em::text@0 "" => "b"
 UPDATE: em::text@2 "" => "0"
+UPDATE: i::text@0 "" => "b"
+UPDATE: i::text@2 "" => "0"
 ```
 
 # Update `{"fail":true,"label":"c"}`
@@ -58,8 +57,8 @@ UPDATE: em::text@2 "" => "0"
 ```
 ## Change
 ```
-UPDATE: i::text@0 "b" => "c"
 UPDATE: em::text@0 "b" => "c"
+UPDATE: i::text@0 "b" => "c"
 ```
 
 # Update `{"fail":false,"label":"d"}`
@@ -79,8 +78,8 @@ UPDATE: em::text@0 "b" => "c"
 ```
 ## Change
 ```
-UPDATE: i::text@0 "c" => "d"
 UPDATE: em::text@0 "c" => "d"
+UPDATE: i::text@0 "c" => "d"
 ```
 
 # Update
@@ -104,8 +103,8 @@ container.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text "0" => "1"
-UPDATE: i::text@2 "0" => "1"
 UPDATE: em::text@2 "0" => "1"
+UPDATE: i::text@2 "0" => "1"
 ```
 
 # Update `{"fail":true,"label":"e"}`
@@ -125,6 +124,6 @@ UPDATE: em::text@2 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: i::text@0 "d" => "e"
 UPDATE: em::text@0 "d" => "e"
+UPDATE: i::text@0 "d" => "e"
 ```

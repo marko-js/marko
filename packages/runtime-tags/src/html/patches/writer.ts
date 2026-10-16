@@ -1,4 +1,3 @@
-import { normalizeDynamicRenderer } from "../../common/helpers";
 import { ROOT_SCOPE_ID } from "../../common/meta";
 import {
   type Accessor,
@@ -17,7 +16,6 @@ import {
   type ScopeInternals,
   type Channel,
   State,
-  _attr_content as _base_attr_content,
   _resume_locals as _base_resume_locals,
   _script as _base_script,
   _subscribe as _base_subscribe,
@@ -901,33 +899,6 @@ export function _var(
       PatchKey.Var
     ] = registryId;
   }
-}
-
-// Content a patch pairs with the live branch; a rendered renderer's values
-// fill as it renders (`_content_withheld`).
-export function _attr_content(
-  nodeAccessor: Accessor,
-  scopeId: number,
-  content: unknown,
-  markerGuard?: number,
-) {
-  const state = getState();
-  if (state instanceof PatchUpdateState) {
-    const renderer = normalizeDynamicRenderer<ServerRenderer>(content);
-    if (typeof renderer === "function") {
-      pairBranch(
-        state,
-        scopeId,
-        nodeAccessor,
-        _peek_scope_id(),
-        undefined,
-        undefined,
-        renderer[RendererProp.Owner],
-      );
-    }
-    markContentRendered(state, renderer);
-  }
-  _base_attr_content(nodeAccessor, scopeId, content, markerGuard);
 }
 
 // A value the client normalizes ships as is, but an object ships as the text
