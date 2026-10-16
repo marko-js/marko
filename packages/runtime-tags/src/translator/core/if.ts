@@ -23,7 +23,7 @@ import {
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import { addReasonExprs, type Reasons } from "../util/reasons";
-import { getReferencedBindings, mergeReferences } from "../util/references";
+import { mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -232,12 +232,7 @@ export const IfTag = {
               ...trimEmptyArgs(rendererArgs),
             );
           };
-          addValue(
-            ifTagSection,
-            getReferencedBindings(ifTagExtra),
-            signal,
-            expr,
-          );
+          addValue(ifTagSection, ifTagExtra, signal, expr);
         }
       },
     },

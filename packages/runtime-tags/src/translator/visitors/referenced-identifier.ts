@@ -135,7 +135,7 @@ export default {
             addStatement(
               "render",
               section,
-              getReferencedBindings(canonicalExtra),
+              canonicalExtra,
               t.callExpression(importRuntime("$signalReset"), [
                 scopeIdentifier,
                 t.numericLiteral(exprId),

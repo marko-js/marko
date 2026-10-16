@@ -625,12 +625,7 @@ export default {
             importRuntimeFeature("controllable");
           }
         }
-        addValue(
-          section,
-          getReferencedBindings(tagExtra),
-          signal,
-          tagExpression,
-        );
+        addValue(section, tagExtra, signal, tagExpression);
         tag.remove();
       }
     },

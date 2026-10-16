@@ -7,7 +7,6 @@ import buildStringExpression from "../util/build-string-expression";
 import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
 import { addReasonExprs } from "../util/reasons";
-import { getReferencedBindings } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
@@ -170,7 +169,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       addStatement(
         "render",
         section,
-        getReferencedBindings(value.extra),
+        value.extra,
         method === "_text"
           ? callRuntime("_text", createScopeReadExpression(nodeBinding!), value)
           : callRuntime(

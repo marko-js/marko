@@ -10,7 +10,6 @@ import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
   dropNodes,
   getAllTagReferenceNodes,
-  getReferencedBindings,
   isReferenceHoisted,
   setDerivedFrom,
   trackParamsReferences,
@@ -176,19 +175,18 @@ export default {
         }
 
         const section = getSection(tag);
-        const referencedBindings = getReferencedBindings(node.extra);
         if (translatedAttrs.statements.length) {
           addStatement(
             "render",
             section,
-            referencedBindings,
+            node.extra,
             translatedAttrs.statements,
           );
         }
 
         addValue(
           section,
-          referencedBindings,
+          node.extra,
           initValue(tag.get("var").node!.extra!.binding!)!,
           propsToExpression(translatedAttrs.properties),
         );

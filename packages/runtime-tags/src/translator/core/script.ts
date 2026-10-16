@@ -12,11 +12,7 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import {
-  dropNodes,
-  getAllTagReferenceNodes,
-  getReferencedBindings,
-} from "../util/references";
+import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
@@ -116,7 +112,6 @@ export default {
 
       const section = getSection(tag);
       const { value } = valueAttr;
-      const referencedBindings = getReferencedBindings(value.extra);
 
       const isFunction =
         t.isFunctionExpression(value) || t.isArrowFunctionExpression(value);
@@ -159,11 +154,11 @@ export default {
         addStatement(
           "effect",
           section,
-          referencedBindings,
+          value.extra,
           inlineBody || t.callExpression(value, []),
         );
       } else {
-        addHTMLEffectCall(section, referencedBindings);
+        addHTMLEffectCall(section, value.extra);
       }
 
       tag.remove();

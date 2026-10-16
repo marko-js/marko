@@ -12,7 +12,6 @@ import { bodyToText, bodyToUncoercedText } from "../util/body-to-text";
 import { isOutputHTML } from "../util/marko-config";
 import { addAlwaysReason, addReasonExprs } from "../util/reasons";
 import {
-  getReferencedBindings,
   isTagVarUsed,
   mergeReferences,
   trackDomVarReferences,
@@ -128,7 +127,7 @@ export default {
           addStatement(
             "render",
             tagSection,
-            getReferencedBindings(tagExtra),
+            tagExtra,
             callRuntime(
               "_text",
               createScopeReadExpression(nodeBinding!),

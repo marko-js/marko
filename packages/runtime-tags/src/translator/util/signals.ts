@@ -861,15 +861,16 @@ export function trimEmptyArgs(
   args.length = finalLen || 0;
   return args as t.Expression[];
 }
-// An expression is added as its own statement.
+// Work for `expr` runs when what it references changes, in setup if nothing
+// (or no `expr`); a `statement` given as an expression is wrapped as one.
 export function addStatement(
   type: "render" | "effect",
   targetSection: Section,
-  referencedBindings: ReferencedBindings,
+  expr: t.NodeExtra | undefined,
   statement: t.Statement | t.Statement[] | t.Expression,
   isPure?: boolean,
 ): void {
-  const signal = getSignal(targetSection, referencedBindings);
+  const signal = getSignal(targetSection, getReferencedBindings(expr));
   const statements = (signal[type] ??= []);
 
   if (Array.isArray(statement)) {
@@ -899,7 +900,7 @@ export function addTagStatement(
     addStatement(
       "render",
       getSection(tag),
-      getReferencedBindings(tag.node.attributes[0]?.value.extra),
+      tag.node.attributes[0]?.value.extra,
       statement,
     );
   }
@@ -909,11 +910,11 @@ export function addTagStatement(
 
 export function addValue(
   targetSection: Section,
-  referencedBindings: ReferencedBindings,
+  expr: t.NodeExtra | undefined,
   signal: Signal,
   value?: t.Expression,
 ) {
-  const parentSignal = getSignal(targetSection, referencedBindings);
+  const parentSignal = getSignal(targetSection, getReferencedBindings(expr));
   parentSignal.values.push({
     signal,
     value,
@@ -1233,11 +1234,8 @@ function toReturnedFunction(rawFn: t.Function, prologue?: t.Statement[]) {
     : [t.returnStatement(fn)];
 }
 
-export function addHTMLEffectCall(
-  section: Section,
-  referencedBindings?: ReferencedBindings,
-) {
-  const signal = getSignal(section, referencedBindings);
+export function addHTMLEffectCall(section: Section, expr?: t.NodeExtra) {
+  const signal = getSignal(section, getReferencedBindings(expr));
   signal.hasHTMLEffect = signal.storesValue = true;
 }
 

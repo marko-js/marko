@@ -16,7 +16,6 @@ import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import {
   dropNodes,
-  getReferencedBindings,
   isReferenceHoisted,
   setDerivedFrom,
   trackVarReferences,
@@ -80,7 +79,7 @@ export default {
         // An unread pure value was dropped, so there is nothing to derive.
         if (varBinding && !varBinding.aliasOf && !value.extra?.dropped) {
           const signal = initValue(varBinding)!;
-          addValue(section, getReferencedBindings(value.extra), signal, value);
+          addValue(section, value.extra, signal, value);
         }
       } else if (!varBinding?.pruned || !value.extra?.dropped) {
         translateVar(tag, value);

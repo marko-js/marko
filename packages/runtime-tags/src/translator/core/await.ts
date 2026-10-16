@@ -13,11 +13,7 @@ import {
 } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
-import {
-  getReferencedBindings,
-  setDerivedFrom,
-  trackParamsReferences,
-} from "../util/references";
+import { setDerivedFrom, trackParamsReferences } from "../util/references";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -176,12 +172,7 @@ export default {
           t.callExpression(t.identifier(bodySection.name), [scopeIdentifier]),
         );
 
-        addValue(
-          section,
-          getReferencedBindings(valueExpr.extra),
-          signal,
-          valueExpr,
-        );
+        addValue(section, valueExpr.extra, signal, valueExpr);
 
         tag.remove();
       },

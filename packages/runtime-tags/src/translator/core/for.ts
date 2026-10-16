@@ -28,7 +28,6 @@ import { addReasonExprs } from "../util/reasons";
 import {
   dropNodes,
   getAllTagReferenceNodes,
-  getReferencedBindings,
   onFinalizeReferences,
   setDerivedFrom,
   trackParamsReferences,
@@ -278,7 +277,6 @@ export default {
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
         const tagExtra = node.extra!;
-        const referencedBindings = getReferencedBindings(tagExtra);
         const nodeBinding = tagExtra.nodeBinding!;
         const hop = { kind: "for", nodeBinding } as const;
         setClosureSignalBuilder(tag, hop, (closure, render) => {
@@ -313,12 +311,7 @@ export default {
           loopArgs.push(forAttrs.by);
         }
 
-        addValue(
-          tagSection,
-          referencedBindings,
-          signal,
-          t.arrayExpression(loopArgs),
-        );
+        addValue(tagSection, tagExtra, signal, t.arrayExpression(loopArgs));
 
         tag.remove();
       },
