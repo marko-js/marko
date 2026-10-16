@@ -110,7 +110,7 @@ export default {
         const nodeBinding = tagExtra.nodeBinding!;
         const tagBody = tag.get("body");
         const section = getSection(tag);
-        const bodySection = getSectionForBody(tagBody);
+        const bodySection = getSectionForBody(tagBody)!;
         writeHTMLResumeStatements(tag);
 
         tag
@@ -125,7 +125,7 @@ export default {
                   node.body.params,
                   toOnlyExpressionOrBlock(node.body.body),
                 ),
-                getWriteGuard(section, bodySection?.reason, true),
+                getWriteGuard(section, bodySection.reason, true),
               ),
             ),
           )[0]
