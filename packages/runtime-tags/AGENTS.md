@@ -24,7 +24,8 @@ the compiler/runtime model end to end and routes each concept to its code.
 Principles that decide most proposals:
 
 - Client code, serialized data, and registrations ship only where analysis shows they can run or update.
-- Code ships because code that ships references it, never by force. Never keep a call or declaration for its side effect (a registration, a stamp) or to make an optimized build work: a kept value pins its whole reference graph (signals, joins, renders, runtime), which in real apps bundles subgraphs the plain build drops, so a fixture's small size delta proves nothing. Deliver the fact the client needs instead (serialized data or a compiler literal), or fail closed. An unreferenced top-level declaration in an optimized bundle snapshot is this bug.
+- Code ships because code that ships references it, never by force. Never keep a call or declaration for its side effect (a registration, a stamp) or to make an optimized build work: a kept value pins its whole reference graph (signals, joins, renders, runtime), which in real apps bundles subgraphs the plain build drops, so a fixture's small size delta proves nothing. Deliver the fact the client needs instead (serialized data or a compiler literal). An unreferenced top-level declaration in an optimized bundle snapshot is this bug.
+- A build contract (an id the compiler registered) is a `MARKO_DEBUG` assert, never a production check, and needs no fixture faking its violation.
 - An optimization may take any shape that idiomatic Marko code cannot observe.
 - HTML output targets what browsers parse, not validators.
 - No API may require `import "marko"`.
