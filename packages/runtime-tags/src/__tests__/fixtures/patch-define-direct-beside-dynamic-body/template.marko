@@ -1,0 +1,7 @@
+<let/open=false/>
+<define/Panel|props|>
+  <em>${JSON.stringify(props)}</em>
+</define>
+<Panel label=input.label/>
+<${open ? "b" : Panel} label=input.label/>
+<button onClick() { open = !open }>toggle</button>

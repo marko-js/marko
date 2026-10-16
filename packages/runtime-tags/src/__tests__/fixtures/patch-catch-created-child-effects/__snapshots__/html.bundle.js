@@ -24,7 +24,7 @@ function boom(msg) {
 }
 _shells({
 	a0: "a0;D ;<p> </p>",
-	a: "a !a8; D l%;<button> </button><!><!>"
+	a: "a !a6; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_msg = _write_if($scope0_reason, 1), $scope0_page = _page_render();
@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope2_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			Ci: $wi__input_msg && 1
-		}), "a5"), _client_guard($scope0_reason, 2) && "a6");
+		}), "a3"), _client_guard($scope0_reason, 2) && "a4");
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -58,10 +58,10 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		}), "a1"), "a2");
-	}, void 0, "a7", "a0", 1, "");
-	_script($scope0_id, "a8");
+	}, void 0, "a5", "a0", 1, "");
+	_script($scope0_id, "a6");
 	_patch_write($scope0_id, "wg", input.fail, 1);
-	_patch_value($scope0_id, "va10", count, 1);
+	_patch_value($scope0_id, "va8", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.msg,
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.fail,
@@ -69,5 +69,5 @@ var template_default = _template("a", (input) => {
 		i: $wi__input_msg && $input_msg__closures,
 		k: $count__closures,
 		j: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && $input_fail__closures
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va9", input.msg, !_server_guard($scope0_reason, 1));
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.msg, !_server_guard($scope0_reason, 1));
 }, 1);

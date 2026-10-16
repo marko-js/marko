@@ -2,12 +2,12 @@
 const $template = "<button>+</button><!><!>";
 const $walks = " b%c";
 const $catch_content = _content("__tests__/template.marko_3*content", "caught");
-const $try_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_input_label#0:5/init", "input_label/7", ($scope) => _text($scope["#text/1"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0);
+const $try_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/1"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0);
 const $try_content__setup = ($scope) => {
 	$try_content__input_label($scope);
 	$try_content__count($scope);
 };
-const $try_content__count = _resumed["__tests__/template.marko_2_count#0:6/init"] = _closure_get("count/8", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:6/subscribe");
+const $try_content__count = _resumed["__tests__/template.marko_2_count#0:6/init"] = /*@__PURE__*/ _closure_get("count/8", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:6/subscribe");
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<p><!> <!></p>", "D%c%", $try_content__setup, 0, $catch_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);
 const $count__closure = /*@__PURE__*/ _closure($try_content__count);

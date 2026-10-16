@@ -1,7 +1,7 @@
 // Analyze-side structure facts for patches, in template terms; ownership
 // conclusions and wire channels belong to ./decisions, ./refresh, ./writers.
 import { type Binding, bindingUtil } from "../bindings";
-import { createCyclicMemo } from "../cyclic-memo";
+import { createProgramCyclicMemo } from "../cyclic-memo";
 import { isPatch } from "../marko-config";
 import { at, every, first, type Opt, size, some } from "../optional";
 import {
@@ -17,37 +17,52 @@ import {
 } from "../references";
 import {
   getCallerParamGroups,
+  isKnownChild,
   type Section,
   StructureKind,
   type ParamReasonGroup,
 } from "../sections";
 import type { Sources } from "../sources";
 import { createSectionState } from "../state";
-import { isPatchFillBinding } from "./refresh";
+import { canPatchFill } from "./refresh";
 
-// A patch render reaches the section: the page patches, and no stateful
-// structure (which resumed code re-renders) encloses it.
-export function isPatchRendered(section: Section) {
-  return isPatch() && !inStatefulBranch(section);
+// Every render of the section is patch-written: on the branch path, outside
+// stateful structure. Finalize or later, as `isStatefulBranch` memoizes.
+export function patchWrites(section: Section) {
+  return (
+    isPatch() && section.enclosing.branchPath && !inStatefulBranch(section)
+  );
 }
 
-// Whether a patch may reach the section: no branch on its chain is stateful.
-// A content body counts not, since another consumer may render it patched.
-export function mayPatchReach(section: Section | undefined) {
-  for (let cur = section; cur; cur = cur.parent) {
-    if (!cur.derives && isStatefulBranch(cur)) return false;
-  }
-  return true;
+// Some render of the section may be patch-written: no branch on its chain is
+// stateful, but content, which another consumer may render patched.
+export const [patchMayWrite] = createProgramCyclicMemo(
+  (section: Section): boolean =>
+    (!section.parent || patchMayWrite(section.parent)) &&
+    (!isStatefulBranch(section) || !!section.derives),
+  false,
+);
+
+// A scope a flush writes into: a known child, a branch or boundary body, a
+// `@catch` or attribute tag `<for>` content, where every render is patch-written.
+export function patchWritesScope(section: Section) {
+  return (
+    patchWrites(section) &&
+    (isKnownChild(section) ||
+      !!section.branch ||
+      section.boundaryContent === "catch" ||
+      !!section.localClosures)
+  );
 }
 
-// Whether the section renders inside stateful structure (inclusive), whose
-// bodies patch renders skip.
-export function inStatefulBranch(section: Section | undefined) {
-  for (let cur = section; cur; cur = cur.parent) {
-    if (isStatefulBranch(cur)) return true;
-  }
-  return false;
-}
+// Inside stateful structure (inclusive). The parent is asked first, so only the
+// section's own answer can loop back to it, where it reads as not stateful.
+export const [inStatefulBranch] = createProgramCyclicMemo(
+  (section: Section): boolean =>
+    (!!section.parent && inStatefulBranch(section.parent)) ||
+    isStatefulBranch(section),
+  false,
+);
 
 // The one walk over a content body's consumers (the binding it derives
 // through its property path, aliases, bindings its reads hand it to).
@@ -123,53 +138,40 @@ function bodyRendersStateful(section: Section) {
 
 // A branch body whose branch expression has a state reason (or nested in one) and
 // whose param sources a patch fills; needs resolved sources (finalize or later).
-export const isStatefulBranch = createCyclicMemo((section: Section) => {
-  // An optional branch or a dynamic tag body; an `<await>`/`<try>` body
-  // renders for every value its branch expression takes.
-  const expr =
-    isPatch() && section.branch?.optional !== false
-      ? section.branchExpr
-      : undefined;
-  const sources = expr && getSourcesForExpr(expr);
-  // A body the child renders stateful (any consumer), or one whose own
-  // branch expression derives from state.
-  return (
-    bodyRendersStateful(section) ||
-    (!!expr &&
-      (!!sources?.state || inStatefulBranch(section.parent)) &&
-      every(getReferencedBindings(expr), clientRecomputes))
-  );
-}, false);
+export const [isStatefulBranch] = createProgramCyclicMemo(
+  (section: Section) => {
+    // An optional branch or a dynamic tag body; an `<await>`/`<try>` body
+    // renders for every value its branch expression takes.
+    const expr =
+      isPatch() && section.branch?.optional !== false
+        ? section.branchExpr
+        : undefined;
+    const sources = expr && getSourcesForExpr(expr);
+    // A body the child renders stateful (any consumer), or one whose own
+    // branch expression derives from state.
+    return (
+      bodyRendersStateful(section) ||
+      (!!expr &&
+        (!!sources?.state || inStatefulBranch(section.parent!)) &&
+        every(getReferencedBindings(expr), clientRecomputes))
+    );
+  },
+  false,
+);
 
 // The client recomputes a state-mixed ref from what it holds: its state, a
-// fill, or a derivation it can recompute the same way.
+// fill (the read here calls for one), or a derivation it can recompute so.
 function clientRecomputes(binding: Binding): boolean {
   const sources = getSourcesForRef(binding);
   if (!sources?.param) return true;
-  if (isPatchFillBinding(binding) || inStatefulBranch(binding.section)) {
-    return true;
-  }
+  if (inStatefulBranch(binding.section) || canPatchFill(binding)) return true;
   const inputs = getBindingsDerivedFrom(binding);
   return !!inputs && every(inputs, clientRecomputes);
 }
 
-// Rebuild sources that are params alone: a call site passing state for them
-// hands the branch to the client at run time. Call at finalize or later.
-export function getParamRebuildSources(section: Section) {
-  if (
-    !isPatch() ||
-    !isBranchPathSection(section) ||
-    isStatefulBranch(section)
-  ) {
-    return;
-  }
-  const sources = getRebuildSources(section);
-  return sources?.param && !sources.state ? sources : undefined;
-}
-
-// What makes the section anew on the client: a branch's expression, or the call
-// site expression passing content (an attribute tag item of a param loop).
-function getRebuildSources(section: Section) {
+// What selects the section: a branch's expression, or the call site
+// expression passing content (an attribute tag item of a param loop).
+function getStructureSources(section: Section) {
   if (section.branch?.optional) {
     return section.branchExpr && getSourcesForExpr(section.branchExpr);
   }
@@ -178,16 +180,20 @@ function getRebuildSources(section: Section) {
   }
 }
 
-// The param rebuild sources of every branch around the section (inclusive),
-// or undefined when none.
-export function getParamRebuildChain(section: Section | undefined) {
-  let chain: Sources[] | undefined;
-  for (let cur = section; cur; cur = cur.parent) {
-    const sources = getParamRebuildSources(cur);
-    if (sources) (chain ??= []).push(sources);
-  }
-  return chain;
-}
+// The sources of each branch around it (inclusive) selected by params alone,
+// caller-owned structure: a call site passing state for them hands it to the client.
+export const [getCallerOwnedStructure] = createProgramCyclicMemo(
+  (section: Section): Sources[] | undefined => {
+    const chain = section.parent && getCallerOwnedStructure(section.parent);
+    const sources = patchWrites(section)
+      ? getStructureSources(section)
+      : undefined;
+    return sources?.param && !sources.state
+      ? chain?.concat(sources) || [sources]
+      : chain;
+  },
+  undefined,
+);
 
 // The params a branch or loop expression derives from are structural where
 // a caller passes them: a template's, or a `<define>` body's.
@@ -200,55 +206,6 @@ export function recordStructuralParams(sources: Sources | undefined) {
 // Whether a param reason group (one section's params) holds a structural one.
 export function hasStructuralParam(group: ParamReasonGroup) {
   return bindingUtil.intersects(group, first(group).section.structuralParams);
-}
-
-// Structure resumed code renders on its own, which patch renders skip: boundary
-// content, a stateful branch's body, or a `@catch` reading none of its error.
-export function inResumedStructure(section: Section) {
-  return (
-    !isBranchPathSection(section) ||
-    inStatefulBranch(section) ||
-    inUnreadCatch(section)
-  );
-}
-
-// Whether a patch writes the section's holes directly. Finalize or later:
-// `isStatefulBranch` memoizes, so an earlier call would cache a wrong answer.
-export function writesPatchIn(section: Section) {
-  return isPatch() && !inResumedStructure(section);
-}
-
-// Whether every section from `section` up to (exclusive) `owner` is a
-// branch: only those chains compose per-hop closure builders.
-export function isBranchSectionChain(section: Section, owner: Section) {
-  for (
-    let cur: Section | undefined = section;
-    cur && cur !== owner;
-    cur = cur.parent
-  ) {
-    if (!cur.branch?.optional) return false;
-  }
-  return true;
-}
-
-// Sections whose holes patch-write directly: every level down to them links
-// structurally, except a `@placeholder` (rendered outside the patch) and dropped content.
-export function isBranchPathSection(section: Section) {
-  for (let cur = section; cur.parent; cur = cur.parent) {
-    if (cur.boundaryContent === "placeholder" || cur.dropped) return false;
-  }
-  return true;
-}
-
-// A `@catch` (inclusive) reading none of its error: the client renders it from
-// its renderer and closures, as from any throw. Finalize or later.
-export function inUnreadCatch(section: Section) {
-  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
-    if (cur.boundaryContent === "catch" && (!cur.params || cur.params.pruned)) {
-      return true;
-    }
-  }
-  return false;
 }
 
 // What a `@catch` a patch creates renders through its renderer's setup:
@@ -266,7 +223,7 @@ export function catchSetupRenders(
 // Whether a patch renders the branches or loop rows at the node: it writes
 // the node's section, and none is stateful (a chain with one is the client's).
 export function patchesBranchesAt(binding: Binding) {
-  return writesPatchIn(binding.section) && !hasStatefulBranchAt(binding);
+  return patchWrites(binding.section) && !hasStatefulBranchAt(binding);
 }
 
 export function hasStatefulBranchAt(binding: Binding) {

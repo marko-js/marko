@@ -24,13 +24,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_await($scope3_id, "#text/0", item.promise, () => {
 				const $scope4_id = _scope_id();
 				_html(`<div>${_patch_text($scope4_id, "#text/0", item.msg, void 0, $scope0_reason, 0)} done</div>`);
-				_unfilled_if($scope0_reason, 0) && _patch_init($scope4_id, "__tests__/template.marko_4_item_msg#3:4/init");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope4_id, "__tests__/template.marko_4_item_msg#3:4/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_msg__closures, _scope($scope4_id, { _: $wi__input_items && _scope_with_id($scope3_id) }, "__tests__/template.marko", "6:8"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_4_item_msg#3:4/subscribe");
 			}, 1, "__tests__/template.marko_4*content");
 			$wi__input_items && _scope($scope3_id, { "ClosureScopes:item_msg/8": _unfilled_if($scope0_reason, 0) && $for_content__item_msg__closures }, "__tests__/template.marko", "5:6");
 		}, "id", $scope1_id, "#section/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 0);
 		_html(`</section>${_el_resume($scope1_id, "#section/0")}`);
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_items#0:5/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_items#0:5/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_items__closures, _scope($scope1_id, { _: $wi__input_items && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_items#0:5/subscribe");
 	}, () => {
 		_scope_reason();

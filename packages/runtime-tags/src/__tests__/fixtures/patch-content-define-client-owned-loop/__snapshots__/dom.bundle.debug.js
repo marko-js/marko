@@ -3,7 +3,7 @@ const $List_content__walks = " b";
 const $List_content__template = "<ul></ul>";
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<button>+</button>`)($List_content__template, $List_content__template);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($List_content__walks, $List_content__walks);
-const $for_content__input_suffix = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_suffix", _shell_subscribe_closure_get("__tests__/template.marko_2_input_suffix#0:5/init", "input_suffix/8", ($scope) => _text($scope["#text/1"], $scope._._.input_suffix), ($scope) => $scope._._, "__tests__/template.marko_2_input_suffix#0:5/subscribe"), 0);
+const $for_content__input_suffix = _closure_resume("__tests__/template.marko_2_input_suffix#0:5/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_suffix", /*@__PURE__*/ _closure_get("input_suffix/8", ($scope) => _text($scope["#text/1"], $scope._._.input_suffix), ($scope) => $scope._._), 0));
 const $for_content__setup = $for_content__input_suffix;
 const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__$params = ($scope, $params3) => $for_content__item($scope, $params3[0]);

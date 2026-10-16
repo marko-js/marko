@@ -5,7 +5,7 @@ _shells({
 	a2: "a2;D ;<em> </em>",
 	a3: "a3;b%;<!><!><!>",
 	a4: "a4;D ;<span> </span>",
-	a: "a !a10;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
+	a: "a !a8;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_related__OR__input_slow = _write_if($scope0_reason, 0), $scope0_page = _page_render();
@@ -24,13 +24,13 @@ var template_default = _template("a", (input) => {
 		}, 1, "a1", 1);
 		_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, "a5");
 		_unfilled_if($scope0_reason, 5) && _patch_init($scope1_id, "a6");
-		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 4) && "a7", 0), _client_guard($scope0_reason, 5) && "a8", 0);
+		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 4) && "a5", 0), _client_guard($scope0_reason, 5) && "a6", 0);
 		$wi__input_related__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "a9", void 0, "a3", 1);
+	}, void 0, "a7", void 0, "a3", 1);
 	_html("</section><footer>");
 	_await($scope0_id, "c", resolveAfter(input.note, input.slow ? 2 : 0), (note) => {
 		const $scope4_id = _scope_id();
@@ -38,12 +38,12 @@ var template_default = _template("a", (input) => {
 		_scope($scope4_id, {});
 	}, 1, "a0", 1);
 	_html(`</footer><button>Count ${_text_resume($scope0_id, "e", count, 2)}</button>${_el_resume($scope0_id, "d")}</main>`);
-	_script($scope0_id, "a10");
+	_script($scope0_id, "a8");
 	_patch_write($scope0_id, "wi", input.related, 1);
 	_patch_write($scope0_id, "wj", input.slow, 1);
 	_patch_write($scope0_id, "wk", input.note, 1);
-	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "a11");
-	_patch_value($scope0_id, "va12", count, 1);
+	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "a9");
+	_patch_value($scope0_id, "va10", count, 1);
 	$scope0_page && _scope($scope0_id, {
 		i: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && input.related,
 		j: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.slow,

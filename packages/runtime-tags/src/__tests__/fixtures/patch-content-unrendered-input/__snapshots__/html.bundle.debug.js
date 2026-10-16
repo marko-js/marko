@@ -99,7 +99,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
 			const $childScope = _patch_child($scope1_id, "#childScope/0");
 			panel_default({ rows: input.rows });
-			_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/template.marko_1_input_rows#0:7/init");
+			_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/template.marko_1_input_rows#0:7/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 4) && $input_rows__closures, _scope($scope1_id, {
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)

@@ -32,7 +32,7 @@ const $walks = " D l%c";
 function boom(error) {
 	throw error;
 }
-const $try_content__input_error = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_input_error#0:7/init", "input_error/11", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_2_input_error#0:7/subscribe");
+const $try_content__input_error = /*@__PURE__*/ _closure_get("input_error/11", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_2_input_error#0:7/subscribe");
 const $try_content__setup = $try_content__input_error;
 const $catch_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $catch_content__input_large__OR__input_label__OR__count__OR__err_message = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill3", "err_message", /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_large", /*@__PURE__*/ _or(4, ($scope) => $catch_content__dynamicTag($scope, $scope._.input_large ? large_label_default : small_label_default, () => ({

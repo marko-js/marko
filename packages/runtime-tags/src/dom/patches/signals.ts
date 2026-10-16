@@ -8,7 +8,7 @@ import {
   type Scope,
 } from "../../common/types";
 import { queueRender, runId } from "../queue";
-import { _resumed, getRegisteredWithScope } from "../resume";
+import { _resumed, _var_resume } from "../resume";
 import {
   _closure_get,
   _const,
@@ -20,9 +20,17 @@ import {
   type ClosureScopes,
   type Signal,
   type SignalFn,
-  subscribeToScopeSet,
 } from "../signals";
 import { patchFills } from "./apply";
+
+// Installed by `patches/effect`, whose effects re-run by their reads: a fill a
+// join registers then marks its change as a write does.
+let markFillChange:
+  | ((scope: Scope, valueAccessor: EncodedAccessor) => void)
+  | undefined;
+export function installFillChange(mark: typeof markFillChange) {
+  markFillChange = mark;
+}
 
 function fillJoin<T extends SignalFn>(
   key: string,
@@ -41,9 +49,17 @@ function fillJoin<T extends SignalFn>(
           dispatch(scope);
         }
       : dispatch;
-    (patchFills[key] = _const(valueAccessor, fn) as Signal<unknown> & {
-      _?: SignalFn;
-    })._ = fn;
+    // An effect reading the value re-runs from its own template's module,
+    // which imports `patches/effect` before its joins register.
+    (patchFills[key] = _const(
+      valueAccessor,
+      markFillChange
+        ? (scope) => {
+            markFillChange!(scope, valueAccessor);
+            fn(scope);
+          }
+        : fn,
+    ) as Signal<unknown> & { _?: SignalFn })._ = fn;
   }
   return join;
 }
@@ -174,10 +190,18 @@ function fill<T extends Signal<any>>(
     fillFn === undefined ? signal : _const(id, fillFn || undefined);
   return signal;
 }
-// A dynamic tag's variable takes a patch's value through its registration.
-export function _fill_var(id: string) {
-  patchFills[id] = (scope, value) =>
-    getRegisteredWithScope<(value: unknown) => void>(id, scope)(value);
+// Registers a fill only a patch's key reaches, keeping the fill and the value
+// signal it wraps.
+export { fill as _fill_resume };
+
+// A dynamic tag's variable a patch writes takes the value through its own
+// resume registration, under the same id.
+export function _fill_var_resume<T extends Signal<unknown>>(
+  id: string,
+  signal: T,
+): T {
+  patchFills[id] = signal;
+  return _var_resume(id, signal);
 }
 export function _fill_let<T>(
   key: string,
@@ -235,34 +259,13 @@ export function _shell_or(
   return or;
 }
 
-// A created subscriber a flush names subscribes once the flush's values
-// settle, rendering only what its owner changed, as a resumed one does.
-export function _shell_subscribe_closure_get(
-  initId: string,
-  valueAccessor: EncodedAccessor,
-  fn: SignalFn,
-  getOwnerScope?: (scope: Scope) => Scope,
-  resumeId?: string,
-) {
-  const closureSignal = _closure_get(
-    valueAccessor,
-    fn,
-    getOwnerScope,
-    resumeId,
-  );
-  _resumed[initId] = (scope: Scope) =>
-    queueRender(
-      scope,
-      () => {
-        subscribeToScopeSet(
-          getOwnerScope ? getOwnerScope(scope) : scope[AccessorProp.Owner]!,
-          closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
-          scope,
-        );
-        closureSignal(scope, 1);
-      },
-      -1,
-    );
+// A created subscriber a flush names by id whether or not client code reaches
+// it: this registration is what ships it, and the fill join around it.
+export function _closure_resume<T extends (scope: Scope, resumed: 1) => void>(
+  resumeId: string,
+  closureSignal: T,
+): T {
+  _resumed[resumeId] = (scope: Scope) => closureSignal(scope, 1);
   return closureSignal;
 }
 

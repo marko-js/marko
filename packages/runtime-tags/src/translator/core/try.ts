@@ -15,8 +15,8 @@ import { getTagName } from "../util/get-tag-name";
 import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import { some } from "../util/optional";
-import { isCreatableBody, sectionHasServerEffect } from "../util/patch/refresh";
-import { mayPatchReach } from "../util/patch/structure";
+import { sectionHasServerEffect } from "../util/patch/refresh";
+import { patchMayWrite, patchWritesScope } from "../util/patch/structure";
 import { boundaryAlwaysPairs } from "../util/patch/writers";
 import { getSourcesForRef } from "../util/reasons";
 import { mergeTagReferences, onFinalizeReferences } from "../util/references";
@@ -120,12 +120,12 @@ export default {
       // A `<try>` a patch may reach applies its body through `patches/try`, and
       // a `@catch` a patch creates from its renderer, `patches/catch-created`.
       onFinalizeReferences(() => {
-        if (mayPatchReach(section)) {
+        if (patchMayWrite(section)) {
           linkRuntimeFeature("patches/try");
           if (attrTags["@catch"]) {
             const { catchSection } = getTryParts(tag);
             linkRuntimeFeature(
-              catchSection && isCreatableBody(catchSection)
+              catchSection && patchWritesScope(catchSection)
                 ? "patches/catch-created"
                 : "patches/catch",
             );
@@ -178,7 +178,7 @@ export default {
             // A catch the flush creates mounts the effects reading its error;
             // else the client renders it from its error, sent where it reads it.
             catchSection &&
-              isCreatableBody(catchSection) &&
+              patchWritesScope(catchSection) &&
               !sectionHasServerEffect(catchSection)
               ? t.stringLiteral(getCatchEffectIds(catchSection))
               : !!catchSection?.params &&

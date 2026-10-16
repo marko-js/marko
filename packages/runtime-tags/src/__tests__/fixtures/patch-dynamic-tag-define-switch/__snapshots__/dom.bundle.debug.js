@@ -1,10 +1,10 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $Other_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0/content", "input_label", _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_2_input_label#0:3/subscribe"), 1);
+const $Other_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0/content", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_2_input_label#0:3/subscribe"), 1);
 const $Other_content__setup = $Other_content__input_label;
 const $Other_content = _content("__tests__/template.marko_2*content", "<i> </i>", "D ", $Other_content__setup);
-const $Counter_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0/content", "input_label", _closure_get("input_label/8", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:3/subscribe"), 0);
+const $Counter_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0/content", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:3/subscribe"), 0);
 const $Counter_content__n = /*@__PURE__*/ _let("n/3", ($scope) => _text($scope["#text/2"], $scope.n));
 const $Counter_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$Counter_content__n($scope, +$scope.n + 1);

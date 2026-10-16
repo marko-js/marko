@@ -18,8 +18,8 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "#text/0", input.fail ? boom() : "ok", void 0, $scope0_reason, 2)}</p>`);
 		_dynamic_tag($scope2_id, "#text/1", input.content, {}, 0, 0, $wg__input_content, void 0, 2, $scope0_reason, 1);
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/wrapper.marko_2_input_content#0:3/init");
-		_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/tags/wrapper.marko_2_input_fail#0:4/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/wrapper.marko_2_input_content#0:3/subscribe");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_content__closures, _scope($scope2_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_content/5": $wi__input_content && 1

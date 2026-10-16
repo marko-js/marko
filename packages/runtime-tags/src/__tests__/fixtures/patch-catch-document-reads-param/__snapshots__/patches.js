@@ -2,14 +2,14 @@
 {
   ka: [{
     ta: "SHOWN_two"
-  }, "a4"],
-  va5: "b"
+  }, "a3"],
+  va4: "b"
 }
 
 // PATCH
 {
   cAa: [{
     ta: "ok"
-  }, 0, "a4"],
-  va5: "c"
+  }, 0, "a3"],
+  va4: "c"
 }

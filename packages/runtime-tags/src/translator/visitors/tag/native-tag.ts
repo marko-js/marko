@@ -67,7 +67,6 @@ import {
   writesPatchHandler,
   mergeWriteSources,
 } from "../../util/patch/decisions";
-import { isBranchPathSection } from "../../util/patch/structure";
 import {
   buildPatchTextContent,
   callPatchRuntime,
@@ -451,7 +450,7 @@ export default {
         if (content !== undefined) {
           const contentExtra = (attributes[content].value.extra ??= {});
           contentExtra.contentAttr = true;
-          if (isPatch() && isBranchPathSection(tagSection)) {
+          if (isPatch()) {
             onFinalizeReferences(() => {
               if (writesPatchSite(tagSection, contentExtra)) {
                 linkRuntimeFeature("patches/dynamic-tag");
@@ -474,11 +473,7 @@ export default {
             }
           }
         }
-        if (
-          isPatch() &&
-          hasDynamicAttributes &&
-          isBranchPathSection(tagSection)
-        ) {
+        if (isPatch() && hasDynamicAttributes) {
           if (spread) {
             onFinalizeReferences(() => {
               if (writesPatchHole(tagSection, tagExtra)) {

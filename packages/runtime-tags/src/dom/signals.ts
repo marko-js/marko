@@ -319,6 +319,12 @@ export function _closure_get(
       : scope[AccessorProp.Owner]!;
     scope[closureSignal[ClosureSignalProp.SignalIndexAccessor]] =
       closureSignal[ClosureSignalProp.Index];
+    // Subscribing first ensures the owner's set (a created owner's may not exist yet).
+    subscribeToScopeSet(
+      ownerScope,
+      closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
+      scope,
+    );
     if (!resumed) {
       fn(scope);
     } else if (
@@ -332,11 +338,6 @@ export function _closure_get(
       // does it render, in its own run as resumed async content does.
       queueAsyncRender(scope, closureSignal);
     }
-    subscribeToScopeSet(
-      ownerScope,
-      closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
-      scope,
-    );
   }) as ((scope: Scope, resumed?: 1) => void) & {
     [ClosureSignalProp.ScopeInstancesAccessor]: string;
     [ClosureSignalProp.SignalIndexAccessor]: string;

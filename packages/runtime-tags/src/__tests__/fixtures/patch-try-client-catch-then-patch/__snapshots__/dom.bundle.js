@@ -2,18 +2,18 @@
 function boom() {
 	throw new Error("boom");
 }
-const $try_content__input_message = _shell_subscribe_closure_get("a2", 7, ($scope) => _text($scope.a, $scope._.f), 0, "a3");
-const $try_content__count = _resumed.a10 = _closure_get(8, ($scope) => _text($scope.b, $scope._.g === 1 ? boom() : ""), 0, "a4");
-const $catch_content__input_message = /*@__PURE__*/ _fill_join_closure("a7", 5, _closure_get(7, ($scope) => _text($scope.b, $scope._.f), 0, "a1"), 0);
+const $try_content__input_message = _closure_resume("a2", /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._.f)));
+const $try_content__count = _resumed.a9 = /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.b, $scope._.g === 1 ? boom() : ""), 0, "a3");
+const $catch_content__input_message = /*@__PURE__*/ _fill_join_closure("a6", 5, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.b, $scope._.f), 0, "a1"), 0);
 const $catch_content__setup = $catch_content__input_message;
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
-const $catch_content = _content$1("a5", "<b><!> <!></b>", "D%c%", $catch_content__setup, $catch_content__$params);
+const $catch_content = _content$1("a4", "<b><!> <!></b>", "D%c%", $catch_content__setup, $catch_content__$params);
 const $count__closure = /*@__PURE__*/ _closure($try_content__count);
-const $count = /*@__PURE__*/ _fill_let("a8", 6, ($scope) => {
+const $count = /*@__PURE__*/ _fill_let("a7", 6, ($scope) => {
 	_text($scope.c, $scope.g);
 	$count__closure($scope);
 });
-const $setup__script = _script("a6", ($scope) => _on($scope.b, "click", function() {
+const $setup__script = _script("a5", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.g + 1);
 }));

@@ -35,8 +35,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<i>${_patch_text($scope2_id, "#text/0", $global$1.brand)}:${_patch_text($scope2_id, "#text/1", input.prefix, 2, $scope0_reason, 2)}:${_patch_text($scope2_id, "#text/2", item, 2, $scope0_reason, 1)}</i>`);
 			_fill_global_subscribe("__tests__/template.marko_2_$global_brand#4", $scope2_id);
-			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_prefix#0:4/init");
-			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_item#1:2/init");
+			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_prefix#0:4/subscribe");
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_item#1:2/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope2_id, { _: $wi__input_items__OR__input_prefix && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6")));
 		}, $scope1_id) });
 		_scope($scope1_id, {

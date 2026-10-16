@@ -46,7 +46,7 @@ var holder_default = /*@__PURE__*/ _template("__tests__/tags/holder.marko", "", 
 // tags/src.marko
 const $template = "";
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&`)("");
-const $tab_content__count = _resumed["__tests__/tags/src.marko_1_count#0:5/init"] = _closure_get("count/7", ($scope) => _text($scope["#text/2"], $scope._.count), 0, "__tests__/tags/src.marko_1_count#0:5/subscribe");
+const $tab_content__count = _resumed["__tests__/tags/src.marko_1_count#0:5/init"] = /*@__PURE__*/ _closure_get("count/7", ($scope) => _text($scope["#text/2"], $scope._.count), 0, "__tests__/tags/src.marko_1_count#0:5/subscribe");
 const $tab_content__setup__script = _script("__tests__/tags/src.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope._, +$scope._.count + 1);
 }));

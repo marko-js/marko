@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_server_guard($scope0_reason, 0) && _patch_effect($scope3_id, "PatchEffect:__tests__/template.marko_3_value#2", "value");
 			_scope($scope3_id, { value }, "__tests__/template.marko", "4:6", { value: "4:12" });
 		}, 1, "__tests__/template.marko_3*content", 1);
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:3/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:3/subscribe");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_promise#0:3/subscribe", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {

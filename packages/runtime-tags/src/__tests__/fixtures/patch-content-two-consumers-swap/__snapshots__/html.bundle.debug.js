@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_reason, 3)}</em>`);
-			_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_note#0:5/init");
+			_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_note#0:5/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope1_id, { _: $wi__input_note && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		}, $scope0_id)
 	});
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();
 					_html(`<em>${_patch_text($scope3_id, "#text/0", input.note, void 0, $scope0_reason, 3)}</em>`);
-					_unfilled_if($scope0_reason, 3) && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:5/init");
+					_unfilled_if($scope0_reason, 3) && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:5/subscribe");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope3_id, {
 						_: _write_if($scope0_reason, 0) && _scope_with_id($scope2_id),
 						"ClosureSignalIndex:input_note/8": $wi__input_note && 1

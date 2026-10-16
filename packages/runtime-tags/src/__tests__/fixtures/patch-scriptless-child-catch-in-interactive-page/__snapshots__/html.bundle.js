@@ -19,14 +19,14 @@ var card_default = _template("b", (input) => {
 			_scope($scope3_id, {});
 		}, 1, "b0", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "b3");
-		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "b4", 0);
+		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "b3", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<b>${_patch_text($scope2_id, "a", err.message)}</b>`);
 		_scope($scope2_id, {});
-	}, void 0, "b5", "b2", 1, "");
+	}, void 0, "b4", "b2", 1, "");
 	$scope0_page && _scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 });
 

@@ -19,7 +19,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 			_html(`<em>${_patch_text($scope4_id, "#text/0", v, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope4_id, {}, "__tests__/child.marko", "2:4");
 		}, 1, "__tests__/child.marko_4*content", 1);
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/child.marko_1_input_p#0:3/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/child.marko_1_input_p#0:3/subscribe");
 		$wi__input_p && _subscribe(_unfilled_if($scope0_reason, 0) && $input_p__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/child.marko", "1:2"), _client_guard($scope0_reason, 0) && "__tests__/child.marko_1_input_p#0:3/subscribe", 0);
 		$wi__input_p && _resume_branch($scope1_id);
 	}, () => {

@@ -2,7 +2,7 @@
 const $input_meta = ($scope, input_meta) => _text($scope.a, input_meta ? input_meta.n : "-");
 
 // template.marko
-const $Box_content__count = _resumed.c7 = _closure_get(7, ($scope) => _text($scope.b, $scope._._.f), ($scope) => $scope._._, "c11");
+const $Box_content__count = _resumed.c7 = /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.b, $scope._._.f), ($scope) => $scope._._, "c10");
 const $count__closure = /*@__PURE__*/ _closure($Box_content__count);
 const $count = /*@__PURE__*/ _fill_let("c5", 5, ($scope) => {
 	$input_meta($scope.a, attrTag({ n: $scope.f }));

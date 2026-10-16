@@ -26,7 +26,7 @@ var small_label_default = /*@__PURE__*/ _template("c", $template, $walks, 0, $in
 
 // template.marko
 const $catch_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $catch_content__input_large__OR__input_label__OR__count__OR__err_message = /*@__PURE__*/ _fill_join("a1", 3, /*@__PURE__*/ _fill_join_subscribers("a10", 6, /*@__PURE__*/ _fill_join_subscribers("a9", 5, /*@__PURE__*/ _or(4, ($scope) => $catch_content__dynamicTag($scope, $scope._.f ? large_label_default : small_label_default, () => ({
+const $catch_content__input_large__OR__input_label__OR__count__OR__err_message = /*@__PURE__*/ _fill_join("a1", 3, /*@__PURE__*/ _fill_join_subscribers("a9", 6, /*@__PURE__*/ _fill_join_subscribers("a8", 5, /*@__PURE__*/ _or(4, ($scope) => $catch_content__dynamicTag($scope, $scope._.f ? large_label_default : small_label_default, () => ({
 	message: $scope.d,
 	count: $scope._.i,
 	label: $scope._.g
@@ -41,12 +41,12 @@ const $catch_content__input_label = /*@__PURE__*/ _closure_get(10, $catch_conten
 const $catch_content__count = /*@__PURE__*/ _closure_get(12, $catch_content__input_large__OR__input_label__OR__count__OR__err_message, 0, "a4");
 const $catch_content__err_message = /*@__PURE__*/ _fill_const("a1", 3, $catch_content__input_large__OR__input_label__OR__count__OR__err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
-const $catch_content = _content$1("a7", "<!><!><!>", "b%", $catch_content__setup, $catch_content__$params);
+const $catch_content = _content$1("a6", "<!><!><!>", "b%", $catch_content__setup, $catch_content__$params);
 const $count__closure = /*@__PURE__*/ _closure($catch_content__count);
-const $count = /*@__PURE__*/ _fill_let("a11", 8, ($scope) => {
+const $count = /*@__PURE__*/ _fill_let("a10", 8, ($scope) => {
 	_text($scope.b, $scope.i);
 	$count__closure($scope);
 });
-const $setup__script = _script("a8", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("a7", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, +$scope.i + 1);
 }));

@@ -3,7 +3,7 @@ _shells({
 	a0: "a0;D%c%;<em><!>.<!></em>",
 	a1: "a1;D%c%;<em><!>.<!></em>",
 	a2: "a2;b%;<!><!><!>",
-	a: "a !a8;D%b ;<main><!><button>interactive</button></main>",
+	a: "a !a7;D%b ;<main><!><button>interactive</button></main>",
 	a3: "a3; ;<section></section>",
 	a4: "a4;b%;<!><!><!>"
 });
@@ -26,14 +26,14 @@ var template_default = _template("a", (input) => {
 					_scope($scope4_id, { _: $wi__input_groups && _scope_with_id($scope3_id) });
 				}, 1, "a0");
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, "a5");
-				$wi__input_groups && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 0) && "a6", 0);
+				$wi__input_groups && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 0) && "a5", 0);
 				$wi__input_groups && _resume_branch($scope3_id);
 			}, void 0, (err) => {
 				_scope_reason();
 				const $scope5_id = _scope_id();
 				_html(`<b>${_patch_text($scope5_id, "a", err.message)}</b>`);
 				_scope($scope5_id, {});
-			}, void 0, "a7", "a2", void 0, "");
+			}, void 0, "a6", "a2", void 0, "");
 			$wi__input_groups && _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				g: _unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures
@@ -43,6 +43,6 @@ var template_default = _template("a", (input) => {
 		_scope($scope1_id, {});
 	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a3", $scope0_reason, 0);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a8");
+	_script($scope0_id, "a7");
 	$scope0_page && _scope($scope0_id, {});
 }, 1);

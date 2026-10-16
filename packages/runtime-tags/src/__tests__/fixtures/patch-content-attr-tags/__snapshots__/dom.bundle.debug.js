@@ -18,7 +18,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks$1);
 const $footer_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "static");
-const $header_content__input_h = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_h#0:3/init", "input_h/4", ($scope) => _text($scope["#text/0"], $scope._.input_h), 0, "__tests__/template.marko_1_input_h#0:3/subscribe");
+const $header_content__input_h = /*@__PURE__*/ _closure_get("input_h/4", ($scope) => _text($scope["#text/0"], $scope._.input_h), 0, "__tests__/template.marko_1_input_h#0:3/subscribe");
 const $header_content__setup = $header_content__input_h;
 const $header_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<b> </b>", "D ", $header_content__setup);
 function $setup($scope) {

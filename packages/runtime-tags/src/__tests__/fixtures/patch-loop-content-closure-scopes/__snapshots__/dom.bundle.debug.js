@@ -16,7 +16,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = () => {};
-const $panel_content__p_text = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_p_text#1:4/init", "p_text/5", ($scope) => _text($scope["#text/0"], $scope._.p_text), 0, "__tests__/template.marko_2_p_text#1:4/subscribe");
+const $panel_content__p_text = /*@__PURE__*/ _closure_get("p_text/5", ($scope) => _text($scope["#text/0"], $scope._.p_text), 0, "__tests__/template.marko_2_p_text#1:4/subscribe");
 const $panel_content__setup = $panel_content__p_text;
 const $panel_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $panel_content__setup);
 const $for_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $panel_content($scope));

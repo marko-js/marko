@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_for_of([1, 2], (x) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_patch_text($scope3_id, "#text/0", x, void 0, 0, 0)}:${_patch_text($scope3_id, "#text/1", input.note, 2, $scope0_reason, 1)}</p>`);
-				_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:5/init");
+				_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:5/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope3_id, { _: $wi__input_note__OR__input_show && _scope_with_id($scope2_id) }, "__tests__/template.marko", "13:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_3_input_note#0:5/subscribe");
 			}, 0, $scope2_id, "#div/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", 0, 0);
 			_html(`</div>${_el_resume($scope2_id, "#div/0")}`);

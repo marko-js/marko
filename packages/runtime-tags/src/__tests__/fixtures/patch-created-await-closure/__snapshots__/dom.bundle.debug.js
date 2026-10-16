@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>+</button><!><!>";
 const $walks = " b%c";
-const $await_content__count = _resumed["__tests__/template.marko_2_count#0:6/init"] = _closure_get("count/8", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:6/subscribe");
+const $await_content__count = _resumed["__tests__/template.marko_2_count#0:6/init"] = /*@__PURE__*/ _closure_get("count/8", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:6/subscribe");
 const $await_content__setup = $await_content__count;
 const $await_content__v = ($scope, v) => _text($scope["#text/1"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);

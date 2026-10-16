@@ -3,7 +3,7 @@ _shells({
 	a0: "a0,<span>ok</span>",
 	a1: "a1,<span>ok</span>",
 	a2: "a2;b%;<!><!><!>",
-	a: "a !a8;D%b D ;<main><!><button> </button></main>"
+	a: "a !a7;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_detail = _write_guard($scope0_reason, 0), $wi__input_detail = _write_if($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $scope0_page = _page_render();
@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 			_html("<span>ok</span>");
 		}, 1, "a0");
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, "a5");
-		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a6", 0);
+		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a5", 0);
 		$wi__input_promise && _resume_branch($scope3_id);
 	}, void 0, () => {
 		_scope_reason();
@@ -38,14 +38,14 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", $wg__input_detail, $wg__input_detail, 0, 0, 1);
 		_subscribe($wi__input_detail && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a4", $wg__input_detail);
 		$wg__input_detail || _resume_branch($scope1_id);
-	}, void 0, "a7", "a2", 1);
+	}, void 0, "a6", "a2", 1);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a8");
-	_patch_value($scope0_id, "va10", count, 1);
+	_script($scope0_id, "a7");
+	_patch_value($scope0_id, "va9", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.detail,
 		h: count,
 		i: $wi__input_detail && $input_detail__closures,
 		j: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va9", input.detail, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va8", input.detail, !_server_guard($scope0_reason, 0));
 }, 1);

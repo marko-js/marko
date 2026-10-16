@@ -12,7 +12,7 @@ const $catch_content__setup__script = _script("__tests__/template.marko_2", ($sc
 const $catch_content__setup = $catch_content__setup__script;
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_2*content", "<button> </button>", " D ", $catch_content__setup, $catch_content__$params);
-const $try_content__input_error = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_error#0:3/init", "input_error/4", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_1_input_error#0:3/subscribe");
+const $try_content__input_error = /*@__PURE__*/ _closure_get("input_error/4", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_1_input_error#0:3/subscribe");
 const $try_content__setup = $try_content__input_error;
 const $try = /*@__PURE__*/ _try("#text/0", "<p> </p>", "D ", $try_content__setup, 0, $catch_content);
 function $setup($scope) {

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope4_reason = _scope_reason();
 		const $scope4_id = _scope_id();
 		_html(`<p>${_patch_text($scope4_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope4_id, "__tests__/template.marko_4_input_error#0:4/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope4_id, "__tests__/template.marko_4_input_error#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope4_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_4_input_error#0:4/subscribe");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason(), $wg__err_status = _write_guard($scope1_reason, 0);
@@ -28,13 +28,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (err.status === 404) {
 				const $scope2_id = _scope_id();
 				_html(`<b>${_patch_text($scope2_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</b>`);
-				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:3/init");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:3/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_2_input_label#0:3/subscribe");
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
 				_html(`<i>${_patch_text($scope3_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</i>`);
-				_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, "__tests__/template.marko_3_input_label#0:3/init");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, "__tests__/template.marko_3_input_label#0:3/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope3_id, {
 					_: _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_label/5": $wi__input_label && 1

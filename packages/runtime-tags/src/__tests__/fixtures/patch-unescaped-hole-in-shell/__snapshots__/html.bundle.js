@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 							_subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope3_id, {
 								_: $wi__input_show__OR__input_html && _scope_with_id($scope2_id),
 								Cg: $wi__input_html && 1
-							}), _client_guard($scope0_reason, 2) && "a5");
+							}), _client_guard($scope0_reason, 2) && "a4");
 							return 0;
 						}
 					}, $scope2_id, "a", 1, $wg__input_html, void 0, void 0, void 0, ["a2"], $scope0_reason, 2);
@@ -34,16 +34,16 @@ var template_default = _template("a", (input) => {
 						if (input.html) {
 							const $scope4_id = _scope_id();
 							_html(_patch_html($scope4_id, "a", input.html, void 0, $scope0_reason, 2));
-							_unfilled_if($scope0_reason, 2) && _patch_init($scope4_id, "a6");
+							_unfilled_if($scope0_reason, 2) && _patch_init($scope4_id, "a5");
 							_subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope4_id, {
 								_: $wi__input_show__OR__input_html && _scope_with_id($scope2_id),
 								Cg: $wi__input_html && 2
-							}), _client_guard($scope0_reason, 2) && "a7");
+							}), _client_guard($scope0_reason, 2) && "a5");
 							return 0;
 						}
 					}, $scope2_id, "b", 1, $wg__input_html, void 0, void 0, void 0, ["a3"], $scope0_reason, 2);
-					_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "a8");
-					$wi__input_show__OR__input_html && _subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a9", $wg__input_html);
+					_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "a6");
+					$wi__input_show__OR__input_html && _subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a6", $wg__input_html);
 					return 0;
 				}
 			}, $scope1_id, "c", 1, $wg__input_show, void 0, void 0, void 0, ["a1"], $scope0_reason, 1);
@@ -55,5 +55,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 1) && input.html,
 		g: $wi__input_html && _unfilled_if($scope0_reason, 2) && $input_html__closures
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va10", input.html, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.html, !_server_guard($scope0_reason, 2));
 }, 1);

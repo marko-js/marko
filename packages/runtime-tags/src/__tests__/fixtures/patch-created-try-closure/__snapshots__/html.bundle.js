@@ -1,7 +1,7 @@
 // template.marko
 _shells({
-	a0: "a0 a10;D%c%;<p><!> <!></p>",
-	a: "a !a6; b%;<button>+</button><!><!>",
+	a0: "a0 a9;D%c%;<p><!> <!></p>",
+	a: "a !a5; b%;<button>+</button><!><!>",
 	a1: "a1;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
@@ -19,22 +19,22 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_resume($scope2_id, "a", count)} ${_patch_text($scope2_id, "b", input.label, 2, $scope0_reason, 1)}</p>`);
 				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "a2");
-				_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a3"), "a4");
+				_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a2"), "a3");
 			}, void 0, () => {
 				_scope_reason();
 				_scope_id();
 				_html("caught");
-			}, void 0, "a5", "a0");
+			}, void 0, "a4", "a0");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
-	_script($scope0_id, "a6");
-	_patch_value($scope0_id, "va8", count, 1);
+	_script($scope0_id, "a5");
+	_patch_value($scope0_id, "va7", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: _unfilled_if($scope0_reason, 0) && input.label,
 		g: count,
 		h: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_label__closures,
 		i: $count__closures
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.label, !_server_guard($scope0_reason, 1));
+	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va6", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

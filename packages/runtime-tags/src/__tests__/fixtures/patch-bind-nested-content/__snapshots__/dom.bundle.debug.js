@@ -37,7 +37,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $frame_content2__if = /*@__PURE__*/ _if("#text/0", "<span>Seen <!></span><button>+</button>", "Db%l ", $if_content__setup);
-const $frame_content2__input_show = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_input_show#0:6/init", "input_show/10", ($scope) => $frame_content2__if($scope, $scope._._.input_show ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_show#0:6/subscribe");
+const $frame_content2__input_show = /*@__PURE__*/ _closure_get("input_show/10", ($scope) => $frame_content2__if($scope, $scope._._.input_show ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_show#0:6/subscribe");
 const $frame_content2__setup = $frame_content2__input_show;
 const $frame_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $frame_content2__setup);
 const $frame_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $frame_content2($scope));

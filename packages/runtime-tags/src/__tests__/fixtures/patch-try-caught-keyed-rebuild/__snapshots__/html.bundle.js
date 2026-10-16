@@ -51,12 +51,12 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__page_fail__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__page_title__closures, _scope($scope2_id, {
 				_: $wi__input_pages && _scope_with_id($scope1_id),
 				c: _existing_scope($childScope)
-			}), _client_guard($scope0_reason, 0) && "a5"), _client_guard($scope0_reason, 0) && "a6");
+			}), _client_guard($scope0_reason, 0) && "a3"), _client_guard($scope0_reason, 0) && "a4");
 		}, void 0, () => {
 			_scope_reason();
 			_scope_id();
 			_html("caught");
-		}, void 0, "a7", "a0");
+		}, void 0, "a5", "a0");
 		$wi__input_pages && _scope($scope1_id, {
 			f: _unfilled_if($scope0_reason, 0) && $for_content__page_title__closures,
 			g: _unfilled_if($scope0_reason, 0) && $for_content__page_fail__closures

@@ -1,9 +1,20 @@
+import { decodeAccessor } from "../../common/helpers";
 import type { Accessor, Scope } from "../../common/types";
 import { AccessorProp, PatchKey } from "../../common/types";
-import "./write";
+import "./write.feat";
 import { queueEffect, runId } from "../queue";
 import { getRegisteredWithScope } from "../resume";
 import { patchers } from "./apply";
+import { installFillChange } from "./signals";
+
+// A changed value a join's fill sets is marked as a write marks it.
+installFillChange((scope, valueAccessor) => {
+  (scope[AccessorProp.PatchChanged] ??= {})[
+    MARKO_DEBUG
+      ? (valueAccessor as Accessor)
+      : decodeAccessor(valueAccessor as number)
+  ] = runId;
+});
 
 declare module "./apply" {
   interface PatchValues {

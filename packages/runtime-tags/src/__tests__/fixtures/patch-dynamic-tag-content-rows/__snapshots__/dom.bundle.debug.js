@@ -46,7 +46,7 @@ const $layout_content = _content("__tests__/template.marko_3*content", "<p> <inp
 const $row_content__input_text = /*@__PURE__*/ _closure_get("input_text/6", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/template.marko_2_input_text#0:5/subscribe");
 const $row_content__setup = $row_content__input_text;
 const $row_content = _content("__tests__/template.marko_2*content", "<em> <input></em>", "D ", $row_content__setup);
-const $header_content__input_text = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_text#0:5/init", "input_text/6", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/template.marko_1_input_text#0:5/subscribe");
+const $header_content__input_text = /*@__PURE__*/ _closure_get("input_text/6", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/template.marko_1_input_text#0:5/subscribe");
 const $header_content__setup = $header_content__input_text;
 const $header_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<b> <input></b>", "D ", $header_content__setup);
 function $setup($scope) {

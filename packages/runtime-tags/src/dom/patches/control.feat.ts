@@ -1,4 +1,4 @@
-import "./write";
+import "./write.feat";
 import {
   type Accessor,
   AccessorPrefix,

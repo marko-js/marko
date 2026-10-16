@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 					_script($scope2_id, "a2", 0, _client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 2));
 					(_server_guard($scope0_reason, 4) || _server_guard($scope0_reason, 2)) && _patch_effect($scope2_id, "ea2", "1 c 2 g");
 					_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, "a3");
-					_subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 4) && "a4", 0);
+					_subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 4) && "a3", 0);
 					return 0;
 				}
 			}, $scope1_id, "b", 1, _write_guard($scope0_reason, 3), void 0, void 0, void 0, ["a1"], $scope0_reason, 3);
@@ -39,5 +39,5 @@ var template_default = _template("a", (input) => {
 		f: _unfilled_if($scope0_reason, 1) && input.inner,
 		g: input.suffix,
 		j: $wi__input_suffix && $input_suffix__closures
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.title, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va6", input.inner, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "wg", input.suffix, !_server_guard($scope0_reason, 4)));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.title, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.inner, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "wg", input.suffix, !_server_guard($scope0_reason, 4)));
 }, 1);

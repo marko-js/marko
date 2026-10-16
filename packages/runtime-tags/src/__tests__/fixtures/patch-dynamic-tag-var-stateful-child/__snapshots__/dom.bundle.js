@@ -8,9 +8,8 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-_fill_var("a0");
 const $count__script = _script("a1", ($scope) => $scope.c.dataset.count = String($scope.j));
-const $count = _var_resume("a0", /*@__PURE__*/ _const(9, ($scope) => {
+const $count = _fill_var_resume("a0", /*@__PURE__*/ _const(9, ($scope) => {
 	_text($scope.d, $scope.j);
 	$count__script($scope);
 }));

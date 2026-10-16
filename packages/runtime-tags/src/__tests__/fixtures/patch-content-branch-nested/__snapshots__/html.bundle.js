@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 5) && $input_label__closures, _scope($scope2_id, {
 						_: $wi__input_a__OR__input_b__OR__input_label__OR__input_text && _scope_with_id($scope1_id),
 						a: _existing_scope($childScope)
-					}), _client_guard($scope0_reason, 5) && "a5");
+					}), _client_guard($scope0_reason, 5) && "a4");
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $wg__input_b, void 0, void 0, void 0, ["a2"], $scope0_reason, 4);
@@ -62,5 +62,5 @@ var template_default = _template("a", (input) => {
 		g: _unfilled_if($scope0_reason, 0) && input.text,
 		j: _write_if($scope0_reason, 6) && _unfilled_if($scope0_reason, 6) && $input_text__closures,
 		i: _write_if($scope0_reason, 5) && _unfilled_if($scope0_reason, 5) && $input_label__closures
-	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va6", input.b, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 4)) && _patch_value($scope0_id, "va7", input.label, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 4)) && _patch_value($scope0_id, "va8", input.text, !_server_guard($scope0_reason, 6)));
+	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va5", input.b, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 4)) && _patch_value($scope0_id, "va6", input.label, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 4)) && _patch_value($scope0_id, "va7", input.text, !_server_guard($scope0_reason, 6)));
 }, 1);

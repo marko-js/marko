@@ -51,12 +51,12 @@ var template_default = _template("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			c: _existing_scope($childScope2)
-		}), _client_guard($scope0_reason, 2) && "b7"), _client_guard($scope0_reason, 3) && "b8");
+		}), _client_guard($scope0_reason, 2) && "b5"), _client_guard($scope0_reason, 3) && "b6");
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "b9", void 0, "b4", 1);
+	}, void 0, "b7", void 0, "b4", 1);
 	$scope0_page && _scope($scope0_id, {
 		b: _existing_scope($childScope),
 		i: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_a__closures,

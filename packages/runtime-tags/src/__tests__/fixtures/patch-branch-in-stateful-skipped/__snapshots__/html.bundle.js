@@ -20,11 +20,7 @@ var panel_default = _template("b", (input) => {
 });
 
 // template.marko
-_shells({
-	a: /*@__PURE__*/ (() => `a;${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`)(),
-	a0: "a0;D ;<p> </p>",
-	a1: "a1;D ;<li> </li>"
-});
+_shells({ a: /*@__PURE__*/ (() => `a;${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`)() });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -33,7 +29,7 @@ var template_default = _template("a", (input) => {
 	panel_default({
 		label: input.label,
 		items: input.items,
-		content: _content_resume("a4", ({ label, items }) => {
+		content: _content_resume("a2", ({ label, items }) => {
 			const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0), $wg__items = _write_guard($scope1_reason, 1), $wi__label = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			const $panel_content__label__closures = /* @__PURE__ */ new Set();
@@ -45,7 +41,7 @@ var template_default = _template("a", (input) => {
 						if (label) {
 							const $scope3_id = _scope_id();
 							_html(`<p>${_text_resume($scope3_id, "a", label, $wg__label)}</p>`);
-							_subscribe($wi__label && $panel_content__label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), "a2", $wg__label);
+							_subscribe($wi__label && $panel_content__label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), "a0", $wg__label);
 							return 0;
 						}
 					}, $scope2_id, "a", $wg__label, $wg__label, 0, 0, 1);
@@ -60,7 +56,7 @@ var template_default = _template("a", (input) => {
 				}
 			}, $scope1_id, "a");
 			_html(`<button>toggle</button>${_el_resume($scope1_id, "b")}`);
-			_script($scope1_id, "a3");
+			_script($scope1_id, "a1");
 			_scope($scope1_id, {
 				e: label,
 				f: items,

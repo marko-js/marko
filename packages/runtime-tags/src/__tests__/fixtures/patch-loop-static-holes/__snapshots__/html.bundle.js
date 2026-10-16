@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_patch_text($scope3_id, "a", x, void 0, 0, 0)}:${_patch_text($scope3_id, "b", input.note, 2, $scope0_reason, 1)}</p>`);
 				_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, "a4");
-				_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope3_id, { _: $wi__input_note__OR__input_show && _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 1) && "a5");
+				_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope3_id, { _: $wi__input_note__OR__input_show && _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 1) && "a4");
 			}, 0, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "a2", 0, 0);
 			_html(`</div>${_el_resume($scope2_id, "a")}`);
 			_scope($scope2_id, { _: $wi__input_note__OR__input_show && _scope_with_id($scope0_id) });
@@ -41,5 +41,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		f: _unfilled_if($scope0_reason, 2) && input.note,
 		h: $wi__input_note && _unfilled_if($scope0_reason, 1) && $input_note__closures
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va6", input.note, !_server_guard($scope0_reason, 1));
+	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va5", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

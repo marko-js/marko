@@ -30,10 +30,9 @@ var other_default = /*@__PURE__*/ _template("__tests__/tags/other.marko", $templ
 const $template = "<!><!><p> </p>";
 const $walks = "b1b D l";
 const $setup = () => {};
-_fill_var("__tests__/template.marko_0_count#9/var");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $count);
 const $count__script = _script("__tests__/template.marko_0_count#9", ($scope) => _el_read($scope["#p/2"]).dataset.count = String($scope.count));
-const $count = _var_resume("__tests__/template.marko_0_count#9/var", /*@__PURE__*/ _const("count", ($scope) => {
+const $count = _fill_var_resume("__tests__/template.marko_0_count#9/var", /*@__PURE__*/ _const("count", ($scope) => {
 	_text($scope["#text/3"], $scope.count);
 	$count__script($scope);
 }));

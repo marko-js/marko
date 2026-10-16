@@ -4,9 +4,7 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 import { BindingType } from "../../util/bindings";
 import { isOptimize, isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { forEach, some } from "../../util/optional";
-import { hasPatchEffect, rerunsEffectOnPatch } from "../../util/patch/refresh";
-import { getReferencedBindings } from "../../util/references";
+import { forEach } from "../../util/optional";
 import {
   callRuntime,
   importRuntimeFeature,
@@ -19,7 +17,6 @@ import {
 import { scopeIdentifier } from "../../util/scope-read";
 import { isSectionRendererElided } from "../../util/section-renderer";
 import {
-  forEachSection,
   forEachSectionReverse,
   getDynamicTagContentClosures,
   getSectionForBody,
@@ -229,8 +226,6 @@ export default {
         }
       });
 
-      if (isPatch()) forEachSection(importPatchEffectFeatures);
-
       const written = writeSignals(section);
       writeRegisteredFns();
 
@@ -303,19 +298,4 @@ function markReturn(
       ? [callRuntime("_return_setup", setup), params]
       : [setup, callRuntime("_return_setup", params!)]
     : [setup, params];
-}
-
-function importPatchEffectFeatures(section: Section) {
-  if (some(section.bindings, hasPatchEffect)) {
-    importRuntimeFeature("patches/effect");
-  }
-  // An effect a patch re-runs resets its `$signal`s first.
-  if (section.abortSignalExprs?.some(rerunsOnPatch)) {
-    importRuntimeFeature("patches/effect-signal");
-  }
-}
-
-// An effect expression a patch re-runs (its `_patch_effect` entry).
-function rerunsOnPatch(root: t.NodeExtra) {
-  return some(getReferencedBindings(root), rerunsEffectOnPatch);
 }

@@ -28,7 +28,7 @@ const $inputtag_content = _content("__tests__/template.marko_4*content", "<!><!>
 _content_resume($inputtag_content);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"));
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
-const $try_content__input_card = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_card", /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_3_input_card#0:9/init", "input_card/14", ($scope) => $try_content__await_promise($scope, $scope._._.input_card), ($scope) => $scope._._, "__tests__/template.marko_3_input_card#0:9/subscribe"), 0);
+const $try_content__input_card = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_card", /*@__PURE__*/ _closure_get("input_card/14", ($scope) => $try_content__await_promise($scope, $scope._._.input_card), ($scope) => $scope._._, "__tests__/template.marko_3_input_card#0:9/subscribe"), 0);
 const $try_content__setup = ($scope) => {
 	$try_content__input_card($scope);
 	$await_content2($scope);

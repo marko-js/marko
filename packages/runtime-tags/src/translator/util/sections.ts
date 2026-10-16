@@ -181,6 +181,19 @@ export interface Section {
   /** A `<try>`'s `@catch` or `@placeholder`: content that always
    * registers, so its slot names it by id. A patch renders a `@catch`. */
   boundaryContent: false | "catch" | "placeholder";
+  /** Where it sits among the sections around it, once bindings resolve. */
+  enclosing: {
+    /** On the branch path: no dropped content or boundary content reading no
+     * params around it. */
+    branchPath: boolean;
+    /** Content a consumer or a `<try>` renders encloses it (inclusive). */
+    inContentSection: boolean;
+    /** The nearest section around it (inclusive) that is no optional branch:
+     * only a chain of optional branches composes per-hop closure builders. */
+    nonOptionalAncestor: Section;
+    /** The nearest `<await>` or `<try>` body around it (inclusive). */
+    boundaryBody: Section | undefined;
+  };
   /** A content body shipped as a shell, created by id from a dynamic tag
    * entry. */
   contentShell: boolean;
@@ -267,6 +280,7 @@ export function ensureBodySection(
       hasSetupWork: false,
       branch: undefined,
       boundaryContent: false,
+      enclosing: undefined as unknown as Section["enclosing"],
       contentShell: false,
       structure: parentSection && !parentSection.structure ? null : [],
     };
@@ -303,6 +317,36 @@ export function getSectionForBody(
   body: t.NodePath<t.MarkoTagBody | t.Program>,
 ) {
   return body.node.extra?.section;
+}
+
+// Where each section sits among those around it, recorded parents first once
+// bindings resolve.
+export function finalizeEnclosing(section: Section) {
+  const enclosing = section.parent?.enclosing;
+  section.enclosing = enclosing
+    ? {
+        branchPath:
+          enclosing.branchPath &&
+          !section.dropped &&
+          !(
+            section.boundaryContent &&
+            (!section.params || section.params.pruned)
+          ),
+        inContentSection:
+          enclosing.inContentSection ||
+          (!section.branch && (!!section.derives || !!section.boundaryContent)),
+        nonOptionalAncestor: section.branch?.optional
+          ? enclosing.nonOptionalAncestor
+          : section,
+        boundaryBody:
+          section.branch?.optional === false ? section : enclosing.boundaryBody,
+      }
+    : {
+        branchPath: true,
+        inContentSection: false,
+        nonOptionalAncestor: section,
+        boundaryBody: undefined,
+      };
 }
 
 // Content analysis dropped is rendered by no output, so translate never visits it.
@@ -634,7 +678,7 @@ export function forEachParamGroup(
   bindingUtil.forEachRun(params, bindingToSection, sectionUtil.compare, fn);
 }
 
-// Each group of params a caller passes (`isCalledBody`), with its section:
+// Each group of params a caller passes (`isKnownChild`), with its section:
 // the call's mask reports who feeds it at render.
 export function getCallerParamGroups(params: Sources["param"]) {
   return reduceParamGroups(
@@ -649,13 +693,13 @@ function addCallerParamGroup(
   section: Section,
   group: ParamReasonGroup,
 ) {
-  if (isCalledBody(section)) groups.push([section, group]);
+  if (isKnownChild(section)) groups.push([section, group]);
   return groups;
 }
 
 // A template's root, or a `<define>` body its direct calls render: each call
 // passes its params, as a known tag passes a child template's.
-export function isCalledBody(section: Section) {
+export function isKnownChild(section: Section) {
   return !section.parent || !!section.callSections;
 }
 
@@ -673,7 +717,7 @@ export function getCallerParamGroupsAt(
 // to `section` or a body around it, whose scope reason `section` reads.
 export function isCallerParamAt(param: Binding, section: Section) {
   return (
-    isCalledBody(param.section) &&
+    isKnownChild(param.section) &&
     isSameOrAncestorSection(param.section, section)
   );
 }

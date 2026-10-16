@@ -37,7 +37,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 			_html("content");
 		}, $scope1_id), void 0, void 0, "__tests__/tags/child/index.marko_1_$btn#2/var", 1, $scope0_reason, 0);
 		_var($scope1_id, "#scopeOffset/1", $inputa11yTextbutton_scope, "__tests__/tags/child/index.marko_1_$btn#2/var");
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/child/index.marko_1_input_a11yText#0:3/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/child/index.marko_1_input_a11yText#0:3/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			$btn,
 			_: $wi__input_a11yText && _scope_with_id($scope0_id)

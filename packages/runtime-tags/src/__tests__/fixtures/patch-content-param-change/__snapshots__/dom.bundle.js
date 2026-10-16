@@ -15,7 +15,7 @@ const $setup__script = _script("c0", ($scope) => _on($scope.b, "click", function
 
 // template.marko
 const $wrapper_content__input_suffix__OR__value = /*@__PURE__*/ _or(6, ($scope) => $input_title($scope.a, $scope.f + $scope._.d));
-const $wrapper_content__input_suffix = /*@__PURE__*/ _fill_join_closure("a3", 3, _closure_get(4, $wrapper_content__input_suffix__OR__value, 0, "a1"), 0);
+const $wrapper_content__input_suffix = /*@__PURE__*/ _fill_join_closure("a3", 3, /*@__PURE__*/ _closure_get(4, $wrapper_content__input_suffix__OR__value, 0, "a1"), 0);
 const $wrapper_content__setup = ($scope) => {
 	$wrapper_content__input_suffix($scope);
 	_var($scope, 0, $wrapper_content__label);

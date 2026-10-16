@@ -1,7 +1,7 @@
 // template.marko
 _shells({
-	a0: "a0 a10;D%b%;<em><!><!></em>",
-	a: "a !a6;D%b D ;<main><!><button> </button></main>"
+	a0: "a0 a9;D%b%;<em><!><!></em>",
+	a: "a !a5;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_message = _write_if($scope0_reason, 0), $scope0_page = _page_render();
@@ -18,20 +18,20 @@ var template_default = _template("a", (input) => {
 		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_message__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			Ch: $wi__input_message && 1
-		}), "a3"), "a4");
+		}), "a2"), "a3");
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<b>${_patch_text($scope1_id, "a", err.message)} ${_text_resume($scope1_id, "b", input.message, 2)}</b>`);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_message__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
-	}, void 0, "a5", "a0", 1, "");
+	}, void 0, "a4", "a0", 1, "");
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a6");
-	_patch_value($scope0_id, "va8", count, 1);
+	_script($scope0_id, "a5");
+	_patch_value($scope0_id, "va7", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.message,
 		g: count,
 		h: $wi__input_message && $input_message__closures,
 		i: $count__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.message, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va6", input.message, !_server_guard($scope0_reason, 0));
 }, 1);

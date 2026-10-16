@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<em>${_patch_text($scope4_id, "#text/0", v, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "7:6");
 		}, 1, "__tests__/template.marko_4*content", 1);
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:6/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:6/subscribe");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_promise#0:6/subscribe", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, void 0, (err) => {
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_input_error#0:7/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_input_error#0:7/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "10:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_error#0:7/subscribe");
 	}, void 0, ({ cause }) => {
 		const $scope5_reason = _scope_reason();

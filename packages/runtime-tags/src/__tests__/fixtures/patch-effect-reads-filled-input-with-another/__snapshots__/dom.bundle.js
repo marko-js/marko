@@ -1,0 +1,12 @@
+// template.marko
+const $input_label__OR__n = /*@__PURE__*/ _or(9, ($scope) => _text($scope.b, $scope.i + $scope.f));
+const $n = /*@__PURE__*/ _fill_let("a4", 8, $input_label__OR__n);
+const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
+	$n($scope, +$scope.i + 1);
+}));
+const $input_label__OR__input_other__script = _script("a0", ($scope) => $scope.c.textContent = "script:" + $scope.f + $scope.g);
+const $input_label__OR__input_other = /*@__PURE__*/ _shell_or("a3", 7, $input_label__OR__input_other__script);
+const $input_label = fill("a2", /*@__PURE__*/ _const(5, ($scope) => {
+	$input_label__OR__n($scope);
+	$input_label__OR__input_other($scope);
+}));

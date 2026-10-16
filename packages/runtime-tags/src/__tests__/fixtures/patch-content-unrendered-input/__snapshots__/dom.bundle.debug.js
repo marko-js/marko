@@ -55,7 +55,7 @@ const $wrapper_content = _content("__tests__/template.marko_3*content", "<p> </p
 const $guest_content__input_guestText = /*@__PURE__*/ _closure_get("input_guestText/13", ($scope) => _text($scope["#text/0"], $scope._.input_guestText), 0, "__tests__/template.marko_2_input_guestText#0:8/subscribe");
 const $guest_content__setup = $guest_content__input_guestText;
 const $guest_content = _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $guest_content__setup);
-const $admin_content__input_rows = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_rows#0:7/init", "input_rows/12", ($scope) => $input_rows$1($scope["#childScope/0"], $scope._.input_rows), 0, "__tests__/template.marko_1_input_rows#0:7/subscribe");
+const $admin_content__input_rows = /*@__PURE__*/ _closure_get("input_rows/12", ($scope) => $input_rows$1($scope["#childScope/0"], $scope._.input_rows), 0, "__tests__/template.marko_1_input_rows#0:7/subscribe");
 const $admin_content__setup = $admin_content__input_rows;
 const $admin_content = _content("__tests__/template.marko_1*content", $template$3, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $admin_content__setup);
 const $n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/11", ($scope) => _text($scope["#text/1"], $scope.n));

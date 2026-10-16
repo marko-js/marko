@@ -22,19 +22,19 @@ var wrapper_default = _template("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_content__closures, _scope($scope2_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			Cf: $wi__input_content && 1
-		}), "b4"), _client_guard($scope0_reason, 2) && "b5");
+		}), "b2"), _client_guard($scope0_reason, 2) && "b3");
 	}, void 0, () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $wg__input_content);
 		_subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1", $wg__input_content);
 		$wg__input_content || _resume_branch($scope1_id);
-	}, void 0, "b6", "b0", 1);
+	}, void 0, "b4", "b0", 1);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.content,
 		f: $wi__input_content && $input_content__closures,
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_fail__closures
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb7", input.content, !_server_guard($scope0_reason, 1));
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb5", input.content, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

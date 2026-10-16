@@ -24,7 +24,7 @@ import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputDOM, isPatch } from "../util/marko-config";
 import { type Opt, push } from "../util/optional";
 import { writesPatchHole } from "../util/patch/decisions";
-import { writesPatchIn } from "../util/patch/structure";
+import { patchWrites } from "../util/patch/structure";
 import { callPatchRuntime, getExprWriteOwnership } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import {
@@ -146,7 +146,7 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
     onFinalizeReferences(() => {
       // The flush writes a dynamic style's rule, even a state-sourced one: a
       // scope the flush creates never runs the setup that writes its selector.
-      if (writesPatchIn(section)) {
+      if (patchWrites(section)) {
         linkRuntimeFeature("patches/style");
       }
     });
@@ -244,7 +244,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     writer.writeTo(tag)`${callRuntime(
       "_style_html",
       buildStyleDecls(node, (value, i) =>
-        writesPatchIn(section)
+        patchWrites(section)
           ? callPatchRuntime(
               "_patch_style",
               section,

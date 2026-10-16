@@ -11,7 +11,6 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__value = _write_guard($scope1_reason, 0);
 		_html(`<p>${_text_resume($scope1_id, "a", value + input.title, $wg__input_title || $wg__value)}</p>`);
-		_patch_write($scope1_id, "wd", value, 1);
 		_client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && _patch_init($scope1_id, "a1");
 		_subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, {
 			d: $wi__input_title && value,

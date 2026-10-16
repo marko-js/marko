@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			} else if (input.kind === "b") {
 				const $scope2_id = _scope_id();
 				_html(`<i>B:${_patch_text($scope2_id, "#text/0", input.kind, 2, $scope0_reason, 0)}</i>`);
-				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_kind#0:3/init");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_kind#0:3/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_kind__closures, _scope($scope2_id, {
 					_: $wi__input_kind && _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_kind/4": $wi__input_kind && 1
@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 1;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_kind, void 0, void 0, void 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 0);
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_kind#0:3/init");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_kind#0:3/subscribe");
 		$wi__input_kind && _subscribe(_unfilled_if($scope0_reason, 0) && $input_kind__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 		$wg__input_kind || $wi__input_kind && _resume_branch($scope1_id);
 	}, $scope0_id) });

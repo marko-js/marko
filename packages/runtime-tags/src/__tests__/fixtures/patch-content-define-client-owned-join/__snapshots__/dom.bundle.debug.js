@@ -4,7 +4,7 @@ const $Label_content__template = "<p> </p>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>+</button>`)($Label_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Label_content__walks);
 const $Label_content__input_suffix__OR__n = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "n", /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_suffix", /*@__PURE__*/ _shell_or("__tests__/template.marko_1_input_suffix#0:4_n#3/init", 4, ($scope) => _text($scope["#text/0"], $scope.n + $scope._.input_suffix)), "input_suffix/6", 0));
-const $Label_content__input_suffix = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_suffix#0:4/init", "input_suffix/6", $Label_content__input_suffix__OR__n, 0, "__tests__/template.marko_1_input_suffix#0:4/subscribe");
+const $Label_content__input_suffix = /*@__PURE__*/ _closure_get("input_suffix/6", $Label_content__input_suffix__OR__n, 0, "__tests__/template.marko_1_input_suffix#0:4/subscribe");
 const $Label_content__setup = /*@__PURE__*/ _child_setup($Label_content__input_suffix);
 const $Label_content__n = /*@__PURE__*/ _const("n", $Label_content__input_suffix__OR__n);
 const $Label_content__$params = ($scope, $params2) => $Label_content__$temp($scope, $params2[0]);

@@ -22,7 +22,7 @@ let $load_Child_setup = /*@__PURE__*/ _load_setup(() => import("./v:child.marko.
 let $load_Child_tag_input_name = /*@__PURE__*/ _load_signal_patch(() => import("./v:child.marko.input_name.mjs"), "ready:__tests__/child.marko");
 let $load_Child_tag_input_item = /*@__PURE__*/ _load_signal_patch(() => import("./v:child.marko.input_item.mjs"), "ready:__tests__/child.marko");
 const $placeholder_content = _content("__tests__/template.marko_3*content", "loading");
-const $await_content__item = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_item#0:7/init", "item/9", ($scope) => $load_Child_tag_input_item($scope["#childScope/2"], $scope._._.item), ($scope) => $scope._._, "__tests__/template.marko_2_item#0:7/subscribe");
+const $await_content__item = /*@__PURE__*/ _closure_get("item/9", ($scope) => $load_Child_tag_input_item($scope["#childScope/2"], $scope._._.item), ($scope) => $scope._._, "__tests__/template.marko_2_item#0:7/subscribe");
 const $await_content__setup = ($scope) => {
 	$await_content__item($scope);
 	$load_Child_setup($scope, $scope["#childScope/2"], $scope["#text/1"]);
@@ -32,7 +32,7 @@ const $await_content__value = ($scope, value) => _text($scope["#text/0"], value)
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span> </span><!><!>", "D l%/&", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__input_promise = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_promise#0:6/init", "input_promise/8", ($scope) => $try_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:6/subscribe");
+const $try_content__input_promise = /*@__PURE__*/ _closure_get("input_promise/8", ($scope) => $try_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:6/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);

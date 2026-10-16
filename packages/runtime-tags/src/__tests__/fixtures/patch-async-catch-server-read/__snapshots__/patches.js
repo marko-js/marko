@@ -1,13 +1,13 @@
 // PATCH
 {
   cAa: 0,
-  va7: "second",
+  va6: "second",
   ka: []
 }
 
 // PATCH
 {
   cAa: 0,
-  va7: "third",
+  va6: "third",
   ka: []
 }

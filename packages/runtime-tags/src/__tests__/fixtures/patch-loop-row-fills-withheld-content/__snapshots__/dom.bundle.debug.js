@@ -17,7 +17,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 // template.marko
 const $template = "<button>toggle</button><!><!>";
 const $walks = " b%c";
-const $panel_content__p_text = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "p_text", _closure_get("p_text/7", ($scope) => _text($scope["#text/0"], $scope._.p_text), 0, "__tests__/template.marko_2_p_text#1:3/subscribe"), 0);
+const $panel_content__p_text = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "p_text", /*@__PURE__*/ _closure_get("p_text/7", ($scope) => _text($scope["#text/0"], $scope._.p_text), 0, "__tests__/template.marko_2_p_text#1:3/subscribe"), 0);
 const $panel_content__setup = $panel_content__p_text;
 const $panel_content = _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $panel_content__setup);
 const $for_content__open = _resumed["__tests__/template.marko_1_open#0:5/init"] = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $input_open($scope["#childScope/0"], $scope._.open));

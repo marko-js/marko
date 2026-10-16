@@ -320,19 +320,27 @@ A flush waiting for the lazy modules it writes into to register
 (`patches/ready`); later flushes of the response queue behind it, and a
 rejected one is discarded.
 
-**Called body**:
-A section its callers pass params to (`isCalledBody`): a template's root, or a
+**Known child**:
+A section its callers pass params to (`isKnownChild`): a template's root, or a
 `<define>` body its direct calls render. Patches handle both alike: the
 params' groups gate writes in the body and the sections inside it, a flush
 writes its scope, and a created one seeds from its setup envelope.
-_Avoid_: define root, root-like body
+_Avoid_: called body, define root, root-like body
 
 **Structural param**:
-A called body's param a branch expression derives from (`structuralParams`),
+A known child's param a branch expression derives from (`structuralParams`),
 where it is declared or in a child it is passed to: state in the call site's
 expressions (those at the child's tag) hands that structure to the client at
 run time.
 _Avoid_: upstream of structure, selector
+
+**Caller-owned structure**:
+A branch around a section (inclusive), or content a call site passes, that a
+known child's params alone select (`getCallerOwnedStructure`): a caller
+passing client state for them hands it to the client at run time, so a read
+inside fills only where that caller's group bits say (a fill's `structure`
+condition).
+_Avoid_: rebuild, rebuilt structure
 
 **Stateful structure**:
 A branch body whose branch expression has a state reason (its `BranchExpr`
@@ -345,7 +353,7 @@ _Avoid_: state-selected, client-owned
 **Ownership**:
 Which side feeds a param group at a call site, as the runtime reads it from the
 group's two bits (client contributes, server contributes). Only the group of a
-called body's param is decided per call, at render, and only code in that body
+known child's param is decided per call, at render, and only code in that body
 reads it (`isCallerParamAt`); analysis knows only sources (state, params,
 `$global`), so translate code names those and never claims ownership.
 _Avoid_: server-owned/client-owned as a compile-time fact
@@ -355,8 +363,8 @@ A read a patch keeps current by writing its value at the site is a _hole_ the
 patch _fills_; the html gates say which side acts on a param group:
 `_filled_guard` (a patch fills it: server-owned, or constant where a construct
 needs the seed), `_unfilled_if` (no patch fills it: the group is client-sourced,
-or the read sits in unpatched structure). Analyze records reads no patch can
-fill (`hasUnfillablePatchReads`), never the gate.
+or the read sits in unpatched structure). Translate derives reads no patch can
+fill (`PatchWrite.unfillable`), never the gate.
 _Avoid_: server-side/client-side value, owned read
 
 **Unpatched structure**:
@@ -365,7 +373,7 @@ branch or loop whose expression derives from a client-owned group, a dynamic tag
 site a patch never pairs, a `@catch` (one reading its error is written once, by
 the patch creating it). The html writer tracks it at render as context
 (`withUnpatched`, `inUnpatched`) because a child template cannot see how its
-parent reached it; analyze names the static cases `inResumedStructure`.
+parent reached it; the static cases are where `patchWrites` fails.
 _Avoid_: client-owned structure, client-selected
 
 **Caught try**:
@@ -391,16 +399,17 @@ no shell, and a kept branch with nothing filled ships no entry.
 _Avoid_: static branch, frozen rows
 
 **Branch path**:
-The root section and every section below it not crossing a `@placeholder`
-(`isBranchPathSection`). Outside stateful structure and a `@catch` reading
-none of its error, its text and attr holes emit direct patch writes
-(`writesPatchIn`), a `@catch`'s into the scope its flush creates.
+The root section and every section below it crossing no dropped content and
+no boundary content reading no params: a `@placeholder`, or a `@catch` reading
+none of its error (`enclosing.branchPath`). Outside stateful structure, its text
+and attr holes emit direct patch writes (`patchWrites`), a `@catch`'s into the
+scope its flush creates.
 _Avoid_: capture path, patch section
 
 **Patch fill**:
 A value a patch writes into a hole is a _fill_. A _patch fill_ is a
 server-sourced binding whose reads intersect client state, so patches refresh
-it through a registered fill signal. A _join fill_ is a called body's input read by a join whose other
+it through a registered fill signal. A _join fill_ is a known child's input read by a join whose other
 inputs a caller may pass client state: the section owning the join
 registers it on the join alone (`_fill_join`), and writes it only while
 another input is client-sourced (otherwise the value is a write, and a created
@@ -410,7 +419,7 @@ reaches every join that reads it, so no join registers it again.
 _Avoid_: deliver/delivery, forwarder
 
 **Effect write / capture write**:
-Wire channels for refreshable values no fill consumes: an accessor write
+Wire channels for values a patch sends that no fill consumes: an accessor write
 plus effect re-run, or a bare accessor write for registered-function
 captures.
 
@@ -435,7 +444,7 @@ _Avoid_: bind table, bind source, bind 0
 A dom node the writer emits a patch entry keyed on, so its marker or scope ref
 is written whatever its reason says: a node rendering a value a flush
 writes (`rendersValue`, `writesPatchHole`), a known tag's child scope ref
-(`isKnownChildNode`, `isPatchRendered`), or the marker of loop rows a flush
+(`isKnownChildNode`, `patchWrites`), or the marker of loop rows a flush
 pairs (`getLoopBody`, `patchesBranchesAt`). Analyze records what the template
 renders there; translate concludes which nodes are keyed (`isPatchKeyed`) and
 forces their writes (`getSlotWriteReason`). Being keyed is no reason, so it

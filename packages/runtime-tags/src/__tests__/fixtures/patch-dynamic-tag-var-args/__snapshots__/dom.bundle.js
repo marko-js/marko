@@ -12,5 +12,4 @@ const $valueChange = ($scope) => function(v) {
 _resumed.a0 = $valueChange;
 
 // template.marko
-_fill_var("b0");
-const $n = _var_resume("b0", ($scope, n) => _text($scope.c, n));
+const $n = _fill_var_resume("b0", ($scope, n) => _text($scope.c, n));

@@ -40,11 +40,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							const $scope3_reason = _scope_reason();
 							const $scope3_id = _scope_id();
 							_html(`<em>${_patch_text($scope3_id, "#text/0", input.text, void 0, $scope0_reason, 6)}</em>`);
-							_unfilled_if($scope0_reason, 6) && _patch_init($scope3_id, "__tests__/template.marko_3_input_text#0:6/init");
+							_unfilled_if($scope0_reason, 6) && _patch_init($scope3_id, "__tests__/template.marko_3_input_text#0:6/subscribe");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:10"));
 						}, $scope2_id)
 					});
-					_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:5/init");
+					_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:5/subscribe");
 					_subscribe(_unfilled_if($scope0_reason, 5) && $input_label__closures, _scope($scope2_id, {
 						_: $wi__input_a__OR__input_b__OR__input_label__OR__input_text && _scope_with_id($scope1_id),
 						"#childScope/0": _existing_scope($childScope)

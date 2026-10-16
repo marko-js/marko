@@ -1,7 +1,7 @@
 // tags/frag-host.marko
 const $template$1 = "<section></section>";
 const $walks$1 = " b";
-const $frag_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/tags/frag-host.marko_fill0", "input_note", _closure_get("input_note/8", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/tags/frag-host.marko_1_input_note#0:3/subscribe"), 0);
+const $frag_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/tags/frag-host.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/8", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/tags/frag-host.marko_1_input_note#0:3/subscribe"), 0);
 const $frag_content__setup = $frag_content__input_note;
 const $frag_content = _content("__tests__/tags/frag-host.marko_1*content", "<em> </em>", "D ", $frag_content__setup);
 const $frag = ($scope, frag) => $frag_content2($scope, frag?.content);

@@ -27,10 +27,8 @@ import { hasCallerParamSource, mergeSources, type Sources } from "../sources";
 import { TagNameType } from "../tag-name-type";
 import {
   catchSetupRenders,
-  isBranchPathSection,
-  writesPatchIn,
+  patchWrites,
   isKnownChildNode,
-  isPatchRendered,
   patchesBranchesAt,
 } from "./structure";
 
@@ -53,7 +51,7 @@ export function writesPatchSite(
   section: Section,
   extra: t.NodeExtra | undefined,
 ) {
-  return writesPatchIn(section) && !hasStateSource(extra);
+  return patchWrites(section) && !hasStateSource(extra);
 }
 
 // The patcher applying a hole's entry, linked where a patch writes the hole
@@ -63,7 +61,7 @@ export function linkHolePatcher(
   extra: t.NodeExtra,
   feature: DOMRuntimeFeature,
 ) {
-  if (isPatch() && isBranchPathSection(section)) {
+  if (isPatch()) {
     onFinalizeReferences(() => {
       if (writesPatchHole(section, extra)) linkRuntimeFeature(feature);
     });
@@ -84,7 +82,7 @@ export function writesPatchDynamicTag(
 
 // A state-sourced control value is the client's: no entry re-writes it.
 export function writesPatchControl(section: Section, extras: t.NodeExtra[]) {
-  return writesPatchIn(section) && !extras.some(isStateSourcedExpr);
+  return patchWrites(section) && !extras.some(isStateSourcedExpr);
 }
 
 // A handler written inline merged its references with its control's, so
@@ -93,7 +91,7 @@ export function writesPatchHandler(tagSection: Section, value: t.Expression) {
   switch (value.type) {
     case "ArrowFunctionExpression":
     case "FunctionExpression":
-      return writesPatchIn(tagSection) && !capturesState(value.extra!);
+      return patchWrites(tagSection) && !capturesState(value.extra!);
     default:
       return writesPatchHole(tagSection, value.extra);
   }
@@ -106,7 +104,7 @@ export function writesPatchHole(
   extra: t.NodeExtra | undefined,
 ) {
   return (
-    writesPatchIn(section) &&
+    patchWrites(section) &&
     !isStateSourcedExpr(extra) &&
     !catchSetupRenders(section, getWriteSources(extra))
   );
@@ -200,7 +198,7 @@ export function isPatchKeyed(section: Section, binding: Binding) {
   ) {
     return false;
   }
-  if (isKnownChildNode(binding)) return isPatchRendered(section);
+  if (isKnownChildNode(binding)) return patchWrites(section);
   if (getLoopBody(binding) && patchesBranchesAt(binding)) return true;
   return rendersPatchedValues(section, binding);
 }
@@ -219,7 +217,7 @@ export function isPatchKeyedByValues(section: Section, binding: Binding) {
 
 function rendersPatchedValues(section: Section, binding: Binding) {
   return (
-    writesPatchIn(section) &&
+    patchWrites(section) &&
     some(findSlot(binding)?.reasonExprs, rendersServerValue)
   );
 }

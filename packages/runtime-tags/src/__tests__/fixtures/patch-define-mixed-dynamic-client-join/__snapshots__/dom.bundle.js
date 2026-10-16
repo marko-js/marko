@@ -2,7 +2,7 @@
 const $Panel_content__walks = "D l";
 const $Panel_content__template = "<p> </p>";
 const $Panel_content__input_title__OR__value = /*@__PURE__*/ _shell_or("a1", 4, ($scope) => _text($scope.a, $scope.d + $scope._.f));
-const $Panel_content__input_title = /*@__PURE__*/ _fill_join_closure("a4", 5, _closure_get(10, $Panel_content__input_title__OR__value, 0, "a2"), 0);
+const $Panel_content__input_title = /*@__PURE__*/ _fill_join_closure("a4", 5, /*@__PURE__*/ _closure_get(10, $Panel_content__input_title__OR__value, 0, "a2"), 0);
 const $Panel_content__setup = /*@__PURE__*/ _child_setup($Panel_content__input_title);
 const $Panel_content__value = /*@__PURE__*/ _const(3, $Panel_content__input_title__OR__value);
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);

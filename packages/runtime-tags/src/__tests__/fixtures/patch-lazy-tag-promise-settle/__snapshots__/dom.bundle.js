@@ -1,5 +1,5 @@
 // template.marko
-const $placeholder_content = _content$1("b5", "<span class=loading>...</span>");
+const $placeholder_content = _content$1("b4", "<span class=loading>...</span>");
 
 // probe.marko
 const $settled = /*@__PURE__*/ _fill_let("a1", 4, ($scope) => _text($scope.a, $scope.e ? "settled" : "pending"));

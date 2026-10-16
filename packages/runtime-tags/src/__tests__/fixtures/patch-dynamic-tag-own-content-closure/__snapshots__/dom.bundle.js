@@ -1,5 +1,5 @@
 // template.marko
-const $Content_content__n = _closure_get(10, ($scope) => _text($scope.d, $scope._.h), 0, "a2");
+const $Content_content__n = /*@__PURE__*/ _closure_get(10, ($scope) => _text($scope.d, $scope._.h), 0, "a2");
 const $Content_content__count = /*@__PURE__*/ _let(7, ($scope) => _text($scope.c, $scope.h));
 const $Content_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$Content_content__count($scope, +$scope.h + 1);

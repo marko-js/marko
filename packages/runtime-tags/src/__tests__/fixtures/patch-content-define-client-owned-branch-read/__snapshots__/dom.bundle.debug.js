@@ -3,7 +3,7 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($Panel_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)($Panel_content__walks);
-const $if_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", _shell_subscribe_closure_get("__tests__/template.marko_2_input_title#0:4/init", "input_title/6", ($scope) => _text($scope["#text/0"], $scope._._.input_title), ($scope) => $scope._._, "__tests__/template.marko_2_input_title#0:4/subscribe"), 0);
+const $if_content__input_title = _closure_resume("__tests__/template.marko_2_input_title#0:4/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", ($scope) => _text($scope["#text/0"], $scope._._.input_title), ($scope) => $scope._._), 0));
 const $if_content__setup = $if_content__input_title;
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_content__setup);
 const $Panel_content__open = ($scope, open) => $Panel_content__if($scope, open ? 0 : 1);

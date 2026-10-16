@@ -3,14 +3,14 @@
   cAa: [{
     pa: "a0",
     cAa: {}
-  }, 0, "a7"],
-  va9: "b"
+  }, 0, "a6"],
+  va8: "b"
 }]
 ;CAE
 
 // PATCH holding CAE
 {
   cAa: 0,
-  va9: "c",
+  va8: "c",
   ka: []
 }

@@ -18,7 +18,7 @@ import {
   createCyclicPathMemo,
   type MemoPath,
 } from "./cyclic-memo";
-import { addKnownTagReasons } from "./known-tag";
+import { addKnownTagReasons, recordKnownTagPatchFacts } from "./known-tag";
 import { isPatch } from "./marko-config";
 import { addFunctionReasons } from "./module-registrations";
 import {
@@ -30,7 +30,7 @@ import {
   rest,
   some,
 } from "./optional";
-import { ensurePatchReasonGroups, recordPatchFacts } from "./patch/refresh";
+import { ensurePatchReasonGroups, resetPatchFills } from "./patch/refresh";
 import {
   addOwnerReason,
   addReason,
@@ -78,6 +78,7 @@ export function solveReasons(
   do {
     reasonsVersion = getReasonsVersion();
     resetReaders();
+    if (isPatch()) resetPatchFills();
     forEachSection((section) =>
       addIntersectionReasons(section, intersectionsBySection.get(section)),
     );
@@ -94,7 +95,7 @@ function solveSectionReasons(
   intersections: Intersection[] | undefined,
 ) {
   addKnownTagReasons(section);
-  if (isPatch()) recordPatchFacts(section);
+  if (isPatch()) recordKnownTagPatchFacts(section);
   mergeSlotReasons(section);
   // Groups lay out the mask callers pack: one per set of params a runtime
   // question asks of, whether the client reads a write and who feeds a patch's.

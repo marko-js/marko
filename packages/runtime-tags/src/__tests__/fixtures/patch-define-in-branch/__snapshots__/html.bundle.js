@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<li>${_patch_text($scope1_id, "a", label, void 0, $scope1_reason, 0)}: ${_patch_text($scope1_id, "b", input.suffix, 2, $scope0_reason, 1)}</li>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "a2");
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_suffix__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a3");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_suffix__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a2");
 	}, $scope0_id) };
 	_html("<ul>");
 	_if(() => {
@@ -38,5 +38,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.suffix,
 		f: _write_if($scope0_reason, 1) && $input_suffix__closures
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va4", input.suffix, !_server_guard($scope0_reason, 1));
+	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.suffix, !_server_guard($scope0_reason, 1));
 }, 1);

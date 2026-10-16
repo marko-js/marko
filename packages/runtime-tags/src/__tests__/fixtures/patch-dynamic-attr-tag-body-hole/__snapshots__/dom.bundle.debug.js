@@ -22,10 +22,10 @@ var card_default = /*@__PURE__*/ _template("__tests__/card.marko", $template$1, 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($walks$1);
-const $Card_content__input_label = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_input_label#0:4/init", "input_label/6", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_2_input_label#0:4/subscribe");
+const $Card_content__input_label = /*@__PURE__*/ _closure_get("input_label/6", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_2_input_label#0:4/subscribe");
 const $Card_content__setup = $Card_content__input_label;
 const $Card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", " ", " ", $Card_content__setup);
-const $meta_content__input_label = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_label#0:4/init", "input_label/6", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:4/subscribe");
+const $meta_content__input_label = /*@__PURE__*/ _closure_get("input_label/6", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:4/subscribe");
 const $meta_content__setup = $meta_content__input_label;
 const $meta_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $meta_content__setup);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "count/5", ($scope) => $input_meta_n($scope["#childScope/0"], $scope.count));

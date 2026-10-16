@@ -14,10 +14,10 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__open($scope, $temp.open);
 	$Panel_content__tag_input_body($scope, $temp.body);
 };
-const $body_content2__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", _closure_get("input_title/8", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_2_input_title#0:5/subscribe"), 1);
+const $body_content2__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/8", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_2_input_title#0:5/subscribe"), 1);
 const $body_content2__setup = $body_content2__input_title;
 const $body_content2 = _content("__tests__/template.marko_2*content", "<strong> </strong>", "D ", $body_content2__setup);
-const $body_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", _closure_get("input_title/8", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:5/subscribe"), 0);
+const $body_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/8", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:5/subscribe"), 0);
 const $body_content__setup = $body_content__input_title;
 const $body_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $body_content__setup);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "count/7", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.count % 2 === 0));

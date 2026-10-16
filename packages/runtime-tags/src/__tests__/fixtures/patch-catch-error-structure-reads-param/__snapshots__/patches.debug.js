@@ -4,7 +4,7 @@
     "PatchBranch:#text/0": [{
       "PatchText:#text/0": "b",
       "PatchSetup:": {
-        "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_2_input_label#0:3/init"
+        "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_2_input_label#0:3/subscribe"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_1*content"],
@@ -18,7 +18,7 @@
     "PatchBranch:#text/0": [1, {
       "PatchText:#text/0": "c",
       "PatchSetup:": {
-        "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_3_input_label#0:3/init"
+        "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_3_input_label#0:3/subscribe"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_3*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure-reads-param/template.marko_1*content"],

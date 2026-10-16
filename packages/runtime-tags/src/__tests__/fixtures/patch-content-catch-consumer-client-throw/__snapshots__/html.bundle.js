@@ -17,19 +17,19 @@ var wrapper_default = _template("c", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "a", input.fail ? boom$1() : "ok", void 0, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "c2");
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "c3");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "c2");
 	}, void 0, () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", input.fallback, {}, 0, 0, $wg__input_fallback);
 		_subscribe($wi__input_fallback && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c1", $wg__input_fallback);
 		$wg__input_fallback || _resume_branch($scope1_id);
-	}, void 0, "c4", "c0", 1);
+	}, void 0, "c3", "c0", 1);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.fallback,
 		f: $wi__input_fallback && $input_fallback__closures,
 		g: $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc5", input.fallback, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc4", input.fallback, !_server_guard($scope0_reason, 0));
 });
 
 // tags/error-wrapper.marko
@@ -51,19 +51,19 @@ var error_wrapper_default = _template("b", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "a", input.fail ? boom() : "ok", void 0, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "b2");
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b3");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b2");
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<b>${_patch_text($scope1_id, "a", err.message)}</b>`);
 		_dynamic_tag($scope1_id, "b", input.fallback, {}, 0, 0, _write_guard($scope0_reason, 0), void 0, 2, $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");
-	}, void 0, "b4", "b0", 1, "");
+	}, void 0, "b3", "b0", 1, "");
 	$scope0_page ? _scope($scope0_id, {
 		d: input.fallback,
 		f: _write_if($scope0_reason, 0) && $input_fallback__closures,
 		g: $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb5", input.fallback, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb4", input.fallback, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

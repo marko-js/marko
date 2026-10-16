@@ -10,7 +10,7 @@ const $if_content__setup = ($scope) => {
 	$row_content__setup._($scope["#childScope/1"], $scope._);
 	$row_content__label($scope["#childScope/1"], "b");
 };
-const $row_content__input_suffix = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_suffix", /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_suffix#0:3/init", "input_suffix/5", ($scope) => _text($scope["#text/1"], $scope._.input_suffix), 0, "__tests__/template.marko_1_input_suffix#0:3/subscribe"), 0);
+const $row_content__input_suffix = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_suffix", /*@__PURE__*/ _closure_get("input_suffix/5", ($scope) => _text($scope["#text/1"], $scope._.input_suffix), 0, "__tests__/template.marko_1_input_suffix#0:3/subscribe"), 0);
 const $row_content__setup = /*@__PURE__*/ _child_setup($row_content__input_suffix);
 const $row_content__label = ($scope, label) => _text($scope["#text/0"], label);
 const $row_content__$params = ($scope, $params2) => $row_content__label($scope, $params2[0]);

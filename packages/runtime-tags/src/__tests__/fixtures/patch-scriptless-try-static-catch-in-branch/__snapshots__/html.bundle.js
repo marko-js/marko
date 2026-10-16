@@ -23,13 +23,13 @@ var template_default = _template("a", (input) => {
 					_scope($scope4_id, {});
 				}, 1, "a0");
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "a4");
-				$wi__input_show__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a5", 0);
+				$wi__input_show__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "a4", 0);
 				$wi__input_show__OR__input_promise && _resume_branch($scope2_id);
 			}, void 0, () => {
 				_scope_reason();
 				_scope_id();
 				_html("<p>oops</p>");
-			}, void 0, "a6", "a2");
+			}, void 0, "a5", "a2");
 			$wi__input_show__OR__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
@@ -38,5 +38,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 1) && input.promise,
 		f: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_promise__closures
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.promise, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va6", input.promise, !_server_guard($scope0_reason, 2));
 }, 1);

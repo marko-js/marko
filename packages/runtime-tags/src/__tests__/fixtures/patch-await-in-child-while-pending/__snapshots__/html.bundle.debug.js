@@ -13,7 +13,7 @@ var my_child_default = _template("__tests__/tags/my-child/index.marko", (input) 
 	_await($scope0_id, "#text/0", input.promise, () => {
 		const $scope1_id = _scope_id();
 		_html(`<div id=done>${_patch_text($scope1_id, "#text/0", input.msg, void 0, $scope0_reason, 2)} done</div>`);
-		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/my-child/index.marko_1_input_msg#0:4/init");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/my-child/index.marko_1_input_msg#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_msg__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/my-child/index.marko", "1:2"), _client_guard($scope0_reason, 2) && "__tests__/tags/my-child/index.marko_1_input_msg#0:4/subscribe");
 	}, 1, "__tests__/tags/my-child/index.marko_1*content", 1);
 	_patch_write($scope0_id, "PatchWrite:input_msg", input.msg, 1);
@@ -48,8 +48,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			promise: input.promise
 		});
 		_html("</section>");
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_msg#0:5/init");
-		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:6/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_msg#0:5/subscribe");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:6/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope1_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)

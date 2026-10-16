@@ -28,8 +28,8 @@ var rows_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a0: /*@__PURE__*/ (() => `a0 a8;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`)(),
-	a: "a !a5; b%;<button>drop</button><!><!>"
+	a0: /*@__PURE__*/ (() => `a0 a7;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`)(),
+	a: "a !a4; b%;<button>drop</button><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -51,14 +51,14 @@ var template_default = _template("a", (input) => {
 		_subscribe($items__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
-		}), _client_guard($scope0_reason, 0) && "a2"), "a3");
+		}), _client_guard($scope0_reason, 0) && "a1"), "a2");
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "a4", void 0, "a0", 1);
-	_script($scope0_id, "a5");
-	_patch_value($scope0_id, "va6", items, 1);
+	}, void 0, "a3", void 0, "a0", 1);
+	_script($scope0_id, "a4");
+	_patch_value($scope0_id, "va5", items, 1);
 	$scope0_page && _scope($scope0_id, {
 		f: items,
 		g: _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $input_promise__closures,

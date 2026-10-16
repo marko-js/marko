@@ -39,10 +39,7 @@ import {
   reduce,
   some,
 } from "./optional";
-import {
-  finalizePatchRootReasons,
-  memoizeFillReadKinds,
-} from "./patch/refresh";
+import { finalizePatchRootReasons } from "./patch/refresh";
 import {
   addAlwaysReason,
   addOwnerReason,
@@ -79,6 +76,7 @@ import {
   setReadsOwner,
   StructureKind,
   type StructureOp,
+  finalizeEnclosing,
 } from "./sections";
 import { addSetupWork } from "./setup-work";
 import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
@@ -101,6 +99,7 @@ export function finalizeReferences() {
   resolveReads(intersectionsBySection);
   forEachSection(finalizeContentDerives);
   resolveBindings();
+  forEachSection(finalizeEnclosing);
   forEachSection(addSectionReasons);
   for (const finalize of getReferenceFinalizers()) {
     finalize();
@@ -108,7 +107,6 @@ export function finalizeReferences() {
   forEachSection(applyReasonExprs);
   if (isPatch()) finalizePatchRootReasons();
   solveReasons(intersectionsBySection);
-  if (isPatch()) memoizeFillReadKinds();
   finalizeRegistrations();
   allocateIds(intersectionsBySection);
   getReadsByExpression().clear();

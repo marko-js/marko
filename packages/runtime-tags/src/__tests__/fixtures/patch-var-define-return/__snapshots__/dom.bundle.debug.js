@@ -19,10 +19,10 @@ function $setup($scope) {
 	$n($scope, 0);
 }
 const $total__script = _script("__tests__/template.marko_0_total#9", ($scope) => _el_read($scope["#div/2"]).dataset.total = String($scope.total));
-const $total = _var_resume("__tests__/template.marko_0_total#9/var", /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "total", ($scope) => {
+const $total = _var_resume("__tests__/template.marko_0_total#9/var", _fill_resume("__tests__/template.marko_fill1", /*@__PURE__*/ _const("total", ($scope) => {
 	$total__script($scope);
 	_text($scope["#text/3"], $scope.total);
-}, $total__script));
+}), "total", $total__script));
 const $input_b = ($scope, input_b) => $Sum_content__b($scope["#childScope/0"], input_b);
 const $input = ($scope, input) => $input_b($scope, input.b);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

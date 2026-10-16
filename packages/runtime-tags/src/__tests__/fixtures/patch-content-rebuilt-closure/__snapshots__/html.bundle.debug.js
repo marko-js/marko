@@ -42,7 +42,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/child.marko_2*shell"], $scope0_reason, 2);
-			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_show#0:4/init");
+			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_show#0:4/subscribe");
 			$wi__input_items__OR__input_show && _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "3:6"));
 			$wg__input_show || $wi__input_items__OR__input_show && _resume_branch($scope1_id);
 		}, $scope0_id) });

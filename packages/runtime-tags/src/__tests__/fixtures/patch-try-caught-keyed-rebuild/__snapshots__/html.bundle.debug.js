@@ -47,8 +47,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					return 0;
 				}
 			}, $scope2_id, "#text/3", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 0);
-			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_page_title#1:3/init");
-			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_page_fail#1:4/init");
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_page_title#1:3/subscribe");
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_page_fail#1:4/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__page_fail__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__page_title__closures, _scope($scope2_id, {
 				_: $wi__input_pages && _scope_with_id($scope1_id),
 				"#childScope/2": _existing_scope($childScope)

@@ -8,7 +8,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__n._($scope);
 	$foo_content__setup._($scope["#childScope/0"], $scope._._);
 };
-const $foo_content__input_x = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_x#0:3/init", "input_x/4", ($scope) => _text($scope["#text/0"], $scope._.input_x), 0, "__tests__/template.marko_1_input_x#0:3/subscribe");
+const $foo_content__input_x = /*@__PURE__*/ _closure_get("input_x/4", ($scope) => _text($scope["#text/0"], $scope._.input_x), 0, "__tests__/template.marko_1_input_x#0:3/subscribe");
 const $foo_content__setup = /*@__PURE__*/ _child_setup($foo_content__input_x);
 const $foo_content__if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($foo_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($foo_content__walks), $if_content__setup);
 const $foo_content__tag_param_ = /*@__PURE__*/ _const("n", ($scope) => {

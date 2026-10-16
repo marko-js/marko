@@ -569,20 +569,11 @@ export default {
         if (tag.node.var && isTagVarResumed(tag)) {
           const varBinding = tag.node.var.extra!.binding!;
           tagVarSignal = initValue(varBinding);
-          tagVarSignal.register = true;
+          // A patch writes the variable's value by its resume id.
+          tagVarSignal.register = writesPatchDynamicTag(tag, section)
+            ? "fill"
+            : true;
           tagVarSignal.referenced = true;
-          if (writesPatchDynamicTag(tag, section)) {
-            getProgram().node.body.push(
-              t.expressionStatement(
-                callRuntime(
-                  "_fill_var",
-                  t.stringLiteral(
-                    getResumeRegisterId(section, varBinding, "var"),
-                  ),
-                ),
-              ),
-            );
-          }
           tagVarSignal.buildAssignment = (valueSection, value) =>
             buildVarChange(
               t.memberExpression(

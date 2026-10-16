@@ -56,16 +56,16 @@ var template_default = _template("b", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 1) && $item__closures, _scope($scope2_id, {
 				_: $wi__input_label__OR__input_promise && _scope_with_id($scope1_id),
 				b: _existing_scope($childScope3)
-			}), _client_guard($scope0_reason, 1) && "b4");
+			}), _client_guard($scope0_reason, 1) && "b3");
 		}, 1, "b0", 1);
-		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "b5");
-		$wi__input_label__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "b6", 0);
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "b4");
+		$wi__input_label__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "b4", 0);
 		$wi__input_label__OR__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "b7", void 0, "b2", 1);
+	}, void 0, "b5", void 0, "b2", 1);
 	_html("</main>");
 	_patch_write($scope0_id, "wh", item, 1);
 	$scope0_page && _scope($scope0_id, {

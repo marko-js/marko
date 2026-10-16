@@ -7,7 +7,7 @@
         "PatchText:#text/0": "SHOWN_message1",
         "PatchText:#text/2": "b",
         "PatchSetup:": {
-          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2_input_label#0:5/init"
+          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2_input_label#0:5/subscribe"
         }
       }
     }
@@ -25,7 +25,7 @@
         "PatchText:#text/0": "SHOWN_message2",
         "PatchText:#text/2": "c",
         "PatchSetup:": {
-          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2_input_label#0:5/init"
+          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2_input_label#0:5/subscribe"
         }
       }
     }
@@ -50,7 +50,7 @@
         "PatchText:#text/0": "SHOWN_message3",
         "PatchText:#text/2": "e",
         "PatchSetup:": {
-          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2_input_label#0:5/init"
+          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2_input_label#0:5/subscribe"
         }
       }
     }

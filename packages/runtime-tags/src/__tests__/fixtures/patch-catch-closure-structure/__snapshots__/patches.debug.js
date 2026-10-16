@@ -5,7 +5,7 @@
     "PatchBranch:#text/1": [{
       "PatchText:#text/0": "b",
       "PatchSetup:": {
-        "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_2_input_detail#0:5/init"
+        "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_2_input_detail#0:5/subscribe"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_1*content"],
@@ -29,7 +29,7 @@
     "PatchBranch:#text/1": [{
       "PatchText:#text/0": "c",
       "PatchSetup:": {
-        "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_2_input_detail#0:5/init"
+        "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_2_input_detail#0:5/subscribe"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_2*shell"]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-closure-structure/template.marko_1*content"],

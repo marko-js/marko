@@ -1,4 +1,5 @@
 import { type Opt, reduce } from "./optional";
+import { createProgramState } from "./state";
 
 // A memo whose computation may re-ask itself through a cycle: a re-ask
 // answers `cycleAnswer`, and a frame that consumed one does not cache.
@@ -33,6 +34,17 @@ export function createCyclicMemo<K extends object, R>(
       }
     }
   };
+}
+
+// The memo per program, so each stage derives its own answers (analyze state
+// never reaches translate); `reset` starts the program's answers afresh.
+export function createProgramCyclicMemo<K extends object, R>(
+  compute: (key: K) => R,
+  cycleAnswer: R,
+) {
+  const create = () => createCyclicMemo(compute, cycleAnswer);
+  const [getMemo, setMemo] = createProgramState(create);
+  return [(key: K) => getMemo()(key), () => setMemo(create())] as const;
 }
 
 // The same memo keyed by an object and a property path (`true` for every

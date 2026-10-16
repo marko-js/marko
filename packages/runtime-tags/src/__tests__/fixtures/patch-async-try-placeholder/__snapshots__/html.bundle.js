@@ -19,13 +19,13 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, {});
 		}, 1, "a0", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "a3");
-		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a4", 0);
+		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a3", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "a5", void 0, "a2", 1);
+	}, void 0, "a4", void 0, "a2", 1);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { g: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures });
 }, 1);

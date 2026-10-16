@@ -30,8 +30,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope4_id, {}, "__tests__/template.marko", "5:8");
 		}, 1, "__tests__/template.marko_4*content", 1);
 		_html("</div>");
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_fast#0:4/init");
-		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_slow#0:5/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_fast#0:4/subscribe");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_slow#0:5/subscribe");
 		$wi__input_fast__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 2) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fast__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_fast#0:4/subscribe", 0), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_slow#0:5/subscribe", 0);
 		$wi__input_fast__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {

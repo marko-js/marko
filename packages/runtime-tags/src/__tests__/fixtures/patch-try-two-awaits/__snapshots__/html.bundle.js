@@ -5,7 +5,7 @@ _shells({
 	a2: "a2;D ;<b> </b>",
 	a3: "a3;D ;<em> </em>",
 	a4: "a4;D%b%;<div><!><!></div>",
-	a: "a !a10;D%b ;<main><!><button>x</button></main>"
+	a: "a !a8;D%b ;<main><!><button>x</button></main>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_fast__OR__input_slow = _write_if($scope0_reason, 0), $scope0_page = _page_render();
@@ -30,15 +30,15 @@ var template_default = _template("a", (input) => {
 		_html("</div>");
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "a5");
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "a6");
-		$wi__input_fast__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 2) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fast__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a7", 0), _client_guard($scope0_reason, 2) && "a8", 0);
+		$wi__input_fast__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 2) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fast__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a5", 0), _client_guard($scope0_reason, 2) && "a6", 0);
 		$wi__input_fast__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "a9", void 0, "a4", 1);
+	}, void 0, "a7", void 0, "a4", 1);
 	_html(`<button>x</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a10");
+	_script($scope0_id, "a8");
 	$scope0_page && _scope($scope0_id, {
 		g: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_fast__closures,
 		h: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_slow__closures

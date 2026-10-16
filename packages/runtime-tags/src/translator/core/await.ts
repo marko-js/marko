@@ -14,7 +14,7 @@ import {
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { isPatch } from "../util/marko-config";
-import { isPatchRendered, mayPatchReach } from "../util/patch/structure";
+import { patchWrites, patchMayWrite } from "../util/patch/structure";
 import { boundaryAlwaysPairs } from "../util/patch/writers";
 import { getSourcesForExpr } from "../util/reasons";
 import {
@@ -96,7 +96,7 @@ export default {
     // An await a patch may reach pairs its body through a `PatchChild` entry.
     if (isPatch()) {
       onFinalizeReferences(() => {
-        if (mayPatchReach(section)) linkRuntimeFeature("patches/boundary");
+        if (patchMayWrite(section)) linkRuntimeFeature("patches/boundary");
       });
     }
     const valueExtra = (valueAttr.value.extra ??= {});
@@ -150,7 +150,7 @@ export default {
                 ),
                 // A patch page always marks a patchable boundary: the
                 // flush pairs its body through the resumed branch link.
-                isPatchRendered(section)
+                patchWrites(section)
                   ? t.numericLiteral(1)
                   : getWriteGuard(section, bodySection.reason, true),
                 isPatch() && getPendingShellArg(valueAttr.value, bodySection),

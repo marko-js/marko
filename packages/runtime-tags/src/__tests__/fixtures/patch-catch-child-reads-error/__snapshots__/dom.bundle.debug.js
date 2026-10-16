@@ -18,14 +18,14 @@ const $walks = " D l%c";
 function boom(error) {
 	throw error;
 }
-const $try_content__input_error = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_input_error#0:6/init", "input_error/9", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_2_input_error#0:6/subscribe");
+const $try_content__input_error = /*@__PURE__*/ _closure_get("input_error/9", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_2_input_error#0:6/subscribe");
 const $try_content__setup = $try_content__input_error;
-const $catch_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", _closure_get("input_label/8", ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0);
+const $catch_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0);
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_label($scope);
 	$catch_content__count($scope);
 };
-const $catch_content__count = _closure_get("count/10", ($scope) => $input_count($scope["#childScope/0"], $scope._.count), 0, "__tests__/template.marko_1_count#0:7/subscribe");
+const $catch_content__count = /*@__PURE__*/ _closure_get("count/10", ($scope) => $input_count($scope["#childScope/0"], $scope._.count), 0, "__tests__/template.marko_1_count#0:7/subscribe");
 const $catch_content__err_message = ($scope, err_message) => $input_message($scope["#childScope/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $catch_content__setup, $catch_content__$params);

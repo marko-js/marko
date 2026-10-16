@@ -3,8 +3,9 @@ import { types as t } from "@marko/compiler";
 import { type Binding, BindingType } from "../util/bindings";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getExprRoot } from "../util/get-root";
-import { isOptimize, isOutputHTML } from "../util/marko-config";
+import { isOptimize, isOutputHTML, isPatch } from "../util/marko-config";
 import { some } from "../util/optional";
+import { rerunsEffectOnPatch } from "../util/patch/refresh";
 import {
   assertReferencedInRender,
   getCanonicalExtra,
@@ -12,7 +13,11 @@ import {
   setReferencesScope,
   trackGlobalReference,
 } from "../util/references";
-import { callRuntime, importRuntime } from "../util/runtime";
+import {
+  callRuntime,
+  importRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import { scopeIdentifier } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
@@ -145,6 +150,13 @@ export default {
 
           if (!resetEmitted.has(exprRoot)) {
             resetEmitted.add(exprRoot);
+            // An effect a patch re-runs resets its `$signal`s first.
+            if (
+              isPatch() &&
+              some(getReferencedBindings(exprRoot), rerunsEffectOnPatch)
+            ) {
+              importRuntimeFeature("patches/effect-signal");
+            }
             addStatement(
               "render",
               section,

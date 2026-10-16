@@ -4,19 +4,19 @@
     cAa: [{
       pa: "a0",
       cAa: {}
-    }, "a2", "a7"]
+    }, "a2", "a6"]
   }, "a3"],
-  va9: "b"
+  va8: "b"
 }]
 ;Cxo
 
 // PATCH holding Cxo
 {
   bc: [{
-    cAa: [{}, "a2", "a7"],
+    cAa: [{}, "a2", "a6"],
     ka: [{
       ta: "boom"
-    }, "a7"]
+    }, "a6"]
   }, "a3"],
-  va9: "c"
+  va8: "c"
 }

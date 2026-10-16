@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><em> </em><button>set</button></main>";
 const $walks = "E l l";
-const $x = _fill_let("__tests__/template.marko_fill0", "x/5", ($scope) => $x_length($scope, $scope.x?.length));
+const $x = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _let("x/5", ($scope) => $x_length($scope, $scope.x?.length)));
 const $x_length__script = _script("__tests__/template.marko_0_x_length#6", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.x_length);
 }));

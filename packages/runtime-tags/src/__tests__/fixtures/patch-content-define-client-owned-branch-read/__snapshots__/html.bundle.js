@@ -3,7 +3,7 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 _shells({
 	a0: /*@__PURE__*/ ((_w0, _w1) => `a0;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
-	a: /*@__PURE__*/ (() => `a !a4;${((_w0) => `D/${_w0}& l`)($Panel_content__walks)};${((_w0) => `<main>${_w0}<button>+</button></main>`)($Panel_content__template)}`)(),
+	a: /*@__PURE__*/ (() => `a !a3;${((_w0) => `D/${_w0}& l`)($Panel_content__walks)};${((_w0) => `<main>${_w0}<button>+</button></main>`)($Panel_content__template)}`)(),
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_patch_text($scope2_id, "a", input.title, void 0, $scope0_reason, 0)}</em>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a2");
-				_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, { _: ($wi__input_title || $wi__open) && _scope_with_id($scope1_id) }), "a3");
+				_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, { _: ($wi__input_title || $wi__open) && _scope_with_id($scope1_id) }), "a2");
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__open, void 0, void 0, void 0, ["a1"], $scope1_reason, 0);
@@ -30,12 +30,12 @@ var template_default = _template("a", (input) => {
 	const $childScope = _patch_child($scope0_id, "a");
 	Panel.content({ open: true });
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a4");
-	_patch_value($scope0_id, "va6", count, 1);
+	_script($scope0_id, "a3");
+	_patch_value($scope0_id, "va5", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.title,
 		f: count,
 		g: $wi__input_title && $input_title__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va5", input.title, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va4", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

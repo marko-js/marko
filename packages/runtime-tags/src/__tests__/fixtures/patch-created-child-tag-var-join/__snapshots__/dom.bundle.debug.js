@@ -54,13 +54,13 @@ var file_panes_default = /*@__PURE__*/ _template("__tests__/tags/file-panes.mark
 // tags/file-host.marko
 const $template$1 = $template$2;
 const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
-const $first_content__input_files = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/tags/file-host.marko_1_input_files#0:3/init", "input_files/5", ($scope) => $input_files$1($scope["#childScope/0"], $scope._.input_files), 0, "__tests__/tags/file-host.marko_1_input_files#0:3/subscribe");
+const $first_content__input_files = /*@__PURE__*/ _closure_get("input_files/5", ($scope) => $input_files$1($scope["#childScope/0"], $scope._.input_files), 0, "__tests__/tags/file-host.marko_1_input_files#0:3/subscribe");
 const $first_content__setup = ($scope) => {
 	$first_content__input_files($scope);
 	$first_content__input_filesChange($scope);
 	$setup$3($scope["#childScope/0"]);
 };
-const $first_content__input_filesChange = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/tags/file-host.marko_1_input_filesChange#0:4/init", "input_filesChange/6", ($scope) => $input_filesChange$1($scope["#childScope/0"], $scope._.input_filesChange), 0, "__tests__/tags/file-host.marko_1_input_filesChange#0:4/subscribe");
+const $first_content__input_filesChange = /*@__PURE__*/ _closure_get("input_filesChange/6", ($scope) => $input_filesChange$1($scope["#childScope/0"], $scope._.input_filesChange), 0, "__tests__/tags/file-host.marko_1_input_filesChange#0:4/subscribe");
 const $first_content = /*@__PURE__*/ _content("__tests__/tags/file-host.marko_1*content", $template$3, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$3), $first_content__setup);
 function $setup$1($scope) {
 	$input_first($scope["#childScope/0"], attrTag({ content: $first_content($scope) }));

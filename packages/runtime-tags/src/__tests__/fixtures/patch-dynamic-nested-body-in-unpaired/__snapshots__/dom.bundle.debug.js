@@ -29,14 +29,14 @@ var box_default = /*@__PURE__*/ _template("__tests__/box.marko", $template$1, $w
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$2);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($walks$2);
-const $Box_content__input_label = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_input_label#0:4/init", "input_label/6", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:4/subscribe");
+const $Box_content__input_label = /*@__PURE__*/ _closure_get("input_label/6", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:4/subscribe");
 const $Box_content__setup = ($scope) => {
 	$Box_content__input_label($scope);
 	$Box_content__count($scope);
 };
-const $Box_content__count = _resumed["__tests__/template.marko_2_count#0:5/init"] = _closure_get("count/7", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:5/subscribe");
+const $Box_content__count = _resumed["__tests__/template.marko_2_count#0:5/init"] = /*@__PURE__*/ _closure_get("count/7", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:5/subscribe");
 const $Box_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!>!<!>", "%c%", $Box_content__setup);
-const $Card_content__input_label = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_label#0:4/init", "input_label/6", ($scope) => $input_k($scope["#childScope/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:4/subscribe");
+const $Card_content__input_label = /*@__PURE__*/ _closure_get("input_label/6", ($scope) => $input_k($scope["#childScope/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:4/subscribe");
 const $Card_content__setup = ($scope) => {
 	$Card_content__input_label($scope);
 	$input_content_direct($scope["#childScope/0"], $Box_content($scope));

@@ -10,9 +10,9 @@ const $catch_content2 = _content("__tests__/template.marko_4*content", "<i> </i>
 const $catch_content__err = ($scope, err) => _text($scope["#text/0"], err);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
 const $catch_content = _content("__tests__/template.marko_3*content", "<b> </b>", "D ", 0, $catch_content__$params);
-const $try_content2__input_error = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_input_error#0:6/init", "input_error/8", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_2_input_error#0:6/subscribe");
+const $try_content2__input_error = /*@__PURE__*/ _closure_get("input_error/8", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_2_input_error#0:6/subscribe");
 const $try_content2__setup = $try_content2__input_error;
-const $try_content__input_error = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_error#0:6/init", "input_error/8", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_1_input_error#0:6/subscribe");
+const $try_content__input_error = /*@__PURE__*/ _closure_get("input_error/8", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_1_input_error#0:6/subscribe");
 const $try_content__setup = $try_content__input_error;
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "count/7", ($scope) => _text($scope["#text/3"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/0", "<p> </p>", "D ", $try_content__setup, 0, $catch_content);

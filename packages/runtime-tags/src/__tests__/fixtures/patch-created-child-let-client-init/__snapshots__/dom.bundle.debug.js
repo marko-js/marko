@@ -3,10 +3,10 @@ const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $n__script = _script("__tests__/tags/child.marko_0_n#4", ($scope) => console.log("n", $scope.n));
-const $n = _fill_let("__tests__/tags/child.marko_fill0", "n/4", ($scope) => {
+const $n = _fill_resume("__tests__/tags/child.marko_fill0", /*@__PURE__*/ _let("n/4", ($scope) => {
 	_text($scope["#text/0"], $scope.n);
 	$n__script($scope);
-});
+}));
 const $input_count = ($scope, input_count) => $n($scope, input_count + 10);
 const $input$1 = ($scope, input) => $input_count($scope, input.count);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", 0, $input$1);

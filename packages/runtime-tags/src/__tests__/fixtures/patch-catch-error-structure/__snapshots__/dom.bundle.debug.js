@@ -21,7 +21,7 @@ const $catch_content__$params = ($scope, $params2) => {
 };
 const $catch_content__err_message = /*@__PURE__*/ _const("err_message", $if_content__err_message);
 const $catch_content = _content("__tests__/template.marko_2*content", "<!><!><!><!>", "b%b%", $catch_content__setup, $catch_content__$params);
-const $try_content__input_error = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_error#0:5/init", "input_error/7", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_1_input_error#0:5/subscribe");
+const $try_content__input_error = /*@__PURE__*/ _closure_get("input_error/7", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_1_input_error#0:5/subscribe");
 const $try_content__setup = $try_content__input_error;
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "count/6", ($scope) => _text($scope["#text/2"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/0", "<p> </p>", "D ", $try_content__setup, 0, $catch_content);

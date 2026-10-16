@@ -9,7 +9,7 @@ const $for_content__setup = ($scope) => {
 };
 const $for_content__count = _resumed["__tests__/template.marko_3_count#0:8/init"] = /*@__PURE__*/ _closure_get("count/12", $for_content__input_suffix__OR__count, ($scope) => $scope._._._, "__tests__/template.marko_3_count#0:8/subscribe");
 const $if_content2__for = /*@__PURE__*/ _for_of("#text/0", "<p> </p>", "D ", $for_content__setup);
-const $if_content2__input_items = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_items", /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_input_items#0:6/init", "input_items/10", ($scope) => $if_content2__for($scope, [$scope._._.input_items, (item) => item]), ($scope) => $scope._._, "__tests__/template.marko_2_input_items#0:6/subscribe"), 0);
+const $if_content2__input_items = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_items", /*@__PURE__*/ _closure_get("input_items/10", ($scope) => $if_content2__for($scope, [$scope._._.input_items, (item) => item]), ($scope) => $scope._._, "__tests__/template.marko_2_input_items#0:6/subscribe"), 0);
 const $if_content2__setup = $if_content2__input_items;
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content2__setup);
 const $if_content__input_inner = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_inner", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_inner ? 0 : 1)));

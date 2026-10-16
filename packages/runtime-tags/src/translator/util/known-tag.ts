@@ -37,8 +37,7 @@ import {
 } from "./params-tree";
 import { isPatchKeyed } from "./patch/decisions";
 import {
-  inStatefulBranch,
-  isPatchRendered,
+  patchWrites,
   hasStructuralParam,
   recordStructuralParams,
 } from "./patch/structure";
@@ -185,7 +184,7 @@ export function knownTagAnalyze(
   if (isPatch()) {
     // Children inside unpatched structure never pair from a patch.
     onFinalizeReferences(() => {
-      if (isPatchRendered(section)) linkRuntimeFeature("patches/child");
+      if (patchWrites(section)) linkRuntimeFeature("patches/child");
     });
   }
   ensureBodySection(tagBody);
@@ -372,7 +371,7 @@ export function knownTagTranslateHTML(
       t.variableDeclaration("const", [
         t.variableDeclarator(
           peekScopeId,
-          isPatchRendered(section)
+          patchWrites(section)
             ? callRuntime(
                 "_patch_child",
                 getScopeIdIdentifier(section),
@@ -575,11 +574,14 @@ export function ensureKnownTagPatchGroups(section: Section) {
 // What a patch template's known children need of it: the value patcher for
 // fills their joins or structure take, and the params they make structural.
 export function recordKnownTagPatchFacts(section: Section) {
-  const patchRendered = isPatchRendered(section);
   for (const tagExtra of getKnownTags(section)) {
     for (const { params, sources } of getParamGroupSources(tagExtra) || []) {
       // Client state joined with server values fills the child's joins.
-      if (sources?.state && hasParamOrGlobalSource(sources) && patchRendered) {
+      if (
+        sources?.state &&
+        hasParamOrGlobalSource(sources) &&
+        patchWrites(section)
+      ) {
         linkRuntimeFeature("patches/value");
       }
       // The fact rolls up: a param passed to a child's structural param
@@ -588,7 +590,7 @@ export function recordKnownTagPatchFacts(section: Section) {
         recordStructuralParams(sources);
         // Client state passed to the child's structural params hands it the
         // structure at run time: its fills need the value patcher.
-        if (sources?.state && patchRendered) {
+        if (sources?.state && patchWrites(section)) {
           linkRuntimeFeature("patches/value");
         }
       }
@@ -756,7 +758,7 @@ function getPatchedParams(
   tag: t.NodePath<t.MarkoTag>,
   section: Section,
 ): SortedOpt<Binding> {
-  if (!isPatch() || inStatefulBranch(section)) return;
+  if (!patchWrites(section)) return;
   return getParamGroupSources(tag.node.extra!)?.reduce(
     addUngatedParams,
     undefined,

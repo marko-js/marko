@@ -95,7 +95,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							return 1;
 						}
 					}, $scope2_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_4*shell", "__tests__/template.marko_5*shell"], $scope0_reason, 1);
-					_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_input_page#0:3/init");
+					_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_input_page#0:3/subscribe");
 					$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "11:8"));
 					$wg__input_page || $wi__input_page && _resume_branch($scope2_id);
 				}, $scope1_id)

@@ -20,7 +20,7 @@ _shells({
 	a: "a;b%;<!><!><!>",
 	a0: /*@__PURE__*/ (() => `a0;${/*@__PURE__*/ ((_w0) => `0${_w0}&D%c%l%c`)("")};${/*@__PURE__*/ ((_w0) => `${_w0}<p><!>:<!></p><!><!>`)("")}`)(),
 	a1: "a1;b%;<!><!><!>",
-	a2: "a2 a9!a4;Db%l ;<span>Seen <!></span><button>+</button>"
+	a2: "a2 a8!a4;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0), $scope0_page = _page_render();
@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
 				M: _unfilled_if($scope0_reason, 0) && other,
 				_: _scope_with_id($scope1_id)
-			}), _client_guard($scope0_reason, 0) && "a7", $wg__input_show);
+			}), _client_guard($scope0_reason, 0) && "a6", $wg__input_show);
 		}, (n) => n, $scope1_id, "e", 1, void 0, void 0, void 0, void 0, "a1", 0, 0);
 		_scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 0) && name,

@@ -5,4 +5,4 @@ const $catch_content__setup = _script("a1", ($scope) => _on($scope.a, "click", f
 	$catch_content__shown($scope, $scope.f + "!");
 }));
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
-const $catch_content = _content$1("a5", "<button> </button>", " D ", $catch_content__setup, $catch_content__$params);
+const $catch_content = _content$1("a4", "<button> </button>", " D ", $catch_content__setup, $catch_content__$params);

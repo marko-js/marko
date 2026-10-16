@@ -18,9 +18,8 @@ var two_default = /*@__PURE__*/ _template("__tests__/tags/two.marko", $template$
 const $template = "<!><!><p> </p>";
 const $walks = "b1bD l";
 const $setup = () => {};
-_fill_var("__tests__/template.marko_0_x#8/var");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, () => $x);
-const $x = _var_resume("__tests__/template.marko_0_x#8/var", ($scope, x) => _text($scope["#text/2"], x));
+const $x = _fill_var_resume("__tests__/template.marko_0_x#8/var", ($scope, x) => _text($scope["#text/2"], x));
 const $input_which__OR__input_a = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_a", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_which", /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_which#5_input_a#6/init", 7, ($scope) => $dynamicTag($scope, $scope.input_which ? one_default : two_default, () => ({ a: $scope.input_a })))));
 const $input_which = /*@__PURE__*/ _const("input_which", $input_which__OR__input_a);
 const $input_a = /*@__PURE__*/ _const("input_a", $input_which__OR__input_a);

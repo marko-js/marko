@@ -5,8 +5,8 @@
       ta: "SHOWN_message1",
       tc: "b"
     }
-  }, "a5"],
-  va7: "b"
+  }, "a4"],
+  va6: "b"
 }
 
 // PATCH
@@ -16,16 +16,16 @@
       ta: "SHOWN_message2",
       tc: "c"
     }
-  }, "a5"],
-  va7: "c"
+  }, "a4"],
+  va6: "c"
 }
 
 // PATCH
 {
   cAc: [{
     ta: "ok"
-  }, 0, "a5"],
-  va7: "d"
+  }, 0, "a4"],
+  va6: "d"
 }
 
 // PATCH
@@ -35,6 +35,6 @@
       ta: "SHOWN_message3",
       tc: "e"
     }
-  }, "a5"],
-  va7: "e"
+  }, "a4"],
+  va6: "e"
 }

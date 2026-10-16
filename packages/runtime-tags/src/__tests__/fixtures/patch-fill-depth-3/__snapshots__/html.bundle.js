@@ -1,9 +1,9 @@
 // template.marko
 _shells({
-	a: "a !a7;D%b ;<main><!><button>+</button></main>",
+	a: "a !a6;D%b ;<main><!><button>+</button></main>",
 	a0: "a0;b%;<!><!><!>",
 	a1: "a1;b%;<!><!><!>",
-	a2: "a2 a13 a14;D ;<p> </p>"
+	a2: "a2 a12 a13;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 2), $wi__input_suffix = _write_if($scope0_reason, 4), $scope0_page = _page_render();
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 						}), _client_guard($scope0_reason, 4) && "a3"), "a4");
 					}, (item) => item, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "a2", $scope0_reason, 3);
 					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "a5");
-					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a6");
+					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a5");
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $wg__input_inner, void 0, void 0, void 0, ["a1"], $scope0_reason, 2);
@@ -37,8 +37,8 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a0"], $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a7");
-	_patch_value($scope0_id, "va11", count, 1);
+	_script($scope0_id, "a6");
+	_patch_value($scope0_id, "va10", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: _unfilled_if($scope0_reason, 1) && input.inner,
 		g: _write_if($scope0_reason, 0) && input.items,
@@ -47,5 +47,5 @@ var template_default = _template("a", (input) => {
 		l: $wi__input_suffix && $input_suffix__closures,
 		m: $count__closures,
 		k: _write_if($scope0_reason, 3) && $input_items__closures
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va8", input.inner, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "va9", input.items, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "va10", input.suffix, !_server_guard($scope0_reason, 4)));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.inner, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "va8", input.items, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "va9", input.suffix, !_server_guard($scope0_reason, 4)));
 }, 1);

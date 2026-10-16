@@ -26,19 +26,19 @@ function boom(msg) {
 	throw new Error(msg);
 }
 const $try_content__input_msg__OR__input_fail = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom($scope._.input_msg) : $scope._.input_msg)), "input_msg/8", 1);
-const $try_content__input_msg = _shell_subscribe_closure_get("__tests__/template.marko_2_input_msg#0:5/init", "input_msg/8", $try_content__input_msg__OR__input_fail, 0, "__tests__/template.marko_2_input_msg#0:5/subscribe");
+const $try_content__input_msg = _closure_resume("__tests__/template.marko_2_input_msg#0:5/subscribe", /*@__PURE__*/ _closure_get("input_msg/8", $try_content__input_msg__OR__input_fail));
 const $try_content__setup = ($scope) => {
 	$try_content__input_msg($scope);
 	$try_content__input_fail($scope);
 };
-const $try_content__input_fail = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_input_fail#0:6/init", "input_fail/9", $try_content__input_msg__OR__input_fail, 0, "__tests__/template.marko_2_input_fail#0:6/subscribe");
-const $catch_content__input_msg = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", _closure_get("input_msg/8", ($scope) => $input_label($scope["#childScope/0"], $scope._.input_msg), 0, "__tests__/template.marko_1_input_msg#0:5/subscribe"), 0);
+const $try_content__input_fail = /*@__PURE__*/ _closure_get("input_fail/9", $try_content__input_msg__OR__input_fail, 0, "__tests__/template.marko_2_input_fail#0:6/subscribe");
+const $catch_content__input_msg = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/8", ($scope) => $input_label($scope["#childScope/0"], $scope._.input_msg), 0, "__tests__/template.marko_1_input_msg#0:5/subscribe"), 0);
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_msg($scope);
 	$catch_content__count($scope);
 	$setup$1($scope["#childScope/0"]);
 };
-const $catch_content__count = _closure_get("count/10", ($scope) => $input_count($scope["#childScope/0"], $scope._.count), 0, "__tests__/template.marko_1_count#0:7/subscribe");
+const $catch_content__count = /*@__PURE__*/ _closure_get("count/10", ($scope) => $input_count($scope["#childScope/0"], $scope._.count), 0, "__tests__/template.marko_1_count#0:7/subscribe");
 const $catch_content__err_message = ($scope, err_message) => $input_message($scope["#childScope/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $catch_content__setup, $catch_content__$params);

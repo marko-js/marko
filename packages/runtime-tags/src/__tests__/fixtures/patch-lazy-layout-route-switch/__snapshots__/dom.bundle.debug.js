@@ -3,7 +3,7 @@ const $template = "<html><body><!></body></html>";
 const $walks = "E%m";
 const $setup = () => {};
 const $Layout_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", 0, "<!><!><!>", "b%/&");
-const $Layout_content__input_page = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_input_page#0:3/init", "input_page/5", ($scope) => $Layout_content__if($scope, $scope._._.input_page === 1 ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_page#0:3/subscribe");
+const $Layout_content__input_page = /*@__PURE__*/ _closure_get("input_page/5", ($scope) => $Layout_content__if($scope, $scope._._.input_page === 1 ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_page#0:3/subscribe");
 const $Layout_content__setup = $Layout_content__input_page;
 const $Layout_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $Layout_content__setup);
 const $else_content__input_list = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_list", /*@__PURE__*/ _if_closure("#text/0", 1));

@@ -13,5 +13,5 @@ const $setup__script = _script("b0", ($scope) => _on($scope.b, "click", function
 }));
 
 // template.marko
-const $box_content__input_note = /*@__PURE__*/ _fill_join_closure("a2", 4, _closure_get(5, ($scope) => _text($scope.a, $scope._.e), 0, "a0"), 0);
+const $box_content__input_note = /*@__PURE__*/ _fill_join_closure("a2", 4, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.e), 0, "a0"), 0);
 const $box_content = _content("a1", "<em> </em>", "D ", $box_content__input_note);

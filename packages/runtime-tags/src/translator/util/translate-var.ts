@@ -14,10 +14,10 @@ import { generateUidIdentifier } from "./generate-uid";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isPatch } from "./marko-config";
 import { toArray } from "./optional";
-import { isPatchFillBinding, isPatchWriteBinding } from "./patch/refresh";
+import { getPatchFill, getPatchWrite } from "./patch/refresh";
 import { writeLocalFill, writeLocalWrite } from "./patch/writers";
 import { importRuntime } from "./runtime";
-import { getSection, isCalledBody, type Section } from "./sections";
+import { getSection, isKnownChild, type Section } from "./sections";
 import { findSlot } from "./slots";
 import { toMemberExpression, toPropertyName } from "./to-property-name";
 
@@ -96,12 +96,12 @@ export default function translateVar(
   ]);
   const inserted: t.Statement[] = [declaration];
   // A branch local with no state source that fills writes once it exists; a
-  // called body's rides its scope write's complement.
+  // known child's rides its scope write's complement.
   if (isPatch()) {
     const section = getSection(tag);
     forEachIdentifierPath(tag.get("var"), (id) => {
       const binding = id.node.extra?.binding;
-      if (binding && binding.section === section && !isCalledBody(section)) {
+      if (binding && binding.section === section && !isKnownChild(section)) {
         writeLocalAfterDeclaration(section, binding, inserted);
       }
     });
@@ -311,9 +311,9 @@ function writeLocalAfterDeclaration(
   statements: t.Statement[],
 ) {
   if (!binding.sources?.state) {
-    if (isPatchFillBinding(binding)) {
+    if (getPatchFill(binding).fill) {
       statements.push(t.expressionStatement(writeLocalFill(section, binding)));
-    } else if (isPatchWriteBinding(binding)) {
+    } else if (getPatchWrite(binding).write) {
       statements.push(t.expressionStatement(writeLocalWrite(section, binding)));
     }
   }

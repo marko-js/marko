@@ -47,7 +47,7 @@ import {
   getParamReasonGroupIndex,
   getRendererReason,
   getScopeIdIdentifier,
-  isCalledBody,
+  isKnownChild,
   isCallerParamAt,
   type ParamReasonGroup,
   type Section,
@@ -82,24 +82,19 @@ import {
 } from "./decisions";
 import {
   getCreatedJoins,
-  getFillConditions,
   getPatchFillBindings,
   getPatchFillKey,
-  hasPatchEffect,
-  isCreatableBody,
-  isCreatedScopeSeed,
-  isPatchFillBinding,
-  isPatchWriteBinding,
+  getPatchFill,
+  getPatchWrite,
   patchCreates,
   patchFillsClientReads,
   patchFillsSubscribedReads,
-  splitsContentFill,
   subscribesCreated,
 } from "./refresh";
-import { isBranchPathSection } from "./structure";
+import { patchWritesScope } from "./structure";
 
 // A section's patch entries beside its resume data: effect re-runs, the setup
-// a created scope gets, and the fills a called body writes as `_scope`'s else.
+// a created scope gets, and the fills a known child writes as `_scope`'s else.
 export function writePatchResumeStatements(
   section: Section,
   body: t.Statement[],
@@ -119,10 +114,10 @@ export function writePatchResumeStatements(
             undefined,
             getConstantSeed(section, binding),
           ),
-          isPatchWriteBinding(binding)
-            ? getPatchWrite(section, binding)
+          getPatchWrite(binding).write
+            ? getUnfilledPatchWrite(section, binding)
             : undefined,
-          splitsContentFill(binding)
+          getPatchFill(binding).splitsContent
             ? buildPatchValue(section, binding, true)
             : undefined,
         ),
@@ -133,12 +128,16 @@ export function writePatchResumeStatements(
   // Effect-read values need no client registration: the wire writes the
   // accessor and each reading effect re-runs by register id on change.
   forEach(section.bindings, (binding) => {
-    if (isPatchWriteBinding(binding) && !isPatchFillBinding(binding)) {
+    if (getPatchWrite(binding).write && !getPatchFill(binding).fill) {
       // A branch local writes at its declaration (`translateVar`), other
-      // branch bindings up front; a called body's ride the reason's complement.
-      if (isCalledBody(section)) {
+      // branch bindings up front; a known child's ride the reason's complement.
+      if (isKnownChild(section)) {
         fillCalls.push(
-          gatePatchWrite(section, binding, getPatchWrite(section, binding)),
+          gatePatchWrite(
+            section,
+            binding,
+            getUnfilledPatchWrite(section, binding),
+          ),
         );
       } else if (!getWrittenLocalFills().has(binding)) {
         getHTMLSectionStatements(section).push(
@@ -157,7 +156,7 @@ export function writePatchResumeStatements(
       let always = false;
       forEach(signal.referencedBindings, (binding) => {
         const root = getCanonicalBinding(binding);
-        if (hasPatchEffect(root)) {
+        if (getPatchWrite(root).effect) {
           (byHops[section.depth - root.section.depth] ??= []).push(
             getScopeAccessor(root),
           );
@@ -204,7 +203,7 @@ export function writePatchResumeStatements(
   // A created scope has no resume data: what its resumed twin reads from
   // the document and nothing else supplies arrives as a setup write.
   forEach(section.bindings, (binding) => {
-    if (isCreatedScopeSeed(binding) && getWriteReason(binding)) {
+    if (getPatchWrite(binding).seed && getWriteReason(binding)) {
       body.push(
         t.expressionStatement(
           buildPatchWrite(section, binding, undefined, t.numericLiteral(1)),
@@ -238,7 +237,7 @@ export function writePatchResumeStatements(
               section,
               "_unfilled_if",
               closure.sources,
-              getResumeRegisterId(section, closure, "init"),
+              getResumeRegisterId(section, closure, "subscribe"),
             ),
           ),
         );
@@ -286,18 +285,14 @@ export function writePatchResumeStatements(
     }
   });
 
-  // A body a flush may create seeds its state in the setup envelope; content
-  // an attribute tag `<for>` creates also seeds its loop params.
-  if (
-    isCalledBody(section) ||
-    isCreatableBody(section) ||
-    (!!section.localClosures && isBranchPathSection(section))
-  ) {
+  // A scope a flush writes, and so may create, seeds its state in the setup
+  // envelope; content an attribute tag `<for>` creates also seeds its loop params.
+  if (patchWritesScope(section)) {
     forEach(getPatchFillBindings(section), (binding) => {
       if (!isStateSourced(binding)) {
-        // A local with no state source writes plainly once it exists (a called
-        // body's fills already write as the scope reason's complement).
-        if (!isCalledBody(section) && !getWrittenLocalFills().has(binding)) {
+        // A local with no state source writes plainly once it exists (a known
+        // child's fills already write as the scope reason's complement).
+        if (!isKnownChild(section) && !getWrittenLocalFills().has(binding)) {
           getHTMLSectionStatements(section).push(
             t.expressionStatement(writeLocalFill(section, binding)),
           );
@@ -453,7 +448,7 @@ export function writeLocalFill(section: Section, binding: Binding) {
 // read, gated like the root's writes.
 export function writeLocalWrite(section: Section, binding: Binding) {
   getWrittenLocalFills().add(binding);
-  const write = getPatchWrite(section, binding);
+  const write = getUnfilledPatchWrite(section, binding);
   const filledGuard = getCallerGroupGuard(
     section,
     "_filled_guard",
@@ -496,12 +491,12 @@ function buildUnfilledIfWritten(
   section: Section,
   reason: Reason | undefined,
   expr: t.Expression,
-  rebuilds: SortedOpt<Sources> | false,
+  structure: SortedOpt<Sources> | false,
 ) {
-  if (rebuilds === false || !isDynamicWriteGuard(section, reason)) return;
+  if (structure === false || !isDynamicWriteGuard(section, reason)) return;
   return t.logicalExpression(
     "&&",
-    getUnfilledGuard(section, reason.param, rebuilds, !!reason.global),
+    getUnfilledGuard(section, reason.param, structure, !!reason.global),
     expr,
   );
 }
@@ -732,12 +727,12 @@ export function orCallerGroupGuards(
 export function getUnfilledGuard(
   section: Section,
   params: Sources["param"],
-  rebuilds: SortedOpt<Sources>,
+  structure: SortedOpt<Sources>,
   unpatched: boolean,
 ) {
   let guard: t.Expression | undefined;
-  // Each group once, keyed by its section's own list entry: a rebuild may
-  // gate on one the params already name.
+  // Each group once, keyed by its section's own list entry: caller-owned
+  // structure may gate on one the params already name.
   const checked = new Set<ParamReasonGroup>();
   forEachParamGroup(params, (paramSection, group) => {
     const index = getParamReasonGroupIndex(paramSection, group);
@@ -752,7 +747,7 @@ export function getUnfilledGuard(
     section,
     guard,
     "_unfilled_if",
-    rebuilds,
+    structure,
     checked,
   );
   if (unpatched) guard = orGuard(guard, callRuntime("_unfilled_if"));
@@ -774,13 +769,13 @@ function gatePatchWrite(
     getSourcesForRef(binding),
   );
   let expr = write;
-  const conditions = getFillConditions(binding);
-  if (conditions) {
+  const { fill: conditions } = getPatchFill(binding);
+  if (conditions && conditions !== true) {
     let needed = orCallerGroupGuards(
       section,
       undefined,
       "_client_guard",
-      sourcesUtil.union(conditions.rebuilds, conditions.joins),
+      sourcesUtil.union(conditions.structure, conditions.joins),
     );
     needed = orCallerGroupGuards(
       section,
@@ -834,19 +829,19 @@ function rendersUnconditionally(content: Section) {
 
 // A capture only patch-filled reads use is kept fresh where it is still
 // read unfilled; a patch renders every other read itself.
-function getPatchWrite(section: Section, binding: Binding) {
+function getUnfilledPatchWrite(section: Section, binding: Binding) {
   const write = buildPatchWrite(
     section,
     binding,
     undefined,
     getConstantSeed(section, binding),
   );
-  const rebuilds = patchFillsSubscribedReads(binding);
-  return rebuilds === false
+  const structure = patchFillsSubscribedReads(binding);
+  return structure === false
     ? write
     : t.logicalExpression(
         "&&",
-        getUnfilledGuard(section, undefined, rebuilds, true),
+        getUnfilledGuard(section, undefined, structure, true),
         write,
       );
 }

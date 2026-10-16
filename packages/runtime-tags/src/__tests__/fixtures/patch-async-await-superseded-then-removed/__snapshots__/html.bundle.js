@@ -25,24 +25,24 @@ var template_default = _template("a", (input) => {
 					_scope($scope4_id, {});
 				}, 1, "a0");
 				_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "a4");
-				_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a5", 0);
+				_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a4", 0);
 				return 0;
 			}
 		}, $scope1_id, "a", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["a3"], $scope0_reason, 2);
 		_html(`<span>${_patch_text($scope1_id, "b", input.label, void 0, $scope0_reason, 4)}</span>`);
-		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "a6");
-		_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, "a7");
-		_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a8"), _client_guard($scope0_reason, 4) && "a9");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "a5");
+		_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, "a6");
+		_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a5"), _client_guard($scope0_reason, 4) && "a6");
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "a10", void 0, "a1", 1);
+	}, void 0, "a7", void 0, "a1", 1);
 	_html("</main>");
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 2) && input.a,
 		h: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_a__closures,
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_show__closures,
 		i: _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 4) && $input_label__closures
-	}) : _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va11", input.a, !_server_guard($scope0_reason, 3));
+	}) : _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va8", input.a, !_server_guard($scope0_reason, 3));
 }, 1);

@@ -15,12 +15,12 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)($walks$1);
-const $card_content__input_note = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_note#0:5/init", "input_note/7", ($scope) => _text($scope["#text/1"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:5/subscribe");
+const $card_content__input_note = /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/1"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:5/subscribe");
 const $card_content__setup = ($scope) => {
 	$card_content__input_note($scope);
 	$card_content__count($scope);
 };
-const $card_content__count = _resumed["__tests__/template.marko_1_count#0:6/init"] = _closure_get("count/8", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#0:6/subscribe");
+const $card_content__count = _resumed["__tests__/template.marko_1_count#0:6/init"] = /*@__PURE__*/ _closure_get("count/8", ($scope) => _text($scope["#text/0"], $scope._.count), 0, "__tests__/template.marko_1_count#0:6/subscribe");
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<em><!>:<!></em>", "D%c%", $card_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($card_content__count);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "count/6", $count__closure);

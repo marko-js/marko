@@ -6,23 +6,23 @@
     },
     "template.marko.page.mjs": {
       "min": 1644,
-      "brotli": 839
+      "brotli": 840
     },
     "route-pg.mjs": {
       "total": {
-        "min": 1978,
-        "brotli": 991
+        "min": 1939,
+        "brotli": 981
       },
       "files": {
         "tags/file-store.marko": 332,
         "tags/file-tabs.marko": 584,
-        "tags/file-host.marko": 344,
+        "tags/file-host.marko": 322,
         "tags/route-pg.marko": 245
       }
     },
     "shared": {
-      "min": 13247,
-      "brotli": 5876
+      "min": 13235,
+      "brotli": 5861
     }
   },
   "html": {

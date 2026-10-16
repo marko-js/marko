@@ -151,7 +151,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 								return 1;
 							}
 						}, $scope3_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_5*shell", "__tests__/template.marko_6*shell"], $scope0_reason, 1);
-						_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, "__tests__/template.marko_3_input_page#0:3/init");
+						_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, "__tests__/template.marko_3_input_page#0:3/subscribe");
 						$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope3_id, {
 							_: _scope_with_id($scope2_id),
 							"ClosureSignalIndex:input_page/5": 1
@@ -159,7 +159,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						$wg__input_page || $wi__input_page && _resume_branch($scope3_id);
 					}, $scope2_id)
 				});
-				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_list#0:4/init");
+				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_list#0:4/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_list__closures, _scope($scope2_id, {
 					_: $wi__input_page__OR__input_list && _scope_with_id($scope1_id),
 					"#childScope/1": _existing_scope($childScope3)
@@ -167,7 +167,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 1;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_4*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 1);
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_page#0:3/init");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_page#0:3/subscribe");
 		$wi__input_page__OR__input_list && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"));
 		$wg__input_page || $wi__input_page__OR__input_list && _resume_branch($scope1_id);
 	}, $scope0_id) });

@@ -6,7 +6,7 @@ import {
   type Scope,
 } from "../../common/types";
 import type { Renderer } from "../renderer";
-import "./write";
+import "./write.feat";
 import { getRegisteredWithScope } from "../resume";
 import { getLoopItem, installBindRef } from "./apply";
 import { createPatchers, patchers } from "./apply";

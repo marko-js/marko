@@ -58,13 +58,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				name: "c",
 				item
 			});
-			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_item#0:7/init");
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_item#0:7/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 1) && $item__closures, _scope($scope2_id, {
 				_: $wi__input_label__OR__input_promise && _scope_with_id($scope1_id),
 				"#childScope/1": _existing_scope($childScope3)
 			}, "__tests__/template.marko", "9:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_item#0:7/subscribe");
 		}, 1, "__tests__/template.marko_2*content", 1);
-		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:6/init");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:6/subscribe");
 		$wi__input_label__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:4"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_promise#0:6/subscribe", 0);
 		$wi__input_label__OR__input_promise && _resume_branch($scope1_id);
 	}, () => {

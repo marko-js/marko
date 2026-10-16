@@ -19,7 +19,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template$1
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}<!></main>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&/${_w1}&%l`)(" b", " b");
 const $placeholder_content = _content("__tests__/template.marko_3*content", "loading");
-const $await_content__item = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_2_item#0:7/init", "item/9", ($scope) => $input_item($scope["#childScope/1"], $scope._._.item), ($scope) => $scope._._, "__tests__/template.marko_2_item#0:7/subscribe");
+const $await_content__item = /*@__PURE__*/ _closure_get("item/9", ($scope) => $input_item($scope["#childScope/1"], $scope._._.item), ($scope) => $scope._._, "__tests__/template.marko_2_item#0:7/subscribe");
 const $await_content__setup = ($scope) => {
 	$await_content__item($scope);
 	$input_name($scope["#childScope/1"], "c");
@@ -28,7 +28,7 @@ const $await_content__value = ($scope, value) => _text($scope["#text/0"], value)
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", /*@__PURE__*/ ((_w0) => `<span> </span>${_w0}`)($template$1), /*@__PURE__*/ ((_w0) => `D l/${_w0}&`)(" b"), $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__input_promise = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_promise#0:6/init", "input_promise/8", ($scope) => $try_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:6/subscribe");
+const $try_content__input_promise = /*@__PURE__*/ _closure_get("input_promise/8", ($scope) => $try_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:6/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);

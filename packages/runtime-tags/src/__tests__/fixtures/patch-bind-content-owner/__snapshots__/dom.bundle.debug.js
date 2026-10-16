@@ -37,7 +37,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $frame_content__if = /*@__PURE__*/ _if("#text/0", "<span>Seen <!></span><button>+</button>", "Db%l ", $if_content__setup);
-const $frame_content__input_show = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_show#0:6/init", "input_show/10", ($scope) => $frame_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/template.marko_1_input_show#0:6/subscribe");
+const $frame_content__input_show = /*@__PURE__*/ _closure_get("input_show/10", ($scope) => $frame_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/template.marko_1_input_show#0:6/subscribe");
 const $frame_content__setup = $frame_content__input_show;
 const $frame_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $frame_content__setup);
 const $store = _var_resume("__tests__/template.marko_0_store#7/var", ($scope, store) => {

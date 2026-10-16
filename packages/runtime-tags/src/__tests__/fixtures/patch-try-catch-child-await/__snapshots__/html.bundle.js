@@ -37,13 +37,13 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, {
 			_: $wi__input_promise && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
-		}), _client_guard($scope0_reason, 0) && "a2");
+		}), _client_guard($scope0_reason, 0) && "a1");
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<b>${_patch_text($scope2_id, "a", err.message)}</b>`);
 		_scope($scope2_id, {});
-	}, void 0, "a3", "a0", 1, "");
+	}, void 0, "a2", "a0", 1, "");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 1);

@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(`<b>${_patch_text($scope4_id, "#text/0", a, void 0, $scope0_reason, 3)}</b>`);
 					_scope($scope4_id, {}, "__tests__/template.marko", "5:10");
 				}, 1, "__tests__/template.marko_4*content");
-				_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_fast#0:5/init");
+				_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_fast#0:5/subscribe");
 				_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 3) && $input_fast__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:8"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_fast#0:5/subscribe", 0);
 				return 0;
 			}
@@ -40,8 +40,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope5_id, {}, "__tests__/template.marko", "7:8");
 		}, 1, "__tests__/template.marko_5*content", 1);
 		_html("</div>");
-		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_show#0:4/init");
-		_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/template.marko_1_input_slow#0:6/init");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_show#0:4/subscribe");
+		_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/template.marko_1_input_slow#0:6/subscribe");
 		$wi__input_show__OR__input_fast__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 4) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_show#0:4/subscribe", $wg__input_show), _client_guard($scope0_reason, 4) && "__tests__/template.marko_1_input_slow#0:6/subscribe", $wg__input_show);
 		$wg__input_show || $wi__input_show__OR__input_fast__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {

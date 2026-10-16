@@ -3,7 +3,7 @@ const $thing_content__walks = "D%c%l";
 const $thing_content__template = "<em><!> <!></em>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<div>x</div>`)($thing_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($thing_content__walks);
-const $thing_content__input_title = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_title#0:4/init", "input_title/10", ($scope) => _text($scope["#text/1"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:4/subscribe");
+const $thing_content__input_title = /*@__PURE__*/ _closure_get("input_title/10", ($scope) => _text($scope["#text/1"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:4/subscribe");
 const $thing_content__setup = /*@__PURE__*/ _child_setup($thing_content__input_title);
 const $thing_content__attrs_x = ($scope, attrs_x) => _text($scope["#text/0"], attrs_x);
 const $thing_content__$params = ($scope, $params2) => $thing_content__attrs($scope, $params2[0]);

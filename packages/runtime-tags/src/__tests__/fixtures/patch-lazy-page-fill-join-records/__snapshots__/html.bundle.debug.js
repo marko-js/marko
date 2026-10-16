@@ -91,7 +91,7 @@ var page_b_default = _template("__tests__/page-b.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<span>${_patch_text($scope2_id, "#text/0", p, void 0, $scope0_reason, 0)}/${_text_resume($scope2_id, "#text/1", count, 2)}/${_patch_text($scope2_id, "#text/2", item, 2, 0, 0)}</span>`);
-				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/page-b.marko_2_p#0:7/init");
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/page-b.marko_2_p#0:7/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $p__closures, _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/page-b.marko", "5:4")));
 			}, $scope1_id)
 		});
@@ -155,8 +155,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 								wide: input.wide,
 								note: input.note
 							});
-							_unfilled_if($scope0_reason, 5) && _patch_init($scope3_id, "__tests__/template.marko_3_input_wide#0:5/init");
-							_unfilled_if($scope0_reason, 6) && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:6/init");
+							_unfilled_if($scope0_reason, 5) && _patch_init($scope3_id, "__tests__/template.marko_3_input_wide#0:5/subscribe");
+							_unfilled_if($scope0_reason, 6) && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:6/subscribe");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_wide__closures, _scope($scope3_id, {
 								_: $wi__input_page__OR__input_wide__OR__input_note && _scope_with_id($scope2_id),
 								"#childScope/1": _existing_scope($childScope)
@@ -167,7 +167,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							_set_scope_reason(_mask_group($scope0_reason, 6) << 1);
 							const $childScope2 = _patch_child($scope4_id, "#childScope/1");
 							$PageB_withLoadAssets({ note: input.note });
-							_unfilled_if($scope0_reason, 6) && _patch_init($scope4_id, "__tests__/template.marko_4_input_note#0:6/init");
+							_unfilled_if($scope0_reason, 6) && _patch_init($scope4_id, "__tests__/template.marko_4_input_note#0:6/subscribe");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope4_id, {
 								_: _write_if($scope0_reason, 0) && _scope_with_id($scope2_id),
 								"#childScope/1": _existing_scope($childScope2),
@@ -176,7 +176,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							return 1;
 						}
 					}, $scope2_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_4*shell"], $scope0_reason, 3);
-					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_page#0:3/init");
+					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_page#0:3/subscribe");
 					$wi__input_page__OR__input_wide__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 3) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "11:8"));
 					$wg__input_page || $wi__input_page__OR__input_wide__OR__input_note && _resume_branch($scope2_id);
 				}, $scope1_id)

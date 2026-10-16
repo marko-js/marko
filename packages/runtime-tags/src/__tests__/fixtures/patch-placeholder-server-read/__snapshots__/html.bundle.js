@@ -3,7 +3,7 @@ _shells({
 	a0: "a0,<div id=done>done</div>",
 	a1: "a1,<div id=done>done</div>",
 	a2: "a2;b%;<!><!><!>",
-	a: "a !a7; D l%;<button> </button><!><!>"
+	a: "a !a6; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_msg = _write_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $wi__input_msg = _write_if($scope0_reason, 0), $scope0_page = _page_render();
@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 			_html("<div id=done>done</div>");
 		}, 1, "a0");
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "a4");
-		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a5", 0);
+		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a4", 0);
 		$wi__input_promise && _resume_branch($scope2_id);
 	}, () => {
 		_scope_reason();
@@ -28,13 +28,13 @@ var template_default = _template("a", (input) => {
 		_html(`<em>loading ${_text_resume($scope1_id, "a", input.msg, $wg__input_msg * 2)}</em>`);
 		_subscribe($wi__input_msg && $input_msg__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3", $wg__input_msg);
 		$wg__input_msg || _resume_branch($scope1_id);
-	}, void 0, "a6", void 0, "a2", 1);
-	_script($scope0_id, "a7");
-	_patch_value($scope0_id, "va9", count, 1);
+	}, void 0, "a5", void 0, "a2", 1);
+	_script($scope0_id, "a6");
+	_patch_value($scope0_id, "va8", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.msg,
 		h: count,
 		i: $wi__input_msg && $input_msg__closures,
 		j: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va8", input.msg, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.msg, !_server_guard($scope0_reason, 0));
 }, 1);

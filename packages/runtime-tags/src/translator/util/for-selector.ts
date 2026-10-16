@@ -7,7 +7,7 @@ import {
   getPropertyAlias,
 } from "./bindings";
 import { forEach, some } from "./optional";
-import { isPatchFillBinding } from "./patch/refresh";
+import { getPatchFill } from "./patch/refresh";
 import { inStatefulBranch } from "./patch/structure";
 import { getReferencedBindings } from "./references";
 import { isDirectClosure, type Section } from "./sections";
@@ -43,7 +43,7 @@ export function detectForSelector(
         isDirectClosure(bodySection, closure) &&
         // A fill refreshes through the plain scan join; the keyed selector
         // dispatch has no fill channel.
-        !(inStatefulBranch(bodySection) && isPatchFillBinding(canonical)) &&
+        !(inStatefulBranch(bodySection) && getPatchFill(canonical).fill) &&
         !closures?.has(canonical) &&
         onlyComparesKey(closure, canonical, bodySection, keyBinding)
       ) {

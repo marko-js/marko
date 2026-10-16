@@ -28,7 +28,6 @@ const pureDOMFunctions = new Set<string>([
   "_fill_join_subscribers",
   "_shell_join",
   "_shell_or",
-  "_shell_subscribe_closure_get",
   "_fill_const",
   "_fill_let",
   "_fill_let_change",
@@ -101,22 +100,16 @@ export function callRuntime(
   name: DOMRuntimeHelpers | HTMLRuntimeHelpers,
   ...args: Array<Parameters<typeof t.callExpression>[1][number] | Falsy>
 ) {
-  const callExpression = callRuntimeKept(name, ...args);
-  return isOutputDOM() && pureDOMFunctions.has(name)
-    ? t.addComment(callExpression, "leading", "@__PURE__")
-    : callExpression;
-}
-
-// A registration a shell or a seed names whatever client code reaches it,
-// so tree-shaking keeps it even where the helper is otherwise pure.
-export function callRuntimeKept(
-  name: DOMRuntimeHelpers | HTMLRuntimeHelpers,
-  ...args: Array<Parameters<typeof t.callExpression>[1][number] | Falsy>
-) {
   if (isOutputDOM() && isPatch() && scopeBoundRegistrations.has(name)) {
     importRuntimeFeature("patches/bind");
   }
-  return t.callExpression(importRuntime(name), trimFalsyArgs(args));
+  const callExpression = t.callExpression(
+    importRuntime(name),
+    trimFalsyArgs(args),
+  );
+  return isOutputDOM() && pureDOMFunctions.has(name)
+    ? t.addComment(callExpression, "leading", "@__PURE__")
+    : callExpression;
 }
 
 export function dynamicImport(
@@ -136,6 +129,7 @@ const scopeBoundRegistrations = new Set<string>([
   "_el",
   "_hoist_resume",
   "_var_resume",
+  "_fill_var_resume",
 ]);
 
 // A `src/{dom,html}/*.feat.ts` module is a compiler-injected side-effect
@@ -183,6 +177,7 @@ export const domPatchRuntimeFeatures = [
   "patches/text-content",
   "patches/try",
   "patches/value",
+  "patches/write",
   "patches/bind",
   "patches/var",
 ] as const;

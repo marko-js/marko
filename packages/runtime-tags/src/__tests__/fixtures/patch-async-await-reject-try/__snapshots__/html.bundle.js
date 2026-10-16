@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope4_id, {});
 		}, 1, "a0", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a3");
-		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a4", 0);
+		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a3", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<em>${_patch_text($scope3_id, "a", err.message)}</em>`);
 		_scope($scope3_id, {});
-	}, "a5", "a6", "a2", 1, "");
+	}, "a4", "a5", "a2", 1, "");
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 1);

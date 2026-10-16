@@ -16,7 +16,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& D l`)("b%c");
 const $if_content__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.label)));
 const $if_content__setup = $if_content__label;
 const $item_content__if = /*@__PURE__*/ _if("#text/1", "<b><!>!</b>", "D%", $if_content__setup);
-const $item_content__input_show = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/template.marko_1_input_show#0:6/init", "input_show/8", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/template.marko_1_input_show#0:6/subscribe"), 0);
+const $item_content__input_show = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _closure_get("input_show/8", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/template.marko_1_input_show#0:6/subscribe"), 0);
 const $item_content__setup = ($scope) => {
 	$item_content__input_show($scope);
 	$item_content__n($scope);

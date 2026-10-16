@@ -10,17 +10,21 @@ import { some } from "./optional";
 import {
   contentIsPatched,
   contentMayCreate,
-  isPatchFillBinding,
+  getPatchFill,
   sectionHasServerEffect,
+  writesSeed,
 } from "./patch/refresh";
 import {
   inStatefulBranch,
-  inUnreadCatch,
-  isBranchPathSection,
   isStatefulBranch,
+  patchWrites,
 } from "./patch/structure";
 import { getSourcesForRef } from "./reasons";
-import { callRuntime, registerRuntimeValue } from "./runtime";
+import {
+  callRuntime,
+  linkRuntimeFeature,
+  registerRuntimeValue,
+} from "./runtime";
 import {
   forEachSection,
   forEachSectionReverse,
@@ -89,15 +93,15 @@ export function buildShells() {
     }
   });
   forEachSection((section) => {
-    // A flush may create a branch-path body, none stateful or in a catch the
-    // client renders; a template including itself outside a branch has none.
-    if (
-      section.branch?.optional &&
-      isBranchPathSection(section) &&
-      !isStatefulBranch(section) &&
-      !inUnreadCatch(section)
-    ) {
+    // A flush may create a branch-path body outside stateful structure; a
+    // template including itself outside a branch has none.
+    if (section.branch?.optional && patchWrites(section)) {
       addShell(shells, section, "shell");
+    }
+    // Shells settle which scopes a flush seeds, by plain writes; the link is
+    // page-level, as a flush may seed a scope of a template whose module never loads.
+    if (some(section.bindings, writesSeed)) {
+      linkRuntimeFeature("patches/write");
     }
   });
 }
@@ -268,7 +272,8 @@ export function isQueuedOnCreate(section: Section, refs: ReferencedBindings) {
         state.section !== section ||
         !!state.assignments ||
         !!getWriteReason(state),
-    ) || some(refs, (ref) => ref.section === section && isPatchFillBinding(ref))
+    ) ||
+    some(refs, (ref) => ref.section === section && !!getPatchFill(ref).fill)
   );
 }
 

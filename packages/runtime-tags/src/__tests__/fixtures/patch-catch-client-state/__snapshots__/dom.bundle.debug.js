@@ -4,7 +4,7 @@ const $walks$1 = "b%c";
 function boom(error) {
 	throw error;
 }
-const $try_content__input_error = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/tags/panel.marko_2_input_error#0:4/init", "input_error/6", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/tags/panel.marko_2_input_error#0:4/subscribe");
+const $try_content__input_error = /*@__PURE__*/ _closure_get("input_error/6", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/tags/panel.marko_2_input_error#0:4/subscribe");
 const $try_content__setup = $try_content__input_error;
 const $catch_content__text = ($scope, text) => _text($scope["#text/1"], text);
 const $catch_content__input_label__OR__err_message = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill0", "input_label", /*@__PURE__*/ _shell_or("__tests__/tags/panel.marko_1_input_label#0:3_err_message#5/init", 6, ($scope) => $catch_content__text($scope, `${$scope._.input_label}: ${$scope.err_message}`)), "input_label/5", 0);

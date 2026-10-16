@@ -34,7 +34,6 @@ INSERT: main > b + i
 ## Console
 ```
 LOG "detail" "b"
-LOG "detail" "b"
 ```
 
 # Update

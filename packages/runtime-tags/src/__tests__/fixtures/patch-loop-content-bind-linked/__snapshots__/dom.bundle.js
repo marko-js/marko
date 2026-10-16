@@ -10,7 +10,7 @@ const $setup__script = _script("b3", ($scope) => _on($scope.a, "click", function
 const $input_onPick__script = _script("b2", ($scope) => _on($scope.b, "click", $scope.f));
 
 // template.marko
-const $item_content__input_note = /*@__PURE__*/ _fill_join_closure("a3", 3, _closure_get(5, ($scope) => _text($scope.b, $scope._.d), 0, "a1"), 0);
+const $item_content__input_note = /*@__PURE__*/ _fill_join_closure("a3", 3, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.b, $scope._.d), 0, "a1"), 0);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content$1("a2", "<em><!>:<!></em>", "D%c%", $item_content__input_note), { 2($scope) {
 	_text($scope.a, $scope.c);
 } });

@@ -30,7 +30,7 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $t
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks$1);
 const $wrapper_content__input_suffix__OR__value = /*@__PURE__*/ _or(6, ($scope) => $input_title($scope["#childScope/0"], $scope.value + $scope._.input_suffix));
-const $wrapper_content__input_suffix = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_suffix", _closure_get("input_suffix/4", $wrapper_content__input_suffix__OR__value, 0, "__tests__/template.marko_1_input_suffix#0:3/subscribe"), 0);
+const $wrapper_content__input_suffix = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_suffix", /*@__PURE__*/ _closure_get("input_suffix/4", $wrapper_content__input_suffix__OR__value, 0, "__tests__/template.marko_1_input_suffix#0:3/subscribe"), 0);
 const $wrapper_content__setup = ($scope) => {
 	$wrapper_content__input_suffix($scope);
 	_var($scope, "#childScope/0", $wrapper_content__label);

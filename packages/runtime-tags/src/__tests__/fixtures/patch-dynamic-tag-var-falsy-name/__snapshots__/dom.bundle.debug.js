@@ -26,14 +26,13 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper/index.mark
 // tags/child/index.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
-_fill_var("__tests__/tags/child/index.marko_1_$btn#2/var");
 _dynamic_tag_var_resume("#text/0");
 const $inputa11yTextbutton_content = /*@__PURE__*/ _content("__tests__/tags/child/index.marko_2*content", "content");
 const $btn_getter = _hoist_resume("__tests__/tags/child/index.marko_0_$btn#1:2/hoist", "$btn", "ClosureScopes:1");
 const $wrapper_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputa11yTextbutton_content, () => $wrapper_content__$btn);
-const $wrapper_content__input_a11yText = /*@__PURE__*/ _shell_subscribe_closure_get("__tests__/tags/child/index.marko_1_input_a11yText#0:3/init", "input_a11yText/4", ($scope) => $wrapper_content__dynamicTag($scope, $scope._.input_a11yText && "button", () => ({ "aria-label": $scope._.input_a11yText })), 0, "__tests__/tags/child/index.marko_1_input_a11yText#0:3/subscribe");
+const $wrapper_content__input_a11yText = /*@__PURE__*/ _closure_get("input_a11yText/4", ($scope) => $wrapper_content__dynamicTag($scope, $scope._.input_a11yText && "button", () => ({ "aria-label": $scope._.input_a11yText })), 0, "__tests__/tags/child/index.marko_1_input_a11yText#0:3/subscribe");
 const $wrapper_content__setup = $wrapper_content__input_a11yText;
-const $wrapper_content__$btn = _var_resume("__tests__/tags/child/index.marko_1_$btn#2/var", /*@__PURE__*/ _const("$btn", ($scope) => _assert_hoist($scope.$btn)));
+const $wrapper_content__$btn = _fill_var_resume("__tests__/tags/child/index.marko_1_$btn#2/var", /*@__PURE__*/ _const("$btn", ($scope) => _assert_hoist($scope.$btn)));
 const $wrapper_content = /*@__PURE__*/ _content("__tests__/tags/child/index.marko_1*content", "<!><!><!>", "b1", $wrapper_content__setup, 0, "ClosureScopes:1");
 function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $wrapper_content($scope));

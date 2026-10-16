@@ -1,5 +1,5 @@
 // tags/child.marko
-const $user = _fill_let("b3", 5, ($scope) => $user_name($scope, $scope.f?.name));
+const $user = fill("b3", /*@__PURE__*/ _let(5, ($scope) => $user_name($scope, $scope.f?.name)));
 const $user_name = /*@__PURE__*/ _const(6, ($scope) => $user_name_length($scope, $scope.g?.length));
 const $user_name_length__script = _script("b0", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, $scope.h);

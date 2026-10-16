@@ -20,7 +20,6 @@ import {
   isPatch,
 } from "../../util/marko-config";
 import { type ParamsTree, exposeParamsTree } from "../../util/params-tree";
-import { linkPatchSeedBinds } from "../../util/patch/refresh";
 import { isUnconditionalReason } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
 import {
@@ -134,7 +133,6 @@ export default {
 
       if (isPatch()) {
         buildShells();
-        linkPatchSeedBinds();
       }
       // A template with no setup work lets its callers skip its setup export
       // (checked when this template translates).

@@ -41,13 +41,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						if (input.alt) {
 							const $scope3_id = _scope_id();
 							_html(`<em>A:${_patch_text($scope3_id, "#text/0", input.note, 2, $scope0_reason, 6)}</em>`);
-							_unfilled_if($scope0_reason, 6) && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:6/init");
+							_unfilled_if($scope0_reason, 6) && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:6/subscribe");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope3_id, { _: $wi__input_show__OR__input_alt__OR__input_note && _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
 							return 0;
 						} else {
 							const $scope4_id = _scope_id();
 							_html(`<strong>B:${_patch_text($scope4_id, "#text/0", input.note, 2, $scope0_reason, 6)}</strong>`);
-							_unfilled_if($scope0_reason, 6) && _patch_init($scope4_id, "__tests__/template.marko_4_input_note#0:6/init");
+							_unfilled_if($scope0_reason, 6) && _patch_init($scope4_id, "__tests__/template.marko_4_input_note#0:6/subscribe");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope4_id, {
 								_: $wi__input_show__OR__input_alt__OR__input_note && _scope_with_id($scope2_id),
 								"ClosureSignalIndex:input_note/9": $wi__input_note && 1
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							return 1;
 						}
 					}, $scope2_id, "#text/0", 1, $wg__input_alt, void 0, void 0, void 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_4*shell"], $scope0_reason, 5);
-					_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, "__tests__/template.marko_2_input_alt#0:5/init");
+					_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, "__tests__/template.marko_2_input_alt#0:5/subscribe");
 					$wi__input_show__OR__input_alt__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 5) && $input_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
 					$wg__input_alt || $wi__input_show__OR__input_alt__OR__input_note && _resume_branch($scope2_id);
 				}, $scope1_id)

@@ -1,4 +1,4 @@
-import "./write";
+import "./write.feat";
 import { PatchKey } from "../../common/types";
 import { createPatchers, patchers, patchFills } from "./apply";
 
