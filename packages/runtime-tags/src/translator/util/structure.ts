@@ -11,6 +11,7 @@ import { generateUidIdentifier } from "./generate-uid";
 import { getParentTag } from "./get-parent-tag";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { toModuleReadExpression } from "./module-read";
+import { importRuntimeFeature } from "./runtime";
 import {
   ContentType,
   getSection,
@@ -27,6 +28,7 @@ import { withLeadingComment } from "./with-comment";
 
 const walkCodeToName = {
   [WalkCode.Get]: "get",
+  [WalkCode.Nonce]: "nonce",
   [WalkCode.Replace]: "replace",
   [WalkCode.EndChild]: "endChild",
   [WalkCode.BeginChild]: "beginChild",
@@ -109,8 +111,9 @@ function pushMarkup(structure: StructureOp[], str: string) {
 export function node(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
   binding?: Binding,
+  injectsNonce?: boolean,
 ) {
-  return addNode(path, binding, false);
+  return addNode(path, binding, false, injectsNonce);
 }
 
 // A `<!>` marker that what renders in its place replaces.
@@ -150,6 +153,7 @@ function addNode(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
   binding: Binding | undefined,
   marker: boolean,
+  injectsNonce?: boolean,
 ) {
   const { structure } = getSection(path);
   if (!structure) return;
@@ -157,6 +161,7 @@ function addNode(
     kind: StructureKind.Node,
     binding,
     marker,
+    injectsNonce,
   };
   structure.push(op);
   return op;
@@ -170,8 +175,8 @@ interface ResolvedStructure {
   steps: Step.Value[];
 }
 
-// Resolves a section's structure stream into its inert template markup and the
-// walk string claiming each visited node, including dynamic content edges.
+// Resolves a section's structure stream into its template markup and the walk
+// string acting on each node it visits, including dynamic content edges.
 function resolveStructure(section: Section) {
   const resolved: ResolvedStructure = {
     writes: [""],
@@ -204,6 +209,12 @@ function resolveStructure(section: Section) {
           textEdge = undefined;
           break;
         case StructureKind.Node: {
+          if (op.injectsNonce) {
+            importRuntimeFeature("nonce");
+            flushSteps(resolved);
+            resolved.walkComment.push(walkCodeToName[WalkCode.Nonce]);
+            appendLiteral(resolved.walks, String.fromCharCode(WalkCode.Nonce));
+          }
           if (!op.binding) continue;
           const withVar = hasScopeOffset(op.binding);
           const code = op.marker

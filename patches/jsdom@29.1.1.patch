@@ -1,0 +1,101 @@
+diff --git a/lib/jsdom/browser/parser/html.js b/lib/jsdom/browser/parser/html.js
+index 29000275c7f3b09ded966ff5142be86aeb0441a3..2f083563afa8197f740a1978f8917021e057bdc5 100644
+--- a/lib/jsdom/browser/parser/html.js
++++ b/lib/jsdom/browser/parser/html.js
+@@ -86,6 +86,11 @@ class JSDOMParse5Adapter {
+ 
+     if ("_parserInserted" in element) {
+       element._parserInserted = true;
++      // https://html.spec.whatwg.org/multipage/parsing.html#parsing-main-inhead:fragment-case-4
++      // (not for document.write, which jsdom emulates with a fragment parse).
++      if (this._fragment && !this._documentImpl._documentWriting) {
++        element._alreadyStarted = true;
++      }
+     }
+ 
+     return element;
+diff --git a/lib/jsdom/living/nodes/Document-impl.js b/lib/jsdom/living/nodes/Document-impl.js
+index b85d6b0e2dc56441dc60a71c71a822e00a1934ac..0b99fa65e8027e1969c7ab363a01794071feee36 100644
+--- a/lib/jsdom/living/nodes/Document-impl.js
++++ b/lib/jsdom/living/nodes/Document-impl.js
+@@ -403,7 +403,9 @@ class DocumentImpl extends NodeImpl {
+       // If called from an script element directly (during the first tick),
+       // the new elements are inserted right after that element.
+       const tempDiv = this.createElement("div");
++      this._documentWriting = true;
+       tempDiv.innerHTML = text;
++      this._documentWriting = false;
+ 
+       let child = tempDiv.firstChild;
+       let previous = this._writeAfterElement;
+@@ -427,7 +429,9 @@ class DocumentImpl extends NodeImpl {
+         while (node.lastChild && node.lastChild.nodeType === NODE_TYPE.ELEMENT_NODE) {
+           node = node.lastChild;
+         }
++        this._documentWriting = true;
+         node.innerHTML = text;
++        this._documentWriting = false;
+       } else {
+         clearChildNodes(this);
+         parseIntoDocument(text, this);
+diff --git a/lib/jsdom/living/nodes/HTMLScriptElement-impl.js b/lib/jsdom/living/nodes/HTMLScriptElement-impl.js
+index 68c8e6f2dc11ea557fd464f631f5dd2daa525c4c..a3b44dab9d86e63bc7a574fdc26fa06a147eccb9 100644
+--- a/lib/jsdom/living/nodes/HTMLScriptElement-impl.js
++++ b/lib/jsdom/living/nodes/HTMLScriptElement-impl.js
+@@ -49,6 +49,16 @@ class HTMLScriptElementImpl extends HTMLElementImpl {
+     }
+   }
+ 
++  // https://html.spec.whatwg.org/multipage/scripting.html#script-processing-model:children-changed-steps
++  // (as Chromium runs it: on a child inserted, not removed or edited).
++  _descendantAdded(parent, child) {
++    super._descendantAdded(parent, child);
++
++    if (parent === this && !this._parserInserted) {
++      this._eval();
++    }
++  }
++
+   _canRunScript() {
+     const document = this._ownerDocument;
+     // Equivalent to the spec's "scripting is disabled" check.
+@@ -132,7 +142,10 @@ class HTMLScriptElementImpl extends HTMLElementImpl {
+ 
+     // TODO: this text check doesn't seem completely the same as the spec, which e.g. will try to execute scripts with
+     // child element nodes. Spec bug? https://github.com/whatwg/html/issues/3419
++    // https://html.spec.whatwg.org/multipage/scripting.html#prepare-the-script-element
++    // (step 3: a script the parser tried to start is no longer parser-inserted).
+     if (!this.hasAttributeNS(null, "src") && this.text.length === 0) {
++      this._parserInserted = false;
+       return;
+     }
+ 
+@@ -145,6 +158,7 @@ class HTMLScriptElementImpl extends HTMLElementImpl {
+ 
+     if (type !== "classic") {
+       // TODO: implement modules, and then change the check to `type === null`.
++      this._parserInserted = false;
+       return;
+     }
+ 
+diff --git a/lib/jsdom/living/range/Range-impl.js b/lib/jsdom/living/range/Range-impl.js
+index 92a246dab553ee4cebba3ffee402429acadecbab..1f83de9cef14cb103354f157bf2978f800178825 100644
+--- a/lib/jsdom/living/range/Range-impl.js
++++ b/lib/jsdom/living/range/Range-impl.js
+@@ -446,7 +446,15 @@ class RangeImpl extends AbstractRangeImpl {
+       element = createElement(node._ownerDocument, "body", HTML_NS);
+     }
+ 
+-    return parseFragment(fragment, element);
++    // Unmark the fragment's scripts so they run once inserted.
++    const fragmentNode = parseFragment(fragment, element);
++    for (const node of domSymbolTree.treeIterator(fragmentNode)) {
++      if ("_parserInserted" in node) {
++        node._alreadyStarted = false;
++        node._parserInserted = false;
++      }
++    }
++    return fragmentNode;
+   }
+ 
+   // https://dom.spec.whatwg.org/#concept-range-root

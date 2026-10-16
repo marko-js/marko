@@ -11,6 +11,7 @@ patchedDependencies:
   '@babel/helper-compilation-targets@7.29.7': e98b468bdfe20d08a48f6ee078ac991affe4c54d99c96a56ab50fb71b8601b03
   '@babel/traverse@7.29.7': 831f9092cade155e5b2c5b6b6109643387b1b7a674245caa9073652b8eac637c
   '@babel/types@7.29.7': 2babd421813ee0b1029e501540d465c9c83b4f4e4b1291713f2d107680b6e4ca
+  jsdom@29.1.1: 634453f8d4699090765617a724d503feb132afe0c812154224b48972c0f57f7c
   mocha-autotest@1.1.3: 8ed132c3bc8563849f2fc1a6d4b83cc2d73b9e5c2b6b59ddb9957fd11e23078f
   mocha@11.7.6: f72212bff7d4deb783ff457de9e3f682de7c0a615036d8b77ac3221fa6673600
 
@@ -119,7 +120,7 @@ importers:
         version: 2.0.3
       jsdom:
         specifier: ^29.1.1
-        version: 29.1.1
+        version: 29.1.1(patch_hash=634453f8d4699090765617a724d503feb132afe0c812154224b48972c0f57f7c)
       kleur:
         specifier: ^4.1.5
         version: 4.1.5
@@ -5111,7 +5112,7 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  jsdom@29.1.1:
+  jsdom@29.1.1(patch_hash=634453f8d4699090765617a724d503feb132afe0c812154224b48972c0f57f7c):
     dependencies:
       '@asamuzakjp/css-color': 5.1.11
       '@asamuzakjp/dom-selector': 7.1.1

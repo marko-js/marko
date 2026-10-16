@@ -1,0 +1,6 @@
+<html-script>
+  { const main = document.querySelector("main");
+  main.dataset.ran = (+main.dataset.ran || 0) + 1;
+  main.dataset.nonce = document.currentScript.nonce; }
+</html-script>
+<html-style ...input.attrs>p { color: red }</html-style>

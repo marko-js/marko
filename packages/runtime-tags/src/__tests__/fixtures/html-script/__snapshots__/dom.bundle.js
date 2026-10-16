@@ -1,6 +1,6 @@
 // template.marko
 const $count = /*@__PURE__*/ _let(2, ($scope) => {
-	_text_content($scope.a, `
+	_start_late($scope.a, `
   {
     "imports": {
       "${_to_text($scope.c)}": "https://markojs.com",

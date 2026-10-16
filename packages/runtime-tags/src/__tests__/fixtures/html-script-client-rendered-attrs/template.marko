@@ -1,0 +1,21 @@
+<let/show=false/>
+<let/type="text/plain"/>
+<let/items=["a"]/>
+<main>
+  <button.show onClick() { show = true }>show</button>
+  <button.add onClick() { items = [...items, "b"] }>add</button>
+  <html-script data-root=input.root>(window.ran ||= []).push("root " + document.currentScript.dataset.root)</html-script>
+  <html-script ...input.rootAttrs>(window.ran ||= []).push("inline")</html-script>
+  <if=show>
+    <html-script type=type>(window.ran ||= []).push("plain")</html-script>
+    <html-script ...input.attrs>(window.ran ||= []).push("spread")</html-script>
+    <html-script src="/never.js" type=type/>
+    <html-script src=input.src type=type/>
+    <html-script ...input.external>(window.ran ||= []).push("inline")</html-script>
+    <html-script data-a=input.a>(window.ran ||= []).push(${JSON.stringify(type)} + " " + document.currentScript.dataset.a)</html-script>
+    <html-script data-a=input.a type=(type && "module" && "text/javascript")>(window.ran ||= []).push("both " + document.currentScript.dataset.a)</html-script>
+  </if>
+  <for|item| of=items>
+    <html-script data-item=item>(window.ran ||= []).push("row " + document.currentScript.dataset.item)</html-script>
+  </for>
+</main>

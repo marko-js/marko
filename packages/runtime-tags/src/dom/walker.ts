@@ -12,11 +12,17 @@ import { createScope, skipScope } from "./scope";
 /** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 let currentNode: Node;
 
-// Codes claim nodes in document order: Get a template node, Replace a `<!>`
-// marker. A child's codes (BeginChild to EndChild) walk past its own nodes.
+// Codes act on nodes in document order: Get claims one, Replace a `<!>` marker,
+// Nonce gives one the page's nonce; BeginChild to EndChild walk a child's own.
 export function walk(startNode: Node, walkCodes: string, branch: BranchScope) {
   currentNode = startNode;
   walkInternal(0, walkCodes, branch);
+}
+
+// Set by `nonce.feat`, which a template whose walk sets a nonce imports.
+let nonceEnabled: undefined | 1;
+export function installNonce() {
+  nonceEnabled = 1;
 }
 
 // TODO: turn into normal function declaration when resolved: https://github.com/oxc-project/oxc/issues/17364?issue=rolldown%7Crolldown%7C7666
@@ -59,6 +65,19 @@ const walkInternal = function walkInternal(
             ? getDebugKey(currentScopeIndex++, "#scopeOffset")
             : decodeAccessor(currentScopeIndex++)
         ] = skipScope();
+      }
+    } else if (MARKO_DEBUG && value === WalkCode.Nonce && !nonceEnabled) {
+      throw new Error(
+        "A template's walk sets a nonce but `nonce.feat` never loaded; the compiler imports it with the template.",
+      );
+    } else if (nonceEnabled && value === WalkCode.Nonce) {
+      // Set before the node connects: a nonce set later never lets a refused
+      // script or style apply.
+      if (scope[AccessorProp.Global].cspNonce) {
+        (currentNode as Element).setAttribute(
+          "nonce",
+          scope[AccessorProp.Global].cspNonce as string,
+        );
       }
     } else if (value === WalkCode.EndChild) {
       return currentWalkIndex;

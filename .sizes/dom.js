@@ -1,4 +1,4 @@
-// size: 27501 (min) 10237 (brotli)
+// size: 27706 (min) 10324 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -105,6 +105,8 @@ let embedRenders;
 let readyIds;
 let isResuming;
 let cloneCache = {};
+let lateStarts;
+let lateStartsEffects;
 let _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
   let prevValue = scope["R" + accessor];
   if (prevValue !== (scope["R" + accessor] = _to_text(value))) {
@@ -1254,9 +1256,8 @@ function _attr_style_item(element, name, value) {
 function _style_shell(scope, nodeAccessor) {
   let element = scope[nodeAccessor],
     id = _id(scope);
-  (_attr_nonce(scope, nodeAccessor),
-    _attr(element, "class", id),
-    _text_content(element, "." + id + "~*{}"));
+  (_attr(element, "class", id),
+    _text_content(element, "." + id + "~*{" + (element.textContent || "}")));
 }
 function _style_rule_item(element, name, value) {
   let text = element.textContent,
@@ -1270,8 +1271,18 @@ function _style_rule_item(element, name, value) {
         : text.slice(0, -1) + decl + "}",
     ));
 }
-function _attr_nonce(scope, nodeAccessor) {
-  _attr(scope[nodeAccessor], "nonce", scope.$.cspNonce);
+function _start_late(element, text, src) {
+  (lateStartsEffects !== pendingEffects &&
+    (pendingEffects.unshift(startLate, (lateStarts = [])), (lateStartsEffects = pendingEffects)),
+    lateStarts.push([element, text, src]));
+}
+function startLate(starts) {
+  starts.sort(byDocumentOrder);
+  for (let [element, text, src] of starts)
+    (src !== void 0 && _attr(element, "src", src), text !== void 0 && _text_content(element, text));
+}
+function byDocumentOrder([a], [b]) {
+  return a === b ? 0 : a.compareDocumentPosition(b) & 2 ? 1 : -1;
 }
 function _text(node, value) {
   let normalizedValue = _to_text(value);

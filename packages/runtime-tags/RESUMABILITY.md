@@ -149,7 +149,8 @@ end in `0`, preventing an arbitrary final value from being mistaken for scopes.
 DOM association has two encodings:
 
 - DOM **walk strings** (`translator/util/structure.ts`, `dom/walker.ts`) locate nodes
-  when cloning new client branches.
+  when cloning new client branches, and give a script or style that sets no
+  nonce the page's before it connects.
 - SSR **resume comments** (`html/writer.ts`, `dom/resume.ts`) attach existing
   nodes/ranges to scopes and reconstruct owners, branches, keys, and await state.
 

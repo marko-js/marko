@@ -1,0 +1,12 @@
+<let/show=false/>
+<main>
+  <button onClick() { show = !show }>toggle</button>
+  <if=show>
+    <html-script>
+      { const main = document.querySelector("main");
+      main.dataset.ran = (+main.dataset.ran || 0) + 1;
+      main.dataset.nonce = document.currentScript.nonce;
+      main.dataset.inPlace = document.currentScript.parentNode === main; }
+    </html-script>
+  </if>
+</main>

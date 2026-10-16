@@ -7,7 +7,7 @@ import {
   type Scope,
 } from "../common/types";
 import { insertChildNodes } from "./dom";
-import { parseHTML } from "./parse-html";
+import { parseContextualHTML, parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
 import { _resumed } from "./resume";
 import { createScope } from "./scope";
@@ -197,6 +197,12 @@ export function _content_closures(
   };
 }
 
+// Set through `html-script.feat`: a template's scripts run once a clone connects.
+let runnableParse: undefined | 1;
+export function installRunnableParse() {
+  runnableParse = 1;
+}
+
 const cloneCache: Partial<
   Record<string, Record<string, ReturnType<typeof createCloneableHTML>>>
 > = {};
@@ -204,7 +210,9 @@ function createCloneableHTML(
   html: string,
   ns: string,
 ): (branch: BranchScope, walks: string) => void {
-  const { firstChild, lastChild } = parseHTML(html, ns) as {
+  const { firstChild, lastChild } = (
+    runnableParse ? parseContextualHTML(html, ns) : parseHTML(html, ns)
+  ) as {
     firstChild: ChildNode;
     lastChild: ChildNode;
   };

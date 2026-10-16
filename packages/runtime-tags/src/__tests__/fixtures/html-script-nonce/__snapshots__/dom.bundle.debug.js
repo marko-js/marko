@@ -1,21 +1,23 @@
 // template.marko
-const $template = "<script type=magic>\n  A\n<\/script><script type=magic nonce=override>\n  B\n<\/script><script>\n  C\n<\/script><!><!>";
-const $walks = " c b%c";
-const $if_content__setup = ($scope) => _attr_nonce($scope, "#script/0");
-const $spreadAttrs__script = _script("__tests__/template.marko_0_spreadAttrs#3", ($scope) => _attrs_script($scope, "#script/1"));
+const $template = "<script type=magic><\/script><script type=magic nonce=override><\/script><script><\/script><!><!>";
+const $walks = "! b b! b%c";
+const $if_content__setup = ($scope) => _start_late($scope["#script/0"], "\n    D\n  ");
+const $spreadAttrs__script = _script("__tests__/template.marko_0_spreadAttrs#4", ($scope) => _attrs_script($scope, "#script/2"));
 const $spreadAttrs = /*@__PURE__*/ _const("spreadAttrs", ($scope) => {
-	_attrs($scope, "#script/1", {
+	_attrs($scope, "#script/2", {
 		nonce: $scope.$global.cspNonce,
 		type: "magic",
 		...$scope.spreadAttrs
 	});
+	_start_late($scope["#script/2"], "\n  C\n");
 	$spreadAttrs__script($scope);
 });
-const $if = /*@__PURE__*/ _if("#text/2", "<script type=magic>\n    D\n  <\/script>", " ", $if_content__setup);
-const $mounted = /*@__PURE__*/ _let("mounted/4", ($scope) => $if($scope, $scope.mounted ? 0 : 1));
+const $if = /*@__PURE__*/ _if("#text/3", "<script type=magic><\/script>", "! ", $if_content__setup);
+const $mounted = /*@__PURE__*/ _let("mounted/5", ($scope) => $if($scope, $scope.mounted ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => $mounted($scope, true));
 function $setup($scope) {
-	_attr_nonce($scope, "#script/0");
+	_start_late($scope["#script/0"], "\n  A\n");
+	_start_late($scope["#script/1"], "\n  B\n");
 	$spreadAttrs($scope, { nonce: "override-spread" });
 	$mounted($scope, false);
 	$setup__script($scope);

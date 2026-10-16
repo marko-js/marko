@@ -107,6 +107,9 @@ import * as writer from "../../util/writer";
 
 const kNodeOp = Symbol("native tag structure node");
 const kNativeAttrs = Symbol("native tag attrs");
+const kStartsAfterAttrs = Symbol(
+  "script or style whose src or text renders after insertion",
+);
 
 // Tags whose body html translate replaced with a content attribute write.
 const htmlContentAttrTags = new WeakSet<t.MarkoTag>();
@@ -122,6 +125,7 @@ declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kNodeOp]?: StructureNode;
     [kNativeAttrs]?: NativeAttrs;
+    [kStartsAfterAttrs]?: t.NodeExtra;
   }
 }
 
@@ -387,12 +391,21 @@ export default {
         }
       }
 
+      // A script starts, and a style checks its nonce, as its `src` or text
+      // lands: a script's after its render, a style's after its attributes.
+      const startsLate =
+        tagName === "script"
+          ? !!node.body.body.length || indexByName.src !== undefined
+          : tagName === "style" &&
+            hasDynamicAttributes &&
+            !!node.body.body.length;
+
       if (
         (node.var && isTagVarUsed(tag)) ||
         hasDynamicAttributes ||
         hasEventHandlers ||
         textPlaceholders ||
-        injectsNonce ||
+        startsLate ||
         content !== undefined ||
         controllable
       ) {
@@ -446,7 +459,23 @@ export default {
           exprExtras = push(exprExtras, attributes[content].value.extra!);
         }
 
-        if (textPlaceholders) {
+        if (startsLate) {
+          // It starts once the update's renders are done, so it reads only
+          // what it writes: its text, and a script's `src` or spread.
+          exprExtras = push(
+            exprExtras,
+            (tagExtra[kStartsAfterAttrs] = mergeReferenceGroup(
+              tagSection,
+              tagName === "script"
+                ? [
+                    ...(textPlaceholders || []),
+                    attrAt(attributes, indexByName.src)?.value,
+                    spread && node,
+                  ]
+                : textPlaceholders || [],
+            )),
+          );
+        } else if (textPlaceholders) {
           exprExtras = push(
             exprExtras,
             textPlaceholders.length === 1
@@ -454,11 +483,6 @@ export default {
               : mergeReferenceGroup(tagSection, textPlaceholders),
           );
           addSetupExpr(tagSection, textPlaceholders[0]);
-        }
-
-        if (injectsNonce && !spread) {
-          // A nonce statement with no references is written in setup.
-          addSetupWork(tagSection);
         }
 
         if (controllable?.attrs[1] !== undefined) {
@@ -478,7 +502,7 @@ export default {
       const write = structure.writeTo(tag);
       // Addressed once exit settles it: a child control flow tag may still
       // bind this tag through the only-child optimization.
-      tagExtra[kNodeOp] = structure.node(tag);
+      tagExtra[kNodeOp] = structure.node(tag, undefined, injectsNonce);
 
       write`<${tagName}`;
 
@@ -486,6 +510,7 @@ export default {
         for (const index of own) {
           const { name, value } = attributes[index] as t.MarkoAttribute;
           const { confident, computed } = evaluate(value);
+          if (name === "src" && tagName === "script") continue;
           if (confident) {
             write`${getStaticAttrMarkup(name, computed)}`;
           } else if (name === "class" || name === "style") {
@@ -531,7 +556,11 @@ export default {
 
       if (!getTagDef(tag)?.parseOptions?.openTagOnly) {
         const write = structure.writeTo(tag);
-        if (tagName !== "textarea" && getTagFacts(tag).textBody) {
+        if (
+          tagName !== "textarea" &&
+          getTagFacts(tag).textBody &&
+          !tagExtra[kStartsAfterAttrs]
+        ) {
           const textLiteral = bodyToUncoercedText(tag.node.body);
           if (t.isStringLiteral(textLiteral)) {
             write`${textLiteral.value}`;
@@ -918,6 +947,9 @@ export default {
       enter(tag) {
         const tagExtra = tag.node.extra!;
         const { nodeBinding } = tagExtra;
+        if (getCanonicalTagName(tag) === "script") {
+          importRuntimeFeature("html-script");
+        }
         // The template holds everything a tag without a node binding writes.
         if (!nodeBinding) return;
 
@@ -933,20 +965,6 @@ export default {
           spread && buildSkipExpression(attributes, nativeAttrs);
         const spreadExpression =
           spread && buildSpreadExpression(attributes, spread, injectsNonce);
-
-        if (injectsNonce && !spread) {
-          addStatement(
-            "render",
-            tagSection,
-            undefined,
-            callRuntime(
-              "_attr_nonce",
-              scopeIdentifier,
-              getScopeAccessorLiteral(nodeBinding),
-            ),
-            true,
-          );
-        }
 
         if (controllable) {
           const hasChangeHandler = controllable.attrs[1] !== undefined;
@@ -992,6 +1010,7 @@ export default {
         if (own) {
           for (const index of own) {
             const { name, value } = attributes[index] as t.MarkoAttribute;
+            if (name === "src" && tagName === "script") continue;
             const { confident } = evaluate(value);
             const valueReferences = getReferencedBindings(value.extra);
 
@@ -1190,7 +1209,31 @@ export default {
         const tagName = getCanonicalTagName(tag);
 
         if (!openTagOnly) {
-          if (tagName !== "textarea" && getTagFacts(tag).textBody) {
+          const startExtra = tagExtra[kStartsAfterAttrs];
+          if (startExtra) {
+            const { attributes } = tag.node;
+            const src =
+              tagName === "script" &&
+              attrAt(
+                attributes,
+                tagExtra[kNativeAttrs]!.own?.find(
+                  (index) =>
+                    (attributes[index] as t.MarkoAttribute).name === "src",
+                ),
+              );
+            addStatement(
+              "render",
+              getSection(tag),
+              getReferencedBindings(startExtra),
+              callRuntime(
+                "_start_late",
+                createScopeReadExpression(nodeBinding!),
+                tag.node.body.body.length && bodyToText(tag.node.body),
+                src && src.value,
+              ),
+              true,
+            );
+          } else if (tagName !== "textarea" && getTagFacts(tag).textBody) {
             const textLiteral = bodyToText(tag.node.body, tagName === "title");
             if (!t.isStringLiteral(textLiteral)) {
               addStatement(

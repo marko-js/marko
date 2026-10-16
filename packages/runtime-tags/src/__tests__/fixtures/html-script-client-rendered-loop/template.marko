@@ -1,0 +1,11 @@
+<let/items=["a"]/>
+<main>
+  <button onClick() { items = [...items, String.fromCharCode(97 + items.length)] }>add</button>
+  <for|item| of=items>
+    <p>${item}</p>
+    <html-script>
+      { const main = document.querySelector("main");
+      main.dataset.ran = (main.dataset.ran || "") + document.currentScript.previousElementSibling.textContent; }
+    </html-script>
+  </for>
+</main>

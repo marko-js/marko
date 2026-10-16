@@ -1,4 +1,5 @@
 export const Get = 32;
+export const Nonce = 33;
 export const Replace = 37;
 export const EndChild = 38;
 

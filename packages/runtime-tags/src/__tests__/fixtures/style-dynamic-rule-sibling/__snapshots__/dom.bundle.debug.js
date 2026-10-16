@@ -1,6 +1,6 @@
 // template.marko
 const $template = "<style></style><div><div></div></div>";
-const $walks = " b D l";
+const $walks = "! b D l";
 function $setup($scope) {
 	_style_shell($scope, "#style/0");
 }

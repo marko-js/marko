@@ -84,14 +84,16 @@ export interface StructureText {
   value: string;
 }
 
-// A node client code addresses, held in its dom binding: one the markup
-// renders, or a `<!>` marker that what renders in its place replaces.
+// A node the walk acts on: one the markup renders, held in its dom binding, or
+// a `<!>` marker that what renders in its place replaces.
 export interface StructureNode {
   kind: typeof StructureKind.Node;
   // Set at an element's exit, once only-child control flow may have bound it;
-  // still unset there, the element is not addressed and the op drops.
+  // still unset there, the walk stores nothing for the element.
   binding: Binding | undefined;
   marker: boolean;
+  // A script or style that sets no nonce, so it takes the page's.
+  injectsNonce: boolean | undefined;
 }
 
 export interface StructureChild {

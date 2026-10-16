@@ -1,8 +1,8 @@
 // template.marko
 const $template = "<script type=importmap><\/script><div> </div>";
-const $walks = " bD l";
+const $walks = "! bD l";
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
-	_text_content($scope["#script/0"], `
+	_start_late($scope["#script/0"], `
   {
     "imports": {
       "${_to_text($scope.count)}": "https://markojs.com",
@@ -15,7 +15,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	_attr_nonce($scope, "#script/0");
 	$count($scope, 0);
 	$setup__script($scope);
 }

@@ -1,0 +1,9 @@
+<let/show=false/>
+<let/count=1/>
+<main>
+  <button.show onClick() { show = true }>show</button>
+  <button.inc onClick() { count++ }>inc</button>
+  <if=show>
+    <html-script>document.querySelector("main").dataset.count = ${count};</html-script>
+  </if>
+</main>

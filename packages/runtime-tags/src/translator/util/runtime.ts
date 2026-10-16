@@ -118,7 +118,9 @@ export const domRuntimeFeatures = [
   "controllable-textarea",
   "dynamic-tag-script",
   "dynamic-tag-var",
+  "html-script",
   "lazy",
+  "nonce",
   "placeholder",
 ] as const;
 export type DOMRuntimeFeature = (typeof domRuntimeFeatures)[number];

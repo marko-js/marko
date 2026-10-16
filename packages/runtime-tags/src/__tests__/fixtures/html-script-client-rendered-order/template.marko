@@ -1,0 +1,14 @@
+<let/show=false/>
+<main data-ran="">
+  <button onClick() { show = true }>show</button>
+  <script>if (show) document.querySelector("main").dataset.seen = document.querySelector("main").dataset.ran</script>
+  <if=show>
+    <html-script data-n=input.n>document.querySelector("main").dataset.ran += " " + document.currentScript.dataset.n;</html-script>
+    <html-script>document.querySelector("main").dataset.ran += " static";</html-script>
+    <child/>
+    <for|i| of=[1, 2]>
+      <html-script data-i=i>document.querySelector("main").dataset.ran += " row" + document.currentScript.dataset.i;</html-script>
+    </for>
+    <html-script>document.querySelector("main").dataset.ran += " last";</html-script>
+  </if>
+</main>

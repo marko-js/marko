@@ -1,0 +1,17 @@
+<main><button>add</button><!--M_$1 a--><!--M_[-->
+  <p>a<!--M_$2 a--></p>
+  <script>
+    {
+      const main = document.querySelector("main");
+      main.dataset.ran = (main.dataset.ran || "") + document.currentScript
+        .previousElementSibling.textContent;
+    }
+  </script><!--M_]1 b 2-->
+</main>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    c: ["a"]
+  }], "a0 1"];
+  M._.w()
+</script>

@@ -4,5 +4,17 @@
 ## Change
 ```
 INSERT: style
-UPDATE: style[nonce] null => "default-nonce"
+```
+
+# Update
+```js
+const window = document.defaultView;
+window.console.log(
+  (window).ran,
+  Array.from(document.querySelectorAll("style"), (style) => style.nonce),
+);
+```
+## Console
+```
+LOG undefined [ 'default-nonce', 'override', 'override-spread', 'default-nonce' ]
 ```

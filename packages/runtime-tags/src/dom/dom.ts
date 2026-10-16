@@ -31,7 +31,12 @@ import {
 } from "./controllable";
 import { _on } from "./event";
 import { parseHTML } from "./parse-html";
-import { createAndSetupBranch, type Renderer } from "./renderer";
+import { pendingEffects } from "./queue";
+import {
+  createAndSetupBranch,
+  installRunnableParse,
+  type Renderer,
+} from "./renderer";
 import { _id, subscribeToScopeSet } from "./signals";
 
 export function _to_text(value: unknown) {
@@ -134,9 +139,9 @@ export function _attr_style_item(
 export function _style_shell(scope: Scope, nodeAccessor: Accessor) {
   const element = scope[nodeAccessor] as Element;
   const id = _id(scope);
-  _attr_nonce(scope, nodeAccessor);
   _attr(element, "class", id);
-  _text_content(element, "." + id + "~*{}");
+  // A declaration a closure rendered first stays, its text closing the block.
+  _text_content(element, "." + id + "~*{" + (element.textContent || "}"));
 }
 
 export function _style_rule_item(
@@ -157,8 +162,39 @@ export function _style_rule_item(
   );
 }
 
-export function _attr_nonce(scope: Scope, nodeAccessor: Accessor) {
-  _attr(scope[nodeAccessor], "nonce", scope[AccessorProp.Global].cspNonce);
+// Set by `html-script.feat`, which a template rendering a `<script>` imports:
+// a spread's script `src` starts as a template's own does.
+let scriptStart: typeof _start_late | undefined;
+export function installHTMLScript() {
+  scriptStart = _start_late;
+  installRunnableParse();
+}
+
+// A script starts, and a style checks its nonce, as its `src` or text lands: a
+// run's get theirs once its renders are done, in document order, before its effects.
+export function _start_late(element: Element, text?: unknown, src?: unknown) {
+  if (lateStartsEffects !== pendingEffects) {
+    pendingEffects.unshift(startLate, (lateStarts = []));
+    lateStartsEffects = pendingEffects;
+  }
+  lateStarts.push([element, text, src]);
+}
+
+let lateStarts: [Element, unknown, unknown][];
+let lateStartsEffects: unknown[] | undefined;
+function startLate(starts: [Element, unknown, unknown][]) {
+  starts.sort(byDocumentOrder);
+  for (const [element, text, src] of starts) {
+    if (src !== undefined) _attr(element, "src", src);
+    if (text !== undefined) _text_content(element, text);
+  }
+}
+
+function byDocumentOrder(
+  [a]: [Element, ...unknown[]],
+  [b]: [Element, ...unknown[]],
+) {
+  return a === b ? 0 : a.compareDocumentPosition(b) & 2 ? 1 : -1;
 }
 
 export function _text(node: Text | Comment, value: unknown) {
@@ -305,6 +341,8 @@ function attrsInternal(
         if (isEventHandler(name)) {
           (events ||= scope[AccessorPrefix.EventAttributes + nodeAccessor] =
             {})[getEventType(name)] = value;
+        } else if (scriptStart && name === "src" && el.localName === "script") {
+          scriptStart(el, undefined, value);
         } else if (
           !(skip?.test(name) || (name === "content" && el.tagName !== "META"))
         ) {
@@ -377,6 +415,8 @@ export const _html = /*@__PURE__*/ withDynamicHtml(function _html(
     const parentNode = firstChild.parentNode!;
     const lastChild = (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] ||
       firstChild) as ChildNode;
+    // Inert on purpose: a runnable parse would run a nonce-less script from data
+    // under `strict-dynamic`, which refuses that same script in the server's HTML.
     const newContent = parseHTML(
       scope[AccessorPrefix.DynamicHTMLValue + accessor],
       (parentNode as Element).namespaceURI!,

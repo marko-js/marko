@@ -93,7 +93,7 @@ export default {
       analyzeDynamicStyle(tag, names);
       // Dynamic styles write their shell statement in setup.
       addSetupWork(ensureSection(tag));
-      structure.node(tag, tag.node.extra!.nodeBinding);
+      structure.node(tag, tag.node.extra!.nodeBinding, true);
       structure.enterShallow(tag);
       structure.writeTo(tag)`<style></style>`;
     }

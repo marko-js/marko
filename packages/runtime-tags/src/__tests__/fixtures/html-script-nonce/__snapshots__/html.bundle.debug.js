@@ -12,9 +12,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		nonce: $global().cspNonce,
 		type: "magic",
 		...spreadAttrs
-	}, "#script/1", $scope0_id, "script")}>
+	}, "#script/2", $scope0_id, "script")}>
   C
-<\/script>${_el_resume($scope0_id, "#script/1")}`);
+<\/script>${_el_resume($scope0_id, "#script/2")}`);
 	_if(() => {
 		if (mounted) {
 			const $scope1_id = _scope_id();
@@ -24,8 +24,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, {}, "__tests__/template.marko", "17:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, 1, 0, 0, 1);
+	}, $scope0_id, "#text/3", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_spreadAttrs#3");
-	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "EventAttributes:#script/1": ["...spreadAttrs", "11:30"] });
+	_script($scope0_id, "__tests__/template.marko_0_spreadAttrs#4");
+	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "EventAttributes:#script/2": ["...spreadAttrs", "11:30"] });
 }, 1);

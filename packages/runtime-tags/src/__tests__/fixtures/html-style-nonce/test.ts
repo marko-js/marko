@@ -1,4 +1,5 @@
 import type { TestConfig } from "../../main.test";
+import { logScriptsAndStyles } from "../../utils/log-scripts";
 import { wait } from "../../utils/resolve";
 
 export const config: TestConfig = {
@@ -10,5 +11,6 @@ export const config: TestConfig = {
       },
     },
     wait,
+    logScriptsAndStyles,
   ],
 };

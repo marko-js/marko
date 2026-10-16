@@ -1,0 +1,7 @@
+<let/code=""/>
+<let/type="text/plain"/>
+<main>
+  <button onClick() { code = "ran"; type = undefined; }>go</button>
+  <html-script>${code && `document.querySelector("main").dataset.a = "${code}"`}</html-script>
+  <html-script type=type>document.querySelector("main").dataset.b = ${JSON.stringify(code)}</html-script>
+</main>

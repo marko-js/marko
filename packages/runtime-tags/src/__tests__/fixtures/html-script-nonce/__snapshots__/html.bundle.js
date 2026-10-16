@@ -10,10 +10,10 @@ var template_default = _template("a", (input) => {
 		nonce: $global().cspNonce,
 		type: "magic",
 		nonce: "override-spread"
-	}, "b", $scope0_id, "script")}>
+	}, "c", $scope0_id, "script")}>
   C
-<\/script>${_el_resume($scope0_id, "b")}`);
-	_if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
+<\/script>${_el_resume($scope0_id, "c")}`);
+	_if(() => {}, $scope0_id, "d", 1, 1, 0, 0, 1);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});

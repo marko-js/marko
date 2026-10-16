@@ -1,0 +1,10 @@
+<let/show=false/>
+<main>
+  <button onClick() { show = true }>show</button>
+  <if=show>
+    <html-style nonce=$global.cspNonce>main { --a: 1 }</html-style>
+    <html-style media=input.media>main { --b: 1 }</html-style>
+    <html-style src="x.css" media=input.media>main { --c: 1 }</html-style>
+    <html-style src=input.src media=input.media>main { --d: 1 }</html-style>
+  </if>
+</main>
