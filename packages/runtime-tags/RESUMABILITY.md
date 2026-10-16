@@ -113,11 +113,12 @@ patch, fill, structural param, shell).
   shells it sent changed what the page holds.
   `apply(response, onCommit, onApplied, onEnd, onFail)` reads the body's lines
   as frames: `onCommit` right before the first changes the page, `onApplied`
-  whenever every frame so far has applied, `onEnd` once the body ended and all
-  applied, and `onFail` for a response that is no patch, a failed frame or a
-  cut stream. A later `patch()` ends the response. `@marko/vite` names the
-  build (`@marko/vite/patch`); `@marko/run` sends the headers and decides what
-  a failure loads.
+  once each frame has applied, with anything it waits on (a lazy module, a body
+  the document still streams), `onEnd` once the body ended and all applied, and
+  `onFail` for a response that is no patch, a failed frame or a cut stream. A
+  later `patch()` ends the response. `@marko/vite` names the build
+  (`@marko/vite/patch`); `@marko/run` sends the headers and decides what a
+  failure loads.
 
 Each frame runs as the document's resume scripts do: a script element
 carrying the live page's `$global.cspNonce` (`evaluate`), whose thunk the frame

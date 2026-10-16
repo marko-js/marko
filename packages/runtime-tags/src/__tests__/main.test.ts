@@ -1219,8 +1219,9 @@ function streamPatch(
   const settle = (applied: 0 | 1) => {
     for (const resolve of waiters.splice(0)) resolve(applied);
   };
+  // Frames sent and frames the page reported applied, each its line.
   let sent = 0;
-  let appliedThrough = 0;
+  let applied = 0;
   const state = {
     failed: false,
     closed: false,
@@ -1249,10 +1250,7 @@ function streamPatch(
       { headers: server.patchResponseHeaders!("patch") },
     ),
     report(() => {}),
-    report(() => {
-      appliedThrough = sent;
-      settle(1);
-    }),
+    report(() => ++applied === sent && settle(1)),
     report(() => (state.ended = true)),
     report(() => {
       state.failed = true;
@@ -1265,7 +1263,8 @@ function streamPatch(
       const controller = await wanted;
       if (controller) {
         wanted = new Promise((resolve) => (wake = resolve));
-        sent++;
+        // The server ends every frame with a newline, and the page reports each.
+        for (let at = -1; (at = flush.indexOf("\n", at + 1)) >= 0;) sent++;
         controller.enqueue(encoder.encode(flush));
         await wanted;
       }
@@ -1275,7 +1274,7 @@ function streamPatch(
     result(): 0 | 1 | Promise<0 | 1> {
       return state.failed
         ? 0
-        : appliedThrough === sent
+        : applied === sent
           ? 1
           : new Promise((resolve) => waiters.push(resolve));
     },

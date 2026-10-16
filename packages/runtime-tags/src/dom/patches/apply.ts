@@ -271,10 +271,12 @@ export function patch(
           onFail();
         }
       };
+      // Each frame reports once it (and anything it waited on) applied; the end
+      // once the body ended and every frame applied.
       const done: FrameDone = (applied) =>
         applied
           ? render[RenderDataProp.PatchResponse] === stop &&
-            (--waiting || (onApplied(), ended && onEnd()))
+            (onApplied(), --waiting || (ended && onEnd()))
           : MARKO_DEBUG
             ? fail("a frame did not apply")
             : fail();
@@ -301,20 +303,17 @@ export function patch(
       try {
         for (let read; !(read = await reader.read()).done;) {
           buffered += decoder.decode(read.value, { stream: true });
-          // The chunk is a wait of its own, so its frames report as one.
-          let start = 0;
-          waiting++;
-          for (
-            let at;
+          let start = 0,
+            at;
+          while (
             render[RenderDataProp.PatchResponse] === stop &&
-            (at = buffered.indexOf("\n", start)) >= 0;
-            start = at + 1
+            (at = buffered.indexOf("\n", start)) >= 0
           ) {
             waiting++;
             applyLine(buffered.slice(start, at), done);
+            start = at + 1;
           }
           buffered = buffered.slice(start);
-          start ? done(1) : waiting--;
         }
       } catch {
         return MARKO_DEBUG ? fail("the stream was cut short") : fail();
