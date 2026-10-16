@@ -128,6 +128,11 @@ and under which guard the server writes it.
 per-call guards.
 _Avoid_: serialization flag, serialized value
 
+**Param reason group**:
+A param set a template's call sites report as two bits (`paramReasonGroups`),
+built from what each write reason leaves conditional. The list is the
+template's interface to its callers, fixed at analyze exit.
+
 **Slot**:
 What analysis records, with its reason, for one thing client code may read
 after resume: either a place in a scope the server writes at an _accessor_ (a
@@ -261,3 +266,12 @@ Unset emits a normal module, `page` a top-level bootstrap, and `load` a lazy
 ready notification. Deprecated `output: "hydrate"` aliases a DOM page entry;
 Marko 6 still resumes.
 _Avoid_: output mode, hydration
+
+**Root**:
+A template a page entry imports: the topmost template with client work, or
+with resumes the client's own code revives (a registration, or a state-backed
+or `always` reason). Everything below a root arrives through its imports. An
+entry that initializes the runtime imports every root. A param-only reason is
+never a root's own (the parent passing it client state already bundles the
+template).
+_Avoid_: linked page, unlinked page, scriptless page (as a bundling state)
