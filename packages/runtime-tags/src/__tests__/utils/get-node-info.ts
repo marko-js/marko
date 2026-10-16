@@ -7,6 +7,7 @@ export function getNodePath(node: Node) {
 
   if (isText(cur)) {
     const { parentNode } = cur;
+    suffix = "::text";
     if (parentNode) {
       let offset = 0;
       let hasOtherText = false;
@@ -25,7 +26,7 @@ export function getNodePath(node: Node) {
           }
         }
       }
-      suffix = found && hasOtherText ? `::text@${offset}` : "::text";
+      if (found && hasOtherText) suffix += `@${offset}`;
     }
     cur = parentNode as Node | null;
     if (!cur || cur === body) return suffix;

@@ -15,7 +15,7 @@ outercaught ERROR!
 ```
 ## Change
 ```
-INSERT:  + :is(::text("caught "), ::text("ERROR!"))
+INSERT: ::text + :is(::text("caught "), ::text("ERROR!"))
 UPDATE: ::text@12 "" => "ERROR!"
 INSERT: ::text("outer")
 REMOVE: ::text@0 + ::text("loading outer")
