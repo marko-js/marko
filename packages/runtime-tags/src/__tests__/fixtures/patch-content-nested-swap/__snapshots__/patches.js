@@ -1,7 +1,7 @@
 // PATCH
 [`a0;b%;<!><!><!>`, {
   ba: [{
-    fa: ["div"]
+    fa: ">div"
   }, "a0"]
 }]
 ;BAE
@@ -9,13 +9,13 @@
 // PATCH holding BAE
 {
   ba: [{
-    fa: ["div"]
+    fa: ">div"
   }, "a0"]
 }
 
 // PATCH holding BAE
 {
   ba: [{
-    fa: ["span"]
+    fa: ">span"
   }, "a0"]
 }

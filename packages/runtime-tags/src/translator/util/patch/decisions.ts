@@ -45,18 +45,6 @@ export function writesPatchHole(
   );
 }
 
-// A tag whose dynamic tag entry re-renders it from the server's value: a
-// renderer and input (`input` content included) a patch writes.
-export function writesPatchDynamicTag(
-  tag: t.NodePath<t.MarkoTag>,
-  section: Section,
-) {
-  return (
-    tag.node.name.type !== "StringLiteral" &&
-    writesPatchHole(section, tag.node.extra)
-  );
-}
-
 // A handler written inline merged its references with its control's, so
 // only its own captures say whether it is client-sourced.
 export function writesPatchHandler(tagSection: Section, value: t.Expression) {

@@ -5,7 +5,7 @@
       fa: "^^a0",
       cAa: {
         ta: "x",
-        fb: ["div"]
+        fb: ">div"
       }
     }
   }, "a1"]
@@ -19,7 +19,7 @@
       fa: "^^a0",
       cAa: {
         ta: "y",
-        fb: ["div"]
+        fb: ">div"
       }
     }
   }, "a1"]
@@ -32,7 +32,7 @@
       fa: "^^a0",
       cAa: {
         ta: "y",
-        fb: ["span"]
+        fb: ">span"
       }
     }
   }, "a1"]
@@ -45,7 +45,7 @@
       fa: "^^a0",
       cAa: {
         ta: "z",
-        fb: ["em"]
+        fb: ">em"
       }
     }
   }, "a1"]

@@ -1,5 +1,5 @@
 // PATCH
 {
-  fa: ["span"],
+  fa: ">span",
   va1: "span"
 }

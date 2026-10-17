@@ -1,4 +1,4 @@
 // PATCH
 {
-  fa: ["div"]
+  fa: ">div"
 }

@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				_html("body");
 			}, $scope1_id), void 0, void 0, "__tests__/template.marko_1_el#2/var", 2, $scope0_reason, 1);
-			_var($scope1_id, "#scopeOffset/1", $inputtype_scope, "__tests__/template.marko_1_el#2/var");
+			_var($scope1_id, "#scopeOffset/1", $inputtype_scope, "__tests__/template.marko_1_el#2/var", void 0, 1);
 			_scope($scope1_id, {
 				el,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)

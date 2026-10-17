@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $inputwhichonetwo_scope = _peek_scope_id();
 	let x = _dynamic_tag($scope0_id, "#text/0", input.which ? one_default : two_default, { a: input.a }, void 0, void 0, void 0, "__tests__/template.marko_0_x#8/var", 1, $scope0_reason, 0);
-	_var($scope0_id, "#scopeOffset/1", $inputwhichonetwo_scope, "__tests__/template.marko_0_x#8/var");
+	_var($scope0_id, "#scopeOffset/1", $inputwhichonetwo_scope, "__tests__/template.marko_0_x#8/var", void 0, 1);
 	_html(`<p>${_text_resume($scope0_id, "#text/2", x)}</p>`);
 	_patch_write($scope0_id, "PatchWrite:input_which", input.which, 1);
 	_patch_write($scope0_id, "PatchWrite:input_a", input.a, 1);

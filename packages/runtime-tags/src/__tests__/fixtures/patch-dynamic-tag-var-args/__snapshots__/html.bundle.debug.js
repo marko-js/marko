@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<main>");
 	const $inputoncounternull_scope = _peek_scope_id();
 	let n = _dynamic_tag($scope0_id, "#text/0", input.on ? counter_default : null, [input.start], 0, 1, void 0, "__tests__/template.marko_0_n#8/var", 1, $scope0_reason, 0);
-	_var($scope0_id, "#scopeOffset/1", $inputoncounternull_scope, "__tests__/template.marko_0_n#8/var");
+	_var($scope0_id, "#scopeOffset/1", $inputoncounternull_scope, "__tests__/template.marko_0_n#8/var", void 0, 1);
 	_html(`<p>${_text_resume($scope0_id, "#text/2", n)}</p></main>`);
 	_patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
 	_patch_write($scope0_id, "PatchWrite:input_start", input.start, 1);

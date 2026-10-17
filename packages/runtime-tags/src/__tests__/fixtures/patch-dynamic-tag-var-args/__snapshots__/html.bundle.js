@@ -27,7 +27,7 @@ var template_default = _template("b", (input) => {
 	_html("<main>");
 	const $inputoncounternull_scope = _peek_scope_id();
 	let n = _dynamic_tag($scope0_id, "a", input.on ? counter_default : null, [input.start], 0, 1, void 0, "b0", 1, $scope0_reason, 0);
-	_var($scope0_id, "b", $inputoncounternull_scope, "b0");
+	_var($scope0_id, "b", $inputoncounternull_scope, "b0", void 0, 1);
 	_html(`<p>${_text_resume($scope0_id, "c", n)}</p></main>`);
 	_patch_write($scope0_id, "wf", input.on, 1);
 	_patch_write($scope0_id, "wg", input.start, 1);

@@ -1,7 +1,7 @@
 // template.marko
 _shells({
-	a0: "a0;D ;<p> </p>",
-	a1: "a1 !a4,",
+	a0: "a0 a3;D ;<p> </p>",
+	a1: "a1 !a5,",
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
@@ -11,6 +11,7 @@ var template_default = _template("a", (input) => {
 	const Outer = { content: _content_resume("a1", ({ value }) => {
 		const $scope1_id = _scope_id();
 		const $Outer_content__value__closures = /* @__PURE__ */ new Set();
+		_patch_value($scope1_id, "va6", value);
 		const $scope1_reason = _scope_reason(), $wi__value = _write_if($scope1_reason, 0);
 		let count = 0;
 		const Inner = { content: _content_elide("a0", ({ y }) => {
@@ -20,10 +21,10 @@ var template_default = _template("a", (input) => {
 			_html(`<p>${_patch_text($scope2_id, "a", b + $global$1.suffix, void 0, (2 | _mask_group($scope2_reason, 0)) << 1, 0)}</p>`);
 			_fill_global_subscribe("a2", $scope2_id, _client_guard($scope2_reason, 0));
 			_patch_write($scope2_id, "wd", y, 1);
-			_patch_write($scope2_id, "wf", b, 1);
-			_client_guard($scope2_reason, 0) && _patch_init($scope2_id, "a3");
+			_patch_init($scope2_id, "a3", 1);
+			_client_guard($scope2_reason, 0) && _patch_init($scope2_id, "a4");
 			_subscribe(_unfilled_if($scope2_reason, 0) && $wi__value && $Outer_content__value__closures, _scope($scope2_id, {
-				d: _unfilled_if($scope1_reason, 0) && y,
+				d: $wi__value && y,
 				f: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope2_reason, 0)) && b,
 				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}));
@@ -32,8 +33,8 @@ var template_default = _template("a", (input) => {
 		const $childScope = _patch_child($scope1_id, "a");
 		Inner.content({ y: count });
 		_html(`<button>inc</button>${_el_resume($scope1_id, "b")}`);
-		_script($scope1_id, "a4");
-		_patch_value($scope1_id, "va5", count, 1);
+		_script($scope1_id, "a5");
+		_patch_value($scope1_id, "va7", count, 1);
 		_scope($scope1_id, {
 			e: value,
 			f: count,

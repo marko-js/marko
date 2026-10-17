@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const $inputwhichCounterOther_scope = _peek_scope_id();
 	let count = _dynamic_tag($scope0_id, "#text/0", input.which ? Counter : Other, { label: input.label }, void 0, void 0, void 0, "__tests__/template.marko_0_count#10/var", 1, $scope0_reason, 0);
-	_var($scope0_id, "#scopeOffset/1", $inputwhichCounterOther_scope, "__tests__/template.marko_0_count#10/var");
+	_var($scope0_id, "#scopeOffset/1", $inputwhichCounterOther_scope, "__tests__/template.marko_0_count#10/var", void 0, 1);
 	_html(`<p>${_text_resume($scope0_id, "#text/2", count)}</p>`);
 	_patch_write($scope0_id, "PatchWrite:input_which", input.which, 1);
 	_patch_write($scope0_id, "PatchWrite:Counter", Counter, 1);
