@@ -13,15 +13,15 @@ import {
   type Scope,
 } from "../../common/types";
 import { _await_promise, findTryWithPlaceholder } from "../control-flow";
-import {
-  queueAsyncRender,
-  queueEffect,
-  queueRender,
-  rendering,
-} from "../queue";
+import { queueAsyncRender, queueEffect } from "../queue";
 import "./loop-item.feat";
 import "./try.feat";
-import { _content, createBranch, type Renderer } from "../renderer";
+import {
+  _content,
+  createBranch,
+  type Renderer,
+  setupBranch,
+} from "../renderer";
 import { collectScopes, insertBranchBefore, syncGen } from "../scope";
 import type { Signal } from "../signals";
 import { applyInFrame, frameWait } from "./apply";
@@ -102,21 +102,16 @@ function attachDetachedAwait(
   if (!renderer) return applyChildPatch();
   awaitBranch[AccessorProp.PendingScopes] =
     awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
-  const setupAndAttach = () => {
-    renderer[RendererProp.Setup]?.(awaitBranch);
-    // A shell content's walk created the body's scopes with no setup.
-    if ((renderer as { [RendererProp.Shell]?: 1 })[RendererProp.Shell]) {
-      withCreating(applyChildPatch);
-    } else {
-      applyChildPatch();
-    }
-    const anchor = scope[accessor] as ChildNode;
-    insertBranchBefore(awaitBranch, anchor.parentNode!, anchor);
-    anchor.remove();
-  };
-  // Queued on the owner: the pending body holds its own renders until it settles.
-  if (rendering) setupAndAttach();
-  else queueRender(scope, setupAndAttach, -1);
+  setupBranch(renderer, awaitBranch);
+  // A shell content's walk created the body's scopes with no setup.
+  if ((renderer as { [RendererProp.Shell]?: 1 })[RendererProp.Shell]) {
+    withCreating(applyChildPatch);
+  } else {
+    applyChildPatch();
+  }
+  const anchor = scope[accessor] as ChildNode;
+  insertBranchBefore(awaitBranch, anchor.parentNode!, anchor);
+  anchor.remove();
   awaitBranch[AccessorProp.DetachedAwait] = 0;
 }
 
