@@ -32,7 +32,7 @@ export interface LoadTrigger {
 }
 
 // A stand-in signal or load: the callers ignore its result.
-const noop = (_?: unknown): any => 0;
+export const noop = (_?: unknown): any => 0;
 
 export function _load_template(id: string, load: () => Promise<Renderer>) {
   let pending: ReturnType<typeof load> | undefined;

@@ -22,9 +22,9 @@ const $input$1 = ($scope, input) => {
 };
 const $input_n__closure = /*@__PURE__*/ _closure($if_content2__input_n);
 const $input_n = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill0", "input_n", ($scope) => {
-	$input_n__closure($scope);
 	$if_content__input_n($scope);
-}, $input_n__closure);
+	$input_n__closure($scope);
+});
 var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$1, "b%c", 0, $input$1);
 
 // template.marko

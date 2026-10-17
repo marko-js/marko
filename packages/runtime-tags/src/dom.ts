@@ -94,11 +94,13 @@ export {
   _fill_join_for,
   _fill_join_if,
   _fill_join_subscribers,
+  _fill_join_value,
   _fill_let,
   _fill_let_change,
   _fill_resume,
   _fill_var_resume,
   _shell_init,
+  _patch_or,
   _shell_or,
 } from "./dom/patches/signals";
 export {

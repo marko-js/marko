@@ -70,6 +70,7 @@ export {
   _patch_child,
   _patch_effect,
   _patch_init,
+  _patch_join_init,
   _patch_let_change,
   _patch_nonce,
   _patch_value,

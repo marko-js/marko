@@ -19,5 +19,5 @@ const $input = ($scope, input) => {
 const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_title", ($scope) => {
 	$for_content__input_title($scope);
 	$for_content2__input_title($scope);
-}, $for_content__input_title);
+});
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

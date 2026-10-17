@@ -104,9 +104,9 @@ const $input = ($scope, input) => {
 };
 const $input_items__closure = /*@__PURE__*/ _closure($body_content__input_items, $inputtag_content__input_items);
 const $input_items = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_items", ($scope) => {
-	$input_items__closure($scope);
 	$if_content__input_items($scope);
-}, $input_items__closure);
+	$input_items__closure($scope);
+});
 const $input_nested = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "input_nested", $if_content__input_nested);
 const $input_tag = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill2", "input_tag", $if_content__input_tag);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

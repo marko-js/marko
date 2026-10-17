@@ -1,0 +1,63 @@
+// tags/row.marko
+const $template$1 = "<p> </p><em> </em>";
+const $walks$1 = "D lD l";
+_shells({ "__tests__/tags/row.marko": "__tests__/tags/row.marko;D lD ;<p> </p><em> </em>" });
+var row_default = _template("__tests__/tags/row.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	_html(`<p>${_patch_text($scope0_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 0)}</p><em>${_patch_text($scope0_id, "#text/1", input.y + input.b, void 0, $scope0_reason, 2)}</em>`);
+	_patch_write($scope0_id, "PatchWrite:input_a", input.a, !(_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4)));
+	_patch_write($scope0_id, "PatchWrite:input_b", input.b, !(_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 5))));
+	_patch_write($scope0_id, "PatchWrite:input_y", input.y, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4)));
+	_patch_join_init($scope0_id, "__tests__/tags/row.marko_0_input_a#4_input_b#5/init", $scope0_reason, 0);
+	_patch_join_init($scope0_id, "__tests__/tags/row.marko_0_input_b#5_input_y#7/init", $scope0_reason, 2);
+	$scope0_page && _scope($scope0_id, {
+		input_a: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.a,
+		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.b,
+		input_y: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2)) && input.y
+	}, "__tests__/tags/row.marko", 0, {
+		input_a: ["input.a"],
+		input_b: ["input.b"],
+		input_y: ["input.y"]
+	});
+});
+
+// template.marko
+const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<button>+</button>`)($template$1, $template$1, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}& b`)($walks$1, $walks$1, $walks$1);
+_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}& b`)($walks$1, $walks$1, $walks$1)};${((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<button>+</button>`)($template$1, $template$1, $template$1)}`)() });
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	let n = 0;
+	_set_scope_reason(762 | _mask_group($scope0_reason, 1) << 11);
+	const $childScope = _patch_child($scope0_id, "#childScope/0");
+	row_default({
+		a: n,
+		b: n,
+		y: input.y
+	});
+	_set_scope_reason(158 | (_mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 2) << 9 | _mask_group($scope0_reason, 1) << 11));
+	const $childScope2 = _patch_child($scope0_id, "#childScope/1");
+	row_default({
+		a: n,
+		b: input.x,
+		y: input.y
+	});
+	_set_scope_reason(2286 | _mask_group($scope0_reason, 2) << 9);
+	const $childScope3 = _patch_child($scope0_id, "#childScope/2");
+	row_default({
+		a: n,
+		b: input.x,
+		y: n
+	});
+	_html(`<button>+</button>${_el_resume($scope0_id, "#button/3")}`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", n, 1);
+	$scope0_page && _scope($scope0_id, {
+		n,
+		"#childScope/0": _existing_scope($childScope),
+		"#childScope/1": _existing_scope($childScope2),
+		"#childScope/2": _existing_scope($childScope3)
+	}, "__tests__/template.marko", 0, { n: "1:6" });
+}, 1);

@@ -7,10 +7,12 @@ import {
   type Binding,
   bindingUtil,
   getCanonicalBinding,
+  type Intersection,
   getDebugNames,
   isStateSourced,
   type ReferencedBindings,
 } from "../bindings";
+import { createAnalysisMemo } from "../cyclic-memo";
 import { generateUidIdentifier } from "../generate-uid";
 import {
   getAccessorPrefix,
@@ -34,7 +36,7 @@ import {
   isUnconditionalReason,
   type Reason,
 } from "../reasons";
-import { getReferencedBindings } from "../references";
+import { getReferencedBindings, isReferencedExtra } from "../references";
 import {
   callRuntime,
   type HTMLRuntimeHelpers,
@@ -49,6 +51,7 @@ import {
   getScopeIdIdentifier,
   isKnownChild,
   isCallerParamAt,
+  isLoopBody,
   type ParamReasonGroup,
   type Section,
 } from "../sections";
@@ -81,7 +84,9 @@ import {
 } from "./decisions";
 import {
   type CreatedInit,
+  type FillConditions,
   getCreatedInits,
+  isPatchWrittenJoin,
   getPatchFillBindings,
   getPatchFillKey,
   getPatchFill,
@@ -117,7 +122,7 @@ export function writePatchResumeStatements(
             ? getUnfilledPatchWrite(section, binding)
             : undefined,
           getPatchFill(binding).splitsContent
-            ? buildPatchValue(section, binding, true)
+            ? buildPatchValue(section, binding, "content")
             : undefined,
         ),
       );
@@ -138,7 +143,10 @@ export function writePatchResumeStatements(
             getUnfilledPatchWrite(section, binding),
           ),
         );
-      } else if (!getWrittenLocalFills().has(binding)) {
+      } else if (
+        !getWrittenLocalFills().has(binding) &&
+        !getPatchFill(binding).unpatchedStructure
+      ) {
         getHTMLSectionStatements(section).push(
           t.expressionStatement(writeLocalWrite(section, binding)),
         );
@@ -201,12 +209,61 @@ export function writePatchResumeStatements(
   // A created scope has no resume data: what its resumed twin reads from
   // the document and nothing else supplies arrives as a setup write.
   forEach(section.bindings, (binding) => {
-    if (getPatchWrite(binding).seed && getWriteReason(binding)) {
-      body.push(
-        t.expressionStatement(
-          buildPatchWrite(section, binding, undefined, t.numericLiteral(1)),
-        ),
-      );
+    const { seed, write } = getPatchWrite(binding);
+    const seeds = seed && getWriteReason(binding);
+    // A fill or effect write's own call carries its entry.
+    const unpatched =
+      !(getPatchFill(binding).fill || write) &&
+      getPatchFill(binding).unpatchedStructure;
+    // A value written in place wherever its group is the server's needs no more.
+    const joinWrites = write ? undefined : getPatchFill(binding).joinWrites;
+    // In place where a join the patch writes runs on the client (another
+    // member is the client's), unless the unpatched key ships there already.
+    const othersClient =
+      joinWrites &&
+      !(
+        unpatched &&
+        (unpatched === true ||
+          sourcesUtil.isSuperset(unpatched.structure, joinWrites))
+      )
+        ? orCallerGroupGuards(section, undefined, "_client_guard", joinWrites)
+        : undefined;
+    const filled =
+      othersClient || unpatched
+        ? getCallerGroupGuard(
+            section,
+            "_filled_guard",
+            getSourcesForRef(binding),
+          )
+        : undefined;
+    const inPlace = othersClient && andGuard(filled, othersClient);
+    const entry =
+      seeds || inPlace
+        ? seeds
+          ? buildPatchWrite(
+              section,
+              binding,
+              undefined,
+              inPlace ? t.unaryExpression("!", inPlace) : t.numericLiteral(1),
+            )
+          : t.logicalExpression(
+              "&&",
+              inPlace!,
+              buildPatchWrite(section, binding),
+            )
+        : undefined;
+    const expr = unpatched
+      ? orUnpatchedValue(section, binding, filled, entry)
+      : entry;
+    if (expr) body.push(t.expressionStatement(expr));
+    // A local reaching a written join where the client may own it chooses its
+    // fill or write here, as its declaration cannot know the content withheld.
+    if (!isKnownChild(section) && getPatchFill(binding).unpatchedStructure) {
+      if (getPatchFill(binding).fill) {
+        body.push(t.expressionStatement(writeLocalFill(section, binding)));
+      } else if (write) {
+        body.push(t.expressionStatement(writeLocalWrite(section, binding)));
+      }
     }
   });
 
@@ -226,10 +283,28 @@ export function writePatchResumeStatements(
   }
 
   // A created or composed scope runs what its flush names: a join's or
-  // closure's init where the client contributes its caller group, a subscriber.
+  // closure's init where the client contributes its caller group, a subscriber;
+  // any scope, a written join's where its group mixes.
   for (const [ref, init] of getCreatedInits(section)) {
     if (Array.isArray(ref)) {
-      if (init.init === "client") {
+      if (init.init === "mixed") {
+        const needed = getJoinInitGuard(section, ref);
+        if (needed !== false) {
+          body.push(
+            t.expressionStatement(
+              andGuard(
+                needed,
+                callPatchRuntime(
+                  "_patch_join_init",
+                  section,
+                  getResumeRegisterId(section, ref, "init"),
+                  ...getPatchWriteOwnership(section, getSourcesForRef(ref)),
+                ),
+              ),
+            ),
+          );
+        }
+      } else if (init.init === "client") {
         body.push(
           t.expressionStatement(
             buildClientInit(
@@ -447,7 +522,12 @@ function buildLetSeeds(section: Section, binding: Binding) {
 // by its group's ownership; an unfilled instance re-derives via closure inits.
 export function writeLocalFill(section: Section, binding: Binding) {
   getWrittenLocalFills().add(binding);
-  const write = buildPatchValue(section, binding);
+  const write = orUnpatchedValue(
+    section,
+    binding,
+    undefined,
+    buildPatchValue(section, binding),
+  )!;
   const filledGuard = getCallerGroupGuard(
     section,
     "_filled_guard",
@@ -479,7 +559,12 @@ export function writeLocalFill(section: Section, binding: Binding) {
 // read, gated like the root's writes.
 export function writeLocalWrite(section: Section, binding: Binding) {
   getWrittenLocalFills().add(binding);
-  const write = getUnfilledPatchWrite(section, binding);
+  const write = orUnpatchedValue(
+    section,
+    binding,
+    undefined,
+    getUnfilledPatchWrite(section, binding),
+  )!;
   const filledGuard = getCallerGroupGuard(
     section,
     "_filled_guard",
@@ -589,13 +674,13 @@ export function callPatchRuntime(
 export function buildPatchValue(
   section: Section,
   binding: Binding,
-  content?: boolean,
+  split?: "content" | "unpatched",
   seed?: t.Expression,
 ) {
   return callPatchRuntime(
     "_patch_value",
     section,
-    getPatchKey().Value + getPatchFillKey(binding, content),
+    getPatchKey().Value + getPatchFillKey(binding, split),
     getDeclaredBindingExpression(binding),
     seed,
   );
@@ -713,11 +798,42 @@ function buildSubscribe(
 // Ownership args for an expression's write in `section`; a value fixed for the
 // scope's lifetime (constant, `<id>`, `<define>`) only seeds a created scope.
 export function getExprWriteOwnership(section: Section, extra: t.NodeExtra) {
-  return getPatchWriteOwnership(
+  const ownership = getPatchWriteOwnership(
     section,
     getWriteSources(extra),
     isStableExpr(extra),
   );
+  // Where every filled member's unpatched key re-runs a written join, the
+  // client writes its hole: the group reads as client-sourced there.
+  const join = isReferencedExtra(extra) && getReferencedBindings(extra);
+  if (
+    !ownership.length ||
+    !Array.isArray(join) ||
+    !isPatchWrittenJoin(join) ||
+    !some(join, (ref) =>
+      unpatchedPastGroup(section, getCanonicalBinding(ref), join),
+    )
+  ) {
+    return ownership;
+  }
+  const needed = getJoinInitGuard(section, join);
+  if (needed === undefined) return ownership;
+  const client = t.numericLiteral(1);
+  return [
+    buildGroupMask([
+      {
+        value: needed
+          ? t.conditionalExpression(
+              needed,
+              callRuntime("_mask_group", ...ownership),
+              client,
+            )
+          : client,
+        names: "",
+      },
+    ])!,
+    t.numericLiteral(0),
+  ];
 }
 
 // A patch writer's trailing `[mask, groupIdx]` ownership args, or `[]` when
@@ -835,19 +951,30 @@ function gatePatchWrite(
   otherwise?: t.Expression,
   contentWrite?: t.Expression,
 ) {
-  let guard: t.Expression | undefined = getCallerGroupGuard(
+  const guard = getCallerGroupGuard(
     section,
     "_filled_guard",
     getSourcesForRef(binding),
   );
-  let expr = write;
-  const { fill: conditions } = getPatchFill(binding);
+  const {
+    fill: conditions,
+    unpatchedOnly,
+    unpatchedStructure,
+  } = getPatchFill(binding);
+  let expr: t.Expression | undefined = unpatchedOnly ? undefined : write;
   if (conditions && conditions !== true) {
+    // Groups the unpatched arm tests are the server's wherever this one runs.
     let needed = orCallerGroupGuards(
       section,
       undefined,
       "_client_guard",
-      sourcesUtil.union(conditions.structure, conditions.joins),
+      sourcesUtil.difference(
+        sourcesUtil.union(
+          sourcesUtil.union(conditions.structure, conditions.joins),
+          conditions.writes,
+        ),
+        unpatchedStructure === true ? undefined : unpatchedStructure?.structure,
+      ),
     );
     needed = orCallerGroupGuards(
       section,
@@ -855,43 +982,164 @@ function gatePatchWrite(
       "_filled_guard",
       conditions.fills,
     );
-    // Content client code renders unconditionally (a `@catch` or
-    // `@placeholder` may, at any time) is never rendered for good: it fills.
-    const always = some(conditions.contents, rendersUnconditionally);
-    let withheld: t.Expression | undefined;
-    if (!always) {
-      forEach(conditions.contents, (content) => {
-        let term: t.Expression = callRuntime(
-          "_content_withheld",
-          t.stringLiteral(getResumeRegisterId(content, "content")),
-        );
-        // Live on the client only where what renders it is the client's.
-        const reason = getRendererReason(content);
-        const client = reason && getClientGuard(section, reason);
-        if (client) term = t.logicalExpression("&&", term, client);
-        withheld = orGuard(withheld, term);
-      });
-    }
+    const contents = getWithheldGuard(section, conditions.contents);
+    const always = contents === true;
+    const withheld = always ? undefined : contents;
     if (contentWrite && (always || withheld)) {
       const content = !withheld
         ? contentWrite
         : otherwise
           ? t.conditionalExpression(withheld, contentWrite, otherwise)
           : t.logicalExpression("&&", withheld, contentWrite);
-      expr = needed ? t.conditionalExpression(needed, write, content) : content;
+      expr =
+        needed && expr
+          ? t.conditionalExpression(needed, expr, content)
+          : content;
       needed = undefined;
     } else if (always) {
       needed = undefined;
     } else if (withheld) {
       needed = orGuard(needed, withheld);
     }
-    if (needed && otherwise) {
+    if (needed && expr && otherwise) {
       expr = t.conditionalExpression(needed, expr, otherwise);
-    } else if (needed) {
-      guard = andGuard(guard, needed);
+    } else if (needed && expr) {
+      expr = t.logicalExpression("&&", needed, expr);
     }
   }
-  return andGuard(guard, expr);
+  return andGuard(guard, orUnpatchedValue(section, binding, undefined, expr)!);
+}
+
+// A member of a join the patch writes ships, where the client may own the
+// join's structure there, under its unpatched key: its run also re-runs the join.
+function orUnpatchedValue(
+  section: Section,
+  binding: Binding,
+  guard: t.Expression | undefined,
+  otherwise: t.Expression | undefined,
+) {
+  const { unpatchedStructure } = getPatchFill(binding);
+  if (!unpatchedStructure) return otherwise;
+  const unpatched =
+    unpatchedStructure !== true &&
+    getUnpatchedGuard(section, unpatchedStructure);
+  const where = unpatched ? andGuard(guard, unpatched) : guard;
+  const value = buildPatchValue(section, binding, "unpatched");
+  return !where
+    ? value
+    : otherwise
+      ? t.conditionalExpression(where, value, otherwise)
+      : t.logicalExpression("&&", where, value);
+}
+
+// Where a filled member of a written join ships no unpatched key that re-runs
+// the join on this scope: `false` where every member's always does.
+function getJoinInitGuard(section: Section, join: Intersection) {
+  if (
+    !some(join, (ref) =>
+      rerunsJoinInPairedRows(section, getCanonicalBinding(ref), join),
+    )
+  ) {
+    return;
+  }
+  let guard: t.Expression | false = false;
+  for (const ref of join) {
+    const member = getCanonicalBinding(ref);
+    const filled = getCallerGroupGuard(
+      section,
+      "_filled_guard",
+      getSourcesForRef(member),
+    );
+    let term: t.Expression | undefined = filled;
+    if (rerunsJoinInPairedRows(section, member, join)) {
+      const { unpatchedStructure } = getPatchFill(member);
+      const unpatched =
+        unpatchedStructure !== true &&
+        getUnpatchedGuard(section, unpatchedStructure!);
+      if (!unpatched) continue;
+      term = andGuard(filled, t.unaryExpression("!", unpatched));
+    }
+    if (!term) return;
+    guard = guard ? orGuard(guard, term) : term;
+  }
+  return guard;
+}
+
+// The client may own the member's structure where the join's own groups are
+// the server's, as where the hole is written.
+function unpatchedPastGroup(
+  section: Section,
+  member: Binding,
+  join: Intersection,
+) {
+  const { unpatchedStructure } = getPatchFill(member);
+  return (
+    rerunsJoinInPairedRows(section, member, join) &&
+    (unpatchedStructure === true ||
+      !!unpatchedStructure!.contents ||
+      !every(unpatchedStructure!.structure, (sources) =>
+        bindingUtil.isSuperset(getSourcesForRef(join)!.param, sources.param),
+      ))
+  );
+}
+
+// The member's unpatched key re-runs the join by its hops in loop rows: a patch
+// pairs those where the client may own them, as it renders no such branch.
+function rerunsJoinInPairedRows(
+  section: Section,
+  member: Binding,
+  join: Intersection,
+) {
+  const rows = getPairedRows(section);
+  return (
+    !!rows &&
+    rows.depth > member.section.depth &&
+    section.enclosing.nonOptionalAncestor ===
+      member.section.enclosing.nonOptionalAncestor &&
+    !!getPatchFill(member).unpatchedJoins?.includes(join)
+  );
+}
+
+// The nearest loop rows around the section (inclusive).
+const [getPairedRows] = createAnalysisMemo(
+  (section: Section): Section | undefined =>
+    isLoopBody(section)
+      ? section
+      : section.parent && getPairedRows(section.parent),
+  undefined,
+);
+
+// Where the client may own structure: its caller groups are the client's, or
+// its content is live there.
+function getUnpatchedGuard(section: Section, unpatched: FillConditions) {
+  const contents = getWithheldGuard(section, unpatched.contents);
+  if (contents === true) return;
+  const structure = orCallerGroupGuards(
+    section,
+    undefined,
+    "_client_guard",
+    unpatched.structure,
+  );
+  return contents ? orGuard(structure, contents) : structure;
+}
+
+// Where content is live on the client: `true` where something renders it
+// unconditionally (a `@catch` or `@placeholder` may, at any time).
+function getWithheldGuard(section: Section, contents: Opt<Section>) {
+  if (some(contents, rendersUnconditionally)) return true;
+  let withheld: t.Expression | undefined;
+  forEach(contents, (content) => {
+    let term: t.Expression = callRuntime(
+      "_content_withheld",
+      t.stringLiteral(getResumeRegisterId(content, "content")),
+    );
+    // Live on the client only where what renders it is the client's.
+    const reason = getRendererReason(content);
+    const client = reason && getClientGuard(section, reason);
+    if (client) term = t.logicalExpression("&&", term, client);
+    withheld = orGuard(withheld, term);
+  });
+  return withheld;
 }
 
 function rendersUnconditionally(content: Section) {

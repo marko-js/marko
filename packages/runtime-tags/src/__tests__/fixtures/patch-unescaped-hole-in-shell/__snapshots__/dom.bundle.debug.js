@@ -37,7 +37,7 @@ const $input = ($scope, input) => {
 };
 const $input_html__closure = /*@__PURE__*/ _closure($if_content2__input_html, $if_content3__input_html, $if_content4__input_html);
 const $input_html = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_html", ($scope) => {
-	$input_html__closure($scope);
 	$if_content__input_html($scope);
-}, $input_html__closure);
+	$input_html__closure($scope);
+});
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
