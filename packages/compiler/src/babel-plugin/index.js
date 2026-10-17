@@ -537,7 +537,7 @@ function stripTypes(file) {
           // temporarily so that they will be processed by
           // babel typescript transform.
           const importNode = stmt.node;
-          importScriptlets.set(importNode, path.node);
+          importScriptlets.set(importNode, path);
           stmt.remove();
           path.insertBefore(importNode);
         }
@@ -576,7 +576,8 @@ function stripTypes(file) {
         // Add back imports from scriptlets that were
         // hoisted for the babel typescript transform.
         if (!hasTypes || importNode.specifiers.length) {
-          scriptlet.body.unshift(importNode);
+          const [inserted] = scriptlet.unshiftContainer("body", importNode);
+          file.path.scope.registerDeclaration(inserted);
         }
       }
     }
