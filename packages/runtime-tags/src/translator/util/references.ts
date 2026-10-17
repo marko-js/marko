@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import {
   addAssignedProperty,
@@ -71,6 +72,7 @@ export interface ResolvedRead {
 const kReferencedBindings = Symbol("referenced bindings");
 const kLazyBindings = Symbol("lazy bindings");
 const kConstantBindings = Symbol("constant bindings");
+const kGlobalKeys = Symbol("global keys");
 const kReferencedBindingsInFunction = Symbol("referenced bindings in function");
 const kConstantBindingsInFunction = Symbol("constant bindings in function");
 
@@ -78,6 +80,8 @@ declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     /** An expression reads `$global`, so HTML output declares a const for it. */
     hasGlobalRead?: true;
+    /** The template's `$global`: a signal-inert root binding, made on its first read. */
+    globalBinding?: Binding;
   }
 
   export interface MarkoTagExtra {
@@ -96,6 +100,7 @@ declare module "@marko/compiler/dist/types" {
     [kReferencedBindings]?: ReferencedBindings;
     [kLazyBindings]?: ReferencedBindings;
     [kConstantBindings]?: ReferencedBindings;
+    [kGlobalKeys]?: ReferencedBindings;
     /** The bindings it derives, in the order it derives them: call sites
      * derive a child template's, so no one template's order sorts them. */
     derives?: Opt<Binding>;
@@ -595,24 +600,22 @@ export function setReferencesScope(path: t.NodePath<any>) {
 // `$global` reads route through the reference graph, so property
 // aliases record the keys read.
 export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
-  const section = ensureSection(path);
   trackReference(
     path,
-    (section.globalBinding ??= createBinding(
+    (getProgram().node.extra!.globalBinding ??= createBinding(
       "$global",
       BindingType.global,
-      section,
+      ensureSection(getProgram()),
     )),
   );
 }
 
-// The first-hop `$global` key a keyed alias reads through.
+// The first-hop `$global` key a read reads through: its alias of `$global`,
+// or `$global` itself for a read of the whole object.
 export function getGlobalKey(binding: Binding) {
-  let hop: Binding | undefined;
-  for (let cur: Binding | undefined = binding; cur; cur = cur.aliasOf) {
-    if (cur.aliasOf) hop = cur;
-  }
-  return hop?.property;
+  let key = binding;
+  while (key.aliasOf?.aliasOf) key = key.aliasOf;
+  return key;
 }
 
 function createBindingsAndTrackReferences(
@@ -1423,10 +1426,18 @@ export function setResolvedReads(
   referencedBindings: ReferencedBindings,
   lazyBindings: ReferencedBindings,
   constantBindings: ReferencedBindings,
+  globalBindings: ReferencedBindings,
 ) {
   extra[kReferencedBindings] = referencedBindings;
   extra[kLazyBindings] = lazyBindings;
   extra[kConstantBindings] = constantBindings;
+  extra[kGlobalKeys] = globalBindings;
+}
+
+// The first-hop `$global` keys an expression reads as it evaluates (see
+// `getGlobalKey`).
+export function getGlobalKeys(extra: t.NodeExtra | undefined) {
+  return extra && getCanonicalExtra(extra)[kGlobalKeys];
 }
 
 export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {

@@ -29,7 +29,7 @@ _shells({
 	"__tests__/shop.marko": "__tests__/shop.marko !__tests__/shop.marko_0; D l b%;<button> </button><button>drop</button><!><!>",
 	"__tests__/shop.marko_1*shell": "__tests__/shop.marko_1*shell;b%;<!><!><!>",
 	"__tests__/shop.marko_2*shell": "__tests__/shop.marko_2*shell;b%;<!><!><!>",
-	"__tests__/shop.marko_3*shell": /*@__PURE__*/ (() => `__tests__/shop.marko_3*shell __tests__/shop.marko_3_p#0:4/init __tests__/shop.marko_3_proj#0:10/init __tests__/shop.marko_3_now#0:11/init __tests__/shop.marko_3_drops#0:12/init;${/*@__PURE__*/ ((_w0) => ` D%c%l/${_w0}&`)("D l")};${/*@__PURE__*/ ((_w0) => `<span><!> <!></span>${_w0}`)($template$2)}`)()
+	"__tests__/shop.marko_3*shell": /*@__PURE__*/ (() => `__tests__/shop.marko_3*shell __tests__/shop.marko_3_p#0:4/init __tests__/shop.marko_3_proj#0:7/init __tests__/shop.marko_3_now#0:8/init __tests__/shop.marko_3_drops#0:9/init;${/*@__PURE__*/ ((_w0) => ` D%c%l/${_w0}&`)("D l")};${/*@__PURE__*/ ((_w0) => `<span><!> <!></span>${_w0}`)($template$2)}`)()
 });
 var shop_default = _template("__tests__/shop.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -64,7 +64,7 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 					}, "__tests__/shop.marko", "20:6", {
 						part: "20:10",
 						have: "21:14"
-					}), "__tests__/shop.marko_3_now#0:11/subscribe"), "__tests__/shop.marko_3_drops#0:12/subscribe");
+					}), "__tests__/shop.marko_3_now#0:8/subscribe"), "__tests__/shop.marko_3_drops#0:9/subscribe");
 				}, 0, $scope2_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/shop.marko_3*shell", 0, 0);
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/shop.marko", "19:4");
 				return 0;
@@ -72,7 +72,7 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/shop.marko_2*shell"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/shop.marko", "17:2");
 	}, 0, $scope0_id, "#text/3", 1, void 0, void 0, void 0, void 0, "__tests__/shop.marko_1*shell", 0, 0);
-	_fill_global_subscribe("__tests__/shop.marko_0_$global_data_player#9", $scope0_id);
+	_fill_global_subscribe("__tests__/shop.marko_0_$global_data#6", $scope0_id);
 	_script($scope0_id, "__tests__/shop.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/shop.marko_fill2", now, 1);
 	_patch_value($scope0_id, "PatchValue:__tests__/shop.marko_fill3", drops, 1);
@@ -81,8 +81,8 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 		proj,
 		now,
 		drops,
-		"ClosureScopes:now/16": $now__closures,
-		"ClosureScopes:drops/17": $drops__closures
+		"ClosureScopes:now/13": $now__closures,
+		"ClosureScopes:drops/14": $drops__closures
 	}, "__tests__/shop.marko", 0, {
 		p: "11:8",
 		proj: "12:8",

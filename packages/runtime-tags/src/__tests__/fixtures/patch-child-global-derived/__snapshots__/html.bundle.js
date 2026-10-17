@@ -31,6 +31,6 @@ var template_default = _template("a", (input) => {
 	_patch_value($scope0_id, "va3", show, 1);
 	$scope0_page ? _scope($scope0_id, {
 		c: brand,
-		f: show
+		d: show
 	}) : _patch_value($scope0_id, "va2", brand);
 }, 1);

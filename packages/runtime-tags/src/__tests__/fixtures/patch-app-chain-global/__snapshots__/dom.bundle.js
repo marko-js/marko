@@ -5,7 +5,7 @@ const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $global2__script = _fill_global_script("d4", ($scope) => $scope.$.log?.("router"), "");
+const $setup__$global = _fill_global_script("d3", ($scope) => $scope.$.log?.("router"), "");
 
 // page-a.marko
 const $count = /*@__PURE__*/ _fill_let("b1", 2, ($scope) => _text($scope.b, $scope.c));
@@ -14,7 +14,7 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // page-b.marko
-const $count = /*@__PURE__*/ _fill_let("c2", 9, ($scope) => _text($scope.d, $scope.j));
+const $count = /*@__PURE__*/ _fill_let("c2", 7, ($scope) => _text($scope.d, $scope.h));
 const $setup__script = _script("c1", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, +$scope.j + 1);
+	$count($scope, +$scope.h + 1);
 }));

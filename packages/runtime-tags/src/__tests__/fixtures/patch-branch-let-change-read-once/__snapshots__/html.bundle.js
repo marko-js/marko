@@ -27,11 +27,11 @@ var template_default = _template("a", (input) => {
 			_fill_global_subscribe("a2", $scope1_id);
 			_script($scope1_id, "a3");
 			const $countChange = read($global$1, onCount) || void 0;
-			_patch_let_change($scope1_id, "va4", count, "dd", $countChange, $scope0_reason, 2);
+			_patch_let_change($scope1_id, "va4", count, "de", $countChange, (2 | _mask_group($scope0_reason, 2)) << 1, 0);
 			_scope($scope1_id, {
-				c: count,
+				d: count,
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),
-				d: $countChange
+				e: $countChange
 			});
 			return 0;
 		}

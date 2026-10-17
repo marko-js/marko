@@ -8,7 +8,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $global$1 = $global();
 	let count = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", $global$1.brand + ":" + count)}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_fill_global_subscribe("__tests__/child.marko_0_count#2_$global_brand#4", $scope0_id, 1);
+	_fill_global_subscribe("__tests__/child.marko_0_count#2_$global_brand#6", $scope0_id, 1);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/child.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });

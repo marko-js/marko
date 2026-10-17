@@ -32,25 +32,25 @@ const UPGRADES = [{
 	parts: ["y"]
 }];
 const $for_content2__live = ($scope, live) => _attr_class_item($scope["#span/0"], "short", live < 2);
-const $for_content2__proj__OR__now__OR__have = /*@__PURE__*/ _fill_join("__tests__/shop.marko_fill1", "proj", /*@__PURE__*/ _shell_join("__tests__/shop.marko_3_proj#0:10/init", /*@__PURE__*/ _or(8, ($scope) => $for_content2__live($scope, $scope.have + $scope._._._.now * $scope._._._.proj), 2)), ($join) => /*@__PURE__*/ _for_closure("#text/3", /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $join))));
+const $for_content2__proj__OR__now__OR__have = /*@__PURE__*/ _fill_join("__tests__/shop.marko_fill1", "proj", /*@__PURE__*/ _shell_join("__tests__/shop.marko_3_proj#0:7/init", /*@__PURE__*/ _or(8, ($scope) => $for_content2__live($scope, $scope.have + $scope._._._.now * $scope._._._.proj), 2)), ($join) => /*@__PURE__*/ _for_closure("#text/3", /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $join))));
 const $for_content2__have = /*@__PURE__*/ _const("have", ($scope) => {
 	_text($scope["#text/2"], $scope.have);
 	$for_content2__proj__OR__now__OR__have($scope);
 });
 const $for_content2__p__OR__drops__OR__part = /*@__PURE__*/ _fill_join("__tests__/shop.marko_fill4", "part", /*@__PURE__*/ _fill_join("__tests__/shop.marko_fill0", "p", /*@__PURE__*/ _shell_join("__tests__/shop.marko_3_p#0:4/init", /*@__PURE__*/ _or(6, ($scope) => $for_content2__have($scope, withDrops(bankCount($scope._._._.p, $scope.part), $scope._._._.drops, $scope.part)), 2)), ($join2) => /*@__PURE__*/ _for_closure("#text/3", /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $join2)))));
-const $for_content2__p = /*@__PURE__*/ _closure_get("p/13", $for_content2__p__OR__drops__OR__part, ($scope) => $scope._._._);
+const $for_content2__p = /*@__PURE__*/ _closure_get("p/10", $for_content2__p__OR__drops__OR__part, ($scope) => $scope._._._);
 const $for_content2__setup = ($scope) => {
 	$for_content2__p($scope);
 	$for_content2__proj($scope);
 	$for_content2__now($scope);
 	$for_content2__drops($scope);
 };
-const $for_content2__proj = /*@__PURE__*/ _closure_get("proj/15", ($scope) => {
+const $for_content2__proj = /*@__PURE__*/ _closure_get("proj/12", ($scope) => {
 	$for_content2__proj__OR__now__OR__have($scope);
 	$input_v($scope["#childScope/3"], $scope._._._.proj);
 }, ($scope) => $scope._._._);
-const $for_content2__now = _resumed["__tests__/shop.marko_3_now#0:11/init"] = /*@__PURE__*/ _closure_get("now/16", $for_content2__proj__OR__now__OR__have, ($scope) => $scope._._._, "__tests__/shop.marko_3_now#0:11/subscribe");
-const $for_content2__drops = _resumed["__tests__/shop.marko_3_drops#0:12/init"] = /*@__PURE__*/ _closure_get("drops/17", $for_content2__p__OR__drops__OR__part, ($scope) => $scope._._._, "__tests__/shop.marko_3_drops#0:12/subscribe");
+const $for_content2__now = _resumed["__tests__/shop.marko_3_now#0:8/init"] = /*@__PURE__*/ _closure_get("now/13", $for_content2__proj__OR__now__OR__have, ($scope) => $scope._._._, "__tests__/shop.marko_3_now#0:8/subscribe");
+const $for_content2__drops = _resumed["__tests__/shop.marko_3_drops#0:9/init"] = /*@__PURE__*/ _closure_get("drops/14", $for_content2__p__OR__drops__OR__part, ($scope) => $scope._._._, "__tests__/shop.marko_3_drops#0:9/subscribe");
 const $for_content2__part = /*@__PURE__*/ _fill_const("__tests__/shop.marko_fill4", "part", ($scope) => {
 	$for_content2__p__OR__drops__OR__part($scope);
 	_text($scope["#text/1"], $scope.part);
@@ -81,14 +81,14 @@ const $p = /*@__PURE__*/ _fill_const("__tests__/shop.marko_fill0", "p", ($scope)
 	$p_rate($scope, $scope.p?.rate);
 	$p_owned($scope, $scope.p?.owned);
 }, $p__closure);
-const $global_data_player = /*@__PURE__*/ _fill_global_join("data", "__tests__/shop.marko_0_$global_data_player#9", ($scope) => $p($scope, $scope.$global.data?.player));
+const $setup__$global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/shop.marko_0_$global_data#6", ($scope) => $p($scope, $scope.$global.data.player));
 const $now__closure = /*@__PURE__*/ _closure($for_content2__now);
-const $now = /*@__PURE__*/ _fill_let("__tests__/shop.marko_fill2", "now/11", ($scope) => {
+const $now = /*@__PURE__*/ _fill_let("__tests__/shop.marko_fill2", "now/8", ($scope) => {
 	_text($scope["#text/1"], $scope.now);
 	$now__closure($scope);
 });
 const $drops__closure = /*@__PURE__*/ _closure($for_content2__drops);
-const $drops = /*@__PURE__*/ _fill_let("__tests__/shop.marko_fill3", "drops/12", $drops__closure);
+const $drops = /*@__PURE__*/ _fill_let("__tests__/shop.marko_fill3", "drops/9", $drops__closure);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/3", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $setup__script = _script("__tests__/shop.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
@@ -103,7 +103,7 @@ function $setup($scope) {
 	$now($scope, 0);
 	$drops($scope, {});
 	$for($scope, [UPGRADES]);
-	$global_data_player($scope);
+	$setup__$global_data($scope);
 }
 var shop_default = /*@__PURE__*/ _template("__tests__/shop.marko", $template, $walks, $setup);
 

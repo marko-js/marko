@@ -7,7 +7,7 @@ var brand_default = _template("__tests__/tags/brand.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$2 = $global();
 	_html(`<b>${_patch_text($scope0_id, "#text/0", $global$2.brand)}</b>`);
-	_fill_global_subscribe("__tests__/tags/brand.marko_0_$global_brand#2", $scope0_id);
+	_fill_global_subscribe("__tests__/tags/brand.marko_0_$global_brand#4", $scope0_id);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/brand.marko", 0);
 });
 
@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "#text/0", $global$1.brand, $scope0_page)}</em>`);
 			brand_default({});
-			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#3", $scope1_id, 1);
+			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:7", $scope1_id, 1);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}

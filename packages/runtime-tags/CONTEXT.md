@@ -391,6 +391,13 @@ call site hands the param to the client, a changed `$global` key re-runs the
 join there instead: the page ships the value and subscribes the scope.
 _Avoid_: server-required param
 
+**`$global` join**:
+A signal's client work that reads `$global` keys as it renders (each
+expression records the first-hop keys it reads), split into a function the
+signal calls. A patch build registers it under each key (`_fill_global_join`),
+so a changed key re-runs only that work, on each scope that ran it.
+_Avoid_: part, global part
+
 **Kept structure**:
 A loop or branch whose expression derives from nothing request-derived (its
 group's mask is `0`), outside structure a flush creates: its scopes stay, so

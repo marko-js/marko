@@ -48,7 +48,6 @@ import {
   trimEmptyArgs,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import { hasParamOrGlobalSource } from "../util/sources";
 import * as structure from "../util/structure";
 import { toOnlyExpressionOrBlock } from "../util/to-only-or-block";
 import { translateByTarget } from "../util/visitors";
@@ -220,12 +219,12 @@ export default {
   types: runtimeInfo.name + "/tags/await.d.marko",
 } as Tag;
 
-// A thenable of client state alone resolves via `_await_promise`, so a patch
-// skips its Pending entry; any other value's carries the shell id.
+// A thenable of client state and `$global` alone resolves via `_await_promise`
+// (a changed key re-runs its join), so a patch skips its Pending entry.
 function getPendingShellArg(value: t.Expression, bodySection: Section) {
   const valueSources = getSourcesForExpr(value.extra!);
   const shellId = findShellId(bodySection);
-  return valueSources?.state && !hasParamOrGlobalSource(valueSources)
+  return valueSources?.state && !valueSources.param
     ? t.numericLiteral(0)
     : shellId && t.stringLiteral(shellId);
 }

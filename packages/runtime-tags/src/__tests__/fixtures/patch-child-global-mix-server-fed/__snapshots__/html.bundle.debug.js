@@ -7,8 +7,8 @@ var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$2 = $global();
 	const z = input.v + $global$2.flag;
-	_html(`<p>${_patch_text($scope0_id, "#text/0", z + $global$2.mark, void 0, $scope0_reason, 0)}</p>`);
-	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_input_v#3_$global_flag#6", $scope0_id, _client_guard($scope0_reason, 0));
+	_html(`<p>${_patch_text($scope0_id, "#text/0", z + $global$2.mark, void 0, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
+	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_input_v#3_$global_flag#5", $scope0_id, _client_guard($scope0_reason, 0));
 	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_z#4_$global_mark#7", $scope0_id);
 	_patch_write($scope0_id, "PatchWrite:input_v", input.v, 1);
 	_patch_write($scope0_id, "PatchWrite:z", z, 1);

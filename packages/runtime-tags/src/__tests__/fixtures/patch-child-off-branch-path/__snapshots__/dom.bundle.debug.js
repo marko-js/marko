@@ -80,29 +80,29 @@ const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__input_slow = /*@__PURE__*/ _closure_get("input_slow/15", ($scope) => $try_content__await_promise($scope, $scope._.input_slow), 0, "__tests__/template.marko_2_input_slow#0:7/subscribe");
+const $try_content__input_slow = /*@__PURE__*/ _closure_get("input_slow/13", ($scope) => $try_content__await_promise($scope, $scope._.input_slow), 0, "__tests__/template.marko_2_input_slow#0:7/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_slow($scope);
 	$await_content($scope);
 };
-const $placeholder_content__input_label__OR__n = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(3, ($scope) => $input_label$2($scope["#childScope/1"], `${$scope._.n} ${$scope._.input_label}`)), "input_label/14", 0);
-const $placeholder_content__input_label = /*@__PURE__*/ _closure_get("input_label/14", $placeholder_content__input_label__OR__n, 0, "__tests__/template.marko_1_input_label#0:6/subscribe");
+const $placeholder_content__input_label__OR__n = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(3, ($scope) => $input_label$2($scope["#childScope/1"], `${$scope._.n} ${$scope._.input_label}`)), "input_label/12", 0);
+const $placeholder_content__input_label = /*@__PURE__*/ _closure_get("input_label/12", $placeholder_content__input_label__OR__n, 0, "__tests__/template.marko_1_input_label#0:6/subscribe");
 const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__input_label($scope);
 	$placeholder_content__brand($scope);
 	$placeholder_content__n($scope);
 };
-const $placeholder_content__brand = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "brand", /*@__PURE__*/ _closure_get("brand/16", ($scope) => $input_label$2($scope["#childScope/0"], $scope._.brand)), 0);
-const $placeholder_content__n = /*@__PURE__*/ _closure_get("n/17", ($scope) => {
+const $placeholder_content__brand = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "brand", /*@__PURE__*/ _closure_get("brand/14", ($scope) => $input_label$2($scope["#childScope/0"], $scope._.brand)), 0);
+const $placeholder_content__n = /*@__PURE__*/ _closure_get("n/15", ($scope) => {
 	$input_on($scope["#childScope/2"], $scope._.n);
 	$placeholder_content__input_label__OR__n($scope);
-}, 0, "__tests__/template.marko_1_n#0:13/subscribe");
+}, 0, "__tests__/template.marko_1_n#0:11/subscribe");
 const $placeholder_content = _content("__tests__/template.marko_1*content", /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<!>`)($template$3, $template$3, $template$2), /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}&b`)("D l", "D l", "b%c"), $placeholder_content__setup);
 const $brand__closure = /*@__PURE__*/ _closure($placeholder_content__brand);
 const $brand = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "brand", $brand__closure);
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_0_$global_brand#12", ($scope) => $brand($scope, `${$scope.$global.brand}!`));
+const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_0_$global_brand#8", ($scope) => $brand($scope, `${$scope.$global.brand}!`));
 const $n__closure = /*@__PURE__*/ _closure($placeholder_content__n);
-const $n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill2", "n/13", ($scope) => {
+const $n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill2", "n/11", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$n__closure($scope);
 });
@@ -116,7 +116,7 @@ function $setup($scope) {
 	$try($scope);
 	$setup__script($scope);
 	$n($scope, 0);
-	$global_brand($scope);
+	$setup__$global_brand($scope);
 }
 const $input_slow__closure = /*@__PURE__*/ _closure($try_content__input_slow);
 const $input_slow = /*@__PURE__*/ _const("input_slow", ($scope) => {

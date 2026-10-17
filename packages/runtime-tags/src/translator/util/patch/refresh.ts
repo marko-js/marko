@@ -28,8 +28,6 @@ import {
   every,
   first,
   forEach,
-  type Opt,
-  push,
   reduce,
   some,
   type SortedOpt,
@@ -58,7 +56,6 @@ import {
   type ParamReasonGroup,
   sectionUtil,
 } from "../sections";
-import { addSetupWork } from "../setup-work";
 import { findSlot, type Slot, SlotKind } from "../slots";
 import {
   createSources,
@@ -265,7 +262,6 @@ function seedsCreatedScope(binding: Binding) {
       ? createsElidedContent(section)
       : patchWritesScope(section)) &&
     binding.type !== BindingType.dom &&
-    binding.type !== BindingType.global &&
     binding.type !== BindingType.constant &&
     !binding.sources?.state &&
     // A branch's own params arrive with its structure.
@@ -741,42 +737,6 @@ function isSectionParam(binding: Binding) {
   return binding.type === BindingType.param || isParamBinding(binding);
 }
 
-// Keyed `$global` reads a root section renders itself; effect-only reads
-// see the live bag and need no signal.
-export function getSectionGlobalReads(section: Section) {
-  let globals: Opt<Binding>;
-  if (isPatch()) {
-    forEach(section.bindings, (binding) => {
-      if (binding.type !== BindingType.global) return;
-      // Setup renders the key's direct reads; intersections and functions
-      // reading it join on their own.
-      for (const read of binding.reads.keys()) {
-        if (getReferencedBindings(read) === binding) {
-          globals = push(globals, binding);
-          break;
-        }
-      }
-    });
-  }
-  return globals;
-}
-
-// A `$global` join's unfillable reads in `section` but its caller params: the
-// call site keeps those current wherever it hands them to the client.
-export function hasUnfillableGlobalJoinReads(
-  refs: Opt<Binding>,
-  section: Section,
-) {
-  return some(
-    refs,
-    (binding) =>
-      isUnfillablePatchRead(binding) &&
-      !every(getSourcesForRef(binding)!.param, (param) =>
-        isCallerParamAt(param, section),
-      ),
-  );
-}
-
 // The caller params a `$global` join reads unfilled: a changed key re-runs it
 // only where the client owns them.
 export function getCallerHeldSources(refs: ReferencedBindings) {
@@ -1166,13 +1126,6 @@ function ensureWriteGroups(slot: Slot) {
 
 function ensureExprWriteGroups(expr: t.NodeExtra) {
   if (!expr.consumed) ensureCallerParamGroups(getWriteSources(expr));
-}
-
-// Before reasons settle: setup renders a section's keyed `$global` reads.
-export function finalizePatchRootReasons() {
-  forEachSection((section) => {
-    if (getSectionGlobalReads(section)) addSetupWork(section);
-  });
 }
 
 // A created scope's seed a flush writes; a registration it carries binds by

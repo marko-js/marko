@@ -81,7 +81,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_data#6", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_data#5", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", open, 1);
 	$scope0_page && _scope($scope0_id, {

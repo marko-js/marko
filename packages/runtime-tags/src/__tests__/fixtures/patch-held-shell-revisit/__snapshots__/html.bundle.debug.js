@@ -49,7 +49,7 @@ const $PageA_withLoadAssets = withLoadAssets(page_a_default, flush, "ready:__tes
 const $PageB_withLoadAssets = withLoadAssets(page_b_default, flush, "ready:__tests__/page-b.marko");
 _shells({
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
-	"__tests__/template.marko": /*@__PURE__*/ ((_w0) => `__tests__/template.marko !__tests__/template.marko_0_$global#4;${((_w0) => `/${_w0}&`)($walks$3)};${_w0}`)($template$3),
+	"__tests__/template.marko": /*@__PURE__*/ ((_w0) => `__tests__/template.marko !__tests__/template.marko_0_$global#3;${((_w0) => `/${_w0}&`)($walks$3)};${_w0}`)($template$3),
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$2)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$2)}`)(),
 	"__tests__/template.marko_3*shell": /*@__PURE__*/ (() => `__tests__/template.marko_3*shell;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)()
 });
@@ -82,10 +82,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"));
 		$wg__input_page || $wi__input_page && _resume_branch($scope1_id);
 	}, $scope0_id) });
-	_fill_global_subscribe("__tests__/template.marko_0_$global#4", $scope0_id, 1);
-	_script($scope0_id, "__tests__/template.marko_0_$global#4");
+	_fill_global_subscribe("__tests__/template.marko_0_$global#3", $scope0_id, 1);
+	_script($scope0_id, "__tests__/template.marko_0_$global#3");
 	$scope0_page && _scope($scope0_id, {
-		"ClosureScopes:input_page/5": $wi__input_page && _unfilled_if($scope0_reason, 0) && $input_page__closures,
+		"ClosureScopes:input_page/4": $wi__input_page && _unfilled_if($scope0_reason, 0) && $input_page__closures,
 		"#childScope/0": _existing_scope($childScope3)
 	}, "__tests__/template.marko", 0);
 }, 1);

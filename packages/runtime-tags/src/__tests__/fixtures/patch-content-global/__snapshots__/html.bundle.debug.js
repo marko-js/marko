@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<div>${_patch_text($scope1_id, "#text/0", $global$1.brand)}</div>`);
-			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#2", $scope1_id);
+			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:6", $scope1_id);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 		}, $scope0_id)
 	});

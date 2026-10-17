@@ -1,5 +1,5 @@
 // tags/greet/index.marko
-const $double = /*@__PURE__*/ _const(6, ($scope) => _return($scope, $scope.g));
+const $double = /*@__PURE__*/ _const(4, ($scope) => _return($scope, $scope.e));
 const $input_n = ($scope, input_n) => $double($scope, input_n * 2);
 
 // template.marko

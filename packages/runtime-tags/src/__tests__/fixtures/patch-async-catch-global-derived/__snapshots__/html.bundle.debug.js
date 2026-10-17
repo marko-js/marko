@@ -34,13 +34,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$scope2_page || _resume_branch($scope2_id);
 	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#8", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#5", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", n, 1);
 	$scope0_page ? _scope($scope0_id, {
 		tag,
 		n,
-		"ClosureScopes:input_promise/10": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures
+		"ClosureScopes:input_promise/8": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures
 	}, "__tests__/template.marko", 0, {
 		tag: "1:8",
 		n: "2:6"

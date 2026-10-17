@@ -1,6 +1,6 @@
 // template.marko
 const $n = /*@__PURE__*/ _fill_let("a3", 4, ($scope) => _text($scope.d, $scope.e));
-const $global2__script = _fill_global_script("a0", ($scope) => {
+const $setup__$global = _fill_global_script("a0", ($scope) => {
 	$scope.$;
 	$scope.a.dataset.runs = String(+($scope.a.dataset.runs || 0) + 1);
 }, "");

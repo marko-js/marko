@@ -9,9 +9,7 @@ const $input_body = /*@__PURE__*/ _fill_const("c1", 4, $if_content__input_body);
 // tags/card.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button class=b>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
-const $body_content__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "b0", ($scope) => _text($scope.a, $scope.$.brand));
-const $body_content__setup = ($scope) => $body_content__$global_brand($scope);
-const $body_content = _content$1("b1", "<em> </em>", "D ", $body_content__setup);
+const $body_content = _content$1("b1", "<em> </em>", "D ", /* @__PURE__ */ _fill_global_join("brand", "b0", ($scope) => _text($scope.a, $scope.$.brand)));
 const $count = /*@__PURE__*/ _fill_let("b3", 2, ($scope) => $input_open($scope.a, $scope.c % 2 === 0));
 const $setup__script$1 = _script("b2", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.c + 1);

@@ -68,7 +68,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_patch_value($scope0_id, "va2", open, 1);
 	$scope0_page && _scope($scope0_id, {
-		h: open,
+		f: open,
 		b: _existing_scope($childScope)
 	});
 }, 1);

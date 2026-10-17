@@ -40,14 +40,13 @@ import {
   push,
   reduce,
   some,
+  toArray,
 } from "./optional";
 import {
   initsCreatedJoin,
   fillJoinsIn,
   getPatchFillKey,
-  getSectionGlobalReads,
   getCallerHeldSources,
-  hasUnfillableGlobalJoinReads,
   getPatchFill,
   getPatchWrite,
   createsWithInit,
@@ -83,11 +82,10 @@ import {
   type AssignedBindingExtra,
   getReferencedBindings,
   getReferencedBindingsInFunction,
-  getGlobalKey,
+  getGlobalKeys,
   hasResumableAssignment,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
-  getLazyBindings,
 } from "./references";
 import {
   callRuntime,
@@ -160,6 +158,10 @@ export interface Signal {
     value: t.Expression | undefined;
   }>;
   intersections: Opt<Signal>;
+  /** Its `$global` joins: work reading `$global` keys, which it calls. */
+  globalJoins: Opt<Signal>;
+  /** As a `$global` join, the keys whose change re-runs it. */
+  globalKeys: ReferencedBindings;
   /** Signals this one forwards into: they must declare first when the
    * forward simplifies to a bare, eagerly evaluated reference. */
   forwards: Opt<Signal>;
@@ -375,8 +377,9 @@ export function getSignal(
   section: Section,
   referencedBindings: ReferencedBindings,
   name?: string,
+  globalKeys?: ReferencedBindings,
 ) {
-  if (referencedBindings && !Array.isArray(referencedBindings)) {
+  if (!globalKeys && referencedBindings && !Array.isArray(referencedBindings)) {
     if (referencedBindings.type === BindingType.constant) {
       return getSignal(section, undefined);
     }
@@ -390,21 +393,27 @@ export function getSignal(
   }
 
   const signals = getSignals(section);
-  let signal = signals.get(referencedBindings)!;
+  const key = globalKeys
+    ? getGlobalJoinId(section, referencedBindings, globalKeys)
+    : referencedBindings;
+  let signal = signals.get(key)!;
   if (!signal) {
     const signalName =
-      name ??
+      (name ??
+        (referencedBindings
+          ? getDebugNamesAsIdentifier(referencedBindings)
+          : "setup")) +
+      (globalKeys ? "__" + getDebugNamesAsIdentifier(globalKeys) : "");
+    const exportName =
+      !globalKeys &&
       (referencedBindings
-        ? getDebugNamesAsIdentifier(referencedBindings)
-        : "setup");
-    const exportName = referencedBindings
-      ? !Array.isArray(referencedBindings) &&
-        referencedBindings.section === section &&
-        getProgram().node.extra.exportNames!.params.get(referencedBindings)
-      : !section.parent && getProgram().node.extra.exportNames!.setup;
+        ? !Array.isArray(referencedBindings) &&
+          referencedBindings.section === section &&
+          getProgram().node.extra.exportNames!.params.get(referencedBindings)
+        : !section.parent && getProgram().node.extra.exportNames!.setup);
 
     signals.set(
-      referencedBindings,
+      key,
       (signal = {
         identifier: exportName
           ? t.identifier(exportName)
@@ -415,6 +424,8 @@ export function getSignal(
         section,
         values: [],
         intersections: undefined,
+        globalJoins: undefined,
+        globalKeys,
         forwards: undefined,
         render: [],
         patch: [],
@@ -424,15 +435,15 @@ export function getSignal(
         build: undefined,
         export: !!exportName,
         storesValue: !!(
-          referencedBindings &&
-          (Array.isArray(referencedBindings) ||
-            referencedBindings.type === BindingType.dom ||
-            referencedBindings.type === BindingType.let ||
-            referencedBindings.type === BindingType.global ||
-            referencedBindings.section !== section ||
-            referencedBindings.closureSections ||
-            referencedBindings.hoists ||
-            referencedBindings.localOf)
+          globalKeys ||
+          (referencedBindings &&
+            (Array.isArray(referencedBindings) ||
+              referencedBindings.type === BindingType.dom ||
+              referencedBindings.type === BindingType.let ||
+              referencedBindings.section !== section ||
+              referencedBindings.closureSections ||
+              referencedBindings.hoists ||
+              referencedBindings.localOf))
         ),
         forceStore: false,
         inline: undefined,
@@ -444,6 +455,12 @@ export function getSignal(
 
     if (isOutputHTML()) {
       return signal;
+    } else if (globalKeys) {
+      const parent = getSignal(section, referencedBindings);
+      parent.globalJoins = push(parent.globalJoins, signal);
+      // The runtime runs a join on the scope alone, so it reads values there.
+      parent.storesValue = true;
+      signal.build = () => buildSignalFn(signal);
     } else if (!referencedBindings) {
       signal.build = () => buildSignalFn(signal);
     } else if (Array.isArray(referencedBindings)) {
@@ -566,86 +583,45 @@ function inShellChain(section: Section) {
   return false;
 }
 
-// Setup renders a keyed `$global` read from the shared globals object; a
-// resumed scope keeps the server's rendering (joins: `writeSignals`).
-function initGlobalRead(binding: Binding) {
-  const { section } = binding;
-  const signal = getSignal(section, binding);
-  // Setup calls it even when its own work collapsed into an intersection.
-  signal.referenced = true;
-  signal.build = () => buildSignalFn(signal);
-  addValue(section, undefined, signal);
-}
-
-// Joins a changed `$global` key queues on `section` (for a closure, its owner):
-// `true` if resumed code renders the read, else the sources the client may own.
+// The joins a changed `$global` key re-runs on `section`'s scopes: `true` if
+// resumed code renders the read, else the sources the client may own.
 export function getGlobalJoins(section: Section) {
   const joins = new Map<string, true | Sources | undefined>();
-  if (isPatch()) {
-    forEach(section.bindings, (binding) => {
-      if (binding.type !== BindingType.global) return;
-      for (const read of binding.reads.keys()) {
-        // A function reading it when invoked reads the globals object live.
-        if (bindingUtil.has(getLazyBindings(read), binding)) continue;
-        const refs = getReferencedBindings(read);
-        // A signal derived from a server value the client never receives is
-        // server-computed.
-        if (hasUnfillableGlobalJoinReads(refs, section)) continue;
-        const unfilled = getCallerHeldSources(refs) || isResumedRead(read);
-        const id = getResumeRegisterId(
-          section,
-          Array.isArray(refs) ? refs : binding,
-        );
-        const prev = joins.get(id);
-        joins.set(
-          id,
-          prev === true || unfilled === true
-            ? true
-            : mergeSources(prev, unfilled || undefined),
-        );
-      }
-    });
+  for (const expr of section.globalReadExprs || []) {
+    const referencedBindings = getReferencedBindings(expr);
+    const unfilled =
+      getCallerHeldSources(referencedBindings) || isResumedRead(expr);
+    const id = getGlobalJoinId(
+      section,
+      referencedBindings,
+      getGlobalKeys(expr)!,
+    );
+    const prev = joins.get(id);
+    joins.set(
+      id,
+      prev === true || unfilled === true
+        ? true
+        : mergeSources(prev, unfilled || undefined),
+    );
   }
   return joins;
 }
 
-// The `$global` keys a signal joins; none when it also derives from a server
-// value the client never receives (server-computed: a patch fills it).
-function getGlobalJoinKeys(signal: Signal) {
-  let keys: string[] | undefined;
-  forEach(signal.referencedBindings, (ref) => {
-    // An opaque read (`$global` whole) joins every key, as `""`.
-    if (ref.type === BindingType.global) {
-      (keys ||= []).push(getGlobalKey(ref) ?? "");
-    }
-  });
-  return keys &&
-    !hasUnfillableGlobalJoinReads(signal.referencedBindings, signal.section)
-    ? keys
-    : undefined;
+// Registers a `$global` join under each key: pure, so the consumer's own
+// retention decides whether a changed key has a reader.
+function wrapGlobalJoins(signal: Signal, value: t.Expression): t.Expression {
+  const id = t.stringLiteral(getSignalRegisterId(signal));
+  return reduce(
+    signal.globalKeys,
+    (expr, key) =>
+      callRuntime("_fill_global_join", toGlobalKeyLiteral(key), id, expr),
+    value,
+  );
 }
 
-// Wraps a signal reading `$global` keys as each key's join: pure, so the
-// consumer's own retention decides whether a changed key has a reader.
-function wrapGlobalJoins(
-  signal: Signal,
-  keys: string[] | undefined,
-  value: t.Expression,
-): t.Expression {
-  let expr = value;
-  if (keys) {
-    // The effect's register id, under which its registration joins these keys.
-    const id = getResumeRegisterId(signal.section, signal.referencedBindings);
-    for (const key of keys) {
-      expr = callRuntime(
-        "_fill_global_join",
-        t.stringLiteral(key),
-        t.stringLiteral(id),
-        expr,
-      );
-    }
-  }
-  return expr;
+// A key's name in `$global`; `""` is the whole object.
+function toGlobalKeyLiteral(key: Binding) {
+  return t.stringLiteral(key.property ?? "");
 }
 
 export function initValue(binding: Binding, isLet = false) {
@@ -732,7 +708,8 @@ export function signalHasWork(signal: Signal): boolean {
     signal.effect.length ||
     signal.hasHTMLEffect ||
     signal.values.length ||
-    signal.intersections
+    signal.intersections ||
+    signal.globalJoins
   ) {
     return true;
   }
@@ -764,9 +741,7 @@ function isPureMemberForwarder(binding: Binding): boolean {
     binding.assignments ||
     isForSelectorValue(binding) ||
     findSlot(binding)?.reason ||
-    // A `$global` member reads the globals object, never a stored value.
-    (binding.type !== BindingType.global &&
-      getSignal(binding.section, binding).storesValue)
+    getSignal(binding.section, binding).storesValue
   ) {
     return false;
   }
@@ -828,6 +803,7 @@ function patchRendersInto(target: Signal) {
   return (
     patchRenders(target) ||
     (!!binding &&
+      !target.globalKeys &&
       !Array.isArray(binding) &&
       binding.section === target.section &&
       getPatchFill(binding).fillsReads)
@@ -842,7 +818,8 @@ function hasClientRender(signal: Signal): boolean {
     signal.hasHTMLEffect ||
     signal.render.length ||
     signal.values.some(isClientRenderedValue) ||
-    !every(signal.intersections, patchRenders)
+    !every(signal.intersections, patchRenders) ||
+    !every(signal.globalJoins, patchRenders)
   ) {
     return true;
   }
@@ -928,12 +905,7 @@ function buildIntersection(
   fn: t.Expression,
 ) {
   const { source, id, returnedBy } = section.intersections!.get(intersection)!;
-  // A `$global` member never arrives: the globals object holds it already.
-  let arrivals = 0;
-  forEach(intersection, (member) => {
-    if (getCanonicalBinding(member).type !== BindingType.global) arrivals++;
-  });
-  if (source || (arrivals === 1 && !returnedBy)) return fn;
+  if (source) return fn;
   // A created scope's flush runs the join by its init id (`getCreatedJoins`).
   const shellInitId =
     initsCreatedJoin(section, intersection) &&
@@ -943,7 +915,9 @@ function buildIntersection(
     ...(shellInitId ? [t.stringLiteral(shellInitId)] : []),
     t.numericLiteral(id),
     fn,
-    returnedBy || arrivals > 2 ? t.numericLiteral(arrivals - 1) : undefined,
+    returnedBy || intersection.length > 2
+      ? t.numericLiteral(intersection.length - 1)
+      : undefined,
     returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true),
   );
 }
@@ -953,7 +927,8 @@ export function buildSignalFn(signal: Signal): t.Expression {
   const binding = signal.referencedBindings;
   const isIntersection = Array.isArray(binding);
   const isBinding = binding && !isIntersection;
-  const isValue = isBinding && binding.section === section;
+  const isValue =
+    isBinding && binding.section === section && !signal.globalKeys;
   const assertsHoists = isValue && binding.hoists && !isOptimize();
 
   if (isValue) {
@@ -1020,6 +995,10 @@ export function buildSignalFn(signal: Signal): t.Expression {
 
   forEach(signal.intersections, (intersection) => {
     pushScopeCall(forwardsTo(signal, intersection), intersection.identifier);
+  });
+
+  forEach(signal.globalJoins, (join) => {
+    pushScopeCall(forwardsTo(signal, join), join.identifier);
   });
 
   if (isValue && binding.sources) {
@@ -1248,7 +1227,7 @@ export function addStatement(
   statement: t.Statement | t.Statement[] | t.Expression,
   isPure?: boolean,
 ): void {
-  const signal = getSignal(targetSection, getReferencedBindings(expr));
+  const signal = getExprSignal(targetSection, expr);
   const statements = (signal[type] ??= []);
 
   if (Array.isArray(statement)) {
@@ -1292,7 +1271,7 @@ export function addValue(
   signal: Signal,
   value?: t.Expression,
 ) {
-  const parentSignal = getSignal(targetSection, getReferencedBindings(expr));
+  const parentSignal = getExprSignal(targetSection, expr);
   parentSignal.values.push({
     signal,
     value,
@@ -1305,6 +1284,17 @@ export function addValue(
   ) {
     parentSignal.storesValue = true;
   }
+}
+
+// An expression reading `$global` keys (a patch build's) adds its work to its
+// signal's join for those keys.
+function getExprSignal(section: Section, expr: t.NodeExtra | undefined) {
+  return getSignal(
+    section,
+    getReferencedBindings(expr),
+    undefined,
+    getGlobalKeys(expr),
+  );
 }
 
 function buildResumeRegisterKey(
@@ -1342,10 +1332,31 @@ export function getResumeRegisterId(
   return getTemplateId(markoOpts, filename as string, key);
 }
 
+// A `$global` join's register id names its keys beside its signal's bindings.
+function getGlobalJoinId(
+  section: Section,
+  referencedBindings: ReferencedBindings,
+  keys: ReferencedBindings,
+) {
+  return getResumeRegisterId(
+    section,
+    bindingUtil.union(referencedBindings, keys),
+  );
+}
+
+export function getSignalRegisterId({
+  section,
+  referencedBindings,
+  globalKeys,
+}: Signal) {
+  return globalKeys
+    ? getGlobalJoinId(section, referencedBindings, globalKeys)
+    : getResumeRegisterId(section, referencedBindings);
+}
+
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
   const written = new Set<Signal>();
-  forEach(getSectionGlobalReads(section), initGlobalRead);
   writeGetters(section);
 
   for (const signal of getSignals(section).values()) {
@@ -1362,8 +1373,8 @@ export function writeSignals(section: Section) {
     }
 
     forEach(signal.intersections, writeSignal);
+    forEach(signal.globalJoins, writeSignal);
 
-    const globalJoinKeys = isPatch() ? getGlobalJoinKeys(signal) : undefined;
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {
       // An effect reading a value a patch writes re-runs by the flush's entry.
@@ -1381,18 +1392,20 @@ export function writeSignals(section: Section) {
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
         callRuntime(
-          globalJoinKeys ? "_fill_global_script" : "_script",
-          t.stringLiteral(
-            getResumeRegisterId(section, signal.referencedBindings),
-          ),
+          signal.globalKeys ? "_fill_global_script" : "_script",
+          t.stringLiteral(getSignalRegisterId(signal)),
           effectFn,
-          ...(globalJoinKeys || []).map((key) => t.stringLiteral(key)),
+          ...toArray(signal.globalKeys, toGlobalKeyLiteral),
         ),
       );
     }
 
     let signalDeclaration: t.Statement | undefined;
     if (signal.build) {
+      // A join with no work but its effect is that effect, which
+      // `_fill_global_script` registers under each key already.
+      const onlyEffect =
+        !signal.render.length && !signal.values.length && !signal.patch.length;
       let value = signal.build();
       // A shell init registers its signal by assignment (`registerShellInit`).
       const built = t.isAssignmentExpression(value) ? value.right : value;
@@ -1420,12 +1433,13 @@ export function writeSignals(section: Section) {
       if (isPatch()) {
         const unwrapped = value;
         const binding = signal.referencedBindings;
-        if (Array.isArray(binding)) {
+        if (signal.globalKeys) {
+          if (!onlyEffect) value = wrapGlobalJoins(signal, value);
+        } else if (Array.isArray(binding)) {
           value = wrapJoinFills(signal, binding, value);
         } else if (binding) {
           value = wrapClosureFill(signal, binding, value);
         }
-        value = wrapGlobalJoins(signal, globalJoinKeys, value);
         // A wrapper takes the signal as a callback whose result goes unused.
         if (
           value !== unwrapped &&
@@ -1797,7 +1811,7 @@ function toReturnedFunction(rawFn: t.Function, prologue?: t.Statement[]) {
 }
 
 export function addHTMLEffectCall(section: Section, expr?: t.NodeExtra) {
-  const signal = getSignal(section, getReferencedBindings(expr));
+  const signal = getExprSignal(section, expr);
   signal.hasHTMLEffect = signal.storesValue = true;
 }
 
@@ -1890,7 +1904,6 @@ export function writeHTMLResumeStatements(
           // `_unfilled_if` on the same root group already tests the mask.
           !(
             ownership?.length &&
-            !closureScopesReason.global &&
             isSameReason(closureScopesReason, readSources) &&
             // Root params sort first, so all are when the last is.
             isTemplateParam(last(closureScopesReason.param!))
@@ -1965,15 +1978,15 @@ export function writeHTMLResumeStatements(
   // signal order, CSR runs the signal graph forward — the two paths differ.
   for (let i = allSignals.length; i--;) {
     if (allSignals[i].hasHTMLEffect) {
-      const signalRefs = allSignals[i].referencedBindings;
       const clientGuard =
-        isPatch() && getEffectClientGuard(section, signalRefs);
+        isPatch() &&
+        getEffectClientGuard(section, allSignals[i].referencedBindings);
       body.push(
         t.expressionStatement(
           callRuntime(
             "_script",
             scopeIdIdentifier,
-            t.stringLiteral(getResumeRegisterId(section, signalRefs)),
+            t.stringLiteral(getSignalRegisterId(allSignals[i])),
             // `_script` reads only a `0` guard, so `1` stands in for none.
             clientGuard ? markerGuard || t.numericLiteral(1) : markerGuard,
             clientGuard,
@@ -2031,10 +2044,7 @@ export function writeHTMLResumeStatements(
   };
 
   forEach(section.bindings, (binding) => {
-    // A keyed `$global` read lives on the globals object, never in a slot.
-    if (binding.type === BindingType.global) {
-      pendingProperties.delete(getScopeAccessor(binding));
-    } else if (binding.type !== BindingType.dom) {
+    if (binding.type !== BindingType.dom) {
       writeBinding(binding);
     }
   });

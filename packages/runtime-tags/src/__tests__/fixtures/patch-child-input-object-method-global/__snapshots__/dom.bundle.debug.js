@@ -20,8 +20,8 @@ const $highlight2 = /*@__PURE__*/ _fill_const("__tests__/tags/code-block.marko_f
 	$if_content__highlight($scope);
 	$else_content__highlight($scope);
 });
-const $input_cursor__OR__$global_theme = /*@__PURE__*/ _fill_global_join("theme", "__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", ($scope) => $highlight2($scope, $highlight($scope)));
-const $input_cursor = /*@__PURE__*/ _const("input_cursor", $input_cursor__OR__$global_theme);
+const $input_cursor__$global_theme = /*@__PURE__*/ _fill_global_join("theme", "__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", ($scope) => $highlight2($scope, $highlight($scope)));
+const $input_cursor = /*@__PURE__*/ _const("input_cursor", $input_cursor__$global_theme);
 const $if = /*@__PURE__*/ _if("#text/0", "<div> </div>", "D ", $if_content__setup, "<span> </span>", "D ", $else_content__setup);
 const $input_text_length = ($scope, input_text_length) => $if($scope, input_text_length > 2 ? 0 : 1);
 const $input$1 = ($scope, input) => {

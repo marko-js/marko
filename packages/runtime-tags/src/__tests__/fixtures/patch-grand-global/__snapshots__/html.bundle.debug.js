@@ -7,7 +7,7 @@ var inner_default = _template("__tests__/tags/outer/tags/inner/index.marko", (in
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<em>${_patch_text($scope0_id, "#text/0", $global$1.brand)}</em>`);
-	_fill_global_subscribe("__tests__/tags/outer/tags/inner/index.marko_0_$global_brand#2", $scope0_id);
+	_fill_global_subscribe("__tests__/tags/outer/tags/inner/index.marko_0_$global_brand#4", $scope0_id);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/outer/tags/inner/index.marko", 0);
 });
 

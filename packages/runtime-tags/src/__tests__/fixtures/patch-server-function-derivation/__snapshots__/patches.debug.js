@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko_2_count#0:12/init;D%c%;<p><!>/<!></p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/patch-server-function-derivation/tags/panel.marko_2_count#0:10/init;D%c%;<p><!>/<!></p>`, {
   "$global:": {
     data: {
       items: ["a", "b", "c"]

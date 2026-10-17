@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__input_a = /*@__PURE__*/ _if_closure(2, 0, /* @__PURE__ */ _fill_global_join("g", "a0", /*@__PURE__*/ _fill_join_if("a2", 5, ($scope) => _text($scope.a, $scope._.f + $scope.$.g), 2, 0)));
+const $if_content__input_a = /*@__PURE__*/ _fill_join("a2", 5, /*@__PURE__*/ _if_closure(2, 0, /* @__PURE__ */ _fill_global_join("g", "a0", ($scope) => _text($scope.a, $scope._.f + $scope.$.g))));
 const $if = /*@__PURE__*/ _if(2, "<p>t:<!></p>", "Db%", $if_content__input_a);
 const $s = /*@__PURE__*/ _fill_let("a3", 6, ($scope) => {
 	_text($scope.b, $scope.g);

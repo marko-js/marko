@@ -21,6 +21,6 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: _write_if($scope0_reason, 0) && input.name,
 		f: greeting,
-		i: count
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", greeting, !_server_guard($scope0_reason, 0));
+		g: count
+	}) : _filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_value($scope0_id, "va2", greeting, !_server_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0));
 }, 1);

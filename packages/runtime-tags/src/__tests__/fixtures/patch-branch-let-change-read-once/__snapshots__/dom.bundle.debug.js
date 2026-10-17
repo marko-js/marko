@@ -10,9 +10,10 @@ function read($global, handler) {
 	queueMicrotask(() => reads.delete($global));
 	return handler;
 }
-const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_fill2", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
-const $if_content__input_start__OR__onCount__OR__$global = /*@__PURE__*/ _fill_global_join("", "__tests__/template.marko_1_input_start#0:5_onCount#0:7_$global#4", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_start", /*@__PURE__*/ _or(5, ($scope) => $if_content__count($scope, $scope._.input_start, read($scope.$global, $scope._.onCount))), "#text/1", 0));
-const $if_content__input_start = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_start__OR__onCount__OR__$global);
+const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_fill2", "count/3", ($scope) => _text($scope["#text/1"], $scope.count));
+const $if_content__input_start__OR__onCount__$global = /*@__PURE__*/ _fill_global_join("", "__tests__/template.marko_1_input_start#0:5_onCount#0:7_$global#0:9", ($scope) => $if_content__count($scope, $scope._.input_start, read($scope.$global, $scope._.onCount)));
+const $if_content__input_start__OR__onCount = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_start", /*@__PURE__*/ _or(2, $if_content__input_start__OR__onCount__$global), "#text/1", 0);
+const $if_content__input_start = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_start__OR__onCount);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);
 }));
@@ -21,7 +22,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__onCount._($scope);
 	$if_content__setup__script($scope);
 };
-const $if_content__onCount = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_start__OR__onCount__OR__$global);
+const $if_content__onCount = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_start__OR__onCount);
 const $last = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "last/6", ($scope) => _text($scope["#text/0"], $scope.last));
 const $onCount2 = /*@__PURE__*/ _const("onCount");
 function $setup($scope) {

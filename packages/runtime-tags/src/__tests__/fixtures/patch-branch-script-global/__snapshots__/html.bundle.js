@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			_html("<p>promo</p>");
 			_fill_global_subscribe("a1", $scope1_id, 1);
 			_script($scope1_id, "a1", 0);
-			_scope($scope1_id, {});
+			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a0"], $scope0_reason, 0);

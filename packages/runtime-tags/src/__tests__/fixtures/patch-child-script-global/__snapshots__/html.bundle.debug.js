@@ -1,14 +1,14 @@
 // tags/badge/index.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-_shells({ "__tests__/tags/badge/index.marko": "__tests__/tags/badge/index.marko !__tests__/tags/badge/index.marko_0_$global_brand#2;D ;<span> </span>" });
+_shells({ "__tests__/tags/badge/index.marko": "__tests__/tags/badge/index.marko !__tests__/tags/badge/index.marko_0_$global_brand#4;D ;<span> </span>" });
 var badge_default = _template("__tests__/tags/badge/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<span>${_patch_text($scope0_id, "#text/0", $global$1.brand)}</span>`);
-	_fill_global_subscribe("__tests__/tags/badge/index.marko_0_$global_brand#2", $scope0_id, 1);
-	_script($scope0_id, "__tests__/tags/badge/index.marko_0_$global_brand#2");
+	_fill_global_subscribe("__tests__/tags/badge/index.marko_0_$global_brand#4", $scope0_id, 1);
+	_script($scope0_id, "__tests__/tags/badge/index.marko_0_$global_brand#4");
 	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/badge/index.marko", 0);
 });
 

@@ -88,17 +88,17 @@ var page_default = _template("__tests__/page.marko", (input) => {
 		_scope($scope1_id, {
 			item_n: item?.n,
 			_: _scope_with_id($scope0_id),
-			"ClosureScopes:item_n/14": $wi__input_items && $for_content__item_n__closures,
+			"ClosureScopes:item_n/12": $wi__input_items && $for_content__item_n__closures,
 			"#childScope/0": _existing_scope($childScope3)
 		}, "__tests__/page.marko", "4:2", { item_n: ["item.n", "4:6"] });
 	}, 0, $scope0_id, "#text/3", 1, void 0, void 0, void 0, void 0, "__tests__/page.marko_1*shell", $scope0_reason, 0);
-	_fill_global_subscribe("__tests__/page.marko_0_$global_data#11", $scope0_id);
+	_fill_global_subscribe("__tests__/page.marko_0_$global_data#8", $scope0_id);
 	_script($scope0_id, "__tests__/page.marko_0");
 	$scope0_page ? _scope($scope0_id, {
 		bonus,
 		p_base: p?.base,
 		"#childScope/0": _existing_scope($childScope),
-		"ClosureScopes:bonus/12": $bonus__closures
+		"ClosureScopes:bonus/10": $bonus__closures
 	}, "__tests__/page.marko", 0, {
 		bonus: "1:6",
 		p_base: ["p.base", "2:8"]

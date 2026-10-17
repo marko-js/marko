@@ -17,8 +17,8 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel/index.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("b%c");
-const $body_content__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_1_$global_brand#2", ($scope) => _text($scope["#text/0"], $scope.$global.brand));
-const $body_content__setup = ($scope) => $body_content__$global_brand($scope);
+const $body_content__setup__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_1_$global_brand#0:6", ($scope) => _text($scope["#text/0"], $scope.$global.brand));
+const $body_content__setup = $body_content__setup__$global_brand;
 const $body_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $body_content__setup);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "count/2", ($scope) => $input_open($scope["#childScope/0"], $scope.count % 2 === 0));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

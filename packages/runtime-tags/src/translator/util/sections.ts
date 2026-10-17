@@ -33,6 +33,7 @@ import {
   type Reason,
   setParamReasonGroups,
 } from "./reasons";
+import { type ReferencedExtra } from "./references";
 import { type Slot } from "./slots";
 import { getReasonForBinding } from "./solve-reasons";
 import { ALWAYS, mergeSources, type Sources } from "./sources";
@@ -148,9 +149,6 @@ export interface Section {
   callSections: SortedOpt<Section>;
   /** The known tags rendering in it, in analyze order. */
   knownTags: t.MarkoTagExtra[] | undefined;
-  /** Its `$global`: a signal-inert root binding, made on its first read. Every
-   * scope holds the globals object, so no section closes over another's. */
-  globalBinding: Binding | undefined;
   /** The content's rendering tag (its extra), and each child binding that
    * derives from the content, at `properties`. */
   derives:
@@ -167,6 +165,8 @@ export interface Section {
   /** Each distinct `$signal` expression root, at its abort id; analyze
    * allocates the ids so translates read, never re-derive. */
   abortSignalExprs: t.NodeExtra[] | undefined;
+  /** Its expressions that read `$global` keys as they evaluate. */
+  globalReadExprs: ReferencedExtra[] | undefined;
   readsOwner: boolean;
   /** Whether analysis found work keyed by setup in the section, or in a
    * `<define>` body or template it calls in place. */
@@ -278,11 +278,11 @@ export function ensureBodySection(
       branchExpr: undefined,
       callSections: undefined,
       knownTags: undefined,
-      globalBinding: undefined,
       derives: undefined,
       dropped: !!extra.dropped,
       hasAbortSignal: false,
       abortSignalExprs: undefined,
+      globalReadExprs: undefined,
       readsOwner: false,
       hasSetupWork: false,
       branch: undefined,

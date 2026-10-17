@@ -44,5 +44,5 @@ var template_default = _template("a", (input) => {
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_fill_global_subscribe("a3", $scope0_id);
 	_patch_value($scope0_id, "va4", hovered, 1);
-	$scope0_page && _scope($scope0_id, { f: hovered });
+	$scope0_page && _scope($scope0_id, { d: hovered });
 }, 1);

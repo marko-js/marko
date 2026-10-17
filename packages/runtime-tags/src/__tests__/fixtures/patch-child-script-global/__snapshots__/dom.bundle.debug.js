@@ -9,17 +9,15 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/badge/index.marko
 const $template = "<span> </span>";
 const $walks = "D l";
-const $global_brand__script = _fill_global_script("__tests__/tags/badge/index.marko_0_$global_brand#2", ($scope) => {
+const $setup__$global_brand__script = _fill_global_script("__tests__/tags/badge/index.marko_0_$global_brand#4", ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope.$global.brand + "]";
 	}
 }, "brand");
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/tags/badge/index.marko_0_$global_brand#2", ($scope) => {
-	$global_brand__script($scope);
+const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/tags/badge/index.marko_0_$global_brand#4", ($scope) => {
+	$setup__$global_brand__script($scope);
 	_text($scope["#text/0"], $scope.$global.brand);
 });
-function $setup($scope) {
-	$global_brand($scope);
-}
+const $setup = $setup__$global_brand;
 var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", $template, "D l", $setup);

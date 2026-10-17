@@ -24,24 +24,24 @@ const $placeholder_content__input_label$1 = /*@__PURE__*/ _fill_join_closure("b1
 const $placeholder_content$1 = _content$1("b9", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $placeholder_content__input_label$1);
 
 // template.marko
-const $placeholder_content__input_label__OR__n = /*@__PURE__*/ _fill_join_subscribers("a9", 6, /*@__PURE__*/ _or(3, ($scope) => $input_label($scope.b, `${$scope._.n} ${$scope._.g}`)), 14, 0);
-const $placeholder_content__input_label = /*@__PURE__*/ _closure_get(14, $placeholder_content__input_label__OR__n, 0, "a3");
+const $placeholder_content__input_label__OR__n = /*@__PURE__*/ _fill_join_subscribers("a9", 6, /*@__PURE__*/ _or(3, ($scope) => $input_label($scope.b, `${$scope._.l} ${$scope._.g}`)), 12, 0);
+const $placeholder_content__input_label = /*@__PURE__*/ _closure_get(12, $placeholder_content__input_label__OR__n, 0, "a3");
 const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__input_label($scope);
 	$placeholder_content__brand($scope);
 	$placeholder_content__n($scope);
 };
-const $placeholder_content__brand = /*@__PURE__*/ _fill_join_closure("a10", 10, /*@__PURE__*/ _closure_get(16, ($scope) => $input_label($scope.a, $scope._.k)), 0);
-const $placeholder_content__n = /*@__PURE__*/ _closure_get(17, ($scope) => {
-	$input_on($scope.c, $scope._.n);
+const $placeholder_content__brand = /*@__PURE__*/ _fill_join_closure("a10", 10, /*@__PURE__*/ _closure_get(14, ($scope) => $input_label($scope.a, $scope._.k)), 0);
+const $placeholder_content__n = /*@__PURE__*/ _closure_get(15, ($scope) => {
+	$input_on($scope.c, $scope._.l);
 	$placeholder_content__input_label__OR__n($scope);
 }, 0, "a4");
 const $placeholder_content = _content$1("a6", /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<!>`)($template$1, $template$1, $template), /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}&b`)("D l", "D l", "b%c"), $placeholder_content__setup);
 const $n__closure = /*@__PURE__*/ _closure($placeholder_content__n);
-const $n = /*@__PURE__*/ _fill_let("a11", 13, ($scope) => {
-	_text($scope.b, $scope.n);
+const $n = /*@__PURE__*/ _fill_let("a11", 11, ($scope) => {
+	_text($scope.b, $scope.l);
 	$n__closure($scope);
 });
 const $setup__script = _script("a8", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, +$scope.n + 1);
+	$n($scope, +$scope.l + 1);
 }));

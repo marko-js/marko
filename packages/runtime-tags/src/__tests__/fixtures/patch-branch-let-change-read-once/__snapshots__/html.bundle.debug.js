@@ -28,10 +28,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			let count = input.start;
 			_html(`<button>${_text_resume($scope1_id, "#text/1", count)}</button>${_el_resume($scope1_id, "#button/0")}`);
-			_fill_global_subscribe("__tests__/template.marko_1_input_start#0:5_onCount#0:7_$global#4", $scope1_id);
+			_fill_global_subscribe("__tests__/template.marko_1_input_start#0:5_onCount#0:7_$global#0:9", $scope1_id);
 			_script($scope1_id, "__tests__/template.marko_1");
 			const $countChange = read($global$1, onCount) || void 0;
-			_patch_let_change($scope1_id, "PatchValue:__tests__/template.marko_fill2", count, "PatchBind:TagVariableChange:count", $countChange, $scope0_reason, 2);
+			_patch_let_change($scope1_id, "PatchValue:__tests__/template.marko_fill2", count, "PatchBind:TagVariableChange:count", $countChange, (2 | _mask_group($scope0_reason, 2)) << 1, 0);
 			_scope($scope1_id, {
 				count,
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),

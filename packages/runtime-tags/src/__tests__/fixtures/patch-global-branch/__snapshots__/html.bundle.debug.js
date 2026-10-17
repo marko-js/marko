@@ -40,7 +40,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/2", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"]);
 	_trailers("</body></html>");
-	_fill_global_subscribe("__tests__/template.marko_0_$global_meta_headings#8", $scope0_id);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_meta_hideFooter#9", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_meta#5", $scope0_id);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

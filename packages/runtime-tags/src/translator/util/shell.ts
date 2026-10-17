@@ -33,7 +33,11 @@ import {
   StructureKind,
   type StructureOp,
 } from "./sections";
-import { getResumeRegisterId, getSignals } from "./signals";
+import {
+  getResumeRegisterId,
+  getSignalRegisterId,
+  getSignals,
+} from "./signals";
 import { getSectionMeta, trimTrailingExits } from "./structure";
 import { getWriteReason } from "./write-guard";
 
@@ -288,7 +292,7 @@ export function getSectionEffectRegisterIds(
   for (let i = allSignals.length; i--;) {
     const { hasHTMLEffect, referencedBindings } = allSignals[i];
     if (hasHTMLEffect && !skip(referencedBindings)) {
-      ids += (ids && " ") + getResumeRegisterId(section, referencedBindings);
+      ids += (ids && " ") + getSignalRegisterId(allSignals[i]);
     }
   }
   return ids;

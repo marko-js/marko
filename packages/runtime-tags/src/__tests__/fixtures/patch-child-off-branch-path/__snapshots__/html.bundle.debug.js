@@ -161,7 +161,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#childScope/0": $scope1_page && _existing_scope($childScope),
 			"#childScope/1": _existing_scope($childScope2),
 			"#childScope/2": _existing_scope($childScope3)
-		}, "__tests__/template.marko", "8:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_label#0:6/subscribe"), "__tests__/template.marko_1_n#0:13/subscribe");
+		}, "__tests__/template.marko", "8:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_label#0:6/subscribe"), "__tests__/template.marko_1_n#0:11/subscribe");
 	}, void 0, "__tests__/template.marko_1*content", void 0, "__tests__/template.marko_2*content", 1);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 3) << 5 | _mask_group($scope0_reason, 2) << 7);
 	const $childScope4 = _patch_child($scope0_id, "#childScope/3");
@@ -171,16 +171,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		failing: input.failing,
 		other: input.other
 	});
-	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#12", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#8", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", n, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,
 		brand,
 		n,
-		"ClosureScopes:input_label/14": $wi__input_label && $input_label__closures,
-		"ClosureScopes:n/17": $n__closures,
-		"ClosureScopes:input_slow/15": $wi__input_slow && _unfilled_if($scope0_reason, 1) && $input_slow__closures,
+		"ClosureScopes:input_label/12": $wi__input_label && $input_label__closures,
+		"ClosureScopes:n/15": $n__closures,
+		"ClosureScopes:input_slow/13": $wi__input_slow && _unfilled_if($scope0_reason, 1) && $input_slow__closures,
 		"#childScope/3": _existing_scope($childScope4)
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],

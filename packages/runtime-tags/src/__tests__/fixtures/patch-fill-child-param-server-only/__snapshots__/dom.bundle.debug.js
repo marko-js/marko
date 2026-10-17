@@ -27,7 +27,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $for_content__hovered__OR__item_id = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "item_id", /*@__PURE__*/ _or(6, ($scope) => _attr_class_item($scope["#li/0"], "hovered", $scope._.hovered === $scope.item_id)));
-const $for_content__hovered = _resumed["__tests__/template.marko_1_hovered#0:5/init"] = /*@__PURE__*/ _for_closure("#ul/0", $for_content__hovered__OR__item_id);
+const $for_content__hovered = _resumed["__tests__/template.marko_1_hovered#0:3/init"] = /*@__PURE__*/ _for_closure("#ul/0", $for_content__hovered__OR__item_id);
 const $for_content__item_id = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "item_id", ($scope) => {
 	$for_content__hovered__OR__item_id($scope);
 	$input_label($scope["#childScope/1"], $scope.item_id);
@@ -40,10 +40,10 @@ const $data = /*@__PURE__*/ _const("data", ($scope) => {
 });
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", /*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1), /*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks$1), $for_content__setup, $for_content__$params);
 const $data_items = ($scope, data_items) => $for($scope, [data_items]);
-const $global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/template.marko_0_$global_data#4", ($scope) => $data($scope, $scope.$global.data));
-const $hovered = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "hovered/5", $for_content__hovered);
+const $setup__$global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/template.marko_0_$global_data#5", ($scope) => $data($scope, $scope.$global.data));
+const $hovered = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "hovered/3", $for_content__hovered);
 function $setup($scope) {
 	$hovered($scope, undefined);
-	$global_data($scope);
+	$setup__$global_data($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

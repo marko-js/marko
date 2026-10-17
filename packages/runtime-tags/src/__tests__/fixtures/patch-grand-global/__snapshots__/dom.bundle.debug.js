@@ -1,10 +1,8 @@
 // tags/outer/tags/inner/index.marko
 const $template$2 = "<em> </em>";
 const $walks$2 = "D l";
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/tags/outer/tags/inner/index.marko_0_$global_brand#2", ($scope) => _text($scope["#text/0"], $scope.$global.brand));
-function $setup$2($scope) {
-	$global_brand($scope);
-}
+const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/tags/outer/tags/inner/index.marko_0_$global_brand#4", ($scope) => _text($scope["#text/0"], $scope.$global.brand));
+const $setup$2 = $setup__$global_brand;
 var inner_default = /*@__PURE__*/ _template("__tests__/tags/outer/tags/inner/index.marko", $template$2, "D l", $setup$2);
 
 // tags/outer/index.marko

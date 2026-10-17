@@ -43,7 +43,7 @@ var page_b_default = _template("c", (input) => {
 	_fill_global_subscribe("c0", $scope0_id);
 	_script($scope0_id, "c1");
 	_patch_value($scope0_id, "vc2", count, 1);
-	$scope0_page && _scope($scope0_id, { j: count });
+	$scope0_page && _scope($scope0_id, { h: count });
 });
 
 // template.marko
@@ -51,7 +51,7 @@ const $PageA_withLoadAssets = withLoadAssets(page_a_default, flush, "_b");
 const $PageB_withLoadAssets = withLoadAssets(page_b_default, flush, "_c");
 _shells({
 	d0: "d0;b%;<!><!><!>",
-	d: /*@__PURE__*/ ((_w0) => `d !d4;${((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2),
+	d: /*@__PURE__*/ ((_w0) => `d !d3;${((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2),
 	d1: /*@__PURE__*/ (() => `d1;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)(),
 	d2: /*@__PURE__*/ (() => `d2;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)()
 });
@@ -80,14 +80,14 @@ var template_default = _template("d", (input) => {
 				return 1;
 			}
 		}, $scope1_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["d1", "d2"], $scope0_reason, 0);
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "d3");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "d4");
 		$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wg__input_page || $wi__input_page && _resume_branch($scope1_id);
 	}, $scope0_id) });
-	_fill_global_subscribe("d4", $scope0_id, 1);
-	_script($scope0_id, "d4");
+	_fill_global_subscribe("d3", $scope0_id, 1);
+	_script($scope0_id, "d3");
 	$scope0_page && _scope($scope0_id, {
-		f: $wi__input_page && _unfilled_if($scope0_reason, 0) && $input_page__closures,
+		e: $wi__input_page && _unfilled_if($scope0_reason, 0) && $input_page__closures,
 		a: _existing_scope($childScope3)
 	});
 }, 1);

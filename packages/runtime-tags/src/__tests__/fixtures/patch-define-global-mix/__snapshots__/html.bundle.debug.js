@@ -14,8 +14,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Badge = { content: _content_elide("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<p>${_patch_text($scope1_id, "#text/0", input.value + $global$1.flag, void 0, $scope1_reason, 0)}</p>`);
-		_fill_global_subscribe("__tests__/template.marko_1_input_value#3_$global_flag#5", $scope1_id, _client_guard($scope1_reason, 0));
+		_html(`<p>${_patch_text($scope1_id, "#text/0", input.value + $global$1.flag, void 0, (2 | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
+		_fill_global_subscribe("__tests__/template.marko_1_$global_flag#0:8_input_value#3", $scope1_id, _client_guard($scope1_reason, 0));
 		_patch_write($scope1_id, "PatchWrite:input_value", input.value, 1);
 		_scope($scope1_id, { input_value: _unfilled_if($scope1_reason, 0) && input.value }, "__tests__/template.marko", "1:2", { input_value: ["input.value", "1:15"] });
 	}, $scope0_id) };

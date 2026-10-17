@@ -60,9 +60,9 @@ const $data = ($scope, data) => {
 	$data_items($scope, data?.items);
 };
 const $data_items = ($scope, data_items) => $input_items($scope["#childScope/1"], data_items);
-const $global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/template.marko_0_$global_data#6", ($scope) => $data($scope, $scope.$global.data));
+const $setup__$global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/template.marko_0_$global_data#5", ($scope) => $data($scope, $scope.$global.data));
 const $if = /*@__PURE__*/ _if("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
@@ -70,6 +70,6 @@ function $setup($scope) {
 	$setup$1($scope["#childScope/1"]);
 	$setup__script($scope);
 	$open($scope, false);
-	$global_data($scope);
+	$setup__$global_data($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

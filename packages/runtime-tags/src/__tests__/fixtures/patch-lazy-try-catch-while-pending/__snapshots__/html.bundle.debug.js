@@ -17,10 +17,10 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		_await($scope1_id, "#text/0", $global$1.promise, (v) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_patch_text($scope4_id, "#text/0", $global$1.name)} ${_patch_text($scope4_id, "#text/1", v, 2)}</em>`);
-			_fill_global_subscribe("__tests__/child.marko_4_$global_name#5", $scope4_id);
+			_fill_global_subscribe("__tests__/child.marko_4_$global_name#0:9", $scope4_id);
 			_scope($scope4_id, {}, "__tests__/child.marko", "2:4");
 		}, 1, "__tests__/child.marko_4*content", 1);
-		_fill_global_subscribe("__tests__/child.marko_1_$global_promise#2", $scope1_id);
+		_fill_global_subscribe("__tests__/child.marko_1_$global_promise#0:7", $scope1_id);
 	}, () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();

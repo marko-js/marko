@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	_patch_value($scope0_id, "va8", n, 1);
 	$scope0_page ? _scope($scope0_id, {
 		g: tag,
-		j: n,
-		k: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures
+		h: n,
+		i: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures
 	}) : _patch_value($scope0_id, "va7", tag);
 }, 1);

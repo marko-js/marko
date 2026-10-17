@@ -15,12 +15,12 @@ var code_block_default = _template("b", (input) => {
 	_if(() => {
 		if (input.text.length > 2) {
 			const $scope1_id = _scope_id();
-			_html(`<div>${_patch_html($scope1_id, "a", highlight(input.text), void 0, $scope0_reason, 0)}</div>`);
+			_html(`<div>${_patch_html($scope1_id, "a", highlight(input.text), void 0, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</div>`);
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
-			_html(`<span>${_patch_html($scope2_id, "a", highlight(input.text), void 0, $scope0_reason, 0)}</span>`);
+			_html(`<span>${_patch_html($scope2_id, "a", highlight(input.text), void 0, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</span>`);
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 1;
 		}
@@ -30,7 +30,7 @@ var code_block_default = _template("b", (input) => {
 		d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.cursor,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && input.text,
 		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && highlight
-	}) : (_filled_guard($scope0_reason, 2) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "vb4", input.text, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "vb5", highlight, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 1) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && _patch_write($scope0_id, "wd", input.cursor, !_server_guard($scope0_reason, 1)));
+	}) : (_filled_guard($scope0_reason, 2) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "vb4", input.text, !_server_guard($scope0_reason, 2)), _filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "vb5", highlight, !_server_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0)), _filled_guard($scope0_reason, 1) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && _patch_write($scope0_id, "wd", input.cursor, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko

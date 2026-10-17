@@ -33,10 +33,10 @@ var panel_default = _template("b", (input) => {
 	_patch_value($scope0_id, "vb5", count, 1);
 	_patch_value($scope0_id, "vb6", open, 1);
 	$scope0_page ? _scope($scope0_id, {
-		i: summary,
-		l: pending?.length,
-		m: count,
-		n: open
+		g: summary,
+		j: pending?.length,
+		k: count,
+		l: open
 	}) : (_patch_value($scope0_id, "vb3", summary), _patch_value($scope0_id, "vb4", pending?.length));
 });
 

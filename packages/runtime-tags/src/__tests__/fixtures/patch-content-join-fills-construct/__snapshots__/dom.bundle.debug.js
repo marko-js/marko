@@ -59,16 +59,16 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 // page.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b%c`)("");
-const $aside_content__bonus__OR__p_base__OR__item_n = /*@__PURE__*/ _fill_join_subscribers("__tests__/page.marko_fill1", "item_n", /*@__PURE__*/ _fill_join_subscribers("__tests__/page.marko_fill0", "p_base", /*@__PURE__*/ _or(1, ($scope) => $input_base($scope["#childScope/0"], ($scope._._.bonus ?? $scope._._.p_base) + $scope._.item_n), 2), "p_base/13", 0), "item_n/14", 0);
-const $aside_content__bonus = _resumed["__tests__/page.marko_2_bonus#0:7/init"] = /*@__PURE__*/ _closure_get("bonus/12", $aside_content__bonus__OR__p_base__OR__item_n, ($scope) => $scope._._, "__tests__/page.marko_2_bonus#0:7/subscribe");
+const $aside_content__bonus__OR__p_base__OR__item_n = /*@__PURE__*/ _fill_join_subscribers("__tests__/page.marko_fill1", "item_n", /*@__PURE__*/ _fill_join_subscribers("__tests__/page.marko_fill0", "p_base", /*@__PURE__*/ _or(1, ($scope) => $input_base($scope["#childScope/0"], ($scope._._.bonus ?? $scope._._.p_base) + $scope._.item_n), 2), "p_base/11", 0), "item_n/12", 0);
+const $aside_content__bonus = _resumed["__tests__/page.marko_2_bonus#0:7/init"] = /*@__PURE__*/ _closure_get("bonus/10", $aside_content__bonus__OR__p_base__OR__item_n, ($scope) => $scope._._, "__tests__/page.marko_2_bonus#0:7/subscribe");
 const $aside_content__setup = ($scope) => {
 	$aside_content__bonus($scope);
 	$aside_content__p_base($scope);
 	$aside_content__item_n($scope);
 	$setup$2($scope["#childScope/0"]);
 };
-const $aside_content__p_base = _resumed["__tests__/page.marko_2_p_base#0:9/init"] = /*@__PURE__*/ _closure_get("p_base/13", $aside_content__bonus__OR__p_base__OR__item_n, ($scope) => $scope._._);
-const $aside_content__item_n = _resumed["__tests__/page.marko_2_item_n#1:3/init"] = /*@__PURE__*/ _closure_get("item_n/14", $aside_content__bonus__OR__p_base__OR__item_n, 0, "__tests__/page.marko_2_item_n#1:3/subscribe");
+const $aside_content__p_base = _resumed["__tests__/page.marko_2_p_base#0:9/init"] = /*@__PURE__*/ _closure_get("p_base/11", $aside_content__bonus__OR__p_base__OR__item_n, ($scope) => $scope._._);
+const $aside_content__item_n = _resumed["__tests__/page.marko_2_item_n#1:3/init"] = /*@__PURE__*/ _closure_get("item_n/12", $aside_content__bonus__OR__p_base__OR__item_n, 0, "__tests__/page.marko_2_item_n#1:3/subscribe");
 const $aside_content = /*@__PURE__*/ _content("__tests__/page.marko_2*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $aside_content__setup);
 const $for_content__setup = ($scope) => $input_aside($scope["#childScope/0"], attrTag({ content: $aside_content($scope) }));
 const $for_content__$params = ($scope, $params2) => $for_content__item_n($scope, $params2[0]?.n);
@@ -77,7 +77,7 @@ const $for_content__item_n = /*@__PURE__*/ _fill_const("__tests__/page.marko_fil
 const $bonus__closure = /*@__PURE__*/ _closure($aside_content__bonus);
 const $bonus = _var_resume("__tests__/page.marko_0_bonus#7/var", /*@__PURE__*/ _const("bonus", $bonus__closure));
 const $p = ($scope, p) => $p_base($scope, p?.base);
-const $global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/page.marko_0_$global_data#11", ($scope) => $p($scope, $scope.$global.data));
+const $setup__$global_data = /*@__PURE__*/ _fill_global_join("data", "__tests__/page.marko_0_$global_data#8", ($scope) => $p($scope, $scope.$global.data));
 const $setup__script = _script("__tests__/page.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	_var_change($scope["#childScope/0"], 5, "bonus");
 }));
@@ -85,7 +85,7 @@ function $setup($scope) {
 	$setup$3($scope["#childScope/0"]);
 	_var($scope, "#childScope/0", $bonus);
 	$setup__script($scope);
-	$global_data($scope);
+	$setup__$global_data($scope);
 }
 const $p_base__closure = /*@__PURE__*/ _closure($aside_content__p_base);
 const $p_base = /*@__PURE__*/ _fill_const("__tests__/page.marko_fill0", "p_base", $p_base__closure);

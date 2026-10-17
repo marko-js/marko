@@ -9,7 +9,7 @@ var tagger_default = _template("__tests__/tags/tagger/index.marko", (input) => {
 	const g = $global$1.locale + "!";
 	_html("<span>t</span>");
 	const $return = g;
-	_fill_global_subscribe("__tests__/tags/tagger/index.marko_0_$global_locale#2", $scope0_id);
+	_fill_global_subscribe("__tests__/tags/tagger/index.marko_0_$global_locale#4", $scope0_id);
 	return $return;
 });
 

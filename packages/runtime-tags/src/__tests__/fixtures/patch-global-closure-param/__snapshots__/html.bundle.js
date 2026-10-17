@@ -1,0 +1,49 @@
+// tags/wrap.marko
+const $template = "<div><!></div>";
+_shells({ b: "b;D%;<div><!></div>" });
+var wrap_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	_html("<div>");
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $wg__input_content, void 0, 2, $scope0_reason, 0);
+	_html("</div>");
+	$scope0_page && _scope($scope0_id, {});
+});
+
+// template.marko
+_shells({
+	a0: "a0; ;<p></p>",
+	a: /*@__PURE__*/ (() => `a !a4;${((_w0) => `/${_w0}& D l`)("D%l")};${((_w0) => `${_w0}<button> </button>`)($template)}`)()
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wi__input_v = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $z__closures = /* @__PURE__ */ new Set();
+	const $global$1 = $global();
+	let n = 0;
+	const z = input.v + $global$1.flag;
+	_set_scope_reason(0);
+	const $childScope = _patch_child($scope0_id, "a");
+	wrap_default({ content: _content_elide("a0", () => {
+		_scope_reason();
+		const $scope1_page = _page_render();
+		const $scope1_id = _scope_id();
+		_html(`<p${_patch_attr($scope1_id, "aa data-z", "data-z", z + $global$1.mark, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></p>${_el_resume($scope1_id, "a")}`);
+		_fill_global_subscribe("a1", $scope1_id);
+		_unfilled_if((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_init($scope1_id, "a2");
+		_subscribe(_unfilled_if((2 | _mask_group($scope0_reason, 0)) << 1, 0) && $z__closures, _scope($scope1_id, { _: ($scope1_page || $wi__input_v) && _scope_with_id($scope0_id) }));
+	}, $scope0_id) });
+	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}`);
+	_fill_global_subscribe("a3", $scope0_id, _client_guard($scope0_reason, 0));
+	_script($scope0_id, "a4");
+	_patch_write($scope0_id, "wf", input.v, 1);
+	_patch_write($scope0_id, "wh", z, 1);
+	_patch_value($scope0_id, "va5", n, 1);
+	$scope0_page && _scope($scope0_id, {
+		f: _unfilled_if($scope0_reason, 0) && input.v,
+		g: n,
+		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && z,
+		i: ($scope0_page || $wi__input_v) && (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && $z__closures,
+		a: _existing_scope($childScope)
+	});
+}, 1);

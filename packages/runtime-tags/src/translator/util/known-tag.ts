@@ -585,12 +585,8 @@ export function ensureKnownTagPatchGroups(section: Section) {
 export function recordKnownTagPatchFacts(section: Section) {
   for (const tagExtra of section.knownTags || []) {
     for (const { params, sources } of getParamGroupSources(tagExtra) || []) {
-      // Client state joined with server values fills the child's joins.
-      if (
-        sources?.state &&
-        hasParamOrGlobalSource(sources) &&
-        patchWrites(section)
-      ) {
+      // Client state joined with params fills the child's joins.
+      if (sources?.state && sources.param && patchWrites(section)) {
         linkRuntimeFeature("patches/value");
       }
       // The fact rolls up: a param passed to a child's structural param
@@ -727,7 +723,7 @@ function getGroupSourcesValue(
   group: ParamReasonGroup,
   sources: Sources | undefined,
 ): number | t.Expression {
-  if (sources?.state) return hasParamOrGlobalSource(sources) ? 3 : 1;
+  if (sources?.state) return sources.param ? 3 : 1;
   // Params this section's callers pass compose their groups' bits at render.
   const callerGroups = getCallerParamGroupsAt(sources?.param, section);
   if (callerGroups.length) {

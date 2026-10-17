@@ -168,10 +168,10 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		g: input.label,
 		k: brand,
-		n,
-		o: $wi__input_label && $input_label__closures,
-		r: $n__closures,
-		p: $wi__input_slow && _unfilled_if($scope0_reason, 1) && $input_slow__closures,
+		l: n,
+		m: $wi__input_label && $input_label__closures,
+		p: $n__closures,
+		n: $wi__input_slow && _unfilled_if($scope0_reason, 1) && $input_slow__closures,
 		d: _existing_scope($childScope4)
 	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va9", input.label, !_server_guard($scope0_reason, 0)), _patch_value($scope0_id, "va10", brand));
 }, 1);

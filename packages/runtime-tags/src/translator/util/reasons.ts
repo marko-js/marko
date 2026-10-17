@@ -21,6 +21,7 @@ import {
 import {
   isReferencedExtra,
   getCanonicalExtra,
+  getGlobalKeys,
   getReferencedBindings,
 } from "./references";
 import {
@@ -33,6 +34,7 @@ import { ensureSectionSlot, ensureSlot, type Slot, SlotKind } from "./slots";
 import {
   compareSources,
   ALWAYS,
+  globalSources,
   mergeSources,
   type Sources,
   sourcesUtil,
@@ -107,9 +109,10 @@ export function isStateReason(reason: undefined | Reason): reason is Sources {
 
 export function getSourcesForExpr(expr: t.NodeExtra) {
   const root = getCanonicalExtra(expr);
-  return isReferencedExtra(root)
-    ? getSourcesForRef(getReferencedBindings(root))
-    : undefined;
+  if (isReferencedExtra(root)) {
+    const sources = getSourcesForRef(getReferencedBindings(root));
+    return getGlobalKeys(root) ? mergeSources(globalSources, sources) : sources;
+  }
 }
 
 export function getSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {

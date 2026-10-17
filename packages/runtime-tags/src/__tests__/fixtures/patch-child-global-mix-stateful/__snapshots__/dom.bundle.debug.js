@@ -1,0 +1,25 @@
+// tags/gm/index.marko
+const $template$1 = "<p></p>";
+const $walks$1 = " b";
+const $setup$1 = ($_) => {};
+const $z__$global_mark = /*@__PURE__*/ _fill_global_join("mark", "__tests__/tags/gm/index.marko_0_z#4_$global_mark#7", ($scope) => _attr($scope["#p/0"], "data-z", $scope.z + _global_read($scope.$global, "mark")));
+const $z = /*@__PURE__*/ _const("z", $z__$global_mark);
+const $input_v__$global_flag = /*@__PURE__*/ _fill_global_join("flag", "__tests__/tags/gm/index.marko_0_input_v#3_$global_flag#5", ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")));
+const $input_v = /*@__PURE__*/ _const("input_v", $input_v__$global_flag);
+const $input = ($scope, input) => $input_v($scope, input.v);
+var gm_default = /*@__PURE__*/ _template("__tests__/tags/gm/index.marko", $template$1, " b", 0, $input);
+
+// template.marko
+const $template = "<main><!><button>t</button></main>";
+const $walks = "D%b l";
+const $if_content__setup = ($scope) => $input_v($scope["#childScope/0"], "a");
+const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
+const $open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "open/2", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
+	$open($scope, !$scope.open);
+}));
+function $setup($scope) {
+	$setup__script($scope);
+	$open($scope, true);
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

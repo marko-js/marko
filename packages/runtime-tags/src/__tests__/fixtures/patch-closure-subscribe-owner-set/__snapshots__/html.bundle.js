@@ -74,11 +74,11 @@ var shop_default = _template("a", (input) => {
 	_patch_value($scope0_id, "va11", drops, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: p,
-		k: proj,
-		l: now,
-		m: drops,
-		q: $now__closures,
-		r: $drops__closures
+		h: proj,
+		i: now,
+		j: drops,
+		n: $now__closures,
+		o: $drops__closures
 	}) : (_patch_value($scope0_id, "va8", p), _patch_value($scope0_id, "va9", proj));
 });
 

@@ -42,7 +42,7 @@ const $if_content__setup = ($scope) => {
 	$input_data($scope.a, { q: "client" });
 };
 const $if = /*@__PURE__*/ _if(2, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("a2", 7, ($scope) => $if($scope, $scope.h ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("a2", 5, ($scope) => $if($scope, $scope.f ? 0 : 1));
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$open($scope, !$scope.h);
+	$open($scope, !$scope.f);
 }));

@@ -1,9 +1,7 @@
 // tags/outer/tags/inner/index.marko
 const $template$1 = "<em> </em>";
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "c0", ($scope) => _text($scope.a, $scope.$.brand));
-function $setup$1($scope) {
-	$global_brand($scope);
-}
+const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "c0", ($scope) => _text($scope.a, $scope.$.brand));
+const $setup$1 = $setup__$global_brand;
 
 // tags/outer/index.marko
 const $template = $template$1;

@@ -11,6 +11,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	const name = brandOf($global$1);
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", brandOf($global$1))}</h1><h2>${_patch_text($scope0_id, "#text/1", name)}</h2><p>${_patch_text($scope0_id, "#text/2", input.name, void 0, $scope0_reason, 0)}</p></main>`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global#7", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global#4", $scope0_id);
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

@@ -84,7 +84,7 @@ var page_default = _template("a", (input) => {
 		_scope($scope1_id, {
 			d: item?.n,
 			_: _scope_with_id($scope0_id),
-			o: $wi__input_items && $for_content__item_n__closures,
+			m: $wi__input_items && $for_content__item_n__closures,
 			a: _existing_scope($childScope3)
 		});
 	}, 0, $scope0_id, "d", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 0);
@@ -94,7 +94,7 @@ var page_default = _template("a", (input) => {
 		h: bonus,
 		j: p?.base,
 		a: _existing_scope($childScope),
-		m: $bonus__closures
+		k: $bonus__closures
 	}) : _patch_value($scope0_id, "va6", p?.base);
 });
 

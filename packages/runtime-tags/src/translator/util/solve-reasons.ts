@@ -41,6 +41,7 @@ import {
   type ReferencedExtra,
   getFunctionReadsByExpression,
   getConstantBindingsInFunction,
+  getReferencedBindings,
   getReferencedBindingsInFunction,
   getBindingsDerivedFrom,
 } from "./references";
@@ -135,13 +136,33 @@ function addIntersectionMemberReason(
   partner: Binding,
 ) {
   if (findSlot(member)?.reason?.always) return;
-  // A changed `$global` key re-runs the join wherever the client holds the
-  // member, so the member's own sources say where it is read.
-  const reason =
+  // A partner a changed `$global` key refreshes re-runs the join wherever the
+  // client holds the member, so the member's own sources say where.
+  addMemberReason(
+    section,
+    member,
     !isSupersetSources(member, partner) ||
-    hasReadIntermediate(member, partner, new Set())
+      hasReadIntermediate(member, partner, new Set())
       ? partner.sources
-      : partner.sources?.global && member.sources;
+      : partner.sources?.global && member.sources,
+  );
+}
+
+// A changed `$global` key re-runs what reads it wherever the client holds the
+// values it reads, so each value's own sources say where it is read.
+export function addGlobalReadReasons(section: Section) {
+  for (const expr of section.globalReadExprs || []) {
+    forEach(getReferencedBindings(expr), (member) => {
+      addMemberReason(section, member, member.sources);
+    });
+  }
+}
+
+function addMemberReason(
+  section: Section,
+  member: Binding,
+  reason: Reason | undefined | false,
+) {
   if (reason) {
     if (member.section !== section) {
       addOwnerReason(

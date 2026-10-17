@@ -26,13 +26,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, 0, $scope2_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell");
 			_scope($scope2_id, {}, "__tests__/template.marko", "4:4");
 		}, 1, "__tests__/template.marko_2*content", 1);
-		_fill_global_subscribe("__tests__/template.marko_1_$global_data_items#3", $scope1_id);
+		_fill_global_subscribe("__tests__/template.marko_1_$global_data#0:5", $scope1_id);
 	}, () => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
 		_html("Loading");
 	}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_1*content");
-	_fill_global_subscribe("__tests__/template.marko_0_$global_data_params#6", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_data#5", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

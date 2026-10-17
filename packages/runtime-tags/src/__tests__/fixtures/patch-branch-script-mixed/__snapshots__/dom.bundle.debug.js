@@ -2,14 +2,14 @@
 const $template = "<main><h1> </h1><!></main>";
 const $walks = "E l%l";
 const $setup = ($_) => {};
-const $if_content__input_value__OR__$global_brand__script = _fill_global_script("__tests__/template.marko_1_input_value#0:6_$global_brand#1", ($scope) => {
+const $if_content__input_value__$global_brand__script = _fill_global_script("__tests__/template.marko_1_input_value#0:6_$global_brand#0:8", ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope._.input_value + ":" + _global_read($scope.$global, "brand") + "]";
 	}
 }, "brand");
-const $if_content__input_value__OR__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_1_input_value#0:6_$global_brand#1", $if_content__input_value__OR__$global_brand__script);
-const $if_content__input_value = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_value__OR__$global_brand);
+const $if_content__input_value__$global_brand = $if_content__input_value__$global_brand__script;
+const $if_content__input_value = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_value__$global_brand);
 const $if_content__setup = $if_content__input_value;
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $if = /*@__PURE__*/ _if("#text/1", "<p>promo</p>", 0, $if_content__setup);

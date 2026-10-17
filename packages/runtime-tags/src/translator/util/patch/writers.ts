@@ -55,6 +55,7 @@ import {
 import {
   getHTMLSectionStatements,
   getResumeRegisterId,
+  getSignalRegisterId,
   getScopeProperties,
   getSignals,
   toSequenceExpression,
@@ -187,8 +188,7 @@ export function writePatchResumeStatements(
               callPatchRuntime(
                 "_patch_effect",
                 section,
-                getPatchKey().Effect +
-                  getResumeRegisterId(section, signal.referencedBindings),
+                getPatchKey().Effect + getSignalRegisterId(signal),
                 t.stringLiteral(aborts ? accessors + "!" + aborts : accessors),
               ),
             ),
@@ -659,13 +659,16 @@ export function getPatchWriteOwnership(
   // A state-mixed write has no caller group (`ensureCallerParamGroups`).
   if (!isConditionalReason(sources)) return [];
   const groups = getCallerParamGroupsAt(sources.param, section);
-  if (groups.length > 1) {
-    // A `<define>` body's group beside its template's: one mask composes
-    // them, as a call site composes its child's.
+  if (groups.length > 1 || (groups.length && sources.global)) {
+    // A `<define>` body's group beside its template's, or a `$global` read's
+    // static server source: one mask composes them, as a call site does.
+    const value = buildComposedGroupValue(groups);
     return [
       buildGroupMask([
         {
-          value: buildComposedGroupValue(groups),
+          value: sources.global
+            ? t.binaryExpression("|", t.numericLiteral(2), value)
+            : value,
           names: getDebugNames(sources.param),
         },
       ])!,

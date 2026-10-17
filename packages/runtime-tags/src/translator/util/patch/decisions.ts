@@ -11,10 +11,11 @@ import {
 import { createAnalysisMemo } from "../cyclic-memo";
 import { isPatch } from "../marko-config";
 import { every, forEach, type Opt, push, some } from "../optional";
-import { getSourcesForRef } from "../reasons";
+import { getSourcesForExpr, getSourcesForRef } from "../reasons";
 import {
   getCanonicalExtra,
   getConstantBindings,
+  getGlobalKeys,
   getReferencedBindings,
   getReferencedBindingsInFunction,
   onFinalizeReferences,
@@ -118,19 +119,20 @@ export function hasStateSource(extra: t.NodeExtra | undefined) {
   );
 }
 
-// What a patch write of the expression follows: its reads' sources and its
-// loop keys' (a key changes with the collection it keys).
+// What a patch write of the expression follows: its reads' sources, `$global`'s
+// for the keys it reads, and its loop keys' (a key changes with its collection).
 export function getWriteSources(extra: t.NodeExtra | undefined) {
   return mergeSources(
-    getSourcesForRef(getReferencedBindings(extra)),
+    extra && getSourcesForExpr(extra),
     getSourcesForRef(getConstantBindings(extra)),
   );
 }
 
 // An expression with nothing request-derived behind it renders once, so no
-// patch fills it again: it reads stable bindings alone (none reads `$global`).
+// patch fills it again: it reads stable bindings alone and no `$global` key.
 export function isStableExpr(extra: t.NodeExtra) {
   return (
+    !getGlobalKeys(extra) &&
     every(getReferencedBindings(extra), isStableBinding) &&
     every(getConstantBindings(extra), isStableBinding)
   );

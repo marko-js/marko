@@ -17,7 +17,7 @@ function link(data, id) {
 }
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko !; ;<ul></ul>",
-	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell __tests__/template.marko_1_hovered#0:5/init!__tests__/template.marko_1;${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)}`)()
+	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell __tests__/template.marko_1_hovered#0:3/init!__tests__/template.marko_1;${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "7:4", { item_id: ["item.id", "7:8"] });
 	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell");
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_data#4", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_data#5", $scope0_id);
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", hovered, 1);
 	$scope0_page && _scope($scope0_id, { hovered }, "__tests__/template.marko", 0, { hovered: "5:6" });
 }, 1);

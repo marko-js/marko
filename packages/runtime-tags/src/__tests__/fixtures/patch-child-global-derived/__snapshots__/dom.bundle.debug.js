@@ -12,15 +12,15 @@ const $walks = "D%b l";
 const $if_content__brand = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "brand", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_text($scope["#childScope/0"], $scope._.brand)));
 const $if_content__setup = $if_content__brand;
 const $brand = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "brand", $if_content__brand);
-const $global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_0_$global_brand#4", ($scope) => $brand($scope, `${$scope.$global.brand}`));
+const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("brand", "__tests__/template.marko_0_$global_brand#4", ($scope) => $brand($scope, `${$scope.$global.brand}`));
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $if_content__setup);
-const $show = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "show/5", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "show/3", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, !$scope.show);
 }));
 function $setup($scope) {
 	$setup__script($scope);
 	$show($scope, true);
-	$global_brand($scope);
+	$setup__$global_brand($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

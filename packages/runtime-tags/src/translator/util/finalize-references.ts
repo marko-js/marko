@@ -39,7 +39,6 @@ import {
   reduce,
   some,
 } from "./optional";
-import { finalizePatchRootReasons } from "./patch/refresh";
 import {
   addAlwaysReason,
   addOwnerReason,
@@ -60,6 +59,8 @@ import {
   getAssignments,
   getCanonicalExtra,
   getFunctionReadsByExpression,
+  getGlobalKey,
+  getGlobalKeys,
   getReadsByExpression,
   getReferencedBindings,
   getReferenceFinalizers,
@@ -81,7 +82,7 @@ import {
 } from "./sections";
 import { addSetupWork } from "./setup-work";
 import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
-import { solveReasons } from "./solve-reasons";
+import { addGlobalReadReasons, solveReasons } from "./solve-reasons";
 import {
   ALWAYS,
   type Sources,
@@ -107,7 +108,6 @@ export function finalizeReferences() {
     finalize();
   }
   forEachSection(applyReasonExprs);
-  if (isPatch()) finalizePatchRootReasons();
   solveReasons(intersectionsBySection);
   finalizeRegistrations();
   allocateIds(intersectionsBySection);
@@ -184,9 +184,10 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         exprBindings.referencedBindings,
         exprBindings.lazyBindings,
         exprBindings.constantBindings,
+        exprBindings.globalBindings,
       );
       if (exprBindings.globalBindings) {
-        getProgram().node.extra.hasGlobalRead = true;
+        (expr.section.globalReadExprs ||= []).push(expr);
       }
       if (!exprBindings.referencedBindings) {
         // With no resolved references, any statement this expression keys
@@ -262,14 +263,12 @@ function resolveBindings() {
   const bindingNamesBySection = new Map<Section, Set<string>>();
   for (const binding of getBindings()) {
     const { name, section } = binding;
-    // Verbatim `$global` reads compile as written, so only sources resolve; a
-    // collision rename would also burn a UID and shift later generated names.
-    if (isVerbatimGlobal(binding)) {
+    // `$global` bindings resolve sources only: no collision rename (it
+    // would burn a UID and shift later generated names), no section
+    // membership, no closures — reads compile verbatim.
+    if (binding.type === BindingType.global) {
       resolveBindingSources(binding);
       continue;
-    }
-    if (binding.type === BindingType.global) {
-      getProgram().node.extra.hasGlobalRead = true;
     }
     if (binding.type !== BindingType.dom) {
       resolveBindingSources(binding);
@@ -349,6 +348,8 @@ function addSectionReasons(section: Section) {
     addReasonExprs(branchSlot, section.branchExpr);
     addReasonExprs(ensureSlot(section.branch.nodeBinding), section.branchExpr);
   }
+
+  addGlobalReadReasons(section);
 }
 
 // Dense per-section ids for bindings, intersections, and closure accessors.
@@ -595,6 +596,9 @@ function resolveDerivedSources(binding: Binding) {
   } else if (exprs) {
     const refs = getValueReferences(exprs);
     binding.sources = reduce(refs, mergeResolvedSources, binding.sources);
+    if (some(exprs, getGlobalKeys)) {
+      binding.sources = mergeSources(binding.sources, globalSources);
+    }
     binding.intersection = Array.isArray(refs)
       ? refs
       : refs && getRootIntersection(refs);
@@ -649,18 +653,13 @@ function readsAnySource(expr: t.NodeExtra) {
   return (
     !!expr.initialValue &&
     isReferencedExtra(getCanonicalExtra(expr)) &&
-    !!reduce(
-      getReferencedBindings(expr),
-      mergeResolvedSources,
-      undefined as Sources | undefined,
-    )
+    (!!getGlobalKeys(expr) ||
+      !!reduce(
+        getReferencedBindings(expr),
+        mergeResolvedSources,
+        undefined as Sources | undefined,
+      ))
   );
-}
-
-// A `$global` read compiles verbatim (no read slot, signal, or register
-// id) unless patches key it: a keyed read refreshes like any reference.
-function isVerbatimGlobal(binding: Binding) {
-  return binding.type === BindingType.global && !isPatch();
 }
 
 function mergeResolvedSources(sources: Sources | undefined, ref: Binding) {
@@ -846,11 +845,9 @@ function isLazyRead(
     expr.invokeOnly &&
     read.deferred &&
     !isChangeHandlerRead &&
-    // Roots and section params own a live slot, and a keyed `$global` reads the
-    // globals object; other aliases would go stale on resume read live.
-    (!binding.aliasOf ||
-      isParamBinding(binding) ||
-      binding.type === BindingType.global) &&
+    // Roots and section params own a live slot; other aliases forward to their
+    // aliased binding with no own slot, so reading them live would go stale on resume.
+    (!binding.aliasOf || isParamBinding(binding)) &&
     binding.type !== BindingType.constant
   );
 }
@@ -891,16 +888,24 @@ function resolveReferencedBindings(
         if (ancestor) {
           binding = ancestor;
         }
-      } else if (!isVerbatimGlobal(binding)) {
+      } else if (binding.type !== BindingType.global) {
         extra.section = expr.section;
         ({ binding } = extra.read =
           resolveConstantReference(binding) ??
           resolveExpressionReference(expr, read));
       }
-      if (isVerbatimGlobal(binding)) {
+      if (binding.type === BindingType.global) {
         // `$global` reads stay verbatim member chains: no read slot,
         // no signal, no register-id participation.
-        globalBindings = bindingUtil.add(globalBindings, binding);
+        getProgram().node.extra.hasGlobalRead = true;
+        // Only a patch changes `$global` after the page renders: it keeps the keys
+        // read as the expression evaluates (a function invoked later reads it live).
+        if (isPatch() && !(expr.invokeOnly && read.deferred)) {
+          globalBindings = bindingUtil.add(
+            globalBindings,
+            getGlobalKey(binding),
+          );
+        }
       } else if (binding.type !== BindingType.dom) {
         const isLazy = isLazyRead(expr, read, binding, isChangeHandlerRead);
         if (isLazy) {
