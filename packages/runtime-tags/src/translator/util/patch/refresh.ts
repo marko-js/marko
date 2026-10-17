@@ -23,6 +23,7 @@ import { readsValuesOnResume } from "../finalize-references";
 import {
   ensureKnownTagPatchGroups,
   getParamGroupSources,
+  getStatefulChildSetups,
   isKnownTagExtra,
   someCallPasses,
 } from "../known-tag";
@@ -221,12 +222,12 @@ function computePatchFill(binding: Binding): PatchFill {
   const fillsReads =
     fill === true || !!(conditions?.structure || conditions?.contents);
   // Only the patch's key reaches the declaration: a `<let>` nothing assigns
-  // (its seed), or a template input's value with reads its signal alone reaches.
+  // (its seed), or a value the server renders whose reads its signal alone reaches.
   const ownRegistration =
     !!fill &&
     (binding.sources?.state
       ? !binding.assignments && bindingUtil.has(binding.sources.state, binding)
-      : !binding.section.parent && hasDeclarationOnlyReads(binding));
+      : patchWrites(binding.section) && hasDeclarationOnlyReads(binding));
   // The declaration's fill replaces the join fills its member registers: where
   // it ships past their structure, its run leaves them to the unpatched key.
   if (fillsReads && !(binding.assignments || ownRegistration)) {
@@ -874,6 +875,12 @@ function computeCreatedInits(section: Section) {
       inits.delete(closure);
     }
   });
+  // The page itself is never created.
+  if (section.parent || !isPage()) {
+    for (const child of getStatefulChildSetups(section)) {
+      inits.set(child, "shell");
+    }
+  }
   for (const [ref, init] of inits) {
     // A join the patch writes inits on any scope, existing or created.
     if (
@@ -970,9 +977,14 @@ function getClosureInit(
   closure: Binding,
 ): CreatedInit | undefined {
   const { sources } = closure;
-  if (closure.type === BindingType.constant) return;
-  // Client state renders, and subscribes, by its own init.
-  if (sources?.state) return "shell";
+  if (closure.type === BindingType.constant || runsSetupFromCall(section)) {
+    return;
+  }
+  // Client state renders, and subscribes, by its own init, as does what a call
+  // passes a body some consumer renders stateful, which no patch writes.
+  if (sources?.state || someReadIn(closure, section, passesStatefulBody)) {
+    return "shell";
+  }
   if (
     some(
       section.bindings,
@@ -998,6 +1010,14 @@ function getClosureInit(
     return subscribes ? "clientSubscribe" : "client";
   }
   if (dynamic) return subscribes ? "subscribe" : "unfilled";
+}
+
+function passesStatefulBody(read: ReferencedExtra) {
+  return some(read.derives, isStatefulBodyParam);
+}
+
+function isStatefulBodyParam(binding: Binding) {
+  return isSectionParam(binding) && isStatefulBranch(binding.section);
 }
 
 // The sources take a param a calling tag may pass client state: a template's
@@ -1205,8 +1225,15 @@ export function namesBodyOwner(section: Section, body: Section) {
     body.readsOwner &&
     body.parent !== section &&
     patchWrites(section) &&
-    patchCreatesOrComposes(section)
+    patchCreatesOrComposes(section) &&
+    !runsSetupFromCall(body)
   );
+}
+
+// A body some consumer renders stateful runs its setup, owner link included,
+// from its call's init (`getStatefulChildSetups`).
+function runsSetupFromCall(body: Section) {
+  return isStatefulBranch(body) && (body.hasSetupWork || body.readsOwner);
 }
 
 // An effect read the wire cannot keep current blocks creation; fills,

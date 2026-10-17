@@ -100,6 +100,7 @@ export {
   _fill_resume,
   _fill_var_resume,
   _shell_init,
+  _shell_setup,
   _patch_or,
   _shell_or,
 } from "./dom/patches/signals";

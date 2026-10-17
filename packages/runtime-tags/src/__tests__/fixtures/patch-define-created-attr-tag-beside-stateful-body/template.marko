@@ -1,0 +1,20 @@
+<let/open=false/>
+<define/Panel|{ isOpen, item }|>
+  <if=isOpen>
+    <for|it| of=item>
+      <em>${it.label}</em>
+    </for>
+  </if>
+</define>
+<if=input.show>
+  <Panel isOpen=true>
+    <if=true>
+      <@item label="x"/>
+    </if>
+  </Panel>
+</if>
+<const/Tag=input.other ? "div" : Panel/>
+<${Tag} isOpen=!open>
+  <@item label=input.label + "!"/>
+</>
+<button onClick() { open = !open }>toggle</button>

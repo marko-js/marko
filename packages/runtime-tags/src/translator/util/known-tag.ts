@@ -33,6 +33,7 @@ import {
   reduce,
   some,
   type SortedOpt,
+  toArray,
 } from "./optional";
 import {
   type ParamsTree,
@@ -42,9 +43,10 @@ import {
   getSettledParamsTree,
 } from "./params-tree";
 import { isPatchKeyedSlot } from "./patch/decisions";
-import { namesBodyOwner } from "./patch/refresh";
+import { getCreatedInits, namesBodyOwner } from "./patch/refresh";
 import {
   patchWrites,
+  isStatefulBranch,
   hasStructuralParam,
   recordStructuralParams,
 } from "./patch/structure";
@@ -73,6 +75,8 @@ import {
   trackVarReferences,
   mergeTagReferences,
   onFinalizeReferences,
+  getGlobalReads,
+  getReferencedBindings,
   getReferencedBindingsInFunction,
 } from "./references";
 import {
@@ -102,9 +106,12 @@ import {
 } from "./sections";
 import { addSetupExpr, addSetupWork } from "./setup-work";
 import {
+  addSignalStatement,
   addStatement,
   getResumeRegisterId,
+  getSignal,
   initValue,
+  runGlobalJoinFrom,
   writeHTMLResumeStatements,
   writeSlot,
 } from "./signals";
@@ -506,13 +513,16 @@ export function knownTagTranslateDOM(
     preferredName?: string,
     directContent?: boolean,
   ) => t.Identifier,
-  callSetup: ((section: Section, childBinding: Binding) => void) | undefined,
+  callSetup:
+    | ((section: Section, childBinding: Binding) => t.Expression[])
+    | undefined,
 ) {
   const tagSection = getSection(tag);
   const { node } = tag;
   const extra = node.extra!;
   const paramsTree = getSettledParamsTree(extra[kParamsTree]);
   const childScopeBinding = extra.childScopeBinding!;
+  const setupKey = getChildSetupKey(tagSection, childScopeBinding);
 
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
@@ -539,7 +549,14 @@ export function knownTagTranslateDOM(
       ),
     );
   }
-  callSetup?.(tagSection, childScopeBinding);
+  const setup = callSetup?.(tagSection, childScopeBinding);
+  if (setup?.length) {
+    addSignalStatement(
+      getSignal(tagSection, setupKey),
+      "render",
+      setup.map((expr) => t.expressionStatement(expr)),
+    );
+  }
 
   if (paramsTree) {
     writeParamsToSignals(tag, paramsTree, getTagName(tag) || "tag", {
@@ -547,6 +564,7 @@ export function knownTagTranslateDOM(
       knownExprs: extra[kKnownExprs]!,
       getBindingIdentifier,
       childScopeBinding,
+      setupKey,
     });
   }
 }
@@ -554,6 +572,34 @@ export function knownTagTranslateDOM(
 export function addTagVarBindings(section: Section) {
   const bindings = getTagVarBindings(section);
   if (bindings.length) addStatement("render", section, undefined, bindings);
+}
+
+// A scope a patch creates runs no setup, so what a call into a body some
+// consumer renders stateful does there runs from the child's init.
+function getChildSetupKey(tagSection: Section, childScopeBinding: Binding) {
+  if (isPatch() && getCreatedInits(tagSection).has(childScopeBinding)) {
+    const signal = getSignal(tagSection, childScopeBinding, "init");
+    signal.build = () =>
+      t.arrowFunctionExpression(
+        [scopeIdentifier],
+        t.blockStatement([
+          ...signal.render,
+          ...signal.patch,
+          ...toArray(signal.globalJoins, (join) =>
+            t.expressionStatement(
+              t.callExpression(join.identifier, [scopeIdentifier]),
+            ),
+          ),
+        ]),
+      );
+    addStatement(
+      "render",
+      tagSection,
+      undefined,
+      t.callExpression(signal.identifier, [scopeIdentifier]),
+    );
+    return childScopeBinding;
+  }
 }
 
 export function addKnownTagReasons(section: Section) {
@@ -578,6 +624,51 @@ export function addKnownTagReasons(section: Section) {
       }
     }
   }
+}
+
+// The children whose body some consumer renders stateful and whose call does
+// setup work: a scope a patch creates runs that work by the child's init.
+export function getStatefulChildSetups(section: Section) {
+  const children: Binding[] = [];
+  for (const tagExtra of section.knownTags || []) {
+    const childSection = tagExtra[kChildSection]!;
+    if (
+      isStatefulBranch(childSection) &&
+      (childSection.hasSetupWork ||
+        childSection.readsOwner ||
+        passesSetupValue(tagExtra))
+    ) {
+      children.push(tagExtra.childScopeBinding!);
+    }
+  }
+  return children;
+}
+
+// Whether the call writes a param from what no binding feeds (a constant, an
+// unset prop, a body), which translate keys by nothing.
+function passesSetupValue(tagExtra: t.MarkoTagExtra) {
+  const tree = getSettledParamsTree(tagExtra[kParamsTree]);
+  if (!tree) return false;
+  const { known, value } = tagExtra[kKnownExprs]!;
+  if (!known) return !getReferencedBindings(value);
+  // A root param the tag passes nothing for is never written.
+  for (const name in tree.props) {
+    if (known[name] && passesSetupExprs(known[name], tree.props[name])) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// A prop with no known expression is one a spread passes, keyed by `value`.
+function passesSetupExprs({ known, value }: KnownExprs, tree: ParamsTree) {
+  if (!known) return !getReferencedBindings(value);
+  for (const name in tree.props) {
+    if (passesSetupExprs(known[name] ?? { value }, tree.props[name])) {
+      return true;
+    }
+  }
+  return !!tree.rest && !tree.rest.props && !getReferencedBindings(value);
 }
 
 // A known tag var's wiring guard asks whether the client holds the child's
@@ -1156,6 +1247,7 @@ function analyzeAttrs(
     if (remaining.size) {
       // Unset props are applied with no value (and no references) in setup.
       addSetupWork(section);
+      for (const name of remaining) known[name] = { value: undefined };
     }
 
     if (paramsTree.rest && !paramsTree.rest.props) {
@@ -1262,6 +1354,8 @@ type TranslateDOMInfo = {
     directContent?: boolean,
   ) => t.Identifier;
   childScopeBinding: Binding;
+  /** What keys the call's statements that read no binding. */
+  setupKey: Binding | undefined;
 };
 
 function writeParamsToSignals(
@@ -1279,12 +1373,7 @@ function writeParamsToSignals(
     const translatedAttrs = translateAttrs(tag);
 
     if (translatedAttrs.statements.length) {
-      addStatement(
-        "render",
-        info.tagSection,
-        tagExtra,
-        translatedAttrs.statements,
-      );
+      addCallStatement(info, tagExtra, translatedAttrs.statements);
     }
 
     writeToSignal(
@@ -1354,7 +1443,7 @@ function applyAttrObject(
   }
 
   if (statements.length) {
-    addStatement("render", info.tagSection, tagExtra, statements);
+    addCallStatement(info, tagExtra, statements);
   }
 
   writeToSignal(info, tagInputIdentifier, tagExtra, translatedProps!, true);
@@ -1450,7 +1539,7 @@ function writeAttrsToSignals(
               statements,
             );
 
-            addStatement("render", info.tagSection, tagExtra, statements);
+            addCallStatement(info, tagExtra, statements);
 
             addAttrTag(
               contentProps,
@@ -1508,7 +1597,7 @@ function writeAttrsToSignals(
       const trees = getGroupParamsTrees(group, attrTagLookup, paramsTree);
       const hasRest = trees.some(([, tree]) => tree === true);
 
-      addStatement("render", info.tagSection, hasRest ? tagExtra : expr, [
+      addCallStatement(info, hasRest ? tagExtra : expr, [
         t.variableDeclaration(
           "let",
           trees.map(([attrTagMeta]) =>
@@ -1640,7 +1729,7 @@ function writeAttrsToSignals(
 
     if (!isSimpleReference(spreadExpr)) {
       spreadId = generateUidIdentifier(`${hint}_spread`);
-      addStatement("render", info.tagSection, tagExtra, [
+      addCallStatement(info, tagExtra, [
         t.variableDeclaration("const", [
           t.variableDeclarator(spreadId, spreadExpr),
         ]),
@@ -1720,13 +1809,35 @@ function writeToSignal(
     info.childScopeBinding,
     info.tagSection,
   );
-  addStatement(
-    type,
-    info.tagSection,
+  addCallStatement(
+    info,
     expr,
     t.callExpression(signal, value ? [scope, value] : [scope]),
     isPure,
+    type,
   );
+}
+
+// What reads no binding runs in setup, or in the child's init where a scope a
+// patch creates runs it.
+function addCallStatement(
+  info: TranslateDOMInfo,
+  expr: t.NodeExtra | undefined,
+  statement: t.Statement | t.Statement[] | t.Expression,
+  isPure?: boolean,
+  type: "render" | "patch" = "render",
+) {
+  if (info.setupKey && !getReferencedBindings(expr)) {
+    const init = getSignal(info.tagSection, info.setupKey);
+    if (getGlobalReads(expr)) {
+      addStatement(type, info.tagSection, expr, statement, isPure);
+      runGlobalJoinFrom(init, expr!);
+    } else {
+      addSignalStatement(init, type, statement, isPure);
+    }
+  } else {
+    addStatement(type, info.tagSection, expr, statement, isPure);
+  }
 }
 
 // The child signal setting the prop `name` of `paramsTree`.

@@ -310,3 +310,12 @@ export function _shell_init<T extends (scope: Scope) => void>(
 ): T {
   return (_resumed[id] = signal);
 }
+
+// A created call's setup a shell names by id, which no shipped code may call:
+// this registration is what ships it.
+export function _shell_setup<T extends (scope: Scope) => void>(
+  id: string,
+  setup: T,
+): T {
+  return (_resumed[id] = setup);
+}

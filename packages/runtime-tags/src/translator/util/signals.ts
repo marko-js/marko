@@ -1297,7 +1297,22 @@ export function addStatement(
   statement: t.Statement | t.Statement[] | t.Expression,
   isPure?: boolean,
 ): void {
-  const signal = getExprSignal(targetSection, expr);
+  addSignalStatement(
+    getExprSignal(targetSection, expr),
+    type,
+    statement,
+    isPure,
+  );
+}
+
+// The signal runs the statement on its `type` pass, storing its value unless
+// a pure render statement is all that reads it.
+export function addSignalStatement(
+  signal: Signal,
+  type: "render" | "effect" | "patch",
+  statement: t.Statement | t.Statement[] | t.Expression,
+  isPure?: boolean,
+) {
   const statements = (signal[type] ??= []);
 
   if (Array.isArray(statement)) {
@@ -1310,6 +1325,17 @@ export function addStatement(
 
   if (!isPure || type === "effect") {
     signal.storesValue = true;
+  }
+}
+
+// A signal runs, in setup's place, the `$global` join of an expression reading
+// no binding, which keeps the id the html subscribes a resumed scope by.
+export function runGlobalJoinFrom(signal: Signal, expr: t.NodeExtra) {
+  const join = getExprSignal(signal.section, expr);
+  const setup = getSignal(signal.section, undefined);
+  if (some(setup.globalJoins, (it) => it === join)) {
+    setup.globalJoins = filter(setup.globalJoins, (it) => it !== join);
+    signal.globalJoins = push(signal.globalJoins, join);
   }
 }
 
@@ -1765,22 +1791,19 @@ function buildClosureFillJoin(
     : fill;
 }
 
-// A scope a flush creates runs the closure by its init, registered with the
-// signal it runs (each fill wrapper returns it).
-function wrapCreatedInit(
-  signal: Signal,
-  closure: Binding,
-  value: t.Expression,
-) {
+// A scope a flush creates runs a closure, or a call's setup work, by its init,
+// registered with the signal it runs (each fill wrapper returns it).
+function wrapCreatedInit(signal: Signal, ref: Binding, value: t.Expression) {
   const { section } = signal;
-  const init = getCreatedInits(section).get(closure);
-  return init && init !== "subscribe" && init !== "unfilled"
-    ? callRuntime(
-        "_shell_init",
-        t.stringLiteral(getResumeRegisterId(section, closure, "init")),
-        value,
-      )
-    : value;
+  const init = getCreatedInits(section).get(ref);
+  if (!init || init === "subscribe" || init === "unfilled") return value;
+  // A call's init has no other caller than the setup of structure the server
+  // renders, which no bundle carries; a closure's stays reachable from its owner.
+  return callRuntime(
+    ref.section === section ? "_shell_setup" : "_shell_init",
+    t.stringLiteral(getResumeRegisterId(section, ref, "init")),
+    value,
+  );
 }
 
 // A fill walks the closure's subscribers by the position each stamped where a
