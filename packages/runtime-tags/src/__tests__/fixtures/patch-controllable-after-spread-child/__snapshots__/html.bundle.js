@@ -15,8 +15,8 @@ var text_field_default = _template("b", (input) => {
 	_patch_write($scope0_id, "we", valueChange, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b4");
 	$scope0_page ? _scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && value,
-		e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && valueChange
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && value,
+		e: _unfilled_if($scope0_reason, 0) && valueChange
 	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb2", value, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", valueChange, !_server_guard($scope0_reason, 2)));
 });
 

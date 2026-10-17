@@ -21,6 +21,7 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html/patch");
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
   "_fill_join",
+  "_fill_join_value",
   "_fill_global_join",
   "_fill_global_path_join",
   "_fill_join_closure",
@@ -30,6 +31,7 @@ const pureDOMFunctions = new Set<string>([
   "_closure_index",
   "_shell_init",
   "_shell_or",
+  "_patch_or",
   "_fill_const",
   "_fill_let",
   "_fill_let_change",

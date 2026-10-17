@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b3");
 	$scope0_page ? _scope($scope0_id, {
 		e: input.a,
-		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.b
+		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b
 	}) : (_filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "vb1", input.a, !_server_guard($scope0_reason, 1)) : _patch_write($scope0_id, "we", input.a, !_server_guard($scope0_reason, 1))), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.b, !_server_guard($scope0_reason, 2)));
 });
 

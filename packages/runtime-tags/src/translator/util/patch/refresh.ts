@@ -93,14 +93,18 @@ import {
 const [getFillOrdinals] = createAnalysisState(() => {
   const ordinals = new Map<Binding, number>();
   forEachSection((section) => {
-    forEach(getPatchFillBindings(section), (fill) => {
-      ordinals.set(fill, ordinals.size);
+    forEach(section.bindings, (binding) => {
+      const { fill, unpatchedJoins } = getPatchFill(binding);
+      if (fill || unpatchedJoins) ordinals.set(binding, ordinals.size);
     });
   });
   return ordinals;
 });
 
-export function getPatchFillKey(binding: Binding, content?: boolean) {
+export function getPatchFillKey(
+  binding: Binding,
+  split?: "content" | "unpatched",
+) {
   const ordinal = getFillOrdinals().get(binding);
   if (ordinal === undefined) {
     throw new Error("Marko: a patch fill binding is missing its ordinal.");
@@ -109,7 +113,7 @@ export function getPatchFillKey(binding: Binding, content?: boolean) {
   return getTemplateId(
     markoOpts,
     opts.filename as string,
-    "fill" + ordinal + (content ? "/content" : ""),
+    "fill" + ordinal + (split ? "/" + split : ""),
   );
 }
 
@@ -159,6 +163,11 @@ export interface PatchFill {
   effectRead?: boolean;
   writeReads?: boolean;
   ownRegistration?: boolean;
+  joinWrites?: SortedOpt<Sources>;
+  joinFill?: Intersection;
+  unpatchedOnly?: boolean;
+  unpatchedJoins?: Intersection[];
+  unpatchedStructure?: true | FillConditions;
 }
 
 // What a patch writes and seeds, asked once shells are built.
@@ -173,60 +182,114 @@ const UNREAD: PatchFill & PatchWrite = {};
 
 // Fills read the reasons of the moment, so each solve pass asks afresh; a
 // value re-asked within its own answer (a recursive `<define>`) is unread.
-export const [getPatchFill, resetPatchFills] = createAnalysisMemo(
+export const [getPatchFill, resetFills] = createAnalysisMemo(
   computePatchFill,
   UNREAD,
 );
+export function resetPatchFills() {
+  resetFills();
+  resetFillReadKinds();
+  resetJoinInits();
+  resetWrittenJoins();
+}
 
 export const [getPatchWrite] = createAnalysisMemo(computePatchWrite, UNREAD);
 
 function computePatchFill(binding: Binding): PatchFill {
-  const kind = computeFillReadKind(binding);
+  const read = getFillReadKind(binding);
+  const { kind } = read;
+  let { unpatchedJoins, unpatchedStructure } = read;
+  // A value only joins the patch writes call for rides its slot write; a fill
+  // for other reads also goes where they run on the client.
+  const writes = getJoinWrites(kind);
+  const fillable = canPatchFill(binding);
+  // A join the scope does not init takes join fills: each key ships only where
+  // the join mixes, where the others are the client's.
+  const join = writes && read.writtenJoins!.keys().next().value!;
+  const joinFill = join && !initsWrittenJoin(join) ? join : undefined;
+  const reasons = writes && !joinFill ? undefined : kind;
   const effectRead = someAlias(binding, hasPatchEffectRead, undefined, true);
   const fnCapture = someAlias(binding, isRegisteredFnCapture, undefined, true);
-  const fillable = canPatchFill(binding);
   // A rendered read (through any alias) the client must derive: joined
   // with state, or inside structure the client may own.
-  const fill = fillable ? (binding.sources?.state ? true : kind) : undefined;
+  const fill = fillable ? (binding.sources?.state ? true : reasons) : undefined;
   const conditions = fill === true ? undefined : fill;
   let derivedNeeds: PatchFill["derivedNeeds"];
   // The client derives a value no patch can fill from its sources, wherever
   // its reads, effects and functions (or a part's) need it.
   if (!fillable) {
-    derivedNeeds = effectRead || fnCapture || kind;
+    derivedNeeds = effectRead || fnCapture || reasons;
     for (const part of binding.propertyAliases.values()) {
       derivedNeeds = mergeKinds(derivedNeeds, getPatchFill(part).derivedNeeds);
     }
   }
+  // Every client read stays current, through its declaration and closures;
+  // a fill only client-sourced join members call for reaches its joins alone.
+  const fillsReads =
+    fill === true || !!(conditions?.structure || conditions?.contents);
+  // Only the patch's key reaches the declaration: a `<let>` nothing assigns
+  // (its seed), or a template input's value with reads its signal alone reaches.
+  const ownRegistration =
+    !!fill &&
+    (binding.sources?.state
+      ? !binding.assignments && bindingUtil.has(binding.sources.state, binding)
+      : !binding.section.parent && hasDeclarationOnlyReads(binding));
+  // The declaration's fill replaces the join fills its member registers: where
+  // it ships past their structure, its run leaves them to the unpatched key.
+  if (fillsReads && !(binding.assignments || ownRegistration)) {
+    let joined: FillConditions | undefined;
+    for (const [, conditions] of read.clientJoins) {
+      joined = mergeConditions(joined, {
+        structure: sourcesUtil.union(conditions.structure, conditions.joins),
+        contents: conditions.contents,
+      });
+    }
+    if (joined && fillsPast(fill!, joined)) {
+      for (const [join] of read.clientJoins) (unpatchedJoins ||= []).push(join);
+      unpatchedStructure = mergeKinds(unpatchedStructure, joined);
+    }
+  }
+  // A client join and withheld content both call for it: it refreshes the
+  // content under a key of its own, which a patch writing the join sends.
+  const splitsContent =
+    !!conditions?.contents &&
+    !!(conditions.joins || conditions.structure || conditions.fills);
+  // The unpatched key ships wherever the fill's own guard holds, which leaves
+  // the fill key only content that refreshes under a key of its own.
+  const unpatchedOnly =
+    !!fill &&
+    !!unpatchedStructure &&
+    (unpatchedStructure === true ||
+      (!!conditions &&
+        !conditions.fills &&
+        (!conditions.contents || splitsContent) &&
+        sourcesUtil.isSuperset(
+          unpatchedStructure.structure,
+          sourcesUtil.union(
+            sourcesUtil.union(conditions.structure, conditions.joins),
+            conditions.writes,
+          ),
+        )));
   return {
     kind,
     fill,
-    // Every client read stays current, through its declaration and closures;
-    // a fill only client-sourced join members call for reaches its joins alone.
-    fillsReads:
-      fill === true || !!(conditions?.structure || conditions?.contents),
+    fillsReads,
     // No caller-owned structure re-renders its reads: always, or for
     // withheld content alone.
     fillsWithoutStructure:
       fill === true || (!!conditions?.contents && !conditions.structure),
-    // A client join and withheld content both call for it: it refreshes the
-    // content under a key of its own, which a patch writing the join sends.
-    splitsContent:
-      !!conditions?.contents &&
-      !!(conditions.joins || conditions.structure || conditions.fills),
+    splitsContent,
     derivedNeeds,
     effectRead,
     // A value a patch sends that effects or captures read: written where a
     // flush writes its scope.
     writeReads: isPatchSent(binding) && (effectRead || fnCapture),
-    // Only the patch's key reaches the declaration: a `<let>` nothing assigns
-    // (its seed), or a template input's value with reads its signal alone reaches.
-    ownRegistration:
-      !!fill &&
-      (binding.sources?.state
-        ? !binding.assignments &&
-          bindingUtil.has(binding.sources.state, binding)
-        : !binding.section.parent && hasDeclarationOnlyReads(binding)),
+    ownRegistration,
+    joinWrites: joinFill ? undefined : writes,
+    joinFill,
+    unpatchedOnly,
+    unpatchedJoins,
+    unpatchedStructure,
   };
 }
 
@@ -333,25 +396,53 @@ export interface FillConditions {
   // A nested member's fill re-runs the join: it fills under that member's group.
   fills?: SortedOpt<Sources>;
   contents?: SortedOpt<Section>;
+  // A join the patch writes reads it: its other members, where the client runs it.
+  writes?: SortedOpt<Sources>;
 }
 
-function computeFillReadKind(
-  binding: Binding,
-): true | FillConditions | undefined {
-  const knownChild = isKnownChild(binding.section);
-  let conditions: FillConditions | undefined;
+// What a binding's reads (and its direct aliases') need of its fill, and the
+// joins the patch writes that it reaches in structure the client may own.
+const [getFillReadKind, resetFillReadKinds] = createAnalysisMemo(
+  computeFillReadKind,
+  {
+    kind: undefined,
+    unpatchedJoins: undefined,
+    unpatchedStructure: undefined,
+    writtenJoins: undefined,
+    clientJoins: [],
+  },
+);
+
+function computeFillReadKind(binding: Binding) {
+  let kind: true | FillConditions | undefined;
+  let unpatchedJoins: Intersection[] | undefined;
+  let unpatchedStructure: true | FillConditions | undefined;
+  // Each written join its value is shipped for, by the section reading it.
+  let writtenJoins: Map<Intersection, Section> | undefined;
+  const clientJoins: [Intersection, FillConditions][] = [];
   for (const alias of binding.aliases) {
     // A property alias or rest fills on its own; a direct alias reads this.
     if (isDirectAlias(alias)) {
-      const { kind } = getPatchFill(alias);
-      if (kind === true) return true;
-      if (kind) conditions = mergeConditions(conditions, kind);
+      const aliasFill = getFillReadKind(alias);
+      kind = mergeKinds(kind, aliasFill.kind);
+      for (const [join, section] of aliasFill.writtenJoins || []) {
+        (writtenJoins ||= new Map()).set(join, section);
+      }
+      if (aliasFill.unpatchedJoins) {
+        unpatchedJoins = unpatchedJoins
+          ? unpatchedJoins.concat(aliasFill.unpatchedJoins)
+          : aliasFill.unpatchedJoins;
+        unpatchedStructure = mergeKinds(
+          unpatchedStructure,
+          aliasFill.unpatchedStructure,
+        );
+      }
     }
   }
   // A known child that is itself stateful structure renders every read from
   // what its calls pass, on the client.
-  if (knownChild && isStatefulBranch(binding.section)) {
-    return true;
+  if (isKnownChild(binding.section) && isStatefulBranch(binding.section)) {
+    kind = true;
   }
   for (const read of binding.reads.keys()) {
     // A spread's attributes still render; any other effect read outside
@@ -360,12 +451,65 @@ function computeFillReadKind(
     // A handler reads the slot at call time: the owner write keeps it
     // current with no registration to shake.
     if (effect && read.invokeOnly) continue;
-    if (!effect) {
-      const sources = getSourcesForRef(getReferencedBindings(read));
-      if (sources?.state) return true;
-      const derived = getDerivedNeeds(read);
-      if (derived === true) return true;
-      if (derived) conditions = mergeConditions(conditions, derived);
+    const refs = getReferencedBindings(read);
+    const written = Array.isArray(refs) && isPatchWrittenJoin(refs);
+    if (written) {
+      // Where the client may own the join's structure, the binding ships
+      // there under its unpatched key, which also re-runs the join.
+      const structure = getReadStructure(binding, read, effect);
+      if (structure) {
+        unpatchedStructure = mergeKinds(unpatchedStructure, structure);
+        (unpatchedJoins ||= []).push(refs);
+      }
+    }
+    const readKind = getReadKind(binding, read, effect, written);
+    kind = mergeKinds(kind, readKind);
+    if (written && readKind !== true && readKind?.writes) {
+      (writtenJoins ||= new Map()).set(refs, read.section);
+    }
+    // A join no patch writes, run on the client where its other callers' members are.
+    if (
+      !written &&
+      Array.isArray(refs) &&
+      readKind !== true &&
+      readKind?.joins
+    ) {
+      clientJoins.push([refs, readKind]);
+    }
+  }
+  return {
+    kind,
+    unpatchedJoins,
+    unpatchedStructure,
+    writtenJoins,
+    clientJoins,
+  };
+}
+
+// What one read needs of the binding's fill: `true` for every patch.
+function getReadKind(
+  binding: Binding,
+  read: ReferencedExtra,
+  effect: boolean,
+  written: boolean,
+): true | FillConditions | undefined {
+  const knownChild = isKnownChild(binding.section);
+  const refs = getReferencedBindings(read);
+  let conditions: FillConditions | undefined;
+  if (!effect) {
+    const sources = getSourcesForRef(refs);
+    if (sources?.state) return true;
+    const derived = getDerivedNeeds(read);
+    if (derived === true) return true;
+    if (derived) conditions = mergeConditions(conditions, derived);
+    if (written) {
+      // The patch inits the join where it runs on the client, which needs
+      // a caller's value of this binding.
+      const writes =
+        hasCallerParamSourceAt(binding.sources, binding.section) &&
+        getOtherInputs(sources, binding);
+      if (writes) conditions = mergeConditions(conditions, { writes });
+    } else {
       // A join whose other members a caller may pass client state,
       // dispatched from this scope; an `<await>` value re-fires no promise.
       const others =
@@ -377,77 +521,87 @@ function computeFillReadKind(
         // re-runs the join, unless the join is a hole the flush fills itself.
         const fills = isFilledHole(read)
           ? undefined
-          : reduce(getReferencedBindings(read), addNestedMemberFill);
+          : reduce(refs, addNestedMemberFill);
         conditions = mergeConditions(conditions, { joins: others, fills });
       }
-      // A join with a param of a body outside the binding's is computed where
-      // the body's calls pass it: on the client for state, else by their bits.
-      const passed =
-        receivesCallerParams(binding.section) &&
-        getDefineCallSources(sources, binding.section);
-      if (passed) {
-        if (passed.state) return true;
-        const passedOthers = getOtherInputs(
-          mergeSources(passed, sources),
-          binding,
-        );
-        if (passedOthers) {
-          conditions = mergeConditions(conditions, { structure: passedOthers });
-        }
+    }
+    // A join with a param of a body outside the binding's is computed where
+    // the body's calls pass it: on the client for state, else by their bits.
+    const passed =
+      receivesCallerParams(binding.section) &&
+      getDefineCallSources(sources, binding.section);
+    if (passed) {
+      if (passed.state) return true;
+      const passedOthers = getOtherInputs(
+        mergeSources(passed, sources),
+        binding,
+      );
+      if (passedOthers) {
+        conditions = mergeConditions(conditions, { structure: passedOthers });
       }
     }
-    // A `<define>` body reads as if at each tag rendering its var: a worklist
-    // visits each call section once, so a recursive define reaches its own once.
-    const readSections = new Set([read.section]);
-    for (const readAt of readSections) {
-      // No patch write reaches a skipped region: reads inside stateful
-      // structure, or boundary content the client renders, promote to owner fills.
-      let readSection: Section | undefined = readAt;
-      let content: Section | undefined;
-      while (readSection && readSection !== binding.section) {
-        if (isStatefulBranch(readSection)) return true;
-        if (readSection.boundaryContent) return true;
-        // The nearest content a consumer renders (or withholds).
-        if (!content && !readSection.branch && readSection.derives) {
-          content = readSection;
-        }
-        if (readSection.callSections) {
-          forEach(readSection.callSections, (callSection) => {
-            readSections.add(callSection);
-          });
-          break;
-        }
-        readSection = readSection.parent;
+  }
+  // A written join's structure ships the binding under its unpatched key.
+  if (written) return conditions;
+  return mergeKinds(conditions, getReadStructure(binding, read, effect));
+}
+
+// The structure a read sits in that the client may own, from the binding's
+// section: `true` where client code always renders it.
+function getReadStructure(
+  binding: Binding,
+  read: ReferencedExtra,
+  effect: boolean,
+): true | FillConditions | undefined {
+  const knownChild = isKnownChild(binding.section);
+  let found: FillConditions | undefined;
+  // A `<define>` body reads as if at each tag rendering its var: a worklist
+  // visits each call section once, so a recursive define reaches its own once.
+  const readSections = new Set([read.section]);
+  for (const readAt of readSections) {
+    // No patch write reaches a skipped region: reads inside stateful
+    // structure, or boundary content the client renders, promote to owner fills.
+    let readSection: Section | undefined = readAt;
+    let content: Section | undefined;
+    while (readSection && readSection !== binding.section) {
+      if (isStatefulBranch(readSection)) return true;
+      if (readSection.boundaryContent) return true;
+      // The nearest content a consumer renders (or withholds).
+      if (!content && !readSection.branch && readSection.derives) {
+        content = readSection;
       }
-      if (effect) continue;
-      // An `<await>` value re-fires no promise client-side: the boundary's
-      // own flushes carry its settlement.
-      if (
-        content &&
-        !isBoundaryValueRead(read) &&
-        consumerMayWithhold(content)
-      ) {
-        conditions = mergeConditions(conditions, { contents: content });
+      if (readSection.callSections) {
+        forEach(readSection.callSections, (callSection) => {
+          readSections.add(callSection);
+        });
+        break;
       }
-      if (!knownChild) continue;
-      // Only caller-owned structure of OTHER caller params can leave this read
-      // unfilled, as a caller's ownership bits decide at render; those of a
-      // `<define>` body outside the binding's are what its calls pass.
-      for (const chainSources of getCallerOwnedStructure(readAt) || []) {
-        const passed = getDefineCallSources(chainSources, binding.section);
-        if (passed?.state) return true;
-        for (const sources of [chainSources, passed]) {
-          if (
-            hasCallerParamSourceAt(sources, binding.section) &&
-            !sourcesInclude(sources!, binding)
-          ) {
-            conditions = mergeConditions(conditions, { structure: sources });
-          }
+      readSection = readSection.parent;
+    }
+    if (effect) continue;
+    // An `<await>` value re-fires no promise client-side: the boundary's
+    // own flushes carry its settlement.
+    if (content && !isBoundaryValueRead(read) && consumerMayWithhold(content)) {
+      found = mergeConditions(found, { contents: content });
+    }
+    if (!knownChild) continue;
+    // Only caller-owned structure of OTHER caller params can leave this read
+    // unfilled, as a caller's ownership bits decide at render; those of a
+    // `<define>` body outside the binding's are what its calls pass.
+    for (const chainSources of getCallerOwnedStructure(readAt) || []) {
+      const passed = getDefineCallSources(chainSources, binding.section);
+      if (passed?.state) return true;
+      for (const sources of [chainSources, passed]) {
+        if (
+          hasCallerParamSourceAt(sources, binding.section) &&
+          !sourcesInclude(sources!, binding)
+        ) {
+          found = mergeConditions(found, { structure: sources });
         }
       }
     }
   }
-  return conditions;
+  return found;
 }
 
 // A closure's sources beside the params its reads in the section join it
@@ -501,6 +655,15 @@ function getDerivedNeeds(read: ReferencedExtra) {
   );
 }
 
+// Whether a fill ships where none of the structure is the client's.
+function fillsPast(fill: true | FillConditions, structure: FillConditions) {
+  return (
+    fill === true ||
+    !sourcesUtil.isSuperset(structure.structure, fill.structure) ||
+    !sectionUtil.isSuperset(structure.contents, fill.contents)
+  );
+}
+
 function mergeKinds(
   a: true | FillConditions | undefined,
   b: true | FillConditions | undefined,
@@ -536,8 +699,8 @@ function getDefineCallSources(sources: Sources | undefined, section: Section) {
   return passed;
 }
 
-// What a `<define>` body's direct calls pass for `params`: the reasons of
-// their param groups, which each call maps to its sources.
+// What a `<define>` body's direct calls pass for `params`, by their groups within
+// it, which cover it: each stateless reason, a call slot's too, is one group.
 function getBodyCallSources(body: Section, params: ParamReasonGroup) {
   let sources: Sources | undefined;
   forEach(body.callSections, (callSection) => {
@@ -545,7 +708,7 @@ function getBodyCallSources(body: Section, params: ParamReasonGroup) {
       if (
         slot.kind === SlotKind.ParamGroup &&
         first(slot.group!).section === body &&
-        bindingUtil.intersects(slot.group, params)
+        bindingUtil.isSuperset(params, slot.group)
       ) {
         sources = mergeSources(sources, slot.reason);
       }
@@ -640,6 +803,7 @@ function mergeConditions(
     joins: sourcesUtil.union(a?.joins, b.joins),
     fills: sourcesUtil.union(a?.fills, b.fills),
     contents: sectionUtil.union(a?.contents, b.contents),
+    writes: sourcesUtil.union(a?.writes, b.writes),
   };
 }
 
@@ -762,7 +926,13 @@ function computeCreatedInits(section: Section) {
     }
   });
   for (const [ref, init] of inits) {
-    if (!namesCreatedInit(section, init, Array.isArray(ref))) inits.delete(ref);
+    // A join the patch writes inits on any scope, existing or created.
+    if (
+      !(Array.isArray(ref) && isPatchWrittenJoin(ref)) &&
+      !namesCreatedInit(section, init, Array.isArray(ref))
+    ) {
+      inits.delete(ref);
+    }
   }
   return inits.size ? inits : NO_INITS;
 }
@@ -809,11 +979,13 @@ function getJoinInit(section: Section, join: Intersection) {
   }
   if (
     hasTagCallerParamAt(sources, section) &&
-    // Closures a withheld local fill re-derives from complete it.
-    !every(
-      join,
-      (member) => getClosureInits(section).get(member) === "localFill",
-    )
+    // Closures a withheld local fill re-derives from complete it, but not on
+    // a scope that exists, where the patch inits a join it writes.
+    (isPatchWrittenJoin(join) ||
+      !every(
+        join,
+        (member) => getClosureInits(section).get(member) === "localFill",
+      ))
   ) {
     return "client";
   }
@@ -925,11 +1097,110 @@ function isUnwrittenRead(read: ReferencedExtra) {
 // subscribers, matching the position each stamped.
 export function joinsFillOverSubscribers(section: Section, closure: Binding) {
   return (
-    registersJoinFill(closure) &&
+    (registersJoinFill(closure) ||
+      // or its unpatched key re-runs it
+      !!getPatchFill(closure).unpatchedJoins?.some((join) =>
+        section.intersections!.has(join),
+      )) &&
     section.enclosing.nonOptionalAncestor !==
       closure.section.enclosing.nonOptionalAncestor &&
     !inStatefulBranch(section)
   );
+}
+
+// A join of params, one a caller passes, every read of which is a hole the
+// patch writes: where their group mixes client and server, the scope inits it.
+export const [isPatchWrittenJoin, resetWrittenJoins] = createAnalysisMemo(
+  (join: Intersection) => {
+    let section: Section | undefined;
+    for (const read of join[0].reads.keys()) {
+      if (getReferencedBindings(read) === join) {
+        if (!isFilledHole(read)) return false;
+        section = read.section;
+      }
+    }
+    const sources = getSourcesForRef(join);
+    return (
+      Array.isArray(sources?.param) &&
+      hasTagCallerParamAt(sources, section!) &&
+      !(
+        isPassedStateByEveryCall(sources) &&
+        // A member another join reads keeps it written: its key would ship for both.
+        every(join, (member) => !readsOtherJoin(member, join))
+      )
+    );
+  },
+  false,
+);
+
+function readsOtherJoin(binding: Binding, join: Intersection) {
+  for (const read of binding.reads.keys()) {
+    const refs = getReferencedBindings(read);
+    if (Array.isArray(refs) && refs !== join) return true;
+  }
+  return false;
+}
+
+// Some `<define>` body's params of the sources, one of which each call passes
+// client state: a join of them mixes on every instance, so the client runs it.
+function isPassedStateByEveryCall(sources: Sources) {
+  let always = false;
+  forEachParamGroup(sources.param, (body, params) => {
+    if (!body.parent || !isKnownChild(body)) return;
+    const calls = new Map<Binding, boolean>();
+    forEach(body.callSections, (callSection) => {
+      forEach(callSection.slots, (slot) => {
+        if (
+          slot.kind === SlotKind.ParamGroup &&
+          first(slot.group!).section === body &&
+          bindingUtil.isSuperset(params, slot.group)
+        ) {
+          calls.set(
+            slot.owner,
+            !!calls.get(slot.owner) || !!slot.reason?.state,
+          );
+        }
+      });
+    });
+    let passes = calls.size > 0;
+    for (const state of calls.values()) passes &&= state;
+    always ||= passes;
+  });
+  return always;
+}
+
+// A written join the scope inits: some member its patch ships has no fill to
+// re-run it with (a row's item, a member of two, one filled for other reads).
+export const [initsWrittenJoin, resetJoinInits] = createAnalysisMemo(
+  (join: Intersection) =>
+    isPatchWrittenJoin(join) &&
+    some(join, (ref) => {
+      const member = getCanonicalBinding(ref);
+      const { kind, writtenJoins } = getFillReadKind(member);
+      const section = writtenJoins?.get(join);
+      return (
+        !!section &&
+        !(
+          getJoinWrites(kind) &&
+          writtenJoins!.size === 1 &&
+          !member.section.parent &&
+          // Its key's hops reach every scope of the join, unlike a subscriber set.
+          section.enclosing.nonOptionalAncestor ===
+            member.section.enclosing.nonOptionalAncestor
+        )
+      );
+    }),
+  false,
+);
+
+// The other members' sources of the joins the patch writes, for a value only
+// those joins call for.
+function getJoinWrites(kind: true | FillConditions | undefined) {
+  return kind !== true &&
+    kind?.writes &&
+    !(kind.structure || kind.joins || kind.fills || kind.contents)
+    ? kind.writes
+    : undefined;
 }
 
 // A fill its declaration registers (kept by its assignments or its own
@@ -1274,8 +1545,12 @@ export function ensurePatchReasonGroups(
   intersections: Intersection[] | undefined,
 ) {
   forEach(section.bindings, (binding) => {
-    const { fill, writeReads } = getPatchFill(binding);
-    if (fill || (writeReads && patchWritesScope(binding.section))) {
+    const { fill, writeReads, joinWrites } = getPatchFill(binding);
+    if (
+      fill ||
+      joinWrites ||
+      (writeReads && patchWritesScope(binding.section))
+    ) {
       ensureCallerParamGroups(getSourcesForRef(binding));
     }
     // A created scope's `<let>` seeds by who feeds its init.

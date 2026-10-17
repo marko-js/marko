@@ -36,9 +36,9 @@ const $input = ($scope, input) => {
 };
 const $input_detail__closure = /*@__PURE__*/ _closure($if_content2__input_detail);
 const $input_detail = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_detail", ($scope) => {
-	$input_detail__closure($scope);
 	$if_content__input_detail($scope);
-}, $input_detail__closure);
+	$input_detail__closure($scope);
+});
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 
 // tags/badge.marko
