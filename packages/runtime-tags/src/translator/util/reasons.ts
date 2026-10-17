@@ -21,7 +21,7 @@ import {
 import {
   isReferencedExtra,
   getCanonicalExtra,
-  getGlobalKeys,
+  getGlobalReads,
   getReferencedBindings,
 } from "./references";
 import {
@@ -111,7 +111,9 @@ export function getSourcesForExpr(expr: t.NodeExtra) {
   const root = getCanonicalExtra(expr);
   if (isReferencedExtra(root)) {
     const sources = getSourcesForRef(getReferencedBindings(root));
-    return getGlobalKeys(root) ? mergeSources(globalSources, sources) : sources;
+    return getGlobalReads(root)
+      ? mergeSources(globalSources, sources)
+      : sources;
   }
 }
 

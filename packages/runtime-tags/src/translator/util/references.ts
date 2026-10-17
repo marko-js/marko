@@ -72,7 +72,7 @@ export interface ResolvedRead {
 const kReferencedBindings = Symbol("referenced bindings");
 const kLazyBindings = Symbol("lazy bindings");
 const kConstantBindings = Symbol("constant bindings");
-const kGlobalKeys = Symbol("global keys");
+const kGlobalReads = Symbol("global reads");
 const kReferencedBindingsInFunction = Symbol("referenced bindings in function");
 const kConstantBindingsInFunction = Symbol("constant bindings in function");
 
@@ -100,7 +100,7 @@ declare module "@marko/compiler/dist/types" {
     [kReferencedBindings]?: ReferencedBindings;
     [kLazyBindings]?: ReferencedBindings;
     [kConstantBindings]?: ReferencedBindings;
-    [kGlobalKeys]?: ReferencedBindings;
+    [kGlobalReads]?: ReferencedBindings;
     /** The bindings it derives, in the order it derives them: call sites
      * derive a child template's, so no one template's order sorts them. */
     derives?: Opt<Binding>;
@@ -608,14 +608,6 @@ export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
       ensureSection(getProgram()),
     )),
   );
-}
-
-// The first-hop `$global` key a read reads through: its alias of `$global`,
-// or `$global` itself for a read of the whole object.
-export function getGlobalKey(binding: Binding) {
-  let key = binding;
-  while (key.aliasOf?.aliasOf) key = key.aliasOf;
-  return key;
 }
 
 function createBindingsAndTrackReferences(
@@ -1431,13 +1423,13 @@ export function setResolvedReads(
   extra[kReferencedBindings] = referencedBindings;
   extra[kLazyBindings] = lazyBindings;
   extra[kConstantBindings] = constantBindings;
-  extra[kGlobalKeys] = globalBindings;
+  extra[kGlobalReads] = globalBindings;
 }
 
-// The first-hop `$global` keys an expression reads as it evaluates (see
-// `getGlobalKey`).
-export function getGlobalKeys(extra: t.NodeExtra | undefined) {
-  return extra && getCanonicalExtra(extra)[kGlobalKeys];
+// The `$global` reads an expression makes as it evaluates, each the deepest
+// alias of `$global` it reads (the whole object is `$global` itself).
+export function getGlobalReads(extra: t.NodeExtra | undefined) {
+  return extra && getCanonicalExtra(extra)[kGlobalReads];
 }
 
 export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {

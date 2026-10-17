@@ -393,9 +393,13 @@ _Avoid_: server-required param
 
 **`$global` join**:
 A signal's client work that reads `$global` keys as it renders (each
-expression records the first-hop keys it reads), split into a function the
-signal calls. A patch build registers it under each key (`_fill_global_join`),
-so a changed key re-runs only that work, on each scope that ran it.
+expression records the deepest path it reads, as a property alias would),
+split into a function the signal calls. A patch build registers it under each
+key (`_fill_global_join`), with the nested paths it reads there
+(`_fill_global_path_join`), so a changed key re-runs only that work, on each
+scope that ran it, and a join reading paths only when one of them changed.
+Work reading under the same keys shares one join; a script keeps its own, so
+it runs again only when what it reads changes.
 _Avoid_: part, global part
 
 **Kept structure**:

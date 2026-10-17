@@ -22,6 +22,7 @@ const pureDOMFunctions = new Set<string>([
   "_await_promise",
   "_fill_join",
   "_fill_global_join",
+  "_fill_global_path_join",
   "_fill_join_closure",
   "_fill_join_for",
   "_fill_join_if",

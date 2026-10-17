@@ -15,7 +15,7 @@ import { getSourcesForExpr, getSourcesForRef } from "../reasons";
 import {
   getCanonicalExtra,
   getConstantBindings,
-  getGlobalKeys,
+  getGlobalReads,
   getReferencedBindings,
   getReferencedBindingsInFunction,
   onFinalizeReferences,
@@ -132,7 +132,7 @@ export function getWriteSources(extra: t.NodeExtra | undefined) {
 // patch fills it again: it reads stable bindings alone and no `$global` key.
 export function isStableExpr(extra: t.NodeExtra) {
   return (
-    !getGlobalKeys(extra) &&
+    !getGlobalReads(extra) &&
     every(getReferencedBindings(extra), isStableBinding) &&
     every(getConstantBindings(extra), isStableBinding)
   );

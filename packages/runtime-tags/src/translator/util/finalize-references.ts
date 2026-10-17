@@ -59,8 +59,7 @@ import {
   getAssignments,
   getCanonicalExtra,
   getFunctionReadsByExpression,
-  getGlobalKey,
-  getGlobalKeys,
+  getGlobalReads,
   getReadsByExpression,
   getReferencedBindings,
   getReferenceFinalizers,
@@ -596,7 +595,7 @@ function resolveDerivedSources(binding: Binding) {
   } else if (exprs) {
     const refs = getValueReferences(exprs);
     binding.sources = reduce(refs, mergeResolvedSources, binding.sources);
-    if (some(exprs, getGlobalKeys)) {
+    if (some(exprs, getGlobalReads)) {
       binding.sources = mergeSources(binding.sources, globalSources);
     }
     binding.intersection = Array.isArray(refs)
@@ -653,7 +652,7 @@ function readsAnySource(expr: t.NodeExtra) {
   return (
     !!expr.initialValue &&
     isReferencedExtra(getCanonicalExtra(expr)) &&
-    (!!getGlobalKeys(expr) ||
+    (!!getGlobalReads(expr) ||
       !!reduce(
         getReferencedBindings(expr),
         mergeResolvedSources,
@@ -898,13 +897,10 @@ function resolveReferencedBindings(
         // `$global` reads stay verbatim member chains: no read slot,
         // no signal, no register-id participation.
         getProgram().node.extra.hasGlobalRead = true;
-        // Only a patch changes `$global` after the page renders: it keeps the keys
+        // Only a patch changes `$global` after the page renders: it keeps the paths
         // read as the expression evaluates (a function invoked later reads it live).
         if (isPatch() && !(expr.invokeOnly && read.deferred)) {
-          globalBindings = bindingUtil.add(
-            globalBindings,
-            getGlobalKey(binding),
-          );
+          globalBindings = bindingUtil.add(globalBindings, binding);
         }
       } else if (binding.type !== BindingType.dom) {
         const isLazy = isLazyRead(expr, read, binding, isChangeHandlerRead);
