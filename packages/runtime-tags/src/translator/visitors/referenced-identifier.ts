@@ -1,8 +1,11 @@
 import { types as t } from "@marko/compiler";
 
+import { type Binding, BindingType } from "../util/bindings";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getExprRoot } from "../util/get-root";
-import { isOptimize, isOutputHTML } from "../util/marko-config";
+import { isOptimize, isOutputHTML, isPatch } from "../util/marko-config";
+import { some } from "../util/optional";
+import { rerunsEffectOnPatch } from "../util/patch/refresh";
 import {
   assertReferencedInRender,
   getCanonicalExtra,
@@ -10,7 +13,11 @@ import {
   setReferencesScope,
   trackGlobalReference,
 } from "../util/references";
-import { callRuntime, importRuntime } from "../util/runtime";
+import {
+  callRuntime,
+  importRuntime,
+  importRuntimeFeature,
+} from "../util/runtime";
 import { scopeIdentifier } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
@@ -75,7 +82,8 @@ export default {
       const rootExtra = (getExprRoot(identifier).node.extra ??= { section });
       (identifier.node.extra ??= {}).exprRoot = rootExtra;
       if (rootExtra[kAbortId] === undefined) {
-        rootExtra[kAbortId] = section.abortSignalExprs++;
+        rootExtra[kAbortId] =
+          (section.abortSignalExprs ??= []).push(rootExtra) - 1;
       }
     }
   },
@@ -86,12 +94,22 @@ export default {
       case "$global": {
         // An HTML read resolves to the `$global` const the program declares.
         if (isOutputHTML()) break;
+        const key = !isOptimize() && getSignalGlobalKey(identifier);
+        // Only a patch keyed `$global.key` read becomes a tracked binding (a
+        // fill needs an identity); every other shape stays a bag access.
+        if (
+          !key &&
+          (identifier.parent.type === "MemberExpression" ||
+            identifier.parent.type === "OptionalMemberExpression") &&
+          identifier.parent.extra?.read
+        ) {
+          break;
+        }
 
         const globalRead = t.memberExpression(
           scopeIdentifier,
           t.identifier(getAccessorProp().Global),
         );
-        const key = !isOptimize() && getSignalGlobalKey(identifier);
         if (key) {
           identifier.parentPath.replaceWith(
             callRuntime("_global_read", globalRead, t.stringLiteral(key)),
@@ -131,6 +149,13 @@ export default {
 
           if (!resetEmitted.has(exprRoot)) {
             resetEmitted.add(exprRoot);
+            // An effect a patch re-runs resets its `$signal`s first.
+            if (
+              isPatch() &&
+              some(getReferencedBindings(exprRoot), rerunsEffectOnPatch)
+            ) {
+              importRuntimeFeature("patches/effect-signal");
+            }
             addStatement(
               "render",
               section,
@@ -175,7 +200,16 @@ function getSignalGlobalKey(identifier: t.NodePath<t.Identifier>) {
 
   const { name } = parent.property;
   if (name === "runtimeId" || name === "renderId") return;
-  return getReferencedBindings(getExprRoot(identifier).node.extra)
+  // A patch build's `$global` reads are bindings too; only other reads make
+  // this a reactive read.
+  return some(
+    getReferencedBindings(getExprRoot(identifier).node.extra),
+    isNotGlobalBinding,
+  )
     ? name
     : undefined;
+}
+
+function isNotGlobalBinding(binding: Binding) {
+  return binding.type !== BindingType.global;
 }

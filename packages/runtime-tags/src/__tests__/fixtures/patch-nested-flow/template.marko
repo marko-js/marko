@@ -1,0 +1,21 @@
+<main>
+  <ul>
+    <for|item| of=input.items by="id">
+      <li>
+        ${item.label}
+        <if=item.sale>
+          <em>on sale</em>
+        </if>
+      </li>
+    </for>
+  </ul>
+  <if=input.summary>
+    <section>
+      ${input.summary}
+      <if=input.detail>
+        <small>${input.detail}</small>
+      </if>
+    </section>
+  </if>
+  <badge label=input.badge/>
+</main>

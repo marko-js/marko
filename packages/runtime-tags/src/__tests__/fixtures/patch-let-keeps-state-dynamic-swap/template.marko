@@ -1,0 +1,8 @@
+<define/A|{ x }|>
+  <let/l=String(x)/>
+  <button onClick() { l += "+" }>${l}</button>
+</define>
+<define/B|{ x }|>
+  <b>B</b>
+</define>
+<${input.flag ? B : A} x=input.a/>

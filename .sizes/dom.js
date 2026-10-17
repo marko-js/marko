@@ -1,4 +1,4 @@
-// size: 27478 (min) 10241 (brotli)
+// size: 29025 (min) 10733 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -778,10 +778,10 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
   let closureSignal = (scope, resumed) => {
     let ownerScope = getOwnerScope ? getOwnerScope(scope) : scope._;
     ((scope[closureSignal.b] = closureSignal.c),
+      subscribeToScopeSet(ownerScope, closureSignal.a, scope),
       resumed
         ? ownerScope[closureSignal.a]._ && queueAsyncRender(scope, fn)
-        : queueRender(scope, fn, -1),
-      subscribeToScopeSet(ownerScope, closureSignal.a, scope));
+        : queueRender(scope, fn, -1));
   };
   return (
     (closureSignal.a = valueAccessor),
@@ -859,7 +859,9 @@ function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
-function readyFailed(readyId) {}
+function readyFailed(readyId) {
+  readyIds?.has(readyId);
+}
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
     ((embedRenders = /* @__PURE__ */ new Map()),
@@ -2052,6 +2054,17 @@ function byFirstArg(name) {
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
+let patchFills = {};
+let patchers = {};
+function patchWrite(scope, accessor, value) {
+  (scope[accessor] !== value || !(accessor in scope)) &&
+    ((scope[accessor] = value), ((scope.AA ??= {})[accessor] = runId));
+}
+function applyGlobals(live, _key, value) {
+  for (let key in value) patchWrite(live.$, key, value[key]);
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
 let empty = [];
 let rest = Symbol();
 let classIdToBranch = /* @__PURE__ */ new Map();
@@ -2150,11 +2163,7 @@ let compat = {
       return toInsertNode(branch.S, branch.K);
   },
 };
-let _template = (id, template, walks, setup, inputSignal) => {
-  let renderer = _content(id, template, walks, setup, inputSignal)();
-  return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
-};
-let noop = (_) => 0;
+let globalJoins = {};
 function attrTag(attrs) {
   return ((attrs[Symbol.iterator] = attrTagIterator), (attrs[rest] = empty), attrs);
 }
@@ -2166,6 +2175,43 @@ function attrTags(first, attrs) {
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
 }
+function _fill_global_join(key, id, join) {
+  return (
+    (patchers.$ = patchGlobals),
+    ((globalJoins[key] ??= {})[id] = (scope) => {
+      (join(scope), subscribeToScopeSet(scope.$, "B" + id, scope));
+    })
+  );
+}
+function _fill_global_script(id, fn, ...keys) {
+  let effect = (_resumed[id] = (scope) => {
+      let ran = (scope.AB ??= {});
+      (ran[id] !== runId && ((ran[id] = runId), fn(scope)),
+        subscribeToScopeSet(scope.$, "B" + id, scope));
+    }),
+    queue = (scope) => queueEffect(scope, effect);
+  for (let key of keys) _fill_global_join(key, id, queue);
+  return queue;
+}
+function patchGlobals(live, key, value) {
+  applyGlobals(live, key, value);
+  let keys = [];
+  for (let key in value) live.$.AA?.[key] === runId && keys.push(key);
+  keys.length && keys.push("");
+  for (let key of keys)
+    for (let id in globalJoins[key])
+      live.$["B" + id]?.forEach(
+        (scope) => scope.H && scope.H !== runId && queueRender(scope, globalJoins[key][id], -1),
+      );
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom.mjs
+let _template = (id, template, walks, setup, inputSignal) => {
+  let renderer = _content(id, template, walks, setup, inputSignal)();
+  return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
+};
+let noop = (_) => 0;
+let loads = {};
 function mount(input = {}, reference, position) {
   let branch,
     parentNode = reference,
@@ -2362,5 +2408,117 @@ function _load_race_trigger(...triggers) {
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+/** A load a flush creating the lazy template `id` waits for. The page entry
+ * registers the module's: a module registering its own would bundle it. */
+function _load_lazy(id, load) {
+  Array.isArray(loads[id]) ? loads[id].push(load) : loads[id] ? load() : (loads[id] = [load]);
+}
+/** A lazy child's input signal on a patch page: a flush loads it untriggered,
+ * and a scope it creates applies it now; the page's render waits for a trigger. */
+function _load_signal_patch(load, id, trigger) {
+  let buffered = _load_signal(trigger ? trigger(load) : load),
+    apply = (scope, value) => {
+      (apply._ || buffered)(scope, value);
+    };
+  return (_load_lazy(id, () => load().then((mod) => (apply._ = mod._))), apply);
+}
+let closureFillJoins = {};
+function fillJoin(key, valueAccessor, join, dispatch) {
+  let prev = patchFills[key],
+    prevFn = prev?._;
+  if (!prev || prevFn) {
+    let fn = prevFn
+      ? (scope) => {
+          (prevFn(scope), dispatch(scope));
+        }
+      : dispatch;
+    (patchFills[key] = _const(valueAccessor, fn))._ = fn;
+  }
+  return join;
+}
+function _fill_join(key, valueAccessor, join, buildDispatch) {
+  return fillJoin(key, valueAccessor, join, buildDispatch?.(join) || join);
+}
+function _fill_join_if(key, valueAccessor, join, ...hops) {
+  let dispatch = join;
+  for (let i = hops.length; i > 0; i -= 2)
+    dispatch = _if_closure(hops[i - 2], hops[i - 1], dispatch);
+  return fillJoin(key, valueAccessor, join, dispatch);
+}
+function _fill_join_for(key, valueAccessor, join, ...hops) {
+  let dispatch = join;
+  for (let i = hops.length; i--;) dispatch = _for_closure(hops[i], dispatch);
+  return fillJoin(key, valueAccessor, join, dispatch);
+}
+function _fill_join_closure(key, valueAccessor, join, index) {
+  let closureJoin = join;
+  closureJoin.c = index;
+  let signals = (closureFillJoins[key] ??= []);
+  return (
+    signals.length ||
+      fillJoin(key, valueAccessor, join, (scope) => {
+        let instances = scope[closureJoin.a];
+        if (instances) {
+          instances._ = 1;
+          let signalIndex = closureJoin.b;
+          for (let childScope of instances)
+            if (childScope.H > 0 && childScope.H < runId) {
+              let sig = signals[childScope[signalIndex] || 0];
+              sig && queueRender(childScope, sig, -1);
+            }
+        }
+      }),
+    (signals[index] = join),
+    join
+  );
+}
+function _fill_join_subscribers(key, valueAccessor, join, closureAccessor, index) {
+  closureAccessor = decodeAccessor(closureAccessor);
+  let instancesAccessor = closureAccessor,
+    signalIndex = "C" + closureAccessor;
+  return fillJoin(key, valueAccessor, join, (scope) => {
+    let instances = scope[instancesAccessor];
+    if (instances) {
+      instances._ = 1;
+      for (let childScope of instances)
+        childScope.H > 0 &&
+          childScope.H < runId &&
+          (childScope[signalIndex] || 0) === index &&
+          queueRender(childScope, join, -1);
+    }
+  });
+}
+function fill(key, signal, id, fillFn) {
+  return ((patchFills[key] = fillFn === void 0 ? signal : _const(id, fillFn || void 0)), signal);
+}
+function _fill_var_resume(id, signal) {
+  return ((patchFills[id] = signal), _var_resume(id, signal));
+}
+function _fill_let(key, id, fn, fillFn) {
+  return fill(key, _let(id, fn), id, fillFn);
+}
+function _fill_let_change(key, id, fn, fillFn) {
+  return fill(key, _let_change(id, fn), id, fillFn ?? fn ?? 0);
+}
+function _fill_const(key, id, fn, fillFn) {
+  return fill(key, _const(id, fn), id, fillFn);
+}
+function _shell_or(initId, id, fn, defaultPending, scopeIdAccessor = "L") {
+  let or = _or(id, fn, defaultPending, scopeIdAccessor),
+    scopeIdKey = scopeIdAccessor === "L" ? scopeIdAccessor : decodeAccessor(scopeIdAccessor);
+  return ((_resumed[initId] = (scope) => queueRender(scope, fn, id, 0, scope[scopeIdKey])), or);
+}
+function _closure_resume(resumeId, closureSignal) {
+  return ((_resumed[resumeId] = (scope) => closureSignal(scope, 1)), closureSignal);
+}
+function _shell_join(id, join) {
+  let prev = _resumed[id];
+  return (
+    (_resumed[id] = (scope) => {
+      (prev?.(scope), queueRender(scope, join, -1));
+    }),
+    join
+  );
 }
 //#endregion

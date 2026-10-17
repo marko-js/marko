@@ -1,0 +1,89 @@
+// tags/store.marko
+_shells({ c: "c !," });
+_client_return("c");
+var store_default = _template("c", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	let last = 0;
+	const $return = {
+		last,
+		set: _resume(function(next) {
+			last = next;
+		}, "c0", $scope0_id)
+	};
+	_patch_value($scope0_id, "vc1", last, 1);
+	return $return;
+});
+
+// tags/frame.marko
+const $template = "<section><!></section>";
+_shells({ b: "b;D%;<section><!></section>" });
+var frame_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	_html("<section>");
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $wg__input_content, void 0, 2, $scope0_reason, 0);
+	_html("</section>");
+	$scope0_page && _scope($scope0_id, {});
+});
+
+// template.marko
+_shells({
+	a0: "a0;b%;<!><!><!>",
+	a1: /*@__PURE__*/ ((_w0) => `a1;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template),
+	a: /*@__PURE__*/ (() => `a;${((_w0, _w1) => `0${_w0}&D l/${_w1}&`)("", "D%l")};${((_w0, _w1) => `${_w0}<p> </p>${_w1}`)("", $template)}`)(),
+	a2: "a2 a10!a4;Db%l ;<span>Seen <!></span><button>+</button>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $store_set__closures = /* @__PURE__ */ new Set();
+	const $input_show__closures = /* @__PURE__ */ new Set();
+	const $childScope = _patch_child($scope0_id, "a");
+	let store = store_default({});
+	_var($scope0_id, "b", $childScope, "a3");
+	_html(`<p>${_text_resume($scope0_id, "c", store.last)}</p>`);
+	_set_scope_reason(0);
+	const $childScope3 = _patch_child($scope0_id, "d");
+	frame_default({ content: _content_elide("a1", () => {
+		_scope_reason();
+		const $scope1_id = _scope_id();
+		_set_scope_reason(0);
+		const $childScope2 = _patch_child($scope1_id, "a");
+		frame_default({ content: _content_elide("a0", () => {
+			_scope_reason();
+			const $scope2_id = _scope_id();
+			_if(() => {
+				if (input.show) {
+					const $scope3_id = _scope_id();
+					let count = 0;
+					_html(`<span>Seen ${_text_resume($scope3_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope3_id, "b")}`);
+					_script($scope3_id, "a4");
+					const $countChange = store.set || void 0;
+					_patch_value($scope3_id, "va5", count, 1);
+					_patch_bind($scope3_id, "dd", $countChange);
+					_subscribe($store_set__closures, _scope($scope3_id, {
+						c: count,
+						_: _scope_with_id($scope2_id),
+						d: $countChange
+					}));
+					return 0;
+				}
+			}, $scope2_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
+			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a6");
+			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+			$wg__input_show || _resume_branch($scope2_id);
+		}, $scope1_id) });
+		_scope($scope1_id, {
+			_: _scope_with_id($scope0_id),
+			a: _existing_scope($childScope2)
+		});
+	}, $scope0_id) });
+	$scope0_page && _scope($scope0_id, {
+		j: $wi__input_show && store?.set,
+		a: _existing_scope($childScope),
+		l: $store_set__closures,
+		k: $wi__input_show && _unfilled_if($scope0_reason, 0) && $input_show__closures,
+		d: _existing_scope($childScope3)
+	});
+}, 1);

@@ -632,6 +632,11 @@ export function tryBoundary(
   catchContent: ServerRenderer | undefined,
   branchId: number,
   renderers: () => void,
+  // A patch's catch, writing its own entry: the body renders outside the
+  // branch id, nothing of it streams once caught, and nothing reorders.
+  onCatch?: (err: unknown) => void,
+  // A patch's body that settled without throwing.
+  onSettle?: () => void,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
@@ -641,14 +646,16 @@ export function tryBoundary(
   const bodyBoundary = new Boundary(state, undefined, boundary);
   if (catchContent) bodyBoundary.withinCatch = true;
   const body = chunk.fork(bodyBoundary, null);
-  const bodyEnd = body.render(withBranchId, branchId, content);
+  const bodyEnd = onCatch
+    ? body.render(content)
+    : body.render(withBranchId, branchId, content);
 
   if (bodyBoundary.aborted) {
     // Without a `@catch` the error ends the enclosing render, like any throw in it.
     if (!catchContent) throw bodyBoundary.reason;
     // Sync error. The body's already-written scopes stay in the resume payload
     // unused; a `@catch` firing is rare enough not to warrant dropping them.
-    catchContent(bodyBoundary.reason);
+    (onCatch || catchContent)(bodyBoundary.reason);
     // A rendered `@catch` is not a try, as on the client: it gets no renderers.
     return true;
   }
@@ -656,10 +663,15 @@ export function tryBoundary(
   if (body === bodyEnd) {
     // Sync success
     chunk.append(body);
+    onSettle?.();
     return false;
   }
 
-  const renderersAtSettle = !bodyBoundary.resumeWrites;
+  // Marks kept whatever the body does (a patch page's) let a patch pair the
+  // body before it settles, telling it from a catch by its renderers.
+  const renderersAtSettle =
+    !bodyBoundary.resumeWrites &&
+    !state.keepsTryMarks(chunk, boundary.resumeWrites);
   // Forked from the try's chunk: an `_await` in the body replaces the body's
   // context with a copy, on which the branch id would never restore.
   const bodyNext = (bodyEnd.next = chunk.forkRest(boundary));
@@ -668,16 +680,27 @@ export function tryBoundary(
 
   // With a catch, markers let it take the body's place once the stream reaches
   // it pending (`markCatchRange`); a body settled or caught first needs none.
-  const reorderId = catchContent ? state.nextReorderId() : "";
-  if (reorderId) {
-    chunk.catchRange = { id: reorderId, end: bodyEnd };
-    // The catch renders later, forked from this chunk.
-    captureContext(chunk);
-  }
+  const reorderId = catchContent && !onCatch ? state.nextReorderId() : "";
+  if (reorderId) chunk.catchRange = { id: reorderId, end: bodyEnd };
+  // The catch renders later, forked from this chunk.
+  if (catchContent) captureContext(chunk);
 
   bodyBoundary.onNext = () => {
     if (boundary.aborted) return;
     if (bodyBoundary.aborted) {
+      if (onCatch) {
+        if (!bodyEnd.consumed) {
+          let cut = body;
+          while (cut.consumed) cut = cut.next!;
+          cut.async = false;
+          cut.next = bodyNext;
+          cut.html = cut.scripts = cut.effects = cut.lastEffect = "";
+          cut.placeholder = cut.reorderId = cut.catchRange = null;
+        }
+        chunk.fork(boundary, null).render(onCatch, bodyBoundary.reason);
+        boundary.endAsync();
+        return;
+      }
       if (!reorderId) {
         boundary.abort(bodyBoundary.reason);
         return;
@@ -733,6 +756,7 @@ export function tryBoundary(
         bodyEnd.render(renderers);
       }
       chunk.catchRange = null;
+      if (onSettle) bodyEnd.render(onSettle);
       boundary.endAsync();
     } else {
       boundary.onNext();

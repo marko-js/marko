@@ -6,7 +6,10 @@ import { decode } from "@jridgewell/sourcemap-codec";
 import * as compiler from "@marko/compiler";
 
 import * as translator from "../translator";
-import { domRuntimeFeatures } from "../translator/util/runtime";
+import {
+  domPatchRuntimeFeatures,
+  domRuntimeFeatures,
+} from "../translator/util/runtime";
 
 const require = createRequire(import.meta.url);
 
@@ -26,10 +29,10 @@ const fixture = (name: string) =>
 describe("runtime-tags/translator-api", () => {
   describe("getRuntimeEntryFiles", () => {
     it("returns the debug runtime entries when not optimized", () => {
-      assert.deepEqual(translator.getRuntimeEntryFiles("html", false), [
+      assert.deepEqual(translator.getRuntimeEntryFiles("html", false, false), [
         "@marko/runtime-tags/debug/html",
       ]);
-      assert.deepEqual(translator.getRuntimeEntryFiles("dom", false), [
+      assert.deepEqual(translator.getRuntimeEntryFiles("dom", false, false), [
         "@marko/runtime-tags/debug/dom",
         ...domRuntimeFeatures.map(
           (feature) => `@marko/runtime-tags/debug/dom/${feature}.feat`,
@@ -38,12 +41,26 @@ describe("runtime-tags/translator-api", () => {
     });
 
     it("returns the optimized runtime entries when optimized", () => {
-      assert.deepEqual(translator.getRuntimeEntryFiles("html", true), [
+      assert.deepEqual(translator.getRuntimeEntryFiles("html", true, false), [
         "@marko/runtime-tags/html",
       ]);
-      assert.deepEqual(translator.getRuntimeEntryFiles("dom", true), [
+      assert.deepEqual(translator.getRuntimeEntryFiles("dom", true, false), [
         "@marko/runtime-tags/dom",
         ...domRuntimeFeatures.map(
+          (feature) => `@marko/runtime-tags/dom/${feature}.feat`,
+        ),
+      ]);
+    });
+
+    it("leads with each side's patch entry for a patch build", () => {
+      assert.deepEqual(translator.getRuntimeEntryFiles("html", true, true), [
+        "@marko/runtime-tags/html/patch",
+        "@marko/runtime-tags/html",
+      ]);
+      assert.deepEqual(translator.getRuntimeEntryFiles("dom", true, true), [
+        "@marko/runtime-tags/dom/patch",
+        "@marko/runtime-tags/dom",
+        ...[...domRuntimeFeatures, ...domPatchRuntimeFeatures].map(
           (feature) => `@marko/runtime-tags/dom/${feature}.feat`,
         ),
       ]);
@@ -53,9 +70,9 @@ describe("runtime-tags/translator-api", () => {
       const interop = require("marko/translator") as ReturnType<
         typeof import("../translator/interop").createInteropTranslator
       >;
-      const entries = interop.getRuntimeEntryFiles("html", false);
-      assert.ok(entries.includes("@marko/runtime-tags/debug/html"));
-      assert.ok(entries.length > 1);
+      const entries = interop.getRuntimeEntryFiles("html", false, true);
+      assert.equal(entries[0], "@marko/runtime-tags/debug/html/patch");
+      assert.ok(entries.length > 2);
     });
   });
 
@@ -72,6 +89,45 @@ describe("runtime-tags/translator-api", () => {
       },
     );
     assert.ok(code.includes('"my%20template%3b%22id%22"'), code);
+  });
+
+  it("imports the shared text patch register module", () => {
+    const { code } = compiler.compileSync(
+      "<div>${input.value}</div>",
+      path.join(import.meta.dirname, "tmp.marko"),
+      {
+        ...baseConfig,
+        cache: new Map(),
+        output: "dom",
+        entry: "page",
+        optimize: true,
+        patches: true,
+        linkAssets: { runtime: "asset-runtime", onAsset() {} },
+      },
+    );
+    assert.match(
+      code,
+      /import "@marko\/runtime-tags\/dom\/patches\/text\.feat";/,
+    );
+  });
+
+  it("compiles no build into a patch page's entry", () => {
+    const { code } = compiler.compileSync(
+      "<html><body>${input.value}</body></html>",
+      path.join(import.meta.dirname, "tmp.marko"),
+      {
+        ...baseConfig,
+        cache: new Map(),
+        output: "dom",
+        entry: "page",
+        optimize: true,
+        patches: true,
+        linkAssets: { runtime: "asset-runtime", onAsset() {} },
+      },
+    );
+    // The document's render data names the server's build instead.
+    assert.match(code, /\binit\(\)/);
+    assert.doesNotMatch(code, /build/i);
   });
 
   describe("style blocks with sourceMaps", () => {

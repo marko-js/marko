@@ -56,9 +56,13 @@ export {
   AccessorPrefix,
   AccessorProp,
   ClosureScopesProp,
+  PatchKey,
   ClosureSignalProp,
+  HeldFrameProp,
   KeyedScopesProp,
+  PatchPendingProp,
   PendingRenderProp,
+  RenderDataProp,
   RendererProp,
 } from "./accessor.debug";
 
@@ -103,6 +107,14 @@ export interface Template {
     position?: InsertPosition,
   ): MountedTemplate;
   render(input?: Input): RenderedTemplate;
+  /** Renders a patch for a request `patchRequest` answers `"patch"`, under `patchResponseHeaders`.
+   * @experimental The patch protocol may change in a minor release. */
+  patch(
+    input?: Input,
+    headers?:
+      | Record<string, string | undefined>
+      | { get(name: string): string | null },
+  ): RenderedTemplate;
 }
 
 export interface MountedTemplate {

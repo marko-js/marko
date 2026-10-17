@@ -54,10 +54,14 @@ export function createInteropTranslator(translate5: any) {
         .concat(translate5.taglibs) as Taglibs,
       translate6.taglibs as Taglibs,
     ),
-    getRuntimeEntryFiles(output: Config["output"], optimize: boolean) {
+    getRuntimeEntryFiles(
+      output: Config["output"],
+      optimize: boolean,
+      patches: boolean,
+    ) {
       return [
+        ...translate6.getRuntimeEntryFiles(output, optimize, patches),
         ...translate5.getRuntimeEntryFiles(output, optimize),
-        ...translate6.getRuntimeEntryFiles(output, optimize),
       ];
     },
   };

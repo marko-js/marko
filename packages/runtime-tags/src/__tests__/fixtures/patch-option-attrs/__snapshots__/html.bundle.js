@@ -1,0 +1,24 @@
+// template.marko
+_shells({
+	a: "a !a1;D bD b lD l ;<main><select></select><select id=plain><option value=a>A</option><option value=b>B</option></select><em> </em><button>+</button></main>",
+	a0: "a0; D ;<option> </option>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html("<main>");
+	_patch_select_value($scope0_id, "a", input.picked, void 0, () => {
+		_html("<select>");
+		_for_of(input.options, (o) => {
+			const $scope1_id = _scope_id();
+			_html(`<option${_patch_attr_option_value($scope1_id, "aa value", o.value, $scope0_reason, 1)}>${_patch_text($scope1_id, "b", o.label, void 0, $scope0_reason, 1)}</option>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 1))}`);
+			_scope($scope1_id, {});
+		}, (o) => o.id, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 1);
+		_html("</select>");
+	}, "n3a", $scope0_reason, 0);
+	_html(`${_el_resume($scope0_id, "a")}<select id=plain><option${_attr_option_value("a")}${_patch_attr($scope0_id, "ab selected", "selected", input.pick === "a", $scope0_reason, 2)}>A</option>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 2))}<option${_attr_option_value("b")}${_patch_attr($scope0_id, "ac selected", "selected", input.pick === "b", $scope0_reason, 2)}>B</option>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 2))}</select><em>${_text_resume($scope0_id, "d", count)}</em><button>+</button>${_el_resume($scope0_id, "e")}</main>`);
+	_script($scope0_id, "a1");
+	_patch_value($scope0_id, "va2", count, 1);
+	$scope0_page && _scope($scope0_id, { k: count });
+}, 1);

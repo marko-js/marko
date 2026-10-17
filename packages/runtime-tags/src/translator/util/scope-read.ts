@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-import { type Binding, BindingType } from "./bindings";
+import { type Binding, BindingType, getCanonicalBinding } from "./bindings";
 import { generateUidIdentifier } from "./generate-uid";
 import { getAccessorProp } from "./get-accessor-enums";
 import { isOutputDOM } from "./marko-config";
@@ -39,6 +39,9 @@ export function createScopeReadExpression(
   reference: Binding,
   section = reference.section,
 ) {
+  if (reference.type === BindingType.global) {
+    return createGlobalReadExpression(reference);
+  }
   const expr = toMemberExpression(
     getScopeExpression(section, reference.section),
     getScopeAccessor(reference),
@@ -50,4 +53,26 @@ export function createScopeReadExpression(
     exprExtra.section = section;
   }
   return expr;
+}
+
+// A keyed `$global` read: its keys under the globals object every scope shares,
+// which is never nullish.
+function createGlobalReadExpression(
+  binding: Binding,
+): t.MemberExpression | t.OptionalMemberExpression {
+  const { aliasOf, property } = getCanonicalBinding(binding)!;
+  if (!aliasOf) {
+    return t.memberExpression(
+      scopeIdentifier,
+      t.identifier(getAccessorProp().Global),
+    );
+  }
+  const object = createGlobalReadExpression(aliasOf);
+  return property === undefined
+    ? object
+    : toMemberExpression(
+        object,
+        property,
+        aliasOf.nullable && !!aliasOf.aliasOf,
+      );
 }

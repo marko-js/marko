@@ -10,22 +10,34 @@ import {
 import type { LoadTrigger } from "../../html/assets";
 import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
 import { generateUid, getUnusedParamIdentifier } from "../util/generate-uid";
-import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPage,
+  isPatch,
+} from "../util/marko-config";
 import {
   resolveRegisteredExport,
   trackImport,
   trackImportedTemplate,
 } from "../util/module-registrations";
+import { hasStateSource } from "../util/patch/decisions";
+import { patchCreates } from "../util/patch/refresh";
+import { getAllTagReferenceNodes } from "../util/references";
 import {
+  linkRuntimeFeature,
   callRuntime,
   dynamicImport,
   importRuntime,
   importRuntimeFeature,
 } from "../util/runtime";
+import { getSection } from "../util/sections";
 import { createOutputState } from "../util/state";
 import {
   getImportFacts,
   getLoadAttr,
+  type LoadImportConfig,
   trackTagImport,
 } from "../util/tag-import";
 import { getLiteralName, toMemberExpression } from "../util/to-property-name";
@@ -39,6 +51,46 @@ declare module "@marko/compiler/dist/types" {
 }
 
 const [getHtmlLoadWrapped] = createOutputState(() => new Map<string, string>());
+
+// Whether only scopes a patch creates render a page's import: no tag naming it
+// derives from state, and a document root never renders on the client.
+export function isCreatedOnlyLoad(loadImport: LoadImportConfig) {
+  return getCreatedOnlyLoads().has(loadImport);
+}
+
+// Decided at the first ask, before any load import translates its
+// references away (imports translate ahead of the tags naming them).
+const [getCreatedOnlyLoads] = createOutputState(() => {
+  const loads = new Set<LoadImportConfig>();
+  if (!isPatch() || !isPage()) return loads;
+  const program = getProgram();
+  for (const node of program.node.body) {
+    if (node.type !== "ImportDeclaration") continue;
+    const loadImport = node.extra?.loadImport;
+    if (!loadImport?.render) continue;
+    // Analyze allows a load import its default specifier alone.
+    const { local } = node.specifiers[0];
+    // A trigger keeps its channel, so a navigation never forces a load; an
+    // import's uses (tag names, values passed along) are its references.
+    if (
+      program.scope.getBinding(local.name)!.referencePaths.every(
+        (ref) =>
+          // Only a tag name renders it; a value (an alias, a ternary) is
+          // client code that reads the binding.
+          ref.parent.type === "MarkoTag" &&
+          ref.parent.name === ref.node &&
+          patchCreates(getSection(ref)) &&
+          // A tag deriving from state re-renders on the client.
+          !getAllTagReferenceNodes(ref.parent).some((node) =>
+            hasStateSource(node.extra),
+          ),
+      )
+    ) {
+      loads.add(loadImport);
+    }
+  }
+  return loads;
+});
 
 export default {
   analyze(importDecl) {
@@ -104,6 +156,12 @@ export default {
         );
       }
 
+      // A flush revealing the tag waits for its module and may reference
+      // binds: the page needs both features, interactive or not.
+      if (isPatch()) {
+        linkRuntimeFeature("patches/ready");
+        linkRuntimeFeature("patches/bind");
+      }
       const file = getFile();
 
       const loadFile = tagImport && loadFileForImport(file, value);
@@ -159,6 +217,12 @@ export default {
             node.attributes = undefined;
             return;
           } else {
+            // Flushes name a server-only template, whose loader the page's
+            // entry registers: no client code here renders it.
+            if (isCreatedOnlyLoad(loadImport)) {
+              importDecl.remove();
+              return;
+            }
             const onlyLoadTagReferences = binding.referencePaths.every(
               (ref) =>
                 t.isMarkoTag(ref.parent) && ref.parent.extra?.tagNameLoad,

@@ -38,7 +38,9 @@ import { getReasonForBinding } from "./solve-reasons";
 import { ALWAYS, mergeSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
 import { getTagContentType, getTagFacts } from "./tag-facts";
+import { type LoadImportConfig } from "./tag-import";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
+import { getSectionWriteReason, getSlotWriteReason } from "./write-guard";
 
 // A set of the section's params that reasons wait on together; each
 // call site passes whether the group changed.
@@ -99,6 +101,9 @@ export interface StructureChild {
   name: string;
   binding: Binding;
   renderer?: StructureRef;
+  // A lazy child: its import's load config. It renders at the marker before
+  // it, which the walk steps over.
+  load?: LoadImportConfig;
 }
 
 // A module read written into the markup, read when the module loads.
@@ -132,6 +137,9 @@ export interface Section {
   /** When client code reads anything in its scope: its slots' reasons merged. */
   reason: undefined | Reason;
   paramReasonGroups: ParamReasonGroups | undefined;
+  /** Its params a branch expression derives from, here or in a child they are
+   * passed to (structural params). */
+  structuralParams: SortedOpt<Binding> | undefined;
   returnValueExpr: t.NodeExtra | undefined;
   isHoistThrough: true | undefined;
   branchExpr: t.NodeExtra | undefined;
@@ -140,6 +148,9 @@ export interface Section {
   callSections: SortedOpt<Section>;
   /** The known tags rendering in it, in analyze order. */
   knownTags: t.MarkoTagExtra[] | undefined;
+  /** Its `$global`: a signal-inert root binding, made on its first read. Every
+   * scope holds the globals object, so no section closes over another's. */
+  globalBinding: Binding | undefined;
   /** The content's rendering tag (its extra), and each child binding that
    * derives from the content, at `properties`. */
   derives:
@@ -153,9 +164,9 @@ export interface Section {
   /** Content a known child never reads, which no output renders. */
   dropped: boolean;
   hasAbortSignal: boolean;
-  /** Count of distinct `$signal` expression roots; analyze allocates each
-   * root's abort id from this so translates read, never re-derive. */
-  abortSignalExprs: number;
+  /** Each distinct `$signal` expression root, at its abort id; analyze
+   * allocates the ids so translates read, never re-derive. */
+  abortSignalExprs: t.NodeExtra[] | undefined;
   readsOwner: boolean;
   /** Whether analysis found work keyed by setup in the section, or in a
    * `<define>` body or template it calls in place. */
@@ -168,8 +179,29 @@ export interface Section {
         optional: boolean;
         /** An `<if>` branch's place in its chain, the renderer index it renders as. */
         index?: number;
+        /** An `<await>`'s body. */
+        await?: true;
       }
     | undefined;
+  /** A `<try>`'s `@catch` or `@placeholder`: content that always
+   * registers, so its slot names it by id. A patch renders a `@catch`. */
+  boundaryContent: false | "catch" | "placeholder";
+  /** Where it sits among the sections around it, once bindings resolve. */
+  enclosing: {
+    /** On the branch path: no dropped content or boundary content reading no
+     * params around it. */
+    branchPath: boolean;
+    /** Content a consumer or a `<try>` renders encloses it (inclusive). */
+    inContentSection: boolean;
+    /** The nearest section around it (inclusive) that is no optional branch:
+     * only a chain of optional branches composes per-hop closure builders. */
+    nonOptionalAncestor: Section;
+    /** The nearest `<await>` or `<try>` body around it (inclusive). */
+    boundaryBody: Section | undefined;
+  };
+  /** A content body shipped as a shell, created by id from a dynamic tag
+   * entry. */
+  contentShell: boolean;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -240,18 +272,23 @@ export function ensureBodySection(
       slots: undefined,
       reason: undefined,
       paramReasonGroups: undefined,
+      structuralParams: undefined,
       returnValueExpr: undefined,
       content: getContentInfo(path),
       branchExpr: undefined,
       callSections: undefined,
       knownTags: undefined,
+      globalBinding: undefined,
       derives: undefined,
       dropped: !!extra.dropped,
       hasAbortSignal: false,
-      abortSignalExprs: 0,
+      abortSignalExprs: undefined,
       readsOwner: false,
       hasSetupWork: false,
       branch: undefined,
+      boundaryContent: false,
+      enclosing: undefined as unknown as Section["enclosing"],
+      contentShell: false,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     if (parentSection) {
@@ -289,6 +326,36 @@ export function getSectionForBody(
   return body.node.extra?.section;
 }
 
+// Where each section sits among those around it, recorded parents first once
+// bindings resolve.
+export function finalizeEnclosing(section: Section) {
+  const enclosing = section.parent?.enclosing;
+  section.enclosing = enclosing
+    ? {
+        branchPath:
+          enclosing.branchPath &&
+          !section.dropped &&
+          !(
+            section.boundaryContent &&
+            (!section.params || section.params.pruned)
+          ),
+        inContentSection:
+          enclosing.inContentSection ||
+          (!section.branch && (!!section.derives || !!section.boundaryContent)),
+        nonOptionalAncestor: section.branch?.optional
+          ? enclosing.nonOptionalAncestor
+          : section,
+        boundaryBody:
+          section.branch?.optional === false ? section : enclosing.boundaryBody,
+      }
+    : {
+        branchPath: true,
+        inContentSection: false,
+        nonOptionalAncestor: section,
+        boundaryBody: undefined,
+      };
+}
+
 // Content analysis dropped is rendered by no output, so translate never visits it.
 // Attribute tags are inputs, not content: an unread one is removed on its own.
 export function removeDroppedContent(tag: t.NodePath<t.MarkoTag>) {
@@ -318,6 +385,16 @@ export const [getBranchRendererArgs, setBranchRendererArgs] =
       params?: t.Expression,
     ]
   >();
+
+// The `<for>` body rendered at a node, once per item: an optional branch
+// outside an `<if>` chain, which numbers its branches.
+export function getLoopBody(binding: Binding) {
+  return find(binding.branchBodies, isLoopBody);
+}
+
+function isLoopBody(section: Section) {
+  return !!section.branch?.optional && section.branch.index === undefined;
+}
 
 export function forEachSection(fn: (section: Section) => void) {
   const { sections } = getProgram().node.extra;
@@ -544,19 +621,33 @@ export function getCommonSection(section: Section, other: Section) {
   return a;
 }
 
+// A group gates what a write reason leaves conditional; a write reason is
+// conditional only where the reason is (patch keying adds `always`).
 export function ensureSectionReasonGroups(section: Section) {
-  ensureReasonGroups(section.reason);
-
+  if (isConditionalReason(section.reason)) {
+    ensureReasonGroups(getSectionWriteReason(section));
+  }
   forEach(section.slots, ensureSlotReasonGroups);
 }
 
 function ensureSlotReasonGroups(slot: Slot) {
-  ensureReasonGroups(slot.reason);
+  if (isConditionalReason(slot.reason)) {
+    ensureReasonGroups(getSlotWriteReason(slot));
+  }
 }
 
 export function ensureReasonGroups(reason: Section["reason"]) {
   if (isConditionalReason(reason)) {
     forEachParamGroup(reason.param, ensureParamReasonGroup);
+  }
+}
+
+// A patch write asks who feeds it of each group its callers pass.
+export function ensureCallerParamGroups(sources: Sources | undefined) {
+  if (isConditionalReason(sources)) {
+    for (const [section, group] of getCallerParamGroups(sources.param)) {
+      ensureParamReasonGroup(section, group);
+    }
   }
 }
 
@@ -591,6 +682,50 @@ export function forEachParamGroup(
   bindingUtil.forEachRun(params, bindingToSection, sectionUtil.compare, fn);
 }
 
+// Each group of params a caller passes (`isKnownChild`), with its section:
+// the call's mask reports who feeds it at render.
+export function getCallerParamGroups(params: Sources["param"]) {
+  return reduceParamGroups(
+    params,
+    addCallerParamGroup,
+    [] as [Section, ParamReasonGroup][],
+  );
+}
+
+function addCallerParamGroup(
+  groups: [Section, ParamReasonGroup][],
+  section: Section,
+  group: ParamReasonGroup,
+) {
+  if (isKnownChild(section)) groups.push([section, group]);
+  return groups;
+}
+
+// A template's root, or a `<define>` body its direct calls render: each call
+// passes its params, as a known tag passes a child template's.
+export function isKnownChild(section: Section) {
+  return !section.parent || !!section.callSections;
+}
+
+// The caller groups a write in `section` gates on (`isCallerParamAt`).
+export function getCallerParamGroupsAt(
+  params: Sources["param"],
+  section: Section,
+) {
+  return getCallerParamGroups(params).filter(([body]) =>
+    isSameOrAncestorSection(body, section),
+  );
+}
+
+// Whether a write in `section` gates on the param's group: a caller passes it
+// to `section` or a body around it, whose scope reason `section` reads.
+export function isCallerParamAt(param: Binding, section: Section) {
+  return (
+    isKnownChild(param.section) &&
+    isSameOrAncestorSection(param.section, section)
+  );
+}
+
 export function reduceParamGroups<R>(
   params: Sources["param"],
   fn: (acc: R, section: Section, group: ParamReasonGroup) => R,
@@ -605,7 +740,7 @@ export function reduceParamGroups<R>(
   );
 }
 
-function bindingToSection(binding: Binding) {
+export function bindingToSection(binding: Binding) {
   return binding.section;
 }
 

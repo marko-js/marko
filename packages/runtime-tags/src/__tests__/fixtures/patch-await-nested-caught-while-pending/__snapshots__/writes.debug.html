@@ -1,0 +1,60 @@
+<button>0<!--M_$1 #text/1--></button><!--M_$1 #button/0--><!--M_[--><!--M_!^3--><em>outer
+  loading</em><!--M_!3--><!--M_]1 #text/2 3--><!--M_[--><span
+  id=last>a<!--M_$4 #text/0-->
+  <!>l<!--M_$4 #text/1-->
+</span><!--M_]1 #text/3 4-->
+<t hidden M_=3><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [1, {
+      count: 0
+    }, 1, {
+      _: _(1),
+      "#PlaceholderContent": _._[
+        "packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-caught-while-pending/template.marko_6*content"
+        ]
+    }], _ => [4, {
+      _: _(1),
+      "ClosureSignalIndex:input_msg/12": 2
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-caught-while-pending/template.marko_0 1"
+  ];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[-->
+  <div id=outer>a<!--M_$6 #text/0-->
+    <!>o<!--M_$6 #text/1-->
+  </div><!--M_[--><!--M_!^c--><!--M_!^8--><em>inner
+    loading</em><!--M_!8--><!--M_!c--><!--M_]6 #text/2 8--><!--M_]3 #text/0 6-->
+</t>
+<t hidden M_=8><!--M_#d--></t>
+<script>
+  M._.r.push(_ => [6, {
+    _: _(3)
+  }, 1, {
+    _: _(6),
+    "#CatchContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-caught-while-pending/template.marko_8*content"
+      ],
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-caught-while-pending/template.marko_7*content"
+      ]
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d></t>
+<t hidden M_=c><!--M_*8--><em>inner failed</em></t>
+<script>
+  M._.r.push(_ => [8, {
+    "#CatchContent": 0,
+    "#PlaceholderContent": 0
+  }]);
+  M._.w()
+</script>

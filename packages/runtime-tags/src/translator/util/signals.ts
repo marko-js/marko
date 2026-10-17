@@ -20,16 +20,58 @@ import {
   type Intersection,
   isDirectAlias,
   isRest,
+  isTemplateParam,
   type ReferencedBindings,
   someAlias,
+  someReadIn,
 } from "./bindings";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
-import { isOptimize, isOutputHTML } from "./marko-config";
-import { forEach, type Opt, push, reduce, some } from "./optional";
+import { isOptimize, isOutputHTML, isPatch } from "./marko-config";
+import {
+  every,
+  filter,
+  forEach,
+  last,
+  type Opt,
+  push,
+  reduce,
+  some,
+} from "./optional";
+import {
+  initsCreatedJoin,
+  fillJoinsIn,
+  getPatchFillKey,
+  getSectionGlobalReads,
+  getCallerHeldSources,
+  hasUnfillableGlobalJoinReads,
+  getPatchFill,
+  getPatchWrite,
+  createsWithInit,
+  keepsInit,
+  fillSubscribes,
+  getClosureReadSources,
+  isResumedRead,
+  patchCreates,
+  closureCarriesFill,
+  rerunsEffectOnPatch,
+} from "./patch/refresh";
+import {
+  patchWrites,
+  getCallerOwnedStructure,
+  inStatefulBranch,
+  patchesBranchesAt,
+} from "./patch/structure";
+import {
+  getClosureScopesIfWritten,
+  getPatchWriteOwnership,
+  getUnfilledValueIfWritten,
+  orCallerGroupGuards,
+  writePatchResumeStatements,
+} from "./patch/writers";
 import { getReadReplacement } from "./read-replacement";
 import {
   getNodeReasons,
@@ -41,11 +83,17 @@ import {
   type AssignedBindingExtra,
   getReferencedBindings,
   getReferencedBindingsInFunction,
+  getGlobalKey,
   hasResumableAssignment,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
+  getLazyBindings,
 } from "./references";
-import { callRuntime, registerRuntimeValue } from "./runtime";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  registerRuntimeValue,
+} from "./runtime";
 import {
   getClosureAccessorLiteral,
   getLocalsScopeAccessor,
@@ -68,15 +116,18 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  isKnownChild,
   isDynamicClosure,
   isInParentSection,
   isOptionalBranch,
   type Section,
   sectionUtil,
 } from "./sections";
+import { isQueuedOnCreate, registerShellInit, wrapShellJoin } from "./shell";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
-import { createOutputState, createOutputSectionState } from "./state";
+import { mergeSources, type Sources } from "./sources";
+import { createOutputSectionState, createOutputState } from "./state";
 import { toOnlyExpressionOrBlock } from "./to-only-or-block";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
 import { getRestPattern, withRestFallback } from "./translate-var";
@@ -87,6 +138,9 @@ import {
   getWriteGuardForAny,
   getWriteReason,
   isSameReason,
+  scopePageIdentifier,
+  getSlotWriteReason,
+  getSectionWriteReason,
 } from "./write-guard";
 import { flushInto } from "./writer";
 
@@ -95,7 +149,8 @@ export interface Signal {
   referencedBindings: ReferencedBindings;
   section: Section;
   build: undefined | (() => t.Expression | undefined);
-  register?: boolean;
+  // A registration resuming the signal by id; a patch's fill takes it too.
+  register?: boolean | "fill";
   // Other emitted statements reference this signal's identifier directly (eg
   // the `_var` setup call), so even an empty signal keeps its declaration.
   referenced?: boolean;
@@ -109,6 +164,13 @@ export interface Signal {
    * forward simplifies to a bare, eagerly evaluated reference. */
   forwards: Opt<Signal>;
   render: t.Statement[];
+  /** Renders a patch does itself (its hole writes, forwards into work it
+   * renders): a client render needs them, a fill's run does not. */
+  patch: t.Statement[];
+  /** Whether a patch renders every render of this signal (`patchRenders`). */
+  patchRendered?: boolean;
+  /** A fill's run when it differs from the render (`render` without `patch`). */
+  fillFn: t.Expression | undefined;
   effect: t.Statement[];
   hasHTMLEffect: boolean;
   storesValue: boolean;
@@ -122,9 +184,12 @@ export interface Signal {
     | undefined;
 }
 
+// `shellInitId` (patch pages only) is the init a body a flush creates runs
+// the closure by, so the signal builds as its `_shell_` registering twin.
 type closureSignalBuilder = (
   closure: Binding,
   render: t.Expression,
+  shellInitId?: string,
 ) => t.Expression;
 // Structured facts about a branch section's closure hop: what kind of
 // branch it is and which node binding (plus branch index) addresses it.
@@ -134,22 +199,35 @@ export type ClosureHop =
 export const [getSignals] = createOutputSectionState<Map<unknown, Signal>>(
   () => new Map(),
 );
-const [getClosureSignalBuilder, _setClosureSignalBuilder] =
-  createOutputSectionState<closureSignalBuilder | undefined>();
+const [getClosureSignal, _setClosureSignal] = createOutputSectionState<
+  { hop: ClosureHop; build: closureSignalBuilder } | undefined
+>();
 export function setClosureSignalBuilder(
   tag: t.NodePath<t.MarkoTag>,
   hop: ClosureHop,
-  build: closureSignalBuilder = (_closure, render) =>
-    buildClosureHop(hop, render),
+  build: closureSignalBuilder = (_closure, render, shellInitId) =>
+    buildClosureHop(hop, render, shellInitId),
 ) {
-  _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, build);
+  _setClosureSignal(getSectionForBody(tag.get("body"))!, { hop, build });
 }
 
-export function buildClosureHop(hop: ClosureHop, render: t.Expression) {
+export function buildClosureHop(
+  hop: ClosureHop,
+  render: t.Expression,
+  shellInitId?: string,
+) {
   const accessor = getScopeAccessorLiteral(hop.nodeBinding, true);
-  return hop.kind === "if"
-    ? callRuntime("_if_closure", accessor, t.numericLiteral(hop.index), render)
-    : callRuntime("_for_closure", accessor, render);
+  return registerShellInit(
+    shellInitId,
+    hop.kind === "if"
+      ? callRuntime(
+          "_if_closure",
+          accessor,
+          t.numericLiteral(hop.index),
+          render,
+        )
+      : callRuntime("_for_closure", accessor, render),
+  );
 }
 
 // A branch section whose scope ids ride a resume marker carrying the parent scope
@@ -205,14 +283,14 @@ function mayBeUnwritten(closure: Binding) {
   return !isUnconditionalReason(getWriteReason(closure));
 }
 
-const [getScopeProperties] = createOutputSectionState<
+export const [getScopeProperties] = createOutputSectionState<
   Map<string, { expression: t.Expression; reason: Reason }>
 >(() => new Map());
 export function writeSlot(
   slot: PlaceSlot | undefined,
   expression: t.Expression,
 ) {
-  const reason = slot?.reason;
+  const reason = getSlotWriteReason(slot);
   if (reason) {
     const accessor = getSlotAccessor(slot!);
     getScopeProperties(slot!.section).set(accessor, {
@@ -339,6 +417,8 @@ export function getSignal(
         intersections: undefined,
         forwards: undefined,
         render: [],
+        patch: [],
+        fillFn: undefined,
         effect: [],
         hasHTMLEffect: false,
         build: undefined,
@@ -348,6 +428,7 @@ export function getSignal(
           (Array.isArray(referencedBindings) ||
             referencedBindings.type === BindingType.dom ||
             referencedBindings.type === BindingType.let ||
+            referencedBindings.type === BindingType.global ||
             referencedBindings.section !== section ||
             referencedBindings.closureSections ||
             referencedBindings.hoists ||
@@ -394,31 +475,64 @@ export function getSignal(
       signal.build = () => {
         const closure = referencedBindings;
         const render = buildSignalFn(signal);
-        const closureSignalBuilder = getClosureSignalBuilder(section);
+        const closureSignal = getClosureSignal(section);
+        // A body a flush creates runs the closure by its init: one a shell names
+        // (`keepsInit`) is always kept; a subscriber subscribes by its resume id.
+        const createdInit = createsWithInit(section, closure);
+        const shellInitId =
+          createdInit && keepsInit(section, closure)
+            ? getResumeRegisterId(section, closure, "init")
+            : undefined;
 
-        if (closureSignalBuilder && !isDynamicClosure(section, closure)) {
-          return closureSignalBuilder(closure, render);
+        if (closureSignal && !isDynamicClosure(section, closure)) {
+          return closureSignal.build(closure, render, shellInitId);
         }
 
-        return callRuntime(
+        const changeable = isChangeableDynamicClosure(section, closure);
+        const subscribesInit = createdInit && !shellInitId;
+        const fillKey = isPatch() && getClosureFillKey(section, closure);
+        // Keyed by this subscriber's section, as the HTML registration is; a
+        // created scope's init names the same id, subscribing as a resume does.
+        const resumeId =
+          (changeable || subscribesInit) &&
+          t.stringLiteral(getResumeRegisterId(section, closure, "subscribe"));
+        // A flush names a created subscriber's id whether or not client code
+        // reaches it, so its registration ships it.
+        const patchResumed =
+          subscribesInit && changeable && fillSubscribes(closure, section);
+        // Built trimmed: the signal's writer trims only the outermost call,
+        // which a wrapper around the subscriber becomes.
+        let closureGet = callRuntime(
           "_closure_get",
-          getClosureAccessorLiteral(closure),
-          render,
-          isInParentSection(closure, section)
-            ? undefined
-            : t.arrowFunctionExpression(
-                [scopeIdentifier],
-                getScopeExpression(section, closure.section),
-              ),
-          // Match the HTML registration, which is gated on this subscriber
-          // section (writeHTMLResumeStatements); keying on any sibling closure
-          // section would ship a subscribe id that nothing looks up.
-          isChangeableDynamicClosure(section, closure)
-            ? t.stringLiteral(
-                getResumeRegisterId(section, closure, "subscribe"),
-              )
-            : undefined,
+          ...trimEmptyArgs([
+            getClosureAccessorLiteral(closure),
+            render,
+            isInParentSection(closure, section)
+              ? undefined
+              : t.arrowFunctionExpression(
+                  [scopeIdentifier],
+                  getScopeExpression(section, closure.section),
+                ),
+            !patchResumed && resumeId,
+          ]),
         );
+        if (fillKey) {
+          // Deep closure positions reassemble the indexed composite via a
+          // shared per-key table, keyed by the serialized index.
+          closureGet = callRuntime(
+            "_fill_join_closure",
+            fillKey,
+            getScopeAccessorLiteral(closure, true),
+            closureGet,
+            t.numericLiteral(getDynamicClosureIndex(closure, section)),
+          );
+        }
+        if (patchResumed) {
+          closureGet = callRuntime("_closure_resume", resumeId, closureGet);
+        }
+        return subscribesInit
+          ? closureGet
+          : registerShellInit(shellInitId, closureGet);
       };
     }
   }
@@ -432,8 +546,106 @@ function isChangeableDynamicClosure(section: Section, closure: Binding) {
   return (
     !!sources &&
     isDynamicClosure(section, closure) &&
-    (!sources.state || some(sources.state, hasResumableAssignment))
+    (!sources.state || some(sources.state, hasResumableAssignment)) &&
+    shipsClosureScopes(closure)
   );
+}
+
+// A resumed subscriber joins its owner's set, which a patch page ships only
+// where analysis gave it a reason (never for a value read for `$global` alone).
+function shipsClosureScopes(closure: Binding) {
+  return !!findSlot(closure, SlotKind.ClosureScopes)?.reason;
+}
+
+// A dynamic content shell elides the chain's dom renderers, and with them the
+// `_closure_get` subscribe registration; a known child's direct calls keep both.
+function inShellChain(section: Section) {
+  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
+    if (cur.contentShell === true && !isKnownChild(cur)) return true;
+  }
+  return false;
+}
+
+// Setup renders a keyed `$global` read from the shared globals object; a
+// resumed scope keeps the server's rendering (joins: `writeSignals`).
+function initGlobalRead(binding: Binding) {
+  const { section } = binding;
+  const signal = getSignal(section, binding);
+  // Setup calls it even when its own work collapsed into an intersection.
+  signal.referenced = true;
+  signal.build = () => buildSignalFn(signal);
+  addValue(section, undefined, signal);
+}
+
+// Joins a changed `$global` key queues on `section` (for a closure, its owner):
+// `true` if resumed code renders the read, else the sources the client may own.
+export function getGlobalJoins(section: Section) {
+  const joins = new Map<string, true | Sources | undefined>();
+  if (isPatch()) {
+    forEach(section.bindings, (binding) => {
+      if (binding.type !== BindingType.global) return;
+      for (const read of binding.reads.keys()) {
+        // A function reading it when invoked reads the globals object live.
+        if (bindingUtil.has(getLazyBindings(read), binding)) continue;
+        const refs = getReferencedBindings(read);
+        // A signal derived from a server value the client never receives is
+        // server-computed.
+        if (hasUnfillableGlobalJoinReads(refs, section)) continue;
+        const unfilled = getCallerHeldSources(refs) || isResumedRead(read);
+        const id = getResumeRegisterId(
+          section,
+          Array.isArray(refs) ? refs : binding,
+        );
+        const prev = joins.get(id);
+        joins.set(
+          id,
+          prev === true || unfilled === true
+            ? true
+            : mergeSources(prev, unfilled || undefined),
+        );
+      }
+    });
+  }
+  return joins;
+}
+
+// The `$global` keys a signal joins; none when it also derives from a server
+// value the client never receives (server-computed: a patch fills it).
+function getGlobalJoinKeys(signal: Signal) {
+  let keys: string[] | undefined;
+  forEach(signal.referencedBindings, (ref) => {
+    // An opaque read (`$global` whole) joins every key, as `""`.
+    if (ref.type === BindingType.global) {
+      (keys ||= []).push(getGlobalKey(ref) ?? "");
+    }
+  });
+  return keys &&
+    !hasUnfillableGlobalJoinReads(signal.referencedBindings, signal.section)
+    ? keys
+    : undefined;
+}
+
+// Wraps a signal reading `$global` keys as each key's join: pure, so the
+// consumer's own retention decides whether a changed key has a reader.
+function wrapGlobalJoins(
+  signal: Signal,
+  keys: string[] | undefined,
+  value: t.Expression,
+): t.Expression {
+  let expr = value;
+  if (keys) {
+    // The effect's register id, under which its registration joins these keys.
+    const id = getResumeRegisterId(signal.section, signal.referencedBindings);
+    for (const key of keys) {
+      expr = callRuntime(
+        "_fill_global_join",
+        t.stringLiteral(key),
+        t.stringLiteral(id),
+        expr,
+      );
+    }
+  }
+  return expr;
 }
 
 export function initValue(binding: Binding, isLet = false) {
@@ -442,11 +654,44 @@ export function initValue(binding: Binding, isLet = false) {
   // Lazy reads read the value from its scope slot.
   if (binding.hasLazyReads) signal.forceStore = true;
   signal.build = () => {
+    // A value a patch writes in place takes the write patcher.
+    if (isPatch() && getPatchWrite(binding).write) {
+      importRuntimeFeature("patches/write");
+    }
     if (isPureMemberForwarder(binding)) {
       return undefined;
     }
 
+    // A fill runs from its scope slot, never as a value forwarder.
+    const fills = isPatch() && getPatchFill(binding).fillsReads;
+    if (fills) signal.storesValue = true;
     const fn = buildSignalFn(signal);
+    const helper = isLet
+      ? signal.extraArgs
+        ? "_let_change"
+        : "_let"
+      : "_const";
+    // A fill binding's own declaration doubles as its fill registration
+    // (even a pure forwarder); renders the flush writes itself stay out.
+    if (fills) {
+      const { fillsWithoutStructure, ownRegistration } = getPatchFill(binding);
+      // A fill no caller-owned structure re-renders applies by its patcher;
+      // one only caller-owned structure or a join needs rides the call site's.
+      if (fillsWithoutStructure) importRuntimeFeature("patches/value");
+      const key = t.stringLiteral(getPatchFillKey(binding));
+      const accessor = getScopeAccessorLiteral(binding, true, isLet);
+      // Where only the key reaches it, the fill's registration ships it and
+      // its value signal stays pure; elsewhere what reaches the signal does.
+      return ownRegistration
+        ? callRuntime(
+            "_fill_resume",
+            key,
+            callRuntime(helper, ...trimEmptyArgs([accessor, fn])),
+            signal.fillFn && getScopeAccessorLiteral(binding, true),
+            signal.fillFn,
+          )
+        : callRuntime(`_fill${helper}`, key, accessor, fn, signal.fillFn);
+    }
     if (
       !signal.forceStore &&
       (isDirectAlias(binding) ||
@@ -458,7 +703,7 @@ export function initValue(binding: Binding, isLet = false) {
     }
 
     return callRuntime(
-      isLet ? (signal.extraArgs ? "_let_change" : "_let") : "_const",
+      helper,
       getScopeAccessorLiteral(binding, true, isLet),
       fn,
     );
@@ -483,6 +728,7 @@ export function signalHasWork(signal: Signal): boolean {
     signal.extraArgs ||
     signal.forceStore ||
     signal.render.length ||
+    signal.patch.length ||
     signal.effect.length ||
     signal.hasHTMLEffect ||
     signal.values.length ||
@@ -518,12 +764,128 @@ function isPureMemberForwarder(binding: Binding): boolean {
     binding.assignments ||
     isForSelectorValue(binding) ||
     findSlot(binding)?.reason ||
-    getSignal(binding.section, binding).storesValue
+    // A `$global` member reads the globals object, never a stored value.
+    (binding.type !== BindingType.global &&
+      getSignal(binding.section, binding).storesValue)
   ) {
     return false;
   }
 
   return hasNonConstantPropertyAlias(binding);
+}
+
+// `1` where a created scope's renders queue the effect, else whether a client group feeds a
+// value a patch writes for it (`0` if none does), or undefined where it reads none.
+function getEffectClientGuard(section: Section, refs: ReferencedBindings) {
+  if (isQueuedOnCreate(section, refs)) return t.numericLiteral(1);
+  const read = filter(refs, rerunsEffectOnPatch);
+  if (read) {
+    return (
+      orCallerGroupGuards(
+        section,
+        undefined,
+        "_client_guard",
+        reduce(read, pushCanonicalSources),
+      ) || t.numericLiteral(0)
+    );
+  }
+}
+
+function pushCanonicalSources(list: Opt<Sources>, binding: Binding) {
+  const { sources } = getCanonicalBinding(binding);
+  return sources ? push(list, sources) : list;
+}
+
+// A forward a patch renders is a patch statement, like a hole it writes.
+function forwardsTo(signal: Signal, target: Signal) {
+  return isPatch() && patchRendersInto(target) ? signal.patch : signal.render;
+}
+
+// A patch render runs a signal when every render is a hole it writes or a
+// forward it runs (a cycle resolves as the client's).
+function patchRenders(signal: Signal): boolean {
+  if (signal.patchRendered === undefined) {
+    signal.patchRendered = false;
+    signal.patchRendered = patchesStructure(signal) || !hasClientRender(signal);
+  }
+  return signal.patchRendered;
+}
+
+// A loop or branch chain a patch renders whenever it writes the scope: the
+// signal's binding is the node its optional bodies render at.
+function patchesStructure({ referencedBindings }: Signal) {
+  return (
+    !!referencedBindings &&
+    !Array.isArray(referencedBindings) &&
+    some(referencedBindings.branchBodies, isOptionalBranch) &&
+    patchesBranchesAt(referencedBindings)
+  );
+}
+
+// A patch renders a forward into a value it fills itself as well.
+function patchRendersInto(target: Signal) {
+  const binding = target.referencedBindings;
+  return (
+    patchRenders(target) ||
+    (!!binding &&
+      !Array.isArray(binding) &&
+      binding.section === target.section &&
+      getPatchFill(binding).fillsReads)
+  );
+}
+
+function hasClientRender(signal: Signal): boolean {
+  if (
+    signal.extraArgs ||
+    signal.register ||
+    signal.effect.length ||
+    signal.hasHTMLEffect ||
+    signal.render.length ||
+    signal.values.some(isClientRenderedValue) ||
+    !every(signal.intersections, patchRenders)
+  ) {
+    return true;
+  }
+  const binding = signal.referencedBindings;
+  if (binding) {
+    return (
+      !Array.isArray(binding) &&
+      (binding.type === BindingType.dom ||
+        // Only the binding's own signal runs its closure signals; a closure
+        // signal is itself one of them, so checking there would find itself.
+        (binding.section === signal.section &&
+          (some(
+            binding.closureSections,
+            (closureSection) =>
+              !patchRenders(getSignal(closureSection, binding)),
+          ) ||
+            !!binding.hoists ||
+            hasClientRenderedAlias(binding))))
+    );
+  }
+  return !!signal.section.referencedClosures;
+}
+
+function isClientRenderedValue({ signal }: Signal["values"][number]) {
+  return !signal.inline && !patchRendersInto(signal);
+}
+
+// A whole or property alias a client render reaches (not a constant).
+function hasClientRenderedAlias(binding: Binding) {
+  for (const alias of binding.aliases) {
+    if (isClientRenderedAlias(alias)) return true;
+  }
+  for (const alias of binding.propertyAliases.values()) {
+    if (isClientRenderedAlias(alias)) return true;
+  }
+  return false;
+}
+
+function isClientRenderedAlias(alias: Binding) {
+  return (
+    alias.type !== BindingType.constant &&
+    !patchRendersInto(getSignal(alias.section, alias))
+  );
 }
 
 function pushMemberForwards(
@@ -548,7 +910,7 @@ function pushMemberForwards(
 
 function pushForward(signal: Signal, target: Signal, value: t.Expression) {
   signal.forwards = push(signal.forwards, target);
-  signal.render.push(
+  forwardsTo(signal, target).push(
     t.expressionStatement(
       t.callExpression(target.identifier, [
         scopeIdentifier,
@@ -566,14 +928,22 @@ function buildIntersection(
   fn: t.Expression,
 ) {
   const { source, id, returnedBy } = section.intersections!.get(intersection)!;
-  if (source) return fn;
+  // A `$global` member never arrives: the globals object holds it already.
+  let arrivals = 0;
+  forEach(intersection, (member) => {
+    if (getCanonicalBinding(member).type !== BindingType.global) arrivals++;
+  });
+  if (source || (arrivals === 1 && !returnedBy)) return fn;
+  // A created scope's flush runs the join by its init id (`getCreatedJoins`).
+  const shellInitId =
+    initsCreatedJoin(section, intersection) &&
+    getResumeRegisterId(section, intersection, "init");
   return callRuntime(
-    "_or",
+    shellInitId ? "_shell_or" : "_or",
+    ...(shellInitId ? [t.stringLiteral(shellInitId)] : []),
     t.numericLiteral(id),
     fn,
-    returnedBy || intersection.length > 2
-      ? t.numericLiteral(intersection.length - 1)
-      : undefined,
+    returnedBy || arrivals > 2 ? t.numericLiteral(arrivals - 1) : undefined,
     returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true),
   );
 }
@@ -632,7 +1002,7 @@ export function buildSignalFn(signal: Signal): t.Expression {
     if (value.signal.inline) {
       continue;
     }
-    signal.render.push(
+    forwardsTo(signal, value.signal).push(
       t.expressionStatement(
         signalHasWork(value.signal)
           ? t.callExpression(value.signal.identifier, [
@@ -649,7 +1019,7 @@ export function buildSignalFn(signal: Signal): t.Expression {
   }
 
   forEach(signal.intersections, (intersection) => {
-    pushScopeCall(signal.render, intersection.identifier);
+    pushScopeCall(forwardsTo(signal, intersection), intersection.identifier);
   });
 
   if (isValue && binding.sources) {
@@ -667,9 +1037,10 @@ export function buildSignalFn(signal: Signal): t.Expression {
 
         dynamicClosureArgs.push(getSignal(closureSection, binding).identifier);
       } else {
+        const closureSignal = getSignal(closureSection, binding);
         pushScopeCall(
-          signal.render,
-          getSignal(closureSection, binding).identifier,
+          forwardsTo(signal, closureSignal),
+          closureSignal.identifier,
         );
       }
     });
@@ -694,8 +1065,17 @@ export function buildSignalFn(signal: Signal): t.Expression {
     signal.storesValue = true;
   }
 
+  let render = signal.render;
+  // A fill's run is the render without what the patch renders itself.
+  if (signal.patch.length) {
+    if (isValue && getPatchFill(binding).fillsReads) {
+      signal.fillFn = t.cloneNode(toScopeFn(render), true);
+    }
+    render = render.concat(signal.patch);
+  }
+
   if (!signal.storesValue) {
-    const call = isValue && getOnlyCall(signal.render);
+    const call = isValue && getOnlyCall(render);
     if (
       call &&
       call.callee.type === "Identifier" &&
@@ -712,11 +1092,11 @@ export function buildSignalFn(signal: Signal): t.Expression {
       isValue
         ? [scopeIdentifier, getSignalValueIdentifier(signal)]
         : [scopeIdentifier],
-      toOnlyExpressionOrBlock(signal.render),
+      toOnlyExpressionOrBlock(render),
     );
   }
 
-  return toScopeFn(signal.render);
+  return toScopeFn(render);
 }
 
 // `(scope) => fn(scope)` is `fn`.
@@ -862,7 +1242,7 @@ export function trimEmptyArgs(
 // Work for `expr` runs when what it references changes, in setup if nothing
 // (or no `expr`); a `statement` given as an expression is wrapped as one.
 export function addStatement(
-  type: "render" | "effect",
+  type: "render" | "effect" | "patch",
   targetSection: Section,
   expr: t.NodeExtra | undefined,
   statement: t.Statement | t.Statement[] | t.Expression,
@@ -965,6 +1345,7 @@ export function getResumeRegisterId(
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
   const written = new Set<Signal>();
+  forEach(getSectionGlobalReads(section), initGlobalRead);
   writeGetters(section);
 
   for (const signal of getSignals(section).values()) {
@@ -982,22 +1363,30 @@ export function writeSignals(section: Section) {
 
     forEach(signal.intersections, writeSignal);
 
+    const globalJoinKeys = isPatch() ? getGlobalJoinKeys(signal) : undefined;
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {
+      // An effect reading a value a patch writes re-runs by the flush's entry.
+      if (isPatch() && some(signal.referencedBindings, rerunsEffectOnPatch)) {
+        importRuntimeFeature("patches/effect");
+      }
       traverseReplace(signal, "effect", replaceEffectNode);
       const effectIdentifier = getSignalEffectIdentifier(signal);
       const effectFn = t.arrowFunctionExpression(
         [scopeIdentifier],
         toOnlyExpressionOrBlock(signal.effect),
       );
+      // An effect reading `$global` keys runs once per run however many reach
+      // it, and its registration carries the keys whose change re-runs it.
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
         callRuntime(
-          "_script",
+          globalJoinKeys ? "_fill_global_script" : "_script",
           t.stringLiteral(
             getResumeRegisterId(section, signal.referencedBindings),
           ),
           effectFn,
+          ...(globalJoinKeys || []).map((key) => t.stringLiteral(key)),
         ),
       );
     }
@@ -1005,11 +1394,13 @@ export function writeSignals(section: Section) {
     let signalDeclaration: t.Statement | undefined;
     if (signal.build) {
       let value = signal.build();
+      // A shell init registers its signal by assignment (`registerShellInit`).
+      const built = t.isAssignmentExpression(value) ? value.right : value;
       // A built bare identifier, or one a `_const`/`_let` store takes as its
       // fn, references its forward target when the module evaluates.
       const buildsEagerForward =
-        t.isIdentifier(value) ||
-        (t.isCallExpression(value) && t.isIdentifier(value.arguments.at(-1)));
+        t.isIdentifier(built) ||
+        (t.isCallExpression(built) && t.isIdentifier(built.arguments.at(-1)));
 
       if (
         !value ||
@@ -1022,13 +1413,34 @@ export function writeSignals(section: Section) {
         return;
       }
 
-      if (t.isCallExpression(value)) {
-        trimEmptyArgs(value.arguments as t.Expression[]);
+      if (t.isCallExpression(built)) {
+        trimEmptyArgs(built.arguments as t.Expression[]);
+      }
+
+      if (isPatch()) {
+        const unwrapped = value;
+        const binding = signal.referencedBindings;
+        if (Array.isArray(binding)) {
+          value = wrapJoinFills(signal, binding, value);
+        } else if (binding) {
+          value = wrapClosureFill(signal, binding, value);
+        }
+        value = wrapGlobalJoins(signal, globalJoinKeys, value);
+        // A wrapper takes the signal as a callback whose result goes unused.
+        if (
+          value !== unwrapped &&
+          t.isArrowFunctionExpression(built) &&
+          t.isBlockStatement(built.body)
+        ) {
+          built.body = toOnlyExpressionOrBlock(built.body.body);
+        }
       }
 
       if (signal.register) {
+        // A variable's fill applies by the value patcher, imported beside it.
+        if (signal.register === "fill") importRuntimeFeature("patches/value");
         value = callRuntime(
-          "_var_resume",
+          signal.register === "fill" ? "_fill_var_resume" : "_var_resume",
           t.stringLiteral(
             getResumeRegisterId(section, signal.referencedBindings, "var"),
           ),
@@ -1056,6 +1468,8 @@ export function writeSignals(section: Section) {
     }
 
     traverseReplace(signal, "render", replaceRenderNode, signal);
+    traverseReplace(signal, "patch", replaceRenderNode, signal);
+    traverseReplace(signal, "fillFn", replaceRenderNode, signal);
 
     const signalStatements = signal.prependStatements || [];
 
@@ -1072,6 +1486,156 @@ export function writeSignals(section: Section) {
   }
 
   return written;
+}
+
+// A join's fill members register on its declaration, so tree-shaking keeps
+// each with the join.
+function wrapJoinFills(
+  signal: Signal,
+  join: Intersection,
+  value: t.Expression,
+) {
+  const { section } = signal;
+  let expr = value;
+  let creates: boolean | undefined;
+  let stateful: boolean | undefined;
+  for (const ref of join) {
+    const member = getCanonicalBinding(ref);
+    // A fill its declaration registers (kept by its assignments or its own
+    // registration) reaches the join through what derives from it.
+    const memberFill = getPatchFill(member);
+    if (
+      !memberFill.fill ||
+      ((member.assignments || memberFill.ownRegistration) &&
+        memberFill.fillsReads)
+    ) {
+      continue;
+    }
+    if (member.section === section) {
+      expr = callRuntime(
+        "_fill_join",
+        t.stringLiteral(getPatchFillKey(member)),
+        getScopeAccessorLiteral(member, true),
+        expr,
+      );
+    } else if (
+      section.enclosing.nonOptionalAncestor ===
+      member.section.enclosing.nonOptionalAncestor
+    ) {
+      const { helper, hops } = getFillJoinHops(section, member.section);
+      // A creatable body's fill closure inits as the arrival at this join,
+      // registered under the closure's init id.
+      if (
+        !member.sources?.state &&
+        fillJoinsIn(member, section) &&
+        (creates ??= patchCreates(section))
+      ) {
+        expr = wrapShellJoin(section, member, expr);
+      }
+      expr = callRuntime(
+        helper,
+        t.stringLiteral(getPatchFillKey(member)),
+        getScopeAccessorLiteral(member, true),
+        expr,
+        ...hops,
+      );
+    } else if (!(stateful ??= inStatefulBranch(section))) {
+      // A chain passing a non-optional section runs the join in its owner's
+      // closure subscribers; in stateful structure its closure signal does.
+      expr = callRuntime(
+        "_fill_join_subscribers",
+        t.stringLiteral(getPatchFillKey(member)),
+        getScopeAccessorLiteral(member, true),
+        expr,
+        getClosureAccessorLiteral(member),
+        t.numericLiteral(getDynamicClosureIndex(member, section)),
+      );
+    }
+  }
+  return expr;
+}
+
+// The fill join over the branch hops from `section` up to `owner`, each from
+// its branch's registered hop: a homogeneous chain flattens onto its kind's
+// helper owner-first, as the runtime folds trailing hops outward.
+function getFillJoinHops(section: Section, owner: Section) {
+  const hops: ClosureHop[] = [];
+  for (let cur = section; cur !== owner; cur = cur.parent!) {
+    hops.push(getClosureSignal(cur)!.hop);
+  }
+  const conditional = hops[0].kind === "if";
+  if (hops.every((hop) => (hop.kind === "if") === conditional)) {
+    return {
+      helper: conditional ? "_fill_join_if" : "_fill_join_for",
+      hops: hops.reverse().flatMap(getHopArgs),
+    } as const;
+  }
+  // A mixed chain compiles a dispatch builder: the arrow pulls in only the
+  // closure kinds its chain uses.
+  const joinId = generateUidIdentifier("join");
+  let dispatch: t.Expression = joinId;
+  for (const hop of hops) {
+    dispatch = buildClosureHop(hop, dispatch);
+  }
+  return {
+    helper: "_fill_join",
+    hops: [t.arrowFunctionExpression([joinId], dispatch)],
+  } as const;
+}
+
+// Inside unpatched structure a lone closure over a server fill IS the refresh
+// channel: it registers the fill join itself (a branch hop's, here).
+function wrapClosureFill(
+  signal: Signal,
+  closure: Binding,
+  value: t.Expression,
+) {
+  const { section } = signal;
+  const key =
+    !isDynamicClosure(section, closure) &&
+    getClosureSignal(section) &&
+    getClosureFillKey(section, closure);
+  return key
+    ? callRuntime(
+        "_fill_join",
+        key,
+        getScopeAccessorLiteral(closure, true),
+        value,
+      )
+    : value;
+}
+
+// The fill key a closure's signal in `section` registers its fill join under,
+// where that signal is the read's only refresh channel.
+function getClosureFillKey(section: Section, closure: Binding) {
+  const fill = getPatchFill(closure);
+  if (
+    !closure.sources?.state &&
+    closure.section !== section &&
+    fill.fillsReads &&
+    (section.enclosing.inContentSection ||
+      !patchWrites(section) ||
+      getCallerOwnedStructure(section)) &&
+    closureCarriesFill(closure, section)
+  ) {
+    return t.stringLiteral(
+      getPatchFillKey(
+        closure,
+        section.enclosing.inContentSection && fill.splitsContent,
+      ),
+    );
+  }
+}
+
+// A homogeneous hop's runtime args: its owner's node accessor, and an `if`
+// hop's branch index.
+function getHopArgs(hop: ClosureHop) {
+  return hop.kind === "if"
+    ? [
+        getScopeAccessorLiteral(hop.nodeBinding, true),
+        t.numericLiteral(hop.index),
+      ]
+    : [getScopeAccessorLiteral(hop.nodeBinding, true)];
 }
 
 function writeGetters(section: Section) {
@@ -1142,13 +1706,16 @@ function pushInstancesAccessor(section: Section, accessors: t.Expression[]) {
 export function writeRegisteredFns() {
   const registeredFns = getRegisteredFns();
   const statements: t.Statement[] = [];
-  for (const registeredFn of registeredFns) {
+  for (const [id, registeredFn] of registeredFns) {
     let fn: t.Statement;
     if (
       registeredFn.referencedBindings ||
       registeredFn.referencesScope ||
       registeredFn.referencedLocals
     ) {
+      // A scope-bound registration can reach any patched value derived from it
+      // (an entry, or a reference in data); the module registering it links it.
+      if (isPatch()) importRuntimeFeature("patches/bind");
       let params: (t.Identifier | t.Pattern)[];
       let prologue: t.Statement[] | undefined;
       if (registeredFn.referencedLocals) {
@@ -1176,7 +1743,7 @@ export function writeRegisteredFns() {
       const body = toReturnedFunction(registeredFn.node, prologue);
       fn = t.variableDeclaration("const", [
         t.variableDeclarator(
-          t.identifier(registeredFn.id),
+          t.identifier(id),
           t.arrowFunctionExpression(
             params,
             body.length === 1 && body[0].type === "ReturnStatement"
@@ -1187,12 +1754,12 @@ export function writeRegisteredFns() {
       ]);
     } else if (
       registeredFn.node.type === "FunctionDeclaration" &&
-      registeredFn.node.id?.name === registeredFn.id
+      registeredFn.node.id?.name === id
     ) {
       fn = registeredFn.node;
     } else {
       fn = t.functionDeclaration(
-        t.identifier(registeredFn.id),
+        t.identifier(id),
         registeredFn.node.params as t.FunctionDeclaration["params"],
         registeredFn.node.body.type === "BlockStatement"
           ? registeredFn.node.body
@@ -1205,13 +1772,10 @@ export function writeRegisteredFns() {
     statements.push(fn);
   }
 
-  for (const registeredFn of registeredFns) {
+  for (const [id, registeredFn] of registeredFns) {
     statements.push(
       t.expressionStatement(
-        registerRuntimeValue(
-          registeredFn.registerId,
-          t.identifier(registeredFn.id),
-        ),
+        registerRuntimeValue(registeredFn.registerId, t.identifier(id)),
       ),
     );
   }
@@ -1237,6 +1801,10 @@ export function addHTMLEffectCall(section: Section, expr?: t.NodeExtra) {
   signal.hasHTMLEffect = signal.storesValue = true;
 }
 
+export function toSequenceExpression(exprs: t.Expression[]) {
+  return exprs.length === 1 ? exprs[0] : t.sequenceExpression(exprs);
+}
+
 export function writeHTMLResumeStatements(
   path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>,
 ) {
@@ -1254,11 +1822,11 @@ export function writeHTMLResumeStatements(
     getNodeReasons(section),
     true,
   );
-  const sectionReason = section.reason;
+  const sectionReason = getSectionWriteReason(section);
   forEach(section.referencedClosures, (closure) => {
     // A constant never changes, so nothing subscribes to it.
     if (closure.sources && closure.type !== BindingType.constant) {
-      if (isDynamicClosure(section, closure)) {
+      if (isDynamicClosure(section, closure) && shipsClosureScopes(closure)) {
         const closureSignal = getSignal(closure.section, closure);
         let identifier =
           htmlDynamicClosureInstancesIdentifier.get(closureSignal);
@@ -1278,7 +1846,18 @@ export function writeHTMLResumeStatements(
               ),
             ]),
           );
-          writeSlot(findSlot(closure, SlotKind.ClosureScopes), identifier);
+          const scopesSlot = findSlot(closure, SlotKind.ClosureScopes);
+          // Only an unfilled read subscribes, so the set ships only there.
+          writeSlot(
+            scopesSlot,
+            (isPatch() &&
+              getClosureScopesIfWritten(
+                closure,
+                scopesSlot?.reason,
+                identifier,
+              )) ||
+              identifier,
+          );
         }
 
         const closureIndex = getDynamicClosureIndex(closure, section);
@@ -1293,16 +1872,63 @@ export function writeHTMLResumeStatements(
           closure,
           SlotKind.ClosureScopes,
         )?.reason;
-        const subscribeArg =
+        const readSources =
+          isPatch() && !closure.sources.state
+            ? getClosureReadSources(closure, section)
+            : undefined;
+        const ownershipArgs =
+          readSources && getPatchWriteOwnership(section, readSources);
+        // A patch-filled reader needs no dispatch unless the client can change
+        // the owner value (`_unfilled_if`).
+        const ownership = someReadIn(closure, section, isResumedRead)
+          ? undefined
+          : ownershipArgs;
+        let subscribeArg: t.Expression = identifier;
+        if (
           isConditionalReason(closureScopesReason) &&
-          !isSameReason(closureScopesReason, sectionReason)
-            ? getExprIfWritten(closure.section, closureScopesReason, identifier)
-            : identifier;
-        const changeable = isChangeableDynamicClosure(section, closure);
+          !isSameReason(closureScopesReason, sectionReason) &&
+          // `_unfilled_if` on the same root group already tests the mask.
+          !(
+            ownership?.length &&
+            !closureScopesReason.global &&
+            isSameReason(closureScopesReason, readSources) &&
+            // Root params sort first, so all are when the last is.
+            isTemplateParam(last(closureScopesReason.param!))
+          )
+        ) {
+          subscribeArg = getExprIfWritten(
+            closure.section,
+            closureScopesReason,
+            identifier,
+          );
+        }
+        if (ownership) {
+          subscribeArg = t.logicalExpression(
+            "&&",
+            callRuntime("_unfilled_if", ...ownership),
+            subscribeArg,
+          );
+        }
+        // A shell chain registers no subscribe, and one the client cannot
+        // change is shaken with its owner's signal.
+        const changeable =
+          isChangeableDynamicClosure(section, closure) &&
+          !(isPatch() && inShellChain(section));
         addWriteScopeBuilder(section, (expr) => {
-          const resumeId =
-            changeable &&
-            t.stringLiteral(getResumeRegisterId(section, closure, "subscribe"));
+          let resumeId: t.Expression | undefined;
+          if (changeable) {
+            resumeId = t.stringLiteral(
+              getResumeRegisterId(section, closure, "subscribe"),
+            );
+            // A value a patch fills can change before the subscriber resumes.
+            if (ownershipArgs?.length && !fillSubscribes(closure, section)) {
+              resumeId = t.logicalExpression(
+                "&&",
+                callRuntime("_client_guard", ...ownershipArgs),
+                resumeId,
+              );
+            }
+          }
           return callRuntime(
             "_subscribe",
             subscribeArg,
@@ -1315,18 +1941,42 @@ export function writeHTMLResumeStatements(
     }
   });
 
+  // A scope with client work reading `$global` keys joins their readers.
+  for (const [id, unfilled] of getGlobalJoins(section)) {
+    body.push(
+      t.expressionStatement(
+        callRuntime(
+          "_fill_global_subscribe",
+          t.stringLiteral(id),
+          scopeIdIdentifier,
+          unfilled === true
+            ? t.numericLiteral(1)
+            : unfilled &&
+                callRuntime(
+                  "_client_guard",
+                  ...getPatchWriteOwnership(section, unfilled),
+                ),
+        ),
+      ),
+    );
+  }
+
   // Mount-effect order is unspecified: resume runs these in reverse
   // signal order, CSR runs the signal graph forward — the two paths differ.
   for (let i = allSignals.length; i--;) {
     if (allSignals[i].hasHTMLEffect) {
       const signalRefs = allSignals[i].referencedBindings;
+      const clientGuard =
+        isPatch() && getEffectClientGuard(section, signalRefs);
       body.push(
         t.expressionStatement(
           callRuntime(
             "_script",
             scopeIdIdentifier,
             t.stringLiteral(getResumeRegisterId(section, signalRefs)),
-            markerGuard,
+            // `_script` reads only a `0` guard, so `1` stands in for none.
+            clientGuard ? markerGuard || t.numericLiteral(1) : markerGuard,
+            clientGuard,
           ),
         ),
       );
@@ -1337,8 +1987,12 @@ export function writeHTMLResumeStatements(
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   const pendingProperties = getScopeProperties(section);
   const scopeProperties: t.ObjectProperty[] = [];
+  const patches = isPatch();
+  // A patch root writes under `$scope_page`, not its reason, so each
+  // property keeps its own guard.
+  const scopeGuardsReason = !patches || !!section.parent;
   const ifWritten = (reason: Reason, expr: t.Expression) => {
-    if (isSameReason(sectionReason, reason)) return expr;
+    if (scopeGuardsReason && isSameReason(sectionReason, reason)) return expr;
     return getExprIfWritten(section, reason, expr);
   };
 
@@ -1347,11 +2001,14 @@ export function writeHTMLResumeStatements(
     const reason = getWriteReason(binding);
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
+    const value = getDeclaredBindingExpression(binding);
     pendingProperties.delete(accessor);
     scopeProperties.push(
       toObjectProperty(
         accessor,
-        ifWritten(reason, getDeclaredBindingExpression(binding)),
+        (isPatch() &&
+          getUnfilledValueIfWritten(section, binding, reason, value)) ||
+          ifWritten(reason, value),
       ),
     );
 
@@ -1374,10 +2031,17 @@ export function writeHTMLResumeStatements(
   };
 
   forEach(section.bindings, (binding) => {
-    if (binding.type !== BindingType.dom) {
+    // A keyed `$global` read lives on the globals object, never in a slot.
+    if (binding.type === BindingType.global) {
+      pendingProperties.delete(getScopeAccessor(binding));
+    } else if (binding.type !== BindingType.dom) {
       writeBinding(binding);
     }
   });
+
+  const fillCalls: t.Expression[] = patches
+    ? writePatchResumeStatements(section, body)
+    : [];
 
   if (section.parent) {
     const ownerAccessor = getAccessorProp().Owner;
@@ -1443,9 +2107,33 @@ export function writeHTMLResumeStatements(
     const writeCall = writeScopeBuilder
       ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
       : callRuntime("_scope", ...writeScopeArgs);
+    // Child sections gate through their cross-section guards (derived
+    // from the root reason, so still binary under patches).
+    const write = scopeGuardsReason
+      ? getExprIfWritten(section, sectionReason, writeCall)
+      : writeCall;
     body.push(
       t.expressionStatement(
-        getExprIfWritten(section, sectionReason, writeCall),
+        // A known child's fills take its write's place in a patch render.
+        fillCalls.length && isKnownChild(section)
+          ? t.conditionalExpression(
+              scopePageIdentifier(section),
+              write,
+              toSequenceExpression(fillCalls),
+            )
+          : scopeGuardsReason
+            ? write
+            : t.logicalExpression("&&", scopePageIdentifier(section), write),
+      ),
+    );
+  } else if (fillCalls.length) {
+    body.push(
+      t.expressionStatement(
+        t.logicalExpression(
+          "||",
+          scopePageIdentifier(section),
+          toSequenceExpression(fillCalls),
+        ),
       ),
     );
   }
@@ -1729,17 +2417,22 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
   return getSignal(assignment.section, assignment).buildAssignment;
 }
 
-const [getRegisteredFns] = createOutputState<
-  {
-    id: string;
-    registerId: string;
-    node: t.Function;
-    section: Section;
-    referencesScope: undefined | boolean;
-    referencedBindings: ReferencedBindings;
-    referencedLocals: Opt<Binding>;
-  }[]
->(() => []);
+// Keyed by id: a fill's run clones its render, handlers included, and each
+// registered function declares once.
+const [getRegisteredFns] = createOutputState(
+  () =>
+    new Map<
+      string,
+      {
+        registerId: string;
+        node: t.Function;
+        section: Section;
+        referencesScope: undefined | boolean;
+        referencedBindings: ReferencedBindings;
+        referencedLocals: Opt<Binding>;
+      }
+    >(),
+);
 export function replaceRegisteredFunctionNode(node: t.Node) {
   switch (node.type) {
     case "ClassMethod":
@@ -1770,15 +2463,18 @@ function registerFnExpression(node: t.Function) {
     const referencesScope = extra.referencesScope;
     const referencedBindings = getReferencedBindingsInFunction(extra);
     const referencedLocals = extra.referencedLocalBindingsInFunction;
-    getRegisteredFns().push({
-      id,
-      node,
-      registerId: extra.registerId,
-      section: extra.section,
-      referencesScope,
-      referencedBindings,
-      referencedLocals,
-    });
+    const registeredFns = getRegisteredFns();
+    // A fill's run clones its render, handlers included: each declares once.
+    if (!registeredFns.has(id)) {
+      registeredFns.set(id, {
+        node,
+        registerId: extra.registerId,
+        section: extra.section,
+        referencesScope,
+        referencedBindings,
+        referencedLocals,
+      });
+    }
 
     if (referencedLocals) {
       // The argument mirrors the locals scope `_resume_locals` serializes.

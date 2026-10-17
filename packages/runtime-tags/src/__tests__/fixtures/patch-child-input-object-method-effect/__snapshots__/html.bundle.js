@@ -1,0 +1,36 @@
+// tags/probe.marko
+const $template = "<p> </p>";
+_shells({ b: "b !b0;D ;<p> </p>" });
+var probe_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	let seen = "";
+	_html(`<p>${_text_resume($scope0_id, "a", seen)}</p>`);
+	_script($scope0_id, "b0", 1, _client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2));
+	(_server_guard($scope0_reason, 1) || _server_guard($scope0_reason, 2)) && _patch_effect($scope0_id, "eb0", "d e");
+	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b1");
+	_patch_value($scope0_id, "vb2", seen, 1);
+	$scope0_page ? _scope($scope0_id, {
+		d: input.opts,
+		e: input.label
+	}) : (_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "wd", input.opts, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "we", input.label, !_server_guard($scope0_reason, 2)));
+});
+
+// template.marko
+_shells({ a: /*@__PURE__*/ ((_w0) => `a;${((_w0) => `/${_w0}&`)("D l")};${_w0}`)($template) });
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);
+	const $childScope = _patch_child($scope0_id, "a");
+	probe_default({
+		label: input.label,
+		opts: {
+			kind: "x",
+			describe: _resume(function(label) {
+				return `${label}!`;
+			}, "a0")
+		}
+	});
+	$scope0_page && _scope($scope0_id, { a: _existing_scope($childScope) });
+}, 1);

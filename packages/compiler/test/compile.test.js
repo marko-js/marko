@@ -256,14 +256,16 @@ describe("compiler/compile", () => {
     it("is empty for a translator that offers none", () =>
       assert.deepEqual(getRuntimeEntryFiles("html", {}), []));
 
-    it("follows the configured optimize over the environment", () => {
+    it("follows the configured optimize and patches over the environment", () => {
       try {
         for (const optimize of [true, false]) {
-          configure({ optimize });
-          assert.deepEqual(
-            getRuntimeEntryFiles("dom", translator),
-            translator.getRuntimeEntryFiles("dom", optimize),
-          );
+          for (const patches of [true, false]) {
+            configure({ optimize, patches });
+            assert.deepEqual(
+              getRuntimeEntryFiles("dom", translator),
+              translator.getRuntimeEntryFiles("dom", optimize, patches),
+            );
+          }
         }
       } finally {
         configure();

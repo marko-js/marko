@@ -60,6 +60,9 @@ export function getBranchResumeArgs(
   tag: t.NodePath<t.MarkoTag>,
   branchReasons: Reasons,
   singleNode: boolean,
+  // A patched branch keeps its markers and pairs statically: patches address
+  // it at the markers, and interior writes reach it through the pairing.
+  patchChain?: boolean,
 ) {
   const tagSection = getSection(tag);
   const nodeBinding = tag.node.extra!.nodeBinding!;
@@ -68,14 +71,15 @@ export function getBranchResumeArgs(
   const endArgs = buildBranchEndArgs(
     tagSection,
     nodeBinding,
-    getOnlyChildParentTagName(tag),
-    singleNode,
+    !patchChain && getOnlyChildParentTagName(tag),
+    !patchChain && singleNode,
   );
   const [markerGuard] = endArgs;
+  // A patched chain's shells follow, so its guard is never left off.
   return [
     scopeId,
     accessor,
-    getWriteGuardForAny(tagSection, branchReasons, !markerGuard),
+    getWriteGuardForAny(tagSection, branchReasons, !patchChain && !markerGuard),
     ...endArgs,
   ];
 }

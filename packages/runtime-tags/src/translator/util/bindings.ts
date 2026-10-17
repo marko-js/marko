@@ -99,6 +99,9 @@ export interface Binding {
   exposed: boolean;
   /** Read on invocation from its own scope slot, so its signal stores it. */
   hasLazyReads: boolean;
+  /** Fixed for the scope's lifetime (an `<id>`, a `<define>` renderer):
+   * never derived from inputs, so never rewritten. */
+  stable?: true;
 }
 
 /** A param of a template or of a tag body, which its caller supplies. */
@@ -382,6 +385,18 @@ export function someAlias<A>(
   return false;
 }
 
+// Whether a read of the binding in `section` passes `test`.
+export function someReadIn(
+  binding: Binding,
+  section: Section,
+  test: (read: ReferencedExtra) => boolean,
+) {
+  for (const read of binding.reads.keys()) {
+    if (read.section === section && test(read)) return true;
+  }
+  return false;
+}
+
 // Whether the binding, or a value it aliases (transitively), passes `test`.
 export function someUpToAliasRoot<A>(
   binding: Binding | undefined,
@@ -455,6 +470,20 @@ export function getDebugAccess(
 // other modules.
 export function isTemplateParam(binding: Binding) {
   return binding.type === BindingType.param && !binding.section.parent;
+}
+
+// A section's params, or an alias of them.
+export function isParamBinding(binding: Binding) {
+  const root = getAliasRoot(binding);
+  return root === root.section.params;
+}
+
+export function isStableBinding(binding: Binding) {
+  return !!binding.stable;
+}
+
+export function isStateSourced(binding: Binding) {
+  return !!binding.sources?.state;
 }
 
 export function getDebugName(binding: Binding) {

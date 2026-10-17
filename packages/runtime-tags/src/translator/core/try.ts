@@ -7,13 +7,24 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
+import type { Falsy } from "../../common/types";
 import { assertHasBody } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
+import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
-import { mergeTagReferences } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import { some } from "../util/optional";
+import { sectionHasServerEffect } from "../util/patch/refresh";
+import { patchMayWrite, patchWritesScope } from "../util/patch/structure";
+import { boundaryAlwaysPairs } from "../util/patch/writers";
+import { getSourcesForRef } from "../util/reasons";
+import { mergeTagReferences, onFinalizeReferences } from "../util/references";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -23,7 +34,9 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  type Section,
 } from "../util/sections";
+import { getSectionEffectRegisterIds, isQueuedOnCreate } from "../util/shell";
 import {
   addValue,
   getResumeRegisterId,
@@ -103,6 +116,23 @@ export default {
       nodeBinding,
       optional: false,
     });
+    if (isPatch()) {
+      // A `<try>` a patch may reach applies its body through `patches/try`, and
+      // a `@catch` a patch creates from its renderer, `patches/catch-created`.
+      onFinalizeReferences(() => {
+        if (patchMayWrite(section)) {
+          linkRuntimeFeature("patches/try");
+          if (attrTags["@catch"]) {
+            const { catchSection } = getTryParts(tag);
+            linkRuntimeFeature(
+              catchSection && patchWritesScope(catchSection)
+                ? "patches/catch-created"
+                : "patches/catch",
+            );
+          }
+        }
+      });
+    }
     structure.marker(tag, nodeBinding);
     structure.enterShallow(tag);
   },
@@ -114,13 +144,14 @@ export default {
       exit(tag) {
         const section = getSection(tag);
         const tagBody = tag.get("body");
+        const bodySection = getSectionForBody(tagBody)!;
         const nodeBinding = tag.node.extra!.nodeBinding!;
         const { catchTag, catchSection, placeholderTag, placeholderSection } =
           getTryParts(tag);
 
         writeHTMLResumeStatements(tag);
 
-        const tryArgs = [
+        const tryArgs: Array<t.Expression | Falsy> = [
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(nodeBinding),
           buildContent(tagBody),
@@ -138,6 +169,23 @@ export default {
                 : getResumeRegisterId(section, nodeBinding, "catch"),
             ),
         ];
+        if (isPatch()) {
+          // A patch creates from the body's shell; an always-pairing body
+          // drops it outside divergent contexts.
+          tryArgs.push(
+            t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+            boundaryAlwaysPairs(bodySection) && t.numericLiteral(1),
+            // A catch the flush creates mounts the effects reading its error;
+            // else the client renders it from its error, sent where it reads it.
+            catchSection &&
+              patchWritesScope(catchSection) &&
+              !sectionHasServerEffect(catchSection)
+              ? t.stringLiteral(getCatchEffectIds(catchSection))
+              : !!catchSection?.params &&
+                  !catchSection.params.pruned &&
+                  t.numericLiteral(1),
+          );
+        }
 
         tag
           .replaceWith(
@@ -226,6 +274,19 @@ function getAttrTag(tag: t.NodePath<t.MarkoTag>, name: string) {
       return child;
     }
   }
+}
+
+// A `@catch` a flush creates sets up from its renderer, which queues every
+// effect but those reading its error: the flush mounts those by id.
+function getCatchEffectIds(section: Section) {
+  return getSectionEffectRegisterIds(
+    section,
+    (refs) =>
+      !some(
+        getSourcesForRef(refs)?.param,
+        (param) => param.section === section,
+      ) || isQueuedOnCreate(section, refs),
+  );
 }
 
 // Static content of the try, rendered by the server as a plain function.

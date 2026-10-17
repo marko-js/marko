@@ -1,0 +1,30 @@
+// template.marko
+function fail() {
+	return Promise.reject(/* @__PURE__ */ new Error("down"));
+}
+_shells({
+	a0: "a0;D ;<em> </em>",
+	a1: "a1;D ;<em> </em>",
+	a2: "a2;b%;<!><!><!>",
+	a: "a;E l%;<main><p> </p><!></main>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	_html(`<main><p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</p>`);
+	_try($scope0_id, "b", () => {
+		_scope_reason();
+		const $scope1_id = _scope_id();
+		_await($scope1_id, "a", fail(), (v) => {
+			const $scope3_id = _scope_id();
+			_html(`<em>${_patch_text($scope3_id, "a", v, void 0, 0, 0)}</em>`);
+			_scope($scope3_id, {});
+		}, 1, "a0", 1);
+	}, void 0, () => {
+		_scope_reason();
+		_scope_id();
+		_html("<p>oops</p>");
+	}, void 0, "a3", "a2");
+	_html("</main>");
+	$scope0_page && _scope($scope0_id, {});
+}, 1);

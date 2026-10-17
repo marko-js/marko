@@ -14,7 +14,8 @@ import {
   someUpToAliasRoot,
 } from "./bindings";
 import { createAnalysisMemo, createAnalysisPathMemo } from "./cyclic-memo";
-import { addKnownTagReasons } from "./known-tag";
+import { addKnownTagReasons, recordKnownTagPatchFacts } from "./known-tag";
+import { isPatch } from "./marko-config";
 import { addFunctionReasons } from "./module-registrations";
 import {
   concat,
@@ -25,6 +26,7 @@ import {
   rest,
   some,
 } from "./optional";
+import { ensurePatchReasonGroups, resetPatchFills } from "./patch/refresh";
 import {
   addOwnerReason,
   addReason,
@@ -74,19 +76,29 @@ export function solveReasons(
     // Answers read the reasons of the moment, so each pass asks afresh.
     resetExtraReaders();
     resetBindingReaders();
+    if (isPatch()) resetPatchFills();
     forEachSection((section) =>
       addIntersectionReasons(section, intersectionsBySection.get(section)),
     );
     forEachSection(addClosureReasons);
     addRegisteredFnReasons(getFunctionReadsByExpression());
-    forEachSectionReverse(solveSectionReasons);
+    forEachSectionReverse((section) =>
+      solveSectionReasons(section, intersectionsBySection.get(section)),
+    );
   } while (reasonsVersion !== getReasonsVersion());
 }
 
-function solveSectionReasons(section: Section) {
+function solveSectionReasons(
+  section: Section,
+  intersections: Intersection[] | undefined,
+) {
   addKnownTagReasons(section);
+  if (isPatch()) recordKnownTagPatchFacts(section);
   mergeSlotReasons(section);
+  // Groups lay out the mask callers pack: one per set of params a runtime
+  // question asks of, whether the client reads a write and who feeds a patch's.
   ensureSectionReasonGroups(section);
+  if (isPatch()) ensurePatchReasonGroups(section, intersections);
 }
 
 // An intersection member is read when its partners' sources change, unless
@@ -122,19 +134,23 @@ function addIntersectionMemberReason(
   member: Binding,
   partner: Binding,
 ) {
-  if (
-    !findSlot(member)?.reason?.always &&
-    (!isSupersetSources(member, partner) ||
-      hasReadIntermediate(member, partner, new Set()))
-  ) {
+  if (findSlot(member)?.reason?.always) return;
+  // A changed `$global` key re-runs the join wherever the client holds the
+  // member, so the member's own sources say where it is read.
+  const reason =
+    !isSupersetSources(member, partner) ||
+    hasReadIntermediate(member, partner, new Set())
+      ? partner.sources
+      : partner.sources?.global && member.sources;
+  if (reason) {
     if (member.section !== section) {
       addOwnerReason(
         section,
         member.section,
-        mergeSources(member.sources, partner.sources),
+        mergeSources(member.sources, reason),
       );
     }
-    addReason(ensureSlot(member), partner.sources);
+    addReason(ensureSlot(member), reason);
   }
 }
 

@@ -1,0 +1,53 @@
+// tags/frame.marko
+const $template = "<section><!></section>";
+_shells({ b: "b;D%;<section><!></section>" });
+var frame_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	_html("<section>");
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $wg__input_content, void 0, 2, $scope0_reason, 0);
+	_html("</section>");
+	$scope0_page && _scope($scope0_id, {});
+});
+
+// template.marko
+_shells({
+	a0: "a0;D ;<p> </p>",
+	a1: "a1;D ;<p> </p>",
+	a2: "a2 a9 a10 a11;b%;<!><!><!>",
+	a: /*@__PURE__*/ (() => `a !a3;${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template)}`)()
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wi__input_second = _write_if($scope0_reason, 0), $wi__input_first = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $input_second__closures = /* @__PURE__ */ new Set();
+	const $input_first__closures = /* @__PURE__ */ new Set();
+	const $showSecond__closures = /* @__PURE__ */ new Set();
+	let showSecond = false;
+	_html("<main>");
+	_set_scope_reason(0);
+	const $childScope = _patch_child($scope0_id, "a");
+	frame_default({ content: _content_elide("a2", () => {
+		_scope_reason();
+		const $scope1_id = _scope_id();
+		_await($scope1_id, "a", input.first, (value) => {
+			const $scope2_id = _scope_id();
+			_html(`<p>${_text_resume($scope2_id, "a", value)}</p>`);
+			_scope($scope2_id, {});
+		}, 1, "a0");
+		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }))));
+		_resume_branch($scope1_id);
+	}, $scope0_id) });
+	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}</main>`);
+	_script($scope0_id, "a3");
+	_patch_value($scope0_id, "va6", showSecond, 1);
+	$scope0_page ? _scope($scope0_id, {
+		e: input.second,
+		f: input.first,
+		g: showSecond,
+		h: $wi__input_second && $input_second__closures,
+		i: $wi__input_first && $input_first__closures,
+		j: $showSecond__closures,
+		a: _existing_scope($childScope)
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va4", input.second, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.first, !_server_guard($scope0_reason, 1)));
+}, 1);

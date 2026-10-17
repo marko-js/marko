@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures-interop/patch-error-class-tag/template.marko:3:2
+      1 | // use tags
+      2 | <div id="tags-api">tags</div>
+    > 3 | <self-counter/>
+        |  ^^^^^^^^^^^^ The Marko 5 (class API) tag `<self-counter>` cannot render in a template compiled with the experimental `patches` option. Migrate it to the tags API, or turn `patches` off.
+      4 |

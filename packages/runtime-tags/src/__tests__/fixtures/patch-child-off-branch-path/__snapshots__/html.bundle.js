@@ -1,0 +1,177 @@
+// tags/note.marko
+_shells({ c: "c;D ;<p> </p>" });
+var note_default = _template("c", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	_html(`<p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</p>`);
+	$scope0_page && _scope($scope0_id, {});
+});
+
+// tags/toggle.marko
+_shells({
+	d: "d;b%;<!><!><!>",
+	d0: "d0,<i>on</i>"
+});
+var toggle_default = _template("d", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	_if(() => {
+		if (input.on) {
+			const $scope1_id = _scope_id();
+			_html("<i>on</i>");
+			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
+			return 0;
+		}
+	}, $scope0_id, "a", 1, $wg__input_on, void 0, void 0, void 0, ["d0"], $scope0_reason, 0);
+	$scope0_page && _scope($scope0_id, {});
+});
+
+// tags/card.marko
+const $template = "<!><!><!><!>";
+const $walks = "b%b%c";
+_shells({
+	b0: "b0;D ;<em> </em>",
+	b1: "b1;D ;<b> </b>",
+	b2: "b2;D ;<em> </em>",
+	b3: "b3;D ;<em> </em>",
+	b4: "b4;b%;<!><!><!>",
+	b5: "b5;D ;<em> </em>",
+	b6: "b6;b%;<!><!><!>",
+	b: "b !;b%b%;<!><!><!><!>"
+});
+var card_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $wi__input_slow = _write_if($scope0_reason, 1), $wg__input_other = _write_guard($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_other = _write_if($scope0_reason, 2), $wi__input_failing = _write_if($scope0_reason, 3), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $input_label__closures = /* @__PURE__ */ new Set();
+	const $input_slow__closures = /* @__PURE__ */ new Set();
+	const $input_other__closures = /* @__PURE__ */ new Set();
+	const $input_failing__closures = /* @__PURE__ */ new Set();
+	_try($scope0_id, "a", () => {
+		_scope_reason();
+		const $scope2_id = _scope_id();
+		_await($scope2_id, "a", input.slow, (v) => {
+			const $scope5_id = _scope_id();
+			_html(`<em>${_patch_text($scope5_id, "a", v, void 0, $scope0_reason, 1)}</em>`);
+			_scope($scope5_id, {});
+		}, 1, "b2", 1);
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "b8");
+		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b8", 0);
+		$wi__input_slow && _resume_branch($scope2_id);
+	}, () => {
+		_scope_reason();
+		const $scope1_id = _scope_id();
+		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		const $childScope = _peek_scope_id();
+		note_default({ label: input.label });
+		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+			_: _scope_with_id($scope0_id),
+			a: $wi__input_label && _existing_scope($childScope)
+		}), "b7", $wg__input_label);
+		$wg__input_label || _resume_branch($scope1_id);
+	}, void 0, "b9", void 0, "b6", 1);
+	_try($scope0_id, "b", () => {
+		_scope_reason();
+		const $scope4_id = _scope_id();
+		_await($scope4_id, "a", input.failing, (v) => {
+			const $scope7_id = _scope_id();
+			_html(`<em>${_patch_text($scope7_id, "a", v, void 0, $scope0_reason, 3)}</em>`);
+			_scope($scope7_id, {});
+		}, 1, "b0", 1);
+		_unfilled_if($scope0_reason, 3) && _patch_init($scope4_id, "b12");
+		$wi__input_failing && _subscribe(_unfilled_if($scope0_reason, 3) && $input_failing__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "b12", 0);
+		$wi__input_failing && _resume_branch($scope4_id);
+	}, void 0, () => {
+		_scope_reason();
+		const $scope3_id = _scope_id();
+		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		const $childScope2 = _peek_scope_id();
+		note_default({ label: input.label });
+		_await($scope3_id, "b", input.other, (w) => {
+			const $scope6_id = _scope_id();
+			_html(`<b>${_text_resume($scope6_id, "a", w, $wg__input_other)}</b>`);
+			$wi__input_other && _scope($scope6_id, {});
+		}, $wg__input_other, "b1");
+		_subscribe($wi__input_other && $input_other__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope3_id, {
+			_: _scope_with_id($scope0_id),
+			a: $wi__input_label && _existing_scope($childScope2),
+			Ci: $wi__input_label && 1
+		}), "b10", $wg__input_label), "b11", $wg__input_label);
+		$wg__input_label || _resume_branch($scope3_id);
+	}, void 0, "b13", "b4", 1);
+	$scope0_page ? _scope($scope0_id, {
+		e: input.label,
+		g: input.other,
+		i: $wi__input_label && $input_label__closures,
+		j: $wi__input_slow && _unfilled_if($scope0_reason, 1) && $input_slow__closures,
+		k: $wi__input_other && $input_other__closures,
+		l: $wi__input_failing && _unfilled_if($scope0_reason, 3) && $input_failing__closures
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb14", input.label, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb15", input.other, !_server_guard($scope0_reason, 2)));
+});
+
+// template.marko
+_shells({
+	a0: "a0;D ;<em> </em>",
+	a1: "a1;D ;<em> </em>",
+	a2: "a2;b%;<!><!><!>",
+	a: /*@__PURE__*/ (() => `a !a8;${((_w0) => ` D l%b/${_w0}&b`)($walks)};${((_w0) => `<button> </button><!>${_w0}<!>`)($template)}`)()
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wi__input_slow = _write_if($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $input_label__closures = /* @__PURE__ */ new Set();
+	const $n__closures = /* @__PURE__ */ new Set();
+	const $input_slow__closures = /* @__PURE__ */ new Set();
+	const brand = `${$global().brand}!`;
+	let n = 0;
+	_html(`<button>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
+	_try($scope0_id, "c", () => {
+		_scope_reason();
+		const $scope2_id = _scope_id();
+		_await($scope2_id, "a", input.slow, (v) => {
+			const $scope3_id = _scope_id();
+			_html(`<em>${_patch_text($scope3_id, "a", v, void 0, $scope0_reason, 1)}</em>`);
+			_scope($scope3_id, {});
+		}, 1, "a0", 1);
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "a5");
+		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a5", 0);
+		$wi__input_slow && _resume_branch($scope2_id);
+	}, () => {
+		_scope_reason();
+		const $scope1_page = _page_render();
+		const $scope1_id = _scope_id();
+		const $childScope = _peek_scope_id();
+		note_default({ label: brand });
+		_set_scope_reason(6);
+		const $childScope2 = _peek_scope_id();
+		note_default({ label: `${n} ${input.label}` });
+		_set_scope_reason(2);
+		const $childScope3 = _peek_scope_id();
+		toggle_default({ on: n });
+		_subscribe($n__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+			_: _scope_with_id($scope0_id),
+			a: $scope1_page && _existing_scope($childScope),
+			b: _existing_scope($childScope2),
+			c: _existing_scope($childScope3)
+		}), _client_guard($scope0_reason, 0) && "a3"), "a4");
+	}, void 0, "a6", void 0, "a2", 1);
+	_set_scope_reason(_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 3) << 5 | _mask_group($scope0_reason, 2) << 7);
+	const $childScope4 = _patch_child($scope0_id, "d");
+	card_default({
+		label: "fixed",
+		slow: input.slow,
+		failing: input.failing,
+		other: input.other
+	});
+	_fill_global_subscribe("a7", $scope0_id);
+	_script($scope0_id, "a8");
+	_patch_value($scope0_id, "va11", n, 1);
+	$scope0_page ? _scope($scope0_id, {
+		g: input.label,
+		k: brand,
+		n,
+		o: $wi__input_label && $input_label__closures,
+		r: $n__closures,
+		p: $wi__input_slow && _unfilled_if($scope0_reason, 1) && $input_slow__closures,
+		d: _existing_scope($childScope4)
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va9", input.label, !_server_guard($scope0_reason, 0)), _patch_value($scope0_id, "va10", brand));
+}, 1);

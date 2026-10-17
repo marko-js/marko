@@ -36,6 +36,11 @@ import {
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
+import {
+  linkHolePatcher,
+  writesPatchDynamicTag,
+} from "../../util/patch/decisions";
+import { getExprWriteOwnership } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
   getAllTagReferenceNodes,
@@ -170,6 +175,7 @@ export default {
       // Name-only tags are left out: flagging them registers sibling attr-tag
       // props through `for` items, so a bare function as the name stays unregistered.
       if (inputNodes.length) tagExtra.retained = true;
+      if (node.name.type !== "StringLiteral") tagExtra.rendersContent = true;
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
       const usesVar = hasVar && isTagVarUsed(tag);
@@ -191,6 +197,10 @@ export default {
         BindingType.dom,
         tagSection,
       ));
+      // The dynamic tag entry applies without this template's dom module.
+      if (node.name.type !== "StringLiteral") {
+        linkHolePatcher(tagSection, tagExtra, "patches/dynamic-tag");
+      }
 
       if (hasVar) {
         trackVarReferences(tag, BindingType.derived)!.returnedBy = {
@@ -455,6 +465,29 @@ export default {
         const markerGuard = getWriteGuard(tagSection, markerReason, true);
         // For a debug build's check that the tag it renders is not lazy.
         const debugTagVar = !isOptimize() && node.var && t.numericLiteral(1);
+        // The resumed variable's id: `_var` wires it, a patch entry fills it.
+        const varId =
+          node.var &&
+          isTagVarResumed(tag) &&
+          getResumeRegisterId(tagSection, node.var.extra?.binding, "var");
+        // A patched tag writes its entry from what it renders (the entry ships
+        // no statically empty input) and marks its branch whatever its reason.
+        const input = args[0];
+        const patchArgs = writesPatchDynamicTag(tag, tagSection)
+          ? [
+              t.numericLiteral(
+                !hasTagArgs &&
+                  input.type === "ObjectExpression" &&
+                  !input.properties.length
+                  ? 2
+                  : 1,
+              ),
+              ...getExprWriteOwnership(tagSection, tagExtra),
+            ]
+          : [];
+        const tagVarArg =
+          patchArgs.length && varId ? t.stringLiteral(varId) : debugTagVar;
+
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -467,7 +500,8 @@ export default {
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
               markerGuard,
-              debugTagVar,
+              tagVarArg,
+              ...patchArgs,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -478,10 +512,11 @@ export default {
               args[1] || (markerGuard ? t.numericLiteral(0) : undefined),
               markerGuard ? t.numericLiteral(0) : undefined,
               markerGuard,
-              debugTagVar,
+              tagVarArg,
+              ...patchArgs,
             );
 
-        if (node.var && isTagVarResumed(tag)) {
+        if (varId) {
           const dynamicScopeIdentifier = generateUidIdentifier(
             tag.get("name").toString() + "_scope",
           );
@@ -502,13 +537,7 @@ export default {
                 getScopeIdIdentifier(tagSection),
                 getScopeOffsetAccessorLiteral(nodeBinding),
                 dynamicScopeIdentifier,
-                t.stringLiteral(
-                  getResumeRegisterId(
-                    tagSection,
-                    node.var.extra?.binding,
-                    "var",
-                  ),
-                ),
+                t.stringLiteral(varId),
                 mutatesTagVar
                   ? getScopeAccessorLiteral(nodeBinding)
                   : undefined,
@@ -534,7 +563,10 @@ export default {
         if (tag.node.var && isTagVarResumed(tag)) {
           const varBinding = tag.node.var.extra!.binding!;
           tagVarSignal = initValue(varBinding);
-          tagVarSignal.register = true;
+          // A patch writes the variable's value by its resume id.
+          tagVarSignal.register = writesPatchDynamicTag(tag, section)
+            ? "fill"
+            : true;
           tagVarSignal.referenced = true;
           tagVarSignal.buildAssignment = (valueSection, value) =>
             buildVarChange(

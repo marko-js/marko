@@ -147,6 +147,21 @@ export function run() {
   runEffects(effects);
 }
 
+// A patch applies its entries inside the run that renders them, which `run`
+// ends and `abortRun` drops (`patches/apply`).
+export function startRun() {
+  rendering = 1;
+}
+
+// Discards a rejected flush's queued work and retires its epoch, so
+// residue (marks, fresh `Gen`s, queued checks) can never match later.
+export function abortRun() {
+  runId++;
+  rendering = 0;
+  pendingRenders = [];
+  pendingEffects = [];
+}
+
 export function queueAsyncRender<T, U extends Scope = Scope>(
   scope: U,
   signal: Signal<T, U>,

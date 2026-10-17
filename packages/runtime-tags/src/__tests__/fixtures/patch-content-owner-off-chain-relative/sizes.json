@@ -1,0 +1,16 @@
+{
+  "dom": {
+    "template.marko.page.mjs": {
+      "min": 14832,
+      "brotli": 6333
+    }
+  },
+  "html": {
+    "min": 674,
+    "brotli": 375
+  },
+  "patch": {
+    "min": 238,
+    "brotli": 158
+  }
+}

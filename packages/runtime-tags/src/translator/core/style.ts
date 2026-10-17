@@ -19,13 +19,24 @@ import MagicString, { type SourceMap } from "magic-string";
 import { addAssetImport } from "../util/asset-imports";
 import { BindingType, createBinding } from "../util/bindings";
 import buildStringExpression from "../util/build-string-expression";
+import { getPatchKey } from "../util/get-accessor-enums";
 import { isCoreTagName } from "../util/is-core-tag";
-import { isOutputDOM } from "../util/marko-config";
+import { isOutputDOM, isPatch } from "../util/marko-config";
 import { type Opt, push } from "../util/optional";
+import { writesPatchHole } from "../util/patch/decisions";
+import { patchWrites } from "../util/patch/structure";
+import { callPatchRuntime, getExprWriteOwnership } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
-import { getReferencedBindings, mergeReferences } from "../util/references";
-import { callRuntime } from "../util/runtime";
-import { getScopeAccessorLiteral } from "../util/scope-accessor";
+import {
+  getReferencedBindings,
+  mergeReferences,
+  onFinalizeReferences,
+} from "../util/references";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
+import {
+  getScopeAccessor,
+  getScopeAccessorLiteral,
+} from "../util/scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
 import {
   getNodeContentType,
@@ -124,10 +135,22 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   const tagExtra = mergeReferences(section, node, []);
   let exprExtras: Opt<t.NodeExtra> = tagExtra;
   for (const value of dynamicStyleValues(node)) {
-    exprExtras = push(exprExtras, (value.extra ??= {}));
+    const valueExtra = (value.extra ??= {});
+    valueExtra.rendersValue = true;
+    exprExtras = push(exprExtras, valueExtra);
   }
 
   addReasonExprs(ensureSlot(binding), exprExtras);
+  // Stateful structure is known only once sources resolve.
+  if (isPatch()) {
+    onFinalizeReferences(() => {
+      // The flush writes a dynamic style's rule, even a state-sourced one: a
+      // scope the flush creates never runs the setup that writes its selector.
+      if (patchWrites(section)) {
+        linkRuntimeFeature("patches/style");
+      }
+    });
+  }
 }
 
 function createCustomPropertyNames(tag: t.NodePath<t.MarkoTag>) {
@@ -216,7 +239,24 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const binding = node.extra?.nodeBinding;
 
   if (binding) {
-    writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
+    const names = node.extra![kCustomPropertyNames]!;
+    const section = getSection(tag);
+    writer.writeTo(tag)`${callRuntime(
+      "_style_html",
+      buildStyleDecls(node, (value, i) =>
+        patchWrites(section)
+          ? callPatchRuntime(
+              "_patch_style",
+              section,
+              getPatchKey().Style + getScopeAccessor(binding) + " " + names[i],
+              value,
+              ...(writesPatchHole(section, value.extra)
+                ? getExprWriteOwnership(section, value.extra!)
+                : [t.numericLiteral(0), t.numericLiteral(0)]),
+            )
+          : callRuntime("_escape_style_value", value),
+      ),
+    )}`;
     writer.markNode(tag, binding, getWriteReason(binding));
   }
 
@@ -246,8 +286,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     );
 
     dynamicStyleValues(node).forEach((value, i) => {
+      const patched = writesPatchHole(section, value.extra);
       addStatement(
-        "render",
+        patched ? "patch" : "render",
         section,
         value.extra,
         callRuntime(
@@ -304,13 +345,16 @@ function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function buildStyleDecls(node: t.MarkoTag) {
+function buildStyleDecls(
+  node: t.MarkoTag,
+  toDecl: (value: t.Expression, i: number) => t.Expression,
+) {
   const names = node.extra![kCustomPropertyNames]!;
   const parts: (string | t.Expression)[] = [];
 
   dynamicStyleValues(node).forEach((value, i) => {
     parts.push(`${names[i]}:`);
-    parts.push(callRuntime("_escape_style_value", value));
+    parts.push(toDecl(value, i));
     parts.push(";");
   });
 
