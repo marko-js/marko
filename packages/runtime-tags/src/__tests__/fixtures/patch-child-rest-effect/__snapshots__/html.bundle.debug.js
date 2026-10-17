@@ -1,7 +1,7 @@
 // tags/dump/index.marko
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
-_shells({ "__tests__/tags/dump/index.marko": "__tests__/tags/dump/index.marko !__tests__/tags/dump/index.marko_0_input_label#3;D ;<p> </p>" });
+_shells({ "__tests__/tags/dump/index.marko": "__tests__/tags/dump/index.marko;D ;<p> </p>" });
 var dump_default = _template("__tests__/tags/dump/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<main>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_script($scope1_id, "__tests__/template.marko_1_input_title#0:5", 0, _client_guard($scope0_reason, 1));
+		_script($scope1_id, "__tests__/template.marko_1_input_title#0:5", 0);
 		_server_guard($scope0_reason, 1) && _patch_effect($scope1_id, "PatchEffect:__tests__/template.marko_1_input_title#0:5", "1 input_title");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);

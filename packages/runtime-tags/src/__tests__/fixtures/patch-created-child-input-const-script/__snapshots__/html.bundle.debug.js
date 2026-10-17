@@ -1,7 +1,7 @@
 // tags/probe.marko
 const $template$1 = "<p>probe</p>";
 const $walks$1 = "b";
-_shells({ "__tests__/tags/probe.marko": "__tests__/tags/probe.marko !__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5,<p>probe</p>" });
+_shells({ "__tests__/tags/probe.marko": "__tests__/tags/probe.marko,<p>probe</p>" });
 var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

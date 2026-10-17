@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1_it_onPick#5; D ;<button> </button>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1*shell; D ;<button> </button>`, {
   "PatchChild:#childScope/0": {
     "PatchLoop:#text/0": [{
       "PatchWrite:it_onPick": _([], "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/template.marko_0/onPick", _.a = {
@@ -10,6 +10,9 @@
       }),
       "PatchAttr:#button/0 class": "b1",
       "PatchText:#text/1": "B",
+      "PatchSetup:": {
+        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1_it_onPick#5"
+      },
       "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1_it_onPick#5": "it_onPick"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1*shell"]
   }
@@ -28,6 +31,9 @@
       }),
       "PatchAttr:#button/0 class": "b1",
       "PatchText:#text/1": "C",
+      "PatchSetup:": {
+        "PatchInit:": _.c = "!packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1_it_onPick#5"
+      },
       "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1_it_onPick#5": "it_onPick"
     }, {
       "PatchWrite:it_onPick": _([], "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/template.marko_0/onPick", _.b = {
@@ -38,6 +44,9 @@
       }),
       "PatchAttr:#button/0 class": "b2",
       "PatchText:#text/1": "D",
+      "PatchSetup:": {
+        "PatchInit:": _.c
+      },
       "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1_it_onPick#5": "it_onPick"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1*shell"]
   }

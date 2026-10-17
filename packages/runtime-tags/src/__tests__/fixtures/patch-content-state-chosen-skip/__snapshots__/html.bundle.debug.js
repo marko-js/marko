@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, { id: 1 }, "#section/3", $scope0_id, "section");
 	const status = `${input.b}: ${takeRenders()} content renders`;
 	_html(`</section>${_el_resume($scope0_id, "#section/3")}`);
-	_script($scope0_id, "__tests__/template.marko_0_status#12", 1, _client_guard($scope0_reason, 0));
+	_script($scope0_id, "__tests__/template.marko_0_status#12");
 	_script($scope0_id, "__tests__/template.marko_0_input_b#6_mode#7_one#8_two#9", 1, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_status#12", "status");

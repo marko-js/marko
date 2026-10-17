@@ -85,20 +85,23 @@ export function withRendererSetUp<U>(cb: (value: U) => void, value: U) {
   );
 }
 
-// A patch mounts an effect where no creation queues it (`client` is `1` where one does): a
-// created `@catch`'s renderer queues all but those reading only patch-written values (`0`).
+// A patch names an effect a created scope's renders don't queue: where a caller decides
+// (`client` `0`), or (undefined) a composed scope's, but a created `@catch`'s renderer's.
 export function _script(
   scopeId: number,
   registryId: string,
   markerGuard?: number,
   client?: 0 | 1,
 ) {
+  const state = getState();
   const context = getChunk()!.context;
-  if (
-    !(getState() instanceof PatchUpdateState) ||
-    (context?.[kSetUp] !== undefined && context[kSetUp] === context[kBranchId]
-      ? client === 0
-      : client !== 1)
+  if (!(state instanceof PatchUpdateState)) {
+    _base_script(scopeId, registryId, markerGuard);
+  } else if (client === 0) {
+    if (inCreatable()) addSetupId(state, scopeId, registryId, 1);
+  } else if (
+    client === undefined &&
+    !(context?.[kSetUp] !== undefined && context[kSetUp] === context[kBranchId])
   ) {
     _base_script(scopeId, registryId, markerGuard);
   }
@@ -475,8 +478,8 @@ export class PatchUpdateState extends PatchRenderState {
 
   override queuePassiveScope() {}
 
-  // Paired scopes keep their effects and a branch's ride its shell; a scope a
-  // creation below a branch (a child instance) mounts from setup.
+  // A scope the client pairs keeps its effects; where it may create, a branch's
+  // own ride its shell, and those of scopes rendering in it their setup envelope.
   override queueEffect(scopeId: number, registryId: string) {
     if (inCreatable() && getChunk()!.context?.[kBranchId] !== scopeId) {
       addSetupId(this, scopeId, registryId, 1);

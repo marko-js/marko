@@ -1,5 +1,5 @@
 // PATCH
-[`b0 !b1; D ;<button> </button>`, {
+[`b0; D ;<button> </button>`, {
   ca: {
     la: [{
       wf: _([], "a0", _.a = {
@@ -10,6 +10,9 @@
       }),
       "aa class": "b1",
       tb: "B",
+      s: {
+        i: "!b1"
+      },
       eb1: "f"
     }, "b0"]
   }
@@ -28,6 +31,9 @@
       }),
       "aa class": "b1",
       tb: "C",
+      s: {
+        i: "!b1"
+      },
       eb1: "f"
     }, {
       wf: _([], "a0", _.b = {
@@ -38,6 +44,9 @@
       }),
       "aa class": "b2",
       tb: "D",
+      s: {
+        i: "!b1"
+      },
       eb1: "f"
     }, "b0"]
   }
