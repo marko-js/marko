@@ -38,7 +38,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$1 = "<svg></svg>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $if_content__input_name = /*@__PURE__*/ _if_closure("#svg/0", 0, ($scope) => _attr($scope["#path/0"], "d", $scope._.input_name));
+const $if_content__input_name = /*@__PURE__*/ _shell_init("__tests__/tags/icon.marko_1_input_name#0:3/init", /*@__PURE__*/ _if_closure("#svg/0", 0, ($scope) => _attr($scope["#path/0"], "d", $scope._.input_name)));
 const $if_content__setup$1 = $if_content__input_name;
 const $if = /*@__PURE__*/ _if("#svg/0", "<path></path>", " ", $if_content__setup$1);
 const $input_name = /*@__PURE__*/ _const("input_name", ($scope) => {
@@ -55,7 +55,7 @@ const $walks = "D%lD%l";
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
 const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__$params = ($scope, $params3) => $for_content__item($scope, $params3[0]);
-const $if_content__list_ = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_name($scope["#childScope/0"], $scope._.list_0));
+const $if_content__list_ = /*@__PURE__*/ _shell_init("__tests__/docs.marko_2_list_0#1:4/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_name($scope["#childScope/0"], $scope._.list_0)));
 const $if_content__setup = $if_content__list_;
 const $await_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<a> </a>", "D ", 0, $for_content__$params);
 const $await_content__list = ($scope, list) => {

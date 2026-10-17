@@ -14,6 +14,7 @@ var frame_default = _template("__tests__/tags/frame.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, $wg__input_content, void 0, 2, $scope0_reason, 0);
+			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/frame.marko_1_input_content#0:3/init");
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frame.marko", "2:11");
 			return 0;
 		}
@@ -29,6 +30,8 @@ _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<em> </em>",
 	"__tests__/template.marko_2_#text#0/await": "__tests__/template.marko_2_#text#0/await;D ;<b> </b>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
+	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content,",
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => `D%b/${_w0}& l`)(" b")};${((_w0) => `<main><!>${_w0}<button>interactive</button></main>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -45,7 +48,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<em>${_patch_text($scope3_id, "#text/0", v, void 0, $scope0_reason, 2)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "3:6");
 		}, 1, "__tests__/template.marko_3*content");
-		$wi__input_as__OR__input_p && _subscribe(_unfilled_if($scope0_reason, 2) && $input_p__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:6"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_p#0:6/subscribe", 0);
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_p#0:6/subscribe");
+		$wi__input_as__OR__input_p && _subscribe(_unfilled_if($scope0_reason, 2) && $input_p__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:6"));
 		$wi__input_as__OR__input_p && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => [{ input_p: input.p }]), 0, _write_guard($scope0_reason, 1), void 0, 1, $scope0_reason, 1);
 	_set_scope_reason(0);

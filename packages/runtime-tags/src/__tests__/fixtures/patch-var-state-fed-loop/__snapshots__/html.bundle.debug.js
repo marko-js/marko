@@ -28,6 +28,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 		let label = labeler_default({ title: item + input.suffix });
 		_client_guard($scope0_reason, 0) && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/tags/list.marko_1_label#6/var");
 		_html(`<p>${_patch_text($scope1_id, "#text/2", label, void 0, $scope0_reason, 0)}</p>`);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/list.marko_1_input_suffix#0:4_item#4/init");
 		_scope($scope1_id, {
 			item: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

@@ -17,7 +17,7 @@ var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (inp
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "#text/0", input.fail ? boom() : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, _client_guard($scope0_reason, 1) ? "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/init" : "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }, "__tests__/tags/error-wrapper.marko", "4:2"), _client_guard($scope0_reason, 1) && "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
@@ -38,7 +38,10 @@ var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (inp
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&b`)("b%c");
-_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => ` D l/${_w0}&b`)("b%c")};${((_w0) => `<button> </button>${_w0}<!>`)($template$1)}`)() });
+_shells({
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_count#0:7/init,",
+	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => ` D l/${_w0}&b`)("b%c")};${((_w0) => `<button> </button>${_w0}<!>`)($template$1)}`)()
+});
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -54,7 +57,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<i>${_patch_text($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 1)} ${_text_resume($scope1_id, "#text/1", count, 2)}</i>`);
-			_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4"), "__tests__/template.marko_1_input_label#0:6/subscribe"), "__tests__/template.marko_1_count#0:7/subscribe");
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:6/subscribe");
+			_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4")));
 		}, $scope0_id) })
 	});
 	_script($scope0_id, "__tests__/template.marko_0");

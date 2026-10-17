@@ -1,16 +1,19 @@
 // tags/counter-box/index.marko
-const $template$1 = "<span> </span><button class=mode>b</button>";
-const $walks$1 = "D l b";
-_shells({ "__tests__/tags/counter-box/index.marko": "^__tests__/tags/counter-box/index.marko !__tests__/tags/counter-box/index.marko_0;D l ;<span> </span><button class=mode>b</button>" });
+const $template$1 = "<span> </span><button class=mode>b</button><button class=go>go</button>";
+const $walks$1 = "D l b b";
+_shells({ "__tests__/tags/counter-box/index.marko": "^__tests__/tags/counter-box/index.marko __tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7/init!__tests__/tags/counter-box/index.marko_0;D l b ;<span> </span><button class=mode>b</button><button class=go>go</button>" });
 _client_return("__tests__/tags/counter-box/index.marko");
 var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let mode = "a";
-	_html(`<span>${_text_resume($scope0_id, "#text/0", mode)}</span><button class=mode>b</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", mode)}</span><button class=mode>b</button>${_el_resume($scope0_id, "#button/1")}<button class=go>go</button>${_el_resume($scope0_id, "#button/2")}`);
 	const $return = mode;
+	_script($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7", 1, 1);
 	_script($scope0_id, "__tests__/tags/counter-box/index.marko_0");
-	const $valueChange = _patch_bind($scope0_id, "PatchBind:#TagVariableChange", (mode === "a" ? input.onA : input.onB) || void 0, 0, 0);
+	(_server_guard($scope0_reason, 0) || _server_guard($scope0_reason, 1)) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7", "input_onA input_onB");
+	_patch_init($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7/init", 1);
+	const $valueChange = (mode === "a" ? input.onA : input.onB) || void 0;
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/counter-box/index.marko_fill0", mode, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_onA: input.onA,
@@ -39,17 +42,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(($scope0_page ? 0 : 0) << 1 | ($scope0_page ? 0 : 0) << 3);
+			_set_scope_reason(($scope0_page ? _mask_group($scope0_reason, 1) : 0) << 1 | ($scope0_page ? _mask_group($scope0_reason, 1) : 0) << 3);
 			const $childScope = _patch_child($scope1_id, "#childScope/0");
 			let count = counter_box_default({
 				onA: _resume(function(v) {
-					last = "a" + v;
+					last = input.p + "a" + v;
 				}, "__tests__/template.marko_1/onA", $scope1_id),
 				onB: _resume(function(v) {
-					last = "b" + v;
+					last = input.p + "b" + v;
 				}, "__tests__/template.marko_1/onB", $scope1_id)
 			});
-			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_count#6/var");
+			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_count#7/var");
 			_html(`<button class=set>set</button>${_el_resume($scope1_id, "#button/2")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_scope($scope1_id, {
@@ -60,6 +63,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`<p>${_text_resume($scope0_id, "#text/1", last)}</p>`);
-	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", last, 1);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", last, 1);
+	$scope0_page ? _scope($scope0_id, { input_p: input.p }, "__tests__/template.marko", 0, { input_p: ["input.p"] }) : _filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 0) ? _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.p, !_server_guard($scope0_reason, 1)) : _patch_write($scope0_id, "PatchWrite:input_p", input.p, !_server_guard($scope0_reason, 1)));
 }, 1);

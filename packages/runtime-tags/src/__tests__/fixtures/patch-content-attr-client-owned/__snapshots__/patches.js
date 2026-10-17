@@ -1,13 +1,13 @@
 // PATCH
 {
   cb: {
-    vb3: "b2"
+    vb4: "b2"
   }
 }
 
 // PATCH
 {
   cb: {
-    vb3: "b3"
+    vb4: "b3"
   }
 }

@@ -36,7 +36,7 @@ const $count = _fill_var_resume("__tests__/template.marko_0_count#9/var", /*@__P
 	_text($scope["#text/3"], $scope.count);
 	$count__script($scope);
 }));
-const $input_which__OR__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_which", /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_which#6_input_label#7/init", 8, ($scope) => $dynamicTag($scope, $scope.input_which ? counter_default : other_default, ($_) => ({ label: $scope.input_label })))));
+const $input_which__OR__input_label = /*@__PURE__*/ _or(8, ($scope) => $dynamicTag($scope, $scope.input_which ? counter_default : other_default, ($_) => ({ label: $scope.input_label })));
 const $input_which = /*@__PURE__*/ _const("input_which", $input_which__OR__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", $input_which__OR__input_label);
 const $input = ($scope, input) => {

@@ -8,7 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</h1></main>`);
 	_script($scope0_id, "__tests__/template.marko_0_input_a#4_input_b#5", 1, _client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3));
 	(_server_guard($scope0_reason, 2) || _server_guard($scope0_reason, 3)) && _patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_input_a#4_input_b#5", "input_a input_b");
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_a#4_input_b#5/init");
 	$scope0_page ? _scope($scope0_id, {
 		input_a: input.a,
 		input_b: input.b

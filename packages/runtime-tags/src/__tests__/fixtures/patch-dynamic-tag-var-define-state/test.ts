@@ -8,5 +8,12 @@ const inc = (document: Document) => {
 // client's value, as for a template.
 export const config: TestConfig = {
   patches: true,
-  steps: [{ which: true, label: "a" }, inc, { which: true, label: "b" }],
+  steps: [
+    { which: true, label: "a" },
+    inc,
+    { which: true, label: "b" },
+    { which: false, label: "c" },
+    { which: true, label: "d" },
+    inc,
+  ],
 };

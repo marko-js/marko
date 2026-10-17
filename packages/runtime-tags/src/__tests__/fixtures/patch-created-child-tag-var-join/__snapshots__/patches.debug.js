@@ -28,7 +28,7 @@
               "PatchBind:TagVariableChange:tabs": [_.b, 3]
             },
             "PatchSetup:": {
-              "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-host.marko_1_input_files#0:3/subscribe"
+              "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-host.marko_1_input_files#0:3/init"
             }
           }
         }

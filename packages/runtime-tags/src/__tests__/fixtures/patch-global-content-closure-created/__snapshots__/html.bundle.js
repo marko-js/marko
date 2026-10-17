@@ -11,15 +11,19 @@ var panel_default = _template("c", (input) => {
 		if (input.open) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "a", input.body, {}, 0, 0, $wg__input_body, void 0, 2, $scope0_reason, 2);
+			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "c1");
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_open, void 0, void 0, void 0, ["c0"], $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.body }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc1", input.body, !_server_guard($scope0_reason, 2));
+	$scope0_page ? _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.body }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc2", input.body, !_server_guard($scope0_reason, 2));
 });
 
 // tags/card.marko
-_shells({ b: /*@__PURE__*/ (() => `b !b2;${((_w0) => `b/${_w0}& b`)("b%c")};${((_w0) => `<!>${_w0}<button class=b>+</button>`)($template)}`)() });
+_shells({
+	b0: "b0,",
+	b: /*@__PURE__*/ (() => `b !b2;${((_w0) => `b/${_w0}& b`)("b%c")};${((_w0) => `<!>${_w0}<button class=b>+</button>`)($template)}`)()
+});
 var card_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_page = _page_render();
@@ -30,11 +34,11 @@ var card_default = _template("b", (input) => {
 	const $childScope = _patch_child($scope0_id, "a");
 	panel_default({
 		open: true,
-		body: attrTag({ content: _content_resume("b1", () => {
+		body: attrTag({ content: _content_resume("b0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "a", $global$1.brand)}</em>`);
-			_fill_global_subscribe("b0", $scope1_id);
+			_fill_global_subscribe("b1", $scope1_id);
 			_scope($scope1_id, {});
 		}, $scope0_id) })
 	});

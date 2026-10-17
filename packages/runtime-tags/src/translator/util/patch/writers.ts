@@ -49,6 +49,7 @@ import {
   getScopeIdIdentifier,
   isKnownChild,
   isCallerParamAt,
+  isDynamicClosure,
   type ParamReasonGroup,
   type Section,
 } from "../sections";
@@ -80,17 +81,19 @@ import {
   isStableExpr,
 } from "./decisions";
 import {
-  getCreatedJoins,
+  type CreatedInit,
+  getCreatedInits,
   getPatchFillBindings,
   getPatchFillKey,
   getPatchFill,
   getPatchWrite,
-  patchCreates,
   patchFillsClientReads,
+  patchComposes,
   patchFillsSubscribedReads,
-  subscribesCreated,
+  getCreatedSubscribeStructure,
+  patchWritesScope,
+  runsClientInit,
 } from "./refresh";
-import { patchWritesScope } from "./structure";
 
 // A section's patch entries beside its resume data: effect re-runs, the setup
 // a created scope gets, and the fills a known child writes as `_scope`'s else.
@@ -210,37 +213,53 @@ export function writePatchResumeStatements(
     }
   });
 
-  // Each join whose output the client owns renders once the flush settles.
-  for (const join of getCreatedJoins(section) || []) {
+  // A scope another's shell composes runs from setup what its own shell names.
+  const shellInitIds = patchComposes(section) && getShellInitIds(section);
+  if (shellInitIds) {
     body.push(
       t.expressionStatement(
-        buildClientInit(
+        callPatchRuntime(
+          "_patch_init",
           section,
-          "_client_guard",
-          getSourcesForRef(join),
-          getResumeRegisterId(section, join, "init"),
+          shellInitIds,
+          t.numericLiteral(1),
         ),
       ),
     );
   }
 
-  // A created content scope subscribes to the root params no patch fills
-  // there: client-sourced ones, or any in unpatched structure (a `@catch`).
-  if (patchCreates(section)) {
-    forEach(section.referencedClosures, (closure) => {
-      if (subscribesCreated(section, closure)) {
+  // A created or composed scope runs what its flush names: a join's or
+  // closure's init where the client contributes its caller group, a subscriber.
+  for (const [ref, init] of getCreatedInits(section)) {
+    if (Array.isArray(ref)) {
+      if (runsClientInit(init)) {
         body.push(
           t.expressionStatement(
             buildClientInit(
               section,
-              "_unfilled_if",
-              closure.sources,
-              getResumeRegisterId(section, closure, "subscribe"),
+              getSourcesForRef(ref),
+              getResumeRegisterId(section, ref, "init"),
             ),
           ),
         );
       }
-    });
+    } else if (
+      init !== "shell" &&
+      init !== "subscribe" &&
+      init !== "localFill"
+    ) {
+      body.push(
+        t.expressionStatement(
+          isDynamicClosure(section, ref)
+            ? buildSubscribe(section, ref, init)
+            : buildClientInit(
+                section,
+                ref.sources,
+                getResumeRegisterId(section, ref, "init"),
+              ),
+        ),
+      );
+    }
   }
 
   // A `<return>` handler's slot holds its bind (`buildReturnChangeBind`), which
@@ -338,6 +357,20 @@ export function writePatchResumeStatements(
   return fillCalls;
 }
 
+// The inits every created scope of the section runs, as the shell grammar's
+// space-joined ids.
+export function getShellInitIds(section: Section) {
+  let ids = "";
+  for (const [ref, init] of getCreatedInits(section)) {
+    if (init === "shell" || init === "subscribe") {
+      ids +=
+        (ids && " ") +
+        getResumeRegisterId(section, ref, init === "shell" ? "init" : init);
+    }
+  }
+  return ids;
+}
+
 // A controlled `<let>`'s value, a fill while its handler controls it and the
 // server owns its controller, else a seed; then its handler binds.
 function buildLetChangeWrites(
@@ -426,9 +459,9 @@ export function writeLocalFill(section: Section, binding: Binding) {
   // Only a closure the section reads re-derives through its init; a value
   // its creator passes (a loop param) has none to run.
   const inits = toArray(
-    bindingUtil.intersection(
+    bindingUtil.filter(
       binding.sources?.param,
-      section.referencedClosures,
+      (param) => getCreatedInits(section).get(param) === "localFill",
     ),
     (param) =>
       callPatchRuntime(
@@ -590,6 +623,9 @@ export function buildReturnChangeBind(
   handler: t.Expression,
   extra: t.NodeExtra,
 ) {
+  // Every created scope's init of what the handler reads sets it.
+  const refs = getReferencedBindings(extra);
+  if (refs && getCreatedInits(section).get(refs) === "shell") return handler;
   const sources = getWriteSources(extra);
   return callPatchRuntime(
     "_patch_bind",
@@ -622,18 +658,52 @@ export function buildPatchTextContent(
   );
 }
 
-// A created scope runs the init where `check` holds for the sources' groups.
-export function buildClientInit(
+// A created scope runs the init where the client contributes the sources'
+// groups.
+function buildClientInit(
   section: Section,
-  check: "_client_guard" | "_unfilled_if",
   sources: Sources | undefined,
   initId: string,
 ) {
   return t.logicalExpression(
     "&&",
-    getCallerGroupGuard(section, check, sources)!,
+    getCallerGroupGuard(section, "_client_guard", sources)!,
     callPatchRuntime("_patch_init", section, initId),
   );
+}
+
+// A created subscriber joins its owner's set where no patch fills the closure,
+// else for its subscribers' fill; it inits where the client contributes.
+function buildSubscribe(section: Section, closure: Binding, init: CreatedInit) {
+  const initId =
+    runsClientInit(init) && getResumeRegisterId(section, closure, "init");
+  const subscribeId = t.stringLiteral(
+    getResumeRegisterId(section, closure, "subscribe"),
+  );
+  const patchInit = callRuntime(
+    "_patch_init",
+    getScopeIdIdentifier(section),
+    initId
+      ? t.conditionalExpression(
+          getCallerGroupGuard(section, "_client_guard", closure.sources)!,
+          t.stringLiteral(initId),
+          subscribeId,
+        )
+      : subscribeId,
+  );
+  const structure = getCreatedSubscribeStructure(section, closure, init);
+  return structure === false
+    ? patchInit
+    : t.logicalExpression(
+        "&&",
+        orCallerGroupGuards(
+          section,
+          getCallerGroupGuard(section, "_unfilled_if", closure.sources),
+          "_unfilled_if",
+          structure,
+        )!,
+        patchInit,
+      );
 }
 
 // Ownership args for an expression's write in `section`; a value fixed for the

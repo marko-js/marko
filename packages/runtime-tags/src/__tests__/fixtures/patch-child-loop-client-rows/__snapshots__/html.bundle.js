@@ -18,12 +18,13 @@ var rows_default = _template("b", (input) => {
 			_scope($scope2_id, { _: $wi__input_items__OR__input_promise && _scope_with_id($scope1_id) });
 		}, 1, "b0");
 		_html("</div>");
+		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "b3");
 		$wi__input_items__OR__input_promise && _scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 2) && item?.id,
 			_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id)
 		});
 	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b2", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.promise }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb3", input.promise, !_server_guard($scope0_reason, 2));
+	$scope0_page ? _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.promise }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb4", input.promise, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

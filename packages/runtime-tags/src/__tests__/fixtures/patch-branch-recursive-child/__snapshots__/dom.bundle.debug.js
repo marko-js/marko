@@ -5,7 +5,7 @@ const $setup$1 = ($_) => {};
 const $for_content__child = ($scope, child) => $input_node($scope["#childScope/0"], child);
 const $for_content__$params = ($scope, $params2) => $for_content__child($scope, $params2[0]);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), 0, $for_content__$params);
-const $if_content__input_node_children = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__for($scope, [$scope._.input_node_children]));
+const $if_content__input_node_children = /*@__PURE__*/ _shell_init("__tests__/tags/tree.marko_1_input_node_children#0:6/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__for($scope, [$scope._.input_node_children])));
 const $if_content__setup$1 = $if_content__input_node_children;
 const $input_node_name = ($scope, input_node_name) => _text($scope["#text/0"], input_node_name);
 const $input_node = ($scope, input_node) => {

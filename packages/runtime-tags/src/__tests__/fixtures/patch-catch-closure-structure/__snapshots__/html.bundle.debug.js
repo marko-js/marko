@@ -7,7 +7,7 @@ function boom(error) {
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<p> </p>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b D ;<main><!><button> </button></main>",
-	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell !__tests__/template.marko_2_input_detail#0:5;D ;<i> </i>"
+	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_input_detail#0:5/subscribe!__tests__/template.marko_2_input_detail#0:5;D ;<i> </i>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_detail = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1), $scope0_page = _page_render();
@@ -31,7 +31,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<i>${_patch_text($scope2_id, "#text/0", input.detail, void 0, $scope0_reason, 0)}</i>`);
 				_script($scope2_id, "__tests__/template.marko_2_input_detail#0:5");
-				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_detail#0:5/subscribe");
 				_subscribe($wi__input_detail && $input_detail__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_detail/8": $wi__input_detail && 1

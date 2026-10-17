@@ -26,7 +26,11 @@ import {
   rest,
   some,
 } from "./optional";
-import { ensurePatchReasonGroups, resetPatchFills } from "./patch/refresh";
+import {
+  ensurePatchReasonGroups,
+  resetClosureInits,
+  resetPatchFills,
+} from "./patch/refresh";
 import {
   addOwnerReason,
   addReason,
@@ -77,7 +81,10 @@ export function solveReasons(
     // Answers read the reasons of the moment, so each pass asks afresh.
     resetExtraReaders();
     resetBindingReaders();
-    if (isPatch()) resetPatchFills();
+    if (isPatch()) {
+      resetPatchFills();
+      resetClosureInits();
+    }
     forEachSection((section) =>
       addIntersectionReasons(section, intersectionsBySection.get(section)),
     );

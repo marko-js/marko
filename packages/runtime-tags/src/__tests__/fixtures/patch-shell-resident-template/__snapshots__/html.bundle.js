@@ -38,7 +38,7 @@ var chooser_default = _template("d", (input) => {
 });
 
 // template.marko
-_shells({ c: /*@__PURE__*/ (() => `c !;${((_w0) => `b%b/${_w0}&b`)($walks)};${((_w0) => `<!><!>${_w0}<!>`)($template)}`)() });
+_shells({ c: /*@__PURE__*/ (() => `c;${((_w0) => `b%b/${_w0}&b`)($walks)};${((_w0) => `<!><!>${_w0}<!>`)($template)}`)() });
 var template_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -51,10 +51,9 @@ var template_default = _template("c", (input) => {
 	});
 	_patch_write($scope0_id, "we", input.which, 1);
 	_patch_write($scope0_id, "wf", input.label, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "c2");
-	$scope0_page ? _scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.which,
-		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
+	$scope0_page && _scope($scope0_id, {
+		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.which,
+		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.label,
 		b: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vc0", input.which, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc1", input.label, !_server_guard($scope0_reason, 2)));
+	});
 }, 1);

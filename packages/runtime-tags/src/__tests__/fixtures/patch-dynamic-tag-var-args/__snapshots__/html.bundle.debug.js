@@ -24,7 +24,7 @@ var counter_default = _template("__tests__/counter.marko", (input) => {
 // template.marko
 const $template = "<main><!><p> </p></main>";
 const $walks = "D1bD m";
-_shells({ "__tests__/template.marko": "__tests__/template.marko !;D1bD ;<main><!><p> </p></main>" });
+_shells({ "__tests__/template.marko": "__tests__/template.marko;D1bD ;<main><!><p> </p></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -35,12 +35,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<p>${_text_resume($scope0_id, "#text/2", n)}</p></main>`);
 	_patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
 	_patch_write($scope0_id, "PatchWrite:input_start", input.start, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_on#5_input_start#6/init");
-	$scope0_page ? _scope($scope0_id, {
-		input_on: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.on,
-		input_start: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.start
+	$scope0_page && _scope($scope0_id, {
+		input_on: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.on,
+		input_start: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.start
 	}, "__tests__/template.marko", 0, {
 		input_on: ["input.on"],
 		input_start: ["input.start"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.on, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.start, !_server_guard($scope0_reason, 2)));
+	});
 }, 1);

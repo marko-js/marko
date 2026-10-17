@@ -239,8 +239,8 @@ export function _fill_const<T>(
   return fill(key, _const<T>(id, fn), id, fillFn);
 }
 
-// A created scope's params land as seeds, so no arrival completes its join:
-// the flush runs it by this init, after whatever does arrive.
+// A created scope's join waits on members it seeds or never inits: the flush
+// runs it by this init, after whatever does arrive.
 export function _shell_or(
   initId: string,
   id: number,
@@ -259,8 +259,18 @@ export function _shell_or(
   return or;
 }
 
-// A created subscriber a flush names by id whether or not client code reaches
-// it: this registration is what ships it, and the fill join around it.
+// A later closure position a flush may create carries its index, which its
+// owner's `_closure` composite would stamp, so the composite need not ship.
+export function _closure_index(
+  index: number,
+  signal: ReturnType<typeof _closure_get>,
+) {
+  signal[ClosureSignalProp.Index] = index;
+  return signal;
+}
+
+// A created subscriber a shell or flush names by id whether or not client code
+// reaches it: this registration is what ships it, and the fill join around it.
 export function _closure_resume<T extends (scope: Scope, resumed: 1) => void>(
   resumeId: string,
   closureSignal: T,
@@ -269,16 +279,11 @@ export function _closure_resume<T extends (scope: Scope, resumed: 1) => void>(
   return closureSignal;
 }
 
-// A fill closure's creation init is the arrival at each join that reads it,
-// queued as a closure's first render is; registered from the join's own fill wrapper.
-export function _shell_join<T extends (scope: Scope) => void>(
+// A created scope's init registers with the signal it runs, so it lives exactly
+// as long.
+export function _shell_init<T extends (scope: Scope) => void>(
   id: string,
-  join: T,
+  signal: T,
 ): T {
-  const prev = _resumed[id] as T | undefined;
-  _resumed[id] = (scope: Scope) => {
-    prev?.(scope);
-    queueRender(scope, join, -1);
-  };
-  return join;
+  return (_resumed[id] = signal);
 }

@@ -17,19 +17,23 @@ var card_b_default = _template("b", (input) => {
 });
 
 // template.marko
-_shells({ c: "c !c2; D l%b%b%b%;<button class=inc> </button><!><!><!><!><!>" });
+_shells({
+	c0: "c0,",
+	c1: "c1,",
+	c: "c !c2; D l%b%b%b%;<button class=inc> </button><!><!><!><!><!>"
+});
 var template_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
-	const Row = { content: _content_resume("c0", ({ user }) => {
+	const Row = { content: _content_resume("c1", ({ user }) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<p>${_patch_text($scope1_id, "a", user.name)}</p>`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
-	const Alt = { content: _content_resume("c1", ({ user }) => {
+	const Alt = { content: _content_resume("c0", ({ user }) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html(`<i>${_patch_text($scope2_id, "a", user.name)}</i>`);
@@ -54,23 +58,19 @@ var template_default = _template("c", (input) => {
 	_patch_write($scope0_id, "ws", input.hidden, 1);
 	_patch_write($scope0_id, "wv", Row, 1);
 	_patch_write($scope0_id, "ww", Alt, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "c12");
-	_client_guard($scope0_reason, 1) && _patch_init($scope0_id, "c13");
-	_client_guard($scope0_reason, 6) && _patch_init($scope0_id, "c14");
-	_client_guard($scope0_reason, 5) && _patch_init($scope0_id, "c15");
-	_patch_value($scope0_id, "vc16", n, 1);
-	$scope0_page ? _scope($scope0_id, {
-		i: (_unfilled_if($scope0_reason, 8) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 7)) && input.which,
-		j: (_unfilled_if($scope0_reason, 7) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 8)) && input.user,
-		l: (_unfilled_if($scope0_reason, 10) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 9)) && input.alt,
-		m: (_unfilled_if($scope0_reason, 9) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 10)) && input.user2,
-		n: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 6)) && input.tag,
-		o: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.cls,
-		p: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.title,
-		r: (_unfilled_if($scope0_reason, 15) || _unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 14)) && input.none,
-		s: (_unfilled_if($scope0_reason, 14) || _unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 15)) && input.hidden,
+	_patch_value($scope0_id, "vc3", n, 1);
+	$scope0_page && _scope($scope0_id, {
+		i: (_unfilled_if($scope0_reason, 8) || _unfilled_if($scope0_reason, 0)) && input.which,
+		j: (_unfilled_if($scope0_reason, 7) || _unfilled_if($scope0_reason, 0)) && input.user,
+		l: (_unfilled_if($scope0_reason, 10) || _unfilled_if($scope0_reason, 1)) && input.alt,
+		m: (_unfilled_if($scope0_reason, 9) || _unfilled_if($scope0_reason, 1)) && input.user2,
+		n: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.tag,
+		o: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 6)) && input.cls,
+		p: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 6)) && input.title,
+		r: (_unfilled_if($scope0_reason, 12) || _unfilled_if($scope0_reason, 5)) && input.none,
+		s: (_unfilled_if($scope0_reason, 11) || _unfilled_if($scope0_reason, 5)) && input.hidden,
 		u: n,
-		v: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 9) || _unfilled_if($scope0_reason, 10)) && Row,
-		w: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 9) || _unfilled_if($scope0_reason, 10)) && Alt
-	}) : (_filled_guard($scope0_reason, 7) && _client_guard($scope0_reason, 8) && _patch_value($scope0_id, "vc3", input.which, !_server_guard($scope0_reason, 7)), _filled_guard($scope0_reason, 8) && _client_guard($scope0_reason, 7) && _patch_value($scope0_id, "vc4", input.user, !_server_guard($scope0_reason, 8)), _filled_guard($scope0_reason, 9) && _client_guard($scope0_reason, 10) && _patch_value($scope0_id, "vc5", input.alt, !_server_guard($scope0_reason, 9)), _filled_guard($scope0_reason, 10) && _client_guard($scope0_reason, 9) && _patch_value($scope0_id, "vc6", input.user2, !_server_guard($scope0_reason, 10)), _filled_guard($scope0_reason, 11) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "vc7", input.tag, !_server_guard($scope0_reason, 11)), _filled_guard($scope0_reason, 12) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vc8", input.cls, !_server_guard($scope0_reason, 12)), _filled_guard($scope0_reason, 13) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vc9", input.title, !_server_guard($scope0_reason, 13)), _filled_guard($scope0_reason, 14) && _client_guard($scope0_reason, 15) && _patch_value($scope0_id, "vc10", input.none, !_server_guard($scope0_reason, 14)), _filled_guard($scope0_reason, 15) && _client_guard($scope0_reason, 14) && _patch_value($scope0_id, "vc11", input.hidden, !_server_guard($scope0_reason, 15)));
+		v: _unfilled_if($scope0_reason, 1) && Row,
+		w: _unfilled_if($scope0_reason, 1) && Alt
+	});
 }, 1);

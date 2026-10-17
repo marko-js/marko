@@ -23,7 +23,11 @@ var card_b_default = _template("__tests__/card-b.marko", (input) => {
 // template.marko
 const $template = "<button class=inc> </button><!><!><!><!><!>";
 const $walks = " D l%b%b%b%c";
-_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%b%b%b%;<button class=inc> </button><!><!><!><!><!>" });
+_shells({
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content,",
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%b%b%b%;<button class=inc> </button><!><!><!><!><!>"
+});
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -60,24 +64,20 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_hidden", input.hidden, 1);
 	_patch_write($scope0_id, "PatchWrite:Row", Row, 1);
 	_patch_write($scope0_id, "PatchWrite:Alt", Alt, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_which#8_input_user#9/init");
-	_client_guard($scope0_reason, 1) && _patch_init($scope0_id, "__tests__/template.marko_0_input_alt#11_input_user2#12_Row#21_Alt#22/init");
-	_client_guard($scope0_reason, 6) && _patch_init($scope0_id, "__tests__/template.marko_0_input_tag#13_input_cls#14_input_title#15/init");
-	_client_guard($scope0_reason, 5) && _patch_init($scope0_id, "__tests__/template.marko_0_input_none#17_input_hidden#18/init");
-	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill9", n, 1);
-	$scope0_page ? _scope($scope0_id, {
-		input_which: (_unfilled_if($scope0_reason, 8) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 7)) && input.which,
-		input_user: (_unfilled_if($scope0_reason, 7) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 8)) && input.user,
-		input_alt: (_unfilled_if($scope0_reason, 10) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 9)) && input.alt,
-		input_user2: (_unfilled_if($scope0_reason, 9) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 10)) && input.user2,
-		input_tag: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 6)) && input.tag,
-		input_cls: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.cls,
-		input_title: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.title,
-		input_none: (_unfilled_if($scope0_reason, 15) || _unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 14)) && input.none,
-		input_hidden: (_unfilled_if($scope0_reason, 14) || _unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 15)) && input.hidden,
+	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", n, 1);
+	$scope0_page && _scope($scope0_id, {
+		input_which: (_unfilled_if($scope0_reason, 8) || _unfilled_if($scope0_reason, 0)) && input.which,
+		input_user: (_unfilled_if($scope0_reason, 7) || _unfilled_if($scope0_reason, 0)) && input.user,
+		input_alt: (_unfilled_if($scope0_reason, 10) || _unfilled_if($scope0_reason, 1)) && input.alt,
+		input_user2: (_unfilled_if($scope0_reason, 9) || _unfilled_if($scope0_reason, 1)) && input.user2,
+		input_tag: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.tag,
+		input_cls: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 6)) && input.cls,
+		input_title: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 6)) && input.title,
+		input_none: (_unfilled_if($scope0_reason, 12) || _unfilled_if($scope0_reason, 5)) && input.none,
+		input_hidden: (_unfilled_if($scope0_reason, 11) || _unfilled_if($scope0_reason, 5)) && input.hidden,
 		n,
-		Row: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 9) || _unfilled_if($scope0_reason, 10)) && Row,
-		Alt: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 9) || _unfilled_if($scope0_reason, 10)) && Alt
+		Row: _unfilled_if($scope0_reason, 1) && Row,
+		Alt: _unfilled_if($scope0_reason, 1) && Alt
 	}, "__tests__/template.marko", 0, {
 		input_which: ["input.which"],
 		input_user: ["input.user"],
@@ -91,5 +91,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		n: "4:6",
 		Row: "6:9",
 		Alt: "7:9"
-	}) : (_filled_guard($scope0_reason, 7) && _client_guard($scope0_reason, 8) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.which, !_server_guard($scope0_reason, 7)), _filled_guard($scope0_reason, 8) && _client_guard($scope0_reason, 7) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.user, !_server_guard($scope0_reason, 8)), _filled_guard($scope0_reason, 9) && _client_guard($scope0_reason, 10) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.alt, !_server_guard($scope0_reason, 9)), _filled_guard($scope0_reason, 10) && _client_guard($scope0_reason, 9) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill3", input.user2, !_server_guard($scope0_reason, 10)), _filled_guard($scope0_reason, 11) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill4", input.tag, !_server_guard($scope0_reason, 11)), _filled_guard($scope0_reason, 12) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill5", input.cls, !_server_guard($scope0_reason, 12)), _filled_guard($scope0_reason, 13) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill6", input.title, !_server_guard($scope0_reason, 13)), _filled_guard($scope0_reason, 14) && _client_guard($scope0_reason, 15) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill7", input.none, !_server_guard($scope0_reason, 14)), _filled_guard($scope0_reason, 15) && _client_guard($scope0_reason, 14) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill8", input.hidden, !_server_guard($scope0_reason, 15)));
+	});
 }, 1);

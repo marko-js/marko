@@ -7,7 +7,6 @@ _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content __tests__/template.marko_3_count#0:6/init;D%c%c%;<p><!>:<!>:<!></p>",
 	"__tests__/template.marko_2_#text#0/await": "__tests__/template.marko_2_#text#0/await __tests__/template.marko_3_count#0:6/init;D%c%c%;<p><!>:<!>:<!></p>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
-	"__tests__/template.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*content !;${_w0};${_w1}`)($Info_content__walks, $Info_content__template),
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => `b/${_w0}& b`)($Info_content__walks)};${((_w0) => `<!>${_w0}<button>+</button>`)($Info_content__template)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -15,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = 0;
-	const Info = { content: _content_elide("__tests__/template.marko_1*content", ({ id, value }) => {
+	const Info = { content: _content("__tests__/template.marko_1*content", ({ id, value }) => {
 		const $scope1_id = _scope_id();
 		const $Info_content__id__closures = new Set();
 		const $Info_content__value__closures = new Set();

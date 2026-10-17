@@ -1,7 +1,10 @@
 // template.marko
 const $template = "<!><!><button> </button>";
 const $walks = "b%b D l";
-_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b D ;<!><!><button> </button>" });
+_shells({
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content !__tests__/template.marko_1,",
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b D ;<!><!><button> </button>"
+});
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -12,6 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let count = 0;
 		_html(`<em>${_patch_text($scope1_id, "#text/1", label)} ${_text_resume($scope1_id, "#text/2", count, 2)}</em>${_el_resume($scope1_id, "#em/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
+		_patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", count, 1);
 		_scope($scope1_id, { count }, "__tests__/template.marko", "2:2", { count: "3:8" });
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.show ? Content : "span", { label: input.label }, 0, 0, _write_guard($scope0_reason, 0), void 0, 1, $scope0_reason, 0);
@@ -20,17 +24,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_show", input.show, 1);
 	_patch_write($scope0_id, "PatchWrite:input_label", input.label, 1);
 	_patch_write($scope0_id, "PatchWrite:Content", Content, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_show#5_input_label#6_Content#8/init");
-	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", n, 1);
-	$scope0_page ? _scope($scope0_id, {
-		input_show: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show,
-		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
+	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", n, 1);
+	$scope0_page && _scope($scope0_id, {
+		input_show: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.show,
+		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.label,
 		n,
-		Content: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && Content
+		Content: _unfilled_if($scope0_reason, 0) && Content
 	}, "__tests__/template.marko", 0, {
 		input_show: ["input.show"],
 		input_label: ["input.label"],
 		n: "1:6",
 		Content: "2:9"
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.show, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.label, !_server_guard($scope0_reason, 2)));
+	});
 }, 1);

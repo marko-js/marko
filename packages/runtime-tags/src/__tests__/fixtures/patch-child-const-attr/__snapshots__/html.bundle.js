@@ -13,6 +13,7 @@ var badge_default = _template("b", (input) => {
 		if (input.label) {
 			const $scope1_id = _scope_id();
 			_html(`<b>${_patch_text($scope1_id, "a", input.label, void 0, $scope0_reason, 0)}</b>`);
+			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "b1");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}

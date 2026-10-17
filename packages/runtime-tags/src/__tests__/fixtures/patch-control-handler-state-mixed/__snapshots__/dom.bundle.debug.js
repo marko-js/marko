@@ -2,7 +2,7 @@
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 const $for_content__cm__OR__it_v = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "it_v", /*@__PURE__*/ _or(5, ($scope) => _attr_input_value($scope, "#input/0", $scope.it_v + $scope._.cm, $valueChange($scope))));
-const $for_content__cm = _resumed["__tests__/template.marko_1_cm#0:9/init"] = /*@__PURE__*/ _for_closure("#text/2", $for_content__cm__OR__it_v);
+const $for_content__cm = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_cm#0:9/init", /*@__PURE__*/ _for_closure("#text/2", $for_content__cm__OR__it_v));
 const $for_content__cv = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill3", "cv/6", ($scope) => _text($scope["#text/1"], $scope.cv));
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _attr_input_value_script($scope, "#input/0"));
 const $for_content__setup = ($scope) => {

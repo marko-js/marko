@@ -17,9 +17,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-loop-content-locals/tags/tabs.marko_1*shell"]
   }
 }]
-;CQY
+;CwY
 
-// PATCH holding CQY
+// PATCH holding CwY
 {
   "PatchChild:#childScope/0": {
     "PatchLoop:#text/0": [{

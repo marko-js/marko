@@ -35,6 +35,4 @@ INSERT: main > .box
 REMOVE: .box + .box
 UPDATE: .box[class] null => "box"
 INSERT: .box > em
-UPDATE: .box > em::text " " => "3"
-UPDATE: .box > em::text "" => "3"
 ```

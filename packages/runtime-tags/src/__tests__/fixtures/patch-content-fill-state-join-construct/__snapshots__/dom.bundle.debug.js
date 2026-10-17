@@ -23,7 +23,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $card_content__count = _resumed["__tests__/template.marko_2_count#0:6/init"] = /*@__PURE__*/ _closure_get("count/9", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:6/subscribe");
+const $card_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_2_count#0:6/init", /*@__PURE__*/ _closure_get("count/9", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._));
 const $card_content__setup = ($scope) => {
 	$card_content__count($scope);
 	$card_content__p_name($scope);

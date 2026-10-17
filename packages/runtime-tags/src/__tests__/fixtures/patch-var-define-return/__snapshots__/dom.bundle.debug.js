@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><div> </div><button>+</button>";
 const $walks = "0&b D l b";
-const $Sum_content__a__OR__b = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "b", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "a", /*@__PURE__*/ _shell_or("__tests__/template.marko_1_a#2_b#3/init", 4, ($scope) => _return($scope, $scope.a + $scope.b))));
+const $Sum_content__a__OR__b = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "b", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "a", /*@__PURE__*/ _or(4, ($scope) => _return($scope, $scope.a + $scope.b))));
 const $Sum_content__a = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "a", $Sum_content__a__OR__b);
 const $Sum_content__b = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill2", "b", $Sum_content__a__OR__b);
 const $Sum_content__$params = ($scope, $params2) => $Sum_content__$temp($scope, $params2[0]);

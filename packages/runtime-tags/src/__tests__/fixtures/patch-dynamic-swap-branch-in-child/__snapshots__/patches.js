@@ -1,25 +1,29 @@
 // PATCH
-[`b0 !b4; ;<button>a</button>`, {
+[`b1,`, `b2 !b6; ;<button>a</button>`, {
   ca: {
-    fa: ["^b5", {
-      x: "a1"
-    }],
+    fa: "^b1",
     cAa: {
-      ba: "b0"
+      wd: "a1",
+      ba: "b2",
+      s: {
+        i: "b8"
+      }
     }
   }
 }]
-;DAI
+;ERg
 
-// PATCH holding DAI
-[`b2 !b7; ;<button>b</button>`, {
+// PATCH holding ERg
+[`b0,`, `b4 !b9; ;<button>b</button>`, {
   ca: {
-    fa: ["^b8", {
-      x: "a2"
-    }],
+    fa: "^b0",
     cAa: {
-      ba: "b2"
+      wd: "a2",
+      ba: "b4",
+      s: {
+        i: "b11"
+      }
     }
   }
 }]
-;DRQ
+;EVw

@@ -45,7 +45,7 @@ What a binding's value is computed from: the expressions it reads
 (`derivedFrom`, whose reverse is an expression's `derives`) and, for an
 alias, the binding it aliases (`aliasOf`), summarized by kind as its
 _sources_.
-_Avoid_: upstream, downstream, feed, feeder
+_Avoid_: upstream, downstream, feed, feeder, recompute (the client deriving a value)
 
 **Branch expression**:
 The expression a branch section is rendered by: an `<if>` condition, a
@@ -226,8 +226,10 @@ _Avoid_: hydrate, hydration, replay
 **Created scope**:
 A scope a patch creates from a shell where the live page has none, seeded by
 its fills and set up by registered ids (`inits…!effects…`) in place of a
-renderer's setup; a live scope the patch writes into is _paired_. A `@catch`
-creates from its registered renderer instead, whose setup runs: the patch
+renderer's setup; a live scope the patch writes into is _paired_. Content the
+page registers creates from that renderer's markup with the shell's ids and
+no params, or from the renderer alone where it has no setup or params. A
+`@catch` creates from its registered renderer, whose setup runs: the patch
 stands in for its error, mounting by id the effects that read it. The same
 word as a client render's `createBranch`; the patch is just who creates.
 _Avoid_: construct, rebuild
@@ -299,7 +301,8 @@ _Avoid_: partial
 A body a patch may create, as its id with setup ids, walks and markup
 (`id inits…!effects…;walks;template`): registered by the server module at
 load and shipped in the first flush that creates from it, so the client
-creates the body without bundling its template.
+creates the body without bundling its template. Content whose renderer the
+page registers ships no markup (`id inits…!effects…,`), or no shell at all.
 _Avoid_: skeleton, template string
 
 **Held-shell token**:

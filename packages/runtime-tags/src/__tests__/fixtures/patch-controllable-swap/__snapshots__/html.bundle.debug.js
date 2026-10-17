@@ -17,17 +17,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_big", input.big, 1);
 	_patch_write($scope0_id, "PatchWrite:plain", plain, 1);
 	_patch_write($scope0_id, "PatchWrite:loud", loud, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_value#5_input_big#6_plain#7_loud#8/init");
-	$scope0_page ? _scope($scope0_id, {
-		input_value: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.value,
-		input_big: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.big,
-		plain: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && plain,
-		loud: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && loud
+	$scope0_page && _scope($scope0_id, {
+		input_value: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.value,
+		input_big: _unfilled_if($scope0_reason, 0) && input.big,
+		plain: _unfilled_if($scope0_reason, 0) && plain,
+		loud: _unfilled_if($scope0_reason, 0) && loud
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],
 		input_big: ["input.big"],
 		plain: "1:8",
 		loud: "2:8",
 		"ControlledHandler:#input/1": ["valueChange", "5:28"]
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.value, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.big, !_server_guard($scope0_reason, 3)));
+	});
 }, 1);

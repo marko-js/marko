@@ -19,7 +19,7 @@ function boom(error) {
 }
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<p> </p>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_count#0:7/init;D%c%c%;<span><!> <!> <!></span>",
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_count#0:7/init,",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {

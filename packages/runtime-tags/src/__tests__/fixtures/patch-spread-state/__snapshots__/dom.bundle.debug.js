@@ -2,19 +2,19 @@
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
 const $if_content__input_attrs__OR__on__script = _script("__tests__/template.marko_1_input_attrs#0:5_on#0:6", ($scope) => _attrs_script($scope, "#a/0"));
-const $if_content__input_attrs__OR__on = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_attrs", /*@__PURE__*/ _shell_join("__tests__/template.marko_1_input_attrs#0:5/init", /*@__PURE__*/ _or(1, ($scope) => {
+const $if_content__input_attrs__OR__on = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_attrs", /*@__PURE__*/ _shell_or("__tests__/template.marko_1_input_attrs#0:5_on#0:6/init", 1, ($scope) => {
 	_attrs($scope, "#a/0", {
 		...$scope._.input_attrs,
 		class: $scope._.on ? "on" : "off"
 	});
 	$if_content__input_attrs__OR__on__script($scope);
-})), "#text/0", 0);
+}), "#text/0", 0);
 const $if_content__input_attrs = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_attrs__OR__on);
 const $if_content__setup = ($scope) => {
 	$if_content__input_attrs._($scope);
 	$if_content__on._($scope);
 };
-const $if_content__on = _resumed["__tests__/template.marko_1_on#0:6/init"] = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_attrs__OR__on);
+const $if_content__on = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_attrs__OR__on);
 const $on = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "on/6", $if_content__on);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$on($scope, !$scope.on);

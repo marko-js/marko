@@ -26,7 +26,7 @@ function boom(msg) {
 	throw new Error(msg);
 }
 const $try_content__input_msg__OR__input_fail = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom($scope._.input_msg) : $scope._.input_msg)), "input_msg/8", 1);
-const $try_content__input_msg = _closure_resume("__tests__/template.marko_2_input_msg#0:5/subscribe", /*@__PURE__*/ _closure_get("input_msg/8", $try_content__input_msg__OR__input_fail));
+const $try_content__input_msg = /*@__PURE__*/ _closure_index(1, /*@__PURE__*/ _closure_get("input_msg/8", $try_content__input_msg__OR__input_fail, 0, "__tests__/template.marko_2_input_msg#0:5/subscribe"));
 const $try_content__setup = ($scope) => {
 	$try_content__input_msg($scope);
 	$try_content__input_fail($scope);

@@ -26,6 +26,7 @@ var icon_default = _template("__tests__/tags/icon.marko", (input) => {
 		if (input.name) {
 			const $scope1_id = _scope_id();
 			_html(`<path${_patch_attr($scope1_id, "PatchAttr:#path/0 d", "d", input.name, $scope0_reason, 0)}></path>${_el_resume($scope1_id, "#path/0", _mask_group($scope0_reason, 0))}`);
+			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/icon.marko_1_input_name#0:3/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/icon.marko", "2:4");
 			return 0;
 		}
@@ -61,6 +62,7 @@ var docs_default = _template("__tests__/docs.marko", (input) => {
 				_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 				const $childScope = _patch_child($scope2_id, "#childScope/0");
 				icon_default({ name: list[0] });
+				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/docs.marko_2_list_0#1:4/init");
 				_scope($scope2_id, {
 					_: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope)

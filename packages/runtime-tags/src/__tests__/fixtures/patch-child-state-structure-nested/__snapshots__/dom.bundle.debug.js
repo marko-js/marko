@@ -2,10 +2,10 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content2__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/tags/panel/index.marko_fill1", "input_title", /*@__PURE__*/ _closure_get("input_title/7", ($scope) => _text($scope["#text/0"], $scope._._.input_title), ($scope) => $scope._._, "__tests__/tags/panel/index.marko_2_input_title#0:5/subscribe"), 0);
+const $if_content2__input_title = /*@__PURE__*/ _shell_init("__tests__/tags/panel/index.marko_2_input_title#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/panel/index.marko_fill1", "input_title", /*@__PURE__*/ _closure_get("input_title/7", ($scope) => _text($scope["#text/0"], $scope._._.input_title), ($scope) => $scope._._, "__tests__/tags/panel/index.marko_2_input_title#0:5/subscribe"), 0));
 const $if_content2__setup = $if_content2__input_title;
 const $if_content__if = /*@__PURE__*/ _if("#section/0", "<em> </em>", "D ", $if_content2__setup);
-const $if_content__input_inner = /*@__PURE__*/ _fill_join("__tests__/tags/panel/index.marko_fill0", "input_inner", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_inner ? 0 : 1)));
+const $if_content__input_inner = /*@__PURE__*/ _shell_init("__tests__/tags/panel/index.marko_1_input_inner#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/panel/index.marko_fill0", "input_inner", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_inner ? 0 : 1))));
 const $if_content__setup = $if_content__input_inner;
 const $if = /*@__PURE__*/ _if("#text/0", "<section></section>", " ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

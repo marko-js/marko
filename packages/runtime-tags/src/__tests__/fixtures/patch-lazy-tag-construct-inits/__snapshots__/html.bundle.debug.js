@@ -14,6 +14,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_patch_value($scope1_id, "PatchValue:__tests__/child.marko_fill1", i);
 		_html(`<span>${_patch_text($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope1_id, "#text/1", count + i, 2)}</span>`);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/child.marko_1_input_label#0:4/init");
 		_scope($scope1_id, {
 			i,
 			_: _scope_with_id($scope0_id)

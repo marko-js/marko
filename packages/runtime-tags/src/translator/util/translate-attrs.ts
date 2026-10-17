@@ -7,7 +7,7 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
-import { isOutputHTML, isPatch } from "./marko-config";
+import { isOutputHTML } from "./marko-config";
 import {
   type AttrTagMeta,
   type AttrTagLookup,
@@ -30,6 +30,7 @@ import {
   getRendererReason,
   type Section,
 } from "./sections";
+import { shipsContentShell } from "./shell";
 import { getContentClosureValues, getResumeRegisterId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
 import { getScopeReasonStatement } from "./write-guard";
@@ -423,7 +424,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
       return callRuntime(
         serialized
           ? "_content_resume"
-          : isPatch() && bodySection.contentShell
+          : shipsContentShell(bodySection)
             ? "_content_elide"
             : "_content",
         t.stringLiteral(getResumeRegisterId(bodySection, "content")),

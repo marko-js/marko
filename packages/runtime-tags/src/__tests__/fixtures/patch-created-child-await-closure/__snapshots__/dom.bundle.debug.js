@@ -19,7 +19,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/page.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content__likes = _resumed["__tests__/tags/page.marko_1_likes#0:4/init"] = /*@__PURE__*/ _closure_get("likes/5", ($scope) => _text($scope["#text/2"], $scope._.likes), 0, "__tests__/tags/page.marko_1_likes#0:4/subscribe");
+const $await_content__likes = /*@__PURE__*/ _shell_init("__tests__/tags/page.marko_1_likes#0:4/init", /*@__PURE__*/ _closure_get("likes/5", ($scope) => _text($scope["#text/2"], $scope._.likes), 0, "__tests__/tags/page.marko_1_likes#0:4/subscribe"));
 const $await_content__open = /*@__PURE__*/ _fill_let("__tests__/tags/page.marko_fill1", "open/6", ($scope) => _text($scope["#text/3"], $scope.open ? "open" : "closed"));
 const $await_content__setup__script = _script("__tests__/tags/page.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$await_content__open($scope, !$scope.open);

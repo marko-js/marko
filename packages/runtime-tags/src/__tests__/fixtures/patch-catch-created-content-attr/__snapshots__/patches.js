@@ -3,9 +3,9 @@
   cc: {
     ka: [{
       ta: "SHOWN_message"
-    }, "b3"]
+    }, "b4"]
   },
-  va4: "b"
+  va3: "b"
 }
 
 // PATCH
@@ -13,9 +13,9 @@
   cc: {
     ka: [{
       ta: "SHOWN_message"
-    }, "b3"]
+    }, "b4"]
   },
-  va4: "c"
+  va3: "c"
 }
 
 // PATCH
@@ -23,9 +23,9 @@
   cc: {
     cAa: [{
       ta: "ok"
-    }, 0, "b3"]
+    }, 0, "b4"]
   },
-  va4: "d"
+  va3: "d"
 }
 
 // PATCH
@@ -33,7 +33,7 @@
   cc: {
     ka: [{
       ta: "SHOWN_message"
-    }, "b3"]
+    }, "b4"]
   },
-  va4: "e"
+  va3: "e"
 }

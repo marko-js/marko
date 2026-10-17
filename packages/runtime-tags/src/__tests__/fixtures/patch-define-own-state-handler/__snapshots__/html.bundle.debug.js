@@ -3,14 +3,11 @@ const $Row_content__walks = " D l";
 const $Row_content__template = "<button> </button>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks);
-_shells({
-	"__tests__/template.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*content !__tests__/template.marko_1;${_w0};${_w1}`)($Row_content__walks, $Row_content__template),
-	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `b/${_w0}&b`)($Row_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`)()
-});
+_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `b/${_w0}&b`)($Row_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	const Row = { content: _content_elide("__tests__/template.marko_1*content", ({ label }) => {
+	const Row = { content: _content("__tests__/template.marko_1*content", ({ label }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
 		let shown = "none";

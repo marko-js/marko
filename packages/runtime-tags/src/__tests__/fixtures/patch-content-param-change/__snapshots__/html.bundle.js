@@ -10,6 +10,8 @@ var labeler_default = _template("b", (input) => {
 });
 
 // tags/wrapper.marko
+const $template = "<!><!><button>+</button>";
+const $walks = "b%b b";
 _shells({ c: "c !c0;b%b ;<!><!><button>+</button>" });
 var wrapper_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -26,6 +28,7 @@ var wrapper_default = _template("c", (input) => {
 });
 
 // template.marko
+_shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `b/${_w0}&`)($walks)};${((_w0) => `<!>${_w0}`)($template)}`)() });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_suffix = _write_guard($scope0_reason, 0), $wi__input_suffix = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

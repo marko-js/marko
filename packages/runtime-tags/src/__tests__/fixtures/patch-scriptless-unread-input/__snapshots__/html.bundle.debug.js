@@ -13,6 +13,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!><!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&%c`)("D l");
 _shells({
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,",
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !;${((_w0) => `b%b/${_w0}&%c`)("D l")};${((_w0) => `<!><!>${_w0}<!><!>`)($template$1)}`)(),
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${_w0}`)($template$1)
 });
@@ -40,16 +41,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_html(_patch_text($scope2_id, "#text/0", input.user3.name, void 0, $scope0_reason, 7));
-		_subscribe(_unfilled_if($scope0_reason, 7) && $input_user3_name__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), _client_guard($scope0_reason, 7) && "__tests__/template.marko_2_input_user3_name#0:12/subscribe");
+		_unfilled_if($scope0_reason, 7) && _patch_init($scope2_id, "__tests__/template.marko_2_input_user3_name#0:12/subscribe");
+		_subscribe(_unfilled_if($scope0_reason, 7) && $input_user3_name__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 	}, $scope0_id, ($scope) => [{ input_user3_name: input.user3?.name }]), 0, _write_guard($scope0_reason, 0), void 0, 1, $scope0_reason, 0);
 	_patch_write($scope0_id, "PatchWrite:input_tag", input.tag, 1);
 	_patch_write($scope0_id, "PatchWrite:input_cls", input.cls, 1);
 	_patch_write($scope0_id, "PatchWrite:input_user3_name", input.user3?.name, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_tag#8_input_cls#9/init");
 	$scope0_page ? _scope($scope0_id, {
 		input_user: _unfilled_if($scope0_reason, 2) && input.user,
-		input_tag: (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 5)) && input.tag,
-		input_cls: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 6)) && input.cls,
+		input_tag: (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 0)) && input.tag,
+		input_cls: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && input.cls,
 		input_user3_name: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 7)) && input.user3?.name,
 		"#childScope/1": _existing_scope($childScope2),
 		"ClosureScopes:input_user3_name/14": _write_if($scope0_reason, 7) && $input_user3_name__closures
@@ -58,5 +59,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_tag: ["input.tag"],
 		input_cls: ["input.cls"],
 		input_user3_name: ["input.user3.name"]
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.user, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 6) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.tag, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.cls, !_server_guard($scope0_reason, 6)));
+	}) : _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.user, !_server_guard($scope0_reason, 3));
 }, 1);

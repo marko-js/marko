@@ -3,14 +3,11 @@ const $Panel_content__walks = "b%b b";
 const $Panel_content__template = "<!><!><button>toggle</button>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks);
-_shells({
-	"__tests__/template.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*content !__tests__/template.marko_1;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
-	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)()
-});
+_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	const Panel = { content: _content_elide("__tests__/template.marko_1*content", ({ label }) => {
+	const Panel = { content: _content("__tests__/template.marko_1*content", ({ label }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0), $scope1_page = _page_render();
 		let open = false;

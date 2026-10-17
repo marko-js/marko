@@ -6,7 +6,7 @@ const $if_content__seen = /*@__PURE__*/ _const("seen", ($scope) => {
 	_text($scope["#text/0"], $scope.seen);
 	$if_content__seen__script($scope);
 });
-const $if_content__count = _resumed["__tests__/template.marko_1_count#0:5/init"] = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__seen($scope, $scope._.count + 1));
+const $if_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_count#0:5/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__seen($scope, $scope._.count + 1)));
 const $if_content__setup = $if_content__count;
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "count/5", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

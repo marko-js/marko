@@ -1,17 +1,17 @@
 // PATCH
 {
-  vc6: !0,
-  vc7: "two"
+  vc3: !0,
+  vc4: "two"
 }
 
 // PATCH
 {
-  vc6: !1,
-  vc7: "three"
+  vc3: !1,
+  vc4: "three"
 }
 
 // PATCH
 {
-  vc6: !0,
-  vc7: "four"
+  vc3: !0,
+  vc4: "four"
 }

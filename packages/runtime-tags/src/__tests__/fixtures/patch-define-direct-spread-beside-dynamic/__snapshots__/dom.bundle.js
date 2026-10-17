@@ -16,11 +16,11 @@ const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a5", 13, /*@__
 	isOpen: !$scope.k,
 	label: $scope.j + "!"
 })), 2)));
-const $open = /*@__PURE__*/ _fill_let("a8", 10, $input_label__OR__open__OR__Tag);
+const $open = /*@__PURE__*/ _fill_let("a6", 10, $input_label__OR__open__OR__Tag);
 const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.k);
 }));
-const $input_show__OR__input_rest = /*@__PURE__*/ _shell_or("a6", 7, ($scope) => {
+const $input_show__OR__input_rest = /*@__PURE__*/ _or(7, ($scope) => {
 	const $tag_input_spread = {
 		isOpen: $scope.f,
 		...$scope.g

@@ -19,7 +19,7 @@ const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a4", 11, /*@__
 	isOpen: !$scope.h,
 	label: $scope.f + "!"
 })), 2));
-const $open = /*@__PURE__*/ _fill_let("a6", 7, ($scope) => {
+const $open = /*@__PURE__*/ _fill_let("a5", 7, ($scope) => {
 	$Panel_content__isOpen($scope.a, $scope.h);
 	$input_label__OR__open__OR__Tag($scope);
 });

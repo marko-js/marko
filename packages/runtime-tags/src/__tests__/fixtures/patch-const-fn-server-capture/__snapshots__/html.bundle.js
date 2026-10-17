@@ -18,8 +18,8 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a1"], $scope0_reason, 5);
 	$scope0_page ? _scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && input.decor,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 6)) && input.text,
-		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && fmt
-	}) : (_filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "va2", input.text, !_server_guard($scope0_reason, 6)), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 5) || _client_guard($scope0_reason, 6)) && _patch_value($scope0_id, "va3", fmt, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 4) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5) || _unfilled_if()) && _patch_write($scope0_id, "wd", input.decor, !_server_guard($scope0_reason, 4)));
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 5)) && input.decor,
+		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 5)) && input.text,
+		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 5)) && fmt
+	}) : (_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "va2", input.text, !_server_guard($scope0_reason, 6)), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "va3", fmt, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 4) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 5) || _unfilled_if()) && _patch_write($scope0_id, "wd", input.decor, !_server_guard($scope0_reason, 4)));
 }, 1);

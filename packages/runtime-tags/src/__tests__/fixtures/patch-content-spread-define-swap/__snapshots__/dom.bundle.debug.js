@@ -8,7 +8,7 @@ const $one_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/te
 const $one_content__setup = $one_content__input_title;
 const $one_content = _content("__tests__/template.marko_1*content", "<em>one <!></em>", "Db%", $one_content__setup);
 const $input_which__OR__one__OR__two__script = _script("__tests__/template.marko_0_input_which#4_one#5_two#6", ($scope) => _attrs_script($scope, "#div/0"));
-const $input_which__OR__one__OR__two = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_which#4_one#5_two#6/init", 7, ($scope) => {
+const $input_which__OR__one__OR__two = /*@__PURE__*/ _or(7, ($scope) => {
 	_attrs_content($scope, "#div/0", { content: $scope.input_which ? $scope.one : $scope.two });
 	$input_which__OR__one__OR__two__script($scope);
 }, 2);

@@ -4,7 +4,7 @@ const $walks$2 = "b%b b";
 _shells({
 	"__tests__/tags/sub.marko": "__tests__/tags/sub.marko !__tests__/tags/sub.marko_0;b%b ;<!><!><button class=inc>+</button>",
 	"__tests__/tags/sub.marko_1*shell": "__tests__/tags/sub.marko_1*shell;b%;<!><!><!>",
-	"__tests__/tags/sub.marko_2*shell": "__tests__/tags/sub.marko_2*shell __tests__/tags/sub.marko_2_input_n#0:5/init __tests__/tags/sub.marko_2_g#0:6/init;D ;<span class=v> </span>"
+	"__tests__/tags/sub.marko_2*shell": "__tests__/tags/sub.marko_2*shell __tests__/tags/sub.marko_2_g#0:6/init __tests__/tags/sub.marko_2_input_n#0:5_g#0:6/init;D ;<span class=v> </span>"
 });
 var sub_default = _template("__tests__/tags/sub.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $wi__input_n = _write_if($scope0_reason, 1), $scope0_page = _page_render();
@@ -18,6 +18,7 @@ var sub_default = _template("__tests__/tags/sub.marko", (input) => {
 			if (t.on) {
 				const $scope2_id = _scope_id();
 				_html(`<span class=v>${_text_resume($scope2_id, "#text/0", g - input.n)}</span>`);
+				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/sub.marko_2_input_n#0:5/subscribe");
 				_subscribe($g__closures, _subscribe($wi__input_n && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/sub.marko", "4:4"), _client_guard($scope0_reason, 1) && "__tests__/tags/sub.marko_2_input_n#0:5/subscribe"), "__tests__/tags/sub.marko_2_g#0:6/subscribe");
 				return 0;
 			}

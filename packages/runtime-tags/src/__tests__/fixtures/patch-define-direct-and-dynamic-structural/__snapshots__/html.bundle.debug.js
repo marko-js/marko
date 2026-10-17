@@ -42,7 +42,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_write($scope0_id, "PatchWrite:Panel", Panel, 1);
 	_patch_write($scope0_id, "PatchWrite:Other", Other, 1);
-	_client_guard($scope0_reason, 1) && _patch_init($scope0_id, "__tests__/template.marko_0_input_other#6_Panel#8_Other#9/init");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,

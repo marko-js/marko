@@ -1,7 +1,7 @@
 // tags/my-child/index.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $await_content__input_msg = /*@__PURE__*/ _closure_get("input_msg/5", ($scope) => _text($scope["#text/0"], $scope._.input_msg), 0, "__tests__/tags/my-child/index.marko_1_input_msg#0:4/subscribe");
+const $await_content__input_msg = /*@__PURE__*/ _shell_init("__tests__/tags/my-child/index.marko_1_input_msg#0:4/init", /*@__PURE__*/ _closure_get("input_msg/5", ($scope) => _text($scope["#text/0"], $scope._.input_msg), 0, "__tests__/tags/my-child/index.marko_1_input_msg#0:4/subscribe"));
 const $await_content__setup = $await_content__input_msg;
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<div id=done><!> done</div>", "D%", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0");

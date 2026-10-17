@@ -4,7 +4,7 @@ const $walks$2 = "b%c";
 function boom$1() {
 	throw new Error("SHOWN_message");
 }
-const $try_content__input_fail$1 = /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom$1() : "ok"), 0, "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe");
+const $try_content__input_fail$1 = /*@__PURE__*/ _shell_init("__tests__/tags/wrapper.marko_2_input_fail#0:4/init", /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom$1() : "ok"), 0, "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe"));
 const $try_content__setup$1 = $try_content__input_fail$1;
 const $catch_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $catch_content__input_fallback$1 = /*@__PURE__*/ _fill_join_closure("__tests__/tags/wrapper.marko_fill0", "input_fallback", /*@__PURE__*/ _closure_get("input_fallback/5", ($scope) => $catch_content__dynamicTag$1($scope, $scope._.input_fallback), 0, "__tests__/tags/wrapper.marko_1_input_fallback#0:3/subscribe"), 0);
@@ -30,7 +30,7 @@ const $walks$1 = "b%c";
 function boom() {
 	throw new Error("SHOWN_message");
 }
-const $try_content__input_fail = /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe");
+const $try_content__input_fail = /*@__PURE__*/ _shell_init("__tests__/tags/error-wrapper.marko_2_input_fail#0:4/init", /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe"));
 const $try_content__setup = $try_content__input_fail;
 const $catch_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $catch_content__input_fallback = /*@__PURE__*/ _fill_join_closure("__tests__/tags/error-wrapper.marko_fill0", "input_fallback", /*@__PURE__*/ _closure_get("input_fallback/5", ($scope) => $catch_content__dynamicTag($scope, $scope._.input_fallback), 0, "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe"), 0);
@@ -60,14 +60,14 @@ const $fallback_content2__setup = ($scope) => {
 	$fallback_content2__input_label($scope);
 	$fallback_content2__count($scope);
 };
-const $fallback_content2__count = /*@__PURE__*/ _closure_get("count/10", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_2_count#0:8/subscribe");
+const $fallback_content2__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_2_count#0:8/init", /*@__PURE__*/ _closure_get("count/10", ($scope) => _text($scope["#text/1"], $scope._.count)));
 const $fallback_content2 = _content("__tests__/template.marko_2*content", "<i><!> <!></i>", "D%c%", $fallback_content2__setup);
 const $fallback_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/9", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:7/subscribe"), 0);
 const $fallback_content__setup = ($scope) => {
 	$fallback_content__input_label($scope);
 	$fallback_content__count($scope);
 };
-const $fallback_content__count = /*@__PURE__*/ _closure_get("count/10", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_1_count#0:8/subscribe");
+const $fallback_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_count#0:8/init", /*@__PURE__*/ _closure_get("count/10", ($scope) => _text($scope["#text/1"], $scope._.count)));
 const $fallback_content = _content("__tests__/template.marko_1*content", "<em><!> <!></em>", "D%c%", $fallback_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($fallback_content__count, $fallback_content2__count);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "count/8", ($scope) => {

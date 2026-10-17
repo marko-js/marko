@@ -1,6 +1,6 @@
 // tags/counter-box/index.marko
-const $input_onA__OR__input_onB__OR__mode = /*@__PURE__*/ _or(7, ($scope) => _return_change($scope, $scope.g === "a" ? $scope.e : $scope.f), 2);
-const $mode = /*@__PURE__*/ _fill_let("b1", 6, ($scope) => {
+const $input_onA__OR__input_onB__OR__mode = /*@__PURE__*/ _shell_or("b1", 7, ($scope) => _return_change($scope, $scope.g === "a" ? $scope.e : $scope.f), 2);
+const $mode = /*@__PURE__*/ _fill_let("b2", 6, ($scope) => {
 	_text($scope.a, $scope.g);
 	_return($scope, $scope.g);
 	$input_onA__OR__input_onB__OR__mode($scope);

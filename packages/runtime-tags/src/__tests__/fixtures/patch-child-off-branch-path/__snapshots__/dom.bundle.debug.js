@@ -26,7 +26,7 @@ const $await_content__v$1 = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params$1 = ($scope, $params2) => $await_content__v$1($scope, $params2[0]);
 const $await_content3 = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content3__$params);
-const $try_content2__input_failing = /*@__PURE__*/ _closure_get("input_failing/11", ($scope) => $try_content2__await_promise($scope, $scope._.input_failing), 0, "__tests__/tags/card.marko_4_input_failing#0:7/subscribe");
+const $try_content2__input_failing = /*@__PURE__*/ _shell_init("__tests__/tags/card.marko_4_input_failing#0:7/init", /*@__PURE__*/ _closure_get("input_failing/11", ($scope) => $try_content2__await_promise($scope, $scope._.input_failing), 0, "__tests__/tags/card.marko_4_input_failing#0:7/subscribe"));
 const $try_content2__setup = ($scope) => {
 	$try_content2__input_failing($scope);
 	$await_content3($scope);
@@ -43,7 +43,7 @@ const $catch_content__input_other = /*@__PURE__*/ _fill_join_closure("__tests__/
 const $catch_content = _content("__tests__/tags/card.marko_3*content", /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($template$3), /*@__PURE__*/ ((_w0) => `/${_w0}&%c`)("D l"), $catch_content__setup);
 const $await_content$1 = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $try_content__await_promise$1 = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params$1);
-const $try_content__input_slow$1 = /*@__PURE__*/ _closure_get("input_slow/9", ($scope) => $try_content__await_promise$1($scope, $scope._.input_slow), 0, "__tests__/tags/card.marko_2_input_slow#0:5/subscribe");
+const $try_content__input_slow$1 = /*@__PURE__*/ _shell_init("__tests__/tags/card.marko_2_input_slow#0:5/init", /*@__PURE__*/ _closure_get("input_slow/9", ($scope) => $try_content__await_promise$1($scope, $scope._.input_slow), 0, "__tests__/tags/card.marko_2_input_slow#0:5/subscribe"));
 const $try_content__setup$1 = ($scope) => {
 	$try_content__input_slow$1($scope);
 	$await_content$1($scope);

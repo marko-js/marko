@@ -1,10 +1,8 @@
 // template.marko
-const $Inner_content__walks = "D l";
-const $Inner_content__template = "<p> </p>";
 _shells({
 	a0: "a0;D ;<p> </p>",
-	a1: /*@__PURE__*/ (() => `a1 !a4;${/*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Inner_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<button>inc</button>`)($Inner_content__template)}`)(),
-	a: "a !;b%;<!><!><!>"
+	a1: "a1 !a4,",
+	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show__OR__input_n = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -35,6 +33,7 @@ var template_default = _template("a", (input) => {
 		Inner.content({ y: count });
 		_html(`<button>inc</button>${_el_resume($scope1_id, "b")}`);
 		_script($scope1_id, "a4");
+		_patch_value($scope1_id, "va5", count, 1);
 		_scope($scope1_id, {
 			e: value,
 			f: count,
@@ -46,10 +45,9 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wd", input.show, 1);
 	_patch_write($scope0_id, "we", input.n, 1);
 	_patch_write($scope0_id, "wf", Outer, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a7");
-	$scope0_page ? _scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.n,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && Outer
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va5", input.show, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va6", input.n, !_server_guard($scope0_reason, 2)));
+	$scope0_page && _scope($scope0_id, {
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.show,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.n,
+		f: _unfilled_if($scope0_reason, 0) && Outer
+	});
 }, 1);

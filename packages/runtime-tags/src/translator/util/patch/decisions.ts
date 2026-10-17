@@ -13,7 +13,6 @@ import { isPatch } from "../marko-config";
 import { every, forEach, type Opt, push, some } from "../optional";
 import { getSourcesForExpr, getSourcesForRef } from "../reasons";
 import {
-  getCanonicalExtra,
   getConstantBindings,
   getGlobalReads,
   getReferencedBindings,
@@ -25,7 +24,6 @@ import { type DOMRuntimeFeature, linkRuntimeFeature } from "../runtime";
 import { getLoopBody, type Section } from "../sections";
 import { findSlot, SlotKind, type Slot } from "../slots";
 import { mergeSources, type Sources } from "../sources";
-import { TagNameType } from "../tag-name-type";
 import {
   catchSetupRenders,
   patchWrites,
@@ -79,18 +77,6 @@ export function writesPatchHandler(tagSection: Section, value: t.Expression) {
 // patch-written structure, with no state source.
 export function isFilledHole(read: ReferencedExtra) {
   return !!read.rendersValue && writesPatchHole(read.section, read);
-}
-
-// Whether the read's tag writes patch entries naming what it renders: a
-// dynamic tag, `content=` or a content spread a patch writes.
-export function isPatchedSite(read: ReferencedExtra) {
-  return (
-    // A dynamic tag's extra merges its name, attrs, args and attr tags.
-    (getCanonicalExtra(read).tagNameType === TagNameType.DynamicTag ||
-      !!read.attrSetSpread ||
-      !!read.contentAttr) &&
-    writesPatchHole(read.section, read)
-  );
 }
 
 // A slot the writer keys a patch entry on, which its scope writes whatever its

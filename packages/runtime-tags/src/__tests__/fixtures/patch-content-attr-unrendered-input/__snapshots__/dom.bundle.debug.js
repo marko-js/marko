@@ -14,7 +14,7 @@ function $setup($scope) {
 	$setup__script($scope);
 	$n($scope, 0);
 }
-const $input_on__OR__frag_content = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_on#7_frag_content#10/init", 11, ($scope) => _attr_content($scope, "#section/2", $scope.input_on ? $scope.frag_content : null));
+const $input_on__OR__frag_content = /*@__PURE__*/ _or(11, ($scope) => _attr_content($scope, "#section/2", $scope.input_on ? $scope.frag_content : null));
 const $frag_content2 = /*@__PURE__*/ _const("frag_content", $input_on__OR__frag_content);
 const $input_on = /*@__PURE__*/ _const("input_on", $input_on__OR__frag_content);
 const $input = ($scope, input) => {

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_3*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_1*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_3*shell;b%;<!><!><!>`, {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{
       "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_1*content",
@@ -9,9 +9,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_3*shell"]
   }
 }]
-;BgI
+;BwY
 
-// PATCH holding BgI
+// PATCH holding BwY
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{
@@ -23,14 +23,14 @@
   }
 }
 
-// PATCH holding BgI
+// PATCH holding BwY
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": 0
   }
 }
 
-// PATCH holding BgI
+// PATCH holding BwY
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{

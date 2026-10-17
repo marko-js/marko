@@ -11,6 +11,7 @@ var my_for_default = _template("__tests__/tags/my-for.marko", (input) => {
 	_for_to(input.to, 0, 1, (...args) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", input.content, [...args], 0, 1, $wg__input_to__OR__input_content, void 0, 1, $scope0_reason, 0);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/my-for.marko_1_input_content#0:4_args#1/init");
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {
 			args: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && args,
 			_: _scope_with_id($scope0_id)

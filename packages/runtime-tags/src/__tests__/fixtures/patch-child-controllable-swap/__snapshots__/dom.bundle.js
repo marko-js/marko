@@ -1,11 +1,11 @@
 // tags/counter/index.marko
-const $if_content__count = /*@__PURE__*/ _fill_let_change("b2", 2, ($scope) => _text($scope.a, $scope.c));
+const $if_content__count = /*@__PURE__*/ _fill_let_change("b3", 2, ($scope) => _text($scope.a, $scope.c));
 const $if_content__setup__script = _script("b1", ($scope) => _on($scope.b, "click", function() {
 	$if_content__count($scope, +$scope.c + 1);
 }));
 
 // template.marko
-const $last = /*@__PURE__*/ _fill_let("a3", 8, ($scope) => _text($scope.b, $scope.i));
+const $last = /*@__PURE__*/ _fill_let("a2", 8, ($scope) => _text($scope.b, $scope.i));
 const $plain = ($scope) => (next) => {
 	$last($scope, next);
 };

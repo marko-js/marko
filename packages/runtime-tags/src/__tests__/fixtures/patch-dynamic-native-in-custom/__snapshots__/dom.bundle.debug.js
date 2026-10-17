@@ -15,17 +15,17 @@ var card_default = /*@__PURE__*/ _template("__tests__/card.marko", $template$1, 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($walks$1);
-const $inputonpdiv_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0);
+const $inputonpdiv_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._), 0);
 const $inputonpdiv_content__setup = $inputonpdiv_content__input_label;
 const $inputonpdiv_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", " ", " ", $inputonpdiv_content__setup);
 const $Card_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputonpdiv_content);
-const $Card_content__input_on__OR__count = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_on", /*@__PURE__*/ _or(1, ($scope) => $Card_content__dynamicTag($scope, $scope._.input_on ? "p" : "div", ($_) => ({ "data-n": $scope._.count }))), "input_on/7", 0);
-const $Card_content__input_on = /*@__PURE__*/ _closure_get("input_on/7", $Card_content__input_on__OR__count, 0, "__tests__/template.marko_1_input_on#0:4/subscribe");
+const $Card_content__input_on__OR__count = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_on", /*@__PURE__*/ _shell_or("__tests__/template.marko_1_input_on#0:4_count#0:6/init", 1, ($scope) => $Card_content__dynamicTag($scope, $scope._.input_on ? "p" : "div", ($_) => ({ "data-n": $scope._.count }))), "input_on/7", 0);
+const $Card_content__input_on = _closure_resume("__tests__/template.marko_1_input_on#0:4/subscribe", /*@__PURE__*/ _closure_get("input_on/7", $Card_content__input_on__OR__count));
 const $Card_content__setup = ($scope) => {
 	$Card_content__input_on($scope);
 	$Card_content__count($scope);
 };
-const $Card_content__count = /*@__PURE__*/ _closure_get("count/9", $Card_content__input_on__OR__count, 0, "__tests__/template.marko_1_count#0:6/subscribe");
+const $Card_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_count#0:6/init", /*@__PURE__*/ _closure_get("count/9", $Card_content__input_on__OR__count));
 const $Card_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $Card_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($Card_content__count);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill2", "count/6", ($scope) => {

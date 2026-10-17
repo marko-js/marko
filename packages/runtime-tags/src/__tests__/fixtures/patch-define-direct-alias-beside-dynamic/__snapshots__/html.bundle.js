@@ -34,8 +34,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_patch_write($scope0_id, "wk", Panel, 1);
-	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "a6");
-	_patch_value($scope0_id, "va7", open, 1);
+	_patch_value($scope0_id, "va6", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		i: input.label,
 		j: open,

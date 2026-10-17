@@ -30,6 +30,7 @@ var wrapper_default = _template("__tests__/components/wrapper.marko", (input) =>
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 			const $childScope = _patch_child($scope1_id, "#childScope/1");
 			$Child_withLoadAssets({ label: input.label });
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/components/wrapper.marko_1_input_label#0:4/init");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 				"#childScope/1": _existing_scope($childScope)
@@ -38,7 +39,7 @@ var wrapper_default = _template("__tests__/components/wrapper.marko", (input) =>
 		}
 	}, $scope0_id, "#section/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/components/wrapper.marko_1*shell"], $scope0_reason, 0);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { input_label: _unfilled_if($scope0_reason, 0) && input.label }, "__tests__/components/wrapper.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/components/wrapper.marko_fill0", input.label, !_server_guard($scope0_reason, 1));
+	$scope0_page ? _scope($scope0_id, { input_label: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label }, "__tests__/components/wrapper.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/components/wrapper.marko_fill0", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

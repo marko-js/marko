@@ -14,10 +14,9 @@ const $setup__script$1 = _script("d0", ($scope) => _on($scope.a, "click", functi
 const $input_base = /*@__PURE__*/ _fill_const("d1", 4, $input_base__OR__tick);
 
 // page.marko
-const $aside_content__bonus__OR__p_base__OR__item_n = /*@__PURE__*/ _fill_join_subscribers("a3", 3, /*@__PURE__*/ _fill_join_subscribers("a6", 9, /*@__PURE__*/ _or(1, ($scope) => $input_base($scope.a, ($scope._._.h ?? $scope._._.j) + $scope._.d), 2), 11, 0), 12, 0);
-const $aside_content__bonus = _resumed.a8 = /*@__PURE__*/ _closure_get(10, $aside_content__bonus__OR__p_base__OR__item_n, ($scope) => $scope._._, "a12");
-const $aside_content__p_base = _resumed.a9 = /*@__PURE__*/ _closure_get(11, $aside_content__bonus__OR__p_base__OR__item_n, ($scope) => $scope._._);
-const $aside_content__item_n = _resumed.a10 = /*@__PURE__*/ _closure_get(12, $aside_content__bonus__OR__p_base__OR__item_n, 0, "a13");
+const $aside_content__bonus__OR__p_base__OR__item_n = /*@__PURE__*/ _fill_join_subscribers("a3", 3, /*@__PURE__*/ _fill_join_subscribers("a6", 9, /*@__PURE__*/ _shell_or("a10", 1, ($scope) => $input_base($scope.a, ($scope._._.h ?? $scope._._.j) + $scope._.d), 2), 11, 0), 12, 0);
+const $aside_content__bonus = /*@__PURE__*/ _shell_init("a8", /*@__PURE__*/ _closure_get(10, $aside_content__bonus__OR__p_base__OR__item_n, ($scope) => $scope._._));
+const $aside_content__item_n = _closure_resume("a9", /*@__PURE__*/ _closure_get(12, $aside_content__bonus__OR__p_base__OR__item_n));
 const $bonus = _var_resume("a2", /*@__PURE__*/ _const(7, /* @__PURE__ */ _closure($aside_content__bonus)));
 const $setup__script = _script("a5", ($scope) => _on($scope.c, "click", function() {
 	_var_change($scope.a, 5);

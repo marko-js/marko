@@ -4,7 +4,7 @@ const $walks$2 = "b%c";
 function boom$1() {
 	throw new Error("SHOWN_message");
 }
-const $try_content__input_fail$1 = /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom$1() : "ok"), 0, "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe");
+const $try_content__input_fail$1 = /*@__PURE__*/ _shell_init("__tests__/tags/wrapper.marko_2_input_fail#0:4/init", /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom$1() : "ok"), 0, "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe"));
 const $try_content__setup$1 = $try_content__input_fail$1;
 const $catch_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $catch_content__input_fallback$1 = /*@__PURE__*/ _fill_join_closure("__tests__/tags/wrapper.marko_fill0", "input_fallback", /*@__PURE__*/ _closure_get("input_fallback/5", ($scope) => $catch_content__dynamicTag$1($scope, $scope._.input_fallback), 0, "__tests__/tags/wrapper.marko_1_input_fallback#0:3/subscribe"), 0);
@@ -30,7 +30,7 @@ const $walks$1 = "b%c";
 function boom() {
 	throw new Error("SHOWN_message");
 }
-const $try_content__input_fail = /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe");
+const $try_content__input_fail = /*@__PURE__*/ _shell_init("__tests__/tags/error-wrapper.marko_2_input_fail#0:4/init", /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe"));
 const $try_content__setup = $try_content__input_fail;
 const $catch_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $catch_content__input_fallback = /*@__PURE__*/ _fill_join_closure("__tests__/tags/error-wrapper.marko_fill0", "input_fallback", /*@__PURE__*/ _closure_get("input_fallback/5", ($scope) => $catch_content__dynamicTag($scope, $scope._.input_fallback), 0, "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe"), 0);

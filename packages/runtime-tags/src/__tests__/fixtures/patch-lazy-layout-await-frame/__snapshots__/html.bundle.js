@@ -25,6 +25,7 @@ var icon_default = _template("f", (input) => {
 		if (input.name) {
 			const $scope1_id = _scope_id();
 			_html(`<path${_patch_attr($scope1_id, "aa d", "d", input.name, $scope0_reason, 0)}></path>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
+			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "f1");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}
@@ -60,6 +61,7 @@ var docs_default = _template("a", (input) => {
 				_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 				const $childScope = _patch_child($scope2_id, "a");
 				icon_default({ name: list[0] });
+				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a4");
 				_scope($scope2_id, {
 					_: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)

@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a5 a6;D ;<p> </p>`, {
+[`a0 a5;D ;<p> </p>`, {
   ba: "a0",
   va2: "Store?"
 }]

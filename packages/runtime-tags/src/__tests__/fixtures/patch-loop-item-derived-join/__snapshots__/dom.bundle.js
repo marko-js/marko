@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__label = _resumed.a5 = /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.b, $scope._.j));
+const $for_content__label = /*@__PURE__*/ _shell_init("a5", /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.b, $scope._.j)));
 const $label = /*@__PURE__*/ _const(9, ($scope) => {
 	_text($scope.b, $scope.j);
 	$for_content__label($scope);

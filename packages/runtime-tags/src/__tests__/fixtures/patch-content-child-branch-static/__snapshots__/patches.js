@@ -6,9 +6,9 @@
     }, "b0"]
   }
 }]
-;BgI
+;CAM
 
-// PATCH holding BgI
+// PATCH holding CAM
 {
   ca: {
     ba: [{
@@ -17,14 +17,14 @@
   }
 }
 
-// PATCH holding BgI
+// PATCH holding CAM
 {
   ca: {
     ba: 0
   }
 }
 
-// PATCH holding BgI
+// PATCH holding CAM
 {
   ca: {
     ba: [{

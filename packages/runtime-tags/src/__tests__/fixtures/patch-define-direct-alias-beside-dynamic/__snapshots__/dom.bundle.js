@@ -16,7 +16,7 @@ const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a5", 14, /*@__
 	isOpen: !$scope.j,
 	label: $scope.i + "!"
 })), 2)));
-const $open = /*@__PURE__*/ _fill_let("a7", 9, $input_label__OR__open__OR__Tag);
+const $open = /*@__PURE__*/ _fill_let("a6", 9, $input_label__OR__open__OR__Tag);
 const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.j);
 }));

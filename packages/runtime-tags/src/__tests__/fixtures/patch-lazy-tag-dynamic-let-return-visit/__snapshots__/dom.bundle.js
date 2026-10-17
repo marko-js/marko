@@ -1,5 +1,5 @@
 // template.marko
-const $n = /*@__PURE__*/ _fill_let("b4", 8, ($scope) => _text($scope.b, $scope.i));
+const $n = /*@__PURE__*/ _fill_let("b1", 8, ($scope) => _text($scope.b, $scope.i));
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.i + 1);
 }));

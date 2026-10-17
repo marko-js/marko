@@ -17,7 +17,6 @@ import {
 } from "../references";
 import {
   getCallerParamGroups,
-  isKnownChild,
   type Section,
   StructureKind,
   type ParamReasonGroup,
@@ -42,18 +41,6 @@ export const [patchMayWrite] = createAnalysisMemo(
     (!isStatefulBranch(section) || !!section.derives),
   false,
 );
-
-// A scope a flush writes into: a known child, a branch or boundary body, a
-// `@catch` or attribute tag `<for>` content, where every render is patch-written.
-export function patchWritesScope(section: Section) {
-  return (
-    patchWrites(section) &&
-    (isKnownChild(section) ||
-      !!section.branch ||
-      section.boundaryContent === "catch" ||
-      !!section.localClosures)
-  );
-}
 
 // Inside stateful structure (inclusive). The parent is asked first, so only the
 // section's own answer can loop back to it, where it reads as not stateful.
@@ -152,18 +139,18 @@ export const [isStatefulBranch] = createAnalysisMemo((section: Section) => {
     bodyRendersStateful(section) ||
     (!!expr &&
       (!!sources?.state || inStatefulBranch(section.parent!)) &&
-      every(getReferencedBindings(expr), clientRecomputes))
+      every(getReferencedBindings(expr), clientDerives))
   );
 }, false);
 
-// The client recomputes a state-mixed ref from what it holds: its state, a
-// fill (the read here calls for one), or a derivation it can recompute so.
-function clientRecomputes(binding: Binding): boolean {
+// The client derives a state-mixed ref from what it holds: its state, a fill
+// (the read here calls for one), or a value it derives the same way.
+function clientDerives(binding: Binding): boolean {
   const sources = getSourcesForRef(binding);
   if (!sources?.param) return true;
   if (inStatefulBranch(binding.section) || canPatchFill(binding)) return true;
   const inputs = getBindingsDerivedFrom(binding);
-  return !!inputs && every(inputs, clientRecomputes);
+  return !!inputs && every(inputs, clientDerives);
 }
 
 // What selects the section: a branch's expression, or the call site

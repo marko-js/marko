@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/tags/card/index.marko_1*shell;D%b%;<li><!><!></li>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/template.marko_1*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/tags/card/index.marko_1*shell;D%b%;<li><!><!></li>`, {
   "PatchChild:#childScope/0": {
     "PatchLoop:#ul/0": [{
       "PatchText:#text/0": "1",
@@ -16,9 +16,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-child-loop/tags/card/index.marko_1*shell"]
   }
 }]
-;BgE
+;CQo
 
-// PATCH holding BgE
+// PATCH holding CQo
 {
   "PatchChild:#childScope/0": {
     "PatchLoop:#ul/0": [{
@@ -31,7 +31,7 @@
   }
 }
 
-// PATCH holding BgE
+// PATCH holding CQo
 {
   "PatchChild:#childScope/0": {
     "PatchLoop:#ul/0": [{

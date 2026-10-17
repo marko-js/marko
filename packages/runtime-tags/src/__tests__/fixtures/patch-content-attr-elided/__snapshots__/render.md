@@ -63,6 +63,5 @@ UPDATE: main > p::text "two" => "three"
 ```
 INSERT: main > section > em
 UPDATE: main > section > em::text " " => "four"
-UPDATE: main > section > em::text "" => "four"
 UPDATE: main > p::text "three" => "four"
 ```

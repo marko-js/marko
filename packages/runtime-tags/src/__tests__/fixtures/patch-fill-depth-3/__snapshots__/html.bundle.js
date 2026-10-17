@@ -22,6 +22,7 @@ var template_default = _template("a", (input) => {
 					_for_of(input.items, (item) => {
 						const $scope3_id = _scope_id();
 						_html(`<p>${_text_resume($scope3_id, "a", item + ":" + input.suffix + "@0")}</p>`);
+						_unfilled_if($scope0_reason, 4) && _patch_init($scope3_id, "a3");
 						_subscribe($count__closures, _subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope3_id, {
 							M: item,
 							_: _scope_with_id($scope2_id)

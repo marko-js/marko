@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/tags/layout.marko_1*shell;D%b%;<li><!><!></li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/tags/layout.marko_2*shell;D%b%;<li><!><!></li>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/template.marko_2*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/tags/layout.marko_1*shell;D%b%;<li><!><!></li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/template.marko_3*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/tags/layout.marko_2*shell;D%b%;<li><!><!></li>`, {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "t",
     "PatchChild:BranchScopes:#text/1": {
@@ -36,4 +36,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/tags/layout.marko_2*shell"]
   }
 }]
-;CwY
+;D2Y

@@ -1,12 +1,12 @@
 // tags/frag-host.marko
 const $one_content = _content$1("b0", "<em>one</em>");
-const $two_content__input_b = /*@__PURE__*/ _fill_join_closure("b4", 4, /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, $scope._.e), 0, "b2"), 0);
+const $two_content__input_b = /*@__PURE__*/ _shell_init("b2", /*@__PURE__*/ _fill_join_closure("b5", 4, /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, $scope._.e), 0, "b3"), 0));
 const $two_content = _content$1("b1", "<strong> </strong>", "D ", $two_content__input_b);
-const $input_mode__OR__one__OR__two__script = _script("b3", ($scope) => {
+const $input_mode__OR__one__OR__two__script = _script("b4", ($scope) => {
 	_attrs_script($scope, "a");
 	_attrs_script($scope, "b");
 });
-const $input_mode__OR__one__OR__two = /*@__PURE__*/ _shell_or("b5", 8, ($scope) => {
+const $input_mode__OR__one__OR__two = /*@__PURE__*/ _shell_or("b6", 8, ($scope) => {
 	_attrs_content($scope, "a", { content: $scope.f ? $scope.g : $scope.h });
 	_attrs_partial_content($scope, "b", { content: $scope.f ? $scope.h : $scope.g }, { id: 1 });
 	$input_mode__OR__one__OR__two__script($scope);

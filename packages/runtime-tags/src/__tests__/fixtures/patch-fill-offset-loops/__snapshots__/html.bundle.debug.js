@@ -4,7 +4,7 @@ const $walks = "E l%b l";
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E l%b ;<main><h1> </h1><!><button>+</button></main>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>",
-	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_input_suffix#0:7/init __tests__/template.marko_2_count#0:8/init;D ;<p> </p>"
+	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_count#0:8/init __tests__/template.marko_2_input_suffix#0:7_count#0:8/init;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_suffix = _write_if($scope0_reason, 2), $scope0_page = _page_render();
@@ -18,6 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_for_of(row.cells, (cell) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "#text/0", cell + ":" + input.suffix + "@" + count)}</p>`);
+			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_suffix#0:7/subscribe");
 			_subscribe($count__closures, _subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, {
 				"#LoopKey": cell,
 				_: _scope_with_id($scope1_id)

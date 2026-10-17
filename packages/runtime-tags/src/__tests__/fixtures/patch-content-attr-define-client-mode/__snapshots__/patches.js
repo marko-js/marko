@@ -1,6 +1,6 @@
 // PATCH
 {
   cb: {
-    vb2: "b"
+    vb3: "b"
   }
 }

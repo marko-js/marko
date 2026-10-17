@@ -11,13 +11,13 @@ var frame_default = /*@__PURE__*/ _template("__tests__/tags/frame.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("D%l");
-const $frame_content__input_label__OR__count = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.input_label + ":" + $scope._.count)), "input_label/6", 0);
-const $frame_content__input_label = _resumed["__tests__/template.marko_1_input_label#0:4/init"] = /*@__PURE__*/ _closure_get("input_label/6", $frame_content__input_label__OR__count, 0, "__tests__/template.marko_1_input_label#0:4/subscribe");
+const $frame_content__input_label__OR__count = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _shell_or("__tests__/template.marko_1_input_label#0:4_count#0:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_label + ":" + $scope._.count)), "input_label/6", 0);
+const $frame_content__input_label = _closure_resume("__tests__/template.marko_1_input_label#0:4/subscribe", /*@__PURE__*/ _closure_get("input_label/6", $frame_content__input_label__OR__count));
 const $frame_content__setup = ($scope) => {
 	$frame_content__input_label($scope);
 	$frame_content__count($scope);
 };
-const $frame_content__count = _resumed["__tests__/template.marko_1_count#0:5/init"] = /*@__PURE__*/ _closure_get("count/7", $frame_content__input_label__OR__count, 0, "__tests__/template.marko_1_count#0:5/subscribe");
+const $frame_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_count#0:5/init", /*@__PURE__*/ _closure_get("count/7", $frame_content__input_label__OR__count));
 const $frame_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p> </p>", "D ", $frame_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($frame_content__count);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "count/5", $count__closure);

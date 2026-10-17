@@ -199,9 +199,6 @@ export interface Section {
     /** The nearest `<await>` or `<try>` body around it (inclusive). */
     boundaryBody: Section | undefined;
   };
-  /** A content body shipped as a shell, created by id from a dynamic tag
-   * entry. */
-  contentShell: boolean;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -288,7 +285,6 @@ export function ensureBodySection(
       branch: undefined,
       boundaryContent: false,
       enclosing: undefined as unknown as Section["enclosing"],
-      contentShell: false,
       structure: parentSection && !parentSection.structure ? null : [],
     };
     if (parentSection) {

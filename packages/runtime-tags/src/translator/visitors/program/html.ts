@@ -11,12 +11,9 @@ import { getDeclaredBindingExpression } from "../../util/get-declared-binding-ex
 import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
-import { first, forEach, mapToString } from "../../util/optional";
-import {
-  getCreateInitClosures,
-  getPatchFillBindings,
-  patchCreates,
-} from "../../util/patch/refresh";
+import { first, forEach } from "../../util/optional";
+import { getPatchFillBindings } from "../../util/patch/refresh";
+import { getShellInitIds } from "../../util/patch/writers";
 import { getReadReplacement } from "../../util/read-replacement";
 import { getSourcesForExpr } from "../../util/reasons";
 import {
@@ -38,6 +35,7 @@ import {
   getShippedShellId,
   getSectionEffectRegisterIds,
   isQueuedOnCreate,
+  shipsShellInits,
 } from "../../util/shell";
 import {
   addWriteScopeBuilder,
@@ -185,14 +183,8 @@ export default {
           // A shell's id token is `inits…!effects…`; a lone `!` means setup
           // for seeds alone. Roots, content and boundary bodies carry one too.
           let marker = "";
-          if (
-            id === getShellId(section) ||
-            !section.parent ||
-            ((section.contentShell === true ||
-              section.branch?.optional === false) &&
-              patchCreates(section))
-          ) {
-            marker = getCreateInitIds(section);
+          if (shipsShellInits(section)) {
+            marker = getShellInitIds(section);
             const effectIds = getSectionEffectRegisterIds(section, (refs) =>
               isQueuedOnCreate(section, refs),
             );
@@ -365,14 +357,6 @@ function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
         getScopeIdIdentifier(extra.section),
     );
   }
-}
-
-// The inits a created scope of the section runs, as the shell grammar's
-// space-joined ids.
-function getCreateInitIds(section: Section) {
-  return mapToString(getCreateInitClosures(section), " ", (closure) =>
-    getResumeRegisterId(section, closure, "init"),
-  );
 }
 
 // A dynamic tag's patch leaves its variable to the client where the rendered

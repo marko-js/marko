@@ -5,7 +5,7 @@ function boom(error) {
 _shells({
 	a0: "a0;D ;<p> </p>",
 	a: "a !a7;D%b D ;<main><!><button> </button></main>",
-	a1: "a1 !a2;D ;<i> </i>"
+	a1: "a1 a3!a2;D ;<i> </i>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_detail = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1), $scope0_page = _page_render();
@@ -29,7 +29,6 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<i>${_patch_text($scope2_id, "a", input.detail, void 0, $scope0_reason, 0)}</i>`);
 				_script($scope2_id, "a2");
-				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a3");
 				_subscribe($wi__input_detail && $input_detail__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					Ci: $wi__input_detail && 1

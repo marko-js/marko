@@ -1,5 +1,5 @@
 // PATCH
-[`a1;b/E%c%l l&b;<!><div class=counter><span><!>: <!></span><button class=inc>+</button></div><!>`, {
+[`a0;b/E%c%l l&b;<!><div class=counter><span><!>: <!></span><button class=inc>+</button></div><!>`, {
   ba: [{
     ca: {
       ta: "A",
@@ -8,11 +8,11 @@
         va3: 5
       }
     }
-  }, "a1"]
+  }, "a0"]
 }]
-;BgI
+;BAE
 
-// PATCH holding BgI
+// PATCH holding BAE
 {
   ba: [{
     ca: {
@@ -22,5 +22,5 @@
         va3: 5
       }
     }
-  }, "a1"]
+  }, "a0"]
 }

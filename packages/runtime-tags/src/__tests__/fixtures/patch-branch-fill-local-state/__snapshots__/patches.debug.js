@@ -5,7 +5,7 @@
 }
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-fill-local-state/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-fill-local-state/template.marko_1_input_title#0:6/init!packages/runtime-tags/src/__tests__/fixtures/patch-branch-fill-local-state/template.marko_1;D l ;<p> </p><button id=n>n</button>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-fill-local-state/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-fill-local-state/template.marko_1_input_title#0:6_n#2/init!packages/runtime-tags/src/__tests__/fixtures/patch-branch-fill-local-state/template.marko_1;D l ;<p> </p><button id=n>n</button>`, {
   "PatchBranch:#text/0": [{
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-fill-local-state/template.marko_fill2": 0

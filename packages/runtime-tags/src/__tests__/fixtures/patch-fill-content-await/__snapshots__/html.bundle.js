@@ -14,7 +14,7 @@ var frame_default = _template("b", (input) => {
 _shells({
 	a0: "a0;D ;<p> </p>",
 	a1: "a1;D ;<p> </p>",
-	a2: "a2 a9 a10 a11;b%;<!><!><!>",
+	a2: "a2 a9 a10 a11 a12;b%;<!><!><!>",
 	a: /*@__PURE__*/ (() => `a !a3;${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {

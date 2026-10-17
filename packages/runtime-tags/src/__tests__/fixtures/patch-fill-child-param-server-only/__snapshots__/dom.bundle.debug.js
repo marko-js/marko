@@ -27,7 +27,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $for_content__hovered__OR__item_id = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "item_id", /*@__PURE__*/ _or(6, ($scope) => _attr_class_item($scope["#li/0"], "hovered", $scope._.hovered === $scope.item_id)));
-const $for_content__hovered = _resumed["__tests__/template.marko_1_hovered#0:3/init"] = /*@__PURE__*/ _for_closure("#ul/0", $for_content__hovered__OR__item_id);
+const $for_content__hovered = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_hovered#0:3/init", /*@__PURE__*/ _for_closure("#ul/0", $for_content__hovered__OR__item_id));
 const $for_content__item_id = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "item_id", ($scope) => {
 	$for_content__hovered__OR__item_id($scope);
 	$input_label($scope["#childScope/1"], $scope.item_id);

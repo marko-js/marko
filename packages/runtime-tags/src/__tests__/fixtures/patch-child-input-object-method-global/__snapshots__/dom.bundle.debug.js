@@ -2,14 +2,14 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $else_content__input_text__OR__highlight = /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill1", "highlight", /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill0", "input_text", /*@__PURE__*/ _or(1, ($scope) => _html($scope, $scope._.highlight($scope._.input_text), "#text/0")), "#text/0", 1), "#text/0", 1);
+const $else_content__input_text__OR__highlight = /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill1", "highlight", /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill0", "input_text", /*@__PURE__*/ _shell_or("__tests__/tags/code-block.marko_2_input_text#0:4_highlight#0:6/init", 1, ($scope) => _html($scope, $scope._.highlight($scope._.input_text), "#text/0")), "#text/0", 1), "#text/0", 1);
 const $else_content__input_text = /*@__PURE__*/ _if_closure("#text/0", 1, $else_content__input_text__OR__highlight);
 const $else_content__setup = ($scope) => {
 	$else_content__input_text._($scope);
 	$else_content__highlight._($scope);
 };
 const $else_content__highlight = /*@__PURE__*/ _if_closure("#text/0", 1, $else_content__input_text__OR__highlight);
-const $if_content__input_text__OR__highlight = /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill1", "highlight", /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill0", "input_text", /*@__PURE__*/ _or(1, ($scope) => _html($scope, $scope._.highlight($scope._.input_text), "#text/0")), "#text/0", 0), "#text/0", 0);
+const $if_content__input_text__OR__highlight = /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill1", "highlight", /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill0", "input_text", /*@__PURE__*/ _shell_or("__tests__/tags/code-block.marko_1_input_text#0:4_highlight#0:6/init", 1, ($scope) => _html($scope, $scope._.highlight($scope._.input_text), "#text/0")), "#text/0", 0), "#text/0", 0);
 const $if_content__input_text = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_text__OR__highlight);
 const $if_content__setup = ($scope) => {
 	$if_content__input_text._($scope);

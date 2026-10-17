@@ -2,7 +2,7 @@
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $if_content__input_note = /*@__PURE__*/ _fill_join("__tests__/tags/badge/index.marko_fill0", "input_note", /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_note)));
+const $if_content__input_note = /*@__PURE__*/ _shell_init("__tests__/tags/badge/index.marko_1_input_note#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/badge/index.marko_fill0", "input_note", /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_note))));
 const $if_content__setup = $if_content__input_note;
 const $if = /*@__PURE__*/ _if("#div/0", "<i> </i>", "D ", $if_content__setup);
 const $input_label = ($scope, input_label) => $if($scope, input_label ? 0 : 1);

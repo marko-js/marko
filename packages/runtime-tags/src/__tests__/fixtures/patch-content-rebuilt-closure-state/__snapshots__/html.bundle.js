@@ -20,7 +20,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<button>add</button>${_w0}<!>`)($temp
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
 _shells({
 	b0: "b0;b%;<!><!><!>",
-	b: /*@__PURE__*/ (() => `b !b3;${((_w0) => ` b/${_w0}&b`)("b%c")};${((_w0) => `<button>add</button>${_w0}<!>`)($template$1)}`)(),
+	b: /*@__PURE__*/ (() => `b !b4;${((_w0) => ` b/${_w0}&b`)("b%c")};${((_w0) => `<button>add</button>${_w0}<!>`)($template$1)}`)(),
 	b1: "b1,<span>shown</span>"
 });
 var child_default = _template("b", (input) => {
@@ -43,21 +43,21 @@ var child_default = _template("b", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b1"], $scope0_reason, 0);
-			_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "b2");
+			_patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "b2" : "b3");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			$wg__input_show || _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	const $childScope = _patch_child($scope0_id, "b");
 	list_default({ item: $item });
-	_script($scope0_id, "b3");
-	_patch_value($scope0_id, "vb5", items, 1);
+	_script($scope0_id, "b4");
+	_patch_value($scope0_id, "vb6", items, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.show,
 		f: items,
 		g: $wi__input_show && $input_show__closures,
 		b: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _content_withheld("b0") && _patch_value($scope0_id, "vb4", input.show, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _content_withheld("b0") && _patch_value($scope0_id, "vb5", input.show, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

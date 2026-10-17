@@ -18,6 +18,7 @@ var sub_default = _template("c", (input) => {
 			if (t.on) {
 				const $scope2_id = _scope_id();
 				_html(`<span class=v>${_text_resume($scope2_id, "a", g - input.n)}</span>`);
+				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "c2");
 				_subscribe($g__closures, _subscribe($wi__input_n && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "c2"), "c3");
 				return 0;
 			}

@@ -8,6 +8,8 @@ var card_default = _template("b", (input) => {
 });
 
 // tags/list.marko
+const $template = "<button>add</button><button>rename</button><ul></ul>";
+const $walks = " b b b";
 _shells({ c: "c !c0; b b ;<button>add</button><button>rename</button><ul></ul>" });
 var list_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_row = _write_if($scope0_reason, 0), $scope0_page = _page_render();
@@ -39,6 +41,7 @@ var list_default = _template("c", (input) => {
 });
 
 // template.marko
+_shells({ a: /*@__PURE__*/ (() => `a;${((_w0) => `/${_w0}&D l`)($walks)};${((_w0) => `${_w0}<p> </p>`)($template)}`)() });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

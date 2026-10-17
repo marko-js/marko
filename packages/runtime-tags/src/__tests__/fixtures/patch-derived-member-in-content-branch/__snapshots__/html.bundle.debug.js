@@ -15,7 +15,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
 _shells({
-	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_count#0:5/init;b%;<!><!><!>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_input_label#0:4/subscribe __tests__/template.marko_1_count#0:5/init __tests__/template.marko_1_count#0:5_label#2/init;b%;<!><!><!>",
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:4/subscribe");
+		_patch_write($scope1_id, "PatchWrite:label", item.label, 1);
 		_subscribe($count__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			label: item.label,
 			_: _scope_with_id($scope0_id)

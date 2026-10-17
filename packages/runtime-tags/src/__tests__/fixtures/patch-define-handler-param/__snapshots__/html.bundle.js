@@ -1,15 +1,12 @@
 // template.marko
 const $Card_content__walks = "Db%l b";
 const $Card_content__template = "<h1>Product <!></h1><button>Add to cart</button>";
-_shells({
-	a0: /*@__PURE__*/ ((_w0, _w1) => `a0 !a1;${_w0};${_w1}`)($Card_content__walks, $Card_content__template),
-	a: /*@__PURE__*/ (() => `a !;${((_w0) => `b/${_w0}&Db%l`)($Card_content__walks)};${((_w0) => `<!>${_w0}<p>Cart: <!></p>`)($Card_content__template)}`)()
-});
+_shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `b/${_w0}&Db%l`)($Card_content__walks)};${((_w0) => `<!>${_w0}<p>Cart: <!></p>`)($Card_content__template)}`)() });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let cart = [];
-	const Card = { content: _content_elide("a0", ({ id }) => {
+	const Card = { content: _content("a0", ({ id }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
 		_html(`<h1>Product ${_patch_text($scope1_id, "a", id, 2, $scope1_reason, 0)}</h1><button>Add to cart</button>${_el_resume($scope1_id, "b")}`);

@@ -1,0 +1,8 @@
+<let/shown=""/>
+<if=input.show>
+  <wrapper>
+    <const/label=input.label/>
+    <button onClick() { shown = label }>show</button>
+  </wrapper>
+</if>
+<p>${shown}</p>

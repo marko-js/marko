@@ -1,24 +1,29 @@
 // PATCH
-{
+[`b1,`, {
   ca: {
-    fa: ["^b3", {
-      x: "a1"
-    }],
+    fa: "^b1",
     cAa: {
-      ba: 0
-    }
-  }
-}
-
-// PATCH
-[`b0 !b2; ;<button>a</button>`, {
-  ca: {
-    fa: ["^b3", {
-      x: "a2"
-    }],
-    cAa: {
-      ba: "b0"
+      wd: "a1",
+      ba: 0,
+      s: {
+        i: "b6"
+      }
     }
   }
 }]
-;CAI
+;DAM
+
+// PATCH holding DAM
+[`b2 !b4; ;<button>a</button>`, {
+  ca: {
+    fa: "^b1",
+    cAa: {
+      wd: "a2",
+      ba: "b2",
+      s: {
+        i: "b6"
+      }
+    }
+  }
+}]
+;DRg

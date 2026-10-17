@@ -11,9 +11,9 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-await-param/template.marko_fill1": "b"
   }
 }]
-;CxQ
+;CQo
 
-// PATCH holding CxQ
+// PATCH holding CQo
 {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": [{

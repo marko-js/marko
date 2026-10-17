@@ -1,23 +1,29 @@
 // template.marko
-_shells({ a: "a !a4; ;<div></div>" });
+_shells({
+	a0: "a0,",
+	a1: "a1,",
+	a: "a !a4; ;<div></div>"
+});
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_title = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
-	const one = { content: _content_resume("a0", () => {
+	const one = { content: _content_resume("a1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<em>one ${_patch_text($scope1_id, "a", input.title, 2, $scope0_reason, 0)}</em>`);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a2");
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
-	const two = { content: _content_resume("a2", () => {
+	const two = { content: _content_resume("a0", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html(`<strong>two ${_patch_text($scope2_id, "a", input.title, 2, $scope0_reason, 0)}</strong>`);
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a3");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			Ci: $wi__input_title && 1
-		}), "a3");
+		}));
 	}, $scope0_id) };
 	_html("<div");
 	_patch_attrs_content({ content: input.which ? one : two }, "a", $scope0_id, "div", void 0, void 0, $scope0_reason, 1);
@@ -25,7 +31,6 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	_patch_write($scope0_id, "wf", one, 1);
 	_patch_write($scope0_id, "wg", two, 1);
-	_client_guard($scope0_reason, 1) && _patch_init($scope0_id, "a6");
 	$scope0_page ? _scope($scope0_id, {
 		d: input.title,
 		f: _unfilled_if($scope0_reason, 1) && one,

@@ -17,6 +17,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			if (button) {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "#text/0", button, {}, 0, 0, $wg__input_button, void 0, 2, $scope0_reason, 0);
+				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/tags/child.marko_2_button#1:2/init");
 				$wi__input_button && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "4:8");
 				return 0;
 			}

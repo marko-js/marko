@@ -6,7 +6,7 @@ const stamp = "srv";
 var flag;
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E%c%l%b ;<main><p><!> <!></p><!><button>+</button></main>",
-	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_input_title#0:6/init __tests__/template.marko_1_count#0:8/init;D ;<span> </span>"
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_input_title#0:6_count#0:8/init;D ;<span> </span>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

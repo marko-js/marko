@@ -11,6 +11,7 @@ var tabs_default = _template("b", (input) => {
 		if (input.tab) {
 			const $scope1_id = _scope_id();
 			_html(`<div>a ${_patch_text($scope1_id, "a", input.tab.on, 2, $scope0_reason, 1)}</div>`);
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b2");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		} else {
@@ -21,7 +22,7 @@ var tabs_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_tab, void 0, void 0, void 0, ["b0", "b1"], $scope0_reason, 0);
 	_patch_write($scope0_id, "we", input.tab?.on, 1);
-	$scope0_page && _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.tab?.on });
+	$scope0_page && _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.tab?.on });
 });
 
 // template.marko

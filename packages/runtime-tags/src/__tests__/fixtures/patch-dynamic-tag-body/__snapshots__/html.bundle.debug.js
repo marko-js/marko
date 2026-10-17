@@ -15,6 +15,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
 _shells({
+	"__tests__/template.marko_2*content": "",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content; ; ",
 	"__tests__/template.marko": "__tests__/template.marko !;b%b%;<!><!><!><!>"
 });
@@ -36,15 +37,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id), 0, $wg__input_wrap, void 0, 2, $scope0_reason, 5);
 	_patch_write($scope0_id, "PatchWrite:input_tag", input.tag, 1);
 	_patch_write($scope0_id, "PatchWrite:input_cls", input.cls, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_tag#4_input_cls#5/init");
 	$scope0_page ? _scope($scope0_id, {
-		input_tag: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.tag,
-		input_cls: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.cls,
+		input_tag: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.tag,
+		input_cls: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.cls,
 		input_note: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 6)) && input.note,
 		"ClosureScopes:input_note/9": _write_if($scope0_reason, 6) && $input_note__closures
 	}, "__tests__/template.marko", 0, {
 		input_tag: ["input.tag"],
 		input_cls: ["input.cls"],
 		input_note: ["input.note"]
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.tag, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.cls, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.note, !_server_guard($scope0_reason, 6)));
+	}) : _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 6));
 }, 1);

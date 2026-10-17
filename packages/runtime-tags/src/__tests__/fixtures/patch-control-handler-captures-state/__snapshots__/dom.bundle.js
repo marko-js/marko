@@ -1,8 +1,8 @@
 // template.marko
 const $if_content__v__OR__suffix = /*@__PURE__*/ _or(1, ($scope) => _attr_input_value($scope, "a", $scope._.g, $valueChange($scope)));
-const $if_content__v = _resumed.a7 = /*@__PURE__*/ _if_closure(0, 0, $if_content__v__OR__suffix);
+const $if_content__v = /*@__PURE__*/ _shell_init("a7", /*@__PURE__*/ _if_closure(0, 0, $if_content__v__OR__suffix));
 const $if_content__setup__script = _script("a2", ($scope) => _attr_input_value_script($scope, "a"));
-const $if_content__suffix = _resumed.a8 = /*@__PURE__*/ _if_closure(0, 0, $if_content__v__OR__suffix);
+const $if_content__suffix = /*@__PURE__*/ _shell_init("a8", /*@__PURE__*/ _if_closure(0, 0, $if_content__v__OR__suffix));
 const $v = /*@__PURE__*/ _fill_let("a4", 6, ($scope) => {
 	_text($scope.b, $scope.g);
 	$if_content__v($scope);

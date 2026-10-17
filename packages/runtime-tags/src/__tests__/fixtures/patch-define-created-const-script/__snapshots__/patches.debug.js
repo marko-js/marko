@@ -9,4 +9,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-const-script/template.marko_2*shell"]
 }]
-;BgI
+;BAE

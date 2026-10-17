@@ -5,7 +5,7 @@ const $frag_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/te
 const $frag_content__setup = $frag_content__input_note;
 const $frag_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $frag_content__setup);
 const $frag = ($scope, frag) => $frag_content2($scope, frag?.content);
-const $input_mode__OR__frag_content = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_mode#5_frag_content#7/init", 8, ($scope) => _attr_content($scope, "#section/0", $scope.input_mode ? $scope.frag_content : null));
+const $input_mode__OR__frag_content = /*@__PURE__*/ _or(8, ($scope) => _attr_content($scope, "#section/0", $scope.input_mode ? $scope.frag_content : null));
 const $frag_content2 = /*@__PURE__*/ _const("frag_content", $input_mode__OR__frag_content);
 function $setup($scope) {
 	$frag($scope, { content: $frag_content($scope) });

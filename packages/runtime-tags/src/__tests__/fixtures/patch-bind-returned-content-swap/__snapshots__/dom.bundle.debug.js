@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $Content_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/tags/child.marko_1_input_label#0:2/subscribe"), 0);
+const $Content_content__input_label = /*@__PURE__*/ _shell_init("__tests__/tags/child.marko_1_input_label#0:2/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/tags/child.marko_1_input_label#0:2/subscribe"), 0));
 const $Content_content__setup__script = _script("__tests__/tags/child.marko_1", ($scope) => _on($scope["#em/0"], "click", function() {
 	$count($scope._, +$scope._.count + 1);
 }));
@@ -10,7 +10,7 @@ const $Content_content__setup = ($scope) => {
 	$Content_content__count($scope);
 	$Content_content__setup__script($scope);
 };
-const $Content_content__count = /*@__PURE__*/ _closure_get("count/6", ($scope) => _text($scope["#text/2"], $scope._.count), 0, "__tests__/tags/child.marko_1_count#0:3/subscribe");
+const $Content_content__count = /*@__PURE__*/ _shell_init("__tests__/tags/child.marko_1_count#0:3/init", /*@__PURE__*/ _closure_get("count/6", ($scope) => _text($scope["#text/2"], $scope._.count)));
 const $Content_content = _content("__tests__/tags/child.marko_1*content", "<em><!> <!></em>", " D%c%", $Content_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($Content_content__count);
 const $count = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill1", "count/3", $count__closure);
@@ -42,7 +42,7 @@ function $setup($scope) {
 	$n($scope, 0);
 }
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/4");
-const $input_first__OR__a__OR__b = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_first#9_a#11_b#12/init", 13, ($scope) => $dynamicTag($scope, $scope.input_first ? $scope.a : $scope.b), 2, "#scopeOffset/3");
+const $input_first__OR__a__OR__b = /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.input_first ? $scope.a : $scope.b), 2, "#scopeOffset/3");
 const $a = /*@__PURE__*/ _const("a", $input_first__OR__a__OR__b);
 const $b = /*@__PURE__*/ _const("b", $input_first__OR__a__OR__b);
 const $input_first = /*@__PURE__*/ _const("input_first", $input_first__OR__a__OR__b);

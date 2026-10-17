@@ -1,4 +1,6 @@
 // card.marko
+const $template = "<section><em> </em><!></section>";
+const $walks = "E l%l";
 _shells({ b: "b;E l%;<section><em> </em><!></section>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -10,6 +12,10 @@ var card_default = _template("b", (input) => {
 });
 
 // template.marko
+_shells({
+	c0: "c0 c7 c8 c9;b%;<!><!><!>",
+	c: /*@__PURE__*/ (() => `c !c2;${((_w0) => `/${_w0}& b`)($walks)};${((_w0) => `${_w0}<button>+</button>`)($template)}`)()
+});
 var template_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_on = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -21,22 +27,22 @@ var template_default = _template("c", (input) => {
 	const $childScope = _patch_child($scope0_id, "a");
 	card_default({
 		meta: attrTag({ n: count }),
-		content: _content("c4", () => {
+		content: _content_elide("c0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_dynamic_tag($scope1_id, "a", input.on ? "p" : "div", { "data-n": count }, _content("c0", () => {
+			_dynamic_tag($scope1_id, "a", input.on ? "p" : "div", { "data-n": count }, _content("c1", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
 				_html(_text_resume($scope2_id, "a", input.label, $wg__input_label));
-				_subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "c1", $wg__input_label);
+				_subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				$wg__input_label || _resume_branch($scope2_id);
 			}, $scope1_id));
-			_subscribe($count__closures, _subscribe($wi__input_on && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "c2"), "c3");
+			_subscribe($count__closures, _subscribe($wi__input_on && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		}, $scope0_id)
 	});
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "c5");
-	_patch_value($scope0_id, "vc8", count, 1);
+	_script($scope0_id, "c2");
+	_patch_value($scope0_id, "vc5", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.on,
 		f: input.label,
@@ -45,5 +51,5 @@ var template_default = _template("c", (input) => {
 		h: $wi__input_on && $input_on__closures,
 		j: $count__closures,
 		a: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc6", input.on, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc7", input.label, !_server_guard($scope0_reason, 1)));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc3", input.on, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc4", input.label, !_server_guard($scope0_reason, 1)));
 }, 1);

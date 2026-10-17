@@ -50,7 +50,7 @@ import {
   getSection,
   getSectionForBody,
 } from "../util/sections";
-import { getShellIdArg, registerShellInit } from "../util/shell";
+import { getShellIdArg } from "../util/shell";
 import {
   addValue,
   buildClosureHop,
@@ -337,21 +337,17 @@ export default {
         const tagExtra = node.extra!;
         const nodeBinding = tagExtra.nodeBinding!;
         const hop = { kind: "for", nodeBinding } as const;
-        setClosureSignalBuilder(tag, hop, (closure, render, shellInitId) => {
+        setClosureSignalBuilder(tag, hop, (closure, render) => {
           const selectorKeyBinding = getForSelectorKey(bodySection, closure);
-          if (!selectorKeyBinding) {
-            return buildClosureHop(hop, render, shellInitId);
-          }
-          return registerShellInit(
-            shellInitId,
-            callRuntime(
-              "_for_selector",
-              getScopeAccessorLiteral(nodeBinding, true),
-              getScopeAccessorLiteral(closure, true),
-              getScopeAccessorLiteral(selectorKeyBinding, true),
-              render,
-            ),
-          );
+          return selectorKeyBinding
+            ? callRuntime(
+                "_for_selector",
+                getScopeAccessorLiteral(nodeBinding, true),
+                getScopeAccessorLiteral(closure, true),
+                getScopeAccessorLiteral(selectorKeyBinding, true),
+                render,
+              )
+            : buildClosureHop(hop, render);
         });
 
         const forType = getForType(node)!;

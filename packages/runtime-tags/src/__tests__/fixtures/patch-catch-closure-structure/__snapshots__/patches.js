@@ -1,12 +1,9 @@
 // PATCH
-[`a1 !a2;D ;<i> </i>`, {
+[`a1 a3!a2;D ;<i> </i>`, {
   ka: [{
     ta: "SHOWN_x",
     bb: [{
-      ta: "b",
-      s: {
-        i: "a3"
-      }
+      ta: "b"
     }, "a1"]
   }, "a6"],
   va8: "b"
@@ -27,10 +24,7 @@
   ka: [{
     ta: "SHOWN_z",
     bb: [{
-      ta: "c",
-      s: {
-        i: "a3"
-      }
+      ta: "c"
     }, "a1"]
   }, "a6"],
   va8: "c"

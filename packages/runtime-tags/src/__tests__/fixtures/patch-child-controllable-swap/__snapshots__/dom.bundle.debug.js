@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/tags/counter/index.marko_fill1", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
-const $if_content__input_onCount = /*@__PURE__*/ _fill_join("__tests__/tags/counter/index.marko_fill0", "input_onCount", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__count($scope, 0, $scope._.input_onCount)));
+const $if_content__input_onCount = /*@__PURE__*/ _shell_init("__tests__/tags/counter/index.marko_1_input_onCount#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/counter/index.marko_fill0", "input_onCount", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__count($scope, 0, $scope._.input_onCount))));
 const $if_content__setup__script = _script("__tests__/tags/counter/index.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);
 }));
@@ -24,7 +24,7 @@ var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.mark
 const $template = /*@__PURE__*/ ((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `E lDb%l/${_w0}&l`)("b%c");
 const $last = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "last/8", ($scope) => _text($scope["#text/1"], $scope.last));
-const $input_big__OR__plain__OR__tenfold = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_big#7_plain#9_tenfold#10/init", 11, ($scope) => $input_onCount($scope["#childScope/2"], $scope.input_big ? $scope.tenfold : $scope.plain), 2);
+const $input_big__OR__plain__OR__tenfold = /*@__PURE__*/ _or(11, ($scope) => $input_onCount($scope["#childScope/2"], $scope.input_big ? $scope.tenfold : $scope.plain), 2);
 const $plain2 = /*@__PURE__*/ _const("plain", $input_big__OR__plain__OR__tenfold);
 const $tenfold2 = /*@__PURE__*/ _const("tenfold", $input_big__OR__plain__OR__tenfold);
 function $setup($scope) {

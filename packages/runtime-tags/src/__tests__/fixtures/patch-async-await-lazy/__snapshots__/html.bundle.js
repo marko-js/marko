@@ -42,8 +42,7 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wi", input.related, 1);
 	_patch_write($scope0_id, "wj", input.slow, 1);
 	_patch_write($scope0_id, "wk", input.note, 1);
-	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "a9");
-	_patch_value($scope0_id, "va10", count, 1);
+	_patch_value($scope0_id, "va9", count, 1);
 	$scope0_page && _scope($scope0_id, {
 		i: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && input.related,
 		j: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.slow,

@@ -52,7 +52,7 @@ _resumed["__tests__/other.marko"] = other_default;
 const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_which__OR__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_which", /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_which#4_input_label#5/init", 6, ($scope) => $dynamicTag($scope, $scope.input_which ? counter_default : other_default, ($_) => ({ label: $scope.input_label })))));
+const $input_which__OR__input_label = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_which ? counter_default : other_default, ($_) => ({ label: $scope.input_label })));
 const $input_which = /*@__PURE__*/ _const("input_which", ($scope) => {
 	$input_Tag($scope["#childScope/1"], $scope.input_which ? counter_default : other_default);
 	$input_which__OR__input_label($scope);

@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/tags/counter/index.marko_fill1", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
-const $if_content__input_onCount = /*@__PURE__*/ _fill_join("__tests__/tags/counter/index.marko_fill0", "input_onCount", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__count($scope, 0, $scope._.input_onCount)));
+const $if_content__input_onCount = /*@__PURE__*/ _shell_init("__tests__/tags/counter/index.marko_1_input_onCount#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/counter/index.marko_fill0", "input_onCount", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__count($scope, 0, $scope._.input_onCount))));
 const $if_content__setup__script = _script("__tests__/tags/counter/index.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__count($scope, $scope.count + $scope._.input_step);
 }));

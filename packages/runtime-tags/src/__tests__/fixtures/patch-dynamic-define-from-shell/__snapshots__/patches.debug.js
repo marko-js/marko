@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-define-from-shell/template.marko_1*content !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-define-from-shell/template.marko_1;D l/D l& b;<h4> </h4><p> </p><button class=pick>pick</button>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-define-from-shell/template.marko_1*content !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-define-from-shell/template.marko_1,`, {
   "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-define-from-shell/template.marko_1*content",
   "PatchChild:BranchScopes:#text/0": {
     "PatchWrite:user_name": "TWO",
@@ -9,9 +9,9 @@
     }
   }
 }]
-;BgI
+;CAI
 
-// PATCH holding BgI
+// PATCH holding CAI
 {
   "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-define-from-shell/template.marko_1*content",
   "PatchChild:BranchScopes:#text/0": {

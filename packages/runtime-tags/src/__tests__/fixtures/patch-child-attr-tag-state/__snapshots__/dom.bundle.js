@@ -1,6 +1,6 @@
 // tags/tabs/index.marko
 const $template = "<!><!><!>";
-const $if_content__input_tab_on = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e));
+const $if_content__input_tab_on = /*@__PURE__*/ _shell_init("b2", /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e)));
 const $if$1 = /*@__PURE__*/ _if(0, "<div>a <!></div>", "Db%", $if_content__input_tab_on, "<span>b</span>");
 const $input_tab = ($scope, input_tab) => {
 	$input_tab_on($scope, input_tab?.on);

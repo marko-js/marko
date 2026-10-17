@@ -3,7 +3,7 @@ const $template$1 = "<button> </button><!><!>";
 const $walks$1 = " D l%c";
 _shells({
 	b: "b !b2; D l%;<button> </button><!><!>",
-	b0: "b0 b5 b6 b7 b8,"
+	b0: "b0 b5,"
 });
 var level_watch_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

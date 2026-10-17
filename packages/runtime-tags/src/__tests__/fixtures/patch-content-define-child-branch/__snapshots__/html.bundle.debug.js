@@ -4,7 +4,7 @@ const $Card_content2__template = "<section></section>";
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($Card_content2__template);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($Card_content2__walks);
 _shells({
-	"__tests__/template.marko_2*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_2*content !;${_w0};${_w1}`)($Card_content2__walks, $Card_content2__template),
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content,",
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `D/${_w0}&l`)($Card_content2__walks)};${((_w0) => `<main>${_w0}</main>`)($Card_content2__template)}`)(),
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;b%;<!><!><!>"
 });
@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
-	const Card = { content: _content_elide("__tests__/template.marko_2*content", ({ show, content }) => {
+	const Card = { content: _content("__tests__/template.marko_2*content", ({ show, content }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__content = _write_guard($scope2_reason, 2), $wg__show = _write_guard($scope2_reason, 1), $scope2_page = _page_render();
 		_html("<section>");
@@ -36,7 +36,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_reason, 2)}</em>`);
-			_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:4"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_note#0:4/subscribe");
+			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_note#0:4/subscribe");
+			_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:4"));
 		}, $scope0_id)
 	});
 	_html("</main>");

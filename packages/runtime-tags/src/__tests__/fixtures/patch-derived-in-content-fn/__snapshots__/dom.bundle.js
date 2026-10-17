@@ -9,8 +9,8 @@ const $wrapper_content__label = /*@__PURE__*/ _const(1, ($scope) => $input($scop
 	read: $read($scope),
 	onRead: $onRead($scope)
 }));
-const $wrapper_content__input_label = _closure_resume("a3", /*@__PURE__*/ _fill_join_closure("a4", 4, /*@__PURE__*/ _closure_get(6, ($scope) => $wrapper_content__label($scope, $scope._.e)), 0));
-const $shown = /*@__PURE__*/ _fill_let("a5", 5, ($scope) => _text($scope.b, $scope.f));
+const $wrapper_content__input_label = _closure_resume("a6", /*@__PURE__*/ _fill_join_closure("a3", 4, /*@__PURE__*/ _closure_get(6, ($scope) => $wrapper_content__label($scope, $scope._.e)), 0));
+const $shown = /*@__PURE__*/ _fill_let("a4", 5, ($scope) => _text($scope.b, $scope.f));
 const $onRead = ($scope) => function(value) {
 	$shown($scope._, value);
 };

@@ -17,7 +17,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("D%l");
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<p> </p>",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<p> </p>",
-	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_input_second#0:4/init __tests__/template.marko_1_input_first#0:5/init __tests__/template.marko_1_showSecond#0:6/init;b%;<!><!><!>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_input_second#0:4/subscribe __tests__/template.marko_1_input_first#0:5/subscribe __tests__/template.marko_1_showSecond#0:6/init __tests__/template.marko_1_input_second#0:4_input_first#0:5_showSecond#0:6/init;b%;<!><!><!>",
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

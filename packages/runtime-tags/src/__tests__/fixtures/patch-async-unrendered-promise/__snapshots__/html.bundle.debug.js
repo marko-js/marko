@@ -16,6 +16,8 @@ _shells({
 	"__tests__/template.marko_8*content": "__tests__/template.marko_8*content;D ;<p> </p>",
 	"__tests__/template.marko_7*content": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_7*content;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${_w0}`)($template$1),
 	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content;D ;<p> </p>",
+	"__tests__/template.marko_4_#text#0/await": "__tests__/template.marko_4_#text#0/await;D ;<p> </p>",
+	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content,",
 	"__tests__/template.marko_3_#text#0/await": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_3_#text#0/await;${((_w0) => `/${_w0}&`)("D l")};${_w0}`)($template$1),
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%b%b%;<button class=inc> </button><!><!><!><p>end</p>",
@@ -75,7 +77,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<p>${_patch_text($scope8_id, "#text/0", user.name, void 0, $scope0_reason, 7)}</p>`);
 			_scope($scope8_id, {}, "__tests__/template.marko", "13:4");
 		}, 1, "__tests__/template.marko_8*content");
-		$wi__input_tag__OR__input_boxed && _subscribe(_unfilled_if($scope0_reason, 7) && $input_boxed__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:4"), _client_guard($scope0_reason, 7) && "__tests__/template.marko_4_input_boxed#0:11/subscribe", 0);
+		_unfilled_if($scope0_reason, 7) && _patch_init($scope4_id, "__tests__/template.marko_4_input_boxed#0:11/subscribe");
+		$wi__input_tag__OR__input_boxed && _subscribe(_unfilled_if($scope0_reason, 7) && $input_boxed__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:4"));
 		$wi__input_tag__OR__input_boxed && _resume_branch($scope4_id);
 	}, $scope0_id, ($scope) => [{ input_boxed: input.boxed }]), 0, _write_guard($scope0_reason, 6), void 0, 1, $scope0_reason, 6);
 	_html("<p>end</p>");

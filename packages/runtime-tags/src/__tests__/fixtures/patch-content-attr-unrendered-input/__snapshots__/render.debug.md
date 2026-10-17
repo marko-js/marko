@@ -43,5 +43,4 @@ REMOVE: section > em
 ```
 INSERT: section > em
 UPDATE: section > em::text " " => "SHOWN_r3"
-UPDATE: section > em::text "" => "SHOWN_r3"
 ```

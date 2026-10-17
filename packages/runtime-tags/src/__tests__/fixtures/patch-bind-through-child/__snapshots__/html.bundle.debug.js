@@ -33,6 +33,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			let count = 0;
 			_html(`<span>Seen ${_text_resume($scope1_id, "#text/0", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/tags/child.marko_1");
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_on#0:4/init");
 			const $countChange = input.on || void 0;
 			_patch_let_change($scope1_id, "PatchValue:__tests__/tags/child.marko_fill1", count, "PatchBind:TagVariableChange:count", $countChange, $scope0_reason, 1);
 			_scope($scope1_id, {

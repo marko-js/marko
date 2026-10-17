@@ -22,17 +22,17 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$1 = "<button> </button><!><!>";
 const $walks$1 = " D l%c";
 const $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown__script = _script("__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9", ($scope) => document.body.dataset.watch = $scope._.input_projection_skill + ":" + $scope._.input_baseXp + ":" + ($scope._.input_playerId ?? "anon") + ":" + $scope._.shown);
-const $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown = /*@__PURE__*/ _or(0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown__script, 3);
-const $if_content__input_projection_skill = _resumed["__tests__/tags/level-watch.marko_1_input_projection_skill#0:6/init"] = /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
+const $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown = /*@__PURE__*/ _shell_or("__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9/init", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown__script, 3);
+const $if_content__input_projection_skill = /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
 const $if_content__setup = ($scope) => {
 	$if_content__input_projection_skill._($scope);
 	$if_content__input_baseXp._($scope);
 	$if_content__input_playerId._($scope);
 	$if_content__shown._($scope);
 };
-const $if_content__input_baseXp = _resumed["__tests__/tags/level-watch.marko_1_input_baseXp#0:7/init"] = /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
-const $if_content__input_playerId = _resumed["__tests__/tags/level-watch.marko_1_input_playerId#0:8/init"] = /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
-const $if_content__shown = _resumed["__tests__/tags/level-watch.marko_1_shown#0:9/init"] = /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
+const $if_content__input_baseXp = /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
+const $if_content__input_playerId = /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
+const $if_content__shown = /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
 const $shown = /*@__PURE__*/ _fill_let("__tests__/tags/level-watch.marko_fill0", "shown/9", ($scope) => {
 	_text($scope["#text/1"], $scope.shown);
 	$if_content__shown($scope);

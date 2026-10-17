@@ -14,7 +14,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
-const $if_content__count = _resumed["__tests__/template.marko_1_count#0:6/init"] = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_count($scope["#childScope/0"], $scope._.count));
+const $if_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_count#0:6/init", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_count($scope["#childScope/0"], $scope._.count)));
 const $if_content__setup = $if_content__count;
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "count/6", ($scope) => {
 	_text($scope["#text/1"], $scope.count);

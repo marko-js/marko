@@ -44,7 +44,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_related", input.related, 1);
 	_patch_write($scope0_id, "PatchWrite:input_slow", input.slow, 1);
 	_patch_write($scope0_id, "PatchWrite:input_note", input.note, 1);
-	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "__tests__/template.marko_0_input_slow#9_input_note#10/init");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", count, 1);
 	$scope0_page && _scope($scope0_id, {
 		input_related: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && input.related,

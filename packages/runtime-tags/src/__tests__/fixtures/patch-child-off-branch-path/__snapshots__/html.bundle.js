@@ -54,8 +54,8 @@ var card_default = _template("b", (input) => {
 			_html(`<em>${_patch_text($scope5_id, "a", v, void 0, $scope0_reason, 1)}</em>`);
 			_scope($scope5_id, {});
 		}, 1, "b2", 1);
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "b8");
-		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b8", 0);
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, _client_guard($scope0_reason, 1) ? "b8" : "b9");
+		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b9", 0);
 		$wi__input_slow && _resume_branch($scope2_id);
 	}, () => {
 		_scope_reason();
@@ -68,7 +68,7 @@ var card_default = _template("b", (input) => {
 			a: $wi__input_label && _existing_scope($childScope)
 		}), "b7", $wg__input_label);
 		$wg__input_label || _resume_branch($scope1_id);
-	}, void 0, "b9", void 0, "b6", 1);
+	}, void 0, "b10", void 0, "b6", 1);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
@@ -77,8 +77,8 @@ var card_default = _template("b", (input) => {
 			_html(`<em>${_patch_text($scope7_id, "a", v, void 0, $scope0_reason, 3)}</em>`);
 			_scope($scope7_id, {});
 		}, 1, "b0", 1);
-		_unfilled_if($scope0_reason, 3) && _patch_init($scope4_id, "b12");
-		$wi__input_failing && _subscribe(_unfilled_if($scope0_reason, 3) && $input_failing__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "b12", 0);
+		_unfilled_if($scope0_reason, 3) && _patch_init($scope4_id, _client_guard($scope0_reason, 3) ? "b13" : "b14");
+		$wi__input_failing && _subscribe(_unfilled_if($scope0_reason, 3) && $input_failing__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "b14", 0);
 		$wi__input_failing && _resume_branch($scope4_id);
 	}, void 0, () => {
 		_scope_reason();
@@ -95,9 +95,9 @@ var card_default = _template("b", (input) => {
 			_: _scope_with_id($scope0_id),
 			a: $wi__input_label && _existing_scope($childScope2),
 			Ci: $wi__input_label && 1
-		}), "b10", $wg__input_label), "b11", $wg__input_label);
+		}), "b11", $wg__input_label), "b12", $wg__input_label);
 		$wg__input_label || _resume_branch($scope3_id);
-	}, void 0, "b13", "b4", 1);
+	}, void 0, "b15", "b4", 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.label,
 		g: input.other,
@@ -105,7 +105,7 @@ var card_default = _template("b", (input) => {
 		j: $wi__input_slow && _unfilled_if($scope0_reason, 1) && $input_slow__closures,
 		k: $wi__input_other && $input_other__closures,
 		l: $wi__input_failing && _unfilled_if($scope0_reason, 3) && $input_failing__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb14", input.label, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb15", input.other, !_server_guard($scope0_reason, 2)));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb16", input.label, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb17", input.other, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

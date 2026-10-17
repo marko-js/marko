@@ -29,7 +29,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const upper = input.msg.toUpperCase();
 		_html(`<b${_attr("title", input.msg)}>${_patch_text($scope1_id, "#text/1", err.message)} ${_text_resume($scope1_id, "#text/2", input.msg, 2)} ${_text_resume($scope1_id, "#text/3", upper, 2)} ${_patch_text($scope1_id, "#text/4", err.message + upper, 2, $scope0_reason, 1)}</b>${_el_resume($scope1_id, "#b/0", _mask_group($scope0_reason, 1))}`);
 		_patch_write($scope1_id, "PatchWrite:err_message", err?.message, 1);
-		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_err_message#7_upper#8/init");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope1_id, {
 			err_message: _unfilled_if($scope0_reason, 1) && err?.message,
 			upper: _unfilled_if($scope1_reason, 0) && upper,

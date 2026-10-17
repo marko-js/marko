@@ -19,7 +19,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_x._($scope);
 	$if_content__tab._($scope);
 };
-const $if_content__tab = _resumed["__tests__/template.marko_1_tab#0:6/init"] = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_a($scope["#childScope/0"], $scope._.tab));
+const $if_content__tab = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_tab#0:6/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_a($scope["#childScope/0"], $scope._.tab)));
 const $tab = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "tab/6", $if_content__tab);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$tab($scope, +$scope.tab + 1);

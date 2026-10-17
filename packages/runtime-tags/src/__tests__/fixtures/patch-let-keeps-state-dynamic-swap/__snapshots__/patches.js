@@ -1,13 +1,20 @@
 // PATCH
-{
-  fa: ["^a0", {
-    x: "a1"
-  }]
-}
+[`a1 !a2,`, {
+  fa: "^a1",
+  cAa: {
+    s: {
+      va3: "a1"
+    }
+  }
+}]
+;BgI
 
-// PATCH
+// PATCH holding BgI
 {
-  fa: ["^a0", {
-    x: "a2"
-  }]
+  fa: "^a1",
+  cAa: {
+    s: {
+      va3: "a2"
+    }
+  }
 }

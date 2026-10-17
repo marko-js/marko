@@ -13,11 +13,6 @@ const $input_count__script = _script("b0", ($scope) => console.log("count", $sco
 const $input_count = /*@__PURE__*/ _const(5, $input_count__script);
 
 // template.marko
-function boom(msg) {
-	throw new Error(msg);
-}
-const $try_content__input_msg__OR__input_fail = /*@__PURE__*/ _fill_join_subscribers("a7", 5, /*@__PURE__*/ _or(1, ($scope) => _text($scope.a, $scope._.g ? boom($scope._.f) : $scope._.f)), 8, 1);
-const $try_content__input_msg = _closure_resume("a3", /*@__PURE__*/ _closure_get(8, $try_content__input_msg__OR__input_fail));
 const $catch_content__input_msg = /*@__PURE__*/ _fill_join_closure("a7", 5, /*@__PURE__*/ _closure_get(8, ($scope) => $input_label($scope.a, $scope._.f), 0, "a1"), 0);
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_msg($scope);

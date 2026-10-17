@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content__input_tab_on = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_tab_on));
+const $if_content__input_tab_on = /*@__PURE__*/ _shell_init("__tests__/tags/tabs/index.marko_1_input_tab_on#0:4/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_tab_on)));
 const $if_content__setup$1 = $if_content__input_tab_on;
 const $if$1 = /*@__PURE__*/ _if("#text/0", "<div>a <!></div>", "Db%", $if_content__setup$1, "<span>b</span>");
 const $input_tab = ($scope, input_tab) => {

@@ -3,7 +3,7 @@ const $Kid_content__walks = "D l";
 const $Kid_content__template = "<span> </span>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>+</button>`)($Kid_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Kid_content__walks);
-const $Kid_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_b", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_a", /*@__PURE__*/ _shell_or("__tests__/template.marko_1_input_a#3_input_b#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b))));
+const $Kid_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_b", /*@__PURE__*/ _or(5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b)));
 const $Kid_content__input_a = /*@__PURE__*/ _const("input_a", $Kid_content__input_a__OR__input_b);
 const $Kid_content__input_b = /*@__PURE__*/ _const("input_b", $Kid_content__input_a__OR__input_b);
 const $Kid_content__$params = ($scope, $params2) => $Kid_content__input($scope, $params2[0]);

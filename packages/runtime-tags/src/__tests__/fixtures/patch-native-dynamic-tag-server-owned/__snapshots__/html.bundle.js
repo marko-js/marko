@@ -19,12 +19,11 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	_patch_write($scope0_id, "wf", input.on, 1);
 	_patch_write($scope0_id, "wg", input.label, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a5");
-	_patch_value($scope0_id, "va6", count, 1);
-	$scope0_page ? _scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.on,
+	_patch_value($scope0_id, "va3", count, 1);
+	$scope0_page && _scope($scope0_id, {
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.on,
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
 		i: count,
 		j: _write_if($scope0_reason, 2) && $input_label__closures
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.on, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.label, !_server_guard($scope0_reason, 2)));
+	});
 }, 1);
