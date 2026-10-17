@@ -1,7 +1,7 @@
 // Analyze-side structure facts for patches, in template terms; ownership
 // conclusions and wire channels belong to ./decisions, ./refresh, ./writers.
 import { type Binding, bindingUtil } from "../bindings";
-import { createOutputMemo } from "../cyclic-memo";
+import { createAnalysisMemo } from "../cyclic-memo";
 import { isPatch } from "../marko-config";
 import { at, every, first, type Opt, size, some } from "../optional";
 import {
@@ -23,7 +23,7 @@ import {
   type ParamReasonGroup,
 } from "../sections";
 import type { Sources } from "../sources";
-import { createOutputSectionState } from "../state";
+import { createAnalysisSectionState } from "../state";
 import { canPatchFill } from "./refresh";
 
 // Every render of the section is patch-written: on the branch path, outside
@@ -36,7 +36,7 @@ export function patchWrites(section: Section) {
 
 // Some render of the section may be patch-written: no branch on its chain is
 // stateful, but content, which another consumer may render patched.
-export const [patchMayWrite] = createOutputMemo(
+export const [patchMayWrite] = createAnalysisMemo(
   (section: Section): boolean =>
     (!section.parent || patchMayWrite(section.parent)) &&
     (!isStatefulBranch(section) || !!section.derives),
@@ -57,7 +57,7 @@ export function patchWritesScope(section: Section) {
 
 // Inside stateful structure (inclusive). The parent is asked first, so only the
 // section's own answer can loop back to it, where it reads as not stateful.
-export const [inStatefulBranch] = createOutputMemo(
+export const [inStatefulBranch] = createAnalysisMemo(
   (section: Section): boolean =>
     (!!section.parent && inStatefulBranch(section.parent)) ||
     isStatefulBranch(section),
@@ -138,7 +138,7 @@ function bodyRendersStateful(section: Section) {
 
 // A branch body whose branch expression has a state reason (or nested in one) and
 // whose param sources a patch fills; needs resolved sources (finalize or later).
-export const [isStatefulBranch] = createOutputMemo((section: Section) => {
+export const [isStatefulBranch] = createAnalysisMemo((section: Section) => {
   // An optional branch or a dynamic tag body; an `<await>`/`<try>` body
   // renders for every value its branch expression takes.
   const expr =
@@ -179,7 +179,7 @@ function getStructureSources(section: Section) {
 
 // The sources of each branch around it (inclusive) selected by params alone,
 // caller-owned structure: a call site passing state for them hands it to the client.
-export const [getCallerOwnedStructure] = createOutputMemo(
+export const [getCallerOwnedStructure] = createAnalysisMemo(
   (section: Section): Sources[] | undefined => {
     const chain = section.parent && getCallerOwnedStructure(section.parent);
     const sources = patchWrites(section)
@@ -232,7 +232,7 @@ export function isKnownChildNode(binding: Binding) {
   return getKnownChildNodes(binding.section).has(binding);
 }
 
-const [getKnownChildNodes] = createOutputSectionState((section) => {
+const [getKnownChildNodes] = createAnalysisSectionState((section) => {
   const nodes = new Set<Binding>();
   for (const op of section.structure || []) {
     if (typeof op === "object" && op.kind === StructureKind.Child) {

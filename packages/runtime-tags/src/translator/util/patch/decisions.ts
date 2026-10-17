@@ -8,7 +8,7 @@ import {
   isStableBinding,
   isStateSourced,
 } from "../bindings";
-import { createOutputMemo } from "../cyclic-memo";
+import { createAnalysisMemo } from "../cyclic-memo";
 import { isPatch } from "../marko-config";
 import { every, forEach, type Opt, push, some } from "../optional";
 import { getSourcesForRef } from "../reasons";
@@ -104,9 +104,9 @@ export function isPatchKeyedByValues(binding: Binding) {
   return isPatch() && getPatchKeying(findSlot(binding)!) === "values";
 }
 
-// A scope with a patch-keyed node is written, decided once per stage as its
-// slots' keying is.
-export const [hasPatchKeyedNodes] = createOutputMemo(
+// A scope with a patch-keyed node is written, decided once per analysis as
+// its slots' keying is.
+export const [hasPatchKeyedNodes] = createAnalysisMemo(
   (section: Section) => some(section.slots, isPatchKeyedNode),
   false,
 );
@@ -170,9 +170,9 @@ function isPatchKeyedNode(slot: Slot) {
   return slot.kind === SlotKind.Value && !!getPatchKeying(slot);
 }
 
-// Why a patch keys the slot, decided once per stage: it reads sources and
+// Why a patch keys the slot, decided once per analysis: it reads sources and
 // structure, which settle before reasons; being keyed is no reason.
-const [getPatchKeying] = createOutputMemo(computePatchKeying, undefined);
+const [getPatchKeying] = createAnalysisMemo(computePatchKeying, undefined);
 
 function computePatchKeying(slot: Slot) {
   if (slot.kind === SlotKind.Branch) {

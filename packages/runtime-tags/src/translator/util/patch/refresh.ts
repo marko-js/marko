@@ -16,7 +16,7 @@ import {
   someUpToAliasRoot,
   someReadIn,
 } from "../bindings";
-import { createCyclicMemo, createOutputMemo } from "../cyclic-memo";
+import { createAnalysisMemo, createCyclicMemo } from "../cyclic-memo";
 import { readsValuesOnResume } from "../finalize-references";
 import {
   ensureKnownTagPatchGroups,
@@ -70,7 +70,7 @@ import {
   type Sources,
   sourcesUtil,
 } from "../sources";
-import { createOutputState } from "../state";
+import { createAnalysisState } from "../state";
 import {
   getWriteSources,
   isFilledHole,
@@ -89,9 +89,9 @@ import {
   getCallerOwnedStructure,
 } from "./structure";
 
-// Stable wire/registry key for a fill: a register id for a program-wide fill
-// ordinal built in section order so every output agrees.
-const [getFillOrdinals] = createOutputState(() => {
+// Stable wire/registry key for a fill: a register id for a template-wide fill
+// ordinal, built once per analysis in section order, which every output reads.
+const [getFillOrdinals] = createAnalysisState(() => {
   const ordinals = new Map<Binding, number>();
   forEachSection((section) => {
     forEach(getPatchFillBindings(section), (fill) => {
@@ -147,7 +147,7 @@ function isWrittenContentShell(section: Section) {
   );
 }
 
-// A value's fill, derived in each stage (afresh each solve pass): what its reads
+// A value's fill, derived once per analysis (afresh each solve pass): what its reads
 // need, how a patch fills them, and what recomputing it needs of its inputs.
 export interface PatchFill {
   kind?: true | FillConditions;
@@ -173,12 +173,12 @@ const UNREAD: PatchFill & PatchWrite = {};
 
 // Fills read the reasons of the moment, so each solve pass asks afresh; a
 // value re-asked within its own answer (a recursive `<define>`) is unread.
-export const [getPatchFill, resetPatchFills] = createOutputMemo(
+export const [getPatchFill, resetPatchFills] = createAnalysisMemo(
   computePatchFill,
   UNREAD,
 );
 
-export const [getPatchWrite] = createOutputMemo(computePatchWrite, UNREAD);
+export const [getPatchWrite] = createAnalysisMemo(computePatchWrite, UNREAD);
 
 function computePatchFill(binding: Binding): PatchFill {
   const kind = computeFillReadKind(binding);

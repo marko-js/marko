@@ -1,5 +1,5 @@
 import { type Opt, reduce } from "./optional";
-import { createAnalysisState, createOutputState } from "./state";
+import { createAnalysisState } from "./state";
 
 // A memo whose computation may re-ask itself through a cycle: a re-ask
 // answers `cycleAnswer`, and a frame that consumed one does not cache.
@@ -44,17 +44,6 @@ export function createAnalysisMemo<K extends object, R>(
 ) {
   const create = () => createCyclicMemo(compute, cycleAnswer);
   const [getMemo, setMemo] = createAnalysisState(create);
-  return [(key: K) => getMemo()(key), () => setMemo(create())] as const;
-}
-
-// The memo per output being built, so each stage derives its own answers
-// (analyze's pass has its own); `reset` starts them afresh.
-export function createOutputMemo<K extends object, R>(
-  compute: (key: K) => R,
-  cycleAnswer: R,
-) {
-  const create = () => createCyclicMemo(compute, cycleAnswer);
-  const [getMemo, setMemo] = createOutputState(create);
   return [(key: K) => getMemo()(key), () => setMemo(create())] as const;
 }
 
