@@ -1,7 +1,7 @@
 // child.marko
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
-_shells({ "__tests__/child.marko": "__tests__/child.marko !__tests__/child.marko_0_input_name#3_input_item#4; ;<div></div>" });
+_shells({ "__tests__/child.marko": "__tests__/child.marko; ;<div></div>" });
 var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

@@ -37,6 +37,7 @@ import {
   isQueuedOnCreate,
   shipsShellInits,
 } from "../../util/shell";
+import { getEffectCallerSources } from "../../util/signals";
 import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
@@ -185,8 +186,12 @@ export default {
           let marker = "";
           if (shipsShellInits(section)) {
             marker = getShellInitIds(section);
-            const effectIds = getSectionEffectRegisterIds(section, (refs) =>
-              isQueuedOnCreate(section, refs),
+            // An effect a caller decides per instance rides the flush instead.
+            const effectIds = getSectionEffectRegisterIds(
+              section,
+              (refs) =>
+                isQueuedOnCreate(section, refs) ||
+                !!getEffectCallerSources(section, refs),
             );
             if (effectIds) marker += "!" + effectIds;
             marker ||= getPatchFillBindings(section) ? "!" : "";

@@ -1,6 +1,6 @@
 // tags/dump/index.marko
 const $template = "<p> </p>";
-_shells({ b: "b !b0;D ;<p> </p>" });
+_shells({ b: "b;D ;<p> </p>" });
 var dump_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

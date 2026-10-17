@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
 		_patch_write($scope4_id, "wd", err?.cause?.code);
-		_script($scope4_id, "a5", 0, 0);
+		_script($scope4_id, "a5", 0);
 		_patch_effect($scope4_id, "ea5", "d");
 		_scope($scope4_id, { d: err?.cause?.code });
 	}, void 0, "a7", "a0", 1, "a5");

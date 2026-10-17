@@ -2,7 +2,7 @@
 const $template = "<button>toggle</button><button>pick</button><!><!>";
 const $walks = " b b%c";
 _shells({
-	b: "b !b2 b3; b b%;<button>toggle</button><button>pick</button><!><!>",
+	b: "b !b3; b b%;<button>toggle</button><button>pick</button><!><!>",
 	b0: "b0 b6;b%;<!><!><!>"
 });
 var list_default = _template("b", (input) => {

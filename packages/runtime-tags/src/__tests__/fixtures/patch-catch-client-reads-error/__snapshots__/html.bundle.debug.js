@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
 		_patch_write($scope4_id, "PatchWrite:err_cause_code", err?.cause?.code);
-		_script($scope4_id, "__tests__/template.marko_4_err_cause_code#3", 0, 0);
+		_script($scope4_id, "__tests__/template.marko_4_err_cause_code#3", 0);
 		_patch_effect($scope4_id, "PatchEffect:__tests__/template.marko_4_err_cause_code#3", "err_cause_code");
 		_scope($scope4_id, { err_cause_code: err?.cause?.code }, "__tests__/template.marko", "14:6", { err_cause_code: ["err.cause.code", "14:13"] });
 	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content", 1, "__tests__/template.marko_4_err_cause_code#3");

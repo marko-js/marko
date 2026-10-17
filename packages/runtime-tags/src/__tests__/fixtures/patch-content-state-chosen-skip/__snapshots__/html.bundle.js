@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 	}, { id: 1 }, "d", $scope0_id, "section");
 	const status = `${input.b}: ${takeRenders()} content renders`;
 	_html(`</section>${_el_resume($scope0_id, "d")}`);
-	_script($scope0_id, "a4", 1, _client_guard($scope0_reason, 0));
+	_script($scope0_id, "a4");
 	_script($scope0_id, "a5", 1, 1);
 	_script($scope0_id, "a6");
 	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "ea4", "m");

@@ -522,6 +522,11 @@ export function _try(
   );
   const chunk = getChunk()!;
   const beforeBranch = deferBranchStart(chunk);
+  // In its branch, the body's own setup rides its shell; it is creatable
+  // only where the try's scope is.
+  const bodyContent = inCreatable()
+    ? content
+    : () => withKeptBranchId(branchId, content);
   const renderers = (): void =>
     writeTryRenderers(
       branchId,
@@ -540,7 +545,7 @@ export function _try(
     let entry: unknown[] | undefined;
     let settled = false;
     writesRenderers = tryBoundary(
-      content,
+      bodyContent,
       catchContent,
       branchId,
       renderers,
@@ -601,7 +606,7 @@ export function _try(
     // A try this flush may create needs its entry even when its body writes
     // nothing.
     if (create) ensureScopePatch(state, branchId);
-    content();
+    withBranchId(branchId, bodyContent);
   }
   applyBranchStart(chunk, beforeBranch, true);
   if (!writesRenderers) renderers();

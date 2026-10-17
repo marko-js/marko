@@ -59,6 +59,7 @@ import {
   isResumedRead,
   closureCarriesFill,
   rerunsEffectOnPatch,
+  hasTagCallerParamAt,
 } from "./patch/refresh";
 import {
   patchWrites,
@@ -801,21 +802,26 @@ function isPureMemberForwarder(binding: Binding): boolean {
   return hasNonConstantPropertyAlias(binding);
 }
 
-// `1` where a created scope's renders queue the effect, else whether a client group feeds a
-// value a patch writes for it (`0` if none does), or undefined where it reads none.
+// `1` where a created scope's renders queue the effect, a caller guard where whether they
+// do varies by instance, else undefined (a shell or its setup envelope mounts it).
 function getEffectClientGuard(section: Section, refs: ReferencedBindings) {
   if (isQueuedOnCreate(section, refs)) return t.numericLiteral(1);
-  const read = filter(refs, rerunsEffectOnPatch);
-  if (read) {
-    return (
-      orCallerGroupGuards(
-        section,
-        undefined,
-        "_client_guard",
-        reduce(read, pushCanonicalSources),
-      ) || t.numericLiteral(0)
-    );
+  const sources = getEffectCallerSources(section, refs);
+  if (sources) {
+    return orCallerGroupGuards(section, undefined, "_client_guard", sources);
   }
+}
+
+// The sources an effect re-runs on where one is a param a calling tag passes.
+export function getEffectCallerSources(
+  section: Section,
+  refs: ReferencedBindings,
+) {
+  const sources = reduce(
+    filter(refs, rerunsEffectOnPatch),
+    pushCanonicalSources,
+  );
+  if (some(sources, (s) => hasTagCallerParamAt(s, section))) return sources;
 }
 
 function pushCanonicalSources(list: Opt<Sources>, binding: Binding) {

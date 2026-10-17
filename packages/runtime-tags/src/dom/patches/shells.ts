@@ -5,7 +5,7 @@ import {
   RendererProp,
   type Scope,
 } from "../../common/types";
-import { queueEffect, runId } from "../queue";
+import { runId } from "../queue";
 import { _content as content } from "../renderer";
 import { _resumed, getRegisteredWithScope } from "../resume";
 import { installPatchShells } from "./apply";
@@ -56,7 +56,10 @@ export const resolveSetupIds = (ids: string) =>
 // Inits render now (the scope's first render); effects queue as mounts.
 export const runSetupIds = ([inits, effects]: SetupIds, scope: Scope) => {
   for (const init of inits) init(scope);
-  if (effects) for (const effect of effects) queueEffect(scope, effect);
+  // Effects wait, paired with their scope, until its child scopes' have queued.
+  for (const effect of effects || []) {
+    (scope[AccessorProp.SetupEffects] ||= []).push(effect, scope);
+  }
 };
 // A shell's parts, kept on the registered factory (and its renderers) for
 // the loop patcher, which reconciles from them rather than a renderer.

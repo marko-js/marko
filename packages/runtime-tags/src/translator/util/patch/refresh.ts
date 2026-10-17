@@ -881,7 +881,10 @@ function getClosureInit(
 
 // The sources take a param a calling tag may pass client state: a template's
 // other than a page's, whose input the request passes, or a `<define>` body's.
-function hasTagCallerParamAt(sources: Sources | undefined, section: Section) {
+export function hasTagCallerParamAt(
+  sources: Sources | undefined,
+  section: Section,
+) {
   return some(
     sources?.param,
     (param) => isCallerParamAt(param, section) && mayPassClientState(param),

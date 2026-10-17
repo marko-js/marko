@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const brand = $global$1.brand;
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", brand)}</h1></main>`);
 	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#4", $scope0_id);
-	_script($scope0_id, "__tests__/template.marko_0_brand#1", 1, 0);
+	_script($scope0_id, "__tests__/template.marko_0_brand#1");
 	_patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_brand#1", "brand");
 	$scope0_page ? _scope($scope0_id, { brand }, "__tests__/template.marko", 0, { brand: "1:8" }) : _patch_write($scope0_id, "PatchWrite:brand", brand);
 }, 1);

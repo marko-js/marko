@@ -632,8 +632,8 @@ export function tryBoundary(
   catchContent: ServerRenderer | undefined,
   branchId: number,
   renderers: () => void,
-  // A patch's catch, writing its own entry: the body renders outside the
-  // branch id, nothing of it streams once caught, and nothing reorders.
+  // A patch's catch, writing its own entry: nothing of the body streams
+  // once caught, and nothing reorders.
   onCatch?: (err: unknown) => void,
   // A patch's body that settled without throwing.
   onSettle?: () => void,
@@ -646,9 +646,7 @@ export function tryBoundary(
   const bodyBoundary = new Boundary(state, undefined, boundary);
   if (catchContent) bodyBoundary.withinCatch = true;
   const body = chunk.fork(bodyBoundary, null);
-  const bodyEnd = onCatch
-    ? body.render(content)
-    : body.render(withBranchId, branchId, content);
+  const bodyEnd = body.render(withBranchId, branchId, content);
 
   if (bodyBoundary.aborted) {
     // Without a `@catch` the error ends the enclosing render, like any throw in it.

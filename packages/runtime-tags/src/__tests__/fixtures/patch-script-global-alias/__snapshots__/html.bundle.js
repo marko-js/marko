@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const brand = $global().brand;
 	_html(`<main><h1>${_patch_text($scope0_id, "a", brand)}</h1></main>`);
 	_fill_global_subscribe("a0", $scope0_id);
-	_script($scope0_id, "a1", 1, 0);
+	_script($scope0_id, "a1");
 	_patch_effect($scope0_id, "ea1", "b");
 	$scope0_page ? _scope($scope0_id, { b: brand }) : _patch_write($scope0_id, "wb", brand);
 }, 1);

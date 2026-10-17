@@ -1,7 +1,7 @@
 // tags/file-store.marko
 const $template$5 = "";
 const $walks$5 = "";
-_shells({ "__tests__/tags/file-store.marko": "^__tests__/tags/file-store.marko !__tests__/tags/file-store.marko_0_input_value#2," });
+_shells({ "__tests__/tags/file-store.marko": "^__tests__/tags/file-store.marko !," });
 _client_return("__tests__/tags/file-store.marko");
 var file_store_default = _template("__tests__/tags/file-store.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

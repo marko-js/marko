@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
 	"__tests__/tags/menu.marko": "__tests__/tags/menu.marko;b%;<!><!><!>",
-	"__tests__/tags/menu.marko_1*shell": "__tests__/tags/menu.marko_1*shell !__tests__/tags/menu.marko_1_it_onPick#5; D ;<button> </button>"
+	"__tests__/tags/menu.marko_1*shell": "__tests__/tags/menu.marko_1*shell; D ;<button> </button>"
 });
 var menu_default = _template("__tests__/tags/menu.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

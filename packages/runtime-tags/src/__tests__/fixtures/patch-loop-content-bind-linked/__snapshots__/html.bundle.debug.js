@@ -2,7 +2,7 @@
 const $template$1 = "<button>toggle</button><button>pick</button><!><!>";
 const $walks$1 = " b b%c";
 _shells({
-	"__tests__/tags/list.marko": "__tests__/tags/list.marko !__tests__/tags/list.marko_0_input_onPick#5 __tests__/tags/list.marko_0; b b%;<button>toggle</button><button>pick</button><!><!>",
+	"__tests__/tags/list.marko": "__tests__/tags/list.marko !__tests__/tags/list.marko_0; b b%;<button>toggle</button><button>pick</button><!><!>",
 	"__tests__/tags/list.marko_1*shell": "__tests__/tags/list.marko_1*shell __tests__/tags/list.marko_1_open#0:7/init;b%;<!><!><!>"
 });
 var list_default = _template("__tests__/tags/list.marko", (input) => {

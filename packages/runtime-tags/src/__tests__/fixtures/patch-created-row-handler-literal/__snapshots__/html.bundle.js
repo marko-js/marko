@@ -1,7 +1,7 @@
 // tags/row.marko
 const $template = "<li><span> </span><button>Pick</button></li>";
 const $walks = "E l l";
-_shells({ b: "b !b0;E l ;<li><span> </span><button>Pick</button></li>" });
+_shells({ b: "b;E l ;<li><span> </span><button>Pick</button></li>" });
 var row_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

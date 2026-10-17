@@ -61,6 +61,12 @@ export const patchScope = (patch: Scope, live: Scope, kinds = patchers) => {
         : key[0]) as PatchKind
     ]!(live, key, patch[key as keyof Scope]);
   }
+  // A created scope mounts its setup's effects once its entry has mounted its
+  // child scopes' (an envelope applies inside the entry: `createPatchers`).
+  if (kinds === patchers && live[AccessorProp.SetupEffects]) {
+    pendingEffects.push(...live[AccessorProp.SetupEffects]);
+    live[AccessorProp.SetupEffects] = 0;
+  }
 };
 // The render a flush is applying against (set by `beginPatch`).
 export let patchRender!: RenderData;

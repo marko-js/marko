@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 _shells({
 	b: "b;b%;<!><!><!>",
-	b0: "b0 !b1; D ;<button> </button>"
+	b0: "b0; D ;<button> </button>"
 });
 var menu_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

@@ -1,5 +1,5 @@
 // tags/file-store.marko
-_shells({ d: "d !d1," });
+_shells({ d: "d !," });
 _client_return("d");
 var file_store_default = _template("d", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
