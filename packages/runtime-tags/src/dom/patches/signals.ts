@@ -5,8 +5,10 @@ import {
   ClosureScopesProp,
   ClosureSignalProp,
   type EncodedAccessor,
+  PatchKey,
   type Scope,
 } from "../../common/types";
+import { noop } from "../load";
 import { queueRender, runId } from "../queue";
 import { _resumed, _var_resume } from "../resume";
 import {
@@ -21,7 +23,7 @@ import {
   type Signal,
   type SignalFn,
 } from "../signals";
-import { patchFills } from "./apply";
+import { patchers, patchFills } from "./apply";
 
 // Installed by `patches/effect`, whose effects re-run by their reads: a fill a
 // join registers then marks its change as a write does.
@@ -71,6 +73,15 @@ export function _fill_join<T extends SignalFn>(
   buildDispatch?: (join: SignalFn) => SignalFn,
 ): T {
   return fillJoin(key, valueAccessor, join, buildDispatch?.(join) || join);
+}
+// A member of a join the patch writes, filled for other reads: its fill only
+// sets the value, as the patch writes the join or the scope inits it.
+export function _fill_join_value<T extends SignalFn>(
+  key: string,
+  valueAccessor: EncodedAccessor,
+  join: T,
+): T {
+  return fillJoin(key, valueAccessor, join, noop);
 }
 // Owner-side dispatch for cross-section joins over branch scopes; per-kind
 // helpers keep branch-free bundles free of the other kind.
@@ -256,6 +267,18 @@ export function _shell_or(
   // Queued in the same order as the join's own renders.
   _resumed[initId] = (scope: Scope) =>
     queueRender(scope, fn, id, 0, scope[scopeIdKey]);
+  return or;
+}
+
+// A join the patch writes: a patch names its init on any scope it leaves the
+// join to, so the join brings the patcher that runs it.
+export const _patch_or = /*@__PURE__*/ withJoinInits(_shell_or);
+function withJoinInits<T>(or: T) {
+  // Join inits alone, registered by `_shell_or`; `resolveSetupIds` here ships
+  // `patches/shells` on every page (in `apply`, +6 B on each patch page).
+  patchers[PatchKey.Init] = (scope, _key, ids) => {
+    for (const id of ids.split(" ")) (_resumed[id] as SignalFn)(scope);
+  };
   return or;
 }
 

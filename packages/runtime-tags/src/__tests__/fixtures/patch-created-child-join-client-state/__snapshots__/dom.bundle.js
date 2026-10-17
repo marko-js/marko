@@ -1,5 +1,5 @@
 // tags/plain-child.marko
-const $input_a__OR__input_b = /*@__PURE__*/ _fill_join("b1", 4, /*@__PURE__*/ _fill_join("b0", 3, /*@__PURE__*/ _shell_or("b2", 5, ($scope) => _text($scope.a, $scope.d + $scope.e))));
+const $input_a__OR__input_b = /*@__PURE__*/ _patch_or("b0", 5, ($scope) => _text($scope.a, $scope.d + $scope.e));
 const $input_a = /*@__PURE__*/ _const(3, $input_a__OR__input_b);
 
 // template.marko

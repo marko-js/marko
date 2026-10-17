@@ -22,7 +22,7 @@ function $setup($scope) {
 const $input_tone = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_tone", ($scope) => {
 	$input_tone__OR__count($scope);
 	$if_content__input_tone($scope);
-}, $input_tone__OR__count);
+});
 const $if = /*@__PURE__*/ _if("#text/2", "<em>note</em>", " ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {

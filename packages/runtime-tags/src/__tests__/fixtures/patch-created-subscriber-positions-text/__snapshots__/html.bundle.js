@@ -31,7 +31,7 @@ var panel_default = _template("b", (input) => {
 					_html(`<i>${_patch_text($scope3_id, "a", input.a + ":" + input.b, void 0, $scope0_reason, 2)}</i>`);
 					(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2)) && _patch_init($scope3_id, "b5");
 					(_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 2)) && _patch_init($scope3_id, "b6");
-					_client_guard($scope0_reason, 2) && _patch_init($scope3_id, "b7");
+					_patch_join_init($scope3_id, "b7", $scope0_reason, 2);
 					_subscribe(_unfilled_if($scope0_reason, 6) && $input_a__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _scope($scope3_id, {
 						_: $wi__input_show__OR__input_b__OR__input_a && _scope_with_id($scope1_id),
 						Ch: $wi__input_b && 1
@@ -45,12 +45,13 @@ var panel_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 4);
+	_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4) ? _patch_value($scope0_id, "vb11", input.a) : _patch_write($scope0_id, "wf", input.a, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5)));
 	$scope0_page ? _scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && input.b,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.a,
-		h: $wi__input_b && (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && $input_b__closures,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 5)) && input.b,
+		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.a,
+		h: $wi__input_b && (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2)) && $input_b__closures,
 		i: _write_if($scope0_reason, 6) && (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && $input_a__closures
-	}) : (_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 6)) && _patch_value($scope0_id, "vb9", input.b, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "vb10", input.a, !_server_guard($scope0_reason, 6)));
+	}) : _filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) ? _patch_value($scope0_id, "vb10", input.b) : (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 6)) && _patch_value($scope0_id, "vb9", input.b, !_server_guard($scope0_reason, 5)));
 });
 
 // template.marko

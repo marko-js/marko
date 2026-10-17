@@ -40,9 +40,9 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#main/2", "<!><!><!>", "b%/&", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", ($scope) => {
-	_text($scope["#text/3"], $scope.input_label);
 	$if_content__input_label($scope);
-});
+	_text($scope["#text/3"], $scope.input_label);
+}, $if_content__input_label);
 const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 	$input_label($scope, input.label);

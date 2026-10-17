@@ -3,7 +3,7 @@ const $PlainChild_content__walks = "Db%l";
 const $PlainChild_content__template = "<p>t=<!></p>";
 const $template = "<button>+</button><!><!>";
 const $walks = " b%c";
-const $PlainChild_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_b", /*@__PURE__*/ _shell_or("__tests__/template.marko_2_input_a#3_input_b#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b)));
+const $PlainChild_content__input_a__OR__input_b = /*@__PURE__*/ _patch_or("__tests__/template.marko_2_input_a#3_input_b#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b));
 const $PlainChild_content__input_a = /*@__PURE__*/ _const("input_a", $PlainChild_content__input_a__OR__input_b);
 const $PlainChild_content__input_b = /*@__PURE__*/ _const("input_b", $PlainChild_content__input_a__OR__input_b);
 const $PlainChild_content__$params = ($scope, $params2) => $PlainChild_content__input($scope, $params2[0]);

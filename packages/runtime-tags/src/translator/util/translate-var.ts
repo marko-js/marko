@@ -310,7 +310,9 @@ function writeLocalAfterDeclaration(
   binding: Binding,
   statements: t.Statement[],
 ) {
-  if (!binding.sources?.state) {
+  // One reaching a written join where the client may own it waits for the
+  // section's end, which knows whether the content is withheld.
+  if (!binding.sources?.state && !getPatchFill(binding).unpatchedStructure) {
     if (getPatchFill(binding).fill) {
       statements.push(t.expressionStatement(writeLocalFill(section, binding)));
     } else if (getPatchWrite(binding).write) {

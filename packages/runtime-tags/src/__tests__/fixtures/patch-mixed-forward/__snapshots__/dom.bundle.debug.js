@@ -2,7 +2,7 @@
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $input_a__OR__input_b = /*@__PURE__*/ _fill_join("__tests__/tags/kid.marko_fill1", "input_b", /*@__PURE__*/ _fill_join("__tests__/tags/kid.marko_fill0", "input_a", /*@__PURE__*/ _shell_or("__tests__/tags/kid.marko_0_input_a#3_input_b#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b))));
+const $input_a__OR__input_b = /*@__PURE__*/ _patch_or("__tests__/tags/kid.marko_0_input_a#3_input_b#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b));
 const $input_a = /*@__PURE__*/ _const("input_a", $input_a__OR__input_b);
 const $input_b = /*@__PURE__*/ _const("input_b", $input_a__OR__input_b);
 const $input$1 = ($scope, input) => {

@@ -4,11 +4,12 @@
     "PatchBranch:#text/0": [{
       "PatchBranch:#div/0": [{
         "PatchSetup:": {
-          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_b#0:5/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4_input_b#0:5/init"
-        }
+          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_b#0:5/subscribe"
+        },
+        "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4_input_b#0:5/init"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2*shell"]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_1*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_fill1": "b"
+    "PatchWrite:input_b": "b"
   }
 }]
 ;CQY
@@ -17,7 +18,7 @@
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": 0,
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_fill1": "c"
+    "PatchWrite:input_b": "c"
   }
 }
 
@@ -27,11 +28,12 @@
     "PatchBranch:#text/0": [{
       "PatchBranch:#div/0": [{
         "PatchSetup:": {
-          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_b#0:5/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4_input_b#0:5/init"
-        }
+          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_b#0:5/subscribe"
+        },
+        "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4_input_b#0:5/init"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2*shell"]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_1*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_fill1": "d"
+    "PatchWrite:input_b": "d"
   }
 }
 
@@ -41,10 +43,11 @@
     "PatchBranch:#text/0": [{
       "PatchBranch:#div/0": [{
         "PatchSetup:": {
-          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_b#0:5/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4_input_b#0:5/init"
-        }
+          "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_b#0:5/subscribe"
+        },
+        "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2_input_a#0:4_input_b#0:5/init"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_2*shell"]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_1*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-caller-join/tags/panel.marko_fill1": "e"
+    "PatchWrite:input_b": "e"
   }
 }

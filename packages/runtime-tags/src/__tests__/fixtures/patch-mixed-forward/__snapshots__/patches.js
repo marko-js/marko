@@ -1,13 +1,15 @@
 // PATCH
 {
   ca: {
-    vb1: 2
+    we: 2,
+    i: "b0"
   }
 }
 
 // PATCH
 {
   ca: {
-    vb1: 3
+    we: 3,
+    i: "b0"
   }
 }

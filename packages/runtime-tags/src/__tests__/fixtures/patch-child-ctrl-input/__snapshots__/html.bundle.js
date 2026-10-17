@@ -5,13 +5,13 @@ var field_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<input${_patch_input_value($scope0_id, "a", input.value, input.valueChange, "n2a", $scope0_reason, 0, "dEa", $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}<em>${_patch_text($scope0_id, "b", input.value, void 0, $scope0_reason, 1)}</em>`);
 	_script($scope0_id, "b0");
-	_patch_write($scope0_id, "we", input.value, 1);
-	_patch_write($scope0_id, "wf", input.valueChange, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b3");
-	$scope0_page ? _scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.value,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.valueChange
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb1", input.value, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.valueChange, !_server_guard($scope0_reason, 2)));
+	_patch_write($scope0_id, "we", input.value, !(_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2)));
+	_patch_write($scope0_id, "wf", input.valueChange, !(_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1)));
+	_patch_join_init($scope0_id, "b1", $scope0_reason, 0);
+	$scope0_page && _scope($scope0_id, {
+		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.value,
+		f: _unfilled_if($scope0_reason, 0) && input.valueChange
+	});
 });
 
 // template.marko

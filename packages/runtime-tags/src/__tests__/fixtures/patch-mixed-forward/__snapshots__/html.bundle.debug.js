@@ -1,21 +1,21 @@
 // tags/kid.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-_shells({ "__tests__/tags/kid.marko": "__tests__/tags/kid.marko !;D ;<span> </span>" });
+_shells({ "__tests__/tags/kid.marko": "__tests__/tags/kid.marko;D ;<span> </span>" });
 var kid_default = _template("__tests__/tags/kid.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html(`<span>${_patch_text($scope0_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 0)}</span>`);
-	_patch_write($scope0_id, "PatchWrite:input_a", input.a, 1);
-	_patch_write($scope0_id, "PatchWrite:input_b", input.b, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/kid.marko_0_input_a#3_input_b#4/init");
-	$scope0_page ? _scope($scope0_id, {
-		input_a: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.a,
-		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.b
+	_patch_write($scope0_id, "PatchWrite:input_a", input.a, !(_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2)));
+	_patch_write($scope0_id, "PatchWrite:input_b", input.b, !(_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1)));
+	_patch_join_init($scope0_id, "__tests__/tags/kid.marko_0_input_a#3_input_b#4/init", $scope0_reason, 0);
+	$scope0_page && _scope($scope0_id, {
+		input_a: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,
+		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b
 	}, "__tests__/tags/kid.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/kid.marko_fill0", input.a, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/kid.marko_fill1", input.b, !_server_guard($scope0_reason, 2)));
+	});
 });
 
 // template.marko

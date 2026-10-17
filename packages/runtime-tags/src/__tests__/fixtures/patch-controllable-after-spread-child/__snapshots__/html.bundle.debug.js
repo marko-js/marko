@@ -12,17 +12,17 @@ var text_field_default = _template("__tests__/tags/text-field.marko", (input) =>
 	}, "#input/0", $scope0_id, "input", void 0, $scope0_reason, 3)}>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/text-field.marko_0_attrs#6");
 	_script($scope0_id, "__tests__/tags/text-field.marko_0");
-	_patch_write($scope0_id, "PatchWrite:value", value, 1);
-	_patch_write($scope0_id, "PatchWrite:valueChange", valueChange, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/text-field.marko_0_value#3_valueChange#4/init");
-	$scope0_page ? _scope($scope0_id, {
-		value: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && value,
-		valueChange: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && valueChange
+	_patch_write($scope0_id, "PatchWrite:value", value, !(_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2)));
+	_patch_write($scope0_id, "PatchWrite:valueChange", valueChange, !(_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1)));
+	_patch_join_init($scope0_id, "__tests__/tags/text-field.marko_0_value#3_valueChange#4/init", $scope0_reason, 0);
+	$scope0_page && _scope($scope0_id, {
+		value: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && value,
+		valueChange: _unfilled_if($scope0_reason, 0) && valueChange
 	}, "__tests__/tags/text-field.marko", 0, {
 		value: "1:10",
 		valueChange: "1:17",
 		"ControlledHandler:#input/0": ["valueChange", "2:29"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/text-field.marko_fill0", value, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/text-field.marko_fill1", valueChange, !_server_guard($scope0_reason, 2)));
+	});
 });
 
 // template.marko

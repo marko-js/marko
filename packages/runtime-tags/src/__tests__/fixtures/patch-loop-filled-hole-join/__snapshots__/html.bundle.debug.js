@@ -18,21 +18,22 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 		_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "PatchValue:__tests__/tags/feed-list.marko_fill2", item?.id);
 		_html(`<li${hovered === item.id ? " class=hovered" : ""}><a${_patch_attr($scope1_id, "PatchAttr:#a/1 href", "href", link(input.data, item.id), $scope0_reason, 0)}>${_patch_text($scope1_id, "#text/2", item.id, void 0, $scope0_reason, 1)}</a>${_el_resume($scope1_id, "#a/1", _mask_group($scope0_reason, 0))}</li>${_el_resume($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/tags/feed-list.marko_1");
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#5/init");
+		(_filled_guard($scope0_reason, 2) && !_client_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#5/init", $scope0_reason, 0);
 		_scope($scope1_id, {
 			item_id: item?.id,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/feed-list.marko", "6:4", { item_id: ["item.id", "6:8"] });
 	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/feed-list.marko_1*shell", $scope0_reason, 1);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
+	_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/feed-list.marko_fill0/unpatched", input.data) : _patch_write($scope0_id, "PatchWrite:input_data", input.data, !(_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1)));
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/feed-list.marko_fill1", hovered, 1);
-	$scope0_page ? _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		input_data: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.data,
 		hovered: _write_if($scope0_reason, 1) && hovered
 	}, "__tests__/tags/feed-list.marko", 0, {
 		input_data: ["input.data"],
 		hovered: "4:6"
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/feed-list.marko_fill0", input.data, !_server_guard($scope0_reason, 2));
+	});
 });
 
 // template.marko

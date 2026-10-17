@@ -1,13 +1,15 @@
 // PATCH
 {
   "PatchChild:#childScope/0": {
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-mixed-forward/template.marko_fill1": 2
+    "PatchWrite:input_b": 2,
+    "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-mixed-forward/template.marko_1_input_a#3_input_b#4/init"
   }
 }
 
 // PATCH
 {
   "PatchChild:#childScope/0": {
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-mixed-forward/template.marko_fill1": 3
+    "PatchWrite:input_b": 3,
+    "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-mixed-forward/template.marko_1_input_a#3_input_b#4/init"
   }
 }

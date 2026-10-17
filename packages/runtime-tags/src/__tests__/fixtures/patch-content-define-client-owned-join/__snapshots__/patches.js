@@ -1,9 +1,15 @@
 // PATCH
 {
-  va3: "b"
+  ca: {
+    i: "a1"
+  },
+  va4: "b"
 }
 
 // PATCH
 {
-  va3: "c"
+  ca: {
+    i: "a1"
+  },
+  va4: "c"
 }

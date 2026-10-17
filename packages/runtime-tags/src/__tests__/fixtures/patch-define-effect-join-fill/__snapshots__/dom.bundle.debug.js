@@ -3,7 +3,7 @@ const $Row_content__walks = "D l b";
 const $Row_content__template = "<p> </p><div></div>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>+</button>`)($Row_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Row_content__walks);
-const $Row_content__a__OR__b = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "a", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.a + $scope.b)));
+const $Row_content__a__OR__b = /*@__PURE__*/ _patch_or("__tests__/template.marko_1_a#4_b#5/init", 6, ($scope) => _text($scope["#text/0"], $scope.a + $scope.b));
 const $Row_content__a__script = _script("__tests__/template.marko_1_a#4", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.a);
 const $Row_content__a = /*@__PURE__*/ _const("a", ($scope) => {
 	$Row_content__a__script($scope);

@@ -2,7 +2,8 @@
 {
   "PatchChild:#childScope/0": {
     "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_1_a#4": "a",
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_fill1": "y"
+    "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_1_a#4_b#5/init",
+    "PatchWrite:a": "y"
   }
 }
 
@@ -10,6 +11,7 @@
 {
   "PatchChild:#childScope/0": {
     "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_1_a#4": "a",
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_fill1": "z"
+    "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_1_a#4_b#5/init",
+    "PatchWrite:a": "z"
   }
 }

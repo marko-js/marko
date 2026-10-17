@@ -1,7 +1,7 @@
 // tags/panel.marko
 const $template = "<!><!><!>";
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: "b0;D ;<em> </em>"
 });
 var panel_default = _template("b", (input) => {
@@ -11,15 +11,17 @@ var panel_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "a", input.a + ":" + input.b, void 0, $scope0_reason, 2)}</em>`);
-			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "b1");
+			_patch_join_init($scope1_id, "b1", $scope0_reason, 2);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 4);
-	$scope0_page ? _scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && input.a,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.b
-	}) : (_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 6)) && _patch_value($scope0_id, "vb2", input.a, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "vb3", input.b, !_server_guard($scope0_reason, 6)));
+	_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) ? _patch_value($scope0_id, "vb2", input.a) : _patch_write($scope0_id, "we", input.a, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 6)));
+	_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4) ? _patch_value($scope0_id, "vb3", input.b) : _patch_write($scope0_id, "wf", input.b, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5)));
+	$scope0_page && _scope($scope0_id, {
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.a,
+		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.b
+	});
 });
 
 // template.marko
