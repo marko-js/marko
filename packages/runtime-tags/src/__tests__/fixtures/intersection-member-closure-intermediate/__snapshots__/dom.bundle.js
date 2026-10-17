@@ -1,9 +1,7 @@
 // template.marko
 const $if_content__list_length = /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.f));
 const $if_content__setup = $if_content__list_length;
-const $list__OR__show = ($scope) => {
-	_text($scope.a, $scope.h ? $scope.e.join() : "none");
-};
+const $list__OR__show = ($scope) => _text($scope.a, $scope.h ? $scope.e.join() : "none");
 const $list = /*@__PURE__*/ _let(4, ($scope) => {
 	$list_length($scope, $scope.e?.length);
 	$list__OR__show($scope);

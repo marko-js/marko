@@ -24,7 +24,7 @@ const $x = _var_resume("__tests__/template.marko_0_x#3/var", /*@__PURE__*/ _cons
 	$x__closure($scope);
 }));
 function $setup($scope) {
-	_var($scope, "#childScope/0", $x);
 	$input_content($scope["#childScope/0"], $child_content($scope));
+	_var($scope, "#childScope/0", $x);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

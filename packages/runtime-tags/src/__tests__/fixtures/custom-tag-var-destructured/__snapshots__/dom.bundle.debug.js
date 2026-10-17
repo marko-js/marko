@@ -47,7 +47,7 @@ const $inc = /*@__PURE__*/ _const("inc", $inc__script);
 const $missing3 = ($scope, missing) => _text($scope["#text/5"], missing);
 const $missing2 = ($scope, $missing) => $missing3($scope, void 0 !== $missing ? $missing : "fallback");
 function $setup($scope) {
-	_var($scope, "#childScope/0", $pattern2);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $pattern2);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

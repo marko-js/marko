@@ -11,8 +11,8 @@ const $template = "<button>Toggle</button><!><!>";
 const $walks = " b%c";
 const $if_content__value = ($scope, value) => $Wrapper_content__input_value($scope["#childScope/2"], value);
 const $if_content__setup = ($scope) => {
-	_var($scope, "#childScope/0", $if_content__value);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $if_content__value);
 	_var($scope, "#childScope/2", $if_content__wrapped);
 };
 const $if_content__wrapped = ($scope, wrapped) => _text($scope["#text/4"], wrapped);

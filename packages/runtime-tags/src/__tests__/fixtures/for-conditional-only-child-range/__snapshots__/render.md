@@ -112,9 +112,6 @@ INSERT: .list > p + pre
 REMOVE: .list > pre:nth-of-type(1) + p
 INSERT: .list > pre:nth-of-type(1) + pre
 REMOVE: .list > pre:nth-of-type(2) + p
-UPDATE: .list > p::text@5 "" => "1"
-UPDATE: .list > pre:nth-of-type(1)::text@5 "" => "2"
-UPDATE: .list > pre:nth-of-type(2)::text@5 "" => "0"
 ```
 
 # Update
@@ -230,6 +227,4 @@ INSERT: .list > p
 REMOVE: .list > p + pre
 INSERT: .list > p + pre
 REMOVE: .list > pre + p
-UPDATE: .list > p::text@5 "" => "0"
-UPDATE: .list > pre::text@5 "" => "1"
 ```

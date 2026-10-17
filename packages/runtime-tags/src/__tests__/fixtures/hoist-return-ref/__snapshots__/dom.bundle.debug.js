@@ -24,8 +24,8 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&0${_w1}&`)(" b", "");
 const $x_getter = _hoist_resume("__tests__/template.marko_0_x#3/hoist", "x");
 function $setup($scope) {
 	$input($scope["#childScope/0"], { y: $x_getter($scope) });
-	_var($scope, "#childScope/1", $x);
 	$setup$1($scope["#childScope/1"]);
+	_var($scope, "#childScope/1", $x);
 }
 const $x = /*@__PURE__*/ _const("x", ($scope) => _assert_hoist($scope.x));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

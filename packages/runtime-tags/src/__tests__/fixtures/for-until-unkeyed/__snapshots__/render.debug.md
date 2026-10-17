@@ -60,8 +60,6 @@ document.querySelector(".more").click();
 ```
 INSERT: ul > li:nth-of-type(2) + li
 INSERT: span:nth-of-type(1) + span
-UPDATE: ul > li:nth-of-type(3)::text " " => "2"
-UPDATE: span:nth-of-type(2)::text " " => "2"
 ```
 
 # Update
@@ -112,5 +110,4 @@ document.querySelector(".more").click();
 ## Change
 ```
 INSERT: ul > li
-UPDATE: ul > li::text " " => "0"
 ```

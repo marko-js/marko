@@ -51,7 +51,6 @@ ab
 ## Change
 ```
 INSERT: ::text@1 + .placeholder
-UPDATE: .placeholder::text " " => "0"
 ```
 
 # Update

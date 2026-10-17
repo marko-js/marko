@@ -14,9 +14,7 @@ var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $t
 // template.marko
 const $template = "<!><!><button id=changeTag></button>";
 const $walks = "b%b b";
-const $tagName_content__setup = ($scope) => {
-	$setup$1($scope["#childScope/0"]);
-};
+const $tagName_content__setup = ($scope) => $setup$1($scope["#childScope/0"]);
 const $tagName_content = _content("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $tagName_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $tagName_content);
 const $tagName = /*@__PURE__*/ _let("tagName/2", ($scope) => $dynamicTag($scope, $scope.tagName));

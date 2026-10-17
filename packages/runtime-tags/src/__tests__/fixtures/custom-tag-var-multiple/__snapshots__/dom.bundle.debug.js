@@ -15,7 +15,7 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div> </div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("b");
 const $data = ($scope, data) => _text($scope["#text/2"], data);
 function $setup($scope) {
-	_var($scope, "#childScope/0", $data);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $data);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

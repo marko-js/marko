@@ -4,5 +4,4 @@
 ## Change
 ```
 INSERT: style
-UPDATE: style[nonce] null => "default-nonce"
 ```

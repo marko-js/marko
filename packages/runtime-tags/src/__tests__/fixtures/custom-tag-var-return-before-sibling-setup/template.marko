@@ -1,0 +1,24 @@
+<define/Box|{ color }|>
+  <style>
+    .box { color: ${color}; }
+  </style>
+  <div class="box"/>
+</define>
+
+<define/Later|{ value }|>
+  <await|v|=value>
+    <span>${v}</span>
+  </await>
+</define>
+
+<child/top/>
+<swatch color=top/>
+
+<let/open=false>
+<button onClick() { open = !open }>Toggle</button>
+<if=open>
+  <child/color/>
+  <Box color=color/>
+  <swatch color=color/>
+  <Later value=color/>
+</if>

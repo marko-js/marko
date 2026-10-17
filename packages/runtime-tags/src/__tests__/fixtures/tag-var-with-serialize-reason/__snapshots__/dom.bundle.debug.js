@@ -20,8 +20,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	_var($scope, "#childScope/2", $x);
 	$setup$1($scope["#childScope/2"]);
+	_var($scope, "#childScope/2", $x);
 	$count($scope, 1);
 	$setup__script($scope);
 }

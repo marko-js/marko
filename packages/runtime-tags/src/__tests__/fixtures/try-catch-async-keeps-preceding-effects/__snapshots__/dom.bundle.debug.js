@@ -25,9 +25,7 @@ const $try_content2__setup = ($scope) => {
 	$await_content2($scope);
 	$try_content2__await_promise($scope, rejectAfter(new Error("ERROR!"), 2));
 };
-const $await_content__setup = ($scope) => {
-	$setup$1($scope["#childScope/0"]);
-};
+const $await_content__setup = ($scope) => $setup$1($scope["#childScope/0"]);
 const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");

@@ -157,7 +157,7 @@ export function _for_closure(
       -1,
     );
   };
-  ownerSignal._ = fn;
+  ownerSignal._ = (scope: Scope) => queueRender(scope, fn, -1);
   return ownerSignal;
 }
 
@@ -209,7 +209,7 @@ export function _for_selector(
       );
     }
   };
-  ownerSignal._ = fn;
+  ownerSignal._ = (scope: Scope) => queueRender(scope, fn, -1);
   return ownerSignal;
 }
 
@@ -262,7 +262,7 @@ export function _if_closure(
       queueRender(ifScope, fn, -1);
     }
   };
-  ownerSignal._ = fn;
+  ownerSignal._ = (scope: Scope) => queueRender(scope, fn, -1);
   return ownerSignal;
 }
 
@@ -295,11 +295,7 @@ export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
           childScope[AccessorProp.Gen] > 0 &&
           childScope[AccessorProp.Gen] < runId
         ) {
-          queueRender(
-            childScope,
-            closureSignals[childScope[signalIndex] || 0],
-            -1,
-          );
+          closureSignals[childScope[signalIndex] || 0](childScope);
         }
       }
     }
@@ -320,7 +316,7 @@ export function _closure_get(
     scope[closureSignal[ClosureSignalProp.SignalIndexAccessor]] =
       closureSignal[ClosureSignalProp.Index];
     if (!resumed) {
-      fn(scope);
+      queueRender(scope, fn, -1);
     } else if (
       (
         ownerScope[
@@ -330,7 +326,7 @@ export function _closure_get(
     ) {
       // The server's HTML is current unless the owner changed since, so only then
       // does it render, in its own run as resumed async content does.
-      queueAsyncRender(scope, closureSignal);
+      queueAsyncRender(scope, fn);
     }
     subscribeToScopeSet(
       ownerScope,
@@ -357,16 +353,6 @@ export function _closure_get(
   return closureSignal;
 }
 
-export function _child_setup(setup: Signal<never> & { _: Signal<Scope> }) {
-  // A direct call passes the owner; rendered as a value, the body's branch
-  // already has its renderer's.
-  setup._ = (scope, owner) => {
-    scope[AccessorProp.Owner] ||= owner;
-    queueRender(scope, setup, -1);
-  };
-  return setup;
-}
-
 export function _var(
   scope: Scope,
   childAccessor: EncodedAccessor,
@@ -378,8 +364,8 @@ export function _var(
     ];
   childScope[AccessorProp.TagVariable] = (value: unknown) =>
     signal(scope, value);
-  // A section's first params (its setup is queued) or an earlier tag's setup
-  // can make the child return before this binds.
+  // Bound after the section's tags are set up: a child's setup, or a value an
+  // earlier tag variable delivers, can make it return first.
   if (AccessorProp.ReturnValue in childScope) {
     signal(scope, childScope[AccessorProp.ReturnValue]);
   }

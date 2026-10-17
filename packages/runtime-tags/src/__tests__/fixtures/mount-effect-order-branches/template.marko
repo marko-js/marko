@@ -1,0 +1,12 @@
+<let/show = true>
+<let/items = [1, 2]>
+<lifecycle onMount() { console.log("parent lifecycle") }/>
+<if=show>
+  <lifecycle onMount() { console.log("if lifecycle") }/>
+</if>
+<for|i| of=items>
+  <script>console.log("row script")</script>
+</for>
+<child/>
+<script>console.log("parent script")</script>
+<button onClick() { show = !show; items = [...items, items.length + 1] }>t</button>

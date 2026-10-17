@@ -23,8 +23,8 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&0${_w1}&`)("", " b");
 const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#3/hoist", "setHtml");
 function $setup($scope) {
 	$input_value($scope["#childScope/0"], $setHtml_getter($scope));
-	_var($scope, "#childScope/1", $setHtml);
 	$setup$1($scope["#childScope/1"]);
+	_var($scope, "#childScope/1", $setHtml);
 }
 const $setHtml = /*@__PURE__*/ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

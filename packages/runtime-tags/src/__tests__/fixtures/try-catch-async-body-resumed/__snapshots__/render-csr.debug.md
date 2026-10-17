@@ -10,7 +10,6 @@
 ```
 INSERT: button
 UPDATE: button::text@0 "" => "ready"
-UPDATE: button::text@6 "" => "0"
 ```
 
 # Update
@@ -23,9 +22,7 @@ caught bang
 ## Change
 ```
 UPDATE: button::text@6 "0" => "1"
-INSERT: ::text(" ")
 INSERT: ::text("caught "), ::text("bang")
-REMOVE: ::text@7 + ::text(" ")
 REMOVE: ::text@7 + button
 UPDATE: ::text@7 "" => "bang"
 ```

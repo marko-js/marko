@@ -4,7 +4,7 @@ const $MyTag_content__template = "<div><!>|<!>|<!></div>";
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<!>${_w0}${_w1}${_w2}<button>inc <!></button>`)($MyTag_content__template, $MyTag_content__template, $MyTag_content__template);
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}& Db%l`)($MyTag_content__walks, $MyTag_content__walks, $MyTag_content__walks);
 const $MyTag_content__input = /*@__PURE__*/ _closure_get("input/9", ($scope) => _text($scope["#text/2"], JSON.stringify($scope._.input)), 0, "__tests__/template.marko_1_input#0:6/subscribe");
-const $MyTag_content__setup = /*@__PURE__*/ _child_setup($MyTag_content__input);
+const $MyTag_content__setup = $MyTag_content__input;
 const $MyTag_content__a = ($scope, a) => _text($scope["#text/0"], a);
 const $MyTag_content__b = ($scope, b) => _text($scope["#text/1"], b);
 const $MyTag_content__tag_params = ($scope, $params2) => {
@@ -33,11 +33,14 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$x($scope, +$scope.x + 1);
 }));
 function $setup($scope) {
-	$MyTag_content__setup._($scope["#childScope/0"], $scope);
-	$MyTag_content__setup._($scope["#childScope/1"], $scope);
+	$scope["#childScope/0"]._ = $scope;
+	$MyTag_content__setup($scope["#childScope/0"]);
+	$scope["#childScope/1"]._ = $scope;
+	$MyTag_content__setup($scope["#childScope/1"]);
 	$MyTag_content__a($scope["#childScope/1"], 7);
 	$MyTag_content__b($scope["#childScope/1"], 8);
-	$MyTag_content__setup._($scope["#childScope/2"], $scope);
+	$scope["#childScope/2"]._ = $scope;
+	$MyTag_content__setup($scope["#childScope/2"]);
 	$x($scope, 1);
 	$setup__script($scope);
 }

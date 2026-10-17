@@ -1,0 +1,6 @@
+<let/count=0>
+<button onClick() { count++ }>${count}</button>
+<if=count>
+  <script>console.log("setup")</script>
+  <script>console.log(`closure ${count}`)</script>
+</if>

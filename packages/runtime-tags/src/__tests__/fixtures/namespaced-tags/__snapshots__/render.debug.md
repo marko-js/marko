@@ -310,11 +310,9 @@ REMOVE: div > math::text + a
 ```
 INSERT: div > svg:nth-of-type(1) > a:nth-of-type(1) + a
 REMOVE: div > svg:nth-of-type(1) > a:nth-of-type(2) + ::text("Hi")
-INSERT: div > svg:nth-of-type(1) > a:nth-of-type(2)::text("Hi")
 UPDATE: div > svg:nth-of-type(1) > a:nth-of-type(2)[href] null => "#bar"
 INSERT: div > math > a:nth-of-type(1) + a
 REMOVE: div > math > a:nth-of-type(2) + ::text("Hi")
-INSERT: div > math > a:nth-of-type(2)::text("Hi")
 UPDATE: div > math > a:nth-of-type(2)[href] null => "#bar"
 UPDATE: div > svg:nth-of-type(1) > a:nth-of-type(2)[ns] null => "http://www.w3.org/2000/svg"
 UPDATE: div > math > a:nth-of-type(2)[ns] null => "http://www.w3.org/1998/Math/MathML"

@@ -7,8 +7,8 @@ const $if_content__input_depth = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope
 const $if_content__setup = ($scope) => {
 	$if_content__input_depth._($scope);
 	$if_content__s._($scope);
+	$Rec_content__setup($scope["#childScope/0"]);
 	_var($scope, "#childScope/0", $if_content__child);
-	$Rec_content__setup._($scope["#childScope/0"], $scope._._);
 };
 const $if_content__s = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Rec_content__input_label($scope["#childScope/0"], $scope._.s));
 const $if_content__child = _var_resume("__tests__/template.marko_2_child#3/var", ($scope, child) => _text($scope["#text/2"], child));
@@ -19,10 +19,10 @@ const $Rec_content__s = /*@__PURE__*/ _let("s/7", ($scope) => {
 const $Rec_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$Rec_content__s($scope, +$scope.s + 1);
 }));
-const $Rec_content__setup = /*@__PURE__*/ _child_setup(($scope) => {
+const $Rec_content__setup = ($scope) => {
 	$Rec_content__s($scope, 0);
 	$Rec_content__setup__script($scope);
-});
+};
 const $Rec_content__input_label = /*@__PURE__*/ _const("input_label", ($scope) => _return($scope, $scope.input_label));
 const $Rec_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<span> </span>`)($Rec_content__template), /*@__PURE__*/ ((_w0) => `b0${_w0}&D l`)($Rec_content__walks), $if_content__setup);
 const $Rec_content__tag_input_depth = /*@__PURE__*/ _const("input_depth", ($scope) => {
@@ -35,7 +35,7 @@ const $Rec_content__input = ($scope, input) => {
 	$Rec_content__tag_input_depth($scope, input.depth);
 };
 function $setup($scope) {
-	$Rec_content__setup._($scope["#childScope/0"], $scope);
+	$Rec_content__setup($scope["#childScope/0"]);
 	$Rec_content__tag_input_depth($scope["#childScope/0"], 1);
 	$Rec_content__input_label($scope["#childScope/0"], "x");
 }

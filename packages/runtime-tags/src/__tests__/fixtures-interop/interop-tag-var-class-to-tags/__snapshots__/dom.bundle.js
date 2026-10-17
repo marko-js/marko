@@ -6,11 +6,11 @@ const $input_x$1 = /*@__PURE__*/ _const(2, ($scope) => _return($scope, $scope.c)
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("");
 const $v = _var_resume("b0", ($scope, v) => _text($scope.c, v));
+const $input_x = ($scope, input_x) => $input_x$1($scope.a, input_x);
+const $input = ($scope, input) => $input_x($scope, input.x);
 function $setup($scope) {
 	_var($scope, 0, $v);
 }
-const $input_x = ($scope, input_x) => $input_x$1($scope.a, input_x);
-const $input = ($scope, input) => $input_x($scope, input.x);
 var tags_child_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
 
 // template.marko

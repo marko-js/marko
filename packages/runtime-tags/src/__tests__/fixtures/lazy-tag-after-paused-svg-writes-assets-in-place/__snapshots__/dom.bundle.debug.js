@@ -3,9 +3,7 @@ const $template = "<svg><!></svg><!><!>";
 const $walks = "D%l%c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
-const $await_content2__setup = ($scope) => {
-	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-};
+const $await_content2__setup = ($scope) => $load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 const $await_content2__v = ($scope, v) => $load_Child_tag_input_value($scope["#childScope/1"], v);
 const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
 const $await_content__v_length = ($scope, v_length) => _attr($scope["#rect/0"], "width", v_length);

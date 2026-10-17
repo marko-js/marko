@@ -41,8 +41,8 @@ const $v = _var_resume("__tests__/template.marko_0_v#3/var", /*@__PURE__*/ _cons
 const $v_n = /*@__PURE__*/ _const("v_n", $for_content__v_n);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<button> </button>", " D ", $for_content__setup, $for_content__$params);
 function $setup($scope) {
-	_var($scope, "#childScope/0", $v);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $v);
 	$for($scope, [[1, 2]]);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

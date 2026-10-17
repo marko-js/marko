@@ -38,9 +38,9 @@ const $mytag_content = /*@__PURE__*/ _content("__tests__/template.marko_1*conten
 const $count__closure = /*@__PURE__*/ _closure($mytag_content__count);
 const $count = _var_resume("__tests__/template.marko_0_count#3/var", /*@__PURE__*/ _const("count", $count__closure));
 function $setup($scope) {
-	_var($scope, "#childScope/0", $count);
 	$setup$2($scope["#childScope/0"]);
 	$input_value($scope["#childScope/0"], 0);
 	$input_content_direct($scope["#childScope/2"], $mytag_content($scope));
+	_var($scope, "#childScope/0", $count);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

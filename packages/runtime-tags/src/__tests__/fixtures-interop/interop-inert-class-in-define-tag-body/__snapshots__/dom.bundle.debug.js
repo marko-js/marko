@@ -30,13 +30,13 @@ const $Greeting_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<button id=tags> </button>${_w0}<!>`)($Greeting_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&b`)($Greeting_content__walks);
 const $Greeting_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $Greeting_content__setup = /*@__PURE__*/ _child_setup(($scope) => $Greeting_content__dynamicTag($scope, _marko_template, ($_) => ({ value: "Hello World" })));
+const $Greeting_content__setup = ($scope) => $Greeting_content__dynamicTag($scope, _marko_template, ($_) => ({ value: "Hello World" }));
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$Greeting_content__setup._($scope["#childScope/2"], $scope);
+	$Greeting_content__setup($scope["#childScope/2"]);
 	$count($scope, 0);
 	$setup__script($scope);
 }

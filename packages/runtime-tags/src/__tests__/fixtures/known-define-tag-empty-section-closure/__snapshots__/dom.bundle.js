@@ -13,9 +13,7 @@ function $setup($scope) {
 }
 
 // template.marko
-const $if_content__setup = ($scope) => {
-	$setup($scope.a);
-};
+const $if_content__setup = ($scope) => $setup($scope.a);
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks), $if_content__setup);
 const $m = /*@__PURE__*/ _let(1, ($scope) => $if($scope, $scope.b ? 0 : 1));
 const $setup__script = _script("a0", ($scope) => $m($scope, 1));

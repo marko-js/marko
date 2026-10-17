@@ -22,8 +22,8 @@ const $template$1 = $template$2;
 const $walks$1 = /*@__PURE__*/ ((_w0) => `0${_w0}&`)("D l");
 const $g = _var_resume("__tests__/tags/child.marko_0_g#2/var", /*@__PURE__*/ _const("g", ($scope) => _return($scope, $scope.g)));
 function $setup$1($scope) {
-	_var($scope, "#childScope/0", $g);
 	$setup$2($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $g);
 }
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, /*@__PURE__*/ _return_setup($setup$1));
 

@@ -29,7 +29,6 @@
 ## Change
 ```
 INSERT: .inc
-UPDATE: .inc::text " " => "0"
 ```
 
 # Update

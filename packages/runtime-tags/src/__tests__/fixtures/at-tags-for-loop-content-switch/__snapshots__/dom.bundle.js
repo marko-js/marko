@@ -15,7 +15,5 @@ const $tab_content__setup = ($scope) => {
 	$tab_content__count($scope, 0);
 	$tab_content__setup__script($scope);
 };
-const $tab_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "<button class=inc><!>: <!></button>", " D%c%", $tab_content__setup), { 3($scope) {
-	_text($scope.b, $scope.d);
-} });
+const $tab_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "<button class=inc><!>: <!></button>", " D%c%", $tab_content__setup), { 3: ($scope) => _text($scope.b, $scope.d) });
 _resumed.a1 = $tab_content;

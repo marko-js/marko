@@ -112,17 +112,13 @@ document.querySelector(`#${id}`).click();
 ```
 ## Change
 ```
+INSERT: span:nth-of-type(4) + :is(span, span)
 INSERT: span:nth-of-type(4) + em
 INSERT: em:nth-of-type(3) + b
-INSERT: b:nth-of-type(3) > :is(::text("tag "), ::text("2"))
-INSERT: b:nth-of-type(3) + span
-INSERT: span:nth-of-type(5) + span
+UPDATE: span:nth-of-type(5)::text@0 "" => "2"
+UPDATE: span:nth-of-type(6)::text@0 "" => "2"
 UPDATE: em:nth-of-type(3)::text@3 "" => "2"
 UPDATE: b:nth-of-type(3)::text@4 "" => "2"
-UPDATE: span:nth-of-type(5)::text@0 "" => "2"
-UPDATE: span:nth-of-type(5)::text@2 "" => "0"
-UPDATE: span:nth-of-type(6)::text@0 "" => "2"
-UPDATE: span:nth-of-type(6)::text@2 "" => "1"
 ```
 
 # Update
@@ -178,17 +174,14 @@ document.querySelector(`#${id}`).click();
 REMOVE: #rename + em
 INSERT: #rename + i
 REMOVE: i:nth-of-type(1) + b
-INSERT: i:nth-of-type(1) > :is(::text("tag "), ::text("0"))
 REMOVE: span:nth-of-type(2) + em
 INSERT: span:nth-of-type(2) + i
 REMOVE: i:nth-of-type(2) + b
-INSERT: i:nth-of-type(2) > :is(::text("tag "), ::text("1"))
 REMOVE: span:nth-of-type(6) + strong
 REMOVE: span:nth-of-type(6) + strong
 REMOVE: span:nth-of-type(4) + em
 INSERT: span:nth-of-type(4) + i
 REMOVE: i:nth-of-type(3) + b
-INSERT: i:nth-of-type(3) > :is(::text("tag "), ::text("2"))
 UPDATE: i:nth-of-type(1)::text@4 "" => "0"
 UPDATE: i:nth-of-type(2)::text@4 "" => "1"
 UPDATE: i:nth-of-type(3)::text@4 "" => "2"
@@ -262,17 +255,14 @@ document.querySelector(`#${id}`).click();
 INSERT: #rename + em
 INSERT: em:nth-of-type(1) + b
 REMOVE: b:nth-of-type(1) + i
-INSERT: b:nth-of-type(1) > :is(::text("tag "), ::text("0"))
 INSERT: span:nth-of-type(2) + em
 INSERT: em:nth-of-type(2) + b
 REMOVE: b:nth-of-type(2) + i
-INSERT: b:nth-of-type(2) > :is(::text("tag "), ::text("1"))
 INSERT: span:nth-of-type(6) + strong
 INSERT: strong:nth-of-type(1) + strong
 INSERT: span:nth-of-type(4) + em
 INSERT: em:nth-of-type(3) + b
 REMOVE: b:nth-of-type(3) + i
-INSERT: b:nth-of-type(3) > :is(::text("tag "), ::text("2"))
 UPDATE: em:nth-of-type(1)::text@3 "" => "0"
 UPDATE: b:nth-of-type(1)::text@4 "" => "0"
 UPDATE: em:nth-of-type(2)::text@3 "" => "1"

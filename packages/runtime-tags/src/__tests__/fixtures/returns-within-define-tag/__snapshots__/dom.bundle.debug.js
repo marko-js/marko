@@ -3,13 +3,13 @@ const $template = "<!><button class=once> </button><button class=twice> </button
 const $walks = "0&b D 0&l D l";
 const $Twice_content__value__OR__call = /*@__PURE__*/ _or(4, ($scope) => _return($scope, $_return2($scope)));
 const $Twice_content__call = /*@__PURE__*/ _let("call/3", $Twice_content__value__OR__call);
-const $Twice_content__setup = /*@__PURE__*/ _child_setup(($scope) => $Twice_content__call($scope, 2));
+const $Twice_content__setup = ($scope) => $Twice_content__call($scope, 2);
 const $Twice_content__value = /*@__PURE__*/ _const("value", $Twice_content__value__OR__call);
 const $Twice_content__$params = ($scope, $params3) => $Twice_content__$temp($scope, $params3[0]);
 const $Twice_content__$temp = ($scope, $temp2) => $Twice_content__value($scope, $temp2.value);
 const $Once_content__value__OR__call = /*@__PURE__*/ _or(4, ($scope) => _return($scope, $_return($scope)));
 const $Once_content__call = /*@__PURE__*/ _let("call/3", $Once_content__value__OR__call);
-const $Once_content__setup = /*@__PURE__*/ _child_setup(($scope) => $Once_content__call($scope, 1));
+const $Once_content__setup = ($scope) => $Once_content__call($scope, 1);
 const $Once_content__value = /*@__PURE__*/ _const("value", $Once_content__value__OR__call);
 const $Once_content__$params = ($scope, $params2) => $Once_content__$temp($scope, $params2[0]);
 const $Once_content__$temp = ($scope, $temp) => $Once_content__value($scope, $temp.value);
@@ -22,10 +22,10 @@ const $clickTwiceCount = /*@__PURE__*/ _let("clickTwiceCount/10", ($scope) => {
 	_text($scope["#text/7"], $scope.clickTwiceCount);
 });
 function $setup($scope) {
+	$Once_content__setup($scope["#childScope/0"]);
+	$Twice_content__setup($scope["#childScope/4"]);
 	_var($scope, "#childScope/0", $onClickOnce2);
-	$Once_content__setup._($scope["#childScope/0"], $scope);
 	_var($scope, "#childScope/4", $onClickTwice2);
-	$Twice_content__setup._($scope["#childScope/4"], $scope);
 	$clickOnceCount($scope, 0);
 	$clickTwiceCount($scope, 0);
 }

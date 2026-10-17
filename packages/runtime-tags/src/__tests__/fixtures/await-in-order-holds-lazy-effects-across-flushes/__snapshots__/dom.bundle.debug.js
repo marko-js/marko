@@ -45,14 +45,10 @@ let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.mark
 let $load_Child_tag_input_id = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_id.mjs"));
 let $load_Reordered_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:reordered.marko.setup.mjs"));
 let $load_Reordered_tag_input_id = /*@__PURE__*/ _load_signal(($_) => import("./v:reordered.marko.input_id.mjs"));
-const $await_content3__setup = ($scope) => {
-	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-};
+const $await_content3__setup = ($scope) => $load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 const $await_content3__v = ($scope, v) => $load_Child_tag_input_id($scope["#childScope/1"], v);
 const $await_content3__$params = ($scope, $params4) => $await_content3__v($scope, $params4[0]);
-const $await_content2__setup = ($scope) => {
-	$load_Reordered_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-};
+const $await_content2__setup = ($scope) => $load_Reordered_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 const $await_content2__v = ($scope, v) => $load_Reordered_tag_input_id($scope["#childScope/1"], v);
 const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
 const $placeholder_content = _content("__tests__/template.marko_3*content", "loading");
@@ -62,9 +58,7 @@ const $try_content__setup = ($scope) => {
 	$await_content2($scope);
 	$try_content__await_promise($scope, resolveAfter("c", 2));
 };
-const $await_content__setup = ($scope) => {
-	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-};
+const $await_content__setup = ($scope) => $load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 const $await_content__v = ($scope, v) => $load_Child_tag_input_id($scope["#childScope/1"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!>", "b%/&", $await_content__setup);

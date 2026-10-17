@@ -9,7 +9,6 @@
 ## Change
 ```
 INSERT: button
-UPDATE: button::text " " => "0"
 ```
 
 # Update

@@ -149,6 +149,7 @@ export const compat = {
         );
       }
 
+      renderer[RendererProp.LocalClosures]?.(branch);
       renderer[RendererProp.Params]?.(
         branch,
         (renderer as any)._ ? args[0] : args,

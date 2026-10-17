@@ -93,8 +93,8 @@ export function _await_promise(
       (isPromise(promise) && findTryWithPlaceholder(scope)) ||
       awaitBranch;
     if (!tryBranch) {
-      // `_await_content` creates the branch, or resume adopts a streamed one
-      // as its `@placeholder` completes; either runs the deferred latest value.
+      // Resume adopts the streamed branch as its `@placeholder` completes, which
+      // runs the deferred latest value.
       const deferred = (scope[promiseAccessor] = (_?: Scope) =>
         deferred === scope[promiseAccessor] && awaitPromise(scope, promise));
       const awaitCounter =
@@ -237,7 +237,6 @@ export function _await_content(
 ) {
   if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
-  const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const renderer = _content("", template, walks, setup)();
   return (scope: Scope) => {
     const pendingScopes = collectScopes(
@@ -251,10 +250,6 @@ export function _await_content(
     );
     (scope[branchAccessor] as BranchScope)[AccessorProp.PendingScopes] =
       pendingScopes;
-
-    if (typeof scope[promiseAccessor] === "function") {
-      (scope[promiseAccessor] as () => void)();
-    }
   };
 }
 
@@ -396,15 +391,17 @@ export function _try(
 ) {
   if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
-  const renderer = _content("", template, walks, setup)();
+  const renderer = _content("", template, walks)();
 
   // `@catch` and `@placeholder` are static, so this runs once, in setup.
   return (scope: Scope) => {
-    setBranch(scope, nodeAccessor as string, renderer, createAndSetupBranch);
+    setBranch(scope, nodeAccessor as string, renderer, createBranch);
     const branch = scope[branchAccessor];
     branch[AccessorProp.BranchAccessor] = nodeAccessor;
     branch[AccessorProp.CatchContent] = catchContent;
     branch[AccessorProp.PlaceholderContent] = placeholderContent || undefined;
+    // Queued so a throw in the body's setup reaches this `<try>`.
+    if (setup) queueRender(branch, setup, -1);
   };
 }
 
@@ -432,13 +429,18 @@ export function renderCatch(scope: Scope, error: unknown) {
       owner,
       tryWithCatch[AccessorProp.BranchAccessor],
       catchContent,
-      createAndSetupBranch,
+      createBranch,
     );
-    catchContent[RendererProp.Params]?.(
+    // Queued so a throw in the catch content reaches an outer `<try>`.
+    queueRender(
       owner[
         AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
       ],
-      [error],
+      (branch) => {
+        setupBranch(catchContent, branch);
+        catchContent[RendererProp.Params]?.(branch, [error]);
+      },
+      -1,
     );
   }
 }
@@ -627,6 +629,68 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
     if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
     const childScopeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
     const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
+    // Built whole before it is inserted: the variable is bound before setup,
+    // whose `<return>` calls it.
+    const createTagBranch = (
+      $global: Scope[typeof AccessorProp.Global],
+      tagNameOrRenderer: Renderer | string,
+      scope: Scope,
+      parentNode: ParentNode,
+    ) => {
+      if (MARKO_DEBUG && typeof tagNameOrRenderer === "string") {
+        assertValidTagName(tagNameOrRenderer);
+      }
+
+      const branch = createBranch(
+        $global,
+        tagNameOrRenderer,
+        scope,
+        parentNode,
+      );
+      if (typeof tagNameOrRenderer === "string") {
+        branch[MARKO_DEBUG ? `#${tagNameOrRenderer.toLowerCase()}/0` : "a"] =
+          branch[AccessorProp.StartNode] =
+          branch[AccessorProp.EndNode] =
+            document.createElementNS(
+              tagNameOrRenderer === "svg"
+                ? "http://www.w3.org/2000/svg"
+                : tagNameOrRenderer === "math"
+                  ? "http://www.w3.org/1998/Math/MathML"
+                  : (parentNode as Element).namespaceURI,
+              tagNameOrRenderer,
+            );
+      }
+
+      if (getTagVar) {
+        branch[AccessorProp.TagVariable] = (value: unknown) =>
+          getTagVar()(scope, value);
+        bindTagVar!(
+          scope,
+          branch,
+          scope[scopeOffsetAccessor as Accessor],
+          tagNameOrRenderer,
+        );
+      }
+
+      if (typeof tagNameOrRenderer !== "string") {
+        setupBranch(tagNameOrRenderer, branch);
+      } else if (getContent) {
+        const content = getContent(scope);
+        const elementAccessor = MARKO_DEBUG
+          ? `#${tagNameOrRenderer.toLowerCase()}/0`
+          : "a";
+        setBranch(branch, elementAccessor, content, createAndSetupBranch);
+        if (content[RendererProp.Accessor]) {
+          subscribeToScopeSet(
+            content[RendererProp.Owner]!,
+            content[RendererProp.Accessor],
+            branch[AccessorPrefix.BranchScopes + elementAccessor],
+          );
+        }
+      }
+
+      return branch;
+    };
     return (scope, newRenderer, getInput?: () => any) => {
       const normalizedRenderer =
         normalizeDynamicRenderer<Renderer>(newRenderer);
@@ -639,63 +703,28 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
             (getContent ? undefined : 0)) ||
         (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
       ) {
-        // A falsy name renders the body in its place.
-        const renderer =
-          normalizedRenderer || (getContent ? getContent(scope) : undefined);
-        setBranch(
-          scope,
-          nodeAccessor as string,
-          renderer,
-          createBranchWithTagNameOrRenderer,
-        );
-
-        if (getTagVar) {
-          if (normalizedRenderer) {
-            scope[childScopeAccessor][AccessorProp.TagVariable] = (
-              value: unknown,
-            ) => getTagVar()(scope, value);
-            bindTagVar!(
-              scope,
-              scope[childScopeAccessor],
-              scope[scopeOffsetAccessor as Accessor],
-              normalizedRenderer,
-            );
-          } else {
+        let renderer: Renderer | string | undefined = normalizedRenderer;
+        if (renderer) {
+          setBranch(scope, nodeAccessor as string, renderer, createTagBranch);
+        } else {
+          if (getTagVar) {
             // A falsy name has no tag, so no variable, even where its body renders.
             getTagVar()(scope);
           }
+          // A falsy name renders the body in its place.
+          setBranch(
+            scope,
+            nodeAccessor as string,
+            (renderer = getContent ? getContent(scope) : undefined),
+            createAndSetupBranch,
+          );
         }
-
-        if (typeof renderer === "string") {
-          if (getContent) {
-            const content = getContent(scope);
-            setBranch(
-              scope[childScopeAccessor],
-              MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
-              content,
-              createAndSetupBranch,
-            );
-            if (content[RendererProp.Accessor]) {
-              subscribeToScopeSet(
-                content[RendererProp.Owner]!,
-                content[RendererProp.Accessor],
-                scope[childScopeAccessor][
-                  AccessorPrefix.BranchScopes +
-                    (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")
-                ],
-              );
-            }
-          }
-        } else if (renderer) {
-          // Set up once the tag variable placed the branch's renders.
-          setupBranch(renderer, scope[childScopeAccessor]);
-          if (renderer[RendererProp.Accessor]) {
-            subscribeToScopeSet(
-              renderer[RendererProp.Owner]!,
-              renderer[RendererProp.Accessor],
-              scope[childScopeAccessor],
-            );
-          }
+        if (typeof renderer !== "string" && renderer?.[RendererProp.Accessor]) {
+          subscribeToScopeSet(
+            renderer[RendererProp.Owner]!,
+            renderer[RendererProp.Accessor],
+            scope[childScopeAccessor],
+          );
         }
       }
 
@@ -875,7 +904,7 @@ const loop = /*@__PURE__*/ withBranches(
       return (scope: Scope, value: T) => {
         const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
         const oldScopes = toArray<BranchScope>(scope[scopesAccessor]);
-        const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
+        const newScopes: BranchScope[] = [];
         scope[keyedScopesAccessor] = null;
         const oldLen = oldScopes.length;
         const parentNode = (
@@ -915,18 +944,22 @@ const loop = /*@__PURE__*/ withBranches(
           if (branch) {
             hasPotentialMoves = true;
             oldScopesByKey?.delete(key);
+            branch[AccessorProp.LoopKey] = key;
           } else {
-            branch = createAndSetupBranch(
+            // Keyed before its setup, which can read the key.
+            (branch = createBranch(
               scope[AccessorProp.Global],
               renderer,
               scope,
               parentNode,
-            );
+            ))[AccessorProp.LoopKey] = key;
+            setupBranch(renderer, branch);
           }
-          branch[AccessorProp.LoopKey] = key;
           newScopes.push(branch);
           params?.(branch, args);
         });
+        // Owned once every row rendered: a row that throws leaves the old rows owned.
+        scope[scopesAccessor] = newScopes;
 
         const newLen = newScopes.length;
         const hasSiblings = referenceNode !== parentNode;
@@ -1108,39 +1141,6 @@ function reorderKeyed(
 
     afterReference = newScopes[start + i][AccessorProp.StartNode];
   }
-}
-
-function createBranchWithTagNameOrRenderer(
-  $global: Scope[typeof AccessorProp.Global],
-  tagNameOrRenderer: Renderer | string,
-  parentScope: Scope,
-  parentNode: ParentNode,
-) {
-  if (MARKO_DEBUG && typeof tagNameOrRenderer === "string") {
-    assertValidTagName(tagNameOrRenderer);
-  }
-
-  const branch = createBranch(
-    $global,
-    tagNameOrRenderer,
-    parentScope,
-    parentNode,
-  );
-  if (typeof tagNameOrRenderer === "string") {
-    branch[MARKO_DEBUG ? `#${tagNameOrRenderer.toLowerCase()}/0` : "a"] =
-      branch[AccessorProp.StartNode] =
-      branch[AccessorProp.EndNode] =
-        document.createElementNS(
-          tagNameOrRenderer === "svg"
-            ? "http://www.w3.org/2000/svg"
-            : tagNameOrRenderer === "math"
-              ? "http://www.w3.org/1998/Math/MathML"
-              : (parentNode as Element).namespaceURI,
-          tagNameOrRenderer,
-        );
-  }
-
-  return branch;
 }
 
 function bySecondArg(_item: unknown, index: unknown) {

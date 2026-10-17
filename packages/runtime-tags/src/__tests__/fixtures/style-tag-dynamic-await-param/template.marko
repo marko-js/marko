@@ -1,0 +1,16 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<if=input.show>
+  <await|color|=resolveAfter(input.color, 1)>
+    <style>
+      .later { color: ${color}; }
+    </style>
+    <div class="later"/>
+  </await>
+  <await|color|=input.color>
+    <style>
+      .now { color: ${color}; }
+    </style>
+    <div class="now"/>
+  </await>
+</if>

@@ -14,9 +14,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list/index.marko", $t
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $setup = ($_) => {};
-const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span> </span>", "D "), { x($scope) {
-	_text($scope["#text/0"], $scope.x);
-} });
+const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span> </span>", "D "), { x: ($scope) => _text($scope["#text/0"], $scope.x) });
 const $input_items = /*@__PURE__*/ _const("input_items", ($scope) => {
 	let $row;
 	forOf($scope.input_items, (item) => {

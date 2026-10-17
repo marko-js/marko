@@ -7,9 +7,7 @@ const $setup = $setup__script$1;
 
 // tags/wrapper.marko
 const $template = "<!><!><!>";
-const $if_content__setup = ($scope) => {
-	$setup($scope.a);
-};
+const $if_content__setup = ($scope) => $setup($scope.a);
 const $if$1 = /*@__PURE__*/ _if(0, $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b"), $if_content__setup);
 const $show$1 = ($scope, show) => $if$1($scope, show ? 0 : 1);
 

@@ -10,9 +10,7 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", "<span> </span>", "D "), { 1($scope) {
-	_text($scope.a, JSON.stringify($scope.b));
-} });
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", "<span> </span>", "D "), { 1: ($scope) => _text($scope.a, JSON.stringify($scope.b)) });
 _resumed.a0 = $item_content;
 const $await_content__setup = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$picked($scope._, $scope.c);

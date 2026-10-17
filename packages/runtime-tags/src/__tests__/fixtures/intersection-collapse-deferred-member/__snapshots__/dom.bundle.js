@@ -41,16 +41,12 @@ const $input_inc_pending = /*@__PURE__*/ _const(7, ($scope) => {
 
 // template.marko
 const $flag = /*@__PURE__*/ _const(6);
-const $inc_status__OR__inc_pending = ($scope) => {
-	$flag($scope, $scope.e + ($scope.f ? "?" : ""));
-};
-const $inc_status__OR__flag = ($scope) => {
-	_attr_class($scope.b, [
-		"flag",
-		$scope.g,
-		$scope.e
-	]);
-};
+const $inc_status__OR__inc_pending = ($scope) => $flag($scope, $scope.e + ($scope.f ? "?" : ""));
+const $inc_status__OR__flag = ($scope) => _attr_class($scope.b, [
+	"flag",
+	$scope.g,
+	$scope.e
+]);
 const $inc = /*@__PURE__*/ _let(3, ($scope) => {
 	$input_inc($scope.c, $scope.d);
 	$inc_status($scope, $scope.d?.status);

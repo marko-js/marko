@@ -49,7 +49,6 @@ UPDATE: button:nth-of-type(1)::text@7 "0" => "1"
 ```
 INSERT: .swap + .n1
 UPDATE: .n1::text@0 "" => "placeholder 1"
-UPDATE: .n1::text@14 "" => "0"
 ```
 
 # Update

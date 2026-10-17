@@ -4,9 +4,7 @@ const $walks = "b%b%c";
 let $load_Thrower_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:thrower.marko.setup.mjs"));
 const $await_content2__d = ($scope, d) => _text($scope["#text/0"], d);
 const $await_content2__$params = ($scope, $params4) => $await_content2__d($scope, $params4[0]);
-const $await_content__setup = ($scope) => {
-	$load_Thrower_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-};
+const $await_content__setup = ($scope) => $load_Thrower_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__$params);

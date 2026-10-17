@@ -127,7 +127,6 @@ UPDATE: ::text@96 " " => "53"
 ```
 INSERT: ::text@96 + button
 UPDATE: button::text@0 "" => "ERROR!"
-UPDATE: button::text@7 "" => "0"
 ```
 
 # Update

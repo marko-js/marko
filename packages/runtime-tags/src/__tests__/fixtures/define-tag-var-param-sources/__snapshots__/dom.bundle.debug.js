@@ -14,9 +14,9 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
+	$Sum_content__b($scope["#childScope/2"], 1);
 	_var($scope, "#childScope/0", $x);
 	_var($scope, "#childScope/2", $y);
-	$Sum_content__b($scope["#childScope/2"], 1);
 	$n($scope, 0);
 	$setup__script($scope);
 }

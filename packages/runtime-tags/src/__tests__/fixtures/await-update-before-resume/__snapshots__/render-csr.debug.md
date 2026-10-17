@@ -55,6 +55,6 @@ REMOVE: #inside + ::text("loading...")
 ```
 ## Console
 ```
-LOG "effect ran value=1"
 LOG "setup effect ran"
+LOG "effect ran value=1"
 ```

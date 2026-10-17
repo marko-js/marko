@@ -33,7 +33,7 @@ const $list = ($scope, list) => $for($scope, [list]);
 const $clear__script = _script("__tests__/template.marko_0_clear#6", ($scope) => _on($scope["#button/2"], "click", $scope.clear));
 const $clear = /*@__PURE__*/ _const("clear", $clear__script);
 function $setup($scope) {
-	_var($scope, "#childScope/0", $store);
 	$input_value($scope["#childScope/0"], ["Learn Marko", "Make a Website"]);
+	_var($scope, "#childScope/0", $store);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

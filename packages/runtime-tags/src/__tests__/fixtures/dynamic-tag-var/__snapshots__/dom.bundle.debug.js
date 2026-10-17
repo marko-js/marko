@@ -11,8 +11,8 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!><!><!>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&b1b1b1c`)("");
 const $data = ($scope, data1) => {};
 function $setup($scope) {
-	_var($scope, "#childScope/0", $data);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $data);
 }
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/6");

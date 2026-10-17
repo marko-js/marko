@@ -37,12 +37,8 @@ const $tab_content__setup = ($scope) => {
 	$tab_content__setup__script($scope);
 };
 const $tab_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button class=inc><!><!>: <!></button>", " D%b%c%", $tab_content__setup), {
-	row_0($scope) {
-		_text($scope["#text/1"], $scope.row_0);
-	},
-	col($scope) {
-		_text($scope["#text/2"], $scope.col);
-	}
+	row_0: ($scope) => _text($scope["#text/1"], $scope.row_0),
+	col: ($scope) => _text($scope["#text/2"], $scope.col)
 });
 _resumed["__tests__/template.marko_1*content"] = $tab_content;
 function $setup($scope) {

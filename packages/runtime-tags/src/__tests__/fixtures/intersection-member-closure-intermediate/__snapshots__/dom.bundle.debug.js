@@ -3,9 +3,7 @@ const $template = "<p> </p><!><button class=same-length></button><button class=t
 const $walks = "D l%b b b";
 const $if_content__list_length = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.list_length));
 const $if_content__setup = $if_content__list_length;
-const $list__OR__show = ($scope) => {
-	_text($scope["#text/0"], $scope.show ? $scope.list.join() : "none");
-};
+const $list__OR__show = ($scope) => _text($scope["#text/0"], $scope.show ? $scope.list.join() : "none");
 const $list = /*@__PURE__*/ _let("list/4", ($scope) => {
 	$list_length($scope, $scope.list?.length);
 	$list__OR__show($scope);

@@ -6,12 +6,13 @@ const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)($MyButton_content__walks);
 const $MyButton_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	_el_read($scope._["#div/0"]).textContent += `[onClick(${$scope.input_message})]`;
 }));
-const $MyButton_content__setup = /*@__PURE__*/ _child_setup($MyButton_content__setup__script);
+const $MyButton_content__setup = $MyButton_content__setup__script;
 const $MyButton_content__tag_input_message = /*@__PURE__*/ _const("input_message");
 const $MyButton_content__$params = ($scope, $params2) => $MyButton_content__input($scope, $params2[0]);
 const $MyButton_content__input = ($scope, input) => $MyButton_content__tag_input_message($scope, input.message);
 function $setup($scope) {
-	$MyButton_content__setup._($scope["#childScope/1"], $scope);
+	$scope["#childScope/1"]._ = $scope;
+	$MyButton_content__setup($scope["#childScope/1"]);
 	$MyButton_content__tag_input_message($scope["#childScope/1"], "hello");
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

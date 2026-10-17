@@ -1,0 +1,7 @@
+import Swatch from "./tags/swatch.marko";
+
+<for|color| of=input.colors>
+  <swatch color=color/>
+</for>
+
+<${input.show ? Swatch : null} color=input.color/>

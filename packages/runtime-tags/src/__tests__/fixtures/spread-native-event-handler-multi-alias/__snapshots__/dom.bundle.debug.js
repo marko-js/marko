@@ -8,7 +8,7 @@ const $MyButton_content__setup__script = _script("__tests__/template.marko_1", (
 	document.getElementById("el").textContent += "[onClick(child)]";
 	$scope.input_onClick();
 }));
-const $MyButton_content__setup = /*@__PURE__*/ _child_setup($MyButton_content__setup__script);
+const $MyButton_content__setup = $MyButton_content__setup__script;
 const $MyButton_content__input__script = _script("__tests__/template.marko_1_input#2", ($scope) => _attrs_script($scope, "#button/0"));
 const $MyButton_content__input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_partial_content($scope, "#button/0", $scope.input, { "on-click": 1 });
@@ -18,7 +18,7 @@ const $MyButton_content__input = /*@__PURE__*/ _const("input", ($scope) => {
 const $MyButton_content__$params = ($scope, $params2) => $MyButton_content__input($scope, $params2[0]);
 const $MyButton_content__input_onClick = /*@__PURE__*/ _const("input_onClick");
 function $setup($scope) {
-	$MyButton_content__setup._($scope["#childScope/0"], $scope);
+	$MyButton_content__setup($scope["#childScope/0"]);
 	$MyButton_content__input($scope["#childScope/0"], {
 		"on-click": $onclick,
 		onClick: $onClick,

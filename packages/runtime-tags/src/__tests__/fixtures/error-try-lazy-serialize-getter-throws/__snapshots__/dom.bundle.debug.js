@@ -20,9 +20,7 @@ let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.mark
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__$params);
-const $try_content__setup = ($scope) => {
-	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-};
+const $try_content__setup = ($scope) => $load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%/&", $try_content__setup, 0, $catch_content);
 function $setup($scope) {
 	$try($scope);

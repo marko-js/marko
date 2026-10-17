@@ -13,7 +13,7 @@ const $ChildB_content__count = /*@__PURE__*/ _closure_get("count/8", ($scope) =>
 	$ChildB_content__count__OR__foo($scope);
 	$ChildB_content__count__OR__$bar($scope);
 }, 0, "__tests__/template.marko_2_count#0:7/subscribe");
-const $ChildB_content__setup = /*@__PURE__*/ _child_setup($ChildB_content__count);
+const $ChildB_content__setup = $ChildB_content__count;
 const $ChildB_content__$bar = /*@__PURE__*/ _const("$bar2", $ChildB_content__count__OR__$bar);
 const $ChildB_content__foo = /*@__PURE__*/ _const("foo", ($scope) => {
 	_text($scope["#text/2"], typeof $scope.foo);
@@ -33,7 +33,7 @@ const $ChildA_content__count = /*@__PURE__*/ _closure_get("count/8", ($scope) =>
 	$ChildA_content__count__OR__$foo($scope);
 	$ChildA_content__count__OR__$bar($scope);
 }, 0, "__tests__/template.marko_1_count#0:7/subscribe");
-const $ChildA_content__setup = /*@__PURE__*/ _child_setup($ChildA_content__count);
+const $ChildA_content__setup = $ChildA_content__count;
 const $ChildA_content__$bar = /*@__PURE__*/ _const("$bar", $ChildA_content__count__OR__$bar);
 const $ChildA_content__foo = /*@__PURE__*/ _const("foo", ($scope) => {
 	_text($scope["#text/2"], typeof $scope.foo);
@@ -51,22 +51,28 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$ChildA_content__setup._($scope["#childScope/0"], $scope);
+	$scope["#childScope/0"]._ = $scope;
+	$ChildA_content__setup($scope["#childScope/0"]);
 	$ChildA_content__foo($scope["#childScope/0"], { bar: 0 });
 	$ChildA_content__id($scope["#childScope/0"], "a");
-	$ChildA_content__setup._($scope["#childScope/1"], $scope);
+	$scope["#childScope/1"]._ = $scope;
+	$ChildA_content__setup($scope["#childScope/1"]);
 	$ChildA_content__foo($scope["#childScope/1"], {});
 	$ChildA_content__id($scope["#childScope/1"], "b");
-	$ChildA_content__setup._($scope["#childScope/2"], $scope);
+	$scope["#childScope/2"]._ = $scope;
+	$ChildA_content__setup($scope["#childScope/2"]);
 	$ChildA_content__id($scope["#childScope/2"], "c");
 	$ChildA_content__foo($scope["#childScope/2"]);
-	$ChildB_content__setup._($scope["#childScope/3"], $scope);
+	$scope["#childScope/3"]._ = $scope;
+	$ChildB_content__setup($scope["#childScope/3"]);
 	$ChildB_content__foo($scope["#childScope/3"], { bar: 0 });
 	$ChildB_content__input_id($scope["#childScope/3"], "d");
-	$ChildB_content__setup._($scope["#childScope/4"], $scope);
+	$scope["#childScope/4"]._ = $scope;
+	$ChildB_content__setup($scope["#childScope/4"]);
 	$ChildB_content__foo($scope["#childScope/4"], {});
 	$ChildB_content__input_id($scope["#childScope/4"], "e");
-	$ChildB_content__setup._($scope["#childScope/5"], $scope);
+	$scope["#childScope/5"]._ = $scope;
+	$ChildB_content__setup($scope["#childScope/5"]);
 	$ChildB_content__input_id($scope["#childScope/5"], "f");
 	$ChildB_content__foo($scope["#childScope/5"]);
 	$count($scope, 0);

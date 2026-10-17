@@ -29,12 +29,12 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$sel($scope, 1 - $scope.sel);
 }));
 function $setup($scope) {
-	_var($scope, "#childScope/0", $a);
 	$setup$1($scope["#childScope/0"]);
 	$input_n($scope["#childScope/0"], 1);
-	_var($scope, "#childScope/2", $b);
 	$setup$1($scope["#childScope/2"]);
 	$input_n($scope["#childScope/2"], 2);
+	_var($scope, "#childScope/0", $a);
+	_var($scope, "#childScope/2", $b);
 	$sel($scope, 0);
 	$setup__script($scope);
 }

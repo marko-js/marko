@@ -1,0 +1,10 @@
+<let/count=1>
+<button onClick() { count++ }>more</button>
+<list>
+  <for|n| until=count>
+    <@item>
+      <let/x=10/>
+      <return=n * x/>
+    </@item>
+  </for>
+</list>

@@ -13,8 +13,8 @@ const $walks = "b%b D l";
 const $if_content__input_depth = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_depth($scope["#childScope/0"], $scope._.input_depth - 1));
 const $if_content__setup = ($scope) => {
 	$if_content__input_depth._($scope);
-	_var($scope, "#childScope/0", $if_content__child);
 	$setup($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $if_content__child);
 };
 const $if_content__child = _var_resume("__tests__/tags/rec.marko_1_child#3/var", ($scope, child) => _text($scope["#text/2"], child));
 const $n = /*@__PURE__*/ _let("n/6", ($scope) => {

@@ -109,13 +109,13 @@ function insertLoaded(
   // while its placeholder shows, and back once it is dismissed.
   const parent = (_?: never) => marker.parentNode as Element,
     values = branch[AccessorProp.Load] as LoadValues,
-    // Clone in the run that sets up: nested scopes take the generation of
-    // the run that creates them, and a `<let>` seeded by setup in a later
-    // run is dropped as stale, taking the nested tag's `<return>` with it.
-    clone = (_?: never) => {
+    // Clone and set up in one run: a `<let>` that setup writes into a scope
+    // cloned in an earlier run is dropped as stale, and its `<return>` with it.
+    create = (_?: never) => {
       syncGen(branch);
       renderer[RendererProp.Clone]!(branch, parent().namespaceURI!);
       branch[AccessorProp.Load] = 0;
+      setupBranch(renderer, branch);
     },
     insert = (_?: never) => {
       insertBranchBefore(branch, parent(), marker);
@@ -136,8 +136,7 @@ function insertLoaded(
           (apply._ = mod._) &&
           !--remaining &&
           queueAsyncRender(branch, (branch) => {
-            clone();
-            renderer[RendererProp.Setup]?.(branch);
+            create();
             values.forEach(([value, apply]) => apply(branch, value));
             insert();
           }),
@@ -147,8 +146,7 @@ function insertLoaded(
       ),
     );
   } else {
-    clone();
-    setupBranch(renderer, branch);
+    create();
     insert();
   }
 }

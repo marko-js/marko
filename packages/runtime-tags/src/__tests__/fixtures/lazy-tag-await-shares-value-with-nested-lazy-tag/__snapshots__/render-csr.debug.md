@@ -12,7 +12,6 @@
 ```
 INSERT: .parent
 UPDATE: .parent::text@0 "" => "parent"
-UPDATE: .parent::text@7 "" => "0"
 ```
 
 # Update

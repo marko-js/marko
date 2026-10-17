@@ -136,8 +136,7 @@ export function _style_shell(scope: Scope, nodeAccessor: Accessor) {
   const id = _id(scope);
   _attr_nonce(scope, nodeAccessor);
   _attr(element, "class", id);
-  // A declaration a closure rendered first stays, its text closing the block.
-  _text_content(element, "." + id + "~*{" + (element.textContent || "}"));
+  _text_content(element, "." + id + "~*{}");
 }
 
 export function _style_rule_item(

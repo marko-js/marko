@@ -64,5 +64,4 @@
 ## Change
 ```
 INSERT: script:nth-of-type(3) + script
-UPDATE: script:nth-of-type(4)[nonce] null => "default-nonce"
 ```

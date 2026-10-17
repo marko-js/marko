@@ -30,8 +30,8 @@ const $api_getter = /*@__PURE__*/ _hoist("api");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => $api_getter($scope)().setHtml("works"));
 function $setup($scope) {
 	$input($scope["#childScope/0"], { action: $action($scope) });
-	_var($scope, "#childScope/1", $api);
 	$setup$1($scope["#childScope/1"]);
+	_var($scope, "#childScope/1", $api);
 	$setup__script($scope);
 }
 const $api = /*@__PURE__*/ _const("api", ($scope) => _assert_hoist($scope.api));

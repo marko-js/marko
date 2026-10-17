@@ -6,12 +6,8 @@ const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", "<p><!>|<!></p>", "D%c%"), {
-	2($scope) {
-		_text($scope.a, $scope.c);
-	},
-	3($scope) {
-		_text($scope.b, JSON.stringify($scope.d));
-	}
+	2: ($scope) => _text($scope.a, $scope.c),
+	3: ($scope) => _text($scope.b, JSON.stringify($scope.d))
 });
 const $items = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;

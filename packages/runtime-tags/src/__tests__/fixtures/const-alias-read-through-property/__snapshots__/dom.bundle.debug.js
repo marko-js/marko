@@ -5,9 +5,7 @@ const $obj = /*@__PURE__*/ _let("obj/6", ($scope) => {
 	$p($scope, $scope.obj);
 	$obj_a($scope, $scope.obj?.a);
 });
-const $p = ($scope) => {
-	_text($scope["#text/1"], JSON.stringify($scope.obj));
-};
+const $p = ($scope) => _text($scope["#text/1"], JSON.stringify($scope.obj));
 const $obj_a__script = _script("__tests__/template.marko_0_obj_a#7", ($scope) => _on($scope["#button/3"], "click", function() {
 	$obj($scope, { a: $scope.obj_a + 1 });
 }));

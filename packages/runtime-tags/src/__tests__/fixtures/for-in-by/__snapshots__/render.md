@@ -34,5 +34,4 @@
 ```
 REMOVE: div > p
 INSERT: div > p:nth-of-type(1) + p
-UPDATE: div > p:nth-of-type(2)::text@0 "" => "c"
 ```

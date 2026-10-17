@@ -93,17 +93,13 @@ const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("_
 	_text($scope["#text/1"], $scope.i);
 } });
 _resumed["__tests__/template.marko_3*content"] = $item_content2;
-const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "<em> </em>", "D "), { n($scope) {
-	_text($scope["#text/0"], $scope.n);
-} });
+const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "<em> </em>", "D "), { n: ($scope) => _text($scope["#text/0"], $scope.n) });
 _resumed["__tests__/template.marko_2*content"] = $cell_content;
 const $item_content__items_0__OR__item = /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/1"], $scope.item === $scope._.items_0));
 const $item_content__items_ = /*@__PURE__*/ _closure_get("items_0/5", $item_content__items_0__OR__item);
 const $item_content__setup = $item_content__items_;
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span><!>:<!></span>", "D%c%", $item_content__setup), {
-	item_text($scope) {
-		_text($scope["#text/0"], $scope.item_text);
-	},
+	item_text: ($scope) => _text($scope["#text/0"], $scope.item_text),
 	item: $item_content__items_0__OR__item
 });
 _resumed["__tests__/template.marko_1*content"] = $item_content;

@@ -14,12 +14,8 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 const $template = /*@__PURE__*/ ((_w0) => `<button id=rename>rename</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p><!>|<!></p>", "D%c%"), {
-	item_text($scope) {
-		_text($scope["#text/0"], $scope.item_text);
-	},
-	item($scope) {
-		_text($scope["#text/1"], JSON.stringify($scope.item));
-	}
+	item_text: ($scope) => _text($scope["#text/0"], $scope.item_text),
+	item: ($scope) => _text($scope["#text/1"], JSON.stringify($scope.item))
 });
 const $items = /*@__PURE__*/ _let("items/2", ($scope) => {
 	let $item;

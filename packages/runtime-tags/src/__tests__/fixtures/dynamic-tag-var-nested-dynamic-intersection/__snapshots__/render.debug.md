@@ -76,7 +76,6 @@ document.querySelector(selector).click();
 ## Change
 ```
 INSERT: span
-UPDATE: span::text " " => "0"
 UPDATE: .inc::text "1:undefined" => "1:0"
 ```
 

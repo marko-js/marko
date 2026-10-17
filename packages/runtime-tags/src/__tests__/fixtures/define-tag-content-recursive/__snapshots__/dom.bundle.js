@@ -12,7 +12,7 @@ const $Tree_content3 = _content("a2", "<!>: <!><!>", "%c%", $Tree_content3__setu
 const $if_content2__input_depth = /*@__PURE__*/ _closure_get(8, ($scope) => $Tree_content2__input_depth($scope.a, $scope._._.f - 1), ($scope) => $scope._._, "a3");
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_depth($scope);
-	$Tree_content2__setup._($scope.a, $scope._._._);
+	$Tree_content2__setup($scope.a);
 	$Tree_content2__tag_input_content($scope.a, $Tree_content3($scope));
 };
 const $if_content__if = /*@__PURE__*/ _if(1, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tree_content2__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tree_content2__walks), $if_content2__setup);
@@ -28,10 +28,10 @@ const $Tree_content2__open = /*@__PURE__*/ _let(7, ($scope) => $Tree_content2__i
 const $Tree_content2__setup__script = _script("a5", ($scope) => _on($scope.a, "click", function() {
 	$Tree_content2__open($scope, !$scope.h);
 }));
-const $Tree_content2__setup = /*@__PURE__*/ _child_setup(($scope) => {
+const $Tree_content2__setup = ($scope) => {
 	$Tree_content2__open($scope, false);
 	$Tree_content2__setup__script($scope);
-});
+};
 const $Tree_content2__input_depth__closure = /*@__PURE__*/ _closure($if_content2__input_depth, $Tree_content3__input_depth);
 const $Tree_content2__input_depth = /*@__PURE__*/ _const(5, ($scope) => {
 	_text($scope.b, $scope.f);

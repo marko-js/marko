@@ -41,9 +41,9 @@ const $cart = ($scope, cart) => $hasHydrate($scope, cart !== null);
 const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!>", "b%");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
 function $setup($scope) {
-	_var($scope, "#childScope/0", $pattern2);
 	$setup$1($scope["#childScope/0"]);
 	$await_content($scope);
+	_var($scope, "#childScope/0", $pattern2);
 	$await_promise($scope, resolveAfter([
 		1,
 		2,

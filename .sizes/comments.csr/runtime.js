@@ -1,4 +1,4 @@
-// size: 5860 (min) 2578 (brotli)
+// size: 5890 (min) 2585 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
@@ -103,7 +103,7 @@ let _for_of_unkeyed = /*@__PURE__*/ /* @__PURE__ */ withBranches(
     return (scope, value) => {
       let referenceNode = scope[nodeAccessor],
         oldScopes = toArray(scope[scopesAccessor]),
-        newScopes = (scope[scopesAccessor] = []);
+        newScopes = [];
       scope[keyedScopesAccessor] = null;
       let oldLen = oldScopes.length,
         parentNode =
@@ -113,7 +113,7 @@ let _for_of_unkeyed = /*@__PURE__*/ /* @__PURE__ */ withBranches(
         oldScopesByKey,
         hasPotentialMoves,
         start = 0;
-      forEach(value, (key, args) => {
+      (forEach(value, (key, args) => {
         let i = newScopes.length,
           oldScope = oldScopes[i],
           branch =
@@ -125,12 +125,13 @@ let _for_of_unkeyed = /*@__PURE__*/ /* @__PURE__ */ withBranches(
                 )).get(key)
               : oldScope && (start++, oldScope));
         (branch
-          ? ((hasPotentialMoves = !0), oldScopesByKey?.delete(key))
-          : (branch = createAndSetupBranch(scope.$, renderer, scope, parentNode)),
-          (branch.M = key),
+          ? ((hasPotentialMoves = !0), oldScopesByKey?.delete(key), (branch.M = key))
+          : (((branch = createBranch(scope.$, renderer, scope, parentNode)).M = key),
+            setupBranch(renderer, branch)),
           newScopes.push(branch),
           params?.(branch, args));
-      });
+      }),
+        (scope[scopesAccessor] = newScopes));
       let newLen = newScopes.length,
         hasSiblings = referenceNode !== parentNode,
         afterReference = null,
@@ -328,7 +329,7 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
         -1,
       );
     };
-  return ((ownerSignal._ = fn), ownerSignal);
+  return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
 function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
   ownerConditionalNodeAccessor = decodeAccessor(ownerConditionalNodeAccessor);
@@ -342,7 +343,7 @@ function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
         (scope[branchAccessor] || 0) === branch &&
         queueRender(ifScope, fn, -1);
     };
-  return ((ownerSignal._ = fn), ownerSignal);
+  return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
 function _script(id, fn) {
   return (
@@ -374,7 +375,7 @@ function createAndSetupBranch($global, renderer, parentScope, parentNode) {
   return setupBranch(renderer, createBranch($global, renderer, parentScope, parentNode));
 }
 function setupBranch(renderer, branch) {
-  return (renderer.c && queueRender(branch, renderer.c, -1), branch);
+  return (renderer.c?.(branch), branch);
 }
 function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
   ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),

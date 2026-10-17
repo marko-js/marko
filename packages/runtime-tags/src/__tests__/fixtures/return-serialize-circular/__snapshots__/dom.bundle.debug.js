@@ -24,8 +24,8 @@ const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	_text($scope["#text/2"], $scope.count);
 });
 function $setup($scope) {
-	_var($scope, "#childScope/0", $setCount);
 	$input_valueChange($scope["#childScope/0"], $valueChange($scope));
+	_var($scope, "#childScope/0", $setCount);
 	$count($scope, 0);
 }
 const $setCount__script = _script("__tests__/template.marko_0_setCount#4", ($scope) => $scope.setCount());

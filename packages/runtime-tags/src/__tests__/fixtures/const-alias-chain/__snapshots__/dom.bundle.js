@@ -9,9 +9,7 @@ const $a_b = /*@__PURE__*/ _const(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	$z($scope, $scope.h);
 });
-const $z = ($scope) => {
-	_text($scope.a, $scope.h);
-};
+const $z = ($scope) => _text($scope.a, $scope.h);
 const $setup__script = _script("a0", ($scope) => _on($scope.d, "click", function() {
 	$obj($scope, {
 		a: { b: 3 },

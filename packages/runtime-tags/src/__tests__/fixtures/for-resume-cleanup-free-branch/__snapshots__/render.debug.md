@@ -52,7 +52,6 @@ document.querySelector("#c").click();
 ## Change
 ```
 INSERT: li:nth-of-type(3) + li
-UPDATE: li:nth-of-type(4)::text@5 "" => "3"
 ```
 
 # Update

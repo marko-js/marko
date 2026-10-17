@@ -22,7 +22,6 @@ document.querySelector(".A").click();
 ```
 INSERT: .A
 REMOVE: .A + .A
-INSERT: .A::text("body content")
 UPDATE: .A[class] null => "A"
 ```
 
@@ -41,6 +40,5 @@ document.querySelector(".A").click();
 ```
 INSERT: .A
 REMOVE: .A + .A
-INSERT: .A::text("body content")
 UPDATE: .A[class] null => "A"
 ```

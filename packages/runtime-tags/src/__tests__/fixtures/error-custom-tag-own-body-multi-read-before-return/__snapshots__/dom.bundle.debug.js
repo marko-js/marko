@@ -23,8 +23,8 @@ const $child_content__x = /*@__PURE__*/ _closure_get("x/6", $child_content__y__O
 const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span> </span>", "D ", /*@__PURE__*/ _return_setup($child_content__setup));
 const $y = /*@__PURE__*/ _let("y/3");
 function $setup($scope) {
-	_var($scope, "#childScope/0", $x);
 	$input_content($scope["#childScope/0"], $child_content($scope));
+	_var($scope, "#childScope/0", $x);
 	$y($scope, 1);
 }
 const $x__closure = /*@__PURE__*/ _closure($child_content__x);

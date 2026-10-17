@@ -11,9 +11,7 @@ function $setup($scope) {
 }
 
 // template.marko
-const $tagName_content__setup = ($scope) => {
-	$setup($scope.a);
-};
+const $tagName_content__setup = ($scope) => $setup($scope.a);
 const $tagName_content = _content("a0", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $tagName_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, $tagName_content);
 const $tagName = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag($scope, $scope.c));

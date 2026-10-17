@@ -25,9 +25,7 @@ const $walks = "b%c";
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__$params);
-const $try_content__setup = ($scope) => {
-	$setup$1($scope["#childScope/0"]);
-};
+const $try_content__setup = ($scope) => $setup$1($scope["#childScope/0"]);
 const $try = /*@__PURE__*/ _try("#text/0", /*@__PURE__*/ ((_w0) => `<div>${_w0}</div>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks$1), $try_content__setup, 0, $catch_content);
 function $setup($scope) {
 	$try($scope);

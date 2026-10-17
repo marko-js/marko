@@ -11,10 +11,10 @@ const $Box_content2__open = /*@__PURE__*/ _let("open/5", ($scope) => $Box_conten
 const $Box_content2__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$Box_content2__open($scope, !$scope.open);
 }));
-const $Box_content2__setup = /*@__PURE__*/ _child_setup(($scope) => {
+const $Box_content2__setup = ($scope) => {
 	$Box_content2__open($scope, false);
 	$Box_content2__setup__script($scope);
-});
+};
 const $Box_content2__tag_input_content = /*@__PURE__*/ _const("input_content", $if_content__input_content);
 const $Box_content2__$params = ($scope, $params2) => $Box_content2__input($scope, $params2[0]);
 const $Box_content2__input = ($scope, input) => $Box_content2__tag_input_content($scope, input.content);
@@ -22,7 +22,7 @@ const $Box_content__input_label = /*@__PURE__*/ _closure_get("input_label/4", ($
 const $Box_content__setup = $Box_content__input_label;
 const $Box_content = _content("__tests__/template.marko_1*content", "label: <!>", "b%", $Box_content__setup);
 function $setup($scope) {
-	$Box_content2__setup._($scope["#childScope/0"], $scope);
+	$Box_content2__setup($scope["#childScope/0"]);
 	$Box_content2__tag_input_content($scope["#childScope/0"], $Box_content($scope));
 }
 const $input = ($scope, input) => $input_label($scope, input.label);

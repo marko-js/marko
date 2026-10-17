@@ -30,24 +30,12 @@ var labeled_list_default = /*@__PURE__*/ _template("__tests__/tags/labeled-list.
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => `<button id=add>add</button><button id=mode>mode</button>${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}`)($template$2, $template$2, $template$2, $template$2, $template$2, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => ` b b/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}&`)(" b", " b", " b", " b", " b", $walks$1);
-const $item_content6 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_6*content", "labeled <!>", "b%"), { i($scope) {
-	_text($scope["#text/0"], $scope.i);
-} });
-const $item_content5 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_5*content", "for-if <!>", "b%"), { j($scope) {
-	_text($scope["#text/0"], $scope.j);
-} });
-const $item_content4 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_4*content", "else <!>", "b%"), { i($scope) {
-	_text($scope["#text/0"], $scope.i);
-} });
-const $item_content3 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_3*content", "else-if <!>", "b%"), { i($scope) {
-	_text($scope["#text/0"], $scope.i);
-} });
-const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "if <!>", "b%"), { i($scope) {
-	_text($scope["#text/0"], $scope.i);
-} });
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "static <!>", "b%"), { i($scope) {
-	_text($scope["#text/0"], $scope.i);
-} });
+const $item_content6 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_6*content", "labeled <!>", "b%"), { i: ($scope) => _text($scope["#text/0"], $scope.i) });
+const $item_content5 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_5*content", "for-if <!>", "b%"), { j: ($scope) => _text($scope["#text/0"], $scope.j) });
+const $item_content4 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_4*content", "else <!>", "b%"), { i: ($scope) => _text($scope["#text/0"], $scope.i) });
+const $item_content3 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_3*content", "else-if <!>", "b%"), { i: ($scope) => _text($scope["#text/0"], $scope.i) });
+const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "if <!>", "b%"), { i: ($scope) => _text($scope["#text/0"], $scope.i) });
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "static <!>", "b%"), { i: ($scope) => _text($scope["#text/0"], $scope.i) });
 const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	let $item2;
 	if ($scope.mode === 0) {

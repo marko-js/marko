@@ -1,0 +1,11 @@
+<if=input.show>
+  <try>
+    ${(() => { throw new Error("red") })()}
+    <@catch|err|>
+      <style>
+        .caught { color: ${err.message}; }
+      </style>
+      <div class="caught"/>
+    </@catch>
+  </try>
+</if>

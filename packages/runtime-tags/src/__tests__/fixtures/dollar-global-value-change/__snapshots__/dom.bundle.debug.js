@@ -20,8 +20,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	_var_change($scope["#childScope/0"], 1, "v");
 }));
 function $setup($scope) {
-	_var($scope, "#childScope/0", $v);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $v);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -23,28 +23,28 @@ const $walks = /*@__PURE__*/ ((_w0) => `b%/${_w0}&b%b%b%b%c`)("");
 const $setHtml4_getter = /*@__PURE__*/ _hoist("setHtml4", "BranchScopes:#text/5");
 const $if_content6__setHtml = /*@__PURE__*/ _const("setHtml4", ($scope) => _assert_hoist($scope.setHtml4));
 const $if_content6__setup = ($scope) => {
-	_var($scope, "#childScope/0", $if_content6__setHtml);
 	$setup$2($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $if_content6__setHtml);
 };
 const $if_content5__setup__script = _script("__tests__/template.marko_5", ($scope) => $setHtml3_getter($scope._)()("Hello world"));
 const $if_content5__setup = $if_content5__setup__script;
 const $setHtml3_getter = /*@__PURE__*/ _hoist("setHtml3", "BranchScopes:#text/3");
 const $if_content4__setHtml = /*@__PURE__*/ _const("setHtml3", ($scope) => _assert_hoist($scope.setHtml3));
 const $if_content4__setup = ($scope) => {
-	_var($scope, "#childScope/0", $if_content4__setHtml);
 	$setup$2($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $if_content4__setHtml);
 };
 const $setHtml2_getter = /*@__PURE__*/ _hoist("setHtml2", "BranchScopes:#text/2");
 const $if_content3__setHtml = /*@__PURE__*/ _const("setHtml2", ($scope) => _assert_hoist($scope.setHtml2));
 const $if_content3__setup = ($scope) => {
-	_var($scope, "#childScope/0", $if_content3__setHtml);
 	$setup$2($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $if_content3__setHtml);
 };
 const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#2:2/hoist", "setHtml", "BranchScopes:#text/0", "BranchScopes:#text/0");
 const $if_content2__setHtml = /*@__PURE__*/ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml));
 const $if_content2__setup = ($scope) => {
-	_var($scope, "#childScope/0", $if_content2__setHtml);
 	$setup$2($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $if_content2__setHtml);
 };
 const $if_content__if = /*@__PURE__*/ _if("#text/0", $template$2, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $if_content2__setup);
 const $if_content__input_show = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_show ? 0 : 1));

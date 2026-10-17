@@ -17,7 +17,6 @@ caught bang
 ## Change
 ```
 UPDATE: div > button::text "0" => "1"
-INSERT: div::text(" ")
 INSERT: ::text("caught "), ::text("bang")
 REMOVE: ::text@7 + div
 UPDATE: ::text@7 "" => "bang"

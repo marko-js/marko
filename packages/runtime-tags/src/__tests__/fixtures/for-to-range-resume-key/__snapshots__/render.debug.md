@@ -32,5 +32,4 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: button:nth-of-type(3) + button
-UPDATE: button:nth-of-type(4)::text@2 "" => "5"
 ```

@@ -30,7 +30,6 @@ document.querySelector("button").click();
 ```
 INSERT: div > span
 REMOVE: div > span + span
-UPDATE: div > span::text " " => "1"
 ```
 
 # Update
@@ -53,7 +52,6 @@ document.querySelector("button").click();
 ```
 REMOVE: div > span
 INSERT: div > .hidden
-UPDATE: .hidden::text " " => "1"
 ```
 
 # Update
@@ -74,5 +72,4 @@ document.querySelector("button").click();
 ```
 INSERT: div > span
 REMOVE: div > span + span
-UPDATE: div > span::text " " => "1"
 ```

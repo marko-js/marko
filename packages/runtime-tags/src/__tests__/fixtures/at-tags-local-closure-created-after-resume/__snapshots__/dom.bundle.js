@@ -39,15 +39,11 @@ const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a
 	_text($scope.b, $scope.c);
 } });
 _resumed.a2 = $item_content2;
-const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "<em> </em>", "D "), { 1($scope) {
-	_text($scope.a, $scope.b);
-} });
+const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "<em> </em>", "D "), { 1: ($scope) => _text($scope.a, $scope.b) });
 _resumed.a1 = $cell_content;
 const $item_content__items_0__OR__item = /*@__PURE__*/ _or(4, ($scope) => _text($scope.b, $scope.d === $scope._.e));
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", "<span><!>:<!></span>", "D%c%", /* @__PURE__ */ _closure_get(5, $item_content__items_0__OR__item)), {
-	2($scope) {
-		_text($scope.a, $scope.c);
-	},
+	2: ($scope) => _text($scope.a, $scope.c),
 	3: $item_content__items_0__OR__item
 });
 _resumed.a0 = $item_content;
