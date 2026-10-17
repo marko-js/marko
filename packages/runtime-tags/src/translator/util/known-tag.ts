@@ -81,7 +81,7 @@ import {
   writeSlot,
 } from "./signals";
 import { findSlot, ensureSlot, SlotKind } from "./slots";
-import { createAnalysisState } from "./state";
+import { createAnalysisState, createOutputSectionState } from "./state";
 import {
   toMemberExpression,
   toObjectProperty,
@@ -102,6 +102,12 @@ import translateVar, {
 import { buildGroupMask, getWriteGuard } from "./write-guard";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
+
+// Bound after every tag in the section is set up, so a `<return>` a setup
+// sends early reaches tags that read it only once they are set up too.
+const [getTagVarBindings] = createOutputSectionState(
+  () => [] as t.Statement[],
+);
 
 const kChildSection = Symbol("known tag child section");
 const kParamsTree = Symbol("known tag params tree");
@@ -416,15 +422,14 @@ export function knownTagTranslateDOM(
         value,
         varBinding,
       );
-    addStatement(
-      "render",
-      tagSection,
-      undefined,
-      callRuntime(
-        "_var",
-        scopeIdentifier,
-        getScopeAccessorLiteral(childScopeBinding, true),
-        signal.identifier,
+    getTagVarBindings(tagSection).push(
+      t.expressionStatement(
+        callRuntime(
+          "_var",
+          scopeIdentifier,
+          getScopeAccessorLiteral(childScopeBinding, true),
+          signal.identifier,
+        ),
       ),
     );
   }
@@ -438,6 +443,11 @@ export function knownTagTranslateDOM(
       childScopeBinding,
     });
   }
+}
+
+export function addTagVarBindings(section: Section) {
+  const bindings = getTagVarBindings(section);
+  if (bindings.length) addStatement("render", section, undefined, bindings);
 }
 
 export function addKnownTagReasons(section: Section) {

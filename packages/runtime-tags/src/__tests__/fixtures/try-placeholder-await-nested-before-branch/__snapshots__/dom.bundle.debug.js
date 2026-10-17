@@ -14,9 +14,7 @@ var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $t
 // template.marko
 const $template = "<button class=toggle>toggle</button><!><!>";
 const $walks = " b%c";
-const $await_content2__setup = ($scope) => {
-	$setup$1($scope["#childScope/0"]);
-};
+const $await_content2__setup = ($scope) => $setup$1($scope["#childScope/0"]);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $await_content2__setup);
 const $await_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $await_content__setup = ($scope) => {

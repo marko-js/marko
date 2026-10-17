@@ -3,6 +3,7 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
 import { BindingType } from "../../util/bindings";
 import { getUnusedParamIdentifier } from "../../util/generate-uid";
+import { addTagVarBindings } from "../../util/known-tag";
 import { isOptimize } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
@@ -104,6 +105,7 @@ export default {
           const { writes } = getSectionMeta(childSection);
           // Reaches the runtime through `_content`, which strips these.
           const walks = trimTrailingExits(getSectionMeta(childSection).walks);
+          addTagVarBindings(childSection);
           const written = writeSignals(childSection);
           const setup = getSetup(childSection);
           const setupIdentifier =
@@ -213,6 +215,7 @@ export default {
         }
       });
 
+      addTagVarBindings(section);
       const written = writeSignals(section);
       writeRegisteredFns();
 

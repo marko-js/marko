@@ -275,16 +275,7 @@ Inner mounted
 ```
 INSERT: pre + div
 INSERT: div > p + div
-UPDATE: div > div:nth-of-type(1)::text@0 "" => "Outer"
-UPDATE: div > span::text@0 "" => "Outer"
-UPDATE: div > p::text@0 "" => "Outer"
 INSERT: div > div:nth-of-type(2) > p:nth-of-type(1) + :is(div, span, p)
-UPDATE: div > div:nth-of-type(2) > div:nth-of-type(1)::text@0 "" => "Middle"
-UPDATE: div > div:nth-of-type(2) > span:nth-of-type(1)::text@0 "" => "Middle"
-UPDATE: div > div:nth-of-type(2) > p:nth-of-type(1)::text@0 "" => "Middle"
-UPDATE: div > div:nth-of-type(2) > div:nth-of-type(2)::text@0 "" => "Inner"
-UPDATE: div > div:nth-of-type(2) > span:nth-of-type(2)::text@0 "" => "Inner"
-UPDATE: div > div:nth-of-type(2) > p:nth-of-type(2)::text@0 "" => "Inner"
 REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed")
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted")
 REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted")

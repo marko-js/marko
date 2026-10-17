@@ -21,11 +21,11 @@ const $x = _var_resume("__tests__/template.marko_0_x#8/var", /*@__PURE__*/ _cons
 	$if_content__x($scope);
 	$for_content__x($scope);
 }));
+const $input_a = ($scope, input_a) => $Inc_content__a($scope["#childScope/0"], input_a);
+const $input = ($scope, input) => $input_a($scope, input.a);
 function $setup($scope) {
 	_var($scope, "#childScope/0", $x);
 }
-const $input_a = ($scope, input_a) => $Inc_content__a($scope["#childScope/0"], input_a);
-const $input = ($scope, input) => $input_a($scope, input.a);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 
 // tags/show-value.marko

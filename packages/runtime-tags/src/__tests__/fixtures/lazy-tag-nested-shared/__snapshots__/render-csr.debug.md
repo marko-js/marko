@@ -11,7 +11,6 @@
 ## Change
 ```
 INSERT: .child
-UPDATE: .child::text@6 "" => "shared"
 ```
 
 # Update

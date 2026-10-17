@@ -16,16 +16,12 @@ const $list_ = /*@__PURE__*/ _const(12, ($scope) => {
 	_text($scope.g, $scope.m);
 	$second($scope, $scope.m);
 });
-const $second = ($scope) => {
-	_text($scope.e, $scope.m);
-};
+const $second = ($scope) => _text($scope.e, $scope.m);
 const $list_2 = /*@__PURE__*/ _const(13, ($scope) => {
 	_text($scope.c, $scope.n);
 	$third($scope, $scope.n);
 });
-const $third = ($scope) => {
-	_text($scope.f, $scope.n);
-};
+const $third = ($scope) => _text($scope.f, $scope.n);
 const $setup__script = _script("a0", ($scope) => _on($scope.i, "click", function() {
 	$list($scope, [4, 5]);
 }));

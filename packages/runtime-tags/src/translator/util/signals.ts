@@ -739,7 +739,10 @@ function toScopeFn(render: t.Statement[]): t.Expression {
     return call.callee as t.Expression;
   }
 
-  return t.arrowFunctionExpression([scopeIdentifier], t.blockStatement(render));
+  return t.arrowFunctionExpression(
+    [scopeIdentifier],
+    toOnlyExpressionOrBlock(render),
+  );
 }
 
 // The call a render of a single call statement makes.

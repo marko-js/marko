@@ -8,9 +8,7 @@ const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $item_content__$item_text = ($scope, $item_text) => $item_content__$item_text_n($scope, $item_text.n);
 const $item_content__$item_text_n = ($scope, item_text_n) => _text($scope.b, item_text_n);
 const $item_content__setup = ($scope) => $item_content__$item_text($scope, { n: 1 });
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", "<p><!>|<!></p>", "D%c%", $item_content__setup), { 2($scope) {
-	_text($scope.a, $scope.c);
-} });
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", "<p><!>|<!></p>", "D%c%", $item_content__setup), { 2: ($scope) => _text($scope.a, $scope.c) });
 const $items = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
 	forOf($scope.c, (item) => {

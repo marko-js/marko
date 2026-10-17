@@ -219,10 +219,7 @@ Inner mounted
 ```
 INSERT: pre + div
 INSERT: div > p + div
-UPDATE: div > p::text " " => "Outer"
 INSERT: div > div > p:nth-of-type(1) + p
-UPDATE: div > div > p:nth-of-type(1)::text " " => "Middle"
-UPDATE: div > div > p:nth-of-type(2)::text " " => "Inner"
 REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed")
 INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted")
 REMOVE: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroyed\nMiddle destroyed\nOuter destroyed\nOuter mounted")

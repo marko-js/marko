@@ -14,10 +14,10 @@ const $template = /*@__PURE__*/ ((_w0, _w1) => `<div>${_w0} </div><span>${_w1} <
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D0${_w0}& lD0${_w1}& l`)(" b", " b");
 const $divName = _var_resume("__tests__/template.marko_0_divName#6/var", ($scope, divName) => _text($scope["#text/2"], divName));
 function $setup($scope) {
-	_var($scope, "#childScope/0", $divName);
 	$setup$1($scope["#childScope/0"]);
-	_var($scope, "#childScope/3", $spanName);
 	$setup$1($scope["#childScope/3"]);
+	_var($scope, "#childScope/0", $divName);
+	_var($scope, "#childScope/3", $spanName);
 }
 const $spanName = _var_resume("__tests__/template.marko_0_spanName#7/var", ($scope, spanName) => _text($scope["#text/5"], spanName));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

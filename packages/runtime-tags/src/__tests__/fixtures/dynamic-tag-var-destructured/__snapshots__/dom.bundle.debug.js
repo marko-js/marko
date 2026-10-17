@@ -30,7 +30,7 @@ const $inc__script = _script("__tests__/template.marko_0_inc#6", ($scope) => _on
 }));
 const $inc = /*@__PURE__*/ _const("inc", $inc__script);
 function $setup($scope) {
-	_var($scope, "#childScope/0", $pattern2);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $pattern2);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

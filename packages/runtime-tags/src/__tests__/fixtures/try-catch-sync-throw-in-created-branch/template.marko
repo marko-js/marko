@@ -1,0 +1,43 @@
+<let/show=false>
+<button onClick() { show = true }>show</button>
+
+<try>
+  <if=show>
+    ${(() => { throw new Error("if body") })()}
+  </if>
+  <@catch|err|>caught ${err.message}</@catch>
+</try>
+
+<try>
+  <if=show>
+    <try>
+      ${(() => { throw new Error("try body") })()}
+      <@catch|err|>caught ${err.message}</@catch>
+    </try>
+  </if>
+  <@catch|err|>outer caught ${err.message}</@catch>
+</try>
+
+<try>
+  <if=show>
+    <try>
+      ${(() => { throw new Error("try body") })()}
+      <@catch>
+        ${(() => { throw new Error("catch") })()}
+      </@catch>
+    </try>
+  </if>
+  <@catch|err|>outer caught ${err.message}</@catch>
+</try>
+
+<try>
+  <if=show>
+    <try>
+      ${(() => { throw new Error("try body") })()}
+      <@catch|err|>
+        ${(() => { throw new Error(`catch of ${err.message}`) })()}
+      </@catch>
+    </try>
+  </if>
+  <@catch|err|>outer caught ${err.message}</@catch>
+</try>

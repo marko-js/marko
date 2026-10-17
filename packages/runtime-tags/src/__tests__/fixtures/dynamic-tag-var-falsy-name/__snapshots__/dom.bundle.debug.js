@@ -3,12 +3,12 @@ const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $tem
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&0${_w1}&`)($walks$1, $walks$1);
 const $plain = ($scope, plain) => {};
 function $setup($scope) {
-	_var($scope, "#childScope/0", $plain);
 	$setup$1($scope["#childScope/0"]);
 	$input_a11yText($scope["#childScope/0"]);
-	_var($scope, "#childScope/2", $labeled);
 	$setup$1($scope["#childScope/2"]);
 	$input_a11yText($scope["#childScope/2"], "Close");
+	_var($scope, "#childScope/0", $plain);
+	_var($scope, "#childScope/2", $labeled);
 }
 const $labeled = ($scope, labeled) => {};
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

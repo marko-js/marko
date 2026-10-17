@@ -136,8 +136,7 @@ document.querySelector("#toggle").click();
 ```
 ## Change
 ```
-INSERT: #inc + span
-INSERT: section > span:nth-of-type(1) + span
+INSERT: #inc + :is(span, span)
 UPDATE: section > span:nth-of-type(1)::text " " => "2"
 UPDATE: section > span:nth-of-type(2)::text " " => "4"
 ```

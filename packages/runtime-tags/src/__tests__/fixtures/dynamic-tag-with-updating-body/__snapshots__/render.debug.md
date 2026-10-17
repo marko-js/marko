@@ -53,8 +53,6 @@ document.querySelector("#changeTag").click();
 ```
 INSERT: span
 REMOVE: span + div
-INSERT: span > #count
-UPDATE: #count::text " " => "0"
 ```
 
 # Update

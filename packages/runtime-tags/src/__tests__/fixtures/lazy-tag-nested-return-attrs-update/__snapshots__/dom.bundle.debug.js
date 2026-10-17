@@ -23,8 +23,8 @@ const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope
 	$scope.focus();
 }));
 function $setup($scope) {
-	_var($scope, "#childScope/0", $focus);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $focus);
 	$setup__script($scope);
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/2"], input_label);

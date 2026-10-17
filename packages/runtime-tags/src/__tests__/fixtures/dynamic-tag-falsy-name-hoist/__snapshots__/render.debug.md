@@ -53,7 +53,6 @@ document.querySelector(".toggle").click();
 ```
 INSERT: div
 REMOVE: div + input
-INSERT: div > input
 ```
 
 # Update

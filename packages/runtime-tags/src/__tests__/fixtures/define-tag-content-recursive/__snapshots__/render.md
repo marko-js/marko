@@ -48,8 +48,8 @@ leaf x
 INSERT: button
 INSERT: button:nth-of-type(2) + :is(::text("2"), ::text(": "))
 UPDATE: button:nth-of-type(3)::text " " => "0"
-UPDATE: ::text@6 "" => "2"
 INSERT: ::text@7 + :is(::text("leaf "), ::text("x"))
+UPDATE: ::text@6 "" => "2"
 UPDATE: ::text@14 "" => "x"
 ```
 

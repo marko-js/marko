@@ -4,9 +4,7 @@ const $walks = "b1b1b1bD%c%c%l b b";
 _dynamic_tag_var_resume("#text/0");
 _dynamic_tag_var_resume("#text/2");
 _dynamic_tag_var_resume("#text/4");
-const $labelspan_content__setup = ($scope) => {
-	_return($scope, 1);
-};
+const $labelspan_content__setup = ($scope) => _return($scope, 1);
 const $labelspan_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", 0, 0, /*@__PURE__*/ _return_setup($labelspan_content__setup));
 const $labelbutton_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "content");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $labelbutton_content, ($_) => $btn);

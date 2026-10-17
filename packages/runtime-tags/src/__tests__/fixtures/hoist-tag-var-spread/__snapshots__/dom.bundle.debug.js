@@ -9,9 +9,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!><!><!>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b%b%b/${_w0}&`)("D l");
-const $if_content3__setup = ($scope) => {
-	$input_a$1($scope["#childScope/0"], $x_getter($scope._._).a);
-};
+const $if_content3__setup = ($scope) => $input_a$1($scope["#childScope/0"], $x_getter($scope._._).a);
 const $x_getter = _hoist_resume("__tests__/template.marko_0_x#2:0/hoist", "x", "BranchScopes:#text/0");
 const $if_content2__x = /*@__PURE__*/ _const("x", ($scope) => _assert_hoist($scope.x));
 const $if_content2__setup = ($scope) => $if_content2__x($scope, $x);

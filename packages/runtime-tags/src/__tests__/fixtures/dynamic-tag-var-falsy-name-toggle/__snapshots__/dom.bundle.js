@@ -2,9 +2,7 @@
 _dynamic_tag_var_resume(0);
 _dynamic_tag_var_resume(2);
 _dynamic_tag_var_resume(4);
-const $labelspan_content__setup = ($scope) => {
-	_return($scope, 1);
-};
+const $labelspan_content__setup = ($scope) => _return($scope, 1);
 const $labelspan_content = /*@__PURE__*/ _content("a2", 0, 0, $labelspan_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, /* @__PURE__ */ _content("a0", "content"), ($_) => $btn);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag(2, $labelspan_content, ($_) => $value);

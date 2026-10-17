@@ -17,7 +17,6 @@
 ## Change
 ```
 INSERT: button + span
-UPDATE: span::text " " => "outer placeholder"
 ```
 ## Console
 ```
@@ -58,7 +57,6 @@ LOG "destroyed" "outer placeholder"
 ## Change
 ```
 INSERT: p + span
-UPDATE: span::text " " => "inner placeholder"
 ```
 ## Console
 ```

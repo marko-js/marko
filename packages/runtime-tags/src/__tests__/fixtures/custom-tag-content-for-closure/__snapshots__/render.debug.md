@@ -52,9 +52,7 @@ document.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text "expand" => "collapse"
-INSERT: button + div
-INSERT: div:nth-of-type(1) + div
-INSERT: div:nth-of-type(2) + div
+INSERT: button + :is(div, div, div)
 ```
 
 # Update

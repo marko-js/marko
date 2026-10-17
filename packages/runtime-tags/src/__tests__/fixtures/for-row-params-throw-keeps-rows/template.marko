@@ -1,0 +1,14 @@
+static function check(item: { id: number; bad?: boolean }) {
+  if (item.bad) throw new Error("row params");
+  return item.id;
+}
+
+<let/items=[{ id: 1 }, { id: 2 }, { id: 3 }]>
+<button.bad onClick() { items = [{ id: 5, bad: true }, { id: 9 }] }>bad</button>
+<button.next onClick() { items = [{ id: 7 }] }>next</button>
+<ul>
+  <li>head</li>
+  <for|item| of=items by="id">
+    <li>${check(item)}</li>
+  </for>
+</ul>

@@ -3,9 +3,7 @@ const $obj = /*@__PURE__*/ _let(6, ($scope) => {
 	$p($scope, $scope.g);
 	$obj_a($scope, $scope.g?.a);
 });
-const $p = ($scope) => {
-	_text($scope.b, JSON.stringify($scope.g));
-};
+const $p = ($scope) => _text($scope.b, JSON.stringify($scope.g));
 const $obj_a__script = _script("a0", ($scope) => _on($scope.d, "click", function() {
 	$obj($scope, { a: $scope.h + 1 });
 }));

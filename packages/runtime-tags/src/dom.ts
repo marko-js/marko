@@ -107,7 +107,6 @@ export {
 } from "./dom/resume";
 export { _assert_init } from "./dom/scope";
 export {
-  _child_setup,
   _closure,
   _closure_get,
   _const,

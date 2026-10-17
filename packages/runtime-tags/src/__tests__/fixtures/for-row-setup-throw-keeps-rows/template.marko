@@ -1,0 +1,12 @@
+<let/items=[1, 2, 3]>
+<button.bad onClick() { items = [4, 9] }>bad</button>
+<button.next onClick() { items = [7] }>next</button>
+<ul>
+  <li>head</li>
+  <for|i| of=items by=(i) => i>
+    <li>${i}</li>
+    <if=i === 4>
+      <em>${(() => { throw new Error("row setup") })()}</em>
+    </if>
+  </for>
+</ul>

@@ -18,16 +18,12 @@ const $list_ = /*@__PURE__*/ _const("list_1", ($scope) => {
 	_text($scope["#text/6"], $scope.list_1);
 	$second($scope, $scope.list_1);
 });
-const $second = ($scope) => {
-	_text($scope["#text/4"], $scope.list_1);
-};
+const $second = ($scope) => _text($scope["#text/4"], $scope.list_1);
 const $list_2 = /*@__PURE__*/ _const("list_2", ($scope) => {
 	_text($scope["#text/2"], $scope.list_2);
 	$third($scope, $scope.list_2);
 });
-const $third = ($scope) => {
-	_text($scope["#text/5"], $scope.list_2);
-};
+const $third = ($scope) => _text($scope["#text/5"], $scope.list_2);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/8"], "click", function() {
 	$list($scope, [4, 5]);
 }));

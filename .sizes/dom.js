@@ -1,4 +1,4 @@
-// size: 27521 (min) 10247 (brotli)
+// size: 27478 (min) 10241 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -190,7 +190,35 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
     let scopeOffsetAccessor = getTagVar && decodeAccessor(nodeAccessor + 1);
     nodeAccessor = decodeAccessor(nodeAccessor);
     let childScopeAccessor = "A" + nodeAccessor,
-      rendererAccessor = "D" + nodeAccessor;
+      rendererAccessor = "D" + nodeAccessor,
+      createTagBranch = ($global, tagNameOrRenderer, scope, parentNode) => {
+        let branch = createBranch($global, tagNameOrRenderer, scope, parentNode);
+        if (
+          (typeof tagNameOrRenderer == "string" &&
+            (branch.a =
+              branch.S =
+              branch.K =
+                document.createElementNS(
+                  tagNameOrRenderer === "svg"
+                    ? "http://www.w3.org/2000/svg"
+                    : tagNameOrRenderer === "math"
+                      ? "http://www.w3.org/1998/Math/MathML"
+                      : parentNode.namespaceURI,
+                  tagNameOrRenderer,
+                )),
+          getTagVar &&
+            ((branch.T = (value) => getTagVar()(scope, value)),
+            bindTagVar(scope, branch, scope[scopeOffsetAccessor], tagNameOrRenderer)),
+          typeof tagNameOrRenderer != "string")
+        )
+          setupBranch(tagNameOrRenderer, branch);
+        else if (getContent) {
+          let content = getContent(scope);
+          (setBranch(branch, "a", content, createAndSetupBranch),
+            content.f && subscribeToScopeSet(content.e, content.f, branch.Aa));
+        }
+        return branch;
+      };
     return (scope, newRenderer, getInput) => {
       let normalizedRenderer = normalizeDynamicRenderer(newRenderer);
       if (
@@ -199,30 +227,19 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
             rendererKey(normalizedRenderer) || (getContent ? void 0 : 0)) ||
         (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
       ) {
-        let renderer = normalizedRenderer || (getContent ? getContent(scope) : void 0);
-        if (
-          (setBranch(scope, nodeAccessor, renderer, createBranchWithTagNameOrRenderer),
-          getTagVar &&
-            (normalizedRenderer
-              ? ((scope[childScopeAccessor].T = (value) => getTagVar()(scope, value)),
-                bindTagVar(
-                  scope,
-                  scope[childScopeAccessor],
-                  scope[scopeOffsetAccessor],
-                  normalizedRenderer,
-                ))
-              : getTagVar()(scope)),
-          typeof renderer == "string")
-        ) {
-          if (getContent) {
-            let content = getContent(scope);
-            (setBranch(scope[childScopeAccessor], "a", content, createAndSetupBranch),
-              content.f && subscribeToScopeSet(content.e, content.f, scope[childScopeAccessor].Aa));
-          }
-        } else
-          renderer &&
-            (setupBranch(renderer, scope[childScopeAccessor]),
-            renderer.f && subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor]));
+        let renderer = normalizedRenderer;
+        (renderer
+          ? setBranch(scope, nodeAccessor, renderer, createTagBranch)
+          : (getTagVar && getTagVar()(scope),
+            setBranch(
+              scope,
+              nodeAccessor,
+              (renderer = getContent ? getContent(scope) : void 0),
+              createAndSetupBranch,
+            )),
+          typeof renderer != "string" &&
+            renderer?.f &&
+            subscribeToScopeSet(renderer.e, renderer.f, scope[childScopeAccessor]));
       }
       if (normalizedRenderer) {
         let childScope = scope[childScopeAccessor],
@@ -275,7 +292,7 @@ let loop = /*@__PURE__*/ withBranches(
     return (scope, value) => {
       let referenceNode = scope[nodeAccessor],
         oldScopes = toArray(scope[scopesAccessor]),
-        newScopes = (scope[scopesAccessor] = []);
+        newScopes = [];
       scope[keyedScopesAccessor] = null;
       let oldLen = oldScopes.length,
         parentNode =
@@ -285,7 +302,7 @@ let loop = /*@__PURE__*/ withBranches(
         oldScopesByKey,
         hasPotentialMoves,
         start = 0;
-      forEach(value, (key, args) => {
+      (forEach(value, (key, args) => {
         let i = newScopes.length,
           oldScope = oldScopes[i],
           branch =
@@ -297,12 +314,13 @@ let loop = /*@__PURE__*/ withBranches(
                 )).get(key)
               : oldScope && (start++, oldScope));
         (branch
-          ? ((hasPotentialMoves = !0), oldScopesByKey?.delete(key))
-          : (branch = createAndSetupBranch(scope.$, renderer, scope, parentNode)),
-          (branch.M = key),
+          ? ((hasPotentialMoves = !0), oldScopesByKey?.delete(key), (branch.M = key))
+          : (((branch = createBranch(scope.$, renderer, scope, parentNode)).M = key),
+            setupBranch(renderer, branch)),
           newScopes.push(branch),
           params?.(branch, args));
-      });
+      }),
+        (scope[scopesAccessor] = newScopes));
       let newLen = newScopes.length,
         hasSiblings = referenceNode !== parentNode,
         afterReference = null,
@@ -678,7 +696,7 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
         -1,
       );
     };
-  return ((ownerSignal._ = fn), ownerSignal);
+  return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
 function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccessor, fn) {
   ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
@@ -706,7 +724,7 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
         );
       }
     };
-  return ((ownerSignal._ = fn), ownerSignal);
+  return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
 function keyedScopes(ownerScope, scopeAccessor, mapAccessor, keyValueAccessor) {
   let map = (ownerScope[mapAccessor] ||= /* @__PURE__ */ new Map());
@@ -733,7 +751,7 @@ function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
         (scope[branchAccessor] || 0) === branch &&
         queueRender(ifScope, fn, -1);
     };
-  return ((ownerSignal._ = fn), ownerSignal);
+  return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
 function subscribeToScopeSet(ownerScope, accessor, scope) {
   let subscribers = (ownerScope[accessor] ||= /* @__PURE__ */ new Set()),
@@ -751,7 +769,7 @@ function _closure(...closureSignals) {
       for (let childScope of scope[scopeInstances])
         childScope.H > 0 &&
           childScope.H < runId &&
-          queueRender(childScope, closureSignals[childScope[signalIndex] || 0], -1);
+          closureSignals[childScope[signalIndex] || 0](childScope);
     }
   };
 }
@@ -760,7 +778,9 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
   let closureSignal = (scope, resumed) => {
     let ownerScope = getOwnerScope ? getOwnerScope(scope) : scope._;
     ((scope[closureSignal.b] = closureSignal.c),
-      resumed ? ownerScope[closureSignal.a]._ && queueAsyncRender(scope, closureSignal) : fn(scope),
+      resumed
+        ? ownerScope[closureSignal.a]._ && queueAsyncRender(scope, fn)
+        : queueRender(scope, fn, -1),
       subscribeToScopeSet(ownerScope, closureSignal.a, scope));
   };
   return (
@@ -768,14 +788,6 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
     (closureSignal.b = "C" + valueAccessor),
     resumeId && (_resumed[resumeId] = (scope) => closureSignal(scope, 1)),
     closureSignal
-  );
-}
-function _child_setup(setup) {
-  return (
-    (setup._ = (scope, owner) => {
-      ((scope._ ||= owner), queueRender(scope, setup, -1));
-    }),
-    setup
   );
 }
 function _var(scope, childAccessor, signal) {
@@ -1143,7 +1155,7 @@ function createAndSetupBranch($global, renderer, parentScope, parentNode) {
   return setupBranch(renderer, createBranch($global, renderer, parentScope, parentNode));
 }
 function setupBranch(renderer, branch) {
-  return (renderer.c && queueRender(branch, renderer.c, -1), branch);
+  return (renderer.c?.(branch), branch);
 }
 function _return_setup(setup) {
   return setup;
@@ -1186,13 +1198,13 @@ function _content_closures(renderer, closureFns) {
   for (let key in closureFns) closureSignals[key] = _const(+key, closureFns[key]);
   return (owner, closureValues) => {
     let instance = renderer(owner),
-      clone = instance.b,
+      setup = instance.c,
       setClosures = (instance.g = (branch) => {
         for (let key in closureSignals) closureSignals[key](branch, closureValues[key]);
       });
     return (
-      (instance.b = (branch, ns) => {
-        (clone(branch, ns), setClosures(branch));
+      (instance.c = (branch) => {
+        (setup?.(branch), setClosures(branch));
       }),
       instance
     );
@@ -1256,7 +1268,7 @@ function _style_shell(scope, nodeAccessor) {
     id = _id(scope);
   (_attr_nonce(scope, nodeAccessor),
     _attr(element, "class", id),
-    _text_content(element, "." + id + "~*{" + (element.textContent || "}")));
+    _text_content(element, "." + id + "~*{}"));
 }
 function _style_rule_item(element, name, value) {
   let text = element.textContent,
@@ -1852,7 +1864,6 @@ function _await_promise(nodeAccessor, params) {
 function _await_content(nodeAccessor, template, walks, setup) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let branchAccessor = "A" + nodeAccessor,
-    promiseAccessor = "L" + nodeAccessor,
     renderer = _content("", template, walks, setup)();
   return (scope) => {
     let pendingScopes = collectScopes(
@@ -1864,8 +1875,7 @@ function _await_content(nodeAccessor, template, walks, setup) {
           scope[nodeAccessor].parentNode,
         )).V = renderer),
     );
-    ((scope[branchAccessor].Y = pendingScopes),
-      typeof scope[promiseAccessor] == "function" && scope[promiseAccessor]());
+    scope[branchAccessor].Y = pendingScopes;
   };
 }
 function startAwait(scope, tryBranch = findTryWithPlaceholder(scope)) {
@@ -1939,13 +1949,14 @@ function dismissPlaceholder(tryBranch) {
 function _try(nodeAccessor, template, walks, setup, placeholderContent, catchContent) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let branchAccessor = "A" + nodeAccessor,
-    renderer = _content("", template, walks, setup)();
+    renderer = _content("", template, walks)();
   return (scope) => {
-    setBranch(scope, nodeAccessor, renderer, createAndSetupBranch);
+    setBranch(scope, nodeAccessor, renderer, createBranch);
     let branch = scope[branchAccessor];
     ((branch.C = nodeAccessor),
       (branch.E = catchContent),
-      (branch.Q = placeholderContent || void 0));
+      (branch.Q = placeholderContent || void 0),
+      setup && queueRender(branch, setup, -1));
   };
 }
 function renderCatch(scope, error) {
@@ -1958,8 +1969,14 @@ function renderCatch(scope, error) {
       (owner["A" + tryWithCatch.C] = placeholderBranch),
       destroyBranch(tryWithCatch));
     let catchContent = tryWithCatch.E();
-    (setBranch(owner, tryWithCatch.C, catchContent, createAndSetupBranch),
-      catchContent.d?.(owner["A" + tryWithCatch.C], [error]));
+    (setBranch(owner, tryWithCatch.C, catchContent, createBranch),
+      queueRender(
+        owner["A" + tryWithCatch.C],
+        (branch) => {
+          (setupBranch(catchContent, branch), catchContent.d?.(branch, [error]));
+        },
+        -1,
+      ));
   } else throw error;
 }
 function findTryWithPlaceholder(scope) {
@@ -2026,24 +2043,6 @@ function reorderKeyed(newScopes, start, newEnd, parentNode, afterReference) {
       ? tail--
       : insertBranchBefore(newScopes[start + i], parentNode, afterReference),
       (afterReference = newScopes[start + i].S));
-}
-function createBranchWithTagNameOrRenderer($global, tagNameOrRenderer, parentScope, parentNode) {
-  let branch = createBranch($global, tagNameOrRenderer, parentScope, parentNode);
-  return (
-    typeof tagNameOrRenderer == "string" &&
-      (branch.a =
-        branch.S =
-        branch.K =
-          document.createElementNS(
-            tagNameOrRenderer === "svg"
-              ? "http://www.w3.org/2000/svg"
-              : tagNameOrRenderer === "math"
-                ? "http://www.w3.org/1998/Math/MathML"
-                : parentNode.namespaceURI,
-            tagNameOrRenderer,
-          )),
-    branch
-  );
 }
 function bySecondArg(_item, index) {
   return index;
@@ -2144,6 +2143,7 @@ let compat = {
       ((branch ||=
         ((created = 1),
         (component.scope = createAndSetupBranch(out.global, renderer, renderer.e, document.body)))),
+        renderer.g?.(branch),
         renderer.d?.(branch, renderer._ ? args[0] : args));
     };
     if (((component.effects = rendering ? renderBranch() : prepareEffects(renderBranch)), created))
@@ -2276,8 +2276,11 @@ function _load_setup(load) {
 function insertLoaded(renderer, branch, marker, awaitCounter) {
   let parent = (_) => marker.parentNode,
     values = branch.X,
-    clone = (_) => {
-      (syncGen(branch), renderer.b(branch, parent().namespaceURI), (branch.X = 0));
+    create = (_) => {
+      (syncGen(branch),
+        renderer.b(branch, parent().namespaceURI),
+        (branch.X = 0),
+        setupBranch(renderer, branch));
     },
     insert = (_) => {
       (insertBranchBefore(branch, parent(), marker), marker.remove(), awaitCounter?.c());
@@ -2292,15 +2295,12 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
           (apply._ = mod._) &&
           !--remaining &&
           queueAsyncRender(branch, (branch) => {
-            (clone(),
-              renderer.c?.(branch),
-              values.forEach(([value, apply]) => apply(branch, value)),
-              insert());
+            (create(), values.forEach(([value, apply]) => apply(branch, value)), insert());
           }),
         (error) => remaining > 0 && ((remaining = 0), fail(error)),
       ),
     );
-  } else (clone(), setupBranch(renderer, branch), insert());
+  } else (create(), insert());
 }
 function loadFailed(scope, awaitCounter) {
   return (error) => {

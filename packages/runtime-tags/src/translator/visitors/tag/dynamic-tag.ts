@@ -280,23 +280,7 @@ export default {
                     .identifier;
             },
             (section, childBinding) => {
-              if (definedBodySection.hasSetupWork) {
-                addStatement(
-                  "render",
-                  section,
-                  undefined,
-                  t.callExpression(
-                    t.memberExpression(
-                      getSignal(definedBodySection, undefined).identifier,
-                      t.identifier("_"),
-                    ),
-                    [
-                      createScopeReadExpression(childBinding, section),
-                      getScopeExpression(section, definedBodySection.parent!),
-                    ],
-                  ),
-                );
-              } else if (definedBodySection.readsOwner) {
+              if (definedBodySection.readsOwner) {
                 addStatement(
                   "render",
                   section,
@@ -308,6 +292,17 @@ export default {
                       getAccessorProp().Owner,
                     ),
                     getScopeExpression(section, definedBodySection.parent!),
+                  ),
+                );
+              }
+              if (definedBodySection.hasSetupWork) {
+                addStatement(
+                  "render",
+                  section,
+                  undefined,
+                  t.callExpression(
+                    getSignal(definedBodySection, undefined).identifier,
+                    [createScopeReadExpression(childBinding, section)],
                   ),
                 );
               }

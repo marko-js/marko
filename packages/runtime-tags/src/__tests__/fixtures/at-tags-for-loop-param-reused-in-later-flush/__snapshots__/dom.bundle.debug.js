@@ -23,9 +23,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!><div> </div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&%bD l`)($walks$1);
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "<span> </span>", "D "), { item($scope) {
-	_text($scope["#text/0"], JSON.stringify($scope.item));
-} });
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "<span> </span>", "D "), { item: ($scope) => _text($scope["#text/0"], JSON.stringify($scope.item)) });
 _resumed["__tests__/template.marko_2*content"] = $item_content;
 const $await_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$picked($scope._, $scope.v);

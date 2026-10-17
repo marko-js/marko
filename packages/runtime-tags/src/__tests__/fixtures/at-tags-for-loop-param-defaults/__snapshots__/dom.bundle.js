@@ -12,9 +12,7 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0
 		_text($scope.b, $scope.d);
 		$if_content__aa($scope);
 	},
-	4($scope) {
-		_text($scope.a, $scope.e);
-	}
+	4: ($scope) => _text($scope.a, $scope.e)
 });
 const $items = /*@__PURE__*/ _let(4, ($scope) => {
 	let $item;

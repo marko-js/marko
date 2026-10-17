@@ -15,7 +15,7 @@ const $Wrap_content__setup__script = _script("__tests__/template.marko_1", ($sco
 	_attr_input_value_script($scope, "#input/1");
 	_attr_input_value_script($scope, "#input/2");
 });
-const $Wrap_content__setup = /*@__PURE__*/ _child_setup($Wrap_content__setup__script);
+const $Wrap_content__setup = $Wrap_content__setup__script;
 const $Wrap_content__tag_param_ = ($scope, $temp) => {
 	$Wrap_content__$aChange($scope, $temp.aChange);
 	$Wrap_content__a($scope, $temp.a);
@@ -29,7 +29,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
-	$Wrap_content__setup._($scope["#childScope/2"], $scope);
+	$Wrap_content__setup($scope["#childScope/2"]);
 	$n($scope, 1);
 	$setup__script($scope);
 }

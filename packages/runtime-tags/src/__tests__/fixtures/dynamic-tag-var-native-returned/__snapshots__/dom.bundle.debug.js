@@ -16,7 +16,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b0${_w0}&b`)("b1c");
 const $v__script = _script("__tests__/template.marko_0_v#2", ($scope) => $scope.v().setAttribute("data-mounted", ""));
 const $v = _var_resume("__tests__/template.marko_0_v#2/var", /*@__PURE__*/ _const("v", $v__script));
 function $setup($scope) {
-	_var($scope, "#childScope/0", $v);
 	$input_as($scope["#childScope/0"], "section");
+	_var($scope, "#childScope/0", $v);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -9,9 +9,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<button></button>", " ", 0, $for_
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "Click <!>", "b%"), { 1($scope) {
-	_text($scope.a, $scope.b);
-} });
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "Click <!>", "b%"), { 1: ($scope) => _text($scope.a, $scope.b) });
 const $clicked = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
 	forOf(["a", "b"], (foo) => {

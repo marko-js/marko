@@ -8,7 +8,6 @@ import {
 } from "../common/types";
 import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
-import { queueRender } from "./queue";
 import { _resumed } from "./resume";
 import { createScope } from "./scope";
 import { _const, type Signal, type SignalFn } from "./signals";
@@ -78,21 +77,19 @@ export function createAndSetupBranch(
   );
 }
 
+// Setup runs as the branch is created, before its values, as a template mounts;
+// the closure signals it calls queue their first render, once owners settle.
 export function setupBranch(renderer: Renderer, branch: BranchScope) {
-  if (renderer[RendererProp.Setup]) {
-    queueRender(branch, renderer[RendererProp.Setup], -1);
-  }
+  renderer[RendererProp.Setup]?.(branch);
   return branch;
 }
 
 // Marks content with a `<return>` for a debug build's dynamic tag variable check.
 export function _return_setup<
-  T extends ((...args: any[]) => unknown) | { _: SetupFn },
+  T extends ((...args: any[]) => unknown) & ReturnMark,
 >(setup: T) {
   if (MARKO_DEBUG) {
-    ((setup as { _?: SetupFn })._ || (setup as ReturnMark))[
-      RendererProp.Returns
-    ] = 1;
+    setup[RendererProp.Returns] = 1;
   }
   return setup;
 }
@@ -181,18 +178,22 @@ export function _content_closures(
   }
   return (owner: Scope, closureValues: Record<Accessor, unknown>): Renderer => {
     const instance = renderer(owner);
-    const clone = instance[RendererProp.Clone];
+    const setup = instance[RendererProp.Setup];
     const setClosures = (instance[RendererProp.LocalClosures] = (branch) => {
       for (const key in closureSignals) {
         closureSignals[key](branch, closureValues[key]);
       }
     });
-    // Applied on clone so a branch any runtime path creates from this content
-    // (dynamic tag, `<try>` catch or placeholder) starts with the loop's values.
-    instance[RendererProp.Clone] = (branch, ns) => {
-      clone(branch, ns);
+    // Applied with setup, so every path that creates the branch builds it with
+    // the loop's values; the content's call sites apply new ones on update.
+    instance[RendererProp.Setup] = (branch) => {
+      setup?.(branch);
       setClosures(branch);
     };
+    if (MARKO_DEBUG) {
+      instance[RendererProp.Setup][RendererProp.Returns] = (setup ||
+        instance[RendererProp.Params])?.[RendererProp.Returns];
+    }
     return instance;
   };
 }

@@ -11,9 +11,7 @@ const $a_b = /*@__PURE__*/ _const("a_b", ($scope) => {
 	_text($scope["#text/1"], $scope.a_b);
 	$z($scope, $scope.a_b);
 });
-const $z = ($scope) => {
-	_text($scope["#text/0"], $scope.a_b);
-};
+const $z = ($scope) => _text($scope["#text/0"], $scope.a_b);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$obj($scope, {
 		a: { b: 3 },

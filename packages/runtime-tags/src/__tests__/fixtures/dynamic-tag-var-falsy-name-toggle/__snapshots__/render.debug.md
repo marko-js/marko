@@ -37,13 +37,13 @@ content
 ## Change
 ```
 UPDATE: input[value] "Close" => ""
+UPDATE: p::text@0 "function" => "undefined"
 INSERT: ::text("content")
 REMOVE: ::text + button
-UPDATE: p::text@0 "function" => "undefined"
-REMOVE: ::text + span
 UPDATE: p::text@10 "function" => "undefined"
-INSERT: ::text + span
+REMOVE: ::text + span
 UPDATE: p::text@20 "undefined" => "function"
+INSERT: ::text + span
 ```
 
 # Update
@@ -70,13 +70,12 @@ document.querySelector("#toggle").click();
 ## Change
 ```
 UPDATE: input[value] "" => "Close"
+UPDATE: p::text@0 "undefined" => "function"
 INSERT: button
 REMOVE: button:nth-of-type(1) + ::text("content")
-UPDATE: p::text@0 "undefined" => "function"
-INSERT: button:nth-of-type(1)::text("content")
 UPDATE: button:nth-of-type(1)[aria-label] null => "Close"
-INSERT: button:nth-of-type(1) + span
 UPDATE: p::text@9 "undefined" => "function"
-REMOVE: span + span
+INSERT: button:nth-of-type(1) + span
 UPDATE: p::text@18 "function" => "undefined"
+REMOVE: span + span
 ```

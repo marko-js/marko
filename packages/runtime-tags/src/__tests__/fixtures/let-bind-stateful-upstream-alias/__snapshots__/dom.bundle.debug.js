@@ -37,7 +37,7 @@ const $store_listChange = /*@__PURE__*/ _const("store_listChange", $store_list__
 const $store_clear__script = _script("__tests__/template.marko_0_store_clear#8", ($scope) => _on($scope["#button/2"], "click", $scope.store_clear));
 const $store_clear = /*@__PURE__*/ _const("store_clear", $store_clear__script);
 function $setup($scope) {
-	_var($scope, "#childScope/0", $store);
 	$input_value($scope["#childScope/0"], ["Learn Marko", "Make a Website"]);
+	_var($scope, "#childScope/0", $store);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

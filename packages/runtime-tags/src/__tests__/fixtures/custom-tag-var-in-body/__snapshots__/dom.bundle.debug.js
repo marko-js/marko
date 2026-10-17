@@ -21,8 +21,8 @@ const $child_content__setup = $child_content__setHtml;
 const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", 0, 0, $child_content__setup);
 const $setHtml = /*@__PURE__*/ _const("setHtml");
 function $setup($scope) {
-	_var($scope, "#childScope/0", $setHtml);
 	$setup$1($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $child_content($scope));
+	_var($scope, "#childScope/0", $setHtml);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

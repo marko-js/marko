@@ -27,9 +27,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>Add</button>`)($temp
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
 const $cell_content__a_id = /*@__PURE__*/ _closure_get("a_id/3", ($scope) => _text($scope["#text/0"], $scope._.a_id), 0, "__tests__/template.marko_2_a_id#1:2/subscribe");
 const $cell_content__setup = $cell_content__a_id;
-const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!>-<!>;", "%c%", $cell_content__setup), { b($scope) {
-	_text($scope["#text/1"], $scope.b);
-} });
+const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!>-<!>;", "%c%", $cell_content__setup), { b: ($scope) => _text($scope["#text/1"], $scope.b) });
 const $row_content__a_id__closure = /*@__PURE__*/ _closure($cell_content__a_id);
 const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")), {
 	a_items($scope) {

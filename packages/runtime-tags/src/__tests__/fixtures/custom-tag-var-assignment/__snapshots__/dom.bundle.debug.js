@@ -32,8 +32,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	});
 });
 function $setup($scope) {
-	_var($scope, "#childScope/0", $count);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $count);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

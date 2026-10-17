@@ -6,8 +6,7 @@ caught ERROR!
 ```
 ## Change
 ```
-INSERT: p
-INSERT: ::text(" ")
+INSERT: ::text(" "), p
 INSERT: ::text("caught "), ::text("ERROR!")
 REMOVE: ::text@7 + ::text(" ")
 REMOVE: ::text@7 + p

@@ -7,15 +7,15 @@ const $Child_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks);
 const $Child_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template);
 const $Level_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content__walks);
 const $Level_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template);
-const $Level_content__setup = /*@__PURE__*/ _child_setup(($scope) => $Child_content__setup._($scope.a, $scope._));
+const $Level_content__setup = ($scope) => $Child_content__setup($scope.a);
 const $Level_content__depth = ($scope, depth) => $Child_content__depth($scope.a, depth);
-const $Child_content__setup = /*@__PURE__*/ _child_setup(($scope) => $setup($scope.a));
+const $Child_content__setup = ($scope) => $setup($scope.a);
 const $Child_content__depth = ($scope, depth) => $input_depth($scope.a, depth - 1);
 const $Label_content__depth = ($scope, depth) => _text($scope.a, depth);
 const $if_content__input_depth = /*@__PURE__*/ _if_closure(2, 0, ($scope) => $Level_content__depth($scope.a, $scope._.g));
 const $if_content__setup = ($scope) => {
 	$if_content__input_depth._($scope);
-	$Level_content__setup._($scope.a, $scope._);
+	$Level_content__setup($scope.a);
 };
 const $if = /*@__PURE__*/ _if(2, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Level_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Level_content__walks), $if_content__setup);
 const $input_depth__OR__open = /*@__PURE__*/ _or(8, ($scope) => $if($scope, $scope.h && $scope.g ? 0 : 1));

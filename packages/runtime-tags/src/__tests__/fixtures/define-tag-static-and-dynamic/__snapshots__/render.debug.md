@@ -65,7 +65,6 @@ document.querySelector("#toggle").click();
 INSERT: button:nth-of-type(2) + button
 REMOVE: button:nth-of-type(3) + div
 INSERT: button:nth-of-type(3)::text@1 + ::text("dynamic")
-UPDATE: button:nth-of-type(3)::text@0 "" => "0"
 ```
 
 # Update
@@ -144,5 +143,4 @@ document.querySelector("#toggle").click();
 ```
 INSERT: .box + div
 REMOVE: div + .box
-INSERT: div::text("dynamic")
 ```

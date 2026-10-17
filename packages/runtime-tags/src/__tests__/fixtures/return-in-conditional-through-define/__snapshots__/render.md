@@ -20,7 +20,6 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: button + div
-UPDATE: div::text@7 "" => "foo"
 ```
 
 # Update
@@ -52,5 +51,4 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: button + div
-UPDATE: div::text@7 "" => "foo"
 ```

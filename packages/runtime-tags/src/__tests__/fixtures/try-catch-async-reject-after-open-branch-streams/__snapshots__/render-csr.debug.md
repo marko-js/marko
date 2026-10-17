@@ -25,8 +25,8 @@
 ```
 INSERT: button
 REMOVE: button:nth-of-type(1) + span
-UPDATE: button:nth-of-type(1)::text@0 "" => "nope"
 UPDATE: button:nth-of-type(1)::text@5 "" => "0"
+UPDATE: button:nth-of-type(1)::text@0 "" => "nope"
 ```
 
 # Update

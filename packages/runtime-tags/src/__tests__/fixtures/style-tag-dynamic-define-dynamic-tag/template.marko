@@ -1,0 +1,8 @@
+<define/Box|{ color }|>
+  <style>
+    .box { color: ${color}; }
+  </style>
+  <div class="box">Hi</div>
+</define>
+<${input.show ? Box : null} color=input.color/>
+<span>after</span>

@@ -6,10 +6,10 @@ const $Box_content__count = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $s
 const $Box_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$Box_content__count($scope, +$scope.g + 1);
 }));
-const $Box_content__setup = /*@__PURE__*/ _child_setup(($scope) => {
+const $Box_content__setup = ($scope) => {
 	$Box_content__count($scope, 0);
 	$Box_content__setup__script($scope);
-});
+};
 const $Box_content__input_content = /* @__PURE__ */ _dynamic_tag(2);
 const $Box_content__$params = ($scope, $params2) => $Box_content__input($scope, $params2[0]);
 const $Box_content__input = ($scope, input) => $Box_content__input_content($scope, input?.content);

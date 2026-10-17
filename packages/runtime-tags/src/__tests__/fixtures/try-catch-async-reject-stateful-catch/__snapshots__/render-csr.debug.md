@@ -9,8 +9,8 @@
 ## Change
 ```
 INSERT: button
-UPDATE: button::text@0 "" => "nope"
 UPDATE: button::text@5 "" => "0"
+UPDATE: button::text@0 "" => "nope"
 ```
 
 # Update

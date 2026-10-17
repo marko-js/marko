@@ -24,9 +24,9 @@ const $message = ($scope, message) => _text($scope["#text/2"], message);
 const $name__OR__data = /*@__PURE__*/ _or(5, ($scope) => $message($scope, `${$scope.name} ${$scope.data}`), 1, "#scopeOffset/1");
 const $name = /*@__PURE__*/ _let("name/3", $name__OR__data);
 function $setup($scope) {
-	_var($scope, "#childScope/0", $data);
 	$setup$1($scope["#childScope/0"]);
 	$input_extra($scope["#childScope/0"], 1);
+	_var($scope, "#childScope/0", $data);
 	$name($scope, "Marko");
 }
 const $data = _var_resume("__tests__/template.marko_0_data#4/var", /*@__PURE__*/ _const("data", $name__OR__data));

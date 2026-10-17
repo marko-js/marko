@@ -27,15 +27,15 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b%c`)($walks$2);
 const $setHtml3_getter = /*@__PURE__*/ _hoist("setHtml3", "ClosureScopes:4");
 const $inputshowsectionnull_content__setHtml = /*@__PURE__*/ _const("setHtml3", ($scope) => _assert_hoist($scope.setHtml3));
 const $inputshowsectionnull_content__setup = ($scope) => {
-	_var($scope, "#childScope/0", $inputshowsectionnull_content__setHtml);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $inputshowsectionnull_content__setHtml);
 };
 const $inputshowsectionnull_content = /*@__PURE__*/ _content("__tests__/template.marko_4*content", $template$1, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $inputshowsectionnull_content__setup, 0, "ClosureScopes:4");
 const $setHtml2_getter = /*@__PURE__*/ _hoist("setHtml2", "ClosureScopes:3", "ClosureScopes:2");
 const $thing_content2__setHtml = /*@__PURE__*/ _const("setHtml2", ($scope) => _assert_hoist($scope.setHtml2));
 const $thing_content2__setup = ($scope) => {
-	_var($scope, "#childScope/0", $thing_content2__setHtml);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $thing_content2__setHtml);
 };
 const $thing_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3*content", $template$1, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $thing_content2__setup, 0, "ClosureScopes:3");
 const $inputshowThingnull_content__setup = ($scope) => $input_content($scope["#childScope/0"], $thing_content2($scope));
@@ -43,8 +43,8 @@ const $inputshowThingnull_content = /*@__PURE__*/ _content("__tests__/template.m
 const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml#1:2/hoist", "setHtml", "ClosureScopes:1");
 const $thing_content__setHtml = /*@__PURE__*/ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml));
 const $thing_content__setup = ($scope) => {
-	_var($scope, "#childScope/0", $thing_content__setHtml);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $thing_content__setHtml);
 };
 const $thing_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $thing_content__setup, 0, "ClosureScopes:1");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {

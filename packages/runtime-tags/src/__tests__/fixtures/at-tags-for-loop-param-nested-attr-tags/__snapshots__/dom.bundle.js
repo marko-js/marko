@@ -13,9 +13,7 @@ const $input_row = ($scope, input_row) => $for($scope, [input_row]);
 
 // template.marko
 const $cell_content__a_id = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._.c), 0, "a0");
-const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "<!>-<!>;", "%c%", $cell_content__a_id), { 2($scope) {
-	_text($scope.b, $scope.c);
-} });
+const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "<!>-<!>;", "%c%", $cell_content__a_id), { 2: ($scope) => _text($scope.b, $scope.c) });
 const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")), {
 	1($scope) {
 		let $cell;

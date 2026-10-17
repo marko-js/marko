@@ -35,7 +35,6 @@
 ## Change
 ```
 INSERT: span:nth-of-type(1) + .inc
-UPDATE: .inc::text " " => "0"
 ```
 
 # Update
@@ -65,7 +64,6 @@ UPDATE: .inc::text " " => "0"
 ## Change
 ```
 INSERT: button
-UPDATE: button:nth-of-type(1)::text " " => "0"
 ```
 
 # Update

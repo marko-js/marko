@@ -16,7 +16,6 @@ import {
   trackVarReferences,
   mergeTagReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   ensureSection,
@@ -136,8 +135,6 @@ export default {
           }
 
           const bodySection = getSectionForBody(tag.get("body"));
-          // Direct calls run the setup through `_child_setup`, even when
-          // other references render the define as a value.
           if (bodySection && hasDirectReferences) {
             const signal = getSignal(bodySection, undefined);
             signal.build = () => {
@@ -153,15 +150,12 @@ export default {
               if (bodySection.hasSetupWork) {
                 // Call sites still call it once dom output drops work analysis
                 // counted (a class API tag); an empty block body would become `0`.
-                return callRuntime(
-                  "_child_setup",
-                  hasWork
-                    ? buildSignalFn(signal)
-                    : t.arrowFunctionExpression(
-                        [getUnusedParamIdentifier()],
-                        t.numericLiteral(0),
-                      ),
-                );
+                return hasWork
+                  ? buildSignalFn(signal)
+                  : t.arrowFunctionExpression(
+                      [getUnusedParamIdentifier()],
+                      t.numericLiteral(0),
+                    );
               }
             };
           }

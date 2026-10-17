@@ -35,14 +35,14 @@ const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 const $Level_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks);
 const $Level_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template);
-const $Level_content__setup = /*@__PURE__*/ _child_setup(($scope) => $setup($scope["#childScope/0"]));
+const $Level_content__setup = ($scope) => $setup($scope["#childScope/0"]);
 const $Level_content__depth = ($scope, depth) => $input_depth($scope["#childScope/0"], depth - 1);
 const $Level_content__$params = ($scope, $params2) => $Level_content__$temp($scope, $params2[0]);
 const $Level_content__$temp = ($scope, $temp) => $Level_content__depth($scope, $temp.depth);
 const $if_content__input_depth = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $Level_content__depth($scope["#childScope/0"], $scope._.input_depth));
 const $if_content__setup = ($scope) => {
 	$if_content__input_depth._($scope);
-	$Level_content__setup._($scope["#childScope/0"], $scope._);
+	$Level_content__setup($scope["#childScope/0"]);
 };
 const $if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Level_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Level_content__walks), $if_content__setup);
 const $input_depth = /*@__PURE__*/ _const("input_depth", ($scope) => {

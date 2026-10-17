@@ -18,9 +18,7 @@ function $setup$2($scope) {
 // components/tags-await.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $await_content__setup = ($scope) => {
-	$setup$2($scope.a);
-};
+const $await_content__setup = ($scope) => $setup$2($scope.a);
 const $await_content = /*@__PURE__*/ _await_content(0, $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise(0);
 function $setup$1($scope) {

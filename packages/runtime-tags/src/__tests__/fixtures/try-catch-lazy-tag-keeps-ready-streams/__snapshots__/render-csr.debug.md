@@ -16,9 +16,7 @@
 ## Change
 ```
 INSERT: #other
-UPDATE: #other::text " " => "0"
 INSERT: #other + #child
-UPDATE: #child::text " " => "0"
 ```
 
 # Update

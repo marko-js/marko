@@ -67,10 +67,4 @@ INSERT: div > p:nth-of-type(2) + p
 INSERT: div > p:nth-of-type(3) + p
 INSERT: div > p:nth-of-type(4) + p
 INSERT: div > p:nth-of-type(5) + p
-UPDATE: div > p:nth-of-type(1)::text@0 "" => "1"
-UPDATE: div > p:nth-of-type(2)::text@0 "" => "2"
-UPDATE: div > p:nth-of-type(3)::text@0 "" => "3"
-UPDATE: div > p:nth-of-type(4)::text " " => "1"
-UPDATE: div > p:nth-of-type(5)::text " " => "2"
-UPDATE: div > p:nth-of-type(6)::text " " => "3"
 ```

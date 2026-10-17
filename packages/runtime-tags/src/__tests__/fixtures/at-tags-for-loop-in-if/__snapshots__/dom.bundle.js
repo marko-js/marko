@@ -13,21 +13,11 @@ const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $input_label = ($scope, input_label) => $input_label_text($scope, input_label?.text);
 
 // template.marko
-const $item_content6 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a5", "labeled <!>", "b%"), { 1($scope) {
-	_text($scope.a, $scope.b);
-} });
-const $item_content5 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a4", "for-if <!>", "b%"), { 1($scope) {
-	_text($scope.a, $scope.b);
-} });
-const $item_content4 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a3", "else <!>", "b%"), { 1($scope) {
-	_text($scope.a, $scope.b);
-} });
-const $item_content3 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", "else-if <!>", "b%"), { 1($scope) {
-	_text($scope.a, $scope.b);
-} });
-const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "if <!>", "b%"), { 1($scope) {
-	_text($scope.a, $scope.b);
-} });
+const $item_content6 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a5", "labeled <!>", "b%"), { 1: ($scope) => _text($scope.a, $scope.b) });
+const $item_content5 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a4", "for-if <!>", "b%"), { 1: ($scope) => _text($scope.a, $scope.b) });
+const $item_content4 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a3", "else <!>", "b%"), { 1: ($scope) => _text($scope.a, $scope.b) });
+const $item_content3 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", "else-if <!>", "b%"), { 1: ($scope) => _text($scope.a, $scope.b) });
+const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "if <!>", "b%"), { 1: ($scope) => _text($scope.a, $scope.b) });
 const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	let $item2;
 	if ($scope.j === 0) forUntil($scope.i, 0, 1, (i) => {

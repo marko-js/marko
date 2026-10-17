@@ -1,0 +1,42 @@
+// tags/list.marko
+var list_default = _template("__tests__/tags/list.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	_for_of(input.item, (item) => {
+		const $scope1_id = _scope_id();
+		const $itemcontent_scope = _peek_scope_id();
+		let value = _dynamic_tag($scope1_id, "#text/0", item.content, {}, void 0, void 0, void 0, 1);
+		_var($scope1_id, "#scopeOffset/1", $itemcontent_scope, "__tests__/tags/list.marko_1_value#6/var");
+		_html(`<span>${_text_resume($scope1_id, "#text/2", value)}</span>`);
+		_scope($scope1_id, {}, "__tests__/tags/list.marko", "1:2");
+	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/list.marko", 0);
+});
+
+// template.marko
+var template_default = _template("__tests__/template.marko", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	let count = 1;
+	_html(`<button>more</button>${_el_resume($scope0_id, "#button/0")}`);
+	_set_scope_reason(2);
+	let $item;
+	forUntil(count, 0, 1, (n) => {
+		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
+			const $scope1_reason = _scope_reason(), $wi__n = _write_if($scope1_reason, 0);
+			const $scope1_id = _scope_id();
+			let x = 10;
+			const $return = n * x;
+			$wi__n && _scope($scope1_id, { x }, "__tests__/template.marko", "5:6", { x: "6:12" });
+			$wi__n && _resume_branch($scope1_id);
+			return $return;
+		}, $scope0_id) });
+	});
+	const $childScope = _peek_scope_id();
+	list_default({ item: $item });
+	_script($scope0_id, "__tests__/template.marko_0");
+	_scope($scope0_id, {
+		count,
+		"#childScope/1": _existing_scope($childScope)
+	}, "__tests__/template.marko", 0, { count: "1:6" });
+}, 1);

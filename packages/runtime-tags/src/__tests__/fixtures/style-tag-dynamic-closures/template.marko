@@ -1,0 +1,42 @@
+<define/Box|{ color }|>
+  <style>
+    .box { color: ${color}; }
+  </style>
+  <div class="box"/>
+</define>
+
+<for of=input.rows>
+  <style>
+    .row { color: ${input.color}; }
+  </style>
+  <div class="row"/>
+</for>
+
+<for|item| of=input.items by="id">
+  <style>
+    .selected { color: ${input.selected === item.id ? "red" : "blue"}; }
+  </style>
+  <div class="selected"/>
+</for>
+
+<if=input.show>
+  <Box color=input.color/>
+</if>
+
+<reveal show=input.show>
+  <style>
+    .content { color: ${input.color}; }
+  </style>
+  <div class="content"/>
+</reveal>
+
+<list>
+  <for|color| of=input.colors>
+    <@item>
+      <style>
+        .item { color: ${color}; }
+      </style>
+      <div class="item"/>
+    </@item>
+  </for>
+</list>

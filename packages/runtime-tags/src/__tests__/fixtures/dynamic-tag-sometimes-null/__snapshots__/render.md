@@ -18,7 +18,6 @@ document.querySelector("button").click();
 ```
 INSERT: div
 REMOVE: div + ::text("Body Content")
-INSERT: div::text("Body Content")
 ```
 
 # Update

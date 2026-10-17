@@ -11,11 +11,11 @@ var tags_return_default = /*@__PURE__*/ _template("__tests__/components/tags-ret
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("");
 const $v = _var_resume("__tests__/components/tags-child.marko_0_v#6/var", ($scope, v) => _text($scope["#text/2"], v));
+const $input_x = ($scope, input_x) => $input_x$1($scope["#childScope/0"], input_x);
+const $input = ($scope, input) => $input_x($scope, input.x);
 function $setup($scope) {
 	_var($scope, "#childScope/0", $v);
 }
-const $input_x = ($scope, input_x) => $input_x$1($scope["#childScope/0"], input_x);
-const $input = ($scope, input) => $input_x($scope, input.x);
 var tags_child_default = /*@__PURE__*/ _template("__tests__/components/tags-child.marko", $template, $walks, $setup, $input);
 
 // template.marko

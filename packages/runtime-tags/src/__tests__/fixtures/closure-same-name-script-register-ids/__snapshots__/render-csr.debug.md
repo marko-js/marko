@@ -21,6 +21,6 @@
 ```
 ## Console
 ```
-LOG "outer" 1
 LOG "inner" 10
+LOG "outer" 1
 ```

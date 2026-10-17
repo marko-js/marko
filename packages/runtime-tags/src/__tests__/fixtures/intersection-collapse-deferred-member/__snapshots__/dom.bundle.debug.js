@@ -51,16 +51,12 @@ var row_default = /*@__PURE__*/ _template("__tests__/tags/row.marko", $template$
 const $template = /*@__PURE__*/ ((_w0) => `<button>resolve</button><span></span>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b b/${_w0}&`)($walks$1);
 const $flag = /*@__PURE__*/ _const("flag");
-const $inc_status__OR__inc_pending = ($scope) => {
-	$flag($scope, $scope.inc_status + ($scope.inc_pending ? "?" : ""));
-};
-const $inc_status__OR__flag = ($scope) => {
-	_attr_class($scope["#span/1"], [
-		"flag",
-		$scope.flag,
-		$scope.inc_status
-	]);
-};
+const $inc_status__OR__inc_pending = ($scope) => $flag($scope, $scope.inc_status + ($scope.inc_pending ? "?" : ""));
+const $inc_status__OR__flag = ($scope) => _attr_class($scope["#span/1"], [
+	"flag",
+	$scope.flag,
+	$scope.inc_status
+]);
 const $inc = /*@__PURE__*/ _let("inc/3", ($scope) => {
 	$input_inc($scope["#childScope/2"], $scope.inc);
 	$inc_status($scope, $scope.inc?.status);

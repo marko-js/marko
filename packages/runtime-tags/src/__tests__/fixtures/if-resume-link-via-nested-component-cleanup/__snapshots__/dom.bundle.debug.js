@@ -11,9 +11,7 @@ var leaf_default = /*@__PURE__*/ _template("__tests__/tags/leaf.marko", $templat
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content__setup$1 = ($scope) => {
-	$setup$2($scope["#childScope/0"]);
-};
+const $if_content__setup$1 = ($scope) => $setup$2($scope["#childScope/0"]);
 const $if$1 = /*@__PURE__*/ _if("#text/0", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b"), $if_content__setup$1);
 const $show$1 = ($scope, show) => $if$1($scope, show ? 0 : 1);
 const $input = ($scope, input) => $show$1($scope, input.show);

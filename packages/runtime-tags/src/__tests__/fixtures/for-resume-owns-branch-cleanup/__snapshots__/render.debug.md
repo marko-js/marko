@@ -50,7 +50,6 @@ document.querySelector("#a").click();
 ## Change
 ```
 INSERT: p:nth-of-type(1) + p
-UPDATE: p:nth-of-type(2)::text@5 "" => "1"
 ```
 
 # Update

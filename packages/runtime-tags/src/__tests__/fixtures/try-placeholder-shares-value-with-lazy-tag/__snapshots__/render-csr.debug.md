@@ -21,7 +21,6 @@ document.querySelector(`.${name}`)?.click();
 ## Change
 ```
 INSERT: .placeholder
-UPDATE: .placeholder::text " " => "0"
 ```
 
 # Update

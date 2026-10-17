@@ -1,9 +1,7 @@
 // template.marko
 let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
-const $catch_content__setup = ($scope) => {
-	$load_Child_setup($scope, $scope.c, $scope.b);
-};
+const $catch_content__setup = ($scope) => $load_Child_setup($scope, $scope.c, $scope.b);
 const $catch_content__$params = ($scope, $params3) => $catch_content__err_message($scope, $params3[0]?.message);
 const $catch_content = _content("b1", "caught <!><!><!>", "b%b%/&", $catch_content__setup, $catch_content__$params);
 const $await_content__value = ($scope, value) => _text($scope.a, value);

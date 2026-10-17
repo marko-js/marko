@@ -14,20 +14,12 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<button id=rename>rename</button>${_w0}${_w1}<!>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` b/${_w0}&/${_w1}&b`)("b%c", "b%c");
 const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "<b><!><!></b>", "D%b%"), {
-	first($scope) {
-		_text($scope["#text/0"], $scope.first);
-	},
-	$temp2_1($scope) {
-		_text($scope["#text/1"], $scope.$temp2_1);
-	}
+	first: ($scope) => _text($scope["#text/0"], $scope.first),
+	$temp2_1: ($scope) => _text($scope["#text/1"], $scope.$temp2_1)
 });
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p><!>:<!></p>", "D%c%"), {
-	id($scope) {
-		_text($scope["#text/0"], $scope.id);
-	},
-	$temp_extra($scope) {
-		_text($scope["#text/1"], $scope.$temp_extra);
-	}
+	id: ($scope) => _text($scope["#text/0"], $scope.id),
+	$temp_extra: ($scope) => _text($scope["#text/1"], $scope.$temp_extra)
 });
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => {
 	let $item;

@@ -26,8 +26,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	});
 });
 function $setup($scope) {
-	_var($scope, "#childScope/0", $val);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $val);
 	$canEdit($scope, true);
 	$setup__script($scope);
 }

@@ -16,11 +16,11 @@ const $Child_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks);
 const $Child_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template);
 const $Level_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content__walks);
 const $Level_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template);
-const $Level_content__setup = /*@__PURE__*/ _child_setup(($scope) => $Child_content__setup._($scope["#childScope/0"], $scope._));
+const $Level_content__setup = ($scope) => $Child_content__setup($scope["#childScope/0"]);
 const $Level_content__depth = ($scope, depth) => $Child_content__depth($scope["#childScope/0"], depth);
 const $Level_content__$params = ($scope, $params4) => $Level_content__$temp($scope, $params4[0]);
 const $Level_content__$temp = ($scope, $temp3) => $Level_content__depth($scope, $temp3.depth);
-const $Child_content__setup = /*@__PURE__*/ _child_setup(($scope) => $setup($scope["#childScope/0"]));
+const $Child_content__setup = ($scope) => $setup($scope["#childScope/0"]);
 const $Child_content__depth = ($scope, depth) => $input_depth($scope["#childScope/0"], depth - 1);
 const $Child_content__$params = ($scope, $params3) => $Child_content__$temp($scope, $params3[0]);
 const $Child_content__$temp = ($scope, $temp2) => $Child_content__depth($scope, $temp2.depth);
@@ -30,7 +30,7 @@ const $Label_content__$temp = ($scope, $temp) => $Label_content__depth($scope, $
 const $if_content__input_depth = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $Level_content__depth($scope["#childScope/0"], $scope._.input_depth));
 const $if_content__setup = ($scope) => {
 	$if_content__input_depth._($scope);
-	$Level_content__setup._($scope["#childScope/0"], $scope._);
+	$Level_content__setup($scope["#childScope/0"]);
 };
 const $if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Level_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Level_content__walks), $if_content__setup);
 const $input_depth__OR__open = /*@__PURE__*/ _or(8, ($scope) => $if($scope, $scope.open && $scope.input_depth ? 0 : 1));

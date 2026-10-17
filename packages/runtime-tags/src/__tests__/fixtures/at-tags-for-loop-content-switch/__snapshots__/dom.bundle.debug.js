@@ -36,9 +36,7 @@ const $tab_content__setup = ($scope) => {
 	$tab_content__count($scope, 0);
 	$tab_content__setup__script($scope);
 };
-const $tab_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button class=inc><!>: <!></button>", " D%c%", $tab_content__setup), { t($scope) {
-	_text($scope["#text/1"], $scope.t);
-} });
+const $tab_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button class=inc><!>: <!></button>", " D%c%", $tab_content__setup), { t: ($scope) => _text($scope["#text/1"], $scope.t) });
 _resumed["__tests__/template.marko_1*content"] = $tab_content;
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);

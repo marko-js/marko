@@ -10,10 +10,10 @@ const $Box_content__count = /*@__PURE__*/ _let("count/6", ($scope) => _text($sco
 const $Box_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$Box_content__count($scope, +$scope.count + 1);
 }));
-const $Box_content__setup = /*@__PURE__*/ _child_setup(($scope) => {
+const $Box_content__setup = ($scope) => {
 	$Box_content__count($scope, 0);
 	$Box_content__setup__script($scope);
-});
+};
 const $Box_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $Box_content__input_content = $Box_content__dynamicTag;
 const $Box_content__$params = ($scope, $params2) => $Box_content__input($scope, $params2[0]);
@@ -27,7 +27,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$useBox($scope, !$scope.useBox);
 }));
 function $setup($scope) {
-	$Box_content__setup._($scope["#childScope/1"], $scope);
+	$Box_content__setup($scope["#childScope/1"]);
 	$input_content_direct($scope["#childScope/1"], $Box_content2($scope));
 	$useBox($scope, false);
 	$Box($scope, { content: $Box_content($scope) });

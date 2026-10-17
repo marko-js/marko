@@ -39,7 +39,6 @@ INSERT: .child
 ## Change
 ```
 INSERT: .child + .placeholder
-UPDATE: .placeholder::text " " => "0"
 ```
 
 # Update

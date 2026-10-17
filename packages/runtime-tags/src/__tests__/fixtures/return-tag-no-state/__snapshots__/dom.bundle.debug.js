@@ -12,7 +12,7 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div>parent <!></div>`)($templa
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&Db%l`)("b");
 const $value = ($scope, value) => _text($scope["#text/2"], value);
 function $setup($scope) {
-	_var($scope, "#childScope/0", $value);
 	$setup$1($scope["#childScope/0"]);
+	_var($scope, "#childScope/0", $value);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

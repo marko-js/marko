@@ -69,8 +69,8 @@ INSERT: span:nth-of-type(2) + b
 INSERT: b:nth-of-type(1) + b
 UPDATE: span:nth-of-type(1)::text@0 "" => "1"
 UPDATE: span:nth-of-type(1)::text@2 "" => "x"
-UPDATE: span:nth-of-type(2)::text@0 "" => "2"
 UPDATE: span:nth-of-type(2)::text@2 "" => "y"
+UPDATE: span:nth-of-type(2)::text@0 "" => "2"
 UPDATE: b:nth-of-type(1)::text@0 "" => "a"
 UPDATE: b:nth-of-type(1)::text@1 "" => "b"
 UPDATE: b:nth-of-type(2)::text@0 "" => "c"

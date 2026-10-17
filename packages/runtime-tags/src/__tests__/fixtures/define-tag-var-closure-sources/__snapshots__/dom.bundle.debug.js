@@ -3,15 +3,16 @@ const $template$1 = "<!><div> </div>";
 const $walks$1 = "0&bD l";
 const $Sum_content__input_n__OR__a = /*@__PURE__*/ _or(3, ($scope) => _return($scope, $scope.a + $scope._.input_n));
 const $Sum_content__input_n = /*@__PURE__*/ _closure_get("input_n/7", $Sum_content__input_n__OR__a, 0, "__tests__/tags/sum-with.marko_1_input_n#0:5/subscribe");
-const $Sum_content__setup = /*@__PURE__*/ _child_setup($Sum_content__input_n);
+const $Sum_content__setup = $Sum_content__input_n;
 const $Sum_content__a = /*@__PURE__*/ _const("a", $Sum_content__input_n__OR__a);
 const $Sum_content__$params = ($scope, $params2) => $Sum_content__$temp($scope, $params2[0]);
 const $Sum_content__$temp = ($scope, $temp) => $Sum_content__a($scope, $temp.a);
 const $x = _var_resume("__tests__/tags/sum-with.marko_0_x#6/var", ($scope, x) => _text($scope["#text/2"], x));
 function $setup$1($scope) {
-	_var($scope, "#childScope/0", $x);
-	$Sum_content__setup._($scope["#childScope/0"], $scope);
+	$scope["#childScope/0"]._ = $scope;
+	$Sum_content__setup($scope["#childScope/0"]);
 	$Sum_content__a($scope["#childScope/0"], 1);
+	_var($scope, "#childScope/0", $x);
 }
 const $input = ($scope, input) => $input_n($scope, input.n);
 const $input_n__closure = /*@__PURE__*/ _closure($Sum_content__input_n);

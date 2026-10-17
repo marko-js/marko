@@ -9,13 +9,13 @@ const $Tag_content2__setup = $Tag_content2__name;
 const $Tag_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<div> </div>", "D ", $Tag_content2__setup);
 const $Tag_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $Tag_content__input_content = $Tag_content__dynamicTag;
-const $Tag_content__setup = /*@__PURE__*/ _child_setup(($scope) => _return($scope, "A"));
+const $Tag_content__setup = ($scope) => _return($scope, "A");
 const $Tag_content__$params = ($scope, $params2) => $Tag_content__input($scope, $params2[0]);
 const $Tag_content__input = ($scope, input) => $Tag_content__input_content($scope, input.content);
 const $name = /*@__PURE__*/ _const("name");
 function $setup($scope) {
-	_var($scope, "#childScope/0", $name);
-	$Tag_content__setup._($scope["#childScope/0"], $scope);
+	$Tag_content__setup($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $Tag_content2($scope));
+	_var($scope, "#childScope/0", $name);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

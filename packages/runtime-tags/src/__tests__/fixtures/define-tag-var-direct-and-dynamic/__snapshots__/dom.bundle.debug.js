@@ -3,7 +3,7 @@ const $template = "<!><!><p><!> <!></p><button></button>";
 const $walks = "0&b1bD%c%l b";
 _dynamic_tag_var_resume("#text/2");
 const $Count_content__n = /*@__PURE__*/ _let("n/0", ($scope) => _return($scope, { n: $scope.n }));
-const $Count_content__setup = /*@__PURE__*/ _child_setup(($scope) => $Count_content__n($scope, 1));
+const $Count_content__setup = ($scope) => $Count_content__n($scope, 1);
 const $Count_content = _content("__tests__/template.marko_1*content", 0, 0, /*@__PURE__*/ _return_setup($Count_content__setup));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", 0, ($_) => $b);
 const $Count__OR__on = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.on && $scope.Count));
@@ -13,8 +13,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$on($scope, !$scope.on);
 }));
 function $setup($scope) {
+	$Count_content__setup($scope["#childScope/0"]);
 	_var($scope, "#childScope/0", $a);
-	$Count_content__setup._($scope["#childScope/0"], $scope);
 	$Count($scope, { content: $Count_content($scope) });
 	$on($scope, true);
 	$setup__script($scope);

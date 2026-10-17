@@ -1,5 +1,5 @@
 // template.marko
-const $MyButton_content__setup__script = _script("a4", ($scope) => _on($scope.a, "click", function() {
+const $MyButton_content__setup = _script("a4", ($scope) => _on($scope.a, "click", function() {
 	document.getElementById("el").textContent += "[onClick(child)]";
 	$scope.d();
 }));

@@ -76,7 +76,6 @@ document.querySelector("button.toggle").click();
 ## Change
 ```
 INSERT: span
-UPDATE: span::text " " => "0"
 UPDATE: .inc::text "1:undefined" => "1:0"
 ```
 
