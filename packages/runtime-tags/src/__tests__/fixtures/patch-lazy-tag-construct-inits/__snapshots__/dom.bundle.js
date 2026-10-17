@@ -6,8 +6,8 @@ const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function
 
 // child.marko
 const $for_content__count__OR__i = /*@__PURE__*/ _fill_join("a1", 3, /*@__PURE__*/ _or(4, ($scope) => _text($scope.b, $scope._.f + $scope.d)));
-const $for_content__count = _resumed.a5 = /*@__PURE__*/ _for_closure(1, $for_content__count__OR__i);
-const $count = /*@__PURE__*/ _fill_let("a3", 5, $for_content__count);
-const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
+const $for_content__count = /*@__PURE__*/ _shell_init("a6", /*@__PURE__*/ _for_closure(1, $for_content__count__OR__i));
+const $count = /*@__PURE__*/ _fill_let("a4", 5, $for_content__count);
+const $setup__script = _script("a3", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, +$scope.f + 1);
 }));

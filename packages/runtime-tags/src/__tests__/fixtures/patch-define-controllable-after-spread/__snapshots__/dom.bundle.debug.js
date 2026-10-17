@@ -3,7 +3,7 @@ const $TextField_content__walks = " b";
 const $TextField_content__template = "<input>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($TextField_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($TextField_content__walks);
-const $TextField_content__value__OR__valueChange = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "valueChange", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "value", /*@__PURE__*/ _shell_or("__tests__/template.marko_1_value#3_valueChange#4/init", 5, ($scope) => _attr_input_value($scope, "#input/0", $scope.value, $scope.valueChange))));
+const $TextField_content__value__OR__valueChange = /*@__PURE__*/ _or(5, ($scope) => _attr_input_value($scope, "#input/0", $scope.value, $scope.valueChange));
 const $TextField_content__value = /*@__PURE__*/ _const("value", $TextField_content__value__OR__valueChange);
 const $TextField_content__valueChange = /*@__PURE__*/ _const("valueChange", $TextField_content__value__OR__valueChange);
 const $TextField_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _attr_input_value_script($scope, "#input/0"));

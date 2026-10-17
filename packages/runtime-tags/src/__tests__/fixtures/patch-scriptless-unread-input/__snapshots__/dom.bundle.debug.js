@@ -21,7 +21,7 @@ const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input_user2 = ($scope, input_user2) => $input_user$1($scope["#childScope/1"], input_user2);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", $inputtag_content);
-const $input_tag__OR__input_cls = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_cls", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_tag", /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_tag#8_input_cls#9/init", 10, ($scope) => $dynamicTag($scope, $scope.input_tag, ($_) => ({ class: $scope.input_cls })))));
+const $input_tag__OR__input_cls = /*@__PURE__*/ _or(10, ($scope) => $dynamicTag($scope, $scope.input_tag, ($_) => ({ class: $scope.input_cls })));
 const $input_tag = /*@__PURE__*/ _const("input_tag", $input_tag__OR__input_cls);
 const $input_cls = /*@__PURE__*/ _const("input_cls", $input_tag__OR__input_cls);
 const $input = ($scope, input) => {

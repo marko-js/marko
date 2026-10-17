@@ -1,9 +1,9 @@
 // template.marko
 _shells({
 	a: "a !a3;D bD l ;<main><div></div><span> </span><button>+</button></main>",
-	a0: "a0 a7 a8;Db%;<p>A <!></p>",
-	a1: "a1 a9 a10;Db%;<p>B <!></p>",
-	a2: "a2 a11;Db%;<p>None <!></p>"
+	a0: "a0 a7;Db%;<p>A <!></p>",
+	a1: "a1 a8;Db%;<p>B <!></p>",
+	a2: "a2 a9;Db%;<p>None <!></p>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_kind = _write_guard($scope0_reason, 0), $scope0_page = _page_render();

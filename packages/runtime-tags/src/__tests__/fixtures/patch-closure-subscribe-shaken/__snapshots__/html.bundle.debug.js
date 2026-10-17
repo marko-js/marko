@@ -18,7 +18,7 @@ _shells({
 	"__tests__/shop.marko": "__tests__/shop.marko !__tests__/shop.marko_0; D l b%;<button> </button><button>drop</button><!><!>",
 	"__tests__/shop.marko_1*shell": "__tests__/shop.marko_1*shell;b%;<!><!><!>",
 	"__tests__/shop.marko_2*shell": "__tests__/shop.marko_2*shell;b%;<!><!><!>",
-	"__tests__/shop.marko_3*shell": "__tests__/shop.marko_3*shell __tests__/shop.marko_3_p#0:4/init __tests__/shop.marko_3_proj#0:7/init __tests__/shop.marko_3_now#0:8/init __tests__/shop.marko_3_drops#0:9/init; D%c%;<span><!> <!></span>"
+	"__tests__/shop.marko_3*shell": "__tests__/shop.marko_3*shell __tests__/shop.marko_3_now#0:8/init __tests__/shop.marko_3_drops#0:9/init __tests__/shop.marko_3_p#0:4_drops#0:9_part#4/init __tests__/shop.marko_3_proj#0:7_now#0:8_have#6/init; D%c%;<span><!> <!></span>"
 });
 var shop_default = _template("__tests__/shop.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

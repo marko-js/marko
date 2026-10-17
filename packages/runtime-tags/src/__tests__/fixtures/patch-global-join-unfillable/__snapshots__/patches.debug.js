@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1*content !packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1;b/D l& b;<!><p> </p><button>inc</button>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1*content !packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1,`, {
   "$global:": {
     suffix: "b"
   },
@@ -11,6 +11,9 @@
         "PatchWrite:b": 1,
         "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_2_value#1:4_y#3/init"
       }
+    },
+    "PatchSetup:": {
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_fill0": 0
     }
   }
 }]
@@ -29,6 +32,9 @@
         "PatchWrite:b": 1,
         "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_2_value#1:4_y#3/init"
       }
+    },
+    "PatchSetup:": {
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_fill0": 0
     }
   }
 }

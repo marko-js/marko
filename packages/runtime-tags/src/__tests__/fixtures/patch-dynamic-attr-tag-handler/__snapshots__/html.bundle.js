@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template = "<div></div>";
 _shells({
-	b: "b !b2; ;<div></div>",
+	b: "b !b3; ;<div></div>",
 	b0: "b0;b%;<!><!><!>",
 	b1: "b1;b%;<!><!><!>"
 });
@@ -16,6 +16,7 @@ var child_default = _template("b", (input) => {
 			if (button) {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "a", button, {}, 0, 0, $wg__input_button, void 0, 2, $scope0_reason, 0);
+				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "b2");
 				$wi__input_button && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
@@ -23,7 +24,7 @@ var child_default = _template("b", (input) => {
 		$wi__input_button && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b0", $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "b2");
+	_script($scope0_id, "b3");
 	$scope0_page && _scope($scope0_id, {});
 });
 

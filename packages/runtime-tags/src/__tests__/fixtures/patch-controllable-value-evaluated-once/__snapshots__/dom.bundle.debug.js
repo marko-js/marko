@@ -5,7 +5,7 @@ function read(reads, value) {
 	reads.count++;
 	return value;
 }
-const $input_value__OR__reads = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_value#4_reads#5/init", 6, ($scope) => _attr_input_value_default($scope, "#input/0", read($scope.reads, $scope.input_value)));
+const $input_value__OR__reads = /*@__PURE__*/ _or(6, ($scope) => _attr_input_value_default($scope, "#input/0", read($scope.reads, $scope.input_value)));
 const $reads = /*@__PURE__*/ _const("reads", ($scope) => {
 	$input_value__OR__reads($scope);
 	$reads_count($scope, $scope.reads.count);

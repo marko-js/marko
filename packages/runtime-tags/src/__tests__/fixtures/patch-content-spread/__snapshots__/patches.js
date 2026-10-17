@@ -1,5 +1,5 @@
 // PATCH
-{
+[`a0,`, {
   ja: {
     class: "c2",
     "data-x": 1
@@ -16,9 +16,10 @@
     ta: "b"
   },
   va5: "b"
-}
+}]
+;BAE
 
-// PATCH
+// PATCH holding BAE
 {
   ja: {
     class: "c3"

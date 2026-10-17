@@ -36,6 +36,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 		});
 		_html(`</li>${_el_resume($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/tags/feed-list.marko_1");
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#4/init");
 		_scope($scope1_id, {
 			item_id: item?.id,
 			_: _scope_with_id($scope0_id),

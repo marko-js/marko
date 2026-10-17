@@ -12,12 +12,12 @@ var my_child_default = _template("b", (input) => {
 	_await($scope0_id, "a", input.promise, () => {
 		const $scope1_id = _scope_id();
 		_html(`<div id=done>${_patch_text($scope1_id, "a", input.msg, void 0, $scope0_reason, 2)} done</div>`);
-		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "b2");
-		_subscribe(_unfilled_if($scope0_reason, 2) && $input_msg__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "b2");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, _client_guard($scope0_reason, 2) ? "b2" : "b3");
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_msg__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "b3");
 	}, 1, "b0", 1);
 	_patch_write($scope0_id, "we", input.msg, 1);
 	$scope0_page && _scope($scope0_id, {
-		e: _unfilled_if($scope0_reason, 1) && input.msg,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.msg,
 		f: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_msg__closures
 	});
 });

@@ -30,7 +30,7 @@ function $setup($scope) {
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/2", "<span> </span>", "D ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content2__$params);
-const $input_slow__OR__input_note = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_slow#9_input_note#10/init", 11, ($scope) => $await_promise($scope, resolveAfter($scope.input_note, $scope.input_slow ? 2 : 0)));
+const $input_slow__OR__input_note = /*@__PURE__*/ _or(11, ($scope) => $await_promise($scope, resolveAfter($scope.input_note, $scope.input_slow ? 2 : 0)));
 const $input_slow__closure = /*@__PURE__*/ _closure($try_content__input_slow);
 const $input_slow = /*@__PURE__*/ _const("input_slow", ($scope) => {
 	$input_slow__OR__input_note($scope);

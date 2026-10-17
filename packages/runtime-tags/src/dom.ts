@@ -86,6 +86,7 @@ export {
 } from "./dom/patches/global";
 export { _load_lazy, _load_signal_patch } from "./dom/patches/load";
 export {
+  _closure_index,
   _closure_resume,
   _fill_const,
   _fill_join,
@@ -97,7 +98,7 @@ export {
   _fill_let_change,
   _fill_resume,
   _fill_var_resume,
-  _shell_join,
+  _shell_init,
   _shell_or,
 } from "./dom/patches/signals";
 export {

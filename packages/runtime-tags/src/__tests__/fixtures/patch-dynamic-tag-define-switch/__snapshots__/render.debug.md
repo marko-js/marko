@@ -38,14 +38,15 @@ UPDATE: .inc::text@0 "a" => "b"
 
 # Update `{"which":false,"label":"c"}`
 ```html
-<i />
+<i>
+  c
+</i>
 ```
 ## Change
 ```
 INSERT: i
 REMOVE: i + button
-UPDATE: i::text " " => ""
-UPDATE: i::text "c" => ""
+UPDATE: i::text " " => "c"
 ```
 
 # Update `{"which":true,"label":"d"}`
@@ -53,13 +54,13 @@ UPDATE: i::text "c" => ""
 <button
   class="inc"
 >
-   0
+  d 0
 </button>
 ```
 ## Change
 ```
 INSERT: .inc
 REMOVE: .inc + i
-UPDATE: .inc::text "" => ""
-UPDATE: .inc::text "d" => ""
+UPDATE: .inc::text@0 "" => "d"
+UPDATE: .inc::text@2 "" => "0"
 ```

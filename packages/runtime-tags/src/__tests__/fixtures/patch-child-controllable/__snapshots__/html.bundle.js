@@ -13,8 +13,9 @@ var counter_default = _template("b", (input) => {
 			let count = 0;
 			_html(`<span>Seen ${_text_resume($scope1_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "b1");
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b2");
 			const $countChange = input.onCount || void 0;
-			_patch_let_change($scope1_id, "vb2", count, "dd", $countChange, $scope0_reason, 1);
+			_patch_let_change($scope1_id, "vb3", count, "dd", $countChange, $scope0_reason, 1);
 			_scope($scope1_id, {
 				c: count,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
@@ -23,7 +24,7 @@ var counter_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { e: _write_if($scope0_reason, 0) && input.onCount }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb3", input.onCount, !_server_guard($scope0_reason, 1));
+	$scope0_page ? _scope($scope0_id, { e: _write_if($scope0_reason, 0) && input.onCount }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb4", input.onCount, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

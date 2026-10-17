@@ -10,12 +10,13 @@ var my_for_default = _template("b", (input) => {
 	_for_to(input.to, 0, 1, (...args) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", input.content, [...args], 0, 1, $wg__input_to__OR__input_content, void 0, 1, $scope0_reason, 0);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "b1");
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {
 			b: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && args,
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b0", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.content }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 2));
+	$scope0_page ? _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.content }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

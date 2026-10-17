@@ -1,6 +1,6 @@
 // template.marko
 const $for_content__cm__OR__it_v = /*@__PURE__*/ _fill_join("a3", 4, /*@__PURE__*/ _or(5, ($scope) => _attr_input_value($scope, "a", $scope.e + $scope._.j, $valueChange($scope))));
-const $for_content__cm = _resumed.a9 = /*@__PURE__*/ _for_closure(2, $for_content__cm__OR__it_v);
+const $for_content__cm = /*@__PURE__*/ _shell_init("a9", /*@__PURE__*/ _for_closure(2, $for_content__cm__OR__it_v));
 const $for_content__cv = /*@__PURE__*/ _fill_let("a4", 6, ($scope) => _text($scope.b, $scope.g));
 const $for_content__setup__script = _script("a2", ($scope) => _attr_input_value_script($scope, "a"));
 const $cm = /*@__PURE__*/ _const(9, $for_content__cm);

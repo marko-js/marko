@@ -5,12 +5,12 @@ function boom() {
 	throw new Error("SHOWN_message");
 }
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $try_content__input_content = _closure_resume("__tests__/tags/wrapper.marko_2_input_content#0:3/subscribe", /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $try_content__dynamicTag($scope, $scope._.input_content)));
+const $try_content__input_content = /*@__PURE__*/ _shell_init("__tests__/tags/wrapper.marko_2_input_content#0:3/init", _closure_resume("__tests__/tags/wrapper.marko_2_input_content#0:3/subscribe", /*@__PURE__*/ _closure_index(1, /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $try_content__dynamicTag($scope, $scope._.input_content)))));
 const $try_content__setup = ($scope) => {
 	$try_content__input_content($scope);
 	$try_content__input_fail($scope);
 };
-const $try_content__input_fail = /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe");
+const $try_content__input_fail = /*@__PURE__*/ _shell_init("__tests__/tags/wrapper.marko_2_input_fail#0:4/init", /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe"));
 const $catch_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $catch_content__input_content = /*@__PURE__*/ _fill_join_closure("__tests__/tags/wrapper.marko_fill0", "input_content", /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $catch_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/wrapper.marko_1_input_content#0:3/subscribe"), 0);
 const $catch_content__setup = $catch_content__input_content;

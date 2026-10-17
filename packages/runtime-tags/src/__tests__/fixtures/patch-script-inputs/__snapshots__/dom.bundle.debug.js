@@ -10,7 +10,7 @@ const $input_a__OR__input_b__script = _script("__tests__/template.marko_0_input_
 		el.dataset.runs = String(+(el.dataset.runs || 0) + 1);
 	}
 });
-const $input_a__OR__input_b = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_a#4_input_b#5/init", 6, $input_a__OR__input_b__script);
+const $input_a__OR__input_b = /*@__PURE__*/ _or(6, $input_a__OR__input_b__script);
 const $input_a = /*@__PURE__*/ _const("input_a", $input_a__OR__input_b);
 const $input_b = /*@__PURE__*/ _const("input_b", $input_a__OR__input_b);
 const $input = ($scope, input) => {

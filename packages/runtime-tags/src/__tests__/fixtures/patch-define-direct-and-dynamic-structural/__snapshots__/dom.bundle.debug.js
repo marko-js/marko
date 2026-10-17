@@ -27,7 +27,7 @@ const $open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "open/7"
 	$input_label__OR__open__OR__Tag($scope);
 });
 const $Tag = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill2", "Tag", $input_label__OR__open__OR__Tag);
-const $input_other__OR__Panel__OR__Other = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_other#6_Panel#8_Other#9/init", 10, ($scope) => $Tag($scope, $scope.input_other ? $scope.Other : $scope.Panel), 2);
+const $input_other__OR__Panel__OR__Other = /*@__PURE__*/ _or(10, ($scope) => $Tag($scope, $scope.input_other ? $scope.Other : $scope.Panel), 2);
 const $Panel = /*@__PURE__*/ _const("Panel", $input_other__OR__Panel__OR__Other);
 const $Other = /*@__PURE__*/ _const("Other", $input_other__OR__Panel__OR__Other);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {

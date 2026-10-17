@@ -9,21 +9,24 @@ import {
   BindingType,
   getCanonicalBinding,
   type Intersection,
+  isStateSourced,
   isDirectAlias,
   isParamBinding,
+  type ParamBinding,
   type ReferencedBindings,
   someAlias,
   someUpToAliasRoot,
   someReadIn,
 } from "../bindings";
-import { createAnalysisMemo, createCyclicMemo } from "../cyclic-memo";
+import { createAnalysisMemo } from "../cyclic-memo";
 import { readsValuesOnResume } from "../finalize-references";
 import {
   ensureKnownTagPatchGroups,
   getParamGroupSources,
   isKnownTagExtra,
+  someCallPasses,
 } from "../known-tag";
-import { isPatch } from "../marko-config";
+import { isPage, isPatch } from "../marko-config";
 import {
   every,
   first,
@@ -56,6 +59,11 @@ import {
   type ParamReasonGroup,
   sectionUtil,
 } from "../sections";
+import {
+  createsFromRenderer,
+  shipsContentShell,
+  shipsShellInits,
+} from "../shell";
 import { findSlot, type Slot, SlotKind } from "../slots";
 import {
   createSources,
@@ -68,16 +76,10 @@ import {
   sourcesUtil,
 } from "../sources";
 import { createAnalysisState } from "../state";
-import {
-  getWriteSources,
-  isFilledHole,
-  isPatchedSite,
-  isStableExpr,
-} from "./decisions";
+import { getWriteSources, isFilledHole, isStableExpr } from "./decisions";
 import {
   catchSetupRenders,
   patchWrites,
-  patchWritesScope,
   hasStructuralParam,
   someContentRead,
   isKnownChildNode,
@@ -117,7 +119,7 @@ export function getPatchFillBindings(section: Section) {
 }
 
 // A canonical root server value a patch sends to keep it current (aliases
-// never get ordinals; `$global` readers recompute from the re-shipped bag).
+// never get ordinals; `$global` readers re-read the re-shipped bag).
 function isPatchSent(binding: Binding) {
   return (
     isPatch() &&
@@ -126,7 +128,16 @@ function isPatchSent(binding: Binding) {
     !binding.sources!.state &&
     (binding.type === BindingType.param ||
       binding.type === BindingType.derived ||
-      (binding.type === BindingType.let && !binding.assignments))
+      (binding.type === BindingType.let && !binding.assignments)) &&
+    !derivesLocals(binding.section)
+  );
+}
+
+// Content a flush creates from its shell with no params or local closures
+// derives its locals from its closures: a patch neither fills nor sends them.
+function derivesLocals(section: Section) {
+  return (
+    !section.params && !section.localClosures && shipsContentShell(section)
   );
 }
 
@@ -136,16 +147,8 @@ function isPatchFillBinding(binding: Binding) {
   return !!getPatchFill(binding).fill;
 }
 
-// Content with params a flush creates from its shell, whose scope it writes
-// too: `buildShells` decides which ship, once reasons settle.
-function isWrittenContentShell(section: Section) {
-  return (
-    section.contentShell === true && !!section.params && patchWrites(section)
-  );
-}
-
 // A value's fill, derived once per analysis (afresh each solve pass): what its reads
-// need, how a patch fills them, and what recomputing it needs of its inputs.
+// need, how a patch fills them, and what deriving it needs of its inputs.
 export interface PatchFill {
   kind?: true | FillConditions;
   fill?: true | FillConditions;
@@ -182,13 +185,13 @@ function computePatchFill(binding: Binding): PatchFill {
   const effectRead = someAlias(binding, hasPatchEffectRead, undefined, true);
   const fnCapture = someAlias(binding, isRegisteredFnCapture, undefined, true);
   const fillable = canPatchFill(binding);
-  // A rendered read (through any alias) the client must recompute: joined
+  // A rendered read (through any alias) the client must derive: joined
   // with state, or inside structure the client may own.
   const fill = fillable ? (binding.sources?.state ? true : kind) : undefined;
   const conditions = fill === true ? undefined : fill;
   let derivedNeeds: PatchFill["derivedNeeds"];
-  // The client recomputes a value no patch can fill from what it derives
-  // from, wherever its reads, effects and functions (or a part's) need it.
+  // The client derives a value no patch can fill from its sources, wherever
+  // its reads, effects and functions (or a part's) need it.
   if (!fillable) {
     derivedNeeds = effectRead || fnCapture || kind;
     for (const part of binding.propertyAliases.values()) {
@@ -246,11 +249,28 @@ export function canPatchFill(binding: Binding) {
     }
     // A local with no state source that a state join reads: its patch writes
     // it, refreshing a paired scope and seeding a fresh one.
-    if (binding !== binding.section.params && isSeedableLocal(binding)) {
+    if (
+      binding !== binding.section.params &&
+      isSeedableLocal(binding) &&
+      !derivesLocals(binding.section)
+    ) {
       return true;
     }
   }
   return isPatchSent(binding) && patchWritesScope(binding.section);
+}
+
+// A scope a flush writes into: a known child, a branch or boundary body, a
+// `@catch`, attribute tag `<for>` content, or content it creates from its shell.
+export function patchWritesScope(section: Section) {
+  return (
+    patchWrites(section) &&
+    (isKnownChild(section) ||
+      !!section.branch ||
+      section.boundaryContent === "catch" ||
+      !!section.localClosures ||
+      shipsContentShell(section))
+  );
 }
 
 // A value a created scope gets from no other channel (a resumed one reads it
@@ -288,7 +308,7 @@ function seedsParam(binding: Binding) {
 // Content a patch creates from its shell alone: no registered renderer brings
 // the attribute tag `<for>` params its call site would pass.
 function createsElidedContent(section: Section) {
-  return section.contentShell === true && !getRendererReason(section);
+  return shipsContentShell(section) && !createsFromRenderer(section);
 }
 
 // Why a binding fills: `true` unconditionally, or the run-time conditions
@@ -336,11 +356,9 @@ function computeFillReadKind(
       // dispatched from this scope; an `<await>` value re-fires no promise.
       const others =
         knownChild &&
-        read.section.enclosing.nonOptionalAncestor ===
-          binding.section.enclosing.nonOptionalAncestor &&
         !isBoundaryValueRead(read) &&
         getOtherInputs(sources, binding);
-      if (others) {
+      if (others && hasTagCallerParamAt(others, binding.section)) {
         // A nested member's own fill (a loop row's, joined with state) also
         // re-runs the join, unless the join is a hole the flush fills itself.
         const fills = isFilledHole(read)
@@ -439,7 +457,7 @@ export function getClosureReadSources(closure: Binding, section: Section) {
 }
 
 // Reads only the declaration's own signal reaches: an effect in its section,
-// or another known child's param the client recomputes from it.
+// or another known child's param the client derives from it.
 function hasDeclarationOnlyReads(binding: Binding) {
   for (const read of binding.reads.keys()) {
     if (
@@ -459,7 +477,7 @@ function hasDeclarationOnlyReads(binding: Binding) {
 }
 
 // What client code needs of the values derived at the read that no patch can
-// fill, which recompute from it; a callee keeps its own copy of what a call passes.
+// fill, which derive from it; a callee keeps its own copy of what a call passes.
 function getDerivedNeeds(read: ReferencedExtra) {
   return reduce(read.derives, (kind: PatchFill["derivedNeeds"], derived) =>
     derived.section.program === read.section.program
@@ -610,38 +628,6 @@ function mergeConditions(
   };
 }
 
-// A known child's join params reach a created scope as seeds, never as
-// arrivals: the flush runs each join whose output the client owns.
-export function getCreatedJoins(section: Section) {
-  let joins: Intersection[] | undefined;
-  forEach(section.bindings, (binding) => {
-    for (const read of binding.reads.keys()) {
-      const refs = getReferencedBindings(read);
-      if (
-        read.section === section &&
-        Array.isArray(refs) &&
-        !joins?.includes(refs) &&
-        section.intersections?.get(refs)?.id !== undefined &&
-        initsCreatedJoin(section, refs)
-      ) {
-        (joins ||= []).push(refs);
-      }
-    }
-  });
-  return joins;
-}
-
-// State members arrive through their own fills, which run the join.
-export function initsCreatedJoin(section: Section, intersection: Intersection) {
-  const sources = getSourcesForRef(intersection);
-  return (
-    isPatch() &&
-    (isKnownChild(section) || section.boundaryContent === "catch") &&
-    !sources?.state &&
-    hasCallerParamSourceAt(sources, section)
-  );
-}
-
 // An effect read of a written value re-runs by register id when a patch
 // changes what it saw; ask through `someAlias` (direct aliases only).
 export function hasPatchEffectRead(binding: Binding) {
@@ -669,53 +655,285 @@ function isRegisteredFnRead(read: Read) {
   return !!read.fnRoot?.reason;
 }
 
-// Closures whose creation INITs render a fresh scope.
-export function getCreateInitClosures(section: Section) {
-  return bindingUtil.filter(section.referencedClosures, (closure) =>
-    closureInitsCreated(closure, section),
+// How a scope a flush creates runs what nothing it receives renders: a
+// closure's value, or a join some members of which arrive seeded or not at all.
+export interface CreatedInit {
+  // Where it renders the value by its init: every created scope (its shell names
+  // it), where the client contributes the caller group, or where a patch withholds
+  // one of these local fills derived from it.
+  init?: "always" | "client" | { localFills: SortedOpt<Binding> };
+  // Where it subscribes the closure so its owner's fills reach it: every created
+  // scope, or where no patch fills it or the groups of a join of it here.
+  subscribe?: "always" | { unfilled: SortedOpt<Sources> };
+}
+
+// The groups a created subscriber also subscribes in past its own: those of a
+// join of it here a call may pass client state, which then needs its fill.
+function getCreatedSubscribeStructure(section: Section, closure: Binding) {
+  let structure: SortedOpt<Sources>;
+  for (const join of getRenderedJoins(section)) {
+    const sources = bindingUtil.has(join, closure) && getSourcesForRef(join);
+    if (
+      sources &&
+      hasTagCallerParamAt(getOtherInputs(sources, closure), section)
+    ) {
+      structure = sourcesUtil.add(structure, sources);
+    }
+  }
+  return structure;
+}
+
+// The joins the section's signals render, once ids allocate: one with a constant
+// member records a read's constants beside its join.
+const [getRenderedJoins] = createAnalysisMemo((section: Section) => {
+  const joins: Intersection[] = [];
+  for (const join of section.intersections!.keys()) {
+    if (!some(join, (member) => member.type === BindingType.constant)) {
+      joins.push(join);
+    }
+  }
+  return joins;
+}, []);
+
+// Whether a join the section renders reads the closure.
+export function isReadInJoin(section: Section, closure: Binding) {
+  return getRenderedJoins(section).some((join) =>
+    bindingUtil.has(join, closure),
   );
 }
 
-// Every member of a state join inits: the join fires once all arrive, and a
-// created scope runs only registered inits. The reconciler sets constants.
-export function closureInitsCreated(closure: Binding, section: Section) {
-  return (
-    closure.type !== BindingType.constant &&
-    (!!closure.sources?.state || someReadIn(closure, section, isStateJoinRead))
-  );
+const NO_INITS = new Map<never, CreatedInit>();
+
+// Each section's closure inits, from the fills of the moment (afresh each
+// solve pass).
+export const [getClosureInits, resetClosureInits] = createAnalysisMemo(
+  computeClosureInits,
+  NO_INITS,
+);
+
+// The inits the server names for the section's created scopes, its closures'
+// and joins', asked once ids allocate the joins.
+export const [getCreatedInits] = createAnalysisMemo(
+  computeCreatedInits,
+  NO_INITS,
+);
+
+function computeClosureInits(section: Section): Map<Binding, CreatedInit> {
+  // A filled binding of the section is a local fill of each closure it derives from.
+  const localFills = new Map<Binding, SortedOpt<Binding>>();
+  forEach(section.bindings, (fill) => {
+    if (
+      !fill.sources?.state &&
+      some(fill.sources?.param, (param) =>
+        bindingUtil.has(section.referencedClosures, param),
+      ) &&
+      getPatchFill(fill).fill
+    ) {
+      forEach(fill.sources!.param, (param) =>
+        localFills.set(param, bindingUtil.add(localFills.get(param), fill)),
+      );
+    }
+  });
+  const inits = new Map<Binding, CreatedInit>();
+  forEach(section.referencedClosures, (closure) => {
+    const init = getClosureInit(section, closure, localFills.get(closure));
+    if (init) inits.set(closure, { init });
+  });
+  return inits.size ? inits : NO_INITS;
 }
 
-// An intersection joining the closure with state.
-function isStateJoinRead(read: ReferencedExtra) {
-  const refs = getReferencedBindings(read);
-  return Array.isArray(refs) && !!getSourcesForRef(refs)?.state;
+function computeCreatedInits(section: Section) {
+  const joinInits = new Map<Intersection, CreatedInit>();
+  // A closure read here only by joins every created scope inits needs no init of
+  // its own, unless it subscribes by it.
+  const joinedClosures = new Set<Binding>();
+  for (const join of getRenderedJoins(section)) {
+    const init = getJoinInit(section, join);
+    if (init) {
+      joinInits.set(join, init);
+      if (init.init === "always") {
+        for (const member of join) joinedClosures.add(member);
+      }
+    }
+  }
+  const inits = new Map<Binding | Intersection, CreatedInit>();
+  forEach(section.referencedClosures, (closure) => {
+    const init = getClosureInits(section).get(closure)?.init;
+    const subscribe = getClosureSubscribe(section, closure, init);
+    const named =
+      (init || subscribe) &&
+      (isDynamicClosure(section, closure) ||
+        !joinedClosures.has(closure) ||
+        someReadIn(closure, section, (read) => {
+          const join = getReferencedBindings(read);
+          return !Array.isArray(join) || joinInits.get(join)?.init !== "always";
+        })) &&
+      getNamedInit(section, { init, subscribe }, false);
+    if (named) inits.set(closure, named);
+  });
+  for (const [join, init] of joinInits) {
+    const named = getNamedInit(section, init, true);
+    if (named) inits.set(join, named);
+  }
+  return inits.size ? inits : NO_INITS;
 }
 
-// A fill closure a state join in `section` reads: its init registers on a
-// `_fill_join_*` wrapper, unless the chain passes a non-optional section.
-export function fillJoinsIn(closure: Binding, section: Section) {
-  return (
-    !closure.sources?.state &&
-    !!getPatchFill(closure).fill &&
-    section.enclosing.nonOptionalAncestor ===
-      closure.section.enclosing.nonOptionalAncestor &&
-    someReadIn(closure, section, isStateJoinRead)
-  );
+// The part of an init the server names: what every created scope does, by its
+// shell or a composing scope's setup, else what a flush writes.
+function getNamedInit(
+  section: Section,
+  { init, subscribe }: CreatedInit,
+  join: boolean,
+): CreatedInit | undefined {
+  const shellNames = patchComposes(section) || shipsShellInits(section);
+  const flushNames =
+    patchCreatesOrComposes(section) ||
+    // A `@catch` sets up its closures; its error's joins wait on the seed.
+    (join && section.boundaryContent === "catch");
+  const named: CreatedInit = {
+    init: (init === "always" ? shellNames : init !== "client" || flushNames)
+      ? init
+      : undefined,
+    subscribe: (subscribe === "always" ? shellNames : flushNames)
+      ? subscribe
+      : undefined,
+  };
+  return named.init || named.subscribe ? named : undefined;
 }
 
-// A closure one of the section's local fills with no state source derives
-// from: when a flush withholds that write, a fresh scope re-derives by its init.
-function isLocalFillClosure(section: Section, closure: Binding) {
-  return (
-    closure.section !== section &&
-    some(
-      section.bindings,
-      (fill) =>
-        !fill.sources?.state &&
-        isInParams(closure, fill.sources?.param) &&
-        !!getPatchFill(fill).fill,
+// A join's created init: a state join inits itself unless every member arrives
+// by its signal; one of caller params inits where the client passes them.
+function getJoinInit(
+  section: Section,
+  join: Intersection,
+): CreatedInit | undefined {
+  if (section.intersections!.get(join)!.source) return;
+  const sources = getSourcesForRef(join);
+  if (sources?.state) {
+    // The page itself is never created.
+    return !every(join, (member) => arrivesBySignal(member, section)) &&
+      (section.parent || !isPage())
+      ? { init: "always" }
+      : undefined;
+  }
+  if (
+    hasTagCallerParamAt(sources, section) &&
+    // Closures a withheld local fill re-derives from complete it.
+    !every(
+      join,
+      (member) =>
+        typeof getClosureInits(section).get(member)?.init === "object",
     )
+  ) {
+    return { init: "client" };
+  }
+}
+
+// A created scope gets the member by its signal, which runs a state join: state by
+// its own init or seed, a value of the section with an unconditional fill by it.
+function arrivesBySignal(member: Binding, section: Section) {
+  const root = getCanonicalBinding(member);
+  return (
+    isStateSourced(root) ||
+    (root.section === section && getPatchFill(root).fill === true)
   );
+}
+
+function getClosureInit(
+  section: Section,
+  closure: Binding,
+  localFills: SortedOpt<Binding>,
+): CreatedInit["init"] {
+  const { sources } = closure;
+  if (closure.type === BindingType.constant) return;
+  // Client state renders, and subscribes, by its own init.
+  if (sources?.state) return "always";
+  if (localFills) return { localFills };
+  // A caller's other closures render where the client contributes them; a join
+  // of them inits itself.
+  if (
+    hasTagCallerParamAt(sources, section) &&
+    someReadIn(closure, section, isLoneRead)
+  ) {
+    return "client";
+  }
+}
+
+// A caller's other dynamic closures subscribe: by the shell where no patch write
+// keeps a read current, else per instance where no patch fills them.
+function getClosureSubscribe(
+  section: Section,
+  closure: Binding,
+  init: CreatedInit["init"],
+): CreatedInit["subscribe"] {
+  if (
+    closure.type !== BindingType.constant &&
+    init !== "always" &&
+    typeof init !== "object" &&
+    hasCallerParamSourceAt(closure.sources, section) &&
+    isDynamicClosure(section, closure)
+  ) {
+    return subscribesFill(closure, section)
+      ? "always"
+      : { unfilled: getCreatedSubscribeStructure(section, closure) };
+  }
+}
+
+// The sources take a param a calling tag may pass client state: a template's
+// other than a page's, whose input the request passes, or a `<define>` body's.
+function hasTagCallerParamAt(sources: Sources | undefined, section: Section) {
+  return some(
+    sources?.param,
+    (param) => isCallerParamAt(param, section) && mayPassClientState(param),
+  );
+}
+
+// A `<define>` body's calls are known: one passes a param client state where
+// it passes state or such a param of its own (sources settle before solve).
+const [mayPassClientState] = createAnalysisMemo(
+  (param: ParamBinding): boolean =>
+    param.section.parent
+      ? someCallPasses(
+          param.section,
+          param,
+          (passed) =>
+            !!passed?.state || some(passed?.param, mayPassClientState),
+        )
+      : !isPage(),
+  false,
+);
+
+// A created subscriber of the closure is reached only by subscribing: a read
+// no patch write keeps current takes a fill its owner's subscribers carry.
+function subscribesFill(closure: Binding, section: Section) {
+  return (
+    someReadIn(closure, section, isUnwrittenRead) &&
+    (fillSubscribes(closure, section) ||
+      (isReadInJoin(section, closure) &&
+        joinsFillOverSubscribers(section, closure)))
+  );
+}
+
+function isUnwrittenRead(read: ReferencedExtra) {
+  return !isFilledHole(read);
+}
+
+// A join in `section` reading the closure runs as a fill join over its owner's
+// subscribers, matching the position each stamped.
+export function joinsFillOverSubscribers(section: Section, closure: Binding) {
+  return (
+    registersJoinFill(closure) &&
+    section.enclosing.nonOptionalAncestor !==
+      closure.section.enclosing.nonOptionalAncestor &&
+    !inStatefulBranch(section)
+  );
+}
+
+// A fill its declaration registers (kept by its assignments or its own
+// registration) reaches the join through what derives from it.
+export function registersJoinFill(member: Binding) {
+  const { fill, fillsReads, ownRegistration } = getPatchFill(member);
+  return !!fill && !((member.assignments || ownRegistration) && fillsReads);
 }
 
 // A `$global` source is fine, since the shipped value is current per flush;
@@ -750,7 +968,7 @@ function isUnfillablePatchRead(binding: Binding) {
 }
 
 // A patch fills a known child's value (a fill or a write), and a local
-// derivation when it fills every server source (it recomputes client-side).
+// derivation when it fills every server source (the client derives it).
 function patchFills(binding: Binding): boolean {
   const root = getCanonicalBinding(binding);
   if (getPatchFill(root).fill || isPatchWritten(root)) return true;
@@ -763,30 +981,12 @@ function patchFills(binding: Binding): boolean {
 
 // Whether a patch may create this content: its tag can diverge, a consumer
 // renders it in creatable structure, or an enclosing branch is created.
-export const contentMayCreate = createCyclicMemo(
+export const [contentMayCreate] = createAnalysisMemo(
   (section: Section) =>
     sectionMayCreate(section) ||
     (!!section.parent && enclosingMayCreate(section.parent)),
   false,
 );
-
-// Whether any consumer's tag names this content in a patch entry (a
-// boundary's shells name what they render); an unknown consumer may.
-export const contentIsPatched = createCyclicMemo((section: Section) => {
-  const { derives } = section;
-  return (
-    !derives ||
-    someContentRead(derives.binding, derives.properties, isPatchedContentRead)
-  );
-}, false);
-
-function isPatchedContentRead(read: ReferencedExtra) {
-  return (
-    isPatchedSite(read) ||
-    !!read.section.boundaryContent ||
-    read.section.branch?.optional === false
-  );
-}
 
 function sectionMayCreate(section: Section): boolean {
   if (section.branch) {
@@ -808,60 +1008,56 @@ function sectionMayCreate(section: Section): boolean {
 }
 
 function readMayCreate(read: ReferencedExtra) {
-  return enclosingMayCreate(read.section);
+  return enclosingMayCreate(read.section, true);
 }
 
-function enclosingMayCreate(section: Section): boolean {
+function enclosingMayCreate(section: Section, fromRead?: boolean): boolean {
   for (let cur: Section | undefined = section; cur; cur = cur.parent) {
     if (cur.branch?.optional) return patchWrites(cur);
     if (cur.branchExpr || cur.derives) {
       return contentMayCreate(cur);
     }
   }
-  // A caller may compose any template into its own shell (a lazy page
-  // under a layout, a child in a branch), so its root may be created.
-  return true;
+  // A caller may compose a template (a lazy-loaded one under a layout, a child
+  // in a branch), never the page template; a tag a read hands content to may.
+  return fromRead || !isPage();
 }
 
-// A branch or boundary body that ships a shell, or content whose shell a
-// patch may create (a shell kept only for reference never creates).
+// A branch or boundary body that ships a shell, or content a patch may create.
 export function patchCreates(section: Section) {
   return (
     isPatch() &&
-    (!!section.branch ||
-      (section.contentShell === true && contentMayCreate(section))) &&
+    (!!section.branch || shipsContentShell(section)) &&
     patchWrites(section) &&
     !sectionHasServerEffect(section)
   );
 }
 
-// A closure whose init a created scope may run registers it on its closure
-// get; a fill a state join reads registers on the join (`_shell_join`).
-export function createsWithInit(section: Section, closure: Binding) {
-  return (
-    patchCreates(section) &&
-    (keepsInit(section, closure) || subscribesCreated(section, closure))
-  );
+// A section whose scopes a flush creates: from its shell, or composed into a
+// created scope's.
+export function patchCreatesOrComposes(section: Section): boolean {
+  return patchCreates(section) || patchComposes(section);
 }
 
-// Inits a flush may name whatever client code reaches their signal.
-export function keepsInit(section: Section, closure: Binding) {
-  return (
-    (closureInitsCreated(closure, section) && !fillJoinsIn(closure, section)) ||
-    isLocalFillClosure(section, closure)
-  );
-}
+// A known child a created scope's shell composes: a template a caller renders
+// (no page), or a `<define>` body a created or composed scope calls.
+export const [patchComposes] = createAnalysisMemo(
+  (section: Section) =>
+    isKnownChild(section) &&
+    (section.parent
+      ? some(section.callSections, patchCreatesOrComposes)
+      : !isPage()),
+  false,
+);
 
-// A caller param a created content scope reads subscribes by its init, which
-// the flush runs where the param is client-sourced; other inits own the id.
-export function subscribesCreated(section: Section, closure: Binding) {
+// A `<define>` body reading what its owner holds, called below the section
+// defining it where a flush may create the call: its patch link names its owner.
+export function namesBodyOwner(section: Section, body: Section) {
   return (
-    isDynamicClosure(section, closure) &&
-    closure.type !== BindingType.constant &&
-    !closure.sources?.state &&
-    !closureInitsCreated(closure, section) &&
-    !isLocalFillClosure(section, closure) &&
-    hasCallerParamSourceAt(closure.sources, section)
+    body.readsOwner &&
+    body.parent !== section &&
+    patchWrites(section) &&
+    patchCreatesOrComposes(section)
   );
 }
 
@@ -974,27 +1170,28 @@ function findUnfilledStructure(
     ) {
       return false;
     }
-    // Content renders client side wherever its tag puts it, and a created
-    // scope on the way may init the closure from its owner.
+    const refs = getReferencedBindings(read);
+    // Content renders client side wherever its tag puts it, and a created scope
+    // may init the closure from its owner, or its caller's.
     for (
       let section: Section | undefined = read.section;
       section && section !== binding.section;
       section = section.parent
     ) {
+      const init = getClosureInits(section).get(binding);
       if (
         (!section.branch && !rendersWithOwner(section)) ||
-        closureInitsCreated(binding, section) ||
-        isLocalFillClosure(section, binding)
+        init?.init === "always" ||
+        typeof init?.init === "object"
       ) {
         if (!throughCreated) return false;
-        structure = sourcesUtil.union(
-          structure,
-          getSourcesForRef(getReferencedBindings(read)),
-        );
+        structure = sourcesUtil.union(structure, getSourcesForRef(refs));
         break;
       }
+      if (init?.init === "client") {
+        structure = sourcesUtil.union(structure, getSourcesForRef(refs));
+      }
     }
-    const refs = getReferencedBindings(read);
     if (Array.isArray(refs)) {
       const filledHole = isFilledHole(read);
       for (const ref of refs) {
@@ -1016,10 +1213,7 @@ function findUnfilledStructure(
         }
         // A caller param fills where its call's ownership bits say, at render.
         if (hasCallerParamSource(partner.sources)) {
-          structure = sourcesUtil.add(
-            structure,
-            getSourcesForRef(getReferencedBindings(read))!,
-          );
+          structure = sourcesUtil.add(structure, getSourcesForRef(refs)!);
         }
       }
     }
@@ -1151,10 +1345,5 @@ function computePatchWrite(binding: Binding): PatchWrite {
 // writes, that no fill always renders.
 function isPatchWritten(binding: Binding) {
   const { fill, writeReads } = getPatchFill(binding);
-  return (
-    fill !== true &&
-    !!writeReads &&
-    (patchWritesScope(binding.section) ||
-      isWrittenContentShell(binding.section))
-  );
+  return fill !== true && !!writeReads && patchWritesScope(binding.section);
 }

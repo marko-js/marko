@@ -16,7 +16,7 @@ function link(data, id) {
 }
 _shells({
 	c: "c !; ;<ul></ul>",
-	c0: /*@__PURE__*/ (() => `c0 c6!c1;${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)}`)()
+	c0: /*@__PURE__*/ (() => `c0 c7!c1;${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)}`)()
 });
 var feed_list_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 1), $scope0_page = _page_render();
@@ -35,6 +35,7 @@ var feed_list_default = _template("c", (input) => {
 		});
 		_html(`</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "c1");
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "c3");
 		_scope($scope1_id, {
 			e: item?.id,
 			_: _scope_with_id($scope0_id),
@@ -42,11 +43,11 @@ var feed_list_default = _template("c", (input) => {
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c0", $scope0_reason, 1);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
-	_patch_value($scope0_id, "vc4", hovered, 1);
+	_patch_value($scope0_id, "vc5", hovered, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: $wi__input_items && input.data,
 		f: $wi__input_items && hovered
-	}) : _filled_guard($scope0_reason, 2) && (_client_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 1)) && _patch_value($scope0_id, "vc3", input.data, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && (_client_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 1)) && _patch_value($scope0_id, "vc4", input.data, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

@@ -16,9 +16,9 @@
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-client-owned-loop/template.marko_fill0": "2"
 }]
-;BgI
+;BAE
 
-// PATCH holding BgI
+// PATCH holding BAE
 {
   "PatchChild:#childScope/0": {
     "PatchLoopItem:#ul/0": [0, {
@@ -34,7 +34,7 @@
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-client-owned-loop/template.marko_fill0": "3"
 }
 
-// PATCH holding BgI
+// PATCH holding BAE
 {
   "PatchChild:#childScope/0": {
     "PatchLoopItem:#ul/0": [0, {

@@ -16,8 +16,8 @@ var error_wrapper_default = _template("b", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "a", input.fail ? boom() : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "b2");
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b2");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, _client_guard($scope0_reason, 1) ? "b2" : "b3");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b3");
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -25,16 +25,19 @@ var error_wrapper_default = _template("b", (input) => {
 		_attr_content("b", $scope1_id, input.fallback);
 		_html(`</div>${_el_resume($scope1_id, "b", _mask_group($scope0_reason, 0))}`);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");
-	}, void 0, "b3", "b0", 1, "");
+	}, void 0, "b4", "b0", 1, "");
 	$scope0_page ? _scope($scope0_id, {
 		d: input.fallback,
 		f: _write_if($scope0_reason, 0) && $input_fallback__closures,
 		g: $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb4", input.fallback, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb5", input.fallback, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
-_shells({ a: /*@__PURE__*/ (() => `a !a3;${((_w0) => ` D l/${_w0}&b`)("b%c")};${((_w0) => `<button> </button>${_w0}<!>`)($template)}`)() });
+_shells({
+	a0: "a0 a6,",
+	a: /*@__PURE__*/ (() => `a !a2;${((_w0) => ` D l/${_w0}&b`)("b%c")};${((_w0) => `<button> </button>${_w0}<!>`)($template)}`)()
+});
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -46,20 +49,21 @@ var template_default = _template("a", (input) => {
 	const $childScope = _patch_child($scope0_id, "c");
 	error_wrapper_default({
 		fail: input.fail,
-		fallback: attrTag({ content: _content_resume("a2", () => {
+		fallback: attrTag({ content: _content_resume("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<i>${_patch_text($scope1_id, "a", input.label, void 0, $scope0_reason, 1)} ${_text_resume($scope1_id, "b", count, 2)}</i>`);
-			_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0"), "a1");
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "a1");
+			_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		}, $scope0_id) })
 	});
-	_script($scope0_id, "a3");
-	_patch_value($scope0_id, "va5", count, 1);
+	_script($scope0_id, "a2");
+	_patch_value($scope0_id, "va4", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		g: input.label,
 		h: count,
 		i: _write_if($scope0_reason, 1) && $input_label__closures,
 		j: $count__closures,
 		c: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.label, !_server_guard($scope0_reason, 1));
+	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va3", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

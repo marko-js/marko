@@ -7,8 +7,8 @@
         "PatchWrite:input_b": 5,
         "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-join-client-state/template.marko_2_input_a#3_input_b#4/init"
       },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-join-client-state/template.marko_fill3": 5
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-join-client-state/template.marko_fill2": 5
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-join-client-state/template.marko_1*shell"]
 }]
-;BgE
+;BAE

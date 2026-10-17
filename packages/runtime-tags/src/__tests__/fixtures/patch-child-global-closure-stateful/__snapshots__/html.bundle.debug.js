@@ -16,6 +16,7 @@ var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<i${_patch_attr($scope1_id, "PatchAttr:#i/0 data-z", "data-z", z + $global$1.mark, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></i>${_el_resume($scope1_id, "#i/0")}`);
 			_fill_global_subscribe("__tests__/tags/gm/index.marko_1_z#0:6_$global_mark#0:10", $scope1_id);
+			_client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_init($scope1_id, "__tests__/tags/gm/index.marko_1_z#0:6/init");
 			_scope($scope1_id, { _: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id) }, "__tests__/tags/gm/index.marko", "3:2");
 			return 0;
 		}

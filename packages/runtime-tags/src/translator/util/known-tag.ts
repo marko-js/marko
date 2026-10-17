@@ -26,7 +26,14 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { every, forEach, fromIter, reduce, type SortedOpt } from "./optional";
+import {
+  every,
+  forEach,
+  fromIter,
+  reduce,
+  some,
+  type SortedOpt,
+} from "./optional";
 import {
   type ParamsTree,
   getAllKnownPropNames,
@@ -35,6 +42,7 @@ import {
   getSettledParamsTree,
 } from "./params-tree";
 import { isPatchKeyedSlot } from "./patch/decisions";
+import { namesBodyOwner } from "./patch/refresh";
 import {
   patchWrites,
   hasStructuralParam,
@@ -380,6 +388,8 @@ export function knownTagTranslateHTML(
                 "_patch_child",
                 getScopeIdIdentifier(section),
                 getScopeAccessorLiteral(childScopeBinding),
+                namesBodyOwner(section, childSection) &&
+                  getScopeIdIdentifier(childSection.parent!),
               )
             : callRuntime("_peek_scope_id"),
         ),
@@ -601,6 +611,27 @@ export function recordKnownTagPatchFacts(section: Section) {
       }
     }
   }
+}
+
+// Whether some call of the `<define>` body passes the params what `test` holds
+// of: the sources of their call-site expressions.
+export function someCallPasses(
+  body: Section,
+  params: Sources["param"],
+  test: (sources: Sources | undefined) => boolean,
+) {
+  return some(body.callSections, (callSection) =>
+    callSection.knownTags!.some(
+      (tagExtra) =>
+        tagExtra[kChildSection] === body &&
+        test(
+          reduce(
+            mapParamReasonToExpr(tagExtra[kKnownExprs]!, params),
+            mergeAllSourcesForExpr,
+          ),
+        ),
+    ),
+  );
 }
 
 // A known tag rendering another template calls its setup in the section's

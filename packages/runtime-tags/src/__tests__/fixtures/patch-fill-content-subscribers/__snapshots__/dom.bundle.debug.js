@@ -11,21 +11,21 @@ var frame_default = /*@__PURE__*/ _template("__tests__/tags/frame.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}<button class=a>a</button><button class=b>b</button></main>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&/${_w1}& b l`)("D%l", "D%l");
-const $frame_content2__input_label__OR__b = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.input_label + ":" + $scope._.b)), "input_label/9", 1);
-const $frame_content2__input_label = _resumed["__tests__/template.marko_2_input_label#0:6/init"] = /*@__PURE__*/ _closure_get("input_label/9", $frame_content2__input_label__OR__b, 0, "__tests__/template.marko_2_input_label#0:6/subscribe");
+const $frame_content2__input_label__OR__b = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _shell_or("__tests__/template.marko_2_input_label#0:6_b#0:8/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_label + ":" + $scope._.b)), "input_label/9", 1);
+const $frame_content2__input_label = _closure_resume("__tests__/template.marko_2_input_label#0:6/subscribe", /*@__PURE__*/ _closure_index(1, /*@__PURE__*/ _closure_get("input_label/9", $frame_content2__input_label__OR__b)));
 const $frame_content2__setup = ($scope) => {
 	$frame_content2__input_label($scope);
 	$frame_content2__b($scope);
 };
-const $frame_content2__b = _resumed["__tests__/template.marko_2_b#0:8/init"] = /*@__PURE__*/ _closure_get("b/11", $frame_content2__input_label__OR__b, 0, "__tests__/template.marko_2_b#0:8/subscribe");
+const $frame_content2__b = /*@__PURE__*/ _shell_init("__tests__/template.marko_2_b#0:8/init", /*@__PURE__*/ _closure_get("b/11", $frame_content2__input_label__OR__b));
 const $frame_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<p class=b> </p>", "D ", $frame_content2__setup);
-const $frame_content__input_label__OR__a = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._.input_label + ":" + $scope._.a)), "input_label/9", 0);
-const $frame_content__input_label = _resumed["__tests__/template.marko_1_input_label#0:6/init"] = /*@__PURE__*/ _closure_get("input_label/9", $frame_content__input_label__OR__a, 0, "__tests__/template.marko_1_input_label#0:6/subscribe");
+const $frame_content__input_label__OR__a = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _shell_or("__tests__/template.marko_1_input_label#0:6_a#0:7/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_label + ":" + $scope._.a)), "input_label/9", 0);
+const $frame_content__input_label = _closure_resume("__tests__/template.marko_1_input_label#0:6/subscribe", /*@__PURE__*/ _closure_get("input_label/9", $frame_content__input_label__OR__a));
 const $frame_content__setup = ($scope) => {
 	$frame_content__input_label($scope);
 	$frame_content__a($scope);
 };
-const $frame_content__a = _resumed["__tests__/template.marko_1_a#0:7/init"] = /*@__PURE__*/ _closure_get("a/10", $frame_content__input_label__OR__a, 0, "__tests__/template.marko_1_a#0:7/subscribe");
+const $frame_content__a = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_a#0:7/init", /*@__PURE__*/ _closure_get("a/10", $frame_content__input_label__OR__a));
 const $frame_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p class=a> </p>", "D ", $frame_content__setup);
 const $a__closure = /*@__PURE__*/ _closure($frame_content__a);
 const $a = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "a/7", $a__closure);

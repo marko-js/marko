@@ -3,10 +3,10 @@ const $template$3 = "<!><!><!>";
 const $walks$3 = "b%c";
 const $setup$3 = ($_) => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__tab_content = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.tab_content));
+const $if_content__tab_content = /*@__PURE__*/ _shell_init("__tests__/tags/view.marko_2_tab_content#1:3/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.tab_content)));
 const $if_content__setup$1 = $if_content__tab_content;
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup$1);
-const $for_content__input_selected = /*@__PURE__*/ _fill_join("__tests__/tags/view.marko_fill0", "input_selected", /*@__PURE__*/ _for_selector("#text/0", "input_selected", "#LoopKey", ($scope) => $for_content__if($scope, $scope["#LoopKey"] === $scope._.input_selected ? 0 : 1)));
+const $for_content__input_selected = /*@__PURE__*/ _shell_init("__tests__/tags/view.marko_1_input_selected#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/view.marko_fill0", "input_selected", /*@__PURE__*/ _for_selector("#text/0", "input_selected", "#LoopKey", ($scope) => $for_content__if($scope, $scope["#LoopKey"] === $scope._.input_selected ? 0 : 1))));
 const $for_content__setup = $for_content__input_selected;
 const $for_content__$params = ($scope, $params2) => $for_content__tab_content($scope, $params2[0]?.content);
 const $for_content__tab_content = /*@__PURE__*/ _const("tab_content", $if_content__tab_content);
@@ -39,13 +39,13 @@ var page_default = /*@__PURE__*/ _template("__tests__/tags/page.marko", $templat
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content__input_items = /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill0", "input_items", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_items$2($scope["#childScope/0"], $scope._.input_items)));
+const $if_content__input_items = /*@__PURE__*/ _shell_init("__tests__/tags/wrap.marko_1_input_items#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill0", "input_items", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_items$2($scope["#childScope/0"], $scope._.input_items))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_items._($scope);
 	$if_content__input_selected._($scope);
 	$setup$2($scope["#childScope/0"]);
 };
-const $if_content__input_selected = /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill1", "input_selected", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_selected$2($scope["#childScope/0"], $scope._.input_selected)));
+const $if_content__input_selected = /*@__PURE__*/ _shell_init("__tests__/tags/wrap.marko_1_input_selected#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill1", "input_selected", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_selected$2($scope["#childScope/0"], $scope._.input_selected))));
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$2), $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {
@@ -82,7 +82,7 @@ var holder_default = /*@__PURE__*/ _template("__tests__/tags/holder.marko", "", 
 // tags/src.marko
 const $template = "";
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&`)("");
-const $tab_content__count = _resumed["__tests__/tags/src.marko_1_count#0:5/init"] = /*@__PURE__*/ _closure_get("count/7", ($scope) => _text($scope["#text/2"], $scope._.count), 0, "__tests__/tags/src.marko_1_count#0:5/subscribe");
+const $tab_content__count = /*@__PURE__*/ _shell_init("__tests__/tags/src.marko_1_count#0:5/init", /*@__PURE__*/ _closure_get("count/7", ($scope) => _text($scope["#text/2"], $scope._.count)));
 const $tab_content__setup__script = _script("__tests__/tags/src.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope._, +$scope._.count + 1);
 }));

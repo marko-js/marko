@@ -13,7 +13,7 @@ const $if_content__setup = ($scope) => {
 	$await_content2($scope);
 };
 const $try_content__if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__setup);
-const $try_content__pending = _resumed.a14 = /*@__PURE__*/ _closure_get(7, ($scope) => $try_content__if($scope, $scope._.f ? 0 : 1), 0, "a7");
+const $try_content__pending = /*@__PURE__*/ _shell_init("a14", /*@__PURE__*/ _closure_get(7, ($scope) => $try_content__if($scope, $scope._.f ? 0 : 1), 0, "a7"));
 const $pending = /*@__PURE__*/ _fill_let("a10", 5, /* @__PURE__ */ _closure($try_content__pending, $if_content__pending));
 const $setup__script = _script("a9", ($scope) => _on($scope.b, "click", function() {
 	$pending($scope, new Promise((r) => globalThis.__resolve = r));

@@ -11,14 +11,14 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
-const $wrapper_content__count__OR__label = /*@__PURE__*/ _or(2, ($scope) => _text($scope["#text/0"], $scope.label + $scope._.count));
+const $wrapper_content__count__OR__label = /*@__PURE__*/ _shell_or("__tests__/template.marko_1_count#0:5_label#1/init", 2, ($scope) => _text($scope["#text/0"], $scope.label + $scope._.count));
 const $wrapper_content__label = /*@__PURE__*/ _const("label", $wrapper_content__count__OR__label);
 const $wrapper_content__input_label = _closure_resume("__tests__/template.marko_1_input_label#0:4/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/6", ($scope) => $wrapper_content__label($scope, $scope._.input_label)), 0));
 const $wrapper_content__setup = ($scope) => {
 	$wrapper_content__input_label($scope);
 	$wrapper_content__count($scope);
 };
-const $wrapper_content__count = _resumed["__tests__/template.marko_1_count#0:5/init"] = /*@__PURE__*/ _closure_get("count/7", $wrapper_content__count__OR__label, 0, "__tests__/template.marko_1_count#0:5/subscribe");
+const $wrapper_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_count#0:5/init", /*@__PURE__*/ _closure_get("count/7", $wrapper_content__count__OR__label));
 const $wrapper_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p> </p>", "D ", $wrapper_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($wrapper_content__count);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "count/5", $count__closure);

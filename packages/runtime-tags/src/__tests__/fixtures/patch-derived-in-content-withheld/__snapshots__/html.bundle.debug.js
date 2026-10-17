@@ -12,11 +12,12 @@ var toggle_default = _template("__tests__/tags/toggle.marko", (input) => {
 		if (input.open) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, $wg__input_content, void 0, 2, $scope0_reason, 2);
+			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/toggle.marko_1_input_content#0:4/init");
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/toggle.marko", "1:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_open, void 0, void 0, void 0, ["__tests__/tags/toggle.marko_1*shell"], $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { input_content: _unfilled_if($scope0_reason, 1) && input.content }, "__tests__/tags/toggle.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/toggle.marko_fill0", input.content, !_server_guard($scope0_reason, 2));
+	$scope0_page ? _scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/toggle.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/toggle.marko_fill0", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/wrapper.marko
@@ -36,7 +37,8 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
 _shells({
-	"__tests__/template.marko_1*content": /*@__PURE__*/ (() => `__tests__/template.marko_1*content __tests__/template.marko_1_open#0:5/init;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2)}`)(),
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,",
+	"__tests__/template.marko_1*content": /*@__PURE__*/ (() => `__tests__/template.marko_1*content __tests__/template.marko_1_input_label#0:4/subscribe __tests__/template.marko_1_open#0:5/init;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2)}`)(),
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -60,10 +62,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_patch_text($scope2_id, "#text/0", label, void 0, $scope0_reason, 0)}</p>`);
+				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_label#1:1/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $wrapper_content__label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"));
 			}, $scope1_id)
 		});
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:4/subscribe");
+		_patch_write($scope1_id, "PatchWrite:label", label, 1);
 		_subscribe($open__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id),

@@ -24,9 +24,9 @@ const $Card_content__$params = ($scope, $params2) => {
 	$Card_content__user_name($scope, $params2[0].user?.name);
 };
 const $Card_content = _content("__tests__/template.marko_1*content", /*@__PURE__*/ ((_w0) => `<h4> </h4>${_w0}<button class=pick>pick</button>`)($template$1), /*@__PURE__*/ ((_w0) => `D l/${_w0}& b`)("D l"), $Card_content__setup, $Card_content__$params);
-const $picked = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill2", "picked/6", ($scope) => _text($scope["#text/1"], $scope.picked));
+const $picked = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "picked/6", ($scope) => _text($scope["#text/1"], $scope.picked));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_useA__OR__input_user__OR__Card__OR__Other = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_user", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_useA", /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_useA#4_input_user#5_Card#7_Other#8/init", 9, ($scope) => $dynamicTag($scope, $scope.input_useA ? $scope.Card : $scope.Other, ($_) => ({ user: $scope.input_user })), 3)));
+const $input_useA__OR__input_user__OR__Card__OR__Other = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.input_useA ? $scope.Card : $scope.Other, ($_) => ({ user: $scope.input_user })), 3);
 const $Card = /*@__PURE__*/ _const("Card", $input_useA__OR__input_user__OR__Card__OR__Other);
 const $Other = /*@__PURE__*/ _const("Other", $input_useA__OR__input_user__OR__Card__OR__Other);
 function $setup($scope) {

@@ -22,9 +22,7 @@
 INSERT: u
 REMOVE: button + u
 REMOVE: button + i
-INSERT: u + i
 INSERT: u + button
-REMOVE: button + i
 ```
 
 # Update `{"a":"a2","show":true,"flag":false}`
@@ -41,7 +39,5 @@ REMOVE: button + i
 INSERT: u
 REMOVE: button + u
 REMOVE: button + button
-INSERT: u + i
 INSERT: u + button
-REMOVE: button + i
 ```

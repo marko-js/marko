@@ -19,8 +19,8 @@ var card_default = _template("b", (input) => {
 			_scope_id();
 			_html("<span>done</span>");
 		}, 1, "b0");
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "b4");
-		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b4", 0);
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, _client_guard($scope0_reason, 1) ? "b4" : "b5");
+		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b5", 0);
 		$wi__input_promise && _resume_branch($scope2_id);
 	}, () => {
 		_scope_reason();
@@ -28,17 +28,20 @@ var card_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $wg__input_content);
 		_subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b3", $wg__input_content);
 		$wg__input_content || _resume_branch($scope1_id);
-	}, void 0, "b5", void 0, "b2", 1);
+	}, void 0, "b6", void 0, "b2", 1);
 	_html("</section>");
 	$scope0_page ? _scope($scope0_id, {
 		d: input.content,
 		f: $wi__input_content && $input_content__closures,
 		g: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb6", input.content, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb7", input.content, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
-_shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `D/${_w0}&l`)("D%l")};${((_w0) => `<main>${_w0}</main>`)($template)}`)() });
+_shells({
+	a0: "a0,",
+	a: /*@__PURE__*/ (() => `a !;${((_w0) => `D/${_w0}&l`)("D%l")};${((_w0) => `<main>${_w0}</main>`)($template)}`)()
+});
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -48,11 +51,12 @@ var template_default = _template("a", (input) => {
 	const $childScope = _patch_child($scope0_id, "a");
 	card_default({
 		promise: input.promise,
-		content: _content_resume("a1", () => {
+		content: _content_resume("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</em>`);
-			_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "a1");
+			_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		}, $scope0_id)
 	});
 	_html("</main>");

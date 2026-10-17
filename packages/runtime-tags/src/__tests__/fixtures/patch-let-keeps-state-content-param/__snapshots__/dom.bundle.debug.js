@@ -15,7 +15,7 @@ var boxp_default = /*@__PURE__*/ _template("__tests__/tags/boxp.marko", $templat
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
-const $boxp_content__l = /*@__PURE__*/ _let("l/5", ($scope) => _text($scope["#text/1"], $scope.l));
+const $boxp_content__l = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "l/5", ($scope) => _text($scope["#text/1"], $scope.l));
 const $boxp_content__x = ($scope, x) => $boxp_content__l($scope, String(x));
 const $boxp_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$boxp_content__l($scope, $scope.l + "+");

@@ -17,7 +17,7 @@
       }
     },
     cAb: 0,
-    vb15: (p => p = new Promise((f, r) => _.a = {
+    vb17: (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
         p.catch(_ => 0);
@@ -50,7 +50,7 @@
       }
     },
     cAb: 0,
-    vb15: (p => p = new Promise((f, r) => _.a = {
+    vb17: (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
         p.catch(_ => 0);

@@ -11,15 +11,19 @@ var panel_default = _template("b", (input) => {
 		if (input.open) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "a", input.body, {}, 0, 0, $wg__input_body, void 0, 2, $scope0_reason, 2);
+			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "b1");
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_open, void 0, void 0, void 0, ["b0"], $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 1) && input.body }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.body, !_server_guard($scope0_reason, 2));
+	$scope0_page ? _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.body }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.body, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
-_shells({ a: /*@__PURE__*/ (() => `a !a2;${((_w0) => `D/${_w0}& l`)("b%c")};${((_w0) => `<main>${_w0}<button>+</button></main>`)($template)}`)() });
+_shells({
+	a0: "a0,",
+	a: /*@__PURE__*/ (() => `a !a2;${((_w0) => `D/${_w0}& l`)("b%c")};${((_w0) => `<main>${_w0}<button>+</button></main>`)($template)}`)()
+});
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_page = _page_render();
@@ -31,11 +35,11 @@ var template_default = _template("a", (input) => {
 	const $childScope = _patch_child($scope0_id, "a");
 	panel_default({
 		open: true,
-		body: attrTag({ content: _content_resume("a1", () => {
+		body: attrTag({ content: _content_resume("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "a", $global$1.brand)}</em>`);
-			_fill_global_subscribe("a0", $scope1_id);
+			_fill_global_subscribe("a1", $scope1_id);
 			_scope($scope1_id, {});
 		}, $scope0_id) })
 	});

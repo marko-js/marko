@@ -61,8 +61,8 @@ export const runSetupIds = ([inits, effects]: SetupIds, scope: Scope) => {
 // A shell's parts, kept on the registered factory (and its renderers) for
 // the loop patcher, which reconciles from them rather than a renderer.
 export type Shell = [template: string, walks: string, setup: SetupFn | 0];
-type ShellFactory = ((owner?: Scope, ...locals: Scope[]) => Renderer) & {
-  [RendererProp.Shell]: Shell;
+type ContentFactory = ((owner?: Scope, ...locals: Scope[]) => Renderer) & {
+  [RendererProp.Shell]?: Shell;
 };
 type Renderer = ReturnType<ReturnType<typeof _content>> & {
   [RendererProp.Shell]?: Shell;
@@ -70,9 +70,10 @@ type Renderer = ReturnType<ReturnType<typeof _content>> & {
 
 // Separate from module registrations so a flush can create from a shell
 // before its module loads; the build id and held-shell token rule out a miss.
-const shells: Record<string, ShellFactory> = {};
+export const shells: Record<string, ContentFactory> = {};
 export const getContentFactory = (id: string) =>
-  shells[id] || getRegisteredWithScope<ShellFactory | Renderer | undefined>(id);
+  shells[id] ||
+  getRegisteredWithScope<ContentFactory | Renderer | undefined>(id);
 export const getContent = (id: string, owner?: Scope, ...locals: Scope[]) => {
   const registered = getContentFactory(id);
   return typeof registered === "function"
@@ -104,7 +105,7 @@ export const registerShell = (shell: string) => {
   // takes no input.
   const registered = _resumed[id];
   const factory = _content(id, ...parts);
-  if (registered) _resumed[id] = registered;
+  _resumed[id] = registered;
   shells[id] = Object.assign(
     (owner?: Scope) =>
       Object.assign(

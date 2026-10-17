@@ -11,7 +11,7 @@ const $template = "<main><!></main>";
 const $walks = "D%l";
 const $setup = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_mode__OR__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_mode", /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_mode#3_input_label#4/init", 5, ($scope) => $dynamicTag($scope, $scope.input_mode === "plain" ? card_plain_default : card_live_default, ($_) => ({ label: $scope.input_label })))));
+const $input_mode__OR__input_label = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_mode === "plain" ? card_plain_default : card_live_default, ($_) => ({ label: $scope.input_label })));
 const $input_mode = /*@__PURE__*/ _const("input_mode", $input_mode__OR__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", $input_mode__OR__input_label);
 const $input = ($scope, input) => {

@@ -15,7 +15,7 @@ function boom(error) {
 }
 _shells({
 	a0: "a0;D ;<p> </p>",
-	a1: "a1 a10;D%c%c%;<span><!> <!> <!></span>",
+	a1: "a1 a10,",
 	a: "a !a5; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2*content packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2_count#0:7/init;D%c%c%;<span><!> <!> <!></span>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2*content packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2_count#0:7/init,`, {
   "PatchCatch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2*content",

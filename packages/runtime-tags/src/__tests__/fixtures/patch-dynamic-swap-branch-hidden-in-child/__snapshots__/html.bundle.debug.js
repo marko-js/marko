@@ -2,6 +2,8 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
+	"__tests__/tags/w.marko_2*content": "__tests__/tags/w.marko_2*content __tests__/tags/w.marko_2_input_show#0:3/subscribe,",
+	"__tests__/tags/w.marko_1*content": "__tests__/tags/w.marko_1*content __tests__/tags/w.marko_1_input_show#0:3/subscribe,",
 	"__tests__/tags/w.marko": "__tests__/tags/w.marko !;b%;<!><!><!>",
 	"__tests__/tags/w.marko_3*shell": "__tests__/tags/w.marko_3*shell !__tests__/tags/w.marko_3; ;<button>a</button>",
 	"__tests__/tags/w.marko_4*shell": "__tests__/tags/w.marko_4*shell !__tests__/tags/w.marko_4; ;<button>b</button>"
@@ -12,6 +14,7 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 	const $input_show__closures = new Set();
 	const A = { content: _content_resume("__tests__/tags/w.marko_1*content", ({ x }) => {
 		const $scope1_id = _scope_id();
+		_patch_write($scope1_id, "PatchWrite:x", x);
 		const $scope1_reason = _scope_reason();
 		_html("<u>A</u>");
 		_if(() => {
@@ -23,14 +26,16 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/w.marko_3*shell"], $scope0_reason, 2);
+		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/w.marko_1_input_show#0:3/init");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, {
 			x,
 			_: $wi__input_show__OR__input_flag__OR__input_x && _scope_with_id($scope0_id)
-		}, "__tests__/tags/w.marko", "1:2", { x: "1:13" }), "__tests__/tags/w.marko_1_input_show#0:3/subscribe", $wg__input_show);
+		}, "__tests__/tags/w.marko", "1:2", { x: "1:13" }));
 		$wg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id) };
 	const B = { content: _content_resume("__tests__/tags/w.marko_2*content", ({ x }) => {
 		const $scope2_id = _scope_id();
+		_patch_write($scope2_id, "PatchWrite:x", x);
 		const $scope2_reason = _scope_reason();
 		_html("<u>B</u>");
 		_if(() => {
@@ -42,11 +47,12 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/w.marko_4*shell"], $scope0_reason, 2);
+		_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/tags/w.marko_2_input_show#0:3/init");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope2_id, {
 			x,
 			_: $wi__input_show__OR__input_flag__OR__input_x && _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_show/9": $wi__input_show && 1
-		}, "__tests__/tags/w.marko", "7:2", { x: "7:13" }), "__tests__/tags/w.marko_2_input_show#0:3/subscribe", $wg__input_show);
+		}, "__tests__/tags/w.marko", "7:2", { x: "7:13" }));
 		$wg__input_show || _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.flag ? A : B, { x: input.x }, 0, 0, $wg__input_flag__OR__input_x, void 0, 1, $scope0_reason, 0);

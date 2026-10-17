@@ -27,15 +27,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_write($scope0_id, "PatchWrite:input_show", input.show, 1);
 	_patch_write($scope0_id, "PatchWrite:input_label", input.label, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_show#5_input_label#6/init");
-	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", n, 1);
-	$scope0_page ? _scope($scope0_id, {
-		input_show: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show,
-		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
+	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", n, 1);
+	$scope0_page && _scope($scope0_id, {
+		input_show: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.show,
+		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.label,
 		n
 	}, "__tests__/template.marko", 0, {
 		input_show: ["input.show"],
 		input_label: ["input.label"],
 		n: "3:6"
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.show, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.label, !_server_guard($scope0_reason, 2)));
+	});
 }, 1);

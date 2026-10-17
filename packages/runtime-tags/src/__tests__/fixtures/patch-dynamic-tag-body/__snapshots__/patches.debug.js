@@ -11,9 +11,9 @@
     }
   }
 }]
-;BwU
+;CQU
 
-// PATCH holding BwU
+// PATCH holding CQU
 {
   "PatchDynamicTag:#text/0": [">section", {
     class: "b"
@@ -24,7 +24,7 @@
   }
 }
 
-// PATCH holding BwU
+// PATCH holding CQU
 {
   "PatchDynamicTag:#text/0": [">section", {
     class: "c"

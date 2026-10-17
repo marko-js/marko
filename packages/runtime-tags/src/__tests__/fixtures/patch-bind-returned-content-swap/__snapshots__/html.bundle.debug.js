@@ -1,7 +1,10 @@
 // tags/child.marko
 const $template$1 = "";
 const $walks$1 = "";
-_shells({ "__tests__/tags/child.marko": "^__tests__/tags/child.marko !," });
+_shells({
+	"__tests__/tags/child.marko_1*content": "__tests__/tags/child.marko_1*content __tests__/tags/child.marko_1_count#0:3/init!__tests__/tags/child.marko_1,",
+	"__tests__/tags/child.marko": "^__tests__/tags/child.marko !,"
+});
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -13,7 +16,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_patch_text($scope1_id, "#text/1", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope1_id, "#text/2", count, 2)}</em>${_el_resume($scope1_id, "#em/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1");
-		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2"), "__tests__/tags/child.marko_1_input_label#0:2/subscribe"), "__tests__/tags/child.marko_1_count#0:3/subscribe");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "__tests__/tags/child.marko_1_input_label#0:2/init" : "__tests__/tags/child.marko_1_input_label#0:2/subscribe");
+		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2")));
 	}, $scope0_id) };
 	const $return = Content;
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill1", count, 1);
@@ -51,7 +55,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_write($scope0_id, "PatchWrite:a", a, 1);
 	_patch_write($scope0_id, "PatchWrite:b", b, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_first#9_a#11_b#12/init");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", n, 1);
 	$scope0_page && _scope($scope0_id, {
 		n,

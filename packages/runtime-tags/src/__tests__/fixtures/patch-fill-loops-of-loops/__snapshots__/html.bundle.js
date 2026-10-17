@@ -16,6 +16,7 @@ var template_default = _template("a", (input) => {
 		_for_of(row.cells, (cell) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "a", cell + ":" + input.suffix + "@0")}</p>`);
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "a2");
 			_subscribe($count__closures, _subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, {
 				M: cell,
 				_: _scope_with_id($scope1_id)

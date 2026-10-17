@@ -18,6 +18,7 @@ var template_default = _template("a", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html(`<p>${_text_resume($scope2_id, "a", input.title + "@0")}</p>`);
+					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "a2");
 					_subscribe($count__closures, _subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a2"), "a3");
 					return 0;
 				}

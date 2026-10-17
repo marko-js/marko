@@ -2,14 +2,14 @@
 const $template = "<main><!><em> </em><button>s</button></main>";
 const $walks = "D%bD l l";
 const $if_content__v__OR__suffix = /*@__PURE__*/ _or(1, ($scope) => _attr_input_value($scope, "#input/0", $scope._.v, $valueChange($scope)));
-const $if_content__v = _resumed["__tests__/template.marko_1_v#0:6/init"] = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__v__OR__suffix);
+const $if_content__v = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_v#0:6/init", /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__v__OR__suffix));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _attr_input_value_script($scope, "#input/0"));
 const $if_content__setup = ($scope) => {
 	$if_content__v._($scope);
 	$if_content__suffix._($scope);
 	$if_content__setup__script($scope);
 };
-const $if_content__suffix = _resumed["__tests__/template.marko_1_suffix#0:7/init"] = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__v__OR__suffix);
+const $if_content__suffix = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_suffix#0:7/init", /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__v__OR__suffix));
 const $v = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "v/6", ($scope) => {
 	_text($scope["#text/1"], $scope.v);
 	$if_content__v($scope);

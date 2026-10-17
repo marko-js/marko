@@ -13,7 +13,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__value = _write_guard($scope1_reason, 0);
 		_html(`<p>${_text_resume($scope1_id, "#text/0", value + input.title, $wg__input_title || $wg__value)}</p>`);
-		_client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_title#0:5_value#3/init");
 		_subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, {
 			value: $wi__input_title && value,
 			_: _scope_with_id($scope0_id)

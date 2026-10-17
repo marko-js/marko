@@ -6,9 +6,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-child-branch-static/tags/card/index.marko_1*shell"]
   }
 }]
-;BgE
+;CAE
 
-// PATCH holding BgE
+// PATCH holding CAE
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{
@@ -17,14 +17,14 @@
   }
 }
 
-// PATCH holding BgE
+// PATCH holding CAE
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": 0
   }
 }
 
-// PATCH holding BgE
+// PATCH holding CAE
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{

@@ -14,16 +14,17 @@ var gm_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<i${_patch_attr($scope1_id, "aa data-z", "data-z", z + $global$1.mark, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></i>${_el_resume($scope1_id, "a")}`);
 			_fill_global_subscribe("b1", $scope1_id);
+			_client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_init($scope1_id, "b2");
 			_scope($scope1_id, { _: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	_fill_global_subscribe("b2", $scope0_id, _client_guard($scope0_reason, 0));
+	_fill_global_subscribe("b3", $scope0_id, _client_guard($scope0_reason, 0));
 	_patch_write($scope0_id, "we", input.v, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 0) && input.v,
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && z
-	}) : _filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb3", z, !_server_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0));
+	}) : _filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb4", z, !_server_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0));
 });
 
 // template.marko

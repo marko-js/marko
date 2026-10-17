@@ -67,7 +67,5 @@ INSERT: div + .box
 REMOVE: .box + .box
 UPDATE: .box[class] null => "box"
 INSERT: .box > p
-UPDATE: .box > p::text " " => "SHOWN_name2b"
-UPDATE: .box > p::text "" => "SHOWN_name2b"
 INSERT: p:nth-of-type(1) + div
 ```

@@ -2,8 +2,7 @@
 function boom() {
 	throw new Error("boom");
 }
-const $try_content__input_message = _closure_resume("a2", /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._.f)));
-const $try_content__count = _resumed.a9 = /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.b, $scope._.g === 1 ? boom() : ""), 0, "a3");
+const $try_content__count = /*@__PURE__*/ _shell_init("a9", /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.b, $scope._.g === 1 ? boom() : ""), 0, "a3"));
 const $catch_content__input_message = /*@__PURE__*/ _fill_join_closure("a6", 5, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.b, $scope._.f), 0, "a1"), 0);
 const $catch_content__setup = $catch_content__input_message;
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);

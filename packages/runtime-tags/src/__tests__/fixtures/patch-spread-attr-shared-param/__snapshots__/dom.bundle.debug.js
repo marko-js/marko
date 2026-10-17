@@ -3,15 +3,15 @@ const $template = "<a>x</a><img>";
 const $walks = " b b";
 const $setup = ($_) => {};
 const $input_url__OR__input_title__OR__input_cls__script = _script("__tests__/template.marko_0_input_url#4_input_title#5_input_cls#6", ($scope) => _attrs_script($scope, "#a/0"));
-const $input_url__OR__input_title__OR__input_cls = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_cls", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_title", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_url", /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_url#4_input_title#5_input_cls#6/init", 7, ($scope) => {
+const $input_url__OR__input_title__OR__input_cls = /*@__PURE__*/ _or(7, ($scope) => {
 	_attrs($scope, "#a/0", {
 		href: $scope.input_url,
 		title: $scope.input_title,
 		class: $scope.input_cls
 	});
 	$input_url__OR__input_title__OR__input_cls__script($scope);
-}, 2))));
-const $input_url__OR__input_width = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill3", "input_width", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_url", /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_url#4_input_width#8/init", 9, ($scope) => _attr($scope["#img/1"], "src", `${$scope.input_url}?w=${$scope.input_width}`))));
+}, 2);
+const $input_url__OR__input_width = /*@__PURE__*/ _or(9, ($scope) => _attr($scope["#img/1"], "src", `${$scope.input_url}?w=${$scope.input_width}`));
 const $input_url = /*@__PURE__*/ _const("input_url", ($scope) => {
 	$input_url__OR__input_title__OR__input_cls($scope);
 	$input_url__OR__input_width($scope);

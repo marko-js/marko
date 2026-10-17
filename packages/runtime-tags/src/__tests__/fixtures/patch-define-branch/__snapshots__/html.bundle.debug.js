@@ -1,20 +1,16 @@
 // template.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
-_shells({
-	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D ;<em> </em>",
-	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>+</button>"
-});
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>+</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_x__closures = new Set();
 	let s = 1;
-	const foo = { content: _content_elide("__tests__/template.marko_1*content", () => {
+	const foo = { content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</em>`);
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_x#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), "__tests__/template.marko_1_input_x#0:4/subscribe");
 	}, $scope0_id) };
 	if ($scope0_page) _if(() => {

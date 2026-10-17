@@ -18,8 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_a#4_input_b#5/init");
-	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill3", open, 1);
+	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_a: input.a,
 		input_b: input.b,
@@ -30,5 +29,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_b: ["input.b"],
 		fmt: "1:8",
 		open: "2:6"
-	}) : (_filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.a, !_server_guard($scope0_reason, 1)) : _patch_write($scope0_id, "PatchWrite:input_a", input.a, !_server_guard($scope0_reason, 1))), _filled_guard($scope0_reason, 2) && (_client_guard($scope0_reason, 1) ? _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.b, !_server_guard($scope0_reason, 2)) : _patch_write($scope0_id, "PatchWrite:input_b", input.b, !_server_guard($scope0_reason, 2))), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", fmt, !_server_guard($scope0_reason, 0)));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", fmt, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_a", input.a, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchWrite:input_b", input.b, !_server_guard($scope0_reason, 2)));
 }, 1);

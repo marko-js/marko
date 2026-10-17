@@ -23,8 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_upper", input.upper, 1);
 	_patch_write($scope0_id, "PatchWrite:up", up, 1);
 	_patch_write($scope0_id, "PatchWrite:low", low, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_upper#5_up#6_low#7/init");
-	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill4", open, 1);
+	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_title: input.title,
 		input_upper: _write_if($scope0_reason, 1) && input.upper,
@@ -39,5 +38,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		low: "2:8",
 		pick: "3:8",
 		open: "4:6"
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.upper, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", up, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", low, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill3", pick, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_title", input.title, !_server_guard($scope0_reason, 1)));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", pick, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:input_title", input.title, !_server_guard($scope0_reason, 1)));
 }, 1);

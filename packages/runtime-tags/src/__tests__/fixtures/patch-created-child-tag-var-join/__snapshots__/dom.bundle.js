@@ -15,7 +15,7 @@ const $setup__script = _script("e0", ($scope) => _on($scope.b, "click", function
 }));
 
 // tags/file-host.marko
-const $first_content__input_files = /*@__PURE__*/ _closure_get(5, ($scope) => $input_files$1($scope.a, $scope._.d), 0, "b1");
+const $first_content__input_files = /*@__PURE__*/ _shell_init("b1", /*@__PURE__*/ _closure_get(5, ($scope) => $input_files$1($scope.a, $scope._.d), 0, "b2"));
 const $input_files__closure = /*@__PURE__*/ _closure($first_content__input_files);
 const $input_files = /*@__PURE__*/ _const(3, $input_files__closure);
 

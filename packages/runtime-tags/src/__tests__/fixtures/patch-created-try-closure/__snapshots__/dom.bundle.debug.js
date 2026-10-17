@@ -7,7 +7,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_label($scope);
 	$try_content__count($scope);
 };
-const $try_content__count = _resumed["__tests__/template.marko_2_count#0:6/init"] = /*@__PURE__*/ _closure_get("count/8", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:6/subscribe");
+const $try_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_2_count#0:6/init", /*@__PURE__*/ _closure_get("count/8", ($scope) => _text($scope["#text/0"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:6/subscribe"));
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<p><!> <!></p>", "D%c%", $try_content__setup, 0, $catch_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);
 const $count__closure = /*@__PURE__*/ _closure($try_content__count);

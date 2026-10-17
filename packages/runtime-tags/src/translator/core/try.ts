@@ -15,8 +15,11 @@ import { getTagName } from "../util/get-tag-name";
 import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import { some } from "../util/optional";
-import { sectionHasServerEffect } from "../util/patch/refresh";
-import { patchMayWrite, patchWritesScope } from "../util/patch/structure";
+import {
+  patchWritesScope,
+  sectionHasServerEffect,
+} from "../util/patch/refresh";
+import { patchMayWrite } from "../util/patch/structure";
 import { boundaryAlwaysPairs } from "../util/patch/writers";
 import { getSourcesForRef } from "../util/reasons";
 import { mergeTagReferences, onFinalizeReferences } from "../util/references";

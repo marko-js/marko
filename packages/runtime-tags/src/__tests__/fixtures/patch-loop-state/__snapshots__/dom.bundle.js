@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__count = _resumed.a4 = /*@__PURE__*/ _for_closure(0, ($scope) => _text($scope.b, $scope._.g));
+const $for_content__count = /*@__PURE__*/ _shell_init("a4", /*@__PURE__*/ _for_closure(0, ($scope) => _text($scope.b, $scope._.g)));
 const $count = /*@__PURE__*/ _fill_let("a2", 6, ($scope) => {
 	_text($scope.c, $scope.g);
 	$for_content__count($scope);

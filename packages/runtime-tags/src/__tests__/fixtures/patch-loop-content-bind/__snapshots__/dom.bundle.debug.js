@@ -5,7 +5,7 @@ const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__item_content = /*@__PURE__*/ _fill_join("__tests__/tags/list.marko_fill1", "item_content", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.item_content)));
 const $if_content__setup = $if_content__item_content;
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
-const $for_content__open = _resumed["__tests__/tags/list.marko_1_open#0:5/init"] = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__if($scope, $scope._.open ? 0 : 1));
+const $for_content__open = /*@__PURE__*/ _shell_init("__tests__/tags/list.marko_1_open#0:5/init", /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__if($scope, $scope._.open ? 0 : 1)));
 const $for_content__setup = $for_content__open;
 const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
 const $for_content__item_content = /*@__PURE__*/ _fill_const("__tests__/tags/list.marko_fill1", "item_content", $if_content__item_content);

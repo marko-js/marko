@@ -1,5 +1,5 @@
 // PATCH
-[`a0 a6 a7; ;<a>go</a>`, {
+[`a0 a6; ;<a>go</a>`, {
   ba: "a0",
   va3: {
     href: "/b"

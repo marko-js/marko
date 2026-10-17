@@ -271,7 +271,12 @@ export function linkScopePatch(
       if (contentId) shipShell(state, contentId);
       const entry =
         slotIds && patchNode(state, [patch, contentId || 0, ...slotIds]);
-      writePatch(state, parent, entryKey(PatchKey.Child, hop), entry || patch);
+      writePatch(
+        state,
+        parent,
+        entryKey(PatchKey.Child, link.up ? "$".repeat(link.up) + hop : hop),
+        entry || patch,
+      );
       return entry;
     } else {
       (
@@ -335,6 +340,8 @@ export interface PatchLink {
   slots?: (string | undefined)[];
   // A content body's owner (its client `_`) when not the rendering scope.
   owner?: number;
+  // A `<define>` body a flush may create: its owner's hops up from `parent`.
+  up?: number;
 }
 
 // A patch template's document render: structure tracks unpatched context.
@@ -419,13 +426,13 @@ export function _patch_nonce() {
 }
 
 // Only a shell the server has rides an entry (a missing one rejects the patch),
-// shipped once per response unless the page already holds it.
+// shipped once per response unless held or empty (the client's renderer suffices).
 export function shipShell(
   state: PatchUpdateState,
   shellId: string | 0 | undefined,
 ) {
-  if (shellId && rawShells[shellId]) {
-    if (!(state.sentShells ??= new Set()).has(shellId)) {
+  if (shellId && shellId in rawShells) {
+    if (rawShells[shellId] && !(state.sentShells ??= new Set()).has(shellId)) {
       state.sentShells.add(shellId);
       state.pendingShells +=
         (state.pendingShells && ",") + quotedShell(shellId);
@@ -670,29 +677,39 @@ export function _mask_group(mask: GroupMask, group: number) {
   return groupSources(mask, group);
 }
 
-// Peeks the child's scope id and links it: a child already written (tag-variable
-// children render first) links now, any other on its first write (`patchLinks`).
-export function _patch_child(scopeId: number, accessor: Accessor) {
+// Peeks the child's scope id and links it now or on its first write; a created
+// `<define>` body's link names its owner, the scope that defined it.
+export function _patch_child(
+  scopeId: number,
+  accessor: Accessor,
+  ownerScopeId?: number,
+) {
   const childScopeId = _peek_scope_id();
   const state = getState();
   if (state instanceof PatchUpdateState) {
-    (state.patchLinks ??= {})[childScopeId] = {
+    const link: PatchLink = ((state.patchLinks ??= {})[childScopeId] = {
       parent: scopeId,
       link: accessor,
-    };
-    const patch = peekScopePatch(state, childScopeId);
-    if (patch) {
-      writePatch(state, scopeId, entryKey(PatchKey.Child, accessor), patch);
+    });
+    if (ownerScopeId && inCreatable()) {
+      link.owner = ownerScopeId;
+      link.up = findOwnerDepth(state, scopeId, ownerScopeId);
     }
+    const patch = peekScopePatch(state, childScopeId);
+    if (patch) linkScopePatch(state, childScopeId, patch);
   }
   return childScopeId;
 }
 
-// An init a fresh scope runs (setup) for what the client owns but nothing
-// delivers: a closure a branch local derives from, or a root join.
-export function _patch_init(scopeId: number, initId: string) {
+// An init a fresh scope runs (setup) for what the client owns but no patch
+// fills; `shell`: those its own shell names, run where another's composes it.
+export function _patch_init(scopeId: number, initId: string, shell?: 1) {
   const state = getState();
-  if (state instanceof PatchUpdateState && inCreatable()) {
+  if (
+    state instanceof PatchUpdateState &&
+    inCreatable() &&
+    !(shell && getChunk()!.context![kBranchId] === scopeId)
+  ) {
     addSetupId(state, scopeId, initId);
   }
   return "";

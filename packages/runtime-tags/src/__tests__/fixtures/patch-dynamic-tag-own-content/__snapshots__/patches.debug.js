@@ -1,9 +1,11 @@
 // PATCH
-{
-  "PatchDynamicTag:#text/0": ["^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-own-content/template.marko_1*content", {
-    label: "b"
-  }],
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-own-content/template.marko_1*content !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-own-content/template.marko_1,`, {
+  "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-own-content/template.marko_1*content",
   "PatchChild:BranchScopes:#text/0": {
-    "PatchText:#text/1": "b"
+    "PatchText:#text/1": "b",
+    "PatchSetup:": {
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-own-content/template.marko_fill1": 0
+    }
   }
-}
+}]
+;BAE

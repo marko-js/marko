@@ -30,7 +30,7 @@ var b_default = _template("__tests__/b.marko", (input) => {
 			_html(`<p>${_patch_text($scope3_id, "#text/0", value, void 0, $scope0_reason, 0)}</p>`);
 			_scope($scope3_id, {}, "__tests__/b.marko", "3:4");
 		}, 1, "__tests__/b.marko_3*content", 1);
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/b.marko_1_input_promise#0:4/subscribe");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "__tests__/b.marko_1_input_promise#0:4/init" : "__tests__/b.marko_1_input_promise#0:4/subscribe");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/b.marko", "2:2"), _client_guard($scope0_reason, 0) && "__tests__/b.marko_1_input_promise#0:4/subscribe", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {
@@ -45,7 +45,7 @@ var b_default = _template("__tests__/b.marko", (input) => {
 // template.marko
 const $template = "<main><!></main>";
 const $walks = "D%l";
-_shells({ "__tests__/template.marko": "__tests__/template.marko !;D%;<main><!></main>" });
+_shells({ "__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_page__OR__input_promise = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -54,12 +54,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	_patch_write($scope0_id, "PatchWrite:input_page", input.page, 1);
 	_patch_write($scope0_id, "PatchWrite:input_promise", input.promise, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_page#3_input_promise#4/init");
-	$scope0_page ? _scope($scope0_id, {
-		input_page: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.page,
-		input_promise: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.promise
+	$scope0_page && _scope($scope0_id, {
+		input_page: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.page,
+		input_promise: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.promise
 	}, "__tests__/template.marko", 0, {
 		input_page: ["input.page"],
 		input_promise: ["input.promise"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.page, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.promise, !_server_guard($scope0_reason, 2)));
+	});
 }, 1);

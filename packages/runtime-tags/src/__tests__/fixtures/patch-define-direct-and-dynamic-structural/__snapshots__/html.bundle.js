@@ -40,8 +40,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	_patch_write($scope0_id, "wi", Panel, 1);
 	_patch_write($scope0_id, "wj", Other, 1);
-	_client_guard($scope0_reason, 1) && _patch_init($scope0_id, "a5");
-	_patch_value($scope0_id, "va6", open, 1);
+	_patch_value($scope0_id, "va5", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.label,
 		h: open,

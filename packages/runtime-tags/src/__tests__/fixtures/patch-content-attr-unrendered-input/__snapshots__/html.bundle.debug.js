@@ -1,7 +1,10 @@
 // template.marko
 const $template = "<button class=inc> </button><section></section>";
 const $walks = " D l b";
-_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l ;<button class=inc> </button><section></section>" });
+_shells({
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content,",
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l ;<button class=inc> </button><section></section>"
+});
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -12,14 +15,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.rec.name, void 0, $scope0_reason, 1)}</em>`);
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_rec_name__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), "__tests__/template.marko_1_input_rec_name#0:6/subscribe");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_rec_name#0:6/subscribe");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_rec_name__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"));
 	}, $scope0_id) };
 	_html("<section>");
 	_patch_attr_content("#section/2", $scope0_id, input.on ? frag.content : null, void 0, $scope0_reason, 2);
 	_html(`</section>${_el_resume($scope0_id, "#section/2", _mask_group($scope0_reason, 2))}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
-	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "__tests__/template.marko_0_input_on#7_frag_content#10/init");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", n, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_rec_name: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.rec?.name,

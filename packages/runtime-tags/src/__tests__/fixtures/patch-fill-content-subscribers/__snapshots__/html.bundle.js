@@ -12,8 +12,8 @@ var frame_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a0: "a0 a7 a8;D ;<p class=b> </p>",
-	a1: "a1 a10 a11;D ;<p class=a> </p>",
+	a0: "a0 a7 a8 a9;D ;<p class=b> </p>",
+	a1: "a1 a11 a12 a13;D ;<p class=a> </p>",
 	a: /*@__PURE__*/ (() => `a !a2;${((_w0, _w1) => `D/${_w0}&/${_w1}& b l`)("D%l", "D%l")};${((_w0, _w1) => `<main>${_w0}${_w1}<button class=a>a</button><button class=b>b</button></main>`)($template, $template)}`)()
 });
 var template_default = _template("a", (input) => {

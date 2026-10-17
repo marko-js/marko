@@ -4,14 +4,14 @@ const $walks$1 = "D%b l";
 const $if_content__c__OR__l = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill3", "l", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.l + "#" + $scope._.c)));
 const $if_content__l = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill3", "l", $if_content__c__OR__l);
 const $if_content__input_label__OR__input_other = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1", "input_other", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill0", "input_label", /*@__PURE__*/ _or(1, ($scope) => $if_content__l($scope, $scope._.input_label + $scope._.input_other + "!")), "#text/0", 0), "#text/0", 0);
-const $if_content__input_label = _resumed["__tests__/tags/child.marko_1_input_label#0:5/init"] = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_label__OR__input_other);
+const $if_content__input_label = /*@__PURE__*/ _shell_init("__tests__/tags/child.marko_1_input_label#0:5/init", /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_label__OR__input_other));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$if_content__input_other._($scope);
 	$if_content__c._($scope);
 };
-const $if_content__input_other = _resumed["__tests__/tags/child.marko_1_input_other#0:6/init"] = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_label__OR__input_other);
-const $if_content__c = _resumed["__tests__/tags/child.marko_1_c#0:7/init"] = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__c__OR__l);
+const $if_content__input_other = /*@__PURE__*/ _shell_init("__tests__/tags/child.marko_1_input_other#0:6/init", /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_label__OR__input_other));
+const $if_content__c = /*@__PURE__*/ _shell_init("__tests__/tags/child.marko_1_c#0:7/init", /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__c__OR__l));
 const $c = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill2", "c/7", $if_content__c);
 const $setup__script$1 = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$c($scope, +$scope.c + 1);

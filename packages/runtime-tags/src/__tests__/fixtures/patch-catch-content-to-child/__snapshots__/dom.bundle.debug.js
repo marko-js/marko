@@ -16,14 +16,14 @@ function boom(error) {
 }
 const $try_content__input_error = /*@__PURE__*/ _closure_get("input_error/9", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_3_input_error#0:6/subscribe");
 const $try_content__setup = $try_content__input_error;
-const $box_content__input_label = _closure_resume("__tests__/template.marko_2_input_label#0:5/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/2"], $scope._._.input_label), ($scope) => $scope._._), 0));
+const $box_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/2"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0);
 const $box_content__setup = ($scope) => {
 	$box_content__input_label($scope);
 	$box_content__count($scope);
 	$box_content__err_message($scope);
 };
-const $box_content__count = _resumed["__tests__/template.marko_2_count#0:7/init"] = /*@__PURE__*/ _closure_get("count/10", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._, "__tests__/template.marko_2_count#0:7/subscribe");
-const $box_content__err_message = /*@__PURE__*/ _closure_get("err_message/11", ($scope) => _text($scope["#text/0"], $scope._.err_message), 0, "__tests__/template.marko_2_err_message#1:3/subscribe");
+const $box_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_2_count#0:7/init", /*@__PURE__*/ _closure_get("count/10", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._));
+const $box_content__err_message = /*@__PURE__*/ _closure_get("err_message/11", ($scope) => _text($scope["#text/0"], $scope._.err_message));
 const $box_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<span><!> <!> <!></span>", "D%c%c%", $box_content__setup);
 const $catch_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $box_content($scope));
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);

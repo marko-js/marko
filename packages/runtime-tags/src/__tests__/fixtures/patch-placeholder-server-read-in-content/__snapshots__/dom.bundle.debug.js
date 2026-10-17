@@ -18,7 +18,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);
 };
-const $placeholder_content__input_msg = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/8", ($scope) => _text($scope["#text/0"], $scope._._.input_msg), ($scope) => $scope._._, "__tests__/template.marko_2_input_msg#0:5/subscribe"), 0);
+const $placeholder_content__input_msg = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/8", ($scope) => _text($scope["#text/0"], $scope._._.input_msg), ($scope) => $scope._._), 0);
 const $placeholder_content__setup = $placeholder_content__input_msg;
 const $placeholder_content = _content("__tests__/template.marko_2*content", "<em>loading <!></em>", "Db%", $placeholder_content__setup);
 const $wrap_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);

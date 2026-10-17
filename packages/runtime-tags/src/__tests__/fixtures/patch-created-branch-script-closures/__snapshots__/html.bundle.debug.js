@@ -3,7 +3,7 @@ const $template$2 = "<button> </button><!><!>";
 const $walks$2 = " D l%c";
 _shells({
 	"__tests__/tags/level-watch.marko": "__tests__/tags/level-watch.marko !__tests__/tags/level-watch.marko_0; D l%;<button> </button><!><!>",
-	"__tests__/tags/level-watch.marko_1*shell": "__tests__/tags/level-watch.marko_1*shell __tests__/tags/level-watch.marko_1_input_projection_skill#0:6/init __tests__/tags/level-watch.marko_1_input_baseXp#0:7/init __tests__/tags/level-watch.marko_1_input_playerId#0:8/init __tests__/tags/level-watch.marko_1_shown#0:9/init,"
+	"__tests__/tags/level-watch.marko_1*shell": "__tests__/tags/level-watch.marko_1*shell __tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9/init,"
 });
 var level_watch_default = _template("__tests__/tags/level-watch.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

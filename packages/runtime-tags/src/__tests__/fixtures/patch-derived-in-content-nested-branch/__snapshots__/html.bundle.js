@@ -12,8 +12,8 @@ var wrapper_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a0: "a0;b%;<!><!><!>",
-	a: /*@__PURE__*/ (() => `a !a3;${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template)}`)(),
+	a0: "a0 a6;b%;<!><!><!>",
+	a: /*@__PURE__*/ (() => `a !a2;${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template)}`)(),
 	a1: "a1 a8 a9;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_label, void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a2");
+		_patch_write($scope1_id, "wb", label, 1);
 		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id),
@@ -46,12 +46,12 @@ var template_default = _template("a", (input) => {
 		$wg__input_label || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "a3");
-	_patch_value($scope0_id, "va5", count, 1);
+	_script($scope0_id, "a2");
+	_patch_value($scope0_id, "va4", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: count,
 		h: $count__closures,
 		g: $wi__input_label && $input_label__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va4", input.label, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va3", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

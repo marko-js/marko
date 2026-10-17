@@ -20,7 +20,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 const $template$1 = /*@__PURE__*/ ((_w0) => `<button>add</button>${_w0}<!>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
 _shells({
-	"__tests__/tags/child.marko_1*content": "__tests__/tags/child.marko_1*content;b%;<!><!><!>",
+	"__tests__/tags/child.marko_1*content": "__tests__/tags/child.marko_1*content __tests__/tags/child.marko_1_input_show#0:4/subscribe;b%;<!><!><!>",
 	"__tests__/tags/child.marko": /*@__PURE__*/ (() => `__tests__/tags/child.marko !__tests__/tags/child.marko_0;${((_w0) => ` b/${_w0}&b`)("b%c")};${((_w0) => `<button>add</button>${_w0}<!>`)($template$2)}`)(),
 	"__tests__/tags/child.marko_2*shell": "__tests__/tags/child.marko_2*shell,<span>shown</span>"
 });
@@ -44,7 +44,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/child.marko_2*shell"], $scope0_reason, 0);
-			_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_show#0:4/subscribe");
+			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_show#0:4/init");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "5:6"));
 			$wg__input_show || _resume_branch($scope1_id);
 		}, $scope0_id) });

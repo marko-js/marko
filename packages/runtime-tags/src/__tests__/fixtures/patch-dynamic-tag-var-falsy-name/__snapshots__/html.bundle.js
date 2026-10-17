@@ -36,7 +36,7 @@ var child_default = _template("b", (input) => {
 			_html("content");
 		}, $scope1_id), void 0, void 0, "b3", 1, $scope0_reason, 0);
 		_var($scope1_id, "b", $inputa11yTextbutton_scope, "b3");
-		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "b4");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "b4" : "b5");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			c: $btn,
 			_: $wi__input_a11yText && _scope_with_id($scope0_id)

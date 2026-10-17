@@ -13,15 +13,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:input_value", input.value, 1);
 	_patch_write($scope0_id, "PatchWrite:input_wire", input.wire, 1);
 	_patch_write($scope0_id, "PatchWrite:handler", handler, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_value#5_input_wire#6_handler#7/init");
-	$scope0_page ? _scope($scope0_id, {
-		input_value: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.value,
-		input_wire: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.wire,
-		handler: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && handler
+	$scope0_page && _scope($scope0_id, {
+		input_value: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.value,
+		input_wire: _unfilled_if($scope0_reason, 0) && input.wire,
+		handler: _unfilled_if($scope0_reason, 0) && handler
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],
 		input_wire: ["input.wire"],
 		handler: "1:8",
 		"ControlledHandler:#input/1": ["valueChange", "4:28"]
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.value, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.wire, !_server_guard($scope0_reason, 3)));
+	});
 }, 1);

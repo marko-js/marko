@@ -1,10 +1,10 @@
 // tags/gm/index.marko
 const $template = "<p></p><!><!>";
 const $walks = " b%c";
-const $if_content__z = /*@__PURE__*/ _fill_join("b3", 6, /*@__PURE__*/ _if_closure(1, 0, /* @__PURE__ */ _fill_global_join("mark", "b1", ($scope) => _attr($scope.a, "data-z", $scope._.g + $scope.$.mark))));
+const $if_content__z = /*@__PURE__*/ _shell_init("b2", /*@__PURE__*/ _fill_join("b4", 6, /*@__PURE__*/ _if_closure(1, 0, /* @__PURE__ */ _fill_global_join("mark", "b1", ($scope) => _attr($scope.a, "data-z", $scope._.g + $scope.$.mark)))));
 const $if_content__setup$1 = $if_content__z;
-const $z = /*@__PURE__*/ _fill_const("b3", 6, $if_content__z);
-const $input_v__$global_flag = /*@__PURE__*/ _fill_global_join("flag", "b2", ($scope) => $z($scope, $scope.e + $scope.$.flag));
+const $z = /*@__PURE__*/ _fill_const("b4", 6, $if_content__z);
+const $input_v__$global_flag = /*@__PURE__*/ _fill_global_join("flag", "b3", ($scope) => $z($scope, $scope.e + $scope.$.flag));
 const $if$1 = /*@__PURE__*/ _if(1, "<i></i>", " ", $if_content__setup$1);
 const $input_v = /*@__PURE__*/ _const(4, ($scope) => {
 	$if$1($scope, $scope.e ? 0 : 1);

@@ -58,7 +58,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			_html(`<em>${_patch_text($scope5_id, "#text/0", v, void 0, $scope0_reason, 1)}</em>`);
 			_scope($scope5_id, {}, "__tests__/tags/card.marko", "2:4");
 		}, 1, "__tests__/tags/card.marko_5*content", 1);
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/card.marko_2_input_slow#0:5/subscribe");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, _client_guard($scope0_reason, 1) ? "__tests__/tags/card.marko_2_input_slow#0:5/init" : "__tests__/tags/card.marko_2_input_slow#0:5/subscribe");
 		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "1:2"), _client_guard($scope0_reason, 1) && "__tests__/tags/card.marko_2_input_slow#0:5/subscribe", 0);
 		$wi__input_slow && _resume_branch($scope2_id);
 	}, () => {
@@ -81,7 +81,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			_html(`<em>${_patch_text($scope7_id, "#text/0", v, void 0, $scope0_reason, 3)}</em>`);
 			_scope($scope7_id, {}, "__tests__/tags/card.marko", "10:4");
 		}, 1, "__tests__/tags/card.marko_7*content", 1);
-		_unfilled_if($scope0_reason, 3) && _patch_init($scope4_id, "__tests__/tags/card.marko_4_input_failing#0:7/subscribe");
+		_unfilled_if($scope0_reason, 3) && _patch_init($scope4_id, _client_guard($scope0_reason, 3) ? "__tests__/tags/card.marko_4_input_failing#0:7/init" : "__tests__/tags/card.marko_4_input_failing#0:7/subscribe");
 		$wi__input_failing && _subscribe(_unfilled_if($scope0_reason, 3) && $input_failing__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "9:2"), _client_guard($scope0_reason, 3) && "__tests__/tags/card.marko_4_input_failing#0:7/subscribe", 0);
 		$wi__input_failing && _resume_branch($scope4_id);
 	}, void 0, () => {

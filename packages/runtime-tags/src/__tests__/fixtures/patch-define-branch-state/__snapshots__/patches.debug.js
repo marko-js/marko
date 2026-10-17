@@ -10,9 +10,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-branch-state/template.marko_1*shell"]
 }]
-;BgE
+;BAE
 
-// PATCH holding BgE
+// PATCH holding BAE
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {

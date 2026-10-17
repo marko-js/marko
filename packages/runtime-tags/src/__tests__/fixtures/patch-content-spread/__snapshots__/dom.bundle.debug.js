@@ -6,7 +6,7 @@ const $extra_content__setup = $extra_content__input_title;
 const $extra_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $extra_content__setup);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "count/8", ($scope) => _text($scope["#text/3"], $scope.count));
 const $input_attrs__OR__extra__script = _script("__tests__/template.marko_0_input_attrs#7_extra#9", ($scope) => _attrs_script($scope, "#section/1"));
-const $input_attrs__OR__extra = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_attrs#7_extra#9/init", 10, ($scope) => {
+const $input_attrs__OR__extra = /*@__PURE__*/ _or(10, ($scope) => {
 	_attrs_content($scope, "#section/1", {
 		...$scope.input_attrs,
 		content: $scope.extra

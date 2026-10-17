@@ -13,7 +13,7 @@ var labeler_default = /*@__PURE__*/ _template("__tests__/tags/labeler.marko", $t
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $for_content__input_suffix__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/list.marko_fill0", "input_suffix", /*@__PURE__*/ _or(5, ($scope) => $input_title($scope["#childScope/0"], $scope.item + $scope._.input_suffix)), "#text/0");
+const $for_content__input_suffix__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/list.marko_fill0", "input_suffix", /*@__PURE__*/ _shell_or("__tests__/tags/list.marko_1_input_suffix#0:4_item#4/init", 5, ($scope) => $input_title($scope["#childScope/0"], $scope.item + $scope._.input_suffix)), "#text/0");
 const $for_content__input_suffix = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_suffix__OR__item);
 const $for_content__setup = ($scope) => {
 	$for_content__input_suffix._($scope);

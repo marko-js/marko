@@ -11,7 +11,7 @@ const $template = "<button class=count> </button><button class=open>open</button
 const $walks = " D l b%b%c";
 const summarize = (data) => ({ n: data.items.length });
 var rows;
-const $for_content__count = _resumed["__tests__/tags/panel.marko_2_count#0:10/init"] = /*@__PURE__*/ _for_closure("#text/4", ($scope) => _text($scope["#text/1"], $scope._.count));
+const $for_content__count = /*@__PURE__*/ _shell_init("__tests__/tags/panel.marko_2_count#0:10/init", /*@__PURE__*/ _for_closure("#text/4", ($scope) => _text($scope["#text/1"], $scope._.count)));
 const $for_content__setup = $for_content__count;
 const $for_content__row_name = ($scope, row_name) => _text($scope["#text/0"], row_name);
 const $for_content__$params = ($scope, $params2) => $for_content__row_name($scope, $params2[0]?.name);

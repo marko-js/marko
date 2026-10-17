@@ -1,15 +1,10 @@
 // PATCH
-[`b;D ;<div class=b> </div>`, {
+[`b;D ;<div class=b> </div>`, `c0,`, {
   fc: "b",
   cAc: {
     ta: "SHOWN_name2"
   },
-  fd: ["^c1", {
-    user: {
-      name: "SHOWN_name2b",
-      passwordHash: "SECRET_hash2b"
-    }
-  }],
+  fd: "^c0",
   cAd: {
     ta: "SHOWN_name2b"
   },
@@ -22,4 +17,4 @@
   }],
   ff: 0
 }]
-;BgE
+;Cwo

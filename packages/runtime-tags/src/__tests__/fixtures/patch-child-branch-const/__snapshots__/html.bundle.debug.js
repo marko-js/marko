@@ -13,14 +13,16 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<h2${_patch_attr_class($scope1_id, "PatchAttr:#h2/0 class", input.title, $scope0_reason, 2)}>${_patch_text($scope1_id, "#text/1", input.title, void 0, $scope0_reason, 2)}</h2>${_el_resume($scope1_id, "#h2/0", _mask_group($scope0_reason, 2))}<p>${_patch_text($scope1_id, "#text/2", input.note, void 0, $scope0_reason, 3)}</p>`);
+			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/card/index.marko_1_input_title#0:4/init");
+			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/tags/card/index.marko_1_input_note#0:5/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4");
 			return 0;
 		}
 	}, $scope0_id, "#section/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/card/index.marko_1*shell"], $scope0_reason, 1);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", $wg__input_show)}`);
 	$scope0_page ? _scope($scope0_id, {
-		input_title: _unfilled_if($scope0_reason, 1) && input.title,
-		input_note: _unfilled_if($scope0_reason, 1) && input.note
+		input_title: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.title,
+		input_note: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.note
 	}, "__tests__/tags/card/index.marko", 0, {
 		input_title: ["input.title"],
 		input_note: ["input.note"]

@@ -3,7 +3,7 @@ const $Panel_content__walks = "D l";
 const $Panel_content__template = "<p> </p>";
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!><button>+</button></main>`)($Panel_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&%b l`)($Panel_content__walks);
-const $Panel_content__input_title__OR__value = /*@__PURE__*/ _shell_or("__tests__/template.marko_1_input_title#0:5_value#3/init", 4, ($scope) => _text($scope["#text/0"], $scope.value + $scope._.input_title));
+const $Panel_content__input_title__OR__value = /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/0"], $scope.value + $scope._.input_title));
 const $Panel_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/10", $Panel_content__input_title__OR__value, 0, "__tests__/template.marko_1_input_title#0:5/subscribe"), 0);
 const $Panel_content__setup = $Panel_content__input_title;
 const $Panel_content__value = /*@__PURE__*/ _const("value", $Panel_content__input_title__OR__value);

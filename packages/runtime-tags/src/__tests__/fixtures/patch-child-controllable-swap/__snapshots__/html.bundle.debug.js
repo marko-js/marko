@@ -14,6 +14,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 			let count = 0;
 			_html(`<span>Seen ${_text_resume($scope1_id, "#text/0", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/tags/counter/index.marko_1");
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/counter/index.marko_1_input_onCount#0:4/init");
 			const $countChange = input.onCount || void 0;
 			_patch_let_change($scope1_id, "PatchValue:__tests__/tags/counter/index.marko_fill1", count, "PatchBind:TagVariableChange:count", $countChange, $scope0_reason, 1);
 			_scope($scope1_id, {
@@ -54,7 +55,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	_patch_write($scope0_id, "PatchWrite:plain", plain, 1);
 	_patch_write($scope0_id, "PatchWrite:tenfold", tenfold, 1);
-	_client_guard($scope0_reason, 2) && _patch_init($scope0_id, "__tests__/template.marko_0_input_big#7_plain#9_tenfold#10/init");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", last, 1);
 	$scope0_page && _scope($scope0_id, {
 		plain: _unfilled_if($scope0_reason, 2) && plain,

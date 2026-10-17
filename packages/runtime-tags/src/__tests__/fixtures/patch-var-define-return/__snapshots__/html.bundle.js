@@ -1,17 +1,13 @@
 // template.marko
-_shells({
-	a0: "a0 !,",
-	a: "a !a5;0&b D l ;<!><div> </div><button>+</button>"
-});
+_shells({ a: "a !a4;0&b D l ;<!><div> </div><button>+</button>" });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	const Sum = { content: _content_elide("a0", ({ a, b }) => {
+	const Sum = { content: _content("a0", ({ a, b }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
 		const $return = a + b;
-		_client_guard($scope1_reason, 0) && _patch_init($scope1_id, "a3");
 		$scope1_page ? _write_if($scope1_reason, 0) && _scope($scope1_id, {
 			c: _write_if($scope1_reason, 2) && a,
 			d: _write_if($scope1_reason, 1) && b
@@ -24,11 +20,11 @@ var template_default = _template("a", (input) => {
 		a: n,
 		b: input.b
 	});
-	_var($scope0_id, "b", $childScope, "a4");
+	_var($scope0_id, "b", $childScope, "a3");
 	_html(`<div>${_text_resume($scope0_id, "d", total)}</div>${_el_resume($scope0_id, "c")}<button>+</button>${_el_resume($scope0_id, "e")}`);
-	_script($scope0_id, "a5");
-	_script($scope0_id, "a6", 1, 1);
-	_patch_value($scope0_id, "va7", n, 1);
+	_script($scope0_id, "a4");
+	_script($scope0_id, "a5", 1, 1);
+	_patch_value($scope0_id, "va6", n, 1);
 	$scope0_page && _scope($scope0_id, {
 		i: n,
 		j: total,

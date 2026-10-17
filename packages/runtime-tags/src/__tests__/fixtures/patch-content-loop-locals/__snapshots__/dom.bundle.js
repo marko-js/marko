@@ -1,6 +1,6 @@
 // template.marko
 const $item_content__n__OR__label = /*@__PURE__*/ _fill_join("a2", 2, /*@__PURE__*/ _or(3, ($scope) => _text($scope.a, $scope.c + $scope._.h)));
-const $item_content__n = _resumed.a8 = /*@__PURE__*/ _closure_get(9, $item_content__n__OR__label, 0, "a10");
+const $item_content__n = /*@__PURE__*/ _shell_init("a8", /*@__PURE__*/ _closure_get(9, $item_content__n__OR__label));
 const $n__closure = /*@__PURE__*/ _closure($item_content__n);
 const $n = /*@__PURE__*/ _fill_let("a6", 7, ($scope) => {
 	_text($scope.c, $scope.h);

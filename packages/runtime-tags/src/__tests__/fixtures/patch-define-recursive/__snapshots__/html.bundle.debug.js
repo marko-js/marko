@@ -4,7 +4,6 @@ const $foo_content__template = "<b> </b><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($foo_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($foo_content__walks);
 _shells({
-	"__tests__/template.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/template.marko_1*content;${_w0};${_w1}`)($foo_content__walks, $foo_content__template),
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `b/${_w0}&b`)($foo_content__walks)};${((_w0) => `<!>${_w0}<!>`)($foo_content__template)}`)(),
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($foo_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($foo_content__template)}`)()
 });
@@ -12,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_x = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_x__closures = new Set();
-	const foo = { content: _content_elide("__tests__/template.marko_1*content", (n) => {
+	const foo = { content: _content("__tests__/template.marko_1*content", (n) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wi__n = _write_if($scope1_reason, 0);
 		_html(`<b>${_patch_text($scope1_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</b>`);
@@ -20,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (n) {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(_mask_group($scope1_reason, 0) << 1);
-				const $childScope = _patch_child($scope2_id, "#childScope/0");
+				const $childScope = _patch_child($scope2_id, "#childScope/0", $scope0_id);
 				foo.content(n - 1);
 				_scope($scope2_id, {
 					_: $wi__n && _scope_with_id($scope1_id),

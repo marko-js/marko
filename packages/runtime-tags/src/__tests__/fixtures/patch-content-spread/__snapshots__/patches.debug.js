@@ -1,5 +1,5 @@
 // PATCH
-{
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-spread/template.marko_1*content,`, {
   "PatchAttrs:#div/0": {
     class: "c2",
     "data-x": 1
@@ -16,9 +16,10 @@
     "PatchText:#text/0": "b"
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-spread/template.marko_fill0": "b"
-}
+}]
+;BAE
 
-// PATCH
+// PATCH holding BAE
 {
   "PatchAttrs:#div/0": {
     class: "c3"

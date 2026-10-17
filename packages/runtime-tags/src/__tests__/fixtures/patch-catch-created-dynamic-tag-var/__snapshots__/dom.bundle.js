@@ -20,7 +20,7 @@ var tiny_label_default = /*@__PURE__*/ _template("c", $template, "D l", 0, $inpu
 
 // template.marko
 const $catch_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(1, 0, ($_) => $catch_content__v);
-const $catch_content__input_big__OR__input_label = /*@__PURE__*/ _fill_join_subscribers("a7", 4, /*@__PURE__*/ _fill_join_subscribers("a6", 3, /*@__PURE__*/ _shell_or("a10", 4, ($scope) => $catch_content__dynamicTag($scope, $scope._.d ? huge_label_default : tiny_label_default, ($_) => ({ label: $scope._.e }))), 6, 0), 7, 0);
+const $catch_content__input_big__OR__input_label = /*@__PURE__*/ _fill_join_subscribers("a7", 4, /*@__PURE__*/ _fill_join_subscribers("a6", 3, /*@__PURE__*/ _or(4, ($scope) => $catch_content__dynamicTag($scope, $scope._.d ? huge_label_default : tiny_label_default, ($_) => ({ label: $scope._.e }))), 6, 0), 7, 0);
 const $catch_content__input_big = /*@__PURE__*/ _closure_get(6, $catch_content__input_big__OR__input_label, 0, "a2");
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_big($scope);

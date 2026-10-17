@@ -15,7 +15,7 @@ var frame_default = _template("__tests__/tags/frame.marko", (input) => {
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("D%l");
 _shells({
-	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_input_label#0:4/init __tests__/template.marko_1_count#0:5/init;D ;<p> </p>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_input_label#0:4/subscribe __tests__/template.marko_1_count#0:5/init __tests__/template.marko_1_input_label#0:4_count#0:5/init;D ;<p> </p>",
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

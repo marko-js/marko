@@ -15,8 +15,8 @@ var frame_default = _template("__tests__/tags/frame.marko", (input) => {
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}<button class=a>a</button><button class=b>b</button></main>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&/${_w1}& b l`)("D%l", "D%l");
 _shells({
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_input_label#0:6/init __tests__/template.marko_2_b#0:8/init;D ;<p class=b> </p>",
-	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_input_label#0:6/init __tests__/template.marko_1_a#0:7/init;D ;<p class=a> </p>",
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_input_label#0:6/subscribe __tests__/template.marko_2_b#0:8/init __tests__/template.marko_2_input_label#0:6_b#0:8/init;D ;<p class=b> </p>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_input_label#0:6/subscribe __tests__/template.marko_1_a#0:7/init __tests__/template.marko_1_input_label#0:6_a#0:7/init;D ;<p class=a> </p>",
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0, _w1) => `D/${_w0}&/${_w1}& b l`)("D%l", "D%l")};${((_w0, _w1) => `<main>${_w0}${_w1}<button class=a>a</button><button class=b>b</button></main>`)($template$1, $template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

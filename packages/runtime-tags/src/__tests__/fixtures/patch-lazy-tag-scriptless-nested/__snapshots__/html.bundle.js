@@ -25,6 +25,7 @@ var host_default = _template("c", (input) => {
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 			const $childScope = _patch_child($scope1_id, "b");
 			$Child_withLoadAssets({ label: input.label });
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "c1");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 				b: _existing_scope($childScope)
@@ -33,7 +34,7 @@ var host_default = _template("c", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["c0"], $scope0_reason, 0);
 	_html(`</section>${_el_resume($scope0_id, "a", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.label }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc1", input.label, !_server_guard($scope0_reason, 1));
+	$scope0_page ? _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vc2", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

@@ -1,0 +1,12 @@
+<if=input.show>
+  <wrap label=input.label>
+    <@content|{ label }|>
+      <let/open=true/>
+      <if=open>
+        <p>${label}</p>
+      </if>
+      <button onClick() { open = !open }>toggle</button>
+      <note/>
+    </@content>
+  </wrap>
+</if>

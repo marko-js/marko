@@ -15,7 +15,6 @@
 ```
 INSERT: div
 REMOVE: div + section
-INSERT: div > :is(::text("body "), ::text("b"))
 UPDATE: div::text@5 "" => "b"
 ```
 

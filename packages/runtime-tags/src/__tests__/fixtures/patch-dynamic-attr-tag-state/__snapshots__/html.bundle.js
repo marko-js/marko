@@ -10,6 +10,7 @@ var card_default = _template("a", (input) => {
 });
 
 // template.marko
+_shells({ b: "b !b2;b%b ;<!><!><button>+</button>" });
 var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

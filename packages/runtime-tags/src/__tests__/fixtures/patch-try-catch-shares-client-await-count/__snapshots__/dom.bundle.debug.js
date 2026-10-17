@@ -24,7 +24,7 @@ const $try_content2__setup = ($scope) => {
 	$await_content($scope);
 };
 const $try_content__if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
-const $try_content__pending = _resumed["__tests__/template.marko_1_pending#0:5/init"] = /*@__PURE__*/ _closure_get("pending/7", ($scope) => $try_content__if($scope, $scope._.pending ? 0 : 1), 0, "__tests__/template.marko_1_pending#0:5/subscribe");
+const $try_content__pending = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_pending#0:5/init", /*@__PURE__*/ _closure_get("pending/7", ($scope) => $try_content__if($scope, $scope._.pending ? 0 : 1), 0, "__tests__/template.marko_1_pending#0:5/subscribe"));
 const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, 0, $catch_content);
 const $try_content__setup = ($scope) => {
 	$try_content__pending($scope);

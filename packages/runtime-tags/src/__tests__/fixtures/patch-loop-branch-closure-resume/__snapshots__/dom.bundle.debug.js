@@ -13,13 +13,13 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/sub.marko
 const $template$1 = "<!><!><button class=inc>+</button>";
 const $walks$1 = "b%b b";
-const $if_content__input_n__OR__g = /*@__PURE__*/ _fill_join("__tests__/tags/sub.marko_fill0", "input_n", /*@__PURE__*/ _shell_join("__tests__/tags/sub.marko_2_input_n#0:5/init", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], $scope._._.g - $scope._._.input_n))), ($join) => /*@__PURE__*/ _for_closure("#text/0", /*@__PURE__*/ _if_closure("#text/0", 0, $join)));
+const $if_content__input_n__OR__g = /*@__PURE__*/ _fill_join("__tests__/tags/sub.marko_fill0", "input_n", /*@__PURE__*/ _shell_or("__tests__/tags/sub.marko_2_input_n#0:5_g#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.g - $scope._._.input_n)), ($join) => /*@__PURE__*/ _for_closure("#text/0", /*@__PURE__*/ _if_closure("#text/0", 0, $join)));
 const $if_content__input_n = /*@__PURE__*/ _closure_get("input_n/7", $if_content__input_n__OR__g, ($scope) => $scope._._, "__tests__/tags/sub.marko_2_input_n#0:5/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__input_n($scope);
 	$if_content__g($scope);
 };
-const $if_content__g = _resumed["__tests__/tags/sub.marko_2_g#0:6/init"] = /*@__PURE__*/ _closure_get("g/8", $if_content__input_n__OR__g, ($scope) => $scope._._, "__tests__/tags/sub.marko_2_g#0:6/subscribe");
+const $if_content__g = /*@__PURE__*/ _shell_init("__tests__/tags/sub.marko_2_g#0:6/init", /*@__PURE__*/ _closure_get("g/8", $if_content__input_n__OR__g, ($scope) => $scope._._, "__tests__/tags/sub.marko_2_g#0:6/subscribe"));
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<span class=v> </span>", "D ", $if_content__setup);
 const $for_content__t_on = ($scope, t_on) => $for_content__if($scope, t_on ? 0 : 1);
 const $for_content__$params = ($scope, $params2) => $for_content__t_on($scope, $params2[0]?.on);

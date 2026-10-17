@@ -2,8 +2,8 @@
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 _shells({
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_input_label#0:6/init __tests__/template.marko_2_n#0:7/init;D ;<div id=done> </div>",
-	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await __tests__/template.marko_2_input_label#0:6/init __tests__/template.marko_2_n#0:7/init;D ;<div id=done> </div>",
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_input_label#0:6/subscribe __tests__/template.marko_2_n#0:7/init __tests__/template.marko_2_input_label#0:6_n#0:7/init;D ;<div id=done> </div>",
+	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await __tests__/template.marko_2_input_label#0:6/subscribe __tests__/template.marko_2_n#0:7/init __tests__/template.marko_2_input_label#0:6_n#0:7/init;D ;<div id=done> </div>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
 });

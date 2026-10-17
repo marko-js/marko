@@ -1,7 +1,10 @@
 // tags/frag-host.marko
 const $template$1 = "<section></section>";
 const $walks$1 = " b";
-_shells({ "__tests__/tags/frag-host.marko": "__tests__/tags/frag-host.marko !; ;<section></section>" });
+_shells({
+	"__tests__/tags/frag-host.marko_1*content": "__tests__/tags/frag-host.marko_1*content,",
+	"__tests__/tags/frag-host.marko": "__tests__/tags/frag-host.marko !; ;<section></section>"
+});
 var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -11,7 +14,9 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.mode ? "x" : "y", void 0, $scope0_reason, 0)} ${_patch_text($scope1_id, "#text/1", input.b, 2, $scope0_reason, 1)}</em>`);
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_mode__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frag-host.marko", "1:2"), "__tests__/tags/frag-host.marko_1_input_mode#0:3/subscribe"), "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "__tests__/tags/frag-host.marko_1_input_mode#0:3/init" : "__tests__/tags/frag-host.marko_1_input_mode#0:3/subscribe");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, _client_guard($scope0_reason, 1) ? "__tests__/tags/frag-host.marko_1_input_b#0:4/init" : "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_mode__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frag-host.marko", "1:2")));
 	}, $scope0_id) };
 	_html("<section");
 	_patch_attrs_content({ content: input.mode ? one : null }, "#section/0", $scope0_id, "section", void 0, void 0, $scope0_reason, 0);

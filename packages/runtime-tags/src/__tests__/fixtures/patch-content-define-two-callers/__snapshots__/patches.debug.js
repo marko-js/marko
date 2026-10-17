@@ -7,7 +7,7 @@
 }
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_4*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_2*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_4*shell;b%;<!><!><!>`, {
   "PatchChild:#childScope/1": {
     "PatchBranch:#text/0": [{
       "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_2*content",
@@ -18,9 +18,9 @@
   },
   "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-two-callers/template.marko_fill0": "c"
 }]
-;BgI
+;CQw
 
-// PATCH holding BgI
+// PATCH holding CQw
 {
   "PatchChild:#childScope/1": {
     "PatchBranch:#text/0": [{

@@ -28,7 +28,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__count._($scope);
 	$setup$1($scope["#childScope/0"]);
 };
-const $if_content__count = _resumed["__tests__/template.marko_1_count#0:7/init"] = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_count($scope["#childScope/0"], $scope._.count));
+const $if_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_count#0:7/init", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_count($scope["#childScope/0"], $scope._.count)));
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "count/7", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$if_content__count($scope);

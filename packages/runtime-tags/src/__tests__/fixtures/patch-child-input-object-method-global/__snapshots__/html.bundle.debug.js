@@ -17,11 +17,13 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 		if (input.text.length > 2) {
 			const $scope1_id = _scope_id();
 			_html(`<div>${_patch_html($scope1_id, "#text/0", highlight(input.text), void 0, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</div>`);
+			_client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_init($scope1_id, "__tests__/tags/code-block.marko_1_input_text#0:4_highlight#0:6/init");
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) }, "__tests__/tags/code-block.marko", "4:2");
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
 			_html(`<span>${_patch_html($scope2_id, "#text/0", highlight(input.text), void 0, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</span>`);
+			_client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_init($scope2_id, "__tests__/tags/code-block.marko_2_input_text#0:4_highlight#0:6/init");
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) }, "__tests__/tags/code-block.marko", "7:2");
 			return 1;
 		}

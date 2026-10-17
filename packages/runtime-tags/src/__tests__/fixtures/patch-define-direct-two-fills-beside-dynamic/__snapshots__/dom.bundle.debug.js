@@ -21,7 +21,7 @@ const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/temp
 })), 2));
 const $open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill3", "open/10", $input_label__OR__open__OR__Tag);
 const $Tag = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill4", "Tag", $input_label__OR__open__OR__Tag);
-const $input_other__OR__Panel = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_other#9_Panel#11/init", 12, ($scope) => $Tag($scope, $scope.input_other ? "div" : $scope.Panel));
+const $input_other__OR__Panel = /*@__PURE__*/ _or(12, ($scope) => $Tag($scope, $scope.input_other ? "div" : $scope.Panel));
 const $Panel = /*@__PURE__*/ _const("Panel", $input_other__OR__Panel);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);
@@ -31,7 +31,7 @@ function $setup($scope) {
 	$open($scope, false);
 	$Panel($scope, { content: $Panel_content($scope) });
 }
-const $input_show__OR__input_label__OR__input_rest = /*@__PURE__*/ _shell_or("__tests__/template.marko_0_input_show#5_input_label#6_input_rest#7/init", 8, ($scope) => {
+const $input_show__OR__input_label__OR__input_rest = /*@__PURE__*/ _or(8, ($scope) => {
 	const $tag_input_spread = {
 		isOpen: $scope.input_show,
 		label: $scope.input_label,

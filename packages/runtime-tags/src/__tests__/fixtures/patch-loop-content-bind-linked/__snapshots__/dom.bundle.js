@@ -2,7 +2,7 @@
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $if_content__item_content = /*@__PURE__*/ _fill_join("b1", 3, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.d)));
 const $for_content__if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__item_content);
-const $for_content__open = _resumed.b6 = /*@__PURE__*/ _for_closure(2, ($scope) => $for_content__if($scope, $scope._.h ? 0 : 1));
+const $for_content__open = /*@__PURE__*/ _shell_init("b6", /*@__PURE__*/ _for_closure(2, ($scope) => $for_content__if($scope, $scope._.h ? 0 : 1)));
 const $open = /*@__PURE__*/ _fill_let("b4", 7, $for_content__open);
 const $setup__script = _script("b3", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.h);

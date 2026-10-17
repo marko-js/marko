@@ -1,12 +1,12 @@
 // PATCH
-[`a0 a7 a8;Db%;<p>A <!></p>`, {
+[`a0 a7;Db%;<p>A <!></p>`, {
   ba: "a0",
   va4: "Store!"
 }]
 ;CAE
 
 // PATCH holding CAE
-[`a1 a9 a10;Db%;<p>B <!></p>`, {
+[`a1 a8;Db%;<p>B <!></p>`, {
   ba: [1, {}, "a1"],
   va4: "Store!"
 }]
@@ -19,7 +19,7 @@
 }
 
 // PATCH holding CQY
-[`a2 a11;Db%;<p>None <!></p>`, {
+[`a2 a9;Db%;<p>None <!></p>`, {
   ba: [2, {}, "a2"],
   va4: "Plaza"
 }]

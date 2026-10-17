@@ -22,6 +22,7 @@ const $content = (input) => {
 				_scope($scope2_id, { a: _existing_scope($childScope) });
 			}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 1);
 			_html(`</ul>${_el_resume($scope1_id, "a")}`);
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b2");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}

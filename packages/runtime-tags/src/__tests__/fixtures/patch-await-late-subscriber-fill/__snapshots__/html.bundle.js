@@ -1,7 +1,7 @@
 // template.marko
 _shells({
-	a0: "a0 a11 a12;D ;<div id=done> </div>",
-	a1: "a1 a11 a12;D ;<div id=done> </div>",
+	a0: "a0 a3 a11 a12;D ;<div id=done> </div>",
+	a1: "a1 a3 a11 a12;D ;<div id=done> </div>",
 	a2: "a2;b%;<!><!><!>",
 	a: "a !a7; D l%;<button> </button><!><!>"
 });

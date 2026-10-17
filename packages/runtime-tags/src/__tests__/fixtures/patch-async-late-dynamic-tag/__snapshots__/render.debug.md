@@ -74,7 +74,5 @@ REMOVE: .box + .box
 UPDATE: .box[class] null => "box"
 REMOVE: main > section:nth-of-type(2) > b + b
 INSERT: .box > em
-UPDATE: .box > em::text " " => "3"
-UPDATE: .box > em::text "" => "3"
 INSERT: main > section:nth-of-type(2) > b
 ```

@@ -32,7 +32,7 @@ const $walks = "b%b b";
 const $Box_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0);
 const $Box_content__setup = $Box_content__input_label;
 const $Box_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", " ", " ", $Box_content__setup);
-const $inputonCardnull_content__count = _resumed["__tests__/template.marko_1_count#0:6/init"] = /*@__PURE__*/ _closure_get("count/8", ($scope) => $input_k($scope["#childScope/0"], $scope._.count), 0, "__tests__/template.marko_1_count#0:6/subscribe");
+const $inputonCardnull_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_count#0:6/init", /*@__PURE__*/ _closure_get("count/8", ($scope) => $input_k($scope["#childScope/0"], $scope._.count)));
 const $inputonCardnull_content__setup = ($scope) => {
 	$inputonCardnull_content__count($scope);
 	$input_content_direct($scope["#childScope/0"], $Box_content($scope));

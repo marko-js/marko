@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<input><input><p id=out>-</p><button>interactive</button>";
 const $walks = " b c b";
-_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b c ;<input><input><p id=out>-</p><button>interactive</button>" });
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0 __tests__/template.marko_0_input_attrs#5 __tests__/template.marko_0_input_attrs#5_input_on#6; b c ;<input><input><p id=out>-</p><button>interactive</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -11,14 +11,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		checked: input.on
 	}, "#input/0", $scope0_id, "input", 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<input${_patch_attrs(input.attrs, "#input/1", $scope0_id, "input", 1, $scope0_reason, 1)}>${_el_resume($scope0_id, "#input/1")}<p id=out>-</p><button>interactive</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5", 1, 1);
-	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5_input_on#6", 1, 1);
+	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5");
+	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5_input_on#6");
 	_patch_write($scope0_id, "PatchWrite:input_attrs", input.attrs, 1);
 	_patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_attrs#5_input_on#6/init");
-	$scope0_page ? _scope($scope0_id, {
-		input_attrs: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.attrs,
-		input_on: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.on
+	$scope0_page && _scope($scope0_id, {
+		input_attrs: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.attrs,
+		input_on: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.on
 	}, "__tests__/template.marko", 0, {
 		input_attrs: ["input.attrs"],
 		input_on: ["input.on"],
@@ -26,5 +25,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"EventAttributes:#input/0": ["...input.attrs", "1:27"],
 		"ControlledHandler:#input/1": ["...input.attrs", "2:11"],
 		"EventAttributes:#input/1": ["...input.attrs", "2:11"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.attrs, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.on, !_server_guard($scope0_reason, 2)));
+	});
 }, 1);

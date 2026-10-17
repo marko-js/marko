@@ -1,16 +1,16 @@
 import { types as t } from "@marko/compiler";
 import { getFile, getProgram } from "@marko/compiler/babel-utils";
 
-import { type Falsy } from "../../common/types";
 import { type ReferencedBindings } from "./bindings";
 import buildStringExpression from "./build-string-expression";
-import { createCyclicMemo } from "./cyclic-memo";
-import { isOptimize } from "./marko-config";
+import { createAnalysisMemo } from "./cyclic-memo";
+import { isOptimize, isPatch } from "./marko-config";
 import { some } from "./optional";
 import {
-  contentIsPatched,
   contentMayCreate,
   getPatchFill,
+  namesBodyOwner,
+  patchCreates,
   sectionHasServerEffect,
   writesSeed,
 } from "./patch/refresh";
@@ -20,18 +20,14 @@ import {
   patchWrites,
 } from "./patch/structure";
 import { getSourcesForRef } from "./reasons";
-import {
-  callRuntime,
-  linkRuntimeFeature,
-  registerRuntimeValue,
-} from "./runtime";
+import { linkRuntimeFeature } from "./runtime";
+import { isSectionRendererElided } from "./section-renderer";
 import {
   forEachSection,
   forEachSectionReverse,
   getRendererReason,
   type Section,
   StructureKind,
-  type StructureOp,
 } from "./sections";
 import {
   getResumeRegisterId,
@@ -62,44 +58,23 @@ export function findShellId(
 // and only this compile can make them (reasons resolve against its program).
 export function buildShells() {
   const shells = (getProgram().node.extra.shells ??= {});
-  // A content body nothing registers ships as a shell.
   forEachSectionReverse((section) => {
     // Kept root awaits let `Pending` carry a body shell id; the root
     // ships under the template id so a dynamic tag entry can create it.
     if (!section.parent) {
-      const bodyShells: Record<string, Section> = {};
-      if (buildAwaitBodyShells(section, bodyShells)) {
-        Object.assign(shells, bodyShells);
-        if (isShellExpressible(section)) {
-          shells[getFile().metadata.marko.id] = section;
-        }
-      }
+      buildAwaitBodyShells(section, shells);
+      shells[getFile().metadata.marko.id] = section;
       return;
     }
-    if (section.branch?.optional || isStatefulBranch(section)) {
-      return;
-    }
-    // A boundary creates from its content shell (never inside a stateful
-    // branch); an inexpressible one stays shell-less and a creation rejects.
-    if (section.branch) {
-      if (!inStatefulBranch(section.parent)) {
-        addShell(shells, section, "content");
-      }
-      return;
-    }
-    // Boundary content always registers, so its slot resolves by id.
+    if (section.branch?.optional) return;
     if (
-      !section.boundaryContent &&
-      contentNeedsShell(section) &&
-      addShell(shells, section, "content")
+      section.branch ? shipsBoundaryShell(section) : shipsContentShell(section)
     ) {
-      section.contentShell = true;
+      addShell(shells, section, "content");
     }
   });
   forEachSection((section) => {
-    // A flush may create a branch-path body outside stateful structure; a
-    // template including itself outside a branch has none.
-    if (section.branch?.optional && patchWrites(section)) {
+    if (shipsBranchShell(section)) {
       addShell(shells, section, "shell");
     }
     // Shells settle which scopes a flush seeds, by plain writes; the link is
@@ -107,26 +82,73 @@ export function buildShells() {
     if (some(section.bindings, writesSeed)) {
       linkRuntimeFeature("patches/write");
     }
+    // A `<define>` body's patch links name its owner where a flush may create
+    // the call below where it is defined (`namesBodyOwner`).
+    if (some(section.callSections, (call) => namesBodyOwner(call, section))) {
+      linkRuntimeFeature("patches/child-owner");
+    }
+    if (shipsRendererShell(section)) {
+      linkRuntimeFeature("patches/registered-content");
+    }
   });
 }
 
+// Content a patch may create ships a shell unless stateful; boundary content's
+// slot resolves by its registered id.
+export function shipsContentShell(section: Section) {
+  return (
+    isPatch() &&
+    !!section.parent &&
+    !section.branch &&
+    !section.boundaryContent &&
+    !section.dropped &&
+    contentMayCreate(section) &&
+    !isStatefulBranch(section)
+  );
+}
+
+// Content a patch creates from the renderer the page registers, so its shell ships
+// no markup; a lazy child the shell composes renders behind a marker there.
+export const [createsFromRenderer] = createAnalysisMemo(
+  (section: Section) =>
+    shipsContentShell(section) &&
+    registersRenderer(section) &&
+    !section.structure?.some(
+      (op) =>
+        typeof op === "object" && op.kind === StructureKind.Child && !!op.load,
+    ),
+  false,
+);
+
+// Whether `_content` registers the section's renderer whenever its module loads:
+// by its own reason, or passed by a parent that does to a tag that isn't lazy.
+const [registersRenderer] = createAnalysisMemo(
+  (section: Section): boolean =>
+    !!section.parent &&
+    !section.branch &&
+    !isSectionRendererElided(section) &&
+    (!!getRendererReason(section) ||
+      (!section.derives?.tag.tagNameLoad && registersRenderer(section.parent))),
+  false,
+);
+
+// Content created from its renderer runs its shell's setup ids in place of the
+// renderer's setup and params, so ships a shell only where it has either.
+function shipsRendererShell(section: Section) {
+  return (
+    createsFromRenderer(section) && (section.hasSetupWork || !!section.params)
+  );
+}
+
 // Ships the section's shell, under its register id of `type`, with its await
-// bodies', unless one is inexpressible.
+// bodies'.
 function addShell(
   shells: Record<string, Section>,
   section: Section,
   type: "content" | "shell",
 ) {
-  const bodyShells: Record<string, Section> = {};
-  if (
-    !isShellExpressible(section) ||
-    !buildAwaitBodyShells(section, bodyShells)
-  ) {
-    return false;
-  }
-  Object.assign(shells, bodyShells);
+  buildAwaitBodyShells(section, shells);
   shells[getResumeRegisterId(section, type)] = section;
-  return true;
 }
 
 // Body shells reuse the branch grammar; nested awaits recurse so a
@@ -137,14 +159,11 @@ function buildAwaitBodyShells(
 ) {
   for (const body of section.children) {
     if (body.branch?.await) {
-      if (!isShellExpressible(body) || !buildAwaitBodyShells(body, shells)) {
-        return false;
-      }
+      buildAwaitBodyShells(body, shells);
       shells[getResumeRegisterId(section, body.branch.nodeBinding, "await")] =
         body;
     }
   }
-  return true;
 }
 
 export function getShellId(section: Section) {
@@ -163,107 +182,33 @@ export function getShippedShellId(section: Section) {
   }
 }
 
+// Whether a shell of the section ships its created scope's inits: a root's,
+// a branch's shipped shell, or a content or boundary body's a patch creates.
+export function shipsShellInits(section: Section) {
+  return (
+    !section.parent ||
+    (section.branch?.optional
+      ? shipsBranchShell(section) && !sectionHasServerEffect(section)
+      : (section.branch
+          ? shipsBoundaryShell(section)
+          : shipsContentShell(section)) && patchCreates(section))
+  );
+}
+
+// A flush may create a branch-path body outside stateful structure.
+function shipsBranchShell(section: Section) {
+  return !!section.branch?.optional && patchWrites(section);
+}
+
+// A boundary creates from its content shell, never inside a stateful branch.
+function shipsBoundaryShell(section: Section) {
+  return !isStatefulBranch(section) && !inStatefulBranch(section.parent!);
+}
+
 // The shell a patch creates a body from, as a writer's argument: `0` for none.
 export function getShellIdArg(section: Section | undefined) {
   const id = section && getShippedShellId(section);
   return id ? t.stringLiteral(id) : t.numericLiteral(0);
-}
-
-// A branch's shell is its resolved structure (known child templates
-// included); anything else leaves it shell-less, so divergence fails closed.
-const isShellExpressible = createCyclicMemo(
-  isStructureExpressible,
-  // A template cycle never resolves to a finite shell.
-  false,
-);
-
-function isStructureExpressible(section: Section) {
-  for (const op of section.structure!) {
-    if (
-      typeof op === "object" &&
-      op.kind !== StructureKind.Node &&
-      // Static text and a stylesheet module's class names are markup the
-      // shell writes as the server module loads.
-      op.kind !== StructureKind.Text &&
-      op.kind !== StructureKind.ModuleRead &&
-      // A known child (a template's root or a sibling define body) composes
-      // when expressible; another template's root as its own compile decided.
-      !(
-        op.kind === StructureKind.Child &&
-        (!op.renderer ||
-          (op.renderer.kind === StructureKind.ExportRef &&
-          op.renderer.program !== getProgram().node.extra
-            ? // Decided by that template's own compile, since its reasons
-              // resolve only against its own program.
-              !!findShellId(
-                op.renderer.program.section!,
-                op.renderer.program.shells,
-              )
-            : isShellExpressible(
-                op.renderer.kind === StructureKind.ExportRef
-                  ? op.renderer.program.section!
-                  : op.renderer.section,
-              )))
-      )
-    ) {
-      return false;
-    }
-  }
-  // Nested branches, boundaries, content shells, and boundary content (a
-  // slot, or the flush's html) arrive through the walk or entries.
-  return !section.children.some(childNeedsShell);
-}
-
-// Content nothing names or creates leaves nothing for a shell to lack.
-function childNeedsShell(child: Section) {
-  return (
-    !child.branch &&
-    !child.contentShell &&
-    !child.boundaryContent &&
-    contentNeedsShell(child)
-  );
-}
-
-// Unregistered content a tag names or a patch may create (a registered body
-// resolves through its module), or a renderer that cannot mount its child.
-function contentNeedsShell(section: Section) {
-  return (
-    (!getRendererReason(section) &&
-      (contentIsPatched(section) || contentMayCreate(section))) ||
-    (hasPatchedChild(section) && contentMayCreate(section))
-  );
-}
-
-// A known child in a non-stateful section pairs from patches; the
-// section's client renderer never mounts it, so a creation needs the shell.
-function hasPatchedChild(section: Section) {
-  return !!section.structure?.some(isChildOp);
-}
-
-function isChildOp(op: StructureOp) {
-  return typeof op === "object" && op.kind === StructureKind.Child;
-}
-
-// A closure signal a body a flush creates runs by its init id (`shellInitId`):
-// registered by assignment, so no tree-shaking drops what a shell names.
-export function registerShellInit(
-  shellInitId: string | Falsy,
-  signal: t.Expression,
-) {
-  return shellInitId ? registerRuntimeValue(shellInitId, signal) : signal;
-}
-
-// A join a created scope runs as the init of `ref`, registered on the join.
-export function wrapShellJoin(
-  section: Section,
-  ref: ReferencedBindings,
-  value: t.Expression,
-) {
-  return callRuntime(
-    "_shell_join",
-    t.stringLiteral(getResumeRegisterId(section, ref, "init")),
-    value,
-  );
 }
 
 // An effect a created scope's own renders queue (an init, seed, or item write cascades into
@@ -298,21 +243,23 @@ export function getSectionEffectRegisterIds(
   return ids;
 }
 
-// The shell `id marker;walks;template` (`,` for `;walks;` when the
-// walk is empty): the section's dom template parts, child imports included.
+// The shell `id marker;walks;template` (`,` for `;walks;` when the walk is
+// empty): the section's dom template parts, none where the client registers them.
 export function buildShell(id: string, section: Section, marker = "") {
+  // A debug build marks content with a `<return>` for the client's check of
+  // a dynamic tag variable over it.
+  const head =
+    (section.returnValueExpr && !isOptimize() ? "^" : "") +
+    id +
+    (marker && " " + marker);
+  if (createsFromRenderer(section)) {
+    return t.stringLiteral(shipsRendererShell(section) ? head + "," : "");
+  }
   const { writes, walks } = getSectionMeta(section);
   const walkExpr = trimTrailingExits(walks);
   const walkless =
     !walkExpr || (walkExpr.type === "StringLiteral" && !walkExpr.value);
-  const parts: (string | t.Expression)[] = [
-    // A debug build marks content with a `<return>` for the client's check of
-    // a dynamic tag variable over it.
-    (section.returnValueExpr && !isOptimize() ? "^" : "") +
-      id +
-      (marker && " " + marker) +
-      (walkless ? "," : ";"),
-  ];
+  const parts: (string | t.Expression)[] = [head + (walkless ? "," : ";")];
   if (!walkless) parts.push(walkExpr!, ";");
   if (writes) parts.push(writes);
   return buildStringExpression(parts, true)!;

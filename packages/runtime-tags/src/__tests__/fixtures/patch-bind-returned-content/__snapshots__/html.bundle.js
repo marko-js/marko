@@ -1,5 +1,8 @@
 // tags/child.marko
-_shells({ b: "b !," });
+_shells({
+	b0: "b0 b7!b1,",
+	b: "b !,"
+});
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -11,7 +14,8 @@ var child_default = _template("b", (input) => {
 		_scope_reason();
 		_html(`<em>${_patch_text($scope1_id, "b", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope1_id, "c", count, 2)}</em>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b1");
-		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b2"), "b3");
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "b2" : "b3");
+		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 	}, $scope0_id) };
 	_patch_value($scope0_id, "vb5", count, 1);
 	$scope0_page ? _scope($scope0_id, {

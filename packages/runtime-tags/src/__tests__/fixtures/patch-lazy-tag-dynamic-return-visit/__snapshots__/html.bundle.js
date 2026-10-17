@@ -20,11 +20,10 @@ var template_default = _template("b", (input) => {
 	_script($scope0_id, "b0");
 	_patch_write($scope0_id, "wf", input.show, 1);
 	_patch_write($scope0_id, "wg", input.label, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b3");
-	_patch_value($scope0_id, "vb4", n, 1);
-	$scope0_page ? _scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show,
-		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
+	_patch_value($scope0_id, "vb1", n, 1);
+	$scope0_page && _scope($scope0_id, {
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.show,
+		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.label,
 		i: n
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb1", input.show, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.label, !_server_guard($scope0_reason, 2)));
+	});
 }, 1);

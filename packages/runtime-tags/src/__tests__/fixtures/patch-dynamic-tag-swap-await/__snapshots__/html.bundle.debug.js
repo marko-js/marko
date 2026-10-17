@@ -3,6 +3,8 @@ const $template = "<main><!><button>interactive</button></main>";
 const $walks = "D%b l";
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<em> </em>",
+	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content,",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>interactive</button></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -18,7 +20,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<em>${_patch_text($scope2_id, "#text/0", v, void 0, $scope0_reason, 2)}</em>`);
 			_scope($scope2_id, {}, "__tests__/template.marko", "3:6");
 		}, 1, "__tests__/template.marko_2*content");
-		$wi__input_as__OR__input_p && _subscribe(_unfilled_if($scope0_reason, 2) && $input_p__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:6"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_p#0:5/subscribe", 0);
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_p#0:5/subscribe");
+		$wi__input_as__OR__input_p && _subscribe(_unfilled_if($scope0_reason, 2) && $input_p__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:6"));
 		$wi__input_as__OR__input_p && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => [{ input_p: input.p }]), 0, _write_guard($scope0_reason, 1), void 0, 1, $scope0_reason, 1);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "#button/1")}</main>`);

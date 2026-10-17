@@ -14,7 +14,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
 const $if_content__label = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label));
 const $if_content__setup = $if_content__label;
 const $wrapper_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
-const $wrapper_content__count__OR__label = /*@__PURE__*/ _or(2, ($scope) => $wrapper_content__if($scope, $scope._.count > 0 && $scope.label ? 0 : 1));
+const $wrapper_content__count__OR__label = /*@__PURE__*/ _shell_or("__tests__/template.marko_1_count#0:5_label#1/init", 2, ($scope) => $wrapper_content__if($scope, $scope._.count > 0 && $scope.label ? 0 : 1));
 const $wrapper_content__label = /*@__PURE__*/ _const("label", ($scope) => {
 	$wrapper_content__count__OR__label($scope);
 	$if_content__label($scope);
@@ -24,7 +24,7 @@ const $wrapper_content__setup = ($scope) => {
 	$wrapper_content__input_label($scope);
 	$wrapper_content__count($scope);
 };
-const $wrapper_content__count = _resumed["__tests__/template.marko_1_count#0:5/init"] = /*@__PURE__*/ _closure_get("count/7", $wrapper_content__count__OR__label, 0, "__tests__/template.marko_1_count#0:5/subscribe");
+const $wrapper_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_count#0:5/init", /*@__PURE__*/ _closure_get("count/7", $wrapper_content__count__OR__label));
 const $wrapper_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $wrapper_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($wrapper_content__count);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "count/5", $count__closure);

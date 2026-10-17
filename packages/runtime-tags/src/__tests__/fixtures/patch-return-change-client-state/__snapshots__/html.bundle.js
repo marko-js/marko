@@ -1,7 +1,7 @@
 // tags/counter-box/index.marko
 const $template = "<span> </span><button class=mode>b</button>";
 const $walks = "D l b";
-_shells({ b: "b !b0;D l ;<span> </span><button class=mode>b</button>" });
+_shells({ b: "b b1!b0;D l ;<span> </span><button class=mode>b</button>" });
 _client_return("b");
 var counter_box_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -10,8 +10,9 @@ var counter_box_default = _template("b", (input) => {
 	_html(`<span>${_text_resume($scope0_id, "a", mode)}</span><button class=mode>b</button>${_el_resume($scope0_id, "b")}`);
 	const $return = mode;
 	_script($scope0_id, "b0");
-	const $valueChange = _patch_bind($scope0_id, "dU", input.onA || void 0, 0, 0);
-	_patch_value($scope0_id, "vb1", mode, 1);
+	_patch_init($scope0_id, "b1", 1);
+	const $valueChange = input.onA || void 0;
+	_patch_value($scope0_id, "vb2", mode, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: input.onA,
 		f: input.onB,

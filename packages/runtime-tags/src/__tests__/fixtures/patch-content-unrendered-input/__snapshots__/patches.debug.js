@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/template.marko_1*content;/ b&;<ul></ul>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/panel.marko_1*shell;D ;<li> </li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/gate.marko_1*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/wrapper.marko_1*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/template.marko_1*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/panel.marko_1*shell;D ;<li> </li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/gate.marko_1*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/template.marko_3*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/wrapper.marko_1*shell;b%;<!><!><!>`, {
   "PatchChild:#childScope/2": {
     "PatchBranch:#text/0": [{
       "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/template.marko_1*content",
@@ -21,10 +21,10 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/wrapper.marko_1*shell"]
   }
 }]
-;E1IB
+;F1IF
 
-// PATCH holding E1IB
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/gate.marko_2*shell;b%;<!><!><!>`, {
+// PATCH holding F1IF
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/template.marko_2*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/tags/gate.marko_2*shell;b%;<!><!><!>`, {
   "PatchChild:#childScope/2": {
     "PatchBranch:#text/0": [1, {
       "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-content-unrendered-input/template.marko_2*content",
@@ -37,4 +37,4 @@
     "PatchBranch:#div/0": 0
   }
 }]
-;E1YB
+;F1YH

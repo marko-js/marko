@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-swap-await/template.marko_2*content;D ;<em> </em>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-swap-await/template.marko_1*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-swap-await/template.marko_2*content;D ;<em> </em>`, {
   "PatchDynamicTag:#text/0": [">section", {
     class: "box"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-swap-await/template.marko_1*content"],
@@ -18,4 +18,4 @@
     }
   }
 }
-;BAE
+;CQo

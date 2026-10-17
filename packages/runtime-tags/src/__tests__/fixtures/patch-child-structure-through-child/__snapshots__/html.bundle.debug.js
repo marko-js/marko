@@ -12,11 +12,12 @@ var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 		if (input.flag) {
 			const $scope1_id = _scope_id();
 			_html(`<em>${_patch_text($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 1)}</em>`);
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/leaf.marko_1_input_label#0:4/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/leaf.marko", "1:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_flag, void 0, void 0, void 0, ["__tests__/tags/leaf.marko_1*shell"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { input_label: _unfilled_if($scope0_reason, 0) && input.label }, "__tests__/tags/leaf.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/leaf.marko_fill0", input.label, !_server_guard($scope0_reason, 1));
+	$scope0_page ? _scope($scope0_id, { input_label: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label }, "__tests__/tags/leaf.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/leaf.marko_fill0", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // tags/mid.marko
@@ -40,6 +41,8 @@ var mid_default = _template("__tests__/tags/mid.marko", (input) => {
 				label: input.label
 			});
 			_html("</section>");
+			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/mid.marko_1_input_flag#0:4/init");
+			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/tags/mid.marko_1_input_label#0:5/init");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
@@ -48,8 +51,8 @@ var mid_default = _template("__tests__/tags/mid.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/mid.marko_1*shell"], $scope0_reason, 1);
 	$scope0_page ? _scope($scope0_id, {
-		input_flag: _unfilled_if($scope0_reason, 1) && input.flag,
-		input_label: _unfilled_if($scope0_reason, 1) && input.label
+		input_flag: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.flag,
+		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.label
 	}, "__tests__/tags/mid.marko", 0, {
 		input_flag: ["input.flag"],
 		input_label: ["input.label"]

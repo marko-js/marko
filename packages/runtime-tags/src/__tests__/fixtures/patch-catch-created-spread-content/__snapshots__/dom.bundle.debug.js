@@ -4,7 +4,7 @@ const $walks$1 = "b%c";
 function boom() {
 	throw new Error("SHOWN_message");
 }
-const $try_content__input_fail = /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe");
+const $try_content__input_fail = /*@__PURE__*/ _shell_init("__tests__/tags/error-wrapper.marko_2_input_fail#0:4/init", /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe"));
 const $try_content__setup = $try_content__input_fail;
 const $catch_content__input_fallback__script = _script("__tests__/tags/error-wrapper.marko_1_input_fallback#0:3", ($scope) => _attrs_script($scope, "#div/1"));
 const $catch_content__input_fallback = /*@__PURE__*/ _fill_join_closure("__tests__/tags/error-wrapper.marko_fill0", "input_fallback", /*@__PURE__*/ _closure_get("input_fallback/5", ($scope) => {
@@ -37,7 +37,7 @@ const $fallback_content__setup = ($scope) => {
 	$fallback_content__input_label($scope);
 	$fallback_content__count($scope);
 };
-const $fallback_content__count = /*@__PURE__*/ _closure_get("count/9", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_1_count#0:7/subscribe");
+const $fallback_content__count = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_count#0:7/init", /*@__PURE__*/ _closure_get("count/9", ($scope) => _text($scope["#text/1"], $scope._.count)));
 const $fallback_content = _content("__tests__/template.marko_1*content", "<i><!> <!></i>", "D%c%", $fallback_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($fallback_content__count);
 const $count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "count/7", ($scope) => {

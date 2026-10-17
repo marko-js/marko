@@ -11,10 +11,10 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!><button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&%b l`)("D%l");
-const $elseif_content2__input_inner = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_inner", /*@__PURE__*/ _closure_get("input_inner/9", ($scope) => _text($scope["#text/0"], $scope._._._.input_inner), ($scope) => $scope._._._, "__tests__/template.marko_5_input_inner#0:6/subscribe"), 1);
+const $elseif_content2__input_inner = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_inner", /*@__PURE__*/ _closure_get("input_inner/9", ($scope) => _text($scope["#text/0"], $scope._._._.input_inner), ($scope) => $scope._._._), 1);
 const $elseif_content2__setup = $elseif_content2__input_inner;
 const $widget_content2__if = /*@__PURE__*/ _if("#text/0", "<b>A</b>", 0, 0, "<i>B:<!></i>", "Db%", $elseif_content2__setup);
-const $widget_content2__input_inner = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_inner", /*@__PURE__*/ _closure_get("input_inner/9", ($scope) => $widget_content2__if($scope, $scope._._.input_inner === "a" ? 0 : $scope._._.input_inner === "b" ? 1 : 2), ($scope) => $scope._._, "__tests__/template.marko_4_input_inner#0:6/subscribe"), 0);
+const $widget_content2__input_inner = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_inner", /*@__PURE__*/ _closure_get("input_inner/9", ($scope) => $widget_content2__if($scope, $scope._._.input_inner === "a" ? 0 : $scope._._.input_inner === "b" ? 1 : 2), ($scope) => $scope._._), 0);
 const $widget_content2__setup = $widget_content2__input_inner;
 const $widget_content2 = /*@__PURE__*/ _content("__tests__/template.marko_4*content", "<!><!><!>", "b%", $widget_content2__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $widget_content2($scope));

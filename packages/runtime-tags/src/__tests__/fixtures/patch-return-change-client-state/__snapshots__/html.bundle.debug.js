@@ -1,7 +1,7 @@
 // tags/counter-box/index.marko
 const $template$1 = "<span> </span><button class=mode>b</button>";
 const $walks$1 = "D l b";
-_shells({ "__tests__/tags/counter-box/index.marko": "^__tests__/tags/counter-box/index.marko !__tests__/tags/counter-box/index.marko_0;D l ;<span> </span><button class=mode>b</button>" });
+_shells({ "__tests__/tags/counter-box/index.marko": "^__tests__/tags/counter-box/index.marko __tests__/tags/counter-box/index.marko_0_input_onA#4_input_onB#5_mode#6/init!__tests__/tags/counter-box/index.marko_0;D l ;<span> </span><button class=mode>b</button>" });
 _client_return("__tests__/tags/counter-box/index.marko");
 var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -10,7 +10,8 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 	_html(`<span>${_text_resume($scope0_id, "#text/0", mode)}</span><button class=mode>b</button>${_el_resume($scope0_id, "#button/1")}`);
 	const $return = mode;
 	_script($scope0_id, "__tests__/tags/counter-box/index.marko_0");
-	const $valueChange = _patch_bind($scope0_id, "PatchBind:#TagVariableChange", (mode === "a" ? input.onA : input.onB) || void 0, 0, 0);
+	_patch_init($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#4_input_onB#5_mode#6/init", 1);
+	const $valueChange = (mode === "a" ? input.onA : input.onB) || void 0;
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/counter-box/index.marko_fill0", mode, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_onA: input.onA,

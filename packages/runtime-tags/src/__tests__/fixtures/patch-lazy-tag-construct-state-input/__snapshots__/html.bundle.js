@@ -12,7 +12,7 @@ var child_default = _template("a", (input) => {
 const $Child_withLoadAssets = withLoadAssets(child_default, flush, "_a");
 _shells({
 	b: "b !b1; D l ;<button class=n> </button><main></main>",
-	b0: /*@__PURE__*/ (() => `b0 b5 b6;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D l")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)()
+	b0: /*@__PURE__*/ (() => `b0 b5;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D l")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $scope0_page = _page_render();

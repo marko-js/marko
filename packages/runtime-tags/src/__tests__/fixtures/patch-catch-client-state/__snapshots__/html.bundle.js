@@ -16,8 +16,8 @@ var panel_default = _template("b", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
-		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "b5");
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b5");
+		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, _client_guard($scope0_reason, 1) ? "b5" : "b6");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b6");
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -33,12 +33,12 @@ var panel_default = _template("b", (input) => {
 			h: n,
 			_: _scope_with_id($scope0_id)
 		}), _client_guard($scope0_reason, 0) && "b4");
-	}, void 0, "b6", "b0", 1, "");
+	}, void 0, "b7", "b0", 1, "");
 	$scope0_page ? _scope($scope0_id, {
 		d: input.label,
 		f: $wi__input_label && $input_label__closures,
 		g: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb7", input.label, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb8", input.label, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

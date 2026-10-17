@@ -29,7 +29,10 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 // tags/heading.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-_shells({ "__tests__/tags/heading.marko": "__tests__/tags/heading.marko;b%;<!><!><!>" });
+_shells({
+	"__tests__/tags/heading.marko_1*content": "__tests__/tags/heading.marko_1*content,",
+	"__tests__/tags/heading.marko": "__tests__/tags/heading.marko;b%;<!><!><!>"
+});
 var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -38,7 +41,8 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`depth ${_patch_text($scope1_id, "#text/0", input.depth, 2, $scope0_reason, 2)}`);
-		_subscribe(_unfilled_if($scope0_reason, 2) && $input_depth__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "1:4"), _client_guard($scope0_reason, 2) && "__tests__/tags/heading.marko_1_input_depth#0:4/subscribe");
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, _client_guard($scope0_reason, 2) ? "__tests__/tags/heading.marko_1_input_depth#0:4/init" : "__tests__/tags/heading.marko_1_input_depth#0:4/subscribe");
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_depth__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "1:4"));
 	}, $scope0_id, ($scope) => [{ input_depth: input.depth }]), 0, $wg__input_type, void 0, 2, $scope0_reason, 1);
 	_patch_write($scope0_id, "PatchWrite:input_depth", input.depth, 1);
 	$scope0_page && _scope($scope0_id, {

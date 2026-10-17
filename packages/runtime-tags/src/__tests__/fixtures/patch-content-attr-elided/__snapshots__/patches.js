@@ -1,19 +1,20 @@
 // PATCH
-{
+[`a0,`, {
   fa: "^a0",
   cAa: {
     ta: "two"
   },
   tb: "two"
-}
+}]
+;BAE
 
-// PATCH
+// PATCH holding BAE
 {
   fa: 0,
   tb: "three"
 }
 
-// PATCH
+// PATCH holding BAE
 {
   fa: "^a0",
   cAa: {

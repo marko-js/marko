@@ -18,19 +18,20 @@ var panel_default = _template("__tests__/tags/panel/index.marko", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html(`<em>${_patch_text($scope2_id, "#text/0", input.title, void 0, $scope0_reason, 4)}</em>`);
-					_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, "__tests__/tags/panel/index.marko_2_input_title#0:5/subscribe");
+					_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, _client_guard($scope0_reason, 4) ? "__tests__/tags/panel/index.marko_2_input_title#0:5/init" : "__tests__/tags/panel/index.marko_2_input_title#0:5/subscribe");
 					_subscribe(_unfilled_if($scope0_reason, 4) && $input_title__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_inner__OR__input_title && _scope_with_id($scope1_id) }, "__tests__/tags/panel/index.marko", "3:6"), _client_guard($scope0_reason, 4) && "__tests__/tags/panel/index.marko_2_input_title#0:5/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#section/0", 1, $wg__input_inner, void 0, void 0, void 0, ["__tests__/tags/panel/index.marko_2*shell"], $scope0_reason, 3);
 			_html(`</section>${_el_resume($scope1_id, "#section/0", $wg__input_inner)}`);
+			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/tags/panel/index.marko_1_input_inner#0:4/init");
 			$wi__input_show__OR__input_inner__OR__input_title && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel/index.marko", "1:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/panel/index.marko_1*shell"], $scope0_reason, 2);
 	$scope0_page ? _scope($scope0_id, {
-		input_inner: _unfilled_if($scope0_reason, 2) && input.inner,
-		input_title: _unfilled_if($scope0_reason, 0) && input.title,
+		input_inner: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.inner,
+		input_title: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.title,
 		"ClosureScopes:input_title/7": _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 4) && $input_title__closures
 	}, "__tests__/tags/panel/index.marko", 0, {
 		input_inner: ["input.inner"],

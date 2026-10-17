@@ -1,13 +1,10 @@
 // template.marko
-_shells({
-	a0: "a0;D%b%;<em><!><!></em>",
-	a: "a !a1;D%b ;<main><!><button>t</button></main>"
-});
+_shells({ a: "a !a1;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let show = true;
-	const badge = { content: _content_elide("a0", (a, b) => {
+	const badge = { content: _content("a0", (a, b) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_html(`<em>${_patch_text($scope2_id, "a", a, void 0, $scope2_reason, 0)}${_patch_text($scope2_id, "b", b, 2, $scope2_reason, 1)}</em>`);

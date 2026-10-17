@@ -11,10 +11,11 @@ var list_default = _template("b", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_patch_text($scope1_id, "a", item, void 0, $scope0_reason, 0)}${_patch_text($scope1_id, "b", input.suffix, 2, $scope0_reason, 1)}</li>`);
+		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b1");
 		_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b0", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
-	$scope0_page ? _scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.suffix }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.suffix, !_server_guard($scope0_reason, 1));
+	$scope0_page ? _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.suffix }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb2", input.suffix, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

@@ -11,10 +11,9 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wf", input.value, 1);
 	_patch_write($scope0_id, "wg", input.wire, 1);
 	_patch_write($scope0_id, "wh", handler, 1);
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a4");
-	$scope0_page ? _scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.value,
-		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.wire,
-		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && handler
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va2", input.value, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va3", input.wire, !_server_guard($scope0_reason, 3)));
+	$scope0_page && _scope($scope0_id, {
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.value,
+		g: _unfilled_if($scope0_reason, 0) && input.wire,
+		h: _unfilled_if($scope0_reason, 0) && handler
+	});
 }, 1);

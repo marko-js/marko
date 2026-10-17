@@ -93,13 +93,13 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // page-b.marko
 const $template = "<h1>B</h1><!><button> </button>";
 const $walks = "b%b D l";
-const $card_content__count = _resumed["__tests__/page-b.marko_2_count#0:6/init"] = /*@__PURE__*/ _closure_get("count/8", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._, "__tests__/page-b.marko_2_count#0:6/subscribe");
+const $card_content__count = /*@__PURE__*/ _shell_init("__tests__/page-b.marko_2_count#0:6/init", /*@__PURE__*/ _closure_get("count/8", ($scope) => _text($scope["#text/1"], $scope._._.count), ($scope) => $scope._._));
 const $card_content__setup = ($scope) => {
 	$card_content__count($scope);
 	$card_content__p($scope);
 	$card_content__item($scope);
 };
-const $card_content__p = /*@__PURE__*/ _closure_get("p/9", ($scope) => _text($scope["#text/0"], $scope._._.p), ($scope) => $scope._._, "__tests__/page-b.marko_2_p#0:7/subscribe");
+const $card_content__p = /*@__PURE__*/ _shell_init("__tests__/page-b.marko_2_p#0:7/init", /*@__PURE__*/ _closure_get("p/9", ($scope) => _text($scope["#text/0"], $scope._._.p), ($scope) => $scope._._, "__tests__/page-b.marko_2_p#0:7/subscribe"));
 const $card_content__item = /*@__PURE__*/ _closure_get("item/10", ($scope) => _text($scope["#text/2"], $scope._.item));
 const $card_content = /*@__PURE__*/ _content("__tests__/page-b.marko_2*content", "<span><!>/<!>/<!></span>", "D%c%c%", $card_content__setup);
 const $for_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $card_content($scope));

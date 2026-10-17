@@ -1,16 +1,38 @@
 // PATCH
-[`a2 !a4;0D l b& b;<span> </span><button class=mode>b</button><button class=set>set</button>`, {
+[`a2 !a4;0D l b b& b;<span> </span><button class=mode>b</button><button class=go>go</button><button class=set>set</button>`, {
   ba: [{
     ca: {
       s: {
         0: "a3",
-        i: "!b0",
-        dU: ["a0", 1],
-        vb1: "a",
-        de: ["a0", 1],
-        df: ["a1", 1]
+        i: "b2!b1",
+        vb3: "a",
+        df: ["a0", 1],
+        dg: ["a1", 1]
       }
     }
-  }, "a2"]
+  }, "a2"],
+  wf: "y"
 }]
 ;BgE
+
+// PATCH holding BgE
+{
+  ba: 0,
+  wf: "z"
+}
+
+// PATCH holding BgE
+{
+  ba: [{
+    ca: {
+      s: {
+        0: "a3",
+        i: "b2!b1",
+        vb3: "a",
+        df: ["a0", 1],
+        dg: ["a1", 1]
+      }
+    }
+  }, "a2"],
+  wf: "z"
+}

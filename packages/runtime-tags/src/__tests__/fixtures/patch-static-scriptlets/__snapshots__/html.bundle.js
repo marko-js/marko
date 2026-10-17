@@ -3,7 +3,7 @@ const shout = (s) => s.toUpperCase() + "!";
 const stamp = "srv";
 _shells({
 	a: "a !a1;E%c%l%b ;<main><p><!> <!></p><!><button>+</button></main>",
-	a0: "a0 a5 a6;D ;<span> </span>"
+	a0: "a0 a5;D ;<span> </span>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

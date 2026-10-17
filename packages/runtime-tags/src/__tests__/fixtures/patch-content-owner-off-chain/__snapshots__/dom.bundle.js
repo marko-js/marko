@@ -1,5 +1,5 @@
 // tags/src.marko
-const $tab_content__count = _resumed.c5 = /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.c, $scope._.f), 0, "c7");
+const $tab_content__count = /*@__PURE__*/ _shell_init("c5", /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.c, $scope._.f)));
 const $tab_content__setup__script = _script("c1", ($scope) => _on($scope.a, "click", function() {
 	$count($scope._, +$scope._.f + 1);
 }));

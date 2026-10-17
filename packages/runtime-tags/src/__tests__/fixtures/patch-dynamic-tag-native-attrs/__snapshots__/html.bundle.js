@@ -31,18 +31,16 @@ var template_default = _template("a", (input) => {
 	_patch_write($scope0_id, "wl", input.hidden, 1);
 	_patch_write($scope0_id, "wn", input.field, 1);
 	_patch_write($scope0_id, "wo", input.checked, 1);
-	_client_guard($scope0_reason, 7) && _patch_init($scope0_id, "a11");
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a12");
-	_patch_value($scope0_id, "va13", n, 1);
-	$scope0_page ? _scope($scope0_id, {
-		g: (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 7)) && input.tag,
-		h: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 7)) && input.cls,
-		i: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 7)) && input.sty,
-		j: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 7)) && input.title,
-		k: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 7)) && input.x,
-		l: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 7)) && input.hidden,
-		n: (_unfilled_if($scope0_reason, 15) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 14)) && input.field,
-		o: (_unfilled_if($scope0_reason, 14) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 15)) && input.checked,
+	_patch_value($scope0_id, "va3", n, 1);
+	$scope0_page && _scope($scope0_id, {
+		g: (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 7)) && input.tag,
+		h: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 7)) && input.cls,
+		i: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 7)) && input.sty,
+		j: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 7)) && input.title,
+		k: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 7)) && input.x,
+		l: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 7)) && input.hidden,
+		n: (_unfilled_if($scope0_reason, 9) || _unfilled_if($scope0_reason, 0)) && input.field,
+		o: (_unfilled_if($scope0_reason, 8) || _unfilled_if($scope0_reason, 0)) && input.checked,
 		q: n
-	}) : (_filled_guard($scope0_reason, 8) && _client_guard($scope0_reason, 6) && _patch_value($scope0_id, "va3", input.tag, !_server_guard($scope0_reason, 8)), _filled_guard($scope0_reason, 9) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "va4", input.cls, !_server_guard($scope0_reason, 9)), _filled_guard($scope0_reason, 10) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va5", input.sty, !_server_guard($scope0_reason, 10)), _filled_guard($scope0_reason, 11) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va6", input.title, !_server_guard($scope0_reason, 11)), _filled_guard($scope0_reason, 12) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va7", input.x, !_server_guard($scope0_reason, 12)), _filled_guard($scope0_reason, 13) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va8", input.hidden, !_server_guard($scope0_reason, 13)), _filled_guard($scope0_reason, 14) && _client_guard($scope0_reason, 15) && _patch_value($scope0_id, "va9", input.field, !_server_guard($scope0_reason, 14)), _filled_guard($scope0_reason, 15) && _client_guard($scope0_reason, 14) && _patch_value($scope0_id, "va10", input.checked, !_server_guard($scope0_reason, 15)));
+	});
 }, 1);

@@ -1,7 +1,7 @@
 // tags/frag-host.marko
-const $frag_content__input_note = /*@__PURE__*/ _fill_join_closure("b2", 3, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.d), 0, "b1"), 0);
+const $frag_content__input_note = /*@__PURE__*/ _shell_init("b1", /*@__PURE__*/ _fill_join_closure("b3", 3, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.d), 0, "b2"), 0));
 const $frag_content = _content$1("b0", "<em> </em>", "D ", $frag_content__input_note);
-const $input_mode__OR__frag_content = /*@__PURE__*/ _shell_or("b3", 7, ($scope) => _attr_content($scope, "a", $scope.e ? $scope.g : null));
+const $input_mode__OR__frag_content = /*@__PURE__*/ _shell_or("b4", 7, ($scope) => _attr_content($scope, "a", $scope.e ? $scope.g : null));
 const $input_mode = /*@__PURE__*/ _const(4, $input_mode__OR__frag_content);
 
 // template.marko

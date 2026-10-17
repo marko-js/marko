@@ -10,7 +10,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_input_label#5_input_other#6", 1, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_server_guard($scope0_reason, 2) && _patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_input_label#5_input_other#6", "input_other");
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/template.marko_0_input_label#5_input_other#6/init");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", n, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,

@@ -1,19 +1,15 @@
 // template.marko
 const $template = "<!><div> </div><button>+</button>";
 const $walks = "0&b D l b";
-_shells({
-	"__tests__/template.marko_1*content": "^__tests__/template.marko_1*content !,",
-	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;0&b D l ;<!><div> </div><button>+</button>"
-});
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;0&b D l ;<!><div> </div><button>+</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	const Sum = { content: _content_elide("__tests__/template.marko_1*content", ({ a, b }) => {
+	const Sum = { content: _content("__tests__/template.marko_1*content", ({ a, b }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
 		const $return = a + b;
-		_client_guard($scope1_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_a#2_b#3/init");
 		$scope1_page ? _write_if($scope1_reason, 0) && _scope($scope1_id, {
 			a: _write_if($scope1_reason, 2) && a,
 			b: _write_if($scope1_reason, 1) && b

@@ -1,29 +1,31 @@
 // PATCH
-{
-  fa: ["^a0", {
-    label: "b"
-  }],
+[`a1 !a2,`, {
+  fa: "^a1",
   cAa: {
-    tb: "b"
+    tb: "b",
+    s: {
+      va4: 0
+    }
   }
-}
+}]
+;BgI
 
-// PATCH
-{
-  fa: ["^a3", {
-    label: "c"
-  }],
+// PATCH holding BgI
+[`a0,`, {
+  fa: "^a0",
   cAa: {
     ta: "c"
   }
-}
+}]
+;BwY
 
-// PATCH
+// PATCH holding BwY
 {
-  fa: ["^a0", {
-    label: "d"
-  }],
+  fa: "^a1",
   cAa: {
-    tb: "d"
+    tb: "d",
+    s: {
+      va4: 0
+    }
   }
 }

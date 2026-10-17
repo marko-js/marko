@@ -22,7 +22,7 @@ const $item_content__setup = ($scope) => {
 	$item_content__n($scope);
 };
 const $item_content__n__OR__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "label", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.label + $scope._.n)));
-const $item_content__n = _resumed["__tests__/template.marko_1_n#0:7/init"] = /*@__PURE__*/ _closure_get("n/9", $item_content__n__OR__label, 0, "__tests__/template.marko_1_n#0:7/subscribe");
+const $item_content__n = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_n#0:7/init", /*@__PURE__*/ _closure_get("n/9", $item_content__n__OR__label));
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<em> </em><!><!>", "D l%", $item_content__setup), { label($scope) {
 	$item_content__n__OR__label($scope);
 	$if_content__label($scope);

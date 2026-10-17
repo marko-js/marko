@@ -3,7 +3,7 @@ const $template$1 = "<div class=panel></div>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _shell_init("__tests__/tags/panel.marko_1_input_content#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content))));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#div/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_open = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
@@ -20,7 +20,7 @@ const $walks = " b%c";
 const $panel_content__p_text = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "p_text", /*@__PURE__*/ _closure_get("p_text/7", ($scope) => _text($scope["#text/0"], $scope._.p_text), 0, "__tests__/template.marko_2_p_text#1:3/subscribe"), 0);
 const $panel_content__setup = $panel_content__p_text;
 const $panel_content = _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $panel_content__setup);
-const $for_content__open = _resumed["__tests__/template.marko_1_open#0:5/init"] = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $input_open($scope["#childScope/0"], $scope._.open));
+const $for_content__open = /*@__PURE__*/ _shell_init("__tests__/template.marko_1_open#0:5/init", /*@__PURE__*/ _for_closure("#text/1", ($scope) => $input_open($scope["#childScope/0"], $scope._.open)));
 const $for_content__setup = ($scope) => {
 	$for_content__open._($scope);
 	$input_content($scope["#childScope/0"], $panel_content($scope));

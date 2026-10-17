@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a: "a !a1;D%b ;<main><!><button>+</button></main>",
-	a0: "a0 a5 a6;D ;<p> </p>"
+	a0: "a0 a5;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

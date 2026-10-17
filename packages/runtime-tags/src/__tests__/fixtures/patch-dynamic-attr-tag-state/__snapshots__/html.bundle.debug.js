@@ -14,6 +14,7 @@ var card_default = _template("__tests__/card.marko", (input) => {
 // template.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>+</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

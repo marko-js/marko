@@ -36,7 +36,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_write($scope0_id, "PatchWrite:Panel", Panel, 1);
-	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "__tests__/template.marko_0_input_other#7_Panel#10/init");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,

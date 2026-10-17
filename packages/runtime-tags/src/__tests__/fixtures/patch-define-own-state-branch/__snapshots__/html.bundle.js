@@ -1,14 +1,11 @@
 // template.marko
 const $Panel_content__walks = "b%b b";
 const $Panel_content__template = "<!><!><button>toggle</button>";
-_shells({
-	a0: /*@__PURE__*/ ((_w0, _w1) => `a0 !a1;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
-	a: /*@__PURE__*/ (() => `a;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)()
-});
+_shells({ a: /*@__PURE__*/ (() => `a;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)() });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
-	const Panel = { content: _content_elide("a0", ({ label }) => {
+	const Panel = { content: _content("a0", ({ label }) => {
 		const $scope1_id = _scope_id(), $scope1_reason = _scope_reason();
 		_write_guard($scope1_reason, 0);
 		const $scope1_page = _page_render();
