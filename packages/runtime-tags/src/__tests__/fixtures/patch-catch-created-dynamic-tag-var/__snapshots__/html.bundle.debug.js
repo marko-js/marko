@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<b>${_patch_text($scope1_id, "#text/0", err.message)}</b>`);
 		const $inputbigBigSmall_scope = _peek_scope_id();
 		let v = _dynamic_tag($scope1_id, "#text/1", input.big ? huge_label_default : tiny_label_default, { label: input.label }, void 0, void 0, void 0, 1);
-		_var($scope1_id, "#scopeOffset/2", $inputbigBigSmall_scope, "__tests__/template.marko_1_v#8/var");
+		_var($scope1_id, "#scopeOffset/2", $inputbigBigSmall_scope, "__tests__/template.marko_1_v#8/var", void 0, 1);
 		_html(`<i>${_text_resume($scope1_id, "#text/3", v)}</i>`);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_big__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_big#0:3/subscribe"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_label#0:4/subscribe");
 	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, "");

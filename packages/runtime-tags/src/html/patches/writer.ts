@@ -895,13 +895,14 @@ export function _subscribe(
 }
 
 // A created child gets the same wiring as a resumed one: a seed bound to the
-// parent's registration, so no separate init registers for it.
+// parent's registration. A dynamic tag's child (`dynamic`) is wired by its tag.
 export function _var(
   parentScopeId: number,
   scopeOffsetAccessor: Accessor,
   childScopeId: number,
   registryId: string,
   nodeAccessor?: Accessor,
+  dynamic?: 1,
 ) {
   _base_var(
     parentScopeId,
@@ -911,7 +912,7 @@ export function _var(
     nodeAccessor,
   );
   const state = getState();
-  if (state instanceof PatchUpdateState && inCreatable()) {
+  if (!dynamic && state instanceof PatchUpdateState && inCreatable()) {
     ensurePatchSetup(state, ensureScopePatch(state, childScopeId))[
       PatchKey.Var
     ] = registryId;

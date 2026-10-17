@@ -1,6 +1,12 @@
 import { normalizeDynamicRenderer } from "../../common/helpers";
 import { ROOT_SCOPE_ID } from "../../common/meta";
-import { type Accessor, PatchKey, RendererProp } from "../../common/types";
+import {
+  type Accessor,
+  AccessorPrefix,
+  AccessorProp,
+  PatchKey,
+  RendererProp,
+} from "../../common/types";
 import {
   _content as _base_content,
   _dynamic_tag as _base_dynamic_tag,
@@ -241,8 +247,8 @@ export function writeDynamicTagEntry(
     if (sources === 2 || (!sources && inCreatable())) {
       const id =
         typeof renderer === "function" ? renderer[RendererProp.Id] : undefined;
-      // A renderer ships its comparable id (or itself bare); native names are
-      // `["div"]`/`>div`, and args ride as array input.
+      // A renderer ships its comparable id (or itself bare); a native name
+      // ships as `>div`, and args ride as array input.
       const registered =
         typeof renderer === "function" ? REGISTRY.get(renderer) : undefined;
       const boundScope = registered?.scope as ScopeInternals | undefined;
@@ -255,13 +261,14 @@ export function writeDynamicTagEntry(
       // id's prefix) takes no input: the flush's entries render what it would.
       const shell = id && shipShell(state as PatchUpdateState, id);
       if (contentId) shipShell(state as PatchUpdateState, contentId);
-      const native = typeof renderer === "string";
       const entry: unknown[] = [
         id
           ? (ownerId === undefined
               ? ""
               : ownerPrefix(state, scopeId, ownerId)) + id
-          : renderer || 0,
+          : typeof renderer === "string"
+            ? ">" + renderer
+            : renderer || 0,
         (!shell && renderer && args) || 0,
         contentId,
         varId,
@@ -270,12 +277,11 @@ export function writeDynamicTagEntry(
       const locals = registered?.locals?.(state.scope);
       if (locals) entry.push(...locals);
       while (entry.length > 1 && !entry[entry.length - 1]) entry.pop();
-      if (native && entry.length > 1) entry[0] = ">" + renderer;
       writePatch(
         state,
         scopeId,
         entryKey(PatchKey.DynamicTag, accessor),
-        entry.length > 1 || native ? entry : entry[0],
+        entry.length > 1 ? entry : entry[0],
       );
     } else if (!(sources & 1)) {
       // No entry ships, so the live branch stays paired: its body is no
@@ -289,7 +295,7 @@ export function writeDynamicTagEntry(
 }
 
 // Content's owner as an id prefix: a `^` per scope up the tag's owner chain (its
-// own first), or accessor hops down from that chain or the root (`^^ a `, `a b `).
+// own first), then accessor hops down from it or the root, or up to a row.
 function ownerPrefix(
   state: PatchUpdateState,
   scopeId: number,
@@ -307,12 +313,7 @@ function ownerPrefix(
     }
     const link = state.patchLinks![cur];
     if (typeof link.link !== "string") {
-      if (MARKO_DEBUG && !relative) {
-        throw new Error(
-          `Content defined in a \`<for>\` row was rendered outside the row. Only a side effect during render, which Marko does not support, can move it there.`,
-        );
-      }
-      return relative!;
+      return relative || branchesUpTo(state, scopeId, cur, hops);
     }
     hops = link.link + " " + hops;
     cur = link.parent;
@@ -320,6 +321,33 @@ function ownerPrefix(
     if (parentUp !== undefined) relative = "^".repeat(parentUp + 1) + hops;
   }
   return relative && relative.length < hops.length ? relative : hops;
+}
+
+// A row is a branch the tag renders inside, reached as the client links it: the
+// tag's closest branch, then a parent branch per branch between.
+function branchesUpTo(
+  state: PatchUpdateState,
+  scopeId: number,
+  rowId: number,
+  hops: string,
+) {
+  let prefix = "^" + AccessorProp.ClosestBranch + " ";
+  for (let cur = scopeId; cur !== rowId;) {
+    const link = state.patchLinks![cur];
+    if (MARKO_DEBUG && !link) {
+      throw new Error(
+        `Content defined in a \`<for>\` row was rendered outside the row. Only state changed during render, which Marko does not support, can move it there.`,
+      );
+    }
+    if (
+      typeof link.link !== "string" ||
+      link.link.startsWith(AccessorPrefix.BranchScopes)
+    ) {
+      prefix += AccessorProp.ParentBranch + " ";
+    }
+    cur = link.parent;
+  }
+  return prefix + hops;
 }
 
 // Templates and content whose own state drives their `<return>`: a dynamic

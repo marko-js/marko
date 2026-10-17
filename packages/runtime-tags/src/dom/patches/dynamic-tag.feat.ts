@@ -14,17 +14,16 @@ import { getRegisteredWithScope } from "../resume";
 import { createPatchers, patchers } from "./apply";
 import { getContent } from "./shells";
 
-// `[renderer, input, contentId, varId]` or bare; `>div` (`["div"]`) is native,
-// `^id`/`^^id` bind the tag's scope/owner, `hop… id` steps down from it or the root.
+// `[renderer, input, contentId, varId]` or bare; `>div` is native, `^id`/`^^id`
+// bind the tag's scope/owner; `hop… id` steps down, `^F N id` up to a row.
 patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
   scope,
   key,
   entry,
 ) => {
   const accessor = key.slice(PatchKey.DynamicTag.length) as Accessor;
-  const bare = !Array.isArray(entry);
   let [renderer, input, contentId, varId, ...locals] = (
-    bare ? [entry] : entry
+    Array.isArray(entry) ? entry : [entry]
   ) as [
     unknown,
     unknown,
@@ -32,7 +31,7 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
     string | 0 | undefined,
     ...Scope[],
   ];
-  if (typeof renderer === "string" && (bare || input !== undefined)) {
+  if (typeof renderer === "string") {
     if (renderer[0] === ">") {
       renderer = renderer.slice(1);
     } else {
@@ -71,7 +70,7 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
       }
     }
   }
-  const content = contentId ? getContent(contentId) : undefined;
+  const content = contentId ? getContent(contentId, scope) : undefined;
   (
     _dynamic_tag(
       (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,

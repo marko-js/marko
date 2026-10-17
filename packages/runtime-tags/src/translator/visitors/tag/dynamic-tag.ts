@@ -33,13 +33,10 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import { isOptimize, isOutputHTML, isPatch } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
-import {
-  linkHolePatcher,
-  writesPatchDynamicTag,
-} from "../../util/patch/decisions";
+import { linkHolePatcher, writesPatchHole } from "../../util/patch/decisions";
 import { getExprWriteOwnership } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
@@ -198,9 +195,7 @@ export default {
         tagSection,
       ));
       // The dynamic tag entry applies without this template's dom module.
-      if (node.name.type !== "StringLiteral") {
-        linkHolePatcher(tagSection, tagExtra, "patches/dynamic-tag");
-      }
+      linkHolePatcher(tagSection, tagExtra, "patches/dynamic-tag");
 
       if (hasVar) {
         trackVarReferences(tag, BindingType.derived)!.returnedBy = {
@@ -473,7 +468,7 @@ export default {
         // A patched tag writes its entry from what it renders (the entry ships
         // no statically empty input) and marks its branch whatever its reason.
         const input = args[0];
-        const patchArgs = writesPatchDynamicTag(tag, tagSection)
+        const patchArgs = writesPatchHole(tagSection, tag.node.extra)
           ? [
               t.numericLiteral(
                 !hasTagArgs &&
@@ -541,6 +536,7 @@ export default {
                 mutatesTagVar
                   ? getScopeAccessorLiteral(nodeBinding)
                   : undefined,
+                isPatch() ? t.numericLiteral(1) : undefined,
               ),
             ),
           );
@@ -564,7 +560,7 @@ export default {
           const varBinding = tag.node.var.extra!.binding!;
           tagVarSignal = initValue(varBinding);
           // A patch writes the variable's value by its resume id.
-          tagVarSignal.register = writesPatchDynamicTag(tag, section)
+          tagVarSignal.register = writesPatchHole(section, tag.node.extra)
             ? "fill"
             : true;
           tagVarSignal.referenced = true;

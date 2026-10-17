@@ -290,8 +290,22 @@ function seedsCreatedScope(binding: Binding) {
     // seeds the join's init.
     !getPatchFill(binding).fillsReads &&
     !isPatchWritten(binding) &&
-    !catchSetupRenders(section, binding.sources)
+    !catchSetupRenders(section, binding.sources) &&
+    // A value a created init's join derives takes no seed: one would leave
+    // the join's first run unchanged, so what reads the value never runs.
+    !derivesByCreatedInit(binding)
   );
+}
+
+// A value its expression's join derives by its created init, which every created
+// or composed scope's shell or flush names (no other scope is created to seed).
+function derivesByCreatedInit(binding: Binding) {
+  const { derivedFrom } = binding;
+  const join =
+    derivedFrom && !Array.isArray(derivedFrom)
+      ? getReferencedBindings(derivedFrom)
+      : undefined;
+  return Array.isArray(join) && !!getJoinInit(binding.section, join)?.init;
 }
 
 // A param a created scope gets as a seed, as no structure brings it: a known
@@ -369,7 +383,8 @@ function computeFillReadKind(
       // A join with a param of a body outside the binding's is computed where
       // the body's calls pass it: on the client for state, else by their bits.
       const passed =
-        knownChild && getDefineCallSources(sources, binding.section);
+        receivesCallerParams(binding.section) &&
+        getDefineCallSources(sources, binding.section);
       if (passed) {
         if (passed.state) return true;
         const passedOthers = getOtherInputs(
@@ -839,6 +854,21 @@ function arrivesBySignal(member: Binding, section: Section) {
   );
 }
 
+// A section its caller passes params: a known child's calls, or the flush for
+// content it creates from its shell, whose tag's entry passes it no input.
+function receivesCallerParams(section: Section) {
+  return isKnownChild(section) || shipsContentShell(section);
+}
+
+// `isCallerParamAt` for what a created scope receives: shell content's params
+// too, which a flush fills without the caller bits the other callers gate on.
+function isReceivedParamAt(param: Binding, section: Section) {
+  return (
+    receivesCallerParams(param.section) &&
+    isSameOrAncestorSection(param.section, section)
+  );
+}
+
 function getClosureInit(
   section: Section,
   closure: Binding,
@@ -870,7 +900,9 @@ function getClosureSubscribe(
     closure.type !== BindingType.constant &&
     init !== "always" &&
     typeof init !== "object" &&
-    hasCallerParamSourceAt(closure.sources, section) &&
+    some(closure.sources?.param, (param) =>
+      isReceivedParamAt(param, section),
+    ) &&
     isDynamicClosure(section, closure)
   ) {
     return subscribesFill(closure, section)

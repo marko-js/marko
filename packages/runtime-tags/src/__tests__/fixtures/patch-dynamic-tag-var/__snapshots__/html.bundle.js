@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $inputwhichonetwo_scope = _peek_scope_id();
 	let x = _dynamic_tag($scope0_id, "a", input.which ? one_default : two_default, { a: input.a }, void 0, void 0, void 0, "a0", 1, $scope0_reason, 0);
-	_var($scope0_id, "b", $inputwhichonetwo_scope, "a0");
+	_var($scope0_id, "b", $inputwhichonetwo_scope, "a0", void 0, 1);
 	_html(`<p>${_text_resume($scope0_id, "c", x)}</p>`);
 	_patch_write($scope0_id, "wf", input.which, 1);
 	_patch_write($scope0_id, "wg", input.a, 1);

@@ -1,0 +1,181 @@
+// PATCH
+[`a1 a17;D%c%;<i><!> <!></i>`, `a6;b%;<!><!><!>`, `a0 a15,`, `a3 !,`, `a2 a19,`, `a5;b%;<!><!><!>`, `a4 !a11;D D l/D%b%l&%b%l;<section><button> </button><p><!><!></p><!><!></section>`, {
+  la: [1, {
+    va12: "b",
+    cc: {
+      s: {
+        ta: "direct"
+      },
+      bb: [{
+        fa: "^^^a1",
+        cAa: {
+          ta: "b"
+        }
+      }, "a6"]
+    },
+    fd: [">span", {
+      label: "dynamic"
+    }, "a0"],
+    cAd: {
+      cAa: {
+        ta: "b"
+      }
+    },
+    le: [],
+    s: {
+      wm: {
+        content: _([
+          ["a", [0, 1]]
+        ], "a2", 1)
+      },
+      va13: 0
+    }
+  }, 2, {
+    va12: "c",
+    cc: {
+      s: {
+        ta: "direct"
+      },
+      bb: [{
+        fa: "^^^a1",
+        cAa: {
+          ta: "c"
+        }
+      }, "a6"]
+    },
+    fd: ["^^a3", 0, "a0"],
+    cAd: {
+      ta: "dynamic",
+      bb: [{
+        fa: ["^F N N a0", 0, 0, 0, {
+          h: "c"
+        }],
+        cAa: {
+          ta: "c"
+        }
+      }, "a6"]
+    },
+    le: [{
+      fa: "^^^a3",
+      cAa: {
+        ta: "y",
+        bb: [{
+          fa: "^F N N N a2",
+          cAa: {
+            ta: "c"
+          }
+        }, "a6"]
+      }
+    }, {
+      fa: "^^^a3",
+      cAa: {
+        ta: "z",
+        bb: [{
+          fa: "^F N N N a2",
+          cAa: {
+            ta: "c"
+          }
+        }, "a6"]
+      }
+    }, "a5"],
+    s: {
+      wm: {
+        content: _([
+          ["a", [1, 2]]
+        ], "a2", 1)
+      },
+      va13: 0
+    }
+  }, "a4"]
+}]
+;Ef4
+
+// PATCH holding Ef4
+{
+  la: [2, {
+    va12: "d",
+    cc: {
+      s: {
+        ta: "direct"
+      },
+      bb: [{
+        fa: "^^^a1",
+        cAa: {
+          ta: "d"
+        }
+      }, "a6"]
+    },
+    fd: [">span", {
+      label: "dynamic"
+    }, "a0"],
+    cAd: {
+      cAa: {
+        ta: "d"
+      }
+    },
+    le: [{
+      fa: [">span", {
+        label: "z",
+        content: _.a = {
+          content: _([
+            ["a", [0, 2]]
+          ], "a2", 1)
+        }
+      }],
+      cAa: {
+        cAa: {
+          ta: "d"
+        }
+      }
+    }, "a5"],
+    s: {
+      wm: _.a,
+      va13: 0
+    }
+  }, 1, {
+    va12: "e",
+    cc: {
+      s: {
+        ta: "direct"
+      },
+      bb: [{
+        fa: "^^^a1",
+        cAa: {
+          ta: "e"
+        }
+      }, "a6"]
+    },
+    fd: ["^^a3", 0, "a0"],
+    cAd: {
+      ta: "dynamic",
+      bb: [{
+        fa: ["^F N N a0", 0, 0, 0, {
+          h: "e"
+        }],
+        cAa: {
+          ta: "e"
+        }
+      }, "a6"]
+    },
+    le: [{
+      fa: "^^^a3",
+      cAa: {
+        ta: "x",
+        bb: [{
+          fa: "^F N N N a2",
+          cAa: {
+            ta: "e"
+          }
+        }, "a6"]
+      }
+    }, "a5"],
+    s: {
+      wm: {
+        content: _([
+          ["a", 1]
+        ], "a2", 1)
+      },
+      va13: 0
+    }
+  }, "a4"]
+}
