@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.4.7
+
+### Patch Changes
+
+- [#4476](https://github.com/marko-js/marko/pull/4476) [`f30aee7`](https://github.com/marko-js/marko/commit/f30aee7b570906778e6a435ad1d2bbb516f9be98) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Give every parameterless arrow in the client runtime, the client code the compiler generates (lazy loaders, setup and argument getters) and the inlined reorder runtime an unused parameter, which minifies a byte smaller (`e=>` instead of `()=>`), so pages ship a few bytes less.
+
+- [#4481](https://github.com/marko-js/marko/pull/4481) [`b612f41`](https://github.com/marko-js/marko/commit/b612f4118552588d7c3c4a81152a075e05b12da9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A client-rendered `<style>` whose placeholder reads a value from outside the control flow body that renders it keeps that declaration; it used to be dropped.
+
+- [#4472](https://github.com/marko-js/marko/pull/4472) [`89a4443`](https://github.com/marko-js/marko/commit/89a444379d1d20deffba79efc25805e6a74cf70b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A `<define>` tag variable's value, and a recursive call's, now depends on what its call passes, as a custom tag's already did, rather than on the params of the content it renders. A variable computed only from input no longer makes the page resume what reads it.
+
+- [#4472](https://github.com/marko-js/marko/pull/4472) [`89a4443`](https://github.com/marko-js/marko/commit/89a444379d1d20deffba79efc25805e6a74cf70b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A page whose `<define>` tag variable is passed to a child tag, or read in an `<if>` or `<for>`, no longer throws `_resumed[registryId] is not a function` on resume: the variable's registration is written only when its value can change in the browser, where the page's module that registers it loads.
+
 ## 6.4.6
 
 ### Patch Changes
