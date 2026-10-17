@@ -29,7 +29,7 @@ declare module "./apply" {
 const _content = /*@__PURE__*/ withBranches(content);
 
 // A scope this flush created has no render coming, so its setup envelope
-// applies now; a fresh branch's queued shell setup runs after, over it.
+// applies now; the renders its shell's setup queued run after, over it.
 patchers[PatchKey.Setup] = (scope, _key, value) => {
   if (creating && scope[AccessorProp.Gen] === runId) {
     patchScope(value, scope, createPatchers);

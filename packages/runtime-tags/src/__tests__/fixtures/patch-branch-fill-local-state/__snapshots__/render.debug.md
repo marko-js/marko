@@ -72,7 +72,7 @@ REMOVE: main > #n
 ```html
 <main>
   <p>
-    Store?@0
+    Fresh@0
   </p>
   <button
     id="n"
@@ -92,4 +92,5 @@ REMOVE: main > #n
 ## Change
 ```
 INSERT: main > :is(p, #n)
+UPDATE: main > p::text " " => "Fresh@0"
 ```

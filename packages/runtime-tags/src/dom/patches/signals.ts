@@ -269,18 +269,16 @@ export function _closure_resume<T extends (scope: Scope, resumed: 1) => void>(
   return closureSignal;
 }
 
-// A fill closure's creation init is the arrival at each join that reads it:
-// registered from the join's own fill wrapper, so it lives exactly as long.
+// A fill closure's creation init is the arrival at each join that reads it,
+// queued as a closure's first render is; registered from the join's own fill wrapper.
 export function _shell_join<T extends (scope: Scope) => void>(
   id: string,
   join: T,
 ): T {
   const prev = _resumed[id] as T | undefined;
-  _resumed[id] = prev
-    ? (scope: Scope) => {
-        prev(scope);
-        join(scope);
-      }
-    : join;
+  _resumed[id] = (scope: Scope) => {
+    prev?.(scope);
+    queueRender(scope, join, -1);
+  };
   return join;
 }
