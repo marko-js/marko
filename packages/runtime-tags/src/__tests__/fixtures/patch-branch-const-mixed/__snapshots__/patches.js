@@ -1,18 +1,18 @@
 // PATCH
 [`a0 a5;D ;<p> </p>`, {
-  ba: "a0",
-  va2: "Store?"
+  va2: "Store?",
+  ba: "a0"
 }]
 ;BAE
 
 // PATCH holding BAE
 {
-  ba: 0,
-  va2: "Store?"
+  va2: "Store?",
+  ba: 0
 }
 
 // PATCH holding BAE
 {
-  ba: "a0",
-  va2: "Fresh"
+  va2: "Fresh",
+  ba: "a0"
 }

@@ -1,6 +1,7 @@
 // PATCH
 [`b1;b/D l&b;<!><p> </p><!>`, {
   ca: {
+    we: "b",
     ba: [{
       c$a: {
         s: {
@@ -8,8 +9,7 @@
         },
         i: "b4"
       }
-    }, "b1"],
-    we: "b"
+    }, "b1"]
   }
 }]
 ;CAM
@@ -17,14 +17,15 @@
 // PATCH holding CAM
 {
   ca: {
-    ba: 0,
-    we: "c"
+    we: "c",
+    ba: 0
   }
 }
 
 // PATCH holding CAM
 {
   ca: {
+    we: "d",
     ba: [{
       c$a: {
         s: {
@@ -32,14 +33,14 @@
         },
         i: "b4"
       }
-    }, "b1"],
-    we: "d"
+    }, "b1"]
   }
 }
 
 // PATCH holding CAM
 {
   ca: {
+    we: "e",
     ba: [{
       c$a: {
         s: {
@@ -47,7 +48,6 @@
         },
         i: "b4"
       }
-    }, "b1"],
-    we: "e"
+    }, "b1"]
   }
 }

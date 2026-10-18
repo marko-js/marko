@@ -1,10 +1,10 @@
 // PATCH
 [`b1;D ;<p> </p>`, {
   ca: {
+    vb5: "c",
     bb: [{
       ta: "cd"
-    }, "b1"],
-    vb5: "c"
+    }, "b1"]
   },
   cb: {
     vb6: "c"
@@ -15,10 +15,10 @@
 // PATCH holding CAM
 {
   ca: {
+    vb5: "e",
     bb: [{
       ta: "ef"
-    }, "b1"],
-    vb5: "e"
+    }, "b1"]
   },
   cb: {
     vb6: "e"
@@ -28,10 +28,10 @@
 // PATCH holding CAM
 {
   ca: {
+    vb5: "g",
     bb: [{
       ta: "gh"
-    }, "b1"],
-    vb5: "g"
+    }, "b1"]
   },
   cb: {
     vb6: "g"

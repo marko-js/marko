@@ -1,21 +1,21 @@
 // PATCH
 [`a0 !a1; ;<button>read</button>`, {
   ta: "Store",
-  bb: "a0",
-  wg: "b"
+  wg: "b",
+  bb: "a0"
 }]
 ;BAE
 
 // PATCH holding BAE
 {
   ta: "Store",
-  bb: 0,
-  wg: "c"
+  wg: "c",
+  bb: 0
 }
 
 // PATCH holding BAE
 {
   ta: "Store",
-  bb: "a0",
-  wg: "d"
+  wg: "d",
+  bb: "a0"
 }

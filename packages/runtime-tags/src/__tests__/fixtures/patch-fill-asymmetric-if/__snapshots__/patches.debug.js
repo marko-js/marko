@@ -1,15 +1,15 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2_count#0:7/init packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2_input_title#0:6_count#0:7/init;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_1*shell;b%;<!><!><!>`, {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_fill1": "Fresh",
   "PatchBranch:#text/0": [1, {
     "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_2*shell"
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_1*shell"],
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_fill1": "Fresh"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_1*shell"]
 }]
 ;CQY
 
 // PATCH holding CQY
 [`packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_3*shell,<p>shown</p>`, {
-  "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_3*shell",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_fill1": "Fresh"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_fill1": "Fresh",
+  "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-fill-asymmetric-if/template.marko_3*shell"
 }]
 ;CQ4

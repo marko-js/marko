@@ -72,5 +72,5 @@ var template_default = _template("a", (input) => {
 		g: _unfilled_if($scope0_reason, 0) && input.note,
 		j: $wi__input_note && _unfilled_if($scope0_reason, 6) && $input_note__closures,
 		i: _write_if($scope0_reason, 5) && _unfilled_if($scope0_reason, 5) && $input_alt__closures
-	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va7", input.title, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va8", input.alt, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "va9", input.note, !_server_guard($scope0_reason, 6)));
+	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va7", input.title, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va8", input.alt, !_server_guard($scope0_reason, 5), 1), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "va9", input.note, !_server_guard($scope0_reason, 6)));
 }, 1);

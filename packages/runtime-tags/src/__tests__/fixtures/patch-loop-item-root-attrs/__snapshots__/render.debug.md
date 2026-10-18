@@ -92,9 +92,9 @@ INSERT: main > p
 ```
 UPDATE: .link.active[class] "link" => "link active"
 UPDATE: .link.active[href] "/a" => "/b"
+UPDATE: .link.active > span::text "A" => "B"
 REMOVE: .link.active > svg > title::text("a")
 INSERT: .link.active > svg > title::text("b")
-UPDATE: .link.active > span::text "A" => "B"
 REMOVE: .link.active + .link.active
 REMOVE: main > p
 ```

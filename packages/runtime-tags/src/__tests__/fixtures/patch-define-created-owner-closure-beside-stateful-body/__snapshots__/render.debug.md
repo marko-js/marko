@@ -29,8 +29,8 @@ INSERT: em
 UPDATE: em:nth-of-type(3)::text@3 "a" => "b"
 UPDATE: em:nth-of-type(3)::text@0 "a!" => "b!"
 INSERT: em
-UPDATE: em:nth-of-type(2)::text@0 "" => "b"
 UPDATE: em:nth-of-type(2)::text@2 "" => "b"
+UPDATE: em:nth-of-type(2)::text@0 "" => "b"
 UPDATE: em:nth-of-type(1)::text@2 "" => "b"
 UPDATE: em:nth-of-type(1)::text@0 "" => "b"
 ```
@@ -103,8 +103,8 @@ REMOVE: em
 ```
 INSERT: em
 INSERT: em
-UPDATE: em:nth-of-type(2)::text@0 "" => "e"
 UPDATE: em:nth-of-type(2)::text@2 "" => "e"
+UPDATE: em:nth-of-type(2)::text@0 "" => "e"
 UPDATE: em:nth-of-type(1)::text@2 "" => "e"
 UPDATE: em:nth-of-type(1)::text@0 "" => "e"
 ```

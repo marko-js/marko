@@ -27,8 +27,8 @@
 ```
 INSERT: em, em
 UPDATE: em:nth-of-type(3)::text "a!" => "b!"
-UPDATE: em:nth-of-type(2)::text " " => "b"
 UPDATE: em:nth-of-type(1)::text " " => "b"
+UPDATE: em:nth-of-type(2)::text " " => "b"
 ```
 
 # Update
@@ -65,8 +65,8 @@ REMOVE: em:nth-of-type(2) + em
 ```
 ## Change
 ```
-UPDATE: em:nth-of-type(2)::text "b" => "c"
 UPDATE: em:nth-of-type(1)::text "b" => "c"
+UPDATE: em:nth-of-type(2)::text "b" => "c"
 ```
 
 # Update `{"show":false,"open":true,"label":"d"}`
@@ -96,6 +96,6 @@ REMOVE: em
 ## Change
 ```
 INSERT: em, em
-UPDATE: em:nth-of-type(2)::text " " => "e"
 UPDATE: em:nth-of-type(1)::text " " => "e"
+UPDATE: em:nth-of-type(2)::text " " => "e"
 ```

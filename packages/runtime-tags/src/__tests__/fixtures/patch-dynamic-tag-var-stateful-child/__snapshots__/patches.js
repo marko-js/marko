@@ -13,10 +13,10 @@
 // PATCH holding BgE
 [`c;D ;<i> </i>`, {
   fa: ["c", 0, 0, "a0"],
+  va0: -1,
   cAa: {
     ta: "c"
-  },
-  va0: -1
+  }
 }]
 ;BwY
 

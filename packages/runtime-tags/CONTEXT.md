@@ -315,9 +315,13 @@ _Avoid_: shell cache, shell manifest
 **Setup envelope**:
 A patch's `PatchKey.Setup` entries: what a created scope gets in place of
 its renderer's setup (seeds, bindings, init ids). It applies only to a scope
-its flush created; a paired scope ignores it. Where its group mixes, a written
-join the scope inits rides the scope's own `PatchKey.Init` entry, created or
-paired.
+its flush created; a paired scope ignores it. Its writes and bindings apply at
+once, ahead of the scope's child scopes, which may read them; its values and
+init ids wait until the scope's entry has patched those child scopes. A write
+never sets a slot a waiting value's or init's signal sets, which would then
+skip its renders: a `<let>` whose renders read members seeds the written ones
+in that one value too. Where its group mixes, a written join the scope inits
+rides the scope's own `PatchKey.Init` entry, created or paired.
 _Avoid_: seed block, init payload
 
 **Held flush**:

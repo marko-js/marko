@@ -1,5 +1,6 @@
 // PATCH
 [`a2;b%;<!><!><!>`, {
+  va6: "b",
   lc: [{
     fa: [">span", {
       label: "x",
@@ -22,13 +23,13 @@
         ta: "b"
       }
     }
-  }, "a2"],
-  va6: "b"
+  }, "a2"]
 }]
 ;CgM
 
 // PATCH holding CgM
 {
+  va6: "c",
   lc: [{
     fa: [">span", {
       label: "y",
@@ -41,6 +42,5 @@
         ta: "c"
       }
     }
-  }, "a2"],
-  va6: "c"
+  }, "a2"]
 }

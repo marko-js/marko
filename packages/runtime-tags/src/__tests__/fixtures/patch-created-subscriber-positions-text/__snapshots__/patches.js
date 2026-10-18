@@ -1,6 +1,7 @@
 // PATCH
 [`b1;D ;<em> </em>`, `b2;D ;<i> </i>`, `b0; b ;<div></div><span></span>`, {
   ca: {
+    vb9: "b",
     ba: [{
       ba: [{
         ta: "b"
@@ -11,8 +12,7 @@
         },
         i: "b7"
       }, "b2"]
-    }, "b0"],
-    vb9: "b"
+    }, "b0"]
   }
 }]
 ;Cxw
@@ -20,14 +20,15 @@
 // PATCH holding Cxw
 {
   ca: {
-    ba: 0,
-    vb9: "c"
+    vb9: "c",
+    ba: 0
   }
 }
 
 // PATCH holding Cxw
 {
   ca: {
+    vb9: "d",
     ba: [{
       ba: [{
         ta: "d"
@@ -38,14 +39,14 @@
         },
         i: "b7"
       }, "b2"]
-    }, "b0"],
-    vb9: "d"
+    }, "b0"]
   }
 }
 
 // PATCH holding Cxw
 {
   ca: {
+    vb9: "e",
     ba: [{
       ba: [{
         ta: "e"
@@ -56,7 +57,6 @@
         },
         i: "b7"
       }, "b2"]
-    }, "b0"],
-    vb9: "e"
+    }, "b0"]
   }
 }

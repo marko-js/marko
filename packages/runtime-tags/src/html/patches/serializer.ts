@@ -1,5 +1,5 @@
 import { ROOT_SCOPE_ID } from "../../common/meta";
-import { RendererProp } from "../../common/types";
+import { PatchKey, RendererProp } from "../../common/types";
 import {
   K_SCOPE_ID,
   Reference,
@@ -135,29 +135,67 @@ function writePatchProps(
   node: object,
   ref: Reference,
   patchNodes: Set<object>,
+  ordered = true,
 ) {
-  let sep = "";
+  const structural = (node as { [kStructuralFills]?: Set<string> })[
+    kStructuralFills
+  ];
+  const buckets: string[][] = [[], [], []];
   for (const key in node) {
-    const escapedKey = toObjectKey(key);
-    const member = (node as Record<string, unknown>)[key];
-    if (member === undefined) {
-      state.wroteUndefined = true;
-      state.buf.push(sep + escapedKey + ":$");
-      sep = ",";
-    } else {
-      state.buf.push(sep + escapedKey + ":");
-      if (typeof member === "object" && patchNodes.has(member as object)) {
-        writePatchNode(state, member as object, ref, escapedKey, patchNodes);
-        sep = ",";
-      } else if (writeProp(state, member, ref, escapedKey)) {
+    buckets[
+      !ordered
+        ? 0
+        : structural?.has(key)
+          ? 2
+          : (CHILD_ENTRIES[
+              MARKO_DEBUG ? key.slice(0, key.indexOf(":") + 1) : key[0]
+            ] ?? 0)
+    ].push(key);
+  }
+  let sep = "";
+  for (const keys of buckets) {
+    for (const key of keys) {
+      const escapedKey = toObjectKey(key);
+      const member = (node as Record<string, unknown>)[key];
+      if (member === undefined) {
+        state.wroteUndefined = true;
+        state.buf.push(sep + escapedKey + ":$");
         sep = ",";
       } else {
-        state.buf.pop();
+        state.buf.push(sep + escapedKey + ":");
+        if (typeof member === "object" && patchNodes.has(member as object)) {
+          // `$global`'s keys are the app's: every build applies them as set.
+          writePatchNode(
+            state,
+            member as object,
+            ref,
+            escapedKey,
+            patchNodes,
+            key !== PatchKey.Globals,
+          );
+          sep = ",";
+        } else if (writeProp(state, member, ref, escapedKey)) {
+          sep = ",";
+        } else {
+          state.buf.pop();
+        }
       }
     }
   }
   return sep;
 }
+
+// The fills of a scope's patch that drive its child scopes' structural params.
+export const kStructuralFills = Symbol();
+
+// Entries nesting child scopes a patch may create, which set up from the scope's
+// other entries: they follow those and precede its structural fills.
+const CHILD_ENTRIES: Record<string, 1> = {
+  [PatchKey.Branch]: 1,
+  [PatchKey.Catch]: 1,
+  [PatchKey.Child]: 1,
+  [PatchKey.Loop]: 1,
+};
 
 // A node keeps a reference (a later flush may reach a value by its path) but
 // needs no identity lookups: `writeArray` and `writePlainObject` without them.
@@ -167,6 +205,7 @@ function writePatchNode(
   parent: Reference,
   accessor: string,
   patchNodes: Set<object>,
+  ordered?: boolean,
 ) {
   const ref = new Reference(parent, accessor, state.flushId, state.buf.length);
   ref.channel = state.channel;
@@ -188,7 +227,7 @@ function writePatchNode(
     state.buf.push(sep === "[" ? "[]" : "]");
   } else {
     state.buf.push("{");
-    writePatchProps(state, node, ref, patchNodes);
+    writePatchProps(state, node, ref, patchNodes, ordered);
     state.buf.push("}");
   }
 }

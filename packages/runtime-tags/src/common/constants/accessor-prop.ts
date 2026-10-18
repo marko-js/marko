@@ -32,6 +32,7 @@ export const TagVariableChange = "U";
 export const TryBranch = "PT";
 export const PatchChanged = "AA";
 export const SetupEffects = "AC";
+export const SetupRenders = "AD";
 export const GlobalScriptRuns = "AB";
 
 type Self = typeof import("./accessor-prop");

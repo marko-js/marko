@@ -2,6 +2,10 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2*content packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_bonus#0:7/init packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_item_n#1:3/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/init;/ D l&;<button class=tick> </button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell;/DbD%m&;<section><h2>Panel</h2><div class=aside><!></div></section>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell;/0& b%c&b;<button class=bonus>bonus</button><!><!><!>`, {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
+      "PatchSetup:": {
+        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_0"
+      },
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_fill0": 0,
       "PatchChild:#childScope/0": {
         "PatchSetup:": {
           0: "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_0_bonus#7/var",
@@ -35,11 +39,7 @@
             }
           }
         }
-      }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell"],
-      "PatchSetup:": {
-        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_0"
-      },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_fill0": 0
+      }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell"]
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell"]
 }]
@@ -49,6 +49,10 @@
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
+      "PatchSetup:": {
+        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_0"
+      },
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_fill0": 2,
       "PatchChild:#childScope/0": {
         "PatchSetup:": {
           0: "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_0_bonus#7/var",
@@ -69,11 +73,7 @@
             }
           }
         }
-      }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell"],
-      "PatchSetup:": {
-        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_0"
-      },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_fill0": 2
+      }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_1*shell"]
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell"]
 }

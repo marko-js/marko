@@ -29,7 +29,7 @@ var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
 	}, "__tests__/tags/gm/index.marko", 0, {
 		input_v: ["input.v"],
 		z: "1:8"
-	}) : _filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/gm/index.marko_fill0", z, !_server_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0));
+	}) : _filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/gm/index.marko_fill0", z, !_server_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0), 1);
 });
 
 // template.marko

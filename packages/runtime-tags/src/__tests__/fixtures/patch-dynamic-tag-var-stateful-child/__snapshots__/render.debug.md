@@ -91,8 +91,8 @@ UPDATE: p[data-count] "1" => "2"
 ```
 INSERT: i
 REMOVE: i + button
-UPDATE: i::text " " => "c"
 UPDATE: p::text "2" => "-1"
+UPDATE: i::text " " => "c"
 UPDATE: p[data-count] "2" => "-1"
 ```
 

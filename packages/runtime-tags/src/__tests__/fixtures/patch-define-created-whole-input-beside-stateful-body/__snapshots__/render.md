@@ -33,8 +33,8 @@
 ```
 INSERT: span
 UPDATE: em:nth-of-type(2)::text "a!" => "b!"
-UPDATE: span:nth-of-type(1)::text " " => "2"
 INSERT: em
+UPDATE: span:nth-of-type(1)::text " " => "2"
 ```
 
 # Update
@@ -87,6 +87,6 @@ REMOVE: span
 ## Change
 ```
 INSERT: span
-UPDATE: span::text " " => "2"
 INSERT: em
+UPDATE: span::text " " => "2"
 ```

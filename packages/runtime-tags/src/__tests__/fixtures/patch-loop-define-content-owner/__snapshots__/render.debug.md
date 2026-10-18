@@ -114,10 +114,10 @@ UPDATE: section > p:nth-of-type(3) > em::text@2 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: section:nth-of-type(1) > p > i::text@0 "a" => "b"
 INSERT: section:nth-of-type(1) > p + span
 REMOVE: section:nth-of-type(1) > span + p
 UPDATE: section:nth-of-type(1) > span[label] null => "dynamic"
+UPDATE: section:nth-of-type(1) > p > i::text@0 "a" => "b"
 UPDATE: section:nth-of-type(1) > span > b::text@0 "" => "b"
 REMOVE: section:nth-of-type(1) > span + p
 INSERT: section:nth-of-type(1) + section
@@ -241,10 +241,10 @@ UPDATE: section:nth-of-type(1) > span > b::text@2 "1" => "2"
 ```
 ## Change
 ```
-UPDATE: section:nth-of-type(1) > p > i::text@0 "c" => "d"
 INSERT: section:nth-of-type(1) > p + span
 REMOVE: section:nth-of-type(1) > span:nth-of-type(1) + p
 UPDATE: section:nth-of-type(1) > span:nth-of-type(1)[label] null => "dynamic"
+UPDATE: section:nth-of-type(1) > p > i::text@0 "c" => "d"
 UPDATE: section:nth-of-type(1) > span:nth-of-type(1) > b::text@0 "" => "d"
 INSERT: section:nth-of-type(1) > span:nth-of-type(1) + span
 REMOVE: section:nth-of-type(1) > span:nth-of-type(2) + p
@@ -252,9 +252,9 @@ UPDATE: section:nth-of-type(1) > span:nth-of-type(2)[label] null => "z"
 INSERT: section:nth-of-type(1) > span:nth-of-type(2) > em
 UPDATE: section:nth-of-type(1) > span:nth-of-type(2) > em::text@0 "" => "d"
 REMOVE: section:nth-of-type(1) > span:nth-of-type(2) + p
-UPDATE: section:nth-of-type(2) > p:nth-of-type(1) > i::text@0 "b" => "e"
 INSERT: section:nth-of-type(2) > p:nth-of-type(1) + p
 REMOVE: section:nth-of-type(2) > p:nth-of-type(2) + span
+UPDATE: section:nth-of-type(2) > p:nth-of-type(1) > i::text@0 "b" => "e"
 UPDATE: section:nth-of-type(2) > p:nth-of-type(2)::text "" => "dynamic"
 INSERT: section:nth-of-type(2) > p:nth-of-type(2)::text + b
 INSERT: section:nth-of-type(2) > p:nth-of-type(2) + p

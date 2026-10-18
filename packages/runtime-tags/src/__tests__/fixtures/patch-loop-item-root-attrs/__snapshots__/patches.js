@@ -3,17 +3,17 @@
   la: [{
     "aa class": "link",
     "aa href": "/a",
+    tc: "A",
     cb: {
       ma: "a"
-    },
-    tc: "A"
+    }
   }, {
     "aa class": "link active",
     "aa href": "/b",
+    tc: "B",
     cb: {
       ma: "b"
-    },
-    tc: "B"
+    }
   }, "a0"],
   bb: [{
     ta: "b"
@@ -26,10 +26,10 @@
   la: [{
     "aa class": "link active",
     "aa href": "/b",
+    tc: "B",
     cb: {
       ma: "b"
-    },
-    tc: "B"
+    }
   }, "a0"],
   bb: 0
 }

@@ -4,12 +4,12 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_fill0/unpatched": "y"
   },
   "PatchChild:#childScope/1": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_fill0": "y",
     "PatchBranch:#text/0": [{
       "PatchChild:$#childScope/0": {
         "PatchText:#text/0": "y:q"
       }
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_3*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_fill0": "y"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_3*shell"]
   }
 }]
 ;CAI
@@ -20,11 +20,11 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_fill0/unpatched": "z"
   },
   "PatchChild:#childScope/1": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_fill0": "z",
     "PatchBranch:#text/0": [{
       "PatchChild:$#childScope/0": {
         "PatchText:#text/0": "z:r"
       }
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_3*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_fill0": "z"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_3*shell"]
   }
 }

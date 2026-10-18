@@ -1,28 +1,28 @@
 // PATCH
 [`a0;D ;<li> </li>`, {
+  va2: "two",
   lb: [{
     ta: "0"
   }, {
     ta: "1"
-  }, "a0"],
-  va2: "two"
+  }, "a0"]
 }]
 ;BAE
 
 // PATCH holding BAE
 {
+  va2: "three",
   lb: [{
     ta: "0"
-  }, "a0"],
-  va2: "three"
+  }, "a0"]
 }
 
 // PATCH holding BAE
 {
+  va2: "four",
   lb: [{
     ta: "0"
   }, {
     ta: "1"
-  }, "a0"],
-  va2: "four"
+  }, "a0"]
 }

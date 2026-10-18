@@ -61,13 +61,30 @@ export const patchScope = (patch: Scope, live: Scope, kinds = patchers) => {
         : key[0]) as PatchKind
     ]!(live, key, patch[key as keyof Scope]);
   }
-  // A created scope mounts its setup's effects once its entry has mounted its
-  // child scopes' (an envelope applies inside the entry: `createPatchers`).
-  if (kinds === patchers && live[AccessorProp.SetupEffects]) {
-    pendingEffects.push(...live[AccessorProp.SetupEffects]);
-    live[AccessorProp.SetupEffects] = 0;
+  // A created scope renders its setup once its entry has patched its child
+  // scopes, and mounts its effects after theirs (envelopes: `createPatchers`).
+  if (kinds === patchers) {
+    if (live[AccessorProp.SetupRenders]) {
+      live[AccessorProp.SetupRenders]();
+      live[AccessorProp.SetupRenders] = 0;
+    }
+    if (live[AccessorProp.SetupEffects]) {
+      pendingEffects.push(...live[AccessorProp.SetupEffects]);
+      live[AccessorProp.SetupEffects] = 0;
+    }
   }
 };
+// A setup patcher whose renders may reach the created scope's child scopes,
+// which their own entries set up first.
+export const afterChildScopes =
+  <K extends PatchKind>(patcher: Patcher<K>): Patcher<K> =>
+  (scope, key, value) => {
+    const prev = scope[AccessorProp.SetupRenders];
+    scope[AccessorProp.SetupRenders] = () => {
+      prev?.();
+      patcher(scope, key, value);
+    };
+  };
 // The render a flush is applying against (set by `beginPatch`).
 export let patchRender!: RenderData;
 // A flush's creations all happen in its own run (a held patch applies in

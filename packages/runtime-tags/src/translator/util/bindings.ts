@@ -523,6 +523,10 @@ export function isInvokeOnlyBinding(binding: Binding): boolean {
   return !someAlias(binding, isReadBeyondInvoking, undefined);
 }
 
+export function isLetBinding(binding: Binding) {
+  return binding.type === BindingType.let;
+}
+
 function isReadBeyondInvoking(binding: Binding) {
   if (
     binding.assignments ||

@@ -1,5 +1,6 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_2*shell;D ;<li> </li>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_1*shell;D ;<aside> </aside>`, {
+  "PatchText:#text/2": "hello",
   "PatchLoop:#ul/0": [3, {
     "PatchText:#text/0": "Milk"
   }, 1, {
@@ -9,22 +10,22 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_2*shell"],
   "PatchBranch:#text/1": [{
     "PatchText:#text/0": "Big Sale"
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_1*shell"],
-  "PatchText:#text/2": "hello"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_1*shell"]
 }]
 ;BwY
 
 // PATCH holding BwY
 {
+  "PatchText:#text/2": "bye",
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread!"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_2*shell"],
-  "PatchBranch:#text/1": 0,
-  "PatchText:#text/2": "bye"
+  "PatchBranch:#text/1": 0
 }
 
 // PATCH holding BwY
 {
+  "PatchText:#text/2": "again",
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread!"
   }, 4, {
@@ -32,6 +33,5 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_2*shell"],
   "PatchBranch:#text/1": [{
     "PatchText:#text/0": "Back"
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_1*shell"],
-  "PatchText:#text/2": "again"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-shift/template.marko_1*shell"]
 }

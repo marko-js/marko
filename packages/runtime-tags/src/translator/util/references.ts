@@ -150,6 +150,13 @@ declare module "@marko/compiler/dist/types" {
     registerId?: string;
     /** When client code reads the function itself, which registers it. */
     reason?: Reason;
+    exprRoot?: t.NodeExtra;
+    /** The object keys and array indices from its expression root down to it,
+     * ending in `true` (anywhere) below a holder with no literal key for it. */
+    rootPath?: Opt<string | true>;
+    /** The same from the input its expression root's attribute lands in (an
+     * attribute tag's under its name), `true` where none holds it. */
+    inputPath?: Opt<string | true>;
     // Reserved for a function reachable through an export: importing templates
     // resolve it to register the function without this template registering it.
     exportRegisterId?: string;
@@ -1344,7 +1351,6 @@ export interface RegisteredFnExtra extends ReferencedExtra, t.FunctionExtra {
   exprRoot: t.NodeExtra;
   name: string;
   registerId: string;
-  reason: Reason;
 }
 
 export function isRegisteredFnExtra(

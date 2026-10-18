@@ -13,8 +13,8 @@ import { renderCatch } from "../control-flow";
 import { patchers, patchScope, withCreating } from "./apply";
 import { getContent } from "./shells";
 
-// Holds a created `@catch`'s own effects past its entry's end, for its renderer's
-// `Params` to queue (an empty entry's end) after the setup of its child scopes.
+// Holds a created `@catch`'s setup values, inits and effects past its entry's end
+// for its renderer's `Params` (an empty entry's end) to run after its setup.
 const catchPatchers: typeof patchers = Object.create(patchers);
 
 // `patches/catch`, plus a content id creating the `@catch` from its renderer

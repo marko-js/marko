@@ -11,6 +11,7 @@
     }, _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_1*shell"]
   },
   "PatchChild:#childScope/1": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_fill1/unpatched": "s",
     "PatchBranch:#text/0": [{
       "PatchSetup:": {
         "PatchInit:": _.a,
@@ -18,8 +19,7 @@
       },
       "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_1_c#2": "c",
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_fill3/unpatched": "r!"
-    }, _.c],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_fill1/unpatched": "s"
+    }, _.c]
   }
 }]
 ;CAE
@@ -37,6 +37,7 @@
     }, _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_1*shell"]
   },
   "PatchChild:#childScope/1": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_fill1/unpatched": "u",
     "PatchBranch:#text/0": [{
       "PatchSetup:": {
         "PatchInit:": _.a,
@@ -44,8 +45,7 @@
       },
       "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_1_c#2": "c",
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_fill3/unpatched": "t!"
-    }, _.c],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_fill1/unpatched": "u"
+    }, _.c]
   }
 }
 
@@ -62,6 +62,7 @@
     }, _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_1*shell"]
   },
   "PatchChild:#childScope/1": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_fill1/unpatched": "w",
     "PatchBranch:#text/0": [{
       "PatchSetup:": {
         "PatchInit:": _.a,
@@ -69,7 +70,6 @@
       },
       "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_1_c#2": "c",
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_fill3/unpatched": "v!"
-    }, _.c],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content-script/tags/child.marko_fill1/unpatched": "w"
+    }, _.c]
   }
 }

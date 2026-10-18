@@ -12,17 +12,17 @@
 [`c !c0; b%;<button class=toggle>toggle</button><!><!>`, {
   cAa: {
     ca: {
+      vb8: "n",
       cAa: {
         fa: "c",
+        vb7: "y",
         cAa: {
           s: {
             vc2: !0
           },
           uc1: ["b0", 1]
-        },
-        vb7: "y"
-      },
-      vb8: "n"
+        }
+      }
     }
   }
 }]
@@ -36,17 +36,17 @@
       s: {
         we: !0
       },
+      vb8: "n",
       cAa: {
         fa: "c",
+        vb7: "z",
         cAa: {
           s: {
             vc2: !0
           },
           uc1: ["b0", 1]
-        },
-        vb7: "z"
-      },
-      vb8: "n"
+        }
+      }
     }
   }, "a0"]
 }

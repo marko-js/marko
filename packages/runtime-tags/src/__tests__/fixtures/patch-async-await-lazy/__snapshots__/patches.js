@@ -1,10 +1,10 @@
 // PATCH
 {
   ta: "Store!",
+  pc: 1,
   cAb: {
     pa: 1
-  },
-  pc: 1
+  }
 }
 {
   cAb: {

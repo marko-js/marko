@@ -20,6 +20,7 @@ import {
   type Intersection,
   getPropertyPath,
   isDirectAlias,
+  isLetBinding,
   isRest,
   isTemplateParam,
   type ReferencedBindings,
@@ -1146,7 +1147,13 @@ export function buildSignalFn(signal: Signal): t.Expression {
     pushScopeCall(signal.render, getSignalEffectIdentifier(signal));
   }
 
-  if (isValue && findSlot(binding)?.reason) {
+  // A registered function reads what it captures from the scope, though a
+  // seeded one gives it no reason.
+  if (
+    isValue &&
+    (findSlot(binding)?.reason ||
+      (isPatch() && getPatchFill(binding).fnCapture))
+  ) {
     signal.storesValue = true;
   }
 
@@ -2740,10 +2747,6 @@ function registerFnExpression(node: t.Function) {
 
 function appendBindingKey(name: string, binding: Binding, section: Section) {
   return `${name}_${binding.name}#${binding.section === section ? "" : binding.section.id + ":"}${binding.id}`;
-}
-
-function isLetBinding(binding: Binding) {
-  return binding.type === BindingType.let;
 }
 
 function getDebugLoc({ start }: t.SourceLocation) {

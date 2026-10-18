@@ -1,21 +1,21 @@
 // PATCH
 [`a0,<a href=#main>Skip to content</a>`, `a1;/b&;<footer>foot</footer>`, {
-  ba: "a0",
   tb: "docs",
+  ba: "a0",
   bc: "a1"
 }]
 ;CQY
 
 // PATCH holding CQY
 {
-  ba: "a0",
   tb: "bare",
+  ba: "a0",
   bc: 0
 }
 
 // PATCH holding CQY
 {
-  ba: 0,
   tb: "home",
+  ba: 0,
   bc: "a1"
 }

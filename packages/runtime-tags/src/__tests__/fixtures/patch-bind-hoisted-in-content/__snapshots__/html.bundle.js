@@ -46,7 +46,6 @@ var template_default = _template("a", (input) => {
 		const $childScope = _patch_child($scope1_id, "a");
 		let setLast = store_default({});
 		_patch_write($scope1_id, "wc", setLast, 1);
-		_patch_write($scope1_id, "wc", setLast, 1);
 		_subscribe($frame_content__subscribers, _scope($scope1_id, {
 			c: setLast,
 			a: _existing_scope($childScope)

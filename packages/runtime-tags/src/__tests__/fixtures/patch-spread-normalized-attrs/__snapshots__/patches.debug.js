@@ -14,6 +14,10 @@
     "data-x": null,
     hidden: !1
   },
+  "PatchAttrs:#input/4": [{
+    value: "SHOWN_v",
+    "data-secret": !1
+  }, 0, 1],
   "PatchBranch:#text/3": [{
     "PatchAttrs:#a/0": {
       href: "/SHOWN_link2",
@@ -22,11 +26,7 @@
         SECRET_lc2: !1
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-spread-normalized-attrs/template.marko_1*shell"],
-  "PatchAttrs:#input/4": [{
-    value: "SHOWN_v",
-    "data-secret": !1
-  }, 0, 1]
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-spread-normalized-attrs/template.marko_1*shell"]
 }]
 ;BAE
 
@@ -46,14 +46,14 @@
     "data-x": null,
     hidden: !1
   },
+  "PatchAttrs:#input/4": [{
+    value: "SHOWN_v",
+    "data-secret": !1
+  }, 0, 1],
   "PatchBranch:#text/3": [{
     "PatchAttrs:#a/0": {
       href: "/SHOWN_link3",
       class: ["SHOWN_lc3"]
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-spread-normalized-attrs/template.marko_1*shell"],
-  "PatchAttrs:#input/4": [{
-    value: "SHOWN_v",
-    "data-secret": !1
-  }, 0, 1]
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-spread-normalized-attrs/template.marko_1*shell"]
 }

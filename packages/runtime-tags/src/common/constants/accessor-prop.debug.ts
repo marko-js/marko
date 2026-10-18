@@ -32,6 +32,7 @@ export const TagVariableChange = "#TagVariableChange";
 export const TryBranch = "#TryBranch";
 export const PatchChanged = "#PatchChanged";
 export const SetupEffects = "#SetupEffects";
+export const SetupRenders = "#SetupRenders";
 export const GlobalScriptRuns = "#GlobalScriptRuns";
 
 type Self = typeof import("./accessor-prop.debug");

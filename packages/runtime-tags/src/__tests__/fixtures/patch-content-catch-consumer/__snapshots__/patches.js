@@ -1,5 +1,6 @@
 // PATCH
 {
+  va5: "b",
   cc: {
     ka: []
   },
@@ -7,12 +8,12 @@
     ka: [{
       ta: "SHOWN_message"
     }, "b4"]
-  },
-  va5: "b"
+  }
 }
 
 // PATCH
 {
+  va5: "c",
   cc: {
     ka: []
   },
@@ -20,12 +21,12 @@
     ka: [{
       ta: "SHOWN_message"
     }, "b4"]
-  },
-  va5: "c"
+  }
 }
 
 // PATCH
 {
+  va5: "d",
   cc: {
     cAa: [{
       ta: "ok"
@@ -35,12 +36,12 @@
     cAa: [{
       ta: "ok"
     }, 0, "b4"]
-  },
-  va5: "d"
+  }
 }
 
 // PATCH
 {
+  va5: "e",
   cc: {
     ka: []
   },
@@ -48,6 +49,5 @@
     ka: [{
       ta: "SHOWN_message"
     }, "b4"]
-  },
-  va5: "e"
+  }
 }

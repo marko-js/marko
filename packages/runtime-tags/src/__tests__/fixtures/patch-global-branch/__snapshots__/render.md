@@ -24,8 +24,8 @@
 ```
 ## Change
 ```
-INSERT: a
 UPDATE: main::text "home" => "docs"
+INSERT: a
 ```
 
 # Update `{"msg":"bare","$global":{"meta":{"headings":true,"hideFooter":true}}}`
@@ -56,7 +56,7 @@ REMOVE: main + footer
 ```
 ## Change
 ```
-REMOVE: a
 UPDATE: main::text "bare" => "home"
+REMOVE: a
 INSERT: main + footer
 ```

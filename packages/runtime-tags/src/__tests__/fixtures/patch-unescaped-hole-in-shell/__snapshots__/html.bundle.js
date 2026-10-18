@@ -55,5 +55,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 1) && input.html,
 		g: $wi__input_html && _unfilled_if($scope0_reason, 2) && $input_html__closures
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.html, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va7", input.html, !_server_guard($scope0_reason, 2), 1);
 }, 1);

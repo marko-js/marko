@@ -26,10 +26,10 @@
 ```
 ## Change
 ```
-INSERT: div
-UPDATE: div:nth-of-type(2)::text "SHOWN_name1b" => "SHOWN_name2b"
 INSERT: div:nth-of-type(2) + .SHOWN_a2
 REMOVE: .SHOWN_a2 + section
 UPDATE: .SHOWN_a2[class] null => "SHOWN_a2"
+INSERT: div
+UPDATE: div:nth-of-type(2)::text "SHOWN_name1b" => "SHOWN_name2b"
 UPDATE: .SHOWN_a2::text " " => "SHOWN_name2c"
 ```

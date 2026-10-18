@@ -61,7 +61,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, "__tests__/tags/child.marko", 0, {
 		input_show: ["input.show"],
 		items: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _content_withheld("__tests__/tags/child.marko_1*content", $scope0_id) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.show, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _content_withheld("__tests__/tags/child.marko_1*content", $scope0_id) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.show, !_server_guard($scope0_reason, 0), 1);
 });
 
 // template.marko

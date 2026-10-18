@@ -1,6 +1,7 @@
 // PATCH
 [`a0 !a2,`, {
   fa: "^a0",
+  va6: "b",
   cAa: {
     va3: {
       content: _([], "a1", 1)
@@ -9,14 +10,14 @@
     s: {
       va4: !0
     }
-  },
-  va6: "b"
+  }
 }]
 ;BgE
 
 // PATCH holding BgE
 {
   fa: "^a0",
+  va6: "c",
   cAa: {
     va3: {
       content: _([], "a1", 1)
@@ -25,6 +26,5 @@
     s: {
       va4: !0
     }
-  },
-  va6: "c"
+  }
 }

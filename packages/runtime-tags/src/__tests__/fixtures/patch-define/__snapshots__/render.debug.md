@@ -25,8 +25,8 @@
 ```
 ## Change
 ```
-UPDATE: em::text@0 "1" => "2"
-UPDATE: em::text@2 "a" => "b"
 UPDATE: .c2[class] "c1 on" => "c2"
 UPDATE: .c2[style] "color:red" => "color:blue"
+UPDATE: em::text@0 "1" => "2"
+UPDATE: em::text@2 "a" => "b"
 ```

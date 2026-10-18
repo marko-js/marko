@@ -17,6 +17,9 @@ f, [`b0;/D l b&;<p> </p><button>+</button>`, `a0;b%b/0&//D%l&&&b;<!><!><div><!><
         ca: {
           fa: "^^b0",
           cAa: {
+            s: {
+              i: "b1"
+            },
             ca: {
               s: {
                 i: "e3!e0",
@@ -26,9 +29,6 @@ f, [`b0;/D l b&;<p> </p><button>+</button>`, `a0;b%b/0&//D%l&&&b;<!><!><div><!><
                 ue2: ["f0", 3]
               },
               di: ["f0", 3]
-            },
-            s: {
-              i: "b1"
             }
           }
         }

@@ -29,10 +29,10 @@ var counter_box_default = /*@__PURE__*/ _template("__tests__/tags/counter-box/in
 // template.marko
 const $template = "<!><!><p> </p>";
 const $walks = "b%bD l";
-const $if_content__input_p = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_p", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
+const $if_content__input_p = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$input_onA($scope["#childScope/0"], $onA($scope));
 	$input_onB($scope["#childScope/0"], $onB($scope));
-}));
+});
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
 	_var_change($scope["#childScope/0"], 5, "count");
 }));
@@ -53,7 +53,7 @@ const $input = ($scope, input) => {
 	$input_show($scope, input.show);
 	$input_p($scope, input.p);
 };
-const $input_p = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_p", $if_content__input_p);
+const $input_p = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _const("input_p", $if_content__input_p));
 const $onB = ($scope) => function(v) {
 	$last($scope._, $scope._.input_p + "b" + v);
 };

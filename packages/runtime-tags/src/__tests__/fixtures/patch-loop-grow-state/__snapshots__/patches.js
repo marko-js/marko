@@ -1,6 +1,6 @@
 // PATCH
 [`a0 a5;D ;<p> </p>`, {
-  la: ["a", {}, "b", {}, "a0"],
-  va2: "Store!"
+  va2: "Store!",
+  la: ["a", {}, "b", {}, "a0"]
 }]
 ;BAE

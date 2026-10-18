@@ -43,7 +43,7 @@ var detail_view_default = _template("__tests__/tags/detail-view.marko", (input) 
 		input_detail: input.detail,
 		"ClosureScopes:input_detail/5": $wi__input_detail && $input_detail__closures,
 		"ClosureScopes:input_error/6": $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}, "__tests__/tags/detail-view.marko", 0, { input_detail: ["input.detail"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/detail-view.marko_fill0", input.detail, !_server_guard($scope0_reason, 0));
+	}, "__tests__/tags/detail-view.marko", 0, { input_detail: ["input.detail"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/detail-view.marko_fill0", input.detail, !_server_guard($scope0_reason, 0), 1);
 });
 
 // template.marko

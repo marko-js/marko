@@ -178,5 +178,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"ClosureScopes:input_page/5": $wi__input_page && _unfilled_if($scope0_reason, 1) && $input_page__closures,
 		"ClosureScopes:input_list/6": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_list__closures,
 		"#childScope/0": _existing_scope($childScope4)
-	}, "__tests__/template.marko", 0, { input_list: ["input.list"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.list, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_list: ["input.list"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.list, !_server_guard($scope0_reason, 2), 1);
 }, 1);

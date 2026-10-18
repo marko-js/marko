@@ -1,0 +1,38 @@
+// tags/card.marko
+const $template$1 = "<section><button>clear</button><!></section>";
+const $walks$1 = "D b%l";
+_shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko !__tests__/tags/card.marko_0;D b%;<section><button>clear</button><!></section>" });
+var card_default = _template("__tests__/tags/card.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	let c = input.content;
+	_html(`<section><button>clear</button>${_el_resume($scope0_id, "#button/0")}`);
+	_dynamic_tag($scope0_id, "#text/1", c, {});
+	_html("</section>");
+	_script($scope0_id, "__tests__/tags/card.marko_0");
+	_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill0", c, 1);
+	$scope0_page ? _scope($scope0_id, {}, "__tests__/tags/card.marko", 0) : _content_withhold(input.content);
+});
+
+// template.marko
+const $template = $template$1;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
+_shells({ "__tests__/template.marko": /*@__PURE__*/ ((_w0) => `__tests__/template.marko;${((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1) });
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $input_label__closures = new Set();
+	_set_scope_reason(0);
+	const $childScope = _patch_child($scope0_id, "#childScope/0");
+	card_default({ content: _content("__tests__/template.marko_1*content", () => {
+		const $scope1_reason = _scope_reason();
+		const $scope1_id = _scope_id();
+		_html(`<em>static ${_text_resume($scope1_id, "#text/0", input.label, $wg__input_label * 2)}</em>`);
+		$wi__input_label && _subscribe($input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), "__tests__/template.marko_1_input_label#0:3/subscribe", $wg__input_label);
+		$wg__input_label || $wi__input_label && _resume_branch($scope1_id);
+	}, $scope0_id) });
+	$scope0_page ? _scope($scope0_id, {
+		"ClosureScopes:input_label/4": $wi__input_label && $input_label__closures,
+		"#childScope/0": _existing_scope($childScope)
+	}, "__tests__/template.marko", 0) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
+}, 1);

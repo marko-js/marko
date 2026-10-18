@@ -17,6 +17,9 @@
         "PatchChild:#childScope/0": {
           "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-host.marko_1*content",
           "PatchChild:BranchScopes:#text/0": {
+            "PatchSetup:": {
+              "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-host.marko_1_input_files#0:3/init"
+            },
             "PatchChild:#childScope/0": {
               "PatchSetup:": {
                 "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-tabs.marko_0_input_files#4_input_filesChange#5/init!packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-tabs.marko_0",
@@ -26,9 +29,6 @@
                 "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-tabs.marko_fill1": [_.b, 3]
               },
               "PatchBind:TagVariableChange:tabs": [_.b, 3]
-            },
-            "PatchSetup:": {
-              "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-host.marko_1_input_files#0:3/init"
             }
           }
         }

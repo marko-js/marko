@@ -42,7 +42,7 @@ var detail_view_default = _template("b", (input) => {
 		d: input.detail,
 		f: $wi__input_detail && $input_detail__closures,
 		g: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb9", input.detail, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb9", input.detail, !_server_guard($scope0_reason, 0), 1);
 });
 
 // template.marko

@@ -1,5 +1,6 @@
 // PATCH
 [`a2 !a4;0D l b b& b;<span> </span><button class=mode>b</button><button class=go>go</button><button class=set>set</button>`, {
+  va5: "y",
   ba: [{
     ca: {
       s: {
@@ -10,19 +11,19 @@
         dg: ["a1", 1]
       }
     }
-  }, "a2"],
-  wf: "y"
+  }, "a2"]
 }]
 ;BgE
 
 // PATCH holding BgE
 {
-  ba: 0,
-  wf: "z"
+  va5: "z",
+  ba: 0
 }
 
 // PATCH holding BgE
 {
+  va5: "z",
   ba: [{
     ca: {
       s: {
@@ -33,6 +34,5 @@
         dg: ["a1", 1]
       }
     }
-  }, "a2"],
-  wf: "z"
+  }, "a2"]
 }

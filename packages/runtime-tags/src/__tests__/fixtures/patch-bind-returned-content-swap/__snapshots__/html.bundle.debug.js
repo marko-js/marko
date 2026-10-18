@@ -45,11 +45,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(0);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");
 	let a = child_default({ label: "A" });
-	_patch_write($scope0_id, "PatchWrite:a", a, 1);
 	_set_scope_reason(0);
 	const $childScope2 = _patch_child($scope0_id, "#childScope/2");
 	let b = child_default({ label: "B" });
-	_patch_write($scope0_id, "PatchWrite:b", b, 1);
 	_dynamic_tag($scope0_id, "#text/4", input.first ? a : b, {}, 0, 0, _write_guard($scope0_reason, 0), void 0, 2, $scope0_reason, 0);
 	_html(`<button>${_text_resume($scope0_id, "#text/6", n)}</button>${_el_resume($scope0_id, "#button/5")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

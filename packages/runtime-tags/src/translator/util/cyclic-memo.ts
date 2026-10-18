@@ -47,31 +47,30 @@ export function createAnalysisMemo<K extends object, R>(
   return [(key: K) => getMemo()(key), () => setMemo(create())] as const;
 }
 
-// The same memo keyed by an object and a property path (`true` for every
-// property): each path interns one key, so a value's answer per path
-// shares one cycle protocol.
-type MemoPath = Opt<string> | true;
-interface PathKeys<K> {
-  value?: [K, MemoPath];
-  all?: [K, MemoPath];
-  props?: Map<string, PathKeys<K>>;
+// The same memo keyed by an object and a property path (a `true` step for
+// every property from there down): each path interns one key, so a value's
+// answer per path shares one cycle protocol.
+type MemoPath = Opt<string | true>;
+interface PathKeys<K, P> {
+  value?: [K, P];
+  props?: Map<string | true, PathKeys<K, P>>;
 }
-export function createAnalysisPathMemo<K extends object, R>(
-  compute: (key: K, path: MemoPath) => R,
-  cycleAnswer: R,
-) {
-  const keys = new WeakMap<K, PathKeys<K>>();
+export function createAnalysisPathMemo<
+  K extends object,
+  R,
+  P extends MemoPath = MemoPath,
+>(compute: (key: K, path: P) => R, cycleAnswer: R) {
+  const keys = new WeakMap<K, PathKeys<K, P>>();
   const [memo, reset] = createAnalysisMemo(
-    ([key, path]: [K, MemoPath]) => compute(key, path),
+    ([key, path]: [K, P]) => compute(key, path),
     cycleAnswer,
   );
   return [
-    (key: K, path: MemoPath) => {
-      let pathKeys: PathKeys<K> | undefined = keys.get(key);
+    (key: K, path: P) => {
+      let pathKeys: PathKeys<K, P> | undefined = keys.get(key);
       if (!pathKeys) keys.set(key, (pathKeys = {}));
-      if (path === true) return memo((pathKeys.all ??= [key, path]));
       return memo(
-        (reduce(path, ensurePropKeys<K>, pathKeys).value ??= [key, path]),
+        (reduce(path, ensurePropKeys<K, P>, pathKeys).value ??= [key, path]),
       );
     },
     reset,
@@ -79,7 +78,10 @@ export function createAnalysisPathMemo<K extends object, R>(
 }
 
 // The keys under `property`, made on first use.
-function ensurePropKeys<K>(pathKeys: PathKeys<K>, property: string) {
+function ensurePropKeys<K, P>(
+  pathKeys: PathKeys<K, P>,
+  property: string | true,
+) {
   let next = pathKeys.props?.get(property);
   if (!next) (pathKeys.props ??= new Map()).set(property, (next = {}));
   return next;

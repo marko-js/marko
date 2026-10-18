@@ -56,7 +56,7 @@ var mid_default = _template("__tests__/tags/mid.marko", (input) => {
 	}, "__tests__/tags/mid.marko", 0, {
 		input_flag: ["input.flag"],
 		input_label: ["input.label"]
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/mid.marko_fill0", input.flag, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/mid.marko_fill1", input.label, !_server_guard($scope0_reason, 3)));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/mid.marko_fill0", input.flag, !_server_guard($scope0_reason, 2), 1), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/mid.marko_fill1", input.label, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

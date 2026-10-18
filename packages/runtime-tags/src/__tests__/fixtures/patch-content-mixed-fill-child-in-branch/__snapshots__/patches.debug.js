@@ -2,6 +2,10 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_1*content packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_1_live#0:9/init;/ D l&;<button class=tick> </button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/template.marko_1*shell;/0& b/DbD%m&&;<button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section>`, {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
+      "PatchSetup:": {
+        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_0"
+      },
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_fill0": 0,
       "PatchChild:#childScope/0": {
         "PatchSetup:": {
           0: "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_0_bonus#7/var",
@@ -19,11 +23,7 @@
             }
           }
         }
-      },
-      "PatchSetup:": {
-        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_0"
-      },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_fill0": 0
+      }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/template.marko_1*shell"]
 }]
@@ -33,6 +33,10 @@
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
+      "PatchSetup:": {
+        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_0"
+      },
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_fill0": 2,
       "PatchChild:#childScope/0": {
         "PatchSetup:": {
           0: "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_0_bonus#7/var",
@@ -50,11 +54,7 @@
             }
           }
         }
-      },
-      "PatchSetup:": {
-        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_0"
-      },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/page.marko_fill0": 2
+      }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/template.marko_1*shell"]
 }

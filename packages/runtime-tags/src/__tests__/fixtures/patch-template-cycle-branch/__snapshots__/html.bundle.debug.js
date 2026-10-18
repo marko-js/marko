@@ -80,5 +80,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#ul/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { input_node: _unfilled_if($scope0_reason, 0) && input.node }, "__tests__/template.marko", 0, { input_node: ["input.node"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.node, !_server_guard($scope0_reason, 1));
+	$scope0_page ? _scope($scope0_id, { input_node: _unfilled_if($scope0_reason, 0) && input.node }, "__tests__/template.marko", 0, { input_node: ["input.node"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.node, !_server_guard($scope0_reason, 1), 1);
 }, 1);

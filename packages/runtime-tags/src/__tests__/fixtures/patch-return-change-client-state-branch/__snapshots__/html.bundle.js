@@ -58,5 +58,5 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
 	_html(`<p>${_text_resume($scope0_id, "b", last)}</p>`);
 	_patch_value($scope0_id, "va6", last, 1);
-	$scope0_page ? _scope($scope0_id, { f: input.p }) : _filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 0) ? _patch_value($scope0_id, "va5", input.p, !_server_guard($scope0_reason, 1)) : _patch_write($scope0_id, "wf", input.p, !_server_guard($scope0_reason, 1)));
+	$scope0_page ? _scope($scope0_id, { f: input.p }) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.p, !_server_guard($scope0_reason, 1));
 }, 1);

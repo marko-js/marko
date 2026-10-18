@@ -1,5 +1,6 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_2*shell;b%;<!><!><!>`, {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_fill0": "b",
   "PatchLoop:#text/2": [{
     "PatchDynamicTag:#text/0": [">span", {
       label: "x",
@@ -22,13 +23,13 @@
         "PatchText:#text/0": "b"
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_2*shell"],
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_fill0": "b"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_2*shell"]
 }]
 ;CgI
 
 // PATCH holding CgI
 {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_fill0": "c",
   "PatchLoop:#text/2": [{
     "PatchDynamicTag:#text/0": [">span", {
       label: "y",
@@ -41,6 +42,5 @@
         "PatchText:#text/0": "c"
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_2*shell"],
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_fill0": "c"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-content-input/template.marko_2*shell"]
 }

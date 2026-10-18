@@ -10,6 +10,7 @@ import { _content as content } from "../renderer";
 import { _resumed, getRegisteredWithScope } from "../resume";
 import { installPatchShells } from "./apply";
 import {
+  afterChildScopes,
   creating,
   createPatchers,
   patchers,
@@ -29,7 +30,7 @@ declare module "./apply" {
 const _content = /*@__PURE__*/ withBranches(content);
 
 // A scope this flush created has no render coming, so its setup envelope
-// applies now; the renders its shell's setup queued run after, over it.
+// applies within its entry; the renders its shell's setup queued run after.
 patchers[PatchKey.Setup] = (scope, _key, value) => {
   if (creating && scope[AccessorProp.Gen] === runId) {
     patchScope(value, scope, createPatchers);
@@ -37,8 +38,9 @@ patchers[PatchKey.Setup] = (scope, _key, value) => {
 };
 // Ids the flush asks a fresh scope to run, in the shell's grammar
 // (`inits…!effects…`): a child's mounts, a client-derived local's inits.
-createPatchers[PatchKey.Init] = (scope, _key, ids) =>
-  runSetupIds(resolveSetupIds(ids), scope);
+createPatchers[PatchKey.Init] = afterChildScopes((scope, _key, ids) =>
+  runSetupIds(resolveSetupIds(ids), scope),
+);
 
 type SetupFn = (branch: Scope) => void;
 type SetupIds = [inits: SetupFn[], effects?: SetupFn[]];

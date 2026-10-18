@@ -48,7 +48,6 @@ var template_default = _template("a", (input) => {
 	let refresh = picker_default({ refreshingChange: _resume(function(v) {
 		busy = v;
 	}, "a0", $scope0_id) });
-	_patch_write($scope0_id, "wf", refresh, 1);
 	_html(`<p>${_text_resume($scope0_id, "c", busy ? "busy" : "idle")}</p><button id=outer>outer</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a1");
 	_patch_write($scope0_id, "wf", refresh, 1);

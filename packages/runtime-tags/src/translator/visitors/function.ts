@@ -1,10 +1,18 @@
 import { types as t } from "@marko/compiler";
-import { getFile, withLoc } from "@marko/compiler/babel-utils";
+import {
+  getFile,
+  isAttributeTag,
+  isTransparentTag,
+  withLoc,
+} from "@marko/compiler/babel-utils";
 
+import { getParentTag } from "../util/get-parent-tag";
 import { getExprRoot, getFnRoot, getMarkoRoot } from "../util/get-root";
 import { canIgnoreRegister, trackFunction } from "../util/module-registrations";
+import { concat, type Opt } from "../util/optional";
 import type { RegisteredFnExtra } from "../util/references";
 import { getSection } from "../util/sections";
+import { getLiteralName } from "../util/to-property-name";
 import { traverseFindAwait } from "../util/traverse";
 import type { TemplateVisitor } from "../util/visitors";
 
@@ -49,6 +57,8 @@ export default {
     const fnExtra = (node.extra ??= {}) as RegisteredFnExtra;
     fnExtra.section = section;
     fnExtra.exprRoot = exprRoot.node.extra ??= {};
+    fnExtra.rootPath = getRootPath(fn, exprRoot);
+    fnExtra.inputPath = getInputPath(markoRoot, fnExtra.rootPath);
     fnExtra.name =
       (node as t.FunctionExpression).id?.name ||
       (isMarkoAttribute(markoRoot)
@@ -69,6 +79,64 @@ export default {
     trackFunction(fn, fnExtra, markoRoot);
   },
 } satisfies TemplateVisitor<t.Function>;
+
+function getRootPath(fn: t.NodePath, root: t.NodePath) {
+  let path: Opt<string | true>;
+  for (let cur = fn; cur !== root;) {
+    const parent = cur.parentPath!;
+    let key: string | true = true;
+    if (parent.node.type === "ArrayExpression") {
+      const { elements } = parent.node;
+      const index = elements.indexOf(cur.node as t.Expression);
+      key = "" + index;
+      for (let i = index; i--;) {
+        if (elements[i]?.type === "SpreadElement") {
+          key = true;
+          break;
+        }
+      }
+      cur = parent;
+    } else {
+      const prop = t.isObjectMethod(cur.node) ? cur : parent;
+      if (t.isObjectMethod(prop.node) || t.isObjectProperty(prop.node)) {
+        if (!prop.node.computed) key = getLiteralName(prop.node.key) ?? true;
+        cur = prop.parentPath!;
+      } else {
+        cur = parent;
+      }
+    }
+    path = key === true ? true : concat(key, path);
+  }
+  return path;
+}
+
+// The keys from its tag's input: an attribute's value lands under its name, a
+// spread's keys as they are.
+function getInputPath(markoRoot: t.NodePath, path: Opt<string | true>) {
+  const { node } = markoRoot;
+  if (node.type !== "MarkoAttribute" && node.type !== "MarkoSpreadAttribute") {
+    return true;
+  }
+  return getTagInputPath(
+    markoRoot.parentPath as t.NodePath<t.MarkoTag>,
+    node.type === "MarkoAttribute" ? concat(node.name, path) : path,
+  );
+}
+
+// An attribute tag lands in its owner's input under its name, the first of any
+// repeated or control-flow ones, whose rest only an iteration (a whole read) reaches.
+function getTagInputPath(
+  tag: t.NodePath<t.MarkoTag>,
+  path: Opt<string | true>,
+): Opt<string | true> {
+  if (!isAttributeTag(tag)) return path;
+  let owner = getParentTag(tag)!;
+  while (isTransparentTag(owner)) owner = getParentTag(owner)!;
+  return getTagInputPath(
+    owner,
+    concat((tag.node.name as t.StringLiteral).value.slice(1), path),
+  );
+}
 
 function isMarkoAttribute(
   path: t.NodePath | undefined | null,

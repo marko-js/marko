@@ -1,7 +1,7 @@
 // PATCH
 {
-  cAa: 0,
   va7: "second",
+  cAa: 0,
   ka: [{
     tb: "boom"
   }, "a5"]

@@ -11,17 +11,17 @@
 [`b !b0; b%;<button class=toggle>toggle</button><!><!>`, `a0,`, {
   ra: [
     [0, 1], {
+      va7: "c",
       cAa: {
         fa: "b",
+        va6: "y",
         cAa: {
           s: {
             vb2: !0
           },
           ub1: ["a0", 1]
-        },
-        va6: "y"
-      },
-      va7: "c"
+        }
+      }
     },
     [1, 2], {
       cAa: {
@@ -35,17 +35,17 @@
       }
     },
     [2, 3], {
+      va7: "e",
       cAa: {
         fa: "b",
+        va6: "y",
         cAa: {
           s: {
             vb2: !0
           },
           ub1: ["a0", 1]
-        },
-        va6: "y"
-      },
-      va7: "e"
+        }
+      }
     }
   ]
 }]

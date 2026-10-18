@@ -59,8 +59,8 @@ UPDATE: .inc::text@0 "a" => "b"
 ```
 INSERT: i
 REMOVE: i + button
-UPDATE: i::text " " => "c"
 UPDATE: p::text "1" => "-1"
+UPDATE: i::text " " => "c"
 ```
 
 # Update `{"which":true,"label":"d"}`

@@ -173,5 +173,5 @@ var template_default = _template("e", (input) => {
 		f: $wi__input_page && _unfilled_if($scope0_reason, 1) && $input_page__closures,
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_list__closures,
 		a: _existing_scope($childScope4)
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "ve9", input.list, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "ve9", input.list, !_server_guard($scope0_reason, 2), 1);
 }, 1);

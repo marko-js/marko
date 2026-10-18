@@ -68,6 +68,7 @@ import {
 import { findSlot } from "../slots";
 import { type Sources, sourcesUtil } from "../sources";
 import { createOutputState } from "../state";
+import { toPropertyName } from "../to-property-name";
 import {
   andGuard,
   buildComposedGroupValue,
@@ -93,12 +94,16 @@ import {
   getPatchFillKey,
   getPatchFill,
   getPatchWrite,
+  hasRenderRead,
   patchFillsClientReads,
   patchComposes,
   patchFillsSubscribedReads,
   patchWritesScope,
   hasContents,
+  seedsLetValueAt,
+  seedsLetWhole,
 } from "./refresh";
+import { drivesStructuralParams } from "./structure";
 
 // A section's patch entries beside its resume data: effect re-runs, the setup
 // a created scope gets, and the fills a known child writes as `_scope`'s else.
@@ -544,20 +549,35 @@ function buildLetChangeWrites(
   ];
 }
 
-// A created scope's `<let>` seeds what the document writes of it (whole where assigned or
-// written whole, else each member) where no client source feeds its init, which sets it.
+// A created scope's `<let>` seeds what the document writes of it or its renders
+// read, whole or by member: one value its signals derive where they render it.
 function buildLetSeeds(section: Section, binding: Binding) {
   const seed = t.numericLiteral(1);
-  const guard = getCallerGroupGuard(
-    section,
-    "_filled_guard",
-    getSourcesForExpr(binding.derivedFrom as t.NodeExtra),
-  );
-  if (binding.assignments || getWriteReason(binding)) {
+  const sources = getSourcesForExpr(binding.derivedFrom as t.NodeExtra);
+  const guard = getCallerGroupGuard(section, "_filled_guard", sources);
+  if (seedsLetWhole(binding)) {
     return [
       andGuard(guard, buildPatchValue(section, binding, undefined, seed)),
     ];
   }
+  // Where renders read members, one value carries the written ones too: derived
+  // after a member's own write, it would skip or clear that member.
+  if (seedsLetValueAt(binding, true)) {
+    return [
+      andGuard(
+        guard,
+        buildPatchValue(
+          section,
+          binding,
+          undefined,
+          seed,
+          getSeedMembers(binding)!,
+        ),
+      ),
+    ];
+  }
+  // A client source's init sets the members.
+  if (sources?.state) return [];
   const writes: t.Expression[] = [];
   const addMemberSeeds = (member: Binding) => {
     for (const alias of member.propertyAliases.values()) {
@@ -579,6 +599,20 @@ function buildLetSeeds(section: Section, binding: Binding) {
 export function writesAtSectionEnd(binding: Binding) {
   const { fill, unpatchedStructure } = getPatchFill(binding);
   return !!unpatchedStructure || (!!fill && fill !== true && hasContents(fill));
+}
+
+// The members a created scope's renders read or the document writes, as the
+// value its `<let>` seeds (its signals derive them).
+function getSeedMembers(member: Binding): t.ObjectExpression | undefined {
+  const props: t.ObjectProperty[] = [];
+  for (const [property, alias] of member.propertyAliases) {
+    const value =
+      hasRenderRead(alias) || getWriteReason(alias)
+        ? getDeclaredBindingExpression(alias)
+        : getSeedMembers(alias);
+    if (value) props.push(t.objectProperty(toPropertyName(property), value));
+  }
+  return props.length ? t.objectExpression(props) : undefined;
 }
 
 // Plain fill write of a branch local with no state source, gated at runtime
@@ -786,13 +820,15 @@ export function buildPatchValue(
   binding: Binding,
   split?: "content" | "unpatched",
   seed?: t.Expression,
+  value: t.Expression = getDeclaredBindingExpression(binding),
 ) {
   return callPatchRuntime(
     "_patch_value",
     section,
     getPatchKey().Value + getPatchFillKey(binding, split),
-    getDeclaredBindingExpression(binding),
+    value,
     seed,
+    drivesStructuralParams(binding) && t.numericLiteral(1),
   );
 }
 
@@ -893,14 +929,13 @@ function buildSubscribe(
         )
       : subscribeId,
   );
-  return t.logicalExpression(
-    "&&",
+  return andGuard(
     orCallerGroupGuards(
       section,
       getCallerGroupGuard(section, "_unfilled_if", closure.sources),
       "_unfilled_if",
       structure,
-    )!,
+    ),
     patchInit,
   );
 }

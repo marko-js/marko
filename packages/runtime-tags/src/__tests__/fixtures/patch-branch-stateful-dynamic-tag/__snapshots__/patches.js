@@ -1,24 +1,24 @@
 // PATCH
 [`a0 a7;b%;<!><!><!>`, {
-  ba: "a0",
-  va4: "two"
+  va4: "two",
+  ba: "a0"
 }]
 ;BAE
 
 // PATCH holding BAE
 {
-  ba: "a0",
-  va4: "three"
+  va4: "three",
+  ba: "a0"
 }
 
 // PATCH holding BAE
 {
-  ba: 0,
-  va4: "four"
+  va4: "four",
+  ba: 0
 }
 
 // PATCH holding BAE
 {
-  ba: "a0",
-  va4: "five"
+  va4: "five",
+  ba: "a0"
 }

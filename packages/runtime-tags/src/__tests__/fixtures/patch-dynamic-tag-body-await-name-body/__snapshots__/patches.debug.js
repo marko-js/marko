@@ -1,5 +1,6 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-name-body/tags/keeper.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-name-body/tags/keeper.marko_0; b%;<button class=toggle>toggle</button><!><!>`, {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-name-body/template.marko_fill0": "b",
   "PatchChild:#childScope/0": {
     "PatchPending:#text/0": 1,
     "PatchChild:BranchScopes:#text/0": {
@@ -14,13 +15,13 @@
         }
       }
     }
-  },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-name-body/template.marko_fill0": "b"
+  }
 }]
 ;DgQ
 
 // PATCH holding DgQ
 {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-name-body/template.marko_fill0": "c",
   "PatchChild:#childScope/0": {
     "PatchPending:#text/0": 1,
     "PatchChild:BranchScopes:#text/0": {
@@ -35,6 +36,5 @@
         }
       }
     }
-  },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-name-body/template.marko_fill0": "c"
+  }
 }

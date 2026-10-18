@@ -1,10 +1,10 @@
 // PATCH
 {
   "PatchText:#text/0": "Store!",
+  "PatchPending:#text/2": 1,
   "PatchChild:BranchScopes:#text/1": {
     "PatchPending:#text/0": 1
-  },
-  "PatchPending:#text/2": 1
+  }
 }
 {
   "PatchChild:BranchScopes:#text/1": {

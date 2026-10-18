@@ -43,12 +43,12 @@
 ```
 INSERT: .inc + .b
 REMOVE: .b + div
-UPDATE: .b::text " " => "SHOWN_name2"
 INSERT: .b + i
 REMOVE: i + p
-UPDATE: i::text " " => "SHOWN_name2b"
 INSERT: i + .SHOWN_on2
 REMOVE: .SHOWN_on2 + section
 UPDATE: .SHOWN_on2[class] null => "SHOWN_on2"
 UPDATE: .SHOWN_on2[title] null => "SHOWN_t2"
+UPDATE: .b::text " " => "SHOWN_name2"
+UPDATE: i::text " " => "SHOWN_name2b"
 ```

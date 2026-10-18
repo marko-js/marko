@@ -7,6 +7,7 @@ import { addTagVarBindings } from "../../util/known-tag";
 import { isOptimize, isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
+import { registersContent } from "../../util/patch/refresh";
 import {
   callRuntime,
   importRuntimeFeature,
@@ -22,7 +23,6 @@ import {
   forEachSectionReverse,
   getDynamicTagContentClosures,
   getSectionForBody,
-  getRendererReason,
   isDynamicClosure,
   type Section,
   setBranchRendererArgs,
@@ -129,7 +129,7 @@ export default {
                 tagParamsIdentifier,
               ]);
             } else {
-              const registerReason = getRendererReason(childSection);
+              const registerReason = registersContent(childSection);
               const registerId = getResumeRegisterId(childSection, "content");
               const objProps: t.ObjectExpression["properties"] = [];
               forEach(childSection.localClosures, (closure) => {

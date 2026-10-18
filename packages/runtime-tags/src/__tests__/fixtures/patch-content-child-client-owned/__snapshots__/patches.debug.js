@@ -1,23 +1,23 @@
 // PATCH
 {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-child-client-owned/template.marko_fill0": "y",
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "b"
-  },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-child-client-owned/template.marko_fill0": "y"
+  }
 }
 
 // PATCH
 {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-child-client-owned/template.marko_fill0": "z",
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c"
-  },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-child-client-owned/template.marko_fill0": "z"
+  }
 }
 
 // PATCH
 {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-child-client-owned/template.marko_fill0": "w",
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "d"
-  },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-content-child-client-owned/template.marko_fill0": "w"
+  }
 }

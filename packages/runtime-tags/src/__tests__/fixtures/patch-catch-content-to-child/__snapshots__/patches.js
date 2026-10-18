@@ -1,5 +1,6 @@
 // PATCH
 [`a1 a10,`, {
+  va6: "b",
   kc: [{
     ca: {
       fa: "^^a1",
@@ -11,13 +12,13 @@
         }
       }
     }
-  }, "a4"],
-  va6: "b"
+  }, "a4"]
 }]
 ;CAI
 
 // PATCH holding CAI
 {
+  va6: "c",
   kc: [{
     ca: {
       fa: "^^a1",
@@ -29,20 +30,20 @@
         }
       }
     }
-  }, "a4"],
-  va6: "c"
+  }, "a4"]
 }
 
 // PATCH holding CAI
 {
+  va6: "d",
   cAc: [{
     ta: "ok"
-  }, 0, "a4"],
-  va6: "d"
+  }, 0, "a4"]
 }
 
 // PATCH holding CAI
 {
+  va6: "e",
   kc: [{
     ca: {
       fa: "^^a1",
@@ -54,6 +55,5 @@
         }
       }
     }
-  }, "a4"],
-  va6: "e"
+  }, "a4"]
 }

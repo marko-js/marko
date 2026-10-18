@@ -1,5 +1,6 @@
 // PATCH
 [`c !c0; b%;<button class=toggle>toggle</button><!><!>`, {
+  va4: "b",
   ca: {
     pa: 1,
     cAa: {
@@ -14,13 +15,13 @@
         }
       }
     }
-  },
-  va4: "b"
+  }
 }]
 ;DgY
 
 // PATCH holding DgY
 {
+  va4: "c",
   ca: {
     pa: 1,
     cAa: {
@@ -35,6 +36,5 @@
         }
       }
     }
-  },
-  va4: "c"
+  }
 }

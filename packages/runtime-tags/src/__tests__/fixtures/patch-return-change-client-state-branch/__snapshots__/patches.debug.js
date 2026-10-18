@@ -1,5 +1,6 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1;0D l b b& b;<span> </span><button class=mode>b</button><button class=go>go</button><button class=set>set</button>`, {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_fill0": "y",
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
@@ -10,19 +11,19 @@
         "PatchBind:input_onB": ["packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1/onB", 1]
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1*shell"],
-  "PatchWrite:input_p": "y"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1*shell"]
 }]
 ;BgI
 
 // PATCH holding BgI
 {
-  "PatchBranch:#text/0": 0,
-  "PatchWrite:input_p": "z"
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_fill0": "z",
+  "PatchBranch:#text/0": 0
 }
 
 // PATCH holding BgI
 {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_fill0": "z",
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
@@ -33,6 +34,5 @@
         "PatchBind:input_onB": ["packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1/onB", 1]
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1*shell"],
-  "PatchWrite:input_p": "z"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-return-change-client-state-branch/template.marko_1*shell"]
 }

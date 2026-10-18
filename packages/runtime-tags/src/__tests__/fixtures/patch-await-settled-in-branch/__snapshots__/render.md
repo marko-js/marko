@@ -18,8 +18,8 @@
 ```
 ## Change
 ```
-INSERT: section
 UPDATE: p::text "a" => "b"
+INSERT: section
 ```
 
 # Update `{"show":false,"label":"c"}`
@@ -30,8 +30,8 @@ UPDATE: p::text "a" => "b"
 ```
 ## Change
 ```
-REMOVE: section
 UPDATE: p::text "b" => "c"
+REMOVE: section
 ```
 
 # Update `{"show":true,"label":"d","value":{}}`
@@ -47,6 +47,6 @@ UPDATE: p::text "b" => "c"
 ```
 ## Change
 ```
-INSERT: section
 UPDATE: p::text "c" => "d"
+INSERT: section
 ```

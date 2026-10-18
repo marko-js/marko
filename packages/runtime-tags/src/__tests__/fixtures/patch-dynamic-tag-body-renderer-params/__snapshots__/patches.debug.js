@@ -1,10 +1,10 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell;b%;<!><!><!>`, {
   "PatchChild:#childScope/0": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_fill2/content": "b",
     "PatchBranch:#text/2": [{
       "PatchDynamicTag:#text/0": ["^^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_1*content", 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content"]
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_fill2/content": "b"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"]
   }
 }]
 ;CAE
@@ -12,10 +12,10 @@
 // PATCH holding CAE
 {
   "PatchChild:#childScope/0": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_fill2/content": "c",
     "PatchBranch:#text/2": [{
       "PatchDynamicTag:#text/0": ["^^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_1*content", 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content"]
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_fill2/content": "c"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"]
   }
 }
 
@@ -37,9 +37,9 @@
 // PATCH holding CQY
 {
   "PatchChild:#childScope/0": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_fill2/content": "e",
     "PatchBranch:#text/2": [{
       "PatchDynamicTag:#text/0": ["^^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_1*content", 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content"]
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_fill2/content": "e"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"]
   }
 }

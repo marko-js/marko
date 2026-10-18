@@ -76,7 +76,7 @@ var view_default = _template("__tests__/tags/view.marko", (input) => {
 			"#LoopKey": "1:11"
 		});
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/view.marko_1*shell", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { input_selected: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.selected }, "__tests__/tags/view.marko", 0, { input_selected: ["input.selected"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/view.marko_fill0", input.selected, !_server_guard($scope0_reason, 2));
+	$scope0_page ? _scope($scope0_id, { input_selected: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.selected }, "__tests__/tags/view.marko", 0, { input_selected: ["input.selected"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/view.marko_fill0", input.selected, !_server_guard($scope0_reason, 2), 1);
 });
 
 // template.marko

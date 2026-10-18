@@ -36,5 +36,5 @@ var template_default = _template("a", (input) => {
 		h: count,
 		j: $wi__input_title && $input_title__closures,
 		k: $count__closures
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va5", input.inner, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va6", input.title, !_server_guard($scope0_reason, 2)));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va5", input.inner, !_server_guard($scope0_reason, 1), 1), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va6", input.title, !_server_guard($scope0_reason, 2)));
 }, 1);

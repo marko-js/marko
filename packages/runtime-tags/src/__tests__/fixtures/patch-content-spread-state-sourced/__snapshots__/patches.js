@@ -1,21 +1,21 @@
 // PATCH
 {
+  va2: "y",
   ca: {
     vb2: {
       class: "b",
       content: _([], "a1", 1)
     }
-  },
-  va2: "y"
+  }
 }
 
 // PATCH
 {
+  va2: "z",
   ca: {
     vb2: {
       class: "c",
       content: _([], "a1", 1)
     }
-  },
-  va2: "z"
+  }
 }

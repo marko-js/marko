@@ -20,16 +20,12 @@ import {
   getParamsTreeAt,
   hasAllKnownProps,
 } from "./params-tree";
+import { registersContent } from "./patch/refresh";
 import { callRuntime } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
 import { scopeIdentifier } from "./scope-read";
 import { getSectionRendererIdentifier } from "./section-renderer";
-import {
-  getScopeIdIdentifier,
-  getSection,
-  getRendererReason,
-  type Section,
-} from "./sections";
+import { getScopeIdIdentifier, getSection, type Section } from "./sections";
 import { shipsContentShell } from "./shell";
 import { getContentClosureValues, getResumeRegisterId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
@@ -421,7 +417,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   const bodySection = body.node.extra?.section;
   if (bodySection) {
     if (isOutputHTML()) {
-      const serialized = getRendererReason(bodySection);
+      const serialized = registersContent(bodySection);
       body.node.body.unshift(getScopeReasonStatement(bodySection) as any);
 
       // An unregistered shell content elides its slot.

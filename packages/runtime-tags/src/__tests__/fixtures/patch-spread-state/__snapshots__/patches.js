@@ -1,25 +1,25 @@
 // PATCH
 [`a0 a6; ;<a>go</a>`, {
-  ba: "a0",
   va3: {
     href: "/b"
-  }
+  },
+  ba: "a0"
 }]
 ;BAE
 
 // PATCH holding BAE
 {
-  ba: 0,
   va3: {
     href: "/b"
-  }
+  },
+  ba: 0
 }
 
 // PATCH holding BAE
 {
-  ba: "a0",
   va3: {
     href: "/c",
     title: "C"
-  }
+  },
+  ba: "a0"
 }

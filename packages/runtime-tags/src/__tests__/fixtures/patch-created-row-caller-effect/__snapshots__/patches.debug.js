@@ -11,6 +11,7 @@
     }, _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-effect/tags/child.marko_1*shell"]
   },
   "PatchChild:#childScope/3": {
+    "PatchWrite:input_count": 10,
     "PatchLoop:#text/0": [{
       "PatchWrite:item": "a",
       "PatchText:#text/0": "a",
@@ -18,8 +19,7 @@
         "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-effect/tags/child.marko_1_input_count#0:4_item#2"
       },
       "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-effect/tags/child.marko_1_input_count#0:4_item#2": _.a
-    }, _.b],
-    "PatchWrite:input_count": 10
+    }, _.b]
   }
 }]
 ;BgE

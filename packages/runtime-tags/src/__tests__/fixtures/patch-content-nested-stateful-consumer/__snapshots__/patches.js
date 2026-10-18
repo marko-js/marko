@@ -1,15 +1,15 @@
 // PATCH
 {
+  va2: "y",
   ca: {
     ta: "b"
-  },
-  va2: "y"
+  }
 }
 
 // PATCH
 {
+  va2: "z",
   ca: {
     ta: "c"
-  },
-  va2: "z"
+  }
 }

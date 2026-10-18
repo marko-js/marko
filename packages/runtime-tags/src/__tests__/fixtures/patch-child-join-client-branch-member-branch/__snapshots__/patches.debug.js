@@ -4,10 +4,10 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_fill0/unpatched": "y"
   },
   "PatchChild:#childScope/1": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_fill0": "y",
     "PatchBranch:#text/0": [{
       "PatchText:#text/0": "yq"
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_1*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_fill0": "y"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_1*shell"]
   }
 }]
 ;CAE
@@ -18,10 +18,10 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_fill0/unpatched": "z"
   },
   "PatchChild:#childScope/1": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_fill0": "z",
     "PatchBranch:#text/0": [{
       "PatchText:#text/0": "zr"
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_1*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_fill0": "z"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_1*shell"]
   }
 }
 
@@ -31,9 +31,9 @@
     "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_fill0/unpatched": "w"
   },
   "PatchChild:#childScope/1": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_fill0": "w",
     "PatchBranch:#text/0": [{
       "PatchText:#text/0": "wt"
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_1*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_fill0": "w"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-member-branch/tags/child.marko_1*shell"]
   }
 }

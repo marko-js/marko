@@ -14,6 +14,10 @@
     "data-x": null,
     hidden: !1
   },
+  je: [{
+    value: "SHOWN_v",
+    "data-secret": !1
+  }, 0, 1],
   bd: [{
     ja: {
       href: "/SHOWN_link2",
@@ -22,11 +26,7 @@
         SECRET_lc2: !1
       }
     }
-  }, "a0"],
-  je: [{
-    value: "SHOWN_v",
-    "data-secret": !1
-  }, 0, 1]
+  }, "a0"]
 }]
 ;BAE
 
@@ -46,14 +46,14 @@
     "data-x": null,
     hidden: !1
   },
+  je: [{
+    value: "SHOWN_v",
+    "data-secret": !1
+  }, 0, 1],
   bd: [{
     ja: {
       href: "/SHOWN_link3",
       class: ["SHOWN_lc3"]
     }
-  }, "a0"],
-  je: [{
-    value: "SHOWN_v",
-    "data-secret": !1
-  }, 0, 1]
+  }, "a0"]
 }

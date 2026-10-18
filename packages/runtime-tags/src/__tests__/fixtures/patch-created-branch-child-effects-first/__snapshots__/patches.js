@@ -1,14 +1,15 @@
 // PATCH
 [`a3 !a9;D ;<i> </i>`, `a4 !a10,<u>nested</u>`, `a1 !a12;b%;<em>content</em><!><!>`, `a5 !a11,`, `a0 !a15,`, `a6 !a14,`, `a2 a28!a18;//b&&/b&%b%b/D%l&%c;<span>inner</span><b>define</b><!><!><div><!></div><!><!>`, {
   bc: [{
+    ff: [0, 0, "a0"],
     ca: {
+      s: {
+        i: "!c0"
+      },
       ca: {
         s: {
           i: "!b0"
         }
-      },
-      s: {
-        i: "!c0"
       }
     },
     cb: {
@@ -31,7 +32,6 @@
         }, "a5"]
       }
     },
-    ff: [0, 0, "a0"],
     cAf: {
       ca: {
         s: {

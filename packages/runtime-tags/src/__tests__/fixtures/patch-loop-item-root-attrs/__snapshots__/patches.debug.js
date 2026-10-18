@@ -3,17 +3,17 @@
   "PatchLoop:#nav/0": [{
     "PatchAttr:#a/0 class": "link",
     "PatchAttr:#a/0 href": "/a",
+    "PatchText:#text/2": "A",
     "PatchChild:#childScope/1": {
       "PatchTextContent:#title/0": "a"
-    },
-    "PatchText:#text/2": "A"
+    }
   }, {
     "PatchAttr:#a/0 class": "link active",
     "PatchAttr:#a/0 href": "/b",
+    "PatchText:#text/2": "B",
     "PatchChild:#childScope/1": {
       "PatchTextContent:#title/0": "b"
-    },
-    "PatchText:#text/2": "B"
+    }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_1*shell"],
   "PatchBranch:#main/1": [{
     "PatchText:#text/0": "b"
@@ -26,10 +26,10 @@
   "PatchLoop:#nav/0": [{
     "PatchAttr:#a/0 class": "link active",
     "PatchAttr:#a/0 href": "/b",
+    "PatchText:#text/2": "B",
     "PatchChild:#childScope/1": {
       "PatchTextContent:#title/0": "b"
-    },
-    "PatchText:#text/2": "B"
+    }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-item-root-attrs/template.marko_1*shell"],
   "PatchBranch:#main/1": 0
 }

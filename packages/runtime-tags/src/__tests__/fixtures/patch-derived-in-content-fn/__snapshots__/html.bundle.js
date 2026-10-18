@@ -27,7 +27,7 @@ _shells({
 	a: /*@__PURE__*/ (() => `a;${((_w0) => `/${_w0}&D l`)("D%l")};${((_w0) => `${_w0}<p> </p>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let shown = "";
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		const label = input.label;
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		_set_scope_reason(($scope0_page ? _mask_group($scope0_reason, 0) : 0) << 1);
 		const $childScope = _patch_child($scope1_id, "a");
 		reader_default({
 			read: _resume(() => label, "a0", $scope1_id),

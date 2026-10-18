@@ -1,16 +1,22 @@
 // Patch fill decisions (which bindings a patch fills or writes, fill identity,
 // what a created scope runs) and the finalizers recording what they need.
 import type { types as t } from "@marko/compiler";
-import { getFile, getTemplateId } from "@marko/compiler/babel-utils";
+import {
+  getFile,
+  getProgram,
+  getTemplateId,
+} from "@marko/compiler/babel-utils";
 
 import {
   type Binding,
   bindingUtil,
   BindingType,
   getCanonicalBinding,
+  isLetBinding,
   type Intersection,
   isStateSourced,
   isDirectAlias,
+  isOwnBinding,
   isParamBinding,
   type ParamBinding,
   type ReferencedBindings,
@@ -18,7 +24,7 @@ import {
   someUpToAliasRoot,
   someReadIn,
 } from "../bindings";
-import { createAnalysisMemo } from "../cyclic-memo";
+import { createAnalysisMemo, createAnalysisPathMemo } from "../cyclic-memo";
 import { readsValuesOnResume } from "../finalize-references";
 import {
   ensureKnownTagPatchGroups,
@@ -32,7 +38,9 @@ import {
   every,
   first,
   forEach,
+  type Opt,
   reduce,
+  rest,
   some,
   type SortedOpt,
 } from "../optional";
@@ -43,6 +51,7 @@ import {
   isUnconditionalReason,
 } from "../reasons";
 import {
+  getCanonicalExtra,
   getReferencedBindings,
   type Read,
   type ReferencedExtra,
@@ -77,12 +86,14 @@ import {
   sourcesUtil,
 } from "../sources";
 import { createAnalysisState } from "../state";
+import { getWriteReason } from "../write-guard";
 import { getWriteSources, isFilledHole, isStableExpr } from "./decisions";
 import {
   catchSetupRenders,
   patchWrites,
   hasStructuralParam,
   someContentRead,
+  bodyRendersStateful,
   isKnownChildNode,
   inStatefulBranch,
   isStatefulBranch,
@@ -183,6 +194,8 @@ export interface PatchFill {
   derivedNeeds?: true | FillConditions;
   effectRead?: boolean;
   writeReads?: boolean;
+  /** A function client code reads, or a flush seeds, captures it. */
+  fnCapture?: boolean;
   ownRegistration?: boolean;
   joinWrites?: SortedOpt<Sources>;
   joinFill?: Intersection;
@@ -213,6 +226,9 @@ export function resetPatchFills() {
   resetJoinInits();
   resetWrittenJoins();
   resetBodyCalls();
+  resetFunctionSeeds();
+  resetLetSeedReach();
+  resetCreatedLetSeedReach();
 }
 
 export const [getPatchWrite] = createAnalysisMemo(computePatchWrite, UNREAD);
@@ -310,6 +326,7 @@ function computePatchFill(binding: Binding): PatchFill {
     // A value a patch sends that effects or captures read: written where a
     // flush writes its scope.
     writeReads: isPatchSent(binding) && (effectRead || fnCapture),
+    fnCapture,
     ownRegistration,
     joinWrites: joinFill ? undefined : writes,
     joinFill,
@@ -398,11 +415,13 @@ function derivesByCreatedInit(binding: Binding) {
 }
 
 // A param a created scope gets as a seed, as no structure brings it: a known
-// child's, or a member of a `@catch`'s error its code joins with a caller's.
+// child's, an `<await>` value a function captures, or a `@catch` error member
+// joined with a caller's.
 function seedsParam(binding: Binding) {
   const { section } = binding;
   return (
     isKnownChild(section) ||
+    (!!section.branch?.await && !!getPatchFill(binding).fnCapture) ||
     (section.boundaryContent === "catch" &&
       hasCallerParamSourceAt(findSlot(binding)?.reason, section))
   );
@@ -497,7 +516,11 @@ function computeFillReadKind(binding: Binding): FillReadKind {
   if (isKnownChild(binding.section) && isStatefulBranch(binding.section)) {
     kind = true;
   }
-  for (const read of binding.reads.keys()) {
+  for (const [read, reads] of binding.reads) {
+    if (some(reads, isOtherTemplateFnCapture)) {
+      kind = true;
+      continue;
+    }
     // A spread's attributes still render; any other effect read outside
     // unpatched structure refreshes through the owner slot write.
     const effect = readsValuesOnResume(read);
@@ -763,19 +786,21 @@ export function getClosureReadSources(closure: Binding, section: Section) {
   return sources;
 }
 
-// Reads only the declaration's own signal reaches: an effect in its section,
-// or another known child's param the client derives from it.
+// Reads only the declaration's own signal reaches: an effect in its section, a
+// capture another template reads, a kept closure, or a child's param from it.
 function hasDeclarationOnlyReads(binding: Binding) {
-  for (const read of binding.reads.keys()) {
+  for (const [read, reads] of binding.reads) {
     if (
-      readsValuesOnResume(read)
+      some(reads, isOtherTemplateFnCapture) ||
+      keepsClosureFills(read.section) ||
+      (readsValuesOnResume(read)
         ? !read.invokeOnly && read.section === binding.section
         : some(
             read.derives,
             (derived) =>
               derived.section !== binding.section &&
               isKnownChild(derived.section),
-          ) && getDerivedNeeds(read)
+          ) && getDerivedNeeds(read))
     ) {
       return true;
     }
@@ -987,8 +1012,221 @@ function isRegisteredFnCapture(binding: Binding) {
   return false;
 }
 
-function isRegisteredFnRead(read: Read) {
-  return !!read.fnRoot?.reason;
+// A capture in a function another template re-reads as it changes: the owner's
+// fill re-creates the function there, as a client render does.
+function isOtherTemplateFnCapture({ fnRoot }: Read) {
+  return !!fnRoot && some(fnRoot.derives, isRereadParam);
+}
+
+// Read beyond a handler call or a `<let>`'s initial value, which keep it as
+// is, following what a read passes it on to (a `<const>`, a child's param).
+const [isRereadParam] = createAnalysisMemo(
+  (param: Binding) => !isOwnBinding(param) && isReread(param, new Set()),
+  false,
+);
+
+function isReread(binding: Binding, seen: Set<Binding>): boolean {
+  if (seen.has(binding)) return false;
+  seen.add(binding);
+  return someAlias(binding, hasRereadingRead, seen);
+}
+
+function hasRereadingRead(binding: Binding, seen: Set<Binding>) {
+  for (const expr of binding.reads.keys()) {
+    if (
+      !expr.initialValue &&
+      !expr.invokeOnly &&
+      (!expr.derives ||
+        some(expr.derives, (derived) => isReread(derived, seen)))
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function isRegisteredFnRead({ fnRoot }: Read) {
+  return !!fnRoot && registersFunction(fnRoot);
+}
+
+// A function registers where client code reads it, or where a flush may seed
+// it by id into a scope it creates: a `<let>`'s seed there carries it.
+export function registersFunction(fnExtra: ReferencedExtra & t.FunctionExtra) {
+  return !!fnExtra.reason || seedsFunction(fnExtra);
+}
+
+export const [seedsFunction, resetFunctionSeeds] = createAnalysisMemo(
+  (fnExtra: ReferencedExtra & t.FunctionExtra) => {
+    const root = fnExtra.exprRoot!;
+    const merged = getCanonicalExtra(root);
+    return (
+      isPatch() &&
+      // A `<let>` holds its value attribute's value; a tag merging its attributes
+      // into a child's whole input holds it under its attribute's name.
+      some(merged.derives, (binding) =>
+        reachesLetSeedFrom(
+          fnExtra.section,
+          binding,
+          merged === root || isLetBinding(binding)
+            ? fnExtra.rootPath
+            : isKnownTagExtra(merged)
+              ? fnExtra.inputPath
+              : true,
+          false,
+        ),
+      )
+    );
+  },
+  false,
+);
+
+// Whether a created scope's `<let>` seed may carry the value at `path` in
+// `binding` (`true`: anywhere in it), through what passes it on.
+const [reachesLetSeed, resetLetSeedReach] = createAnalysisPathMemo(
+  (binding: Binding, path: Opt<string | true>) =>
+    computeReachesLetSeed(binding, path, false),
+  false,
+);
+// The same once the value has passed on from a section a flush may create.
+const [reachesCreatedLetSeed, resetCreatedLetSeedReach] =
+  createAnalysisPathMemo(
+    (binding: Binding, path: Opt<string | true>) =>
+      computeReachesLetSeed(binding, path, true),
+    false,
+  );
+
+function computeReachesLetSeed(
+  binding: Binding,
+  path: Opt<string | true>,
+  created: boolean,
+): boolean {
+  if (
+    isLetBinding(binding) &&
+    !binding.aliasOf &&
+    (created || enclosingMayCreate(binding.section)) &&
+    seedsLetValueAt(binding, path)
+  ) {
+    return true;
+  }
+  for (const [expr, reads] of binding.reads) {
+    // A read that is the whole expression passes the value on as is.
+    const passed =
+      path !== true &&
+      some(reads, (read) => read.extra === expr || read.extra.merged === expr)
+        ? path
+        : true;
+    if (
+      some(expr.derives, (derived) =>
+        reachesLetSeedFrom(expr.section, derived, passed, created),
+      )
+    ) {
+      return true;
+    }
+  }
+  if (path === undefined) return false;
+  for (const [property, alias] of binding.propertyAliases) {
+    if (
+      (path === true || property === first(path)) &&
+      reachesLetSeedFrom(
+        binding.section,
+        alias,
+        path === true ? true : rest(path),
+        created,
+      )
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Passed on from a section a flush may create, the value lands in scopes it
+// creates with it (a child template's, a `<define>` body's instance there).
+function reachesLetSeedFrom(
+  section: Section,
+  binding: Binding,
+  path: Opt<string | true>,
+  created: boolean,
+) {
+  return created || enclosingMayCreate(section)
+    ? reachesCreatedLetSeed(binding, path)
+    : reachesLetSeed(binding, path);
+}
+
+// Whether `buildLetSeeds` seeds the value at `path` in a `<let>`: a member the
+// document writes gives its function a reason of its own.
+export function seedsLetValueAt(binding: Binding, path: Opt<string | true>) {
+  return (
+    seedsLetWhole(binding) ||
+    (rendersLetSeed(binding) && seedsMemberAt(binding, path))
+  );
+}
+
+function seedsMemberAt(member: Binding, path: Opt<string | true>): boolean {
+  if (path === undefined) return false;
+  for (const [property, alias] of member.propertyAliases) {
+    if (
+      (path === true || property === first(path)) &&
+      (hasRenderRead(alias) ||
+        seedsMemberAt(alias, path === true ? true : rest(path)))
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// A created scope's `<let>` seeds its whole value where assigned, written whole
+// or rendered whole.
+export function seedsLetWhole(binding: Binding) {
+  return (
+    !!binding.assignments ||
+    !!getWriteReason(binding) ||
+    (rendersLetSeed(binding) && hasRenderRead(binding))
+  );
+}
+
+// A created scope's renders read its `<let>` from the seed unless a client
+// source's init sets it; the page's own root section is never created.
+function rendersLetSeed(binding: Binding) {
+  return (
+    !getSourcesForExpr(binding.derivedFrom as t.NodeExtra)?.state &&
+    (!isPage() || binding.section !== getProgram().node.extra.section)
+  );
+}
+
+// An effect reads the slot its write sets; any other read renders.
+export function hasRenderRead(binding: Binding) {
+  for (const expr of binding.reads.keys()) {
+    if (!expr.isEffect) return true;
+  }
+  return false;
+}
+
+// Content registers where client code reads its renderer, or where a known
+// child renders it from its state and a flush may create it, naming it by id.
+export function registersContent(section: Section) {
+  return (
+    !!getRendererReason(section) ||
+    (rendersFromChildState(section) && enclosingMayCreate(section.parent!))
+  );
+}
+
+// Content a known child renders from its state.
+const [rendersFromChildState] = createAnalysisMemo(
+  (section: Section) => isPatch() && bodyRendersStateful(section),
+  false,
+);
+
+// Such content closing over what a flush fills, where none creates it and no
+// renderer registers: its closures load by their fills' own registration.
+export function keepsClosureFills(section: Section) {
+  return (
+    !!section.referencedClosures &&
+    !getRendererReason(section) &&
+    rendersFromChildState(section) &&
+    !enclosingMayCreate(section.parent!)
+  );
 }
 
 // How a scope a flush creates runs what nothing it receives renders: a
@@ -1495,16 +1733,26 @@ function readMayCreate(read: ReferencedExtra) {
 }
 
 function enclosingMayCreate(section: Section, fromRead?: boolean): boolean {
-  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
-    if (cur.branch?.optional) return patchWrites(cur);
-    if (cur.branchExpr || cur.derives) {
-      return contentMayCreate(cur);
-    }
+  const creator = getNearestCreator(section);
+  if (creator) {
+    return creator.branch?.optional
+      ? patchWrites(creator)
+      : contentMayCreate(creator);
   }
   // A caller may compose a template (a lazy-loaded one under a layout, a child
   // in a branch), never the page template; a tag a read hands content to may.
   return fromRead || !isPage();
 }
+
+// The nearest section, itself included, whose branch or content decides
+// whether a patch creates it.
+const [getNearestCreator] = createAnalysisMemo(
+  (section: Section): Section | undefined =>
+    section.branch?.optional || section.branchExpr || section.derives
+      ? section
+      : section.parent && getNearestCreator(section.parent),
+  undefined,
+);
 
 // A branch or boundary body that ships a shell, or content a patch may create.
 export function patchCreates(section: Section) {
@@ -1652,11 +1900,14 @@ function findUnfilledStructure(
   let structure: SortedOpt<Sources>;
   for (const [read, reads] of binding.reads) {
     // Resumed code reads the slot whenever it runs, as does a function the
-    // value holds wherever a tag retains it or a callee takes it.
+    // value holds wherever a tag retains it, a callee takes it or a caller.
     const readInFunction = inFunction || some(reads, isFnRead);
     if (
       isResumedRead(read) ||
-      ((read.retained || read.callSiteExprs) && readInFunction)
+      ((read.retained ||
+        read.callSiteExprs ||
+        read === read.section.program.returnValueExpr) &&
+        readInFunction)
     ) {
       return false;
     }

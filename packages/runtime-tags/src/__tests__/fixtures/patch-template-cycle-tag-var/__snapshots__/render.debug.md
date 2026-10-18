@@ -50,9 +50,9 @@ INSERT: span, span, span, em, em
 ## Change
 ```
 UPDATE: span:nth-of-type(1)::text@1 "2" => "3"
+UPDATE: em:nth-of-type(3)::text "10" => "20"
 UPDATE: span:nth-of-type(2)::text@1 "1" => "2"
+UPDATE: em:nth-of-type(2)::text "0" => "10"
 UPDATE: span:nth-of-type(3)::text@1 "0" => "1"
 INSERT: span:nth-of-type(3) + :is(span, em)
-UPDATE: em:nth-of-type(2)::text "0" => "10"
-UPDATE: em:nth-of-type(3)::text "10" => "20"
 ```

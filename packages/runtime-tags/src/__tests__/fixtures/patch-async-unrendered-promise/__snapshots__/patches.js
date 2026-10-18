@@ -1,5 +1,8 @@
 // PATCH
 [`a2;D ;<p> </p>`, `a8;b%;<!><!><!>`, `a6;b%;<!><!><!>`, `a1;/D l&;<div> </div>`, `a9;b%;<!><!><!>`, `a4,`, `a0;D ;<p> </p>`, {
+  fe: [">section", {
+    class: "box"
+  }, "a4"],
   bc: [{
     pa: "a2",
     cAa: {
@@ -11,9 +14,6 @@
       pa: "a1"
     }, "a6", "a11"]
   }, "a9"],
-  fe: [">section", {
-    class: "box"
-  }, "a4"],
   cAe: {
     cAa: {
       pa: "a0",

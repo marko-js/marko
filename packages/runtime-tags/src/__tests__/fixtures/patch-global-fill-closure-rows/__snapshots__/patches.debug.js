@@ -13,6 +13,8 @@
     }
   },
   "PatchChild:#childScope/1": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_fill0": _.a,
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_fill1": 6,
     "PatchLoop:#text/3": [{
       "PatchBranch:#text/0": [{
         "PatchLoop:#text/0": [{
@@ -35,9 +37,7 @@
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_2*shell"]
     }, {
       "PatchBranch:#text/0": 0
-    }],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_fill0": _.a,
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_fill1": 6
+    }]
   }
 }]
 ;DQw

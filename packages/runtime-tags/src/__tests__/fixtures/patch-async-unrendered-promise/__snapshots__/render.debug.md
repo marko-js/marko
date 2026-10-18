@@ -62,10 +62,10 @@ INSERT: p::text("end")
 ```
 ## Change
 ```
-INSERT: .inc + p
 INSERT: div + .box
 REMOVE: .box + .box
 UPDATE: .box[class] null => "box"
+INSERT: .inc + p
 INSERT: .box > p
 INSERT: p:nth-of-type(1) + div
 ```

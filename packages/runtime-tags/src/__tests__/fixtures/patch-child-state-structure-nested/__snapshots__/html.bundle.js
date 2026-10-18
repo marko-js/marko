@@ -32,7 +32,7 @@ var panel_default = _template("b", (input) => {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.inner,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.title,
 		h: _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 4) && $input_title__closures
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb5", input.inner, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "vb6", input.title, !_server_guard($scope0_reason, 4)));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb5", input.inner, !_server_guard($scope0_reason, 3), 1), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3)) && _patch_value($scope0_id, "vb6", input.title, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

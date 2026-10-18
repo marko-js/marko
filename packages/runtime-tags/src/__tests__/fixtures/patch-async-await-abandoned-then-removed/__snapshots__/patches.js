@@ -1,17 +1,17 @@
 // PATCH
 [`a0;D ;<b> </b>`, `a3;b%;<!><!><!>`, {
   cAa: {
+    tb: "two",
     ba: [{
       pa: "a0"
-    }, "a3"],
-    tb: "two"
+    }, "a3"]
   }
 }]
 
 // PATCH
 {
   cAa: {
-    ba: 0,
-    tb: "three"
+    tb: "three",
+    ba: 0
   }
 }

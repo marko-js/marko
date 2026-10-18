@@ -15,7 +15,6 @@ import {
   reserveId,
 } from "./bindings";
 import { setTagContentDerives } from "./content-derives";
-import { forEachIdentifier } from "./for-each-identifier";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName, getTagNameHint } from "./get-tag-name";
 import { isPatch } from "./marko-config";
@@ -30,6 +29,7 @@ import {
   every,
   forEach,
   fromIter,
+  type Opt,
   reduce,
   some,
   type SortedOpt,
@@ -50,7 +50,6 @@ import {
   hasStructuralParam,
   recordStructuralParams,
 } from "./patch/structure";
-import { buildPatchWrite } from "./patch/writers";
 import {
   addAlwaysReason,
   addReasonExprs,
@@ -443,6 +442,7 @@ export function knownTagTranslateHTML(
       if (groups) {
         childGroupMask = buildOwnershipMaskExpr(
           section,
+          tag.node,
           childScopeBinding,
           childSection.paramReasonGroups,
           groups,
@@ -473,31 +473,6 @@ export function knownTagTranslateHTML(
       statements,
     );
     if (varStatement) statements.push(varStatement);
-    // A created scope never runs the child's return, so the flush seeds each
-    // var the client reads, unless its state-sourced return reaches it itself.
-    if (isPatch()) {
-      forEachIdentifier(tagVar, (id) => {
-        // A change handler `translateVar` added to the pattern has no binding.
-        const varBinding = id.extra?.binding;
-        if (
-          !varBinding ||
-          varBinding.sources?.state ||
-          !findSlot(varBinding)?.reason
-        ) {
-          return;
-        }
-        statements.push(
-          t.expressionStatement(
-            buildPatchWrite(
-              section,
-              varBinding,
-              t.identifier(id.name),
-              t.numericLiteral(1),
-            ),
-          ),
-        );
-      });
-    }
   } else {
     statements.push(
       t.expressionStatement(
@@ -753,9 +728,8 @@ export interface ParamGroupSources {
   /** The call site's sources for this group (fn-body reads included;
    * survives any force on the key). */
   sources: Sources | undefined;
-  /** Every expression is a function the call site's scope registers, so the
-   * value is fixed for that scope's life. */
-  scopeBound: boolean;
+  /** The call site's expressions for this group. */
+  exprs: Opt<t.NodeExtra>;
 }
 
 // A tag analyzed as a known child template (vs a `<define>` var's tag).
@@ -773,11 +747,7 @@ export function getParamGroupSources(
   if (knownExprs && tagExtra.childScopeBinding && groups) {
     return groups.map((params) => {
       const exprs = mapParamReasonToExpr(knownExprs, params);
-      return {
-        params,
-        sources: reduce(exprs, mergeAllSourcesForExpr),
-        scopeBound: !!exprs && every(exprs, isRegisteredFnExtra),
-      };
+      return { params, sources: reduce(exprs, mergeAllSourcesForExpr), exprs };
     });
   }
 }
@@ -786,11 +756,12 @@ export function getParamGroupSources(
 // dynamic), or undefined when the all-server default is equivalent.
 function buildOwnershipMaskExpr(
   section: Section,
+  tag: t.MarkoTag,
   childScopeBinding: Binding,
   reasonGroups: ParamReasonGroups,
   groups: ParamGroupSources[],
 ): t.Expression | undefined {
-  const values = groups.map(({ sources, scopeBound }, i) => {
+  const values = groups.map(({ sources, exprs }, i) => {
     const value = getGroupSourcesValue(
       section,
       childScopeBinding,
@@ -799,7 +770,7 @@ function buildOwnershipMaskExpr(
     );
     // A function its scope registers is fixed for the child's life: a page
     // writes it as its sources say, a patch seeds it as a constant.
-    return scopeBound
+    return exprs && every(exprs, (expr) => isScopeBoundExpr(tag, expr))
       ? t.conditionalExpression(
           scopePageIdentifier(section.program),
           typeof value === "number" ? t.numericLiteral(value) : value,
@@ -1264,6 +1235,16 @@ function readsParamsByName(
 
 function isSpreadArgument(arg: t.Expression | t.SpreadElement) {
   return arg.type === "SpreadElement";
+}
+
+// A function its scope registers, or the tag's own merged expression where each
+// attribute is one, it passes no attribute tag, and the child only calls into it.
+function isScopeBoundExpr(tag: t.MarkoTag, expr: t.NodeExtra) {
+  return isKnownTagExtra(expr)
+    ? !tag.attributeTags.length &&
+        every(expr.derives, isInvokeOnlyBinding) &&
+        tag.attributes.every((attr) => isRegisteredFnExtra(attr.value.extra))
+    : isRegisteredFnExtra(expr);
 }
 
 function setDerivedFromTag(

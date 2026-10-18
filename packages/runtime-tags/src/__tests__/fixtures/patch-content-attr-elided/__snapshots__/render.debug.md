@@ -27,8 +27,8 @@
 ```
 ## Change
 ```
-UPDATE: main > section > em::text "one" => "two"
 UPDATE: main > p::text "one" => "two"
+UPDATE: main > section > em::text "one" => "two"
 ```
 
 # Update `{"mode":0,"note":"three"}`
@@ -62,6 +62,6 @@ UPDATE: main > p::text "two" => "three"
 ## Change
 ```
 INSERT: main > section > em
-UPDATE: main > section > em::text " " => "four"
 UPDATE: main > p::text "three" => "four"
+UPDATE: main > section > em::text " " => "four"
 ```

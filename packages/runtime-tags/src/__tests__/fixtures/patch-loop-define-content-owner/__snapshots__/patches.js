@@ -1,6 +1,17 @@
 // PATCH
 [`a1 a17;D%c%;<i><!> <!></i>`, `a6;b%;<!><!><!>`, `a0 a15,`, `a3,`, `a2 a19,`, `a5;b%;<!><!><!>`, `a4 !a11;D D l/D%b%l&%b%l;<section><button> </button><p><!><!></p><!><!></section>`, {
   la: [1, {
+    fd: [">span", {
+      label: "dynamic"
+    }, "a0"],
+    s: {
+      wm: {
+        content: _([
+          ["a", [0, 1]]
+        ], "a2", 1)
+      },
+      va13: 0
+    },
     cc: {
       s: {
         ta: "direct"
@@ -12,24 +23,22 @@
         }
       }, "a6"]
     },
-    fd: [">span", {
-      label: "dynamic"
-    }, "a0"],
     cAd: {
       cAa: {
         ta: "b"
       }
     },
-    le: [],
+    le: []
+  }, 2, {
+    fd: "^^a3",
     s: {
       wm: {
         content: _([
-          ["a", [0, 1]]
+          ["a", [1, 2]]
         ], "a2", 1)
       },
       va13: 0
-    }
-  }, 2, {
+    },
     cc: {
       s: {
         ta: "direct"
@@ -41,7 +50,6 @@
         }
       }, "a6"]
     },
-    fd: "^^a3",
     cAd: {
       ta: "dynamic",
       bb: [{
@@ -73,15 +81,7 @@
           }
         }, "a6"]
       }
-    }, "a5"],
-    s: {
-      wm: {
-        content: _([
-          ["a", [1, 2]]
-        ], "a2", 1)
-      },
-      va13: 0
-    }
+    }, "a5"]
   }, "a4"]
 }]
 ;Ef4
@@ -89,6 +89,18 @@
 // PATCH holding Ef4
 {
   la: [2, {
+    fd: [">span", {
+      label: "dynamic"
+    }, "a0"],
+    va12: "d",
+    s: {
+      wm: _.a = {
+        content: _([
+          ["a", [0, 2]]
+        ], "a2", 1)
+      },
+      va13: 0
+    },
     cc: {
       s: {
         ta: "direct"
@@ -100,9 +112,6 @@
         }
       }, "a6"]
     },
-    fd: [">span", {
-      label: "dynamic"
-    }, "a0"],
     cAd: {
       cAa: {
         ta: "d"
@@ -111,24 +120,24 @@
     le: [{
       fa: [">span", {
         label: "z",
-        content: _.a = {
-          content: _([
-            ["a", [0, 2]]
-          ], "a2", 1)
-        }
+        content: _.a
       }],
       cAa: {
         cAa: {
           ta: "d"
         }
       }
-    }, "a5"],
-    va12: "d",
-    s: {
-      wm: _.a,
-      va13: 0
-    }
+    }, "a5"]
   }, 1, {
+    fd: "^^a3",
+    s: {
+      wm: {
+        content: _([
+          ["a", 1]
+        ], "a2", 1)
+      },
+      va13: 0
+    },
     cc: {
       s: {
         ta: "direct"
@@ -140,7 +149,6 @@
         }
       }, "a6"]
     },
-    fd: "^^a3",
     cAd: {
       ta: "dynamic",
       bb: [{
@@ -161,14 +169,6 @@
           }
         }, "a6"]
       }
-    }, "a5"],
-    s: {
-      wm: {
-        content: _([
-          ["a", 1]
-        ], "a2", 1)
-      },
-      va13: 0
-    }
+    }, "a5"]
   }, "a4"]
 }

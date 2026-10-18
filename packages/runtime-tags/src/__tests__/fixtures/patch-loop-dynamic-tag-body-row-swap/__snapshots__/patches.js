@@ -2,22 +2,22 @@
 [`b !b0; b%;<button class=toggle>toggle</button><!><!>`, `a1;b%;<!><!><!>`, {
   la: [1, {
     fa: "b",
+    va3: "b",
     cAa: {
       s: {
         vb2: !0
       },
       ub1: ["a0", 1]
-    },
-    va3: "b"
+    }
   }, 2, {
     fa: "b",
+    va3: "c",
     cAa: {
       s: {
         vb2: !0
       },
       ub1: ["a0", 1]
-    },
-    va3: "c"
+    }
   }, "a1"]
 }]
 ;CQw
@@ -26,21 +26,21 @@
 {
   la: [1, {
     fa: "b",
+    va3: "d",
     cAa: {
       s: {
         vb2: !0
       },
       ub1: ["a0", 1]
-    },
-    va3: "d"
+    }
   }, 2, {
     fa: "b",
+    va3: "e",
     cAa: {
       s: {
         vb2: !0
       },
       ub1: ["a0", 1]
-    },
-    va3: "e"
+    }
   }, "a1"]
 }

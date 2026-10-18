@@ -1,5 +1,6 @@
 // PATCH
 {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-child-effects/template.marko_fill0": "b",
   "PatchCatch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "b",
@@ -11,6 +12,5 @@
       "PatchWrite:input_message": "b",
       "PatchWrite:input_label": "b"
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-child-effects/template.marko_1*content"],
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-child-effects/template.marko_fill0": "b"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-child-effects/template.marko_1*content"]
 }

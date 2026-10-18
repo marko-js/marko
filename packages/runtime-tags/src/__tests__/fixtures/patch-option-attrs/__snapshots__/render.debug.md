@@ -127,10 +127,10 @@ UPDATE: main > em::text "0" => "1"
 ```
 ## Change
 ```
-UPDATE: main > select:nth-of-type(1) > option:nth-of-type(2)[value] "y" => "z"
-UPDATE: main > select:nth-of-type(1) > option:nth-of-type(2)::text "Y" => "Z"
 UPDATE: #plain > option:nth-of-type(1)[selected] "" => null
 UPDATE: #plain > option:nth-of-type(2)[selected] null => ""
+UPDATE: main > select:nth-of-type(1) > option:nth-of-type(2)[value] "y" => "z"
+UPDATE: main > select:nth-of-type(1) > option:nth-of-type(2)::text "Y" => "Z"
 UPDATE: main > select:nth-of-type(1) > option:nth-of-type(1)[selected] "" => null
 UPDATE: main > select:nth-of-type(1) > option:nth-of-type(2)[selected] null => ""
 ```

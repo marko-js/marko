@@ -13,10 +13,10 @@
 // PATCH holding BgI
 [`a0,`, {
   fa: ["^a0", 0, 0, "a6"],
+  va6: -1,
   cAa: {
     ta: "c"
-  },
-  va6: -1
+  }
 }]
 ;BwY
 

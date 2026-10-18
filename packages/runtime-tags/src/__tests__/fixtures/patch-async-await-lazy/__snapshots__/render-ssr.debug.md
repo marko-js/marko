@@ -67,9 +67,9 @@ UPDATE: main > button::text@6 "0" => "1"
 ## Change
 ```
 UPDATE: main > h1::text "Store" => "Store!"
+REMOVE: main > footer > span
 INSERT: main > section::text("loading")
 REMOVE: main > section::text + em
-REMOVE: main > footer > span
 ```
 
 # Update

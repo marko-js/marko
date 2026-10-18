@@ -1,54 +1,54 @@
 // PATCH
 {
   ca: {
-    ca: {
-      ka: []
-    },
-    vb4: "y"
-  },
-  cb: {
-    ca: {
-      ka: []
-    },
     vb4: "y",
-    vb5: "q"
+    ca: {
+      ka: []
+    }
+  },
+  cb: {
+    vb4: "y",
+    vb5: "q",
+    ca: {
+      ka: []
+    }
   }
 }
 
 // PATCH
 {
   ca: {
-    ca: {
-      ka: []
-    },
-    vb4: "z"
-  },
-  cb: {
-    ca: {
-      ka: []
-    },
     vb4: "z",
-    vb5: "r"
+    ca: {
+      ka: []
+    }
+  },
+  cb: {
+    vb4: "z",
+    vb5: "r",
+    ca: {
+      ka: []
+    }
   }
 }
 
 // PATCH
 {
   ca: {
+    vb4: "w",
     ca: {
       cAa: [{
         ta: "ok"
       }, 0, "c4"]
-    },
-    vb4: "w"
+    }
   },
   cb: {
+    vb4: "w",
+    vb5: "s",
     ca: {
       cAa: [{
         ta: "ok"
       }, 0, "c4"]
-    },
-    vb4: "w",
-    vb5: "s"
+    }
   }
 }

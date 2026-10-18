@@ -13,10 +13,10 @@
 // PATCH holding BgA
 [`^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-stateful-child/tags/other.marko;D ;<i> </i>`, {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-stateful-child/tags/other.marko", 0, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-stateful-child/template.marko_0_count#9/var"],
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-stateful-child/template.marko_0_count#9/var": -1,
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/0": "c"
-  },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-stateful-child/template.marko_0_count#9/var": -1
+  }
 }]
 ;BwM
 

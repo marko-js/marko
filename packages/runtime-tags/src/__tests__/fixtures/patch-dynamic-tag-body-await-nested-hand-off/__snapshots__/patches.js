@@ -1,6 +1,7 @@
 // PATCH
 [`b;b%;<!><!><!>`, `b2 b9;b%;<!><!><!>`, `b0;b%;<!><!><!>`, `c !c0; b%;<button class=toggle>toggle</button><!><!>`, {
   fa: "b",
+  va2: "b",
   cAa: {
     pa: "b2",
     s: {
@@ -18,14 +19,14 @@
         }
       }
     }
-  },
-  va2: "b"
+  }
 }]
 ;Eaw
 
 // PATCH holding Eaw
 {
   fa: "b",
+  va2: "c",
   cAa: {
     pa: "b2",
     s: {
@@ -43,6 +44,5 @@
         }
       }
     }
-  },
-  va2: "c"
+  }
 }

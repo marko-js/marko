@@ -1,5 +1,7 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_fill0": "b",
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_fill1": !0,
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "b",
     "PatchBranch:#text/1": [{
@@ -15,14 +17,14 @@
         }]
       }
     }]
-  },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_fill0": "b",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_fill1": !0
+  }
 }]
 ;CAA
 
 // PATCH holding CAA
 {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_fill0": "c",
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_fill1": !0,
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c",
     "PatchBranch:#text/1": [{
@@ -38,7 +40,5 @@
         }]
       }
     }]
-  },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_fill0": "c",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-recursive-define/template.marko_fill1": !0
+  }
 }

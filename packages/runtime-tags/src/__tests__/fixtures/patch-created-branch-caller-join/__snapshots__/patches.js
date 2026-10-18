@@ -1,12 +1,12 @@
 // PATCH
 [`b0;D ;<em> </em>`, {
   ca: {
+    vb4: "b",
     ba: [{
       s: {
         i: "b1"
       }
-    }, "b0"],
-    vb4: "b"
+    }, "b0"]
   }
 }]
 ;BgI
@@ -14,19 +14,19 @@
 // PATCH holding BgI
 {
   ca: {
-    ba: 0,
-    vb4: "c"
+    vb4: "c",
+    ba: 0
   }
 }
 
 // PATCH holding BgI
 {
   ca: {
+    vb4: "d",
     ba: [{
       s: {
         i: "b1"
       }
-    }, "b0"],
-    vb4: "d"
+    }, "b0"]
   }
 }

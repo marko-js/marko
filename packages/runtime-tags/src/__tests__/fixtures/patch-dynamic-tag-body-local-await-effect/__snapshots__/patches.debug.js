@@ -23,17 +23,17 @@
     "PatchPending:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_2*content",
     "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1_x#2": "x",
     "PatchWrite:x": "c!",
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_fill3": "c!",
     "PatchChild:BranchScopes:#text/1": {
       "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/tags/card.marko",
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_fill4": "z",
       "PatchChild:BranchScopes:#text/0": {
         "PatchSetup:": {
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/tags/card.marko_fill1": !0
         },
         "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/tags/card.marko_fill0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_3*content", 1]
-      },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_fill4": "z"
-    },
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_fill3": "c!"
+      }
+    }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1*shell"]
 }]
 ;DTU

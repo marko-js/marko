@@ -37,11 +37,9 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(0);
 	const $childScope = _patch_child($scope0_id, "a");
 	let a = child_default({ label: "A" });
-	_patch_write($scope0_id, "wl", a, 1);
 	_set_scope_reason(0);
 	const $childScope2 = _patch_child($scope0_id, "c");
 	let b = child_default({ label: "B" });
-	_patch_write($scope0_id, "wm", b, 1);
 	_dynamic_tag($scope0_id, "e", input.first ? a : b, {}, 0, 0, _write_guard($scope0_reason, 0), void 0, 2, $scope0_reason, 0);
 	_html(`<button>${_text_resume($scope0_id, "g", n)}</button>${_el_resume($scope0_id, "f")}`);
 	_script($scope0_id, "a0");

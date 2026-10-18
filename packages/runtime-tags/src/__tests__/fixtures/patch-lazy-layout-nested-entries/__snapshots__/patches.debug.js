@@ -8,11 +8,11 @@
         "PatchBranch:#text/0": [{
           "PatchChild:#childScope/1": {
             "PatchText:#text/0": "a1",
-            "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_1*shell",
             "PatchSetup:": {
               "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_0",
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_fill0": 0
-            }
+            },
+            "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_1*shell"
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell"]
       }
@@ -68,11 +68,11 @@
         "PatchBranch:#text/0": [{
           "PatchChild:#childScope/1": {
             "PatchText:#text/0": "a2",
-            "PatchBranch:#text/1": 0,
             "PatchSetup:": {
               "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_0",
               "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_fill0": 0
-            }
+            },
+            "PatchBranch:#text/1": 0
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell"]
       },

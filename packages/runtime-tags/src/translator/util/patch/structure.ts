@@ -115,7 +115,7 @@ function isStatefulLeaf(read: ReferencedExtra) {
 }
 // A tag body is stateful when the prop it derives renders so in the
 // child; the last hop stays a prop query so whole reads of its owner count.
-function bodyRendersStateful(section: Section) {
+export function bodyRendersStateful(section: Section) {
   const { derives } = section;
   return (
     !!derives &&
@@ -185,6 +185,15 @@ export function recordStructuralParams(sources: Sources | undefined) {
   for (const [section, group] of getCallerParamGroups(sources?.param)) {
     addStructuralParams(section, group);
   }
+}
+
+// A fill whose value derives from its section's structural params: the scope's
+// child entries render that structure before it lands.
+export function drivesStructuralParams(binding: Binding) {
+  return bindingUtil.intersects(
+    getSourcesForRef(binding)?.param,
+    binding.section.structuralParams,
+  );
 }
 
 // Whether a param reason group (one section's params) holds a structural one.

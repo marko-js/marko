@@ -11,17 +11,17 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_3*content,`, {
   "PatchLoopItem:#text/0": [
     [0, 1], {
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill0": "c",
       "PatchChild:BranchScopes:#text/0": {
         "PatchDynamicTag:#text/0": _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko",
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill1": "y",
         "PatchChild:BranchScopes:#text/0": {
           "PatchSetup:": {
             "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_fill1": !0
           },
           "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_fill0": [_.b = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_3*content", 1]
-        },
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill1": "y"
-      },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill0": "c"
+        }
+      }
     },
     [1, 2], {
       "PatchChild:BranchScopes:#text/0": {
@@ -35,17 +35,17 @@
       }
     },
     [2, 3], {
+      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill0": "e",
       "PatchChild:BranchScopes:#text/0": {
         "PatchDynamicTag:#text/0": _.c,
+        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill1": "y",
         "PatchChild:BranchScopes:#text/0": {
           "PatchSetup:": {
             "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_fill1": !0
           },
           "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_fill0": [_.b, 1]
-        },
-        "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill1": "y"
-      },
-      "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill0": "e"
+        }
+      }
     }
   ]
 }]

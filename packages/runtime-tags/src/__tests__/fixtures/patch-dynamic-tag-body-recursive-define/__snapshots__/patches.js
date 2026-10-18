@@ -1,5 +1,7 @@
 // PATCH
 [`b !b0; b%;<button class=toggle>toggle</button><!><!>`, {
+  va6: "b",
+  va7: !0,
   ca: {
     ta: "b",
     bb: [{
@@ -15,14 +17,14 @@
         }]
       }
     }]
-  },
-  va6: "b",
-  va7: !0
+  }
 }]
 ;CAM
 
 // PATCH holding CAM
 {
+  va6: "c",
+  va7: !0,
   ca: {
     ta: "c",
     bb: [{
@@ -38,7 +40,5 @@
         }]
       }
     }]
-  },
-  va6: "c",
-  va7: !0
+  }
 }

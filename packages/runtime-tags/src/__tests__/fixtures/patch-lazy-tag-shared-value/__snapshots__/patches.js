@@ -1,9 +1,9 @@
 // PATCH
 a, {
-  cd: {
-    we: _.a = {
-      label: "b"
-    }
+  wh: _.a = {
+    label: "b"
   },
-  wh: _.a
+  cd: {
+    we: _.a
+  }
 }

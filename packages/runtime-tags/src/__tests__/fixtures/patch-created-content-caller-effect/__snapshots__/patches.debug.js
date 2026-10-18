@@ -13,6 +13,7 @@
     }
   },
   "PatchChild:#childScope/3": {
+    "PatchWrite:input_count": 10,
     "PatchChild:#childScope/0": {
       "PatchBranch:#text/0": [{
         "PatchDynamicTag:#text/0": _.a,
@@ -23,8 +24,7 @@
           "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/child.marko_1_input_count#0:4": "1 input_count"
         }
       }, _.b]
-    },
-    "PatchWrite:input_count": 10
+    }
   }
 }]
 ;Cwo

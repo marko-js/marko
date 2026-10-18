@@ -32,6 +32,6 @@ INSERT: main > :is(span, p)
 ```
 ## Change
 ```
-UPDATE: main > span::text "a" => "b"
 UPDATE: main > p::text "a!" => "b!"
+UPDATE: main > span::text "a" => "b"
 ```

@@ -39,5 +39,5 @@ var template_default = _template("a", (input) => {
 		f: _unfilled_if($scope0_reason, 1) && input.inner,
 		g: input.suffix,
 		j: $wi__input_suffix && $input_suffix__closures
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.title, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.inner, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "wg", input.suffix, !_server_guard($scope0_reason, 4)));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.title, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "va5", input.inner, !_server_guard($scope0_reason, 3), 1), _filled_guard($scope0_reason, 4) && _patch_write($scope0_id, "wg", input.suffix, !_server_guard($scope0_reason, 4)));
 }, 1);

@@ -163,5 +163,5 @@ var template_default = _template("d", (input) => {
 		j: $wi__input_wide && _unfilled_if($scope0_reason, 4) && $input_wide__closures,
 		k: $wi__input_note && _unfilled_if($scope0_reason, 5) && $input_note__closures,
 		h: $wi__input_page && _unfilled_if($scope0_reason, 2) && $input_page__closures
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vd10", input.list, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vd11", input.wide, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vd12", input.note, !_server_guard($scope0_reason, 5)));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vd10", input.list, !_server_guard($scope0_reason, 3), 1), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vd11", input.wide, !_server_guard($scope0_reason, 4), 1), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vd12", input.note, !_server_guard($scope0_reason, 5)));
 }, 1);

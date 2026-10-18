@@ -3,14 +3,14 @@
   $: {
     brand: "w"
   },
-  ba: [{
-    tc: "w"
-  }, "a0"],
-  va6: !0,
   va7: "a",
   va8: {
     content: _([], "a1", 1)
-  }
+  },
+  ba: [{
+    tc: "w"
+  }, "a0"],
+  va6: !0
 }]
 ;BAE
 
@@ -19,12 +19,12 @@
   $: {
     brand: "w"
   },
-  ba: 0,
-  va6: !1,
   va7: "a",
   va8: {
     content: _([], "a1", 1)
-  }
+  },
+  ba: 0,
+  va6: !1
 }
 
 // PATCH holding BAE
@@ -32,14 +32,14 @@
   $: {
     brand: "y"
   },
-  ba: [{
-    tc: "y"
-  }, "a0"],
-  va6: !0,
   va7: "b",
   va8: {
     content: _([], "a1", 1)
-  }
+  },
+  ba: [{
+    tc: "y"
+  }, "a0"],
+  va6: !0
 }
 
 // PATCH holding BAE
@@ -47,12 +47,12 @@
   $: {
     brand: "z"
   },
-  ba: [{
-    tc: "z"
-  }, "a0"],
-  va6: !0,
   va7: "c",
   va8: {
     content: _([], "a1", 1)
-  }
+  },
+  ba: [{
+    tc: "z"
+  }, "a0"],
+  va6: !0
 }

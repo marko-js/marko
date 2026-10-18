@@ -43,7 +43,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			});
 			_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill3", ret);
 			_client_guard($scope0_reason, 1) && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_ret#4/var");
-			_patch_write($scope1_id, "PatchWrite:ret", ret, 1);
 			_html(`<b>${_patch_text($scope1_id, "#text/2", ret, void 0, $scope0_reason, 1)}</b>`);
 			if ($scope0_page) _if(() => {
 				if (open) {

@@ -1,5 +1,6 @@
 // PATCH
 [`a1;D ;<li> </li>`, `a0;D ;<aside> </aside>`, {
+  tc: "hello",
   la: [3, {
     ta: "Milk"
   }, 1, {
@@ -9,22 +10,22 @@
   }, "a1"],
   bb: [{
     ta: "Big Sale"
-  }, "a0"],
-  tc: "hello"
+  }, "a0"]
 }]
 ;BwY
 
 // PATCH holding BwY
 {
+  tc: "bye",
   la: [2, {
     ta: "Bread!"
   }, "a1"],
-  bb: 0,
-  tc: "bye"
+  bb: 0
 }
 
 // PATCH holding BwY
 {
+  tc: "again",
   la: [2, {
     ta: "Bread!"
   }, 4, {
@@ -32,6 +33,5 @@
   }, "a1"],
   bb: [{
     ta: "Back"
-  }, "a0"],
-  tc: "again"
+  }, "a0"]
 }

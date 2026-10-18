@@ -33,7 +33,7 @@ import {
   withBranchId,
   withContext,
 } from "../writer";
-import { PatchSerializerState } from "./serializer";
+import { kStructuralFills, PatchSerializerState } from "./serializer";
 import { quotedShell, rawShells } from "./shells";
 import { encodeHeld } from "./token";
 
@@ -764,6 +764,7 @@ export function _patch_value(
   key: string,
   value: unknown,
   setup?: 1,
+  structural?: 1,
 ) {
   const state = getState();
   if (state instanceof PatchUpdateState) {
@@ -775,10 +776,13 @@ export function _patch_value(
     // freshly created scopes; only a scope below a branch is created.
     const entries = setup ? ensurePatchSetup(state, patch) : patch;
     // `key` is the compiled `Value` key; a bound registration's is rare.
-    if (bind) {
-      entries[PatchKey.BindValue + key.slice(PatchKey.Value.length)] = bind;
-    } else {
-      entries[key] = value;
+    const entryKey = bind
+      ? PatchKey.BindValue + key.slice(PatchKey.Value.length)
+      : key;
+    entries[entryKey] = bind || value;
+    if (structural) {
+      ((entries as { [kStructuralFills]?: Set<string> })[kStructuralFills] ??=
+        new Set()).add(entryKey);
     }
   }
   return "";
@@ -804,8 +808,8 @@ export function _patch_bind<T>(
       if (bind) {
         (owned === 2 ? patch : ensurePatchSetup(state, patch))[key] = bind;
       } else {
-        // Both forms: the plain write clears paired scopes' slots, while the setup
-        // entry lands after a created scope's seeds (which reset the change slot).
+        // Both forms: the plain write clears paired scopes' slots, the setup entry
+        // sets a created scope's.
         const writeKey = PatchKey.Write + key.slice(PatchKey.Bind.length);
         if (owned === 2) patch[writeKey] = value;
         if (inCreatable()) ensurePatchSetup(state, patch)[writeKey] = value;
@@ -816,8 +820,7 @@ export function _patch_bind<T>(
 }
 
 // A controllable `<let>`: its value fills a paired scope while the handler
-// controls it under the server's ownership, else seeds a created one; the bind
-// follows, so a seed cannot clobber an installed handler.
+// controls it under the server's ownership, else seeds a created one.
 export function _patch_let_change(
   scopeId: number,
   valueKey: string,
@@ -871,8 +874,7 @@ export function _resume_locals<T extends WeakKey>(
     : _base_resume_locals(val, id, locals, ownerScopeId);
 }
 
-// A patched scope write: setup entries nest under `s` AFTER the seeds, so
-// a controllable seed cannot clobber its handler.
+// A patched scope write, a created scope's seed (`setup`) in its setup envelope.
 export function _patch_write(
   scopeId: number,
   key: string,

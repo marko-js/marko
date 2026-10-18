@@ -4,13 +4,13 @@
     g: "H"
   },
   "PatchChild:#childScope/0": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-global-join/tags/child.marko_fill1": "r",
     "PatchBranch:#text/0": [{
       "PatchSetup:": {
         "PatchWrite:c": "H!",
         "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-global-join/tags/child.marko_1_input_a#0:4_input_b#0:5_c#1/init"
       }
-    }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-global-join/tags/child.marko_1*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-global-join/tags/child.marko_fill1": "r"
+    }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-global-join/tags/child.marko_1*shell"]
   },
   "PatchChild:#childScope/1": {
     "PatchBranch:#text/0": [{
@@ -29,13 +29,13 @@
     g: "I"
   },
   "PatchChild:#childScope/0": {
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-global-join/tags/child.marko_fill1": "t",
     "PatchBranch:#text/0": [{
       "PatchSetup:": {
         "PatchWrite:c": "I!",
         "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-global-join/tags/child.marko_1_input_a#0:4_input_b#0:5_c#1/init"
       }
-    }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-global-join/tags/child.marko_1*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-global-join/tags/child.marko_fill1": "t"
+    }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-global-join/tags/child.marko_1*shell"]
   },
   "PatchChild:#childScope/1": {
     "PatchBranch:#text/0": [{

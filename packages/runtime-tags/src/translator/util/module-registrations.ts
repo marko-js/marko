@@ -20,6 +20,7 @@ import {
 import isInvokedFunction from "./is-invoked-function";
 import isStatic from "./is-static";
 import { getMarkoOpts, isOutputHTML } from "./marko-config";
+import { registersFunction, seedsFunction } from "./patch/refresh";
 import { isUnconditionalReason, type Reason } from "./reasons";
 import {
   getCanonicalExtra,
@@ -119,9 +120,10 @@ export function addFunctionReasons() {
 export function finalizeRegistrations() {
   const programExtra = getProgram().node.extra;
   for (const fnExtra of getReferencesByFn().keys()) {
-    if (fnExtra.reason) {
+    if (registersFunction(fnExtra)) {
       registerFunction(fnExtra);
       programExtra.isInteractive ||= isUnconditionalReason(fnExtra.reason);
+      programExtra.hasResumes ||= seedsFunction(fnExtra);
     }
   }
 

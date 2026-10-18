@@ -20,6 +20,7 @@ import {
   isPatch,
 } from "../../util/marko-config";
 import { type ParamsTree, exposeParamsTree } from "../../util/params-tree";
+import { keepsClosureFills, registersContent } from "../../util/patch/refresh";
 import { isUnconditionalReason } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
 import {
@@ -29,11 +30,7 @@ import {
 } from "../../util/runtime";
 import { createScopeIdentifiers } from "../../util/scope-read";
 import { isSectionRendererElided } from "../../util/section-renderer";
-import {
-  forEachSection,
-  ensureBodySection,
-  getRendererReason,
-} from "../../util/sections";
+import { forEachSection, ensureBodySection } from "../../util/sections";
 import { finalizeSetupWork } from "../../util/setup-work";
 import { buildShells } from "../../util/shell";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -43,8 +40,8 @@ import { preAnalyze } from "./pre-analyze";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    /** Client code reads something of its own after resume (a section, or a
-     * renderer it registers), so a page bundles it. */
+    /** Client code reads something of its own after resume (a section, a
+     * registered renderer), or a flush seeds its functions or fills closures. */
     hasResumes?: boolean;
     /** What the template reads of its params (its input is the first), the
      * contract its callers keep. */
@@ -127,7 +124,8 @@ export default {
           isUnconditionalReason(childSection.reason) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
-            getRendererReason(childSection))
+            registersContent(childSection)) ||
+          keepsClosureFills(childSection)
         );
       });
 

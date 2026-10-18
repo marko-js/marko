@@ -29,7 +29,6 @@ var template_default = _template("a", (input) => {
 			const $childScope = _patch_child($scope1_id, "a");
 			let el = box_default({ label: input.label });
 			_client_guard($scope0_reason, 1) && _var($scope1_id, "b", $childScope, "a1");
-			_patch_write($scope1_id, "wd", el, 1);
 			_html(`<button id=read>read</button>${_el_resume($scope1_id, "c")}`);
 			_script($scope1_id, "a2");
 			_patch_write($scope1_id, "wd", el, 1);

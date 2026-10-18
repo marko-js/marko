@@ -1,10 +1,10 @@
 // PATCH
 [`a0,`, {
   fa: "^a0",
+  tb: "two",
   cAa: {
     ta: "two"
-  },
-  tb: "two"
+  }
 }]
 ;BAE
 
@@ -17,8 +17,8 @@
 // PATCH holding BAE
 {
   fa: "^a0",
+  tb: "four",
   cAa: {
     ta: "four"
-  },
-  tb: "four"
+  }
 }

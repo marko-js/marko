@@ -1,6 +1,7 @@
 // PATCH
 [`b !b0; b%;<button class=toggle>toggle</button><!><!>`, {
   fa: "b",
+  va5: "b",
   cAa: {
     s: {
       vb2: !0
@@ -14,8 +15,7 @@
         }
       }))()
     }]
-  },
-  va5: "b"
+  }
 }]
 (_.a.f("y"), 0)
 ;CgQ

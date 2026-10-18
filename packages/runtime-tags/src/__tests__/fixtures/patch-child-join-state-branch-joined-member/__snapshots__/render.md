@@ -115,8 +115,8 @@ UPDATE: p:nth-of-type(1)::text " " => "xk"
 ```
 ## Change
 ```
-UPDATE: p:nth-of-type(2)::text "xp" => "yq"
 UPDATE: em:nth-of-type(2)::text "x-p" => "y-q"
+UPDATE: p:nth-of-type(2)::text "xp" => "yq"
 UPDATE: em:nth-of-type(1)::text "x-k" => "y-k"
 UPDATE: p:nth-of-type(1)::text "xk" => "yk"
 ```
@@ -182,8 +182,8 @@ UPDATE: p:nth-of-type(1)::text "yk" => "ykk"
 ```
 ## Change
 ```
-UPDATE: p:nth-of-type(2)::text "yq" => "zr"
 UPDATE: em:nth-of-type(2)::text "y-q" => "z-r"
+UPDATE: p:nth-of-type(2)::text "yq" => "zr"
 UPDATE: em:nth-of-type(1)::text "y-kk" => "z-kk"
 UPDATE: p:nth-of-type(1)::text "ykk" => "zkk"
 ```

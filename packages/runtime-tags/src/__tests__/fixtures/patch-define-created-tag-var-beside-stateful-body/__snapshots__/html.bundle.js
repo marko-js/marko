@@ -39,7 +39,6 @@ var template_default = _template("a", (input) => {
 			});
 			_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "va3", ret);
 			_client_guard($scope0_reason, 1) && _var($scope1_id, "b", $childScope, "a2");
-			_patch_write($scope1_id, "we", ret, 1);
 			_html(`<b>${_patch_text($scope1_id, "c", ret, void 0, $scope0_reason, 1)}</b>`);
 			if ($scope0_page) _if(() => {}, $scope1_id, "d", 1, 1, 0, 0, 1);
 			_scope($scope1_id, {

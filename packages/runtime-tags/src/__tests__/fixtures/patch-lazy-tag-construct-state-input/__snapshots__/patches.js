@@ -1,12 +1,12 @@
 // PATCH
 a, [`b0 b5;b%b/D l&b;<!><!><span> </span><!>`, {
-  bc: "b0",
-  vb2: "b"
+  vb2: "b",
+  bc: "b0"
 }]
 ;BgI
 
 // PATCH holding BgI
 a, {
-  bc: "b0",
-  vb2: "c"
+  vb2: "c",
+  bc: "b0"
 }

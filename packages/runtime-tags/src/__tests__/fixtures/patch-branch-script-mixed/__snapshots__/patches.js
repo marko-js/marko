@@ -4,10 +4,10 @@
     brand: "Marko"
   },
   ta: "Store",
+  wg: "b",
   bb: [{
     ea1: "1 g"
-  }, "a0"],
-  wg: "b"
+  }, "a0"]
 }]
 ;BAE
 
@@ -17,10 +17,10 @@
     brand: "Marko"
   },
   ta: "Store!",
+  wg: "b",
   bb: [{
     ea1: "1 g"
-  }, "a0"],
-  wg: "b"
+  }, "a0"]
 }
 
 // PATCH holding BAE
@@ -29,10 +29,10 @@
     brand: "Fresh"
   },
   ta: "Store",
+  wg: "b",
   bb: [{
     ea1: "1 g"
-  }, "a0"],
-  wg: "b"
+  }, "a0"]
 }
 
 // PATCH holding BAE
@@ -41,8 +41,8 @@
     brand: "Patch"
   },
   ta: "Store",
+  wg: "c",
   bb: [{
     ea1: "1 g"
-  }, "a0"],
-  wg: "c"
+  }, "a0"]
 }
