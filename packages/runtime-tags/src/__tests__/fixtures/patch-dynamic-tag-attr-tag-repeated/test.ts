@@ -5,7 +5,8 @@ const toggle = (document: Document) => {
     b.click();
 };
 
-// Two attribute tags a renderer keeps under its own state: each one's reads fill.
+// Two attribute tags a renderer keeps under its own state: each one's reads
+// fill.
 export const config: TestConfig = {
   patches: true,
   steps: [

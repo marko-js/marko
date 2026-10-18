@@ -3,7 +3,7 @@ const toggle = (document: Document) => {
   for (const b of document.querySelectorAll<HTMLButtonElement>(".toggle"))
     b.click();
 };
-// A paired row whose tag swaps to a renderer that keeps its body fills the row's
+// A paired row whose tag swaps to a renderer keeping its body fills the row's
 // value once the row knows the body is handed on.
 export const config: TestConfig = {
   patches: true,

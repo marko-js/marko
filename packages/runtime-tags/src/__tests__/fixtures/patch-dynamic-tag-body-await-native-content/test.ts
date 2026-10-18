@@ -6,7 +6,7 @@ const toggle = (document: Document) => {
     b.click();
 };
 
-// A renderer renders the body as a native tag's `content` under its `<await>`; a
+// A renderer renders the body as a native `content` under its `<await>`; a
 // dynamic tag in the body turns out to keep its own body.
 export const config: TestConfig = {
   patches: true,

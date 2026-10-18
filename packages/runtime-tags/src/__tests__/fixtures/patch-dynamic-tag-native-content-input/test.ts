@@ -4,8 +4,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A native tag's `content` input the client renders itself takes the patch's value
-// of what it reads.
+// A native tag's `content` input the client renders itself takes the patch's
+// value of what it reads.
 export const config: TestConfig = {
   patches: true,
   steps: [

@@ -6,10 +6,8 @@ const toggle = (document: Document) => {
     b.click();
 };
 
-// The flush creates the renderer keeping a body that reads a value the flush
-// fills and an `<await>` value no fill writes: the registration keeps the
-// `<await>` value's level. (A later flush's `<await>` value inside kept content
-// renders stale on the client, a separate filed case.)
+// The flush creates the keeper of a body reading a filled value and an
+// `<await>` value no fill writes: the registration keeps that level.
 export const config: TestConfig = {
   patches: true,
   steps: () => [

@@ -3,8 +3,8 @@ const toggle = (document: Document) => {
   for (const b of document.querySelectorAll<HTMLButtonElement>(".toggle"))
     b.click();
 };
-// A body inside another dynamic tag's body takes a later patch's value of what it
-// reads where the outer renderer leaves it to client code.
+// A body inside another dynamic tag's body takes a later patch's value of what
+// it reads where the outer renderer leaves it to client code.
 export const config: TestConfig = {
   patches: true,
   steps: [

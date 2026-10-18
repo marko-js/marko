@@ -437,8 +437,6 @@ interface FillReadKind {
   unpatchedStructure: true | FillConditions | undefined;
   writtenJoins: Map<Intersection, Section> | undefined;
   clientJoins: [Intersection, FillConditions][];
-  // Some read hands it on to what may keep it later.
-  handsOn: boolean;
 }
 
 // What a binding's reads (and its direct aliases') need of its fill, and the
@@ -452,7 +450,6 @@ const [getFillReadKind, resetFillReadKinds] = createAnalysisMemo(
     unpatchedStructure: undefined,
     writtenJoins: undefined,
     clientJoins: [],
-    handsOn: false,
   },
 );
 
@@ -466,16 +463,12 @@ function computeFillReadKind(binding: Binding): FillReadKind {
   // Each written join its value is shipped for, by the section reading it.
   let writtenJoins: Map<Intersection, Section> | undefined;
   const clientJoins: [Intersection, FillConditions][] = [];
-  let handsOnAny = false;
   for (const alias of binding.propertyAliases.values()) {
-    const aliasFill = getFillReadKind(alias);
-    contentKind = mergeKinds(contentKind, aliasFill.contentKind);
-    handsOnAny ||= aliasFill.handsOn;
+    contentKind = mergeKinds(contentKind, getFillReadKind(alias).contentKind);
   }
   for (const alias of binding.aliases) {
     const aliasFill = getFillReadKind(alias);
     contentKind = mergeKinds(contentKind, aliasFill.contentKind);
-    handsOnAny ||= aliasFill.handsOn;
     // A property alias or rest fills on its own; a direct alias reads this.
     if (isDirectAlias(alias)) {
       kind = mergeKinds(kind, aliasFill.kind);
@@ -519,24 +512,18 @@ function computeFillReadKind(binding: Binding): FillReadKind {
     // A derived value renders it by its own kind; passed to another template,
     // this read renders it, and the callee reports its own state.
     let rendersContent = isContentRender(read);
-    // Handed to what may keep it later: rendered as content, passed to another
-    // template, or derived into a value handed on.
-    let handsOn = !!read.rendersContent;
     forEach(read.derives, (derived) => {
       if (derived.section.program === binding.section.program) {
-        const derivedFill = getFillReadKind(derived);
-        const derivedKind = derivedFill.contentKind;
+        const derivedKind = getFillReadKind(derived).contentKind;
         if (derivedKind) {
           contentKind = mergeKinds(contentKind, derivedKind);
           rendersContent = true;
-          handsOn ||= derivedFill.handsOn;
         }
       } else if (someContentRead(derived, undefined, isContentRender)) {
-        rendersContent = handsOn = true;
+        rendersContent = true;
       }
     });
-    handsOnAny ||= handsOn;
-    const handOff: { under?: SortedOpt<Section> } | undefined = handsOn
+    const handOff: { under?: SortedOpt<Section> } | undefined = rendersContent
       ? {}
       : undefined;
     const readKind = getReadKind(binding, read, effect, written, handOff);
@@ -567,7 +554,6 @@ function computeFillReadKind(binding: Binding): FillReadKind {
     unpatchedStructure,
     writtenJoins,
     clientJoins,
-    handsOn: handsOnAny,
   };
 }
 

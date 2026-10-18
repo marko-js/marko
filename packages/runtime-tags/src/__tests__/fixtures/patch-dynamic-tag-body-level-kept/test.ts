@@ -9,7 +9,7 @@ const inc = (document: Document) => {
 };
 
 // A body reads a server value its flush fills and a child's returned state no
-// fill writes: a patch render's registration carries no level, the owner's live.
+// fill writes: a patch render's registration carries no level (the owner's).
 export const config: TestConfig = {
   patches: true,
   steps: [

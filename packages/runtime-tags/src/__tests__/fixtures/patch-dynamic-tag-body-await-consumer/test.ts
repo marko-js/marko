@@ -6,9 +6,8 @@ const toggle = (document: Document) => {
     b.click();
 };
 
-// A renderer keeps the body it is handed under its state inside its own
-// `<await>`, which settles after the flush decides the body's fills: it reports
-// the body where its input is declared, through the `<const>` it derives.
+// A renderer keeps the body under its state in an `<await>` settling after the
+// flush's gates: it reports the body through the `<const>` it derives.
 export const config: TestConfig = {
   patches: true,
   steps: () => [
