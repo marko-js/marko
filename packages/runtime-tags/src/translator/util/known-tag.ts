@@ -33,6 +33,7 @@ import {
   reduce,
   some,
   type SortedOpt,
+  toArray,
 } from "./optional";
 import {
   type ParamsTree,
@@ -42,9 +43,10 @@ import {
   getSettledParamsTree,
 } from "./params-tree";
 import { isPatchKeyedSlot } from "./patch/decisions";
-import { namesBodyOwner } from "./patch/refresh";
+import { getCreatedCallSetups, namesBodyOwner } from "./patch/refresh";
 import {
   patchWrites,
+  isStatefulBranch,
   hasStructuralParam,
   recordStructuralParams,
 } from "./patch/structure";
@@ -73,6 +75,7 @@ import {
   trackVarReferences,
   mergeTagReferences,
   onFinalizeReferences,
+  getReferencedBindings,
   getReferencedBindingsInFunction,
 } from "./references";
 import {
@@ -100,10 +103,19 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import { addSetupExpr, addSetupWork } from "./setup-work";
 import {
+  addCallSetupExpr,
+  addCallSetupParam,
+  addSetupExpr,
+  addSetupWork,
+  callRunsSetup,
+} from "./setup-work";
+import {
+  addSignalStatement,
   addStatement,
+  getExprSignal,
   getResumeRegisterId,
+  getSignal,
   initValue,
   writeHTMLResumeStatements,
   writeSlot,
@@ -506,13 +518,16 @@ export function knownTagTranslateDOM(
     preferredName?: string,
     directContent?: boolean,
   ) => t.Identifier,
-  callSetup: ((section: Section, childBinding: Binding) => void) | undefined,
+  callSetup:
+    | ((section: Section, childBinding: Binding) => t.Expression[])
+    | undefined,
 ) {
   const tagSection = getSection(tag);
   const { node } = tag;
   const extra = node.extra!;
   const paramsTree = getSettledParamsTree(extra[kParamsTree]);
   const childScopeBinding = extra.childScopeBinding!;
+  const setupKey = addCallSetupInit(tagSection, childScopeBinding);
 
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
@@ -539,7 +554,14 @@ export function knownTagTranslateDOM(
       ),
     );
   }
-  callSetup?.(tagSection, childScopeBinding);
+  const setup = callSetup?.(tagSection, childScopeBinding);
+  if (setup?.length) {
+    addSignalStatement(
+      getSignal(tagSection, setupKey),
+      "render",
+      setup.map((expr) => t.expressionStatement(expr)),
+    );
+  }
 
   if (paramsTree) {
     writeParamsToSignals(tag, paramsTree, getTagName(tag) || "tag", {
@@ -547,6 +569,7 @@ export function knownTagTranslateDOM(
       knownExprs: extra[kKnownExprs]!,
       getBindingIdentifier,
       childScopeBinding,
+      setupKey,
     });
   }
 }
@@ -554,6 +577,37 @@ export function knownTagTranslateDOM(
 export function addTagVarBindings(section: Section) {
   const bindings = getTagVarBindings(section);
   if (bindings.length) addStatement("render", section, undefined, bindings);
+}
+
+// A scope a patch creates runs no setup, so what a call into a body some
+// consumer renders stateful does there runs from the child's init.
+function addCallSetupInit(tagSection: Section, childScopeBinding: Binding) {
+  if (
+    isPatch() &&
+    getCreatedCallSetups(tagSection).includes(childScopeBinding)
+  ) {
+    const signal = getSignal(tagSection, childScopeBinding, "init");
+    signal.build = () =>
+      t.arrowFunctionExpression(
+        [scopeIdentifier],
+        t.blockStatement([
+          ...signal.render,
+          ...signal.patch,
+          ...toArray(signal.globalJoins, (join) =>
+            t.expressionStatement(
+              t.callExpression(join.identifier, [scopeIdentifier]),
+            ),
+          ),
+        ]),
+      );
+    addStatement(
+      "render",
+      tagSection,
+      undefined,
+      t.callExpression(signal.identifier, [scopeIdentifier]),
+    );
+    return childScopeBinding;
+  }
 }
 
 export function addKnownTagReasons(section: Section) {
@@ -578,6 +632,22 @@ export function addKnownTagReasons(section: Section) {
       }
     }
   }
+}
+
+// The calls, by child scope binding, into a body some consumer renders stateful
+// that do setup work: the body's own setup, its owner link, or the call's.
+export function getStatefulBodyCalls(section: Section) {
+  const calls: Binding[] = [];
+  for (const tagExtra of section.knownTags || []) {
+    const body = tagExtra[kChildSection]!;
+    if (
+      isStatefulBranch(body) &&
+      (body.hasSetupWork || body.readsOwner || callRunsSetup(tagExtra))
+    ) {
+      calls.push(tagExtra.childScopeBinding!);
+    }
+  }
+  return calls;
 }
 
 // A known tag var's wiring guard asks whether the client holds the child's
@@ -825,6 +895,7 @@ function analyzeParams(
 
   if (!readsParamsByName(tag, paramsTree)) {
     paramsExpr.value = setDerivedFromTag(
+      rootTagExtra,
       section,
       tag,
       paramsTree.binding,
@@ -843,7 +914,7 @@ function analyzeParams(
         const argValueExtra = (arg.extra ??= {});
         known[i] = { value: argValueExtra };
         rootAttrExprs.add(argValueExtra);
-        addSetupExpr(section, arg);
+        addSetupExpr(section, arg, rootTagExtra);
         setDerivedFrom(argTree.binding, argValueExtra, paramsExpr);
       } else {
         dropNodes(arg);
@@ -884,6 +955,7 @@ function analyzeAttrs(
   const inputExpr: KnownExprs = {};
   if (!paramsTree.props) {
     inputExpr.value = setDerivedFromTag(
+      rootTagExtra,
       section,
       tag,
       paramsTree.binding,
@@ -1033,6 +1105,7 @@ function analyzeAttrs(
       }
 
       const groupExtra = mergeReferences(section, node, referenceNodes);
+      addCallSetupExpr(rootTagExtra, groupExtra);
       const groupKnownValue: KnownExprs = { value: groupExtra };
       rootAttrExprs.add(groupExtra);
 
@@ -1062,7 +1135,7 @@ function analyzeAttrs(
         remaining.delete("content");
         known.content = { value: undefined }; // TODO: update when supporting default params
         // The content signal call is applied unconditionally in setup.
-        addSetupWork(section);
+        addCallSetupParam(section, rootTagExtra, contentTree.binding);
       }
     }
   }
@@ -1092,7 +1165,7 @@ function analyzeAttrs(
         remaining.delete(attr.name);
         known[attr.name] = { value: attrExtra };
         rootAttrExprs.add(attrExtra);
-        addSetupExpr(section, attr.value);
+        addSetupExpr(section, attr.value, rootTagExtra);
         setDerivedFrom(attrTree.binding, attrExtra, rootExprs);
         // A cross template child that only ever invokes this input makes the attribute
         // `invokeOnly`; same-program params trees may be mid-analysis with incomplete reads, so skipped.
@@ -1139,6 +1212,7 @@ function analyzeAttrs(
         tag.node,
         spreadReferenceNodes,
       );
+      addCallSetupExpr(rootTagExtra, inputExpr.value);
       setDerivedFrom(
         paramsTree.rest?.binding || paramsTree.binding,
         inputExpr.value,
@@ -1153,14 +1227,18 @@ function analyzeAttrs(
       setDerivedFrom(paramsTree.rest!.binding, inputExpr.value, rootExprs);
     }
 
-    if (remaining.size) {
-      // Unset props are applied with no value (and no references) in setup.
-      addSetupWork(section);
+    // Unset props are applied with no value (and no references) in setup.
+    for (const name of remaining) {
+      addCallSetupParam(
+        section,
+        rootTagExtra,
+        (getParamsTreeAt(paramsTree, name) as ParamsTree).binding,
+      );
     }
 
     if (paramsTree.rest && !paramsTree.rest.props) {
       // The rest signal call is keyed by the tag's merged references.
-      addSetupExpr(section, tag.node);
+      addSetupExpr(section, tag.node, rootTagExtra);
     }
   }
 
@@ -1189,12 +1267,14 @@ function isSpreadArgument(arg: t.Expression | t.SpreadElement) {
 }
 
 function setDerivedFromTag(
+  call: t.MarkoTagExtra,
   section: Section,
   tag: t.NodePath<t.MarkoTag>,
   binding: Binding,
   rootExprs: KnownExprs,
 ) {
   const extra = mergeTagReferences(section, tag.node);
+  addCallSetupExpr(call, extra);
   setDerivedFrom(binding, extra, rootExprs);
   return extra;
 }
@@ -1262,6 +1342,8 @@ type TranslateDOMInfo = {
     directContent?: boolean,
   ) => t.Identifier;
   childScopeBinding: Binding;
+  /** What keys the call's statements that read no binding. */
+  setupKey: Binding | undefined;
 };
 
 function writeParamsToSignals(
@@ -1279,12 +1361,7 @@ function writeParamsToSignals(
     const translatedAttrs = translateAttrs(tag);
 
     if (translatedAttrs.statements.length) {
-      addStatement(
-        "render",
-        info.tagSection,
-        tagExtra,
-        translatedAttrs.statements,
-      );
+      addCallStatement(info, tagExtra, translatedAttrs.statements);
     }
 
     writeToSignal(
@@ -1354,7 +1431,7 @@ function applyAttrObject(
   }
 
   if (statements.length) {
-    addStatement("render", info.tagSection, tagExtra, statements);
+    addCallStatement(info, tagExtra, statements);
   }
 
   writeToSignal(info, tagInputIdentifier, tagExtra, translatedProps!, true);
@@ -1450,7 +1527,7 @@ function writeAttrsToSignals(
               statements,
             );
 
-            addStatement("render", info.tagSection, tagExtra, statements);
+            addCallStatement(info, tagExtra, statements);
 
             addAttrTag(
               contentProps,
@@ -1508,7 +1585,7 @@ function writeAttrsToSignals(
       const trees = getGroupParamsTrees(group, attrTagLookup, paramsTree);
       const hasRest = trees.some(([, tree]) => tree === true);
 
-      addStatement("render", info.tagSection, hasRest ? tagExtra : expr, [
+      addCallStatement(info, hasRest ? tagExtra : expr, [
         t.variableDeclaration(
           "let",
           trees.map(([attrTagMeta]) =>
@@ -1640,7 +1717,7 @@ function writeAttrsToSignals(
 
     if (!isSimpleReference(spreadExpr)) {
       spreadId = generateUidIdentifier(`${hint}_spread`);
-      addStatement("render", info.tagSection, tagExtra, [
+      addCallStatement(info, tagExtra, [
         t.variableDeclaration("const", [
           t.variableDeclarator(spreadId, spreadExpr),
         ]),
@@ -1720,11 +1797,32 @@ function writeToSignal(
     info.childScopeBinding,
     info.tagSection,
   );
-  addStatement(
-    type,
-    info.tagSection,
+  addCallStatement(
+    info,
     expr,
     t.callExpression(signal, value ? [scope, value] : [scope]),
+    isPure,
+    type,
+  );
+}
+
+// What reads no binding runs in setup, or in the child's init where a scope a
+// patch creates runs it.
+function addCallStatement(
+  info: TranslateDOMInfo,
+  expr: t.NodeExtra | undefined,
+  statement: t.Statement | t.Statement[] | t.Expression,
+  isPure?: boolean,
+  type: "render" | "patch" = "render",
+) {
+  addSignalStatement(
+    getExprSignal(
+      info.tagSection,
+      expr,
+      getReferencedBindings(expr) || info.setupKey,
+    ),
+    type,
+    statement,
     isPure,
   );
 }
