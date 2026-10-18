@@ -250,50 +250,36 @@ export function getContentClosureValues(bodySection: Section) {
     : [contentClosures];
   const ownerAccessor = getAccessorProp().Owner;
   const levels: t.Expression[] = [];
-  // A patch render's levels leave out what its flush fills wherever a consumer
-  // withholds the content, up to the outermost level with values left.
-  const patchProps: t.ObjectProperty[][] = [];
-  let patchDepth = 0;
-  let filled = false;
   for (let i = closures.length, section = bodySection.parent!; i;) {
     const props: t.ObjectProperty[] = [];
-    const unfilled: t.ObjectProperty[] = [];
     while (i && closures[i - 1].section === section) {
       const closure = closures[--i];
-      const prop = toObjectProperty(
-        getScopeAccessor(closure),
-        getDeclaredBindingExpression(closure),
+      props.push(
+        toObjectProperty(
+          getScopeAccessor(closure),
+          getDeclaredBindingExpression(closure),
+        ),
       );
-      props.push(prop);
-      if (isPatch() && fillsWithheldContent(closure, bodySection)) {
-        filled = true;
-      } else {
-        unfilled.push(prop);
-      }
     }
-    if (unfilled.length) patchDepth = patchProps.length + 1;
-    patchProps.push(unfilled);
     // Resume walks up through each owner while the payload evaluates, before
     // any scope flush could link it, so every level below another links its owner.
     if (i) {
-      const link = toObjectProperty(
-        ownerAccessor,
-        t.callExpression(scope, [getScopeIdIdentifier(section.parent!)]),
+      props.push(
+        toObjectProperty(
+          ownerAccessor,
+          t.callExpression(scope, [getScopeIdIdentifier(section.parent!)]),
+        ),
       );
-      props.push(link);
-      unfilled.push(link);
     }
     levels.push(t.objectExpression(props));
     section = section.parent!;
   }
-  let patchLevels: t.Expression[] | undefined;
-  if (filled) {
-    patchLevels = [];
-    for (let depth = patchDepth; depth--;) {
-      patchLevels.push(t.objectExpression(patchProps[depth]));
-    }
-  }
-  return { scope, levels: levels.reverse(), patchLevels };
+  // Where the flush fills a closure the content reads wherever a consumer
+  // withholds it, a patch render's registration carries no levels.
+  const patchFilled =
+    isPatch() &&
+    closures.some((closure) => fillsWithheldContent(closure, bodySection));
+  return { scope, levels: levels.reverse(), patchFilled };
 }
 
 function mayBeUnwritten(closure: Binding) {

@@ -6,8 +6,8 @@ const toggle = (document: Document) => {
     b.click();
 };
 
-// A body under `<await>` that a renderer keeps: the flush decides its fills
-// before the await settles, so the pending await counts as keeping it.
+// A body under `<await>` that a renderer keeps: what it reads fills at the
+// await body's end, where the body exists.
 export const config: TestConfig = {
   patches: true,
   steps: () => [

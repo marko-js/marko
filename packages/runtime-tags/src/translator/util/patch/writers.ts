@@ -46,6 +46,7 @@ import { getPrefixedScopeAccessor, getScopeAccessor } from "../scope-accessor";
 import {
   forEachParamGroup,
   getCallerParamGroupsAt,
+  getClosuresFromAbove,
   getParamReasonGroupIndex,
   getRendererReason,
   getScopeIdIdentifier,
@@ -54,6 +55,7 @@ import {
   isLoopBody,
   type ParamReasonGroup,
   type Section,
+  sectionUtil,
 } from "../sections";
 import {
   getHTMLSectionStatements,
@@ -96,7 +98,7 @@ import {
   patchComposes,
   patchFillsSubscribedReads,
   patchWritesScope,
-  rendersAsContent,
+  getContentRenderKind,
 } from "./refresh";
 
 // A section's patch entries beside its resume data: effect re-runs, the setup
@@ -110,24 +112,23 @@ export function writePatchResumeStatements(
   const fillCalls: t.Expression[] = [];
   forEach(getPatchFillBindings(section), (binding) => {
     if (!isStateSourced(binding)) {
-      fillCalls.push(
-        gatePatchWrite(
+      const fill = gatePatchWrite(
+        section,
+        binding,
+        buildPatchValue(
           section,
           binding,
-          buildPatchValue(
-            section,
-            binding,
-            undefined,
-            getConstantSeed(section, binding),
-          ),
-          getPatchWrite(binding).write
-            ? getUnfilledPatchWrite(section, binding)
-            : undefined,
-          getPatchFill(binding).splitsContent
-            ? buildPatchValue(section, binding, "content")
-            : undefined,
+          undefined,
+          getConstantSeed(section, binding),
         ),
+        getPatchWrite(binding).write
+          ? getUnfilledPatchWrite(section, binding)
+          : undefined,
+        getPatchFill(binding).splitsContent
+          ? buildPatchValue(section, binding, "content")
+          : undefined,
       );
+      if (fill) fillCalls.push(fill);
       const withheld = getWithholdCall(section, binding);
       if (withheld) fillCalls.push(withheld);
     }
@@ -145,7 +146,7 @@ export function writePatchResumeStatements(
             section,
             binding,
             getUnfilledPatchWrite(section, binding),
-          ),
+          )!,
         );
       } else if (
         !getWrittenLocalFills().has(binding) &&
@@ -260,16 +261,48 @@ export function writePatchResumeStatements(
       ? orUnpatchedValue(section, binding, filled, entry)
       : entry;
     if (expr) body.push(t.expressionStatement(expr));
-    // A local whose fill depends on withheld content writes at the section's
-    // end, which knows what was withheld.
+    // A local whose fill or write its section's end decides writes here.
     if (!isKnownChild(section) && writesAtSectionEnd(binding)) {
-      if (getPatchFill(binding).fill) {
-        body.push(t.expressionStatement(writeLocalFill(section, binding)));
-      } else if (write) {
-        body.push(t.expressionStatement(writeLocalWrite(section, binding)));
-      }
+      const local = getPatchFill(binding).fill
+        ? writeLocalFill(section, binding)
+        : write && writeLocalWrite(section, binding);
+      if (local) body.push(t.expressionStatement(local));
     }
   });
+
+  // What content under an `<await>` body reads from outside fills at the
+  // body's end, where the content exists.
+  if (section.branch?.await) {
+    forEach(getClosuresFromAbove(section, section), (binding) => {
+      const { fill, splitsContent } = getPatchFill(binding);
+      if (fill && fill !== true && sectionUtil.has(fill.awaits, section)) {
+        const withheld = getWithheldGuard(
+          binding.section,
+          fill.awaitedContents,
+          section,
+        )!;
+        const write = buildPatchValue(
+          binding.section,
+          binding,
+          splitsContent ? "content" : undefined,
+        );
+        body.push(
+          t.expressionStatement(
+            andGuard(
+              getCallerGroupGuard(
+                binding.section,
+                "_filled_guard",
+                getSourcesForRef(binding),
+              ),
+              withheld === true
+                ? write
+                : t.logicalExpression("&&", withheld, write),
+            ),
+          ),
+        );
+      }
+    });
+  }
 
   // A scope another's shell composes runs from setup what its own shell names.
   const shellInitIds = patchComposes(section) && getShellInitIds(section);
@@ -385,10 +418,12 @@ export function writePatchResumeStatements(
       if (!isStateSourced(binding)) {
         // A local with no state source writes plainly once it exists (a known
         // child's fills already write as the scope reason's complement).
-        if (!isKnownChild(section) && !getWrittenLocalFills().has(binding)) {
-          getHTMLSectionStatements(section).push(
-            t.expressionStatement(writeLocalFill(section, binding)),
-          );
+        const local =
+          !isKnownChild(section) &&
+          !getWrittenLocalFills().has(binding) &&
+          writeLocalFill(section, binding);
+        if (local) {
+          getHTMLSectionStatements(section).push(t.expressionStatement(local));
         }
         return;
       }
@@ -541,13 +576,14 @@ export function writeLocalFill(section: Section, binding: Binding) {
     binding,
     undefined,
     gateFillConditions(section, binding, buildPatchValue(section, binding)),
-  )!;
+  );
+  const withheld = getWithholdCall(section, binding);
+  if (!write) return withheld;
   const filledGuard = getCallerGroupGuard(
     section,
     "_filled_guard",
     getSourcesForRef(binding),
   );
-  const withheld = getWithholdCall(section, binding);
   if (!filledGuard) {
     return withheld ? t.sequenceExpression([withheld, write]) : write;
   }
@@ -573,17 +609,32 @@ export function writeLocalFill(section: Section, binding: Binding) {
   return withheld ? t.sequenceExpression([withheld, fill]) : fill;
 }
 
-// Content the value holds stays live where the client may render it here,
-// whether or not the flush ships the value (`_content_withheld`).
+// Content the value holds stays live where a read rendering it may be the
+// client's, whether or not the flush ships the value (`_content_withheld`).
 function getWithholdCall(section: Section, binding: Binding) {
-  return (
-    rendersAsContent(binding) &&
-    gateFillConditions(
-      section,
-      binding,
-      callRuntime("_content_withhold", getDeclaredBindingExpression(binding)),
-    )
+  const kind = getContentRenderKind(binding);
+  if (!kind) return;
+  const call = callRuntime(
+    "_content_withhold",
+    getDeclaredBindingExpression(binding),
   );
+  const contents = kind === true || getWithheldGuard(section, kind.contents);
+  if (contents === true) return call;
+  const needed = orCallerGroupGuards(
+    section,
+    orCallerGroupGuards(
+      section,
+      contents,
+      "_client_guard",
+      sourcesUtil.union(
+        sourcesUtil.union(kind.structure, kind.joins),
+        kind.writes,
+      ),
+    ),
+    "_filled_guard",
+    kind.fills,
+  );
+  return needed && t.logicalExpression("&&", needed, call);
 }
 
 // Plain write of a branch local with no state source that effects or handlers
@@ -987,15 +1038,13 @@ function gatePatchWrite(
     "_filled_guard",
     getSourcesForRef(binding),
   );
-  return andGuard(
-    guard,
-    orUnpatchedValue(
-      section,
-      binding,
-      undefined,
-      gateFillConditions(section, binding, write, otherwise, contentWrite),
-    )!,
+  const gated = orUnpatchedValue(
+    section,
+    binding,
+    undefined,
+    gateFillConditions(section, binding, write, otherwise, contentWrite),
   );
+  return gated && andGuard(guard, gated);
 }
 
 // The write under its fill's run-time conditions: where the client owns what
@@ -1014,6 +1063,21 @@ function gateFillConditions(
   } = getPatchFill(binding);
   let expr: t.Expression | undefined = unpatchedOnly ? undefined : write;
   if (conditions && conditions !== true) {
+    // Content under an `<await>` body gates at the body's end instead.
+    const unawaited = sectionUtil.difference(
+      conditions.contents,
+      conditions.awaitedContents,
+    );
+    if (
+      conditions.awaits &&
+      !unawaited &&
+      !conditions.structure &&
+      !conditions.joins &&
+      !conditions.writes &&
+      !conditions.fills
+    ) {
+      return;
+    }
     // Groups the unpatched arm tests are the server's wherever this one runs.
     let needed = orCallerGroupGuards(
       section,
@@ -1033,7 +1097,7 @@ function gateFillConditions(
       "_filled_guard",
       conditions.fills,
     );
-    const contents = getWithheldGuard(section, conditions.contents);
+    const contents = getWithheldGuard(section, unawaited);
     const always = contents === true;
     const withheld = always ? undefined : contents;
     if (contentWrite && (always || withheld)) {
@@ -1176,7 +1240,11 @@ function getUnpatchedGuard(section: Section, unpatched: FillConditions) {
 
 // Where content is live on the client: `true` where something renders it
 // unconditionally (a `@catch` or `@placeholder` may, at any time).
-function getWithheldGuard(section: Section, contents: Opt<Section>) {
+function getWithheldGuard(
+  section: Section,
+  contents: Opt<Section>,
+  scopeSection = section,
+) {
   if (some(contents, rendersUnconditionally)) return true;
   let withheld: t.Expression | undefined;
   forEach(contents, (content) => {
@@ -1185,7 +1253,7 @@ function getWithheldGuard(section: Section, contents: Opt<Section>) {
       callRuntime(
         "_content_withheld",
         t.stringLiteral(getResumeRegisterId(content, "content")),
-        getScopeIdIdentifier(section),
+        getScopeIdIdentifier(scopeSection),
       ),
     );
     // Live too where the client owns what picks it, which a patch never sees.

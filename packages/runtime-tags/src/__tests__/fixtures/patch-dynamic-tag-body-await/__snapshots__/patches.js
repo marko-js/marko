@@ -1,7 +1,6 @@
 // PATCH
 [`b !b0; b%;<button class=toggle>toggle</button><!><!>`, {
   pa: 1,
-  va7: "b",
   cAa: {
     fa: "b",
     cAa: {
@@ -11,14 +10,14 @@
       ub1: ["a0", 1]
     },
     va5: "y"
-  }
+  },
+  va6: "b"
 }]
 ;CgQ
 
 // PATCH holding CgQ
 {
   pa: 1,
-  va7: "c",
   cAa: {
     fa: "b",
     cAa: {
@@ -28,5 +27,6 @@
       ub1: ["a0", 1]
     },
     va5: "z"
-  }
+  },
+  va6: "c"
 }

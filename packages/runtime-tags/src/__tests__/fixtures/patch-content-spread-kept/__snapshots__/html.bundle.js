@@ -29,7 +29,7 @@ var frag_host_default = _template("b", (input) => {
 		f: _unfilled_if($scope0_reason, 0) && one,
 		h: _write_if($scope0_reason, 0) && $input_mode__closures,
 		i: _write_if($scope0_reason, 1) && $input_b__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb6", input.mode, !_server_guard($scope0_reason, 0)), _content_withhold(input.mode), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb7", input.b, !_server_guard($scope0_reason, 1)));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb6", input.mode, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb7", input.b, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko

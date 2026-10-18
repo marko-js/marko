@@ -147,7 +147,7 @@ export function _fill_join_closure<T extends SignalFn>(
             childScope[AccessorProp.Gen] > 0 &&
             childScope[AccessorProp.Gen] < runId
           ) {
-            // Run as `_closure` does: a declaration's fill may take this key.
+            // The declaration's fill on this key runs `_closure`; dispatch as it does.
             signals[(childScope[signalIndex] as number) || 0]?.(childScope);
           }
         }

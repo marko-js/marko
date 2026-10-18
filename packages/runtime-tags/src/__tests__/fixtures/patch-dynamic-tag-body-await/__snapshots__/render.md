@@ -102,8 +102,8 @@ UPDATE: main > em::text@2 "" => "y"
 ```
 ## Change
 ```
-UPDATE: main > em::text@0 "b" => "c"
 UPDATE: main > em::text@2 "y" => "z"
+UPDATE: main > em::text@0 "b" => "c"
 ```
 
 # Update

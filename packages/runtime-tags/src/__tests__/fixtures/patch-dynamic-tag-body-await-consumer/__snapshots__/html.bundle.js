@@ -38,7 +38,7 @@ var card_default = _template("b", (input) => {
 		g: open,
 		h: $wi__input_content && $input_content__closures,
 		i: $open__closures
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb8", input.content, !_server_guard($scope0_reason, 2)), _client_guard($scope0_reason, 1) && _content_withhold(input.content));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb8", input.content, !_server_guard($scope0_reason, 2)), _content_withhold(input.content));
 });
 
 // template.marko

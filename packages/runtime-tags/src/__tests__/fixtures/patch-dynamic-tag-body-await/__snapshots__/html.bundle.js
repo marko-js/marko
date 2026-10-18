@@ -49,20 +49,21 @@ var template_default = _template("a", (input) => {
 			_: $scope($scope0_id)
 		}] : []), 0, $wg__input_on, void 0, 2, $scope0_reason, 3);
 		_filled_guard($scope0_reason, 2) && _content_withheld("a0", $scope1_id) && _patch_value($scope1_id, "va5", v);
-		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "a6");
+		_filled_guard($scope0_reason, 4) && _content_withheld("a0", $scope1_id) && _patch_value($scope0_id, "va6", input.note);
+		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "a7");
 		$wi__input_v__OR__input_on__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 3) && $input_on__closures, _scope($scope1_id, {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && v,
 			_: _scope_with_id($scope0_id),
 			i: _write_if($scope0_reason, 2) && $await_content__v__closures
-		}), _client_guard($scope0_reason, 3) && "a6", $wg__input_on);
+		}), _client_guard($scope0_reason, 3) && "a7", $wg__input_on);
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, 1, "a1", 1);
 	_html("</main>");
 	_patch_write($scope0_id, "we", input.on, 1);
-	$scope0_page ? _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 2) && input.on,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.note,
 		h: _write_if($scope0_reason, 4) && $input_note__closures,
 		g: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_on__closures
-	}) : _filled_guard($scope0_reason, 4) && _content_withheld("a0", $scope0_id) && _patch_value($scope0_id, "va7", input.note, !_server_guard($scope0_reason, 4));
+	});
 }, 1);

@@ -347,12 +347,11 @@ export function _client_return(id: string) {
 }
 
 // Whether a consumer kept for the resumed page an instance of the content made
-// in the scope's render, or yet may under an unsettled `<await>`: values fill then.
+// in the scope's render: the server values inside fill then.
 export function _content_withheld(id: string, scopeId: number) {
   const state = getState();
   return (
     state instanceof PatchUpdateState &&
-    ((state.withheldContents?.get(id) ?? -1) >= scopeId ||
-      !!state.pendingAwaits?.some((awaitScopeId) => awaitScopeId >= scopeId))
+    (state.withheldContents?.get(id) ?? -1) >= scopeId
   );
 }

@@ -153,15 +153,41 @@ export function fillsWithheldContent(closure: Binding, content: Section) {
   return fill === true || (!!fill && sectionUtil.has(fill.contents, content));
 }
 
-// A value read as content to render (a tag's name, a `content` attribute),
-// directly or where it is passed on.
-export const [rendersAsContent] = createAnalysisMemo(
-  (binding: Binding) => someContentRead(binding, undefined, isContentRender),
-  false,
+// What the reads rendering a value as content (a dynamic tag's name expression
+// or attributes, a `content` attribute) need of its fill, as fill reads do.
+export const [getContentRenderKind] = createAnalysisMemo(
+  computeContentRenderKind,
+  undefined,
 );
 
-function isContentRender(read: ReferencedExtra) {
-  return !!(read.rendersContent || read.nameOnly);
+function computeContentRenderKind(binding: Binding) {
+  let kind: true | FillConditions | undefined;
+  const seen = new Set<Binding>();
+  // Each read rendering it, here or in what derives from it, sits where it is
+  // read from the binding's own section.
+  const visit = (target: Binding) => {
+    if (seen.has(target)) return;
+    seen.add(target);
+    for (const read of target.reads.keys()) {
+      if (read.rendersContent || read.nameOnly) {
+        const refs = getReferencedBindings(read);
+        kind = mergeKinds(
+          kind,
+          getReadKind(
+            binding,
+            read,
+            readsValuesOnResume(read),
+            Array.isArray(refs) && isPatchWrittenJoin(refs),
+          ),
+        );
+      }
+      forEach(read.derives, visit);
+    }
+    for (const alias of target.propertyAliases.values()) visit(alias);
+    for (const alias of target.aliases) visit(alias);
+  };
+  visit(binding);
+  return kind;
 }
 
 // A potential fill: a server-sourced value whose reads intersect client
@@ -416,6 +442,10 @@ export interface FillConditions {
   // A nested member's fill re-runs the join: it fills under that member's group.
   fills?: SortedOpt<Sources>;
   contents?: SortedOpt<Section>;
+  // The contents under an `<await>` body below the binding's section, which
+  // exist only at the end of a body in `awaits`.
+  awaitedContents?: SortedOpt<Section>;
+  awaits?: SortedOpt<Section>;
   // A join the patch writes reads it: its other members, where the client runs it.
   writes?: SortedOpt<Sources>;
 }
@@ -583,9 +613,18 @@ function getReadStructure(
     // structure, or boundary content the client renders, promote to owner fills.
     let readSection: Section | undefined = readAt;
     let contents: SortedOpt<Section>;
+    let awaitedContents: SortedOpt<Section>;
+    let awaits: SortedOpt<Section>;
+    // Those collected since the last `<await>` body crossed.
+    let unawaited: SortedOpt<Section>;
     while (readSection && readSection !== binding.section) {
       if (isStatefulBranch(readSection)) return true;
       if (readSection.boundaryContent) return true;
+      if (unawaited && readSection.branch?.await) {
+        awaitedContents = sectionUtil.union(awaitedContents, unawaited);
+        awaits = sectionUtil.add(awaits, readSection);
+        unawaited = undefined;
+      }
       // Each content around the read that a consumer may withhold: any of them
       // left to client code renders what is inside.
       if (
@@ -594,6 +633,7 @@ function getReadStructure(
         consumerMayWithhold(readSection)
       ) {
         contents = sectionUtil.add(contents, readSection);
+        unawaited = sectionUtil.add(unawaited, readSection);
       }
       if (readSection.callSections) {
         forEach(readSection.callSections, (callSection) => {
@@ -607,7 +647,7 @@ function getReadStructure(
     // An `<await>` value re-fires no promise client-side: the boundary's
     // own flushes carry its settlement.
     if (contents && !isBoundaryValueRead(read)) {
-      found = mergeConditions(found, { contents });
+      found = mergeConditions(found, { contents, awaitedContents, awaits });
     }
     if (!knownChild) continue;
     // Only caller-owned structure of OTHER caller params can leave this read
@@ -843,6 +883,8 @@ function mergeConditions(
     joins: sourcesUtil.union(a?.joins, b.joins),
     fills: sourcesUtil.union(a?.fills, b.fills),
     contents: sectionUtil.union(a?.contents, b.contents),
+    awaitedContents: sectionUtil.union(a?.awaitedContents, b.awaitedContents),
+    awaits: sectionUtil.union(a?.awaits, b.awaits),
     writes: sourcesUtil.union(a?.writes, b.writes),
   };
 }

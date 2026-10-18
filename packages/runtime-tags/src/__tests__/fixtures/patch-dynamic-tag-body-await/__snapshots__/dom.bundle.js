@@ -8,7 +8,7 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $inputonCarddiv_content__input_note = /*@__PURE__*/ _fill_join_closure("a7", 5, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._, "a3"), 0);
+const $inputonCarddiv_content__input_note = /*@__PURE__*/ _fill_join_closure("a6", 5, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._, "a3"), 0);
 const $inputonCarddiv_content__setup = ($scope) => {
 	$inputonCarddiv_content__input_note($scope);
 	$inputonCarddiv_content__v($scope);

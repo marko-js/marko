@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{
 		v,
 		input_note: input.note
-	}] : [{ v }]), 0, _write_guard($scope0_reason, 0), void 0, 2, $scope0_reason, 0);
+	}] : []), 0, _write_guard($scope0_reason, 0), void 0, 2, $scope0_reason, 0);
 	_html("</main>");
 	$scope0_page ? _scope($scope0_id, {
 		input_note: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.note,

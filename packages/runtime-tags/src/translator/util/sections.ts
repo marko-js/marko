@@ -408,7 +408,7 @@ export function getDynamicTagContentClosures(section: Section) {
   }
 }
 
-function getClosuresFromAbove(
+export function getClosuresFromAbove(
   section: Section,
   top: Section,
 ): ReferencedBindings {

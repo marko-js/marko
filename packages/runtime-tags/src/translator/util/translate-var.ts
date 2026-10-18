@@ -314,10 +314,11 @@ function writeLocalAfterDeclaration(
   binding: Binding,
   statements: t.Statement[],
 ) {
-  // One whose fill depends on withheld content writes at the section's end.
+  // One whose fill or write its section's end decides writes there instead.
   if (!binding.sources?.state && !writesAtSectionEnd(binding)) {
     if (getPatchFill(binding).fill) {
-      statements.push(t.expressionStatement(writeLocalFill(section, binding)));
+      const fill = writeLocalFill(section, binding);
+      if (fill) statements.push(t.expressionStatement(fill));
     } else if (getPatchWrite(binding).write) {
       statements.push(t.expressionStatement(writeLocalWrite(section, binding)));
     }

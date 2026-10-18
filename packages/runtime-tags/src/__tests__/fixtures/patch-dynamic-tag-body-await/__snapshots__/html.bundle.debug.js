@@ -56,6 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: $scope($scope0_id)
 		}] : []), 0, $wg__input_on, void 0, 2, $scope0_reason, 3);
 		_filled_guard($scope0_reason, 2) && _content_withheld("__tests__/template.marko_2*content", $scope1_id) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", v);
+		_filled_guard($scope0_reason, 4) && _content_withheld("__tests__/template.marko_2*content", $scope1_id) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note);
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_on#0:4/subscribe");
 		$wi__input_v__OR__input_on__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 3) && $input_on__closures, _scope($scope1_id, {
 			v: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && v,
@@ -66,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 1, "__tests__/template.marko_1*content", 1);
 	_html("</main>");
 	_patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
-	$scope0_page ? _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		input_on: _unfilled_if($scope0_reason, 2) && input.on,
 		input_note: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.note,
 		"ClosureScopes:input_note/7": _write_if($scope0_reason, 4) && $input_note__closures,
@@ -74,5 +75,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_on: ["input.on"],
 		input_note: ["input.note"]
-	}) : _filled_guard($scope0_reason, 4) && _content_withheld("__tests__/template.marko_2*content", $scope0_id) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 4));
+	});
 }, 1);

@@ -157,17 +157,25 @@ function keepBranch<T, U, V>(cb: (a: U, b: V) => T, a: U, b: V): T {
   return withContext(kKeptBranch, getChunk()!.context![kBranchId], cb, a, b);
 }
 
-// A consumer keeps content for the resumed page to render: the values inside
-// fill (`_content_withheld`).
+// A consumer keeps content for the resumed page to render, an attribute tag's
+// every item: the values inside fill (`_content_withheld`).
 export function _content_withhold(value: unknown) {
+  const state = getState();
+  if (state instanceof PatchUpdateState) {
+    if (value && typeof value === "object" && Symbol.iterator in value) {
+      for (const item of value as Iterable<unknown>) withhold(state, item);
+    } else {
+      withhold(state, value);
+    }
+  }
+}
+
+function withhold(state: PatchUpdateState, value: unknown) {
   const content = ((value as { content?: unknown } | undefined)?.content ||
     value) as ServerRenderer | undefined;
   const id = content?.[RendererProp.Id];
   if (id) {
-    ((getState() as PatchUpdateState).withheldContents ??= new Map()).set(
-      id,
-      content[RendererProp.Owner],
-    );
+    (state.withheldContents ??= new Map()).set(id, content[RendererProp.Owner]);
   }
 }
 
@@ -470,8 +478,6 @@ export class PatchUpdateState extends PatchRenderState {
   // Content ids a consumer withheld, each with the owner scope of the latest
   // instance withheld.
   withheldContents?: Map<string, number | undefined>;
-  // The scope of each `<await>` whose body has not rendered yet.
-  pendingAwaits?: number[];
   // Each setup envelope's ids by side, and every id it holds.
   setupIds?: Map<
     object,
