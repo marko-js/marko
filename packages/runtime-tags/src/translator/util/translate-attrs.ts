@@ -477,9 +477,7 @@ function getRegisteredLocals(bodySection: Section) {
         ? t.conditionalExpression(
             scopePageIdentifier(getReasonSection(bodySection.parent!)),
             values,
-            locals.length || patchLevels.length
-              ? t.arrayExpression([...locals, ...patchLevels])
-              : t.numericLiteral(0),
+            t.arrayExpression([...locals, ...patchLevels]),
           )
         : values,
     );

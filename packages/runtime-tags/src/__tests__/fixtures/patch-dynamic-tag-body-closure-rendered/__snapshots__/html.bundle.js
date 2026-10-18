@@ -32,7 +32,7 @@ var heading_default = _template("c", (input) => {
 		_html(`depth ${_patch_text($scope1_id, "a", input.depth, 2, $scope0_reason, 2)}`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, _client_guard($scope0_reason, 2) ? "c1" : "c2");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_depth__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
-	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.depth }] : 0), 0, $wg__input_type, void 0, 2, $scope0_reason, 1);
+	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.depth }] : []), 0, $wg__input_type, void 0, 2, $scope0_reason, 1);
 	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.depth,
 		f: _write_if($scope0_reason, 2) && $input_depth__closures

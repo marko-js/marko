@@ -122,7 +122,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					"#childScope/0": _existing_scope($childScope4),
 					"ClosureSignalIndex:input_items/10": $wi__input_items && 1
 				}, "__tests__/template.marko", "28:6"));
-			}, $scope1_id, ($scope) => $scope0_page ? [{ input_items: input.items }, { _: $scope($scope0_id) }] : 0), 0, _write_guard($scope0_reason, 6), void 0, 2, $scope0_reason, 6);
+			}, $scope1_id, ($scope) => $scope0_page ? [{ input_items: input.items }, { _: $scope($scope0_id) }] : []), 0, _write_guard($scope0_reason, 6), void 0, 2, $scope0_reason, 6);
 			_script($scope1_id, "__tests__/template.marko_1_count#0:9", 1, 1);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_scope($scope1_id, {

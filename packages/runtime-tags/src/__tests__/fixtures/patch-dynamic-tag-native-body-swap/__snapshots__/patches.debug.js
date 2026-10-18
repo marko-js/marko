@@ -23,12 +23,11 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/outer.marko;D%;<section><!></section>`, {
   "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/outer.marko",
   "PatchChild:BranchScopes:#text/0": {
-    "PatchDynamicTag:#text/0": ["^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content", 0, 0, 0, {
-      input_x: "d"
-    }],
+    "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content",
     "PatchChild:BranchScopes:#text/0": {
       "PatchText:#text/0": "d"
     }
-  }
+  },
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_fill0": "d"
 }]
 ;BwU

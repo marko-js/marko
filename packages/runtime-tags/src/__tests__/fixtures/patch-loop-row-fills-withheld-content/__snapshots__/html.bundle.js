@@ -35,7 +35,6 @@ var template_default = _template("a", (input) => {
 	_for_of(input.panels, (p) => {
 		const $scope1_id = _scope_id();
 		const $for_content__p_text__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "va3", p?.text);
 		_set_scope_reason(10);
 		const $childScope = _patch_child($scope1_id, "a");
 		panel_default({
@@ -48,6 +47,7 @@ var template_default = _template("a", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 			}, $scope1_id)
 		});
+		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "va3", p?.text);
 		_scope($scope1_id, {
 			d: p?.text,
 			_: _scope_with_id($scope0_id),

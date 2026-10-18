@@ -29,7 +29,7 @@ var child_default = _template("b", (input) => {
 			_html(`</section>${_el_resume($scope1_id, "b", _mask_group($scope0_reason, 6))}`);
 			_script($scope1_id, "b5", 1, _client_guard($scope0_reason, 4));
 			_server_guard($scope0_reason, 4) && _patch_effect($scope1_id, "eb5", "c");
-			_filled_guard($scope0_reason, 4) && (_content_withheld("b0") && _client_guard($scope0_reason, 6) ? _patch_value($scope1_id, "vb6", c) : _patch_write($scope1_id, "wc", c, !_server_guard($scope0_reason, 4)));
+			_filled_guard($scope0_reason, 4) && (_content_withheld("b0", _client_guard($scope0_reason, 6)) ? _patch_value($scope1_id, "vb6", c) : _patch_write($scope1_id, "wc", c, !_server_guard($scope0_reason, 4)));
 			_patch_write($scope1_id, "we", frag?.content, 1);
 			_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "b7");
 			_client_guard($scope0_reason, 6) && _patch_init($scope1_id, "b8");
@@ -42,7 +42,7 @@ var child_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b1"], $scope0_reason, 3);
-	_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 3) || _content_withheld("b0") && _client_guard($scope0_reason, 6)) ? _patch_value($scope0_id, "vb11", input.a) : _patch_write($scope0_id, "wf", input.a, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4)));
+	_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 3) || _content_withheld("b0", _client_guard($scope0_reason, 6))) ? _patch_value($scope0_id, "vb11", input.a) : _patch_write($scope0_id, "wf", input.a, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4)));
 	$scope0_page ? _scope($scope0_id, {
 		e: _write_if($scope0_reason, 3) && input.b,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.a,

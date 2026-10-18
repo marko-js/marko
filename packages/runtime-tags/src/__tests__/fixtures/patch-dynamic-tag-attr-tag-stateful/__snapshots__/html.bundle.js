@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_reason, 2)}</em>`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "a6");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
-	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.note }] : 0) }) }, 0, 0, $wg__input_on, void 0, 1, $scope0_reason, 1);
+	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.note }] : []) }) }, 0, 0, $wg__input_on, void 0, 1, $scope0_reason, 1);
 	_html("</main>");
 	_patch_write($scope0_id, "wf", Wrap, 1);
 	_patch_write($scope0_id, "wg", Plain, 1);

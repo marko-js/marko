@@ -29,7 +29,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 				_html(`<i>${_patch_text($scope3_id, "#text/0", input.label, void 0, $scope0_reason, 7)}</i>`);
 				_unfilled_if($scope0_reason, 7) && _patch_init($scope3_id, _client_guard($scope0_reason, 7) ? "__tests__/tags/host.marko_3_input_label#0:8/init" : "__tests__/tags/host.marko_3_input_label#0:8/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 7) && $input_label__closures, _scope($scope3_id, { _: $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope_with_id($scope2_id) }, "__tests__/tags/host.marko", "5:6"));
-			}, $scope2_id, ($scope) => $scope0_page ? [{ input_label: input.label }, { _: $scope($scope0_id) }] : 0), 0, $wg__input_wrap__OR__input_native, void 0, 2, $scope0_reason, 1);
+			}, $scope2_id, ($scope) => $scope0_page ? [{ input_label: input.label }, { _: $scope($scope0_id) }] : []), 0, $wg__input_wrap__OR__input_native, void 0, 2, $scope0_reason, 1);
 			_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/host.marko_2_input_wrap#0:5_input_native#0:7/init");
 			$wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/host.marko", "4:2");
 			return 0;

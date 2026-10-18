@@ -15,7 +15,11 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { isOptimize, isPatch } from "./marko-config";
 import { toArray } from "./optional";
 import { getPatchFill, getPatchWrite } from "./patch/refresh";
-import { writeLocalFill, writeLocalWrite } from "./patch/writers";
+import {
+  writeLocalFill,
+  writeLocalWrite,
+  writesAtSectionEnd,
+} from "./patch/writers";
 import { importRuntime } from "./runtime";
 import { getSection, isKnownChild, type Section } from "./sections";
 import { findSlot } from "./slots";
@@ -310,9 +314,8 @@ function writeLocalAfterDeclaration(
   binding: Binding,
   statements: t.Statement[],
 ) {
-  // One reaching a written join where the client may own it waits for the
-  // section's end, which knows whether the content is withheld.
-  if (!binding.sources?.state && !getPatchFill(binding).unpatchedStructure) {
+  // One whose write content withheld decides waits for the section's end.
+  if (!binding.sources?.state && !writesAtSectionEnd(binding)) {
     if (getPatchFill(binding).fill) {
       statements.push(t.expressionStatement(writeLocalFill(section, binding)));
     } else if (getPatchWrite(binding).write) {

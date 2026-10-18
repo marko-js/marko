@@ -41,7 +41,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		input_a: ["input.a"],
 		input_b: ["input.b"],
 		frag_content: ["frag.content", "4:9"]
-	}) : _filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0/unpatched", input.a) : (_client_guard($scope0_reason, 6) || _content_withheld("__tests__/tags/child.marko_2*content") && _client_guard($scope0_reason, 7)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.a, !_server_guard($scope0_reason, 5)));
+	}) : _filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0/unpatched", input.a) : (_client_guard($scope0_reason, 6) || _content_withheld("__tests__/tags/child.marko_2*content", _client_guard($scope0_reason, 7))) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.a, !_server_guard($scope0_reason, 5)));
 });
 
 // template.marko

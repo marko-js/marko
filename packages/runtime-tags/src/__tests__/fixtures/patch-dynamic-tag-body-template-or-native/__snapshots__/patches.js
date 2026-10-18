@@ -23,12 +23,11 @@
 [`a;D%;<section><!></section>`, {
   fa: "a",
   cAa: {
-    fa: ["^^b0", 0, 0, 0, {
-      e: "d"
-    }],
+    fa: "^^b0",
     cAa: {
       ta: "d"
     }
-  }
+  },
+  vb2: "d"
 }]
 ;BwU

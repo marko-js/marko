@@ -257,9 +257,9 @@ export function writePatchResumeStatements(
       ? orUnpatchedValue(section, binding, filled, entry)
       : entry;
     if (expr) body.push(t.expressionStatement(expr));
-    // A local reaching a written join where the client may own it chooses its
-    // fill or write here, as its declaration cannot know the content withheld.
-    if (!isKnownChild(section) && getPatchFill(binding).unpatchedStructure) {
+    // A local whose write content withheld decides chooses its fill or write
+    // here, as its declaration cannot know the content withheld.
+    if (!isKnownChild(section) && writesAtSectionEnd(binding)) {
       if (getPatchFill(binding).fill) {
         body.push(t.expressionStatement(writeLocalFill(section, binding)));
       } else if (write) {
@@ -522,15 +522,22 @@ function buildLetSeeds(section: Section, binding: Binding) {
   return writes;
 }
 
+// A local reaching a written join the client may own, or read in content a
+// consumer may withhold: its section's end knows whether that content is.
+export function writesAtSectionEnd(binding: Binding) {
+  const { fill, unpatchedStructure } = getPatchFill(binding);
+  return !!unpatchedStructure || (!!fill && fill !== true && !!fill.contents);
+}
+
 // Plain fill write of a branch local with no state source, gated at runtime
-// by its group's ownership; an unfilled instance re-derives via closure inits.
+// by its fill's conditions and group; an unfilled instance re-derives by inits.
 export function writeLocalFill(section: Section, binding: Binding) {
   getWrittenLocalFills().add(binding);
   const write = orUnpatchedValue(
     section,
     binding,
     undefined,
-    buildPatchValue(section, binding),
+    gateFillConditions(section, binding, buildPatchValue(section, binding)),
   )!;
   const filledGuard = getCallerGroupGuard(
     section,
@@ -960,6 +967,26 @@ function gatePatchWrite(
     "_filled_guard",
     getSourcesForRef(binding),
   );
+  return andGuard(
+    guard,
+    orUnpatchedValue(
+      section,
+      binding,
+      undefined,
+      gateFillConditions(section, binding, write, otherwise, contentWrite),
+    )!,
+  );
+}
+
+// The write under its fill's run-time conditions: where the client owns what
+// reads it, a caller's group fills it, or content holding a read is live.
+function gateFillConditions(
+  section: Section,
+  binding: Binding,
+  write: t.Expression,
+  otherwise?: t.Expression,
+  contentWrite?: t.Expression,
+) {
   const {
     fill: conditions,
     unpatchedOnly,
@@ -1011,7 +1038,7 @@ function gatePatchWrite(
       expr = t.logicalExpression("&&", needed, expr);
     }
   }
-  return andGuard(guard, orUnpatchedValue(section, binding, undefined, expr)!);
+  return expr;
 }
 
 // A member of a join the patch writes ships, where the client may own the
@@ -1133,14 +1160,15 @@ function getWithheldGuard(section: Section, contents: Opt<Section>) {
   if (some(contents, rendersUnconditionally)) return true;
   let withheld: t.Expression | undefined;
   forEach(contents, (content) => {
-    let term: t.Expression = callRuntime(
-      "_content_withheld",
-      t.stringLiteral(getResumeRegisterId(content, "content")),
-    );
-    // Live on the client only where what renders it is the client's.
+    // Live on the client only where what renders it is the client's, unless
+    // the flush ships it there.
     const reason = getRendererReason(content);
     const client = reason && getClientGuard(section, reason);
-    if (client) term = t.logicalExpression("&&", term, client);
+    const term = callRuntime(
+      "_content_withheld",
+      t.stringLiteral(getResumeRegisterId(content, "content")),
+      client,
+    );
     withheld = orGuard(withheld, term);
   });
   return withheld;

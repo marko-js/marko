@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		_html(_patch_text($scope1_id, "a", input.a.toUpperCase(), void 0, $scope0_reason, 2));
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "a1");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
-	}, $scope0_id, ($scope) => $scope0_page ? [{ g: input.a }] : 0), 0, _write_guard($scope0_reason, 1), void 0, 2, $scope0_reason, 1);
+	}, $scope0_id, ($scope) => $scope0_page ? [{ g: input.a }] : []), 0, _write_guard($scope0_reason, 1), void 0, 2, $scope0_reason, 1);
 	_script($scope0_id, "a2");
 	_patch_value($scope0_id, "va4", n, 1);
 	$scope0_page ? _scope($scope0_id, {

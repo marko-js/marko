@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(_patch_text($scope2_id, "#text/0", input.user3.name, void 0, $scope0_reason, 7));
 		_unfilled_if($scope0_reason, 7) && _patch_init($scope2_id, "__tests__/template.marko_2_input_user3_name#0:12/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 7) && $input_user3_name__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
-	}, $scope0_id, ($scope) => $scope0_page ? [{ input_user3_name: input.user3?.name }] : 0), 0, _write_guard($scope0_reason, 0), void 0, 1, $scope0_reason, 0);
+	}, $scope0_id, ($scope) => $scope0_page ? [{ input_user3_name: input.user3?.name }] : []), 0, _write_guard($scope0_reason, 0), void 0, 1, $scope0_reason, 0);
 	_patch_write($scope0_id, "PatchWrite:input_tag", input.tag, 1);
 	_patch_write($scope0_id, "PatchWrite:input_cls", input.cls, 1);
 	$scope0_page ? _scope($scope0_id, {

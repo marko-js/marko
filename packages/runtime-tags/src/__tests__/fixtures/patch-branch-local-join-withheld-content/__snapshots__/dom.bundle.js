@@ -1,7 +1,7 @@
 // tags/child.marko
-const $frag_content__c = /*@__PURE__*/ _shell_init("b4", /*@__PURE__*/ _fill_join_closure("b2", 2, /*@__PURE__*/ _closure_get(10, ($scope) => _text($scope.a, $scope._.c), 0, "b5"), 0));
+const $frag_content__c = /*@__PURE__*/ _shell_init("b2", /*@__PURE__*/ _fill_join_closure("b4", 2, /*@__PURE__*/ _closure_get(10, ($scope) => _text($scope.a, $scope._.c), 0, "b3"), 0));
 const $frag_content = _content$1("b0", "<em> </em>", "D ", $frag_content__c);
-const $if_content__input_a__OR__c = /*@__PURE__*/ _fill_join_value("b2", 2, /*@__PURE__*/ _fill_join_if("b10", 5, /*@__PURE__*/ _patch_or("b6", 3, ($scope) => _text($scope.a, $scope._.f + $scope.c)), 0, 0));
+const $if_content__input_a__OR__c = /*@__PURE__*/ _fill_join_value("b4", 2, /*@__PURE__*/ _fill_join_if("b10", 5, /*@__PURE__*/ _patch_or("b6", 3, ($scope) => _text($scope.a, $scope._.f + $scope.c)), 0, 0));
 const $if_content__input_a = /*@__PURE__*/ _if_closure(0, 0, $if_content__input_a__OR__c);
 const $if_content__input_mode__OR__frag_content = /*@__PURE__*/ _fill_join_if("b9", 6, /*@__PURE__*/ _shell_or("b7", 6, ($scope) => _attr_content($scope, "b", $scope._.g ? $scope.f : null)), 0, 0);
 const $if_content__input_mode = /*@__PURE__*/ _if_closure(0, 0, $if_content__input_mode__OR__frag_content);

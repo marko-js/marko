@@ -4,9 +4,8 @@ const toggle = (document: Document) => {
   document.querySelector<HTMLButtonElement>(".toggle")!.click();
 };
 
-// A body handed to a renderer whose params run renders its owner's values,
-// in the patch creating its tag and once the renderer's state renders it
-// again, after a flush created it from its shell in a native tag.
+// A body handed to a renderer whose params run renders its owner's values, also
+// once the renderer's state renders it again or a native tag held its shell.
 export const config: TestConfig = {
   patches: true,
   steps: [

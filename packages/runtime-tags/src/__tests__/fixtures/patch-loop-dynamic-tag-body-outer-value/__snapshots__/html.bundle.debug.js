@@ -41,7 +41,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		const $for_content__row_label__closures = new Set();
-		_filled_guard($scope0_reason, 2) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill2", row?.label);
 		_dynamic_tag($scope1_id, "#text/0", input.wrap ? card_default : "div", {}, _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
@@ -52,7 +51,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, ($scope) => $scope0_page ? [{ input_suffix: input.suffix }, {
 			row_label: row?.label,
 			_: $scope($scope0_id)
-		}] : 0), 0, $wg__input_wrap, void 0, 2, $scope0_reason, 3);
+		}] : []), 0, $wg__input_wrap, void 0, 2, $scope0_reason, 3);
+		_filled_guard($scope0_reason, 2) && _content_withheld("__tests__/template.marko_2*content") && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill2", row?.label);
 		$wi__input_rows__OR__input_wrap__OR__input_suffix && _scope($scope1_id, {
 			row_label: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && row?.label,
 			_: _scope_with_id($scope0_id),

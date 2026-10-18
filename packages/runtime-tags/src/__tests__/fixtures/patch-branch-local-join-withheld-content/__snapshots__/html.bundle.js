@@ -13,18 +13,18 @@ var child_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			const $if_content__c__closures = /* @__PURE__ */ new Set();
 			const c = input.b + "!";
-			_filled_guard($scope0_reason, 6) ? _patch_value($scope1_id, "vb2", c) : _patch_init($scope1_id, "b3");
 			_html(`<p>${_patch_text($scope1_id, "a", input.a + c, void 0, $scope0_reason, 1)}</p>`);
 			const frag = { content: _content_resume("b0", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
 				_html(`<em>${_patch_text($scope2_id, "a", c, void 0, $scope0_reason, 6)}</em>`);
-				_unfilled_if($scope0_reason, 6) && _patch_init($scope2_id, _client_guard($scope0_reason, 6) ? "b4" : "b5");
+				_unfilled_if($scope0_reason, 6) && _patch_init($scope2_id, _client_guard($scope0_reason, 6) ? "b2" : "b3");
 				_subscribe(_unfilled_if($scope0_reason, 6) && $if_content__c__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) }));
 			}, $scope1_id) };
 			_html("<section>");
 			_patch_attr_content("b", $scope1_id, input.mode ? frag.content : null, void 0, $scope0_reason, 8);
 			_html(`</section>${_el_resume($scope1_id, "b", _mask_group($scope0_reason, 8))}`);
+			_filled_guard($scope0_reason, 6) ? (_client_guard($scope0_reason, 7) || _content_withheld("b0", _client_guard($scope0_reason, 8))) && _patch_value($scope1_id, "vb4", c) : _patch_init($scope1_id, "b5");
 			_patch_write($scope1_id, "wf", frag?.content, 1);
 			_patch_join_init($scope1_id, "b6", $scope0_reason, 1);
 			_client_guard($scope0_reason, 8) && _patch_init($scope1_id, "b7");

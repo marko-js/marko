@@ -113,22 +113,6 @@ function isStatefulLeaf(read: ReferencedExtra) {
       (!!read.rendersContent && !!getSourcesForExpr(read)?.state))
   );
 }
-// A consumer's read client code may render the content through: named where no
-// patch writes, in boundary content or by client state, or passed on unseen.
-export function rendersOnClient(read: ReferencedExtra) {
-  return read.nameOnly
-    ? !patchWrites(read.section) ||
-        inBoundaryContent(read.section) ||
-        !!getSourcesForExpr(read)?.state
-    : !!read.rendersContent;
-}
-// Inside a `@catch` or `@placeholder` (inclusive), which client code renders.
-const [inBoundaryContent] = createAnalysisMemo(
-  (section: Section): boolean =>
-    !!section.boundaryContent ||
-    (!!section.parent && inBoundaryContent(section.parent)),
-  false,
-);
 // A tag body is stateful when the prop it derives renders so in the
 // child; the last hop stays a prop query so whole reads of its owner count.
 function bodyRendersStateful(section: Section) {

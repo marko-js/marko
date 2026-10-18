@@ -1,7 +1,6 @@
 // PATCH
 [`a1 a17;D%c%;<i><!> <!></i>`, `a6;b%;<!><!><!>`, `a0 a15,`, `a3 !,`, `a2 a19,`, `a5;b%;<!><!><!>`, `a4 !a11;D D l/D%b%l&%b%l;<section><button> </button><p><!><!></p><!><!></section>`, {
   la: [1, {
-    va12: "b",
     cc: {
       s: {
         ta: "direct"
@@ -31,7 +30,6 @@
       va13: 0
     }
   }, 2, {
-    va12: "c",
     cc: {
       s: {
         ta: "direct"
@@ -76,6 +74,7 @@
         }, "a6"]
       }
     }, "a5"],
+    va12: "c",
     s: {
       wm: {
         content: _([
@@ -91,7 +90,6 @@
 // PATCH holding Ef4
 {
   la: [2, {
-    va12: "d",
     cc: {
       s: {
         ta: "direct"
@@ -126,12 +124,12 @@
         }
       }
     }, "a5"],
+    va12: "d",
     s: {
       wm: _.a,
       va13: 0
     }
   }, 1, {
-    va12: "e",
     cc: {
       s: {
         ta: "direct"
@@ -165,6 +163,7 @@
         }, "a6"]
       }
     }, "a5"],
+    va12: "e",
     s: {
       wm: {
         content: _([

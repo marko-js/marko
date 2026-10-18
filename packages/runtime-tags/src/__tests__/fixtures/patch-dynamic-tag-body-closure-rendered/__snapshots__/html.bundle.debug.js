@@ -43,7 +43,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 		_html(`depth ${_patch_text($scope1_id, "#text/0", input.depth, 2, $scope0_reason, 2)}`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, _client_guard($scope0_reason, 2) ? "__tests__/tags/heading.marko_1_input_depth#0:4/init" : "__tests__/tags/heading.marko_1_input_depth#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_depth__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "1:4"));
-	}, $scope0_id, ($scope) => $scope0_page ? [{ input_depth: input.depth }] : 0), 0, $wg__input_type, void 0, 2, $scope0_reason, 1);
+	}, $scope0_id, ($scope) => $scope0_page ? [{ input_depth: input.depth }] : []), 0, $wg__input_type, void 0, 2, $scope0_reason, 1);
 	$scope0_page ? _scope($scope0_id, {
 		input_depth: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.depth,
 		"ClosureScopes:input_depth/5": _write_if($scope0_reason, 2) && $input_depth__closures

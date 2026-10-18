@@ -38,7 +38,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.panels, (p) => {
 		const $scope1_id = _scope_id();
 		const $for_content__p_text__closures = new Set();
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", p?.text);
 		_set_scope_reason(10);
 		const $childScope = _patch_child($scope1_id, "#childScope/0");
 		panel_default({
@@ -51,6 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"));
 			}, $scope1_id)
 		});
+		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", p?.text);
 		_scope($scope1_id, {
 			p_text: p?.text,
 			_: _scope_with_id($scope0_id),

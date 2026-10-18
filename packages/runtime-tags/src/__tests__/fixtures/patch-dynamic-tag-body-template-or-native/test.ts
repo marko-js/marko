@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-// A body a dynamic tag renders natively or hands to a template rendering it in
-// patched structure: the patch renders it every time, so nothing it reads fills.
+// A body a dynamic tag renders natively or hands to a template: what it reads
+// fills only where the template holds it, which the server decides at render.
 export const config: TestConfig = {
   patches: true,
   steps: [

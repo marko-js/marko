@@ -29,6 +29,7 @@ import {
   _patch_value,
   entryKey,
   findOwnerDepth,
+  getHandedRenderer,
   groupSources,
   inCreatable,
   markContentRendered,
@@ -36,6 +37,7 @@ import {
   patchWait,
   shipShell,
   walkMarkers,
+  withHandedRenderer,
   withUnpatched,
   writePatch,
 } from "./writer";
@@ -116,9 +118,28 @@ function renderDynamicTag(
       ? SERVER_ALL
       : 0
     : undefined;
-  if (isPatchRender && !pairs) {
-    return withUnpatched(() =>
-      _base_dynamic_tag(
+  const unpatched = isPatchRender && !pairs;
+  // A renderer a patch runs renders what it is handed as its own.
+  const scoped = unpatched
+    ? withUnpatched
+    : typeof renderer === "function" && withHandedRenderer;
+  const value = scoped
+    ? scoped(() =>
+        _base_dynamic_tag(
+          scopeId,
+          accessor,
+          tag,
+          inputOrArgs,
+          content,
+          inputIsArgs,
+          markerGuard,
+          tagVar ? 1 : undefined,
+          pairing,
+          reason,
+          renderDynamicTag,
+        ),
+      )
+    : _base_dynamic_tag(
         scopeId,
         accessor,
         tag,
@@ -130,22 +151,8 @@ function renderDynamicTag(
         pairing,
         reason,
         renderDynamicTag,
-      ),
-    );
-  }
-  const value = _base_dynamic_tag(
-    scopeId,
-    accessor,
-    tag,
-    inputOrArgs,
-    content,
-    inputIsArgs,
-    markerGuard,
-    tagVar ? 1 : undefined,
-    pairing,
-    reason,
-    renderDynamicTag,
-  );
+      );
+  if (unpatched) return value;
   // A template whose own state drives its return keeps the client's value.
   if (
     typeof tagVar === "string" &&
@@ -188,11 +195,7 @@ export function pairsContent(
             : undefined,
         );
       }
-      // A native or absent tag renders its body here; a renderer, itself.
-      markContentRendered(
-        state,
-        typeof renderer === "function" ? renderer : content,
-      );
+      markContentRendered(state, renderer || content);
     }
   }
   return pairs;
@@ -205,8 +208,8 @@ export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
   if (state instanceof PatchUpdateState) {
     const withheld = (state.withheldContents ??= new Map());
     let instances = withheld.get(id);
-    if (!instances) withheld.set(id, (instances = new Set()));
-    instances.add(fn);
+    if (!instances) withheld.set(id, (instances = new Map()));
+    instances.set(fn, getHandedRenderer());
   }
   return _base_content(id, fn, scopeId);
 }
@@ -279,6 +282,16 @@ export function writeDynamicTagEntry(
         shell ? 0 : contentId,
         varId,
       ];
+      // A native tag's `content` input ships for the client to render itself.
+      const shipped =
+        typeof renderer === "string" &&
+        (
+          normalizeDynamicRenderer(
+            ((Array.isArray(args) ? args[0] : args) as { content?: unknown })
+              ?.content,
+          ) as ServerRenderer | undefined
+        )?.[RendererProp.Id];
+      if (shipped) (state.heldContents ??= new Set()).add(shipped);
       // Render-only locals (a loop's values) ride last, as its factory takes them.
       const locals = registered?.locals?.(state.scope);
       if (locals) entry.push(...locals);
@@ -364,11 +377,13 @@ export function _client_return(id: string) {
   clientReturns.add(id);
 }
 
-// Whether a consumer withheld a content renderer the flush handed it
-// (handed over, never invoked): server values inside fill then.
-export function _content_withheld(id: string) {
+// Whether the flush ships a content renderer to the client, or a consumer withheld
+// one it was handed (live where `client` says): server values inside fill then.
+export function _content_withheld(id: string, client: unknown = 1) {
   const state = getState();
   return (
-    state instanceof PatchUpdateState && !!state.withheldContents?.get(id)?.size
+    state instanceof PatchUpdateState &&
+    (!!state.heldContents?.has(id) ||
+      (!!client && !!state.withheldContents?.get(id)?.size))
   );
 }

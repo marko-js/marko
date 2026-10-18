@@ -33,7 +33,6 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		const $for_content__row_label__closures = /* @__PURE__ */ new Set();
 		const $for_content__n__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 0) && _patch_value($scope2_id, "va12", row?.label);
 		let n = 0;
 		const Label = { content: _content_resume("a2", () => {
 			const $scope5_id = _scope_id();
@@ -69,7 +68,7 @@ var template_default = _template("a", (input) => {
 				Cn: $wi__input_rows && 2,
 				Cp: 2
 			})));
-		}, $scope2_id, ($scope) => $scope0_page ? [{ h: row?.label }] : 0), 0, $wg__input_rows, void 0, 1, $scope0_reason, 0);
+		}, $scope2_id, ($scope) => $scope0_page ? [{ h: row?.label }] : []), 0, $wg__input_rows, void 0, 1, $scope0_reason, 0);
 		_for_of(row.tags, (tag) => {
 			const $scope3_id = _scope_id();
 			_dynamic_tag($scope3_id, "a", row.card ? Card : "span", {
@@ -80,6 +79,7 @@ var template_default = _template("a", (input) => {
 		}, 0, $scope2_id, "e", 1, void 0, void 0, void 0, void 0, "a5", $scope0_reason, 0);
 		_html("</section>");
 		_script($scope2_id, "a11");
+		_filled_guard($scope0_reason, 0) && (_content_withheld("a2", _client_guard($scope0_reason, 0)) || _content_withheld("a0")) && _patch_value($scope2_id, "va12", row?.label);
 		_patch_write($scope2_id, "wm", Label, 1);
 		_patch_value($scope2_id, "va13", n, 1);
 		_scope($scope2_id, {

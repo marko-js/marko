@@ -1,7 +1,6 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_6*content packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_6_n#2:11/init;D%c%;<i><!> <!></i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_4*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_7*content packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_7_n#2:11/init,`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_1*content !,`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_5*content packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_5_n#2:11/init,`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_3*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2*shell !packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2;D D l/D%b%l&%b%l;<section><button> </button><p><!><!></p><!><!></section>`, {
   "PatchLoop:#text/0": [1, {
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill1": "b",
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
         "PatchText:#text/0": "direct"
@@ -31,7 +30,6 @@
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill2": 0
     }
   }, 2, {
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill1": "c",
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
         "PatchText:#text/0": "direct"
@@ -76,6 +74,7 @@
         }, _.b]
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_3*shell"],
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill1": "c",
     "PatchSetup:": {
       "PatchWrite:Label": {
         content: _([
@@ -91,7 +90,6 @@
 // PATCH holding Ef4
 {
   "PatchLoop:#text/0": [2, {
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill1": "d",
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
         "PatchText:#text/0": "direct"
@@ -126,12 +124,12 @@
         }
       }
     }, _.d = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_3*shell"],
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill1": "d",
     "PatchSetup:": {
       "PatchWrite:Label": _.a,
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill2": 0
     }
   }, 1, {
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill1": "e",
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
         "PatchText:#text/0": "direct"
@@ -165,6 +163,7 @@
         }, _.c]
       }
     }, _.d],
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill1": "e",
     "PatchSetup:": {
       "PatchWrite:Label": {
         content: _([

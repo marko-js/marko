@@ -35,7 +35,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		const $for_content__row_label__closures = new Set();
 		const $for_content__n__closures = new Set();
-		_filled_guard($scope0_reason, 0) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill1", row?.label);
 		let n = 0;
 		const Label = { content: _content_resume("__tests__/template.marko_5*content", () => {
 			const $scope5_id = _scope_id();
@@ -71,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				"ClosureSignalIndex:row_label/13": $wi__input_rows && 2,
 				"ClosureSignalIndex:n/15": 2
 			}, "__tests__/template.marko", "10:8")));
-		}, $scope2_id, ($scope) => $scope0_page ? [{ row_label: row?.label }] : 0), 0, $wg__input_rows, void 0, 1, $scope0_reason, 0);
+		}, $scope2_id, ($scope) => $scope0_page ? [{ row_label: row?.label }] : []), 0, $wg__input_rows, void 0, 1, $scope0_reason, 0);
 		_for_of(row.tags, (tag) => {
 			const $scope3_id = _scope_id();
 			_dynamic_tag($scope3_id, "#text/0", row.card ? Card : "span", {
@@ -82,6 +81,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, 0, $scope2_id, "#text/4", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 0);
 		_html("</section>");
 		_script($scope2_id, "__tests__/template.marko_2");
+		_filled_guard($scope0_reason, 0) && (_content_withheld("__tests__/template.marko_5*content", _client_guard($scope0_reason, 0)) || _content_withheld("__tests__/template.marko_7*content")) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill1", row?.label);
 		_patch_write($scope2_id, "PatchWrite:Label", Label, 1);
 		_patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill2", n, 1);
 		_scope($scope2_id, {

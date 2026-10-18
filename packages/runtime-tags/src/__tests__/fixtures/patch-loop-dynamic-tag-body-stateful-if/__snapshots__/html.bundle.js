@@ -35,14 +35,14 @@ var template_default = _template("a", (input) => {
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		const $for_content__row_label__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "va3", row?.label);
 		_dynamic_tag($scope1_id, "a", input.wrap ? card_default : "div", {}, _content_resume("a0", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
 			_html(`<b>${_patch_text($scope2_id, "a", row.label, void 0, $scope0_reason, 1)}</b>`);
 			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "a2");
 			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__row_label__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_wrap && _scope_with_id($scope1_id) }));
-		}, $scope1_id, ($scope) => $scope0_page ? [{ d: row?.label }] : 0), 0, $wg__input_wrap, void 0, 2, $scope0_reason, 2);
+		}, $scope1_id, ($scope) => $scope0_page ? [{ d: row?.label }] : []), 0, $wg__input_wrap, void 0, 2, $scope0_reason, 2);
+		_filled_guard($scope0_reason, 1) && _content_withheld("a0") && _patch_value($scope1_id, "va3", row?.label);
 		$wi__input_rows__OR__input_wrap && _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && row?.label,
 			_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),

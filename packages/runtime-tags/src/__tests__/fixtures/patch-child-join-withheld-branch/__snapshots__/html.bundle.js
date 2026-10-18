@@ -34,8 +34,8 @@ var child_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b1"], $scope0_reason, 4);
-	_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) || _content_withheld("b0") && _client_guard($scope0_reason, 7)) ? _patch_value($scope0_id, "vb7", input.a) : _patch_write($scope0_id, "we", input.a, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 6)));
-	_filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _content_withheld("b0") && _client_guard($scope0_reason, 7)) ? _patch_value($scope0_id, "vb8", input.b) : _patch_write($scope0_id, "wf", input.b, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5)));
+	_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) || _content_withheld("b0", _client_guard($scope0_reason, 7))) ? _patch_value($scope0_id, "vb7", input.a) : _patch_write($scope0_id, "we", input.a, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 6)));
+	_filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _content_withheld("b0", _client_guard($scope0_reason, 7))) ? _patch_value($scope0_id, "vb8", input.b) : _patch_write($scope0_id, "wf", input.b, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5)));
 	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b,

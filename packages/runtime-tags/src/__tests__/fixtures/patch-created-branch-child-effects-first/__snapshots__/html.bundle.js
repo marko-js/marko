@@ -119,7 +119,7 @@ var template_default = _template("a", (input) => {
 					a: _existing_scope($childScope4),
 					Ck: $wi__input_items && 1
 				}));
-			}, $scope1_id, ($scope) => $scope0_page ? [{ g: input.items }, { _: $scope($scope0_id) }] : 0), 0, _write_guard($scope0_reason, 6), void 0, 2, $scope0_reason, 6);
+			}, $scope1_id, ($scope) => $scope0_page ? [{ g: input.items }, { _: $scope($scope0_id) }] : []), 0, _write_guard($scope0_reason, 6), void 0, 2, $scope0_reason, 6);
 			_script($scope1_id, "a17", 1, 1);
 			_script($scope1_id, "a18");
 			_scope($scope1_id, {

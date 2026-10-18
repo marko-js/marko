@@ -77,7 +77,6 @@ import {
   sourcesUtil,
 } from "../sources";
 import { createAnalysisState } from "../state";
-import { getDynamicTagInputBindings } from "../tag-name-type";
 import { getWriteSources, isFilledHole, isStableExpr } from "./decisions";
 import {
   catchSetupRenders,
@@ -88,7 +87,6 @@ import {
   inStatefulBranch,
   isStatefulBranch,
   getCallerOwnedStructure,
-  rendersOnClient,
 } from "./structure";
 
 // Stable wire/registry key for a fill: a register id for a template-wide fill
@@ -573,17 +571,18 @@ function getReadStructure(
     // No patch write reaches a skipped region: reads inside stateful
     // structure, or boundary content the client renders, promote to owner fills.
     let readSection: Section | undefined = readAt;
-    let content: Section | undefined;
+    let contents: SortedOpt<Section>;
     while (readSection && readSection !== binding.section) {
       if (isStatefulBranch(readSection)) return true;
       if (readSection.boundaryContent) return true;
-      // The nearest content a consumer renders (or withholds).
+      // Each content around the read that a consumer may withhold: any of them
+      // left to client code renders what is inside.
       if (
-        !content &&
         !readSection.branch &&
-        (readSection.derives || readSection.branchExpr)
+        (readSection.derives || readSection.branchExpr) &&
+        consumerMayWithhold(readSection)
       ) {
-        content = readSection;
+        contents = sectionUtil.add(contents, readSection);
       }
       if (readSection.callSections) {
         forEach(readSection.callSections, (callSection) => {
@@ -596,8 +595,8 @@ function getReadStructure(
     if (effect) continue;
     // An `<await>` value re-fires no promise client-side: the boundary's
     // own flushes carry its settlement.
-    if (content && !isBoundaryValueRead(read) && consumerMayWithhold(content)) {
-      found = mergeConditions(found, { contents: content });
+    if (contents && !isBoundaryValueRead(read)) {
+      found = mergeConditions(found, { contents });
     }
     if (!knownChild) continue;
     // Only caller-owned structure of OTHER caller params can leave this read
@@ -774,21 +773,16 @@ function getOtherInputs(sources: Sources | undefined, binding: Binding) {
 // Whether the consumer may withhold the content, as the runtime decides: client
 // code renders it on its own, or client state reaches its structural params.
 function consumerMayWithhold(content: Section) {
-  const consumer = content.derives?.tag;
-  if (!consumer || !isKnownTagExtra(consumer)) {
-    // A dynamic tag naming only known templates and native names hands the content
-    // to those templates' reads; for any other consumer the runtime decides.
-    const inputs = getDynamicTagInputBindings(
-      (consumer || content.branchExpr)!,
-    );
-    return inputs
-      ? someContentRead(inputs, content.derives?.properties, rendersOnClient)
-      : !!getRendererReason(content);
-  }
   const reason = getRendererReason(content);
   // Read unconditionally, its renderer renders wherever the consumer puts it
   // (a `@catch` on a client error, say), apart from any patch render.
   if (reason && isUnconditionalReason(reason)) return true;
+  const consumer = content.derives?.tag;
+  // A dynamic tag's body, or a `<define>` var passed on (its direct tags
+  // classify on their own), may reach any consumer, so the runtime decides.
+  if (!consumer || !isKnownTagExtra(consumer)) {
+    return !!reason;
+  }
   for (const { params, sources } of getParamGroupSources(consumer) || []) {
     if (
       hasStructuralParam(params) &&
