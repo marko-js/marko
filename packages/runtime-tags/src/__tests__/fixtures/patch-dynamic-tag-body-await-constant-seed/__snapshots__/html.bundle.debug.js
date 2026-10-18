@@ -63,7 +63,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			"ClosureScopes:v/8": _write_if($scope0_reason, 2) && $await_content__v__closures
 		}, "__tests__/tags/card.marko", "2:2", { v: "2:8" }), _client_guard($scope0_reason, 3) && "__tests__/tags/card.marko_1_input_on#0:4/subscribe", $wg__input_on);
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
-	}, 1, "__tests__/tags/card.marko_1*content", 1);
+	}, 1, "__tests__/tags/card.marko_1*content", 1, 1);
 	_patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
 	$scope0_page && _scope($scope0_id, {
 		input_on: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.on,

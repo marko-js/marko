@@ -630,7 +630,14 @@ function getWithholdCall(section: Section, binding: Binding) {
     "_content_withhold",
     getDeclaredBindingExpression(binding),
   );
-  const contents = kind === true || getWithheldGuard(section, kind.contents);
+  // Content under an `<await>` counts too: a settled one renders at once,
+  // with nothing pending.
+  const contents =
+    kind === true ||
+    getWithheldGuard(
+      section,
+      sectionUtil.union(kind.contents, kind.awaitedContents),
+    );
   if (contents === true) return call;
   const needed = orCallerGroupGuards(
     section,

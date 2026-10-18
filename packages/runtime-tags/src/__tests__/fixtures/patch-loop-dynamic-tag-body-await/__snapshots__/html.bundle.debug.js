@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				"ClosureScopes:v/8": $await_content__v__closures
 			}, "__tests__/template.marko", "3:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_2_row_card#1:4/subscribe", $wg__input_rows);
 			$wg__input_rows || $wi__input_rows && _resume_branch($scope2_id);
-		}, 1, "__tests__/template.marko_2*content");
+		}, 1, "__tests__/template.marko_2*content", void 0, 1);
 		$wi__input_rows && _scope($scope1_id, {
 			"ClosureScopes:row_label/7": $for_content__row_label__closures,
 			"ClosureScopes:row_card/6": _unfilled_if($scope0_reason, 0) && $for_content__row_card__closures

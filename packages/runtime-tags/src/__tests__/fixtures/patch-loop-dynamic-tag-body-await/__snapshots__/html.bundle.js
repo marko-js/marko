@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 				i: $await_content__v__closures
 			}), _client_guard($scope0_reason, 0) && "a8", $wg__input_rows);
 			$wg__input_rows || $wi__input_rows && _resume_branch($scope2_id);
-		}, 1, "a1");
+		}, 1, "a1", void 0, 1);
 		$wi__input_rows && _scope($scope1_id, {
 			h: $for_content__row_label__closures,
 			g: _unfilled_if($scope0_reason, 0) && $for_content__row_card__closures

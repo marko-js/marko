@@ -45,10 +45,10 @@ var card_default = _template("b", (input) => {
 		_filled_guard($scope0_reason, 2) && _content_withheld("b0", $scope1_id) && _patch_value($scope0_id, "vb4", input.content);
 		$wi__input_p__OR__input_content && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 1, "b1", 1, 1);
-	$scope0_page && _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content,
 		f: _write_if($scope0_reason, 2) && $input_content__closures
-	});
+	}) : _content_withheld("b0", $scope0_id) && _content_withhold(input.content);
 });
 
 // template.marko

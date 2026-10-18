@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 			j: _write_if($scope0_reason, 3) && $await_content__v__closures
 		}), _client_guard($scope0_reason, 4) && "a8", $wg__input_on);
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
-	}, 1, "a2", 1);
+	}, 1, "a2", 1, 1);
 	_dynamic_tag($scope0_id, "b", input.on ? card_default : "div", {}, _content_resume("a0", () => {
 		const $scope3_id = _scope_id();
 		_scope_reason();

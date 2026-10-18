@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					"ClosureScopes:v/11": _write_if($scope0_reason, 6) && $await_content__v__closures
 				}, "__tests__/template.marko", "7:6", { v: "7:12" }), _client_guard($scope0_reason, 7) && "__tests__/template.marko_2_input_on#0:6/subscribe", $wg__input_on);
 				$wg__input_on || $wi__input_show__OR__input_note__OR__input_v__OR__input_on && _resume_branch($scope2_id);
-			}, 1, "__tests__/template.marko_2*content");
+			}, 1, "__tests__/template.marko_2*content", void 0, 1);
 			_script($scope1_id, "__tests__/template.marko_1_x#2", 1, 1);
 			_server_guard($scope0_reason, 5) && _patch_effect($scope1_id, "PatchEffect:__tests__/template.marko_1_x#2", "x");
 			_filled_guard($scope0_reason, 5) ? _patch_write($scope1_id, "PatchWrite:x", x, !_server_guard($scope0_reason, 5)) : _patch_init($scope1_id, "__tests__/template.marko_1_input_note#0:4/init");

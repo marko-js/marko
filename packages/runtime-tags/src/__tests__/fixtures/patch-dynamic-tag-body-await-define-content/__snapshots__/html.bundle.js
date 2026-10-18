@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 		Body.content({});
 		_filled_guard($scope0_reason, 3) && _content_withheld("a1", $scope3_id) && _patch_value($scope0_id, "va6", input.note);
 		_scope($scope3_id, { a: _existing_scope($childScope) });
-	}, 1, "a0", 1);
+	}, 1, "a0", 1, 1);
 	_html("</main>");
 	_patch_write($scope0_id, "wd", input.on, 1);
 	$scope0_page && _scope($scope0_id, {

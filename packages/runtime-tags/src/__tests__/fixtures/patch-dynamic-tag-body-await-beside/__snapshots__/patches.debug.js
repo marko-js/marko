@@ -31,6 +31,7 @@
       "PatchText:#text/0": "c"
     }
   },
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-beside/template.marko_fill0": "c",
   "PatchChild:BranchScopes:#text/0": {
     "PatchDynamicTag:#text/0": [">div", 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-beside/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/0": {

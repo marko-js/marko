@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 				_unfilled_if($scope0_reason, 6) && _patch_init($scope3_id, "a7");
 				$wi__input_show__OR__input_v__OR__input_on && _subscribe(_unfilled_if($scope0_reason, 6) && $input_on__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 6) && "a7", $wg__input_on);
 				$wg__input_on || $wi__input_show__OR__input_v__OR__input_on && _resume_branch($scope3_id);
-			}, 1, "a1");
+			}, 1, "a1", void 0, 1);
 			$wi__input_show__OR__input_v__OR__input_on && _scope($scope2_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

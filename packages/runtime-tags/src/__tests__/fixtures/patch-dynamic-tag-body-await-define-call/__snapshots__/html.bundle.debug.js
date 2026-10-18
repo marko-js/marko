@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_unfilled_if($scope0_reason, 6) && _patch_init($scope3_id, "__tests__/template.marko_3_input_on#0:6/subscribe");
 				$wi__input_show__OR__input_v__OR__input_on && _subscribe(_unfilled_if($scope0_reason, 6) && $input_on__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 6) && "__tests__/template.marko_3_input_on#0:6/subscribe", $wg__input_on);
 				$wg__input_on || $wi__input_show__OR__input_v__OR__input_on && _resume_branch($scope3_id);
-			}, 1, "__tests__/template.marko_3*content");
+			}, 1, "__tests__/template.marko_3*content", void 0, 1);
 			$wi__input_show__OR__input_v__OR__input_on && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
 			return 0;
 		}

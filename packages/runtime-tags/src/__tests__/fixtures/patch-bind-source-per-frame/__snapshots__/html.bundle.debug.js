@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_title#0:5/subscribe");
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_handler#0:9/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_title__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4", { "EventAttributes:#button/0": ["...{ title: input.title, onClick: handler }", "5:25"] }), _client_guard($scope0_reason, 3) && "__tests__/template.marko_1_input_title#0:5/subscribe"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_1_handler#0:9/subscribe");
-	}, 1, "__tests__/template.marko_1*content", 1);
+	}, 1, "__tests__/template.marko_1*content", 1, 1);
 	_await($scope0_id, "#text/1", input.two, () => {
 		const $scope2_id = _scope_id();
 		_html(`<button${_patch_attrs({
@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureSignalIndex:input_title/10": $wi__input_title && 1,
 			"ClosureSignalIndex:handler/11": $wi__input_title && 1
 		}, "__tests__/template.marko", "7:4", { "EventAttributes:#button/0": ["...{ title: input.title, onClick: handler }", "8:25"] }), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_title#0:5/subscribe"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_handler#0:9/subscribe");
-	}, 1, "__tests__/template.marko_2*content", 1);
+	}, 1, "__tests__/template.marko_2*content", 1, 1);
 	_html(`<em>${_patch_text($scope0_id, "#text/2", count)}</em></main>`);
 	_patch_write($scope0_id, "PatchWrite:handler", handler, 1);
 	$scope0_page ? _scope($scope0_id, {

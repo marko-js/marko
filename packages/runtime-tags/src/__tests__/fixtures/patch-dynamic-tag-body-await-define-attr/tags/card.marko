@@ -1,0 +1,7 @@
+import Keeper from "./keeper.marko";
+<define/Pass|{ c, on }|>
+  <${on ? Keeper : "div"} content=c/>
+</define>
+<await|x|=input.p>
+  <Pass c=input.content on=x/>
+</await>

@@ -63,7 +63,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		Body.content({});
 		_filled_guard($scope0_reason, 3) && _content_withheld("__tests__/template.marko_2*content", $scope3_id) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note);
 		_scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "6:4");
-	}, 1, "__tests__/template.marko_3*content", 1);
+	}, 1, "__tests__/template.marko_3*content", 1, 1);
 	_html("</main>");
 	_patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
 	$scope0_page && _scope($scope0_id, {

@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 			j: _write_if($scope0_reason, 2) && $await_content__v__closures
 		}), _client_guard($scope0_reason, 3) && "a7", $wg__input_on);
 		$wg__input_on || $wi__input_note__OR__input_v__OR__input_on && _resume_branch($scope1_id);
-	}, 1, "a1", 1);
+	}, 1, "a1", 1, 1);
 	_html("</main>");
 	_script($scope0_id, "a8", 1, 1);
 	_server_guard($scope0_reason, 1) && _patch_effect($scope0_id, "ea8", "e");

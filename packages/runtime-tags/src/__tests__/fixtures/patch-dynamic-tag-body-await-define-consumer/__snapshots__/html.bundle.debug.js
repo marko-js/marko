@@ -63,10 +63,10 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_filled_guard($scope0_reason, 1) && _content_withheld("__tests__/tags/card.marko_2*content", $scope3_id) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill0", input.content);
 		_scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/card.marko", "5:2");
 	}, 1, "__tests__/tags/card.marko_3*content", 1, 1);
-	$scope0_page && _scope($scope0_id, {
+	$scope0_page ? _scope($scope0_id, {
 		input_content: input.content,
 		"ClosureScopes:input_content/5": _write_if($scope0_reason, 1) && $input_content__closures
-	}, "__tests__/tags/card.marko", 0, { input_content: ["input.content"] });
+	}, "__tests__/tags/card.marko", 0, { input_content: ["input.content"] }) : _content_withheld("__tests__/tags/card.marko_2*content", $scope0_id) && _content_withhold(input.content);
 });
 
 // template.marko

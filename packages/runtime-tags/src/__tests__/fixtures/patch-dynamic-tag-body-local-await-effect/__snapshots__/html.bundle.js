@@ -60,7 +60,7 @@ var template_default = _template("a", (input) => {
 					l: _write_if($scope0_reason, 6) && $await_content__v__closures
 				}), _client_guard($scope0_reason, 7) && "a8", $wg__input_on);
 				$wg__input_on || $wi__input_show__OR__input_note__OR__input_v__OR__input_on && _resume_branch($scope2_id);
-			}, 1, "a1");
+			}, 1, "a1", void 0, 1);
 			_script($scope1_id, "a9", 1, 1);
 			_server_guard($scope0_reason, 5) && _patch_effect($scope1_id, "ea9", "c");
 			_filled_guard($scope0_reason, 5) ? _patch_write($scope1_id, "wc", x, !_server_guard($scope0_reason, 5)) : _patch_init($scope1_id, "a10");

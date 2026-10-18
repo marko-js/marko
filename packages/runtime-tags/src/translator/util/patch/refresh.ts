@@ -18,7 +18,6 @@ import {
   someUpToAliasRoot,
   someReadIn,
 } from "../bindings";
-import * as TagNameType from "../constants/tag-name-type";
 import { createAnalysisMemo } from "../cyclic-memo";
 import { readsValuesOnResume } from "../finalize-references";
 import {
@@ -425,10 +424,21 @@ export interface FillConditions {
   contents?: SortedOpt<Section>;
   awaitedContents?: SortedOpt<Section>;
   awaits?: SortedOpt<Section>;
-  // The `<await>` bodies a read handing the value on to what may keep it crosses.
+  // The `<await>` bodies a read crosses handing it on to what may keep it.
   passedUnder?: SortedOpt<Section>;
   // A join the patch writes reads it: its other members, where the client runs it.
   writes?: SortedOpt<Sources>;
+}
+
+interface FillReadKind {
+  kind: true | FillConditions | undefined;
+  contentKind: true | FillConditions | undefined;
+  unpatchedJoins: Intersection[] | undefined;
+  unpatchedStructure: true | FillConditions | undefined;
+  writtenJoins: Map<Intersection, Section> | undefined;
+  clientJoins: [Intersection, FillConditions][];
+  // Some read hands it on to what may keep it later.
+  handsOn: boolean;
 }
 
 // What a binding's reads (and its direct aliases') need of its fill, and the
@@ -442,10 +452,11 @@ const [getFillReadKind, resetFillReadKinds] = createAnalysisMemo(
     unpatchedStructure: undefined,
     writtenJoins: undefined,
     clientJoins: [],
+    handsOn: false,
   },
 );
 
-function computeFillReadKind(binding: Binding) {
+function computeFillReadKind(binding: Binding): FillReadKind {
   let kind: true | FillConditions | undefined;
   // What the reads rendering it as content need, its own, its aliases' and
   // its derived values': `{}` where they need nothing.
@@ -455,12 +466,16 @@ function computeFillReadKind(binding: Binding) {
   // Each written join its value is shipped for, by the section reading it.
   let writtenJoins: Map<Intersection, Section> | undefined;
   const clientJoins: [Intersection, FillConditions][] = [];
+  let handsOnAny = false;
   for (const alias of binding.propertyAliases.values()) {
-    contentKind = mergeKinds(contentKind, getFillReadKind(alias).contentKind);
+    const aliasFill = getFillReadKind(alias);
+    contentKind = mergeKinds(contentKind, aliasFill.contentKind);
+    handsOnAny ||= aliasFill.handsOn;
   }
   for (const alias of binding.aliases) {
     const aliasFill = getFillReadKind(alias);
     contentKind = mergeKinds(contentKind, aliasFill.contentKind);
+    handsOnAny ||= aliasFill.handsOn;
     // A property alias or rest fills on its own; a direct alias reads this.
     if (isDirectAlias(alias)) {
       kind = mergeKinds(kind, aliasFill.kind);
@@ -504,30 +519,32 @@ function computeFillReadKind(binding: Binding) {
     // A derived value renders it by its own kind; passed to another template,
     // this read renders it, and the callee reports its own state.
     let rendersContent = isContentRender(read);
-    // Handed to what may keep it later: a dynamic tag's inputs, another
-    // template, or a derived value kept in content.
-    let handsOn = handsToDynamicTag(read);
+    // Handed to what may keep it later: rendered as content, passed to another
+    // template, or derived into a value handed on.
+    let handsOn = !!read.rendersContent;
     forEach(read.derives, (derived) => {
       if (derived.section.program === binding.section.program) {
-        const derivedKind = getFillReadKind(derived).contentKind;
+        const derivedFill = getFillReadKind(derived);
+        const derivedKind = derivedFill.contentKind;
         if (derivedKind) {
           contentKind = mergeKinds(contentKind, derivedKind);
           rendersContent = true;
-          handsOn ||= derivedKind !== true && keptLater(derivedKind);
+          handsOn ||= derivedFill.handsOn;
         }
       } else if (someContentRead(derived, undefined, isContentRender)) {
         rendersContent = handsOn = true;
       }
     });
-    const passed: { under?: SortedOpt<Section> } | undefined = handsOn
+    handsOnAny ||= handsOn;
+    const handOff: { under?: SortedOpt<Section> } | undefined = handsOn
       ? {}
       : undefined;
-    const readKind = getReadKind(binding, read, effect, written, passed);
+    const readKind = getReadKind(binding, read, effect, written, handOff);
     kind = mergeKinds(kind, readKind);
     if (rendersContent) {
       contentKind = mergeKinds(
         contentKind,
-        mergeKinds(readKind || {}, { passedUnder: passed?.under }),
+        mergeKinds(readKind || {}, { passedUnder: handOff?.under }),
       );
     }
     if (written && readKind !== true && readKind?.writes) {
@@ -550,6 +567,7 @@ function computeFillReadKind(binding: Binding) {
     unpatchedStructure,
     writtenJoins,
     clientJoins,
+    handsOn: handsOnAny,
   };
 }
 
@@ -566,33 +584,14 @@ function isWithholdableContent(section: Section) {
   );
 }
 
-// A dynamic tag the analysis cannot resolve, given inputs (`retained`).
-function handsToDynamicTag(read: ReferencedExtra) {
-  return (
-    !!read.rendersContent &&
-    !!read.retained &&
-    read.tagNameType === TagNameType.DynamicTag
-  );
-}
-
-// A report its section's end may not decide: content, or a hand-off, under
-// an `<await>` body.
-function keptLater(kind: FillConditions) {
-  return hasContents(kind) || !!kind.passedUnder;
-}
-
-// An `<await>` body keeping, or handing on, a value from above it may keep
-// content after the gates around it ran: pending, they count it kept.
+// An `<await>` body handing on a value from above it may keep content after
+// the gates around it ran: pending, they count it kept.
 export function awaitMayWithhold(body: Section) {
   for (let above = body.parent; above; above = above.parent) {
     if (
       some(above.bindings, (binding) => {
         const kind = getPatchFill(binding).contentKind;
-        return (
-          kind !== true &&
-          (sectionUtil.has(kind?.awaits, body) ||
-            sectionUtil.has(kind?.passedUnder, body))
-        );
+        return kind !== true && sectionUtil.has(kind?.passedUnder, body);
       })
     ) {
       return true;
@@ -607,7 +606,7 @@ function getReadKind(
   read: ReferencedExtra,
   effect: boolean,
   written: boolean,
-  passed?: { under?: SortedOpt<Section> },
+  handOff?: { under?: SortedOpt<Section> },
 ): true | FillConditions | undefined {
   const knownChild = isKnownChild(binding.section);
   const refs = getReferencedBindings(read);
@@ -661,17 +660,17 @@ function getReadKind(
   if (written) return conditions;
   return mergeKinds(
     conditions,
-    getReadStructure(binding, read, effect, passed),
+    getReadStructure(binding, read, effect, handOff),
   );
 }
 
 // The structure a read sits in that the client may own, from the binding's
-// section (`true`: always); `passed` takes the `<await>` bodies it crosses.
+// section (`true`: always); `handOff` takes the `<await>` bodies it crosses.
 function getReadStructure(
   binding: Binding,
   read: ReferencedExtra,
   effect: boolean,
-  passed?: { under?: SortedOpt<Section> },
+  handOff?: { under?: SortedOpt<Section> },
 ): true | FillConditions | undefined {
   const knownChild = isKnownChild(binding.section);
   let found: FillConditions | undefined;
@@ -691,8 +690,8 @@ function getReadStructure(
     while (readSection && readSection !== binding.section) {
       if (isStatefulBranch(readSection)) return true;
       if (readSection.boundaryContent) return true;
-      if (passed && readSection.branch?.await) {
-        passed.under = sectionUtil.add(passed.under, readSection);
+      if (handOff && readSection.branch?.await) {
+        handOff.under = sectionUtil.add(handOff.under, readSection);
       }
       if (unawaited && readSection.branch?.await) {
         awaitedContents = sectionUtil.union(awaitedContents, unawaited);

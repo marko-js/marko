@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "a6");
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, "a7");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_title__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "a6"), _client_guard($scope0_reason, 3) && "a7");
-	}, 1, "a2", 1);
+	}, 1, "a2", 1, 1);
 	_await($scope0_id, "b", input.two, () => {
 		const $scope2_id = _scope_id();
 		_html(`<button${_patch_attrs({
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			Ck: $wi__input_title && 1,
 			Cl: $wi__input_title && 1
 		}), _client_guard($scope0_reason, 3) && "a9"), _client_guard($scope0_reason, 3) && "a10");
-	}, 1, "a1", 1);
+	}, 1, "a1", 1, 1);
 	_html(`<em>${_patch_text($scope0_id, "c", count)}</em></main>`);
 	_patch_write($scope0_id, "wj", handler, 1);
 	$scope0_page ? _scope($scope0_id, {

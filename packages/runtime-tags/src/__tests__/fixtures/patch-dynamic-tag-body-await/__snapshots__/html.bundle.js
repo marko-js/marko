@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 			i: _write_if($scope0_reason, 2) && $await_content__v__closures
 		}), _client_guard($scope0_reason, 3) && "a7", $wg__input_on);
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
-	}, 1, "a1", 1);
+	}, 1, "a1", 1, 1);
 	_html("</main>");
 	_patch_write($scope0_id, "we", input.on, 1);
 	$scope0_page && _scope($scope0_id, {
