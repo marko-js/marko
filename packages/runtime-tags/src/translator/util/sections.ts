@@ -337,7 +337,10 @@ export function finalizeEnclosing(section: Section) {
           ),
         inContentSection:
           enclosing.inContentSection ||
-          (!section.branch && (!!section.derives || !!section.boundaryContent)),
+          (!section.branch &&
+            (!!section.derives ||
+              !!section.branchExpr ||
+              !!section.boundaryContent)),
         nonOptionalAncestor: section.branch?.optional
           ? enclosing.nonOptionalAncestor
           : section,

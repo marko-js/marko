@@ -15,7 +15,7 @@
     },
     "PatchDynamicTag:#text/3": [">span", {
       label: "dynamic"
-    }, _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_7*content"],
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_7*content"],
     "PatchChild:BranchScopes:#text/3": {
       "PatchChild:BranchScopes:#span/0": {
         "PatchText:#text/0": "b"
@@ -43,35 +43,33 @@
         }
       }, _.b]
     },
-    "PatchDynamicTag:#text/3": ["^^packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_1*content", 0, _.c],
+    "PatchDynamicTag:#text/3": "^^packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_1*content",
     "PatchChild:BranchScopes:#text/3": {
       "PatchText:#text/0": "dynamic",
       "PatchBranch:#text/1": [{
-        "PatchDynamicTag:#text/0": ["^#ClosestBranch #ParentBranch #ParentBranch packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_7*content", 0, 0, 0, {
-          row_label: "c"
-        }],
+        "PatchDynamicTag:#text/0": "^#ClosestBranch #ParentBranch #ParentBranch packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_7*content",
         "PatchChild:BranchScopes:#text/0": {
           "PatchText:#text/0": "c"
         }
       }, _.b]
     },
     "PatchLoop:#text/4": [{
-      "PatchDynamicTag:#text/0": _.d = "^^^packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_1*content",
+      "PatchDynamicTag:#text/0": _.c = "^^^packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_1*content",
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "y",
         "PatchBranch:#text/1": [{
-          "PatchDynamicTag:#text/0": _.e = "^#ClosestBranch #ParentBranch #ParentBranch #ParentBranch packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_5*content",
+          "PatchDynamicTag:#text/0": _.d = "^#ClosestBranch #ParentBranch #ParentBranch #ParentBranch packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_5*content",
           "PatchChild:BranchScopes:#text/0": {
             "PatchText:#text/0": "c"
           }
         }, _.b]
       }
     }, {
-      "PatchDynamicTag:#text/0": _.d,
+      "PatchDynamicTag:#text/0": _.c,
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "z",
         "PatchBranch:#text/1": [{
-          "PatchDynamicTag:#text/0": _.e,
+          "PatchDynamicTag:#text/0": _.d,
           "PatchChild:BranchScopes:#text/0": {
             "PatchText:#text/0": "c"
           }
@@ -107,7 +105,7 @@
     },
     "PatchDynamicTag:#text/3": [">span", {
       label: "dynamic"
-    }, _.d = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_7*content"],
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_7*content"],
     "PatchChild:BranchScopes:#text/3": {
       "PatchChild:BranchScopes:#span/0": {
         "PatchText:#text/0": "d"
@@ -127,7 +125,7 @@
           "PatchText:#text/0": "d"
         }
       }
-    }, _.e = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_3*shell"],
+    }, _.d = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_3*shell"],
     "PatchSetup:": {
       "PatchWrite:Label": _.a,
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill2": 0
@@ -145,13 +143,11 @@
         }
       }, _.c]
     },
-    "PatchDynamicTag:#text/3": ["^^packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_1*content", 0, _.d],
+    "PatchDynamicTag:#text/3": "^^packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_1*content",
     "PatchChild:BranchScopes:#text/3": {
       "PatchText:#text/0": "dynamic",
       "PatchBranch:#text/1": [{
-        "PatchDynamicTag:#text/0": ["^#ClosestBranch #ParentBranch #ParentBranch packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_7*content", 0, 0, 0, {
-          row_label: "e"
-        }],
+        "PatchDynamicTag:#text/0": "^#ClosestBranch #ParentBranch #ParentBranch packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_7*content",
         "PatchChild:BranchScopes:#text/0": {
           "PatchText:#text/0": "e"
         }
@@ -168,7 +164,7 @@
           }
         }, _.c]
       }
-    }, _.e],
+    }, _.d],
     "PatchSetup:": {
       "PatchWrite:Label": {
         content: _([

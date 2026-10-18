@@ -20,10 +20,10 @@ var card_default = _template("b", (input) => {
 const $template = "<!><!><!>";
 _shells({
 	c0: "c0,",
-	c: "c;b%;<!><!><!>"
+	c: "c !;b%;<!><!><!>"
 });
 var heading_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_type = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_depth__closures = /* @__PURE__ */ new Set();
 	_dynamic_tag($scope0_id, "a", input.type, {}, _content_resume("c0", () => {
@@ -32,12 +32,11 @@ var heading_default = _template("c", (input) => {
 		_html(`depth ${_patch_text($scope1_id, "a", input.depth, 2, $scope0_reason, 2)}`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, _client_guard($scope0_reason, 2) ? "c1" : "c2");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_depth__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
-	}, $scope0_id, ($scope) => [{ e: input.depth }]), 0, $wg__input_type, void 0, 2, $scope0_reason, 1);
-	_patch_write($scope0_id, "we", input.depth, 1);
-	$scope0_page && _scope($scope0_id, {
+	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.depth }] : 0), 0, $wg__input_type, void 0, 2, $scope0_reason, 1);
+	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.depth,
 		f: _write_if($scope0_reason, 2) && $input_depth__closures
-	});
+	}) : _filled_guard($scope0_reason, 2) && _content_withheld("c0") && _patch_value($scope0_id, "vc3", input.depth, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

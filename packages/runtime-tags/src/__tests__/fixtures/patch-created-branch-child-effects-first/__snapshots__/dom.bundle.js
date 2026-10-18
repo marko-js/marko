@@ -15,7 +15,7 @@ const $if_content2__setup = _script("a10", ($scope) => console.log("nested setup
 const $for_content__item__script = _script("a9", ($scope) => console.log("row setup", $scope.c));
 const $Body_content__setup = _script("a8", ($scope) => console.log("define setup"));
 const $inputtag_content__for = /*@__PURE__*/ _for_of_unkeyed(1, 0, 0, 0, $for_content3__$params);
-const $inputtag_content__input_items = /*@__PURE__*/ _fill_join_closure("a20", 6, /*@__PURE__*/ _closure_get(10, ($scope) => $inputtag_content__for($scope, [$scope._._.g]), ($scope) => $scope._._, "a16"), 1);
+const $inputtag_content__input_items = /*@__PURE__*/ _fill_join_closure("a21", 6, /*@__PURE__*/ _closure_get(10, ($scope) => $inputtag_content__for($scope, [$scope._._.g]), ($scope) => $scope._._, "a16"), 1);
 const $inputtag_content__setup__script = _script("a15", ($scope) => console.log("tag body setup"));
 const $inputtag_content__setup = ($scope) => {
 	$inputtag_content__input_items($scope);
@@ -27,8 +27,8 @@ _content_resume($inputtag_content);
 const $body_content__setup__script = _script("a12", ($scope) => console.log("content setup"));
 const $if_content__setup__script = _script("a18", ($scope) => console.log("branch setup"));
 const $if_content__count__script = _script("a17", ($scope) => console.log("branch count", $scope._.j));
-const $if_content__count = /*@__PURE__*/ _shell_init("a27", /*@__PURE__*/ _if_closure(2, 0, $if_content__count__script));
-const $count = /*@__PURE__*/ _fill_let("a23", 9, ($scope) => {
+const $if_content__count = /*@__PURE__*/ _shell_init("a28", /*@__PURE__*/ _if_closure(2, 0, $if_content__count__script));
+const $count = /*@__PURE__*/ _fill_let("a24", 9, ($scope) => {
 	_text($scope.b, $scope.j);
 	$if_content__count($scope);
 });

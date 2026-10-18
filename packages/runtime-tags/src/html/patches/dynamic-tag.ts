@@ -188,7 +188,11 @@ export function pairsContent(
             : undefined,
         );
       }
-      markContentRendered(state, renderer || content);
+      // A native or absent tag renders its body here; a renderer, itself.
+      markContentRendered(
+        state,
+        typeof renderer === "function" ? renderer : content,
+      );
     }
   }
   return pairs;
@@ -260,7 +264,9 @@ export function writeDynamicTagEntry(
       // A renderer the client builds from its shell (bound to its owner by the
       // id's prefix) takes no input: the flush's entries render what it would.
       const shell = id && shipShell(state as PatchUpdateState, id);
-      if (contentId) shipShell(state as PatchUpdateState, contentId);
+      // The patch creates a native or absent tag's body itself; params take
+      // the page's own, and a renderer built from its shell takes none.
+      if (!id) shipShell(state as PatchUpdateState, contentId);
       const entry: unknown[] = [
         id
           ? (ownerId === undefined
@@ -270,7 +276,7 @@ export function writeDynamicTagEntry(
             ? ">" + renderer
             : renderer || 0,
         (!shell && renderer && args) || 0,
-        contentId,
+        shell ? 0 : contentId,
         varId,
       ];
       // Render-only locals (a loop's values) ride last, as its factory takes them.

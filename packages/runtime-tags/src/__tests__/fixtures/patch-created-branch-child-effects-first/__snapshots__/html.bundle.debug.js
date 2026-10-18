@@ -51,7 +51,7 @@ _shells({
 	"__tests__/template.marko_8*shell": "__tests__/template.marko_8*shell !__tests__/template.marko_8_item#1,"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 4), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_items = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_items__closures = new Set();
 	let count = 0;
@@ -122,7 +122,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					"#childScope/0": _existing_scope($childScope4),
 					"ClosureSignalIndex:input_items/10": $wi__input_items && 1
 				}, "__tests__/template.marko", "28:6"));
-			}, $scope1_id, ($scope) => [{ input_items: input.items }, { _: $scope($scope0_id) }]), 0, _write_guard($scope0_reason, 6), void 0, 2, $scope0_reason, 6);
+			}, $scope1_id, ($scope) => $scope0_page ? [{ input_items: input.items }, { _: $scope($scope0_id) }] : 0), 0, _write_guard($scope0_reason, 6), void 0, 2, $scope0_reason, 6);
 			_script($scope1_id, "__tests__/template.marko_1_count#0:9", 1, 1);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_scope($scope1_id, {
@@ -147,5 +147,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_nested: ["input.nested"],
 		input_tag: ["input.tag"],
 		count: "1:6"
-	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.items, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.nested, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.tag, !_server_guard($scope0_reason, 6)));
+	}) : (_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 3) ? _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.items, !_server_guard($scope0_reason, 4)) : _content_withheld("__tests__/template.marko_3*content") && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0/content", input.items)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.nested, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", input.tag, !_server_guard($scope0_reason, 6)));
 }, 1);

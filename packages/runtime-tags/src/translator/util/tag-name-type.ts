@@ -12,11 +12,13 @@ import {
 } from "@marko/compiler/babel-utils";
 import { distance } from "fastest-levenshtein";
 
+import type { Binding } from "./bindings";
 import * as TagNameType from "./constants/tag-name-type";
 import { isAnalyzing } from "./get-compile-stage";
 import { getTagName, getTagNameHint } from "./get-tag-name";
 import { isCoreTag } from "./is-core-tag";
 import { isPatch } from "./marko-config";
+import { concat, type Opt } from "./optional";
 import { getImportFacts, type LoadImportConfig } from "./tag-import";
 
 const kTagNameDynamic = Symbol("tag name dynamic");
@@ -30,6 +32,9 @@ declare module "@marko/compiler/dist/types" {
   // reads that root (a read, a section's branch expression) reads this.
   export interface NodeExtra {
     tagNameType?: TagNameType;
+    /** Every template the name may resolve to, when it can resolve to
+     * nothing else (or a dynamic tag's native names) and none is still analyzing. */
+    tagNameTemplates?: t.ProgramExtra[];
   }
   // Written by `analyzeExpressionTagName`, on the tag whose name it types.
   export interface MarkoTagExtra {
@@ -37,9 +42,6 @@ declare module "@marko/compiler/dist/types" {
     // analysis early.
     tagNameNullable?: boolean;
     tagNameImported?: string;
-    /** Every template the name may resolve to, when it can resolve to
-     * nothing else and none is still analyzing. */
-    tagNameTemplates?: t.ProgramExtra[];
     tagNameLoad?: LoadImportConfig;
   }
   export interface MarkoTagExtra {
@@ -142,6 +144,8 @@ function analyzeExpressionTagName(
   let tagNameImported: string | false | undefined;
   let tagNameLoad: LoadImportConfig | undefined;
   let tagNameTemplates: t.ProgramExtra[] | undefined = [];
+  // A template and a native name met, so the tag stays dynamic.
+  let mixed = false;
 
   while ((path = pending.pop()) && type !== TagNameType.DynamicTag) {
     // Following a `<const>` value can cycle (`<const/a=b><const/b=a>`); skip
@@ -174,6 +178,7 @@ function analyzeExpressionTagName(
           ? TagNameType.NativeTag
           : TagNameType.DynamicTag;
     } else if (path.isStringLiteral() || path.isTemplateLiteral()) {
+      mixed = type === TagNameType.CustomTag;
       type =
         type === undefined || type === TagNameType.NativeTag
           ? TagNameType.NativeTag
@@ -221,6 +226,7 @@ function analyzeExpressionTagName(
           } else if (type === TagNameType.NativeTag) {
             type = TagNameType.DynamicTag;
             tagNameImported = undefined;
+            mixed = true;
           } else if (tagNameImported !== resolvedImport) {
             tagNameImported = undefined;
           }
@@ -267,7 +273,10 @@ function analyzeExpressionTagName(
   extra.tagNameType = type ?? TagNameType.DynamicTag;
   extra.tagNameNullable = nullable;
 
-  if (type === TagNameType.CustomTag) {
+  // A name mixing templates with native names alone keeps its templates.
+  if (mixed && !path) {
+    extra.tagNameTemplates = tagNameTemplates;
+  } else if (type === TagNameType.CustomTag) {
     extra.tagNameTemplates = tagNameTemplates;
     // A name that may be nullish renders the body in its place, so it stays dynamic.
     if (tagNameImported && !nullable) {
@@ -275,6 +284,20 @@ function analyzeExpressionTagName(
       extra.tagNameLoad = tagNameLoad;
     }
   }
+}
+
+// The input binding of every template the name may resolve to; none when any is
+// a Class API template. They come from different programs, so the list is unsorted.
+export function getDynamicTagInputBindings(
+  tagExtra: t.NodeExtra,
+): Opt<Binding> {
+  let inputBindings: Opt<Binding>;
+  for (const childExtra of tagExtra.tagNameTemplates || []) {
+    if (childExtra.featureType === "class") return;
+    const inputBinding = childExtra.paramsTree?.props?.[0]?.binding;
+    if (inputBinding) inputBindings = concat(inputBindings, inputBinding);
+  }
+  return inputBindings;
 }
 
 export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {

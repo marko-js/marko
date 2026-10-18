@@ -8,6 +8,7 @@ import {
   type Scope,
 } from "../../common/types";
 import { _dynamic_tag } from "../control-flow";
+import type { Renderer } from "../renderer";
 // The tag's branch pairs through a `PatchChild` entry.
 import "./child.feat";
 import { getRegisteredWithScope } from "../resume";
@@ -70,7 +71,13 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
       }
     }
   }
-  const content = contentId ? getContent(contentId, scope) : undefined;
+  // A renderer's params keep the body to render as the page does; the patch
+  // creates a native or absent tag's body itself.
+  const content =
+    contentId &&
+    (typeof renderer === "object"
+      ? getRegisteredWithScope<Renderer>(contentId, scope)
+      : getContent(contentId, scope));
   (
     _dynamic_tag(
       (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,

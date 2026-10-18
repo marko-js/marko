@@ -1,6 +1,6 @@
 // PATCH
 [`b;E l%;<section><em> </em><!></section>`, `c1 c8;/E l%l&;<article><b> </b><!></article>`, `c0; ; `, {
-  fa: ["b", 0, "c1"],
+  fa: "b",
   cAa: {
     ta: "-",
     fb: "^^c1",
@@ -31,7 +31,7 @@
 
 // PATCH holding Cxo
 {
-  fa: ["b", 0, "c1"],
+  fa: "b",
   cAa: {
     ta: "-",
     fb: "^^c1",

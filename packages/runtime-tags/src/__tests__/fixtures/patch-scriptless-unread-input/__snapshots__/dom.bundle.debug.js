@@ -11,7 +11,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!><!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&%c`)("D l");
 const $setup = ($_) => {};
-const $inputtag_content__input_user3_name = /*@__PURE__*/ _closure_get("input_user3_name/14", ($scope) => _text($scope["#text/0"], $scope._.input_user3_name), 0, "__tests__/template.marko_2_input_user3_name#0:12/subscribe");
+const $inputtag_content__input_user3_name = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_user3_name", /*@__PURE__*/ _closure_get("input_user3_name/14", ($scope) => _text($scope["#text/0"], $scope._.input_user3_name), 0, "__tests__/template.marko_2_input_user3_name#0:12/subscribe"), 0);
 const $inputtag_content__setup = $inputtag_content__input_user3_name;
 const $inputtag_content = _content("__tests__/template.marko_2*content", " ", " ", $inputtag_content__setup);
 _content_resume($inputtag_content);
@@ -35,5 +35,5 @@ const $input = ($scope, input) => {
 const $input_user = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_user", $if_content__input_user);
 const $input_user3 = ($scope, input_user3) => $input_user3_name($scope, input_user3?.name);
 const $input_user3_name__closure = /*@__PURE__*/ _closure($inputtag_content__input_user3_name);
-const $input_user3_name = /*@__PURE__*/ _const("input_user3_name", $input_user3_name__closure);
+const $input_user3_name = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "input_user3_name", $input_user3_name__closure);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

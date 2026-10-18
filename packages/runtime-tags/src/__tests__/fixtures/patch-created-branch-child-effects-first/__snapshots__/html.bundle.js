@@ -41,14 +41,14 @@ _shells({
 	a0: "a0 !a15,",
 	a1: "a1 !a12;b%;<em>content</em><!><!>",
 	a: "a !a19; D l%;<button> </button><!><!>",
-	a2: /*@__PURE__*/ (() => `a2 a27!a18;${/*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&%b%b/${_w2}&%c`)($walks, $Body_content__walks, "D%l")};${/*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}<!><!>${_w2}<!><!>`)($template$1, $Body_content__template, $template)}`)(),
+	a2: /*@__PURE__*/ (() => `a2 a28!a18;${/*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&%b%b/${_w2}&%c`)($walks, $Body_content__walks, "D%l")};${/*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}<!><!>${_w2}<!><!>`)($template$1, $Body_content__template, $template)}`)(),
 	a3: "a3 !a9;D ;<i> </i>",
 	a4: "a4 !a10,<u>nested</u>",
 	a5: "a5 !a11,",
 	a6: "a6 !a14,"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 4), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_items = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_items__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -119,7 +119,7 @@ var template_default = _template("a", (input) => {
 					a: _existing_scope($childScope4),
 					Ck: $wi__input_items && 1
 				}));
-			}, $scope1_id, ($scope) => [{ g: input.items }, { _: $scope($scope0_id) }]), 0, _write_guard($scope0_reason, 6), void 0, 2, $scope0_reason, 6);
+			}, $scope1_id, ($scope) => $scope0_page ? [{ g: input.items }, { _: $scope($scope0_id) }] : 0), 0, _write_guard($scope0_reason, 6), void 0, 2, $scope0_reason, 6);
 			_script($scope1_id, "a17", 1, 1);
 			_script($scope1_id, "a18");
 			_scope($scope1_id, {
@@ -132,12 +132,12 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 3), void 0, void 0, void 0, ["a2"], $scope0_reason, 3);
 	_script($scope0_id, "a19");
-	_patch_value($scope0_id, "va23", count, 1);
+	_patch_value($scope0_id, "va24", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		g: _write_if($scope0_reason, 1) && input.items,
 		h: _unfilled_if($scope0_reason, 3) && input.nested,
 		i: _unfilled_if($scope0_reason, 3) && input.tag,
 		j: count,
 		k: $wi__input_items && $input_items__closures
-	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va20", input.items, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va21", input.nested, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va22", input.tag, !_server_guard($scope0_reason, 6)));
+	}) : (_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 3) ? _patch_value($scope0_id, "va20", input.items, !_server_guard($scope0_reason, 4)) : _content_withheld("a0") && _patch_value($scope0_id, "va21", input.items)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va22", input.nested, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va23", input.tag, !_server_guard($scope0_reason, 6)));
 }, 1);

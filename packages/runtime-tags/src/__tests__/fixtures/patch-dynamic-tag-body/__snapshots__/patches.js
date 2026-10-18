@@ -3,7 +3,7 @@
   fa: [">div", {
     class: "b"
   }, "a0"],
-  fb: ["b", 0, "a1"],
+  fb: "b",
   cAb: {
     fa: "^^a1",
     cAa: {
@@ -29,7 +29,7 @@
   fa: [">section", {
     class: "c"
   }, "a0"],
-  fb: ["b", 0, "a1"],
+  fb: "b",
   cAb: {
     fa: "^^a1",
     cAa: {

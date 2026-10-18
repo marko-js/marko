@@ -11,12 +11,7 @@ import {
 
 import { isEventHandler } from "../../../common/helpers";
 import { ReservedId } from "../../../common/types";
-import {
-  type Binding,
-  BindingType,
-  createBinding,
-  reserveId,
-} from "../../util/bindings";
+import { BindingType, createBinding, reserveId } from "../../util/bindings";
 import { setTagContentDerives } from "../../util/content-derives";
 import {
   generateUidIdentifier,
@@ -35,7 +30,6 @@ import {
 } from "../../util/known-tag";
 import { isOptimize, isOutputHTML, isPatch } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
-import { concat, type Opt } from "../../util/optional";
 import { linkHolePatcher, writesPatchHole } from "../../util/patch/decisions";
 import { getExprWriteOwnership } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
@@ -86,6 +80,7 @@ import { createOutputState } from "../../util/state";
 import * as structure from "../../util/structure";
 import { isControllableAttr } from "../../util/tag-facts";
 import {
+  getDynamicTagInputBindings,
   getTagRelativePath,
   TagNameType,
   tagNotFoundError,
@@ -689,18 +684,6 @@ function mayHaveNativeAttr(
     }
   }
   return false;
-}
-
-// The input binding of every template the name may resolve to; none when any is
-// a Class API template. They come from different programs, so the list is unsorted.
-function getDynamicTagInputBindings(tagExtra: t.MarkoTagExtra): Opt<Binding> {
-  let inputBindings: Opt<Binding>;
-  for (const childExtra of tagExtra.tagNameTemplates || []) {
-    if (childExtra.featureType === "class") return;
-    const inputBinding = childExtra.paramsTree?.props?.[0]?.binding;
-    if (inputBinding) inputBindings = concat(inputBindings, inputBinding);
-  }
-  return inputBindings;
 }
 
 // Whether the child's variable is wired back to this tag on resume: only once

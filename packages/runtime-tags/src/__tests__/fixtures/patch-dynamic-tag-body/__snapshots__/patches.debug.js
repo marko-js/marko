@@ -3,7 +3,7 @@
   "PatchDynamicTag:#text/0": [">div", {
     class: "b"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content"],
-  "PatchDynamicTag:#text/1": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/tags/wrap.marko", 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_1*content"],
+  "PatchDynamicTag:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/tags/wrap.marko",
   "PatchChild:BranchScopes:#text/1": {
     "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_1*content",
     "PatchChild:BranchScopes:#text/0": {
@@ -29,7 +29,7 @@
   "PatchDynamicTag:#text/0": [">section", {
     class: "c"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content"],
-  "PatchDynamicTag:#text/1": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/tags/wrap.marko", 0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_1*content"],
+  "PatchDynamicTag:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/tags/wrap.marko",
   "PatchChild:BranchScopes:#text/1": {
     "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_1*content",
     "PatchChild:BranchScopes:#text/0": {

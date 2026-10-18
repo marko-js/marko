@@ -1146,9 +1146,11 @@ function getWithheldGuard(section: Section, contents: Opt<Section>) {
   return withheld;
 }
 
+// A dynamic tag's body registers for the renderer the tag hands it to, which
+// `_content_withheld` sees.
 function rendersUnconditionally(content: Section) {
   const reason = getRendererReason(content);
-  return !!reason && isUnconditionalReason(reason);
+  return !content.branchExpr && !!reason && isUnconditionalReason(reason);
 }
 
 // A capture only patch-filled reads use is kept fresh where it is still

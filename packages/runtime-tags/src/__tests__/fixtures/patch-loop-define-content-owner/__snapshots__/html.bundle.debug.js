@@ -14,7 +14,7 @@ _shells({
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_rows = _write_if($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_rows = _write_if($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("__tests__/template.marko_1*content", ({ label, content }) => {
 		const $scope1_id = _scope_id();
@@ -71,7 +71,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				"ClosureSignalIndex:row_label/13": $wi__input_rows && 2,
 				"ClosureSignalIndex:n/15": 2
 			}, "__tests__/template.marko", "10:8")));
-		}, $scope2_id, ($scope) => [{ row_label: row?.label }]), 0, $wg__input_rows, void 0, 1, $scope0_reason, 0);
+		}, $scope2_id, ($scope) => $scope0_page ? [{ row_label: row?.label }] : 0), 0, $wg__input_rows, void 0, 1, $scope0_reason, 0);
 		_for_of(row.tags, (tag) => {
 			const $scope3_id = _scope_id();
 			_dynamic_tag($scope3_id, "#text/0", row.card ? Card : "span", {

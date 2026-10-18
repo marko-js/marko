@@ -47,7 +47,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $
 const $Body_content__setup__script = _script("__tests__/template.marko_4", ($scope) => console.log("define setup"));
 const $Body_content__setup = $Body_content__setup__script;
 const $inputtag_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", 0, 0, 0, $for_content3__$params);
-const $inputtag_content__input_items = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_items", /*@__PURE__*/ _closure_get("input_items/10", ($scope) => $inputtag_content__for($scope, [$scope._._.input_items]), ($scope) => $scope._._, "__tests__/template.marko_3_input_items#0:6/subscribe"), 1);
+const $inputtag_content__input_items = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0/content", "input_items", /*@__PURE__*/ _closure_get("input_items/10", ($scope) => $inputtag_content__for($scope, [$scope._._.input_items]), ($scope) => $scope._._, "__tests__/template.marko_3_input_items#0:6/subscribe"), 1);
 const $inputtag_content__setup__script = _script("__tests__/template.marko_3", ($scope) => console.log("tag body setup"));
 const $inputtag_content__setup = ($scope) => {
 	$inputtag_content__input_items($scope);
@@ -57,7 +57,7 @@ const $inputtag_content__setup = ($scope) => {
 const $inputtag_content = _content("__tests__/template.marko_3*content", /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($template$3), /*@__PURE__*/ ((_w0) => `/${_w0}&%c`)("b"), $inputtag_content__setup);
 _content_resume($inputtag_content);
 const $body_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", 0, 0, 0, $for_content2__$params);
-const $body_content__input_items = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_items", /*@__PURE__*/ _closure_get("input_items/10", ($scope) => $body_content__for($scope, [$scope._._.input_items]), ($scope) => $scope._._, "__tests__/template.marko_2_input_items#0:6/subscribe"), 0);
+const $body_content__input_items = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0/content", "input_items", /*@__PURE__*/ _closure_get("input_items/10", ($scope) => $body_content__for($scope, [$scope._._.input_items]), ($scope) => $scope._._, "__tests__/template.marko_2_input_items#0:6/subscribe"), 0);
 const $body_content__setup__script = _script("__tests__/template.marko_2", ($scope) => console.log("content setup"));
 const $body_content__setup = ($scope) => {
 	$body_content__input_items($scope);

@@ -17,16 +17,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(_patch_text($scope1_id, "#text/0", input.a.toUpperCase(), void 0, $scope0_reason, 2));
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_a#0:6/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
-	}, $scope0_id, ($scope) => [{ input_a: input.a }]), 0, _write_guard($scope0_reason, 1), void 0, 2, $scope0_reason, 1);
+	}, $scope0_id, ($scope) => $scope0_page ? [{ input_a: input.a }] : 0), 0, _write_guard($scope0_reason, 1), void 0, 2, $scope0_reason, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_write($scope0_id, "PatchWrite:input_a", input.a, 1);
-	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", n, 1);
-	$scope0_page && _scope($scope0_id, {
+	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", n, 1);
+	$scope0_page ? _scope($scope0_id, {
 		input_a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.a,
 		n,
 		"ClosureScopes:input_a/8": _write_if($scope0_reason, 2) && $input_a__closures
 	}, "__tests__/template.marko", 0, {
 		input_a: ["input.a"],
 		n: "1:6"
-	});
+	}) : _filled_guard($scope0_reason, 2) && _content_withheld("__tests__/template.marko_1*content") && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.a, !_server_guard($scope0_reason, 2));
 }, 1);

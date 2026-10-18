@@ -21,7 +21,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $inputwrapCarddiv_content__row_label = /*@__PURE__*/ _closure_get("row_label/6", ($scope) => _text($scope["#text/0"], $scope._.row_label), 0, "__tests__/template.marko_2_row_label#1:3/subscribe");
+const $inputwrapCarddiv_content__row_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "row_label", /*@__PURE__*/ _closure_get("row_label/6", ($scope) => _text($scope["#text/0"], $scope._.row_label), 0, "__tests__/template.marko_2_row_label#1:3/subscribe"), 0);
 const $inputwrapCarddiv_content__setup = $inputwrapCarddiv_content__row_label;
 const $inputwrapCarddiv_content = _content("__tests__/template.marko_2*content", "<b> </b>", "D ", $inputwrapCarddiv_content__setup);
 _content_resume($inputwrapCarddiv_content);
@@ -30,7 +30,7 @@ const $for_content__input_wrap = /*@__PURE__*/ _fill_join("__tests__/template.ma
 const $for_content__setup = $for_content__input_wrap;
 const $for_content__$params = ($scope, $params2) => $for_content__row_label($scope, $params2[0]?.label);
 const $for_content__row_label__closure = /*@__PURE__*/ _closure($inputwrapCarddiv_content__row_label);
-const $for_content__row_label = /*@__PURE__*/ _const("row_label", $for_content__row_label__closure);
+const $for_content__row_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "row_label", $for_content__row_label__closure);
 const $for = /*@__PURE__*/ _for_of("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_rows = ($scope, input_rows) => $for($scope, [input_rows, "id"]);
 const $input = ($scope, input) => {

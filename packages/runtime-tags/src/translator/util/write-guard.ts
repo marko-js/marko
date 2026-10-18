@@ -221,7 +221,7 @@ function getDynamicGuard(
 
 // Branch and boundary bodies declare no reason of their own; the nearest
 // enclosing content body or the root does.
-function getReasonSection(section: Section) {
+export function getReasonSection(section: Section) {
   let cur = section;
   while (cur.parent && cur.branch) cur = cur.parent;
   return cur;

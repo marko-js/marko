@@ -47,21 +47,22 @@ const $walks = "b%c";
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,",
 	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>",
-	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_wrap = _write_guard($scope0_reason, 2), $wi__input_rows__OR__input_wrap = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_wrap = _write_guard($scope0_reason, 2), $wi__input_rows__OR__input_wrap = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		const $for_content__row_label__closures = new Set();
+		_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", row?.label);
 		_dynamic_tag($scope1_id, "#text/0", input.wrap ? card_default : "div", {}, _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
 			_html(`<b>${_patch_text($scope2_id, "#text/0", row.label, void 0, $scope0_reason, 1)}</b>`);
 			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_row_label#1:3/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__row_label__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_wrap && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
-		}, $scope1_id, ($scope) => [{ row_label: row?.label }]), 0, $wg__input_wrap, void 0, 2, $scope0_reason, 2);
+		}, $scope1_id, ($scope) => $scope0_page ? [{ row_label: row?.label }] : 0), 0, $wg__input_wrap, void 0, 2, $scope0_reason, 2);
 		$wi__input_rows__OR__input_wrap && _scope($scope1_id, {
 			row_label: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && row?.label,
 			_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),

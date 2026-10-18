@@ -31,7 +31,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $inputtype_content__input_depth = /*@__PURE__*/ _shell_init("__tests__/tags/heading.marko_1_input_depth#0:4/init", /*@__PURE__*/ _closure_get("input_depth/5", ($scope) => _text($scope["#text/0"], $scope._.input_depth), 0, "__tests__/tags/heading.marko_1_input_depth#0:4/subscribe"));
+const $inputtype_content__input_depth = /*@__PURE__*/ _shell_init("__tests__/tags/heading.marko_1_input_depth#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/heading.marko_fill0", "input_depth", /*@__PURE__*/ _closure_get("input_depth/5", ($scope) => _text($scope["#text/0"], $scope._.input_depth), 0, "__tests__/tags/heading.marko_1_input_depth#0:4/subscribe"), 0));
 const $inputtype_content__setup = $inputtype_content__input_depth;
 const $inputtype_content = _content("__tests__/tags/heading.marko_1*content", "depth <!>", "b%", $inputtype_content__setup);
 _content_resume($inputtype_content);
@@ -42,5 +42,5 @@ const $input = ($scope, input) => {
 	$input_depth($scope, input.depth);
 };
 const $input_depth__closure = /*@__PURE__*/ _closure($inputtype_content__input_depth);
-const $input_depth = /*@__PURE__*/ _const("input_depth", $input_depth__closure);
+const $input_depth = /*@__PURE__*/ _fill_const("__tests__/tags/heading.marko_fill0", "input_depth", $input_depth__closure);
 var heading_default = /*@__PURE__*/ _template("__tests__/tags/heading.marko", $template, "b%c", 0, $input);

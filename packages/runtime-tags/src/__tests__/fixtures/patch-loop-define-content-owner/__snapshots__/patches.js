@@ -43,13 +43,11 @@
         }
       }, "a6"]
     },
-    fd: ["^^a3", 0, "a0"],
+    fd: "^^a3",
     cAd: {
       ta: "dynamic",
       bb: [{
-        fa: ["^F N N a0", 0, 0, 0, {
-          h: "c"
-        }],
+        fa: "^F N N a0",
         cAa: {
           ta: "c"
         }
@@ -145,13 +143,11 @@
         }
       }, "a6"]
     },
-    fd: ["^^a3", 0, "a0"],
+    fd: "^^a3",
     cAd: {
       ta: "dynamic",
       bb: [{
-        fa: ["^F N N a0", 0, 0, 0, {
-          h: "e"
-        }],
+        fa: "^F N N a0",
         cAa: {
           ta: "e"
         }

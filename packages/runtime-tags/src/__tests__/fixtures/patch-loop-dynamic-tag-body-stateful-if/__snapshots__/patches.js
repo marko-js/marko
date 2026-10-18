@@ -1,25 +1,23 @@
 // PATCH
-[`b !b0; b%;<button>toggle</button><!><!>`, `a0,`, `a1;b%;<!><!><!>`, {
+[`b !b0; b%;<button>toggle</button><!><!>`, `a1 !;b%;<!><!><!>`, {
   la: [1, {
-    fa: ["b", 0, "a0"],
+    va3: "a",
+    fa: "b",
     cAa: {
       s: {
         vb2: !0
       },
-      ub1: ["a0", 1, {
-        d: "a"
-      }]
+      ub1: ["a0", 1]
     }
   }, 2, {
-    fa: ["b", 0, "a0"],
+    va3: "b",
+    fa: "b",
     cAa: {
       s: {
         vb2: !0
       },
-      ub1: ["a0", 1, {
-        d: "b"
-      }]
+      ub1: ["a0", 1]
     }
   }, "a1"]
 }]
-;CQ4
+;CQw

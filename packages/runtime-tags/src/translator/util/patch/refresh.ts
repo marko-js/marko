@@ -77,6 +77,7 @@ import {
   sourcesUtil,
 } from "../sources";
 import { createAnalysisState } from "../state";
+import { getDynamicTagInputBindings } from "../tag-name-type";
 import { getWriteSources, isFilledHole, isStableExpr } from "./decisions";
 import {
   catchSetupRenders,
@@ -87,6 +88,7 @@ import {
   inStatefulBranch,
   isStatefulBranch,
   getCallerOwnedStructure,
+  rendersOnClient,
 } from "./structure";
 
 // Stable wire/registry key for a fill: a register id for a template-wide fill
@@ -144,6 +146,13 @@ function derivesLocals(section: Section) {
   return (
     !section.params && !section.localClosures && shipsContentShell(section)
   );
+}
+
+// The flush fills the closure wherever it hands this content to client code
+// (`_content_withheld`), so the content's registration need not carry it.
+export function fillsWithheldContent(closure: Binding, content: Section) {
+  const { fill } = getPatchFill(closure);
+  return fill === true || (!!fill && sectionUtil.has(fill.contents, content));
 }
 
 // A potential fill: a server-sourced value whose reads intersect client
@@ -569,7 +578,11 @@ function getReadStructure(
       if (isStatefulBranch(readSection)) return true;
       if (readSection.boundaryContent) return true;
       // The nearest content a consumer renders (or withholds).
-      if (!content && !readSection.branch && readSection.derives) {
+      if (
+        !content &&
+        !readSection.branch &&
+        (readSection.derives || readSection.branchExpr)
+      ) {
         content = readSection;
       }
       if (readSection.callSections) {
@@ -761,16 +774,21 @@ function getOtherInputs(sources: Sources | undefined, binding: Binding) {
 // Whether the consumer may withhold the content, as the runtime decides: client
 // code renders it on its own, or client state reaches its structural params.
 function consumerMayWithhold(content: Section) {
+  const consumer = content.derives?.tag;
+  if (!consumer || !isKnownTagExtra(consumer)) {
+    // A dynamic tag naming only known templates and native names hands the content
+    // to those templates' reads; for any other consumer the runtime decides.
+    const inputs = getDynamicTagInputBindings(
+      (consumer || content.branchExpr)!,
+    );
+    return inputs
+      ? someContentRead(inputs, content.derives?.properties, rendersOnClient)
+      : !!getRendererReason(content);
+  }
   const reason = getRendererReason(content);
   // Read unconditionally, its renderer renders wherever the consumer puts it
   // (a `@catch` on a client error, say), apart from any patch render.
   if (reason && isUnconditionalReason(reason)) return true;
-  const consumer = content.derives!.tag;
-  // A `<define>` var passed on (its direct tags classify on their own)
-  // may reach any consumer, so the runtime decides.
-  if (!isKnownTagExtra(consumer)) {
-    return !!reason;
-  }
   for (const { params, sources } of getParamGroupSources(consumer) || []) {
     if (
       hasStructuralParam(params) &&

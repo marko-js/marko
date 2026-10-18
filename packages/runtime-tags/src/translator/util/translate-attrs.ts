@@ -33,7 +33,11 @@ import {
 import { shipsContentShell } from "./shell";
 import { getContentClosureValues, getResumeRegisterId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
-import { getScopeReasonStatement } from "./write-guard";
+import {
+  getReasonSection,
+  getScopeReasonStatement,
+  scopePageIdentifier,
+} from "./write-guard";
 
 const contentProps = new WeakSet<t.Node>();
 type ContentKey = "renderBody" | "content";
@@ -461,12 +465,23 @@ function getRegisteredLocals(bodySection: Section) {
   const contentClosureValues = getContentClosureValues(bodySection);
   const localClosureValues = getLocalClosureValues(bodySection);
   if (contentClosureValues || localClosureValues) {
+    const locals = localClosureValues ? [localClosureValues] : [];
+    const values = t.arrayExpression([
+      ...locals,
+      ...(contentClosureValues?.levels || []),
+    ]);
+    const patchLevels = contentClosureValues?.patchLevels;
     return t.arrowFunctionExpression(
       contentClosureValues ? [contentClosureValues.scope] : [],
-      t.arrayExpression([
-        ...(localClosureValues ? [localClosureValues] : []),
-        ...(contentClosureValues?.levels || []),
-      ]),
+      patchLevels
+        ? t.conditionalExpression(
+            scopePageIdentifier(getReasonSection(bodySection.parent!)),
+            values,
+            locals.length || patchLevels.length
+              ? t.arrayExpression([...locals, ...patchLevels])
+              : t.numericLiteral(0),
+          )
+        : values,
     );
   }
 }

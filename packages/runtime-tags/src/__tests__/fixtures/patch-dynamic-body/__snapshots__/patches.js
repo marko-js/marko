@@ -1,6 +1,6 @@
 // PATCH
 [`a;D%;<div class=a><!></div>`, `c0; ; `, {
-  fa: ["a", 0, "c0"],
+  fa: "a",
   cAa: {
     fa: "^^c0",
     cAa: {

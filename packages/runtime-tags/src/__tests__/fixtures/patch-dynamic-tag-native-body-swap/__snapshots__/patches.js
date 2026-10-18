@@ -21,7 +21,7 @@
 
 // PATCH holding BgI
 [`a;D%;<section><!></section>`, {
-  fa: ["a", 0, "b0"],
+  fa: "a",
   cAa: {
     fa: ["^^b0", 0, 0, 0, {
       e: "d"

@@ -12,7 +12,7 @@ _shells({
 	a6: "a6;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_rows = _write_if($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_rows = _write_if($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("a3", ({ label, content }) => {
 		const $scope1_id = _scope_id();
@@ -69,7 +69,7 @@ var template_default = _template("a", (input) => {
 				Cn: $wi__input_rows && 2,
 				Cp: 2
 			})));
-		}, $scope2_id, ($scope) => [{ h: row?.label }]), 0, $wg__input_rows, void 0, 1, $scope0_reason, 0);
+		}, $scope2_id, ($scope) => $scope0_page ? [{ h: row?.label }] : 0), 0, $wg__input_rows, void 0, 1, $scope0_reason, 0);
 		_for_of(row.tags, (tag) => {
 			const $scope3_id = _scope_id();
 			_dynamic_tag($scope3_id, "a", row.card ? Card : "span", {
