@@ -18,6 +18,7 @@ import {
   someUpToAliasRoot,
   someReadIn,
 } from "../bindings";
+import * as TagNameType from "../constants/tag-name-type";
 import { createAnalysisMemo } from "../cyclic-memo";
 import { readsValuesOnResume } from "../finalize-references";
 import {
@@ -52,7 +53,6 @@ import {
   ensureCallerParamGroups,
   forEachParamGroup,
   forEachSection,
-  getClosuresFromAbove,
   getRendererReason,
   isKnownChild,
   isCallerParamAt,
@@ -420,12 +420,13 @@ export interface FillConditions {
   joins?: SortedOpt<Sources>;
   // A nested member's fill re-runs the join: it fills under that member's group.
   fills?: SortedOpt<Sources>;
-  // The contents around a read that its section's end sees, and those under
-  // an `<await>` body below it, which exist only at the end of a body in
-  // `awaits` (a `<define>` called under one and outside may be both).
+  // What its section's end sees, apart from what an `<await>` body below it
+  // holds, which a body in `awaits` gates at its end (a content may be both).
   contents?: SortedOpt<Section>;
   awaitedContents?: SortedOpt<Section>;
   awaits?: SortedOpt<Section>;
+  // The `<await>` bodies a read handing the value on to what may keep it crosses.
+  passedUnder?: SortedOpt<Section>;
   // A join the patch writes reads it: its other members, where the client runs it.
   writes?: SortedOpt<Sources>;
 }
@@ -446,9 +447,8 @@ const [getFillReadKind, resetFillReadKinds] = createAnalysisMemo(
 
 function computeFillReadKind(binding: Binding) {
   let kind: true | FillConditions | undefined;
-  // What its reads rendering it as content need (a dynamic tag's name or
-  // attributes, a `content` attribute), here, through its aliases or where
-  // what derives from it renders it: `{}` where they need nothing.
+  // What the reads rendering it as content need, its own, its aliases' and
+  // its derived values': `{}` where they need nothing.
   let contentKind: true | FillConditions | undefined;
   let unpatchedJoins: Intersection[] | undefined;
   let unpatchedStructure: true | FillConditions | undefined;
@@ -501,24 +501,35 @@ function computeFillReadKind(binding: Binding) {
         (unpatchedJoins ||= []).push(refs);
       }
     }
-    const readKind = getReadKind(binding, read, effect, written);
-    kind = mergeKinds(kind, readKind);
-    // What derives from it in its template renders it by its own kind, from
-    // where this read sits. Passed to another template, this read is what
-    // renders it: the callee reports its own state where its param fills.
+    // A derived value renders it by its own kind; passed to another template,
+    // this read renders it, and the callee reports its own state.
     let rendersContent = isContentRender(read);
+    // Handed to what may keep it later: a dynamic tag's inputs, another
+    // template, or a derived value kept in content.
+    let handsOn = handsToDynamicTag(read);
     forEach(read.derives, (derived) => {
       if (derived.section.program === binding.section.program) {
         const derivedKind = getFillReadKind(derived).contentKind;
         if (derivedKind) {
           contentKind = mergeKinds(contentKind, derivedKind);
           rendersContent = true;
+          handsOn ||= derivedKind !== true && keptLater(derivedKind);
         }
       } else if (someContentRead(derived, undefined, isContentRender)) {
-        rendersContent = true;
+        rendersContent = handsOn = true;
       }
     });
-    if (rendersContent) contentKind = mergeKinds(contentKind, readKind || {});
+    const passed: { under?: SortedOpt<Section> } | undefined = handsOn
+      ? {}
+      : undefined;
+    const readKind = getReadKind(binding, read, effect, written, passed);
+    kind = mergeKinds(kind, readKind);
+    if (rendersContent) {
+      contentKind = mergeKinds(
+        contentKind,
+        mergeKinds(readKind || {}, { passedUnder: passed?.under }),
+      );
+    }
     if (written && readKind !== true && readKind?.writes) {
       (writtenJoins ||= new Map()).set(refs, read.section);
     }
@@ -555,51 +566,36 @@ function isWithholdableContent(section: Section) {
   );
 }
 
-// An `<await>` body (or a `<define>` it calls) rendering a value from outside
-// it as content inside content a consumer may withhold, or passing it to a
-// template that renders it, may keep content made before it for the client
-// after the gates around it ran: while it is pending, those count content kept
-// (`_content_withheld`).
-export const [awaitMayWithhold] = createAnalysisMemo((body: Section) => {
-  let closures = getClosuresFromAbove(body, body);
-  forEachSection((section) => {
-    if (section.callSections && rendersUnder(section, body)) {
-      closures = bindingUtil.union(
-        closures,
-        getClosuresFromAbove(section, section),
-      );
-    }
-  });
-  return someContentRead(closures, undefined, (read) =>
-    isContentRender(read)
-      ? rendersUnder(read.section, body, true)
-      : some(
-          read.derives,
-          (derived) =>
-            derived.section.program !== read.section.program &&
-            someContentRead(derived, undefined, isContentRender),
-        ) && rendersUnder(read.section, body),
+// A dynamic tag the analysis cannot resolve, given inputs (`retained`).
+function handsToDynamicTag(read: ReferencedExtra) {
+  return (
+    !!read.rendersContent &&
+    !!read.retained &&
+    read.tagNameType === TagNameType.DynamicTag
   );
-}, false);
+}
 
-// Whether a section renders inside `top`, there or through a `<define>` call,
-// and where `inContent`, inside content a consumer may withhold below it.
-function rendersUnder(
-  section: Section,
-  top: Section,
-  inContent?: boolean,
-  seen = new Set<Section>(),
-): boolean {
-  let needsContent = inContent;
-  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
-    if (cur === top) return !needsContent;
-    if (needsContent && isWithholdableContent(cur)) needsContent = false;
-    if (cur.callSections) {
-      if (seen.has(cur)) return false;
-      seen.add(cur);
-      return some(cur.callSections, (call) =>
-        rendersUnder(call, top, needsContent, seen),
-      );
+// A report its section's end may not decide: content, or a hand-off, under
+// an `<await>` body.
+function keptLater(kind: FillConditions) {
+  return hasContents(kind) || !!kind.passedUnder;
+}
+
+// An `<await>` body keeping, or handing on, a value from above it may keep
+// content after the gates around it ran: pending, they count it kept.
+export function awaitMayWithhold(body: Section) {
+  for (let above = body.parent; above; above = above.parent) {
+    if (
+      some(above.bindings, (binding) => {
+        const kind = getPatchFill(binding).contentKind;
+        return (
+          kind !== true &&
+          (sectionUtil.has(kind?.awaits, body) ||
+            sectionUtil.has(kind?.passedUnder, body))
+        );
+      })
+    ) {
+      return true;
     }
   }
   return false;
@@ -611,6 +607,7 @@ function getReadKind(
   read: ReferencedExtra,
   effect: boolean,
   written: boolean,
+  passed?: { under?: SortedOpt<Section> },
 ): true | FillConditions | undefined {
   const knownChild = isKnownChild(binding.section);
   const refs = getReferencedBindings(read);
@@ -662,22 +659,27 @@ function getReadKind(
   }
   // A written join's structure ships the binding under its unpatched key.
   if (written) return conditions;
-  return mergeKinds(conditions, getReadStructure(binding, read, effect));
+  return mergeKinds(
+    conditions,
+    getReadStructure(binding, read, effect, passed),
+  );
 }
 
 // The structure a read sits in that the client may own, from the binding's
-// section: `true` where client code always renders it.
+// section (`true`: always); `passed` takes the `<await>` bodies it crosses.
 function getReadStructure(
   binding: Binding,
   read: ReferencedExtra,
   effect: boolean,
+  passed?: { under?: SortedOpt<Section> },
 ): true | FillConditions | undefined {
   const knownChild = isKnownChild(binding.section);
   let found: FillConditions | undefined;
-  // A `<define>` body reads as if at each tag rendering its var: a worklist
-  // visits each call section once, so a recursive define reaches its own once,
-  // with the contents around the read no `<await>` body holds yet.
-  const readSections = new Set([read.section]);
+  // A `<define>` body reads as if at each tag rendering its var, with the
+  // contents no `<await>` holds yet: again only when those grow, so it ends.
+  const carriedAt = new Map<Section, SortedOpt<Section>>([
+    [read.section, undefined],
+  ]);
   const pending: [Section, SortedOpt<Section>][] = [[read.section, undefined]];
   for (const [readAt, carried] of pending) {
     // No patch write reaches a skipped region: reads inside stateful
@@ -689,6 +691,9 @@ function getReadStructure(
     while (readSection && readSection !== binding.section) {
       if (isStatefulBranch(readSection)) return true;
       if (readSection.boundaryContent) return true;
+      if (passed && readSection.branch?.await) {
+        passed.under = sectionUtil.add(passed.under, readSection);
+      }
       if (unawaited && readSection.branch?.await) {
         awaitedContents = sectionUtil.union(awaitedContents, unawaited);
         awaits = sectionUtil.add(awaits, readSection);
@@ -701,9 +706,14 @@ function getReadStructure(
       }
       if (readSection.callSections) {
         forEach(readSection.callSections, (callSection) => {
-          if (!readSections.has(callSection)) {
-            readSections.add(callSection);
-            pending.push([callSection, unawaited]);
+          const prev = carriedAt.get(callSection);
+          if (
+            !carriedAt.has(callSection) ||
+            !sectionUtil.isSuperset(prev, unawaited)
+          ) {
+            const next = sectionUtil.union(prev, unawaited);
+            carriedAt.set(callSection, next);
+            pending.push([callSection, next]);
           }
         });
         unawaited = undefined;
@@ -956,6 +966,7 @@ function mergeConditions(
     contents: sectionUtil.union(a?.contents, b.contents),
     awaitedContents: sectionUtil.union(a?.awaitedContents, b.awaitedContents),
     awaits: sectionUtil.union(a?.awaits, b.awaits),
+    passedUnder: sectionUtil.union(a?.passedUnder, b.passedUnder),
     writes: sourcesUtil.union(a?.writes, b.writes),
   };
 }

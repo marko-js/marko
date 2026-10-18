@@ -271,7 +271,11 @@ export function writePatchResumeStatements(
 
   // What content under an `<await>` body reads from outside (there or in a
   // `<define>` it calls) fills at the body's end, where the content exists.
-  for (let above = section.branch?.await && section.parent; above;) {
+  for (
+    let above = section.branch?.await && section.parent;
+    above;
+    above = above.parent
+  ) {
     forEach(getPatchFillBindings(above), (binding) => {
       const { fill, splitsContent } = getPatchFill(binding);
       if (fill && fill !== true && sectionUtil.has(fill.awaits, section)) {
@@ -303,7 +307,6 @@ export function writePatchResumeStatements(
         );
       }
     });
-    above = above.parent;
   }
 
   // A scope another's shell composes runs from setup what its own shell names.
@@ -627,14 +630,7 @@ function getWithholdCall(section: Section, binding: Binding) {
     "_content_withhold",
     getDeclaredBindingExpression(binding),
   );
-  // Content under an `<await>` body that keeps it counts as kept while the
-  // body is pending (`_content_withheld`).
-  const contents =
-    kind === true ||
-    getWithheldGuard(
-      section,
-      sectionUtil.union(kind.contents, kind.awaitedContents),
-    );
+  const contents = kind === true || getWithheldGuard(section, kind.contents);
   if (contents === true) return call;
   const needed = orCallerGroupGuards(
     section,

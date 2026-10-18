@@ -346,9 +346,8 @@ export function _client_return(id: string) {
   clientReturns.add(id);
 }
 
-// Whether a consumer kept for the resumed page an instance of the content made
-// in the scope's render, or yet may under a pending `<await>`: the server
-// values inside fill then.
+// Whether a consumer kept an instance the scope's render made for the resumed
+// page, or yet may under a pending `<await>`: its server values fill then.
 export function _content_withheld(id: string, scopeId: number) {
   const state = getState();
   return (

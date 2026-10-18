@@ -56,10 +56,10 @@ var card_default = _template("b", (input) => {
 		_filled_guard($scope0_reason, 1) && _content_withheld("b1", $scope3_id) && _patch_value($scope0_id, "vb5", input.content);
 		_scope($scope3_id, { a: _existing_scope($childScope) });
 	}, 1, "b0", 1, 1);
-	$scope0_page ? _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		d: input.content,
 		f: _write_if($scope0_reason, 1) && $input_content__closures
-	}) : _content_withheld("b1", $scope0_id) && _content_withhold(input.content);
+	});
 });
 
 // template.marko
