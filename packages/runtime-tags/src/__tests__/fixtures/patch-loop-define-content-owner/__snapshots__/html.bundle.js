@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "b", 1, _write_guard($scope1_reason, 1), void 0, void 0, void 0, ["a6"], $scope1_reason, 1);
 		_html("</p>");
-		$scope1_page ? _scope($scope1_id, { f: _unfilled_if($scope1_reason, 1) && content }) : _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_value($scope1_id, "va7", content, !_server_guard($scope1_reason, 2));
+		$scope1_page ? _scope($scope1_id, { f: _unfilled_if($scope1_reason, 1) && content }) : (_filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_value($scope1_id, "va7", content, !_server_guard($scope1_reason, 2)), _client_guard($scope1_reason, 1) && _content_withhold(content));
 	}, $scope0_id) };
 	_for_of(input.rows, (row) => {
 		const $scope2_id = _scope_id();
@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 		}, 0, $scope2_id, "e", 1, void 0, void 0, void 0, void 0, "a5", $scope0_reason, 0);
 		_html("</section>");
 		_script($scope2_id, "a11");
-		_filled_guard($scope0_reason, 0) && (_content_withheld("a2", _client_guard($scope0_reason, 0)) || _content_withheld("a0")) && _patch_value($scope2_id, "va12", row?.label);
+		_filled_guard($scope0_reason, 0) && (_content_withheld("a2", $scope2_id) || _client_guard($scope0_reason, 0) || _content_withheld("a0", $scope2_id)) && _patch_value($scope2_id, "va12", row?.label);
 		_patch_write($scope2_id, "wm", Label, 1);
 		_patch_value($scope2_id, "va13", n, 1);
 		_scope($scope2_id, {

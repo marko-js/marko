@@ -35,7 +35,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 		input_content: input.content,
 		"ClosureScopes:input_content/5": $wi__input_content && $input_content__closures,
 		"ClosureScopes:input_promise/6": $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures
-	}, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill0", input.content, !_server_guard($scope0_reason, 0));
+	}, "__tests__/tags/card/index.marko", 0, { input_content: ["input.content"] }) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill0", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
 });
 
 // template.marko

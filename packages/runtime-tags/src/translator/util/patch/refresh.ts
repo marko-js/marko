@@ -146,11 +146,22 @@ function derivesLocals(section: Section) {
   );
 }
 
-// The flush fills the closure wherever it hands this content to client code
+// The flush fills the closure wherever a consumer withholds this content
 // (`_content_withheld`), so the content's registration need not carry it.
 export function fillsWithheldContent(closure: Binding, content: Section) {
   const { fill } = getPatchFill(closure);
   return fill === true || (!!fill && sectionUtil.has(fill.contents, content));
+}
+
+// A value read as content to render (a tag's name, a `content` attribute),
+// directly or where it is passed on.
+export const [rendersAsContent] = createAnalysisMemo(
+  (binding: Binding) => someContentRead(binding, undefined, isContentRender),
+  false,
+);
+
+function isContentRender(read: ReferencedExtra) {
+  return !!(read.rendersContent || read.nameOnly);
 }
 
 // A potential fill: a server-sourced value whose reads intersect client

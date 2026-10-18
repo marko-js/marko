@@ -12,7 +12,7 @@ var list_default = _template("b", (input) => {
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
 	_for_of(input.item, (item) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "vb1", item?.content);
+		_content_withhold(item?.content), _filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "vb1", item?.content);
 		if ($scope0_page) _if(() => {
 			{
 				const $scope2_id = _scope_id();

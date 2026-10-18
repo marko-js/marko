@@ -20,7 +20,7 @@ var card_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		f: input.content,
 		g: open
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 1));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 1)), _content_withhold(input.content));
 });
 
 // template.marko

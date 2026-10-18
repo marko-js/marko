@@ -12,7 +12,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}<button>pick</button>${_el_resume($scope0_id, "#button/1")}`);
 	_for_of(input.item, (item) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "PatchValue:__tests__/tags/list.marko_fill1", item?.content);
+		_content_withhold(item?.content), _filled_guard($scope0_reason, 1) && _patch_value($scope1_id, "PatchValue:__tests__/tags/list.marko_fill1", item?.content);
 		if ($scope0_page) _if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();

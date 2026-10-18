@@ -24,7 +24,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	}, "__tests__/tags/card/index.marko", 0, {
 		input_header: ["input.header"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill0", input.header, !_server_guard($scope0_reason, 0));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill0", input.header, !_server_guard($scope0_reason, 0)), _content_withhold(input.header));
 });
 
 // template.marko

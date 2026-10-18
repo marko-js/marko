@@ -34,7 +34,7 @@ var chooser_default = _template("d", (input) => {
 		e: input.Tag,
 		f: input.label,
 		g: show
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vd1", input.Tag, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "vd2", input.label, !_server_guard($scope0_reason, 2)));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vd1", input.Tag, !_server_guard($scope0_reason, 1)), _content_withhold(input.Tag), _filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "vd2", input.label, !_server_guard($scope0_reason, 2)), _content_withhold(input.label));
 });
 
 // template.marko

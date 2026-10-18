@@ -71,5 +71,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		status: "23:8",
 		"EventAttributes:#section/2": ["...{ class: input.b, content: mode ? one : two }", "21:13"],
 		"EventAttributes:#section/3": ["...{ class: input.b, content: mode ? one : two }", "22:13"]
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.b, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:status", status, !_server_guard($scope0_reason, 0)));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.b, !_server_guard($scope0_reason, 0)), _content_withhold(input.b), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:status", status, !_server_guard($scope0_reason, 0)));
 }, 1);

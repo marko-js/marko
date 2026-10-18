@@ -30,7 +30,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_html(`</section>${_el_resume($scope1_id, "#section/1", _mask_group($scope0_reason, 6))}`);
 			_script($scope1_id, "__tests__/tags/child.marko_1_c#2", 1, _client_guard($scope0_reason, 4));
 			_server_guard($scope0_reason, 4) && _patch_effect($scope1_id, "PatchEffect:__tests__/tags/child.marko_1_c#2", "c");
-			_filled_guard($scope0_reason, 4) && (_content_withheld("__tests__/tags/child.marko_2*content", _client_guard($scope0_reason, 6)) ? _patch_value($scope1_id, "PatchValue:__tests__/tags/child.marko_fill3/unpatched", c) : _patch_write($scope1_id, "PatchWrite:c", c, !_server_guard($scope0_reason, 4)));
+			_filled_guard($scope0_reason, 4) && (_content_withheld("__tests__/tags/child.marko_2*content", $scope1_id) || _client_guard($scope0_reason, 6) ? _patch_value($scope1_id, "PatchValue:__tests__/tags/child.marko_fill3/unpatched", c) : _patch_write($scope1_id, "PatchWrite:c", c, !_server_guard($scope0_reason, 4)));
 			_patch_write($scope1_id, "PatchWrite:frag_content", frag?.content, 1);
 			_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4/init");
 			_client_guard($scope0_reason, 6) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_mode#0:6_frag_content#4/init");
@@ -46,7 +46,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 3);
-	_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 3) || _content_withheld("__tests__/tags/child.marko_2*content", _client_guard($scope0_reason, 6))) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill1/unpatched", input.a) : _patch_write($scope0_id, "PatchWrite:input_a", input.a, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4)));
+	_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 3) || _content_withheld("__tests__/tags/child.marko_2*content", $scope0_id) || _client_guard($scope0_reason, 6)) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill1/unpatched", input.a) : _patch_write($scope0_id, "PatchWrite:input_a", input.a, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4)));
 	$scope0_page ? _scope($scope0_id, {
 		input_b: _write_if($scope0_reason, 3) && input.b,
 		input_a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.a,
@@ -56,7 +56,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		input_b: ["input.b"],
 		input_a: ["input.a"],
 		input_mode: ["input.mode"]
-	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.b, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill2", input.mode, !_server_guard($scope0_reason, 6)));
+	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0", input.b, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill2", input.mode, !_server_guard($scope0_reason, 6)), _client_guard($scope0_reason, 3) && _content_withhold(input.mode));
 });
 
 // template.marko

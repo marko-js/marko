@@ -23,7 +23,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, "__tests__/tags/card.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill0", input.content, !_server_guard($scope0_reason, 0));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill0", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
 });
 
 // tags/plain.marko
@@ -78,5 +78,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_p: ["input.p"],
 		input_note: ["input.note"]
-	}) : (_filled_guard($scope0_reason, 3) && _content_withheld("__tests__/template.marko_1*content") && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.p, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && (_content_withheld("__tests__/template.marko_1*content") || _content_withheld("__tests__/template.marko_2*content")) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.note, !_server_guard($scope0_reason, 4)));
+	}) : (_filled_guard($scope0_reason, 3) && _content_withheld("__tests__/template.marko_1*content", $scope0_id) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.p, !_server_guard($scope0_reason, 3)), _content_withheld("__tests__/template.marko_1*content", $scope0_id) && _content_withhold(input.p), _filled_guard($scope0_reason, 4) && (_content_withheld("__tests__/template.marko_1*content", $scope0_id) || _content_withheld("__tests__/template.marko_2*content", $scope0_id)) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.note, !_server_guard($scope0_reason, 4)));
 }, 1);

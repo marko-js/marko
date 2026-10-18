@@ -65,5 +65,5 @@ var template_default = _template("a", (input) => {
 		k: _write_if($scope0_reason, 4) && Panel,
 		m: Tag,
 		o: $wi__input_label && $input_label__closures
-	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.label, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "va5", input.open, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "va6", Tag, !_server_guard($scope0_reason, 4)));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", input.label, !_server_guard($scope0_reason, 1)), _content_withhold(input.label), _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "va5", input.open, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "va6", Tag, !_server_guard($scope0_reason, 4)), _content_withhold(Tag));
 }, 1);

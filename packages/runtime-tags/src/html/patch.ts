@@ -16,12 +16,7 @@ export {
   _show_end,
   _try,
 } from "./patches/control-flow";
-export {
-  _content,
-  _content_elide,
-  _content_resume,
-  _dynamic_tag,
-} from "./patches/dynamic-tag";
+export { _content_elide, _dynamic_tag } from "./patches/dynamic-tag";
 export { _template_patch as _template } from "./patches/template";
 export {
   _resume_locals,
@@ -62,6 +57,7 @@ export { patchRequest, patchResponseHeaders } from "./patches/template";
 export { setPatchBuild } from "./patches/writer";
 export {
   _client_guard,
+  _content_withhold,
   _fill_global_subscribe,
   _filled_guard,
   _mask_group,

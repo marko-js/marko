@@ -27,5 +27,5 @@ var template_default = _template("a", (input) => {
 		i: n,
 		k: _unfilled_if($scope0_reason, 2) && frag?.content,
 		m: _write_if($scope0_reason, 1) && $input_rec_name__closures
-	}) : _filled_guard($scope0_reason, 1) && _content_withheld("a0", _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "va3", input.rec?.name, !_server_guard($scope0_reason, 1));
+	}) : _filled_guard($scope0_reason, 1) && (_content_withheld("a0", $scope0_id) || _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "va3", input.rec?.name, !_server_guard($scope0_reason, 1));
 }, 1);

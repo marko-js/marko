@@ -26,7 +26,7 @@ var child_default = _template("b", (input) => {
 			_html("<section>");
 			_patch_attr_content("a", $scope1_id, input.mode ? frag.content : null, void 0, $scope0_reason, 7);
 			_html(`</section>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 7))}`);
-			_filled_guard($scope0_reason, 5) ? _content_withheld("b0", _client_guard($scope0_reason, 7)) ? _patch_value($scope1_id, "vb7", c) : (_client_guard($scope0_reason, 6) || _content_withheld("b0", _client_guard($scope0_reason, 7))) && _patch_value($scope1_id, "vb6", c) : _patch_init($scope1_id, "b8");
+			_filled_guard($scope0_reason, 5) ? _content_withheld("b0", $scope1_id) || _client_guard($scope0_reason, 7) ? _patch_value($scope1_id, "vb7", c) : (_client_guard($scope0_reason, 6) || _content_withheld("b0", $scope1_id) || _client_guard($scope0_reason, 7)) && _patch_value($scope1_id, "vb6", c) : _patch_init($scope1_id, "b8");
 			_patch_write($scope1_id, "wd", frag?.content, 1);
 			_client_guard($scope0_reason, 7) && _patch_init($scope1_id, "b9");
 			_scope($scope1_id, {
@@ -38,13 +38,13 @@ var child_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b1"], $scope0_reason, 4);
-	_filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _content_withheld("b0", _client_guard($scope0_reason, 7))) ? _patch_value($scope0_id, "vb12", input.a) : _patch_write($scope0_id, "wf", input.a, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5)));
+	_filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _content_withheld("b0", $scope0_id) || _client_guard($scope0_reason, 7)) ? _patch_value($scope0_id, "vb12", input.a) : _patch_write($scope0_id, "wf", input.a, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5)));
 	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 5)) && input.b,
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,
 		g: _unfilled_if($scope0_reason, 4) && input.mode,
 		i: _write_if($scope0_reason, 6) && $input_a__closures
-	}) : (_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "vb10", input.b, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 7) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "vb11", input.mode, !_server_guard($scope0_reason, 7)));
+	}) : (_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "vb10", input.b, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 7) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "vb11", input.mode, !_server_guard($scope0_reason, 7)), _client_guard($scope0_reason, 4) && _content_withhold(input.mode));
 });
 
 // template.marko

@@ -66,5 +66,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		Card: "1:9",
 		n: "4:6",
 		Label: "5:9"
-	}) : (_filled_guard($scope0_reason, 1) && _content_withheld("__tests__/template.marko_1*content", _client_guard($scope0_reason, 0)) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.card, !_server_guard($scope0_reason, 3)));
+	}) : (_filled_guard($scope0_reason, 1) && (_content_withheld("__tests__/template.marko_1*content", $scope0_id) || _client_guard($scope0_reason, 0)) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.card, !_server_guard($scope0_reason, 3)), _client_guard($scope0_reason, 2) && _content_withhold(input.card));
 }, 1);

@@ -28,5 +28,5 @@ var template_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.x,
 		f: _write_if($scope0_reason, 2) && $input_x__closures
-	}) : _filled_guard($scope0_reason, 2) && _content_withheld("b0") && _patch_value($scope0_id, "vb2", input.x, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _content_withheld("b0", $scope0_id) && _patch_value($scope0_id, "vb2", input.x, !_server_guard($scope0_reason, 2));
 }, 1);

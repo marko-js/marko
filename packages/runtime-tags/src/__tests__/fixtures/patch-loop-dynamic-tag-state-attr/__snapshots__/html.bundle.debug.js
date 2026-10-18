@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.items, (i) => {
 		const $scope1_id = _scope_id();
 		const $for_content__i__closures = new Set();
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", i);
+		_content_withhold(i), _filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill1", i);
 		_dynamic_tag($scope1_id, "#text/0", i % 2 ? "p" : "div", { "data-n": count }, _content("__tests__/template.marko_2*content", () => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();

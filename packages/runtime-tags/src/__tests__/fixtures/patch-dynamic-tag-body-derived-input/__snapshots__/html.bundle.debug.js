@@ -27,5 +27,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_a: ["input.a"],
 		n: "1:6"
-	}) : _filled_guard($scope0_reason, 2) && _content_withheld("__tests__/template.marko_1*content") && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.a, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _content_withheld("__tests__/template.marko_1*content", $scope0_id) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.a, !_server_guard($scope0_reason, 2));
 }, 1);

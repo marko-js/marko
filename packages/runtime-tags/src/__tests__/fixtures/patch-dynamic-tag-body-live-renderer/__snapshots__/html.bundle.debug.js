@@ -23,7 +23,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, "__tests__/tags/card.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill0", input.content, !_server_guard($scope0_reason, 0));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill0", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
 });
 
 // tags/heading.marko
@@ -47,7 +47,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		input_depth: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.depth,
 		"ClosureScopes:input_depth/5": _write_if($scope0_reason, 2) && $input_depth__closures
-	}, "__tests__/tags/heading.marko", 0, { input_depth: ["input.depth"] }) : _filled_guard($scope0_reason, 2) && _content_withheld("__tests__/tags/heading.marko_1*content") && _patch_value($scope0_id, "PatchValue:__tests__/tags/heading.marko_fill0", input.depth, !_server_guard($scope0_reason, 2));
+	}, "__tests__/tags/heading.marko", 0, { input_depth: ["input.depth"] }) : _filled_guard($scope0_reason, 2) && _content_withheld("__tests__/tags/heading.marko_1*content", $scope0_id) && _patch_value($scope0_id, "PatchValue:__tests__/tags/heading.marko_fill0", input.depth, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

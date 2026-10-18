@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const Wrap = { content: _content_resume("a1", ({ item }) => {
 		const $scope2_id = _scope_id();
-		_patch_value($scope2_id, "va4", item);
+		_content_withhold(item), _patch_value($scope2_id, "va4", item);
 		const $scope2_reason = _scope_reason(), $wg__item = _write_guard($scope2_reason, 0);
 		let open = true;
 		_html(`<button class=toggle>t</button>${_el_resume($scope2_id, "a")}`);
@@ -52,5 +52,5 @@ var template_default = _template("a", (input) => {
 		f: _unfilled_if($scope0_reason, 1) && Wrap,
 		g: _unfilled_if($scope0_reason, 1) && Plain,
 		i: _write_if($scope0_reason, 2) && $input_note__closures
-	}) : _filled_guard($scope0_reason, 2) && _content_withheld("a2") && _patch_value($scope0_id, "va7", input.note, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _content_withheld("a2", $scope0_id) && _patch_value($scope0_id, "va7", input.note, !_server_guard($scope0_reason, 2));
 }, 1);

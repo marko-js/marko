@@ -35,7 +35,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		input_content: input.content,
 		"ClosureScopes:input_content/5": $wi__input_content && $input_content__closures,
 		"ClosureScopes:input_fail/6": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_fail__closures
-	}, "__tests__/tags/wrapper.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/wrapper.marko_fill0", input.content, !_server_guard($scope0_reason, 1));
+	}, "__tests__/tags/wrapper.marko", 0, { input_content: ["input.content"] }) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/wrapper.marko_fill0", input.content, !_server_guard($scope0_reason, 1)), _content_withhold(input.content));
 });
 
 // template.marko

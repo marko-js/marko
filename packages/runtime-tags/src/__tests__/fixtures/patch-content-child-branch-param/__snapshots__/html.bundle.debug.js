@@ -25,7 +25,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	}, "__tests__/tags/card/index.marko", 0, {
 		input_content: ["input.content"],
 		input_item: ["input.item"]
-	}) : (_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 6)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill0", input.content, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill1", input.item, !_server_guard($scope0_reason, 6)));
+	}) : (_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 6)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill0", input.content, !_server_guard($scope0_reason, 5)), (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 6)) && _content_withhold(input.content), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card/index.marko_fill1", input.item, !_server_guard($scope0_reason, 6)), (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _content_withhold(input.item));
 });
 
 // template.marko

@@ -58,5 +58,5 @@ var template_default = _template("a", (input) => {
 		k: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && Label,
 		l: _write_if($scope0_reason, 1) && $input_label__closures,
 		o: $n__closures
-	}) : (_filled_guard($scope0_reason, 1) && _content_withheld("a1", _client_guard($scope0_reason, 0)) && _patch_value($scope0_id, "va6", input.label, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va7", input.card, !_server_guard($scope0_reason, 3)));
+	}) : (_filled_guard($scope0_reason, 1) && (_content_withheld("a1", $scope0_id) || _client_guard($scope0_reason, 0)) && _patch_value($scope0_id, "va6", input.label, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va7", input.card, !_server_guard($scope0_reason, 3)), _client_guard($scope0_reason, 2) && _content_withhold(input.card));
 }, 1);

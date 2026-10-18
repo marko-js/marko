@@ -18,7 +18,7 @@ var card_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.content,
 		f: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
 });
 
 // tags/heading.marko
@@ -41,7 +41,7 @@ var heading_default = _template("c", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.depth,
 		f: _write_if($scope0_reason, 2) && $input_depth__closures
-	}) : _filled_guard($scope0_reason, 2) && _content_withheld("c0") && _patch_value($scope0_id, "vc3", input.depth, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _content_withheld("c0", $scope0_id) && _patch_value($scope0_id, "vc3", input.depth, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

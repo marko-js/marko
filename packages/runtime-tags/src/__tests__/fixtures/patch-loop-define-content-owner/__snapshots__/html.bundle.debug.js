@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope1_id, "#text/1", 1, _write_guard($scope1_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope1_reason, 1);
 		_html("</p>");
-		$scope1_page ? _scope($scope1_id, { content: _unfilled_if($scope1_reason, 1) && content }, "__tests__/template.marko", "1:2", { content: "1:23" }) : _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill0", content, !_server_guard($scope1_reason, 2));
+		$scope1_page ? _scope($scope1_id, { content: _unfilled_if($scope1_reason, 1) && content }, "__tests__/template.marko", "1:2", { content: "1:23" }) : (_filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill0", content, !_server_guard($scope1_reason, 2)), _client_guard($scope1_reason, 1) && _content_withhold(content));
 	}, $scope0_id) };
 	_for_of(input.rows, (row) => {
 		const $scope2_id = _scope_id();
@@ -81,7 +81,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, 0, $scope2_id, "#text/4", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 0);
 		_html("</section>");
 		_script($scope2_id, "__tests__/template.marko_2");
-		_filled_guard($scope0_reason, 0) && (_content_withheld("__tests__/template.marko_5*content", _client_guard($scope0_reason, 0)) || _content_withheld("__tests__/template.marko_7*content")) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill1", row?.label);
+		_filled_guard($scope0_reason, 0) && (_content_withheld("__tests__/template.marko_5*content", $scope2_id) || _client_guard($scope0_reason, 0) || _content_withheld("__tests__/template.marko_7*content", $scope2_id)) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill1", row?.label);
 		_patch_write($scope2_id, "PatchWrite:Label", Label, 1);
 		_patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill2", n, 1);
 		_scope($scope2_id, {

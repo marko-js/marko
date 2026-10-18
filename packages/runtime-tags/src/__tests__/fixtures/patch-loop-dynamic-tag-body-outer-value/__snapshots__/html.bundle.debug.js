@@ -23,7 +23,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, "__tests__/tags/card.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill0", input.content, !_server_guard($scope0_reason, 0));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/card.marko_fill0", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
 });
 
 // template.marko
@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			row_label: row?.label,
 			_: $scope($scope0_id)
 		}] : []), 0, $wg__input_wrap, void 0, 2, $scope0_reason, 3);
-		_filled_guard($scope0_reason, 2) && _content_withheld("__tests__/template.marko_2*content") && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill2", row?.label);
+		_filled_guard($scope0_reason, 2) && _content_withheld("__tests__/template.marko_2*content", $scope1_id) && _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill2", row?.label);
 		$wi__input_rows__OR__input_wrap__OR__input_suffix && _scope($scope1_id, {
 			row_label: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && row?.label,
 			_: _scope_with_id($scope0_id),
@@ -66,5 +66,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_wrap: ["input.wrap"],
 		input_suffix: ["input.suffix"]
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.wrap, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.suffix, !_server_guard($scope0_reason, 4)) : _content_withheld("__tests__/template.marko_2*content") && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1/content", input.suffix)));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.wrap, !_server_guard($scope0_reason, 3)), _client_guard($scope0_reason, 2) && _content_withhold(input.wrap), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.suffix, !_server_guard($scope0_reason, 4)) : _content_withheld("__tests__/template.marko_2*content", $scope0_id) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1/content", input.suffix)));
 }, 1);

@@ -37,7 +37,7 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 		input_record: ["input.record"],
 		Card: "1:9",
 		Other: "4:9"
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker.marko_fill0", input.useA, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker.marko_fill1", input.record, !_server_guard($scope0_reason, 2)));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker.marko_fill0", input.useA, !_server_guard($scope0_reason, 1)), _client_guard($scope0_reason, 2) && _content_withhold(input.useA), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker.marko_fill1", input.record, !_server_guard($scope0_reason, 2)), _client_guard($scope0_reason, 1) && _content_withhold(input.record));
 });
 
 // template.marko

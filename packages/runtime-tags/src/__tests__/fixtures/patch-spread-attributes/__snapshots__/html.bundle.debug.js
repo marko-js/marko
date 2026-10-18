@@ -36,5 +36,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_img: ["input.img"],
 		count: "1:6",
 		"EventAttributes:#a/0": ["...input.attrs", "3:24"]
-	}) : _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.img, !_server_guard($scope0_reason, 3));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.img, !_server_guard($scope0_reason, 3)), _client_guard($scope0_reason, 2) && _content_withhold(input.img));
 }, 1);

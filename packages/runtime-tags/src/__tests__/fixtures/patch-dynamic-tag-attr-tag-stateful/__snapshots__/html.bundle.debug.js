@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_note__closures = new Set();
 	const Wrap = { content: _content_resume("__tests__/template.marko_2*content", ({ item }) => {
 		const $scope2_id = _scope_id();
-		_patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill1", item);
+		_content_withhold(item), _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill1", item);
 		const $scope2_reason = _scope_reason(), $wg__item = _write_guard($scope2_reason, 0);
 		let open = true;
 		_html(`<button class=toggle>t</button>${_el_resume($scope2_id, "#button/0")}`);
@@ -61,5 +61,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_note: ["input.note"],
 		Wrap: "1:9",
 		Plain: "6:9"
-	}) : _filled_guard($scope0_reason, 2) && _content_withheld("__tests__/template.marko_1*content") && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _content_withheld("__tests__/template.marko_1*content", $scope0_id) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 2));
 }, 1);

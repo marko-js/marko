@@ -61,5 +61,5 @@ var template_default = _template("a", (input) => {
 		j: two,
 		m: status,
 		n: $wi__input_b && $input_b__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.b, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wm", status, !_server_guard($scope0_reason, 0)));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va7", input.b, !_server_guard($scope0_reason, 0)), _content_withhold(input.b), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wm", status, !_server_guard($scope0_reason, 0)));
 }, 1);

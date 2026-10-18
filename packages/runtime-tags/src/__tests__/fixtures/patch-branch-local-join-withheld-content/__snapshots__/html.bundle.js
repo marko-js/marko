@@ -24,7 +24,7 @@ var child_default = _template("b", (input) => {
 			_html("<section>");
 			_patch_attr_content("b", $scope1_id, input.mode ? frag.content : null, void 0, $scope0_reason, 8);
 			_html(`</section>${_el_resume($scope1_id, "b", _mask_group($scope0_reason, 8))}`);
-			_filled_guard($scope0_reason, 6) ? (_client_guard($scope0_reason, 7) || _content_withheld("b0", _client_guard($scope0_reason, 8))) && _patch_value($scope1_id, "vb4", c) : _patch_init($scope1_id, "b5");
+			_filled_guard($scope0_reason, 6) ? (_client_guard($scope0_reason, 7) || _content_withheld("b0", $scope1_id) || _client_guard($scope0_reason, 8)) && _patch_value($scope1_id, "vb4", c) : _patch_init($scope1_id, "b5");
 			_patch_write($scope1_id, "wf", frag?.content, 1);
 			_patch_join_init($scope1_id, "b6", $scope0_reason, 1);
 			_client_guard($scope0_reason, 8) && _patch_init($scope1_id, "b7");
@@ -42,7 +42,7 @@ var child_default = _template("b", (input) => {
 		e: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 6)) && input.b,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.a,
 		g: _unfilled_if($scope0_reason, 5) && input.mode
-	}) : (_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "vb8", input.b, !_server_guard($scope0_reason, 6)), _filled_guard($scope0_reason, 8) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "vb9", input.mode, !_server_guard($scope0_reason, 8)));
+	}) : (_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "vb8", input.b, !_server_guard($scope0_reason, 6)), _filled_guard($scope0_reason, 8) && _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "vb9", input.mode, !_server_guard($scope0_reason, 8)), _client_guard($scope0_reason, 5) && _content_withhold(input.mode));
 });
 
 // template.marko

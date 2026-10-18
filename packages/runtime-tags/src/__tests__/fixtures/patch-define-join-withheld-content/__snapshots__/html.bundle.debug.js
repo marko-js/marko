@@ -22,8 +22,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html("<section>");
 	_patch_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, void 0, $scope0_reason, 6);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", _mask_group($scope0_reason, 6))}`);
-	_filled_guard($scope0_reason, 4) && _content_withheld("__tests__/tags/child.marko_1*content", _client_guard($scope0_reason, 6)) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0/unpatched", input.a) : _patch_write($scope0_id, "PatchWrite:input_a", input.a, !(_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 5)));
-	_filled_guard($scope0_reason, 5) && _content_withheld("__tests__/tags/child.marko_1*content", _client_guard($scope0_reason, 6)) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill1/unpatched", input.b) : _patch_write($scope0_id, "PatchWrite:input_b", input.b, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4)));
+	_filled_guard($scope0_reason, 4) && (_content_withheld("__tests__/tags/child.marko_1*content", $scope0_id) || _client_guard($scope0_reason, 6)) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill0/unpatched", input.a) : _patch_write($scope0_id, "PatchWrite:input_a", input.a, !(_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 5)));
+	_filled_guard($scope0_reason, 5) && (_content_withheld("__tests__/tags/child.marko_1*content", $scope0_id) || _client_guard($scope0_reason, 6)) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/child.marko_fill1/unpatched", input.b) : _patch_write($scope0_id, "PatchWrite:input_b", input.b, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4)));
 	_patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
 	_client_guard($scope0_reason, 6) && _patch_init($scope0_id, "__tests__/tags/child.marko_0_input_mode#5_frag_content#7/init");
 	$scope0_page && _scope($scope0_id, {

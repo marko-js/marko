@@ -74,7 +74,6 @@
         }, _.b]
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_3*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill1": "c",
     "PatchSetup:": {
       "PatchWrite:Label": {
         content: _([
@@ -163,7 +162,6 @@
         }, _.c]
       }
     }, _.d],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill1": "e",
     "PatchSetup:": {
       "PatchWrite:Label": {
         content: _([

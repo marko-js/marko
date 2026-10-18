@@ -21,7 +21,7 @@ var card_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && input.content,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.item
-	}) : (_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 6)) && _patch_value($scope0_id, "vb2", input.content, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "vb3", input.item, !_server_guard($scope0_reason, 6)));
+	}) : (_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 6)) && _patch_value($scope0_id, "vb2", input.content, !_server_guard($scope0_reason, 5)), (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 6)) && _content_withhold(input.content), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "vb3", input.item, !_server_guard($scope0_reason, 6)), (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _content_withhold(input.item));
 });
 
 // template.marko

@@ -466,7 +466,11 @@ export function _await<T>(
     entryKey(PatchKey.Pending, accessor),
     (!elide && patchContent) || 1,
   );
+  // Until it settles, the body may still withhold content (`_content_withheld`).
+  const pending = (state.pendingAwaits ||= []);
+  pending.push(scopeId);
   _base_await(scopeId, accessor, promise, (value: T) => {
+    pending.splice(pending.indexOf(scopeId), 1);
     // The Child entry settles the pending UI the entry above opens: forced so
     // a body with no writes of its own still attaches it.
     const branchId = _peek_scope_id();

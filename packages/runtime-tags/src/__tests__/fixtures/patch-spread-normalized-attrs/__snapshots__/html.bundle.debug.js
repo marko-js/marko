@@ -33,5 +33,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"EventAttributes:#div/2": ["...input.attrs", "3:9"],
 		"ControlledHandler:#input/4": ["...input.field", "5:11"],
 		"EventAttributes:#input/4": ["...input.field", "5:11"]
-	}) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.link, !_server_guard($scope0_reason, 2));
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.link, !_server_guard($scope0_reason, 2)), _client_guard($scope0_reason, 1) && _content_withhold(input.link));
 }, 1);

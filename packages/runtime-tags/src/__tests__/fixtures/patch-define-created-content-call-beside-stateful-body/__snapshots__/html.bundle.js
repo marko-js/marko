@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope4_id, "a", 1, $wg__show, void 0, void 0, void 0, ["a1"], $scope4_reason, 1);
-		$scope4_page ? _write_if($scope4_reason, 1) && _scope($scope4_id, { e: _unfilled_if($scope4_reason, 1) && content }) : _filled_guard($scope4_reason, 2) && _client_guard($scope4_reason, 1) && _patch_value($scope4_id, "va4", content, !_server_guard($scope4_reason, 2));
+		$scope4_page ? _write_if($scope4_reason, 1) && _scope($scope4_id, { e: _unfilled_if($scope4_reason, 1) && content }) : (_filled_guard($scope4_reason, 2) && _client_guard($scope4_reason, 1) && _patch_value($scope4_id, "va4", content, !_server_guard($scope4_reason, 2)), _client_guard($scope4_reason, 1) && _content_withhold(content));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
 	const $childScope2 = _patch_child($scope0_id, "a");
@@ -72,5 +72,5 @@ var template_default = _template("a", (input) => {
 		l: Tag,
 		n: $wi__input_label && $input_label__closures,
 		a: _existing_scope($childScope2)
-	}) : (_filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va6", input.label, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "va7", Tag, !_server_guard($scope0_reason, 3)));
+	}) : (_filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va6", input.label, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "va7", Tag, !_server_guard($scope0_reason, 3)), _content_withhold(Tag));
 }, 1);

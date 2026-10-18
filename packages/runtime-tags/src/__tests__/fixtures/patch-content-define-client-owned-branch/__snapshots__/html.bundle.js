@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", 1, $wg__open, void 0, void 0, void 0, ["a1"], $scope2_reason, 1);
-		$scope2_page ? _write_if($scope2_reason, 1) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 1) && body }) : _filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "va3", body, !_server_guard($scope2_reason, 2));
+		$scope2_page ? _write_if($scope2_reason, 1) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 1) && body }) : (_filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "va3", body, !_server_guard($scope2_reason, 2)), _client_guard($scope2_reason, 1) && _content_withhold(body));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);

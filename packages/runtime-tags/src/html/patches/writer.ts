@@ -157,32 +157,18 @@ function keepBranch<T, U, V>(cb: (a: U, b: V) => T, a: U, b: V): T {
   return withContext(kKeptBranch, getChunk()!.context![kBranchId], cb, a, b);
 }
 
-// A patch render ran this content renderer where it was made, so the values
-// inside it fill as it renders (`_content_withheld`).
-export function markContentRendered(
-  state: PatchUpdateState,
-  renderer: unknown,
-) {
-  const id = (renderer as ServerRenderer | undefined)?.[RendererProp.Id];
-  const instances = id && state.withheldContents?.get(id);
-  if (
-    instances &&
-    instances.get(renderer as ServerRenderer) === getHandedRenderer()
-  ) {
-    instances.delete(renderer as ServerRenderer);
+// A consumer keeps content for the resumed page to render: the values inside
+// fill (`_content_withheld`).
+export function _content_withhold(value: unknown) {
+  const content = ((value as { content?: unknown } | undefined)?.content ||
+    value) as ServerRenderer | undefined;
+  const id = content?.[RendererProp.Id];
+  if (id) {
+    ((getState() as PatchUpdateState).withheldContents ??= new Map()).set(
+      id,
+      content[RendererProp.Owner],
+    );
   }
-}
-
-// The renderer a patch's dynamic tag runs (its branch id): content made outside
-// and rendered in it stays live there, as that renderer may render it again.
-const kHandedRenderer = Symbol("Handed Renderer");
-
-export function getHandedRenderer() {
-  return getChunk()!.context?.[kHandedRenderer] as number | undefined;
-}
-
-export function withHandedRenderer<T>(cb: () => T): T {
-  return withContext(kHandedRenderer, _peek_scope_id(), cb);
 }
 
 // Setup ids share the shell grammar (`inits…!effects…`), each written once:
@@ -481,11 +467,11 @@ export class PatchUpdateState extends PatchRenderState {
   // How a scope hangs off its parent: a reference's path from the root walks
   // these, and a scope writing after its parent's entry re-links through one.
   patchLinks?: Record<number, PatchLink>;
-  // Content instances (by id) a patch render created and has not invoked
-  // since where it made them (by renderer): their values fill.
-  withheldContents?: Map<string, Map<ServerRenderer, number | undefined>>;
-  // Content ids the flush ships for the client to render itself.
-  heldContents?: Set<string>;
+  // Content ids a consumer withheld, each with the owner scope of the latest
+  // instance withheld.
+  withheldContents?: Map<string, number | undefined>;
+  // The scope of each `<await>` whose body has not rendered yet.
+  pendingAwaits?: number[];
   // Each setup envelope's ids by side, and every id it holds.
   setupIds?: Map<
     object,

@@ -96,6 +96,7 @@ import {
   patchComposes,
   patchFillsSubscribedReads,
   patchWritesScope,
+  rendersAsContent,
 } from "./refresh";
 
 // A section's patch entries beside its resume data: effect re-runs, the setup
@@ -127,6 +128,8 @@ export function writePatchResumeStatements(
             : undefined,
         ),
       );
+      const withheld = getWithholdCall(section, binding);
+      if (withheld) fillCalls.push(withheld);
     }
   });
 
@@ -257,8 +260,8 @@ export function writePatchResumeStatements(
       ? orUnpatchedValue(section, binding, filled, entry)
       : entry;
     if (expr) body.push(t.expressionStatement(expr));
-    // A local whose write content withheld decides chooses its fill or write
-    // here, as its declaration cannot know the content withheld.
+    // A local whose fill depends on withheld content writes at the section's
+    // end, which knows what was withheld.
     if (!isKnownChild(section) && writesAtSectionEnd(binding)) {
       if (getPatchFill(binding).fill) {
         body.push(t.expressionStatement(writeLocalFill(section, binding)));
@@ -523,7 +526,7 @@ function buildLetSeeds(section: Section, binding: Binding) {
 }
 
 // A local reaching a written join the client may own, or read in content a
-// consumer may withhold: its section's end knows whether that content is.
+// consumer may withhold: its section's end knows whether one did.
 export function writesAtSectionEnd(binding: Binding) {
   const { fill, unpatchedStructure } = getPatchFill(binding);
   return !!unpatchedStructure || (!!fill && fill !== true && !!fill.contents);
@@ -544,7 +547,10 @@ export function writeLocalFill(section: Section, binding: Binding) {
     "_filled_guard",
     getSourcesForRef(binding),
   );
-  if (!filledGuard) return write;
+  const withheld = getWithholdCall(section, binding);
+  if (!filledGuard) {
+    return withheld ? t.sequenceExpression([withheld, write]) : write;
+  }
   // Only a closure the section reads re-derives through its init; a value
   // its creator passes (a loop param) has none to run.
   const inits = toArray(
@@ -561,9 +567,23 @@ export function writeLocalFill(section: Section, binding: Binding) {
         getResumeRegisterId(section, param, "init"),
       ),
   );
-  return inits.length
+  const fill = inits.length
     ? t.conditionalExpression(filledGuard, write, toSequenceExpression(inits))
     : t.logicalExpression("&&", filledGuard, write);
+  return withheld ? t.sequenceExpression([withheld, fill]) : fill;
+}
+
+// Content the value holds stays live where the client may render it here,
+// whether or not the flush ships the value (`_content_withheld`).
+function getWithholdCall(section: Section, binding: Binding) {
+  return (
+    rendersAsContent(binding) &&
+    gateFillConditions(
+      section,
+      binding,
+      callRuntime("_content_withhold", getDeclaredBindingExpression(binding)),
+    )
+  );
 }
 
 // Plain write of a branch local with no state source that effects or handlers
@@ -1160,21 +1180,23 @@ function getWithheldGuard(section: Section, contents: Opt<Section>) {
   if (some(contents, rendersUnconditionally)) return true;
   let withheld: t.Expression | undefined;
   forEach(contents, (content) => {
-    // Live on the client only where what renders it is the client's, unless
-    // the flush ships it there.
+    withheld = orGuard(
+      withheld,
+      callRuntime(
+        "_content_withheld",
+        t.stringLiteral(getResumeRegisterId(content, "content")),
+        getScopeIdIdentifier(section),
+      ),
+    );
+    // Live too where the client owns what picks it, which a patch never sees.
     const reason = getRendererReason(content);
     const client = reason && getClientGuard(section, reason);
-    const term = callRuntime(
-      "_content_withheld",
-      t.stringLiteral(getResumeRegisterId(content, "content")),
-      client,
-    );
-    withheld = orGuard(withheld, term);
+    if (client) withheld = orGuard(withheld, client);
   });
   return withheld;
 }
 
-// A dynamic tag's body registers for the renderer the tag hands it to, which
+// A dynamic tag's body is live only where its renderer withholds it, which
 // `_content_withheld` sees.
 function rendersUnconditionally(content: Section) {
   const reason = getRendererReason(content);

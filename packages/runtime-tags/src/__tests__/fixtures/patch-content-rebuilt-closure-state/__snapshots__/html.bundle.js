@@ -57,7 +57,7 @@ var child_default = _template("b", (input) => {
 		f: items,
 		g: $wi__input_show && $input_show__closures,
 		b: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _content_withheld("b0") && _patch_value($scope0_id, "vb4", input.show, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _content_withheld("b0", $scope0_id) && _patch_value($scope0_id, "vb4", input.show, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

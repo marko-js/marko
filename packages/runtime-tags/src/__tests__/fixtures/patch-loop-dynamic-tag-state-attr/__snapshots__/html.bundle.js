@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (i) => {
 		const $scope1_id = _scope_id();
 		const $for_content__i__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "va3", i);
+		_content_withhold(i), _filled_guard($scope0_reason, 0) && _patch_value($scope1_id, "va3", i);
 		_dynamic_tag($scope1_id, "a", i % 2 ? "p" : "div", { "data-n": count }, _content("a1", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();

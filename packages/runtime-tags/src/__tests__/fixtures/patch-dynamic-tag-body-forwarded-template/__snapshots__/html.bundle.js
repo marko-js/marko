@@ -18,7 +18,7 @@ var card_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.content,
 		f: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
 });
 
 // tags/fwd.marko
@@ -40,7 +40,7 @@ var fwd_default = _template("c", (input) => {
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => $scope0_page ? [{ d: input.content }] : []), 0, $scope0_page, void 0, 2);
 	_fill_global_subscribe("c2", $scope0_id);
-	$scope0_page ? _scope($scope0_id, { e: $wi__input_content && $input_content__closures }) : _filled_guard($scope0_reason, 0) && _content_withheld("c0") && _patch_value($scope0_id, "vc3", input.content, !_server_guard($scope0_reason, 0));
+	$scope0_page ? _scope($scope0_id, { e: $wi__input_content && $input_content__closures }) : (_filled_guard($scope0_reason, 0) && _content_withheld("c0", $scope0_id) && _patch_value($scope0_id, "vc3", input.content, !_server_guard($scope0_reason, 0)), _content_withheld("c0", $scope0_id) && _content_withhold(input.content));
 });
 
 // template.marko
@@ -64,5 +64,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
 		f: _write_if($scope0_reason, 2) && $input_note__closures
-	}) : _filled_guard($scope0_reason, 2) && _content_withheld("a0") && _patch_value($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _content_withheld("a0", $scope0_id) && _patch_value($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 2));
 }, 1);

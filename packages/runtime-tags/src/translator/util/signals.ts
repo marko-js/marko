@@ -250,8 +250,8 @@ export function getContentClosureValues(bodySection: Section) {
     : [contentClosures];
   const ownerAccessor = getAccessorProp().Owner;
   const levels: t.Expression[] = [];
-  // A patch render's levels leave out what its flush fills wherever it hands
-  // the content to client code, up to the outermost level with values left.
+  // A patch render's levels leave out what its flush fills wherever a consumer
+  // withholds the content, up to the outermost level with values left.
   const patchProps: t.ObjectProperty[][] = [];
   let patchDepth = 0;
   let filled = false;

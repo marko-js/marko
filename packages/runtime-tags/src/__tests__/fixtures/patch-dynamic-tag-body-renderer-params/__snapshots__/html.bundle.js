@@ -38,7 +38,7 @@ var host_default = _template("b", (input) => {
 		i: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 7)) && input.label,
 		j: flag,
 		m: _write_if($scope0_reason, 7) && $input_label__closures
-	}) : (_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 5) || _client_guard($scope0_reason, 6) ? _patch_value($scope0_id, "vb7", input.wrap) : _patch_value($scope0_id, "vb6", input.wrap, !_server_guard($scope0_reason, 4))), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "vb8", input.native, !_server_guard($scope0_reason, 6)), _filled_guard($scope0_reason, 7) && (_client_guard($scope0_reason, 5) ? _patch_value($scope0_id, "vb9", input.label, !_server_guard($scope0_reason, 7)) : _content_withheld("b0") && _patch_value($scope0_id, "vb10", input.label)));
+	}) : (_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 5) || _client_guard($scope0_reason, 6) ? _patch_value($scope0_id, "vb7", input.wrap) : _patch_value($scope0_id, "vb6", input.wrap, !_server_guard($scope0_reason, 4))), _content_withhold(input.wrap), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "vb8", input.native, !_server_guard($scope0_reason, 6)), (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _content_withhold(input.native), _filled_guard($scope0_reason, 7) && (_client_guard($scope0_reason, 5) ? _patch_value($scope0_id, "vb9", input.label, !_server_guard($scope0_reason, 7)) : _content_withheld("b0", $scope0_id) && _patch_value($scope0_id, "vb10", input.label)));
 });
 
 // template.marko

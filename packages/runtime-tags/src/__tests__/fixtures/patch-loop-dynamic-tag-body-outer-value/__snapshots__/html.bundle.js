@@ -18,7 +18,7 @@ var card_default = _template("b", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: input.content,
 		f: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
 });
 
 // template.marko
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 			d: row?.label,
 			_: $scope($scope0_id)
 		}] : []), 0, $wg__input_wrap, void 0, 2, $scope0_reason, 3);
-		_filled_guard($scope0_reason, 2) && _content_withheld("a0") && _patch_value($scope1_id, "va4", row?.label);
+		_filled_guard($scope0_reason, 2) && _content_withheld("a0", $scope1_id) && _patch_value($scope1_id, "va4", row?.label);
 		$wi__input_rows__OR__input_wrap__OR__input_suffix && _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && row?.label,
 			_: _scope_with_id($scope0_id),
@@ -56,5 +56,5 @@ var template_default = _template("a", (input) => {
 		e: _unfilled_if($scope0_reason, 2) && input.wrap,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.suffix,
 		h: _write_if($scope0_reason, 4) && $input_suffix__closures
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va5", input.wrap, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "va6", input.suffix, !_server_guard($scope0_reason, 4)) : _content_withheld("a0") && _patch_value($scope0_id, "va7", input.suffix)));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "va5", input.wrap, !_server_guard($scope0_reason, 3)), _client_guard($scope0_reason, 2) && _content_withhold(input.wrap), _filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "va6", input.suffix, !_server_guard($scope0_reason, 4)) : _content_withheld("a0", $scope0_id) && _patch_value($scope0_id, "va7", input.suffix)));
 }, 1);

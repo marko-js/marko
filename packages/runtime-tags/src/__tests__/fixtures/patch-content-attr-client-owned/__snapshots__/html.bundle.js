@@ -32,7 +32,7 @@ var frag_host_default = _template("b", (input) => {
 		f: _unfilled_if($scope0_reason, 2) && one,
 		g: _unfilled_if($scope0_reason, 2) && two,
 		i: _write_if($scope0_reason, 1) && $input_b__closures
-	}) : _filled_guard($scope0_reason, 1) && _content_withheld("b1", _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "vb4", input.b, !_server_guard($scope0_reason, 1));
+	}) : _filled_guard($scope0_reason, 1) && (_content_withheld("b1", $scope0_id) || _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "vb4", input.b, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

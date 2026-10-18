@@ -25,5 +25,5 @@ var template_default = _template("a", (input) => {
 		g: open,
 		h: Panel,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.label, !_server_guard($scope0_reason, 0));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.label, !_server_guard($scope0_reason, 0)), _content_withhold(input.label));
 }, 1);

@@ -7,37 +7,30 @@ import {
   PatchKey,
   RendererProp,
 } from "../../common/types";
-import {
-  _content as _base_content,
-  _dynamic_tag as _base_dynamic_tag,
-} from "../dynamic-tag";
-import { K_SCOPE_ID, type Locals, REGISTRY, register } from "../serializer";
+import { _content, _dynamic_tag as _base_dynamic_tag } from "../dynamic-tag";
+import { K_SCOPE_ID, REGISTRY, register } from "../serializer";
 import type { ServerRenderer } from "../template";
 import {
   type GroupMask,
   type ScopeInternals,
   type State,
   _peek_scope_id,
-  _resume,
-  getChunk,
   getState,
 } from "../writer";
 import {
   PatchRenderState,
   PatchUpdateState,
   SERVER_ALL,
+  _content_withhold,
   _patch_value,
   entryKey,
   findOwnerDepth,
-  getHandedRenderer,
   groupSources,
   inCreatable,
-  markContentRendered,
   pairBranch,
   patchWait,
   shipShell,
   walkMarkers,
-  withHandedRenderer,
   withUnpatched,
   writePatch,
 } from "./writer";
@@ -75,7 +68,7 @@ export function _dynamic_tag(
         accessor,
         tag,
         patched === 1 && inputOrArgs,
-        content ? content[RendererProp.Id]! : 0,
+        content,
         typeof tagVar === "string" ? tagVar : 0,
         owned,
         group,
@@ -118,28 +111,9 @@ function renderDynamicTag(
       ? SERVER_ALL
       : 0
     : undefined;
-  const unpatched = isPatchRender && !pairs;
-  // A renderer a patch runs renders what it is handed as its own.
-  const scoped = unpatched
-    ? withUnpatched
-    : typeof renderer === "function" && withHandedRenderer;
-  const value = scoped
-    ? scoped(() =>
-        _base_dynamic_tag(
-          scopeId,
-          accessor,
-          tag,
-          inputOrArgs,
-          content,
-          inputIsArgs,
-          markerGuard,
-          tagVar ? 1 : undefined,
-          pairing,
-          reason,
-          renderDynamicTag,
-        ),
-      )
-    : _base_dynamic_tag(
+  if (isPatchRender && !pairs) {
+    return withUnpatched(() =>
+      _base_dynamic_tag(
         scopeId,
         accessor,
         tag,
@@ -151,8 +125,22 @@ function renderDynamicTag(
         pairing,
         reason,
         renderDynamicTag,
-      );
-  if (unpatched) return value;
+      ),
+    );
+  }
+  const value = _base_dynamic_tag(
+    scopeId,
+    accessor,
+    tag,
+    inputOrArgs,
+    content,
+    inputIsArgs,
+    markerGuard,
+    tagVar ? 1 : undefined,
+    pairing,
+    reason,
+    renderDynamicTag,
+  );
   // A template whose own state drives its return keeps the client's value.
   if (
     typeof tagVar === "string" &&
@@ -180,6 +168,9 @@ export function pairsContent(
     if (!pairs) {
       const readyId = (renderer as ServerRenderer)?.[RendererProp.ReadyId];
       if (readyId) patchWait(state, readyId);
+      // The resumed page renders the tag, and so the content passed to it.
+      _content_withhold(renderer);
+      _content_withhold(content);
     } else {
       // A null renderer still renders the body: its writes pair too.
       if (renderer || content) {
@@ -195,32 +186,9 @@ export function pairsContent(
             : undefined,
         );
       }
-      markContentRendered(state, renderer || content);
     }
   }
   return pairs;
-}
-
-// Content a patch render creates is withheld until it renders: its consumer
-// may not, so its values fill. Also called at module load, outside a render.
-export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
-  const state = getChunk()?.boundary.state;
-  if (state instanceof PatchUpdateState) {
-    const withheld = (state.withheldContents ??= new Map());
-    let instances = withheld.get(id);
-    if (!instances) withheld.set(id, (instances = new Map()));
-    instances.set(fn, getHandedRenderer());
-  }
-  return _base_content(id, fn, scopeId);
-}
-
-export function _content_resume(
-  id: string,
-  fn: ServerRenderer,
-  scopeId?: number,
-  locals?: Locals,
-) {
-  return _resume(_content(id, fn, scopeId), id, scopeId, locals);
 }
 
 // Content with no client renderer elides its slot to `0`: an unbound
@@ -240,7 +208,7 @@ export function writeDynamicTagEntry(
   accessor: Accessor,
   tag: unknown,
   args: unknown,
-  contentId: string | 0,
+  content: ServerRenderer | 0 | undefined,
   varId: string | 0,
   owned?: GroupMask,
   group?: number,
@@ -269,6 +237,7 @@ export function writeDynamicTagEntry(
       const shell = id && shipShell(state as PatchUpdateState, id);
       // The patch creates a native or absent tag's body itself; params take
       // the page's own, and a renderer built from its shell takes none.
+      const contentId = content ? content[RendererProp.Id]! : 0;
       if (!id) shipShell(state as PatchUpdateState, contentId);
       const entry: unknown[] = [
         id
@@ -282,16 +251,16 @@ export function writeDynamicTagEntry(
         shell ? 0 : contentId,
         varId,
       ];
-      // A native tag's `content` input ships for the client to render itself.
-      const shipped =
-        typeof renderer === "string" &&
-        (
-          normalizeDynamicRenderer(
-            ((Array.isArray(args) ? args[0] : args) as { content?: unknown })
-              ?.content,
-          ) as ServerRenderer | undefined
-        )?.[RendererProp.Id];
-      if (shipped) (state.heldContents ??= new Set()).add(shipped);
+      // The resumed page renders a native tag's `content` input, and the body
+      // of a renderer it runs from its params (no shell).
+      if (typeof renderer === "string") {
+        _content_withhold(
+          ((Array.isArray(args) ? args[0] : args) as { content?: unknown })
+            ?.content,
+        );
+      } else if (id && !shell) {
+        _content_withhold(content);
+      }
       // Render-only locals (a loop's values) ride last, as its factory takes them.
       const locals = registered?.locals?.(state.scope);
       if (locals) entry.push(...locals);
@@ -377,13 +346,13 @@ export function _client_return(id: string) {
   clientReturns.add(id);
 }
 
-// Whether the flush ships a content renderer to the client, or a consumer withheld
-// one it was handed (live where `client` says): server values inside fill then.
-export function _content_withheld(id: string, client: unknown = 1) {
+// Whether a consumer kept for the resumed page an instance of the content made
+// in the scope's render, or yet may under an unsettled `<await>`: values fill then.
+export function _content_withheld(id: string, scopeId: number) {
   const state = getState();
   return (
     state instanceof PatchUpdateState &&
-    (!!state.heldContents?.has(id) ||
-      (!!client && !!state.withheldContents?.get(id)?.size))
+    ((state.withheldContents?.get(id) ?? -1) >= scopeId ||
+      !!state.pendingAwaits?.some((awaitScopeId) => awaitScopeId >= scopeId))
   );
 }

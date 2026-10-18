@@ -27,7 +27,6 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchText:#text/0": "d"
     }
-  },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-template-or-native/template.marko_fill0": "d"
+  }
 }]
 ;BwU

@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope3_id, "#text/0", 1, $wg__open, void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope3_reason, 1);
-		$scope3_page ? _write_if($scope3_reason, 1) && _scope($scope3_id, { content: _unfilled_if($scope3_reason, 1) && content }, "__tests__/template.marko", "2:2", { content: "2:23" }) : _filled_guard($scope3_reason, 2) && _client_guard($scope3_reason, 1) && _patch_value($scope3_id, "PatchValue:__tests__/template.marko_fill2", content, !_server_guard($scope3_reason, 2));
+		$scope3_page ? _write_if($scope3_reason, 1) && _scope($scope3_id, { content: _unfilled_if($scope3_reason, 1) && content }, "__tests__/template.marko", "2:2", { content: "2:23" }) : (_filled_guard($scope3_reason, 2) && _client_guard($scope3_reason, 1) && _patch_value($scope3_id, "PatchValue:__tests__/template.marko_fill2", content, !_server_guard($scope3_reason, 2)), _client_guard($scope3_reason, 1) && _content_withhold(content));
 	}, $scope0_id) };
 	const Outer = { content: _content("__tests__/template.marko_1*content", ({ open }) => {
 		const $scope1_id = _scope_id();
@@ -63,5 +63,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _content_withheld("__tests__/template.marko_2*content") && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _content_withheld("__tests__/template.marko_2*content", $scope0_id) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

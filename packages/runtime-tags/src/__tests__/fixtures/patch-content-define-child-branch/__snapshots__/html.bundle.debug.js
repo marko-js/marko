@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope2_id, "#section/0", 1, $wg__show, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 1);
 		_html(`</section>${_el_resume($scope2_id, "#section/0", $wg__show)}`);
-		$scope2_page ? _write_if($scope2_reason, 1) && _scope($scope2_id, { content: _unfilled_if($scope2_reason, 1) && content }, "__tests__/template.marko", "1:2", { content: "1:22" }) : _filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill0", content, !_server_guard($scope2_reason, 2));
+		$scope2_page ? _write_if($scope2_reason, 1) && _scope($scope2_id, { content: _unfilled_if($scope2_reason, 1) && content }, "__tests__/template.marko", "1:2", { content: "1:22" }) : (_filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill0", content, !_server_guard($scope2_reason, 2)), _client_guard($scope2_reason, 1) && _content_withhold(content));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);

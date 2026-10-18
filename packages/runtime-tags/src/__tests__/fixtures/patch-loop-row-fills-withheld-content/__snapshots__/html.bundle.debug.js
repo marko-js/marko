@@ -19,7 +19,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		}
 	}, $scope0_id, "#div/0", 1, $wg__input_open, void 0, void 0, void 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $wg__input_open)}`);
-	$scope0_page ? _scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/panel.marko", 0, { input_content: ["input.content"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill0", input.content, !_server_guard($scope0_reason, 2));
+	$scope0_page ? _scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/panel.marko", 0, { input_content: ["input.content"] }) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill0", input.content, !_server_guard($scope0_reason, 2)), _client_guard($scope0_reason, 1) && _content_withhold(input.content));
 });
 
 // template.marko

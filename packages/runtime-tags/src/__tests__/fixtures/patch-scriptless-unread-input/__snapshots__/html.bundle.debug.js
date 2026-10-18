@@ -58,5 +58,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_tag: ["input.tag"],
 		input_cls: ["input.cls"],
 		input_user3_name: ["input.user3.name"]
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.user, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 7) && _content_withheld("__tests__/template.marko_2*content") && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.user3?.name, !_server_guard($scope0_reason, 7)));
+	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.user, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 7) && _content_withheld("__tests__/template.marko_2*content", $scope0_id) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.user3?.name, !_server_guard($scope0_reason, 7)));
 }, 1);

@@ -11,7 +11,7 @@ var fwd_default = _template("b", (input) => {
 	const $global$1 = $global();
 	const Wrap = { content: _content_elide("b0", ({ content }) => {
 		const $scope2_id = _scope_id();
-		_patch_value($scope2_id, "vb3", content);
+		_content_withhold(content), _patch_value($scope2_id, "vb3", content);
 		const $scope2_reason = _scope_reason(), $wg__content = _write_guard($scope2_reason, 0);
 		let open = true;
 		_html(`<button class=toggle>t</button>${_el_resume($scope2_id, "a")}`);
@@ -39,7 +39,7 @@ var fwd_default = _template("b", (input) => {
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => $scope0_page ? [{ d: input.content }] : []), 0, $scope0_page, void 0, 2);
 	_fill_global_subscribe("b6", $scope0_id);
-	$scope0_page ? _scope($scope0_id, { f: $wi__input_content && $input_content__closures }) : _filled_guard($scope0_reason, 0) && _content_withheld("b1") && _patch_value($scope0_id, "vb7", input.content, !_server_guard($scope0_reason, 0));
+	$scope0_page ? _scope($scope0_id, { f: $wi__input_content && $input_content__closures }) : (_filled_guard($scope0_reason, 0) && _content_withheld("b1", $scope0_id) && _patch_value($scope0_id, "vb7", input.content, !_server_guard($scope0_reason, 0)), _content_withheld("b1", $scope0_id) && _content_withhold(input.content));
 });
 
 // template.marko
@@ -63,5 +63,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
 		f: _write_if($scope0_reason, 2) && $input_note__closures
-	}) : _filled_guard($scope0_reason, 2) && _content_withheld("a0") && _patch_value($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _content_withheld("a0", $scope0_id) && _patch_value($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 2));
 }, 1);

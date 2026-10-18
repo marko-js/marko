@@ -22,5 +22,5 @@ var template_default = _template("a", (input) => {
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.a,
 		h: n,
 		i: _write_if($scope0_reason, 2) && $input_a__closures
-	}) : _filled_guard($scope0_reason, 2) && _content_withheld("a0") && _patch_value($scope0_id, "va3", input.a, !_server_guard($scope0_reason, 2));
+	}) : _filled_guard($scope0_reason, 2) && _content_withheld("a0", $scope0_id) && _patch_value($scope0_id, "va3", input.a, !_server_guard($scope0_reason, 2));
 }, 1);

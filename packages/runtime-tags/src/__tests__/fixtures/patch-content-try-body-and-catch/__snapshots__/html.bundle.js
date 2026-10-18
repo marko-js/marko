@@ -34,7 +34,7 @@ var wrapper_default = _template("b", (input) => {
 		d: input.content,
 		f: $wi__input_content && $input_content__closures,
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_fail__closures
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb7", input.content, !_server_guard($scope0_reason, 1));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb7", input.content, !_server_guard($scope0_reason, 1)), _content_withhold(input.content));
 });
 
 // template.marko

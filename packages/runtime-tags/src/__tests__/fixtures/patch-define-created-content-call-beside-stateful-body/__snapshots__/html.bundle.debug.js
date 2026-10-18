@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope4_id, "#text/0", 1, $wg__show, void 0, void 0, void 0, ["__tests__/template.marko_5*shell"], $scope4_reason, 1);
-		$scope4_page ? _write_if($scope4_reason, 1) && _scope($scope4_id, { content: _unfilled_if($scope4_reason, 1) && content }, "__tests__/template.marko", "7:2", { content: "7:22" }) : _filled_guard($scope4_reason, 2) && _client_guard($scope4_reason, 1) && _patch_value($scope4_id, "PatchValue:__tests__/template.marko_fill3", content, !_server_guard($scope4_reason, 2));
+		$scope4_page ? _write_if($scope4_reason, 1) && _scope($scope4_id, { content: _unfilled_if($scope4_reason, 1) && content }, "__tests__/template.marko", "7:2", { content: "7:22" }) : (_filled_guard($scope4_reason, 2) && _client_guard($scope4_reason, 1) && _patch_value($scope4_id, "PatchValue:__tests__/template.marko_fill3", content, !_server_guard($scope4_reason, 2)), _client_guard($scope4_reason, 1) && _content_withhold(content));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
 	const $childScope2 = _patch_child($scope0_id, "#childScope/0");
@@ -79,5 +79,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		open: "1:6",
 		Panel: "2:9",
 		Tag: "15:8"
-	}) : (_filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", Tag, !_server_guard($scope0_reason, 3)));
+	}) : (_filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill2", Tag, !_server_guard($scope0_reason, 3)), _content_withhold(Tag));
 }, 1);

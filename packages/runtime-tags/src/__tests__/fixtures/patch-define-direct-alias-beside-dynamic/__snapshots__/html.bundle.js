@@ -41,5 +41,5 @@ var template_default = _template("a", (input) => {
 		k: _write_if($scope0_reason, 3) && Panel,
 		o: Tag,
 		a: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va2", input.show, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "va3", input.label, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", l, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "va5", Tag, !_server_guard($scope0_reason, 3)));
+	}) : (_filled_guard($scope0_reason, 2) && _patch_value($scope0_id, "va2", input.show, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 4) && _patch_value($scope0_id, "va3", input.label, !_server_guard($scope0_reason, 4)), _content_withhold(input.label), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va4", l, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 3) && _patch_value($scope0_id, "va5", Tag, !_server_guard($scope0_reason, 3)), _content_withhold(Tag));
 }, 1);

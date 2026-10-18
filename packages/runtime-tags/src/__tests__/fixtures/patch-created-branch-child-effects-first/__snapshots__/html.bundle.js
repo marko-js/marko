@@ -139,5 +139,5 @@ var template_default = _template("a", (input) => {
 		i: _unfilled_if($scope0_reason, 3) && input.tag,
 		j: count,
 		k: $wi__input_items && $input_items__closures
-	}) : (_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 3) ? _patch_value($scope0_id, "va20", input.items, !_server_guard($scope0_reason, 4)) : _content_withheld("a0") && _patch_value($scope0_id, "va21", input.items)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va22", input.nested, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va23", input.tag, !_server_guard($scope0_reason, 6)));
+	}) : (_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 3) ? _patch_value($scope0_id, "va20", input.items, !_server_guard($scope0_reason, 4)) : _content_withheld("a0", $scope0_id) && _patch_value($scope0_id, "va21", input.items)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va22", input.nested, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "va23", input.tag, !_server_guard($scope0_reason, 6)), _client_guard($scope0_reason, 3) && _content_withhold(input.tag));
 }, 1);

@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_patch_value($scope1_id, "va1", err?.message);
+		_content_withhold(err?.message), _patch_value($scope1_id, "va1", err?.message);
 		_dynamic_tag($scope1_id, "a", input.large ? large_label_default : small_label_default, {
 			message: err.message,
 			count,
@@ -63,5 +63,5 @@ var template_default = _template("a", (input) => {
 		k: $wi__input_label && $input_label__closures,
 		m: $count__closures,
 		l: $wi__input_error && _unfilled_if($scope0_reason, 2) && $input_error__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va8", input.large, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va9", input.label, !_server_guard($scope0_reason, 1)));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va8", input.large, !_server_guard($scope0_reason, 0)), _content_withhold(input.large), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va9", input.label, !_server_guard($scope0_reason, 1)), _content_withhold(input.label));
 }, 1);

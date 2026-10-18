@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "#text/0", 1, $wg__open, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 1);
-		$scope2_page ? _write_if($scope2_reason, 1) && _scope($scope2_id, { body: _unfilled_if($scope2_reason, 1) && body }, "__tests__/template.marko", "2:2", { body: "2:23" }) : _filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill2", body, !_server_guard($scope2_reason, 2));
+		$scope2_page ? _write_if($scope2_reason, 1) && _scope($scope2_id, { body: _unfilled_if($scope2_reason, 1) && body }, "__tests__/template.marko", "2:2", { body: "2:23" }) : (_filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_value($scope2_id, "PatchValue:__tests__/template.marko_fill2", body, !_server_guard($scope2_reason, 2)), _client_guard($scope2_reason, 1) && _content_withhold(body));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);

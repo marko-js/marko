@@ -29,5 +29,5 @@ var template_default = _template("a", (input) => {
 		...input.attrs
 	}, "b", $scope0_id, "style", 2, $scope0_reason, 1)}>${_patch_text_content($scope0_id, "mb", `p.u { --page: ${_to_text(input.page)} }`, _escape_style, $scope0_reason, 0)}</style>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a3", 1, 1);
-	$scope0_page ? _scope($scope0_id, { f: _unfilled_if($scope0_reason, 0) && input.attrs }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va4", input.attrs, !_server_guard($scope0_reason, 1));
+	$scope0_page ? _scope($scope0_id, { f: _unfilled_if($scope0_reason, 0) && input.attrs }) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "va4", input.attrs, !_server_guard($scope0_reason, 1)), _client_guard($scope0_reason, 0) && _content_withhold(input.attrs));
 }, 1);

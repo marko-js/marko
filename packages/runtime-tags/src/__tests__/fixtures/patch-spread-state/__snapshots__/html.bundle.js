@@ -26,5 +26,5 @@ var template_default = _template("a", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		f: input.attrs,
 		g: on
-	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va3", input.attrs, !_server_guard($scope0_reason, 1));
+	}) : (_filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va3", input.attrs, !_server_guard($scope0_reason, 1)), _content_withhold(input.attrs));
 }, 1);

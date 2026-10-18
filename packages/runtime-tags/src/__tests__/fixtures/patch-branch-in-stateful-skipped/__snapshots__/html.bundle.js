@@ -16,7 +16,7 @@ var panel_default = _template("b", (input) => {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.content,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.label,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.items
-	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb0", input.content, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.label, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb2", input.items, !_server_guard($scope0_reason, 6)));
+	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb0", input.content, !_server_guard($scope0_reason, 4)), _client_guard($scope0_reason, 2) && _content_withhold(input.content), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.label, !_server_guard($scope0_reason, 5)), _client_guard($scope0_reason, 1) && _content_withhold(input.label), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb2", input.items, !_server_guard($scope0_reason, 6)), _client_guard($scope0_reason, 0) && _content_withhold(input.items));
 });
 
 // template.marko

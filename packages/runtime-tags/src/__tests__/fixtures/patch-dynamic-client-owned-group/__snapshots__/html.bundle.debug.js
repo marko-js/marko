@@ -28,7 +28,7 @@ var picker_default = _template("__tests__/tags/picker/index.marko", (input) => {
 	}, "__tests__/tags/picker/index.marko", 0, {
 		input_on: ["input.on"],
 		input_label: ["input.label"]
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker/index.marko_fill0", input.on, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker/index.marko_fill1", input.label, !_server_guard($scope0_reason, 2)));
+	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker/index.marko_fill0", input.on, !_server_guard($scope0_reason, 1)), _client_guard($scope0_reason, 2) && _content_withhold(input.on), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/picker/index.marko_fill1", input.label, !_server_guard($scope0_reason, 2)), _client_guard($scope0_reason, 1) && _content_withhold(input.label));
 });
 
 // template.marko

@@ -147,8 +147,8 @@ export function _fill_join_closure<T extends SignalFn>(
             childScope[AccessorProp.Gen] > 0 &&
             childScope[AccessorProp.Gen] < runId
           ) {
-            const sig = signals[(childScope[signalIndex] as number) || 0];
-            if (sig) queueRender(childScope, sig, -1);
+            // Run as `_closure` does: a declaration's fill may take this key.
+            signals[(childScope[signalIndex] as number) || 0]?.(childScope);
           }
         }
       }

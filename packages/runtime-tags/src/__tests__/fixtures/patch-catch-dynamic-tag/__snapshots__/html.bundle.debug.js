@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill3", err?.message);
+		_content_withhold(err?.message), _patch_value($scope1_id, "PatchValue:__tests__/template.marko_fill3", err?.message);
 		_dynamic_tag($scope1_id, "#text/0", input.large ? large_label_default : small_label_default, {
 			message: err.message,
 			count,
@@ -73,5 +73,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_large: ["input.large"],
 		input_label: ["input.label"],
 		count: "7:6"
-	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.large, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.label, !_server_guard($scope0_reason, 1)));
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", input.large, !_server_guard($scope0_reason, 0)), _content_withhold(input.large), _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", input.label, !_server_guard($scope0_reason, 1)), _content_withhold(input.label));
 }, 1);

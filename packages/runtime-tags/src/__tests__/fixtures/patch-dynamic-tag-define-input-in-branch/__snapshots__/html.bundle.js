@@ -37,5 +37,5 @@ var template_default = _template("a", (input) => {
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.record,
 		g: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && Card,
 		h: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && Other
-	}) : (_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va3", input.useA, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va4", input.record, !_server_guard($scope0_reason, 6)));
+	}) : (_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va3", input.useA, !_server_guard($scope0_reason, 5)), _client_guard($scope0_reason, 4) && _content_withhold(input.useA), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "va4", input.record, !_server_guard($scope0_reason, 6)), _client_guard($scope0_reason, 4) && _content_withhold(input.record));
 }, 1);

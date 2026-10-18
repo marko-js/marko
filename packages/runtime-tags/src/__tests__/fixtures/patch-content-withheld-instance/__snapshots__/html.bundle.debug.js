@@ -36,7 +36,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	$scope0_page ? _scope($scope0_id, {
 		input_note: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		"ClosureScopes:input_note/5": _write_if($scope0_reason, 1) && $input_note__closures
-	}, "__tests__/tags/frag-host.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_reason, 1) && _content_withheld("__tests__/tags/frag-host.marko_2*content", _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/frag-host.marko_fill0", input.note, !_server_guard($scope0_reason, 1));
+	}, "__tests__/tags/frag-host.marko", 0, { input_note: ["input.note"] }) : _filled_guard($scope0_reason, 1) && (_content_withheld("__tests__/tags/frag-host.marko_2*content", $scope0_id) || _client_guard($scope0_reason, 2)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/frag-host.marko_fill0", input.note, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

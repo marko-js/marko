@@ -30,7 +30,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		input_fallback: input.fallback,
 		"ClosureScopes:input_fallback/5": $wi__input_fallback && $input_fallback__closures,
 		"ClosureScopes:input_fail/6": $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures
-	}, "__tests__/tags/wrapper.marko", 0, { input_fallback: ["input.fallback"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/wrapper.marko_fill0", input.fallback, !_server_guard($scope0_reason, 0));
+	}, "__tests__/tags/wrapper.marko", 0, { input_fallback: ["input.fallback"] }) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/wrapper.marko_fill0", input.fallback, !_server_guard($scope0_reason, 0)), _content_withhold(input.fallback));
 });
 
 // tags/panel.marko
