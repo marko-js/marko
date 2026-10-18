@@ -19,7 +19,7 @@ var wrap_default = _template("b", (input) => {
 });
 
 // template.marko
-_shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}`)() });
+_shells({ a: /*@__PURE__*/ (() => `a;${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}`)() });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_promise = _write_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

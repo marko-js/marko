@@ -7,7 +7,7 @@ function read($global, handler) {
 	return handler;
 }
 _shells({
-	a: "a !;Eb%l%;<main><p>last <!></p><!></main>",
+	a: "a;Eb%l%;<main><p>last <!></p><!></main>",
 	a1: "a1 !a3; D ;<button> </button>"
 });
 var template_default = _template("a", (input) => {

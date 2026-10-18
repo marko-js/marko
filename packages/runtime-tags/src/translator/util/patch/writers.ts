@@ -53,6 +53,7 @@ import {
   isCallerParamAt,
   isLoopBody,
   type ParamReasonGroup,
+  reduceParamGroups,
   type Section,
   sectionUtil,
 } from "../sections";
@@ -71,7 +72,6 @@ import {
   andGuard,
   buildComposedGroupValue,
   buildGroupMask,
-  getClientGuard,
   getGroupArgs,
   getWriteReason,
   isDynamicWriteGuard,
@@ -1274,6 +1274,7 @@ function getWithheldGuard(
 ) {
   if (some(contents, rendersUnconditionally)) return true;
   let withheld: t.Expression | undefined;
+  const clientGroups = new Set<ParamReasonGroup>();
   forEach(contents, (content) => {
     withheld = orGuard(
       withheld,
@@ -1283,10 +1284,28 @@ function getWithheldGuard(
         getScopeIdIdentifier(scopeSection),
       ),
     );
-    // Live too where the client owns what picks it, which a patch never sees.
+    // Live too where the client owns what picks it, which a patch never
+    // sees: each group once.
     const reason = getRendererReason(content);
-    const client = reason && getClientGuard(section, reason);
-    if (client) withheld = orGuard(withheld, client);
+    if (reason && isDynamicWriteGuard(section, reason)) {
+      withheld = reduceParamGroups(
+        reason.param,
+        (expr, paramSection, group) => {
+          const index = getParamReasonGroupIndex(paramSection, group);
+          const key = paramSection.paramReasonGroups![index];
+          if (clientGroups.has(key)) return expr;
+          clientGroups.add(key);
+          return orGuard(
+            expr,
+            callRuntime(
+              "_client_guard",
+              ...getGroupArgs(paramSection, group, index),
+            ),
+          );
+        },
+        withheld,
+      );
+    }
   });
   return withheld;
 }

@@ -22,7 +22,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 _shells({
-	"__tests__/tags/gate.marko": "__tests__/tags/gate.marko !;b%;<!><!><!>",
+	"__tests__/tags/gate.marko": "__tests__/tags/gate.marko;b%;<!><!><!>",
 	"__tests__/tags/gate.marko_1*shell": "__tests__/tags/gate.marko_1*shell;b%;<!><!><!>",
 	"__tests__/tags/gate.marko_2*shell": "__tests__/tags/gate.marko_2*shell;b%;<!><!><!>"
 });
@@ -57,7 +57,7 @@ var gate_default = _template("__tests__/tags/gate.marko", (input) => {
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 _shells({
-	"__tests__/tags/wrapper.marko": "__tests__/tags/wrapper.marko !; ;<div></div>",
+	"__tests__/tags/wrapper.marko": "__tests__/tags/wrapper.marko; ;<div></div>",
 	"__tests__/tags/wrapper.marko_1*shell": "__tests__/tags/wrapper.marko_1*shell;b%;<!><!><!>"
 });
 var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {

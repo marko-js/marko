@@ -1,7 +1,7 @@
 // template.marko
 const $Card_content__walks = "Db%l b";
 const $Card_content__template = "<h1>Product <!></h1><button>Add to cart</button>";
-_shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `b/${_w0}&Db%l`)($Card_content__walks)};${((_w0) => `<!>${_w0}<p>Cart: <!></p>`)($Card_content__template)}`)() });
+_shells({ a: /*@__PURE__*/ (() => `a;${((_w0) => `b/${_w0}&Db%l`)($Card_content__walks)};${((_w0) => `<!>${_w0}<p>Cart: <!></p>`)($Card_content__template)}`)() });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

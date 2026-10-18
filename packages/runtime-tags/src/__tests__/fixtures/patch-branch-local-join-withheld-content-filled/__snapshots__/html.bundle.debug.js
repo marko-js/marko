@@ -3,8 +3,8 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
 	"__tests__/tags/child.marko_2*content": "__tests__/tags/child.marko_2*content,",
-	"__tests__/tags/child.marko": "__tests__/tags/child.marko !;b%;<!><!><!>",
-	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell !; ;<section></section>"
+	"__tests__/tags/child.marko": "__tests__/tags/child.marko;b%;<!><!><!>",
+	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell; ;<section></section>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_b__OR__input_a__OR__input_mode = _write_if($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $scope0_page = _page_render();

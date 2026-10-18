@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/fwd.marko !;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/fwd.marko;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, {
   "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/fwd.marko",
   "PatchChild:BranchScopes:#text/0": {
     "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/card.marko",

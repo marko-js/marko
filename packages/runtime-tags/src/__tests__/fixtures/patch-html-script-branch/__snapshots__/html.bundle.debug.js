@@ -2,7 +2,7 @@
 const $template = "<main><!><p> </p></main>";
 const $walks = "D%bD m";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !;D%bD ;<main><!><p> </p></main>",
+	"__tests__/template.marko": "__tests__/template.marko;D%bD ;<main><!><p> </p></main>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell; ;<script>\n      { const main = document.querySelector(\"main\");\n      main.dataset.ran = (+main.dataset.ran || 0) + 1;\n      main.dataset.nonce = document.currentScript.getAttribute(\"nonce\");\n      main.dataset.connected = document.currentScript.isConnected; }\n    <\/script>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {

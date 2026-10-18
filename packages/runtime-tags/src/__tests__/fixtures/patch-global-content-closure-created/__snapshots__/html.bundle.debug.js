@@ -2,7 +2,7 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 _shells({
-	"__tests__/tags/panel/index.marko": "__tests__/tags/panel/index.marko !;b%;<!><!><!>",
+	"__tests__/tags/panel/index.marko": "__tests__/tags/panel/index.marko;b%;<!><!><!>",
 	"__tests__/tags/panel/index.marko_1*shell": "__tests__/tags/panel/index.marko_1*shell;b%;<!><!><!>"
 });
 var panel_default = _template("__tests__/tags/panel/index.marko", (input) => {

@@ -1,7 +1,7 @@
 // tags/list/index.marko
 const $template = "<ul></ul>";
 _shells({
-	b: "b !; ;<ul></ul>",
+	b: "b; ;<ul></ul>",
 	b0: "b0;D%b%;<li><!><!></li>"
 });
 var list_default = _template("b", (input) => {

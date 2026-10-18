@@ -13,7 +13,7 @@ var box_default = _template("a", (input) => {
 // tags/card/index.marko
 const $template = "<section></section>";
 _shells({
-	c: "c !; ;<section></section>",
+	c: "c; ;<section></section>",
 	c0: "c0;b%;<!><!><!>"
 });
 var card_default = _template("c", (input) => {

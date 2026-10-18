@@ -31,7 +31,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
 	"__tests__/tags/heading.marko_1*content": "__tests__/tags/heading.marko_1*content,",
-	"__tests__/tags/heading.marko": "__tests__/tags/heading.marko !;b%;<!><!><!>"
+	"__tests__/tags/heading.marko": "__tests__/tags/heading.marko;b%;<!><!><!>"
 });
 var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_type = _write_guard($scope0_reason, 1);

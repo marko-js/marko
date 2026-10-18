@@ -14,7 +14,7 @@ const $template$4 = "";
 const $walks$4 = /*@__PURE__*/ ((_w0) => `0${_w0}&`)("");
 _shells({
 	"__tests__/tags/src.marko_1*content": "__tests__/tags/src.marko_1*content __tests__/tags/src.marko_1_count#0:5/init!__tests__/tags/src.marko_1; D%c%;<button><!> <!></button>",
-	"__tests__/tags/src.marko": /*@__PURE__*/ ((_w0) => `^__tests__/tags/src.marko !;${((_w0) => `0${_w0}&`)("")};${_w0}`)("")
+	"__tests__/tags/src.marko": /*@__PURE__*/ ((_w0) => `^__tests__/tags/src.marko;${((_w0) => `0${_w0}&`)("")};${_w0}`)("")
 });
 var src_default = _template("__tests__/tags/src.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -48,7 +48,7 @@ var src_default = _template("__tests__/tags/src.marko", (input) => {
 const $template$3 = "<!><!><!>";
 const $walks$3 = "b%c";
 _shells({
-	"__tests__/tags/view.marko": "__tests__/tags/view.marko !;b%;<!><!><!>",
+	"__tests__/tags/view.marko": "__tests__/tags/view.marko;b%;<!><!><!>",
 	"__tests__/tags/view.marko_1*shell": "__tests__/tags/view.marko_1*shell;b%;<!><!><!>",
 	"__tests__/tags/view.marko_2*shell": "__tests__/tags/view.marko_2*shell;b%;<!><!><!>"
 });
@@ -106,7 +106,7 @@ var page_default = _template("__tests__/tags/page.marko", (input) => {
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
-	"__tests__/tags/wrap.marko": "__tests__/tags/wrap.marko !;b%;<!><!><!>",
+	"__tests__/tags/wrap.marko": "__tests__/tags/wrap.marko;b%;<!><!><!>",
 	"__tests__/tags/wrap.marko_1*shell": /*@__PURE__*/ (() => `__tests__/tags/wrap.marko_1*shell;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$2)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2)}`)()
 });
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {

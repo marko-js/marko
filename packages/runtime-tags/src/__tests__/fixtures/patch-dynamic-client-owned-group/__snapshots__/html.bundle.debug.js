@@ -14,7 +14,7 @@ var card_default = _template("__tests__/tags/picker/card.marko", (input) => {
 // tags/picker/index.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-_shells({ "__tests__/tags/picker/index.marko": "__tests__/tags/picker/index.marko !;b%;<!><!><!>" });
+_shells({ "__tests__/tags/picker/index.marko": "__tests__/tags/picker/index.marko;b%;<!><!><!>" });
 var picker_default = _template("__tests__/tags/picker/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_on__OR__input_label = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

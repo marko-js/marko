@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
-	"__tests__/tags/counter/index.marko": "__tests__/tags/counter/index.marko !;b%;<!><!><!>",
+	"__tests__/tags/counter/index.marko": "__tests__/tags/counter/index.marko;b%;<!><!><!>",
 	"__tests__/tags/counter/index.marko_1*shell": "__tests__/tags/counter/index.marko_1*shell !__tests__/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var counter_default = _template("__tests__/tags/counter/index.marko", (input) => {
@@ -34,7 +34,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `E lDb%l/${_w0}&l`)("b%c");
-_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !;${((_w0) => `E lDb%l/${_w0}&l`)("b%c")};${((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template$1)}`)() });
+_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `E lDb%l/${_w0}&l`)("b%c")};${((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

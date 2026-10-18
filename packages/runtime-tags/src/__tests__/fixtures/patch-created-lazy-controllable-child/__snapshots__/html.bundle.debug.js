@@ -1,7 +1,7 @@
 // tags/tab-editor.marko
 const $template$2 = "<p>sel=<!></p>";
 const $walks$2 = "Db%l";
-_shells({ "__tests__/tags/tab-editor.marko": "__tests__/tags/tab-editor.marko !;Db%;<p>sel=<!></p>" });
+_shells({ "__tests__/tags/tab-editor.marko": "__tests__/tags/tab-editor.marko;Db%;<p>sel=<!></p>" });
 var tab_editor_default = _template("__tests__/tags/tab-editor.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

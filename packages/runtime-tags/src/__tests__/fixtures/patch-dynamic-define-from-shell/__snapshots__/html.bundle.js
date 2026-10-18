@@ -11,7 +11,7 @@ var address_view_default = _template("b", (input) => {
 _shells({
 	a0: "a0,",
 	a1: "a1 !a2,",
-	a: "a !;D%bD ;<main><!><output> </output></main>"
+	a: "a;D%bD ;<main><!><output> </output></main>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

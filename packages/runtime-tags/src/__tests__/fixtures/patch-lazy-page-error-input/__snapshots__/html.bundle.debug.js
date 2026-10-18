@@ -29,7 +29,7 @@ const $walks = "b%c";
 const $Page1_withLoadAssets = withLoadAssets(page1_default, flush, "ready:__tests__/page1.marko");
 const $Page2_withLoadAssets = withLoadAssets(page2_default, flush, "ready:__tests__/page2.marko");
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>",
+	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D l")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)(),
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$2)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$2)}`)()
 });

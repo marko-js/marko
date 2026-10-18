@@ -28,7 +28,7 @@ _shells({
 	a0: /*@__PURE__*/ (() => `a0;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Body_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Body_content__template)}`)(),
 	a1: "a1,",
 	a2: /*@__PURE__*/ (() => `a2;${((_w0) => `b/${_w0}&b`)($Body_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Body_content__template)}`)(),
-	a: "a !;D%;<main><!></main>"
+	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_on__OR__input_note__OR__input_v = _write_if($scope0_reason, 1), $scope0_page = _page_render();

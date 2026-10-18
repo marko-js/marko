@@ -1,7 +1,7 @@
 // tags/plain-child.marko
 const $template$1 = "<p>t=<!></p>";
 const $walks$1 = "Db%l";
-_shells({ "__tests__/tags/plain-child.marko": "__tests__/tags/plain-child.marko !;Db%;<p>t=<!></p>" });
+_shells({ "__tests__/tags/plain-child.marko": "__tests__/tags/plain-child.marko;Db%;<p>t=<!></p>" });
 var plain_child_default = _template("__tests__/tags/plain-child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

@@ -15,7 +15,7 @@ var card_default = _template("b", (input) => {
 _shells({
 	a0: "a0;D ;<em> </em>",
 	a1: "a1;D ;<em> </em>",
-	a: /*@__PURE__*/ (() => `a !;${((_w0) => `D/${_w0}&%l`)($walks)};${((_w0) => `<main>${_w0}<!></main>`)($template)}`)(),
+	a: /*@__PURE__*/ (() => `a;${((_w0) => `D/${_w0}&%l`)($walks)};${((_w0) => `<main>${_w0}<!></main>`)($template)}`)(),
 	a2: /*@__PURE__*/ ((_w0) => `a2;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {

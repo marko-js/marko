@@ -4,7 +4,7 @@ const $walks$1 = "b%c";
 _shells({
 	"__tests__/tags/page.marko_1*content": "__tests__/tags/page.marko_1*content __tests__/tags/page.marko_1_likes#0:4/init!__tests__/tags/page.marko_1; D%c%c%;<button><!> <!> <!></button>",
 	"__tests__/tags/page.marko_0_#text#0/await": "__tests__/tags/page.marko_0_#text#0/await __tests__/tags/page.marko_1_likes#0:4/init!__tests__/tags/page.marko_1; D%c%c%;<button><!> <!> <!></button>",
-	"__tests__/tags/page.marko": "__tests__/tags/page.marko !;b%;<!><!><!>"
+	"__tests__/tags/page.marko": "__tests__/tags/page.marko;b%;<!><!><!>"
 });
 var page_default = _template("__tests__/tags/page.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -34,7 +34,7 @@ var page_default = _template("__tests__/tags/page.marko", (input) => {
 const $template = "<!><!><!>";
 const $walks = "b%c";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>",
+	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

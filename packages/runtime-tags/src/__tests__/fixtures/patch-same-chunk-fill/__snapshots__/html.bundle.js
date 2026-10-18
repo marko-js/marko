@@ -1,7 +1,7 @@
 // tags/probe.marko
 const $template = "<div> </div>";
 const $walks = " D l";
-_shells({ b: "b !; D ;<div> </div>" });
+_shells({ b: "b; D ;<div> </div>" });
 var probe_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

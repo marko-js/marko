@@ -34,7 +34,7 @@ var tree_default = _template("b", $content);
 
 // template.marko
 _shells({
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a0: /*@__PURE__*/ ((_w0) => `a0;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {

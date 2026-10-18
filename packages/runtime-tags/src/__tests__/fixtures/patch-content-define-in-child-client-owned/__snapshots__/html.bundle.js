@@ -5,7 +5,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__templa
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks);
 _shells({
 	b0: /*@__PURE__*/ ((_w0, _w1) => `b0;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
-	b: /*@__PURE__*/ (() => `b !;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)(),
+	b: /*@__PURE__*/ (() => `b;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)(),
 	b1: "b1;D ;<em> </em>"
 });
 var wrap_default = _template("b", (input) => {

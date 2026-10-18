@@ -2,8 +2,8 @@
 const $template = "<!><!><!>";
 _shells({
 	b0: "b0,",
-	b: "b !;b%;<!><!><!>",
-	b1: "b1 !;D l ;<p> </p><section></section>"
+	b: "b;b%;<!><!><!>",
+	b1: "b1;D l ;<p> </p><section></section>"
 });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 5), $scope0_page = _page_render();

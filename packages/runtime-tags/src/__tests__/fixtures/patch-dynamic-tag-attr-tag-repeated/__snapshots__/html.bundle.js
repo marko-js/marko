@@ -4,7 +4,7 @@ _shells({
 	a1: "a1 !a5,",
 	a2: "a2,",
 	a3: "a3,",
-	a: "a !;D%;<main><!></main>",
+	a: "a;D%;<main><!></main>",
 	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {

@@ -14,7 +14,7 @@ const $Child_withLoadAssets = withLoadAssets(child_default, flush, "_a", [{
 	selector: "body"
 }]);
 _shells({
-	b: "b !; ;<main></main>",
+	b: "b; ;<main></main>",
 	b0: /*@__PURE__*/ (() => `b0;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D l")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("b", (input) => {

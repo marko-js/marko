@@ -27,7 +27,7 @@ var page2_default = _template("b", (input) => {
 const $Page1_withLoadAssets = withLoadAssets(page1_default, flush, "_a");
 const $Page2_withLoadAssets = withLoadAssets(page2_default, flush, "_b");
 _shells({
-	c: "c !;b%;<!><!><!>",
+	c: "c;b%;<!><!><!>",
 	c0: /*@__PURE__*/ (() => `c0;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D l")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)(),
 	c1: /*@__PURE__*/ (() => `c1;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)()
 });

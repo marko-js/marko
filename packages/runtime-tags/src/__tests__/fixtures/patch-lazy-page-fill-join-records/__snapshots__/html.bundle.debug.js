@@ -118,7 +118,7 @@ const $PageA_withLoadAssets = withLoadAssets(page_a_default, flush, "ready:__tes
 const $PageB_withLoadAssets = withLoadAssets(page_b_default, flush, "ready:__tests__/page-b.marko");
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
-	"__tests__/template.marko": "__tests__/template.marko !;E%;<html><body><!></body></html>",
+	"__tests__/template.marko": "__tests__/template.marko;E%;<html><body><!></body></html>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$4)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$4)}`)(),
 	"__tests__/template.marko_3*shell": /*@__PURE__*/ (() => `__tests__/template.marko_3*shell;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$3)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$3)}`)(),
 	"__tests__/template.marko_4*shell": /*@__PURE__*/ (() => `__tests__/template.marko_4*shell;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)(),

@@ -25,9 +25,9 @@ var keeper_default = _template("c", (input) => {
 const $template = "<!><!><!>";
 _shells({
 	b0: "b0,",
-	b1: "b1 !;b%;<!><!><!>",
-	b2: "b2 !;b%;<!><!><!>",
-	b: "b !;b%;<!><!><!>"
+	b1: "b1;b%;<!><!><!>",
+	b2: "b2;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1);
@@ -69,7 +69,7 @@ var card_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a0: /*@__PURE__*/ (() => `a0;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {

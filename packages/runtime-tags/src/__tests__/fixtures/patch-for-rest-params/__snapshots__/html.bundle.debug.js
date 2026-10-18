@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
-	"__tests__/tags/my-for.marko": "__tests__/tags/my-for.marko !;b%;<!><!><!>",
+	"__tests__/tags/my-for.marko": "__tests__/tags/my-for.marko;b%;<!><!><!>",
 	"__tests__/tags/my-for.marko_1*shell": "__tests__/tags/my-for.marko_1*shell;b%;<!><!><!>"
 });
 var my_for_default = _template("__tests__/tags/my-for.marko", (input) => {

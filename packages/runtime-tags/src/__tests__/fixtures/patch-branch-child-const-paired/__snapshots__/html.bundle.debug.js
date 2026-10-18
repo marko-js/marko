@@ -13,7 +13,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)($walks$1);
 _shells({
-	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !;${((_w0) => `D/${_w0}&%l`)($walks$1)};${((_w0) => `<main>${_w0}<!></main>`)($template$1)}`)(),
+	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `D/${_w0}&%l`)($walks$1)};${((_w0) => `<main>${_w0}<!></main>`)($template$1)}`)(),
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `/${_w0}&D l`)($walks$1)};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

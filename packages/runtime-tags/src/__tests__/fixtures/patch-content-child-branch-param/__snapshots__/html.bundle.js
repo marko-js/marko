@@ -1,7 +1,7 @@
 // tags/card/index.marko
 const $template = "<section></section>";
 _shells({
-	b: "b !; ;<section></section>",
+	b: "b; ;<section></section>",
 	b0: "b0;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {

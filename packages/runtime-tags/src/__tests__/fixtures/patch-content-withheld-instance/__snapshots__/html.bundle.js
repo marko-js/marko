@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 _shells({
 	b0: "b0,",
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b1: "b1; ;<section></section>"
 });
 var frag_host_default = _template("b", (input) => {

@@ -1,6 +1,6 @@
 // tags/panel.marko
 const $template = "<!><!><!>";
-_shells({ b: "b !;b%;<!><!><!>" });
+_shells({ b: "b;b%;<!><!><!>" });
 var panel_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_label__OR__input_items = _write_guard($scope0_reason, 3), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

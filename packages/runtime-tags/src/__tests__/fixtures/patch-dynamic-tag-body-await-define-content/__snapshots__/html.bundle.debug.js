@@ -35,7 +35,7 @@ _shells({
 	"__tests__/template.marko_3*content": /*@__PURE__*/ (() => `__tests__/template.marko_3*content;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Body_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Body_content__template)}`)(),
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,",
 	"__tests__/template.marko_0_#text#0/await": /*@__PURE__*/ (() => `__tests__/template.marko_0_#text#0/await;${((_w0) => `b/${_w0}&b`)($Body_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Body_content__template)}`)(),
-	"__tests__/template.marko": "__tests__/template.marko !;D%;<main><!></main>"
+	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_on__OR__input_note__OR__input_v = _write_if($scope0_reason, 1), $scope0_page = _page_render();

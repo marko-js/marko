@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
 	"__tests__/tags/frag-host.marko_2*content": "__tests__/tags/frag-host.marko_2*content,",
-	"__tests__/tags/frag-host.marko": "__tests__/tags/frag-host.marko !;b%;<!><!><!>",
+	"__tests__/tags/frag-host.marko": "__tests__/tags/frag-host.marko;b%;<!><!><!>",
 	"__tests__/tags/frag-host.marko_1*shell": "__tests__/tags/frag-host.marko_1*shell; ;<section></section>"
 });
 var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {

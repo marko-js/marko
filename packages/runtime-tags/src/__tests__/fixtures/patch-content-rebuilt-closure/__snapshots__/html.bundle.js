@@ -20,7 +20,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 _shells({
 	b0: "b0;b%;<!><!><!>",
-	b: /*@__PURE__*/ (() => `b !;${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`)(),
+	b: /*@__PURE__*/ (() => `b;${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`)(),
 	b1: "b1,<span>shown</span>"
 });
 var child_default = _template("b", (input) => {

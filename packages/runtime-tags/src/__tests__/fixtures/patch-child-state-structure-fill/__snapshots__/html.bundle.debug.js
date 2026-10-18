@@ -2,7 +2,7 @@
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 _shells({
-	"__tests__/tags/toggle-panel/index.marko": "__tests__/tags/toggle-panel/index.marko !; ;<div></div>",
+	"__tests__/tags/toggle-panel/index.marko": "__tests__/tags/toggle-panel/index.marko; ;<div></div>",
 	"__tests__/tags/toggle-panel/index.marko_1*shell": "__tests__/tags/toggle-panel/index.marko_1*shell;D ;<em> </em>"
 });
 var toggle_panel_default = _template("__tests__/tags/toggle-panel/index.marko", (input) => {

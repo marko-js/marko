@@ -1,6 +1,6 @@
 // template.marko
 _shells({
-	a: "a !;b%;<!><!><!>",
+	a: "a;b%;<!><!><!>",
 	a1: "a1;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {

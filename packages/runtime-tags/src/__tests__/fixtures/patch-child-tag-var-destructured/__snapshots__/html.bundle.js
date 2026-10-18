@@ -1,5 +1,5 @@
 // tags/counter/index.marko
-_shells({ b: "b !;Db%;<span>box <!></span>" });
+_shells({ b: "b;Db%;<span>box <!></span>" });
 _client_return("b");
 var counter_default = _template("b", (input) => {
 	_scope_reason();

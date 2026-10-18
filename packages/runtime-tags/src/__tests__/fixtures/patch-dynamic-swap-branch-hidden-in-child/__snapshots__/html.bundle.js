@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 _shells({
 	b0: "b0 b13,",
 	b1: "b1 b15,",
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b2: "b2 !b4; ;<button>a</button>",
 	b3: "b3 !b6; ;<button>b</button>"
 });
@@ -67,7 +67,7 @@ var w_default = _template("b", (input) => {
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && A,
 		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && B,
 		j: $wi__input_show && $input_show__closures
-	}) : (_filled_guard($scope0_reason, 2) && (_content_withheld("b1", $scope0_id) || _client_guard($scope0_reason, 0) || _content_withheld("b0", $scope0_id) || _client_guard($scope0_reason, 0)) && _patch_value($scope0_id, "vb8", input.show, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "vb9", input.flag, !_server_guard($scope0_reason, 3)), _client_guard($scope0_reason, 4) && _content_withhold(input.flag), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vb10", input.x, !_server_guard($scope0_reason, 4)), _client_guard($scope0_reason, 3) && _content_withhold(input.x));
+	}) : (_filled_guard($scope0_reason, 2) && (_content_withheld("b1", $scope0_id) || _client_guard($scope0_reason, 0) || _content_withheld("b0", $scope0_id)) && _patch_value($scope0_id, "vb8", input.show, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "vb9", input.flag, !_server_guard($scope0_reason, 3)), _client_guard($scope0_reason, 4) && _content_withhold(input.flag), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "vb10", input.x, !_server_guard($scope0_reason, 4)), _client_guard($scope0_reason, 3) && _content_withhold(input.x));
 });
 
 // template.marko

@@ -1,7 +1,7 @@
 // tags/boxp.marko
 const $template$1 = "<div><!></div>";
 const $walks$1 = "D%l";
-_shells({ "__tests__/tags/boxp.marko": "__tests__/tags/boxp.marko !;D%;<div><!></div>" });
+_shells({ "__tests__/tags/boxp.marko": "__tests__/tags/boxp.marko;D%;<div><!></div>" });
 var boxp_default = _template("__tests__/tags/boxp.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_x = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

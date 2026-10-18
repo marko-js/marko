@@ -1,6 +1,6 @@
 // template.marko
 _shells({
-	a: "a !;D%bD ;<main><!><p> </p></main>",
+	a: "a;D%bD ;<main><!><p> </p></main>",
 	a0: "a0; ;<script>\n      { const main = document.querySelector(\"main\");\n      main.dataset.ran = (+main.dataset.ran || 0) + 1;\n      main.dataset.nonce = document.currentScript.getAttribute(\"nonce\");\n      main.dataset.connected = document.currentScript.isConnected; }\n    <\/script>"
 });
 var template_default = _template("a", (input) => {

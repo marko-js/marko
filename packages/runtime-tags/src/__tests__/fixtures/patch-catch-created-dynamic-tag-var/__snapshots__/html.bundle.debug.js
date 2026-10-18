@@ -32,7 +32,7 @@ function boom() {
 }
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<p> </p>",
-	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>"
+	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_fail = _write_if($scope0_reason, 3), $scope0_page = _page_render();

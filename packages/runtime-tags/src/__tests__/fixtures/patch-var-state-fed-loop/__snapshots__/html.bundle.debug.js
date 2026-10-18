@@ -15,7 +15,7 @@ var labeler_default = _template("__tests__/tags/labeler.marko", (input) => {
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
-	"__tests__/tags/list.marko": "__tests__/tags/list.marko !;b%;<!><!><!>",
+	"__tests__/tags/list.marko": "__tests__/tags/list.marko;b%;<!><!><!>",
 	"__tests__/tags/list.marko_1*shell": /*@__PURE__*/ (() => `__tests__/tags/list.marko_1*shell;${/*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("D l")};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$2)}`)()
 });
 var list_default = _template("__tests__/tags/list.marko", (input) => {

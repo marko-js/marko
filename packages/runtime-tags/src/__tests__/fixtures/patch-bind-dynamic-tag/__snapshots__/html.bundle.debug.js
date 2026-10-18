@@ -2,7 +2,7 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 _shells({
-	"__tests__/tags/child.marko": "__tests__/tags/child.marko !;b%;<!><!><!>",
+	"__tests__/tags/child.marko": "__tests__/tags/child.marko;b%;<!><!><!>",
 	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell !__tests__/tags/child.marko_1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
@@ -34,7 +34,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 // tags/store.marko
 const $template$1 = "";
 const $walks$1 = "";
-_shells({ "__tests__/tags/store.marko": "^__tests__/tags/store.marko !," });
+_shells({ "__tests__/tags/store.marko": "^__tests__/tags/store.marko," });
 _client_return("__tests__/tags/store.marko");
 var store_default = _template("__tests__/tags/store.marko", (input) => {
 	_scope_reason();

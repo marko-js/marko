@@ -14,7 +14,7 @@ var wrap_default = _template("c", (input) => {
 const $template = "<!><!><!>";
 _shells({
 	b0: "b0;D ;<em> </em>",
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b1: /*@__PURE__*/ ((_w0) => `b1;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template$1)
 });
 var panel_default = _template("b", (input) => {

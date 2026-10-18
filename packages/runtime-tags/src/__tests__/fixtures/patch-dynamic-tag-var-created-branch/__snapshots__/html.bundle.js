@@ -18,7 +18,7 @@ var two_default = _template("c", (input) => {
 
 // template.marko
 _shells({
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a0: "a0;b1bD ;<!><!><p> </p>"
 });
 var template_default = _template("a", (input) => {

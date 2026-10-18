@@ -31,7 +31,7 @@ var card_default = _template("__tests__/card.marko", (input) => {
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
-_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !;${((_w0) => `/${_w0}&b`)($walks$1)};${((_w0) => `${_w0}<!>`)($template$1)}`)() });
+_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `/${_w0}&b`)($walks$1)};${((_w0) => `${_w0}<!>`)($template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

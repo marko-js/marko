@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/tags/card.marko !;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/tags/card.marko;b%;<!><!><!>`, {
   "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/tags/card.marko",
   "PatchChild:BranchScopes:#text/0": {
     "PatchSetup:": {

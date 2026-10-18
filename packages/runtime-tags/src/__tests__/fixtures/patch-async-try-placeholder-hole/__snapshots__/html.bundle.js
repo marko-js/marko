@@ -3,7 +3,7 @@ _shells({
 	a0: "a0;D ;<em> </em>",
 	a1: "a1;D ;<em> </em>",
 	a2: "a2;b%;<!><!><!>",
-	a: "a !;E l%;<main><h1> </h1><!></main>"
+	a: "a;E l%;<main><h1> </h1><!></main>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 0), $scope0_page = _page_render();

@@ -59,7 +59,7 @@ var tree_a_default = _template("__tests__/tags/tree-a.marko", (input) => {
 const $template = "<ul></ul>";
 const $walks = " b";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !; ;<ul></ul>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<ul></ul>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
 });
 var template_default = _template("__tests__/template.marko", (input) => {

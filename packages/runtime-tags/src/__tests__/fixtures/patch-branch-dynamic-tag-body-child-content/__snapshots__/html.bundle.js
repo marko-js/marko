@@ -22,7 +22,7 @@ var card_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0,",
-	a: "a !;b%;<!><!><!>",
+	a: "a;b%;<!><!><!>",
 	a1: "a1;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {

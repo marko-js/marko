@@ -36,7 +36,7 @@ var plain_default = _template("c", (input) => {
 _shells({
 	a0: "a0,",
 	a1: "a1 a7,",
-	a: "a !;D%;<main><!></main>"
+	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_p = _write_guard($scope0_reason, 3), $wi__input_on__OR__input_p__OR__input_note = _write_if($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2);

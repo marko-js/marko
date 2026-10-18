@@ -1,7 +1,7 @@
 // tags/wrap.marko
 const $template = "<!><!><!>";
 _shells({
-	d: "d !;b%;<!><!><!>",
+	d: "d;b%;<!><!><!>",
 	d0: "d0;D%;<ul><!></ul>"
 });
 var wrap_default = _template("d", (input) => {

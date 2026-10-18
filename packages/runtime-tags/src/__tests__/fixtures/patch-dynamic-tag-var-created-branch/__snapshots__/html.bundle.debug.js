@@ -26,7 +26,7 @@ var two_default = _template("__tests__/tags/two.marko", (input) => {
 const $template = "<main></main>";
 const $walks = " b";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !; ;<main></main>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b1bD ;<!><!><p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {

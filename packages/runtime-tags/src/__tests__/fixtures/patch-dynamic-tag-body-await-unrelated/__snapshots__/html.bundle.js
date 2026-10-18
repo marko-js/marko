@@ -26,7 +26,7 @@ _shells({
 	a0: "a0;D ;<i> </i>",
 	a1: "a1,",
 	a2: "a2;D ;<i> </i>",
-	a: "a !;D%b%;<main><!><!></main>"
+	a: "a;D%b%;<main><!><!></main>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 1);

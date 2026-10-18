@@ -1,5 +1,5 @@
 // PATCH
-[`b !;b%;<!><!><!>`, `b0 b4;b%;<!><!><!>`, `b2;b%;<!><!><!>`, `c !c0; b%;<button class=toggle>toggle</button><!><!>`, {
+[`b;b%;<!><!><!>`, `b0 b4;b%;<!><!><!>`, `b2;b%;<!><!><!>`, `c !c0; b%;<button class=toggle>toggle</button><!><!>`, {
   fa: "b",
   cAa: {
     ba: [{

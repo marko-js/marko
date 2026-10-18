@@ -19,7 +19,7 @@ var loader_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a0: /*@__PURE__*/ ((_w0) => `a0;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template),
 	a1: "a1,<em>closed</em>"
 });

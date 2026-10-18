@@ -54,7 +54,7 @@ var card_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0,",
-	a: "a !;D%;<main><!></main>"
+	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on__OR__input_p = _write_guard($scope0_reason, 0);

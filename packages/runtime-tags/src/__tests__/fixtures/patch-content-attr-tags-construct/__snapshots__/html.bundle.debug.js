@@ -19,7 +19,7 @@ const $walks = " b";
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,<b>static header</b>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,body",
-	"__tests__/template.marko": "__tests__/template.marko !; ;<main></main>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
 });
 var template_default = _template("__tests__/template.marko", (input) => {

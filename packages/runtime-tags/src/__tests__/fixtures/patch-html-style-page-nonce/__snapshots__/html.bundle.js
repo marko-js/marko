@@ -1,6 +1,6 @@
 // template.marko
 _shells({
-	a: "a !;b%b ;<!><!><style></style>",
+	a: "a;b%b ;<!><!><style></style>",
 	a0: "a0 !a2; b ;<style>p.s { color: red }</style><style>p.t { color: green }</style>",
 	a1: "a1,<p>a</p>"
 });

@@ -1,6 +1,6 @@
 // tags/code-block.marko
 const $template = "<div> </div>";
-_shells({ b: "b !;D ;<div> </div>" });
+_shells({ b: "b;D ;<div> </div>" });
 var code_block_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

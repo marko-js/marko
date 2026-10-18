@@ -2,7 +2,7 @@
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
 _shells({
-	b: "b !;b%b%;<!><!><!><!>",
+	b: "b;b%b%;<!><!><!><!>",
 	b0: "b0;D ;<i> </i>",
 	b1: "b1;D ;<p> </p>"
 });

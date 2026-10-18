@@ -1,5 +1,5 @@
 // PATCH
-[`b1 !; ;<section></section>`, {
+[`b1; ;<section></section>`, {
   ca: {
     ba: [{
       vb7: "r!",

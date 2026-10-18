@@ -1,6 +1,6 @@
 // tags/child.marko
 const $template = "<span> </span>";
-_shells({ b: "b !;D ;<span> </span>" });
+_shells({ b: "b;D ;<span> </span>" });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

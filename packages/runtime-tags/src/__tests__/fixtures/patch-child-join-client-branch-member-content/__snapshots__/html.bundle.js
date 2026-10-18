@@ -3,7 +3,7 @@ const $template = "<!><!><section></section>";
 const $walks = "b%b b";
 _shells({
 	b0: "b0,",
-	b: "b !;b%b ;<!><!><section></section>",
+	b: "b;b%b ;<!><!><section></section>",
 	b1: "b1;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {

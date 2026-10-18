@@ -32,7 +32,7 @@ const $walks = " b";
 _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content,",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>",
-	"__tests__/template.marko": "__tests__/template.marko !; ;<main></main>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
 	"__tests__/template.marko_2_#text#0/await": "__tests__/template.marko_2_#text#0/await;b%;<!><!><!>",
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;b%;<!><!><!>"
 });

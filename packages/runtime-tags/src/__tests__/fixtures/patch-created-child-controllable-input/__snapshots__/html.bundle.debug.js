@@ -29,7 +29,7 @@ var demo_card_default = _template("__tests__/tags/demo-card.marko", (input) => {
 // tags/page-b.marko
 const $template$1 = $template$2;
 const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2);
-_shells({ "__tests__/tags/page-b.marko": /*@__PURE__*/ ((_w0) => `__tests__/tags/page-b.marko !;${((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2) });
+_shells({ "__tests__/tags/page-b.marko": /*@__PURE__*/ ((_w0) => `__tests__/tags/page-b.marko;${((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2) });
 var page_b_default = _template("__tests__/tags/page-b.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

@@ -38,7 +38,7 @@ var src_default = _template("c", (input) => {
 // tags/view.marko
 const $template = "<!><!><!>";
 _shells({
-	d: "d !;b%;<!><!><!>",
+	d: "d;b%;<!><!><!>",
 	d0: "d0;b%;<!><!><!>",
 	d1: "d1;b%;<!><!><!>"
 });

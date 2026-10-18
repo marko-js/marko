@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
 	"__tests__/tags/rows.marko_2*content": "__tests__/tags/rows.marko_2*content;D%c%;<em><!>:<!></em>",
-	"__tests__/tags/rows.marko": "__tests__/tags/rows.marko !;b%;<!><!><!>",
+	"__tests__/tags/rows.marko": "__tests__/tags/rows.marko;b%;<!><!><!>",
 	"__tests__/tags/rows.marko_1_#text#0/await": "__tests__/tags/rows.marko_1_#text#0/await;D%c%;<em><!>:<!></em>",
 	"__tests__/tags/rows.marko_1*shell": "__tests__/tags/rows.marko_1*shell;D%;<div><!></div>"
 });

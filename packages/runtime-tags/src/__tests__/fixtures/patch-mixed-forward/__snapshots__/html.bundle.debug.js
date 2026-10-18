@@ -1,7 +1,7 @@
 // tags/kid.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-_shells({ "__tests__/tags/kid.marko": "__tests__/tags/kid.marko !;D ;<span> </span>" });
+_shells({ "__tests__/tags/kid.marko": "__tests__/tags/kid.marko;D ;<span> </span>" });
 var kid_default = _template("__tests__/tags/kid.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

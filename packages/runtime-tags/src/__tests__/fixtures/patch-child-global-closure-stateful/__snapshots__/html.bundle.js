@@ -1,6 +1,6 @@
 // tags/gm/index.marko
 _shells({
-	b: "b !; b%;<p></p><!><!>",
+	b: "b; b%;<p></p><!><!>",
 	b0: "b0; ;<i></i>"
 });
 var gm_default = _template("b", (input) => {

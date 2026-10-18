@@ -1,5 +1,5 @@
 // tags/widget/index.marko
-_shells({ b: "b !;D%c%;<p><!>:<!></p>" });
+_shells({ b: "b;D%c%;<p><!>:<!></p>" });
 var widget_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

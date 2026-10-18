@@ -1,5 +1,5 @@
 // tags/store.marko
-_shells({ b: "b !," });
+_shells({ b: "b," });
 _client_return("b");
 var store_default = _template("b", (input) => {
 	_scope_reason();

@@ -1,3 +1,4 @@
+import { isAttrTag } from "../../common/attr-tag";
 import { ROOT_SCOPE_ID } from "../../common/meta";
 import {
   type Accessor,
@@ -158,11 +159,11 @@ function keepBranch<T, U, V>(cb: (a: U, b: V) => T, a: U, b: V): T {
 }
 
 // A consumer keeps content for the resumed page to render, every item of an
-// attribute tag or list: the values inside fill (`_content_withheld`).
+// attribute tag: the values inside fill (`_content_withheld`).
 export function _content_withhold(value: unknown) {
   const state = getState();
   if (state instanceof PatchUpdateState) {
-    if (value && typeof value === "object" && Symbol.iterator in value) {
+    if (isAttrTag(value)) {
       for (const item of value as Iterable<unknown>) withhold(state, item);
     } else {
       withhold(state, value);

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-native/template.marko_2*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-native/template.marko_1*shell !;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-native/template.marko_2*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-native/template.marko_1*shell;b%;<!><!><!>`, {
   "PatchLoop:#text/0": [1, {
     "PatchDynamicTag:#text/0": [">div", 0, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-native/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/0": {

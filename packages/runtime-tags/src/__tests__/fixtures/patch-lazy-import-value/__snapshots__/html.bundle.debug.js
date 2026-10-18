@@ -25,7 +25,7 @@ const $template = "<main></main>";
 const $walks = " b";
 const $Child_withLoadAssets = withLoadAssets(child_default, flush, "ready:__tests__/child.marko");
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !; ;<main></main>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_input_label#0:4_alt#2/init!__tests__/template.marko_1; b%;<button>toggle</button><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {

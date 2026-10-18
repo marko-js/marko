@@ -1,5 +1,5 @@
 // PATCH
-[`b;D/ b%c&l;<section><button>show</button><!><!></section>`, `a1 !;b%;<!><!><!>`, {
+[`b;D/ b%c&l;<section><button>show</button><!><!></section>`, `a1;b%;<!><!><!>`, {
   la: [1, {
     fa: "b",
     cAa: {

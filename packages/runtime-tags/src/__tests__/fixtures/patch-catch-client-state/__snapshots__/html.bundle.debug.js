@@ -6,7 +6,7 @@ function boom(error) {
 }
 _shells({
 	"__tests__/tags/panel.marko_2*content": "__tests__/tags/panel.marko_2*content;D ;<p> </p>",
-	"__tests__/tags/panel.marko": "__tests__/tags/panel.marko !;b%;<!><!><!>"
+	"__tests__/tags/panel.marko": "__tests__/tags/panel.marko;b%;<!><!><!>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1), $scope0_page = _page_render();

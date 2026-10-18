@@ -26,7 +26,7 @@ function boom() {
 }
 _shells({
 	a0: "a0;D ;<p> </p>",
-	a: "a !;b%;<!><!><!>"
+	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_fail = _write_if($scope0_reason, 3), $scope0_page = _page_render();

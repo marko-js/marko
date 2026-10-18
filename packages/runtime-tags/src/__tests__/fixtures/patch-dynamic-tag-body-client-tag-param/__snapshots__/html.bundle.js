@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 _shells({
 	b0: "b0,",
-	b: "b !;b%;<!><!><!>"
+	b: "b;b%;<!><!><!>"
 });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tag = _write_guard($scope0_reason, 1);

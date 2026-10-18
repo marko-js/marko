@@ -16,7 +16,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content !__tests__/template.marko_2; D%c%;<button><!> <!></button>",
-	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>",
+	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template$1)
 });
 var template_default = _template("__tests__/template.marko", (input) => {

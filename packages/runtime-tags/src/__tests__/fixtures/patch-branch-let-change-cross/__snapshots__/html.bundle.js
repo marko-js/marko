@@ -1,6 +1,6 @@
 // template.marko
 _shells({
-	a: "a !;E lDb%l%;<main><h1> </h1><p>Last <!></p><!></main>",
+	a: "a;E lDb%l%;<main><h1> </h1><p>Last <!></p><!></main>",
 	a1: "a1 !a2;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("a", (input) => {

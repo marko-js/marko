@@ -20,7 +20,7 @@ var probe_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a: "a !;b%;<!><!><!>",
+	a: "a;b%;<!><!><!>",
 	a0: /*@__PURE__*/ ((_w0) => `a0;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("b")};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {

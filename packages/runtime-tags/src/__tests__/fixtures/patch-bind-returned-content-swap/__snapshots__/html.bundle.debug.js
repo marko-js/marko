@@ -3,7 +3,7 @@ const $template$1 = "";
 const $walks$1 = "";
 _shells({
 	"__tests__/tags/child.marko_1*content": "__tests__/tags/child.marko_1*content __tests__/tags/child.marko_1_count#0:3/init!__tests__/tags/child.marko_1,",
-	"__tests__/tags/child.marko": "^__tests__/tags/child.marko !,"
+	"__tests__/tags/child.marko": "^__tests__/tags/child.marko,"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

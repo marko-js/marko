@@ -3,7 +3,7 @@ const $template$1 = "<section></section><!><!>";
 const $walks$1 = " b%c";
 _shells({
 	"__tests__/tags/child.marko_1*content": "__tests__/tags/child.marko_1*content,",
-	"__tests__/tags/child.marko": "__tests__/tags/child.marko !; b%;<section></section><!><!>",
+	"__tests__/tags/child.marko": "__tests__/tags/child.marko; b%;<section></section><!><!>",
 	"__tests__/tags/child.marko_2*shell": "__tests__/tags/child.marko_2*shell;D ;<p> </p>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {

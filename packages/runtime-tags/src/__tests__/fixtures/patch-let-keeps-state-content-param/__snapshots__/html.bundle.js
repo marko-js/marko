@@ -1,6 +1,6 @@
 // tags/boxp.marko
 const $template = "<div><!></div>";
-_shells({ b: "b !;D%;<div><!></div>" });
+_shells({ b: "b;D%;<div><!></div>" });
 var boxp_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_x = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

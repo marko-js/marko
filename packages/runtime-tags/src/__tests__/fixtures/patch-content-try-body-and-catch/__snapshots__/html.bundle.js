@@ -5,7 +5,7 @@ function boom() {
 }
 _shells({
 	b0: "b0 b5;D l%;<p> </p><!><!>",
-	b: "b !;b%;<!><!><!>"
+	b: "b;b%;<!><!><!>"
 });
 var wrapper_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $wi__input_content = _write_if($scope0_reason, 1), $scope0_page = _page_render();

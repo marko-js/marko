@@ -33,7 +33,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($Tree_content__
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($Tree_content__walks);
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content,",
-	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !;${((_w0) => `D/${_w0}&l`)($Tree_content__walks)};${((_w0) => `<main>${_w0}</main>`)($Tree_content__template)}`)(),
+	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `D/${_w0}&l`)($Tree_content__walks)};${((_w0) => `<main>${_w0}</main>`)($Tree_content__template)}`)(),
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_input_on#0:4/subscribe;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {

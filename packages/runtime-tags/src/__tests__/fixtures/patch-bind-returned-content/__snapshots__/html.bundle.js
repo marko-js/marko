@@ -1,7 +1,7 @@
 // tags/child.marko
 _shells({
 	b0: "b0 b7!b1,",
-	b: "b !,"
+	b: "b,"
 });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

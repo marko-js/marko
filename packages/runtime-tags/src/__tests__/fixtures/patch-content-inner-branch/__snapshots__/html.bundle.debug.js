@@ -16,7 +16,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks$1);
 _shells({
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
-	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !;${((_w0) => `D/${_w0}&l`)($walks$1)};${((_w0) => `<main>${_w0}</main>`)($template$1)}`)(),
+	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `D/${_w0}&l`)($walks$1)};${((_w0) => `<main>${_w0}</main>`)($template$1)}`)(),
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<em> </em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {

@@ -4,7 +4,7 @@ function boom() {
 }
 _shells({
 	a0: "a0;D%b%;<em><!><!></em>",
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a1: "a1;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {

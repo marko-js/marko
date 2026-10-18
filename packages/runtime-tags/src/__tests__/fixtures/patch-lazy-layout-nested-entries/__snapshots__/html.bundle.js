@@ -80,7 +80,7 @@ const $PageA_withLoadAssets = withLoadAssets(page_a_default, flush, "_b");
 const $PageB_withLoadAssets = withLoadAssets(page_b_default, flush, "_c");
 _shells({
 	d0: "d0;b%;<!><!><!>",
-	d: "d !;E%;<html><body><!></body></html>",
+	d: "d;E%;<html><body><!></body></html>",
 	d1: /*@__PURE__*/ (() => `d1;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$2)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$2)}`)(),
 	d2: /*@__PURE__*/ (() => `d2;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)(),
 	d3: /*@__PURE__*/ (() => `d3;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)(),

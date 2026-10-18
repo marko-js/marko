@@ -18,7 +18,7 @@ const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "_a");
 _shells({
 	b1: "b1;D ;<div> </div>",
 	b2: "b2;D ;<div> </div>",
-	b: /*@__PURE__*/ (() => `b !;${((_w0) => `b%b/${_w0}&D l%c`)($walks)};${((_w0) => `<!><!>${_w0}<p> </p><!><!>`)($template)}`)()
+	b: /*@__PURE__*/ (() => `b;${((_w0) => `b%b/${_w0}&D l%c`)($walks)};${((_w0) => `<!><!>${_w0}<p> </p><!><!>`)($template)}`)()
 });
 var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

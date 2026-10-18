@@ -25,7 +25,7 @@ var card_default = _template("b", (input) => {
 _shells({
 	a0: "a0,",
 	a1: "a1;b%;<!><!><!>",
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a2: "a2;b%;<!><!><!>",
 	a3: "a3;b%;<!><!><!>"
 });

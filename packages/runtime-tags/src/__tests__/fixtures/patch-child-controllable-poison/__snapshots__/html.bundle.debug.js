@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
-	"__tests__/tags/counter/index.marko": "__tests__/tags/counter/index.marko !;b%;<!><!><!>",
+	"__tests__/tags/counter/index.marko": "__tests__/tags/counter/index.marko;b%;<!><!><!>",
 	"__tests__/tags/counter/index.marko_1*shell": "__tests__/tags/counter/index.marko_1*shell !__tests__/tags/counter/index.marko_1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var counter_default = _template("__tests__/tags/counter/index.marko", (input) => {
@@ -41,7 +41,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 const $template = "<main><h1> </h1><p>Last <!></p><!></main>";
 const $walks = "E lDb%l%l";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !;E lDb%l%;<main><h1> </h1><p>Last <!></p><!></main>",
+	"__tests__/template.marko": "__tests__/template.marko;E lDb%l%;<main><h1> </h1><p>Last <!></p><!></main>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

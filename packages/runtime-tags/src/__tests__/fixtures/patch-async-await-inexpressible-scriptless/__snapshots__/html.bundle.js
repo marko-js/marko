@@ -9,7 +9,7 @@ var widget_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a0: /*@__PURE__*/ (() => `a0;${/*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("")};${/*@__PURE__*/ ((_w0) => `${_w0}<em> </em>`)("")}`)(),
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a1: /*@__PURE__*/ (() => `a1;${((_w0) => `0${_w0}&D l`)("")};${((_w0) => `${_w0}<em> </em>`)("")}`)(),
 	a2: "a2;b%;<!><!><!>"
 });

@@ -5,7 +5,7 @@ function boom(error) {
 }
 _shells({
 	b0: "b0;D ;<p> </p>",
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b1: "b1 b4!b2;D ;<i> </i>"
 });
 var detail_view_default = _template("b", (input) => {

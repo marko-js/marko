@@ -13,7 +13,7 @@ var card_default = _template("a", (input) => {
 // template.marko
 _shells({
 	b0: "b0 b7 b8!b2;b%b D ;<!><!><button> </button>",
-	b: /*@__PURE__*/ ((_w0) => `b !;${((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template)
+	b: /*@__PURE__*/ ((_w0) => `b;${((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template)
 });
 var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_on = _write_if($scope0_reason, 0), $scope0_page = _page_render();

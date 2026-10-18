@@ -1,5 +1,5 @@
 // tags/box.marko
-_shells({ c: "c !," });
+_shells({ c: "c," });
 _client_return("c");
 var box_default = _template("c", (input) => {
 	_scope_reason();
@@ -52,7 +52,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b%c`)("");
 _shells({
 	a0: /*@__PURE__*/ ((_w0) => `a0 a8 a9 a10;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2),
 	a: /*@__PURE__*/ (() => `a !a5;${((_w0) => `0${_w0}& b%c`)("")};${((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("")}`)(),
-	a1: /*@__PURE__*/ ((_w0) => `a1 !;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
+	a1: /*@__PURE__*/ ((_w0) => `a1;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
 });
 var page_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0), $scope0_page = _page_render();
@@ -100,7 +100,7 @@ var page_default = _template("a", (input) => {
 
 // template.marko
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: /*@__PURE__*/ (() => `b0;${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("b", (input) => {

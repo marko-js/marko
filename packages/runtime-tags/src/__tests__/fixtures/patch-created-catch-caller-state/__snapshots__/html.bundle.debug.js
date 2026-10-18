@@ -6,7 +6,7 @@ function boom(error) {
 }
 _shells({
 	"__tests__/tags/detail-view.marko_3*content": "__tests__/tags/detail-view.marko_3*content;D ;<p> </p>",
-	"__tests__/tags/detail-view.marko": "__tests__/tags/detail-view.marko !;b%;<!><!><!>",
+	"__tests__/tags/detail-view.marko": "__tests__/tags/detail-view.marko;b%;<!><!><!>",
 	"__tests__/tags/detail-view.marko_2*shell": "__tests__/tags/detail-view.marko_2*shell __tests__/tags/detail-view.marko_2_input_detail#0:3/subscribe!__tests__/tags/detail-view.marko_2_input_detail#0:3;D ;<i> </i>"
 });
 var detail_view_default = _template("__tests__/tags/detail-view.marko", (input) => {

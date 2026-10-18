@@ -26,7 +26,7 @@ var counter_box_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a: "a !;b%bD ;<!><!><p> </p>",
+	a: "a;b%bD ;<!><!><p> </p>",
 	a2: /*@__PURE__*/ (() => `a2 !a4;${/*@__PURE__*/ ((_w0) => `0${_w0}& b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<button class=set>set</button>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {

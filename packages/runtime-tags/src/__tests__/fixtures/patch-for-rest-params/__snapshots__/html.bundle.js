@@ -1,7 +1,7 @@
 // tags/my-for.marko
 const $template = "<!><!><!>";
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: "b0;b%;<!><!><!>"
 });
 var my_for_default = _template("b", (input) => {

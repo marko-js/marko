@@ -4,7 +4,7 @@ const $walks$1 = "b%c";
 _shells({
 	"__tests__/tags/w.marko_2*content": "__tests__/tags/w.marko_2*content __tests__/tags/w.marko_2_input_show#0:3/subscribe,",
 	"__tests__/tags/w.marko_1*content": "__tests__/tags/w.marko_1*content __tests__/tags/w.marko_1_input_show#0:3/subscribe,",
-	"__tests__/tags/w.marko": "__tests__/tags/w.marko !;b%;<!><!><!>",
+	"__tests__/tags/w.marko": "__tests__/tags/w.marko;b%;<!><!><!>",
 	"__tests__/tags/w.marko_3*shell": "__tests__/tags/w.marko_3*shell !__tests__/tags/w.marko_3; ;<button>a</button>",
 	"__tests__/tags/w.marko_4*shell": "__tests__/tags/w.marko_4*shell !__tests__/tags/w.marko_4; ;<button>b</button>"
 });
@@ -74,7 +74,7 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 		input_x: ["input.x"],
 		A: "1:9",
 		B: "7:9"
-	}) : (_filled_guard($scope0_reason, 2) && (_content_withheld("__tests__/tags/w.marko_1*content", $scope0_id) || _client_guard($scope0_reason, 0) || _content_withheld("__tests__/tags/w.marko_2*content", $scope0_id) || _client_guard($scope0_reason, 0)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/w.marko_fill0", input.show, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/tags/w.marko_fill1", input.flag, !_server_guard($scope0_reason, 3)), _client_guard($scope0_reason, 4) && _content_withhold(input.flag), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/tags/w.marko_fill2", input.x, !_server_guard($scope0_reason, 4)), _client_guard($scope0_reason, 3) && _content_withhold(input.x));
+	}) : (_filled_guard($scope0_reason, 2) && (_content_withheld("__tests__/tags/w.marko_1*content", $scope0_id) || _client_guard($scope0_reason, 0) || _content_withheld("__tests__/tags/w.marko_2*content", $scope0_id)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/w.marko_fill0", input.show, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "PatchValue:__tests__/tags/w.marko_fill1", input.flag, !_server_guard($scope0_reason, 3)), _client_guard($scope0_reason, 4) && _content_withhold(input.flag), _filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 3) && _patch_value($scope0_id, "PatchValue:__tests__/tags/w.marko_fill2", input.x, !_server_guard($scope0_reason, 4)), _client_guard($scope0_reason, 3) && _content_withhold(input.x));
 });
 
 // template.marko

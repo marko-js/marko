@@ -2,7 +2,7 @@
 const $Counter_content__walks = "E%c%l l";
 const $Counter_content__template = "<div class=counter><span><!>: <!></span><button class=inc>+</button></div>";
 _shells({
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a0: /*@__PURE__*/ (() => `a0;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Counter_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Counter_content__template)}`)()
 });
 var template_default = _template("a", (input) => {

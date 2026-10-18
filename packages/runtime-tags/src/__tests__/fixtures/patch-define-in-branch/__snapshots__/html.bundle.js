@@ -2,7 +2,7 @@
 const $row_content__walks = "D%c%l";
 const $row_content__template = "<li><!>: <!></li>";
 _shells({
-	a: "a !; ;<ul></ul>",
+	a: "a; ;<ul></ul>",
 	a0: /*@__PURE__*/ (() => `a0;${/*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&b`)($row_content__walks, $row_content__walks)};${/*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<!>`)($row_content__template, $row_content__template)}`)()
 });
 var template_default = _template("a", (input) => {

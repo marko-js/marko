@@ -28,7 +28,7 @@ const $Wrap_content__walks = "b%c";
 const $Wrap_content__template = "<!><!><!>";
 _shells({
 	a0: "a0,",
-	a: /*@__PURE__*/ (() => `a !;${((_w0, _w1) => `D/${_w0}&/${_w1}&l`)($Note_content__walks, $Wrap_content__walks)};${((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($Note_content__template, $Wrap_content__template)}`)()
+	a: /*@__PURE__*/ (() => `a;${((_w0, _w1) => `D/${_w0}&/${_w1}&l`)($Note_content__walks, $Wrap_content__walks)};${((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($Note_content__template, $Wrap_content__template)}`)()
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_on = _write_if($scope0_reason, 2), $scope0_page = _page_render();

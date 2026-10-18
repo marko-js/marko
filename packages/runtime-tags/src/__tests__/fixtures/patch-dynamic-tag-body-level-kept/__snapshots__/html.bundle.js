@@ -42,7 +42,7 @@ var counter_default = _template("c", (input) => {
 // template.marko
 _shells({
 	a0: "a0 a5,",
-	a: /*@__PURE__*/ (() => `a !;${((_w0) => `D0${_w0}&%l`)($walks)};${((_w0) => `<main>${_w0}<!></main>`)($template)}`)()
+	a: /*@__PURE__*/ (() => `a;${((_w0) => `D0${_w0}&%l`)($walks)};${((_w0) => `<main>${_w0}<!></main>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

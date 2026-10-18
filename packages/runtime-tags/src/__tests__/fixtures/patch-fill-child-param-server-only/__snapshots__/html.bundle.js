@@ -14,7 +14,7 @@ function link(data, id) {
 	return `/?q=${data.q}&sel=${id}`;
 }
 _shells({
-	a: "a !; ;<ul></ul>",
+	a: "a; ;<ul></ul>",
 	a0: /*@__PURE__*/ (() => `a0 a6!a1;${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {

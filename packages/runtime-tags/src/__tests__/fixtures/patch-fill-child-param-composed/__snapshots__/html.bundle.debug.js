@@ -16,7 +16,7 @@ function link(data, id) {
 	return `/?q=${data.q}&sel=${id}`;
 }
 _shells({
-	"__tests__/tags/feed-list.marko": "__tests__/tags/feed-list.marko !; ;<ul></ul>",
+	"__tests__/tags/feed-list.marko": "__tests__/tags/feed-list.marko; ;<ul></ul>",
 	"__tests__/tags/feed-list.marko_1*shell": /*@__PURE__*/ (() => `__tests__/tags/feed-list.marko_1*shell __tests__/tags/feed-list.marko_1_hovered#0:5/init!__tests__/tags/feed-list.marko_1;${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks$2)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$2)}`)()
 });
 var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {

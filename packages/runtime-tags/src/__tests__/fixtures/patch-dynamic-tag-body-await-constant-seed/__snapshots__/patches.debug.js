@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_1*content !;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/template.marko_1*shell;b/b%c&b;<!><!><!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/template.marko_1*shell;b/b%c&b;<!><!><!><!><!>`, {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-constant-seed/tags/card.marko_1*content",

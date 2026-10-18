@@ -11,7 +11,7 @@ const $template$1 = "";
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&`)("");
 _shells({
 	c0: "c0 c5!c1; D%c%;<button><!> <!></button>",
-	c: /*@__PURE__*/ ((_w0) => `c !;${((_w0) => `0${_w0}&`)("")};${_w0}`)("")
+	c: /*@__PURE__*/ ((_w0) => `c;${((_w0) => `0${_w0}&`)("")};${_w0}`)("")
 });
 var src_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -44,7 +44,7 @@ var src_default = _template("c", (input) => {
 // tags/view.marko
 const $template = "<!><!><!>";
 _shells({
-	d: "d !;b%;<!><!><!>",
+	d: "d;b%;<!><!><!>",
 	d0: "d0;b%;<!><!><!>",
 	d1: "d1;b%;<!><!><!>"
 });

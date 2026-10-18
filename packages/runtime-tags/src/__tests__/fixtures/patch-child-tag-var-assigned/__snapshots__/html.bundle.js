@@ -1,5 +1,5 @@
 // tags/counter-box/index.marko
-_shells({ b: "b !;Db%;<span>box <!></span>" });
+_shells({ b: "b;Db%;<span>box <!></span>" });
 _client_return("b");
 var counter_box_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

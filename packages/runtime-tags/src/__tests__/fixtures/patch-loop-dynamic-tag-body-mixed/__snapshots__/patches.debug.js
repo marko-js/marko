@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/template.marko_2*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/template.marko_1*shell !;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/template.marko_2*content,`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/template.marko_1*shell;b%;<!><!><!>`, {
   "PatchLoop:#text/0": [1, {
     "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-mixed/tags/card.marko",
     "PatchChild:BranchScopes:#text/0": {

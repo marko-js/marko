@@ -12,7 +12,6 @@ import isStatic from "../../util/is-static";
 import { getMarkoOpts, isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { first, forEach } from "../../util/optional";
-import { getPatchFillBindings } from "../../util/patch/refresh";
 import { getShellInitIds } from "../../util/patch/writers";
 import { getReadReplacement } from "../../util/read-replacement";
 import { getSourcesForExpr } from "../../util/reasons";
@@ -181,8 +180,8 @@ export default {
           if (id === getShellId(section) && !getShippedShellId(section)) {
             continue;
           }
-          // A shell's id token is `inits…!effects…`; a lone `!` means setup
-          // for seeds alone. Roots, content and boundary bodies carry one too.
+          // A shell's id token is `inits…!effects…`. Roots, content and
+          // boundary bodies carry one too.
           let marker = "";
           if (shipsShellInits(section)) {
             marker = getShellInitIds(section);
@@ -194,7 +193,6 @@ export default {
                 !!getEffectCallerSources(section, refs),
             );
             if (effectIds) marker += "!" + effectIds;
-            marker ||= getPatchFillBindings(section) ? "!" : "";
           }
           shellProps.push(
             toObjectProperty(id, buildShell(id, section, marker)),

@@ -42,7 +42,7 @@ var src_default = _template("__tests__/tags/src.marko", (input) => {
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
-	"__tests__/tags/view.marko": "__tests__/tags/view.marko !;b%;<!><!><!>",
+	"__tests__/tags/view.marko": "__tests__/tags/view.marko;b%;<!><!><!>",
 	"__tests__/tags/view.marko_1*shell": "__tests__/tags/view.marko_1*shell;b%;<!><!><!>",
 	"__tests__/tags/view.marko_2*shell": "__tests__/tags/view.marko_2*shell;b%;<!><!><!>"
 });

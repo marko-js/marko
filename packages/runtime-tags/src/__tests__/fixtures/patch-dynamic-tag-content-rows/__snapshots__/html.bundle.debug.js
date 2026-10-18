@@ -2,7 +2,7 @@
 const $template$1 = "<main><h1> </h1><!><header><!></header><ul></ul><ol></ol></main>";
 const $walks$1 = "E l%bD%l b l";
 _shells({
-	"__tests__/tags/layout.marko": "__tests__/tags/layout.marko !;E l%bD%l b ;<main><h1> </h1><!><header><!></header><ul></ul><ol></ol></main>",
+	"__tests__/tags/layout.marko": "__tests__/tags/layout.marko;E l%bD%l b ;<main><h1> </h1><!><header><!></header><ul></ul><ol></ol></main>",
 	"__tests__/tags/layout.marko_1*shell": "__tests__/tags/layout.marko_1*shell;D%b%;<li><!><!></li>",
 	"__tests__/tags/layout.marko_2*shell": "__tests__/tags/layout.marko_2*shell;D%b%;<li><!><!></li>"
 });

@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 _shells({
 	b0: "b0 b7!b2; D%c%c%;<button><!> <!> <!></button>",
 	b1: "b1 b7!b2; D%c%c%;<button><!> <!> <!></button>",
-	b: "b !;b%;<!><!><!>"
+	b: "b;b%;<!><!><!>"
 });
 var page_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -31,7 +31,7 @@ var page_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a: "a !;b%;<!><!><!>",
+	a: "a;b%;<!><!><!>",
 	a0: /*@__PURE__*/ (() => `a0;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {

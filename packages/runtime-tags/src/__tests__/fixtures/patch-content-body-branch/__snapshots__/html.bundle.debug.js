@@ -16,7 +16,7 @@ const $template = "<main></main>";
 const $walks = " b";
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
-	"__tests__/template.marko": "__tests__/template.marko !; ;<main></main>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1),
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;Db%;<em>A:<!></em>",
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell;Db%;<strong>B:<!></strong>"

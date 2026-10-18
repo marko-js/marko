@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content/tags/child.marko_1*shell !;D l ;<p> </p><section></section>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content/tags/child.marko_1*shell;D l ;<p> </p><section></section>`, {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-withheld-content/tags/child.marko_fill3": "r!",

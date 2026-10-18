@@ -22,7 +22,7 @@ var loader_default = _template("__tests__/tags/loader.marko", (input) => {
 const $template = "<main></main>";
 const $walks = " b";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !; ;<main></main>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template$1),
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell,<em>closed</em>"
 });

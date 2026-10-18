@@ -4,7 +4,7 @@ const $Info_content__template = "<p><!>:<!></p>";
 const $template = "<!><!><!>";
 _shells({
 	b0: "b0;D%c%;<p><!>:<!></p>",
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b1: /*@__PURE__*/ (() => `b1;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Info_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Info_content__template)}`)()
 });
 var panel_default = _template("b", (input) => {

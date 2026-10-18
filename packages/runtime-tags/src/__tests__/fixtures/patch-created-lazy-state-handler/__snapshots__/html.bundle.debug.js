@@ -15,7 +15,7 @@ const $template = "<!><!><span> </span>";
 const $walks = "b%bD l";
 const $Picker_withLoadAssets = withLoadAssets(picker_default, flush, "ready:__tests__/tags/picker.marko");
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !;b%bD ;<!><!><span> </span>",
+	"__tests__/template.marko": "__tests__/template.marko;b%bD ;<!><!><span> </span>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)(" b")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

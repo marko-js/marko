@@ -5,7 +5,7 @@ _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<em> </em>",
 	"__tests__/template.marko_2_#text#0/await": "__tests__/template.marko_2_#text#0/await;D ;<em> </em>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
-	"__tests__/template.marko": "__tests__/template.marko !;D%;<main><!></main>"
+	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 0), $scope0_page = _page_render();

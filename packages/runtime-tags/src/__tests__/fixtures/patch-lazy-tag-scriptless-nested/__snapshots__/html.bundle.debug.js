@@ -14,7 +14,7 @@ const $template$1 = "<section></section>";
 const $walks$1 = " b";
 const $Child_withLoadAssets = withLoadAssets(child_default, flush, "ready:__tests__/tags/host/child.marko");
 _shells({
-	"__tests__/tags/host/index.marko": "__tests__/tags/host/index.marko !; ;<section></section>",
+	"__tests__/tags/host/index.marko": "__tests__/tags/host/index.marko; ;<section></section>",
 	"__tests__/tags/host/index.marko_1*shell": /*@__PURE__*/ (() => `__tests__/tags/host/index.marko_1*shell;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D l")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$2)}`)()
 });
 var host_default = _template("__tests__/tags/host/index.marko", (input) => {

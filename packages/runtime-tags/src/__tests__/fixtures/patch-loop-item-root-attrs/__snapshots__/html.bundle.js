@@ -10,7 +10,7 @@ var icon_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a: "a !; b ;<nav></nav><main></main>",
+	a: "a; b ;<nav></nav><main></main>",
 	a0: /*@__PURE__*/ (() => `a0;${/*@__PURE__*/ ((_w0) => ` D/${_w0}&D m`)("D l")};${/*@__PURE__*/ ((_w0) => `<a class=link>${_w0}<span> </span></a>`)($template)}`)(),
 	a1: "a1;D ;<p> </p>"
 });

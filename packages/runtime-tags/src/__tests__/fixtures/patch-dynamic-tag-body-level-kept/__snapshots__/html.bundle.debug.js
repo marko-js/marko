@@ -48,7 +48,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!></main>`)($template$1)
 const $walks = /*@__PURE__*/ ((_w0) => `D0${_w0}&%l`)($walks$1);
 _shells({
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_v#0:7/init,",
-	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !;${((_w0) => `D0${_w0}&%l`)($walks$1)};${((_w0) => `<main>${_w0}<!></main>`)($template$1)}`)()
+	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `D0${_w0}&%l`)($walks$1)};${((_w0) => `<main>${_w0}<!></main>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

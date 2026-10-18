@@ -6,7 +6,7 @@ _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content !__tests__/template.marko_3,",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content,",
-	"__tests__/template.marko": "__tests__/template.marko !;D%;<main><!></main>",
+	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>",
 	"__tests__/template.marko_7*shell": "__tests__/template.marko_7*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {

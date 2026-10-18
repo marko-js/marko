@@ -1,7 +1,7 @@
 // tags/panel/index.marko
 const $template = "<!><!><!>";
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: "b0; ;<section></section>",
 	b1: "b1;D ;<em> </em>"
 });

@@ -2,7 +2,7 @@
 _shells({
 	a0: "a0;D ;<b> </b>",
 	a1: "a1;b%bD ;<!><!><span> </span>",
-	a: "a !;D%;<main><!></main>",
+	a: "a;D%;<main><!></main>",
 	a2: "a2;D ;<b> </b>",
 	a3: "a3;b%;<!><!><!>"
 });

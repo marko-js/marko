@@ -2,7 +2,7 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 _shells({
-	"__tests__/tags/wrap.marko": "__tests__/tags/wrap.marko !;b%;<!><!><!>",
+	"__tests__/tags/wrap.marko": "__tests__/tags/wrap.marko;b%;<!><!><!>",
 	"__tests__/tags/wrap.marko_1*shell": "__tests__/tags/wrap.marko_1*shell;D%;<div><!></div>"
 });
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {

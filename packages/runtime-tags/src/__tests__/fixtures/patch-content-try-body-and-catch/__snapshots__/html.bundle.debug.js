@@ -6,7 +6,7 @@ function boom() {
 }
 _shells({
 	"__tests__/tags/wrapper.marko_2*content": "__tests__/tags/wrapper.marko_2*content __tests__/tags/wrapper.marko_2_input_content#0:3/subscribe;D l%;<p> </p><!><!>",
-	"__tests__/tags/wrapper.marko": "__tests__/tags/wrapper.marko !;b%;<!><!><!>"
+	"__tests__/tags/wrapper.marko": "__tests__/tags/wrapper.marko;b%;<!><!><!>"
 });
 var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $wi__input_content = _write_if($scope0_reason, 1), $scope0_page = _page_render();

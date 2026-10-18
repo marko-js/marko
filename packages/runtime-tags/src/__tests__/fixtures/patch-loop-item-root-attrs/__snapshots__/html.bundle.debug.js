@@ -13,7 +13,7 @@ var icon_default = _template("__tests__/tags/icon.marko", (input) => {
 const $template = "<nav></nav><main></main>";
 const $walks = " b b";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !; b ;<nav></nav><main></main>",
+	"__tests__/template.marko": "__tests__/template.marko; b ;<nav></nav><main></main>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => ` D/${_w0}&D m`)("D l")};${/*@__PURE__*/ ((_w0) => `<a class=link>${_w0}<span> </span></a>`)($template$1)}`)(),
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<p> </p>"
 });

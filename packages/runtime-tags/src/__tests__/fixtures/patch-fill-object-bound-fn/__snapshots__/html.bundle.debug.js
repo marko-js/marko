@@ -1,7 +1,7 @@
 // tags/store.marko
 const $template$2 = "";
 const $walks$2 = "";
-_shells({ "__tests__/tags/store.marko": "^__tests__/tags/store.marko !," });
+_shells({ "__tests__/tags/store.marko": "^__tests__/tags/store.marko," });
 _client_return("__tests__/tags/store.marko");
 var store_default = _template("__tests__/tags/store.marko", (input) => {
 	_scope_reason();

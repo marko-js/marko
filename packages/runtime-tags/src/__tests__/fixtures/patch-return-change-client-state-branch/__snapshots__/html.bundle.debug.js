@@ -32,7 +32,7 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 const $template = "<!><!><p> </p>";
 const $walks = "b%bD l";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !;b%bD ;<!><!><p> </p>",
+	"__tests__/template.marko": "__tests__/template.marko;b%bD ;<!><!><p> </p>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell !__tests__/template.marko_1;${/*@__PURE__*/ ((_w0) => `0${_w0}& b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `${_w0}<button class=set>set</button>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

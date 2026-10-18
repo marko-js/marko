@@ -6,7 +6,7 @@ function boom() {
 }
 _shells({
 	"__tests__/tags/error-wrapper.marko_2*content": "__tests__/tags/error-wrapper.marko_2*content;D ;<p> </p>",
-	"__tests__/tags/error-wrapper.marko": "__tests__/tags/error-wrapper.marko !;b%;<!><!><!>"
+	"__tests__/tags/error-wrapper.marko": "__tests__/tags/error-wrapper.marko;b%;<!><!><!>"
 });
 var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_fail = _write_if($scope0_reason, 1), $scope0_page = _page_render();

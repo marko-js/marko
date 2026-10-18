@@ -16,7 +16,7 @@ function link(data, id) {
 	return `/?q=${data.q}&sel=${id}`;
 }
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !; ;<ul></ul>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<ul></ul>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell __tests__/template.marko_1_hovered#0:3/init!__tests__/template.marko_1;${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

@@ -1,7 +1,7 @@
 // tags/toggle-panel/index.marko
 const $template = "<div></div>";
 _shells({
-	b: "b !; ;<div></div>",
+	b: "b; ;<div></div>",
 	b0: "b0;D ;<em> </em>"
 });
 var toggle_panel_default = _template("b", (input) => {

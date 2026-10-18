@@ -2,7 +2,7 @@
 _shells({
 	a0: "a0,",
 	a1: "a1,",
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a2: "a2;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {

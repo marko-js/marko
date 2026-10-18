@@ -18,7 +18,7 @@ _shells({
 	a0: "a0;D ;<em> </em>",
 	a1: "a1;D ;<em> </em>",
 	a2: /*@__PURE__*/ (() => `a2;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}`)($template)}`)(),
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {

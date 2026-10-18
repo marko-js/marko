@@ -1,7 +1,7 @@
 // tags/box.marko
 const $template$4 = "";
 const $walks$4 = "";
-_shells({ "__tests__/tags/box.marko": "^__tests__/tags/box.marko !," });
+_shells({ "__tests__/tags/box.marko": "^__tests__/tags/box.marko," });
 _client_return("__tests__/tags/box.marko");
 var box_default = _template("__tests__/tags/box.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -56,7 +56,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `0${_w0}& b%c`)("");
 _shells({
 	"__tests__/page.marko_2*content": /*@__PURE__*/ ((_w0) => `__tests__/page.marko_2*content __tests__/page.marko_2_bonus#0:7/init __tests__/page.marko_2_item_n#1:3/subscribe __tests__/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/init;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$3)};${_w0}`)($template$3),
 	"__tests__/page.marko": /*@__PURE__*/ (() => `__tests__/page.marko !__tests__/page.marko_0;${((_w0) => `0${_w0}& b%c`)("")};${((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("")}`)(),
-	"__tests__/page.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/page.marko_1*shell !;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2)
+	"__tests__/page.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/page.marko_1*shell;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2)
 });
 var page_default = _template("__tests__/page.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0), $scope0_page = _page_render();
@@ -109,7 +109,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 const $template = "<!><!><!>";
 const $walks = "b%c";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>",
+	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

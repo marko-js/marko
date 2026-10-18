@@ -23,7 +23,7 @@ var box_b_default = _template("b", (input) => {
 // template.marko
 _shells({
 	c0: "c0; ; ",
-	c: "c !;D%;<main><!></main>"
+	c: "c;D%;<main><!></main>"
 });
 var template_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_mode = _write_guard($scope0_reason, 1), $scope0_page = _page_render();

@@ -17,7 +17,7 @@ const $walks = "b%b%c";
 _shells({
 	"__tests__/template.marko_2*content": "",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content; ; ",
-	"__tests__/template.marko": "__tests__/template.marko !;b%b%;<!><!><!><!>"
+	"__tests__/template.marko": "__tests__/template.marko;b%b%;<!><!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_tag__OR__input_cls = _write_guard($scope0_reason, 0), $wg__input_wrap = _write_guard($scope0_reason, 5), $scope0_page = _page_render();

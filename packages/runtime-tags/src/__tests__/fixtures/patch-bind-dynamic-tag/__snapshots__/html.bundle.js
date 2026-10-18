@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template = "<!><!><!>";
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: "b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var child_default = _template("b", (input) => {
@@ -28,7 +28,7 @@ var child_default = _template("b", (input) => {
 });
 
 // tags/store.marko
-_shells({ c: "c !," });
+_shells({ c: "c," });
 _client_return("c");
 var store_default = _template("c", (input) => {
 	_scope_reason();

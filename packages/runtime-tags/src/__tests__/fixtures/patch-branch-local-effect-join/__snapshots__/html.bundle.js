@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template = "<!><!><!>";
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: "b0;D l ;<p> </p><div></div>"
 });
 var child_default = _template("b", (input) => {

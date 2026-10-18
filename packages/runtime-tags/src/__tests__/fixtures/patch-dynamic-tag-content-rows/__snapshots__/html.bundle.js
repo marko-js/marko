@@ -2,7 +2,7 @@
 const $template = "<main><h1> </h1><!><header><!></header><ul></ul><ol></ol></main>";
 const $walks = "E l%bD%l b l";
 _shells({
-	b: "b !;E l%bD%l b ;<main><h1> </h1><!><header><!></header><ul></ul><ol></ol></main>",
+	b: "b;E l%bD%l b ;<main><h1> </h1><!><header><!></header><ul></ul><ol></ol></main>",
 	b0: "b0;D%b%;<li><!><!></li>",
 	b1: "b1;D%b%;<li><!><!></li>"
 });

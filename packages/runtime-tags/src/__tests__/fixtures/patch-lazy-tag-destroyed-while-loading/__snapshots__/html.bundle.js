@@ -15,7 +15,7 @@ var child_default = _template("a", (input) => {
 // template.marko
 const $Child_withLoadAssets = withLoadAssets(child_default, flush, "_a");
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: /*@__PURE__*/ (() => `b0;${/*@__PURE__*/ ((_w0) => `D%b/${_w0}&l`)($walks)};${/*@__PURE__*/ ((_w0) => `<main><!>${_w0}</main>`)($template)}`)()
 });
 var template_default = _template("b", (input) => {

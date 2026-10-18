@@ -1,7 +1,7 @@
 // tags/badge/index.marko
 const $template = "<div></div>";
 _shells({
-	b: "b !; ;<div></div>",
+	b: "b; ;<div></div>",
 	b0: "b0;D ;<i> </i>"
 });
 var badge_default = _template("b", (input) => {

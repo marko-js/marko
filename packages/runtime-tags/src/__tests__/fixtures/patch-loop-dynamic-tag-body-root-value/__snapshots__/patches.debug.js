@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-root-value/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-root-value/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-root-value/template.marko_1*shell !;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-root-value/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-root-value/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-root-value/template.marko_1*shell;b%;<!><!><!>`, {
   "PatchLoop:#main/0": [1, {
     "PatchDynamicTag:#text/0": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-root-value/tags/card.marko",
     "PatchChild:BranchScopes:#text/0": {

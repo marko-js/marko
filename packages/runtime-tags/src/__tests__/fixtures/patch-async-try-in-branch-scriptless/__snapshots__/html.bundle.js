@@ -3,7 +3,7 @@ _shells({
 	a0: "a0;D ;<em> </em>",
 	a1: "a1;D ;<em> </em>",
 	a2: "a2;b%;<!><!><!>",
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {

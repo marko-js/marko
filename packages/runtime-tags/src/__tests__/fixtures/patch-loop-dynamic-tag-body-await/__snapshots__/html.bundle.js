@@ -24,10 +24,10 @@ var card_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0,",
-	a1: "a1 !;b%;<!><!><!>",
+	a1: "a1;b%;<!><!><!>",
 	a: "a;b%;<!><!><!>",
-	a2: "a2 !;b%;<!><!><!>",
-	a3: "a3 !;b%;<!><!><!>"
+	a2: "a2;b%;<!><!><!>",
+	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_rows = _write_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0);

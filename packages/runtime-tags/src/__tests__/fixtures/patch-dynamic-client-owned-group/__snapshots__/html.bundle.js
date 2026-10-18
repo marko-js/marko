@@ -11,7 +11,7 @@ var card_default = _template("b", (input) => {
 
 // tags/picker/index.marko
 const $template = "<!><!><!>";
-_shells({ c: "c !;b%;<!><!><!>" });
+_shells({ c: "c;b%;<!><!><!>" });
 var picker_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_on__OR__input_label = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

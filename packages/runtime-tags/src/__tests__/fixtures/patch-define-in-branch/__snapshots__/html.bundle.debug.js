@@ -4,7 +4,7 @@ const $row_content__template = "<li><!>: <!></li>";
 const $template = "<ul></ul>";
 const $walks = " b";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !; ;<ul></ul>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<ul></ul>",
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell;${/*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&b`)($row_content__walks, $row_content__walks)};${/*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<!>`)($row_content__template, $row_content__template)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

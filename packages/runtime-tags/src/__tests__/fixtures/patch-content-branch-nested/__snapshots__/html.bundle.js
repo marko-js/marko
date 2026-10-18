@@ -13,7 +13,7 @@ var widget_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0;D ;<em> </em>",
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a1: "a1; ;<div></div>",
 	a2: /*@__PURE__*/ (() => `a2;${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template)}`)()
 });

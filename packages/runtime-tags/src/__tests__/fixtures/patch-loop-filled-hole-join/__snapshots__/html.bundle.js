@@ -4,7 +4,7 @@ function link(data, id) {
 	return `/?q=${data.q}&sel=${id}`;
 }
 _shells({
-	b: "b !; ;<ul></ul>",
+	b: "b; ;<ul></ul>",
 	b0: "b0 b7!b1; D D ;<li><a> </a></li>"
 });
 var feed_list_default = _template("b", (input) => {

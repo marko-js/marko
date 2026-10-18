@@ -5,7 +5,7 @@ const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__temp
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks);
 _shells({
 	"__tests__/tags/wrap.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/wrap.marko_1*content;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
-	"__tests__/tags/wrap.marko": /*@__PURE__*/ (() => `__tests__/tags/wrap.marko !;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)(),
+	"__tests__/tags/wrap.marko": /*@__PURE__*/ (() => `__tests__/tags/wrap.marko;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)(),
 	"__tests__/tags/wrap.marko_2*shell": "__tests__/tags/wrap.marko_2*shell;D ;<em> </em>"
 });
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {

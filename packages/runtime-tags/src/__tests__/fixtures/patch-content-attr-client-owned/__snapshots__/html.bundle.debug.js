@@ -4,7 +4,7 @@ const $walks$1 = " b";
 _shells({
 	"__tests__/tags/frag-host.marko_2*content": "",
 	"__tests__/tags/frag-host.marko_1*content": "__tests__/tags/frag-host.marko_1*content,",
-	"__tests__/tags/frag-host.marko": "__tests__/tags/frag-host.marko !; ;<section></section>"
+	"__tests__/tags/frag-host.marko": "__tests__/tags/frag-host.marko; ;<section></section>"
 });
 var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

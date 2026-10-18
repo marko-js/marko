@@ -2,7 +2,7 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 _shells({
-	"__tests__/tags/leaf.marko": "__tests__/tags/leaf.marko !;b%;<!><!><!>",
+	"__tests__/tags/leaf.marko": "__tests__/tags/leaf.marko;b%;<!><!><!>",
 	"__tests__/tags/leaf.marko_1*shell": "__tests__/tags/leaf.marko_1*shell;D ;<em> </em>"
 });
 var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
@@ -24,7 +24,7 @@ var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
-	"__tests__/tags/mid.marko": "__tests__/tags/mid.marko !;b%;<!><!><!>",
+	"__tests__/tags/mid.marko": "__tests__/tags/mid.marko;b%;<!><!><!>",
 	"__tests__/tags/mid.marko_1*shell": /*@__PURE__*/ (() => `__tests__/tags/mid.marko_1*shell;${/*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("b%c")};${/*@__PURE__*/ ((_w0) => `<section>${_w0}</section>`)($template$2)}`)()
 });
 var mid_default = _template("__tests__/tags/mid.marko", (input) => {

@@ -1,7 +1,7 @@
 // tags/widget/index.marko
 const $template$1 = "<p><!>:<!></p>";
 const $walks$1 = "D%c%l";
-_shells({ "__tests__/tags/widget/index.marko": "__tests__/tags/widget/index.marko !;D%c%;<p><!>:<!></p>" });
+_shells({ "__tests__/tags/widget/index.marko": "__tests__/tags/widget/index.marko;D%c%;<p><!>:<!></p>" });
 var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

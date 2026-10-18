@@ -3,7 +3,7 @@ const $template = "<section></section>";
 _shells({
 	b0: "",
 	b1: "b1,",
-	b: "b !; ;<section></section>"
+	b: "b; ;<section></section>"
 });
 var frag_host_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

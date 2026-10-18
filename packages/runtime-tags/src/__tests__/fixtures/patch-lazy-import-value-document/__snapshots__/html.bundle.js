@@ -19,7 +19,7 @@ var other_default = _template("b", (input) => {
 // template.marko
 withLoadAssets(child_default, flush, "_a");
 _shells({
-	c: "c !; ;<main></main>",
+	c: "c; ;<main></main>",
 	c0: "c0 c5!c1; b%;<button>toggle</button><!><!>"
 });
 var template_default = _template("c", (input) => {

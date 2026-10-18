@@ -1,7 +1,7 @@
 // tags/panel.marko
 const $template = "<!><!><!>";
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: "b0;D%c%;<em><!>:<!></em>"
 });
 var panel_default = _template("b", (input) => {

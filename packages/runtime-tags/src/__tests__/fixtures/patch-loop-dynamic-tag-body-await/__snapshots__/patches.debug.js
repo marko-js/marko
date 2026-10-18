@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_2*content !;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_1*shell !;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_1*shell;b%;<!><!><!>`, {
   "PatchLoop:#text/0": [1, {
     "PatchPending:#text/0": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_2*content"
   }, 2, {

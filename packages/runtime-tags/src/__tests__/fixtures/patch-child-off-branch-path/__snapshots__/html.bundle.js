@@ -37,7 +37,7 @@ _shells({
 	b4: "b4;b%;<!><!><!>",
 	b5: "b5;D ;<em> </em>",
 	b6: "b6;b%;<!><!><!>",
-	b: "b !;b%b%;<!><!><!><!>"
+	b: "b;b%b%;<!><!><!><!>"
 });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $wi__input_slow = _write_if($scope0_reason, 1), $wg__input_other = _write_guard($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_other = _write_if($scope0_reason, 2), $wi__input_failing = _write_if($scope0_reason, 3), $scope0_page = _page_render();

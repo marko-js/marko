@@ -2,7 +2,7 @@
 const $template$1 = "<ul></ul>";
 const $walks$1 = " b";
 _shells({
-	"__tests__/tags/list/index.marko": "__tests__/tags/list/index.marko !; ;<ul></ul>",
+	"__tests__/tags/list/index.marko": "__tests__/tags/list/index.marko; ;<ul></ul>",
 	"__tests__/tags/list/index.marko_1*shell": "__tests__/tags/list/index.marko_1*shell;D%b%;<li><!><!></li>"
 });
 var list_default = _template("__tests__/tags/list/index.marko", (input) => {

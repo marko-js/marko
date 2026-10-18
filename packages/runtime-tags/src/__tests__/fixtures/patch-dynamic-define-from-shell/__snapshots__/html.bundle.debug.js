@@ -15,7 +15,7 @@ const $walks = "D%bD m";
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content,",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content !__tests__/template.marko_1,",
-	"__tests__/template.marko": "__tests__/template.marko !;D%bD ;<main><!><output> </output></main>"
+	"__tests__/template.marko": "__tests__/template.marko;D%bD ;<main><!><output> </output></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

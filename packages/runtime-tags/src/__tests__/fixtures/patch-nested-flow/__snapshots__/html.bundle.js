@@ -14,7 +14,7 @@ var badge_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a: /*@__PURE__*/ (() => `a !;${((_w0) => `D b%b/${_w0}&l`)($walks)};${((_w0) => `<main><ul></ul><!>${_w0}</main>`)($template)}`)(),
+	a: /*@__PURE__*/ (() => `a;${((_w0) => `D b%b/${_w0}&l`)($walks)};${((_w0) => `<main><ul></ul><!>${_w0}</main>`)($template)}`)(),
 	a0: "a0;D%b%;<section><!><!></section>",
 	a1: "a1;D ;<small> </small>",
 	a2: "a2;D%b%;<li><!><!></li>",

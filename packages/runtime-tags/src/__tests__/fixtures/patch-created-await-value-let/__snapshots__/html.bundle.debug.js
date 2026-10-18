@@ -3,7 +3,7 @@ const $template = "<main><h1> </h1><!></main>";
 const $walks = "E l%l";
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content !__tests__/template.marko_2; D%c%;<button><!> <!></button>",
-	"__tests__/template.marko": "__tests__/template.marko !;E l%;<main><h1> </h1><!></main>",
+	"__tests__/template.marko": "__tests__/template.marko;E l%;<main><h1> </h1><!></main>",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await !__tests__/template.marko_2; D%c%;<button><!> <!></button>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });

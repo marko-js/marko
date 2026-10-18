@@ -13,7 +13,7 @@ var row_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a: "a !;D l ;<output> </output><ul></ul>",
+	a: "a;D l ;<output> </output><ul></ul>",
 	a1: /*@__PURE__*/ ((_w0) => `a1;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {

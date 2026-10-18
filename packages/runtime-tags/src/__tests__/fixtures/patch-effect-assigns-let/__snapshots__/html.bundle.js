@@ -1,6 +1,6 @@
 // tags/probe.marko
 const $template = "<p> </p>";
-_shells({ b: "b !;D ;<p> </p>" });
+_shells({ b: "b;D ;<p> </p>" });
 var probe_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

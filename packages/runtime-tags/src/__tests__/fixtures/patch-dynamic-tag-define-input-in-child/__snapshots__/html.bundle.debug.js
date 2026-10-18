@@ -4,7 +4,7 @@ const $walks$1 = "b%c";
 _shells({
 	"__tests__/tags/picker.marko_2*content": "__tests__/tags/picker.marko_2*content,",
 	"__tests__/tags/picker.marko_1*content": "__tests__/tags/picker.marko_1*content,",
-	"__tests__/tags/picker.marko": "__tests__/tags/picker.marko !;b%;<!><!><!>"
+	"__tests__/tags/picker.marko": "__tests__/tags/picker.marko;b%;<!><!><!>"
 });
 var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $scope0_page = _page_render();

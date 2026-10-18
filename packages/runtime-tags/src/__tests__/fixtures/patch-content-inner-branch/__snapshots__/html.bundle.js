@@ -14,7 +14,7 @@ var card_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a0: "a0;b%;<!><!><!>",
-	a: /*@__PURE__*/ (() => `a !;${((_w0) => `D/${_w0}&l`)($walks)};${((_w0) => `<main>${_w0}</main>`)($template)}`)(),
+	a: /*@__PURE__*/ (() => `a;${((_w0) => `D/${_w0}&l`)($walks)};${((_w0) => `<main>${_w0}</main>`)($template)}`)(),
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {

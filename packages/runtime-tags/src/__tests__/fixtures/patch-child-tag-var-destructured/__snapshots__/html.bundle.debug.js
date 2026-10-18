@@ -1,7 +1,7 @@
 // tags/counter/index.marko
 const $template$1 = "<span>box <!></span>";
 const $walks$1 = "Db%l";
-_shells({ "__tests__/tags/counter/index.marko": "^__tests__/tags/counter/index.marko !;Db%;<span>box <!></span>" });
+_shells({ "__tests__/tags/counter/index.marko": "^__tests__/tags/counter/index.marko;Db%;<span>box <!></span>" });
 _client_return("__tests__/tags/counter/index.marko");
 var counter_default = _template("__tests__/tags/counter/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();

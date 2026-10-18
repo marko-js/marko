@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a0: /*@__PURE__*/ (() => `a0;${/*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("D l")};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {

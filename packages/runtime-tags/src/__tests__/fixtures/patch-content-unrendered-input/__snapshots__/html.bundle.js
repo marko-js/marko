@@ -19,7 +19,7 @@ var panel_default = _template("c", (input) => {
 // tags/gate.marko
 const $template$1 = "<!><!><!>";
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: "b0;b%;<!><!><!>",
 	b1: "b1;b%;<!><!><!>"
 });
@@ -50,7 +50,7 @@ var gate_default = _template("b", (input) => {
 // tags/wrapper.marko
 const $template = "<div></div>";
 _shells({
-	d: "d !; ;<div></div>",
+	d: "d; ;<div></div>",
 	d0: "d0;b%;<!><!><!>"
 });
 var wrapper_default = _template("d", (input) => {

@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
-	"__tests__/tags/tabs.marko": "__tests__/tags/tabs.marko !;b%;<!><!><!>",
+	"__tests__/tags/tabs.marko": "__tests__/tags/tabs.marko;b%;<!><!><!>",
 	"__tests__/tags/tabs.marko_1*shell": "__tests__/tags/tabs.marko_1*shell;b%;<!><!><!>",
 	"__tests__/tags/tabs.marko_2*shell": "__tests__/tags/tabs.marko_2*shell;b%;<!><!><!>"
 });

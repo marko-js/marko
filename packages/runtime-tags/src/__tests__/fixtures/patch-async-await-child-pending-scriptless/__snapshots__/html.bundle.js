@@ -15,7 +15,7 @@ var pill_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a0: /*@__PURE__*/ ((_w0) => `a0;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a1: /*@__PURE__*/ ((_w0) => `a1;${((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
 	a2: "a2;b%;<!><!><!>",
 	a3: "a3,<em>closed</em>"

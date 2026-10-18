@@ -5,7 +5,7 @@ function link(data, id) {
 	return `/?q=${data.q}&sel=${id}`;
 }
 _shells({
-	"__tests__/tags/feed-list.marko": "__tests__/tags/feed-list.marko !; ;<ul></ul>",
+	"__tests__/tags/feed-list.marko": "__tests__/tags/feed-list.marko; ;<ul></ul>",
 	"__tests__/tags/feed-list.marko_1*shell": "__tests__/tags/feed-list.marko_1*shell __tests__/tags/feed-list.marko_1_hovered#0:5/init!__tests__/tags/feed-list.marko_1; D D ;<li><a> </a></li>"
 });
 var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {

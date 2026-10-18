@@ -2,7 +2,7 @@
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 _shells({
-	"__tests__/tags/badge/index.marko": "__tests__/tags/badge/index.marko !; ;<div></div>",
+	"__tests__/tags/badge/index.marko": "__tests__/tags/badge/index.marko; ;<div></div>",
 	"__tests__/tags/badge/index.marko_1*shell": "__tests__/tags/badge/index.marko_1*shell;D ;<i> </i>"
 });
 var badge_default = _template("__tests__/tags/badge/index.marko", (input) => {

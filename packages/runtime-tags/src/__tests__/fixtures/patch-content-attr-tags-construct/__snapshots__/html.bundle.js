@@ -17,7 +17,7 @@ var card_default = _template("b", (input) => {
 _shells({
 	a0: "a0,<b>static header</b>",
 	a1: "a1,body",
-	a: "a !; ;<main></main>",
+	a: "a; ;<main></main>",
 	a2: /*@__PURE__*/ ((_w0) => `a2;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {

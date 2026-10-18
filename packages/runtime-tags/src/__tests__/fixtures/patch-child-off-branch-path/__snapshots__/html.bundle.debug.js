@@ -41,7 +41,7 @@ _shells({
 	"__tests__/tags/card.marko_4*content": "__tests__/tags/card.marko_4*content;b%;<!><!><!>",
 	"__tests__/tags/card.marko_2_#text#0/await": "__tests__/tags/card.marko_2_#text#0/await;D ;<em> </em>",
 	"__tests__/tags/card.marko_2*content": "__tests__/tags/card.marko_2*content;b%;<!><!><!>",
-	"__tests__/tags/card.marko": "__tests__/tags/card.marko !;b%b%;<!><!><!><!>"
+	"__tests__/tags/card.marko": "__tests__/tags/card.marko;b%b%;<!><!><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $wi__input_slow = _write_if($scope0_reason, 1), $wg__input_other = _write_guard($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_other = _write_if($scope0_reason, 2), $wi__input_failing = _write_if($scope0_reason, 3), $scope0_page = _page_render();

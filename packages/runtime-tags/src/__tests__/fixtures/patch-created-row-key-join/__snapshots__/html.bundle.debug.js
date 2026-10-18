@@ -2,8 +2,8 @@
 const $template = "<ul></ul>";
 const $walks = " b";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !; ;<ul></ul>",
-	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !; ;<li></li>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<ul></ul>",
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell; ;<li></li>",
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_n#1:2/init __tests__/template.marko_2_n#1:2_m#1:3/init!__tests__/template.marko_2; D ;<button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {

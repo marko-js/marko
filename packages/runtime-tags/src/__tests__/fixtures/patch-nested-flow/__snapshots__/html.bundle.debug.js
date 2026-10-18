@@ -16,7 +16,7 @@ var badge_default = _template("__tests__/tags/badge.marko", (input) => {
 const $template = /*@__PURE__*/ ((_w0) => `<main><ul></ul><!>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D b%b/${_w0}&l`)($walks$1);
 _shells({
-	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !;${((_w0) => `D b%b/${_w0}&l`)($walks$1)};${((_w0) => `<main><ul></ul><!>${_w0}</main>`)($template$1)}`)(),
+	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `D b%b/${_w0}&l`)($walks$1)};${((_w0) => `<main><ul></ul><!>${_w0}</main>`)($template$1)}`)(),
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;D%b%;<section><!><!></section>",
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<small> </small>",
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D%b%;<li><!><!></li>",

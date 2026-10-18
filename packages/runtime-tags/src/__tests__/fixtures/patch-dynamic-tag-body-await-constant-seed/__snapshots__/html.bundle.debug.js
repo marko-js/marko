@@ -31,9 +31,9 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
 	"__tests__/tags/card.marko_2*content": "__tests__/tags/card.marko_2*content,",
-	"__tests__/tags/card.marko_1*content": "__tests__/tags/card.marko_1*content !;b%;<!><!><!>",
-	"__tests__/tags/card.marko_0_#text#0/await": "__tests__/tags/card.marko_0_#text#0/await !;b%;<!><!><!>",
-	"__tests__/tags/card.marko": "__tests__/tags/card.marko !;b%;<!><!><!>"
+	"__tests__/tags/card.marko_1*content": "__tests__/tags/card.marko_1*content;b%;<!><!><!>",
+	"__tests__/tags/card.marko_0_#text#0/await": "__tests__/tags/card.marko_0_#text#0/await;b%;<!><!><!>",
+	"__tests__/tags/card.marko": "__tests__/tags/card.marko;b%;<!><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1);
@@ -80,7 +80,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 const $template = "<main></main>";
 const $walks = " b";
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !; ;<main></main>",
+	"__tests__/template.marko": "__tests__/template.marko; ;<main></main>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {

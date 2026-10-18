@@ -15,7 +15,7 @@ function link(data, id) {
 	return `/?q=${data.q}&sel=${id}`;
 }
 _shells({
-	c: "c !; ;<ul></ul>",
+	c: "c; ;<ul></ul>",
 	c0: /*@__PURE__*/ (() => `c0 c7!c1;${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)}`)()
 });
 var feed_list_default = _template("c", (input) => {

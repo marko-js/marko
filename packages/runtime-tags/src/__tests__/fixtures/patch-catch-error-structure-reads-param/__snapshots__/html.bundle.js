@@ -4,7 +4,7 @@ function boom(error) {
 }
 _shells({
 	a0: "a0;D ;<p> </p>",
-	a: "a !;b%;<!><!><!>",
+	a: "a;b%;<!><!><!>",
 	a1: "a1;D ;<b> </b>",
 	a2: "a2;D ;<i> </i>"
 });

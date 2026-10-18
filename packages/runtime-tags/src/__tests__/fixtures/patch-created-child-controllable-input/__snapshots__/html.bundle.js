@@ -24,7 +24,7 @@ var demo_card_default = _template("b", (input) => {
 // tags/page-b.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-_shells({ c: /*@__PURE__*/ ((_w0) => `c !;${((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1) });
+_shells({ c: /*@__PURE__*/ ((_w0) => `c;${((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1) });
 var page_b_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_page = _page_render();

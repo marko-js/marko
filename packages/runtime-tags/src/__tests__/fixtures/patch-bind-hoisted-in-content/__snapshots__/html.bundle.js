@@ -1,6 +1,6 @@
 // tags/store.marko
 const $template$1 = "<p> </p>";
-_shells({ c: "c !;D ;<p> </p>" });
+_shells({ c: "c;D ;<p> </p>" });
 var store_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_page = _page_render();

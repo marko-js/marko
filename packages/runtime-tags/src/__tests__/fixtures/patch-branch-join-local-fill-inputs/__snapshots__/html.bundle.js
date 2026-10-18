@@ -2,7 +2,7 @@
 const $template = "<!><!><div></div>";
 const $walks = "b%b b";
 _shells({
-	b: "b !;b%b ;<!><!><div></div>",
+	b: "b;b%b ;<!><!><div></div>",
 	b0: "b0 !b5;D lD l ;<p> </p><em> </em><button class=m>m</button>"
 });
 var child_default = _template("b", (input) => {

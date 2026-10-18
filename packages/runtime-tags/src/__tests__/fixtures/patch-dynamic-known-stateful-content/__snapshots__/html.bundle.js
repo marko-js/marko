@@ -26,7 +26,7 @@ var card_default = _template("a", (input) => {
 });
 
 // template.marko
-_shells({ b: /*@__PURE__*/ (() => `b !;${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}`)() });
+_shells({ b: /*@__PURE__*/ (() => `b;${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}`)() });
 var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

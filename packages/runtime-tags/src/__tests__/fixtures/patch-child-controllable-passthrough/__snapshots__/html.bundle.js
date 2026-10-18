@@ -1,7 +1,7 @@
 // tags/counter/index.marko
 const $template$1 = "<!><!><!>";
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: "b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var counter_default = _template("b", (input) => {
@@ -44,7 +44,7 @@ var middle_default = _template("c", (input) => {
 });
 
 // template.marko
-_shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `E lDb%l/${_w0}&l`)($walks)};${((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template)}`)() });
+_shells({ a: /*@__PURE__*/ (() => `a;${((_w0) => `E lDb%l/${_w0}&l`)($walks)};${((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template)}`)() });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

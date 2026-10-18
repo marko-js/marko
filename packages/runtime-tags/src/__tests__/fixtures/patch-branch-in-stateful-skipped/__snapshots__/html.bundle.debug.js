@@ -1,7 +1,7 @@
 // tags/panel.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-_shells({ "__tests__/tags/panel.marko": "__tests__/tags/panel.marko !;b%;<!><!><!>" });
+_shells({ "__tests__/tags/panel.marko": "__tests__/tags/panel.marko;b%;<!><!><!>" });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_label__OR__input_items = _write_guard($scope0_reason, 3), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();

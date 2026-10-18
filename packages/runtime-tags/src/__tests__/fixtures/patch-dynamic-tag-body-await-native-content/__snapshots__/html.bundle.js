@@ -50,7 +50,7 @@ var keeper_default = _template("c", (input) => {
 // template.marko
 _shells({
 	a0: "a0,",
-	a: /*@__PURE__*/ (() => `a !;${((_w0) => `D/${_w0}&l`)("b%c")};${((_w0) => `<main>${_w0}</main>`)($template)}`)()
+	a: /*@__PURE__*/ (() => `a;${((_w0) => `D/${_w0}&l`)("b%c")};${((_w0) => `<main>${_w0}</main>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 3), $wi__input_p__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $scope0_page = _page_render();

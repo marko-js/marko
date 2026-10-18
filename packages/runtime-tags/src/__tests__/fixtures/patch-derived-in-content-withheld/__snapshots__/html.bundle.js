@@ -1,7 +1,7 @@
 // tags/toggle.marko
 const $template$1 = "<!><!><!>";
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: "b0;b%;<!><!><!>"
 });
 var toggle_default = _template("b", (input) => {

@@ -1,7 +1,7 @@
 // tags/counter/index.marko
 const $template = "<!><!><!>";
 _shells({
-	b: "b !;b%;<!><!><!>",
+	b: "b;b%;<!><!><!>",
 	b0: "b0 !b1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var counter_default = _template("b", (input) => {
@@ -32,7 +32,7 @@ var counter_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a: "a !;E lDb%l%;<main><h1> </h1><p>Last <!></p><!></main>",
+	a: "a;E lDb%l%;<main><h1> </h1><p>Last <!></p><!></main>",
 	a1: /*@__PURE__*/ (() => `a1;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {

@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a0: "a0;D ;<b> </b>",
-	a: "a !;b%bD ;<!><!><p> </p>",
+	a: "a;b%bD ;<!><!><p> </p>",
 	a1: "a1;D ;<b> </b>",
 	a2: "a2;D%;<section><!></section>"
 });

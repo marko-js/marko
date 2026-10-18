@@ -21,7 +21,7 @@ const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 _shells({
 	"__tests__/tags/child.marko_1*content": "__tests__/tags/child.marko_1*content;b%;<!><!><!>",
-	"__tests__/tags/child.marko": /*@__PURE__*/ (() => `__tests__/tags/child.marko !;${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`)(),
+	"__tests__/tags/child.marko": /*@__PURE__*/ (() => `__tests__/tags/child.marko;${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`)(),
 	"__tests__/tags/child.marko_2*shell": "__tests__/tags/child.marko_2*shell,<span>shown</span>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {

@@ -13,7 +13,7 @@ var labeler_default = _template("b", (input) => {
 // tags/list.marko
 const $template = "<!><!><!>";
 _shells({
-	c: "c !;b%;<!><!><!>",
+	c: "c;b%;<!><!><!>",
 	c0: /*@__PURE__*/ (() => `c0;${/*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("D l")};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$1)}`)()
 });
 var list_default = _template("c", (input) => {
