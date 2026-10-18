@@ -132,6 +132,15 @@ export function writePatchResumeStatements(
       if (withheld) fillCalls.push(withheld);
     }
   });
+  // A `<let>` keeps the content it is given: what it derives from reports it,
+  // with no fill of its own (or a state one) to report it otherwise.
+  forEach(section.bindings, (binding) => {
+    const { fill, keptInLet } = getPatchFill(binding);
+    if (keptInLet && (!fill || isStateSourced(binding))) {
+      const withheld = getWithholdCall(section, binding);
+      if (withheld) fillCalls.push(withheld);
+    }
+  });
 
   // Effect-read values need no client registration: the wire writes the
   // accessor and each reading effect re-runs by register id on change.

@@ -175,6 +175,7 @@ function isPatchFillBinding(binding: Binding) {
 export interface PatchFill {
   kind?: true | FillConditions;
   contentKind?: true | FillConditions;
+  keptInLet?: boolean;
   fill?: true | FillConditions;
   fillsReads?: boolean;
   fillsWithoutStructure?: boolean;
@@ -296,6 +297,7 @@ function computePatchFill(binding: Binding): PatchFill {
   return {
     kind,
     contentKind: read.contentKind,
+    keptInLet: read.keptInLet,
     fill,
     fillsReads,
     // No caller-owned structure re-renders its reads: always, or for
@@ -437,6 +439,8 @@ interface FillReadKind {
   unpatchedStructure: true | FillConditions | undefined;
   writtenJoins: Map<Intersection, Section> | undefined;
   clientJoins: [Intersection, FillConditions][];
+  // A `<let>` it gives itself to keeps it on the client, as content it renders.
+  keptInLet: boolean;
 }
 
 // What a binding's reads (and its direct aliases') need of its fill, and the
@@ -450,6 +454,7 @@ const [getFillReadKind, resetFillReadKinds] = createAnalysisMemo(
     unpatchedStructure: undefined,
     writtenJoins: undefined,
     clientJoins: [],
+    keptInLet: false,
   },
 );
 
@@ -463,6 +468,7 @@ function computeFillReadKind(binding: Binding): FillReadKind {
   // Each written join its value is shipped for, by the section reading it.
   let writtenJoins: Map<Intersection, Section> | undefined;
   const clientJoins: [Intersection, FillConditions][] = [];
+  let keptInLet = false;
   for (const alias of binding.propertyAliases.values()) {
     contentKind = mergeKinds(contentKind, getFillReadKind(alias).contentKind);
   }
@@ -518,6 +524,7 @@ function computeFillReadKind(binding: Binding): FillReadKind {
         if (derivedKind) {
           contentKind = mergeKinds(contentKind, derivedKind);
           rendersContent = true;
+          keptInLet ||= derived.type === BindingType.let;
         }
       } else if (someContentRead(derived, undefined, isContentRender)) {
         rendersContent = true;
@@ -554,6 +561,7 @@ function computeFillReadKind(binding: Binding): FillReadKind {
     unpatchedStructure,
     writtenJoins,
     clientJoins,
+    keptInLet,
   };
 }
 
