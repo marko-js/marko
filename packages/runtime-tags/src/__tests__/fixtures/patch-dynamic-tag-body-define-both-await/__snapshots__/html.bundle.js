@@ -1,0 +1,73 @@
+// tags/card.marko
+_shells({ b: "b !b0; b%;<button class=toggle>toggle</button><!><!>" });
+var card_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	let open = true;
+	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
+	if ($scope0_page) _if(() => {
+		{
+			const $scope1_id = _scope_id();
+			_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $wg__input_content);
+			_scope($scope1_id, {});
+			return 0;
+		}
+	}, $scope0_id, "b");
+	_script($scope0_id, "b0");
+	_patch_value($scope0_id, "vb2", open, 1);
+	$scope0_page ? _scope($scope0_id, {
+		e: input.content,
+		f: open
+	}) : (_filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
+});
+
+// template.marko
+const $Body_content__walks = "b%c";
+const $Body_content__template = "<!><!><!>";
+_shells({
+	a0: /*@__PURE__*/ (() => `a0;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Body_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Body_content__template)}`)(),
+	a1: "a1,",
+	a2: /*@__PURE__*/ (() => `a2;${((_w0) => `b/${_w0}&b`)($Body_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Body_content__template)}`)(),
+	a: /*@__PURE__*/ (() => `a !;${((_w0) => `E/${_w0}&l%l`)($Body_content__walks)};${((_w0) => `<main><section>${_w0}</section><!></main>`)($Body_content__template)}`)()
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_on__OR__input_note__OR__input_v = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $input_note__closures = /* @__PURE__ */ new Set();
+	const $input_on__closures = /* @__PURE__ */ new Set();
+	const Body = { content: _content("a4", () => {
+		const $scope1_id = _scope_id();
+		_scope_reason();
+		const $scope1_page = _page_render();
+		_dynamic_tag($scope1_id, "a", input.on ? card_default : "div", {}, _content_resume("a1", () => {
+			const $scope2_id = _scope_id();
+			_scope_reason();
+			_html(`<em>${_patch_text($scope2_id, "a", input.note, void 0, $scope0_reason, 3)}</em>`);
+			_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, "a3");
+			_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope2_id, { _: $wi__input_on__OR__input_note__OR__input_v && _scope_with_id($scope1_id) }));
+		}, $scope1_id, ($scope) => $scope1_page ? [{ f: input.note }, { _: $scope($scope0_id) }] : []), 0, $wg__input_on, void 0, 2, $scope0_reason, 2);
+		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, "a5");
+		$wi__input_on__OR__input_note__OR__input_v && _subscribe(_unfilled_if($scope0_reason, 2) && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a5", $wg__input_on);
+		$wg__input_on || $wi__input_on__OR__input_note__OR__input_v && _resume_branch($scope1_id);
+	}, $scope0_id) };
+	_html("<main><section>");
+	const $childScope = _patch_child($scope0_id, "a");
+	Body.content({});
+	_html("</section>");
+	_await($scope0_id, "b", input.v, (v) => {
+		const $scope3_id = _scope_id();
+		const $childScope2 = _patch_child($scope3_id, "a", $scope0_id);
+		Body.content({});
+		_filled_guard($scope0_reason, 3) && _content_withheld("a1", $scope3_id) && _patch_value($scope0_id, "va6", input.note);
+		_scope($scope3_id, { a: _existing_scope($childScope2) });
+	}, 1, "a0", 1);
+	_html("</main>");
+	_patch_write($scope0_id, "we", input.on, 1);
+	$scope0_page ? _scope($scope0_id, {
+		e: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2)) && input.on,
+		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.note,
+		i: _write_if($scope0_reason, 3) && $input_note__closures,
+		h: _write_if($scope0_reason, 2) && $input_on__closures,
+		a: _existing_scope($childScope)
+	}) : _filled_guard($scope0_reason, 3) && _content_withheld("a1", $scope0_id) && _patch_value($scope0_id, "va6", input.note, !_server_guard($scope0_reason, 3));
+}, 1);

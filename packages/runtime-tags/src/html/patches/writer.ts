@@ -157,8 +157,8 @@ function keepBranch<T, U, V>(cb: (a: U, b: V) => T, a: U, b: V): T {
   return withContext(kKeptBranch, getChunk()!.context![kBranchId], cb, a, b);
 }
 
-// A consumer keeps content for the resumed page to render, an attribute tag's
-// every item: the values inside fill (`_content_withheld`).
+// A consumer keeps content for the resumed page to render, every item of an
+// attribute tag or list: the values inside fill (`_content_withheld`).
 export function _content_withhold(value: unknown) {
   const state = getState();
   if (state instanceof PatchUpdateState) {
@@ -478,6 +478,9 @@ export class PatchUpdateState extends PatchRenderState {
   // Content ids a consumer withheld, each with the owner scope of the latest
   // instance withheld.
   withheldContents?: Map<string, number | undefined>;
+  // The scope of each pending `<await>` whose body may keep content made
+  // before it.
+  pendingAwaits?: number[];
   // Each setup envelope's ids by side, and every id it holds.
   setupIds?: Map<
     object,

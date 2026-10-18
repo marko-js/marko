@@ -448,6 +448,7 @@ export function _await<T>(
   markerGuard?: number,
   patchContent?: 0 | string,
   alwaysPairs?: 1,
+  mayWithhold?: 1,
 ) {
   const state = getState();
   if (!(state instanceof PatchUpdateState)) {
@@ -466,7 +467,12 @@ export function _await<T>(
     entryKey(PatchKey.Pending, accessor),
     (!elide && patchContent) || 1,
   );
+  // Until it settles, its body may keep content made before it for the
+  // client (`_content_withheld`).
+  const pending = mayWithhold && (state.pendingAwaits ||= []);
+  if (pending) pending.push(scopeId);
   _base_await(scopeId, accessor, promise, (value: T) => {
+    if (pending) pending.splice(pending.indexOf(scopeId), 1);
     // The Child entry settles the pending UI the entry above opens: forced so
     // a body with no writes of its own still attaches it.
     const branchId = _peek_scope_id();

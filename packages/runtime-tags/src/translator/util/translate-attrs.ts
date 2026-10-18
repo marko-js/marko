@@ -470,13 +470,14 @@ function getRegisteredLocals(bodySection: Section) {
       ...locals,
       ...(contentClosureValues?.levels || []),
     ]);
+    const patchLevels = contentClosureValues?.patchLevels;
     return t.arrowFunctionExpression(
       contentClosureValues ? [contentClosureValues.scope] : [],
-      contentClosureValues?.patchFilled
+      patchLevels
         ? t.conditionalExpression(
             scopePageIdentifier(getReasonSection(bodySection.parent!)),
             values,
-            t.arrayExpression(locals),
+            t.arrayExpression([...locals, ...patchLevels]),
           )
         : values,
     );

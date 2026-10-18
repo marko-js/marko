@@ -14,6 +14,7 @@ import {
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { isPatch } from "../util/marko-config";
+import { awaitMayWithhold } from "../util/patch/refresh";
 import { patchWrites, patchMayWrite } from "../util/patch/structure";
 import { boundaryAlwaysPairs } from "../util/patch/writers";
 import { getSourcesForExpr } from "../util/reasons";
@@ -156,6 +157,10 @@ export default {
                 // creation id outside divergent contexts.
                 isPatch() &&
                   boundaryAlwaysPairs(bodySection) &&
+                  t.numericLiteral(1),
+                // Pending, its body may yet keep content made before it.
+                isPatch() &&
+                  awaitMayWithhold(bodySection) &&
                   t.numericLiteral(1),
               ),
             ),

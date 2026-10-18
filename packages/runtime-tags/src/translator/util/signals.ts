@@ -132,7 +132,7 @@ import { isCallSetupExpr } from "./setup-work";
 import { isQueuedOnCreate, shipsContentShell } from "./shell";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
-import { mergeSources, type Sources } from "./sources";
+import { hasParamOrGlobalSource, mergeSources, type Sources } from "./sources";
 import { createOutputSectionState, createOutputState } from "./state";
 import { toOnlyExpressionOrBlock } from "./to-only-or-block";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
@@ -250,36 +250,57 @@ export function getContentClosureValues(bodySection: Section) {
     : [contentClosures];
   const ownerAccessor = getAccessorProp().Owner;
   const levels: t.Expression[] = [];
+  // Where the flush fills a closure wherever a consumer withholds the content,
+  // a patch render's levels keep only what it may change that no fill writes
+  // (an `<await>` value), up to the outermost level with values left: the
+  // owner holds the rest.
+  const patchProps: t.ObjectProperty[][] = [];
+  let patchDepth = 0;
+  let filled = false;
   for (let i = closures.length, section = bodySection.parent!; i;) {
     const props: t.ObjectProperty[] = [];
+    const kept: t.ObjectProperty[] = [];
     while (i && closures[i - 1].section === section) {
       const closure = closures[--i];
-      props.push(
-        toObjectProperty(
-          getScopeAccessor(closure),
-          getDeclaredBindingExpression(closure),
-        ),
+      const prop = toObjectProperty(
+        getScopeAccessor(closure),
+        getDeclaredBindingExpression(closure),
       );
+      props.push(prop);
+      if (isPatch() && fillsWithheldContent(closure, bodySection)) {
+        filled = true;
+      } else if (flushMayChange(closure)) {
+        kept.push(prop);
+      }
     }
+    if (kept.length) patchDepth = patchProps.length + 1;
+    patchProps.push(kept);
     // Resume walks up through each owner while the payload evaluates, before
     // any scope flush could link it, so every level below another links its owner.
     if (i) {
-      props.push(
-        toObjectProperty(
-          ownerAccessor,
-          t.callExpression(scope, [getScopeIdIdentifier(section.parent!)]),
-        ),
+      const link = toObjectProperty(
+        ownerAccessor,
+        t.callExpression(scope, [getScopeIdIdentifier(section.parent!)]),
       );
+      props.push(link);
+      kept.push(link);
     }
     levels.push(t.objectExpression(props));
     section = section.parent!;
   }
-  // Where the flush fills a closure the content reads wherever a consumer
-  // withholds it, a patch render's registration carries no levels.
-  const patchFilled =
-    isPatch() &&
-    closures.some((closure) => fillsWithheldContent(closure, bodySection));
-  return { scope, levels: levels.reverse(), patchFilled };
+  let patchLevels: t.Expression[] | undefined;
+  if (filled) {
+    patchLevels = [];
+    for (let depth = patchDepth; depth--;) {
+      patchLevels.push(t.objectExpression(patchProps[depth]));
+    }
+  }
+  return { scope, levels: levels.reverse(), patchLevels };
+}
+
+// A server value a flush may send anew; the client holds state's.
+function flushMayChange(closure: Binding) {
+  return !closure.sources?.state && hasParamOrGlobalSource(closure.sources);
 }
 
 function mayBeUnwritten(closure: Binding) {

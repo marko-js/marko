@@ -52,6 +52,7 @@ import {
   ensureCallerParamGroups,
   forEachParamGroup,
   forEachSection,
+  getClosuresFromAbove,
   getRendererReason,
   isKnownChild,
   isCallerParamAt,
@@ -150,44 +151,18 @@ function derivesLocals(section: Section) {
 // (`_content_withheld`), so the content's registration need not carry it.
 export function fillsWithheldContent(closure: Binding, content: Section) {
   const { fill } = getPatchFill(closure);
-  return fill === true || (!!fill && sectionUtil.has(fill.contents, content));
+  return (
+    fill === true ||
+    (!!fill &&
+      (sectionUtil.has(fill.contents, content) ||
+        sectionUtil.has(fill.awaitedContents, content)))
+  );
 }
 
-// What the reads rendering a value as content (a dynamic tag's name expression
-// or attributes, a `content` attribute) need of its fill, as fill reads do.
-export const [getContentRenderKind] = createAnalysisMemo(
-  computeContentRenderKind,
-  undefined,
-);
-
-function computeContentRenderKind(binding: Binding) {
-  let kind: true | FillConditions | undefined;
-  const seen = new Set<Binding>();
-  // Each read rendering it, here or in what derives from it, sits where it is
-  // read from the binding's own section.
-  const visit = (target: Binding) => {
-    if (seen.has(target)) return;
-    seen.add(target);
-    for (const read of target.reads.keys()) {
-      if (read.rendersContent || read.nameOnly) {
-        const refs = getReferencedBindings(read);
-        kind = mergeKinds(
-          kind,
-          getReadKind(
-            binding,
-            read,
-            readsValuesOnResume(read),
-            Array.isArray(refs) && isPatchWrittenJoin(refs),
-          ),
-        );
-      }
-      forEach(read.derives, visit);
-    }
-    for (const alias of target.propertyAliases.values()) visit(alias);
-    for (const alias of target.aliases) visit(alias);
-  };
-  visit(binding);
-  return kind;
+// Every content around the reads a consumer may withhold, gated at the
+// binding's section end or at an `<await>` body's.
+export function hasContents(conditions: FillConditions | undefined) {
+  return !!(conditions?.contents || conditions?.awaitedContents);
 }
 
 // A potential fill: a server-sourced value whose reads intersect client
@@ -200,6 +175,7 @@ function isPatchFillBinding(binding: Binding) {
 // need, how a patch fills them, and what deriving it needs of its inputs.
 export interface PatchFill {
   kind?: true | FillConditions;
+  contentKind?: true | FillConditions;
   fill?: true | FillConditions;
   fillsReads?: boolean;
   fillsWithoutStructure?: boolean;
@@ -272,7 +248,7 @@ function computePatchFill(binding: Binding): PatchFill {
   // Every client read stays current, through its declaration and closures;
   // a fill only client-sourced join members call for reaches its joins alone.
   const fillsReads =
-    fill === true || !!(conditions?.structure || conditions?.contents);
+    fill === true || !!conditions?.structure || hasContents(conditions);
   // Only the patch's key reaches the declaration: a `<let>` nothing assigns
   // (its seed), or a value the server renders whose reads its signal alone reaches.
   const ownRegistration =
@@ -288,6 +264,8 @@ function computePatchFill(binding: Binding): PatchFill {
       joined = mergeConditions(joined, {
         structure: sourcesUtil.union(conditions.structure, conditions.joins),
         contents: conditions.contents,
+        awaitedContents: conditions.awaitedContents,
+        awaits: conditions.awaits,
       });
     }
     if (joined && fillsPast(fill!, joined)) {
@@ -298,8 +276,8 @@ function computePatchFill(binding: Binding): PatchFill {
   // A client join and withheld content both call for it: it refreshes the
   // content under a key of its own, which a patch writing the join sends.
   const splitsContent =
-    !!conditions?.contents &&
-    !!(conditions.joins || conditions.structure || conditions.fills);
+    hasContents(conditions) &&
+    !!(conditions!.joins || conditions!.structure || conditions!.fills);
   // The unpatched key ships wherever the fill's own guard holds, which leaves
   // the fill key only content that refreshes under a key of its own.
   const unpatchedOnly =
@@ -308,7 +286,7 @@ function computePatchFill(binding: Binding): PatchFill {
     (unpatchedStructure === true ||
       (!!conditions &&
         !conditions.fills &&
-        (!conditions.contents || splitsContent) &&
+        (!hasContents(conditions) || splitsContent) &&
         sourcesUtil.isSuperset(
           unpatchedStructure.structure,
           sourcesUtil.union(
@@ -318,12 +296,13 @@ function computePatchFill(binding: Binding): PatchFill {
         )));
   return {
     kind,
+    contentKind: read.contentKind,
     fill,
     fillsReads,
     // No caller-owned structure re-renders its reads: always, or for
     // withheld content alone.
     fillsWithoutStructure:
-      fill === true || (!!conditions?.contents && !conditions.structure),
+      fill === true || (hasContents(conditions) && !conditions!.structure),
     splitsContent,
     derivedNeeds,
     effectRead,
@@ -441,9 +420,10 @@ export interface FillConditions {
   joins?: SortedOpt<Sources>;
   // A nested member's fill re-runs the join: it fills under that member's group.
   fills?: SortedOpt<Sources>;
+  // The contents around a read that its section's end sees, and those under
+  // an `<await>` body below it, which exist only at the end of a body in
+  // `awaits` (a `<define>` called under one and outside may be both).
   contents?: SortedOpt<Section>;
-  // The contents under an `<await>` body below the binding's section, which
-  // exist only at the end of a body in `awaits`.
   awaitedContents?: SortedOpt<Section>;
   awaits?: SortedOpt<Section>;
   // A join the patch writes reads it: its other members, where the client runs it.
@@ -456,6 +436,7 @@ const [getFillReadKind, resetFillReadKinds] = createAnalysisMemo(
   computeFillReadKind,
   {
     kind: undefined,
+    contentKind: undefined,
     unpatchedJoins: undefined,
     unpatchedStructure: undefined,
     writtenJoins: undefined,
@@ -465,15 +446,23 @@ const [getFillReadKind, resetFillReadKinds] = createAnalysisMemo(
 
 function computeFillReadKind(binding: Binding) {
   let kind: true | FillConditions | undefined;
+  // What its reads rendering it as content need (a dynamic tag's name or
+  // attributes, a `content` attribute), here, through its aliases or where
+  // what derives from it renders it: `{}` where they need nothing.
+  let contentKind: true | FillConditions | undefined;
   let unpatchedJoins: Intersection[] | undefined;
   let unpatchedStructure: true | FillConditions | undefined;
   // Each written join its value is shipped for, by the section reading it.
   let writtenJoins: Map<Intersection, Section> | undefined;
   const clientJoins: [Intersection, FillConditions][] = [];
+  for (const alias of binding.propertyAliases.values()) {
+    contentKind = mergeKinds(contentKind, getFillReadKind(alias).contentKind);
+  }
   for (const alias of binding.aliases) {
+    const aliasFill = getFillReadKind(alias);
+    contentKind = mergeKinds(contentKind, aliasFill.contentKind);
     // A property alias or rest fills on its own; a direct alias reads this.
     if (isDirectAlias(alias)) {
-      const aliasFill = getFillReadKind(alias);
       kind = mergeKinds(kind, aliasFill.kind);
       for (const [join, section] of aliasFill.writtenJoins || []) {
         (writtenJoins ||= new Map()).set(join, section);
@@ -514,6 +503,22 @@ function computeFillReadKind(binding: Binding) {
     }
     const readKind = getReadKind(binding, read, effect, written);
     kind = mergeKinds(kind, readKind);
+    // What derives from it in its template renders it by its own kind, from
+    // where this read sits. Passed to another template, this read is what
+    // renders it: the callee reports its own state where its param fills.
+    let rendersContent = isContentRender(read);
+    forEach(read.derives, (derived) => {
+      if (derived.section.program === binding.section.program) {
+        const derivedKind = getFillReadKind(derived).contentKind;
+        if (derivedKind) {
+          contentKind = mergeKinds(contentKind, derivedKind);
+          rendersContent = true;
+        }
+      } else if (someContentRead(derived, undefined, isContentRender)) {
+        rendersContent = true;
+      }
+    });
+    if (rendersContent) contentKind = mergeKinds(contentKind, readKind || {});
     if (written && readKind !== true && readKind?.writes) {
       (writtenJoins ||= new Map()).set(refs, read.section);
     }
@@ -529,11 +534,75 @@ function computeFillReadKind(binding: Binding) {
   }
   return {
     kind,
+    contentKind,
     unpatchedJoins,
     unpatchedStructure,
     writtenJoins,
     clientJoins,
   };
+}
+
+function isContentRender(read: ReferencedExtra) {
+  return !!(read.rendersContent || read.nameOnly);
+}
+
+// A dynamic tag's body or attribute tag a consumer may withhold.
+function isWithholdableContent(section: Section) {
+  return (
+    !section.branch &&
+    !!(section.derives || section.branchExpr) &&
+    consumerMayWithhold(section)
+  );
+}
+
+// An `<await>` body (or a `<define>` it calls) rendering a value from outside
+// it as content inside content a consumer may withhold, or passing it to a
+// template that renders it, may keep content made before it for the client
+// after the gates around it ran: while it is pending, those count content kept
+// (`_content_withheld`).
+export const [awaitMayWithhold] = createAnalysisMemo((body: Section) => {
+  let closures = getClosuresFromAbove(body, body);
+  forEachSection((section) => {
+    if (section.callSections && rendersUnder(section, body)) {
+      closures = bindingUtil.union(
+        closures,
+        getClosuresFromAbove(section, section),
+      );
+    }
+  });
+  return someContentRead(closures, undefined, (read) =>
+    isContentRender(read)
+      ? rendersUnder(read.section, body, true)
+      : some(
+          read.derives,
+          (derived) =>
+            derived.section.program !== read.section.program &&
+            someContentRead(derived, undefined, isContentRender),
+        ) && rendersUnder(read.section, body),
+  );
+}, false);
+
+// Whether a section renders inside `top`, there or through a `<define>` call,
+// and where `inContent`, inside content a consumer may withhold below it.
+function rendersUnder(
+  section: Section,
+  top: Section,
+  inContent?: boolean,
+  seen = new Set<Section>(),
+): boolean {
+  let needsContent = inContent;
+  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
+    if (cur === top) return !needsContent;
+    if (needsContent && isWithholdableContent(cur)) needsContent = false;
+    if (cur.callSections) {
+      if (seen.has(cur)) return false;
+      seen.add(cur);
+      return some(cur.callSections, (call) =>
+        rendersUnder(call, top, needsContent, seen),
+      );
+    }
+  }
+  return false;
 }
 
 // What one read needs of the binding's fill: `true` for every patch.
@@ -606,17 +675,17 @@ function getReadStructure(
   const knownChild = isKnownChild(binding.section);
   let found: FillConditions | undefined;
   // A `<define>` body reads as if at each tag rendering its var: a worklist
-  // visits each call section once, so a recursive define reaches its own once.
+  // visits each call section once, so a recursive define reaches its own once,
+  // with the contents around the read no `<await>` body holds yet.
   const readSections = new Set([read.section]);
-  for (const readAt of readSections) {
+  const pending: [Section, SortedOpt<Section>][] = [[read.section, undefined]];
+  for (const [readAt, carried] of pending) {
     // No patch write reaches a skipped region: reads inside stateful
     // structure, or boundary content the client renders, promote to owner fills.
     let readSection: Section | undefined = readAt;
-    let contents: SortedOpt<Section>;
     let awaitedContents: SortedOpt<Section>;
     let awaits: SortedOpt<Section>;
-    // Those collected since the last `<await>` body crossed.
-    let unawaited: SortedOpt<Section>;
+    let unawaited = carried;
     while (readSection && readSection !== binding.section) {
       if (isStatefulBranch(readSection)) return true;
       if (readSection.boundaryContent) return true;
@@ -627,26 +696,27 @@ function getReadStructure(
       }
       // Each content around the read that a consumer may withhold: any of them
       // left to client code renders what is inside.
-      if (
-        !readSection.branch &&
-        (readSection.derives || readSection.branchExpr) &&
-        consumerMayWithhold(readSection)
-      ) {
-        contents = sectionUtil.add(contents, readSection);
+      if (isWithholdableContent(readSection)) {
         unawaited = sectionUtil.add(unawaited, readSection);
       }
       if (readSection.callSections) {
         forEach(readSection.callSections, (callSection) => {
-          readSections.add(callSection);
+          if (!readSections.has(callSection)) {
+            readSections.add(callSection);
+            pending.push([callSection, unawaited]);
+          }
         });
+        unawaited = undefined;
         break;
       }
       readSection = readSection.parent;
     }
+    // What no `<await>` body holds its section's end sees.
+    const contents = unawaited;
     if (effect) continue;
     // An `<await>` value re-fires no promise client-side: the boundary's
     // own flushes carry its settlement.
-    if (contents && !isBoundaryValueRead(read)) {
+    if ((contents || awaitedContents) && !isBoundaryValueRead(read)) {
       found = mergeConditions(found, { contents, awaitedContents, awaits });
     }
     if (!knownChild) continue;
@@ -725,7 +795,8 @@ function fillsPast(fill: true | FillConditions, structure: FillConditions) {
   return (
     fill === true ||
     !sourcesUtil.isSuperset(structure.structure, fill.structure) ||
-    !sectionUtil.isSuperset(structure.contents, fill.contents)
+    !sectionUtil.isSuperset(structure.contents, fill.contents) ||
+    !sectionUtil.isSuperset(structure.awaitedContents, fill.awaitedContents)
   );
 }
 
@@ -1332,7 +1403,7 @@ export const [initsWrittenJoin, resetJoinInits] = createAnalysisMemo(
 function getJoinWrites(kind: true | FillConditions | undefined) {
   return kind !== true &&
     kind?.writes &&
-    !(kind.structure || kind.joins || kind.fills || kind.contents)
+    !(kind.structure || kind.joins || kind.fills || hasContents(kind))
     ? kind.writes
     : undefined;
 }
@@ -1616,7 +1687,10 @@ function findUnfilledStructure(
         if (fill) {
           // A partner's fill re-runs the join client side, unless the flush
           // fills the join's hole itself.
-          if (!filledHole && (fill === true || fill.contents || fill.fills)) {
+          if (
+            !filledHole &&
+            (fill === true || hasContents(fill) || fill.fills)
+          ) {
             return false;
           }
           if (fill !== true) {
