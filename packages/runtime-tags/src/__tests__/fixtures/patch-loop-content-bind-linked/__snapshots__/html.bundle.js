@@ -2,7 +2,7 @@
 const $template = "<button>toggle</button><button>pick</button><!><!>";
 const $walks = " b b%c";
 _shells({
-	b: "b !b2 b3; b b%;<button>toggle</button><button>pick</button><!><!>",
+	b: "b !b3; b b%;<button>toggle</button><button>pick</button><!><!>",
 	b0: "b0 b6;b%;<!><!><!>"
 });
 var list_default = _template("b", (input) => {
@@ -26,9 +26,9 @@ var list_default = _template("b", (input) => {
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "b0", $scope0_reason, 1);
-	_script($scope0_id, "b2", 1, _client_guard($scope0_reason, 0));
+	_script($scope0_id, "b2", 1, 1);
 	_script($scope0_id, "b3");
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "eb2", "f");
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "hb2" : "eb2", "f");
 	_patch_value($scope0_id, "vb4", open, 1);
 	$scope0_page ? _scope($scope0_id, {
 		f: input.onPick,

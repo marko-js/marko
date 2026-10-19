@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_patch_text($scope2_id, "a", err.message)}</b>`);
 		_scope($scope2_id, {});
-	}, void 0, "a2", "a0", 1, "");
+	}, void 0, "a2", "a0", 1, 2);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { e: $wi__input_boom && _unfilled_if($scope0_reason, 0) && $input_boom__closures });
 }, 1);

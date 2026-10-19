@@ -11,7 +11,7 @@ function takeRenders() {
 	contentRenders = 0;
 	return renders;
 }
-_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0_status#12 __tests__/template.marko_0; b b b ;<button>toggle</button><section></section><section></section><section id=partial></section>" });
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b b b ;<button>toggle</button><section></section><section></section><section id=partial></section>" });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 0), $wi__input_b = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -49,10 +49,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, { id: 1 }, "#section/3", $scope0_id, "section");
 	const status = `${input.b}: ${takeRenders()} content renders`;
 	_html(`</section>${_el_resume($scope0_id, "#section/3")}`);
-	_script($scope0_id, "__tests__/template.marko_0_status#12", 1, _client_guard($scope0_reason, 0));
+	_script($scope0_id, "__tests__/template.marko_0_status#12", 1, 1);
 	_script($scope0_id, "__tests__/template.marko_0_input_b#6_mode#7_one#8_two#9", 1, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_status#12", "status");
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_status#12", "status");
 	_patch_write($scope0_id, "PatchWrite:one", one, 1);
 	_patch_write($scope0_id, "PatchWrite:two", two, 1);
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", mode, 1);

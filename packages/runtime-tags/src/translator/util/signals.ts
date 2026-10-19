@@ -58,6 +58,7 @@ import {
   isResumedRead,
   closureCarriesFill,
   rerunsEffectOnPatch,
+  hasTagCallerParamAt,
 } from "./patch/refresh";
 import {
   patchWrites,
@@ -68,7 +69,6 @@ import {
   getClosureScopesIfWritten,
   getPatchWriteOwnership,
   getUnfilledValueIfWritten,
-  orCallerGroupGuards,
   writePatchResumeStatements,
 } from "./patch/writers";
 import { getReadReplacement } from "./read-replacement";
@@ -798,21 +798,25 @@ function isPureMemberForwarder(binding: Binding): boolean {
   return hasNonConstantPropertyAlias(binding);
 }
 
-// `1` where a created scope's renders queue the effect, else whether a client group feeds a
-// value a patch writes for it (`0` if none does), or undefined where it reads none.
-function getEffectClientGuard(section: Section, refs: ReferencedBindings) {
-  if (isQueuedOnCreate(section, refs)) return t.numericLiteral(1);
-  const read = filter(refs, rerunsEffectOnPatch);
-  if (read) {
-    return (
-      orCallerGroupGuards(
-        section,
-        undefined,
-        "_client_guard",
-        reduce(read, pushCanonicalSources),
-      ) || t.numericLiteral(0)
-    );
-  }
+// An effect a created scope's shell leaves out: one its render queues, or one
+// reading a value a patch writes, which its entry mounts.
+export function isEffectOutsideShell(
+  section: Section,
+  refs: ReferencedBindings,
+) {
+  return isQueuedOnCreate(section, refs) || some(refs, rerunsEffectOnPatch);
+}
+
+// The sources an effect re-runs on where one is a param a calling tag passes.
+export function getEffectCallerSources(
+  section: Section,
+  refs: ReferencedBindings,
+) {
+  const sources = reduce(
+    filter(refs, rerunsEffectOnPatch),
+    pushCanonicalSources,
+  );
+  if (some(sources, (s) => hasTagCallerParamAt(s, section))) return sources;
 }
 
 function pushCanonicalSources(list: Opt<Sources>, binding: Binding) {
@@ -2075,9 +2079,9 @@ export function writeHTMLResumeStatements(
   // signal order, CSR runs the signal graph forward — the two paths differ.
   for (let i = allSignals.length; i--;) {
     if (allSignals[i].hasHTMLEffect) {
-      const clientGuard =
+      const outsideShell =
         isPatch() &&
-        getEffectClientGuard(section, allSignals[i].referencedBindings);
+        isEffectOutsideShell(section, allSignals[i].referencedBindings);
       body.push(
         t.expressionStatement(
           callRuntime(
@@ -2085,8 +2089,8 @@ export function writeHTMLResumeStatements(
             scopeIdIdentifier,
             t.stringLiteral(getSignalRegisterId(allSignals[i])),
             // `_script` reads only a `0` guard, so `1` stands in for none.
-            clientGuard ? markerGuard || t.numericLiteral(1) : markerGuard,
-            clientGuard,
+            outsideShell ? markerGuard || t.numericLiteral(1) : markerGuard,
+            outsideShell && t.numericLiteral(1),
           ),
         ),
       );

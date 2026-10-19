@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<s>${_patch_text($scope4_id, "#text/0", err.message)}</s>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "5:8");
-		}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content", 1, "");
+		}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content", 1, 2);
 		_await($scope1_id, "#text/1", input.b, (b) => {
 			const $scope6_id = _scope_id();
 			_html(`<em>${_patch_text($scope6_id, "#text/0", b, void 0, $scope0_reason, 2)}</em>`);

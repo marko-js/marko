@@ -7,7 +7,7 @@ var child_default = _template("b", (input) => {
 	_html(`<p>${_patch_text($scope0_id, "a", input.x, void 0, $scope0_reason, 0)}</p><button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b0");
 	_script($scope0_id, "b1", 1, 1);
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "eb1", "e");
+	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "hb1", "e");
 	_patch_init($scope0_id, "b2", 1);
 	_patch_value($scope0_id, "vb3", n, 1);
 	$scope0_page ? _scope($scope0_id, {

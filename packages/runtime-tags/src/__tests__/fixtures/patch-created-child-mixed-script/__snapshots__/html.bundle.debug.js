@@ -9,7 +9,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</p><button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/child/index.marko_0");
 	_script($scope0_id, "__tests__/tags/child/index.marko_0_input_x#4_n#5", 1, 1);
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/child/index.marko_0_input_x#4_n#5", "input_x");
+	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchQueuedEffect:__tests__/tags/child/index.marko_0_input_x#4_n#5", "input_x");
 	_patch_init($scope0_id, "__tests__/tags/child/index.marko_0_input_x#4_n#5/init", 1);
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/child/index.marko_fill0", n, 1);
 	$scope0_page ? _scope($scope0_id, {

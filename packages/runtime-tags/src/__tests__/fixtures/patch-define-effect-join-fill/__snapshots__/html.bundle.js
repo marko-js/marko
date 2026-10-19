@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
 		_html(`<p>${_patch_text($scope1_id, "a", a + b, void 0, $scope1_reason, 0)}</p><div></div>${_el_resume($scope1_id, "b")}`);
 		_script($scope1_id, "a1", 1, 1);
-		_server_guard($scope1_reason, 1) && _patch_effect($scope1_id, "ea1", "e");
+		_server_guard($scope1_reason, 1) && _patch_effect($scope1_id, "ha1", "e");
 		_patch_write($scope1_id, "wf", b, 1);
 		$scope1_page ? _scope($scope1_id, {
 			e: a,

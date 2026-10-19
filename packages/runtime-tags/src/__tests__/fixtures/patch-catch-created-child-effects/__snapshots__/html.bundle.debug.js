@@ -1,18 +1,18 @@
 // tags/child.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-_shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !__tests__/tags/child.marko_0_input_count#5 __tests__/tags/child.marko_0_input_label#4 __tests__/tags/child.marko_0_input_message#3 __tests__/tags/child.marko_0;D ;<span> </span>" });
+_shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !__tests__/tags/child.marko_0;D ;<span> </span>" });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html(`<span>${_patch_text($scope0_id, "#text/0", input.message, void 0, $scope0_reason, 0)}</span>`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_count#5", 1, _client_guard($scope0_reason, 2));
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_label#4", 1, _client_guard($scope0_reason, 1));
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_message#3", 1, _client_guard($scope0_reason, 0));
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_count#5", 1, 1);
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_label#4", 1, 1);
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_message#3", 1, 1);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/child.marko_0_input_message#3", "input_message");
-	_server_guard($scope0_reason, 1) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/child.marko_0_input_label#4", "input_label");
-	_server_guard($scope0_reason, 2) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/child.marko_0_input_count#5", "input_count");
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/tags/child.marko_0_input_message#3" : "PatchEffect:__tests__/tags/child.marko_0_input_message#3", "input_message");
+	_filled_guard($scope0_reason, 1) && _patch_effect($scope0_id, _client_guard($scope0_reason, 1) ? "PatchQueuedEffect:__tests__/tags/child.marko_0_input_label#4" : "PatchEffect:__tests__/tags/child.marko_0_input_label#4", "input_label");
+	_filled_guard($scope0_reason, 2) && _patch_effect($scope0_id, _client_guard($scope0_reason, 2) ? "PatchQueuedEffect:__tests__/tags/child.marko_0_input_count#5" : "PatchEffect:__tests__/tags/child.marko_0_input_count#5", "input_count");
 	$scope0_page ? _scope($scope0_id, {
 		input_message: input.message,
 		input_label: input.label,
@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "8:4"), "__tests__/template.marko_1_input_msg#0:5/subscribe"), "__tests__/template.marko_1_count#0:7/subscribe");
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, "");
+	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 2);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_write($scope0_id, "PatchWrite:input_fail", input.fail, 1);
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill1", count, 1);

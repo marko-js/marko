@@ -1,14 +1,14 @@
 // probe.marko
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
-_shells({ "__tests__/probe.marko": "__tests__/probe.marko !__tests__/probe.marko_0_input_promise#3;D ;<div> </div>" });
+_shells({ "__tests__/probe.marko": "__tests__/probe.marko !;D ;<div> </div>" });
 var probe_default = _template("__tests__/probe.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let settled = false;
 	_html(`<div>${_text_resume($scope0_id, "#text/0", settled ? "settled" : "pending")}</div>`);
-	_script($scope0_id, "__tests__/probe.marko_0_input_promise#3", 1, _client_guard($scope0_reason, 0));
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/probe.marko_0_input_promise#3", "input_promise");
+	_script($scope0_id, "__tests__/probe.marko_0_input_promise#3", 1, 1);
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/probe.marko_0_input_promise#3" : "PatchEffect:__tests__/probe.marko_0_input_promise#3", "input_promise");
 	_patch_value($scope0_id, "PatchValue:__tests__/probe.marko_fill0", settled, 1);
 	$scope0_page ? _scope($scope0_id, { input_promise: input.promise }, "__tests__/probe.marko", 0, { input_promise: ["input.promise"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_promise", input.promise, !_server_guard($scope0_reason, 0));
 });

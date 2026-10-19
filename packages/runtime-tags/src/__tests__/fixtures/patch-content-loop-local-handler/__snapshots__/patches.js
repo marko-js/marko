@@ -1,5 +1,5 @@
 // PATCH
-[`a0 !a1 a2; D l ;<button> </button><span></span>`, `b0;b%;<!><!><!>`, {
+[`a0 !a2; D l ;<button> </button><span></span>`, `b0;b%;<!><!><!>`, {
   ca: {
     la: [{
       fa: "^^^a0",

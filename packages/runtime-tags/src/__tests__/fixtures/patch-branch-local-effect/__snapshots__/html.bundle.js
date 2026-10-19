@@ -2,7 +2,7 @@
 _shells({
 	a: "a !; ;<main></main>",
 	a0: "a0;D l%;<p> </p><!><!>",
-	a1: "a1 !a2,<span>inner</span>"
+	a1: "a1,<span>inner</span>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $scope0_page = _page_render();
@@ -18,8 +18,8 @@ var template_default = _template("a", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html("<span>inner</span>");
-					_script($scope2_id, "a2", 0, _client_guard($scope0_reason, 2));
-					_server_guard($scope0_reason, 2) && _patch_effect($scope2_id, "ea2", "1 c");
+					_script($scope2_id, "a2", 0, 1);
+					_filled_guard($scope0_reason, 2) && _patch_effect($scope2_id, "ea2", "1 c");
 					_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 					return 0;
 				}

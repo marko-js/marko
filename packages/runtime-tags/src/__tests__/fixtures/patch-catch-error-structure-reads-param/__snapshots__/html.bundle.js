@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__err_status, void 0, void 0, void 0, ["a1", "a2"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, void 0, "a6", "a0", 1, "");
+	}, void 0, "a6", "a0", 1, 2);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.label,
 		f: $wi__input_label && $input_label__closures,

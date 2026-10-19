@@ -1,14 +1,14 @@
 // tags/probe.marko
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
-_shells({ "__tests__/tags/probe.marko": "__tests__/tags/probe.marko !__tests__/tags/probe.marko_0_input_label#3;D ;<p> </p>" });
+_shells({ "__tests__/tags/probe.marko": "__tests__/tags/probe.marko !;D ;<p> </p>" });
 var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let seen = "";
 	_html(`<p>${_text_resume($scope0_id, "#text/0", seen)}</p>`);
-	_script($scope0_id, "__tests__/tags/probe.marko_0_input_label#3", 1, _client_guard($scope0_reason, 0));
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/probe.marko_0_input_label#3", "input_label");
+	_script($scope0_id, "__tests__/tags/probe.marko_0_input_label#3", 1, 1);
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/tags/probe.marko_0_input_label#3" : "PatchEffect:__tests__/tags/probe.marko_0_input_label#3", "input_label");
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/probe.marko_fill0", seen, 1);
 	$scope0_page ? _scope($scope0_id, { input_label: input.label }, "__tests__/tags/probe.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
 });

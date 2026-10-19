@@ -3,7 +3,7 @@
   "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-child-state-join/tags/child/index.marko",
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/0": "a2",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-child-state-join/tags/child/index.marko_0_input_x#4_n#5": "input_x",
+    "PatchQueuedEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-child-state-join/tags/child/index.marko_0_input_x#4_n#5": "input_x",
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-child-state-join/tags/child/index.marko_fill0": 0
     },
@@ -17,7 +17,7 @@
   "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-child-state-join/tags/child/index.marko",
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/0": "a3",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-child-state-join/tags/child/index.marko_0_input_x#4_n#5": "input_x",
+    "PatchQueuedEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-child-state-join/tags/child/index.marko_0_input_x#4_n#5": "input_x",
     "PatchSetup:": {
       "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-child-state-join/tags/child/index.marko_fill0": 0
     },

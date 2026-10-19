@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 			d: err?.message,
 			_: _scope_with_id($scope0_id)
 		}), _client_guard($scope0_reason, 0) && "a2"), _client_guard($scope0_reason, 1) && "a3"), "a4");
-	}, void 0, "a6", "a0", 1, "");
+	}, void 0, "a6", "a0", 1, 2);
 	_script($scope0_id, "a7");
 	_patch_value($scope0_id, "va10", count, 1);
 	$scope0_page ? _scope($scope0_id, {

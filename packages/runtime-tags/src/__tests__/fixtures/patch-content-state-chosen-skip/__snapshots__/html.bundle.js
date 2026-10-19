@@ -9,7 +9,7 @@ function takeRenders() {
 	contentRenders = 0;
 	return renders;
 }
-_shells({ a: "a !a4 a6; b b b ;<button>toggle</button><section></section><section></section><section id=partial></section>" });
+_shells({ a: "a !a6; b b b ;<button>toggle</button><section></section><section></section><section id=partial></section>" });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 0), $wi__input_b = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -47,10 +47,10 @@ var template_default = _template("a", (input) => {
 	}, { id: 1 }, "d", $scope0_id, "section");
 	const status = `${input.b}: ${takeRenders()} content renders`;
 	_html(`</section>${_el_resume($scope0_id, "d")}`);
-	_script($scope0_id, "a4", 1, _client_guard($scope0_reason, 0));
+	_script($scope0_id, "a4", 1, 1);
 	_script($scope0_id, "a5", 1, 1);
 	_script($scope0_id, "a6");
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "ea4", "m");
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, "ea4", "m");
 	_patch_write($scope0_id, "wi", one, 1);
 	_patch_write($scope0_id, "wj", two, 1);
 	_patch_value($scope0_id, "va8", mode, 1);

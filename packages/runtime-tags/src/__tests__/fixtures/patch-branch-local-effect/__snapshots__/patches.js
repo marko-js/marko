@@ -1,5 +1,5 @@
 // PATCH
-[`a1 !a2,<span>inner</span>`, `a0;D l%;<p> </p><!><!>`, {
+[`a1,<span>inner</span>`, `a0;D l%;<p> </p><!><!>`, {
   ba: [{
     wc: "b!",
     ta: "b!",

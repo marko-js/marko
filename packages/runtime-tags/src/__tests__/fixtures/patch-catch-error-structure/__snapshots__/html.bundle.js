@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 		}, 0, $scope2_id, "b", 1, void 0, void 0, void 0, void 0, "a3");
 		_script($scope2_id, "a4");
 		_scope($scope2_id, { f: _unfilled_if($scope2_reason, 0) && err?.message });
-	}, void 0, "a6", "a0", 1, "");
+	}, void 0, "a6", "a0", 1, 2);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a7");
 	_patch_value($scope0_id, "va8", count, 1);

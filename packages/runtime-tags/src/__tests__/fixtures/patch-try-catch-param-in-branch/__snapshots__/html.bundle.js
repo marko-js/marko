@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_patch_text($scope2_id, "a", err.message)} ${_text_resume($scope2_id, "b", input.title, 2)}</em>`);
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a4");
-			}, void 0, "a6", "a2", void 0, "");
+			}, void 0, "a6", "a2", void 0, 2);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

@@ -17,7 +17,7 @@ var list_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a0: "a0 !a1,<p>item</p>",
+	a0: "a0,<p>item</p>",
 	a: /*@__PURE__*/ (() => `a;${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "wa", label);
 			_html("<p>item</p>");
-			_script($scope1_id, "a1", 0, 0);
+			_script($scope1_id, "a1", 0, 1);
 			_patch_effect($scope1_id, "ea1", "a");
 			_scope($scope1_id, { a: label });
 		}, $scope0_id) });

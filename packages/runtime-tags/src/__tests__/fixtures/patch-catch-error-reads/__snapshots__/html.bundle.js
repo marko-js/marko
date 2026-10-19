@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b>`);
 		_scope($scope3_id, {});
-	}, void 0, "a5", "a3", 1, "");
+	}, void 0, "a5", "a3", 1, 2);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 		const $scope5_id = _scope_id();
 		_html(`<i>${_patch_text($scope5_id, "a", cause.code)}</i>`);
 		_scope($scope5_id, {});
-	}, void 0, "a7", "a1", 1, "");
+	}, void 0, "a7", "a1", 1, 2);
 	_html(`<button>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a8");
 	_patch_value($scope0_id, "va9", count, 1);

@@ -3,7 +3,7 @@
   "PatchChild:#childScope/1": {
     "PatchChild:#childScope/0": {
       "PatchBranch:#text/2": [{
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-script-closures/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9": "1 input_projection_skill input_baseXp input_playerId"
+        "PatchQueuedEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-script-closures/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9": "1 input_projection_skill input_baseXp input_playerId"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-script-closures/tags/level-watch.marko_1*shell"],
       "PatchWrite:input_projection_skill": "wood",
       "PatchWrite:input_baseXp": 2,

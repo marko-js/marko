@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b><button>log</button>${_el_resume($scope3_id, "b")}`);
 		_script($scope3_id, "a2");
 		_scope($scope3_id, { e: err?.message });
-	}, void 0, "a4", "a1", 1, "");
+	}, void 0, "a4", "a1", 1, 2);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
@@ -39,10 +39,10 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
 		_patch_write($scope4_id, "wd", err?.cause?.code);
-		_script($scope4_id, "a5", 0, 0);
+		_script($scope4_id, "a5", 0, 1);
 		_patch_effect($scope4_id, "ea5", "d");
 		_scope($scope4_id, { d: err?.cause?.code });
-	}, void 0, "a7", "a0", 1, "a5");
+	}, void 0, "a7", "a0", 1, 2);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { f: $wi__input_error && _unfilled_if($scope0_reason, 0) && $input_error__closures });
 }, 1);

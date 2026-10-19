@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		}, "a0"))}>${_el_resume($scope1_id, "b")}`);
 		_script($scope1_id, "a2");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3");
-	}, void 0, "a5", "a1", 1, "");
+	}, void 0, "a5", "a1", 1, 2);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.label,
 		f: _write_if($scope0_reason, 0) && $input_label__closures,

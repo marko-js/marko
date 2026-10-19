@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			const $scope5_id = _scope_id();
 			_html(`<s>${_patch_text($scope5_id, "a", e.message)}</s>`);
 			_scope($scope5_id, {});
-		}, void 0, "a5", "a2", 1, "");
+		}, void 0, "a5", "a2", 1, 2);
 		if ($scope0_page) _if(() => {}, $scope1_id, "b");
 		_html("</div>");
 		_subscribe($pending__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a7");

@@ -11,7 +11,7 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 	const $return = mode;
 	_script($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7", 1, 1);
 	_script($scope0_id, "__tests__/tags/counter-box/index.marko_0");
-	(_server_guard($scope0_reason, 0) || _server_guard($scope0_reason, 1)) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7", "input_onA input_onB");
+	(_server_guard($scope0_reason, 0) || _server_guard($scope0_reason, 1)) && _patch_effect($scope0_id, "PatchQueuedEffect:__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7", "input_onA input_onB");
 	_patch_init($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7/init", 1);
 	const $valueChange = (mode === "a" ? input.onA : input.onB) || void 0;
 	_patch_value($scope0_id, "PatchValue:__tests__/tags/counter-box/index.marko_fill0", mode, 1);

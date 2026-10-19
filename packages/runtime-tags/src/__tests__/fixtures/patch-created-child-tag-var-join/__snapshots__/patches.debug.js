@@ -3,9 +3,9 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/1": {
       "PatchChild:#childScope/0": {
+        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_0_input_value#2": "input_value",
         "PatchSetup:": {
           0: "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/route-pg.marko_0_files#3/var",
-          "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_0_input_value#2",
           "PatchBind:#TagVariableChange": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_0/valueChange",
           "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_fill0": _.a = [],
           "PatchWrite:input_value": [{

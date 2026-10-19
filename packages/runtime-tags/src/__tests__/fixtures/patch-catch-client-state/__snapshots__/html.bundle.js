@@ -33,7 +33,7 @@ var panel_default = _template("b", (input) => {
 			h: n,
 			_: _scope_with_id($scope0_id)
 		}), _client_guard($scope0_reason, 0) && "b4");
-	}, void 0, "b7", "b0", 1, "");
+	}, void 0, "b7", "b0", 1, 2);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.label,
 		f: $wi__input_label && $input_label__closures,

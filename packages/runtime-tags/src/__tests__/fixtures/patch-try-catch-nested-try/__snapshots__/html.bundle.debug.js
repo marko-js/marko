@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<span>${_patch_text($scope3_id, "#text/0", err.message)}</span>`);
 		_scope($scope3_id, {}, "__tests__/template.marko", "11:6");
-	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, "");
+	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 2);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {
 		"ClosureScopes:input_promise/5": $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures,

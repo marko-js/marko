@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<s>${_patch_text($scope4_id, "a", err.message)}</s>`);
 			_scope($scope4_id, {});
-		}, void 0, "a7", "a3", 1, "");
+		}, void 0, "a7", "a3", 1, 2);
 		_await($scope1_id, "b", input.b, (b) => {
 			const $scope6_id = _scope_id();
 			_html(`<em>${_patch_text($scope6_id, "a", b, void 0, $scope0_reason, 2)}</em>`);

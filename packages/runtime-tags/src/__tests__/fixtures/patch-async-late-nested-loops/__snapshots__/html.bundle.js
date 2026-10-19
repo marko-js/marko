@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`<b>${_patch_text($scope5_id, "a", err.message)}</b>`);
 				_scope($scope5_id, {});
-			}, void 0, "a6", "a2", void 0, "");
+			}, void 0, "a6", "a2", void 0, 2);
 			$wi__input_groups && _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				g: _unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures

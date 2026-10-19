@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a: "a !; ;<main></main>",
-	a0: "a0 !a1,<p>shown</p>"
+	a0: "a0,<p>shown</p>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -13,8 +13,8 @@ var template_default = _template("a", (input) => {
 			const label = input.title + "!";
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "wa", label, !_server_guard($scope0_reason, 1));
 			_html("<p>shown</p>");
-			_script($scope1_id, "a1", 0, _client_guard($scope0_reason, 1));
-			_server_guard($scope0_reason, 1) && _patch_effect($scope1_id, "ea1", "a");
+			_script($scope1_id, "a1", 0, 1);
+			_filled_guard($scope0_reason, 1) && _patch_effect($scope1_id, "ea1", "a");
 			_scope($scope1_id, {
 				a: label,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)

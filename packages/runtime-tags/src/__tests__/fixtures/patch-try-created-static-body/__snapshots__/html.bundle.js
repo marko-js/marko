@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b>`);
 				_scope($scope3_id, {});
-			}, void 0, "a2", "a0", void 0, "");
+			}, void 0, "a2", "a0", void 0, 2);
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}

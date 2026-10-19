@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<b>${_patch_text($scope1_id, "a", err.message)} ${_text_resume($scope1_id, "b", input.message, 2)}</b>`);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_message__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
-	}, void 0, "a4", "a0", 1, "");
+	}, void 0, "a4", "a0", 1, 2);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a5");
 	_patch_value($scope0_id, "va7", count, 1);

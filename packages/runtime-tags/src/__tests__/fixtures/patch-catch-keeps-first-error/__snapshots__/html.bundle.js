@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		}), "a1"), "a2");
-	}, void 0, "a5", "a0", 1, "");
+	}, void 0, "a5", "a0", 1, 2);
 	_script($scope0_id, "a6");
 	_patch_write($scope0_id, "wg", input.fail, 1);
 	_patch_write($scope0_id, "wh", input.msg, 1);

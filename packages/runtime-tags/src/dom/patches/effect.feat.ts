@@ -19,6 +19,7 @@ installFillChange((scope, valueAccessor) => {
 declare module "./apply" {
   interface PatchValues {
     [PatchKey.Effect]: string;
+    [PatchKey.QueuedEffect]: string;
   }
 }
 
@@ -29,8 +30,22 @@ export function installSignalReset(reset: typeof signalReset) {
 }
 
 // Keyed by effect id: its reads (a number sets later reads' owner depth),
-// then `!` and its `$signal` ids; a read this flush changed re-runs it once.
+// then `!` and its `$signal` ids; a scope this flush created mounts it with
+// its setup's effects, a live one re-runs it once a read this flush changed.
 patchers[PatchKey.Effect] = (scope, key, entry) => {
+  if (scope[AccessorProp.Gen] === runId) {
+    (scope[AccessorProp.SetupEffects] ||= []).push(
+      getRegisteredWithScope(
+        MARKO_DEBUG ? key.slice(key.indexOf(":") + 1) : key.slice(1),
+      ),
+      scope,
+    );
+  } else {
+    patchers[PatchKey.QueuedEffect]!(scope, key, entry);
+  }
+};
+// An effect a created scope's own render queues only re-runs.
+patchers[PatchKey.QueuedEffect] = (scope, key, entry) => {
   if (scope[AccessorProp.Gen] === runId) return;
   const epoch = runId;
   const [reads, aborts] = entry.split("!");

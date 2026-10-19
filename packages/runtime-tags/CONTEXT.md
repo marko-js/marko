@@ -230,7 +230,7 @@ renderer's setup; a live scope the patch writes into is _paired_. Content the
 page registers creates from that renderer's markup with the shell's ids and
 no params, or from the renderer alone where it has no setup or params. A
 `@catch` creates from its registered renderer, whose setup runs: the patch
-stands in for its error, mounting by id the effects that read it. The same
+stands in for its error, whose effects mount from their entries. The same
 word as a client render's `createBranch`; the patch is just who creates.
 _Avoid_: construct, rebuild
 
@@ -298,7 +298,8 @@ entries, from the page root's.
 _Avoid_: partial
 
 **Shell**:
-A body a patch may create, as its id with setup ids, walks and markup
+A body a patch may create, as its id with setup ids (setup reading nothing a
+patch writes), walks and markup
 (`id inits…!effects…;walks;template`): registered by the server module at
 load and shipped in the first flush that creates from it, so the client
 creates the body without bundling its template. Content whose renderer the
@@ -435,7 +436,9 @@ _Avoid_: deliver/delivery, forwarder
 **Effect write / capture write**:
 Wire channels for values a patch sends that no fill consumes: an accessor write
 plus effect re-run, or a bare accessor write for registered-function
-captures.
+captures. The re-run entry also mounts the effect in a scope its flush created,
+whose shell names no effect reading what a patch writes; an effect the created
+scope's own render queues ships as a `QueuedEffect`, which only re-runs it.
 
 **Param group sources**:
 Per reason group at a templated call site (`getParamGroupSources`): the

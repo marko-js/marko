@@ -10,8 +10,8 @@
     },
     "route-pg.mjs": {
       "total": {
-        "min": 1800,
-        "brotli": 905
+        "min": 1957,
+        "brotli": 986
       },
       "files": {
         "tags/file-store.marko": 332,
@@ -21,8 +21,8 @@
       }
     },
     "shared": {
-      "min": 13224,
-      "brotli": 5856
+      "min": 13269,
+      "brotli": 5893
     }
   },
   "html": {
@@ -31,6 +31,6 @@
   },
   "patch": {
     "min": 280,
-    "brotli": 213
+    "brotli": 212
   }
 }

@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 			i: _unfilled_if($scope1_reason, 0) && upper,
 			_: _scope_with_id($scope0_id)
 		}), "a1");
-	}, void 0, "a4", "a0", 1, "");
+	}, void 0, "a4", "a0", 1, 2);
 	_patch_write($scope0_id, "we", input.fail, 1);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.msg,

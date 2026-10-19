@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`<em>${_patch_text($scope5_id, "#text/0", err.message)}</em>`);
 				_scope($scope5_id, {}, "__tests__/template.marko", "6:10");
-			}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_4*content", 1, "");
+			}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_4*content", 1, 2);
 			$wi__input_promise && _scope($scope3_id, { "ClosureScopes:value/5": _unfilled_if($scope0_reason, 0) && $await_content__value__closures }, "__tests__/template.marko", "4:6");
 		}, 1, "__tests__/template.marko_3*content", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:3/subscribe");

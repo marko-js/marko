@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell !packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#0:6_$global_brand#0:8,<p>promo</p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell,<p>promo</p>`, {
   "$global:": {
     brand: "Marko"
   },

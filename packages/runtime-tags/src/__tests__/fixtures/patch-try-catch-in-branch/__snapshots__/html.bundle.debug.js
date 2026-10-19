@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_patch_text($scope3_id, "#text/0", err.message)}</b>`);
 				_scope($scope3_id, {}, "__tests__/template.marko", "8:8");
-			}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", void 0, "");
+			}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", void 0, 2);
 			$wi__input_show__OR__input_message__OR__input_boom && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4");
 			return 0;
 		}

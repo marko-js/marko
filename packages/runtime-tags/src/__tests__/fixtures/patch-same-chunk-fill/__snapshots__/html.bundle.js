@@ -1,14 +1,14 @@
 // tags/probe.marko
 const $template = "<div> </div>";
 const $walks = " D l";
-_shells({ b: "b !b0; D ;<div> </div>" });
+_shells({ b: "b !; D ;<div> </div>" });
 var probe_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let settled = false;
 	_html(`<div>${_text_resume($scope0_id, "b", "pending")}</div>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "b0", 1, _client_guard($scope0_reason, 0));
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "eb0", "e");
+	_script($scope0_id, "b0", 1, 1);
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "hb0" : "eb0", "e");
 	_patch_value($scope0_id, "vb1", settled, 1);
 	$scope0_page ? _scope($scope0_id, { e: input.promise }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.promise, !_server_guard($scope0_reason, 0));
 });

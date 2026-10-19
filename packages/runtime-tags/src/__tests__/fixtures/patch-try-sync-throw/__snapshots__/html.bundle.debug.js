@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_patch_text($scope2_id, "#text/0", err.message)}</b>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "8:6");
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, "");
+	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, 2);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", count, 1);

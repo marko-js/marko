@@ -17,7 +17,7 @@ var menu_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a0: "a0 !a1 a2; D l ;<button> </button><span></span>",
+	a0: "a0 !a2; D l ;<button> </button><span></span>",
 	a: /*@__PURE__*/ (() => `a !;${((_w0) => `b/${_w0}&D l`)("b%c")};${((_w0) => `<!>${_w0}<p> </p>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "we", x?.name);
 			_html(`<button${_patch_attr_class($scope1_id, "aa class", "b" + x.id)}>${_patch_text($scope1_id, "b", x.name)}</button>${_el_resume($scope1_id, "a")}<span></span>${_el_resume($scope1_id, "c")}`);
-			_script($scope1_id, "a1", 1, 0);
+			_script($scope1_id, "a1", 1, 1);
 			_script($scope1_id, "a2");
 			_patch_effect($scope1_id, "ea1", "e");
 			_scope($scope1_id, {

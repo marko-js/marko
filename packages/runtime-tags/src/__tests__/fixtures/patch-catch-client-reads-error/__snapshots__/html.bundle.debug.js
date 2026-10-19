@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<b>${_patch_text($scope3_id, "#text/0", err.message)}</b><button>log</button>${_el_resume($scope3_id, "#button/1")}`);
 		_script($scope3_id, "__tests__/template.marko_3");
 		_scope($scope3_id, { err_message: err?.message }, "__tests__/template.marko", "7:6", { err_message: ["err.message", "7:13"] });
-	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, "");
+	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 2);
 	_try($scope0_id, "#text/1", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
@@ -41,10 +41,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
 		_patch_write($scope4_id, "PatchWrite:err_cause_code", err?.cause?.code);
-		_script($scope4_id, "__tests__/template.marko_4_err_cause_code#3", 0, 0);
+		_script($scope4_id, "__tests__/template.marko_4_err_cause_code#3", 0, 1);
 		_patch_effect($scope4_id, "PatchEffect:__tests__/template.marko_4_err_cause_code#3", "err_cause_code");
 		_scope($scope4_id, { err_cause_code: err?.cause?.code }, "__tests__/template.marko", "14:6", { err_cause_code: ["err.cause.code", "14:13"] });
-	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content", 1, "__tests__/template.marko_4_err_cause_code#3");
+	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content", 1, 2);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_error/5": $wi__input_error && _unfilled_if($scope0_reason, 0) && $input_error__closures }, "__tests__/template.marko", 0);
 }, 1);

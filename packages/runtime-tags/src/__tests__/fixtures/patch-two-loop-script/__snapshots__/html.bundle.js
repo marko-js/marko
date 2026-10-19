@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a: "a !;D%b%;<main><!><!></main>",
-	a0: "a0 !a2,",
+	a0: "a0,",
 	a1: "a1;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
@@ -10,8 +10,8 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_script($scope1_id, "a2", 0, _client_guard($scope0_reason, 1));
-		_server_guard($scope0_reason, 1) && _patch_effect($scope1_id, "ea2", "1 f");
+		_script($scope1_id, "a2", 0, 1);
+		_filled_guard($scope0_reason, 1) && _patch_effect($scope1_id, "ea2", "1 f");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
 	_for_of(input.items2, (item) => {

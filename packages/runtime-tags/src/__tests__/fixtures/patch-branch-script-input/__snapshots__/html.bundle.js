@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a: "a;E l%;<main><h1> </h1><!></main>",
-	a0: "a0 !a1,<p>promo</p>"
+	a0: "a0,<p>promo</p>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
@@ -11,8 +11,8 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
-			_script($scope1_id, "a1", 0, _client_guard($scope0_reason, 2));
-			_server_guard($scope0_reason, 2) && _patch_effect($scope1_id, "ea1", "1 g");
+			_script($scope1_id, "a1", 0, 1);
+			_filled_guard($scope0_reason, 2) && _patch_effect($scope1_id, "ea1", "1 g");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

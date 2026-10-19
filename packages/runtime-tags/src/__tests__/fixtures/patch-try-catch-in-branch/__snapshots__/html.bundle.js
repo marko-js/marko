@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b>`);
 				_scope($scope3_id, {});
-			}, void 0, "a4", "a0", void 0, "");
+			}, void 0, "a4", "a0", void 0, 2);
 			$wi__input_show__OR__input_message__OR__input_boom && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

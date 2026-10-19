@@ -58,7 +58,7 @@ var error_wrapper_default = _template("b", (input) => {
 		_html(`<b>${_patch_text($scope1_id, "a", err.message)}</b>`);
 		_dynamic_tag($scope1_id, "b", input.fallback, {}, 0, 0, _write_guard($scope0_reason, 0));
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");
-	}, void 0, "b4", "b0", 1, "");
+	}, void 0, "b4", "b0", 1, 2);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.fallback,
 		f: _write_if($scope0_reason, 0) && $input_fallback__closures,

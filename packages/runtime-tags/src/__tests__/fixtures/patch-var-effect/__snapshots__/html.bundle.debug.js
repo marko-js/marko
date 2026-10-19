@@ -13,7 +13,7 @@ var labeler_default = _template("__tests__/tags/labeler/index.marko", (input) =>
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button> </button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D0${_w0}& D m`)("b");
-_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0 __tests__/template.marko_0_label#8;${((_w0) => `D0${_w0}& D m`)("b")};${((_w0) => `<main>${_w0}<button> </button></main>`)($template$1)}`)() });
+_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => `D0${_w0}& D m`)("b")};${((_w0) => `<main>${_w0}<button> </button></main>`)($template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -25,8 +25,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:label", label, 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/3", count)}</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_label#8", 1, _client_guard($scope0_reason, 0));
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_label#8", "label");
+	_script($scope0_id, "__tests__/template.marko_0_label#8", 1, 1);
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/template.marko_0_label#8", "label");
 	_patch_value($scope0_id, "PatchValue:__tests__/template.marko_fill0", count, 1);
 	$scope0_page ? _scope($scope0_id, {
 		count,

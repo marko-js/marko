@@ -1,15 +1,15 @@
 // tags/file-store.marko
 const $template$5 = "";
 const $walks$5 = "";
-_shells({ "__tests__/tags/file-store.marko": "^__tests__/tags/file-store.marko !__tests__/tags/file-store.marko_0_input_value#2," });
+_shells({ "__tests__/tags/file-store.marko": "^__tests__/tags/file-store.marko !," });
 _client_return("__tests__/tags/file-store.marko");
 var file_store_default = _template("__tests__/tags/file-store.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let files = [];
 	const $return = files;
-	_script($scope0_id, "__tests__/tags/file-store.marko_0_input_value#2", 0, _client_guard($scope0_reason, 0));
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/file-store.marko_0_input_value#2", "input_value");
+	_script($scope0_id, "__tests__/tags/file-store.marko_0_input_value#2", 0, 1);
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/tags/file-store.marko_0_input_value#2" : "PatchEffect:__tests__/tags/file-store.marko_0_input_value#2", "input_value");
 	const $valueChange2 = _patch_bind($scope0_id, "PatchBind:#TagVariableChange", _resume((_new_files) => {
 		files = _new_files;
 	}, "__tests__/tags/file-store.marko_0/valueChange", $scope0_id) || void 0, 0, 0);

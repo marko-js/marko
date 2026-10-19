@@ -21,6 +21,7 @@ export const Globals = "$";
 export const Init = "i";
 export const Loop = "l";
 export const Pending = "p";
+export const QueuedEffect = "h";
 export const Setup = "s";
 // A `<show>` over request data: `accessor start? end?`, the display bit.
 export const Show = "g";

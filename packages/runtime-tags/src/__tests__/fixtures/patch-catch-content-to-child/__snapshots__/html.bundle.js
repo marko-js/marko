@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 			l: $wi__err_message && _unfilled_if($scope1_reason, 0) && $catch_content__err_message__closures,
 			a: _existing_scope($childScope)
 		});
-	}, void 0, "a4", "a0", 1, "");
+	}, void 0, "a4", "a0", 1, 2);
 	_script($scope0_id, "a5");
 	_patch_value($scope0_id, "va7", count, 1);
 	$scope0_page ? _scope($scope0_id, {

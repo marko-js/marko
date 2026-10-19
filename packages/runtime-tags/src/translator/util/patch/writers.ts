@@ -52,11 +52,13 @@ import {
   type ParamReasonGroup,
   type Section,
 } from "../sections";
+import { isQueuedOnCreate } from "../shell";
 import {
   getHTMLSectionStatements,
   getResumeRegisterId,
   getSignalRegisterId,
   getScopeProperties,
+  getEffectCallerSources,
   getSignals,
   toSequenceExpression,
 } from "../signals";
@@ -175,6 +177,14 @@ export function writePatchResumeStatements(
       if (accessors) {
         // A re-run resets the effect's `$signal`s first, as a render does.
         const aborts = getAbortIds(section, signal.referencedBindings);
+        const id = getSignalRegisterId(signal);
+        const queuedEffect = t.stringLiteral(getPatchKey().QueuedEffect + id);
+        const effect = t.stringLiteral(getPatchKey().Effect + id);
+        // The entry mounts the effect in a created scope where no render of the
+        // scope queues it: one its caller feeds client state does.
+        const queued = isQueuedOnCreate(section, signal.referencedBindings);
+        const callerSources =
+          !queued && getEffectCallerSources(section, signal.referencedBindings);
         body.push(
           t.expressionStatement(
             andGuard(
@@ -182,13 +192,27 @@ export function writePatchResumeStatements(
                 orCallerGroupGuards(
                   section,
                   undefined,
-                  "_server_guard",
+                  // A constant read still mounts the effect where a flush may create.
+                  queued ? "_server_guard" : "_filled_guard",
                   written,
                 ),
-              callPatchRuntime(
+              callRuntime(
                 "_patch_effect",
-                section,
-                getPatchKey().Effect + getSignalRegisterId(signal),
+                getScopeIdIdentifier(section),
+                queued
+                  ? queuedEffect
+                  : callerSources
+                    ? t.conditionalExpression(
+                        orCallerGroupGuards(
+                          section,
+                          undefined,
+                          "_client_guard",
+                          callerSources,
+                        )!,
+                        queuedEffect,
+                        effect,
+                      )
+                    : effect,
                 t.stringLiteral(aborts ? accessors + "!" + aborts : accessors),
               ),
             ),

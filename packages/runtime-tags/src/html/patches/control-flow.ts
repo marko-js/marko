@@ -34,7 +34,6 @@ import {
   withBranchId,
 } from "../writer";
 import {
-  addSetupId,
   PatchRenderState,
   PatchUpdateState,
   _client_guard,
@@ -488,7 +487,8 @@ export function _try(
   catchId?: string,
   bodyId?: string,
   alwaysPairs?: 1,
-  catchEffects?: string | 1,
+  // `2` where a flush creates the catch, `1` where the client renders it from its error.
+  catchRender?: 1 | 2,
 ) {
   const state = getState();
   if (!(state instanceof PatchUpdateState)) {
@@ -522,6 +522,11 @@ export function _try(
   );
   const chunk = getChunk()!;
   const beforeBranch = deferBranchStart(chunk);
+  // In its branch, the body's own setup rides its shell; it is creatable
+  // only where the try's scope is.
+  const bodyContent = inCreatable()
+    ? content
+    : () => withKeptBranchId(branchId, content);
   const renderers = (): void =>
     writeTryRenderers(
       branchId,
@@ -540,7 +545,7 @@ export function _try(
     let entry: unknown[] | undefined;
     let settled = false;
     writesRenderers = tryBoundary(
-      content,
+      bodyContent,
       catchContent,
       branchId,
       renderers,
@@ -572,17 +577,9 @@ export function _try(
           state,
           scopeId,
           entryKey(PatchKey.Catch, accessor),
-          typeof catchEffects === "string"
-            ? writeCatch(
-                state,
-                scopeId,
-                accessor,
-                catchContent,
-                err,
-                catchId!,
-                catchEffects,
-              )
-            : catchEffects
+          catchRender === 2
+            ? writeCatch(state, scopeId, accessor, catchContent, err, catchId!)
+            : catchRender
               ? [err]
               : [],
         );
@@ -601,7 +598,7 @@ export function _try(
     // A try this flush may create needs its entry even when its body writes
     // nothing.
     if (create) ensureScopePatch(state, branchId);
-    content();
+    withBranchId(branchId, bodyContent);
   }
   applyBranchStart(chunk, beforeBranch, true);
   if (!writesRenderers) renderers();
@@ -616,7 +613,6 @@ function writeCatch(
   catchContent: ServerRenderer,
   err: unknown,
   catchId: string,
-  effectIds: string,
 ) {
   const catchBranchId = _peek_scope_id();
   (state.patchLinks ??= {})[catchBranchId] = {
@@ -625,6 +621,5 @@ function writeCatch(
   };
   const patch = openScopePatch(state, catchBranchId);
   withBranchId(catchBranchId, withRendererSetUp, catchContent, err);
-  if (effectIds) addSetupId(state, catchBranchId, effectIds, 1);
   return patchNode(state, [patch, catchId]);
 }

@@ -21,7 +21,7 @@ var child_default = _template("b", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b2");
 	_script($scope0_id, "b3", 1, 1);
-	_server_guard($scope0_reason, 1) && _patch_effect($scope0_id, "eb3", "f");
+	_server_guard($scope0_reason, 1) && _patch_effect($scope0_id, "hb3", "f");
 	_patch_init($scope0_id, "b5", 1);
 	_patch_value($scope0_id, "vb6", n, 1);
 	$scope0_page ? _scope($scope0_id, {

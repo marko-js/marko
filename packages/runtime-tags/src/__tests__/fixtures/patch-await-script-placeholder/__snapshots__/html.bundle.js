@@ -1,7 +1,7 @@
 // template.marko
 _shells({
-	a0: "a0 !a3;D ;<span id=v> </span>",
-	a1: "a1 !a3;D ;<span id=v> </span>",
+	a0: "a0;D ;<span id=v> </span>",
+	a1: "a1;D ;<span id=v> </span>",
 	a2: "a2;b%;<!><!><!>",
 	a: "a;D%;<main><!></main>"
 });
@@ -17,8 +17,8 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_filled_guard($scope0_reason, 0) && _patch_write($scope3_id, "wc", value, !_server_guard($scope0_reason, 0));
 			_html(`<span id=v>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
-			_script($scope3_id, "a3", 1, _client_guard($scope0_reason, 0));
-			_server_guard($scope0_reason, 0) && _patch_effect($scope3_id, "ea3", "c");
+			_script($scope3_id, "a3", 1, 1);
+			_filled_guard($scope0_reason, 0) && _patch_effect($scope3_id, "ea3", "c");
 			_scope($scope3_id, { c: value });
 		}, 1, "a0", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a4");

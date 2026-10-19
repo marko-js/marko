@@ -1,7 +1,7 @@
 // PATCH
 {
   ca: {
-    ea1: "e",
+    ha1: "e",
     va2: "y"
   }
 }
@@ -9,7 +9,7 @@
 // PATCH
 {
   ca: {
-    ea1: "e",
+    ha1: "e",
     va2: "z"
   }
 }

@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope4_id = _scope_id();
 		_html(`<s>${_patch_text($scope4_id, "#text/0", e.message)}</s>`);
 		_scope($scope4_id, {}, "__tests__/template.marko", "9:6");
-	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_3*content", void 0, "");
+	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_3*content", void 0, 2);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

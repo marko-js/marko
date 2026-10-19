@@ -4,18 +4,18 @@
     "PatchWrite:i": 0,
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "N0b",
+      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-handler-literal/tags/row.marko_0_input_onPick#6": "input_onPick",
       "PatchSetup:": {
-        "PatchInit:": _.a = "!packages/runtime-tags/src/__tests__/fixtures/patch-created-row-handler-literal/tags/row.marko_0_input_onPick#6",
-        "PatchBind:input_onPick": [_.b = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-handler-literal/template.marko_1/onPick", 1]
+        "PatchBind:input_onPick": [_.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-handler-literal/template.marko_1/onPick", 1]
       }
     }
   }, {
     "PatchWrite:i": 1,
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "N1b",
+      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-handler-literal/tags/row.marko_0_input_onPick#6": "input_onPick",
       "PatchSetup:": {
-        "PatchInit:": _.a,
-        "PatchBind:input_onPick": [_.b, 1]
+        "PatchBind:input_onPick": [_.a, 1]
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-handler-literal/template.marko_1*shell"]

@@ -13,6 +13,7 @@ export const Globals = "$global:";
 export const Init = "PatchInit:";
 export const Loop = "PatchLoop:";
 export const Pending = "PatchPending:";
+export const QueuedEffect = "PatchQueuedEffect:";
 export const Setup = "PatchSetup:";
 // A `<show>` over request data: `accessor start? end?`, the display bit.
 export const Show = "PatchShow:";

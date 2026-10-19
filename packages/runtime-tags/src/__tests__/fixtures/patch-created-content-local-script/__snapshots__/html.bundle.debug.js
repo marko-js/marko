@@ -20,7 +20,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 _shells({
-	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content !__tests__/template.marko_1_label#0,<p>item</p>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content,<p>item</p>",
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "PatchWrite:label", label);
 			_html("<p>item</p>");
-			_script($scope1_id, "__tests__/template.marko_1_label#0", 0, 0);
+			_script($scope1_id, "__tests__/template.marko_1_label#0", 0, 1);
 			_patch_effect($scope1_id, "PatchEffect:__tests__/template.marko_1_label#0", "label");
 			_scope($scope1_id, { label }, "__tests__/template.marko", "3:6", { label: "2:8" });
 		}, $scope0_id) });

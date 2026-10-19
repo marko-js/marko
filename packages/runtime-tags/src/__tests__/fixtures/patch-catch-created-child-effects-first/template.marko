@@ -1,0 +1,10 @@
+static function boom(msg: string): never {
+  throw new Error(msg);
+}
+<try>
+  <p>${input.fail ? boom(input.msg) : input.msg}</p>
+  <@catch|err|>
+    <inner/>
+    <script>console.log("catch", (err as Error).message)</script>
+  </@catch>
+</try>

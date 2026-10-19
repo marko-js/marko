@@ -14,14 +14,12 @@ import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
-import { some } from "../util/optional";
 import {
   patchWritesScope,
   sectionHasServerEffect,
 } from "../util/patch/refresh";
 import { patchMayWrite } from "../util/patch/structure";
 import { boundaryAlwaysPairs } from "../util/patch/writers";
-import { getSourcesForRef } from "../util/reasons";
 import { mergeTagReferences, onFinalizeReferences } from "../util/references";
 import {
   callRuntime,
@@ -37,9 +35,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  type Section,
 } from "../util/sections";
-import { getSectionEffectRegisterIds, isQueuedOnCreate } from "../util/shell";
 import {
   addValue,
   getResumeRegisterId,
@@ -178,12 +174,12 @@ export default {
           tryArgs.push(
             t.stringLiteral(getResumeRegisterId(bodySection, "content")),
             boundaryAlwaysPairs(bodySection) && t.numericLiteral(1),
-            // A catch the flush creates mounts the effects reading its error;
-            // else the client renders it from its error, sent where it reads it.
+            // A flush creates a catch whose effects its entries mount; else the
+            // client renders it from its error, sent where it reads it.
             catchSection &&
               patchWritesScope(catchSection) &&
               !sectionHasServerEffect(catchSection)
-              ? t.stringLiteral(getCatchEffectIds(catchSection))
+              ? t.numericLiteral(2)
               : !!catchSection?.params &&
                   !catchSection.params.pruned &&
                   t.numericLiteral(1),
@@ -277,19 +273,6 @@ function getAttrTag(tag: t.NodePath<t.MarkoTag>, name: string) {
       return child;
     }
   }
-}
-
-// A `@catch` a flush creates sets up from its renderer, which queues every
-// effect but those reading its error: the flush mounts those by id.
-function getCatchEffectIds(section: Section) {
-  return getSectionEffectRegisterIds(
-    section,
-    (refs) =>
-      !some(
-        getSourcesForRef(refs)?.param,
-        (param) => param.section === section,
-      ) || isQueuedOnCreate(section, refs),
-  );
 }
 
 // Static content of the try, rendered by the server as a plain function.

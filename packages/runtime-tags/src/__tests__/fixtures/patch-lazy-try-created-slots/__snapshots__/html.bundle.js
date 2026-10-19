@@ -30,7 +30,7 @@ var child_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<b>${_patch_text($scope3_id, "a", e.message)}</b>`);
 		_scope($scope3_id, {});
-	}, "a5", "a6", "a2", 1, "");
+	}, "a5", "a6", "a2", 1, 2);
 	$scope0_page && _scope($scope0_id, { e: $wi__input_p && _unfilled_if($scope0_reason, 0) && $input_p__closures });
 });
 

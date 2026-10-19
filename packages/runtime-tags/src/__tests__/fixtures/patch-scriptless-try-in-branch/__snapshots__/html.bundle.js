@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_patch_text($scope3_id, "a", err.message)}</p>`);
 				_scope($scope3_id, {});
-			}, void 0, "a5", "a2", void 0, "");
+			}, void 0, "a5", "a2", void 0, 2);
 			$wi__input_show__OR__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

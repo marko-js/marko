@@ -1,16 +1,16 @@
 // tags/child.marko
-_shells({ b: "b !b0 b1 b2 b3;D ;<span> </span>" });
+_shells({ b: "b !b3;D ;<span> </span>" });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html(`<span>${_patch_text($scope0_id, "a", input.message, void 0, $scope0_reason, 0)}</span>`);
-	_script($scope0_id, "b0", 1, _client_guard($scope0_reason, 2));
-	_script($scope0_id, "b1", 1, _client_guard($scope0_reason, 1));
-	_script($scope0_id, "b2", 1, _client_guard($scope0_reason, 0));
+	_script($scope0_id, "b0", 1, 1);
+	_script($scope0_id, "b1", 1, 1);
+	_script($scope0_id, "b2", 1, 1);
 	_script($scope0_id, "b3");
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "eb2", "d");
-	_server_guard($scope0_reason, 1) && _patch_effect($scope0_id, "eb1", "e");
-	_server_guard($scope0_reason, 2) && _patch_effect($scope0_id, "eb0", "f");
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "hb2" : "eb2", "d");
+	_filled_guard($scope0_reason, 1) && _patch_effect($scope0_id, _client_guard($scope0_reason, 1) ? "hb1" : "eb1", "e");
+	_filled_guard($scope0_reason, 2) && _patch_effect($scope0_id, _client_guard($scope0_reason, 2) ? "hb0" : "eb0", "f");
 	$scope0_page ? _scope($scope0_id, {
 		d: input.message,
 		e: input.label,
@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		}), "a1"), "a2");
-	}, void 0, "a5", "a0", 1, "");
+	}, void 0, "a5", "a0", 1, 2);
 	_script($scope0_id, "a6");
 	_patch_write($scope0_id, "wg", input.fail, 1);
 	_patch_value($scope0_id, "va8", count, 1);

@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		_script($scope2_id, "a1");
 		_patch_value($scope2_id, "va2", shown, 1);
 		_scope($scope2_id, { f: shown });
-	}, void 0, "a4", "a0", 1, "");
+	}, void 0, "a4", "a0", 1, 2);
 	_html("</main>");
 	$scope0_page && _scope($scope0_id, { e: $wi__input_error && _unfilled_if($scope0_reason, 0) && $input_error__closures });
 }, 1);

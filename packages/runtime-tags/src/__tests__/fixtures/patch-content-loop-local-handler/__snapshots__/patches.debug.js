@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/template.marko_1*content !packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/template.marko_1_x_name#4 packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/template.marko_1; D l ;<button> </button><span></span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/tags/menu.marko_1*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/template.marko_1*content !packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/template.marko_1; D l ;<button> </button><span></span>`, `packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/tags/menu.marko_1*shell;b%;<!><!><!>`, {
   "PatchChild:#childScope/0": {
     "PatchLoop:#text/0": [{
       "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/template.marko_1*content",

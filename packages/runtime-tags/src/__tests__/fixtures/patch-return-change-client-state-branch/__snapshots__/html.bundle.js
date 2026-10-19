@@ -11,7 +11,7 @@ var counter_box_default = _template("b", (input) => {
 	const $return = mode;
 	_script($scope0_id, "b0", 1, 1);
 	_script($scope0_id, "b1");
-	(_server_guard($scope0_reason, 0) || _server_guard($scope0_reason, 1)) && _patch_effect($scope0_id, "eb0", "f g");
+	(_server_guard($scope0_reason, 0) || _server_guard($scope0_reason, 1)) && _patch_effect($scope0_id, "hb0", "f g");
 	_patch_init($scope0_id, "b2", 1);
 	const $valueChange = input.onA || void 0;
 	_patch_value($scope0_id, "vb3", mode, 1);

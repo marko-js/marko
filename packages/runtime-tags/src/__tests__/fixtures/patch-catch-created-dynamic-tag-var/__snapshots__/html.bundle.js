@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 		_var($scope1_id, "c", $inputbigBigSmall_scope, "a1", void 0, 1);
 		_html(`<i>${_text_resume($scope1_id, "d", v)}</i>`);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_big__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a2"), _client_guard($scope0_reason, 2) && "a3");
-	}, void 0, "a5", "a0", 1, "");
+	}, void 0, "a5", "a0", 1, 2);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.big,
 		e: input.label,

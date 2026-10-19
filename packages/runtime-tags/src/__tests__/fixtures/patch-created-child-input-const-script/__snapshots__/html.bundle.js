@@ -1,6 +1,6 @@
 // tags/probe.marko
 const $template = "<p>probe</p>";
-_shells({ b: "b !b0,<p>probe</p>" });
+_shells({ b: "b,<p>probe</p>" });
 var probe_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -9,8 +9,8 @@ var probe_default = _template("b", (input) => {
 		items: []
 	};
 	_html("<p>probe</p>");
-	_script($scope0_id, "b0", 0, _client_guard($scope0_reason, 0));
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "eb0", "c e f");
+	_script($scope0_id, "b0", 0, 1);
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "hb0" : "eb0", "c e f");
 	$scope0_page ? _scope($scope0_id, {
 		c: input.label,
 		e: opts.items,

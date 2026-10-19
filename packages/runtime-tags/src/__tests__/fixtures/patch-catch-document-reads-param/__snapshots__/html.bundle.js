@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<b>${_patch_text($scope1_id, "a", err.message)} ${_text_resume($scope1_id, "b", input.label, 2)}</b>`);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
-	}, void 0, "a3", "a0", 1, "");
+	}, void 0, "a3", "a0", 1, 2);
 	$scope0_page ? _scope($scope0_id, {
 		d: input.label,
 		f: _write_if($scope0_reason, 0) && $input_label__closures,

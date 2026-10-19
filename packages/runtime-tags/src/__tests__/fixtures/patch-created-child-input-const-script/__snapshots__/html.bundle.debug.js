@@ -1,7 +1,7 @@
 // tags/probe.marko
 const $template$1 = "<p>probe</p>";
 const $walks$1 = "b";
-_shells({ "__tests__/tags/probe.marko": "__tests__/tags/probe.marko !__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5,<p>probe</p>" });
+_shells({ "__tests__/tags/probe.marko": "__tests__/tags/probe.marko,<p>probe</p>" });
 var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
@@ -10,8 +10,8 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 		items: []
 	};
 	_html("<p>probe</p>");
-	_script($scope0_id, "__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5", 0, _client_guard($scope0_reason, 0));
-	_server_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchEffect:__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5", "input_label opts_items opts_label");
+	_script($scope0_id, "__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5", 0, 1);
+	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5" : "PatchEffect:__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5", "input_label opts_items opts_label");
 	$scope0_page ? _scope($scope0_id, {
 		input_label: input.label,
 		opts_items: opts.items,

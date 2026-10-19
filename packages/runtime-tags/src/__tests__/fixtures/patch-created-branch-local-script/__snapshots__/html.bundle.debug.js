@@ -3,7 +3,7 @@ const $template = "<main></main>";
 const $walks = " b";
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko !; ;<main></main>",
-	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1_label#0,<p>shown</p>"
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell,<p>shown</p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
@@ -15,8 +15,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const label = input.title + "!";
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchWrite:label", label, !_server_guard($scope0_reason, 1));
 			_html("<p>shown</p>");
-			_script($scope1_id, "__tests__/template.marko_1_label#0", 0, _client_guard($scope0_reason, 1));
-			_server_guard($scope0_reason, 1) && _patch_effect($scope1_id, "PatchEffect:__tests__/template.marko_1_label#0", "label");
+			_script($scope1_id, "__tests__/template.marko_1_label#0", 0, 1);
+			_filled_guard($scope0_reason, 1) && _patch_effect($scope1_id, "PatchEffect:__tests__/template.marko_1_label#0", "label");
 			_scope($scope1_id, {
 				label,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)

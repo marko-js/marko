@@ -4,7 +4,7 @@
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "b",
       "PatchSetup:": {
-        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0_input_label#4 packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0"
+        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0"
       },
       "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0_input_label#4": "input_label",
       "PatchWrite:input_label": "b"
@@ -19,7 +19,7 @@
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "c",
       "PatchSetup:": {
-        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0_input_label#4 packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0"
+        "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0"
       },
       "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0_input_label#4": "input_label",
       "PatchWrite:input_label": "c"

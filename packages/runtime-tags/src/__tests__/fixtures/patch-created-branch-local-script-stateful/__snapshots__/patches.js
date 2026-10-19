@@ -1,5 +1,5 @@
 // PATCH
-[`a0 !a1,<p>shown</p>`, {
+[`a0,<p>shown</p>`, {
   bc: [{
     wa: "b!",
     ea1: "a"

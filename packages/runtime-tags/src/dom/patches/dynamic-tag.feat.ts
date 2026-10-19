@@ -85,4 +85,21 @@ patchers[PatchKey.DynamicTag] = createPatchers[PatchKey.DynamicTag] = (
       Array.isArray(input) as unknown as 1,
     ) as (scope: Scope, renderer: unknown, getInput?: () => unknown) => void
   )(scope, renderer || undefined, input ? () => input : undefined);
+  // Content this created mounts its effects at this entry's end, as it may ship no
+  // entry of its own; a native tag's body sits in the tag's branch.
+  let branch = scope[
+    (AccessorPrefix.BranchScopes + accessor) as Accessor
+  ] as Scope;
+  if (typeof renderer === "string") {
+    branch = branch[
+      (AccessorPrefix.BranchScopes +
+        (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")) as Accessor
+    ] as Scope;
+  }
+  if (branch?.[AccessorProp.SetupEffects]) {
+    (scope[AccessorProp.SetupEffects] ||= []).unshift(
+      ...branch[AccessorProp.SetupEffects],
+    );
+    branch[AccessorProp.SetupEffects] = 0;
+  }
 };

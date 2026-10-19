@@ -6,10 +6,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-reads-error/template.marko_3*content"],
   "PatchCatch:#text/1": [{
     "PatchWrite:err_cause_code": "SHOWN_code1",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-reads-error/template.marko_4_err_cause_code#3": "err_cause_code",
-    "PatchSetup:": {
-      "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-reads-error/template.marko_4_err_cause_code#3"
-    }
+    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-reads-error/template.marko_4_err_cause_code#3": "err_cause_code"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-reads-error/template.marko_4*content"]
 }
 
@@ -31,9 +28,6 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-reads-error/template.marko_3*content"],
   "PatchCatch:#text/1": [{
     "PatchWrite:err_cause_code": "SHOWN_code2",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-reads-error/template.marko_4_err_cause_code#3": "err_cause_code",
-    "PatchSetup:": {
-      "PatchInit:": "!packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-reads-error/template.marko_4_err_cause_code#3"
-    }
+    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-reads-error/template.marko_4_err_cause_code#3": "err_cause_code"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-reads-error/template.marko_4*content"]
 }

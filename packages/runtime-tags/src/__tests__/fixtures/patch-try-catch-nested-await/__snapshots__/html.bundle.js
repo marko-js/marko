@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<span>${_patch_text($scope3_id, "a", err.message)}</span>`);
 		_scope($scope3_id, {});
-	}, void 0, "a7", "a4", 1, "");
+	}, void 0, "a7", "a4", 1, 2);
 	_html("</main>");
 	_patch_write($scope0_id, "we", input.b, 1);
 	$scope0_page && _scope($scope0_id, {

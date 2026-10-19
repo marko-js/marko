@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a4");
-	}, void 0, "a6", "a0", 1, "");
+	}, void 0, "a6", "a0", 1, 2);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a7");
 	_patch_value($scope0_id, "va9", count, 1);
