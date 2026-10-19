@@ -45,7 +45,7 @@ import {
   removeDroppedContent,
   StructureKind,
 } from "../../util/sections";
-import { addStatement, getSignal } from "../../util/signals";
+import { getSignal } from "../../util/signals";
 import { createOutputState } from "../../util/state";
 import * as structure from "../../util/structure";
 import {
@@ -233,16 +233,13 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             triggerIdent,
           );
         }
-        addStatement(
-          "render",
-          section,
-          undefined,
+        return [
           t.callExpression(setupIdent, [
             scopeIdentifier,
             createScopeReadExpression(childBinding, section),
             createScopeReadExpression(node.extra!.nodeBinding!, section),
           ]),
-        );
+        ];
       },
     );
   } else if (programSection === childSection) {
@@ -251,16 +248,11 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       (binding, preferredName) =>
         getSignal(programSection, binding, preferredName).identifier,
       childSection.hasSetupWork
-        ? (section, childBinding) => {
-            addStatement(
-              "render",
-              section,
-              undefined,
-              t.callExpression(t.identifier(childExports.setup), [
-                createScopeReadExpression(childBinding, section),
-              ]),
-            );
-          }
+        ? (section, childBinding) => [
+            t.callExpression(t.identifier(childExports.setup), [
+              createScopeReadExpression(childBinding, section),
+            ]),
+          ]
         : undefined,
     );
   } else {
@@ -275,22 +267,17 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           preferredName,
         ),
       childSection.hasSetupWork
-        ? (section, childBinding) => {
-            addStatement(
-              "render",
-              section,
-              undefined,
-              t.callExpression(
-                importOrSelfReferenceName(
-                  file,
-                  relativePath,
-                  childExports.setup,
-                  tagName,
-                ),
-                [createScopeReadExpression(childBinding, section)],
+        ? (section, childBinding) => [
+            t.callExpression(
+              importOrSelfReferenceName(
+                file,
+                relativePath,
+                childExports.setup,
+                tagName,
               ),
-            );
-          }
+              [createScopeReadExpression(childBinding, section)],
+            ),
+          ]
         : undefined,
     );
 

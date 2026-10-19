@@ -23,6 +23,7 @@ import { readsValuesOnResume } from "../finalize-references";
 import {
   ensureKnownTagPatchGroups,
   getParamGroupSources,
+  getStatefulBodyCalls,
   isKnownTagExtra,
   someCallPasses,
 } from "../known-tag";
@@ -232,12 +233,12 @@ function computePatchFill(binding: Binding): PatchFill {
   const fillsReads =
     fill === true || !!(conditions?.structure || conditions?.contents);
   // Only the patch's key reaches the declaration: a `<let>` nothing assigns
-  // (its seed), or a template input's value with reads its signal alone reaches.
+  // (its seed), or a value the server renders whose reads its signal alone reaches.
   const ownRegistration =
     !!fill &&
     (binding.sources?.state
       ? !binding.assignments && bindingUtil.has(binding.sources.state, binding)
-      : !binding.section.parent && hasDeclarationOnlyReads(binding));
+      : patchWrites(binding.section) && hasDeclarationOnlyReads(binding));
   // A client join and withheld content both call for it: it refreshes the
   // content under a key of its own, which a patch writing the join sends.
   const splitsContent =
@@ -879,6 +880,18 @@ export const [getCreatedInits] = createAnalysisMemo(
   NO_INITS,
 );
 
+// The calls, by child scope binding, whose setup work every created scope of the
+// section runs by an init of their own; the page itself is never created.
+export const [getCreatedCallSetups] = createAnalysisMemo(
+  (section: Section) =>
+    (section.parent || !isPage()) &&
+    !runsSetupFromCall(section) &&
+    shellNamesInits(section)
+      ? getStatefulBodyCalls(section)
+      : [],
+  [],
+);
+
 function computeClosureInits(section: Section): Map<Binding, CreatedInit> {
   // A filled binding of the section is a local fill of each closure it derives from.
   const localFills = new Map<Binding, SortedOpt<Binding>>();
@@ -946,7 +959,8 @@ function getNamedInit(
   { init, subscribe }: CreatedInit,
   join: boolean,
 ): CreatedInit | undefined {
-  const shellNames = patchComposes(section) || shipsShellInits(section);
+  if (runsSetupFromCall(section)) return;
+  const shellNames = shellNamesInits(section);
   const flushNames =
     patchCreatesOrComposes(section) ||
     // A `@catch` sets up its closures; its error's joins wait on the seed.
@@ -966,6 +980,11 @@ function getNamedInit(
       : undefined,
   };
   return named.init || named.subscribe ? named : undefined;
+}
+
+// Every created scope runs the inits its shell, or a composing scope's setup, names.
+function shellNamesInits(section: Section) {
+  return patchComposes(section) || shipsShellInits(section);
 }
 
 // A join's created init: a state join inits itself unless every member arrives
@@ -1030,8 +1049,11 @@ function getClosureInit(
 ): CreatedInit["init"] {
   const { sources } = closure;
   if (closure.type === BindingType.constant) return;
-  // Client state renders, and subscribes, by its own init.
-  if (sources?.state) return "always";
+  // Client state renders, and subscribes, by its own init, as does what a call
+  // passes a body some consumer renders stateful, which no patch writes.
+  if (sources?.state || someReadIn(closure, section, passesStatefulBody)) {
+    return "always";
+  }
   if (localFills) return { localFills };
   // A caller's other closures render where the client contributes them; a join
   // of them inits itself.
@@ -1063,6 +1085,14 @@ function getClosureSubscribe(
       ? "always"
       : { unfilled: getCreatedSubscribeStructure(section, closure) };
   }
+}
+
+function passesStatefulBody(read: ReferencedExtra) {
+  return some(read.derives, isStatefulBodyParam);
+}
+
+function isStatefulBodyParam(binding: Binding) {
+  return isSectionParam(binding) && isStatefulBranch(binding.section);
 }
 
 // The sources take a param a calling tag may pass client state: a template's
@@ -1353,8 +1383,15 @@ export function namesBodyOwner(section: Section, body: Section) {
     body.readsOwner &&
     body.parent !== section &&
     patchWrites(section) &&
-    patchCreatesOrComposes(section)
+    patchCreatesOrComposes(section) &&
+    !runsSetupFromCall(body)
   );
+}
+
+// A body some consumer renders stateful runs its setup from its calls' inits and its
+// params from their renders, so names nothing per created scope.
+export function runsSetupFromCall(body: Section) {
+  return !!body.callSections && isStatefulBranch(body);
 }
 
 // An effect read the wire cannot keep current blocks creation; fills,

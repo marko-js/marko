@@ -87,6 +87,7 @@ import {
 import {
   type CreatedInit,
   type FillConditions,
+  getCreatedCallSetups,
   getCreatedInits,
   isPatchWrittenJoin,
   getPatchFillBindings,
@@ -463,6 +464,9 @@ export function getShellInitIds(section: Section) {
     if (init.subscribe === "always") {
       ids += (ids && " ") + getResumeRegisterId(section, ref, "subscribe");
     }
+  }
+  for (const child of getCreatedCallSetups(section)) {
+    ids += (ids && " ") + getResumeRegisterId(section, child, "init");
   }
   return ids;
 }

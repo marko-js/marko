@@ -74,7 +74,6 @@ import {
   StructureKind,
 } from "../../util/sections";
 import {
-  addStatement,
   addValue,
   getResumeRegisterId,
   getSignal,
@@ -285,11 +284,9 @@ export default {
                     .identifier;
             },
             (section, childBinding) => {
+              const setup: t.Expression[] = [];
               if (definedBodySection.readsOwner) {
-                addStatement(
-                  "render",
-                  section,
-                  undefined,
+                setup.push(
                   t.assignmentExpression(
                     "=",
                     toMemberExpression(
@@ -301,16 +298,14 @@ export default {
                 );
               }
               if (definedBodySection.hasSetupWork) {
-                addStatement(
-                  "render",
-                  section,
-                  undefined,
+                setup.push(
                   t.callExpression(
                     getSignal(definedBodySection, undefined).identifier,
                     [createScopeReadExpression(childBinding, section)],
                   ),
                 );
               }
+              return setup;
             },
           );
 

@@ -45,6 +45,7 @@ import {
   toArray,
 } from "./optional";
 import {
+  getCreatedCallSetups,
   getCreatedInits,
   isPatchWrittenJoin,
   getPatchFillKey,
@@ -60,6 +61,7 @@ import {
   closureCarriesFill,
   rerunsEffectOnPatch,
   hasTagCallerParamAt,
+  runsSetupFromCall,
 } from "./patch/refresh";
 import {
   patchWrites,
@@ -124,6 +126,7 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
+import { isCallSetupExpr } from "./setup-work";
 import { isQueuedOnCreate, shipsContentShell } from "./shell";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
@@ -604,9 +607,17 @@ export function getGlobalJoins(section: Section) {
       (Array.isArray(referencedBindings) &&
         isPatchWrittenJoin(referencedBindings) &&
         getSourcesForRef(referencedBindings));
+    // A call's own setup work joins under the init a created scope runs it by.
+    const call =
+      !referencedBindings &&
+      section.knownTags?.find(
+        (call) =>
+          getCreatedCallSetups(section).includes(call.childScopeBinding!) &&
+          isCallSetupExpr(call, expr),
+      );
     const id = getGlobalJoinId(
       section,
-      referencedBindings,
+      call ? call.childScopeBinding : referencedBindings,
       getGlobalJoinReads(expr, getGlobalReads(expr)!),
     );
     const prev = joins.get(id);
@@ -806,13 +817,17 @@ function isPureMemberForwarder(binding: Binding): boolean {
   return hasNonConstantPropertyAlias(binding);
 }
 
-// An effect a created scope's shell leaves out: one its render queues, or one
-// reading a value a patch writes, which its entry mounts.
+// An effect a created scope's shell leaves out: one its render or its call's
+// setup queues, or one reading a value a patch writes, which its entry mounts.
 export function isEffectOutsideShell(
   section: Section,
   refs: ReferencedBindings,
 ) {
-  return isQueuedOnCreate(section, refs) || some(refs, rerunsEffectOnPatch);
+  return (
+    runsSetupFromCall(section) ||
+    isQueuedOnCreate(section, refs) ||
+    some(refs, rerunsEffectOnPatch)
+  );
 }
 
 // The sources an effect re-runs on where one is a param a calling tag passes.
@@ -1293,7 +1308,22 @@ export function addStatement(
   statement: t.Statement | t.Statement[] | t.Expression,
   isPure?: boolean,
 ): void {
-  const signal = getExprSignal(targetSection, expr);
+  addSignalStatement(
+    getExprSignal(targetSection, expr),
+    type,
+    statement,
+    isPure,
+  );
+}
+
+// The signal runs the statement on its `type` pass, storing its value unless
+// a pure render statement is all that reads it.
+export function addSignalStatement(
+  signal: Signal,
+  type: "render" | "effect" | "patch",
+  statement: t.Statement | t.Statement[] | t.Expression,
+  isPure?: boolean,
+) {
   const statements = (signal[type] ??= []);
 
   if (Array.isArray(statement)) {
@@ -1353,12 +1383,16 @@ export function addValue(
 }
 
 // An expression reading `$global` keys (a patch build's) adds its work to its
-// signal's join for those keys, along with what it reads.
-function getExprSignal(section: Section, expr: t.NodeExtra | undefined) {
+// signal's join for those keys, along with what it reads (or `refs` keys it by).
+export function getExprSignal(
+  section: Section,
+  expr: t.NodeExtra | undefined,
+  refs = getReferencedBindings(expr),
+) {
   const reads = getGlobalReads(expr);
   const signal = getSignal(
     section,
-    getReferencedBindings(expr),
+    refs,
     undefined,
     reads && getGlobalJoinReads(expr!, reads),
   );
@@ -1762,20 +1796,18 @@ function buildClosureFillJoin(
     : fill;
 }
 
-// A scope a flush creates runs the closure by its init, registered with the
-// signal it runs (each fill wrapper returns it).
-function wrapCreatedInit(
-  signal: Signal,
-  closure: Binding,
-  value: t.Expression,
-) {
+// A scope a flush creates runs a closure, or a call's setup work, by its init,
+// registered with the signal it runs (each fill wrapper returns it).
+function wrapCreatedInit(signal: Signal, ref: Binding, value: t.Expression) {
   const { section } = signal;
-  return getCreatedInits(section).get(closure)?.init
-    ? callRuntime(
-        "_shell_init",
-        t.stringLiteral(getResumeRegisterId(section, closure, "init")),
-        value,
-      )
+  const id = getResumeRegisterId(section, ref, "init");
+  // A call's init has no caller in any bundle (only server-rendered structure's
+  // setup runs it), so it registers by an assignment shaking keeps.
+  if (getCreatedCallSetups(section).includes(ref)) {
+    return registerRuntimeValue(id, value);
+  }
+  return getCreatedInits(section).get(ref)?.init
+    ? callRuntime("_shell_init", t.stringLiteral(id), value)
     : value;
 }
 
