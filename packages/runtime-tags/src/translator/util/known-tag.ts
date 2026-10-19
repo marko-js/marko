@@ -105,9 +105,7 @@ type AttrTagGroup = AttrTagLookup[string]["group"];
 
 // Bound after every tag in the section is set up, so a `<return>` a setup
 // sends early reaches tags that read it only once they are set up too.
-const [getTagVarBindings] = createOutputSectionState(
-  () => [] as t.Statement[],
-);
+const [getTagVarBindings] = createOutputSectionState(() => [] as t.Statement[]);
 
 const kChildSection = Symbol("known tag child section");
 const kParamsTree = Symbol("known tag params tree");
