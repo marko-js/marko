@@ -22,8 +22,6 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 		_scope($scope2_id, {}, "__tests__/tags/picker.marko", "4:2");
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.useA ? Card : Other, { record: input.record }, 0, 0, $wg__input_useA__OR__input_record, void 0, 1, $scope0_reason, 0);
-	_patch_write($scope0_id, "PatchWrite:input_useA", input.useA, 1);
-	_patch_write($scope0_id, "PatchWrite:input_record", input.record, 1);
 	_patch_write($scope0_id, "PatchWrite:Card", Card, 1);
 	_patch_write($scope0_id, "PatchWrite:Other", Other, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/picker.marko_0_input_useA#3_input_record#4_Card#5_Other#6/init");

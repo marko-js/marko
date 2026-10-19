@@ -20,8 +20,6 @@ var picker_default = _template("b", (input) => {
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "b", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "b1");
-	_patch_write($scope0_id, "we", input.refreshing, 1);
-	_patch_write($scope0_id, "wf", input.refreshingChange, 1);
 	_patch_write($scope0_id, "wk", load, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b4");
 	const $refreshingChange = input.refreshingChange || void 0;

@@ -8,8 +8,6 @@ var demo_card_default = _template("b", (input) => {
 	let selected = input.tab;
 	_html(`<button>tab=${_text_resume($scope0_id, "b", String(selected), 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_patch_write($scope0_id, "we", input.tab, 1);
-	_patch_write($scope0_id, "wf", input.tabChange, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b3");
 	const $selectedChange = input.tabChange || void 0;
 	_patch_let_change($scope0_id, "vb4", selected, "di", $selectedChange, $scope0_reason, 0);

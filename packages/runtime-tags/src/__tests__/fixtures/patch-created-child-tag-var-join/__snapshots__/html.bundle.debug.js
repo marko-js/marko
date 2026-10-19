@@ -32,8 +32,6 @@ var file_tabs_default = _template("__tests__/tags/file-tabs.marko", (input) => {
 	let tabs = input.files;
 	_html(`<p>${_text_resume($scope0_id, "#text/0", tabs.map((tab) => tab.path).join())}</p><button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/file-tabs.marko_0");
-	_patch_write($scope0_id, "PatchWrite:input_files", input.files, 1);
-	_patch_write($scope0_id, "PatchWrite:input_filesChange", input.filesChange, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/file-tabs.marko_0_input_files#4_input_filesChange#5/init");
 	const $tabsChange = input.filesChange || void 0;
 	_patch_let_change($scope0_id, "PatchValue:__tests__/tags/file-tabs.marko_fill2", tabs, "PatchBind:TagVariableChange:tabs", $tabsChange, $scope0_reason, 0);

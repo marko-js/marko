@@ -9,9 +9,6 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		label: input.label,
 		items: input.items
 	}, 0, 0, $wg__input_content__OR__input_label__OR__input_items, void 0, 1, $scope0_reason, 3);
-	_patch_write($scope0_id, "PatchWrite:input_content", input.content, 1);
-	_patch_write($scope0_id, "PatchWrite:input_label", input.label, 1);
-	_patch_write($scope0_id, "PatchWrite:input_items", input.items, 1);
 	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "__tests__/tags/panel.marko_0_input_content#3_input_label#4_input_items#5/init");
 	$scope0_page ? _scope($scope0_id, {
 		input_content: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.content,

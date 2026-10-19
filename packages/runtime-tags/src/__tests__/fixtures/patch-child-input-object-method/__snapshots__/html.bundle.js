@@ -8,14 +8,12 @@ var code_block_default = _template("b", (input) => {
 		return text.replace(input.cursor.test, (m) => `<b>${input.cursor.content((s) => s)}</b>`);
 	}, "b0", $scope0_id);
 	_html(`<div>${_patch_html($scope0_id, "a", highlight(input.text), void 0, $scope0_reason, 0)}</div>`);
-	_patch_write($scope0_id, "we", input.text, 1);
-	_patch_write($scope0_id, "wf", highlight, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b3");
 	$scope0_page ? _scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.cursor,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.text,
-		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && highlight
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.text, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb2", highlight, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 1) && (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if()) && _patch_write($scope0_id, "wd", input.cursor, !_server_guard($scope0_reason, 1)));
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.cursor,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.text,
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && highlight
+	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb1", input.text, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_value($scope0_id, "vb2", highlight, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 1) && (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && _patch_write($scope0_id, "wd", input.cursor, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko

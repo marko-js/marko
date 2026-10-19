@@ -7,8 +7,6 @@ var boxp_default = _template("b", (input) => {
 	_html("<div>");
 	_dynamic_tag($scope0_id, "a", input.content, { x: input.x }, 0, 0, $wg__input_content__OR__input_x, void 0, 1, $scope0_reason, 0);
 	_html("</div>");
-	_patch_write($scope0_id, "wd", input.content, 1);
-	_patch_write($scope0_id, "we", input.x, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b2");
 	$scope0_page ? _scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.content,

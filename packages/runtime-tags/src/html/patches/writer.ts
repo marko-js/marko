@@ -717,6 +717,29 @@ export function _patch_init(scopeId: number, initId: string, shell?: 1) {
   return "";
 }
 
+// A join a patch writes as holes under its group: where the group mixes client
+// and server, the scope re-runs it, fresh or existing; client alone, a fresh one.
+export function _patch_join_init(
+  scopeId: number,
+  initId: string,
+  mask: GroupMask,
+  group: number,
+) {
+  const state = getState();
+  if (state instanceof PatchUpdateState) {
+    const sources = groupSources(mask, group);
+    if (sources === 3) {
+      const patch = ensureScopePatch(state, scopeId);
+      patch[PatchKey.Init] = patch[PatchKey.Init]
+        ? patch[PatchKey.Init] + " " + initId
+        : initId;
+    } else if (sources & 1 && inCreatable()) {
+      addSetupId(state, scopeId, initId);
+    }
+  }
+  return "";
+}
+
 // Emitted as the scope reason's complement, so only a patch (the falsy
 // patch reason) ever reaches here.
 export function _patch_value(

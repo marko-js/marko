@@ -15,8 +15,6 @@ var wrap_default = _template("c", (input) => {
 	_html("<section>");
 	_dynamic_tag($scope0_id, "a", input.content, { label: input.label }, 0, 0, $wg__input_content__OR__input_label, void 0, 1, $scope0_reason, 0);
 	_html("</section>");
-	_patch_write($scope0_id, "wd", input.content, 1);
-	_patch_write($scope0_id, "we", input.label, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "c2");
 	$scope0_page ? _scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.content,

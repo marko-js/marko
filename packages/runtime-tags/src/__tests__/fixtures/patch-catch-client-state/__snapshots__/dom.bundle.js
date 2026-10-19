@@ -15,7 +15,7 @@ const $catch_content__err_message = /*@__PURE__*/ _const(5, $catch_content__inpu
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content$1("b7", "<button class=inc><!> <!></button>", " D%c%", $catch_content__setup, $catch_content__$params);
 const $input_label__closure = /*@__PURE__*/ _closure($catch_content__input_label);
-const $input_label = /*@__PURE__*/ _fill_const("b8", 3, $input_label__closure);
+const $input_label = /*@__PURE__*/ _const(3, $input_label__closure);
 
 // template.marko
 const $label = /*@__PURE__*/ _fill_let("a1", 5, ($scope) => $input_label($scope.b, $scope.f));

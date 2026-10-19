@@ -8,7 +8,7 @@ const $if_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope._;
 	$Info_content__setup($scope["#childScope/0"]);
 };
-const $Info_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill1", "input_b", /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill0", "input_a", /*@__PURE__*/ _shell_or("__tests__/tags/panel.marko_1_input_a#0:3_input_b#0:4/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + ":" + $scope._.input_b)), "input_a/6", 0), "input_b/7", 0);
+const $Info_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _patch_or("__tests__/tags/panel.marko_1_input_a#0:3_input_b#0:4/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + ":" + $scope._.input_b)), "input_a/6", 0), "input_b/7", 0);
 const $Info_content__input_a = _closure_resume("__tests__/tags/panel.marko_1_input_a#0:3/subscribe", /*@__PURE__*/ _closure_get("input_a/6", $Info_content__input_a__OR__input_b));
 const $Info_content__setup = ($scope) => {
 	$Info_content__input_a($scope);
@@ -23,9 +23,9 @@ const $input$1 = ($scope, input) => {
 	$input_show$1($scope, input.show);
 };
 const $input_a__closure = /*@__PURE__*/ _closure($Info_content__input_a);
-const $input_a = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill0", "input_a", $input_a__closure);
+const $input_a = /*@__PURE__*/ _const("input_a", $input_a__closure);
 const $input_b__closure = /*@__PURE__*/ _closure($Info_content__input_b);
-const $input_b = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill1", "input_b", $input_b__closure);
+const $input_b = /*@__PURE__*/ _const("input_b", $input_b__closure);
 var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$1, "b%c", 0, $input$1);
 
 // template.marko

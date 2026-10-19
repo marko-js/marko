@@ -18,8 +18,6 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	_html("<section>");
 	_dynamic_tag($scope0_id, "#text/0", input.content, { label: input.label }, 0, 0, $wg__input_content__OR__input_label, void 0, 1, $scope0_reason, 0);
 	_html("</section>");
-	_patch_write($scope0_id, "PatchWrite:input_content", input.content, 1);
-	_patch_write($scope0_id, "PatchWrite:input_label", input.label, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/wrap.marko_0_input_content#3_input_label#4/init");
 	$scope0_page ? _scope($scope0_id, {
 		input_content: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.content,

@@ -30,8 +30,6 @@ var file_tabs_default = _template("e", (input) => {
 	let tabs = input.files;
 	_html(`<p>${_text_resume($scope0_id, "a", tabs.map((tab) => tab.path).join())}</p><button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "e0");
-	_patch_write($scope0_id, "we", input.files, 1);
-	_patch_write($scope0_id, "wf", input.filesChange, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "e3");
 	const $tabsChange = input.filesChange || void 0;
 	_patch_let_change($scope0_id, "ve4", tabs, "di", $tabsChange, $scope0_reason, 0);

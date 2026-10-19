@@ -8,11 +8,10 @@ var child_default = _template("b", (input) => {
 	_html(`<p>${_patch_text($scope0_id, "a", input.a + input.b, void 0, $scope0_reason, 0)}</p><div></div>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b0", 1, 1);
 	_server_guard($scope0_reason, 1) && _patch_effect($scope0_id, "hb0", "e");
-	_patch_write($scope0_id, "wf", input.b, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b3");
 	$scope0_page ? _scope($scope0_id, {
 		e: input.a,
-		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.b
+		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b
 	}) : (_filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 2) ? _patch_value($scope0_id, "vb1", input.a, !_server_guard($scope0_reason, 1)) : _patch_write($scope0_id, "we", input.a, !_server_guard($scope0_reason, 1))), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vb2", input.b, !_server_guard($scope0_reason, 2)));
 });
 

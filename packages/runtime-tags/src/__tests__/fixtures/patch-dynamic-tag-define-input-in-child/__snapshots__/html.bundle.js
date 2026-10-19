@@ -21,8 +21,6 @@ var picker_default = _template("b", (input) => {
 		_scope($scope2_id, {});
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.useA ? Card : Other, { record: input.record }, 0, 0, $wg__input_useA__OR__input_record, void 0, 1, $scope0_reason, 0);
-	_patch_write($scope0_id, "wd", input.useA, 1);
-	_patch_write($scope0_id, "we", input.record, 1);
 	_patch_write($scope0_id, "wf", Card, 1);
 	_patch_write($scope0_id, "wg", Other, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b4");

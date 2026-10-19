@@ -6,10 +6,10 @@ function boom(error) {
 }
 _shells({
 	"__tests__/tags/panel.marko_2*content": "__tests__/tags/panel.marko_2*content;D ;<p> </p>",
-	"__tests__/tags/panel.marko": "__tests__/tags/panel.marko !;b%;<!><!><!>"
+	"__tests__/tags/panel.marko": "__tests__/tags/panel.marko;b%;<!><!><!>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_error = _write_if($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_error__closures = new Set();
@@ -30,7 +30,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_label#0:3_err_message#5/init");
 		_patch_value($scope1_id, "PatchValue:__tests__/tags/panel.marko_fill1", n, 1);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
-			err_message: $wi__input_label && err?.message,
+			err_message: _unfilled_if($scope0_reason, 0) && err?.message,
 			n,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/panel.marko", "6:4", {
@@ -38,11 +38,12 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			n: "7:10"
 		}), _client_guard($scope0_reason, 0) && "__tests__/tags/panel.marko_1_input_label#0:3/subscribe");
 	}, void 0, "__tests__/tags/panel.marko_1*content", "__tests__/tags/panel.marko_2*content", 1, 2);
-	$scope0_page ? _scope($scope0_id, {
+	_filled_guard($scope0_reason, 0) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill0/unpatched", input.label) : _patch_write($scope0_id, "PatchWrite:input_label", input.label, 1);
+	$scope0_page && _scope($scope0_id, {
 		input_label: input.label,
-		"ClosureScopes:input_label/5": $wi__input_label && $input_label__closures,
+		"ClosureScopes:input_label/5": _write_if($scope0_reason, 0) && $input_label__closures,
 		"ClosureScopes:input_error/6": $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}, "__tests__/tags/panel.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
+	}, "__tests__/tags/panel.marko", 0, { input_label: ["input.label"] });
 });
 
 // template.marko

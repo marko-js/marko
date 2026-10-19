@@ -7,7 +7,7 @@ function boom(error) {
 const $try_content__input_error = /*@__PURE__*/ _shell_init("__tests__/tags/panel.marko_2_input_error#0:4/init", /*@__PURE__*/ _closure_get("input_error/6", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/tags/panel.marko_2_input_error#0:4/subscribe"));
 const $try_content__setup = $try_content__input_error;
 const $catch_content__text = ($scope, text) => _text($scope["#text/1"], text);
-const $catch_content__input_label__OR__err_message = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill0", "input_label", /*@__PURE__*/ _shell_or("__tests__/tags/panel.marko_1_input_label#0:3_err_message#5/init", 6, ($scope) => $catch_content__text($scope, `${$scope._.input_label}: ${$scope.err_message}`)), "input_label/5", 0);
+const $catch_content__input_label__OR__err_message = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill0/unpatched", "input_label", /*@__PURE__*/ _shell_or("__tests__/tags/panel.marko_1_input_label#0:3_err_message#5/init", 6, ($scope) => $catch_content__text($scope, `${$scope._.input_label}: ${$scope.err_message}`)), "input_label/5", 0);
 const $catch_content__input_label = /*@__PURE__*/ _closure_get("input_label/5", $catch_content__input_label__OR__err_message, 0, "__tests__/tags/panel.marko_1_input_label#0:3/subscribe");
 const $catch_content__n = /*@__PURE__*/ _fill_let("__tests__/tags/panel.marko_fill1", "n/7", ($scope) => _text($scope["#text/2"], $scope.n));
 const $catch_content__setup__script = _script("__tests__/tags/panel.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
@@ -30,7 +30,7 @@ const $input$1 = ($scope, input) => {
 	$input_error$1($scope, input.error);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($catch_content__input_label);
-const $input_label = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill0", "input_label", $input_label__closure);
+const $input_label = /*@__PURE__*/ _const("input_label", $input_label__closure);
 const $input_error__closure = /*@__PURE__*/ _closure($try_content__input_error);
 const $input_error$1 = /*@__PURE__*/ _const("input_error", $input_error__closure);
 var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$1, "b%c", $setup$1, $input$1);

@@ -12,7 +12,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
 		_html(`<span>${_patch_text($scope1_id, "#text/0", input.a + input.b, void 0, $scope1_reason, 0)}</span>`);
 		_patch_write($scope1_id, "PatchWrite:input_a", input.a, 1);
-		_patch_write($scope1_id, "PatchWrite:input_b", input.b, 1);
 		$scope1_page ? _scope($scope1_id, {
 			input_a: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 1)) && input.a,
 			input_b: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 0)) && input.b

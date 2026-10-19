@@ -388,7 +388,7 @@ export function getLoopBody(binding: Binding) {
   return find(binding.branchBodies, isLoopBody);
 }
 
-function isLoopBody(section: Section) {
+export function isLoopBody(section: Section) {
   return !!section.branch?.optional && section.branch.index === undefined;
 }
 

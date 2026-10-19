@@ -8,11 +8,10 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 0)}</p><div></div>${_el_resume($scope0_id, "#div/1")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_input_a#4", 1, 1);
 	_server_guard($scope0_reason, 1) && _patch_effect($scope0_id, "PatchQueuedEffect:__tests__/tags/child.marko_0_input_a#4", "input_a");
-	_patch_write($scope0_id, "PatchWrite:input_b", input.b, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/child.marko_0_input_a#4_input_b#5/init");
 	$scope0_page ? _scope($scope0_id, {
 		input_a: input.a,
-		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.b
+		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]

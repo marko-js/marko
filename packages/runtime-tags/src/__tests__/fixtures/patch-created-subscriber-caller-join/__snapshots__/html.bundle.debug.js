@@ -33,14 +33,14 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 4);
 	$scope0_page ? _scope($scope0_id, {
-		input_a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && input.a,
-		input_b: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.b,
-		"ClosureScopes:input_a/7": _write_if($scope0_reason, 5) && (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && $input_a__closures,
-		"ClosureScopes:input_b/8": _write_if($scope0_reason, 6) && (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && $input_b__closures
+		input_a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.a,
+		input_b: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.b,
+		"ClosureScopes:input_a/7": _write_if($scope0_reason, 5) && (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2)) && $input_a__closures,
+		"ClosureScopes:input_b/8": _write_if($scope0_reason, 6) && (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 2)) && $input_b__closures
 	}, "__tests__/tags/panel.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]
-	}) : (_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 6)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill0", input.a, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) || _client_guard($scope0_reason, 5)) && _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill1", input.b, !_server_guard($scope0_reason, 6)));
+	}) : (_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 4) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill0/unpatched", input.a) : _client_guard($scope0_reason, 6) && _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill0", input.a, !_server_guard($scope0_reason, 5))), _filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 4) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill1/unpatched", input.b) : _client_guard($scope0_reason, 5) && _patch_value($scope0_id, "PatchValue:__tests__/tags/panel.marko_fill1", input.b, !_server_guard($scope0_reason, 6))));
 });
 
 // template.marko

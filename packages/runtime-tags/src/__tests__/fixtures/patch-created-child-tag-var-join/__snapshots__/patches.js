@@ -20,8 +20,6 @@ f, [`b0;/D l b&;<p> </p><button>+</button>`, `a0;b%b/0&//D%l&&&b;<!><!><div><!><
             ca: {
               s: {
                 i: "e3!e0",
-                we: _.a,
-                df: ["f0", 3],
                 ve4: _.a,
                 ue2: ["f0", 3]
               },

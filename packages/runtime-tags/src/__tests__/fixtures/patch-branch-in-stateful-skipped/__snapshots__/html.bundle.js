@@ -8,9 +8,6 @@ var panel_default = _template("b", (input) => {
 		label: input.label,
 		items: input.items
 	}, 0, 0, $wg__input_content__OR__input_label__OR__input_items, void 0, 1, $scope0_reason, 3);
-	_patch_write($scope0_id, "wd", input.content, 1);
-	_patch_write($scope0_id, "we", input.label, 1);
-	_patch_write($scope0_id, "wf", input.items, 1);
 	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "b3");
 	$scope0_page ? _scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.content,

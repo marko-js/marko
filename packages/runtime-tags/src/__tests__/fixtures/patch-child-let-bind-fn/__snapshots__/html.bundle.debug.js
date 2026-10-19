@@ -20,8 +20,6 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 		_scope($scope1_id, {}, "__tests__/tags/picker.marko", "10:6");
 	}, 0, $scope0_id, "#ul/1", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "__tests__/tags/picker.marko_0");
-	_patch_write($scope0_id, "PatchWrite:input_refreshing", input.refreshing, 1);
-	_patch_write($scope0_id, "PatchWrite:input_refreshingChange", input.refreshingChange, 1);
 	_patch_write($scope0_id, "PatchWrite:load", load, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/picker.marko_0_input_refreshing#4_input_refreshingChange#5/init");
 	const $refreshingChange = input.refreshingChange || void 0;

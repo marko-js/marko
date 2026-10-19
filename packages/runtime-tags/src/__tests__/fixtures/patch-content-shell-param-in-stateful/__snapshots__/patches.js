@@ -8,15 +8,6 @@
         s: {
           va4: !0
         }
-      },
-      s: {
-        wd: {
-          content: _(["Aa"], "a0", 1),
-          *[Symbol.iterator]() {
-            yield this
-          }
-        },
-        we: "b"
       }
     }
   }, "a1"]
@@ -33,15 +24,6 @@
         s: {
           va4: !0
         }
-      },
-      s: {
-        wd: {
-          content: _(["Aa"], "a0", 1),
-          *[Symbol.iterator]() {
-            yield this
-          }
-        },
-        we: "c"
       }
     }
   }, "a1"]

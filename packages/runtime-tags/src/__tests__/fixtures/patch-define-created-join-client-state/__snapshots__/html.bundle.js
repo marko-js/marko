@@ -13,7 +13,6 @@ var template_default = _template("a", (input) => {
 		const $scope2_reason = _scope_reason(), $scope2_page = _page_render();
 		_html(`<p>t=${_patch_text($scope2_id, "a", input.a + input.b, 2, $scope2_reason, 0)}</p>`);
 		_patch_write($scope2_id, "wd", input.a, 1);
-		_patch_write($scope2_id, "we", input.b, 1);
 		_client_guard($scope2_reason, 0) && _patch_init($scope2_id, "a3");
 		$scope2_page ? _scope($scope2_id, {
 			d: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && input.a,

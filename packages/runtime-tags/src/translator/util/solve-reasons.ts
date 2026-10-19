@@ -26,11 +26,7 @@ import {
   rest,
   some,
 } from "./optional";
-import {
-  ensurePatchReasonGroups,
-  resetClosureInits,
-  resetPatchFills,
-} from "./patch/refresh";
+import { ensurePatchReasonGroups, resetPatchPass } from "./patch/refresh";
 import {
   addOwnerReason,
   addReason,
@@ -82,8 +78,7 @@ export function solveReasons(
     resetExtraReaders();
     resetBindingReaders();
     if (isPatch()) {
-      resetPatchFills();
-      resetClosureInits();
+      resetPatchPass();
     }
     forEachSection((section) =>
       addIntersectionReasons(section, intersectionsBySection.get(section)),

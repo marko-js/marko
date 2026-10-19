@@ -68,8 +68,6 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 		$wg__input_show || _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.flag ? A : B, { x: input.x }, 0, 0, $wg__input_flag__OR__input_x, void 0, 1, $scope0_reason, 0);
-	_patch_write($scope0_id, "PatchWrite:input_flag", input.flag, 1);
-	_patch_write($scope0_id, "PatchWrite:input_x", input.x, 1);
 	_patch_write($scope0_id, "PatchWrite:A", A, 1);
 	_patch_write($scope0_id, "PatchWrite:B", B, 1);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/w.marko_0_input_flag#4_input_x#5_A#6_B#7/init");

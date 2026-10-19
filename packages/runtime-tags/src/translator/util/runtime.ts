@@ -30,6 +30,7 @@ const pureDOMFunctions = new Set<string>([
   "_closure_index",
   "_shell_init",
   "_shell_or",
+  "_patch_or",
   "_fill_const",
   "_fill_let",
   "_fill_let_change",

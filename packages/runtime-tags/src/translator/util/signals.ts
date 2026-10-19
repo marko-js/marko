@@ -46,6 +46,7 @@ import {
 } from "./optional";
 import {
   getCreatedInits,
+  isPatchWrittenJoin,
   getPatchFillKey,
   joinsFillOverSubscribers,
   registersJoinFill,
@@ -74,6 +75,7 @@ import {
 import { getReadReplacement } from "./read-replacement";
 import {
   getNodeReasons,
+  getSourcesForRef,
   isConditionalReason,
   isUnconditionalReason,
   type Reason,
@@ -497,7 +499,7 @@ export function getSignal(
         const init = isPatch() && getCreatedInits(section).get(closure);
         const changeable = resumesSubscriber(section, closure);
         const subscribe = init && init.subscribe;
-        const fillKey = isPatch() && getClosureFillKey(section, closure);
+        const fills = isPatch() && registersClosureFill(section, closure);
         // Keyed by this subscriber's section, as the HTML registration is; a
         // created scope's init names the same id, subscribing as a resume does.
         const resumeId =
@@ -509,7 +511,7 @@ export function getSignal(
           !!subscribe && (subscribe === "always" || !!subscribe.unfilled);
         // Built trimmed: the signal's writer trims only the outermost call,
         // which a wrapper around the subscriber becomes.
-        let closureGet = callRuntime(
+        let closureGet: t.Expression = callRuntime(
           "_closure_get",
           ...trimEmptyArgs([
             getClosureAccessorLiteral(closure),
@@ -524,15 +526,15 @@ export function getSignal(
           ]),
         );
         const index = getDynamicClosureIndex(closure, section);
-        if (fillKey) {
+        if (fills) {
           // Deep closure positions reassemble the indexed composite via a
           // shared per-key table, keyed by the serialized index.
-          closureGet = callRuntime(
+          closureGet = buildClosureFillJoin(
             "_fill_join_closure",
-            fillKey,
-            getScopeAccessorLiteral(closure, true),
+            section,
+            closure,
             closureGet,
-            t.numericLiteral(index),
+            index,
           );
         } else if (index && dispatchesByIndex(closure)) {
           // A created later position carries the index its owner's composite
@@ -595,8 +597,13 @@ export function getGlobalJoins(section: Section) {
   const joins = new Map<string, true | Sources | undefined>();
   for (const expr of section.globalReadExprs || []) {
     const referencedBindings = getReferencedBindings(expr);
+    // The client runs a written join wherever its group has a client member.
     const unfilled =
-      getCallerHeldSources(referencedBindings) || isResumedRead(expr);
+      getCallerHeldSources(referencedBindings) ||
+      isResumedRead(expr) ||
+      (Array.isArray(referencedBindings) &&
+        isPatchWrittenJoin(referencedBindings) &&
+        getSourcesForRef(referencedBindings));
     const id = getGlobalJoinId(
       section,
       referencedBindings,
@@ -679,7 +686,8 @@ export function initValue(binding: Binding, isLet = false) {
   // Lazy reads read the value from its scope slot.
   if (binding.hasLazyReads) signal.forceStore = true;
   signal.build = () => {
-    // A value a patch writes in place takes the write patcher.
+    // A value a patch writes in place takes the write patcher; a join's member
+    // write rides `patches/value`, which the caller's client state fill brings.
     if (isPatch() && getPatchWrite(binding).write) {
       importRuntimeFeature("patches/write");
     }
@@ -959,13 +967,13 @@ function buildIntersection(
 ) {
   const { source, id, returnedBy } = section.intersections!.get(intersection)!;
   if (source) return fn;
-  // A created scope runs the join by its init id (`getCreatedInits`).
+  // A created scope runs the join by its init id (`getCreatedInits`), as any
+  // scope does a written join's where its group mixes, whose init brings its patcher.
+  const init = isPatch() && getCreatedInits(section).get(intersection);
   const shellInitId =
-    isPatch() &&
-    getCreatedInits(section).has(intersection) &&
-    getResumeRegisterId(section, intersection, "init");
+    init && getResumeRegisterId(section, intersection, "init");
   return callRuntime(
-    shellInitId ? "_shell_or" : "_or",
+    shellInitId ? (init.init === "mixed" ? "_patch_or" : "_shell_or") : "_or",
     ...(shellInitId ? [t.stringLiteral(shellInitId)] : []),
     t.numericLiteral(id),
     fn,
@@ -1070,9 +1078,13 @@ export function buildSignalFn(signal: Signal): t.Expression {
 
         dynamicClosureArgs.push(getSignal(closureSection, binding).identifier);
       } else {
+        // A fill reaches a closure in structure the client may own, which
+        // no patch writes there.
         const closureSignal = getSignal(closureSection, binding);
         pushScopeCall(
-          forwardsTo(signal, closureSignal),
+          isPatch() && registersClosureFill(closureSection, binding)
+            ? signal.render
+            : forwardsTo(signal, closureSignal),
           closureSignal.identifier,
         );
       }
@@ -1600,13 +1612,12 @@ function wrapJoinFills(
 ) {
   const { section } = signal;
   let expr = value;
-  for (const ref of join) {
-    const member = getCanonicalBinding(ref);
-    if (!registersJoinFill(member)) continue;
+  // The member's fill under `key` runs the join where the member's scope reaches it.
+  const register = (member: Binding, key: string) => {
     if (member.section === section) {
       expr = callRuntime(
         "_fill_join",
-        t.stringLiteral(getPatchFillKey(member)),
+        t.stringLiteral(key),
         getScopeAccessorLiteral(member, true),
         expr,
       );
@@ -1617,7 +1628,7 @@ function wrapJoinFills(
       const { helper, hops } = getFillJoinHops(section, member.section);
       expr = callRuntime(
         helper,
-        t.stringLiteral(getPatchFillKey(member)),
+        t.stringLiteral(key),
         getScopeAccessorLiteral(member, true),
         expr,
         ...hops,
@@ -1627,15 +1638,53 @@ function wrapJoinFills(
       // closure subscribers; in stateful structure its closure signal does.
       expr = callRuntime(
         "_fill_join_subscribers",
-        t.stringLiteral(getPatchFillKey(member)),
+        t.stringLiteral(key),
         getScopeAccessorLiteral(member, true),
         expr,
         getClosureAccessorLiteral(member),
         t.numericLiteral(getDynamicClosureIndex(member, section)),
       );
     }
+  };
+  // A written join's members re-run it by their join fills where the scope does
+  // not init it, else only set their values; an unpatched key re-runs it too.
+  const written = isPatchWrittenJoin(join);
+  for (const ref of join) {
+    const member = getCanonicalBinding(ref);
+    const registers = registersJoinFill(member);
+    const { unpatchedJoins, joinFill } = getPatchFill(member);
+    if (written) {
+      if (joinFill === join) register(member, getPatchFillKey(member));
+      else expr = registerValueAlone(member, expr);
+      if (unpatchedJoins?.includes(join)) {
+        register(member, getPatchFillKey(member, "unpatched"));
+      }
+    } else if (registers) {
+      register(member, getPatchFillKey(member));
+      // The unpatched key runs whatever the member's fill does.
+      if (unpatchedJoins) {
+        register(member, getPatchFillKey(member, "unpatched"));
+      }
+    }
   }
   return expr;
+}
+
+// A member's value registers alone on the join: a key on another signal may be
+// shaken where this join is kept.
+function registerValueAlone(member: Binding, expr: t.Expression) {
+  return registersJoinFill(member)
+    ? callRuntime(
+        "_fill_join",
+        t.stringLiteral(getPatchFillKey(member)),
+        getScopeAccessorLiteral(member, true),
+        expr,
+        t.arrowFunctionExpression(
+          [],
+          t.arrowFunctionExpression([], t.blockStatement([])),
+        ),
+      )
+    : expr;
 }
 
 // The fill join over the branch hops from `section` up to `owner`, each from
@@ -1674,18 +1723,43 @@ function wrapClosureFill(
   value: t.Expression,
 ) {
   const { section } = signal;
-  const key =
-    !isDynamicClosure(section, closure) &&
+  return !isDynamicClosure(section, closure) &&
     getClosureSignal(section) &&
-    getClosureFillKey(section, closure);
-  return key
-    ? callRuntime(
-        "_fill_join",
-        key,
-        getScopeAccessorLiteral(closure, true),
-        value,
-      )
+    registersClosureFill(section, closure)
+    ? buildClosureFillJoin("_fill_join", section, closure, value)
     : value;
+}
+
+// A closure's fill join in `section`, under its key unless its declaration's
+// registration carries it, and under its unpatched key, which re-runs joins too.
+function buildClosureFillJoin(
+  helper: "_fill_join" | "_fill_join_closure",
+  section: Section,
+  closure: Binding,
+  value: t.Expression,
+  index?: number,
+) {
+  const register = (
+    split: "content" | "unpatched" | undefined,
+    value: t.Expression,
+  ) =>
+    callRuntime(
+      helper,
+      t.stringLiteral(getPatchFillKey(closure, split)),
+      getScopeAccessorLiteral(closure, true),
+      value,
+      index !== undefined && t.numericLiteral(index),
+    );
+  // Content a consumer may withhold refreshes under a key of its own.
+  const content =
+    section.enclosing.inContentSection && getPatchFill(closure).splitsContent;
+  const fill =
+    content || registersJoinFill(closure)
+      ? register(content ? "content" : undefined, value)
+      : value;
+  return getPatchFill(closure).unpatchedJoins
+    ? register("unpatched", fill)
+    : fill;
 }
 
 // A scope a flush creates runs the closure by its init, registered with the
@@ -1718,19 +1792,6 @@ const [dispatchesByIndex] = createAnalysisMemo(
     ),
   false,
 );
-
-// The fill key a closure's signal in `section` registers its fill join under.
-function getClosureFillKey(section: Section, closure: Binding) {
-  if (registersClosureFill(section, closure)) {
-    return t.stringLiteral(
-      getPatchFillKey(
-        closure,
-        section.enclosing.inContentSection &&
-          getPatchFill(closure).splitsContent,
-      ),
-    );
-  }
-}
 
 // A closure's signal in `section` registers a fill join where that signal is
 // the read's only refresh channel.

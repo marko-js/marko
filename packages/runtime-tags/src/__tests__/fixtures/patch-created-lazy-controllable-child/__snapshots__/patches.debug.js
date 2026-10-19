@@ -4,10 +4,8 @@
     "PatchChild:#childScope/1": {
       "PatchChild:#childScope/0": {
         "PatchSetup:": {
-          "PatchWrite:input_tab": 0,
-          "PatchBind:input_tabChange": [_.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/route-pg.marko_0/tabChange", 1],
           "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/tab-editor.marko_0_input_tab#3_input_tabChange#4/init",
-          "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/tab-editor.marko_fill1": [_.a, 1]
+          "PatchBindValue:packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/tab-editor.marko_fill1": ["packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/route-pg.marko_0/tabChange", 1]
         }
       },
       "PatchSetup:": {

@@ -316,7 +316,9 @@ _Avoid_: shell cache, shell manifest
 **Setup envelope**:
 A patch's `PatchKey.Setup` entries: what a created scope gets in place of
 its renderer's setup (seeds, bindings, init ids). It applies only to a scope
-its flush created; a paired scope ignores it.
+its flush created; a paired scope ignores it. Where its group mixes, a written
+join the scope inits rides the scope's own `PatchKey.Init` entry, created or
+paired.
 _Avoid_: seed block, init payload
 
 **Held flush**:
@@ -427,11 +429,33 @@ server-sourced binding whose reads intersect client state, so patches refresh
 it through a registered fill signal. A _join fill_ is a known child's input read by a join whose other
 inputs a caller may pass client state: the section owning the join
 registers it on the join alone (`_fill_join`), and writes it only while
-another input is client-sourced (otherwise the value is a write, and a created
-scope seeds it). No template fills its value into another's param signal.
+another input is client-sourced (otherwise the value is a write). A written
+join takes them where each member its patch ships is a template input only it
+calls for, its scopes reached by hops; otherwise
+the scope inits it, a member only it reads rides its slot write where another
+member is client-sourced (a created scope's seed otherwise), and one filled
+for other reads registers on it with a dispatch that runs nothing. No template
+fills its value into another's param signal.
 Assigned state registers through its own declaration (`_fill_let`), which
 reaches every join that reads it, so no join registers it again.
 _Avoid_: deliver/delivery, forwarder
+
+**Written join**:
+A join of two or more params, one a caller passes, whose every read the patch
+leaves to a hole it writes or an effect its entry re-runs, through any `<const>`
+of it (`isPatchWrittenJoin`); not where each call of a `<define>` body passes a
+member client state, unless a member reads another join. The patch writes it
+where its group is server-sourced on the instance; where the group mixes, its
+members' join fills re-run it, or, where some member has none (one below the
+template root or reached over subscribers, a member of two, one filled for
+other reads), the patch names the join's init on the scope, fresh or existing
+(`_patch_join_init`), and no member's fill re-runs it.
+
+**Unpatched key**:
+A member's fill key with the `/unpatched` suffix (`getPatchFillKey`), as
+withheld content's is `/content`. Where the client may own a written join's
+structure, the member ships under it in place of its fill, slot write or
+seed. Its run re-runs the join, and it registers wherever the fill key does.
 
 **Effect write / capture write**:
 Wire channels for values a patch sends that no fill consumes: an accessor write

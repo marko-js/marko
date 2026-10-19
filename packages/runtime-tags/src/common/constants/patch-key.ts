@@ -16,8 +16,8 @@ export const Html = "q";
 export const DynamicTag = "f";
 // Mirrors `AccessorProp.Global` on live scopes.
 export const Globals = "$";
-// Setup-only: registered ids a fresh scope runs, in the shell's
-// `inits…!effects…` grammar (a client-derived local's inits, a child's mounts).
+// Registered ids a scope runs: a fresh one's setup, in the shell's
+// `inits…!effects…` grammar, or any scope's joins the patch writes.
 export const Init = "i";
 export const Loop = "l";
 export const Pending = "p";

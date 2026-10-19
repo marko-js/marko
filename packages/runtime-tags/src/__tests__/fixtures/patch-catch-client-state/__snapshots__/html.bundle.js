@@ -5,10 +5,10 @@ function boom(error) {
 }
 _shells({
 	b0: "b0;D ;<p> </p>",
-	b: "b !;b%;<!><!><!>"
+	b: "b;b%;<!><!><!>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_error = _write_if($scope0_reason, 1), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_error__closures = /* @__PURE__ */ new Set();
@@ -29,16 +29,17 @@ var panel_default = _template("b", (input) => {
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "b2");
 		_patch_value($scope1_id, "vb3", n, 1);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
-			f: $wi__input_label && err?.message,
+			f: _unfilled_if($scope0_reason, 0) && err?.message,
 			h: n,
 			_: _scope_with_id($scope0_id)
 		}), _client_guard($scope0_reason, 0) && "b4");
 	}, void 0, "b7", "b0", 1, 2);
-	$scope0_page ? _scope($scope0_id, {
+	_filled_guard($scope0_reason, 0) ? _patch_value($scope0_id, "vb8", input.label) : _patch_write($scope0_id, "wd", input.label, 1);
+	$scope0_page && _scope($scope0_id, {
 		d: input.label,
-		f: $wi__input_label && $input_label__closures,
+		f: _write_if($scope0_reason, 0) && $input_label__closures,
 		g: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "vb8", input.label, !_server_guard($scope0_reason, 0));
+	});
 });
 
 // template.marko
