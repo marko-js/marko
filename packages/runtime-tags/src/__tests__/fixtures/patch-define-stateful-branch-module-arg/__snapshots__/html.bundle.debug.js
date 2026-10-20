@@ -20,7 +20,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_html(`<em>${_patch_text($scope2_id, "#text/0", fmt(label), void 0, $scope2_reason, 0)}</em>`);
-		_patch_write($scope2_id, "PatchWrite:fmt", fmt, 1);
 		_patch_write($scope2_id, "PatchWrite:label", label, 1);
 		_scope($scope2_id, {
 			fmt: (_unfilled_if($scope2_reason, 2, 1) || _unfilled_if($scope2_reason, 0, 1)) && fmt,

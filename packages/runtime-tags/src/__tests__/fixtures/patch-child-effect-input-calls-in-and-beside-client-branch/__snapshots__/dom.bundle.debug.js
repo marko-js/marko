@@ -30,7 +30,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__tag_input_fmt($scope, $temp.fmt);
 	$Panel_content__tag_input_label($scope, $temp.label);
 };
-const $if_content2__input_label = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _text($scope["#text/0"], $scope._.input_label)));
+const $if_content2__input_label = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _text($scope["#text/0"], $scope._.input_label));
 const $if_content2__setup = $if_content2__input_label;
 const $if_content__input_fmt = /*@__PURE__*/ _shell_init("__tests__/tags/card.marko_1_input_fmt#0:6/init", /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_fmt", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Panel_content__tag_input_fmt($scope["#childScope/0"], $scope._.input_fmt))));
 const $if_content__setup = ($scope) => {
@@ -54,19 +54,16 @@ const $input_fmt = /*@__PURE__*/ _fill_const("__tests__/tags/card.marko_fill0", 
 	$if_content__input_fmt($scope);
 	$Panel_content__tag_input_fmt($scope["#childScope/0"], $scope.input_fmt);
 }, $if_content__input_fmt);
+_fill_resume("__tests__/tags/card.marko_fill1", /*@__PURE__*/ _const("input_label", /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill1/unpatched", "input_label", ($scope) => {
+	$if_content2__input_label($scope);
+	$input_label__script($scope);
+})));
 const $input_label__script = _script("__tests__/tags/card.marko_0_input_label#7", ($scope) => console.log("label", $scope.input_label));
-const $input_label$1 = _fill_resume("__tests__/tags/card.marko_fill1", _fill_resume("__tests__/tags/card.marko_fill1/unpatched", /*@__PURE__*/ _const("input_label", ($scope) => {
+const $input_label$1 = /*@__PURE__*/ _const("input_label", ($scope) => {
 	$if_content2__input_label($scope);
 	$input_label__script($scope);
 	$if_content__input_label($scope);
 	$Panel_content__tag_input_label($scope["#childScope/0"], $scope.input_label);
-}), "input_label", ($scope) => {
-	$if_content2__input_label($scope);
-	$input_label__script($scope);
-	$if_content__input_label($scope);
-}), "input_label", ($scope) => {
-	$if_content2__input_label($scope);
-	$input_label__script($scope);
 });
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

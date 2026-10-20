@@ -70,6 +70,7 @@ const $input = ($scope, input) => {
 	$input_other($scope, input.other);
 	$input_label($scope, input.label);
 };
-const $input_a = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _const("input_a", $if_content__input_a), "input_a");
+_fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _const("input_a", ($scope) => {}));
+const $input_a = /*@__PURE__*/ _const("input_a", $if_content__input_a);
 const $input_b = _fill_resume("__tests__/template.marko_fill1", /*@__PURE__*/ _const("input_b", $if_content__input_b));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

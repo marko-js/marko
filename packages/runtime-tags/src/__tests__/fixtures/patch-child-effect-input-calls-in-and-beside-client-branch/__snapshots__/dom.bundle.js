@@ -12,7 +12,7 @@ const $Panel_content__if = /*@__PURE__*/ _if(0, "<em> </em>", "D ", $if_content3
 const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen ? 0 : 1);
 const $Panel_content__tag_input_fmt = /*@__PURE__*/ _const(4, $if_content3__fmt);
 const $Panel_content__tag_input_label = /*@__PURE__*/ _const(5, $if_content3__label);
-const $if_content2__input_label = /*@__PURE__*/ _fill_join("b13", 7, /*@__PURE__*/ _if_closure(2, 0, ($scope) => _text($scope.a, $scope._.h)));
+const $if_content2__input_label = /*@__PURE__*/ _if_closure(2, 0, ($scope) => _text($scope.a, $scope._.h));
 const $if_content2__setup = $if_content2__input_label;
 const $if_content__input_fmt = /*@__PURE__*/ _shell_init("b6", /*@__PURE__*/ _fill_join("b11", 6, /*@__PURE__*/ _if_closure(1, 0, ($scope) => $Panel_content__tag_input_fmt($scope.a, $scope._.g))));
 const $if_content__setup = ($scope) => {
@@ -27,20 +27,11 @@ const $open = /*@__PURE__*/ _fill_let("b15", 10, ($scope) => $if2($scope, $scope
 const $setup__script$1 = _script("b9", ($scope) => _on($scope.d, "click", function() {
 	$open($scope, !$scope.k);
 }));
+fill("b12", /*@__PURE__*/ _const(7, /*@__PURE__*/ _fill_join("b13", 7, ($scope) => {
+	$if_content2__input_label($scope);
+	$input_label__script($scope);
+})));
 const $input_label__script = _script("b10", ($scope) => console.log("label", $scope.h));
-const $input_label = fill("b12", fill("b13", /*@__PURE__*/ _const(7, ($scope) => {
-	$if_content2__input_label($scope);
-	$input_label__script($scope);
-	$if_content__input_label($scope);
-	$Panel_content__tag_input_label($scope.a, $scope.h);
-}), 7, ($scope) => {
-	$if_content2__input_label($scope);
-	$input_label__script($scope);
-	$if_content__input_label($scope);
-}), 7, ($scope) => {
-	$if_content2__input_label($scope);
-	$input_label__script($scope);
-});
 const $if = /*@__PURE__*/ _if(1, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 

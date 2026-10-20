@@ -20,16 +20,4 @@ const $open = /*@__PURE__*/ _fill_let("a6", 10, $input_label__OR__open__OR__Tag)
 const $setup__script = _script("a3", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.k);
 }));
-const $input_show__OR__input_label__OR__input_rest = /*@__PURE__*/ _or(8, ($scope) => {
-	const $tag_input_spread = {
-		isOpen: $scope.f,
-		label: $scope.g,
-		...$scope.h
-	};
-	$Panel_content__isOpen($scope.a, $tag_input_spread.isOpen);
-	$Panel_content__tag_input_label($scope.a, $tag_input_spread.label);
-}, 2);
-const $input_label = fill("a4", /*@__PURE__*/ _const(6, ($scope) => {
-	$input_label__OR__open__OR__Tag($scope);
-	$input_show__OR__input_label__OR__input_rest($scope);
-}), 6, $input_label__OR__open__OR__Tag);
+fill("a4", /*@__PURE__*/ _const(6, $input_label__OR__open__OR__Tag));

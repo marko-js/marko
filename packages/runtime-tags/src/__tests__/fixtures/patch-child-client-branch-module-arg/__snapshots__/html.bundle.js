@@ -35,7 +35,7 @@ var card_default = _template("b", (input) => {
 				return 0;
 			}
 		}, $scope3_id, "a", 1, $wg__isOpen, void 0, void 0, void 0, ["b2"], $scope3_reason, 4);
-		_filled_guard($scope3_reason, 5) && _client_guard($scope3_reason, 4) ? _patch_value($scope3_id, "vb4", fmt) : _patch_write($scope3_id, "we", fmt, !(_filled_guard($scope3_reason, 5) && _client_guard($scope3_reason, 6)));
+		_filled_guard($scope3_reason, 5) && _client_guard($scope3_reason, 4) ? _patch_value($scope3_id, "vb4", fmt) : _filled_guard($scope3_reason, 5) && _client_guard($scope3_reason, 6) && _patch_write($scope3_id, "we", fmt);
 		_filled_guard($scope3_reason, 6) && _client_guard($scope3_reason, 4) ? _patch_value($scope3_id, "vb5", label) : _patch_write($scope3_id, "wf", label, !(_filled_guard($scope3_reason, 6) && _client_guard($scope3_reason, 5)));
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
 			e: (_unfilled_if($scope3_reason, 1, 5) || _unfilled_if($scope3_reason, 2, 5)) && fmt,

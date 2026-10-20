@@ -41,10 +41,11 @@ const $input_show__OR__input_label__OR__input_rest = /*@__PURE__*/ _or(8, ($scop
 	$Panel_content__tag_input_label($scope["#childScope/0"], $tag_input_spread.label);
 }, 2);
 const $input_show = /*@__PURE__*/ _const("input_show", $input_show__OR__input_label__OR__input_rest);
-const $input_label = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _const("input_label", ($scope) => {
+_fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _const("input_label", $input_label__OR__open__OR__Tag));
+const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
 	$input_label__OR__open__OR__Tag($scope);
 	$input_show__OR__input_label__OR__input_rest($scope);
-}), "input_label", $input_label__OR__open__OR__Tag);
+});
 const $input_rest = /*@__PURE__*/ _const("input_rest", $input_show__OR__input_label__OR__input_rest);
 const $input_other = /*@__PURE__*/ _const("input_other", $input_other__OR__Panel);
 const $input = ($scope, input) => {

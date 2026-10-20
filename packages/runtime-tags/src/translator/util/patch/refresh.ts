@@ -21,6 +21,7 @@ import {
 import { createAnalysisMemo } from "../cyclic-memo";
 import { readsValuesOnResume } from "../finalize-references";
 import {
+  derivesConstantInput,
   ensureKnownTagPatchGroups,
   getParamGroupSources,
   isKnownTagExtra,
@@ -172,7 +173,28 @@ export interface PatchFill {
   unpatchedOnly?: boolean;
   unpatchedJoins?: Intersection[];
   unpatchedStructure?: true | FillConditions;
-  unpatchedSections?: Section[];
+  unpatchedSections?: SortedOpt<Section>;
+}
+
+// The fill's conditions hold only where the structure is the client's (withheld
+// content aside where it refreshes under a key of its own).
+function holdsWithin(
+  conditions: FillConditions | undefined,
+  structure: SortedOpt<Sources>,
+  splitsContent?: boolean,
+) {
+  return (
+    !!conditions &&
+    !conditions.fills &&
+    (!conditions.contents || !!splitsContent) &&
+    sourcesUtil.isSuperset(
+      structure,
+      sourcesUtil.union(
+        sourcesUtil.union(conditions.structure, conditions.joins),
+        conditions.writes,
+      ),
+    )
+  );
 }
 
 // What a patch writes and seeds, asked once shells are built.
@@ -229,14 +251,7 @@ function computePatchFill(binding: Binding): PatchFill {
     fill &&
     structureReads &&
     !binding.sources?.state &&
-    !(
-      conditions &&
-      !conditions.joins &&
-      !conditions.fills &&
-      !conditions.contents &&
-      !conditions.writes &&
-      sourcesUtil.isSuperset(structureReads, conditions.structure)
-    )
+    !holdsWithin(conditions, structureReads)
       ? read.unpatchedSections
       : undefined;
   const unpatchedStructure = unpatchedSections
@@ -273,16 +288,7 @@ function computePatchFill(binding: Binding): PatchFill {
     !!fill &&
     !!unpatchedStructure &&
     (unpatchedStructure === true ||
-      (!!conditions &&
-        !conditions.fills &&
-        (!conditions.contents || splitsContent) &&
-        sourcesUtil.isSuperset(
-          unpatchedStructure.structure,
-          sourcesUtil.union(
-            sourcesUtil.union(conditions.structure, conditions.joins),
-            conditions.writes,
-          ),
-        )));
+      holdsWithin(conditions, unpatchedStructure.structure, splitsContent));
   return {
     kind,
     fill,
@@ -367,6 +373,8 @@ function seedsCreatedScope(binding: Binding) {
     !getPatchFill(binding).fill &&
     !isPatchWritten(binding) &&
     !catchSetupRenders(section, binding.sources) &&
+    // The client derives a constant a call passes from its module read.
+    !derivesConstantInput(binding) &&
     // A value a created init's join derives takes no seed: one would leave
     // the join's first run unchanged, so what reads the value never runs.
     !derivesByCreatedInit(binding)
@@ -435,8 +443,11 @@ function computeFillReadKind(binding: Binding) {
   let kind: true | FillConditions | undefined;
   let unpatchedJoins: Intersection[] | undefined;
   let unpatchedStructure: true | FillConditions | undefined;
-  // Sections passing it to calls in caller-owned structure of its own, and that structure.
-  let unpatchedSections: Section[] | undefined;
+  // Closure sections a patch rendering renders every read of, and their structure.
+  const unpatchedSections = sectionUtil.filter(
+    binding.closureSections,
+    (section) => leavesToPatchAt(binding, section),
+  );
   let structureReads: SortedOpt<Sources>;
   // Each written join its value is shipped for, by the section reading it.
   let writtenJoins: Map<Intersection, Section> | undefined;
@@ -486,12 +497,12 @@ function computeFillReadKind(binding: Binding) {
     }
     const readKind = getReadKind(binding, read, effect, written);
     kind = mergeKinds(kind, readKind);
-    if (leavesToPatchAt(binding, read.section)) {
-      if (!unpatchedSections?.includes(read.section)) {
-        (unpatchedSections ||= []).push(read.section);
-      }
-      const structure =
-        !written && !effect && getReadStructure(binding, read, effect);
+    if (
+      !written &&
+      !effect &&
+      sectionUtil.has(unpatchedSections, read.section)
+    ) {
+      const structure = getReadStructure(binding, read, effect);
       if (structure && structure !== true) {
         structureReads = sourcesUtil.union(structureReads, structure.structure);
       }
@@ -512,7 +523,7 @@ function computeFillReadKind(binding: Binding) {
 
 // Whether the binding's fill reaches `section` under its unpatched key alone.
 export function dispatchesUnpatchedAt(binding: Binding, section: Section) {
-  return !!getPatchFill(binding).unpatchedSections?.includes(section);
+  return sectionUtil.has(getPatchFill(binding).unpatchedSections, section);
 }
 
 // A section its fill reaches by branch hops, passing it to a call: a patch
@@ -1707,6 +1718,10 @@ function ensureUnfilledWriteGroups(slot: Slot) {
         : patchFillsSubscribedReads)(slot.owner) || undefined,
       ensureCallerParamGroups,
     );
+    // A param the client derives is written by its own group's bits.
+    if (derivesConstantInput(slot.owner)) {
+      ensureCallerParamGroups(getSourcesForRef(slot.owner));
+    }
   }
 }
 

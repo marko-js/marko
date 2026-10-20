@@ -183,8 +183,6 @@ export interface Signal {
   patchRendered?: boolean;
   /** A fill's run when it differs from the render (`render` without `patch`). */
   fillFn: t.Expression | undefined;
-  /** Its unpatched key's run (`render` and `unpatched`) where `patch` holds any. */
-  unpatchedFillFn: t.Expression | undefined;
   effect: t.Statement[];
   hasHTMLEffect: boolean;
   storesValue: boolean;
@@ -435,7 +433,6 @@ export function getSignal(
         patch: [],
         unpatched: [],
         fillFn: undefined,
-        unpatchedFillFn: undefined,
         effect: [],
         hasHTMLEffect: false,
         build: undefined,
@@ -727,25 +724,25 @@ export function initValue(binding: Binding, isLet = false) {
       if (!ownRegistration) {
         return callRuntime(`_fill${helper}`, key, accessor, fn, signal.fillFn);
       }
-      let value = callRuntime(helper, ...trimEmptyArgs([accessor, fn]));
-      // As its joins do, its own registration takes its unpatched key, sent where
-      // caller-owned structure of its own is the client's, which reaches into it.
-      if (unpatchedSections) {
-        value = callRuntime(
-          "_fill_resume",
-          t.stringLiteral(getPatchFillKey(binding, "unpatched")),
-          value,
-          signal.unpatchedFillFn && getScopeAccessorLiteral(binding, true),
-          signal.unpatchedFillFn,
-        );
-      }
-      return callRuntime(
-        "_fill_resume",
-        key,
-        value,
-        signal.fillFn && getScopeAccessorLiteral(binding, true),
-        signal.fillFn,
+      const value = callRuntime(helper, ...trimEmptyArgs([accessor, fn]));
+      if (!signal.fillFn) return callRuntime("_fill_resume", key, value);
+      // The registration keeps the fill's run alone, under its unpatched key as a
+      // join, which closures below caller-owned structure of its own chain onto.
+      const id = getScopeAccessorLiteral(binding, true);
+      const run = unpatchedSections
+        ? callRuntime(
+            "_fill_join",
+            t.stringLiteral(getPatchFillKey(binding, "unpatched")),
+            id,
+            signal.fillFn,
+          )
+        : signal.fillFn;
+      (signal.prependStatements ||= []).push(
+        t.expressionStatement(
+          callRuntime("_fill_resume", key, callRuntime("_const", id, run)),
+        ),
       );
+      return value;
     }
     if (
       !signal.forceStore &&
@@ -1106,13 +1103,11 @@ export function buildSignalFn(signal: Signal): t.Expression {
         // no patch writes there.
         const closureSignal = getSignal(closureSection, binding);
         pushScopeCall(
-          !isPatch()
-            ? signal.render
-            : dispatchesUnpatchedAt(binding, closureSection)
-              ? signal.unpatched
-              : registersClosureFill(closureSection, binding)
-                ? signal.render
-                : forwardsTo(signal, closureSignal),
+          dispatchesUnpatchedAt(binding, closureSection)
+            ? signal.unpatched
+            : registersClosureFill(closureSection, binding)
+              ? signal.render
+              : forwardsTo(signal, closureSignal),
           closureSignal.identifier,
         );
       }
@@ -1144,12 +1139,6 @@ export function buildSignalFn(signal: Signal): t.Expression {
   if (signal.patch.length || signal.unpatched.length) {
     if (isValue && getPatchFill(binding).fillsReads) {
       signal.fillFn = t.cloneNode(toScopeFn(render), true);
-      if (signal.unpatched.length && signal.patch.length) {
-        signal.unpatchedFillFn = t.cloneNode(
-          toScopeFn(render.concat(signal.unpatched)),
-          true,
-        );
-      }
     }
     render = render.concat(signal.unpatched, signal.patch);
   }
@@ -1624,7 +1613,6 @@ export function writeSignals(section: Section) {
     traverseReplace(signal, "patch", replaceRenderNode, signal);
     traverseReplace(signal, "unpatched", replaceRenderNode, signal);
     traverseReplace(signal, "fillFn", replaceRenderNode, signal);
-    traverseReplace(signal, "unpatchedFillFn", replaceRenderNode, signal);
 
     const signalStatements = signal.prependStatements || [];
 
@@ -1796,7 +1784,7 @@ function buildClosureFillJoin(
     );
   // Content a consumer may withhold refreshes under a key of its own; in
   // caller-owned structure of its own, only the unpatched key reaches.
-  const { splitsContent, unpatchedJoins, unpatchedSections } =
+  const { splitsContent, unpatchedJoins, unpatchedSections, ownRegistration } =
     getPatchFill(closure);
   const content = section.enclosing.inContentSection && splitsContent;
   const fill =
@@ -1804,7 +1792,12 @@ function buildClosureFillJoin(
     (registersJoinFill(closure) && !dispatchesUnpatchedAt(closure, section))
       ? register(content ? "content" : undefined, value)
       : value;
-  return unpatchedJoins || unpatchedSections
+  // A declaration registering its unpatched key runs every closure but these.
+  return (
+    ownRegistration && unpatchedSections
+      ? dispatchesUnpatchedAt(closure, section)
+      : unpatchedJoins || unpatchedSections
+  )
     ? register("unpatched", fill)
     : fill;
 }

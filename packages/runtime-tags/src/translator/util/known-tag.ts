@@ -746,20 +746,31 @@ function isClientDerivedInput(
   );
 }
 
-// Every param of the group is such an input, so the mask composes it from fills.
-function isClientDerivedGroup(
-  callSection: Section,
-  params: ParamReasonGroup,
-  knownExprs: KnownExprs,
-) {
-  return every(params, (param) =>
-    isClientDerivedInput(
-      callSection,
-      param,
-      mapParamReasonToExpr(knownExprs, param),
-    ),
-  );
-}
+// Per call in the section, the groups every param of which is such an input:
+// the mask composes them from fills, and the call's fill runs push into them.
+const [getClientDerivedGroups] = createAnalysisMemo((callSection: Section) => {
+  const byCall = new Map<KnownExprs, Set<ParamReasonGroup>>();
+  for (const tagExtra of callSection.knownTags || []) {
+    const knownExprs = tagExtra[kKnownExprs];
+    if (!knownExprs) continue;
+    const groups = new Set<ParamReasonGroup>();
+    for (const params of tagExtra[kChildSection]!.paramReasonGroups || []) {
+      if (
+        every(params, (param) =>
+          isClientDerivedInput(
+            callSection,
+            param,
+            mapParamReasonToExpr(knownExprs, param),
+          ),
+        )
+      ) {
+        groups.add(params);
+      }
+    }
+    if (groups.size) byCall.set(knownExprs, groups);
+  }
+  return byCall;
+}, new Map());
 
 // A template input whose fill ships wherever its group is the server's, by its
 // declaration's own registration.
@@ -780,8 +791,8 @@ export function derivesConstantInput(binding: Binding) {
   );
 }
 
-// A `<define>` param every call passing a constant passes a module read from
-// structure the client renders, whose fill runs push it there: the client derives it.
+// A `<define>` param every call passing a constant where the client renders it passes
+// a module read, which that call's fill runs push: the client derives it.
 export const [derivesConstantParam] = createAnalysisMemo(
   (param: ParamBinding): boolean => {
     const body = param.section;
@@ -793,13 +804,15 @@ export const [derivesConstantParam] = createAnalysisMemo(
           if (tagExtra[kChildSection] !== body) return false;
           const exprs = mapParamReasonToExpr(tagExtra[kKnownExprs]!, param);
           const sources = reduce(exprs, mergeAllSourcesForExpr);
-          if (sources?.state || hasParamOrGlobalSource(sources)) return false;
-          derives = true;
-          return (
-            !exprs ||
-            !every(exprs, isResolvedModuleRead) ||
+          if (
+            sources?.state ||
+            hasParamOrGlobalSource(sources) ||
             !rendersCallOnClient(callSection)
-          );
+          ) {
+            return false;
+          }
+          derives = true;
+          return !exprs || !every(exprs, isResolvedModuleRead);
         }),
       ) &&
       derives
@@ -823,7 +836,7 @@ function buildOwnershipMaskExpr(
       childScopeBinding,
       reasonGroups[i],
       sources,
-      isClientDerivedGroup(section, params, knownExprs),
+      !!getClientDerivedGroups(section).get(knownExprs)?.has(params),
     );
     // A function its scope registers is fixed for the child's life: a page
     // writes it as its sources say, a patch seeds it as a constant.
@@ -1895,28 +1908,29 @@ function pushDerivedConstants(
 }
 
 // A forward the child patches itself (holes it writes, its own fills) is a patch
-// statement, which a fill's run leaves; one the client derives stays in it.
+// statement, which a fill's run leaves; one into a group the client derives stays.
 function getForwardType(
   info: TranslateDOMInfo,
   expr: t.NodeExtra | undefined,
   tree?: ParamsTree,
 ) {
+  const derived = getClientDerivedGroups(info.tagSection).get(info.knownExprs);
   return calleeKeepsInput(info.tagSection, expr && getSourcesForExpr(expr)) &&
-    !(tree && someTreeParam(info, tree))
+    !(derived && (!tree || someTreeParam(derived, tree)))
     ? "patch"
     : "render";
 }
 
-// Whether the mask composes a group of a param the forward covers from fills.
-function someTreeParam(info: TranslateDOMInfo, tree: ParamsTree): boolean {
-  const group = tree.binding.section.paramReasonGroups?.find((params) =>
-    bindingUtil.has(params, tree.binding),
-  );
-  if (group && isClientDerivedGroup(info.tagSection, group, info.knownExprs)) {
-    return true;
+// Whether a param the forward covers is in one of the groups (a spread covers any).
+function someTreeParam(
+  groups: Set<ParamReasonGroup>,
+  tree: ParamsTree,
+): boolean {
+  for (const params of groups) {
+    if (bindingUtil.has(params, tree.binding)) return true;
   }
   for (const prop in tree.props) {
-    if (someTreeParam(info, tree.props[prop])) return true;
+    if (someTreeParam(groups, tree.props[prop])) return true;
   }
   return false;
 }

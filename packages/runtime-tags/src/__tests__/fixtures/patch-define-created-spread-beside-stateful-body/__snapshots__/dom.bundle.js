@@ -19,7 +19,6 @@ const $if_content__input_a__OR__input_b = /*@__PURE__*/ _or(3, ($scope) => {
 	$Panel_content__isOpen($scope.a, $tag_input_spread.isOpen);
 	$Panel_content__tag_input_label($scope.a, $tag_input_spread.label);
 });
-const $if_content__input_a = /*@__PURE__*/ _if_closure(0, 0, $if_content__input_a__OR__input_b);
 const $if_content__input_b = /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
 	const $tag_input_spread2 = {
 		isOpen: true,
@@ -38,5 +37,5 @@ const $open = /*@__PURE__*/ _fill_let("a9", 10, $input_label__OR__open__OR__Tag)
 const $setup__script = _script("a4", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.k);
 }));
-const $input_a = fill("a5", /*@__PURE__*/ _const(6, $if_content__input_a), 6);
+fill("a5", /*@__PURE__*/ _const(6, ($scope) => {}));
 const $input_b = fill("a6", /*@__PURE__*/ _const(7, $if_content__input_b));

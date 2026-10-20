@@ -30,7 +30,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__tag_input_fmt($scope, $temp.fmt);
 	$Panel_content__tag_input_label($scope, $temp.label);
 };
-const $if_content2__input_label = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill2/unpatched", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_label)));
+const $if_content2__input_label = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_label));
 const $if_content2__setup = $if_content2__input_label;
 const $if_content__input_open = /*@__PURE__*/ _shell_init("__tests__/tags/card.marko_1_input_open#0:6/init", /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_open", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Panel_content__isOpen($scope["#childScope/0"], $scope._.input_open))));
 const $if_content__setup = ($scope) => {
@@ -51,14 +51,15 @@ function $setup$1($scope) {
 }
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
+_fill_resume("__tests__/tags/card.marko_fill2", /*@__PURE__*/ _const("input_label", /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill2/unpatched", "input_label", ($scope) => {
+	$if_content2__input_label($scope);
+	$input_label__script($scope);
+})));
 const $input_label__script = _script("__tests__/tags/card.marko_0_input_label#8", ($scope) => console.log("label", $scope.input_label));
-const $input_label$1 = _fill_resume("__tests__/tags/card.marko_fill2", _fill_resume("__tests__/tags/card.marko_fill2/unpatched", /*@__PURE__*/ _const("input_label", ($scope) => {
+const $input_label$1 = /*@__PURE__*/ _const("input_label", ($scope) => {
 	$if_content2__input_label($scope);
 	$input_label__script($scope);
 	$if_content__input_label($scope);
-})), "input_label", ($scope) => {
-	$if_content2__input_label($scope);
-	$input_label__script($scope);
 });
 const $input$1 = ($scope, input) => {
 	$input_show($scope, input.show);
