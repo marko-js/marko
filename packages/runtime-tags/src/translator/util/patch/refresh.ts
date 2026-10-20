@@ -176,27 +176,6 @@ export interface PatchFill {
   unpatchedSections?: SortedOpt<Section>;
 }
 
-// The fill's conditions hold only where the structure is the client's (withheld
-// content aside where it refreshes under a key of its own).
-function holdsWithin(
-  conditions: FillConditions | undefined,
-  structure: SortedOpt<Sources>,
-  splitsContent?: boolean,
-) {
-  return (
-    !!conditions &&
-    !conditions.fills &&
-    (!conditions.contents || !!splitsContent) &&
-    sourcesUtil.isSuperset(
-      structure,
-      sourcesUtil.union(
-        sourcesUtil.union(conditions.structure, conditions.joins),
-        conditions.writes,
-      ),
-    )
-  );
-}
-
 // What a patch writes and seeds, asked once shells are built.
 export interface PatchWrite {
   write?: boolean;
@@ -311,6 +290,27 @@ function computePatchFill(binding: Binding): PatchFill {
     unpatchedStructure,
     unpatchedSections,
   };
+}
+
+// The fill's conditions hold only where the structure is the client's (withheld
+// content aside where it refreshes under a key of its own).
+function holdsWithin(
+  conditions: FillConditions | undefined,
+  structure: SortedOpt<Sources>,
+  splitsContent?: boolean,
+) {
+  return (
+    !!conditions &&
+    !conditions.fills &&
+    (!conditions.contents || !!splitsContent) &&
+    sourcesUtil.isSuperset(
+      structure,
+      sourcesUtil.union(
+        sourcesUtil.union(conditions.structure, conditions.joins),
+        conditions.writes,
+      ),
+    )
+  );
 }
 
 // A value a patch fills where its reads call for it: state or a local of a
