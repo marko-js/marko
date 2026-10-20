@@ -14,6 +14,7 @@ import {
   isInvokeOnlyBinding,
   isOwnBinding,
   type ParamBinding,
+  type ReferencedBindings,
   reserveId,
 } from "./bindings";
 import { setTagContentDerives } from "./content-derives";
@@ -87,7 +88,6 @@ import {
   onFinalizeReferences,
   getReferencedBindings,
   getReferencedBindingsInFunction,
-  type ReferencedBindings,
 } from "./references";
 import {
   linkRuntimeFeature,
