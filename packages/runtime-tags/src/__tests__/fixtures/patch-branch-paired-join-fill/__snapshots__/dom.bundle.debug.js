@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><button>+</button>";
 const $walks$1 = "b%b b";
 const $if_content__count__OR__a = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill3", "a", /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/0"], $scope.a + $scope._.count)));
-const $if_content__a__OR__b = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill4", "b", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill3", "a", /*@__PURE__*/ _patch_or("__tests__/tags/panel.marko_1_a#3_b#5/init", 7, ($scope) => _text($scope["#text/2"], $scope.a + $scope.b)), () => () => {}), () => () => {});
+const $if_content__a__OR__b = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill4", "b", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill3", "a", /*@__PURE__*/ _shell_or("__tests__/tags/panel.marko_1_a#3_b#5/init", 7, ($scope) => _text($scope["#text/2"], $scope.a + $scope.b)), () => () => {}), () => () => {});
 const $if_content__a = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill3", "a", ($scope) => {
 	$if_content__count__OR__a($scope);
 	$if_content__a__OR__b($scope);

@@ -6,7 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Row_content__walks);
 const $Row_content__input_y__OR__b = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_y", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/1"], $scope._.input_y + $scope.b)), "input_y/8", 0);
 const $Row_content__input_y = /*@__PURE__*/ _closure_get("input_y/8", $Row_content__input_y__OR__b, 0, "__tests__/template.marko_1_input_y#0:4/subscribe");
 const $Row_content__setup = $Row_content__input_y;
-const $Row_content__a__OR__b__OR__c = /*@__PURE__*/ _patch_or("__tests__/template.marko_1_a#4_b#5_c#7/init", 8, ($scope) => _text($scope["#text/0"], $scope.a + $scope.b + $scope.c), 2);
+const $Row_content__a__OR__b__OR__c = /*@__PURE__*/ _shell_or("__tests__/template.marko_1_a#4_b#5_c#7/init", 8, ($scope) => _text($scope["#text/0"], $scope.a + $scope.b + $scope.c), 2);
 const $Row_content__a = /*@__PURE__*/ _const("a", $Row_content__a__OR__b__OR__c);
 const $Row_content__b = /*@__PURE__*/ _const("b", ($scope) => {
 	$Row_content__a__OR__b__OR__c($scope);

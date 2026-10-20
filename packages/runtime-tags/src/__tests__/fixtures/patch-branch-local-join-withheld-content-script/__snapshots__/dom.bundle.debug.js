@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $frag_content__input_a__OR__c = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/child.marko_fill3/unpatched", "c", /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/child.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _patch_or("__tests__/tags/child.marko_2_input_a#0:5_c#1:2/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_a + $scope._.c)), "input_a/8", 0), "c/10", 0);
+const $frag_content__input_a__OR__c = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/child.marko_fill3/unpatched", "c", /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/child.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _shell_or("__tests__/tags/child.marko_2_input_a#0:5_c#1:2/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_a + $scope._.c)), "input_a/8", 0), "c/10", 0);
 const $frag_content__input_a = _closure_resume("__tests__/tags/child.marko_2_input_a#0:5/subscribe", /*@__PURE__*/ _closure_get("input_a/8", $frag_content__input_a__OR__c, ($scope) => $scope._._));
 const $frag_content__setup = ($scope) => {
 	$frag_content__input_a($scope);

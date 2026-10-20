@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><div></div>";
 const $walks$1 = "b%b b";
 const $setup$1 = ($_) => {};
-const $if_content__input_a__OR__c = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _patch_or("__tests__/tags/child.marko_1_input_a#0:6_c#1/init", 2, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.c)), "#text/0", 0);
+const $if_content__input_a__OR__c = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _shell_or("__tests__/tags/child.marko_1_input_a#0:6_c#1/init", 2, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.c)), "#text/0", 0);
 const $if_content__c = /*@__PURE__*/ _const("c", $if_content__input_a__OR__c);
 const $if_content__input_b = /*@__PURE__*/ _shell_init("__tests__/tags/child.marko_1_input_b#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_b", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__c($scope, $scope._.input_b + "!"))));
 const $if_content__setup = ($scope) => {

@@ -1,6 +1,6 @@
 // tags/child.marko
 const $for_content__j = ($scope, j) => _text($scope.a, j);
-const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_join_for("b2", 4, /*@__PURE__*/ _patch_or("b1", 3, ($scope) => $for_content__j($scope, $scope._.e + $scope.c)), 0);
+const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_join_for("b2", 4, /*@__PURE__*/ _shell_or("b1", 3, ($scope) => $for_content__j($scope, $scope._.e + $scope.c)), 0);
 const $for_content__input_a = /*@__PURE__*/ _for_closure(0, $for_content__input_a__OR__item);
 const $input_a = /*@__PURE__*/ _const(4, $for_content__input_a);
 

@@ -5,7 +5,7 @@ const $open = /*@__PURE__*/ _fill_let("b3", 8, ($scope) => $if($scope, $scope.i 
 const $setup__script$1 = _script("b0", ($scope) => _on($scope.d, "click", function() {
 	$open($scope, !$scope.i);
 }));
-const $input_b__OR__input_a = /*@__PURE__*/ _fill_join("b1", 6, /*@__PURE__*/ _patch_or("b2", 9, ($scope) => _text($scope.b, $scope.g + $scope.h)), () => () => {});
+const $input_b__OR__input_a = /*@__PURE__*/ _fill_join("b1", 6, /*@__PURE__*/ _shell_or("b2", 9, ($scope) => _text($scope.b, $scope.g + $scope.h)), () => () => {});
 const $input_a = /*@__PURE__*/ _fill_const("b1", 6, ($scope) => {
 	$if_content__input_a($scope);
 	_text($scope.a, $scope.g);

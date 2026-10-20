@@ -2,7 +2,7 @@
 const $if_content__input_a__script = _script("b2", ($scope) => $scope.a.textContent = "s:" + $scope._.g);
 const $if_content__input_a = /*@__PURE__*/ _fill_join("b5", 6, /*@__PURE__*/ _fill_join("b4", 6, /*@__PURE__*/ _if_closure(1, 0, $if_content__input_a__script)));
 const $if_content__setup = $if_content__input_a;
-const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_join_for("b5", 6, /*@__PURE__*/ _fill_join("b4", 6, /*@__PURE__*/ _patch_or("b1", 3, ($scope) => _text($scope.a, $scope._.g + $scope.c)), () => () => {}), 0);
+const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_join_for("b5", 6, /*@__PURE__*/ _fill_join("b4", 6, /*@__PURE__*/ _shell_or("b1", 3, ($scope) => _text($scope.a, $scope._.g + $scope.c)), () => () => {}), 0);
 const $for_content__input_a = /*@__PURE__*/ _for_closure(0, $for_content__input_a__OR__item);
 const $for_content__setup = $for_content__input_a;
 const $for_content__item = /*@__PURE__*/ _const(2, $for_content__input_a__OR__item);

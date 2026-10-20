@@ -5,7 +5,7 @@ const $setup$1 = ($_) => {};
 const $frag_content__c = /*@__PURE__*/ _shell_init("__tests__/tags/child.marko_2_c#1:2/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill3", "c", /*@__PURE__*/ _closure_get("c/10", ($scope) => _text($scope["#text/0"], $scope._.c), 0, "__tests__/tags/child.marko_2_c#1:2/subscribe"), 0));
 const $frag_content__setup = $frag_content__c;
 const $frag_content = _content("__tests__/tags/child.marko_2*content", "<em> </em>", "D ", $frag_content__setup);
-const $if_content__input_a__OR__c = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill3", "c", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _patch_or("__tests__/tags/child.marko_1_input_a#0:5_c#2/init", 3, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.c)), "#text/0", 0), () => () => {});
+const $if_content__input_a__OR__c = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill3", "c", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _shell_or("__tests__/tags/child.marko_1_input_a#0:5_c#2/init", 3, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.c)), "#text/0", 0), () => () => {});
 const $if_content__c__closure = /*@__PURE__*/ _closure($frag_content__c);
 const $if_content__c = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill3", "c", ($scope) => {
 	$if_content__c__closure($scope);

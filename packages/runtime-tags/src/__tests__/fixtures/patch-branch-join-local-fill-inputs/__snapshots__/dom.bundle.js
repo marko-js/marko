@@ -1,7 +1,7 @@
 // tags/child.marko
 const $if_content__m__OR__x__OR__y = /*@__PURE__*/ _fill_join("b3", 6, /*@__PURE__*/ _fill_join("b1", 5, /*@__PURE__*/ _or(7, ($scope) => _text($scope.a, $scope.f + $scope.g + $scope.e), 2)));
 const $if_content__x = /*@__PURE__*/ _fill_const("b1", 5, $if_content__m__OR__x__OR__y);
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("b12", 6, /*@__PURE__*/ _fill_join("b11", 6, /*@__PURE__*/ _fill_join_if("b10", 5, /*@__PURE__*/ _patch_or("b6", 3, ($scope) => _text($scope.b, $scope._.f + $scope._.g)), 0, 0), () => () => {}), 0, 0);
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("b12", 6, /*@__PURE__*/ _fill_join("b11", 6, /*@__PURE__*/ _fill_join_if("b10", 5, /*@__PURE__*/ _shell_or("b6", 3, ($scope) => _text($scope.b, $scope._.f + $scope._.g)), 0, 0), () => () => {}), 0, 0);
 const $if_content__input_a = /*@__PURE__*/ _shell_init("b2", /*@__PURE__*/ _fill_join("b10", 5, /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
 	$if_content__x($scope, $scope._.f + "!");
 	$if_content__input_a__OR__input_b($scope);

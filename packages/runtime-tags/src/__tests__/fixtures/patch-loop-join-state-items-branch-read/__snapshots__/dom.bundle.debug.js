@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!><!>";
 const $walks$1 = "b%b%c";
 const $setup$1 = ($_) => {};
 const $for_content__d = ($scope, d) => _text($scope["#text/0"], d);
-const $for_content__input_b__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/child.marko_fill0/unpatched", "input_b", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_b", /*@__PURE__*/ _patch_or("__tests__/tags/child.marko_2_input_b#0:5_item#2/init", 3, ($scope) => $for_content__d($scope, $scope._.input_b + $scope.item)), () => () => {}), "#text/1");
+const $for_content__input_b__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/child.marko_fill0/unpatched", "input_b", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_b", /*@__PURE__*/ _shell_or("__tests__/tags/child.marko_2_input_b#0:5_item#2/init", 3, ($scope) => $for_content__d($scope, $scope._.input_b + $scope.item)), () => () => {}), "#text/1");
 const $for_content__input_b = /*@__PURE__*/ _for_closure("#text/1", $for_content__input_b__OR__item);
 const $for_content__setup = $for_content__input_b;
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__input_b__OR__item);

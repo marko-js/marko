@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<section></section><!><!>";
 const $walks$1 = " b%c";
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _patch_or("__tests__/tags/child.marko_2_input_a#0:4_input_b#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b)), () => () => {}), "#text/1", 0);
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _shell_or("__tests__/tags/child.marko_2_input_a#0:4_input_b#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b)), () => () => {}), "#text/1", 0);
 const $if_content__input_a = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_a__OR__input_b);
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);

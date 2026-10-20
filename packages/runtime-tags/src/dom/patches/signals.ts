@@ -5,7 +5,6 @@ import {
   ClosureScopesProp,
   ClosureSignalProp,
   type EncodedAccessor,
-  PatchKey,
   type Scope,
 } from "../../common/types";
 import { queueRender, runId } from "../queue";
@@ -22,7 +21,7 @@ import {
   type Signal,
   type SignalFn,
 } from "../signals";
-import { patchers, patchFills } from "./apply";
+import { patchFills } from "./apply";
 
 // Installed by `patches/effect`, whose effects re-run by their reads: a fill a
 // join registers then marks its change as a write does.
@@ -241,8 +240,8 @@ export function _fill_const<T>(
   return fill(key, _const<T>(id, fn), id, fillFn);
 }
 
-// A created scope's join waits on members it seeds or never inits: the flush
-// runs it by this init, after whatever does arrive.
+// A join a flush runs by this init, after whatever members arrive: a created
+// scope's, or a written join's where its group mixes (`patches/init`).
 export function _shell_or(
   initId: string,
   id: number,
@@ -260,16 +259,6 @@ export function _shell_or(
     queueRender(scope, fn, id, 0, scope[scopeIdKey]);
   return or;
 }
-
-// A written join the scope inits: a patch names its init on any scope it leaves
-// the join to, so the join brings the patcher that runs it.
-export const _patch_or = /*@__PURE__*/ (() => {
-  // Join inits alone, registered by `_shell_or`; `resolveSetupIds` here ships
-  // `patches/shells` on every page (in `apply`, +6 B on each patch page).
-  patchers[PatchKey.Init] = (scope, _key, ids) =>
-    ids.split(" ").forEach((id) => (_resumed[id] as SignalFn)(scope));
-  return _shell_or;
-})();
 
 // A later closure position a flush may create carries its index, which its
 // owner's `_closure` composite would stamp, so the composite need not ship.

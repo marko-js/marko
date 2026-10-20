@@ -2,9 +2,9 @@
 const $template$1 = "<p> </p><em> </em>";
 const $walks$1 = "D lD l";
 const $setup$1 = ($_) => {};
-const $input_a__OR__input_b = /*@__PURE__*/ _patch_or("__tests__/tags/row.marko_0_input_a#4_input_b#5/init", 6, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b));
+const $input_a__OR__input_b = /*@__PURE__*/ _shell_or("__tests__/tags/row.marko_0_input_a#4_input_b#5/init", 6, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b));
 const $input_a = /*@__PURE__*/ _const("input_a", $input_a__OR__input_b);
-const $input_b__OR__input_y = /*@__PURE__*/ _patch_or("__tests__/tags/row.marko_0_input_b#5_input_y#7/init", 8, ($scope) => _text($scope["#text/1"], $scope.input_y + $scope.input_b));
+const $input_b__OR__input_y = /*@__PURE__*/ _shell_or("__tests__/tags/row.marko_0_input_b#5_input_y#7/init", 8, ($scope) => _text($scope["#text/1"], $scope.input_y + $scope.input_b));
 const $input_b = /*@__PURE__*/ _const("input_b", ($scope) => {
 	$input_a__OR__input_b($scope);
 	$input_b__OR__input_y($scope);

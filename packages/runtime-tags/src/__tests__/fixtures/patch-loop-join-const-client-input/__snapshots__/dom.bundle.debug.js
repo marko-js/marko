@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $for_content__j = ($scope, j) => _text($scope["#text/0"], j);
-const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _patch_or("__tests__/tags/child.marko_1_input_a#0:4_item#2/init", 3, ($scope) => $for_content__j($scope, $scope._.input_a + $scope.item)), "#text/0");
+const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _shell_or("__tests__/tags/child.marko_1_input_a#0:4_item#2/init", 3, ($scope) => $for_content__j($scope, $scope._.input_a + $scope.item)), "#text/0");
 const $for_content__input_a = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_a__OR__item);
 const $for_content__setup = $for_content__input_a;
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__input_a__OR__item);

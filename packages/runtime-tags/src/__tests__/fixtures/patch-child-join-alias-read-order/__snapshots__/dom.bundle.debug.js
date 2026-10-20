@@ -12,7 +12,7 @@ function $setup$1($scope) {
 	$setup__script$1($scope);
 	$open($scope, true);
 }
-const $input_b__OR__input_a = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _patch_or("__tests__/tags/child.marko_0_input_b#7_a#6/init", 9, ($scope) => _text($scope["#text/1"], $scope.input_a + $scope.input_b)), () => () => {});
+const $input_b__OR__input_a = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _shell_or("__tests__/tags/child.marko_0_input_b#7_a#6/init", 9, ($scope) => _text($scope["#text/1"], $scope.input_a + $scope.input_b)), () => () => {});
 const $input_a = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill0", "input_a", ($scope) => {
 	$if_content__input_a($scope);
 	_text($scope["#text/0"], $scope.input_a);

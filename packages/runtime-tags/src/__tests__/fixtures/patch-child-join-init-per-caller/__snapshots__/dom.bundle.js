@@ -6,7 +6,7 @@ const $open = /*@__PURE__*/ _fill_let("b4", 8, ($scope) => $if($scope, $scope.i 
 const $setup__script$1 = _script("b1", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.i);
 }));
-const $input_a__OR__input_b = /*@__PURE__*/ _fill_join("b2", 5, /*@__PURE__*/ _patch_or("b3", 7, ($scope) => _text($scope.a, $scope.f + $scope.g)), () => () => {});
+const $input_a__OR__input_b = /*@__PURE__*/ _fill_join("b2", 5, /*@__PURE__*/ _shell_or("b3", 7, ($scope) => _text($scope.a, $scope.f + $scope.g)), () => () => {});
 const $input_b = /*@__PURE__*/ _const(6, $input_a__OR__input_b);
 
 // template.marko

@@ -1,5 +1,5 @@
 // tags/child.marko
-const $frag_content__input_a__OR__c = /*@__PURE__*/ _fill_join_subscribers("b6", 2, /*@__PURE__*/ _fill_join_subscribers("b11", 5, /*@__PURE__*/ _patch_or("b4", 1, ($scope) => _text($scope.a, $scope._._.f + $scope._.c)), 8, 0), 10, 0);
+const $frag_content__input_a__OR__c = /*@__PURE__*/ _fill_join_subscribers("b6", 2, /*@__PURE__*/ _fill_join_subscribers("b11", 5, /*@__PURE__*/ _shell_or("b4", 1, ($scope) => _text($scope.a, $scope._._.f + $scope._.c)), 8, 0), 10, 0);
 const $frag_content__input_a = _closure_resume("b2", /*@__PURE__*/ _closure_get(8, $frag_content__input_a__OR__c, ($scope) => $scope._._));
 const $frag_content__setup = ($scope) => {
 	$frag_content__input_a($scope);

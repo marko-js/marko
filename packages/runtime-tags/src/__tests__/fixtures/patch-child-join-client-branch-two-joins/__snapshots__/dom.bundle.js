@@ -1,5 +1,5 @@
 // tags/child.marko
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("b3", 6, /*@__PURE__*/ _fill_join_if("b2", 5, /*@__PURE__*/ _patch_or("b1", 1, ($scope) => _text($scope.a, $scope._.f + $scope._.g)), 0, 0), 0, 0);
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("b3", 6, /*@__PURE__*/ _fill_join_if("b2", 5, /*@__PURE__*/ _shell_or("b1", 1, ($scope) => _text($scope.a, $scope._.f + $scope._.g)), 0, 0), 0, 0);
 const $if_content__input_a = /*@__PURE__*/ _if_closure(0, 0, $if_content__input_a__OR__input_b);
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);

@@ -8,7 +8,7 @@ const $if_content2__setup = ($scope) => {
 const $if_content__input_a__script = _script("b5", ($scope) => $scope.a.textContent = "s:" + $scope._.f);
 const $if_content__input_a = /*@__PURE__*/ _fill_join("b8", 5, /*@__PURE__*/ _fill_join("b7", 5, /*@__PURE__*/ _if_closure(1, 0, $if_content__input_a__script)));
 const $if_content__setup = $if_content__input_a;
-const $Info_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("b9", 6, /*@__PURE__*/ _fill_join_subscribers("b8", 5, /*@__PURE__*/ _fill_join("b7", 5, /*@__PURE__*/ _patch_or("b4", 1, ($scope) => _text($scope.a, $scope._.f + ":" + $scope._.g)), () => () => {}), 9, 0), 10, 0);
+const $Info_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("b9", 6, /*@__PURE__*/ _fill_join_subscribers("b8", 5, /*@__PURE__*/ _fill_join("b7", 5, /*@__PURE__*/ _shell_or("b4", 1, ($scope) => _text($scope.a, $scope._.f + ":" + $scope._.g)), () => () => {}), 9, 0), 10, 0);
 const $Info_content__input_a = _closure_resume("b2", /*@__PURE__*/ _closure_get(9, $Info_content__input_a__OR__input_b));
 const $Info_content__setup = ($scope) => {
 	$Info_content__input_a($scope);

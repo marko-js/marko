@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content3__input_b__OR__input_a = /*@__PURE__*/ _fill_join_if("__tests__/tags/panel.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _fill_join_if("__tests__/tags/panel.marko_fill0/unpatched", "input_b", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "input_b", /*@__PURE__*/ _patch_or("__tests__/tags/panel.marko_3_input_b#0:4_input_a#0:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_a + ":" + $scope._._.input_b)), () => () => {}), "#text/0", 0, "#span/1", 0), "#text/0", 0, "#span/1", 0);
+const $if_content3__input_b__OR__input_a = /*@__PURE__*/ _fill_join_if("__tests__/tags/panel.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _fill_join_if("__tests__/tags/panel.marko_fill0/unpatched", "input_b", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "input_b", /*@__PURE__*/ _shell_or("__tests__/tags/panel.marko_3_input_b#0:4_input_a#0:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_a + ":" + $scope._._.input_b)), () => () => {}), "#text/0", 0, "#span/1", 0), "#text/0", 0, "#span/1", 0);
 const $if_content3__input_b = _closure_resume("__tests__/tags/panel.marko_3_input_b#0:4/subscribe", /*@__PURE__*/ _closure_index(1, /*@__PURE__*/ _closure_get("input_b/7", $if_content3__input_b__OR__input_a, ($scope) => $scope._._)));
 const $if_content3__setup = ($scope) => {
 	$if_content3__input_b($scope);

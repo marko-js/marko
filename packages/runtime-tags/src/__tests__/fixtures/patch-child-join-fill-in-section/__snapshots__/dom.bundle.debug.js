@@ -13,7 +13,7 @@ function $setup$1($scope) {
 	$open($scope, true);
 }
 const $x = ($scope, x) => _text($scope["#text/1"], x);
-const $input_a__OR__input_c = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _patch_or("__tests__/tags/child.marko_0_input_a#5_input_c#6/init", 7, ($scope) => $x($scope, $scope.input_a + $scope.input_c)), () => () => {});
+const $input_a__OR__input_c = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _shell_or("__tests__/tags/child.marko_0_input_a#5_input_c#6/init", 7, ($scope) => $x($scope, $scope.input_a + $scope.input_c)), () => () => {});
 const $input_a$1 = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill0", "input_a", ($scope) => {
 	$if_content__input_a($scope);
 	$input_a__OR__input_c($scope);

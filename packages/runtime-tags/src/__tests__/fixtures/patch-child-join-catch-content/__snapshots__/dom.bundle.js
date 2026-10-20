@@ -4,7 +4,7 @@ const $catch_content__input_fallback = /*@__PURE__*/ _fill_join_closure("c5", 3,
 const $catch_content = _content$1("c4", "<!><!><!>", "b%", $catch_content__input_fallback);
 
 // tags/panel.marko
-const $fallback_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("b5", 5, /*@__PURE__*/ _fill_join_subscribers("b4", 4, /*@__PURE__*/ _patch_or("b3", 1, ($scope) => _text($scope.a, $scope._.e + $scope._.f)), 6, 0), 7, 0);
+const $fallback_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("b5", 5, /*@__PURE__*/ _fill_join_subscribers("b4", 4, /*@__PURE__*/ _shell_or("b3", 1, ($scope) => _text($scope.a, $scope._.e + $scope._.f)), 6, 0), 7, 0);
 const $fallback_content__input_a = _closure_resume("b1", /*@__PURE__*/ _closure_get(6, $fallback_content__input_a__OR__input_b));
 const $fallback_content__setup = ($scope) => {
 	$fallback_content__input_a($scope);

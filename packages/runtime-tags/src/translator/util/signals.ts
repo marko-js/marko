@@ -968,12 +968,14 @@ function buildIntersection(
   const { source, id, returnedBy } = section.intersections!.get(intersection)!;
   if (source) return fn;
   // A created scope runs the join by its init id (`getCreatedInits`), as any
-  // scope does a written join's where its group mixes, whose init brings its patcher.
+  // scope does a written join's where its group mixes (`patches/init`).
   const init = isPatch() && getCreatedInits(section).get(intersection);
   const shellInitId =
     init && getResumeRegisterId(section, intersection, "init");
+  if (shellInitId && init.init === "mixed")
+    importRuntimeFeature("patches/init");
   return callRuntime(
-    shellInitId ? (init.init === "mixed" ? "_patch_or" : "_shell_or") : "_or",
+    shellInitId ? "_shell_or" : "_or",
     ...(shellInitId ? [t.stringLiteral(shellInitId)] : []),
     t.numericLiteral(id),
     fn,

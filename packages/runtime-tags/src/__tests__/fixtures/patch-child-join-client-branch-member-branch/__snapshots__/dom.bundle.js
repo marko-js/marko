@@ -1,7 +1,7 @@
 // tags/child.marko
 const $if_content2__input_a = /*@__PURE__*/ _shell_init("b3", /*@__PURE__*/ _fill_join("b5", 5, /*@__PURE__*/ _fill_join("b4", 5, /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.f)))));
 const $if_content2__setup = $if_content2__input_a;
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("b6", 6, /*@__PURE__*/ _fill_join_if("b5", 5, /*@__PURE__*/ _fill_join("b4", 5, /*@__PURE__*/ _patch_or("b2", 1, ($scope) => _text($scope.a, $scope._.f + $scope._.g)), () => () => {}), 0, 0), 0, 0);
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("b6", 6, /*@__PURE__*/ _fill_join_if("b5", 5, /*@__PURE__*/ _fill_join("b4", 5, /*@__PURE__*/ _shell_or("b2", 1, ($scope) => _text($scope.a, $scope._.f + $scope._.g)), () => () => {}), 0, 0), 0, 0);
 const $if_content__input_a = /*@__PURE__*/ _if_closure(0, 0, $if_content__input_a__OR__input_b);
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);

@@ -1,7 +1,7 @@
 // tags/row.marko
-const $input_a__OR__input_b = /*@__PURE__*/ _patch_or("b0", 6, ($scope) => _text($scope.a, $scope.e + $scope.f));
+const $input_a__OR__input_b = /*@__PURE__*/ _shell_or("b0", 6, ($scope) => _text($scope.a, $scope.e + $scope.f));
 const $input_a = /*@__PURE__*/ _const(4, $input_a__OR__input_b);
-const $input_b__OR__input_y = /*@__PURE__*/ _patch_or("b1", 8, ($scope) => _text($scope.b, $scope.h + $scope.f));
+const $input_b__OR__input_y = /*@__PURE__*/ _shell_or("b1", 8, ($scope) => _text($scope.b, $scope.h + $scope.f));
 const $input_b = /*@__PURE__*/ _const(5, ($scope) => {
 	$input_a__OR__input_b($scope);
 	$input_b__OR__input_y($scope);

@@ -4,7 +4,7 @@ const $walks$1 = "b%b%b b";
 const $if_content__input_a__script = _script("__tests__/tags/child.marko_2_input_a#0:6", ($scope) => _el_read($scope["#div/0"]).textContent = "s:" + $scope._.input_a);
 const $if_content__input_a = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_a__script)));
 const $if_content__setup = $if_content__input_a;
-const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _patch_or("__tests__/tags/child.marko_1_input_a#0:6_item#2/init", 3, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.item)), () => () => {}), "#text/0");
+const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _shell_or("__tests__/tags/child.marko_1_input_a#0:6_item#2/init", 3, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.item)), () => () => {}), "#text/0");
 const $for_content__input_a = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_a__OR__item);
 const $for_content__setup = $for_content__input_a;
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__input_a__OR__item);

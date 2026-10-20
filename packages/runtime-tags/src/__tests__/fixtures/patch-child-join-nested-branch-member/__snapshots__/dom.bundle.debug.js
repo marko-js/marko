@@ -12,7 +12,7 @@ const $input_show$1 = /*@__PURE__*/ _const("input_show", ($scope) => {
 	$if($scope, $scope.input_show ? 0 : 1);
 	$if_content__input_show($scope);
 });
-const $input_b__OR__input_a = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "input_b", /*@__PURE__*/ _patch_or("__tests__/tags/panel.marko_0_input_b#5_input_a#6/init", 7, ($scope) => _text($scope["#text/1"], $scope.input_a + ":" + $scope.input_b)), () => () => {});
+const $input_b__OR__input_a = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "input_b", /*@__PURE__*/ _shell_or("__tests__/tags/panel.marko_0_input_b#5_input_a#6/init", 7, ($scope) => _text($scope["#text/1"], $scope.input_a + ":" + $scope.input_b)), () => () => {});
 const $input_b__closure = /*@__PURE__*/ _closure($if_content2__input_b);
 const $input_b = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill0", "input_b", ($scope) => {
 	$input_b__closure($scope);

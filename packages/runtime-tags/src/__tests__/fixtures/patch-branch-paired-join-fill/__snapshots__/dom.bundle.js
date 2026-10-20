@@ -1,6 +1,6 @@
 // tags/panel.marko
 const $if_content__count__OR__a = /*@__PURE__*/ _fill_join("b1", 3, /*@__PURE__*/ _or(4, ($scope) => _text($scope.a, $scope.d + $scope._.h)));
-const $if_content__a__OR__b = /*@__PURE__*/ _fill_join("b3", 5, /*@__PURE__*/ _fill_join("b1", 3, /*@__PURE__*/ _patch_or("b5", 7, ($scope) => _text($scope.c, $scope.d + $scope.f)), () => () => {}), () => () => {});
+const $if_content__a__OR__b = /*@__PURE__*/ _fill_join("b3", 5, /*@__PURE__*/ _fill_join("b1", 3, /*@__PURE__*/ _shell_or("b5", 7, ($scope) => _text($scope.c, $scope.d + $scope.f)), () => () => {}), () => () => {});
 const $if_content__a = /*@__PURE__*/ _fill_const("b1", 3, ($scope) => {
 	$if_content__count__OR__a($scope);
 	$if_content__a__OR__b($scope);

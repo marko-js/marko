@@ -27,7 +27,7 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $t
 // tags/panel.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $fallback_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _patch_or("__tests__/tags/panel.marko_1_input_a#0:4_input_b#0:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b)), "input_a/6", 0), "input_b/7", 0);
+const $fallback_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _shell_or("__tests__/tags/panel.marko_1_input_a#0:4_input_b#0:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b)), "input_a/6", 0), "input_b/7", 0);
 const $fallback_content__input_a = _closure_resume("__tests__/tags/panel.marko_1_input_a#0:4/subscribe", /*@__PURE__*/ _closure_get("input_a/6", $fallback_content__input_a__OR__input_b));
 const $fallback_content__setup = ($scope) => {
 	$fallback_content__input_a($scope);
