@@ -1,0 +1,11 @@
+class {
+  onCreate() {
+    this.state = { k: 0 };
+  }
+  increment() {
+    this.state.k++;
+  }
+}
+
+<button id="class-leaf" onClick("increment")>class leaf</button>
+<span>${input.label} ${state.k}</span>

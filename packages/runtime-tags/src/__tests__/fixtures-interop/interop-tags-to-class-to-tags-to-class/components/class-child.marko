@@ -1,0 +1,13 @@
+class {
+  onCreate() {
+    this.state = { n: 0 };
+  }
+  increment() {
+    this.state.n++;
+  }
+}
+
+<button id="class" onClick("increment")>class</button>
+<tags-child count=input.count n=state.n>
+  <@foo>content ${input.count} ${state.n}</@foo>
+</tags-child>
