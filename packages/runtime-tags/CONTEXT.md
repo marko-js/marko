@@ -126,8 +126,8 @@ Translate's conclusion from a slot's reason (`getWriteGuard`): whether
 and under which guard the server writes it.
 `always` and state reasons write unconditionally; param-only ones produce
 per-call guards. At a call site the guard is one runtime value for plain and
-patch templates: two bits per param reason group, client contributes and
-server contributes; a patch template reads the pair as the group's ownership.
+patch templates: two bits per param reason group, client renders and server
+contributes; a patch template reads the pair as the group's ownership.
 _Avoid_: serialization flag, serialized value, ownership mask as a second value
 
 **Param reason group**:

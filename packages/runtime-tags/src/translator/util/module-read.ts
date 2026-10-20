@@ -21,9 +21,9 @@ export interface ModuleRead {
   request: string | undefined;
 }
 
-/** The module read an expression is, resolved on first use: translate replaces
- * a `<style/name>` tag. */
-function getModuleRead(
+/** The module read an expression is, resolved onto its extra on first use (translate
+ * replaces a `<style/name>` tag), where checks with no path read it. */
+export function recordModuleRead(
   path: t.NodePath,
   expr: t.Expression,
 ): ModuleRead | undefined {
@@ -33,11 +33,6 @@ function getModuleRead(
   );
 }
 
-/** Resolves the expression's module read onto its extra, for checks with no path. */
-export function recordModuleRead(path: t.NodePath, expr: t.Expression) {
-  getModuleRead(path, expr);
-}
-
 /** A module read `recordModuleRead` resolved, read from the extra alone. */
 export function isResolvedModuleRead(extra: t.NodeExtra | undefined) {
   return !!extra?.[kModuleRead];
@@ -45,7 +40,7 @@ export function isResolvedModuleRead(extra: t.NodeExtra | undefined) {
 
 /** A module read of a stylesheet module, whose reads are class name strings. */
 export function getStyleImportRead(path: t.NodePath, expr: t.Expression) {
-  const moduleRead = getModuleRead(path, expr);
+  const moduleRead = recordModuleRead(path, expr);
   if (
     moduleRead &&
     (moduleRead.request === undefined ||
@@ -88,7 +83,7 @@ function resolveModuleRead(
     }
     case "MemberExpression": {
       const object =
-        !expr.computed && getModuleRead(path, expr.object as t.Expression);
+        !expr.computed && recordModuleRead(path, expr.object as t.Expression);
       return object
         ? {
             read: [...object.read, (expr.property as t.Identifier).name],

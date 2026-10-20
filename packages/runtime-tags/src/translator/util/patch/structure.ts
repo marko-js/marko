@@ -118,9 +118,8 @@ function isPatchedLeaf(read: ReferencedExtra) {
   return !!(read.rendersContent || read.nameOnly) && !isStatefulLeaf(read);
 }
 
-// Which consumers of a tag body render it with client state, as the prop it derives
-// renders in the child: some, or every one, where no direct call outside stateful
-// structure (its mask decides) or patched read leaves an instance to its own.
+// Which consumers render a tag body with client state (as its prop renders in the child):
+// some, or every one where no patched read or call outside stateful structure is left.
 export const [getStatefulConsumers] = createAnalysisMemo(
   (section: Section): "some" | "every" | undefined => {
     const { derives } = section;

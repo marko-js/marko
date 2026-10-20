@@ -30,7 +30,6 @@ const $Panel_content__$temp = ($scope, $temp) => {
 const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$Panel_content__fmt($scope["#childScope/0"], lib.format);
 	$Panel_content__a($scope["#childScope/0"], $scope._.input_label);
-	$Panel_content__fmt($scope["#childScope/0"], lib.format);
 	$Panel_content__b($scope["#childScope/0"], $scope._.input_label + "!");
 }));
 const $if_content__setup = ($scope) => {

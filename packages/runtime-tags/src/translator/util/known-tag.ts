@@ -87,6 +87,7 @@ import {
   onFinalizeReferences,
   getReferencedBindings,
   getReferencedBindingsInFunction,
+  type ReferencedBindings,
 } from "./references";
 import {
   linkRuntimeFeature,
@@ -1416,7 +1417,7 @@ function writeParamsToSignals(
     for (const arg of tag.node.arguments) {
       const argTree = paramsTree.props[i];
       if (argTree) {
-        pushDerivedConstants(info, constants, arg.extra);
+        pushDerivedConstants(info, constants, arg.extra, argTree.binding);
         writeToSignal(
           info,
           info.getBindingIdentifier(argTree.binding, `${hint}_param_${i}`),
@@ -1740,7 +1741,7 @@ function writeAttrsToSignals(
     const attr = staticAttrs[i];
     const { binding } = getParamsTreeAt(paramsTree, attr.name) as ParamsTree;
     remaining.delete(attr.name);
-    pushDerivedConstants(info, constants, attr.value.extra);
+    pushDerivedConstants(info, constants, attr.value.extra, binding);
     writeToSignal(
       info,
       info.getBindingIdentifier(binding, `${hint}_${attr.name}`),
@@ -1876,31 +1877,55 @@ function getDerivedConstants(
   info: TranslateDOMInfo,
   inputs: (readonly [Binding | undefined, string, t.Expression])[],
 ) {
-  return isPatch() && rendersCallOnClient(info.tagSection)
-    ? inputs.filter(
-        ([binding, , value]) =>
-          binding &&
-          isResolvedModuleRead(value.extra) &&
-          derivesConstantInput(binding) &&
-          findSlot(binding)?.reason,
-      )
-    : [];
+  const constants: DerivedConstant[] = [];
+  if (isPatch() && rendersCallOnClient(info.tagSection)) {
+    for (const [binding, name, value] of inputs) {
+      if (
+        binding &&
+        isResolvedModuleRead(value.extra) &&
+        derivesConstantInput(binding) &&
+        findSlot(binding)?.reason
+      ) {
+        constants.push({ binding, name, value, signals: new Set() });
+      }
+    }
+  }
+  return constants;
 }
 
-// A fill reaching the call by another input pushes the constants first, the
-// same pushes setup makes (the signals see the same value, so they re-run nothing).
+interface DerivedConstant {
+  binding: Binding;
+  name: string;
+  value: t.Expression;
+  // The signals of other inputs it is pushed in, once each.
+  signals: Set<ReferencedBindings>;
+}
+
+// A fill reaching the call by an input a join reads with a constant pushes the
+// constant first, as setup does (the signal sees the same value, so it re-runs nothing).
 function pushDerivedConstants(
   info: TranslateDOMInfo,
-  constants: (readonly [Binding | undefined, string, t.Expression])[],
+  constants: DerivedConstant[],
   expr: t.NodeExtra | undefined,
+  param: Binding,
 ) {
-  if (expr && getReferencedBindings(expr)) {
-    for (const [binding, name, value] of constants) {
+  const refs = expr && getReferencedBindings(expr);
+  if (!refs) return;
+  for (const constant of constants) {
+    if (
+      !constant.signals.has(refs) &&
+      param.section.paramReasonGroups?.some(
+        (group) =>
+          bindingUtil.has(group, constant.binding) &&
+          bindingUtil.has(group, param),
+      )
+    ) {
+      constant.signals.add(refs);
       writeToSignal(
         info,
-        info.getBindingIdentifier(binding!, name),
+        info.getBindingIdentifier(constant.binding, constant.name),
         expr,
-        t.cloneNode(value, true),
+        t.cloneNode(constant.value, true),
         true,
       );
     }
