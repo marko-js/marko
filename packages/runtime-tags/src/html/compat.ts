@@ -1,4 +1,5 @@
 import { RENDER_BODY_ID, SET_SCOPE_REGISTER_ID } from "../common/compat-meta";
+import { patchDynamicRenderer } from "../common/helpers";
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import { RendererProp, type Scope } from "../common/types";
 import { writeLoadAsset } from "./assets";
@@ -63,6 +64,9 @@ export const compat = {
   isTagsAPI(fn: any) {
     return !!fn[RendererProp.Id];
   },
+  setRendererId(renderer: any, id: unknown) {
+    renderer[RendererProp.Id] = id;
+  },
   onFlush(fn: (chunk: Chunk) => void) {
     const { flushHTML } = Chunk.prototype;
     Chunk.prototype.flushHTML = function (boundary) {
@@ -75,6 +79,7 @@ export const compat = {
       return flushHTML.call(this, boundary);
     };
   },
+  patchDynamicRenderer,
   patchDynamicTag,
   writeSetScopeForComponent(branchId: number, m5c: string, m5i: unknown) {
     _scope(branchId, { m5c, m5i });

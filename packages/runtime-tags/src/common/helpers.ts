@@ -173,6 +173,17 @@ export function isPromise(value: unknown): value is Promise<unknown> {
   );
 }
 
+export function patchDynamicRenderer(
+  fn: (
+    normalize: typeof normalizeDynamicRenderer,
+  ) => typeof normalizeDynamicRenderer,
+) {
+  // Injection point for compat layer.
+  // @ts-expect-error A function declaration's binding is reassignable.
+  // eslint-disable-next-line no-func-assign
+  normalizeDynamicRenderer = fn(normalizeDynamicRenderer);
+}
+
 export function normalizeDynamicRenderer<Renderer>(
   value: any,
 ): Renderer | string | undefined {

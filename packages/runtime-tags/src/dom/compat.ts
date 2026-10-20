@@ -1,4 +1,5 @@
 import { RENDER_BODY_ID, SET_SCOPE_REGISTER_ID } from "../common/compat-meta";
+import { patchDynamicRenderer } from "../common/helpers";
 import {
   AccessorProp,
   type BranchScope,
@@ -33,6 +34,7 @@ const getRenderScopes = ($global: Record<string, unknown>) => {
 };
 
 export const compat = {
+  patchDynamicRenderer,
   patchDynamicTag,
   queueEffect,
   init(warp10Noop: any) {
@@ -105,10 +107,11 @@ export const compat = {
     return value;
   },
   createRenderer(
-    params: NonNullable<Renderer[typeof RendererProp.Params]>,
+    params: Renderer[typeof RendererProp.Params] | 0,
     clone: () => { startNode: ChildNode; endNode: ChildNode },
+    setup?: Renderer[typeof RendererProp.Setup],
   ) {
-    const renderer = _content("", 0, 0, 0, params)();
+    const renderer = _content("", 0, 0, setup, params)();
     renderer[RendererProp.Clone] = (branch) => {
       const cloned = clone();
       branch[AccessorProp.StartNode] = cloned.startNode;

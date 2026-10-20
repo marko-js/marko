@@ -1,0 +1,36 @@
+<!--M#s0--><button id=class>increment</button><!--F#1-->
+<div>body text 0</div><!--Ms$1 a--><span>outer text
+  0</span><!--Ms$1 b--><!--F/--><!--F#1-->
+<section><!--Ms[-->dynamic text 0<!--Ms]5 a 6--></section>
+<!--Ms(4 a 5--><!--F/--><!--M/-->
+<script>
+  WALKER_RUNTIME("M")("s");
+  M.s.r = [_ => [1, {
+    m5c: "s0-1",
+    Aa: _(2),
+    Da: _._.$C_b,
+    Ab: _(3),
+    Db: _._.$C_b
+  }, 2, {
+    m5c: "s0-2",
+    Da: "section",
+    d: "section",
+    e: {
+      content: _._.$C_b,
+      *[Symbol.iterator]() {
+        yield this
+      }
+    }
+  }, {
+    Da: _._.$C_b
+  }], "$C_s 1 $C_s 4 b0 1"];
+  M.s.w();
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0", 0, {}, {
+        "f": 1
+      }]
+    ],
+    "t": ["a"]
+  })
+</script>

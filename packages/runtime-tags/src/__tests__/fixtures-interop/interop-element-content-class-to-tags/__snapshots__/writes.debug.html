@@ -1,0 +1,40 @@
+<!--M#s0--><button id=class>increment</button><!--F#1-->
+<div>body text 0</div><!--Ms$1 #div/0--><span>outer text
+  0</span><!--Ms$1 #span/1--><!--F/--><!--F#1-->
+<section><!--Ms[-->dynamic text 0<!--Ms]5 #section/0 6--></section>
+<!--Ms(4 #text/0 5--><!--F/--><!--M/-->
+<script>
+  WALKER_RUNTIME("M")("s");
+  M.s.r = [_ => [1, {
+      m5c: "s0-1",
+      "BranchScopes:#div/0": _(2),
+      "ConditionalRenderer:#div/0": _._.$compat_renderBody,
+      "BranchScopes:#span/1": _(3),
+      "ConditionalRenderer:#span/1": _._.$compat_renderBody
+    }, 2, {
+      m5c: "s0-2",
+      "ConditionalRenderer:#text/0": "section",
+      input_tag: "section",
+      input_foo: {
+        content: _._.$compat_renderBody,
+        *[Symbol.iterator]() {
+          yield this
+        }
+      }
+    }, {
+      "ConditionalRenderer:#section/0": _._.$compat_renderBody
+    }],
+    "$compat_setScope 1 $compat_setScope 4 packages/runtime-tags/src/__tests__/fixtures-interop/interop-element-content-class-to-tags/components/tags-child.marko_0_input_foo#4 1"
+  ];
+  M.s.w();
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0", 0, {}, {
+        "f": 1
+      }]
+    ],
+    "t": [
+      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-element-content-class-to-tags/template.marko"
+    ]
+  })
+</script>

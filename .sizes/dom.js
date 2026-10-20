@@ -1,4 +1,4 @@
-// size: 27478 (min) 10241 (brotli)
+// size: 27528 (min) 10253 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -416,6 +416,9 @@ function isNotNullishOrFalse(value) {
 }
 function isPromise(value) {
   return value != null && typeof value.then == "function";
+}
+function patchDynamicRenderer(fn) {
+  normalizeDynamicRenderer = fn(normalizeDynamicRenderer);
 }
 function normalizeDynamicRenderer(value) {
   if (value) {
@@ -2064,6 +2067,7 @@ let getRenderScopes = ($global) => {
   return (render && !scopes && scopesByRender.set(render, (scopes = {})), scopes);
 };
 let compat = {
+  patchDynamicRenderer,
   patchDynamicTag,
   queueEffect,
   init(warp10Noop) {
@@ -2115,8 +2119,8 @@ let compat = {
       ? getRegisteredWithScope(value[0], getRenderScopes($global)?.[value[1]])
       : value;
   },
-  createRenderer(params, clone) {
-    let renderer = _content("", 0, 0, 0, params)();
+  createRenderer(params, clone, setup) {
+    let renderer = _content("", 0, 0, setup, params)();
     return (
       (renderer.b = (branch) => {
         let cloned = clone();

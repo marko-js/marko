@@ -184,7 +184,19 @@ exports.p = function (htmlCompat) {
     {},
   );
 
-  htmlCompat.patchDynamicTag(function getRenderer(tag, scopeId, accessor) {
+  // A Tags element renders only Tags content, so a Class body converts where
+  // it lands: in a spread, `content=`, or a native dynamic tag.
+  htmlCompat.patchDynamicRenderer((normalize) => (value) => {
+    const renderBody = value && (value.content || value.default || value);
+    if (!isMarko6(renderBody)) {
+      htmlCompat.setRendererId((value = getRenderer(renderBody)), renderBody);
+    }
+    return normalize(value);
+  });
+
+  htmlCompat.patchDynamicTag(getRenderer);
+
+  function getRenderer(tag, scopeId, accessor) {
     if (!tag || isMarko6(tag._ || tag.content || tag)) {
       return tag;
     }
@@ -260,10 +272,18 @@ exports.p = function (htmlCompat) {
 
       if (async !== false) {
         async = true;
-        htmlCompat.fork(scopeId, accessor, out, writeClassAPIResultToTagsAPI);
+        // Content a spread or `content=` renders has no location here, and its
+        // element's branch holds it, so it writes no resume marker of its own.
+        htmlCompat.fork(
+          scopeId,
+          accessor,
+          out,
+          writeClassAPIResultToTagsAPI,
+          accessor === undefined ? 0 : 1,
+        );
       }
     };
-  });
+  }
 
   return function register(id, renderer, boundaryMode) {
     // A renderer registered without "preserve" by any module keeps that mode:
