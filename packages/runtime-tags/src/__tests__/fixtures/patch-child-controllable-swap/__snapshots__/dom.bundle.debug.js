@@ -28,17 +28,17 @@ const $input_big__OR__plain__OR__tenfold = /*@__PURE__*/ _or(11, ($scope) => $in
 const $plain2 = /*@__PURE__*/ _const("plain", $input_big__OR__plain__OR__tenfold);
 const $tenfold2 = /*@__PURE__*/ _const("tenfold", $input_big__OR__plain__OR__tenfold);
 function $setup($scope) {
+	$last($scope, 0);
 	$plain2($scope, $plain($scope));
 	$tenfold2($scope, $tenfold($scope));
-	$last($scope, 0);
 }
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/2"], input_show);
 const $input_big = /*@__PURE__*/ _const("input_big", $input_big__OR__plain__OR__tenfold);
 const $input = ($scope, input) => {
+	$input_title($scope, input.title);
 	$input_show($scope, input.show);
 	$input_big($scope, input.big);
-	$input_title($scope, input.title);
 };
 const $plain = ($scope) => (next) => {
 	$last($scope, next);

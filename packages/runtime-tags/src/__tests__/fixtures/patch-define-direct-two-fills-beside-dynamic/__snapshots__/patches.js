@@ -1,23 +1,26 @@
 // PATCH
-{
-  va2: !0,
-  va3: "b",
-  va4: {
-    label: "b"
+[`a0;D ;<em> </em>`, {
+  ca: {
+    ba: [{
+      ta: "b"
+    }, "a0"]
   },
+  va4: "b",
   va5: {
-    content: _([], "a0", 1)
+    content: _([], "a1", 1)
   }
-}
+}]
+;BAE
 
-// PATCH
+// PATCH holding BAE
 {
-  va2: !0,
-  va3: "c",
-  va4: {
-    label: "c"
+  ca: {
+    ba: [{
+      ta: "c"
+    }, "a0"]
   },
+  va4: "c",
   va5: {
-    content: _([], "a0", 1)
+    content: _([], "a1", 1)
   }
 }

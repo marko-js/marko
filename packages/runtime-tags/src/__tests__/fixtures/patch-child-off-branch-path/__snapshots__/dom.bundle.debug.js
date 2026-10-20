@@ -120,16 +120,16 @@ function $setup($scope) {
 }
 const $input_slow__closure = /*@__PURE__*/ _closure($try_content__input_slow);
 const $input_slow = /*@__PURE__*/ _const("input_slow", ($scope) => {
-	$input_slow$1($scope["#childScope/3"], $scope.input_slow);
 	$input_slow__closure($scope);
+	$input_slow$1($scope["#childScope/3"], $scope.input_slow);
 });
 const $input_failing = ($scope, input_failing) => $input_failing$1($scope["#childScope/3"], input_failing);
 const $input_other = ($scope, input_other) => $input_other$1($scope["#childScope/3"], input_other);
 const $input = ($scope, input) => {
 	$input_slow($scope, input.slow);
+	$input_label($scope, input.label);
 	$input_failing($scope, input.failing);
 	$input_other($scope, input.other);
-	$input_label($scope, input.label);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($placeholder_content__input_label);
 const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", $input_label__closure);

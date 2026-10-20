@@ -13,7 +13,7 @@ var labeler_default = /*@__PURE__*/ _template("__tests__/tags/labeler.marko", $t
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $for_content__input_suffix__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/list.marko_fill0", "input_suffix", /*@__PURE__*/ _shell_or("__tests__/tags/list.marko_1_input_suffix#0:4_item#4/init", 5, ($scope) => $input_title($scope["#childScope/0"], $scope.item + $scope._.input_suffix)), "#text/0");
+const $for_content__input_suffix__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/list.marko_fill0/unpatched", "input_suffix", /*@__PURE__*/ _patch_or("__tests__/tags/list.marko_1_input_suffix#0:4_item#4/init", 5, ($scope) => $input_title($scope["#childScope/0"], $scope.item + $scope._.input_suffix)), "#text/0");
 const $for_content__input_suffix = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_suffix__OR__item);
 const $for_content__setup = ($scope) => {
 	$for_content__input_suffix._($scope);
@@ -28,7 +28,7 @@ const $input$1 = ($scope, input) => {
 	$input_items($scope, input.items);
 	$input_suffix$1($scope, input.suffix);
 };
-const $input_suffix$1 = /*@__PURE__*/ _fill_const("__tests__/tags/list.marko_fill0", "input_suffix", $for_content__input_suffix);
+const $input_suffix$1 = /*@__PURE__*/ _const("input_suffix", $for_content__input_suffix);
 var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $template$1, "b%c", 0, $input$1);
 
 // template.marko

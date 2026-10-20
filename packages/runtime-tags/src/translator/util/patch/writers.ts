@@ -20,6 +20,7 @@ import {
   getPatchKey,
 } from "../get-accessor-enums";
 import { getDeclaredBindingExpression } from "../get-declared-binding-expression";
+import { derivesConstantInput } from "../known-tag";
 import {
   every,
   forEach,
@@ -44,6 +45,7 @@ import {
 } from "../runtime";
 import { getPrefixedScopeAccessor, getScopeAccessor } from "../scope-accessor";
 import {
+  findParamReasonGroupIndex,
   forEachParamGroup,
   getCallerParamGroupsAt,
   getParamReasonGroupIndex,
@@ -68,6 +70,7 @@ import {
 import { findSlot } from "../slots";
 import { type Sources, sourcesUtil } from "../sources";
 import { createOutputState } from "../state";
+import { withLeadingComment } from "../with-comment";
 import {
   andGuard,
   buildComposedGroupValue,
@@ -609,6 +612,7 @@ export function getUnfilledValueIfWritten(
     reason,
     expr,
     patchFillsClientReads(binding),
+    binding,
   );
 }
 
@@ -631,13 +635,46 @@ function buildUnfilledIfWritten(
   reason: Reason | undefined,
   expr: t.Expression,
   structure: SortedOpt<Sources> | false,
+  binding?: Binding,
 ) {
   if (structure === false || !isDynamicWriteGuard(section, reason)) return;
   return t.logicalExpression(
     "&&",
-    getUnfilledGuard(section, reason.param, structure, !!reason.global),
+    getUnfilledGuard(
+      section,
+      reason.param,
+      structure,
+      !!reason.global,
+      binding && getOwnParamGroup(binding),
+    ),
     expr,
   );
+}
+
+interface OwnParamGroup {
+  section: Section;
+  index: number;
+}
+
+// The `_unfilled_if` arg naming the value's own group, for a group of its section.
+function getOwnGroupArg(own: OwnParamGroup | undefined, section: Section) {
+  return (
+    own?.section === section &&
+    withLeadingComment(
+      t.numericLiteral(own.index),
+      getDebugNames(section.paramReasonGroups![own.index]),
+    )
+  );
+}
+
+// A known child's param as a group of its own: where a call passes it a
+// constant, the client derives it wherever it renders the call.
+function getOwnParamGroup(binding: Binding): OwnParamGroup | undefined {
+  const { section } = binding;
+  const index = derivesConstantInput(binding)
+    ? findParamReasonGroupIndex(section, getSourcesForRef(binding)!.param!)
+    : -1;
+  if (index !== -1) return { section, index };
 }
 
 // A boundary branch every patch page renders, so it pairs without creating;
@@ -910,6 +947,7 @@ export function orCallerGroupGuards(
   check: HTMLRuntimeHelpers,
   list: Opt<Sources>,
   checked?: ReadonlySet<ParamReasonGroup>,
+  own?: OwnParamGroup,
 ) {
   let expr = guard;
   const seen = new Set<ParamReasonGroup>();
@@ -925,6 +963,7 @@ export function orCallerGroupGuards(
         const part = callRuntime(
           check,
           ...getGroupArgs(paramSection, group, index),
+          getOwnGroupArg(own, paramSection),
         );
         expr = orGuard(expr, part);
       }
@@ -940,6 +979,7 @@ export function getUnfilledGuard(
   params: Sources["param"],
   structure: SortedOpt<Sources>,
   unpatched: boolean,
+  own?: OwnParamGroup,
 ) {
   let guard: t.Expression | undefined;
   // Each group once, keyed by its section's own list entry: caller-owned
@@ -951,6 +991,7 @@ export function getUnfilledGuard(
     const part = callRuntime(
       "_unfilled_if",
       ...getGroupArgs(paramSection, group, index),
+      getOwnGroupArg(own, paramSection),
     );
     guard = orGuard(guard, part);
   });
@@ -960,6 +1001,7 @@ export function getUnfilledGuard(
     "_unfilled_if",
     structure,
     checked,
+    own,
   );
   if (unpatched) guard = orGuard(guard, callRuntime("_unfilled_if"));
   return guard!;

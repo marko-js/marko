@@ -26,9 +26,9 @@ function $setup$1($scope) {
 }
 const $input_show$1 = ($scope, input_show) => $Row_content__show($scope["#childScope/1"], input_show);
 const $input$1 = ($scope, input) => {
-	$input_show$1($scope, input.show);
 	$input_a$1($scope, input.a);
 	$input_b$1($scope, input.b);
+	$input_show$1($scope, input.show);
 };
 const $input_a__closure = /*@__PURE__*/ _closure($if_content__input_a);
 const $input_a$1 = /*@__PURE__*/ _const("input_a", $input_a__closure);

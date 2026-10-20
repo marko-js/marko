@@ -58,6 +58,7 @@ import {
   getClosureReadSources,
   isResumedRead,
   closureCarriesFill,
+  dispatchesUnpatchedAt,
   rerunsEffectOnPatch,
   hasTagCallerParamAt,
 } from "./patch/refresh";
@@ -175,10 +176,15 @@ export interface Signal {
   /** Renders a patch does itself (its hole writes, forwards into work it
    * renders): a client render needs them, a fill's run does not. */
   patch: t.Statement[];
+  /** Dispatch into caller-owned structure a fill reaches only under its
+   * unpatched key: a client render and that key's run need it, the fill's not. */
+  unpatched: t.Statement[];
   /** Whether a patch renders every render of this signal (`patchRenders`). */
   patchRendered?: boolean;
   /** A fill's run when it differs from the render (`render` without `patch`). */
   fillFn: t.Expression | undefined;
+  /** Its unpatched key's run (`render` and `unpatched`) where `patch` holds any. */
+  unpatchedFillFn: t.Expression | undefined;
   effect: t.Statement[];
   hasHTMLEffect: boolean;
   storesValue: boolean;
@@ -427,7 +433,9 @@ export function getSignal(
         forwards: undefined,
         render: [],
         patch: [],
+        unpatched: [],
         fillFn: undefined,
+        unpatchedFillFn: undefined,
         effect: [],
         hasHTMLEffect: false,
         build: undefined,
@@ -707,7 +715,8 @@ export function initValue(binding: Binding, isLet = false) {
     // A fill binding's own declaration doubles as its fill registration
     // (even a pure forwarder); renders the flush writes itself stay out.
     if (fills) {
-      const { fillsWithoutStructure, ownRegistration } = getPatchFill(binding);
+      const { fillsWithoutStructure, ownRegistration, unpatchedSections } =
+        getPatchFill(binding);
       // A fill no caller-owned structure re-renders applies by its patcher;
       // one only caller-owned structure or a join needs rides the call site's.
       if (fillsWithoutStructure) importRuntimeFeature("patches/value");
@@ -715,15 +724,28 @@ export function initValue(binding: Binding, isLet = false) {
       const accessor = getScopeAccessorLiteral(binding, true, isLet);
       // Where only the key reaches it, the fill's registration ships it and
       // its value signal stays pure; elsewhere what reaches the signal does.
-      return ownRegistration
-        ? callRuntime(
-            "_fill_resume",
-            key,
-            callRuntime(helper, ...trimEmptyArgs([accessor, fn])),
-            signal.fillFn && getScopeAccessorLiteral(binding, true),
-            signal.fillFn,
-          )
-        : callRuntime(`_fill${helper}`, key, accessor, fn, signal.fillFn);
+      if (!ownRegistration) {
+        return callRuntime(`_fill${helper}`, key, accessor, fn, signal.fillFn);
+      }
+      let value = callRuntime(helper, ...trimEmptyArgs([accessor, fn]));
+      // As its joins do, its own registration takes its unpatched key, sent where
+      // caller-owned structure of its own is the client's, which reaches into it.
+      if (unpatchedSections) {
+        value = callRuntime(
+          "_fill_resume",
+          t.stringLiteral(getPatchFillKey(binding, "unpatched")),
+          value,
+          signal.unpatchedFillFn && getScopeAccessorLiteral(binding, true),
+          signal.unpatchedFillFn,
+        );
+      }
+      return callRuntime(
+        "_fill_resume",
+        key,
+        value,
+        signal.fillFn && getScopeAccessorLiteral(binding, true),
+        signal.fillFn,
+      );
     }
     if (
       !signal.forceStore &&
@@ -762,6 +784,7 @@ export function signalHasWork(signal: Signal): boolean {
     signal.forceStore ||
     signal.render.length ||
     signal.patch.length ||
+    signal.unpatched.length ||
     signal.effect.length ||
     signal.hasHTMLEffect ||
     signal.values.length ||
@@ -878,6 +901,7 @@ function hasClientRender(signal: Signal): boolean {
     signal.effect.length ||
     signal.hasHTMLEffect ||
     signal.render.length ||
+    signal.unpatched.length ||
     signal.values.some(isClientRenderedValue) ||
     !every(signal.intersections, patchRenders) ||
     !every(signal.globalJoins, patchRenders)
@@ -1082,9 +1106,13 @@ export function buildSignalFn(signal: Signal): t.Expression {
         // no patch writes there.
         const closureSignal = getSignal(closureSection, binding);
         pushScopeCall(
-          isPatch() && registersClosureFill(closureSection, binding)
+          !isPatch()
             ? signal.render
-            : forwardsTo(signal, closureSignal),
+            : dispatchesUnpatchedAt(binding, closureSection)
+              ? signal.unpatched
+              : registersClosureFill(closureSection, binding)
+                ? signal.render
+                : forwardsTo(signal, closureSignal),
           closureSignal.identifier,
         );
       }
@@ -1111,12 +1139,19 @@ export function buildSignalFn(signal: Signal): t.Expression {
   }
 
   let render = signal.render;
-  // A fill's run is the render without what the patch renders itself.
-  if (signal.patch.length) {
+  // A fill's run is the render without what the patch renders itself, or
+  // what only its unpatched key reaches.
+  if (signal.patch.length || signal.unpatched.length) {
     if (isValue && getPatchFill(binding).fillsReads) {
       signal.fillFn = t.cloneNode(toScopeFn(render), true);
+      if (signal.unpatched.length && signal.patch.length) {
+        signal.unpatchedFillFn = t.cloneNode(
+          toScopeFn(render.concat(signal.unpatched)),
+          true,
+        );
+      }
     }
-    render = render.concat(signal.patch);
+    render = render.concat(signal.unpatched, signal.patch);
   }
 
   if (!signal.storesValue) {
@@ -1504,7 +1539,10 @@ export function writeSignals(section: Section) {
       // A join with no work but its effect is that effect, which its script
       // registration puts under each key and nested path already.
       const onlyEffect =
-        !signal.render.length && !signal.values.length && !signal.patch.length;
+        !signal.render.length &&
+        !signal.values.length &&
+        !signal.patch.length &&
+        !signal.unpatched.length;
       let value = signal.build();
       // A built bare identifier, or one a `_const`/`_let` store takes as its
       // fn, references its forward target when the module evaluates.
@@ -1584,7 +1622,9 @@ export function writeSignals(section: Section) {
 
     traverseReplace(signal, "render", replaceRenderNode, signal);
     traverseReplace(signal, "patch", replaceRenderNode, signal);
+    traverseReplace(signal, "unpatched", replaceRenderNode, signal);
     traverseReplace(signal, "fillFn", replaceRenderNode, signal);
+    traverseReplace(signal, "unpatchedFillFn", replaceRenderNode, signal);
 
     const signalStatements = signal.prependStatements || [];
 
@@ -1652,7 +1692,8 @@ function wrapJoinFills(
   for (const ref of join) {
     const member = getCanonicalBinding(ref);
     const registers = registersJoinFill(member);
-    const { unpatchedJoins, joinFill } = getPatchFill(member);
+    const { unpatchedJoins, joinFill, unpatchedSections } =
+      getPatchFill(member);
     if (written) {
       if (joinFill === join) register(member, getPatchFillKey(member));
       else expr = registerValueAlone(member, expr);
@@ -1660,9 +1701,12 @@ function wrapJoinFills(
         register(member, getPatchFillKey(member, "unpatched"));
       }
     } else if (registers) {
-      register(member, getPatchFillKey(member));
+      // In caller-owned structure of its own, only its unpatched key reaches.
+      if (!dispatchesUnpatchedAt(member, section)) {
+        register(member, getPatchFillKey(member));
+      }
       // The unpatched key runs whatever the member's fill does.
-      if (unpatchedJoins) {
+      if (unpatchedJoins || unpatchedSections) {
         register(member, getPatchFillKey(member, "unpatched"));
       }
     }
@@ -1750,14 +1794,17 @@ function buildClosureFillJoin(
       value,
       index !== undefined && t.numericLiteral(index),
     );
-  // Content a consumer may withhold refreshes under a key of its own.
-  const content =
-    section.enclosing.inContentSection && getPatchFill(closure).splitsContent;
+  // Content a consumer may withhold refreshes under a key of its own; in
+  // caller-owned structure of its own, only the unpatched key reaches.
+  const { splitsContent, unpatchedJoins, unpatchedSections } =
+    getPatchFill(closure);
+  const content = section.enclosing.inContentSection && splitsContent;
   const fill =
-    content || registersJoinFill(closure)
+    content ||
+    (registersJoinFill(closure) && !dispatchesUnpatchedAt(closure, section))
       ? register(content ? "content" : undefined, value)
       : value;
-  return getPatchFill(closure).unpatchedJoins
+  return unpatchedJoins || unpatchedSections
     ? register("unpatched", fill)
     : fill;
 }

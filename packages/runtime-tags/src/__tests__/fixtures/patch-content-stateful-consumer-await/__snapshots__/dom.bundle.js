@@ -12,9 +12,9 @@ const $await_content__v = ($scope, v) => _text($scope.a, v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content(0, "<em> </em>", "D ");
 const $wrap_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
-const $wrap_content__input_promise = /*@__PURE__*/ _fill_join_closure("a2", 3, /*@__PURE__*/ _closure_get(4, ($scope) => $wrap_content__await_promise($scope, $scope._.d), 0, "a0"), 0);
+const $wrap_content__input_promise = _closure_resume("a6", /*@__PURE__*/ _fill_join_closure("a3", 3, /*@__PURE__*/ _closure_get(4, ($scope) => $wrap_content__await_promise($scope, $scope._.d)), 0));
 const $wrap_content__setup = ($scope) => {
 	$wrap_content__input_promise($scope);
 	$await_content($scope);
 };
-const $wrap_content = _content$1("a1", "<!><!><!>", "b%", $wrap_content__setup);
+const $wrap_content = _content$1("a2", "<!><!><!>", "b%", $wrap_content__setup);

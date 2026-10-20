@@ -351,14 +351,20 @@ _Avoid_: rebuild, rebuilt structure
 **Stateful structure**:
 A branch body whose branch expression has a state reason (its `BranchExpr`
 slot) — state sources, no `$global`, param sources a patch fills —
-derived from its branch expression (`isStatefulBranch`), never stored.
-Resumed code re-renders it, so patch renders skip it and flushes omit its
-entry.
+derived from its branch expression (`isStatefulBranch`), never stored; or a
+content or `<define>` body every consumer renders with client state. Resumed
+code re-renders it, so patch renders skip it and flushes omit its entry. A
+body only some consumer renders so (`getStatefulConsumers`) is patch-written
+structure whose instances each consumer sets at render: a call by its mask, a
+dynamic tag or stateful chain by rendering it unpatched.
 _Avoid_: state-selected, client-owned
 
 **Ownership**:
 Which side feeds a param group at a call site, as the runtime reads it from the
-group's two bits (client contributes, server contributes). Only the group of a
+group's two bits (client renders, server contributes). The client bit is set by
+client state, or for a server value the client derives: a call input its
+callee reads alone (`isClientDerivedParam`) where the fills of what the input reads
+ship, which then reach it and no hole is written. Only the group of a
 known child's param is decided per call, at render, and only code in that body
 reads it (`isCallerParamAt`); analysis knows only sources (state, params,
 `$global`), so translate code names those and never claims ownership.
@@ -369,7 +375,9 @@ A read a patch keeps current by writing its value at the site is a _hole_ the
 patch _fills_; the html gates say which side acts on a param group:
 `_filled_guard` (a patch fills it: server-owned, or constant where a construct
 needs the seed), `_unfilled_if` (no patch fills it: the group is client-sourced,
-or the read sits in unpatched structure). Translate derives reads no patch can
+or the read sits in unpatched structure, unless the value is a `<define>`
+param a call passes as a module read from structure the client renders, which
+the call's forwards there push first: `derivesConstantParam`). Translate derives reads no patch can
 fill (`PatchWrite.unfillable`), never the gate.
 _Avoid_: server-side/client-side value, owned read
 
@@ -456,6 +464,9 @@ A member's fill key with the `/unpatched` suffix (`getPatchFillKey`), as
 withheld content's is `/content`. Where the client may own a written join's
 structure, the member ships under it in place of its fill, slot write or
 seed. Its run re-runs the join, and it registers wherever the fill key does.
+A value a fill ships for other reads too, passed to a call in caller-owned
+structure of its own (`dispatchesUnpatchedAt`), reaches that call only under
+it: a patch keeps the callee per instance where it renders the structure.
 
 **Effect write / capture write**:
 Wire channels for values a patch sends that no fill consumes: an accessor write

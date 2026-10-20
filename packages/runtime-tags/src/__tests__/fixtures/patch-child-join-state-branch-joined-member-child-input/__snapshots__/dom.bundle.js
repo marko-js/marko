@@ -2,7 +2,7 @@
 const $input_v = ($scope, input_v) => _text($scope.a, input_v);
 
 // tags/child.marko
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("c5", 8, /*@__PURE__*/ _fill_join_if("c3", 4, /*@__PURE__*/ _fill_join("c2", 4, /*@__PURE__*/ _patch_or("c1", 1, ($scope) => _text($scope.a, $scope._.e + $scope._.i)), () => () => {}), 0, 0), 0, 0);
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("c3", 8, /*@__PURE__*/ _fill_join_if("c2", 4, /*@__PURE__*/ _patch_or("c1", 1, ($scope) => _text($scope.a, $scope._.e + $scope._.i)), 0, 0), 0, 0);
 const $if_content__input_a = /*@__PURE__*/ _if_closure(0, 0, $if_content__input_a__OR__input_b);
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);
@@ -10,7 +10,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__input_b = /*@__PURE__*/ _if_closure(0, 0, $if_content__input_a__OR__input_b);
 const $c = ($scope, c) => $input_v($scope.b, c);
-const $input_a__OR__input_d = /*@__PURE__*/ _fill_join("c4", 5, /*@__PURE__*/ _fill_join("c3", 4, /*@__PURE__*/ _fill_join("c2", 4, /*@__PURE__*/ _shell_or("c6", 6, ($scope) => $c($scope, $scope.e + "-" + $scope.f)))));
+const $input_a__OR__input_d = /*@__PURE__*/ _patch_or("c4", 6, ($scope) => $c($scope, $scope.e + "-" + $scope.f));
 const $input_d = /*@__PURE__*/ _const(5, $input_a__OR__input_d);
 const $if = /*@__PURE__*/ _if(0, "<p> </p>", "D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

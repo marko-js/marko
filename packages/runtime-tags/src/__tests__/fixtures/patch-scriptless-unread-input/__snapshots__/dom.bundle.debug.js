@@ -25,11 +25,11 @@ const $input_tag__OR__input_cls = /*@__PURE__*/ _or(10, ($scope) => $dynamicTag(
 const $input_tag = /*@__PURE__*/ _const("input_tag", $input_tag__OR__input_cls);
 const $input_cls = /*@__PURE__*/ _const("input_cls", $input_tag__OR__input_cls);
 const $input = ($scope, input) => {
-	$input_user2($scope, input.user2);
 	$input_tag($scope, input.tag);
 	$input_cls($scope, input.cls);
 	$input_show($scope, input.show);
 	$input_user($scope, input.user);
+	$input_user2($scope, input.user2);
 	$input_user3($scope, input.user3);
 };
 const $input_user = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_user", $if_content__input_user);

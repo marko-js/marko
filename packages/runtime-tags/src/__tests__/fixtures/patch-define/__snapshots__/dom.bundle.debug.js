@@ -18,8 +18,8 @@ const $input_cls = /*@__PURE__*/ _const("input_cls", $input_cls__OR__input_on);
 const $input_on = /*@__PURE__*/ _const("input_on", $input_cls__OR__input_on);
 const $input_color = ($scope, input_color) => _attr_style_item($scope["#div/1"], "color", input_color);
 const $input = ($scope, input) => {
-	$input_n($scope, input.n);
 	$input_title($scope, input.title);
+	$input_n($scope, input.n);
 	$input_cls($scope, input.cls);
 	$input_on($scope, input.on);
 	$input_color($scope, input.color);

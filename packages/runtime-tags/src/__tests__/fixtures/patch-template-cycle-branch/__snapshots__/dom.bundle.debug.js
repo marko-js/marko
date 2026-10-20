@@ -27,13 +27,13 @@ const $if_content__setup$1 = $if_content__input_node_kid;
 const $input_node_name = ($scope, input_node_name) => _text($scope["#text/0"], input_node_name);
 const $if$1 = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<ul>${_w0}</ul>`)($template$2), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks$2), $if_content__setup$1);
 const $input_node_kid = /*@__PURE__*/ _const("input_node_kid", ($scope) => {
-	$if_content__input_node_kid($scope);
 	$if$1($scope, $scope.input_node_kid ? 0 : 1);
+	$if_content__input_node_kid($scope);
 });
 const $input$1 = ($scope, input) => $input_node$1($scope, input.node);
 const $input_node$1 = ($scope, input_node) => {
-	$input_node_kid($scope, input_node?.kid);
 	$input_node_name($scope, input_node?.name);
+	$input_node_kid($scope, input_node?.kid);
 };
 var tree_a_default = /*@__PURE__*/ _template("__tests__/tags/tree-a.marko", $template$1, $walks$1, 0, $input$1);
 

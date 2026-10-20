@@ -23,8 +23,8 @@ function $setup($scope) {
 }
 const $input_items = ($scope, input_items) => $List_content__items($scope["#childScope/1"], input_items);
 const $input = ($scope, input) => {
-	$input_items($scope, input.items);
 	$input_suffix($scope, input.suffix);
+	$input_items($scope, input.items);
 };
 const $input_suffix__closure = /*@__PURE__*/ _closure($for_content__input_suffix);
 const $input_suffix = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_suffix", $input_suffix__closure);

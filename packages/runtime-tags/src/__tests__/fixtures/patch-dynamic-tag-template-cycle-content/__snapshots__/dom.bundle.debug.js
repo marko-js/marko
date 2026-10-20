@@ -27,8 +27,8 @@ function $setup$2($scope) {
 }
 const $input_node_kid__closure$1 = /*@__PURE__*/ _closure($wrap_content__input_node_kid$1);
 const $input_node_kid$1 = /*@__PURE__*/ _const("input_node_kid", ($scope) => {
-	$input_show($scope["#childScope/1"], !!$scope.input_node_kid);
 	$input_node_kid__closure$1($scope);
+	$input_show($scope["#childScope/1"], !!$scope.input_node_kid);
 });
 const $input$2 = ($scope, input) => $input_node$2($scope, input.node);
 const $input_node$2 = ($scope, input_node) => {
@@ -52,8 +52,8 @@ function $setup$1($scope) {
 }
 const $input_node_kid__closure = /*@__PURE__*/ _closure($wrap_content__input_node_kid);
 const $input_node_kid = /*@__PURE__*/ _const("input_node_kid", ($scope) => {
-	$input_show($scope["#childScope/1"], !!$scope.input_node_kid);
 	$input_node_kid__closure($scope);
+	$input_show($scope["#childScope/1"], !!$scope.input_node_kid);
 });
 const $input$1 = ($scope, input) => $input_node$1($scope, input.node);
 const $input_node$1 = ($scope, input_node) => {

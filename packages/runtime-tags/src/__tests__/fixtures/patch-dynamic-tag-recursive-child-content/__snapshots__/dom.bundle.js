@@ -17,16 +17,16 @@ const $wrap_content__setup = ($scope) => {
 const $wrap_content = _content$1("b0", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $wrap_content__setup);
 const $input_node_name = ($scope, input_node_name) => _text($scope.a, input_node_name);
 const $input_node = ($scope, input_node) => {
-	$input_node_kid($scope, input_node?.kid);
 	$input_node_name($scope, input_node?.name);
+	$input_node_kid($scope, input_node?.kid);
 };
 function $setup($scope) {
 	$input_content($scope.b, $wrap_content($scope));
 }
 const $input_node_kid__closure = /*@__PURE__*/ _closure($wrap_content__input_node_kid);
 const $input_node_kid = /*@__PURE__*/ _const(6, ($scope) => {
-	$input_show($scope.b, !!$scope.g);
 	$input_node_kid__closure($scope);
+	$input_show($scope.b, !!$scope.g);
 });
 
 // template.marko

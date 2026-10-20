@@ -10,11 +10,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_1*content", (props) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__props = _write_guard($scope1_reason, 0);
-		_html(`<em>${_text_resume($scope1_id, "#text/0", JSON.stringify(props), $wg__props)}</em>`);
-		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "2:2");
+		const $scope1_reason = _scope_reason();
+		_html(`<em>${_patch_text($scope1_id, "#text/0", JSON.stringify(props), void 0, $scope1_reason, 0)}</em>`);
+		_scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason((_mask_group($scope0_reason, 0) | _filled_guard($scope0_reason, 0)) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/0");
 	Panel.content({ label: input.label });
 	_dynamic_tag($scope0_id, "#text/1", open ? "b" : Panel, { label: input.label });

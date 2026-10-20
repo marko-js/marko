@@ -43,6 +43,7 @@ import {
 } from "../reasons";
 import {
   getReferencedBindings,
+  isReferencedExtra,
   type Read,
   type ReferencedExtra,
 } from "../references";
@@ -86,6 +87,9 @@ import {
   inStatefulBranch,
   isStatefulBranch,
   getCallerOwnedStructure,
+  calleeKeepsInput,
+  getStatefulConsumers,
+  isStatefulLeaf,
 } from "./structure";
 
 // Stable wire/registry key for a fill: a register id for a template-wide fill
@@ -168,6 +172,7 @@ export interface PatchFill {
   unpatchedOnly?: boolean;
   unpatchedJoins?: Intersection[];
   unpatchedStructure?: true | FillConditions;
+  unpatchedSections?: Section[];
 }
 
 // What a patch writes and seeds, asked once shells are built.
@@ -202,7 +207,7 @@ export const [getPatchWrite] = createAnalysisMemo(computePatchWrite, UNREAD);
 function computePatchFill(binding: Binding): PatchFill {
   const read = getFillReadKind(binding);
   const { kind } = read;
-  const { unpatchedJoins, unpatchedStructure } = read;
+  const { unpatchedJoins, structureReads } = read;
   // A value only joins the patch writes call for rides its slot write; a fill
   // for other reads also goes where they run on the client.
   const writes = getJoinWrites(kind);
@@ -218,6 +223,25 @@ function computePatchFill(binding: Binding): PatchFill {
   // with state, or inside structure the client may own.
   const fill = fillable ? (binding.sources?.state ? true : reasons) : undefined;
   const conditions = fill === true ? undefined : fill;
+  // A fill shipped for other reads too reaches calls in caller-owned structure
+  // of its own only by its unpatched key, sent where that structure is the client's.
+  const unpatchedSections =
+    fill &&
+    structureReads &&
+    !binding.sources?.state &&
+    !(
+      conditions &&
+      !conditions.joins &&
+      !conditions.fills &&
+      !conditions.contents &&
+      !conditions.writes &&
+      sourcesUtil.isSuperset(structureReads, conditions.structure)
+    )
+      ? read.unpatchedSections
+      : undefined;
+  const unpatchedStructure = unpatchedSections
+    ? mergeKinds(read.unpatchedStructure, { structure: structureReads })
+    : read.unpatchedStructure;
   let derivedNeeds: PatchFill["derivedNeeds"];
   // The client derives a value no patch can fill from its sources, wherever
   // its reads, effects and functions (or a part's) need it.
@@ -279,6 +303,7 @@ function computePatchFill(binding: Binding): PatchFill {
     unpatchedOnly,
     unpatchedJoins,
     unpatchedStructure,
+    unpatchedSections,
   };
 }
 
@@ -348,15 +373,19 @@ function seedsCreatedScope(binding: Binding) {
   );
 }
 
-// A value its expression's join derives by its created init, which every created
-// or composed scope's shell or flush names (no other scope is created to seed).
+// A value its expression's join (a call site's, for a known child's param)
+// derives by its created init, which every created or composed scope names.
 function derivesByCreatedInit(binding: Binding) {
   const { derivedFrom } = binding;
-  const join =
-    derivedFrom && !Array.isArray(derivedFrom)
-      ? getReferencedBindings(derivedFrom)
-      : undefined;
-  return Array.isArray(join) && !!getJoinInit(binding.section, join)?.init;
+  if (
+    !derivedFrom ||
+    Array.isArray(derivedFrom) ||
+    !isReferencedExtra(derivedFrom)
+  ) {
+    return false;
+  }
+  const join = getReferencedBindings(derivedFrom);
+  return Array.isArray(join) && !!getJoinInit(derivedFrom.section, join)?.init;
 }
 
 // A param a created scope gets as a seed, as no structure brings it: a known
@@ -396,6 +425,8 @@ const [getFillReadKind, resetFillReadKinds] = createAnalysisMemo(
     kind: undefined,
     unpatchedJoins: undefined,
     unpatchedStructure: undefined,
+    unpatchedSections: undefined,
+    structureReads: undefined,
     writtenJoins: undefined,
   },
 );
@@ -404,6 +435,9 @@ function computeFillReadKind(binding: Binding) {
   let kind: true | FillConditions | undefined;
   let unpatchedJoins: Intersection[] | undefined;
   let unpatchedStructure: true | FillConditions | undefined;
+  // Sections passing it to calls in caller-owned structure of its own, and that structure.
+  let unpatchedSections: Section[] | undefined;
+  let structureReads: SortedOpt<Sources>;
   // Each written join its value is shipped for, by the section reading it.
   let writtenJoins: Map<Intersection, Section> | undefined;
   for (const alias of binding.aliases) {
@@ -452,6 +486,16 @@ function computeFillReadKind(binding: Binding) {
     }
     const readKind = getReadKind(binding, read, effect, written);
     kind = mergeKinds(kind, readKind);
+    if (leavesToPatchAt(binding, read.section)) {
+      if (!unpatchedSections?.includes(read.section)) {
+        (unpatchedSections ||= []).push(read.section);
+      }
+      const structure =
+        !written && !effect && getReadStructure(binding, read, effect);
+      if (structure && structure !== true) {
+        structureReads = sourcesUtil.union(structureReads, structure.structure);
+      }
+    }
     if (written && readKind !== true && readKind?.writes) {
       (writtenJoins ||= new Map()).set(refs, read.section);
     }
@@ -460,8 +504,39 @@ function computeFillReadKind(binding: Binding) {
     kind,
     unpatchedJoins,
     unpatchedStructure,
+    unpatchedSections,
+    structureReads,
     writtenJoins,
   };
+}
+
+// Whether the binding's fill reaches `section` under its unpatched key alone.
+export function dispatchesUnpatchedAt(binding: Binding, section: Section) {
+  return !!getPatchFill(binding).unpatchedSections?.includes(section);
+}
+
+// A section its fill reaches by branch hops, passing it to a call: a patch
+// rendering it renders every read there itself.
+function leavesToPatchAt(binding: Binding, section: Section) {
+  return (
+    section.enclosing.nonOptionalAncestor ===
+      binding.section.enclosing.nonOptionalAncestor &&
+    someReadIn(binding, section, isCallInput) &&
+    !someReadIn(binding, section, isClientRenderedRead)
+  );
+}
+
+function isCallInput(read: ReferencedExtra) {
+  return some(read.derives, (derived) => isCalleeParam(derived, read.section));
+}
+
+// A known child's param a call in `section` passes.
+function isCalleeParam(derived: Binding, section: Section) {
+  return derived.section !== section && isKnownChild(derived.section);
+}
+
+function isClientRenderedRead(read: ReferencedExtra) {
+  return !leavesReadToPatch(read);
 }
 
 // What one read needs of the binding's fill: `true` for every patch.
@@ -537,12 +612,14 @@ function getReadStructure(
   // visits each call section once, so a recursive define reaches its own once.
   const readSections = new Set([read.section]);
   for (const readAt of readSections) {
-    // No patch write reaches a skipped region: reads inside stateful
-    // structure, or boundary content the client renders, promote to owner fills.
+    // No patch write reaches a skipped region: reads in stateful structure, a body
+    // some consumer renders so, or boundary content the client renders take owner fills.
     let readSection: Section | undefined = readAt;
     let content: Section | undefined;
     while (readSection && readSection !== binding.section) {
-      if (isStatefulBranch(readSection)) return true;
+      if (isStatefulBranch(readSection) || getStatefulConsumers(readSection)) {
+        return true;
+      }
       if (readSection.boundaryContent) return true;
       // The nearest content a consumer renders (or withholds).
       if (!content && !readSection.branch && readSection.derives) {
@@ -609,17 +686,31 @@ function hasDeclarationOnlyReads(binding: Binding) {
     if (
       readsValuesOnResume(read)
         ? !read.invokeOnly && read.section === binding.section
-        : some(
-            read.derives,
-            (derived) =>
-              derived.section !== binding.section &&
-              isKnownChild(derived.section),
-          ) && getDerivedNeeds(read)
+        : some(read.derives, (derived) =>
+            isCalleeParam(derived, binding.section),
+          ) &&
+          (getDerivedNeeds(read) ||
+            some(
+              read.derives,
+              (derived) =>
+                isCalleeParam(derived, binding.section) &&
+                isClientDerivedParam(derived),
+            ))
     ) {
       return true;
     }
   }
   return false;
+}
+
+// A known child's param the client may derive from what its calls pass: a consumer
+// renders the callee client-side, which reads it alone (nothing stored, no structure).
+export function isClientDerivedParam(param: Binding) {
+  return (
+    !!getStatefulConsumers(param.section) &&
+    !findSlot(param)?.reason &&
+    !bindingUtil.has(param.section.structuralParams, param)
+  );
 }
 
 // What client code needs of the values derived at the read that no patch can
@@ -1148,13 +1239,16 @@ export const [isPatchWrittenJoin, resetWrittenJoins] = createAnalysisMemo(
   false,
 );
 
-// A read the patch leaves to the holes it writes and the effects its entries
-// re-run, through the values derived from it.
+// A read the patch leaves to the holes it writes, the effects its entries
+// re-run and the calls whose callees keep their inputs, through derived values.
 function leavesReadToPatch(read: ReferencedExtra): boolean {
   if (isFilledHole(read) || readsValuesOnResume(read)) return true;
   return (
     !!read.derives &&
     every(read.derives, (derived) => {
+      if (isCalleeParam(derived, read.section)) {
+        return calleeKeepsInput(read.section, getSourcesForExpr(read));
+      }
       if (derived.type !== BindingType.derived) return false;
       for (const derivedRead of derived.reads.keys()) {
         if (!leavesReadToPatch(derivedRead)) return false;
@@ -1303,8 +1397,19 @@ function sectionMayCreate(section: Section): boolean {
   );
 }
 
+// A consumer rendering the content client-side creates it on the client, and a
+// read passing it on within the template leaves it to the reads of what it derives.
 function readMayCreate(read: ReferencedExtra) {
-  return enclosingMayCreate(read.section, true);
+  return (
+    !isStatefulLeaf(read) &&
+    (!!(read.rendersContent || read.nameOnly) ||
+      !read.derives ||
+      some(
+        read.derives,
+        (derived) => derived.section.program !== read.section.program,
+      )) &&
+    enclosingMayCreate(read.section, true)
+  );
 }
 
 function enclosingMayCreate(section: Section, fromRead?: boolean): boolean {

@@ -21,7 +21,7 @@ import {
   StructureKind,
   type ParamReasonGroup,
 } from "../sections";
-import type { Sources } from "../sources";
+import { hasParamOrGlobalSource, type Sources } from "../sources";
 import { createAnalysisSectionState } from "../state";
 import { canPatchFill } from "./refresh";
 
@@ -105,7 +105,7 @@ function someRead(
 
 // Content read inside stateful structure renders there; a tag rendering it
 // with client state re-renders it on the client wherever it sits.
-function isStatefulLeaf(read: ReferencedExtra) {
+export function isStatefulLeaf(read: ReferencedExtra) {
   const rendersContent = read.rendersContent || read.nameOnly;
   return (
     !!(rendersContent || read.derives) &&
@@ -113,14 +113,33 @@ function isStatefulLeaf(read: ReferencedExtra) {
       (!!read.rendersContent && !!getSourcesForExpr(read)?.state))
   );
 }
-// A tag body is stateful when the prop it derives renders so in the
-// child; the last hop stays a prop query so whole reads of its owner count.
-function bodyRendersStateful(section: Section) {
-  const { derives } = section;
-  return (
-    !!derives &&
-    someContentRead(derives.binding, derives.properties, isStatefulLeaf)
-  );
+// A read rendering the content where a patch may render it too.
+function isPatchedLeaf(read: ReferencedExtra) {
+  return !!(read.rendersContent || read.nameOnly) && !isStatefulLeaf(read);
+}
+
+// Which consumers of a tag body render it with client state, as the prop it derives
+// renders in the child: some, or every one, where no direct call outside stateful
+// structure (its mask decides) or patched read leaves an instance to its own.
+export const [getStatefulConsumers] = createAnalysisMemo(
+  (section: Section): "some" | "every" | undefined => {
+    const { derives } = section;
+    if (
+      !derives ||
+      !someContentRead(derives.binding, derives.properties, isStatefulLeaf)
+    ) {
+      return;
+    }
+    return some(section.callSections, isPatchedCall) ||
+      someContentRead(derives.binding, derives.properties, isPatchedLeaf)
+      ? "some"
+      : "every";
+  },
+  undefined,
+);
+
+function isPatchedCall(callSection: Section) {
+  return !inStatefulBranch(callSection);
 }
 
 // A branch body whose branch expression has a state reason (or nested in one) and
@@ -133,10 +152,10 @@ export const [isStatefulBranch] = createAnalysisMemo((section: Section) => {
       ? section.branchExpr
       : undefined;
   const sources = expr && getSourcesForExpr(expr);
-  // A body the child renders stateful (any consumer), or one whose own
-  // branch expression derives from state.
+  // A body every consumer renders stateful, or one whose own branch
+  // expression derives from state.
   return (
-    bodyRendersStateful(section) ||
+    getStatefulConsumers(section) === "every" ||
     (!!expr &&
       (!!sources?.state || inStatefulBranch(section.parent!)) &&
       every(getReferencedBindings(expr), clientDerives))
@@ -178,6 +197,17 @@ export const [getCallerOwnedStructure] = createAnalysisMemo(
   },
   undefined,
 );
+
+// A call input its callee keeps per instance where a patch renders the call: its
+// own fill or holes where its group is the server's, a written join where it mixes.
+export function calleeKeepsInput(
+  section: Section,
+  sources: Sources | undefined,
+) {
+  return (
+    patchWrites(section) && !sources?.state && hasParamOrGlobalSource(sources)
+  );
+}
 
 // The params a branch or loop expression derives from are structural where
 // a caller passes them: a template's, or a `<define>` body's.

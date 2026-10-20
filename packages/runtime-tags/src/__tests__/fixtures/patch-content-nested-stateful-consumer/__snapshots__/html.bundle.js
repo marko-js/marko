@@ -29,9 +29,12 @@ var card_default = _template("b", (input) => {
 });
 
 // template.marko
-_shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `D/${_w0}&l`)($walks)};${((_w0) => `<main>${_w0}</main>`)($template)}`)() });
+_shells({
+	a0: "a0,",
+	a: /*@__PURE__*/ (() => `a !;${((_w0) => `D/${_w0}&l`)($walks)};${((_w0) => `<main>${_w0}</main>`)($template)}`)()
+});
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -39,18 +42,18 @@ var template_default = _template("a", (input) => {
 	const $childScope = _patch_child($scope0_id, "a");
 	card_default({
 		title: input.title,
-		content: _content_resume("a1", () => {
+		content: _content_resume("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_text_resume($scope1_id, "a", input.note, $wg__input_note)}</em>`);
-			_subscribe($wi__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0", $wg__input_note);
-			$wg__input_note || _resume_branch($scope1_id);
+			_html(`<em>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</em>`);
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, "a1");
+			_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		}, $scope0_id)
 	});
 	_html("</main>");
 	$scope0_page ? _scope($scope0_id, {
 		e: input.note,
-		f: $wi__input_note && $input_note__closures,
+		f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_note__closures,
 		a: _existing_scope($childScope)
 	}) : _filled_guard($scope0_reason, 1) && _patch_value($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

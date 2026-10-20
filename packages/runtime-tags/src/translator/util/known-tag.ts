@@ -7,18 +7,22 @@ import {
   BindingType,
   bindingUtil,
   createBinding,
+  getCanonicalBinding,
   getDebugNames,
   ensurePropertyAlias,
   getPropertyAlias,
   isInvokeOnlyBinding,
   isOwnBinding,
+  type ParamBinding,
   reserveId,
 } from "./bindings";
 import { setTagContentDerives } from "./content-derives";
+import { createAnalysisMemo } from "./cyclic-memo";
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName, getTagNameHint } from "./get-tag-name";
 import { isPatch } from "./marko-config";
+import { isResolvedModuleRead, recordModuleRead } from "./module-read";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -30,6 +34,7 @@ import {
   every,
   forEach,
   fromIter,
+  type Opt,
   reduce,
   some,
   type SortedOpt,
@@ -42,8 +47,15 @@ import {
   getSettledParamsTree,
 } from "./params-tree";
 import { isPatchKeyedSlot } from "./patch/decisions";
-import { namesBodyOwner } from "./patch/refresh";
 import {
+  getPatchFill,
+  namesBodyOwner,
+  patchCreatesOrComposes,
+  isClientDerivedParam,
+} from "./patch/refresh";
+import {
+  calleeKeepsInput,
+  getCallerOwnedStructure,
   patchWrites,
   hasStructuralParam,
   recordStructuralParams,
@@ -73,6 +85,7 @@ import {
   trackVarReferences,
   mergeTagReferences,
   onFinalizeReferences,
+  getReferencedBindings,
   getReferencedBindingsInFunction,
 } from "./references";
 import {
@@ -111,6 +124,7 @@ import {
 import { findSlot, ensureSlot, SlotKind } from "./slots";
 import {
   hasCallerParamSource,
+  hasCallerParamSourceAt,
   hasParamOrGlobalSource,
   mergeSources,
   type Sources,
@@ -139,6 +153,7 @@ import {
   buildComposedGroupValue,
   buildGroupMask,
   getClientGuard,
+  getGroupArgs,
   getWriteGuard,
   getWriteReason,
   scopePageIdentifier,
@@ -434,6 +449,7 @@ export function knownTagTranslateHTML(
           childScopeBinding,
           childSection.paramReasonGroups,
           groups,
+          tagExtra[kKnownExprs]!,
         );
       }
     } else {
@@ -712,6 +728,86 @@ export function getParamGroupSources(
   }
 }
 
+// A call input the client derives from the fills of what it reads, which ship
+// wherever their group is the server's: no flush creates the call, no hole is written.
+function isClientDerivedInput(
+  callSection: Section,
+  param: Binding,
+  exprs: Opt<t.NodeExtra>,
+) {
+  const sources = reduce(exprs, mergeAllSourcesForExpr);
+  return (
+    !!exprs &&
+    isClientDerivedParam(param) &&
+    !patchCreatesOrComposes(callSection) &&
+    !sources?.state &&
+    hasCallerParamSourceAt(sources, callSection) &&
+    every(exprs, (expr) => every(getReferencedBindings(expr), shipsOwnFill))
+  );
+}
+
+// Every param of the group is such an input, so the mask composes it from fills.
+function isClientDerivedGroup(
+  callSection: Section,
+  params: ParamReasonGroup,
+  knownExprs: KnownExprs,
+) {
+  return every(params, (param) =>
+    isClientDerivedInput(
+      callSection,
+      param,
+      mapParamReasonToExpr(knownExprs, param),
+    ),
+  );
+}
+
+// A template input whose fill ships wherever its group is the server's, by its
+// declaration's own registration.
+function shipsOwnFill(ref: Binding) {
+  const root = getCanonicalBinding(ref);
+  const { fill, ownRegistration } = getPatchFill(root);
+  return fill === true && !!ownRegistration;
+}
+
+// The binding is such a param.
+export function derivesConstantInput(binding: Binding) {
+  const params = getSourcesForRef(binding)?.param;
+  return (
+    !!params &&
+    !Array.isArray(params) &&
+    params === binding &&
+    derivesConstantParam(params)
+  );
+}
+
+// A `<define>` param every call passing a constant passes a module read from
+// structure the client renders, whose fill runs push it there: the client derives it.
+export const [derivesConstantParam] = createAnalysisMemo(
+  (param: ParamBinding): boolean => {
+    const body = param.section;
+    let derives = false;
+    return (
+      !!body.parent &&
+      !some(body.callSections, (callSection) =>
+        callSection.knownTags!.some((tagExtra) => {
+          if (tagExtra[kChildSection] !== body) return false;
+          const exprs = mapParamReasonToExpr(tagExtra[kKnownExprs]!, param);
+          const sources = reduce(exprs, mergeAllSourcesForExpr);
+          if (sources?.state || hasParamOrGlobalSource(sources)) return false;
+          derives = true;
+          return (
+            !exprs ||
+            !every(exprs, isResolvedModuleRead) ||
+            !rendersCallOnClient(callSection)
+          );
+        }),
+      ) &&
+      derives
+    );
+  },
+  false,
+);
+
 // The instance's sources mask (2 bits per group at `1 + 2i`; keyed when
 // dynamic), or undefined when the all-server default is equivalent.
 function buildOwnershipMaskExpr(
@@ -719,13 +815,15 @@ function buildOwnershipMaskExpr(
   childScopeBinding: Binding,
   reasonGroups: ParamReasonGroups,
   groups: ParamGroupSources[],
+  knownExprs: KnownExprs,
 ): t.Expression | undefined {
-  const values = groups.map(({ sources, scopeBound }, i) => {
+  const values = groups.map(({ params, sources, scopeBound }, i) => {
     const value = getGroupSourcesValue(
       section,
       childScopeBinding,
       reasonGroups[i],
       sources,
+      isClientDerivedGroup(section, params, knownExprs),
     );
     // A function its scope registers is fixed for the child's life: a page
     // writes it as its sources say, a patch seeds it as a constant.
@@ -753,12 +851,23 @@ function getGroupSourcesValue(
   childScopeBinding: Binding,
   group: ParamReasonGroup,
   sources: Sources | undefined,
+  clientDerived: boolean,
 ): number | t.Expression {
   if (sources?.state) return sources.param ? 3 : 1;
   // Params this section's callers pass compose their groups' bits at render.
   const callerGroups = getCallerParamGroupsAt(sources?.param, section);
   if (callerGroups.length) {
-    const composed = buildComposedGroupValue(callerGroups);
+    let composed = buildComposedGroupValue(callerGroups);
+    // Where their fills ship, the client renders the group from them as well.
+    if (clientDerived) {
+      for (const [paramSection, group] of callerGroups) {
+        composed = t.binaryExpression(
+          "|",
+          composed,
+          callRuntime("_filled_guard", ...getGroupArgs(paramSection, group)),
+        );
+      }
+    }
     // A `$global` source adds a static server bit beside the composition.
     return sources!.global
       ? t.binaryExpression("|", t.numericLiteral(2), composed)
@@ -786,28 +895,6 @@ function isUngatedGroup(sources: Sources | undefined) {
     hasParamOrGlobalSource(sources) &&
     !hasCallerParamSource(sources)
   );
-}
-
-// The params the child patches itself, as holes it writes (its ungated
-// groups'): a fill's run leaves their forwards to the patch.
-function getPatchedParams(
-  tag: t.NodePath<t.MarkoTag>,
-  section: Section,
-): SortedOpt<Binding> {
-  if (!patchWrites(section)) return;
-  return getParamGroupSources(tag.node.extra!)?.reduce(
-    addUngatedParams,
-    undefined,
-  );
-}
-
-function addUngatedParams(
-  params: SortedOpt<Binding>,
-  { params: groupParams, sources }: ParamGroupSources,
-) {
-  return isUngatedGroup(sources)
-    ? bindingUtil.union(params, groupParams)
-    : params;
 }
 
 function analyzeParams(
@@ -844,6 +931,7 @@ function analyzeParams(
         known[i] = { value: argValueExtra };
         rootAttrExprs.add(argValueExtra);
         addSetupExpr(section, arg);
+        recordModuleRead(tag, arg as t.Expression);
         setDerivedFrom(argTree.binding, argValueExtra, paramsExpr);
       } else {
         dropNodes(arg);
@@ -1093,6 +1181,7 @@ function analyzeAttrs(
         known[attr.name] = { value: attrExtra };
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
+        recordModuleRead(tag, attr.value);
         setDerivedFrom(attrTree.binding, attrExtra, rootExprs);
         // A cross template child that only ever invokes this input makes the attribute
         // `invokeOnly`; same-program params trees may be mid-analysis with incomplete reads, so skipped.
@@ -1292,21 +1381,36 @@ function writeParamsToSignals(
       tagInputIdentifier,
       tagExtra,
       t.arrayExpression(getRenderArgs(tag, translatedAttrs.properties)),
+      undefined,
+      paramsTree,
     );
     return;
   }
 
   let i = 0;
   if (tag.node.arguments) {
+    const constants = getDerivedConstants(
+      info,
+      tag.node.arguments.map(
+        (arg, j) =>
+          [
+            paramsTree.props[j]?.binding,
+            `${hint}_param_${j}`,
+            arg as t.Expression,
+          ] as const,
+      ),
+    );
     for (const arg of tag.node.arguments) {
       const argTree = paramsTree.props[i];
       if (argTree) {
+        pushDerivedConstants(info, constants, arg.extra);
         writeToSignal(
           info,
           info.getBindingIdentifier(argTree.binding, `${hint}_param_${i}`),
           arg.extra, // TODO: pretty sure content needs to have the reference group of it's param defaults.
           arg as t.Expression,
           true,
+          argTree,
         );
       }
 
@@ -1357,7 +1461,14 @@ function applyAttrObject(
     addStatement("render", info.tagSection, tagExtra, statements);
   }
 
-  writeToSignal(info, tagInputIdentifier, tagExtra, translatedProps!, true);
+  writeToSignal(
+    info,
+    tagInputIdentifier,
+    tagExtra,
+    translatedProps!,
+    true,
+    paramsTree,
+  );
 }
 
 function writeAttrsToSignals(
@@ -1601,18 +1712,29 @@ function writeAttrsToSignals(
   // Attributes were gathered last to first so the last duplicate wins.
   const inputProps = attrProps.reverse().concat(contentProps);
 
-  const patchedParams = getPatchedParams(tag, info.tagSection);
+  const constants = getDerivedConstants(
+    info,
+    staticAttrs.map(
+      (attr) =>
+        [
+          (getParamsTreeAt(paramsTree, attr.name) as ParamsTree).binding,
+          `${hint}_${attr.name}`,
+          attr.value,
+        ] as const,
+    ),
+  );
   for (let i = staticAttrs.length; i--;) {
     const attr = staticAttrs[i];
     const { binding } = getParamsTreeAt(paramsTree, attr.name) as ParamsTree;
     remaining.delete(attr.name);
+    pushDerivedConstants(info, constants, attr.value.extra);
     writeToSignal(
       info,
       info.getBindingIdentifier(binding, `${hint}_${attr.name}`),
       attr.value.extra,
       attr.value, // TODO: use spreadBinding property alias after we optimize `in`
       true,
-      bindingUtil.has(patchedParams, binding) ? "patch" : "render",
+      getParamsTreeAt(paramsTree, attr.name) as ParamsTree,
     );
   }
 
@@ -1640,7 +1762,7 @@ function writeAttrsToSignals(
 
     if (!isSimpleReference(spreadExpr)) {
       spreadId = generateUidIdentifier(`${hint}_spread`);
-      addStatement("render", info.tagSection, tagExtra, [
+      addStatement(getForwardType(info, tagExtra), info.tagSection, tagExtra, [
         t.variableDeclaration("const", [
           t.variableDeclarator(spreadId, spreadExpr),
         ]),
@@ -1714,19 +1836,89 @@ function writeToSignal(
   expr: t.NodeExtra | undefined,
   value?: t.Expression,
   isPure?: boolean,
-  type: "render" | "patch" = "render",
+  tree?: ParamsTree,
 ) {
   const scope = createScopeReadExpression(
     info.childScopeBinding,
     info.tagSection,
   );
   addStatement(
-    type,
+    getForwardType(info, expr, tree),
     info.tagSection,
     expr,
     t.callExpression(signal, value ? [scope, value] : [scope]),
     isPure,
   );
+}
+
+// A call some instance of which the client renders: in stateful structure, or
+// in caller-owned structure a caller may hand it.
+function rendersCallOnClient(section: Section) {
+  return !patchWrites(section) || !!getCallerOwnedStructure(section);
+}
+
+// Where the client renders the call, its module reads the callee stores (a join
+// reads them): resumed, it holds none, which no page writes, so it derives them.
+function getDerivedConstants(
+  info: TranslateDOMInfo,
+  inputs: (readonly [Binding | undefined, string, t.Expression])[],
+) {
+  return isPatch() && rendersCallOnClient(info.tagSection)
+    ? inputs.filter(
+        ([binding, , value]) =>
+          binding &&
+          isResolvedModuleRead(value.extra) &&
+          derivesConstantInput(binding) &&
+          findSlot(binding)?.reason,
+      )
+    : [];
+}
+
+// A fill reaching the call by another input pushes the constants first, the
+// same pushes setup makes (the signals see the same value, so they re-run nothing).
+function pushDerivedConstants(
+  info: TranslateDOMInfo,
+  constants: (readonly [Binding | undefined, string, t.Expression])[],
+  expr: t.NodeExtra | undefined,
+) {
+  if (expr && getReferencedBindings(expr)) {
+    for (const [binding, name, value] of constants) {
+      writeToSignal(
+        info,
+        info.getBindingIdentifier(binding!, name),
+        expr,
+        t.cloneNode(value, true),
+        true,
+      );
+    }
+  }
+}
+
+// A forward the child patches itself (holes it writes, its own fills) is a patch
+// statement, which a fill's run leaves; one the client derives stays in it.
+function getForwardType(
+  info: TranslateDOMInfo,
+  expr: t.NodeExtra | undefined,
+  tree?: ParamsTree,
+) {
+  return calleeKeepsInput(info.tagSection, expr && getSourcesForExpr(expr)) &&
+    !(tree && someTreeParam(info, tree))
+    ? "patch"
+    : "render";
+}
+
+// Whether the mask composes a group of a param the forward covers from fills.
+function someTreeParam(info: TranslateDOMInfo, tree: ParamsTree): boolean {
+  const group = tree.binding.section.paramReasonGroups?.find((params) =>
+    bindingUtil.has(params, tree.binding),
+  );
+  if (group && isClientDerivedGroup(info.tagSection, group, info.knownExprs)) {
+    return true;
+  }
+  for (const prop in tree.props) {
+    if (someTreeParam(info, tree.props[prop])) return true;
+  }
+  return false;
 }
 
 // The child signal setting the prop `name` of `paramsTree`.

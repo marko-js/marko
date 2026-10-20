@@ -13,8 +13,8 @@ const $Card_content__setup = _script("a2", ($scope) => _on($scope.c, "click", fu
 	$picked($scope._, $scope.g);
 }));
 const $Card_content__$params = ($scope, $params2) => {
-	$Card_content__user_address($scope, $params2[0].user?.address);
 	$Card_content__user_name($scope, $params2[0].user?.name);
+	$Card_content__user_address($scope, $params2[0].user?.address);
 };
 const $Card_content = _content$1("a1", /*@__PURE__*/ ((_w0) => `<h4> </h4>${_w0}<button class=pick>pick</button>`)($template), /*@__PURE__*/ ((_w0) => `D l/${_w0}& b`)("D l"), $Card_content__setup, $Card_content__$params);
 const $picked = /*@__PURE__*/ _fill_let("a3", 6, ($scope) => _text($scope.b, $scope.g));

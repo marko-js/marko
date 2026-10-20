@@ -16,7 +16,7 @@ const $walks$1 = " b";
 function link(data, id) {
 	return `/?q=${data.q}&sel=${id}`;
 }
-const $for_content__input_data__OR__item_id = /*@__PURE__*/ _fill_join("__tests__/tags/feed-list.marko_fill2", "item_id", /*@__PURE__*/ _fill_join_for("__tests__/tags/feed-list.marko_fill0", "input_data", /*@__PURE__*/ _shell_or("__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#4/init", 5, ($scope) => $input_href($scope["#childScope/1"], link($scope._.input_data, $scope.item_id))), "#ul/0"));
+const $for_content__input_data__OR__item_id = /*@__PURE__*/ _fill_join("__tests__/tags/feed-list.marko_fill2", "item_id", /*@__PURE__*/ _fill_join_for("__tests__/tags/feed-list.marko_fill0/unpatched", "input_data", /*@__PURE__*/ _patch_or("__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#4/init", 5, ($scope) => $input_href($scope["#childScope/1"], link($scope._.input_data, $scope.item_id))), "#ul/0"), () => () => {});
 const $for_content__input_data = /*@__PURE__*/ _for_closure("#ul/0", $for_content__input_data__OR__item_id);
 const $for_content__setup__script = _script("__tests__/tags/feed-list.marko_1", ($scope) => _on($scope["#li/0"], "mouseenter", function() {
 	$hovered($scope._, $scope.item_id);
@@ -29,10 +29,10 @@ const $for_content__setup = ($scope) => {
 const $for_content__hovered__OR__item_id = /*@__PURE__*/ _fill_join("__tests__/tags/feed-list.marko_fill2", "item_id", /*@__PURE__*/ _or(6, ($scope) => _attr_class_item($scope["#li/0"], "hovered", $scope._.hovered === $scope.item_id)));
 const $for_content__hovered = /*@__PURE__*/ _shell_init("__tests__/tags/feed-list.marko_1_hovered#0:5/init", /*@__PURE__*/ _for_closure("#ul/0", $for_content__hovered__OR__item_id));
 const $for_content__item_id = /*@__PURE__*/ _fill_const("__tests__/tags/feed-list.marko_fill2", "item_id", ($scope) => {
-	$input_label($scope["#childScope/1"], $scope.item_id);
 	$for_content__hovered__OR__item_id($scope);
+	$input_label($scope["#childScope/1"], $scope.item_id);
 	$for_content__input_data__OR__item_id($scope);
-});
+}, $for_content__hovered__OR__item_id);
 const $for_content__$params = ($scope, $params2) => $for_content__item_id($scope, $params2[0]?.id);
 const $hovered = /*@__PURE__*/ _fill_let("__tests__/tags/feed-list.marko_fill1", "hovered/5", $for_content__hovered);
 function $setup$1($scope) {
@@ -44,7 +44,7 @@ const $input = ($scope, input) => {
 	$input_items($scope, input.items);
 	$input_data($scope, input.data);
 };
-const $input_data = /*@__PURE__*/ _fill_const("__tests__/tags/feed-list.marko_fill0", "input_data", $for_content__input_data);
+const $input_data = /*@__PURE__*/ _const("input_data", $for_content__input_data);
 var feed_list_default = /*@__PURE__*/ _template("__tests__/tags/feed-list.marko", $template$1, " b", $setup$1, $input);
 
 // template.marko

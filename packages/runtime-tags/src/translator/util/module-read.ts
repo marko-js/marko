@@ -33,6 +33,16 @@ function getModuleRead(
   );
 }
 
+/** Resolves the expression's module read onto its extra, for checks with no path. */
+export function recordModuleRead(path: t.NodePath, expr: t.Expression) {
+  getModuleRead(path, expr);
+}
+
+/** A module read `recordModuleRead` resolved, read from the extra alone. */
+export function isResolvedModuleRead(extra: t.NodeExtra | undefined) {
+  return !!extra?.[kModuleRead];
+}
+
 /** A module read of a stylesheet module, whose reads are class name strings. */
 export function getStyleImportRead(path: t.NodePath, expr: t.Expression) {
   const moduleRead = getModuleRead(path, expr);

@@ -12,7 +12,7 @@ var cell_default = _template("b", (input) => {
 const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&`)("D l");
 _shells({
-	c: /*@__PURE__*/ (() => `c !;${((_w0) => `b%b/${_w0}&`)("D l")};${((_w0) => `<!><!>${_w0}`)($template$1)}`)(),
+	c: /*@__PURE__*/ (() => `c;${((_w0) => `b%b/${_w0}&`)("D l")};${((_w0) => `<!><!>${_w0}`)($template$1)}`)(),
 	c0: "c0;D ;<p> </p>"
 });
 var child_default = _template("c", (input) => {
@@ -31,14 +31,16 @@ var child_default = _template("c", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "b");
 	cell_default({ v: c });
-	_filled_guard($scope0_reason, 7) && _client_guard($scope0_reason, 6) ? _patch_value($scope0_id, "vc5", input.b) : _patch_write($scope0_id, "wi", input.b, !(_filled_guard($scope0_reason, 7) && _client_guard($scope0_reason, 4)));
-	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "c6");
-	$scope0_page ? _scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.a,
-		f: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 5)) && input.d,
-		i: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 5)) && input.b,
+	_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 6) ? _patch_value($scope0_id, "vc2", input.a) : _patch_write($scope0_id, "we", input.a, !(_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 5) || _client_guard($scope0_reason, 7))));
+	_patch_write($scope0_id, "wf", input.d, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4)));
+	_filled_guard($scope0_reason, 7) && _client_guard($scope0_reason, 6) ? _patch_value($scope0_id, "vc3", input.b) : _patch_write($scope0_id, "wi", input.b, !(_filled_guard($scope0_reason, 7) && _client_guard($scope0_reason, 4)));
+	_patch_join_init($scope0_id, "c4", $scope0_reason, 0);
+	$scope0_page && _scope($scope0_id, {
+		e: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.a,
+		f: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.d,
+		i: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.b,
 		b: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 6) ? _patch_value($scope0_id, "vc3", input.a) : (_client_guard($scope0_reason, 5) || _client_guard($scope0_reason, 7)) && _patch_value($scope0_id, "vc2", input.a, !_server_guard($scope0_reason, 4))), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 4) && _patch_value($scope0_id, "vc4", input.d, !_server_guard($scope0_reason, 5)));
+	});
 });
 
 // template.marko

@@ -54,12 +54,12 @@ const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_which__OR__input_label = /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_which ? counter_default : other_default, ($_) => ({ label: $scope.input_label })));
 const $input_which = /*@__PURE__*/ _const("input_which", ($scope) => {
-	$input_Tag($scope["#childScope/1"], $scope.input_which ? counter_default : other_default);
 	$input_which__OR__input_label($scope);
+	$input_Tag($scope["#childScope/1"], $scope.input_which ? counter_default : other_default);
 });
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
-	$input_label$1($scope["#childScope/1"], $scope.input_label);
 	$input_which__OR__input_label($scope);
+	$input_label$1($scope["#childScope/1"], $scope.input_label);
 });
 function $setup($scope) {
 	$setup$1($scope["#childScope/1"]);

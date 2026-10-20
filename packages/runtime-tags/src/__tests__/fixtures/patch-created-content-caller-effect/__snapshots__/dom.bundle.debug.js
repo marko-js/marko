@@ -26,8 +26,8 @@ function $setup$1($scope) {
 }
 const $input_show$1 = ($scope, input_show) => $input_show$2($scope["#childScope/0"], input_show);
 const $input$1 = ($scope, input) => {
-	$input_show$1($scope, input.show);
 	$input_count$1($scope, input.count);
+	$input_show$1($scope, input.show);
 };
 const $input_count__closure = /*@__PURE__*/ _closure($body_content__input_count);
 const $input_count$1 = /*@__PURE__*/ _const("input_count", $input_count__closure);

@@ -35,9 +35,9 @@ const $template = /*@__PURE__*/ ((_w0) => `<span>a<!></span>${_w0}<!>`)($templat
 const $walks = /*@__PURE__*/ ((_w0) => `Db%l/${_w0}&b`)("b%c");
 const $setup = ($_) => {};
 const $input_n = /*@__PURE__*/ _const("input_n", ($scope) => {
-	$input_n$1($scope["#childScope/1"], $scope.input_n);
 	_return($scope, $scope.input_n * 10);
 	_text($scope["#text/0"], $scope.input_n);
+	$input_n$1($scope["#childScope/1"], $scope.input_n);
 });
 const $input = ($scope, input) => $input_n($scope, input.n);
 var a_tag_default = /*@__PURE__*/ _template("__tests__/tags/a-tag.marko", $template, $walks, 0, /*@__PURE__*/ _return_setup($input));

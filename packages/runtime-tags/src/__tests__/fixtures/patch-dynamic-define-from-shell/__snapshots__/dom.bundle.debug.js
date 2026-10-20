@@ -20,8 +20,8 @@ const $Card_content__setup__script = _script("__tests__/template.marko_1", ($sco
 }));
 const $Card_content__setup = $Card_content__setup__script;
 const $Card_content__$params = ($scope, $params2) => {
-	$Card_content__user_address($scope, $params2[0].user?.address);
 	$Card_content__user_name($scope, $params2[0].user?.name);
+	$Card_content__user_address($scope, $params2[0].user?.address);
 };
 const $Card_content = _content("__tests__/template.marko_1*content", /*@__PURE__*/ ((_w0) => `<h4> </h4>${_w0}<button class=pick>pick</button>`)($template$1), /*@__PURE__*/ ((_w0) => `D l/${_w0}& b`)("D l"), $Card_content__setup, $Card_content__$params);
 const $picked = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "picked/6", ($scope) => _text($scope["#text/1"], $scope.picked));

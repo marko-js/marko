@@ -31,13 +31,13 @@ function check(fail, x) {
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_3*content", "<b> </b>", "D ", 0, $catch_content__$params);
-const $try_content__input_fail__OR__input_x = /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], check($scope._._.input_fail, $scope._._.input_x)));
-const $try_content__input_fail = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_fail", /*@__PURE__*/ _closure_get("input_fail/5", $try_content__input_fail__OR__input_x, ($scope) => $scope._._, "__tests__/template.marko_2_input_fail#0:3/subscribe"), 0);
+const $try_content__input_fail__OR__input_x = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill1", "input_x", /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_fail", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], check($scope._._.input_fail, $scope._._.input_x))), "input_fail/5", 0), "input_x/6", 0);
+const $try_content__input_fail = /*@__PURE__*/ _closure_get("input_fail/5", $try_content__input_fail__OR__input_x, ($scope) => $scope._._, "__tests__/template.marko_2_input_fail#0:3/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_fail($scope);
 	$try_content__input_x($scope);
 };
-const $try_content__input_x = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_x", /*@__PURE__*/ _closure_get("input_x/6", $try_content__input_fail__OR__input_x, ($scope) => $scope._._, "__tests__/template.marko_2_input_x#0:4/subscribe"), 0);
+const $try_content__input_x = /*@__PURE__*/ _closure_get("input_x/6", $try_content__input_fail__OR__input_x, ($scope) => $scope._._, "__tests__/template.marko_2_input_x#0:4/subscribe");
 const $wrap_content__try = /*@__PURE__*/ _try("#text/0", "<p> </p>", "D ", $try_content__setup, 0, $catch_content);
 const $wrap_content__setup = ($scope) => $wrap_content__try($scope);
 const $wrap_content = _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $wrap_content__setup);

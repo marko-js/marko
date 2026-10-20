@@ -7,13 +7,7 @@
         "PatchAttr:#a/0 href": "/?q=b&sel=3",
         "PatchText:#text/1": "3"
       }
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-child-param-composed/tags/feed-list.marko_1*shell"],
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-fill-child-param-composed/tags/feed-list.marko_fill0": {
-      q: "b",
-      items: [{
-        id: "3"
-      }]
-    }
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-fill-child-param-composed/tags/feed-list.marko_1*shell"]
   }
 }]
 ;CAI

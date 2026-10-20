@@ -74,8 +74,8 @@ const $input_showBody = ($scope, input_showBody) => $input_show($scope["#childSc
 const $input = ($scope, input) => {
 	$input_admin($scope, input.admin);
 	$input_rows($scope, input.rows);
-	$input_showBody($scope, input.showBody);
 	$input_guestText($scope, input.guestText);
+	$input_showBody($scope, input.showBody);
 	$input_bodyText($scope, input.bodyText);
 };
 const $input_rows__closure = /*@__PURE__*/ _closure($admin_content__input_rows);

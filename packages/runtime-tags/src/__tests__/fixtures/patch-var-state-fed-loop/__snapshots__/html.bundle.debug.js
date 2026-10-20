@@ -15,7 +15,7 @@ var labeler_default = _template("__tests__/tags/labeler.marko", (input) => {
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 _shells({
-	"__tests__/tags/list.marko": "__tests__/tags/list.marko !;b%;<!><!><!>",
+	"__tests__/tags/list.marko": "__tests__/tags/list.marko;b%;<!><!><!>",
 	"__tests__/tags/list.marko_1*shell": /*@__PURE__*/ (() => `__tests__/tags/list.marko_1*shell;${/*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("D l")};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$2)}`)()
 });
 var list_default = _template("__tests__/tags/list.marko", (input) => {
@@ -28,14 +28,16 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 		let label = labeler_default({ title: item + input.suffix });
 		_client_guard($scope0_reason, 0) && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/tags/list.marko_1_label#6/var");
 		_html(`<p>${_patch_text($scope1_id, "#text/2", label, void 0, $scope0_reason, 0)}</p>`);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/list.marko_1_input_suffix#0:4_item#4/init");
+		_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchWrite:item", item);
+		(_filled_guard($scope0_reason, 2) && !_client_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "__tests__/tags/list.marko_1_input_suffix#0:4_item#4/init", $scope0_reason, 0);
 		_scope($scope1_id, {
-			item: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && item,
+			item: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/tags/list.marko", "1:2", { item: "1:6" });
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { input_suffix: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.suffix }, "__tests__/tags/list.marko", 0, { input_suffix: ["input.suffix"] }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "PatchValue:__tests__/tags/list.marko_fill0", input.suffix, !_server_guard($scope0_reason, 2));
+	_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) ? _patch_value($scope0_id, "PatchValue:__tests__/tags/list.marko_fill0/unpatched", input.suffix) : _patch_write($scope0_id, "PatchWrite:input_suffix", input.suffix, 1);
+	$scope0_page && _scope($scope0_id, { input_suffix: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.suffix }, "__tests__/tags/list.marko", 0, { input_suffix: ["input.suffix"] });
 });
 
 // template.marko

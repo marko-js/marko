@@ -25,16 +25,16 @@ const $wrap_content__setup = ($scope) => {
 const $wrap_content = _content("__tests__/tags/tree.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $wrap_content__setup);
 const $input_node_name = ($scope, input_node_name) => _text($scope["#text/0"], input_node_name);
 const $input_node$1 = ($scope, input_node) => {
-	$input_node_kid($scope, input_node?.kid);
 	$input_node_name($scope, input_node?.name);
+	$input_node_kid($scope, input_node?.kid);
 };
 function $setup$1($scope) {
 	$input_content($scope["#childScope/1"], $wrap_content($scope));
 }
 const $input_node_kid__closure = /*@__PURE__*/ _closure($wrap_content__input_node_kid);
 const $input_node_kid = /*@__PURE__*/ _const("input_node_kid", ($scope) => {
-	$input_show($scope["#childScope/1"], !!$scope.input_node_kid);
 	$input_node_kid__closure($scope);
+	$input_show($scope["#childScope/1"], !!$scope.input_node_kid);
 });
 const $input$1 = ($scope, input) => $input_node$1($scope, input.node);
 var tree_default = /*@__PURE__*/ _template("__tests__/tags/tree.marko", $template$1, $walks$1, $setup$1, $input$1);

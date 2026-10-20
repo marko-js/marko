@@ -38,8 +38,8 @@
 ```
 ## Change
 ```
-UPDATE: ul > li > a::text "1" => "3"
 UPDATE: ul > li > a[href] "/?q=a&sel=1" => "/?q=b&sel=3"
+UPDATE: ul > li > a::text "1" => "3"
 REMOVE: ul > li + li
 ```
 

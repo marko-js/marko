@@ -34,7 +34,7 @@ const $input_items = /*@__PURE__*/ _const("input_items", ($scope) => {
 });
 const $input_selected = ($scope, input_selected) => $input_selected$1($scope["#childScope/0"], input_selected);
 const $input = ($scope, input) => {
-	$input_selected($scope, input.selected);
 	$input_items($scope, input.items);
+	$input_selected($scope, input.selected);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

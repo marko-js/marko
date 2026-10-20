@@ -14,14 +14,14 @@ function check(fail, x) {
 }
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
-const $catch_content = _content$1("a2", "<b> </b>", "D ", 0, $catch_content__$params);
-const $try_content__input_fail__OR__input_x = /*@__PURE__*/ _or(1, ($scope) => _text($scope.a, check($scope._._.d, $scope._._.e)));
-const $try_content__input_fail = /*@__PURE__*/ _fill_join_closure("a5", 3, /*@__PURE__*/ _closure_get(5, $try_content__input_fail__OR__input_x, ($scope) => $scope._._, "a0"), 0);
+const $catch_content = _content$1("a4", "<b> </b>", "D ", 0, $catch_content__$params);
+const $try_content__input_fail__OR__input_x = /*@__PURE__*/ _fill_join_subscribers("a6", 4, /*@__PURE__*/ _fill_join_subscribers("a5", 3, /*@__PURE__*/ _or(1, ($scope) => _text($scope.a, check($scope._._.d, $scope._._.e))), 5, 0), 6, 0);
+const $try_content__input_fail = /*@__PURE__*/ _closure_get(5, $try_content__input_fail__OR__input_x, ($scope) => $scope._._, "a2");
 const $try_content__setup = ($scope) => {
 	$try_content__input_fail($scope);
 	$try_content__input_x($scope);
 };
-const $try_content__input_x = /*@__PURE__*/ _fill_join_closure("a6", 4, /*@__PURE__*/ _closure_get(6, $try_content__input_fail__OR__input_x, ($scope) => $scope._._, "a1"), 0);
+const $try_content__input_x = /*@__PURE__*/ _closure_get(6, $try_content__input_fail__OR__input_x, ($scope) => $scope._._, "a3");
 const $wrap_content__try = /*@__PURE__*/ _try(0, "<p> </p>", "D ", $try_content__setup, 0, $catch_content);
 const $wrap_content__setup = ($scope) => $wrap_content__try($scope);
-const $wrap_content = _content$1("a4", "<!><!><!>", "b%", $wrap_content__setup);
+const $wrap_content = _content$1("a1", "<!><!><!>", "b%", $wrap_content__setup);

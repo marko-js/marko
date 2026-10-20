@@ -44,9 +44,9 @@ function $setup($scope) {
 }
 const $input_label = ($scope, input_label) => $load_Child_tag_input_label($scope["#childScope/1"], input_label);
 const $input = ($scope, input) => {
-	$input_label($scope, input.label);
 	$input_a($scope, input.a);
 	$input_b($scope, input.b);
+	$input_label($scope, input.label);
 };
 const $input_a__closure = /*@__PURE__*/ _closure($try_content__input_a);
 const $input_a = /*@__PURE__*/ _const("input_a", $input_a__closure);

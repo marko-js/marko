@@ -14,8 +14,8 @@ function $setup$1($scope) {
 }
 const $input_open = ($scope, input_open) => $Panel_content__open($scope["#childScope/0"], input_open);
 const $input$1 = ($scope, input) => {
-	$input_open($scope, input.open);
 	$input_title$1($scope, input.title);
+	$input_open($scope, input.open);
 };
 const $input_title__closure = /*@__PURE__*/ _closure($if_content__input_title);
 const $input_title$1 = /*@__PURE__*/ _fill_const("__tests__/tags/wrap.marko_fill0", "input_title", $input_title__closure);

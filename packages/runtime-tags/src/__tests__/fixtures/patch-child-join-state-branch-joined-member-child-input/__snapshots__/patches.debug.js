@@ -1,7 +1,8 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member-child-input/tags/child.marko_1*shell;D ;<p> </p>`, {
   "PatchChild:#childScope/0": {
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member-child-input/tags/child.marko_fill0/unpatched": "y"
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member-child-input/tags/child.marko_fill0/unpatched": "y",
+    "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member-child-input/tags/child.marko_0_input_a#4_input_d#5/init"
   },
   "PatchChild:#childScope/1": {
     "PatchBranch:#text/0": [{
@@ -17,7 +18,8 @@
 // PATCH holding CAI
 {
   "PatchChild:#childScope/0": {
-    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member-child-input/tags/child.marko_fill0/unpatched": "z"
+    "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member-child-input/tags/child.marko_fill0/unpatched": "z",
+    "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member-child-input/tags/child.marko_0_input_a#4_input_d#5/init"
   },
   "PatchChild:#childScope/1": {
     "PatchBranch:#text/0": [{

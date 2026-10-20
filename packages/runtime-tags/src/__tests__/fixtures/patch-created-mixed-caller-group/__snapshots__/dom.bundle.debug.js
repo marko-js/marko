@@ -42,7 +42,7 @@ function $setup($scope) {
 const $input_x = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_x", $input_x__OR__count);
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/0"], input_show);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_x($scope, input.x);
+	$input_show($scope, input.show);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

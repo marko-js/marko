@@ -27,9 +27,9 @@ function $setup($scope) {
 const $input_label = ($scope, input_label) => $input_label$1($scope["#childScope/3"], input_label);
 const $input_year = ($scope, input_year) => $input_year$1($scope["#childScope/5"], input_year);
 const $input = ($scope, input) => {
+	$input_title($scope, input.title);
 	$input_label($scope, input.label);
 	$input_year($scope, input.year);
-	$input_title($scope, input.title);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 

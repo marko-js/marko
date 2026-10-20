@@ -1,7 +1,8 @@
 // PATCH
 [`c0;D ;<p> </p>`, {
   ca: {
-    vc3: "y"
+    vc2: "y",
+    i: "c4"
   },
   cb: {
     ba: [{
@@ -17,7 +18,8 @@
 // PATCH holding CAM
 {
   ca: {
-    vc3: "z"
+    vc2: "z",
+    i: "c4"
   },
   cb: {
     ba: [{

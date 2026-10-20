@@ -29,8 +29,8 @@ function $setup($scope) {
 }
 const $input_x = ($scope, input_x) => $Row_content__b($scope["#childScope/0"], input_x);
 const $input = ($scope, input) => {
-	$input_x($scope, input.x);
 	$input_y($scope, input.y);
+	$input_x($scope, input.x);
 };
 const $input_y__closure = /*@__PURE__*/ _closure($Row_content__input_y);
 const $input_y = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_y", $input_y__closure);

@@ -1,23 +1,26 @@
 // PATCH
-{
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill0": !0,
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill1": {
-    label: "b"
+[`packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_2*shell;D ;<em> </em>`, {
+  "PatchChild:#childScope/0": {
+    "PatchBranch:#text/0": [{
+      "PatchText:#text/0": "b"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_2*shell"]
   },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill2": "b",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill4": {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill0": "b",
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill2": {
     content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_1*content", 1)
   }
-}
+}]
+;BAE
 
-// PATCH
+// PATCH holding BAE
 {
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill0": !0,
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill1": {
-    label: "c"
+  "PatchChild:#childScope/0": {
+    "PatchBranch:#text/0": [{
+      "PatchText:#text/0": "c"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_2*shell"]
   },
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill2": "c",
-  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill4": {
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill0": "c",
+  "PatchValue:packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_fill2": {
     content: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-define-direct-spread-beside-dynamic/template.marko_1*content", 1)
   }
 }

@@ -13,7 +13,7 @@ var labeler_default = _template("b", (input) => {
 // tags/list.marko
 const $template = "<!><!><!>";
 _shells({
-	c: "c !;b%;<!><!><!>",
+	c: "c;b%;<!><!><!>",
 	c0: /*@__PURE__*/ (() => `c0;${/*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("D l")};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$1)}`)()
 });
 var list_default = _template("c", (input) => {
@@ -26,14 +26,16 @@ var list_default = _template("c", (input) => {
 		let label = labeler_default({ title: item + input.suffix });
 		_client_guard($scope0_reason, 0) && _var($scope1_id, "b", $childScope, "c1");
 		_html(`<p>${_patch_text($scope1_id, "c", label, void 0, $scope0_reason, 0)}</p>`);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "c2");
+		_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "we", item);
+		(_filled_guard($scope0_reason, 2) && !_client_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "c2", $scope0_reason, 0);
 		_scope($scope1_id, {
-			e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && item,
+			e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c0", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.suffix }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_value($scope0_id, "vc3", input.suffix, !_server_guard($scope0_reason, 2));
+	_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) ? _patch_value($scope0_id, "vc3", input.suffix) : _patch_write($scope0_id, "we", input.suffix, 1);
+	$scope0_page && _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.suffix });
 });
 
 // template.marko

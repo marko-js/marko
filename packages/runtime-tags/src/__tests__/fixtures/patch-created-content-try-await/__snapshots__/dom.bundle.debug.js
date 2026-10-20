@@ -39,8 +39,8 @@ function $setup($scope) {
 }
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/0"], input_show);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_value($scope, input.value);
+	$input_show($scope, input.show);
 	$input_id($scope, input.id);
 };
 const $input_id__closure = /*@__PURE__*/ _closure($placeholder_content__input_id, $await_content__input_id);

@@ -29,10 +29,10 @@ function $setup($scope) {
 }
 const $input_badge = ($scope, input_badge) => $input_label($scope["#childScope/2"], input_badge);
 const $input = ($scope, input) => {
-	$input_badge($scope, input.badge);
 	$input_items($scope, input.items);
 	$input_summary($scope, input.summary);
 	$input_detail($scope, input.detail);
+	$input_badge($scope, input.badge);
 };
 const $input_detail__closure = /*@__PURE__*/ _closure($if_content2__input_detail);
 const $input_detail = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_detail", ($scope) => {

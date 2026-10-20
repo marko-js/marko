@@ -7,8 +7,8 @@ function $setup($scope) {
 }
 const $input_label = ($scope, input_label) => $input_label$1($scope["#childScope/1"], input_label);
 const $input = ($scope, input) => {
-	$input_label($scope, input.label);
 	$input_title($scope, input.title);
+	$input_label($scope, input.label);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
 

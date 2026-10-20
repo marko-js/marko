@@ -607,11 +607,14 @@ export function _fill_global_subscribe(
   );
 }
 
-// On when no patch fills the group here: it is client-sourced, or the read
-// sits in unpatched structure (the patch `_write_if` folded in: on a page, the mask).
-export function _unfilled_if(owned?: GroupMask, group?: number) {
+// On when no patch fills the group here: client-sourced, or read in unpatched structure
+// (on a page, the mask) unless it is a param whose `own` group a call passes constant.
+export function _unfilled_if(owned?: GroupMask, group?: number, own?: number) {
   const bits = groupSources(owned, group!);
-  return bits & 1 || (bits && inUnpatched()) ? 1 : undefined;
+  return bits & 1 ||
+    (bits && inUnpatched() && (own === undefined || groupSources(owned, own)))
+    ? 1
+    : undefined;
 }
 
 // Where a hole's fill goes: the scope's patch if server-owned, else a created scope's setup

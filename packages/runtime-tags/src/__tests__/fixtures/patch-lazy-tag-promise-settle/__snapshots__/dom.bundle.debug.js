@@ -34,8 +34,8 @@ function $setup($scope) {
 }
 const $input_promise__closure = /*@__PURE__*/ _closure($try_content__input_promise);
 const $input_promise = /*@__PURE__*/ _const("input_promise", ($scope) => {
-	$load_Probe_tag_input_promise($scope["#childScope/1"], $scope.input_promise);
 	$input_promise__closure($scope);
+	$load_Probe_tag_input_promise($scope["#childScope/1"], $scope.input_promise);
 });
 const $input = ($scope, input) => $input_promise($scope, input.promise);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

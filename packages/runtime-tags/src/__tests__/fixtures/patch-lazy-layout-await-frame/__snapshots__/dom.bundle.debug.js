@@ -64,8 +64,8 @@ const $await_content__list = ($scope, list) => {
 };
 const $await_content__if = /*@__PURE__*/ _if("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
 const $await_content__list_ = /*@__PURE__*/ _const("list_0", ($scope) => {
-	$if_content__list_($scope);
 	$await_content__if($scope, $scope.list_0 ? 0 : 1);
+	$if_content__list_($scope);
 });
 const $await_content__$params = ($scope, $params2) => $await_content__list($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!><!>", "b%b%");

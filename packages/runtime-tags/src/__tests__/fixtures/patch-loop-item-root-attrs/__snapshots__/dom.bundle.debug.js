@@ -23,8 +23,8 @@ const $for_content__item_href = /*@__PURE__*/ _const("item_href", ($scope) => {
 const $for_content__item_icon = ($scope, item_icon) => $input_name($scope["#childScope/1"], item_icon);
 const $for_content__item_label = ($scope, item_label) => _text($scope["#text/2"], item_label);
 const $for_content__$params = ($scope, $params2) => {
-	$for_content__item_icon($scope, $params2[0]?.icon);
 	$for_content__item_href($scope, $params2[0]?.href);
+	$for_content__item_icon($scope, $params2[0]?.icon);
 	$for_content__item_label($scope, $params2[0]?.label);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed("#nav/0", /*@__PURE__*/ ((_w0) => `<a class=link>${_w0}<span> </span></a>`)($template$1), /*@__PURE__*/ ((_w0) => ` D/${_w0}&D m`)("D l"), $for_content__setup, $for_content__$params);

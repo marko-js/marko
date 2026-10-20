@@ -19,27 +19,32 @@ var wrap_default = _template("b", (input) => {
 });
 
 // template.marko
-_shells({ a: /*@__PURE__*/ (() => `a !;${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}`)() });
+_shells({
+	a0: "a0;D ;<em> </em>",
+	a1: "a1;D ;<em> </em>",
+	a2: "a2 a6,",
+	a: /*@__PURE__*/ (() => `a !;${((_w0) => `/${_w0}&b`)($walks)};${((_w0) => `${_w0}<!>`)($template)}`)()
+});
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_promise = _write_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
 	const $childScope = _patch_child($scope0_id, "a");
-	wrap_default({ content: _content_resume("a1", () => {
+	wrap_default({ content: _content_resume("a2", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.promise, (v) => {
 			const $scope2_id = _scope_id();
-			_html(`<em>${_text_resume($scope2_id, "a", v, $wg__input_promise)}</em>`);
-			$wi__input_promise && _scope($scope2_id, {});
-		}, $wg__input_promise);
-		_subscribe($wi__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0", 0);
+			_html(`<em>${_patch_text($scope2_id, "a", v, void 0, $scope0_reason, 0)}</em>`);
+			_scope($scope2_id, {});
+		}, 1, "a0");
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	$scope0_page ? _scope($scope0_id, {
 		d: input.promise,
-		e: $wi__input_promise && $input_promise__closures,
+		e: _write_if($scope0_reason, 0) && $input_promise__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va2", input.promise, !_server_guard($scope0_reason, 0));
+	}) : _filled_guard($scope0_reason, 0) && _patch_value($scope0_id, "va3", input.promise, !_server_guard($scope0_reason, 0));
 }, 1);

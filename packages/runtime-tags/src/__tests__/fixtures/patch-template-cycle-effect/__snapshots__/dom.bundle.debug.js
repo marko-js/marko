@@ -27,8 +27,8 @@ var b_tag_default = /*@__PURE__*/ _template("__tests__/tags/b-tag.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `<span>a<!></span>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `Db%l/${_w0}&b`)("b%c");
 const $input_n = ($scope, input_n) => {
-	$input_n$1($scope["#childScope/1"], input_n);
 	_text($scope["#text/0"], input_n);
+	$input_n$1($scope["#childScope/1"], input_n);
 };
 const $setup__script = _script("__tests__/tags/a-tag.marko_0", ($scope) => console.log("a setup"));
 const $setup = $setup__script;

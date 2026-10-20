@@ -35,9 +35,9 @@ const $try_content__setup = ($scope) => {
 };
 const $item__closure = /*@__PURE__*/ _closure($await_content__item);
 const $item = /*@__PURE__*/ _const("item", ($scope) => {
+	$item__closure($scope);
 	$input_item($scope["#childScope/0"], $scope.item);
 	$input_item($scope["#childScope/1"], $scope.item);
-	$item__closure($scope);
 });
 const $input_label = ($scope, input_label) => $item($scope, { label: input_label });
 const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);

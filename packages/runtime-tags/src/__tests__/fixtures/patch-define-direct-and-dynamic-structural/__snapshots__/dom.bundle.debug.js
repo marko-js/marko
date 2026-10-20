@@ -6,11 +6,11 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b b`)($Panel_content__walks);
 const $Other_content__label = ($scope, label) => _text($scope["#text/0"], label);
 const $Other_content__$params = ($scope, $params3) => $Other_content__label($scope, $params3[0].label);
 const $Other_content = _content("__tests__/template.marko_3*content", "<i> </i>", "D ", 0, $Other_content__$params);
-const $if_content__label = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label));
+const $if_content__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill3", "label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label)));
 const $if_content__setup = $if_content__label;
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_content__setup);
 const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen ? 0 : 1);
-const $Panel_content__tag_input_label = /*@__PURE__*/ _const("label", $if_content__label);
+const $Panel_content__tag_input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill3", "label", $if_content__label);
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__isOpen($scope, $temp.isOpen);
@@ -18,10 +18,10 @@ const $Panel_content__$temp = ($scope, $temp) => {
 };
 const $Panel_content = _content("__tests__/template.marko_1*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "Tag", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "Tag", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
 	isOpen: !$scope.open,
 	label: $scope.input_label + "!"
-})), 2));
+})), 2)));
 const $open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "open/7", ($scope) => {
 	$Panel_content__isOpen($scope["#childScope/0"], $scope.open);
 	$input_label__OR__open__OR__Tag($scope);
@@ -39,10 +39,10 @@ function $setup($scope) {
 	$Panel($scope, { content: $Panel_content($scope) });
 	$Other($scope, { content: $Other_content($scope) });
 }
-const $input_label = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _const("input_label", ($scope) => {
-	$Panel_content__tag_input_label($scope["#childScope/0"], $scope.input_label);
+const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", ($scope) => {
 	$input_label__OR__open__OR__Tag($scope);
-}));
+	$Panel_content__tag_input_label($scope["#childScope/0"], $scope.input_label);
+}, $input_label__OR__open__OR__Tag);
 const $input_other = /*@__PURE__*/ _const("input_other", $input_other__OR__Panel__OR__Other);
 const $input = ($scope, input) => {
 	$input_label($scope, input.label);

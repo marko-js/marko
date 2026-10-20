@@ -8,17 +8,17 @@ var template_default = _template("a", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("a0", (label) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0);
-		_html(`<em>${_text_resume($scope1_id, "a", label, $wg__label)}</em>`);
-		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
+		const $scope1_reason = _scope_reason();
+		_html(`<em>${_patch_text($scope1_id, "a", label, void 0, $scope1_reason, 0)}</em>`);
+		_scope($scope1_id, {});
 	}, $scope0_id) };
 	const Other = { content: _content_resume("a1", (label) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__label2 = _write_guard($scope2_reason, 0);
-		_html(`<i>${_text_resume($scope2_id, "a", label, $wg__label2)}</i>`);
+		const $scope2_reason = _scope_reason(), $wg__label = _write_guard($scope2_reason, 0);
+		_html(`<i>${_text_resume($scope2_id, "a", label, $wg__label)}</i>`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason((_mask_group($scope0_reason, 0) | _filled_guard($scope0_reason, 0)) << 1);
 	const $childScope = _patch_child($scope0_id, "a");
 	Panel.content(input.label);
 	_dynamic_tag($scope0_id, "b", Panel, [input.label], 0, 1);

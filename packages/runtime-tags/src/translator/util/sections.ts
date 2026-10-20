@@ -659,15 +659,23 @@ export function getParamReasonGroupIndex(
   section: Section,
   group: ParamReasonGroup,
 ) {
-  const index =
-    section.paramReasonGroups &&
-    findIndexSorted(compareReferences, section.paramReasonGroups, group);
-  if (index === undefined || index === -1) {
+  const index = findParamReasonGroupIndex(section, group);
+  if (index === -1) {
     throw new Error(
       "Invalid compiler state, cannot ask for a param reason group that was not analyzed.",
     );
   }
   return index;
+}
+
+// The group's index, or `-1` where the section has none such.
+export function findParamReasonGroupIndex(
+  section: Section,
+  group: ParamReasonGroup,
+) {
+  return section.paramReasonGroups
+    ? findIndexSorted(compareReferences, section.paramReasonGroups, group)
+    : -1;
 }
 
 // Params sort by section, so each section's are a run.

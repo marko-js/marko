@@ -35,7 +35,7 @@ var feed_list_default = _template("c", (input) => {
 		});
 		_html(`</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "c1");
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "c3");
+		(_filled_guard($scope0_reason, 2) && !_client_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "c3", $scope0_reason, 0);
 		_scope($scope1_id, {
 			e: item?.id,
 			_: _scope_with_id($scope0_id),
@@ -43,11 +43,12 @@ var feed_list_default = _template("c", (input) => {
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c0", $scope0_reason, 1);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
+	_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) ? _patch_value($scope0_id, "vc4", input.data) : _patch_write($scope0_id, "we", input.data, 1);
 	_patch_value($scope0_id, "vc5", hovered, 1);
-	$scope0_page ? _scope($scope0_id, {
+	$scope0_page && _scope($scope0_id, {
 		e: $wi__input_items && input.data,
 		f: $wi__input_items && hovered
-	}) : _filled_guard($scope0_reason, 2) && (_client_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 1)) && _patch_value($scope0_id, "vc4", input.data, !_server_guard($scope0_reason, 2));
+	});
 });
 
 // template.marko
