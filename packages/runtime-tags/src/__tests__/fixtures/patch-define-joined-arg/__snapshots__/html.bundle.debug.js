@@ -1,0 +1,29 @@
+// template.marko
+const $Card_content__walks = " b";
+const $Card_content__template = "<a>x</a>";
+const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Card_content__template);
+const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Card_content__walks);
+_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `b/${_w0}&b`)($Card_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Card_content__template)}`)() });
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const Card = { content: _content("__tests__/template.marko_1*content", ({ href }) => {
+		const $scope1_id = _scope_id();
+		const $scope1_reason = _scope_reason();
+		_html(`<a${_patch_attr($scope1_id, "PatchAttr:#a/0 href", "href", href, $scope1_reason, 0)}>x</a>${_el_resume($scope1_id, "#a/0", _mask_group($scope1_reason, 0))}`);
+		_scope($scope1_id, {}, "__tests__/template.marko", "1:2");
+	}, $scope0_id) };
+	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	const $childScope = _patch_child($scope0_id, "#childScope/0");
+	Card.content({ href: input.q + input.item });
+	_patch_write($scope0_id, "PatchWrite:input_q", input.q, 1);
+	_patch_write($scope0_id, "PatchWrite:input_item", input.item, 1);
+	$scope0_page && _scope($scope0_id, {
+		input_q: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.q,
+		input_item: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.item,
+		"#childScope/0": _existing_scope($childScope)
+	}, "__tests__/template.marko", 0, {
+		input_q: ["input.q"],
+		input_item: ["input.item"]
+	});
+}, 1);
