@@ -9,13 +9,13 @@
 >
 > - Shipped: the `comptime` statement and `comptime import`; `<-if>`, `<-for>` (`of`/`in`/`from`/`to`/`until`/`step`), `<-const>`, `<-log>` (surfaced as compiler diagnostics), `<-debug>`; **userland comptime tags** (template macro expansion: taglib/import resolution, per-file comptime programs with `input` in the expansion's comptime scope, content fragments spliced at `<${input.content}/>` with parameter lowering, attribute-tag inputs, module splicing with hygiene, expansion traces, a fixed depth guard); `<-define>` snippets (attribute defaults, comptime params, snippet values flowing through comptime data) and `<-return>` (comptime tag results; inert when compiled as an entry); **comptime-born functions** crossing as capture-applied factories in a content-addressed virtual module via `resolveVirtualDependency` (inline emission without the hook); the comptime scope rules and diagnostics (statement-anchored code frames with the user error as `cause`, a dedicated `<else>`-after-`<-if>` error); the AST serializer (reference dedup, cycles, module-export function identity including default exports, own-`__proto__`-key safety, null-prototype round-tripping); subtree narrowing for non-primitive member reads; the build-`cache`-scoped module loader with `watchFiles` registration; hygiene renaming for runtime bindings in expanded bodies; attribute-tag routing out of comptime expansion; primitive reads folding to eagerly escaped static output; fixed unroll, depth, and evaluation-time guards; the reserved `$ct` identifier prefix; the `inert`/`isInert` untrusted-data airlock (`marko/comptime`); `meta.comptime`; preserve-without-evaluating under `errorRecovery`; `output: "source"` round-tripping. Fixtures live under `src/__tests__/fixtures/comptime-*` and `error-comptime-*`, with compile-level tests in `comptime-compile.test.ts`.
 > - Not yet implemented from this document: `marko/comptime` `register` (explicit function registration), runtime `<return>` lowering inside comptime-expanded templates (a targeted error for now; `<-return>` covers the comptime case), the cross-template content-hash value store (module _instance_ identity across templates already holds through the shared `cache`), and the concise-mode `-` line-start parser rule (the HTML form works in both modes).
-> - Proposed in this revision, not implemented: [host-provided module loading](#module-loading), [comptime-closed expression folding](#comptime-closed-expressions-fold), and [spread expansion](#spreads-of-comptime-values-expand). Together they let values a build plugin computes (compile-time styling libraries, CSS Modules, aliased modules) reach templates as compile-time constants; see [Build-compiled values pay runtime prices](#build-compiled-values-pay-runtime-prices).
+> - Proposed in this revision, not implemented: [host-transformed module loading](#module-loading), [comptime-closed expression folding](#comptime-closed-expressions-fold), [spread expansion](#spreads-of-comptime-values-expand), and [linking for stylesheet modules](#stylesheet-modules-stay-linked), plus a [companion translator rule](#runtime-spreads-from-stylesheet-modules) outside comptime. Together they let values a build plugin computes (compile-time styling libraries, CSS Modules, aliased modules) reach templates as compile-time constants; see [Build-compiled values pay runtime prices](#build-compiled-values-pay-runtime-prices).
 
 > [!TLDR]
 >
 > - A `-` prefix on any tag runs that tag **in the compiler**: `<-if>`, `<-for>`, `<-const>`, and any userland tag
 > - A `comptime` statement prefix (beside `static`, `server`, `client`) runs module-level JS at compile time and lowers the result to `static`
-> - Comptime expressions are **real JavaScript**, executed in the compiler's realm with its globals, imports, and modules; comptime imports load through the host's build pipeline, so modules a build plugin compiles evaluate as the runtime program sees them
+> - Comptime expressions are **real JavaScript**, executed in the compiler's realm with its globals, imports, and modules; a comptime import runs the code the host build produces for that module, so modules a build plugin compiles evaluate as the runtime program sees them
 > - A runtime expression whose inputs are all comptime values **folds** at compile time, and a spread of a comptime object **expands** into ordinary attributes
 > - Userland tags invoked with `-` are **expanded as AST macros**: their template is evaluated against compile-time input and spliced into the caller
 > - Comptime values reach runtime through a serializer aligned with the resume serializer (`html/serializer.ts`) — same reference dedup, cycles, and function-registration model — emitting AST (plus virtual modules) instead of a wire string
@@ -105,7 +105,13 @@ import { styles } from "./card.css";
 
 `styles.card()` returns the same `{ class }` on every render, but a spread can carry event handlers and controlled form attributes the compiler cannot see, so this tag resumes in the browser. In a Marko Run app styled with Zyzz, a page with no interactivity ships 14.2 kB of client JavaScript (6.6 kB gzipped). The same page styled with a `<style>` block ships none.
 
-Comptime is the natural fix, but today it cannot reach these values. `comptime import` loads modules in the compiler's own loader, outside the pipeline that compiles them, so a build-compiled module runs uncompiled; for Zyzz that produces different class names than the ones its emitted CSS defines. And even with the right module, `styles.card()` is a call and the spread is an object, and the handoff folds neither. [Module loading](#module-loading), [comptime-closed expressions](#comptime-closed-expressions-fold), and [spread expansion](#spreads-of-comptime-values-expand) close the three gaps without any change to the libraries.
+Comptime cannot reach these values today, for three reasons:
+
+- `comptime import` runs a module's source in the compiler's own loader, outside the pipeline that compiles it. A build-compiled module runs uncompiled, and for Zyzz that produces class names its emitted CSS never defines.
+- Even with the right module, `styles.card()` is a call and the spread is an object, and the handoff folds neither.
+- If every use folded, nothing would import the style module at runtime, and its CSS would never reach the page.
+
+[Module loading](#module-loading), [folding](#comptime-closed-expressions-fold), [spread expansion](#spreads-of-comptime-values-expand), and [stylesheet linking](#stylesheet-modules-stay-linked) close those gaps without any change to the libraries. Calls with runtime arguments stay runtime calls, and a [companion rule](#runtime-spreads-from-stylesheet-modules) outside comptime keeps them from forcing a resume.
 
 ### Marko 5 had a shape for this and Marko 6 removed it
 
@@ -119,7 +125,7 @@ Marko ≤5 shipped `<macro>` (removed in Marko 6; today it survives only as a Cl
 
 2. **The time ladder, with resume-style handoffs between rungs.** Marko statements already form a ladder of "when does this run": `static` (module load, both environments) and `server` / `client` (module load, one environment), then per-render code, then interactive updates. Comptime adds the rung above: compile time. Every comptime construct lowers onto the next rung down — `comptime const` becomes `static const`, `<-if>` becomes presence or absence, `<-for>` becomes repetition. Nothing lowers "sideways" into new runtime machinery. And Marko already ships one boundary crossing on this ladder — the server→client resume handoff, powered by `html/serializer.ts` — so comptime→runtime is specified as the same kind of handoff one rung earlier, sharing that serializer's architecture (see [Crossing the boundary](#crossing-the-boundary-the-comptime-handoff)).
 
-3. **Real JavaScript, really executed.** Comptime expressions are evaluated by running them as JavaScript in the compiler's process, with the compiler's globals, real imports, and real semantics. There is no interpreter subset, no "constant expression" dialect, no surprise at `"a".repeat(5)` working but `[...Array(5)]` not. If it runs in the build, it runs in comptime: modules load through the same pipeline that builds the runtime program (see [Module loading](#module-loading)).
+3. **Real JavaScript, really executed.** Comptime expressions are evaluated by running them as JavaScript in the compiler's process, with the compiler's globals, real imports, and real semantics. There is no interpreter subset, no "constant expression" dialect, no surprise at `"a".repeat(5)` working but `[...Array(5)]` not. If it runs in the build, it runs in comptime: a comptime import runs the code the build produces for that module (see [Module loading](#module-loading)).
 
 4. **No residue.** After the comptime pass, the AST contains only constructs that existed before this proposal. Analysis (sections, bindings, signals), translation, and the runtimes are untouched. Comptime is unobservable downstream except as "somebody wrote a very specific template".
 
@@ -236,7 +242,7 @@ comptime import { styles } from "./card.css";
 </article>
 ```
 
-`card.css.ts` is compiled by the build's styling plugin, and the comptime import loads it through that same pipeline, so its functions return the class names the emitted stylesheet defines. `styles.card()` and `styles.title()` read only comptime values: they run while compiling, and their results expand into plain attributes. `styles.bar(...)` reads runtime `input`, so it stays a runtime call, and the handoff re-emits the import for it. The compiled template is equivalent to (class names illustrative):
+`card.css.ts` is compiled by the build's styling plugin, and the comptime import runs the code that plugin produced, so its functions return the class names the emitted stylesheet defines. `styles.card()` and `styles.title()` read only comptime values: they run while compiling, and their results expand into plain attributes. `styles.bar(...)` reads runtime `input`, so it stays a runtime call, and the handoff re-emits the import for it. The module also stays linked as a stylesheet, so its CSS ships either way. The compiled template is equivalent to (class names illustrative):
 
 ```marko
 import { styles } from "./card.css";
@@ -247,7 +253,7 @@ import { styles } from "./card.css";
 </article>
 ```
 
-`<article>` and `<h2>` are now static markup. Only the `<div>`, the one element with runtime input, keeps runtime work.
+`<article>` and `<h2>` are now static markup. The `<div>` keeps its runtime call, but its spread comes from a stylesheet module and needs no event wiring, so with server-only `input` the template ships no client code.
 
 ### A CMS page, end to end
 
@@ -340,28 +346,38 @@ Without a [host loader](#module-loading), the compiler's own module loader has t
 
 ### Module loading
 
-A `comptime import` must produce the module the runtime program will import, not a second interpretation of its source. Build tools transform modules before they run: path aliases, `import.meta.env`, CSS Modules, and compile-time styling libraries whose class names exist only as the output of their build plugin. The compiler's own loader runs those sources untransformed. For a styling library that means class names no emitted stylesheet defines: Zyzz compiles `style({ padding: "8px" })` exported as `styles.card` to a class like `z-AgRDUb-styles-card-p-0`, derived from its module and export, but run uncompiled it returns a content-hashed `z-content-_5b__5b__22_padding…`.
+A `comptime import` must see the module the runtime program will import, not a second interpretation of its source. Build tools transform modules before they run: path aliases, `import.meta.env`, CSS Modules, and compile-time styling libraries whose class names exist only as the output of their build plugin. The compiler's own loader runs those sources untransformed. For a styling library that means class names no emitted stylesheet defines: Zyzz compiles `style({ padding: "8px" })` exported as `styles.card` to a class like `z-AgRDUb-styles-card-p-0`, derived from its module and export, but run uncompiled it returns a content-hashed `z-content-_5b__5b__22_padding…`.
 
-So loading is a capability the host provides, in the same category as `resolveVirtualDependency`. When the host supplies `loadComptimeModule`, the compiler calls it for each `comptime import` and evaluates against the namespace it returns. The host loads the module's whole import graph, so transitive imports get the same transforms. Without it, the loaders above are the default and plain compiler usage is unchanged.
+So the host supplies transformation and the compiler keeps execution. When the host provides `loadComptimeModule`, the compiler asks it to resolve and transform every module a comptime import reaches, including that module's own imports, and evaluates the returned code in the comptime realm:
 
 ```ts
 loadComptimeModule?(
   request: string,
   importer: string,
-): Promise<{ namespace: Record<string, unknown>; watchFiles?: string[] }>;
+): Promise<
+  // Code the host's pipeline produced for the module
+  | { id: string; code: string; watchFiles?: string[] }
+  // A dependency the host leaves to Node, like an SSR external
+  | { id: string; external: true }
+>;
 ```
 
-Every host already has the primitive:
+Every bundler already exposes this to plugins, and none of it needs a module runner:
 
-- **`@marko/vite`:** the server environment's module runner in development, and an in-process runner over the same plugin pipeline in builds (the approach vanilla-extract's Vite plugin takes to evaluate `.css.ts` files during a build).
-- **webpack:** `this.importModule` from the Marko loader.
-- **Node without a bundler:** `import()`, which honors module hooks registered with `module.registerHooks`.
+- **Vite, development:** the server environment's plugin container (`resolveId`, `load`, `transform`).
+- **Vite, Rollup, and Rolldown builds:** `this.resolve` and `this.load`, whose module info carries the transformed code.
+- **webpack:** `this.resolve` and `this.loadModule` from the Marko loader.
+- **Node without a bundler:** no hook; the loaders above apply.
 
-Modules evaluate as the server build sees them, so code that branches on `import.meta.env.SSR` takes the server path, and the html and dom compiles of a template still share one evaluation. Every host primitive is asynchronous, so host loading runs in the async stage: `compile` and `compileFile` resolve module loads before the synchronous Babel traversal applies the results (`@marko/vite` already compiles through `compile`). A `comptime import` in a `compileSync` call with `loadComptimeModule` set is a compile error that points to `compile`. Host-loaded modules stay out of the compiler's `comptime:modules` cache: the host already owns their caching and invalidation (Vite's module graph drops a module when it changes), which also sidesteps that cache never invalidating today (CMS JIT proposal §8.7). Files the host reports in `watchFiles` join `meta.watchFiles`, so the template's own cache entry recompiles when they change. The hook travels with each compile's config and adds no shared state, unlike the globals that the same proposal (§8.6) found racing under concurrent async compiles.
+Keeping execution in the compiler keeps one evaluation model everywhere: the [determinism contract](#determinism-contract), the evaluation guards, and the build `cache` apply to host-transformed code exactly as to plain source. Side-effect imports that resolve to stylesheets (`.css`, `.scss`, `.less`, and similar, including the virtual CSS modules that styling plugins add) evaluate to nothing at compile time; [linking](#stylesheet-modules-stay-linked) delivers that CSS at runtime.
+
+Modules are transformed for the server environment, so code that branches on `import.meta.env.SSR` takes the server path, and the html and dom compiles of a template still share one evaluation. Every host primitive is asynchronous, so host loading runs in the async stage: `compile` and `compileFile` resolve module loads before the synchronous Babel traversal applies the results (`@marko/vite` already compiles through `compile`). A `comptime import` in a `compileSync` call with `loadComptimeModule` set is a compile error that points to `compile`.
+
+The compiler caches evaluations by module id and code, so a changed transform re-evaluates and a changed file cannot serve a stale module, the problem the CMS JIT proposal found in today's `comptime:modules` cache (`cms-jit/PROPOSAL.md` §8.7 on `dpiercey-ws-marko-cms-byz32i`). Files the host reports in `watchFiles` join `meta.watchFiles`, so the template's own cache entry recompiles when they change. The hook travels with each compile's config and adds no shared state, unlike the globals that the same proposal (§8.6) found racing under concurrent async compiles.
 
 ### Determinism contract
 
-The compiler treats comptime output as a pure function of `(template source, comptime-imported modules as the host loads them, compiler-realm globals)`, held constant for the lifetime of a given `cache`. It may evaluate once and reuse the result across output targets (the html and dom compiles of one template must agree), across watch-mode rebuilds until invalidated, and in parallel workers independently. Side effects are permitted (`-log` exists precisely for one), but code whose _output_ depends on evaluation count or wall-clock time is out of contract; see [Caching and invalidation](#caching-and-invalidation).
+The compiler treats comptime output as a pure function of `(template source, comptime-imported modules as the host transforms them, compiler-realm globals)`, held constant for the lifetime of a given `cache`. It may evaluate once and reuse the result across output targets (the html and dom compiles of one template must agree), across watch-mode rebuilds until invalidated, and in parallel workers independently. Side effects are permitted (`-log` exists precisely for one), but code whose _output_ depends on evaluation count or wall-clock time is out of contract; see [Caching and invalidation](#caching-and-invalidation).
 
 ---
 
@@ -500,6 +516,18 @@ comptime import { styles } from "./badge.css";
 ```
 
 Expansion matters beyond output size. A runtime spread on a native tag can carry event handlers and controlled form attributes the compiler cannot see, so the tag always resumes in the browser. Once the keys are known, the tag compiles exactly like its hand-written equivalent, and a tag with no other client behavior ships no JavaScript. Spreads on custom tags keep today's behavior in this revision.
+
+### Stylesheet modules stay linked
+
+A comptime import reaches the runtime program only when a value crosses, so a style module whose every use folds would vanish from the build, and its CSS with it. Stylesheet modules are the exception. A comptime import whose path matches the stylesheet convention Marko already uses for `hydrateIncludeImports` (such as `.css.ts`) is also recorded as an asset import of the template, the same path that links the stylesheets of server-only templates into the page entry. The runtime build then compiles the module and delivers its CSS as it does today.
+
+Integrations should link only the module's CSS where the host can provide it, for instance the stylesheets Vite records for the module's chunk. Linking the module itself works everywhere, but it also ships the module's code when the library's output cannot be tree-shaken: about 1.5 kB (0.9 kB gzipped) per page in the Zyzz app above.
+
+### Runtime spreads from stylesheet modules
+
+Calls with runtime arguments stay runtime calls, like `styles.bar(...)` in the [tour](#build-compiled-values). One companion rule, outside comptime and useful without it, keeps them from forcing a resume: a spread whose value is rooted at a stylesheet module's binding (a member read or call on it, through a plain or a comptime import) compiles as attributes only. Stylesheet modules produce styling, never event handlers or controlled form state, so the tag needs no spread wiring. With server-only data the tag needs no client code, and with browser state only the attribute update ships. Calls rooted at other modules, such as `cx` from `zyzz`, are not covered.
+
+The rule extends Marko's existing treatment of stylesheet module reads in `class` attributes (`util/module-read.ts`) and can land on `main` independently of comptime. On its own it should take the static Zyzz page from 14.2 kB to roughly the 1.5 kB of the linked module's code; comptime folding then removes the runtime call, and CSS-only linking the rest.
 
 ### Functions cross like they resume
 
@@ -789,7 +817,7 @@ There is deliberately **no option that configures comptime**. Comptime is part o
 - **Globals** are the compiler realm's globals. A build orchestrator assigns onto `globalThis` before compiling (the tour example); a `globals` option would only alias that assignment.
 - **Preserve behavior is derived, not configured.** `output: "source"` / `"migrate"` compiles stop before the transform stage, so they round-trip comptime constructs verbatim. Error-recovery compiles (`errorRecovery: true` — the editor/language-server pipeline) never evaluate: comptime constructs lower to their runtime analogues (`<-if>` analyzes as `<if>`, `<-for>` as `<for>`, `comptime` statements as `static`), so bodies still resolve taglib metadata and type-check with their bindings in scope while nothing executes. The compile's existing shape already says whether evaluation is wanted; a mode string would restate it.
 - **Guards are fixed.** `<-for>` unrolling caps at `100_000` iterations, evaluation at `30` seconds of user-code execution per template (enforced by the VM, so even a hung loop terminates), and macro expansion depth at `100`. A legitimate build never approaches these; a runaway one should fail loudly, not be configured around.
-- **Module loading is a host capability, not configuration.** `loadComptimeModule` (see [Module loading](#module-loading)) sits beside `resolveVirtualDependency`: it supplies a service only the host can provide, integrations set it, and plain compiler usage never needs it.
+- **Module loading is a host capability, not configuration.** `loadComptimeModule` (see [Module loading](#module-loading)) sits beside `resolveVirtualDependency`: the host supplies what only it can (resolution and transformation through its own pipeline), integrations set it, and plain compiler usage never needs it.
 
 Additions to the compile result:
 
@@ -941,12 +969,14 @@ Phased so every step lands green and independently useful.
 - `@marko/vite` / `@marko/run`: docs for the cache-lifecycle and watchFiles invalidation patterns; editor plugin grammar updates; `--comptime-preserve` on the inspect script; deriving preserve from `errorRecovery` in the language server.
 - Website docs: a reference page (`docs/reference/comptime.md`) and an explanation page (the time ladder; bake-structure-vs-inline-data guidance).
 
-### Phase 5 — build-compiled modules
+### Phase 5 — build-compiled values
 
-- **Translator:** comptime-closed expression folding, reusing the thunk builder, the read-fold path, and the existing comptime/runtime identifier resolution for the closedness check; spread expansion on native tags. Both work with today's sync loader, so they land first with JSON and plain-module fixtures. The `comptime-import` fixture's `${fmt(featured.cents)}` starts folding. Folding pairs with the CMS JIT proposal's constant-condition pruning (§8.5 there), since it produces the constant conditions pruning removes.
-- **Compiler:** the `loadComptimeModule` hook and the async evaluation stage that awaits module loads before the Babel traversal; the `compileSync` error.
-- **`@marko/vite`:** the hook over the server environment's module runner in development and an in-process runner in builds, forwarding the host's watched files. webpack integrations implement it with `this.importModule`.
-- **Fixtures:** a spread of a comptime object compiles byte-identical to its hand-written attributes (the "no residue" assertion); a tag whose only spreads expand emits no client code; a `comptime import` of a module that a test plugin rewrites evaluates with the plugin's output.
+- **Companion rule (independent):** stylesheet-module spreads compile as attributes only, extending `util/module-read.ts`. It needs no comptime and can land on `main` first.
+- **Translator:** comptime-closed expression folding (the thunk builder, the read-fold path, and the existing comptime/runtime identifier resolution for the closedness check) and spread expansion on native tags. Both work with today's sync loader, so they land with JSON and plain-module fixtures before host loading. The `comptime-import` fixture's `${fmt(featured.cents)}` starts folding. Folding pairs with the CMS JIT proposal's constant-condition pruning (§8.5 there), since it produces the constant conditions pruning removes.
+- **Linking:** comptime imports of stylesheet modules join `assetImports`.
+- **Compiler:** the `loadComptimeModule` hook; the async evaluation stage that awaits module loads before the Babel traversal; evaluation of host-transformed ESM, cached by module id and code; skipping side-effect stylesheet imports; the `compileSync` error.
+- **Integrations:** `@marko/vite` implements the hook with the server environment's plugin container in development and `this.resolve`/`this.load` in builds (confirming Rolldown's module info carries transformed code), and links only a stylesheet module's CSS where it can. webpack integrations use `this.resolve` and `this.loadModule`.
+- **Fixtures:** a spread of a comptime object compiles byte-identical to its hand-written attributes (the "no residue" assertion); a tag whose only spreads expand emits no client code; a module that a test plugin rewrites evaluates with the plugin's output; a fully folded stylesheet module still delivers its CSS; a server-only tag spreading a runtime stylesheet call emits no client code.
 
 Each phase needs a changeset; interop taglib-lookup expectations (`packages/runtime-class/test/taglib-lookup/`) update when the core taglib grows.
 
@@ -978,6 +1008,8 @@ Each phase needs a changeset; interop taglib-lookup expectations (`packages/runt
 - **Whole-file opt-in (a `.comptime.marko` extension or pragma).** Rejected: the CMS use case needs comptime and runtime interleaved in one template; per-invocation granularity is the feature.
 - **A constant-expression interpreter instead of real execution.** (The `computeNode` route, extended.) Rejected per the design decision — subset interpreters grow forever, surprise users at every boundary, and still cannot import a JSON file. Real execution makes capability questions answer themselves.
 - **"Just use a bundler define / build plugin."** Covers `DEBUG_ENABLED`-style constant folding at the JS level only; cannot remove template structure, unroll markup, or expand tags, and pushes CMS builds back to source-generation. Comptime subsumes the define use case via globals while staying inside the language.
+- **The host executes comptime modules (a module runner).** Vite has runners only in development, so builds would need an in-process server, and execution would leave the comptime realm's guards and cache. Rejected in favor of the host transforming and the compiler executing.
+- **Evaluating both outcomes of boolean conditions.** When a call's only runtime inputs are comparisons (`current === tab`), evaluating once per outcome and emitting a conditional would fold state-driven classes. Rejected: n conditions cost 2^n evaluations and a conditional with 2^n leaves, and a cap turns that into a cliff where one more condition silently changes how a tag compiles. It would only help conditions on browser state, whose tags ship code anyway, while the [companion rule](#runtime-spreads-from-stylesheet-modules) already covers conditions on server data.
 - **Library-implemented specialization for calls with runtime arguments.** A comptime function could expose a hook that receives the known arguments plus placeholders for the runtime ones and returns attributes with holes (`class` known, `style` bound to a runtime value). Rejected: every library would need to implement a Marko API. Calls with runtime arguments stay runtime calls.
 - **Tracing calls with placeholder values.** Running a library function with stand-ins for its runtime arguments and recording where they surface needs no library cooperation, but it is unsound: library code branches on values (`v0 === "" ? " " : v0` in Zyzz's compiled output), and a placeholder silently takes one branch.
 - **A separate precompile step.** A library's own CLI (`zyzz dev`) can write compiled modules that the default loader then imports. Rejected: it means a second watcher process beside the dev server.
@@ -996,5 +1028,6 @@ Each phase needs a changeset; interop taglib-lookup expectations (`packages/runt
 7. **Editor-time value knowledge.** Preserve mode could optionally consult a user-supplied "editor globals" module to light up `-if` branch dimming in the IDE without executing project code. Worth exploring after the language server work settles.
 8. **Ecosystem naming.** `comptime` (statement, config key, `marko/comptime` export) vs "compile-time tags" in prose docs — settle before public docs ship.
 9. **Partial comptime input.** Should a runtime invocation be able to mark individual attributes comptime — baking `variant` while `title` stays live? v1 keeps `input` whole (one world per instantiation) because splitting gives attributes per-attribute worlds in both the scope rules and the handoff; content and nested runtime tags cover today's mixed cases. Revisit with evidence. The CMS JIT proposal (`cms-jit/PROPOSAL.md` §3 on `dpiercey-ws-marko-cms-byz32i`) brings that evidence and proposes runtime holes: an attribute on a `-` tag that reads a runtime binding carries its expression into the expansion instead of erroring. [Comptime-closed folding](#comptime-closed-expressions-fold) composes with holes. Style libraries need nothing more than folding (`<-badge size="compact">` folds `styles.badge(input)` inside the expansion). With holes, `<-badge size="compact" title=input.title>` also works when the tag passes only its variant attribute to the style call (`styles.badge({ size: input.size })`): the styles fold and the title splices in.
-10. **Environment views.** Host-loaded modules evaluate as the server build sees them. Is a server view always right for values both outputs bake in, or do some libraries return environment-specific values that a dom compile should evaluate separately?
+10. **Environment views.** Comptime modules are transformed for the server environment. Is a server view always right for values both outputs bake in, or do some libraries return environment-specific values that a dom compile should evaluate separately?
 11. **Folding visibility.** Comptime-closed folding is implicit per expression. Is a way to list what folded (a `meta` entry or a debug flag) worth having, or do `<-log>` and the compiled output suffice?
+12. **Implicit comptime for stylesheet modules.** Marko already treats `.css.ts` imports specially. Should a plain import of a stylesheet module be comptime-capable automatically, so libraries like Zyzz need no template changes at all? That trades the visible `comptime` keyword, which today marks every module the compiler executes, for zero ceremony.
