@@ -138,6 +138,21 @@ exports.p = function (domCompat) {
 
   const rendererCache = new WeakMap();
 
+  // A Tags element renders only Tags content, so a Class body converts where
+  // it lands: in a spread, `content=`, or a native dynamic tag.
+  domCompat.patchDynamicRenderer((normalize) => (value) => {
+    const renderBody = value && (value.content || value.default || value);
+    if (typeof renderBody === "function") {
+      value = domCompat.createRenderer(
+        0,
+        () => ___createFragmentNode(),
+        (branch) => renderAndMorph(branch, 0, renderBody, []),
+      );
+      domCompat.setRendererId(value, renderBody);
+    }
+    return normalize(value);
+  });
+
   domCompat.patchDynamicTag((dynamicTag) => (...args) => {
     const signal = dynamicTag(...args);
     return (scope, renderer, getInput) => {
@@ -207,7 +222,11 @@ exports.p = function (domCompat) {
     const globalComponentsContext = componentsContext.___globalContext;
     let customEvents;
     let normalizedInput;
-    globalComponentsContext.___rerenderComponent = existingComponent;
+    // Set only to rerender a component: a class parent mid-render shares this
+    // context, and clearing it would make the parent recreate its later children.
+    if (existingComponent) {
+      globalComponentsContext.___rerenderComponent = existingComponent;
+    }
     out.sync();
     if (renderer) {
       const [rawInput] = input;
