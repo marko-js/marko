@@ -3188,9 +3188,18 @@ function assertSerializer(ctx: Record<PropertyKey, unknown> = {}) {
           let promiseIndex = 0;
           for (const flush of flushes) {
             await promises[promiseIndex++];
-            const actual = stringifyScopes(serializer, [], boundary);
-            assert.equal(normalizePayload(actual), flush);
+            let actual = stringifyScopes(serializer, [], boundary);
+            let written = normalizePayload(actual);
             apply(actual);
+            // Node decides when a body stream's last read settles, so the
+            // flush's calls may end with the async work after the one it awaited.
+            while (written !== flush && flush.startsWith(written + ",")) {
+              await promises[promiseIndex++];
+              actual = stringifyScopes(serializer, [], boundary);
+              written += "," + normalizePayload(actual);
+              apply(actual);
+            }
+            assert.equal(written, flush);
           }
 
           return [result];
