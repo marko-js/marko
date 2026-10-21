@@ -1,0 +1,10 @@
+let/bar=0
+const/{ "12345678901234567890": value }={
+  "12345678901234567890": 1,
+  "12345678901234567890Change"(v) {
+    bar = v;
+  }
+}
+
+button onClick() { value = bar + 1 }
+  -- ${value}:${bar}
