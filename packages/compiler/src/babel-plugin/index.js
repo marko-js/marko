@@ -528,19 +528,12 @@ const stripTagTypesVisitor = {
 };
 
 function stripTypes(file) {
-  const importScriptlets = new Map();
+  // The TypeScript transform strips type imports only from the program's own
+  // body, so those of `static`, `server` and `client` statements go here.
   for (const path of file.path.get("body")) {
     if (path.type === "MarkoScriptlet" && path.node.static) {
       for (const stmt of path.get("body")) {
-        if (stmt.isImportDeclaration()) {
-          // Hoist import declarations from scriptlets
-          // temporarily so that they will be processed by
-          // babel typescript transform.
-          const importNode = stmt.node;
-          importScriptlets.set(importNode, path);
-          stmt.remove();
-          path.insertBefore(importNode);
-        }
+        if (stmt.isImportDeclaration()) stripTypeImports(stmt);
       }
     }
   }
@@ -548,39 +541,35 @@ function stripTypes(file) {
   traverseAll(file, stripTypesVisitor);
 
   for (const path of file.path.get("body")) {
-    if (path.type === "ExportNamedDeclaration") {
-      if (!(path.node.declaration || path.node.specifiers.length)) {
-        // The babel typescript plugin will add an empty export declaration
-        // if there are no other imports/exports in the file.
-        // This is not needed for Marko file outputs since there is always
-        // a default export.
-        path.remove();
-      }
-    } else if (path.isImportDeclaration()) {
-      const importNode = path.node;
-      const scriptlet = importScriptlets.get(importNode);
-      if (scriptlet) {
-        let hasTypes = false;
-        for (const specifier of path.get("specifiers")) {
-          if (
-            specifier.node.type === "ImportSpecifier" &&
-            specifier.node.importKind === "type"
-          ) {
-            hasTypes = true;
-            specifier.remove();
-          }
-        }
-
-        path.remove();
-
-        // Add back imports from scriptlets that were
-        // hoisted for the babel typescript transform.
-        if (!hasTypes || importNode.specifiers.length) {
-          const [inserted] = scriptlet.unshiftContainer("body", importNode);
-          file.path.scope.registerDeclaration(inserted);
-        }
-      }
+    if (
+      path.type === "ExportNamedDeclaration" &&
+      !(path.node.declaration || path.node.specifiers.length)
+    ) {
+      // The babel typescript plugin will add an empty export declaration
+      // if there are no other imports/exports in the file.
+      // This is not needed for Marko file outputs since there is always
+      // a default export.
+      path.remove();
     }
+  }
+}
+
+function stripTypeImports(decl) {
+  if (decl.node.importKind === "type") {
+    decl.remove();
+    return;
+  }
+
+  let hasTypes = false;
+  for (const specifier of decl.get("specifiers")) {
+    if (specifier.node.importKind === "type") {
+      hasTypes = true;
+      specifier.remove();
+    }
+  }
+
+  if (hasTypes && !decl.node.specifiers.length) {
+    decl.remove();
   }
 }
 

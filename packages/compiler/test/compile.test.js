@@ -135,6 +135,29 @@ describe("compiler/compile", () => {
         "<foo|x|>\n  ${x}\n</foo>\n<type-arg/>",
       ));
 
+    it("keeps a statement import's references through stripTypes", () => {
+      let references;
+      compileSync(
+        'static import { x } from "./x.js";\n<p>${x}</p>\n',
+        template,
+        {
+          translator: Object.create(translator, {
+            transform: {
+              value: {
+                Program(program) {
+                  references =
+                    program.scope.getBinding("x").referencePaths.length;
+                },
+              },
+            },
+          }),
+          output: "html",
+          code: false,
+        },
+      );
+      assert.equal(references, 1);
+    });
+
     it("keeps each comment's syntax", () => {
       const src =
         "// line\n/* block */\n<!-- html -->\n<div>\n  // line\n  /* block */\n  <!-- html -->\n</div>\n<pre>a // line\n</pre>";
