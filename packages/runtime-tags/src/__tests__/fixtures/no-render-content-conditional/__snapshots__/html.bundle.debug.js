@@ -8,16 +8,16 @@ var my_const_default = _template("__tests__/tags/my-const.marko", (input) => {
 
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $wi__input_foo = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let x = my_const_default({ value: input.foo });
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/child.marko_0_x#5/var");
+	$wi__input_foo && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/child.marko_0_x#5/var");
 	_script($scope0_id, "__tests__/tags/child.marko_0_input#3_x#5", _write_guard($scope0_reason, 0));
 	_scope($scope0_id, {
 		input,
 		x,
-		"#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope)
+		"#childScope/0": $wi__input_foo && _existing_scope($childScope)
 	}, "__tests__/tags/child.marko", 0, {
 		input: 0,
 		x: "1:10"

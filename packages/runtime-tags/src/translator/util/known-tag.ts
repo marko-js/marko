@@ -102,7 +102,7 @@ import translateVar, {
   buildVarChange,
   isTagVarAssigned,
 } from "./translate-var";
-import { buildGroupMask, getWriteGuard } from "./write-guard";
+import { buildGroupMask, getExprIfWritten, getWriteGuard } from "./write-guard";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
 
@@ -342,22 +342,24 @@ export function knownTagTranslateHTML(
       ]),
     );
 
-    writeSlot(
-      findSlot(childScopeBinding),
-      callRuntime("_existing_scope", peekScopeId),
-    );
+    const childScopeSlot = findSlot(childScopeBinding)!;
+    writeSlot(childScopeSlot, callRuntime("_existing_scope", peekScopeId));
 
     if (tagVar) {
-      // Deferred below the render call: `_var` mints the post-render scope id
-      // for the scope offset.
+      // Below the render call, `_var` mints the scope offset's post-render id;
+      // guarded, as its registration ships only where the guard holds.
       varStatement = t.expressionStatement(
-        callRuntime(
-          "_var",
-          getScopeIdIdentifier(section),
-          getScopeOffsetAccessorLiteral(childScopeBinding),
-          peekScopeId,
-          t.stringLiteral(
-            getResumeRegisterId(section, tagVar.extra?.binding, "var"),
+        getExprIfWritten(
+          section,
+          childScopeSlot.reason!,
+          callRuntime(
+            "_var",
+            getScopeIdIdentifier(section),
+            getScopeOffsetAccessorLiteral(childScopeBinding),
+            peekScopeId,
+            t.stringLiteral(
+              getResumeRegisterId(section, tagVar.extra?.binding, "var"),
+            ),
           ),
         ),
       );

@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 0), $wi__input_b = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	const Sum = { content: _content("a0", ({ a, b }) => {
@@ -26,12 +26,12 @@ var template_default = _template("a", (input) => {
 		a: input.b,
 		b: 1
 	});
-	_var($scope0_id, "d", $childScope2, "a2");
+	$wi__input_b && _var($scope0_id, "d", $childScope2, "a2");
 	_html(`<div>${_text_resume($scope0_id, "e", x)}|${_text_resume($scope0_id, "f", y, $wg__input_b * 2)}</div><button>+</button>${_el_resume($scope0_id, "g")}`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		k: n,
 		a: _existing_scope($childScope),
-		c: _write_if($scope0_reason, 0) && _existing_scope($childScope2)
+		c: $wi__input_b && _existing_scope($childScope2)
 	});
 }, 1);
