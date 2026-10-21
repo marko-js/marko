@@ -33,15 +33,20 @@ export function isValidPropertyIdentifier(name: string) {
 export function toPropertyName(name: string) {
   if (isValidPropertyIdentifier(name)) {
     return t.identifier(name);
-  } else if (/^(?:0|[1-9][0-9]*)$/.test(name)) {
-    return t.numericLiteral(parseInt(name, 10));
   }
 
-  return t.stringLiteral(name);
+  // A key reads as a number only when the number writes back as the key.
+  const index = +name;
+  return Number.isSafeInteger(index) && index >= 0 && String(index) === name
+    ? t.numericLiteral(index)
+    : t.stringLiteral(name);
 }
 
+// A computed `__proto__` key is an own property, not the prototype.
 export function toObjectProperty(name: string, value: t.Expression) {
-  return t.objectProperty(toPropertyName(name), value);
+  return name === "__proto__"
+    ? t.objectProperty(t.stringLiteral(name), value, true)
+    : t.objectProperty(toPropertyName(name), value);
 }
 
 export function toMemberExpression(
