@@ -470,7 +470,7 @@ function moveDefaultsToConstTags(
             prop.shorthand = false;
             prop.value = t.identifier(sourceName);
             (insertions ||= []).push(
-              toConstTag(left as any, toFallbackExpr(sourceName, right)),
+              toConstTag(left, toFallbackExpr(sourceName, right)),
             );
             moveDefaultsToConstTags(left, insertions);
           } else {
@@ -500,7 +500,7 @@ function moveElementDefaultsToConstTags(
         const sourceName = generateUid(getLiteralName(left) || "pattern");
         elements[i] = withPreviousLocation(t.identifier(sourceName), el);
         (insertions ||= []).push(
-          toConstTag(left as any, toFallbackExpr(sourceName, right)),
+          toConstTag(left, toFallbackExpr(sourceName, right)),
         );
         moveDefaultsToConstTags(left, insertions);
       } else {
@@ -520,7 +520,8 @@ function toFallbackExpr(id: string, fallback: t.Expression) {
   );
 }
 
-function toConstTag(id: t.Identifier, expr: t.Expression) {
+/** A `<const>` tag declaring `id` as `expr`. */
+export function toConstTag(id: t.LVal, expr: t.Expression) {
   return t.markoTag(
     t.stringLiteral("const"),
     [t.markoAttribute("value", expr, null, null, true)],

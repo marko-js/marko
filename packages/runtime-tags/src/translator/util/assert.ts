@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import { type ForType, getForType } from "./branch-tag";
 import { getTagName } from "./get-tag-name";
 
 // Tags whose docs heading is not their bare name; "" links the page root
@@ -198,6 +199,36 @@ function buildRangeError(
   return start && end
     ? tag.hub.buildError({ loc: { start, end } } as t.Node, msg, Error)
     : tag.get("name").buildCodeFrameError(msg);
+}
+
+/** The loop a `<for>` tag's attributes run, which it requires. */
+export function assertForType(tag: t.NodePath<t.MarkoTag>) {
+  const type = getForType(tag.node);
+  if (!type) {
+    throw tag.buildCodeFrameError(
+      `The ${coreTagLink(tag)} requires an \`of=\`, \`in=\`, \`to=\`, or \`until=\` attribute.`,
+    );
+  }
+  return type;
+}
+
+/** The attributes a loop of `type` takes, besides `by=`. */
+export function getForAttrs(type: ForType) {
+  return type === "of" || type === "in" ? [type] : [type, "from", "step"];
+}
+
+/** Throws for a param that a loop of `type` never supplies. */
+export function assertForParams(tag: t.NodePath<t.MarkoTag>, type: ForType) {
+  const extraParam =
+    tag.node.body.params[type === "of" || type === "in" ? 2 : 1];
+  if (extraParam && extraParam.type !== "RestElement") {
+    throw tag.hub.buildError(
+      extraParam,
+      `The ${coreTagLink(tag)} only provides \`|${
+        type === "of" ? "item, index" : type === "in" ? "key, value" : "num"
+      }|\` with \`${type}=\`, so this parameter is never supplied.`,
+    );
+  }
 }
 
 function coreTagLink(tag: t.NodePath<t.MarkoTag>) {
