@@ -6,7 +6,12 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoSpreadAttrs } from "../util/assert";
+import {
+  assertForParams,
+  assertForType,
+  assertNoSpreadAttrs,
+  getForAttrs,
+} from "../util/assert";
 import { type Binding, BindingType, getPropertyAlias } from "../util/bindings";
 import {
   type ForType,
@@ -67,31 +72,12 @@ export default {
       isAttrTag ? BindingType.local : BindingType.derived,
     );
 
-    let allowAttrs: string[];
     assertNoVar(tag);
     assertNoArgs(tag);
     assertNoSpreadAttrs(tag);
 
-    const forType = getForType(tag.node);
-    switch (forType) {
-      case "of":
-        allowAttrs = ["of"];
-        break;
-      case "in":
-        allowAttrs = ["in"];
-        break;
-      case "to":
-        allowAttrs = ["to", "from", "step"];
-        break;
-      case "until":
-        allowAttrs = ["until", "from", "step"];
-        break;
-      default:
-        throw tag.buildCodeFrameError(
-          "The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) requires an `of=`, `in=`, `to=`, or `until=` attribute.",
-        );
-    }
-
+    const forType = assertForType(tag);
+    const allowAttrs = getForAttrs(forType);
     if (!isAttrTag) {
       allowAttrs.push("by");
     }
@@ -114,21 +100,7 @@ export default {
     }
 
     assertAllowedAttributes(tag, allowAttrs);
-
-    const extraParam =
-      tag.node.body.params[forType === "of" || forType === "in" ? 2 : 1];
-    if (extraParam && extraParam.type !== "RestElement") {
-      throw tag.hub.buildError(
-        extraParam,
-        `The [\`<for>\` tag](https://markojs.com/docs/reference/core-tag#for) only provides \`|${
-          forType === "of"
-            ? "item, index"
-            : forType === "in"
-              ? "key, value"
-              : "num"
-        }|\` with \`${forType}=\`, so this parameter is never supplied.`,
-      );
-    }
+    assertForParams(tag, forType);
 
     if (isAttrTag) {
       // The loop runs as its attribute tags are built, so its params change

@@ -9,6 +9,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
+import { toConstTag } from "../visitors/program/pre-analyze";
 
 // No `types`/`.d.marko` on purpose: a stub could only type the pattern as
 // `any`, and the tag is deprecated — run the `<const>` migration for typing.
@@ -28,13 +29,7 @@ export default {
           tagVar &&
           !(tagVar.type === "Identifier" && tagVar.name === "input")
         ) {
-          const constTag = t.markoTag(
-            t.stringLiteral("const"),
-            [t.markoAttribute("value", t.identifier("input"))],
-            t.markoTagBody([]),
-          );
-          constTag.var = tagVar;
-          tag.replaceWith(constTag);
+          tag.replaceWith(toConstTag(tagVar, t.identifier("input")));
         } else {
           tag.remove();
         }
