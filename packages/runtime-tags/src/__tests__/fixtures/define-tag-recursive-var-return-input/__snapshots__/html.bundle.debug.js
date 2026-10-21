@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Rec = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__input_label = _write_guard($scope1_reason, 2), $wg__input_depth__OR__input_label = _write_guard($scope1_reason, 0), $wg__input_depth = _write_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wg__input_label = _write_guard($scope1_reason, 2), $wg__input_depth__OR__input_label = _write_guard($scope1_reason, 0), $wi__input_depth__OR__input_label = _write_if($scope1_reason, 0), $wg__input_depth = _write_guard($scope1_reason, 1);
 		_if(() => {
 			if (input.depth) {
 				const $scope2_id = _scope_id();
@@ -14,9 +14,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					depth: input.depth - 1,
 					label: input.label
 				});
-				_var($scope2_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_2_child#3/var");
+				$wi__input_depth__OR__input_label && _var($scope2_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_2_child#3/var");
 				_html(`<span>${_text_resume($scope2_id, "#text/2", child, $wg__input_label)}</span>`);
-				_write_if($scope1_reason, 0) && _scope($scope2_id, {
+				$wi__input_depth__OR__input_label && _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope)
 				}, "__tests__/template.marko", "2:4");
