@@ -18,7 +18,7 @@ var sum_with_default = _template("b", (input) => {
 	let x = Sum.content({ a: 1 });
 	_var($scope0_id, "b", $childScope, "b2");
 	_html(`<div>${_text_resume($scope0_id, "c", x, $wg__input_n)}</div>`);
-	_scope($scope0_id, {
+	$wi__input_n && _scope($scope0_id, {
 		f: input.n,
 		h: $wi__input_n && $input_n__closures,
 		a: $wi__input_n && _existing_scope($childScope)

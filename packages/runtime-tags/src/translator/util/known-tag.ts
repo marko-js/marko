@@ -7,6 +7,7 @@ import {
   BindingType,
   bindingUtil,
   createBinding,
+  type ParamBinding,
   getDebugNames,
   ensurePropertyAlias,
   getPropertyAlias,
@@ -40,6 +41,7 @@ import {
   getSourcesForExprs,
   type KnownExprs,
   getKnownExprsAt,
+  mapParamBindingToExpr,
   mapParamReasonToExpr,
 } from "./reasons";
 import {
@@ -81,6 +83,7 @@ import {
   writeSlot,
 } from "./signals";
 import { findSlot, ensureSlot, SlotKind } from "./slots";
+import { mergeSources, type Sources } from "./sources";
 import { createAnalysisState, createOutputSectionState } from "./state";
 import {
   toMemberExpression,
@@ -106,6 +109,11 @@ type AttrTagGroup = AttrTagLookup[string]["group"];
 // Bound after every tag in the section is set up, so a `<return>` a setup
 // sends early reaches tags that read it only once they are set up too.
 const [getTagVarBindings] = createOutputSectionState(() => [] as t.Statement[]);
+
+// Call sites settle with sources, before anything maps a param through them.
+const [getCallSiteSourcesByParam] = createAnalysisState(
+  () => new Map<ParamBinding, Sources | undefined>(),
+);
 
 const kChildSection = Symbol("known tag child section");
 const kParamsTree = Symbol("known tag params tree");
@@ -441,6 +449,29 @@ export function knownTagTranslateDOM(
       childScopeBinding,
     });
   }
+}
+
+// What a `<define>` body's calls pass for its param. Another renderer reading
+// the body on the client already makes what the body reads always.
+export function getCallSiteSources(param: ParamBinding) {
+  const sourcesByParam = getCallSiteSourcesByParam();
+  if (sourcesByParam.has(param)) return sourcesByParam.get(param);
+  const body = param.section;
+  let sources: Sources | undefined;
+  forEach(body.callSections, (callSection) => {
+    for (const tagExtra of callSection.knownTags!) {
+      if (tagExtra[kChildSection] === body) {
+        sources = mergeSources(
+          sources,
+          getSourcesForExprs(
+            mapParamBindingToExpr(tagExtra[kKnownExprs]!, param),
+          ),
+        );
+      }
+    }
+  });
+  sourcesByParam.set(param, sources);
+  return sources;
 }
 
 export function addTagVarBindings(section: Section) {

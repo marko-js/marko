@@ -1,6 +1,6 @@
 // tags/test.marko
 var test_default = _template("__tests__/tags/test.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	_scope_reason();
 	const $scope0_id = _scope_id();
 	const count = 123;
 	const Tag = { content: _content("__tests__/tags/test.marko_1*content", (input) => {

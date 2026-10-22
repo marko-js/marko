@@ -19,7 +19,7 @@ import {
   isOutputHTML,
 } from "../../util/marko-config";
 import { type ParamsTree, exposeParamsTree } from "../../util/params-tree";
-import { isUnconditionalReason } from "../../util/reasons";
+import { isUnconditionalReason, mapBodyParams } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
 import {
   dynamicImport,
@@ -122,7 +122,9 @@ export default {
       // has to reach the client on its own.
       forEachSection((childSection) => {
         programExtra.hasResumes ||= !!(
-          isUnconditionalReason(childSection.reason) ||
+          isUnconditionalReason(
+            mapBodyParams(childSection, childSection.reason),
+          ) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
             getRendererReason(childSection))

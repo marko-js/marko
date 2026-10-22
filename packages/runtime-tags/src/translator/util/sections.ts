@@ -29,6 +29,7 @@ import {
 import {
   isConditionalReason,
   type KnownExprs,
+  mapBodyParams,
   mapParamReason,
   type Reason,
   setParamReasonGroups,
@@ -545,18 +546,20 @@ export function getCommonSection(section: Section, other: Section) {
 }
 
 export function ensureSectionReasonGroups(section: Section) {
-  ensureReasonGroups(section.reason);
+  ensureReasonGroups(section, section.reason);
 
   forEach(section.slots, ensureSlotReasonGroups);
 }
 
 function ensureSlotReasonGroups(slot: Slot) {
-  ensureReasonGroups(slot.reason);
+  ensureReasonGroups(slot.section, slot.reason);
 }
 
-export function ensureReasonGroups(reason: Section["reason"]) {
-  if (isConditionalReason(reason)) {
-    forEachParamGroup(reason.param, ensureParamReasonGroup);
+// The groups the section's guards test, in its own terms.
+function ensureReasonGroups(section: Section, reason: Section["reason"]) {
+  const ownReason = mapBodyParams(section, reason);
+  if (isConditionalReason(ownReason)) {
+    forEachParamGroup(ownReason.param, ensureParamReasonGroup);
   }
 }
 

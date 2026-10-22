@@ -1,0 +1,9 @@
+<const/f() { return input.a; }/>
+<define/D|{ on, depth }|>
+  <if=depth>
+    <span>${on && f()}</span>
+    <D on=on depth=depth - 1/>
+  </if>
+</define>
+<D on=input.x depth=2/>
+<counter/>
