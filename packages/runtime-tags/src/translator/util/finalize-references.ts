@@ -316,6 +316,14 @@ function resolveBindings() {
 }
 
 function addSectionReasons(section: Section) {
+  // A call links the body's scope to its owner through the calling scopes;
+  // sections run in order, so a body's own calls come after it.
+  if (section.readsOwner) {
+    forEach(section.callSections, (callSection) => {
+      setReadsOwner(callSection, section.parent!);
+    });
+  }
+
   if (section.isHoistThrough) {
     addReason(ensureSectionSlot(section, SlotKind.Scope), ALWAYS);
   }

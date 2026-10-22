@@ -1,0 +1,5 @@
+<define/E><span>${input.x}</span></define>
+<define/D|{ on }|><if=on><E/></if></define>
+<let/on=false/>
+<button onClick() { on = !on }/>
+<D on=on/>
