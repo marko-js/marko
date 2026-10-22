@@ -1,0 +1,10 @@
+<const/f() { return input.a; }/>
+<define/E|{ show }|>
+  <if=show><span>${f()}</span></if>
+</define>
+<define/D|{ on }|>
+  <E show=on/>
+  <p>${input.a}</p>
+</define>
+<D on=input.x/>
+<counter/>

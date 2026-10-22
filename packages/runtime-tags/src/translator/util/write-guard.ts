@@ -7,7 +7,12 @@ import {
 } from "./bindings";
 import { generateUid, ensureSharedUid } from "./generate-uid";
 import { some } from "./optional";
-import { isConditionalReason, type Reason, type Reasons } from "./reasons";
+import {
+  isConditionalReason,
+  mapBodyParams,
+  type Reason,
+  type Reasons,
+} from "./reasons";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   getParamReasonGroupIndex,
@@ -177,11 +182,12 @@ export function getExprIfWritten<
   T extends undefined | Reason,
   R extends (T extends {} ? t.Expression : undefined),
 >(section: Section, reason: T, expr: t.Expression): R {
-  if (!isDynamicWriteGuard(section, reason)) {
-    return (reason && expr) as R;
+  const ownReason = mapBodyParams(section, reason);
+  if (!isConditionalReason(ownReason)) {
+    return (ownReason && expr) as R;
   }
 
-  return andGuard(orEachParamGroup(reason.param, "_write_if"), expr) as R;
+  return andGuard(orEachParamGroup(ownReason.param, "_write_if"), expr) as R;
 }
 
 // Each param group's `check`, or-ed together.
@@ -262,14 +268,17 @@ function createGuardHoists(): GuardHoists {
 }
 
 function hasConditionalReason(section: Section) {
-  if (section.paramReasonGroups || isConditionalReason(section.reason)) {
+  if (
+    section.paramReasonGroups ||
+    isConditionalReason(mapBodyParams(section, section.reason))
+  ) {
     return true;
   }
   return some(section.slots, isConditionalSlot);
 }
 
 function isConditionalSlot(slot: Slot) {
-  return isConditionalReason(slot.reason);
+  return isConditionalReason(mapBodyParams(slot.section, slot.reason));
 }
 
 function scopeReasonIdentifier(section: Section) {
