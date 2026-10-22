@@ -78,6 +78,7 @@ export function solveReasons(
       addIntersectionReasons(section, intersectionsBySection.get(section)),
     );
     forEachSection(addClosureReasons);
+    forEachSection(addCallOwnerReasons);
     addRegisteredFnReasons(getFunctionReadsByExpression());
     forEachSectionReverse(solveSectionReasons);
   } while (reasonsVersion !== getReasonsVersion());
@@ -238,6 +239,20 @@ function addClosureReasons(section: Section) {
       }
     }
   });
+}
+
+// A call links its body's scope to the body's owner as the calling scope is
+// created, reading the owner chain between them.
+function addCallOwnerReasons(body: Section) {
+  if (body.readsOwner) {
+    forEach(body.callSections, (callSection) => {
+      addOwnerReason(
+        callSection,
+        body.parent!,
+        getBranchExprReasonUntil(callSection, body.parent!),
+      );
+    });
+  }
 }
 
 // Client code reading a function reads what the function references, owners
