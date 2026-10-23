@@ -286,9 +286,27 @@ function markReturn(
   setup: t.Expression | undefined,
   params: t.Expression | undefined,
 ) {
-  return section.returnValueExpr && !isOptimize()
-    ? setup
-      ? [callRuntime("_return_setup", setup), params]
-      : [setup, callRuntime("_return_setup", params!)]
-    : [setup, params];
+  if (!section.returnValueExpr || isOptimize()) {
+    return [setup, params];
+  }
+  // Content whose every value arrives through a local closure has neither a
+  // setup nor params to carry the mark, so mark an empty setup: `_content_closures`
+  // composes with it and copies the mark onto the setup it builds. Marking
+  // nothing at all would leave `_return_setup(undefined)`, which throws as the
+  // module loads.
+  if (!setup && !params) {
+    return [
+      callRuntime(
+        "_return_setup",
+        t.arrowFunctionExpression(
+          [getUnusedParamIdentifier()],
+          t.blockStatement([]),
+        ),
+      ),
+      params,
+    ];
+  }
+  return setup
+    ? [callRuntime("_return_setup", setup), params]
+    : [setup, callRuntime("_return_setup", params!)];
 }
