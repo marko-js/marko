@@ -425,11 +425,11 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
       );
     } else if (isReferenceHoisted(babelBinding.path, ref)) {
       // A hoisted tag variable is its getter wherever it is referenced; calling
-      // it while rendering throws at runtime (`_hoist_read_error`).
+      // it while rendering throws at runtime (`_hoist_read_error`). The getter
+      // reads through the scope the value hoists to, so a function holding any
+      // hoisted read needs that scope, whether it calls the value or keeps it.
       const invoked = isInvokedFunction(ref);
-      if (invoked) {
-        setReferencesScope(ref);
-      }
+      setReferencesScope(ref);
       addReadToExpression(ref, binding, {
         hoisted: getCommonSection(refSection, binding.section),
         invoked,
