@@ -778,10 +778,10 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
   let closureSignal = (scope, resumed) => {
     let ownerScope = getOwnerScope ? getOwnerScope(scope) : scope._;
     ((scope[closureSignal.b] = closureSignal.c),
+      subscribeToScopeSet(ownerScope, closureSignal.a, scope),
       resumed
         ? ownerScope[closureSignal.a]._ && queueAsyncRender(scope, fn)
-        : queueRender(scope, fn, -1),
-      subscribeToScopeSet(ownerScope, closureSignal.a, scope));
+        : queueRender(scope, fn, -1));
   };
   return (
     (closureSignal.a = valueAccessor),
