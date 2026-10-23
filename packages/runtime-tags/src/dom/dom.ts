@@ -61,7 +61,11 @@ function setAttribute(
   if (element.getAttribute(name) != value) {
     if (value === undefined) {
       element.removeAttribute(name);
-    } else {
+    } else if (
+      // A browser hiding a CSP nonce reports it as empty to every attribute
+      // read but still honors it, and writing the attribute exposes the value.
+      !(name === "nonce" && (element as HTMLElement).nonce === value)
+    ) {
       element.setAttribute(name, value);
     }
   }
