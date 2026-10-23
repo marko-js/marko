@@ -254,7 +254,14 @@ function analyzeKnownTagParams(
     paramsTree,
     attrExprs,
   ));
-  setTagContentDerives(tag, paramsTree?.props?.[0]?.binding, exprs);
+  // A body follows the call's arguments, like any attribute tags, so it belongs
+  // to the param at the argument count: `props[0]` put the derives on a value
+  // argument instead, and a body next to arguments then looked unread.
+  setTagContentDerives(
+    tag,
+    paramsTree?.props?.[tag.node.arguments?.length || 0]?.binding,
+    exprs,
+  );
   addReasonExprs(ensureSlot(tagExtra.childScopeBinding!), fromIter(attrExprs));
   return exprs;
 }
@@ -293,6 +300,13 @@ function getRenderArgs(
   const renderArgs: (t.Expression | t.SpreadElement)[] =
     args?.length && !args.every(isDroppedNode) ? args.map(toRenderArg) : [];
   if (!renderArgs.length || properties.length) {
+    if (properties.length) {
+      // The input is positional, so each dropped argument keeps its slot:
+      // without it the body slides into the first param and reads `undefined`.
+      while (renderArgs.length < (args?.length ?? 0)) {
+        renderArgs.push(t.buildUndefinedNode());
+      }
+    }
     renderArgs.push(propsToExpression(properties));
   }
   return renderArgs;
