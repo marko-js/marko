@@ -11,6 +11,7 @@ export const ClosestBranch = "F";
 export const ClosestBranchId = "G";
 export const Gen = "H";
 export const DetachedAwait = "V";
+export const DetachedFragment = "DF";
 export const EndNode = "K";
 export const Id = "L";
 export const Load = "X";
