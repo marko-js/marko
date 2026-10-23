@@ -11,7 +11,6 @@ var template_default = _template("a", (input) => {
 	}, "a1", $scope0_id);
 	_html(`<button class=go>go</button>${_el_resume($scope0_id, "a")}<button class=check>check</button>${_el_resume($scope0_id, "b")}<span>${_text_resume($scope0_id, "c", out)}</span>`);
 	_script($scope0_id, "a2");
-	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		d: box,
 		e: out,

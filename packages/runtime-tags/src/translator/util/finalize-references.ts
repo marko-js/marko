@@ -805,8 +805,10 @@ function isLazyRead(
   binding: Binding,
   isChangeHandlerRead: boolean,
 ) {
+  // A merged tag keeps a single effect for all of its attributes, so an
+  // attribute only ever invoked carries the flag on its own expression root.
   return !!(
-    expr.invokeOnly &&
+    (expr.invokeOnly || read.extra.exprRoot?.invokeOnly) &&
     read.deferred &&
     !isChangeHandlerRead &&
     // Roots and section params own a live slot; other aliases forward to their

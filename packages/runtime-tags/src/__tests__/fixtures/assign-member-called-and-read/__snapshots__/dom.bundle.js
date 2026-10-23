@@ -1,12 +1,12 @@
 // template.marko
 const initial = $initial;
-const $box__script = _script("a3", ($scope) => _lifecycle($scope, { onMount: function() {
-	$scope.d.reveal = (n) => {
-		$out($scope, `revealed ${n}`);
-	};
-} }));
 const $out = /*@__PURE__*/ _let(4, ($scope) => _text($scope.c, $scope.e));
 const $setup__script = _script("a2", ($scope) => {
+	_lifecycle($scope, { onMount: function() {
+		$scope.d.reveal = (n) => {
+			$out($scope, `revealed ${n}`);
+		};
+	} });
 	_on($scope.a, "click", function() {
 		$scope.f(1);
 	});
