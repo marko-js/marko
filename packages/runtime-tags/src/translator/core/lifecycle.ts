@@ -33,7 +33,15 @@ export default {
     const { node } = tag;
     const section = ensureSection(tag);
     for (const attr of node.attributes) {
-      (attr.value.extra ??= {}).consumed = true;
+      const attrExtra = (attr.value.extra ??= {});
+      attrExtra.consumed = true;
+      // `onUpdate` is the only hook re-invoked when the effect re-runs, so its
+      // own reads are the dependency the docs promise. The rest attach once and
+      // are only ever invoked, so a read inside one resolves against the live
+      // scope when it runs instead of subscribing the effect.
+      if (t.isMarkoAttribute(attr) && attr.name !== "onUpdate") {
+        attrExtra.invokeOnly = true;
+      }
     }
     const tagExtra = mergeTagReferences(section, tag.node);
     tagExtra.isEffect = true;
