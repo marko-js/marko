@@ -15,7 +15,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let local = n;
 			_html(`<p>${_text_resume($scope2_id, "#text/0", n + m)}</p><span>${_escape(local)}</span>`);
 			_script($scope2_id, "__tests__/template.marko_2_n#0:2");
-			_subscribe($m__closures, _subscribe($n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4"), "__tests__/template.marko_2_n#0:2/subscribe"), "__tests__/template.marko_2_m#0:3/subscribe");
+			const $scope2_write = _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
+			_subscribe($n__closures, $scope2_write, "__tests__/template.marko_2_n#0:2/subscribe");
+			_subscribe($m__closures, $scope2_write, "__tests__/template.marko_2_m#0:3/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
 	}, () => {

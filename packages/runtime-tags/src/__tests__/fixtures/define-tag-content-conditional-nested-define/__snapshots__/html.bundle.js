@@ -25,8 +25,11 @@ var template_default = _template("a", (input) => {
 			const $scope5_id = _scope_id();
 			_html(`outer ${_text_resume($scope5_id, "a", outer.label, $wg__outer_label * 2)}: `);
 			_dynamic_tag($scope5_id, "b", outer.content, {}, 0, 0, $wg__outer_content);
-			_subscribe($wi__outer_content && $Outer_content2__outer_content__closures, _subscribe($wi__outer_label && $Outer_content2__outer_label__closures, _scope($scope5_id, { _: _scope_with_id($scope3_id) }), "a2", $wg__outer_label || $wg__outer_content), "a3", $wg__outer_label || $wg__outer_content);
-			$wg__outer_label || $wg__outer_content || _resume_branch($scope5_id);
+			const $scope5_guard = $wg__outer_label || $wg__outer_content;
+			const $scope5_write = _scope($scope5_id, { _: _scope_with_id($scope3_id) });
+			_subscribe($wi__outer_label && $Outer_content2__outer_label__closures, $scope5_write, "a2", $scope5_guard);
+			_subscribe($wi__outer_content && $Outer_content2__outer_content__closures, $scope5_write, "a3", $scope5_guard);
+			$scope5_guard || _resume_branch($scope5_id);
 		}, $scope3_id) });
 		_scope($scope3_id, {
 			d: outer.label,

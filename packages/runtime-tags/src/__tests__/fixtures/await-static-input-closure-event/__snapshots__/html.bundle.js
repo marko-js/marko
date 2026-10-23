@@ -13,7 +13,9 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "a", input.foo, _write_guard($scope0_reason, 0))}</p><button>${_text_resume($scope2_id, "c", count)}</button>${_el_resume($scope2_id, "b")}`);
 			_script($scope2_id, "a0");
-			_subscribe($count__closures, _subscribe($wi__input_foo && $input_foo__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1"), "a2");
+			const $scope2_write = _scope($scope2_id, { _: _scope_with_id($scope1_id) });
+			_subscribe($wi__input_foo && $input_foo__closures, $scope2_write, "a1");
+			_subscribe($count__closures, $scope2_write, "a2");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

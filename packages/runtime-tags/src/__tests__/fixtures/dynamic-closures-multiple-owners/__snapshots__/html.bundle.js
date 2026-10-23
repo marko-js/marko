@@ -26,10 +26,12 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<i>${_text_resume($scope2_id, "a", z)}</i><b>${_text_resume($scope2_id, "b", x)}</b>`);
-			_subscribe($wrap_content__x__closures, _subscribe($x__closures, _scope($scope2_id, {
+			const $scope2_write = _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				Cf: 1
-			}), "a0"), "a1");
+			});
+			_subscribe($x__closures, $scope2_write, "a0");
+			_subscribe($wrap_content__x__closures, $scope2_write, "a1");
 		}, $scope1_id) });
 		wrap_default({ content: _content("a4", () => {
 			_scope_reason();

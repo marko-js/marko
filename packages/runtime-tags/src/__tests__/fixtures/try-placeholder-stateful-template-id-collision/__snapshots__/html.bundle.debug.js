@@ -41,11 +41,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope2_id, "#text/0", resolveAfter("body", 2), (body) => {
 			const $scope3_id = _scope_id();
 			_dynamic_tag($scope3_id, "#text/0", tag, { label: `${body} ${clicks}` });
-			_subscribe($tag__closures, _subscribe($clicks__closures, _scope($scope3_id, {
+			const $scope3_write = _scope($scope3_id, {
 				body,
 				_: _scope_with_id($scope2_id),
 				"ClosureSignalIndex:clicks/6": 1
-			}, "__tests__/template.marko", "11:4", { body: "11:10" }), "__tests__/template.marko_3_clicks#0:4/subscribe"), "__tests__/template.marko_3_tag#0:5/subscribe");
+			}, "__tests__/template.marko", "11:4", { body: "11:10" });
+			_subscribe($clicks__closures, $scope3_write, "__tests__/template.marko_3_clicks#0:4/subscribe");
+			_subscribe($tag__closures, $scope3_write, "__tests__/template.marko_3_tag#0:5/subscribe");
 		});
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:2");
 	}, () => {

@@ -178,16 +178,41 @@ export function getWriteGuardForAny(
   return expr;
 }
 
+// Whether a section writes for a reason at all, and under which guard: `false`
+// when never, `true` when always, the guard when only for some params.
+function getWritesGate(
+  section: Section,
+  reason: undefined | Reason,
+): true | false | t.Expression {
+  const ownReason = mapBodyParams(section, reason);
+  if (!isConditionalReason(ownReason)) return !!ownReason;
+  return orEachParamGroup(ownReason.param, "_write_if") || true;
+}
+
 export function getExprIfWritten<
   T extends undefined | Reason,
   R extends (T extends {} ? t.Expression : undefined),
 >(section: Section, reason: T, expr: t.Expression): R {
-  const ownReason = mapBodyParams(section, reason);
-  if (!isConditionalReason(ownReason)) {
-    return (ownReason && expr) as R;
-  }
+  const gate = getWritesGate(section, reason);
+  return (
+    gate === true ? expr : gate === false ? undefined : andGuard(gate, expr)
+  ) as R;
+}
 
-  return andGuard(orEachParamGroup(ownReason.param, "_write_if"), expr) as R;
+// The same gate over a run of statements. `getExprIfWritten` can only wrap one
+// expression, so a write that needs several statements — a scope and each of
+// its subscriptions — would have to nest them into that one.
+export function getStatementsIfWritten(
+  section: Section,
+  reason: undefined | Reason,
+  stmts: t.Statement[],
+): undefined | t.Statement[] {
+  if (!stmts.length) return;
+  const gate = getWritesGate(section, reason);
+  if (gate === false) return;
+  if (gate === true) return stmts;
+  const test = t.isParenthesizedExpression(gate) ? gate.expression : gate;
+  return [t.ifStatement(test, t.blockStatement(stmts))];
 }
 
 // Each param group's `check`, or-ed together.

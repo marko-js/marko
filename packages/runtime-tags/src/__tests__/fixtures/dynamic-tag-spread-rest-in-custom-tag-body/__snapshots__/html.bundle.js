@@ -20,7 +20,9 @@ var template_default = _template("a", (input) => {
 		const { label: $label2, ...rest } = input.button;
 		_html(`<button${_attrs(rest, "a", $scope1_id, "button")}>${_text_resume($scope1_id, "b", input.button.label, _write_guard($scope0_reason, 1))}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
-		_subscribe($wi__rest && $rest__closures, _subscribe($wi__input_button_label && $label__closures, _scope($scope1_id, { _: $wi__input_button_label__OR__rest && _scope_with_id($scope0_id) }), "a1"), "a2");
+		const $scope1_write = _scope($scope1_id, { _: $wi__input_button_label__OR__rest && _scope_with_id($scope0_id) });
+		_subscribe($wi__input_button_label && $label__closures, $scope1_write, "a1");
+		_subscribe($wi__rest && $rest__closures, $scope1_write, "a2");
 	}, $scope0_id) });
 	$wi__input_button_label__OR__rest && _scope($scope0_id, {
 		g: $wi__input_button_label && $label__closures,

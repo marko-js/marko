@@ -36,8 +36,12 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "b", 1, $wg__input_b, 0, 0, 1);
-		_subscribe($wi__input_b && $input_b__closures, _subscribe($wi__input_a && $input_a__closures, _subscribe($wrap_content__subscribers, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) })), "a2", $wg__input_a || $wg__input_b), "a3", $wg__input_a || $wg__input_b);
-		$wg__input_a || $wg__input_b || _resume_branch($scope1_id);
+		const $scope1_guard = $wg__input_a || $wg__input_b;
+		const $scope1_write = _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
+		_subscribe($wrap_content__subscribers, $scope1_write);
+		_subscribe($wi__input_a && $input_a__closures, $scope1_write, "a2", $scope1_guard);
+		_subscribe($wi__input_b && $input_b__closures, $scope1_write, "a3", $scope1_guard);
+		$scope1_guard || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_html(`<button>set</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a5");

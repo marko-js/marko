@@ -29,7 +29,9 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "c");
 		_html(`<button id=toggle>toggle</button>${_el_resume($scope1_id, "d")}`);
 		_script($scope1_id, "a2");
-		_subscribe($show__closures, _subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3"), "a4");
+		const $scope1_write = _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_subscribe($count__closures, $scope1_write, "a3");
+		_subscribe($show__closures, $scope1_write, "a4");
 	}, $scope0_id), 0, 0);
 	_scope($scope0_id, {
 		c: count,
