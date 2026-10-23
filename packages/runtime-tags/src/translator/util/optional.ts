@@ -392,7 +392,7 @@ export function find<T>(
 
 export function some<T>(
   data: Opt<T>,
-  cb: (item: T, index: number) => boolean,
+  cb: (item: T, index: number) => unknown,
 ): boolean {
   return data !== undefined
     ? Array.isArray(data)

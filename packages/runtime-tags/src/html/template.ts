@@ -53,7 +53,7 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
 
 // A render's entry, parameterized on the State a template's mode uses.
 export function startRender(
-  template: Template & ServerRenderer,
+  template: ServerRenderer,
   input: TemplateInput,
   StateClass: typeof State,
 ): RenderedTemplate {

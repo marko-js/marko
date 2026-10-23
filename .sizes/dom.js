@@ -753,8 +753,8 @@ function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
     };
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
-function subscribeToScopeSet(ownerScope, accessor, scope) {
-  let subscribers = (ownerScope[accessor] ||= /* @__PURE__ */ new Set()),
+function subscribeToScopeSet(owner, accessor, scope) {
+  let subscribers = (owner[accessor] ||= /* @__PURE__ */ new Set()),
     { size } = subscribers;
   subscribers.add(scope).size !== size && trackCleanup(scope, subscribers);
 }

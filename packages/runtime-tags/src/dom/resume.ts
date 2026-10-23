@@ -560,8 +560,8 @@ function runResumeEffects(render: RenderData) {
   }
 }
 
-export function getRegisteredWithScope(id: string, scope?: Scope) {
-  return scope ? (_resumed[id] as RegisteredFn)(scope) : _resumed[id];
+export function getRegisteredWithScope<T = unknown>(id: string, scope?: Scope) {
+  return (scope ? (_resumed[id] as RegisteredFn)(scope) : _resumed[id]) as T;
 }
 
 export function _var_resume<T extends Signal<unknown>>(
