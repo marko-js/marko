@@ -315,6 +315,11 @@ export function _closure_get(
       : scope[AccessorProp.Owner]!;
     scope[closureSignal[ClosureSignalProp.SignalIndexAccessor]] =
       closureSignal[ClosureSignalProp.Index];
+    subscribeToScopeSet(
+      ownerScope,
+      closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
+      scope,
+    );
     if (!resumed) {
       queueRender(scope, fn, -1);
     } else if (
@@ -328,11 +333,6 @@ export function _closure_get(
       // does it render, in its own run as resumed async content does.
       queueAsyncRender(scope, fn);
     }
-    subscribeToScopeSet(
-      ownerScope,
-      closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
-      scope,
-    );
   }) as ((scope: Scope, resumed?: 1) => void) & {
     [ClosureSignalProp.ScopeInstancesAccessor]: string;
     [ClosureSignalProp.SignalIndexAccessor]: string;
@@ -346,8 +346,8 @@ export function _closure_get(
   closureSignal[ClosureSignalProp.SignalIndexAccessor] =
     AccessorPrefix.ClosureSignalIndex + valueAccessor;
 
-  // A subscriber that resumes after its owner applies what the client changed
-  // since the server render, then subscribes.
+  // A subscriber that resumes after its owner subscribes, then applies what the
+  // client changed since the server render.
   if (resumeId) _resumed[resumeId] = (scope: Scope) => closureSignal(scope, 1);
 
   return closureSignal;
