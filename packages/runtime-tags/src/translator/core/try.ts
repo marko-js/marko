@@ -7,6 +7,7 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
+import type { Falsy } from "../../common/types";
 import { assertHasBody } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
@@ -120,7 +121,7 @@ export default {
 
         writeHTMLResumeStatements(tag);
 
-        const tryArgs = [
+        const tryArgs: Array<t.Expression | Falsy> = [
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(nodeBinding),
           buildContent(tagBody),

@@ -153,7 +153,7 @@ const builder = {
       }
     },
   ) {
-    const state = (entryFile[kState] ||= {
+    const state: EntryState = (entryFile[kState] ||= {
       init: false,
       hasClientStatement: false,
       lazy: false,

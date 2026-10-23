@@ -267,11 +267,11 @@ export function _if_closure(
 }
 
 export function subscribeToScopeSet(
-  ownerScope: Scope,
+  owner: Record<Accessor, unknown>,
   accessor: Accessor,
   scope: Scope,
 ) {
-  const subscribers = (ownerScope[accessor] ||= new Set()) as Set<Scope>;
+  const subscribers = (owner[accessor] ||= new Set()) as Set<Scope>;
   // Resume adopts the server's set already holding its subscribers, so those
   // register no unsubscribe: bounded, and `_closure` skips destroyed scopes.
   const { size } = subscribers;

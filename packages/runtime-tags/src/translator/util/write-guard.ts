@@ -204,7 +204,7 @@ function orGuard(guard: t.Expression | undefined, other: t.Expression) {
   return guard ? t.logicalExpression("||", guard, other) : other;
 }
 
-function andGuard(guard: t.Expression | undefined, expr: t.Expression) {
+function andGuard(guard: t.Expression | undefined | false, expr: t.Expression) {
   return guard ? t.logicalExpression("&&", guard, expr) : expr;
 }
 
