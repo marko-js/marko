@@ -1,15 +1,19 @@
 import { type Opt, reduce } from "./optional";
 import { createAnalysisState } from "./state";
 
+// Every cyclic memo's computations in progress, counted together: a cycle may
+// close through another memo, whose computations are then as provisional.
+let depth = 0;
+let provisionalAt = Infinity;
+
 // A memo whose computation may re-ask itself through a cycle: a re-ask
-// answers `cycleAnswer`, and a frame that consumed one does not cache.
+// answers `cycleAnswer`, and a computation that consumed one does not cache.
 export function createCyclicMemo<K extends object, R>(
   compute: (key: K) => R,
   cycleAnswer: R,
 ): (key: K) => R {
   const cache = new WeakMap<K, R>();
   const computing = new Map<K, number>();
-  let provisionalAt = Infinity;
   return (key) => {
     if (cache.has(key)) return cache.get(key)!;
     const at = computing.get(key);
@@ -17,19 +21,20 @@ export function createCyclicMemo<K extends object, R>(
       if (at < provisionalAt) provisionalAt = at;
       return cycleAnswer;
     }
-    const frame = computing.size;
-    computing.set(key, frame);
+    const level = depth++;
+    computing.set(key, level);
     const outerProvisionalAt = provisionalAt;
     provisionalAt = Infinity;
     // The walk state outlives a compile (a diagnostic may throw
     // mid-walk), so every exit restores it.
     try {
       const result = compute(key);
-      if (provisionalAt >= frame) cache.set(key, result);
+      if (provisionalAt >= level) cache.set(key, result);
       return result;
     } finally {
+      depth--;
       computing.delete(key);
-      if (provisionalAt >= frame || outerProvisionalAt < provisionalAt) {
+      if (provisionalAt >= level || outerProvisionalAt < provisionalAt) {
         provisionalAt = outerProvisionalAt;
       }
     }
@@ -47,9 +52,8 @@ export function createAnalysisMemo<K extends object, R>(
   return [(key: K) => getMemo()(key), () => setMemo(create())] as const;
 }
 
-// The same memo keyed by an object and a property path (`true` for every
-// property): each path interns one key, so a value's answer per path
-// shares one cycle protocol.
+// The same memo keyed by an object and a property path (`true` for all):
+// each path interns one key, so a path's answers share one cycle protocol.
 type MemoPath = Opt<string> | true;
 interface PathKeys<K> {
   value?: [K, MemoPath];
