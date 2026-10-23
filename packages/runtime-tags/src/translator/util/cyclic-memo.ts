@@ -1,9 +1,9 @@
 import { type Opt, reduce } from "./optional";
 import { createAnalysisState } from "./state";
 
-// Every cyclic memo's computations in progress, counted together: a cycle may
-// close through another memo, whose computations are then as provisional.
-let depth = 0;
+// Every cyclic memo's computations, numbered together as they start: a cycle
+// may close through another memo, whose computations are then as provisional.
+let computations = 0;
 let provisionalAt = Infinity;
 
 // A memo whose computation may re-ask itself through a cycle: a re-ask
@@ -21,20 +21,19 @@ export function createCyclicMemo<K extends object, R>(
       if (at < provisionalAt) provisionalAt = at;
       return cycleAnswer;
     }
-    const level = depth++;
-    computing.set(key, level);
+    const index = computations++;
+    computing.set(key, index);
     const outerProvisionalAt = provisionalAt;
     provisionalAt = Infinity;
     // The walk state outlives a compile (a diagnostic may throw
     // mid-walk), so every exit restores it.
     try {
       const result = compute(key);
-      if (provisionalAt >= level) cache.set(key, result);
+      if (provisionalAt >= index) cache.set(key, result);
       return result;
     } finally {
-      depth--;
       computing.delete(key);
-      if (provisionalAt >= level || outerProvisionalAt < provisionalAt) {
+      if (provisionalAt >= index || outerProvisionalAt < provisionalAt) {
         provisionalAt = outerProvisionalAt;
       }
     }
