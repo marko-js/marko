@@ -474,6 +474,13 @@ export default {
         addReasonExprs(ensureSlot(nodeBinding), push(exprExtras, tagExtra));
       }
 
+      const implied = getImpliedTableAncestors(tag, tagName);
+      if (implied?.startsRun) {
+        // The parsed template holds the wrapper elements the markup never
+        // names, so step into them before this tag claims its own node.
+        for (let i = 0; i < implied.depth; i++) structure.enter(tag);
+      }
+
       const write = structure.writeTo(tag);
       // Addressed once exit settles it: a child control flow tag may still
       // bind this tag through the only-child optimization.
@@ -541,6 +548,11 @@ export default {
       }
 
       structure.exit(tag);
+
+      const implied = getImpliedTableAncestors(tag, tagName);
+      if (implied?.endsRun) {
+        for (let i = 0; i < implied.depth; i++) structure.exit(tag);
+      }
     },
   },
   translate: translateByTarget({
@@ -1587,6 +1599,65 @@ function getCanonicalTagName(tag: t.NodePath<t.MarkoTag>) {
     default:
       return tagName;
   }
+}
+
+// The HTML parser implies elements above a table body's children that the
+// markup never names: a `<tr>` written straight inside a `<table>` gains a
+// `<tbody>`, and a cell written outside a row gains that row too. The dom walk
+// claims nodes from the parsed template, so it has to count them.
+function getImpliedAncestorDepth(parentName: string, name: string) {
+  switch (parentName) {
+    case "table":
+      if (name === "tr") return 1;
+      return name === "td" || name === "th" ? 2 : 0;
+    case "tbody":
+    case "thead":
+    case "tfoot":
+      return name === "td" || name === "th" ? 1 : 0;
+    default:
+      return 0;
+  }
+}
+
+// One run of rows (or cells) shares a single set of implied elements, so the
+// walk steps in once before the body's first child and back out once after its
+// last. A body mixing shapes is left alone: there the parser fosters, drops or
+// reorders nodes rather than only wrapping them.
+function getImpliedTableAncestors(
+  tag: t.NodePath<t.MarkoTag>,
+  tagName: string,
+) {
+  const body = tag.parentPath;
+  if (!body.isMarkoTagBody()) return;
+  const parent = body.parentPath;
+  if (
+    !parent.isMarkoTag() ||
+    analyzeTagNameType(parent) !== TagNameType.NativeTag
+  ) {
+    return;
+  }
+
+  const parentName = getCanonicalTagName(parent);
+  const depth = getImpliedAncestorDepth(parentName, tagName);
+  if (!depth) return;
+
+  const children = body.node.body;
+  for (const child of children) {
+    if (
+      !t.isMarkoTag(child) ||
+      !t.isStringLiteral(child.name) ||
+      getImpliedAncestorDepth(parentName, child.name.value) !== depth
+    ) {
+      return;
+    }
+  }
+
+  const index = children.indexOf(tag.node);
+  return {
+    depth,
+    startsRun: index === 0,
+    endsRun: index === children.length - 1,
+  };
 }
 
 // A `<select>` with a `value` attribute matches options by their `value`
