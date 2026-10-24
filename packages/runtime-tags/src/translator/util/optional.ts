@@ -704,13 +704,15 @@ function differenceSorted<T>(compare: Compare<T>, a: Many<T>, b: Many<T>) {
 }
 
 // Walks the shorter and searches the longer when it is much longer, copying the
-// longer's items between; `a`'s item wins a tie.
+// longer's items between; `a`'s item wins a tie, and a side holding the other is
+// the union itself.
 function unionSorted<T>(compare: Compare<T>, a: Many<T>, b: Many<T>): Many<T> {
   const long = a.length < b.length ? b : a;
   const short = long === a ? b : a;
   if (!isMuchLonger(long, short)) return unionSortedRepeatable(compare, a, b);
   const result = [] as unknown as Many<T>;
   let from = 0;
+  let holdsShort = true;
 
   for (let i = 0; i < short.length; i++) {
     const item = short[i];
@@ -721,6 +723,7 @@ function unionSorted<T>(compare: Compare<T>, a: Many<T>, b: Many<T>): Many<T> {
       item,
       short.length - i,
     );
+    holdsShort &&= found >= 0 && (long === a || long[found] === item);
     const end = found < 0 ? ~found : found;
     while (from < end) result.push(long[from++]);
     if (found >= 0) {
@@ -733,7 +736,7 @@ function unionSorted<T>(compare: Compare<T>, a: Many<T>, b: Many<T>): Many<T> {
 
   while (from < long.length) result.push(long[from++]);
 
-  return result;
+  return holdsShort ? long : result;
 }
 
 function unionSortedRepeatable<T>(
@@ -746,30 +749,32 @@ function unionSortedRepeatable<T>(
   const result = [] as unknown as Many<T>;
   let aIndex = 0;
   let bIndex = 0;
-  let same = true;
+  let aOnly = false;
+  let bOnly = false;
 
   while (aIndex < aLen && bIndex < bLen) {
     const aValue = a[aIndex];
     const bValue = b[bIndex];
     const delta = compare(aValue, bValue);
     if (delta === 0) {
+      aOnly ||= aValue !== bValue;
       aIndex++;
       bIndex++;
       result.push(aValue);
     } else if (delta < 0) {
-      same = false;
+      aOnly = true;
       aIndex++;
       result.push(aValue);
     } else {
-      same = false;
+      bOnly = true;
       bIndex++;
       result.push(bValue);
     }
   }
 
-  if (same && aLen === bLen) {
-    return a;
-  }
+  // A side holding the other is the union itself; `a`'s item wins a tie.
+  if (!bOnly && bIndex === bLen) return a;
+  if (!aOnly && aIndex === aLen) return b;
 
   while (aIndex < aLen) {
     result.push(a[aIndex++]);
