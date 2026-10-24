@@ -20,7 +20,6 @@ import {
 } from "./bindings";
 import { finalizeContentDerives } from "./content-derives";
 import { generateUid } from "./generate-uid";
-import { finalizeRegistrations } from "./module-registrations";
 import {
   addSorted,
   every,
@@ -75,7 +74,6 @@ import {
 } from "./sections";
 import { addSetupWork } from "./setup-work";
 import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
-import { solveReasons } from "./solve-reasons";
 import {
   ALWAYS,
   type Sources,
@@ -86,6 +84,8 @@ import {
 } from "./sources";
 import { createAnalysisState } from "./state";
 
+// Settles reads, assignments, pruning, sources and the reasons tags add, before
+// the solve; each section's intersections are what the solve and ids read.
 export function finalizeReferences() {
   const intersectionsBySection = new Map<Section, Intersection[]>();
   settleAssignments();
@@ -100,11 +100,8 @@ export function finalizeReferences() {
     finalize();
   }
   forEachSection(applyReasonExprs);
-  solveReasons(intersectionsBySection);
-  finalizeRegistrations();
-  allocateIds(intersectionsBySection);
   getReadsByExpression().clear();
-  getFunctionReadsByExpression().clear();
+  return intersectionsBySection;
 }
 
 // Only emitted assignments count, so pruning can ask each binding directly.
@@ -349,7 +346,9 @@ function addSectionReasons(section: Section) {
 }
 
 // Dense per-section ids for bindings, intersections, and closure accessors.
-function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
+export function allocateIds(
+  intersectionsBySection: Map<Section, Intersection[]>,
+) {
   const closureIdEnds = new Map<Section, number>();
   forEachSection((section) => {
     const { bindings } = section;
