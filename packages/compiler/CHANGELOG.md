@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.42.13
+
+### Patch Changes
+
+- [#4486](https://github.com/marko-js/marko/pull/4486) [`5e8b7d8`](https://github.com/marko-js/marko/commit/5e8b7d8f71830b83fc28fd88f8b4fb3d4403eeb4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A tag imported in a `static`, `server` or `client` statement (`static import Card from "./card.marko"`, then `<Card/>`) resolves to that import again, instead of failing with "Local variables must be in a dynamic tag unless they are PascalCase".
+
+- [#4492](https://github.com/marko-js/marko/pull/4492) [`134baa7`](https://github.com/marko-js/marko/commit/134baa7a11d5c885dc2b226e3c0211ee1622705a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Strip the type imports of `static`, `server` and `client` statements where they are written, rather than moving every import of those statements out and back, which dropped what read them until the compiler crawled the template again.
+
 ## 5.42.12
 
 ### Patch Changes
