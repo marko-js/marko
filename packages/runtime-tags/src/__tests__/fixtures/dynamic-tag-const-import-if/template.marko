@@ -1,0 +1,8 @@
+import Card from "./tags/card.marko";
+
+<const/type=Card/>
+<let/show=false/>
+<button#show onClick() { show = !show }>show</button>
+<if=show>
+  <${type}>shown</>
+</if>

@@ -74,6 +74,15 @@ describe("runtime-tags/translator-api", () => {
     assert.ok(code.includes('"my%20template%3b%22id%22"'), code);
   });
 
+  it("calls a tag named by its template's import through that import", () => {
+    const { code } = compiler.compileSync(
+      `import Card from "./tags/card.marko";\n<Card/>\n`,
+      path.join(fixture("dynamic-tag-const-import-if"), "named.marko"),
+      { ...baseConfig, cache: new Map(), output: "html" },
+    );
+    assert.equal(code.match(/ from "\.\/tags\/card\.marko"/g)?.length, 1, code);
+  });
+
   describe("style blocks with sourceMaps", () => {
     const styleSrc = `<style>\n  .foo { color: red }\n</style>\n<div class="foo"/>\n`;
     const compileWithSourceMaps = (sourceMaps: "both" | "inline" | true) => {
