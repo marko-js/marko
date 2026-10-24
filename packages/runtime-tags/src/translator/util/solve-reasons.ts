@@ -84,6 +84,7 @@ export function solveReasons(
     addRegisteredFnReasons(getFunctionReadsByExpression());
     forEachSectionReverse(solveSectionReasons);
   } while (reasonsVersion !== getReasonsVersion());
+  getFunctionReadsByExpression().clear();
 }
 
 function solveSectionReasons(section: Section) {

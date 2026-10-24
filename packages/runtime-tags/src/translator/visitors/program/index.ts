@@ -9,7 +9,10 @@ import { hasAnalyzeErrors } from "../../util/analyze-errors";
 import { addAssetImport } from "../../util/asset-imports";
 import { type Binding, BindingType } from "../../util/bindings";
 import entryBuilder from "../../util/entry-builder";
-import { finalizeReferences } from "../../util/finalize-references";
+import {
+  allocateIds,
+  finalizeReferences,
+} from "../../util/finalize-references";
 import { generateUid, getUnusedParamIdentifier } from "../../util/generate-uid";
 import getStyleFile from "../../util/get-style-file";
 import { analyzeRecursiveTags } from "../../util/known-tag";
@@ -18,6 +21,7 @@ import {
   getReadyId,
   isOutputHTML,
 } from "../../util/marko-config";
+import { finalizeRegistrations } from "../../util/module-registrations";
 import { type ParamsTree, exposeParamsTree } from "../../util/params-tree";
 import { isUnconditionalReason, mapBodyParams } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
@@ -34,6 +38,7 @@ import {
   getRendererReason,
 } from "../../util/sections";
 import { finalizeSetupWork } from "../../util/setup-work";
+import { solveReasons } from "../../util/solve-reasons";
 import type { TemplateVisitor } from "../../util/visitors";
 import { needsCompat } from "../tag/dynamic-tag";
 import programDOM from "./dom";
@@ -110,7 +115,10 @@ export default {
       // skipped, so skip finalization work that assumes an error-free template.
       if (hasAnalyzeErrors()) return;
       analyzeRecursiveTags();
-      finalizeReferences();
+      const intersectionsBySection = finalizeReferences();
+      solveReasons(intersectionsBySection);
+      finalizeRegistrations();
+      allocateIds(intersectionsBySection);
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;
       if (paramsBinding && !paramsBinding.pruned) {
