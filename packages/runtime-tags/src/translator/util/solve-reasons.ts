@@ -13,7 +13,11 @@ import {
   propsUtil,
   someUpToAliasRoot,
 } from "./bindings";
-import { createAnalysisMemo, createAnalysisPathMemo } from "./cyclic-memo";
+import {
+  createPassMemo,
+  createPassPathMemo,
+  resetPassMemos,
+} from "./cyclic-memo";
 import { addKnownTagReasons } from "./known-tag";
 import { addFunctionReasons } from "./module-registrations";
 import {
@@ -71,9 +75,7 @@ export function solveReasons(
   let reasonsVersion: number;
   do {
     reasonsVersion = getReasonsVersion();
-    // Answers read the reasons of the moment, so each pass asks afresh.
-    resetExtraReaders();
-    resetBindingReaders();
+    resetPassMemos();
     forEachSection((section) =>
       addIntersectionReasons(section, intersectionsBySection.get(section)),
     );
@@ -292,17 +294,11 @@ const ALWAYS_READ: Readers = {
   reads: undefined,
 };
 
-const [extraReaders, resetExtraReaders] = createAnalysisMemo(
-  computeExtraReaders,
-  UNREAD,
-);
+const extraReaders = createPassMemo(computeExtraReaders, UNREAD);
 
 // A binding's answer is per asked path: the value itself, one of its
 // properties (a destructured part), or the whole with every property.
-const [bindingReaders, resetBindingReaders] = createAnalysisPathMemo(
-  computeBindingReaders,
-  UNREAD,
-);
+const bindingReaders = createPassPathMemo(computeBindingReaders, UNREAD);
 
 export function getReasonForBinding(
   binding: Binding,
