@@ -12,6 +12,7 @@ import {
 } from "@marko/compiler/babel-utils";
 import { distance } from "fastest-levenshtein";
 
+import * as ClassHydration from "../visitors/tag/constants/class-hydration";
 import * as TagNameType from "./constants/tag-name-type";
 import { isAnalyzing } from "./get-compile-stage";
 import { getTagName, getTagNameHint } from "./get-tag-name";
@@ -92,9 +93,13 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         extra.tagNameType = TagNameType.DynamicTag;
         extra[kTagNameDynamic] = true;
         extra.featureType = "class";
-        // The interop rebuilds this boundary before its Tags descendants can
-        // resume, which is client work of this template's own.
-        if (childFile?.ast.program.extra?.hydratesTags) {
+        // Client work of its own: Tags descendants resume through the boundary,
+        // or a Class component hydrates on the input this template sends it.
+        if (
+          childFile?.ast.program.extra?.hydratesTags ||
+          (childFile?.metadata.marko.classHydration === ClassHydration.Self &&
+            (tag.node.attributes.length || tag.node.body.body.length))
+        ) {
           getProgram().node.extra!.isInteractive = true;
         }
       } else if (!childFile) {

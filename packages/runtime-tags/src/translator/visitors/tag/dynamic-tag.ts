@@ -107,6 +107,8 @@ import * as ClassHydration from "./constants/class-hydration";
 // Keys of the statements a program adds once: a Class-API interop registration
 // is keyed by its shared renderer, however many tags reference it.
 const [getAddedStatementKeys] = createOutputState(() => new Set<string>());
+// This output renders a Class API tag, so it loads the compat runtime first.
+export const [needsCompat, setNeedsCompat] = createOutputState(() => false);
 const [getCompatBoundaryCalls] = createOutputState<
   Map<string, t.CallExpression>
 >(() => new Map());
@@ -339,7 +341,7 @@ export default {
           return;
         }
 
-        (getProgram().node.extra ??= {}).needsCompat = true;
+        setNeedsCompat(true);
 
         if (t.isStringLiteral(tagExpression)) {
           tagExpression = importDefault(

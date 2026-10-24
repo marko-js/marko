@@ -35,6 +35,7 @@ import {
 } from "../../util/sections";
 import { finalizeSetupWork } from "../../util/setup-work";
 import type { TemplateVisitor } from "../../util/visitors";
+import { needsCompat } from "../tag/dynamic-tag";
 import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
@@ -271,7 +272,7 @@ export default {
         programDOM.translate.exit(program);
       }
 
-      if (program.node.extra?.needsCompat) {
+      if (needsCompat()) {
         const compatFile = getCompatRuntimeFile();
         const body: [undefined | t.Statement, ...t.Statement[]] = [undefined];
 
