@@ -1,0 +1,34 @@
+# Render `{"options":[{"id":1,"value":"a"},{"id":2,"value":"b"}]}`
+```html
+<select>
+  <option
+    value="a"
+  >
+    a
+  </option>
+  <option
+    selected=""
+    value="b"
+  >
+    b
+  </option>
+</select>
+<select
+  multiple=""
+>
+  <option
+    value="a"
+  >
+    a
+  </option>
+  <option
+    selected=""
+    value="b"
+  >
+    b
+  </option>
+</select>
+<span>
+  0
+</span>
+```
