@@ -144,7 +144,7 @@ export default {
           if (isOutputHTML()) {
             const wrappedName = ensureHtmlLoadWrapped(
               getReadyId(loadFile)!,
-              t.identifier(local.name),
+              () => t.identifier(local.name),
               loadFile.opts.filename,
               loadImport.render ? undefined : loadImport.triggers,
             );
@@ -204,9 +204,9 @@ export default {
 
 // Same-file lazy imports of one template share the first wrapper's triggers;
 // diverging triggers only meaningfully conflict across files, out of scope here.
-function ensureHtmlLoadWrapped(
+export function ensureHtmlLoadWrapped(
   readyId: string,
-  originalIdentifier: t.Expression,
+  getTemplate: () => t.Identifier,
   filename: string,
   triggers: LoadTrigger[] | undefined,
 ) {
@@ -217,9 +217,8 @@ function ensureHtmlLoadWrapped(
 
   markoOpts.linkAssets?.onAsset("load", filename, readyId);
 
-  const wrappedName = generateUid(
-    `${(originalIdentifier as t.Identifier).name ?? "tag"}_withLoadAssets`,
-  );
+  const template = getTemplate();
+  const wrappedName = generateUid(`${template.name}_withLoadAssets`);
   loadWrapped.set(readyId, wrappedName);
   getProgram().node.body.push(
     t.markoScriptlet(
@@ -229,7 +228,7 @@ function ensureHtmlLoadWrapped(
             t.identifier(wrappedName),
             callRuntime(
               "withLoadAssets",
-              originalIdentifier,
+              template,
               importNamed(getFile(), markoOpts.linkAssets!.runtime, "flush"),
               t.stringLiteral(readyId),
               triggers ? t.valueToNode(triggers) : undefined,

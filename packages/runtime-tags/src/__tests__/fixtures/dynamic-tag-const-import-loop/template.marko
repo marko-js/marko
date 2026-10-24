@@ -1,0 +1,8 @@
+import Card from "./tags/card.marko";
+
+<const/type=Card/>
+<let/count=1/>
+<button#add onClick() { count++ }>add</button>
+<for|i| until=count>
+  <${type}>item ${i}</>
+</for>

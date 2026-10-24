@@ -19,13 +19,18 @@ import {
   ensureSharedUid,
   getUnusedParamIdentifier,
 } from "../../util/generate-uid";
-import { getTagName, getTagNameHint } from "../../util/get-tag-name";
+import { getTagNameHint } from "../../util/get-tag-name";
 import {
   knownTagAnalyze,
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+} from "../../util/marko-config";
+import { dropNodes } from "../../util/references";
 import {
   callRuntime,
   dynamicImport,
@@ -51,6 +56,7 @@ import {
 import { getTagRelativePath, tagNotFoundError } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
+import { ensureHtmlLoadWrapped } from "../import-declaration";
 
 // Caches the trigger and attr signal declarations for a load import so they
 // are shared by all tags in a template using that import.
@@ -103,6 +109,10 @@ export default {
         );
       }
 
+      // A name other than the template's own import is not read: DOM composes
+      // the template and HTML calls its import (`translateHTML`).
+      if (!isTemplateImport(tag)) dropNodes(tag.node.name);
+
       knownTagAnalyze(tag, childSection, childExtra.paramsTree);
 
       const tagName = getTagNameHint(tag.node);
@@ -140,11 +150,27 @@ export default {
 function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   let tagIdentifier: t.Expression;
-  if (t.isStringLiteral(node.name)) {
+  if (node.name.extra?.dropped) {
     const relativePath = getTagRelativePath(tag);
-    tagIdentifier = isCircularRequest(getFile(), relativePath)
-      ? t.identifier(ensureSharedUid("content"))
-      : importDefault(getFile(), relativePath, getTagName(tag));
+    const loadConfig = node.extra?.tagNameLoad;
+    const importTemplate = () =>
+      importDefault(getFile(), relativePath, getTagNameHint(node));
+    if (loadConfig) {
+      // A lazy template renders through the wrapper its import shares.
+      const childFile = loadFileForTag(tag)!;
+      tagIdentifier = t.identifier(
+        ensureHtmlLoadWrapped(
+          getReadyId(childFile)!,
+          importTemplate,
+          childFile.opts.filename,
+          loadConfig.render ? undefined : loadConfig.triggers,
+        ),
+      );
+    } else {
+      tagIdentifier = isCircularRequest(getFile(), relativePath)
+        ? t.identifier(ensureSharedUid("content"))
+        : importTemplate();
+    }
   } else {
     tagIdentifier = node.name;
   }
@@ -390,4 +416,12 @@ function toDOMTriggerExpression(trigger: LoadTrigger) {
 
 function optionalValueToNode(value: unknown) {
   return value ? t.valueToNode(value) : undefined;
+}
+
+// A name the template's own import binds, which HTML calls it by.
+function isTemplateImport(tag: t.NodePath<t.MarkoTag>) {
+  const { name } = tag.node;
+  return (
+    t.isIdentifier(name) && tag.scope.getBinding(name.name)?.kind === "module"
+  );
 }

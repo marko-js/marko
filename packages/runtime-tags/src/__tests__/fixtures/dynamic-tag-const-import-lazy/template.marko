@@ -1,0 +1,6 @@
+import Child from "./child.marko" with { load: "render" }
+
+<const/type=Child/>
+<let/value=0/>
+<${type} value:=value/>
+<span>${value}</span>
