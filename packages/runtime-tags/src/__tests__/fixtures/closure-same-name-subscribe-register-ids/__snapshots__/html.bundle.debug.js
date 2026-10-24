@@ -28,7 +28,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_await($scope2_id, "#text/0", resolveAfter(1, 1), (v) => {
 				const $scope3_id = _scope_id();
 				_html(`<i>${_text_resume($scope3_id, "#text/0", z)}</i><b>${_text_resume($scope3_id, "#text/1", x)}</b>`);
-				_subscribe($wrap_content__x__closures, _subscribe($x__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "11:6"), "__tests__/template.marko_3_x#0:3/subscribe"), "__tests__/template.marko_3_x#1:3/subscribe");
+				const $scope3_write = _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "11:6");
+				_subscribe($x__closures, $scope3_write, "__tests__/template.marko_3_x#0:3/subscribe");
+				_subscribe($wrap_content__x__closures, $scope3_write, "__tests__/template.marko_3_x#1:3/subscribe");
 			});
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "9:4");
 		}, () => {

@@ -17,7 +17,9 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, {});
 		});
 		_script($scope1_id, "a0");
-		_subscribe($m__closures, _subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1"), "a2");
+		const $scope1_write = _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_subscribe($n__closures, $scope1_write, "a1");
+		_subscribe($m__closures, $scope1_write, "a2");
 	}, () => {
 		_scope_reason();
 		_scope_id();

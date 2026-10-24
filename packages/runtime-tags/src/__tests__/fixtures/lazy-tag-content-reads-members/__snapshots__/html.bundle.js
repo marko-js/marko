@@ -24,7 +24,9 @@ var template_default = _template("b", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(_text_resume($scope1_id, "a", value.a + value.b));
-		_subscribe($value_b__closures, _subscribe($value_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0"), "b1");
+		const $scope1_write = _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_subscribe($value_a__closures, $scope1_write, "b0");
+		_subscribe($value_b__closures, $scope1_write, "b1");
 	}, $scope0_id) });
 	_script($scope0_id, "b3");
 	_scope($scope0_id, {

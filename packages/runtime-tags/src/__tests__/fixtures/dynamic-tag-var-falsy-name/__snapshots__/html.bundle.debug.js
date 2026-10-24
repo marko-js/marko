@@ -25,10 +25,12 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 			_html("content");
 		}, $scope1_id), void 0, void 0, 1);
 		_var($scope1_id, "#scopeOffset/1", $inputa11yTextbutton_scope, "__tests__/tags/child/index.marko_1_$btn#2/var");
-		_subscribe($wi__input_a11yText && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
+		const $scope1_write = _scope($scope1_id, {
 			$btn,
 			_: $wi__input_a11yText && _scope_with_id($scope0_id)
-		}, "__tests__/tags/child/index.marko", "1:2", { $btn: "2:36" })), "__tests__/tags/child/index.marko_1_input_a11yText#0:3/subscribe");
+		}, "__tests__/tags/child/index.marko", "1:2", { $btn: "2:36" });
+		_subscribe($wrapper_content__subscribers, $scope1_write);
+		_subscribe($wi__input_a11yText && $input_a11yText__closures, $scope1_write, "__tests__/tags/child/index.marko_1_input_a11yText#0:3/subscribe");
 		_assert_hoist($btn);
 	}, $scope0_id) });
 	const $return = { btn: $btn_getter };
