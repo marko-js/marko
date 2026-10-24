@@ -23,6 +23,12 @@ import {
 
 const compare = (a: number, b: number) => a - b;
 const sorted = new Sorted(compare);
+// Items that tie by key yet are distinct.
+interface Keyed {
+  key: number;
+}
+const compareKeys = (a: Keyed, b: Keyed) => a.key - b.key;
+const toKeyed = (key: number): Keyed => ({ key });
 const toArray = (data: Opt<number>) =>
   data === undefined ? [] : Array.isArray(data) ? data : [data];
 
@@ -400,14 +406,37 @@ describe("runtime-tags/translator/util/optional", () => {
       const short = fromValues([1, 63]);
       assert.equal(sorted.difference(long, short), long);
       assert.equal(sorted.difference(short, long), short);
-      assert.notEqual(sorted.union(long, fromValues([0, 2])), long);
+      assert.equal(sorted.union(long, fromValues([0, 2])), long);
       assert.equal(sorted.union(long, fromValues(toArray(long).slice())), long);
       const near = fromValues([0, 2, 4]);
       assert.equal(sorted.difference(near, fromValues([1, 3])), near);
       assert.equal(sorted.difference(near, 1), near);
       assert.deepEqual(sorted.difference(near, 2), [0, 4]);
       assert.equal(sorted.difference(fromValues([0, 2]), 2), 0);
-      assert.notEqual(sorted.union(near, fromValues([0, 2])), near);
+      assert.equal(sorted.union(near, fromValues([0, 2])), near);
+      assert.equal(sorted.union(fromValues([0, 2]), near), near);
+      assert.equal(sorted.union(fromValues([0, 2]), long), long);
+    });
+
+    it("takes `a`'s item on a tie, so only the same items leave `b` whole", () => {
+      const byKey = new Sorted(compareKeys);
+      const items = range(0, 16).map(toKeyed);
+      const tie = toKeyed(2);
+      const walked = byKey.union(
+        [items[0], tie] as SortedOpt<Keyed>,
+        items.slice(0, 3) as SortedOpt<Keyed>,
+      ) as Keyed[];
+      assert.equal(walked[2], tie);
+      const galloped = byKey.union(
+        [tie, items[4]] as SortedOpt<Keyed>,
+        items as SortedOpt<Keyed>,
+      ) as Keyed[];
+      assert.equal(galloped[2], tie);
+      const list = items as SortedOpt<Keyed>;
+      assert.equal(
+        byKey.union(list, [tie, items[4]] as SortedOpt<Keyed>),
+        list,
+      );
     });
 
     it("merge walks and gallops across every probe width", () => {
