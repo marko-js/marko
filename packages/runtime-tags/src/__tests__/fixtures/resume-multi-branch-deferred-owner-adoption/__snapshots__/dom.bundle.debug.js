@@ -2,21 +2,19 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content__input__script = _script("__tests__/tags/child.marko_1_input#0:2", ($scope) => _lifecycle($scope, { onDestroy: function() {
+const $if_content__input_item = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_item));
+const $if_content__setup__script = _script("__tests__/tags/child.marko_1", ($scope) => _lifecycle($scope, { onDestroy: function() {
 	$scope._.input.log().append(`destroyed ${$scope._.input.item}`);
 } }));
-const $if_content__input = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input__script);
 const $if_content__setup = ($scope) => {
-	$if_content__input._($scope);
 	$if_content__input_item._($scope);
+	$if_content__setup__script($scope);
 };
-const $if_content__input_item = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_item));
 const $if = /*@__PURE__*/ _if("#text/0", "<span> </span>", "D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	$input_show($scope, $scope.input.show);
 	$input_item($scope, $scope.input.item);
-	$if_content__input($scope);
 });
 const $input_item = /*@__PURE__*/ _const("input_item", $if_content__input_item);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", 0, $input);

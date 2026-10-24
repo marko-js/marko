@@ -1,8 +1,7 @@
 // tags/note.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-const $setup$1 = ($_) => {};
-const $input_label__script = _script("__tests__/tags/note.marko_0_input_label#3", ($scope) => _lifecycle($scope, {
+const $setup__script = _script("__tests__/tags/note.marko_0", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		console.log("mounted", $scope.input_label);
 	},
@@ -10,12 +9,10 @@ const $input_label__script = _script("__tests__/tags/note.marko_0_input_label#3"
 		console.log("destroyed", $scope.input_label);
 	}
 }));
-const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
-	_text($scope["#text/0"], $scope.input_label);
-	$input_label__script($scope);
-});
+const $setup$1 = $setup__script;
+const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => _text($scope["#text/0"], $scope.input_label));
 const $input = ($scope, input) => $input_label($scope, input.label);
-var note_default = /*@__PURE__*/ _template("__tests__/tags/note.marko", $template$1, "D l", 0, $input);
+var note_default = /*@__PURE__*/ _template("__tests__/tags/note.marko", $template$1, "D l", $setup$1, $input);
 
 // template.marko
 const $template = "<!><!><!><!>";
@@ -39,7 +36,10 @@ const $try_content2__setup = ($scope) => {
 	$try_content2__await_promise($scope, resolveAfter("a", 1));
 	$try_content2__await_promise2($scope, rejectAfter(new Error("nope"), 2));
 };
-const $placeholder_content__setup = ($scope) => $input_label($scope["#childScope/0"], "placeholder");
+const $placeholder_content__setup = ($scope) => {
+	$setup$1($scope["#childScope/0"]);
+	$input_label($scope["#childScope/0"], "placeholder");
+};
 const $placeholder_content = _content("__tests__/template.marko_2*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $placeholder_content__setup);
 const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%b%", $try_content2__setup, 0, $catch_content);
 const $try_content__setup = ($scope) => $try_content__try($scope);
