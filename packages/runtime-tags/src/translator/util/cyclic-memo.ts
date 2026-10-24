@@ -51,7 +51,25 @@ export function createAnalysisMemo<K extends object, R>(
   return [(key: K) => getMemo()(key), () => setMemo(create())] as const;
 }
 
-// The same memo keyed by an object and a property path (`true` for all):
+// Every pass memo's reset, which each solve pass runs.
+const passResets: (() => void)[] = [];
+
+// An analysis memo over the reasons of the moment: each solve pass asks it
+// afresh.
+export function createPassMemo<K extends object, R>(
+  compute: (key: K) => R,
+  cycleAnswer: R,
+) {
+  const [memo, reset] = createAnalysisMemo(compute, cycleAnswer);
+  passResets.push(reset);
+  return memo;
+}
+
+export function resetPassMemos() {
+  for (const reset of passResets) reset();
+}
+
+// A pass memo keyed by an object and a property path (`true` for all):
 // each path interns one key, so a path's answers share one cycle protocol.
 type MemoPath = Opt<string> | true;
 interface PathKeys<K> {
@@ -59,26 +77,23 @@ interface PathKeys<K> {
   all?: [K, MemoPath];
   props?: Map<string, PathKeys<K>>;
 }
-export function createAnalysisPathMemo<K extends object, R>(
+export function createPassPathMemo<K extends object, R>(
   compute: (key: K, path: MemoPath) => R,
   cycleAnswer: R,
 ) {
   const keys = new WeakMap<K, PathKeys<K>>();
-  const [memo, reset] = createAnalysisMemo(
+  const memo = createPassMemo(
     ([key, path]: [K, MemoPath]) => compute(key, path),
     cycleAnswer,
   );
-  return [
-    (key: K, path: MemoPath) => {
-      let pathKeys: PathKeys<K> | undefined = keys.get(key);
-      if (!pathKeys) keys.set(key, (pathKeys = {}));
-      if (path === true) return memo((pathKeys.all ??= [key, path]));
-      return memo(
-        (reduce(path, ensurePropKeys<K>, pathKeys).value ??= [key, path]),
-      );
-    },
-    reset,
-  ] as const;
+  return (key: K, path: MemoPath) => {
+    let pathKeys: PathKeys<K> | undefined = keys.get(key);
+    if (!pathKeys) keys.set(key, (pathKeys = {}));
+    if (path === true) return memo((pathKeys.all ??= [key, path]));
+    return memo(
+      (reduce(path, ensurePropKeys<K>, pathKeys).value ??= [key, path]),
+    );
+  };
 }
 
 // The keys under `property`, made on first use.
