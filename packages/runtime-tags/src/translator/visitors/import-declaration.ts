@@ -143,9 +143,8 @@ export default {
 
           if (isOutputHTML()) {
             const wrappedName = ensureHtmlLoadWrapped(
-              getReadyId(loadFile)!,
+              loadFile,
               () => t.identifier(local.name),
-              loadFile.opts.filename,
               loadImport.render ? undefined : loadImport.triggers,
             );
 
@@ -205,17 +204,17 @@ export default {
 // Same-file lazy imports of one template share the first wrapper's triggers;
 // diverging triggers only meaningfully conflict across files, out of scope here.
 export function ensureHtmlLoadWrapped(
-  readyId: string,
+  loadFile: t.BabelFile,
   getTemplate: () => t.Identifier,
-  filename: string,
   triggers: LoadTrigger[] | undefined,
 ) {
   const markoOpts = getMarkoOpts();
   const loadWrapped = getHtmlLoadWrapped();
+  const readyId = getReadyId(loadFile)!;
   const existing = loadWrapped.get(readyId);
   if (existing) return existing;
 
-  markoOpts.linkAssets?.onAsset("load", filename, readyId);
+  markoOpts.linkAssets?.onAsset("load", loadFile.opts.filename, readyId);
 
   const template = getTemplate();
   const wrappedName = generateUid(`${template.name}_withLoadAssets`);
@@ -228,7 +227,8 @@ export function ensureHtmlLoadWrapped(
             t.identifier(wrappedName),
             callRuntime(
               "withLoadAssets",
-              template,
+              t.arrowFunctionExpression([], template),
+              t.stringLiteral(loadFile.metadata.marko.id),
               importNamed(getFile(), markoOpts.linkAssets!.runtime, "flush"),
               t.stringLiteral(readyId),
               triggers ? t.valueToNode(triggers) : undefined,

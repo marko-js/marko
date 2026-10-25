@@ -1,0 +1,6 @@
+import B from "./b.marko" with { load: "render" }
+<let/n=0/>
+<button onClick() { n++ }>a ${input.depth}:${n}</button>
+<if=(input.depth > 0)>
+  <B depth=input.depth - 1/>
+</if>

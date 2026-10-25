@@ -61,6 +61,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
 
   if (extra.tagNameType === undefined) {
     const name = tag.get("name");
+    let load: LoadImportConfig | undefined;
     if (name.isStringLiteral()) {
       extra.tagNameType =
         name.node.value[0] === "@"
@@ -73,7 +74,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
       extra.tagNameType = TagNameType.NativeTag;
       extra.tagNameNullable = extra[kTagNameDynamic] = false;
     } else if (name.isIdentifier()) {
-      analyzeExpressionTagName(name, extra);
+      load = analyzeExpressionTagName(name, extra);
       extra[kTagNameDynamic] = !extra.tagNameImported;
     } else {
       analyzeExpressionTagName(name, extra);
@@ -120,15 +121,20 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         extra[kTagNameDynamic] = true;
       }
     }
+
+    // A custom tag its load import names renders through the load path; one
+    // that turned dynamic renders the import's `_load_template` instead.
+    if (load && !extra[kTagNameDynamic]) extra.tagNameLoad = load;
   }
 
   return extra[kTagNameDynamic] ? TagNameType.DynamicTag : extra.tagNameType!;
 }
 
+// The load import a name resolving to one template names, if any.
 function analyzeExpressionTagName(
   name: t.NodePath<t.Expression>,
   extra: t.MarkoTagExtra,
-) {
+): LoadImportConfig | undefined {
   const pending = [name] as t.NodePath<t.Expression>[];
   const seen = new Set<t.Node>();
   let path: (typeof pending)[0] | undefined;
@@ -267,7 +273,7 @@ function analyzeExpressionTagName(
     // A name that may be nullish renders the body in its place, so it stays dynamic.
     if (tagNameImported && !nullable) {
       extra.tagNameImported = tagNameImported;
-      extra.tagNameLoad = tagNameLoad;
+      return tagNameLoad;
     }
   }
 }

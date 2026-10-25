@@ -25,11 +25,7 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import {
-  getMarkoOpts,
-  getReadyId,
-  isOutputHTML,
-} from "../../util/marko-config";
+import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
 import { dropNodes } from "../../util/references";
 import {
   callRuntime,
@@ -160,9 +156,8 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       const childFile = loadFileForTag(tag)!;
       tagIdentifier = t.identifier(
         ensureHtmlLoadWrapped(
-          getReadyId(childFile)!,
+          childFile,
           importTemplate,
-          childFile.opts.filename,
           loadConfig.render ? undefined : loadConfig.triggers,
         ),
       );

@@ -1,0 +1,5 @@
+import Self from "./under.marko"
+<p>under ${input.depth}</p>
+<if=(input.depth > 0)>
+  <Self depth=input.depth - 1/>
+</if>

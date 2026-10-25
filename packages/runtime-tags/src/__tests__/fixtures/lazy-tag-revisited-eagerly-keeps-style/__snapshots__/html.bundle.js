@@ -15,7 +15,7 @@ var lazy_wrap_default = _template("b", (input) => {
 });
 
 // template.marko
-const $LazyWrap_withLoadAssets = withLoadAssets(lazy_wrap_default, flush, "_b");
+const $LazyWrap_withLoadAssets = withLoadAssets(() => lazy_wrap_default, "b", flush, "_b");
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	_scope_id();
