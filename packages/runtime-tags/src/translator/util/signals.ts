@@ -1315,8 +1315,8 @@ export function writeHTMLResumeStatements(
     }
   });
 
-  // Mount-effect order is unspecified: resume runs these in reverse
-  // signal order, CSR runs the signal graph forward — the two paths differ.
+  // Effects carry no order (CONTEXT.md Effect), so neither this loop's direction
+  // nor its place after the section's body holds one.
   for (let i = allSignals.length; i--;) {
     if (allSignals[i].hasHTMLEffect) {
       const signalRefs = allSignals[i].referencedBindings;

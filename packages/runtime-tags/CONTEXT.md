@@ -110,10 +110,10 @@ _Avoid_: observable, reactive value
 **Effect**:
 Client work queued after pending renders, including `<script>`, `<lifecycle>`,
 handler attachment, and controllable setup. Resumable effects register and
-queue per scope through `_script`. On mount, a scope's effects run before those
-of the scope rendering it. Nothing else about their order is guaranteed (on
-update, within one scope, or between scopes rendered side by side), so the
-runtime may queue them in any order that keeps that one.
+queue per scope through `_script`. An effect runs once the renders of its run
+are done, so the DOM it reads is final, its child scopes' included. Nothing
+about their order is guaranteed (between a scope and the scope rendering it,
+side by side, within one scope, on mount or on update), so no code holds one.
 _Avoid_: lifecycle hook, arbitrary JavaScript side effect
 
 **Reason**:

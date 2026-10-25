@@ -128,7 +128,8 @@ At runtime, `_const` stores on identity change, `_let` distinguishes render-time
 propagation from external writes, `_or` counts intersection arrivals per
 generation, closure helpers notify live child scopes, and `_script` queues
 effects. `dom/queue.ts` orders renders by `scopeId * 1e6 + signalId`, deduplicates
-pending signals in scope slots, runs renders before effects, and uses `runId` as
+pending signals in scope slots, runs renders before effects (so each effect reads
+the final DOM, in no guaranteed order), and uses `runId` as
 the generation boundary (resumed scopes start at 1; normal client work at 2).
 
 ## SSR payload and DOM adoption
@@ -202,7 +203,7 @@ fixed point because one channel can unblock another.
 Async reorders may execute after later main-stream scripts. The server therefore
 reserves each ready-stream position with a numeric gate; the reorder script
 replaces that gate in place. Module registration, scope identity, dependency
-order, DOM arrival, and effect order must remain aligned.
+order, and DOM arrival must remain aligned.
 
 ## Modes and verification
 
