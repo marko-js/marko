@@ -1324,7 +1324,7 @@ export function hasResumableAssignment(binding: Binding) {
 }
 
 function isResumableAssignment({ exprRoot, fnRoot }: AssignedBindingExtra) {
-  return !!getCanonicalExtra(exprRoot).isEffect || isRegisteredFnExtra(fnRoot);
+  return !!getCanonicalExtra(exprRoot).isEffect || !!fnRoot?.reason;
 }
 
 export function isAssignedBindingExtra(
