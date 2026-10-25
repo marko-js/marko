@@ -77,13 +77,13 @@ export function _load_setup(load: () => Promise<LoadModule>) {
     insertLoaded(renderer!, child, marker);
 
   return (owner: Scope, child: BranchScope, marker: ChildNode) => {
+    child[AccessorProp.Load] ||= new Map() as LoadValues;
     if (renderer) {
       // Later in this run, once the rest of the owner's setup has
       // buffered every input chunk for the batch below.
       queueRender(child, insertCached, -1, marker);
     } else {
       const awaitCounter = startAwait(owner);
-      child[AccessorProp.Load] ||= new Map() as LoadValues;
       (pending ||= load()).then(
         (mod) => {
           renderer ||= _content("", ...mod._)();

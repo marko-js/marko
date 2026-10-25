@@ -1,4 +1,4 @@
-// size: 27478 (min) 10241 (brotli)
+// size: 27478 (min) 10245 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2257,19 +2257,19 @@ function _load_setup(load) {
     renderer,
     insertCached = (child, marker) => insertLoaded(renderer, child, marker);
   return (owner, child, marker) => {
-    if (renderer) queueRender(child, insertCached, -1, marker);
+    if (((child.X ||= /* @__PURE__ */ new Map()), renderer))
+      queueRender(child, insertCached, -1, marker);
     else {
       let awaitCounter = startAwait(owner);
-      ((child.X ||= /* @__PURE__ */ new Map()),
-        (pending ||= load()).then(
-          (mod) => {
-            ((renderer ||= _content("", ...mod._)()),
-              queueAsyncRender(child, (child) =>
-                insertLoaded(renderer, child, marker, awaitCounter),
-              ));
-          },
-          loadFailed(child, awaitCounter),
-        ));
+      (pending ||= load()).then(
+        (mod) => {
+          ((renderer ||= _content("", ...mod._)()),
+            queueAsyncRender(child, (child) =>
+              insertLoaded(renderer, child, marker, awaitCounter),
+            ));
+        },
+        loadFailed(child, awaitCounter),
+      );
     }
   };
 }
