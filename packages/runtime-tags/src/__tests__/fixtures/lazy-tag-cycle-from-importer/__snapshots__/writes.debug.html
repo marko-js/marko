@@ -1,0 +1,31 @@
+<script async type=module src="b.marko.load.mjs"></script><button>a 3:<!>
+    0<!--M_$2 #text/2--></button><!--M_$2 #button/0--><button>b 2:<!>
+    0<!--M_$4 #text/2--></button><!--M_$4 #button/0--><button>a 1:<!>
+    0<!--M_$6 #text/2--></button><!--M_$6 #button/0--><button>b 0:<!>
+    0<!--M_$8 #text/2--></button><!--M_$8 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-from-importer/b.marko": [
+      _ => [4, {
+        n: 0
+      }, 1, {
+        n: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-from-importer/a.marko_0 6 packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-from-importer/b.marko_0 4"
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-from-importer/b.marko"
+    ].push(_ => [8, {
+      n: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-from-importer/b.marko_0 8"
+    );
+  M._.r = [_ => [2, {
+      n: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-from-importer/a.marko_0 2"
+  ];
+  M._.w()
+</script>

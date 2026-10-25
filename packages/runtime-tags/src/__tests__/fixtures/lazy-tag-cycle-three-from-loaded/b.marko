@@ -1,0 +1,6 @@
+import C from "./c.marko"
+<let/n=0/>
+<button onClick() { n++ }>b ${input.depth}:${n}</button>
+<if=(input.depth > 0)>
+  <C depth=input.depth - 1/>
+</if>

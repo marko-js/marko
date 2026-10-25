@@ -20,7 +20,7 @@ var import_load_tag = require_load_tag();
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 const _marko_componentType$1 = "__tests__/components/class-wrap.marko";
 const _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
-const _marko_load_Child = (0, import_load_tag.withLoadAssets)("__tests__/components/child.marko", _marko_template$2, flush$1, [{
+const _marko_load_Child = (0, import_load_tag.withLoadAssets)("__tests__/components/child.marko", () => _marko_template$2, flush$1, [{
 	type: "on-mouseover",
 	selector: "body"
 }]);

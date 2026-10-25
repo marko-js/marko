@@ -8,7 +8,7 @@ var some_default = _template("__tests__/tags/some.marko", (input) => {
 });
 
 // template.marko
-const $Some_withLoadAssets = withLoadAssets(some_default, flush, "ready:__tests__/tags/some.marko");
+const $Some_withLoadAssets = withLoadAssets(() => some_default, "__tests__/tags/some.marko", flush, "ready:__tests__/tags/some.marko");
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

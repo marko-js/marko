@@ -35,8 +35,8 @@ var child_b_default = _template("__tests__/child-b.marko", (input) => {
 });
 
 // template.marko
-const $ChildS_withLoadAssets = withLoadAssets(child_s_default, flush, "ready:__tests__/child-s.marko");
-const $ChildB_withLoadAssets = withLoadAssets(child_b_default, flush, "ready:__tests__/child-b.marko");
+const $ChildS_withLoadAssets = withLoadAssets(() => child_s_default, "__tests__/child-s.marko", flush, "ready:__tests__/child-s.marko");
+const $ChildB_withLoadAssets = withLoadAssets(() => child_b_default, "__tests__/child-b.marko", flush, "ready:__tests__/child-b.marko");
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

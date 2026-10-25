@@ -7,7 +7,7 @@ var child_default = _template("a", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, flush, "_a", [{
+const $Child_withLoadAssets = withLoadAssets(() => child_default, "a", flush, "_a", [{
 	type: "idle",
 	options: { timeout: 100 }
 }]);

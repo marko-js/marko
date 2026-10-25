@@ -1,0 +1,8 @@
+import B from "./b.marko" with { load: "render" }
+
+class {}
+
+<span>a ${input.depth}</span>
+<if(input.depth > 0)>
+  <B depth=input.depth - 1/>
+</if>

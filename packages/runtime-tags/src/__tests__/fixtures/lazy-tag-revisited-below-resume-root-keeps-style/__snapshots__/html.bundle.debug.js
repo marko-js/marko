@@ -30,7 +30,7 @@ var resume_root_default = _template("__tests__/tags/resume-root.marko", (input) 
 });
 
 // template.marko
-const $LazyWrap_withLoadAssets = withLoadAssets(lazy_wrap_default, flush, "ready:__tests__/tags/lazy-wrap.marko");
+const $LazyWrap_withLoadAssets = withLoadAssets(() => lazy_wrap_default, "__tests__/tags/lazy-wrap.marko", flush, "ready:__tests__/tags/lazy-wrap.marko");
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

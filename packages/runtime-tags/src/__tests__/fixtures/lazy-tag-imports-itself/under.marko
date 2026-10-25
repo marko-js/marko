@@ -1,0 +1,6 @@
+import Self from "./under.marko" with { load: "render" }
+<let/n=0/>
+<button onClick() { n++ }>under ${input.depth}:${n}</button>
+<if=(input.depth > 0)>
+  <Self depth=input.depth - 1/>
+</if>
