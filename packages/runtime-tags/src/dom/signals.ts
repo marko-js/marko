@@ -412,8 +412,8 @@ export function _id(scope: Scope, accessor?: Accessor) {
 
 export function _script(id: string, fn: (scope: Scope) => void) {
   _resumed[id] = fn;
-  // Queued in signal-graph (forward) order; resume runs them in reverse, so
-  // mount-effect order is unspecified across the two paths (see translator).
+  // A client render queues it as its signal runs; resume runs the server's list,
+  // each section's after its body. Neither order is guaranteed, only a final DOM.
   return (scope: Scope) => {
     queueEffect(scope, fn);
   };
