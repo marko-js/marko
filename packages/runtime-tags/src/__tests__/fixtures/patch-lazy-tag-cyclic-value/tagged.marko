@@ -1,0 +1,5 @@
+static function describe(n: { name: string; self: unknown }) {
+  return n.name + "/" + (n.self as { name: string }).name;
+}
+<let/label=""/>
+<button onClick() { label = describe(input.node) }>${label}</button>

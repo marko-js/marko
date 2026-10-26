@@ -8,6 +8,7 @@ import {
   type Accessor,
   AccessorPrefix,
   AccessorProp,
+  PatchPairing,
   RendererProp,
   ResumeSymbol,
 } from "../common/types";
@@ -30,6 +31,7 @@ import {
   getChunk,
   getScopeById,
   getState,
+  type GroupMask,
   rendererKey,
   withBranchId,
 } from "./writer";
@@ -51,8 +53,29 @@ export let _dynamic_tag = (
   markerGuard?: 1 | 0,
   // Passed by a debug build's compiler for a tag variable.
   tagVar?: 1,
+  // A patch build's pairing (`PatchPairing`; `Setup` maps to `Render` first).
+  pairing?: PatchPairing,
+  // The child's scope reason, where the client's default does not hold.
+  reason?: GroupMask,
+  // The dynamic tag a native tag's content renders through: a patch build's
+  // own, so the content pairs too.
+  dynamicTag?: (
+    scopeId: number,
+    accessor: Accessor,
+    tag: unknown,
+    inputOrArgs: unknown,
+    content?: 0,
+    inputIsArgs?: 1,
+    markerGuard?: 1 | 0,
+    tagVar?: 1,
+    pairing?: PatchPairing,
+    reason?: GroupMask,
+  ) => unknown,
 ) => {
   const shouldResume = markerGuard !== 0;
+  // A patch entry may target this tag: its branch marks and pairs, while
+  // the child's data still serializes on the tag's own reason.
+  const marks = shouldResume || pairing;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   const branchId = _peek_scope_id();
@@ -112,7 +135,7 @@ export let _dynamic_tag = (
               input.valueChange,
               renderContent
                 ? () =>
-                    _dynamic_tag(
+                    (dynamicTag || _dynamic_tag)(
                       branchId,
                       MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
                       renderContent,
@@ -120,12 +143,16 @@ export let _dynamic_tag = (
                       0,
                       undefined,
                       markerGuard,
+                      undefined,
+                      pairing,
+                      reason,
                     )
                 : undefined,
               1,
             );
           } else if (renderContent) {
-            _dynamic_tag(
+            // The body is a branch of the native tag's scope: it pairs too.
+            (dynamicTag || _dynamic_tag)(
               branchId,
               MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
               renderContent,
@@ -133,6 +160,9 @@ export let _dynamic_tag = (
               0,
               undefined,
               markerGuard,
+              undefined,
+              pairing,
+              reason,
             );
           }
         }
@@ -165,7 +195,7 @@ export let _dynamic_tag = (
         _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
       }
 
-      if (shouldResume || needsScript) {
+      if (marks || needsScript) {
         _html(
           state.mark(
             ResumeSymbol.BranchEndNativeTag,
@@ -187,12 +217,13 @@ export let _dynamic_tag = (
     }
 
     const chunk = getChunk()!;
-    const beforeBranch = shouldResume ? deferBranchStart(chunk) : undefined;
+    const beforeBranch = marks ? deferBranchStart(chunk) : undefined;
 
     const render = () => {
       if (renderer) {
         try {
-          _set_scope_reason(shouldResume ? ALL_GROUPS : 0);
+          // The child's groups are unknown: the client may re-render it.
+          _set_scope_reason(reason ?? (shouldResume ? ALL_GROUPS : 0));
           return inputIsArgs
             ? renderer(...(inputOrArgs as unknown[]))
             : renderer(
@@ -209,7 +240,12 @@ export let _dynamic_tag = (
         content();
       }
     };
-    result = shouldResume ? withBranchId(branchId, render) : render();
+    // A kept renderer's body pairs with the live branch, so it renders
+    // outside the branch id context that seeds a constant group's holes.
+    result =
+      marks && pairing !== PatchPairing.Keep
+        ? withBranchId(branchId, render)
+        : render();
     rendered = _peek_scope_id() !== branchId;
 
     if (beforeBranch !== undefined) {
@@ -227,7 +263,9 @@ export let _dynamic_tag = (
   }
 
   if (rendered) {
-    if (shouldResume) {
+    // A patched tag keeps its key so a patch naming the same renderer pairs
+    // by id alone.
+    if (shouldResume || (pairing && typeof renderer === "function")) {
       _scope(scopeId, {
         [AccessorPrefix.ConditionalRenderer + accessor]: rendererKey(renderer),
       });
@@ -270,6 +308,9 @@ export const patchDynamicTag = /* @__PURE__ */ (
       inputIsArgs,
       markerGuard,
       tagVar,
+      pairing,
+      reason,
+      dynamicTag,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -283,6 +324,9 @@ export const patchDynamicTag = /* @__PURE__ */ (
         inputIsArgs,
         markerGuard,
         tagVar,
+        pairing,
+        reason,
+        dynamicTag,
       );
     };
   }

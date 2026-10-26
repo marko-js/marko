@@ -1,0 +1,34 @@
+// template.marko
+const $template = "<!><!><button>+</button>";
+const $walks = "b%b b";
+const $setup = [[], ["__tests__/template.marko_0"]];
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>+</button>" });
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $input_label__closures = new Set();
+	const $count__closures = new Set();
+	let count = 0;
+	_dynamic_tag($scope0_id, "#text/0", input.on ? "section" : "article", {
+		class: input.label,
+		"data-count": count
+	}, _content("__tests__/template.marko_1*content", () => {
+		const $scope1_id = _scope_id();
+		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
+		_html(`${_text_resume($scope1_id, "#text/0", input.label, _write_guard($scope0_reason, 1))} ${_text_resume($scope1_id, "#text/1", count, 2)}`);
+		$scope1_page && _subscribe($count__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), "__tests__/template.marko_1_input_label#0:5/subscribe"), "__tests__/template.marko_1_count#0:6/subscribe");
+	}, $scope0_id));
+	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	$scope0_page ? _scope($scope0_id, {
+		input_on: input.on,
+		input_label: input.label,
+		count,
+		"ClosureScopes:input_label/8": $wi__input_label && $input_label__closures,
+		"ClosureScopes:count/9": $count__closures
+	}, "__tests__/template.marko", 0, {
+		input_on: ["input.on"],
+		input_label: ["input.label"],
+		count: "1:6"
+	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.on, !_server_guard($scope0_reason, 0)), _content_withhold(input.on), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.label, !_server_guard($scope0_reason, 1)), _content_withhold(input.label));
+}, 1);

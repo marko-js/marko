@@ -25,6 +25,7 @@ import { scopeIdentifier } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addValue, initValue } from "../util/signals";
+import translateVar from "../util/translate-var";
 
 export default {
   analyze(tag) {
@@ -68,14 +69,11 @@ export default {
         : callRuntime("_id", scopeIdentifier);
 
       if (isOutputHTML()) {
-        tag.replaceWith(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              node.var!,
-              valueAttr ? t.logicalExpression("||", valueAttr.value, id) : id,
-            ),
-          ]),
+        translateVar(
+          tag,
+          valueAttr ? t.logicalExpression("||", valueAttr.value, id) : id,
         );
+        tag.remove();
       } else {
         const section = getSection(tag);
         const signal = initValue(node.var!.extra!.binding!);

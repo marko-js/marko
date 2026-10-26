@@ -1,0 +1,9 @@
+import Lazy from "./lazy.marko" with { load: "render" }
+<let/n=0/>
+<button.open onClick() { n++ }>inc</button>
+<if=input.show>
+  <await|x|=Promise.resolve(input.label)>
+    <Lazy label=x + n/>
+    <script>console.log("await", x)</script>
+  </await>
+</if>

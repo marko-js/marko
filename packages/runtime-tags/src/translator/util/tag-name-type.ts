@@ -17,6 +17,7 @@ import * as TagNameType from "./constants/tag-name-type";
 import { isAnalyzing } from "./get-compile-stage";
 import { getTagName, getTagNameHint } from "./get-tag-name";
 import { isCoreTag } from "./is-core-tag";
+import { isPatch } from "./marko-config";
 import { getImportFacts, type LoadImportConfig } from "./tag-import";
 
 const kTagNameDynamic = Symbol("tag name dynamic");
@@ -91,6 +92,15 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         getTagDef(tag)?.renderer ||
         childFile?.ast.program.extra!.featureType === "class"
       ) {
+        // The experimental patch protocol cannot pair or create class API
+        // output yet, so a page would fail its navigations silently.
+        if (isPatch()) {
+          throw tag
+            .get("name")
+            .buildCodeFrameError(
+              `The Marko 5 (class API) tag \`<${getTagName(tag)}>\` cannot render in a template compiled with the experimental \`patches\` option. Migrate it to the tags API, or turn \`patches\` off.`,
+            );
+        }
         extra.tagNameType = TagNameType.DynamicTag;
         extra[kTagNameDynamic] = true;
         extra.featureType = "class";

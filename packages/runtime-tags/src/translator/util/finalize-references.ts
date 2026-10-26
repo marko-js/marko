@@ -11,15 +11,18 @@ import {
   bindingUtil,
   compareIntersections,
   getAliasRoot,
+  someAlias,
   getBindings,
   getCanonicalBinding,
   getAssignedObject,
   getPropertyPath,
   isDirectAlias,
+  isParamBinding,
   propsUtil,
 } from "./bindings";
 import { finalizeContentDerives } from "./content-derives";
 import { generateUid } from "./generate-uid";
+import { isPatch } from "./marko-config";
 import {
   addSorted,
   every,
@@ -35,12 +38,14 @@ import {
   reduce,
   some,
 } from "./optional";
+import { hasEffectRead } from "./patch/refresh";
 import {
   addAlwaysReason,
   addOwnerReason,
   addReasonExprs,
   addReason,
   applyReasonExprs,
+  getSourcesForExpr,
   getSourcesForRef,
   mapParamBindingToExpr,
 } from "./reasons";
@@ -55,11 +60,15 @@ import {
   getAssignments,
   getCanonicalExtra,
   getFunctionReadsByExpression,
+  getGlobalReads,
+  getNameReadByExpression,
   getReadsByExpression,
+  getReferencedBindings,
   getReferenceFinalizers,
   getValueReferences,
   isReferencedExtra,
   setResolvedFunctionReads,
+  setNameRead,
   setResolvedReads,
 } from "./references";
 import {
@@ -71,9 +80,11 @@ import {
   setReadsOwner,
   StructureKind,
   type StructureOp,
+  finalizeEnclosing,
 } from "./sections";
 import { addSetupWork } from "./setup-work";
 import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
+import { addGlobalReadReasons } from "./solve-reasons";
 import {
   ALWAYS,
   type Sources,
@@ -95,6 +106,7 @@ export function finalizeReferences() {
   resolveReads(intersectionsBySection);
   forEachSection(finalizeContentDerives);
   resolveBindings();
+  forEachSection(finalizeEnclosing);
   forEachSection(addSectionReasons);
   for (const finalize of getReferenceFinalizers()) {
     finalize();
@@ -161,6 +173,7 @@ function excludeAssignedChangeHandlers() {
 
 function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
   const fnReadsByExpression = getFunctionReadsByExpression();
+  const nameReadByExpression = getNameReadByExpression();
   for (const [expr, reads] of getReadsByExpression()) {
     if (isReferencedExtra(expr)) {
       const exprBindings = resolveReferencedBindings(
@@ -172,9 +185,13 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         expr,
         exprBindings.referencedBindings,
         exprBindings.lazyBindings,
+        exprBindings.constantBindings,
+        exprBindings.globalBindings,
       );
+      const nameRead = nameReadByExpression.get(expr)?.extra.read;
+      if (nameRead) setNameRead(expr, nameRead);
       if (exprBindings.globalBindings) {
-        getProgram().node.extra.hasGlobalRead = true;
+        (expr.section.globalReadExprs ||= []).push(expr);
       }
       if (!exprBindings.referencedBindings) {
         // With no resolved references, any statement this expression keys
@@ -343,6 +360,8 @@ function addSectionReasons(section: Section) {
     addReasonExprs(branchSlot, section.branchExpr);
     addReasonExprs(ensureSlot(section.branch.nodeBinding), section.branchExpr);
   }
+
+  addGlobalReadReasons(section);
 }
 
 // Dense per-section ids for bindings, intersections, and closure accessors.
@@ -548,7 +567,12 @@ function resolveBindingSources(binding: Binding) {
       if (aliasRoot !== binding) {
         resolveBindingSources(aliasRoot);
         binding.sources = aliasRoot.sources;
-      } else if (binding.assignments) {
+      } else if (
+        binding.assignments ||
+        (isPatch() &&
+          (some(binding.derivedFrom || undefined, isSourcedInitialValue) ||
+            holdsClientValue(binding)))
+      ) {
         binding.sources = createSources(binding, undefined);
       } else {
         resolveDerivedSources(binding);
@@ -570,12 +594,19 @@ function resolveBindingSources(binding: Binding) {
   if (aliasRoot !== binding) {
     if (!resolvedSources.has(aliasRoot)) {
       resolvedSources.add(aliasRoot);
-      resolveDerivedSources(aliasRoot);
+      resolveRootSources(aliasRoot);
     }
 
     binding.sources = aliasRoot.sources;
   } else {
-    resolveDerivedSources(binding);
+    resolveRootSources(binding);
+  }
+}
+
+function resolveRootSources(binding: Binding) {
+  resolveDerivedSources(binding);
+  if (isPatch() && !binding.sources && holdsClientValue(binding)) {
+    binding.sources = createSources(binding, undefined);
   }
 }
 
@@ -584,9 +615,19 @@ function resolveDerivedSources(binding: Binding) {
 
   if (exprs === undefined) {
     binding.sources = createSources(binding, undefined);
-  } else if (exprs) {
+    return;
+  }
+  // A `$global` key a child's `<return>` reads changes its variable too.
+  const returned = binding.returnedBy?.section?.returnValueExpr;
+  if (returned && getSourcesForExpr(returned)?.global) {
+    binding.sources = globalSources;
+  }
+  if (exprs) {
     const refs = getValueReferences(exprs);
     binding.sources = reduce(refs, mergeResolvedSources, binding.sources);
+    if (some(exprs, getGlobalReads)) {
+      binding.sources = mergeSources(binding.sources, globalSources);
+    }
     binding.intersection = Array.isArray(refs)
       ? refs
       : refs && getRootIntersection(refs);
@@ -624,6 +665,49 @@ function mapReturnedParams(
       withSources(sources, sources.state, params),
     );
   }
+}
+
+// A per-render initial value client code reads (so the page serializes it) is the
+// client's, kept across navigations; an `<await>` body's params stay the server's.
+function holdsClientValue(binding: Binding) {
+  return (
+    differsPerRender(binding) &&
+    binding !== binding.section.params &&
+    readsInClientCode(binding)
+  );
+}
+
+function readsInClientCode(binding: Binding): boolean {
+  if (someAlias(binding, hasEffectRead, undefined)) return true;
+  for (const part of binding.propertyAliases.values()) {
+    if (readsInClientCode(part)) return true;
+  }
+  return false;
+}
+
+// A `<let>`, `<const>` or `<await>` value (or part) whose expression has side
+// effects.
+export function differsPerRender(binding: Binding) {
+  return some(getAliasRoot(binding).derivedFrom || undefined, hasSideEffects);
+}
+
+function hasSideEffects(expr: t.NodeExtra) {
+  return expr.pure === false;
+}
+
+// A navigation keeps an unassigned `<let>`'s value, as a client render does:
+// one seeded from any source is client state to a patch, like an assigned one.
+function isSourcedInitialValue(expr: t.NodeExtra) {
+  return (
+    !!expr.initialValue &&
+    isReferencedExtra(getCanonicalExtra(expr)) &&
+    (!!getGlobalReads(expr) ||
+      !!reduce(
+        getReferencedBindings(expr),
+        mergeResolvedSources,
+        undefined as Sources | undefined,
+      ))
+  );
 }
 
 function mergeResolvedSources(sources: Sources | undefined, ref: Binding) {
@@ -816,11 +900,6 @@ function isLazyRead(
   );
 }
 
-function isParamBinding(binding: Binding) {
-  const root = getAliasRoot(binding);
-  return root === root.section.params;
-}
-
 function resolveReferencedBindings(
   expr: ReferencedExtra,
   reads: Opt<Read>,
@@ -866,7 +945,12 @@ function resolveReferencedBindings(
       if (binding.type === BindingType.global) {
         // `$global` reads stay verbatim member chains: no read slot,
         // no signal, no register-id participation.
-        globalBindings = bindingUtil.add(globalBindings, binding);
+        getProgram().node.extra.hasGlobalRead = true;
+        // Only a patch changes `$global` after the page renders: it keeps the paths
+        // read as the expression evaluates (a function invoked later reads it live).
+        if (isPatch() && !(expr.invokeOnly && read.deferred)) {
+          globalBindings = bindingUtil.add(globalBindings, binding);
+        }
       } else if (binding.type !== BindingType.dom) {
         const isLazy = isLazyRead(expr, read, binding, isChangeHandlerRead);
         if (isLazy) {

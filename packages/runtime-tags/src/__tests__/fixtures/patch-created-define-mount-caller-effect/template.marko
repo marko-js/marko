@@ -1,0 +1,10 @@
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<define/Info|{ label }|>
+  <script>console.log("info", label, input.page)</script>
+  <p>info</p>
+</define>
+<Info label=count/>
+<if=input.show>
+  <Info label=input.label/>
+</if>

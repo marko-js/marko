@@ -6,7 +6,10 @@ import { decode } from "@jridgewell/sourcemap-codec";
 import * as compiler from "@marko/compiler";
 
 import * as translator from "../translator";
-import { domRuntimeFeatures } from "../translator/util/runtime";
+import {
+  domPatchRuntimeFeatures,
+  domRuntimeFeatures,
+} from "../translator/util/runtime";
 
 const require = createRequire(import.meta.url);
 
@@ -49,13 +52,38 @@ describe("runtime-tags/translator-api", () => {
       ]);
     });
 
+    it("leads with each side's patch entry for a patch build", () => {
+      assert.deepEqual(translator.getRuntimeEntryFiles("html", true, true), [
+        "@marko/runtime-tags/html/patch",
+        "@marko/runtime-tags/html",
+      ]);
+      assert.deepEqual(translator.getRuntimeEntryFiles("dom", true, true), [
+        "@marko/runtime-tags/dom/patch",
+        "@marko/runtime-tags/dom",
+        ...[...domRuntimeFeatures, ...domPatchRuntimeFeatures].map(
+          (feature) => `@marko/runtime-tags/dom/${feature}.feat`,
+        ),
+      ]);
+    });
+
+    it("returns the dom entries for every output but html", () => {
+      assert.deepEqual(
+        translator.getRuntimeEntryFiles("hydrate", true, true),
+        translator.getRuntimeEntryFiles("dom", true, true),
+      );
+    });
+
     it("includes both runtimes for the interop translator", () => {
       const interop = require("marko/translator") as ReturnType<
         typeof import("../translator/interop").createInteropTranslator
       >;
       const entries = interop.getRuntimeEntryFiles("html", false);
-      assert.ok(entries.includes("@marko/runtime-tags/debug/html"));
+      assert.equal(entries.at(-1), "@marko/runtime-tags/debug/html");
       assert.ok(entries.length > 1);
+      assert.equal(
+        interop.getRuntimeEntryFiles("html", false, true)[0],
+        "@marko/runtime-tags/debug/html/patch",
+      );
     });
   });
 
@@ -81,6 +109,45 @@ describe("runtime-tags/translator-api", () => {
       { ...baseConfig, cache: new Map(), output: "html" },
     );
     assert.equal(code.match(/ from "\.\/tags\/card\.marko"/g)?.length, 1, code);
+  });
+
+  it("imports the shared text patch register module", () => {
+    const { code } = compiler.compileSync(
+      "<div>${input.value}</div>",
+      path.join(import.meta.dirname, "tmp.marko"),
+      {
+        ...baseConfig,
+        cache: new Map(),
+        output: "dom",
+        entry: "page",
+        optimize: true,
+        patches: true,
+        linkAssets: { runtime: "asset-runtime", onAsset() {} },
+      },
+    );
+    assert.match(
+      code,
+      /import "@marko\/runtime-tags\/dom\/patches\/text\.feat";/,
+    );
+  });
+
+  it("compiles no build into a patch page's entry", () => {
+    const { code } = compiler.compileSync(
+      "<html><body>${input.value}</body></html>",
+      path.join(import.meta.dirname, "tmp.marko"),
+      {
+        ...baseConfig,
+        cache: new Map(),
+        output: "dom",
+        entry: "page",
+        optimize: true,
+        patches: true,
+        linkAssets: { runtime: "asset-runtime", onAsset() {} },
+      },
+    );
+    // The document's render data names the server's build instead.
+    assert.match(code, /\binit\(\)/);
+    assert.doesNotMatch(code, /build/i);
   });
 
   describe("style blocks with sourceMaps", () => {

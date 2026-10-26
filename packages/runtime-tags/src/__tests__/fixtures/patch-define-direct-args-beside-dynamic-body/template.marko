@@ -1,0 +1,10 @@
+<let/open=false/>
+<define/Panel|label|>
+  <em>${label}</em>
+</define>
+<define/Other|label|>
+  <i>${label}</i>
+</define>
+<Panel(input.label)/>
+<${open ? Other : Panel}(input.label)/>
+<button onClick() { open = !open }>toggle</button>

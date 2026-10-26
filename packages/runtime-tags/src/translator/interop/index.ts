@@ -54,11 +54,21 @@ export function createInteropTranslator(translate5: any) {
         .concat(translate5.taglibs) as Taglibs,
       translate6.taglibs as Taglibs,
     ),
-    getRuntimeEntryFiles(output: Config["output"], optimize: boolean) {
-      return [
-        ...translate5.getRuntimeEntryFiles(output, optimize),
-        ...translate6.getRuntimeEntryFiles(output, optimize),
-      ];
+    getRuntimeEntryFiles(
+      output: Config["output"],
+      optimize: boolean,
+      patches?: boolean,
+    ) {
+      const tagsEntries = translate6.getRuntimeEntryFiles(
+        output,
+        optimize,
+        patches,
+      );
+      const classEntries = translate5.getRuntimeEntryFiles(output, optimize);
+      // A patch build's main entry, its `patch` one, leads.
+      return patches
+        ? [...tagsEntries, ...classEntries]
+        : [...classEntries, ...tagsEntries];
     },
   };
 

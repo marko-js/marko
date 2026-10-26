@@ -1,0 +1,10 @@
+<let/count=0/>
+<button
+  id=input.id
+  onClick(event: Event) {
+    count++;
+    const shared = (window as any).shared;
+    if (shared) (event.target as HTMLElement).dataset.same = String(input.tag === shared);
+    else (window as any).shared = input.tag;
+  }
+>${input.tag.name}:${count}</button>

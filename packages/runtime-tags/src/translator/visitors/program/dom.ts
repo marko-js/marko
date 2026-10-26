@@ -4,10 +4,15 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 import { BindingType } from "../../util/bindings";
 import { getUnusedParamIdentifier } from "../../util/generate-uid";
 import { addTagVarBindings } from "../../util/known-tag";
-import { isOptimize } from "../../util/marko-config";
+import { isOptimize, isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
-import { callRuntime, registerRuntimeValue } from "../../util/runtime";
+import { registersContent } from "../../util/patch/refresh";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  registerRuntimeValue,
+} from "../../util/runtime";
 import {
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
@@ -18,7 +23,6 @@ import {
   forEachSectionReverse,
   getDynamicTagContentClosures,
   getSectionForBody,
-  getRendererReason,
   isDynamicClosure,
   type Section,
   setBranchRendererArgs,
@@ -47,6 +51,11 @@ import type { TemplateVisitor } from "../../util/visitors";
 export default {
   translate: {
     enter(program) {
+      // A page that loads this module takes the features analyze linked
+      // from it rather than from its entry.
+      for (const feature of program.node.extra.runtimeFeatures || []) {
+        importRuntimeFeature(feature);
+      }
       const section = getSectionForBody(program)!;
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
@@ -120,7 +129,7 @@ export default {
                 tagParamsIdentifier,
               ]);
             } else {
-              const registerReason = getRendererReason(childSection);
+              const registerReason = registersContent(childSection);
               const registerId = getResumeRegisterId(childSection, "content");
               const objProps: t.ObjectExpression["properties"] = [];
               forEach(childSection.localClosures, (closure) => {
@@ -166,6 +175,11 @@ export default {
               // be registered whatever else the client keeps is left impure.
               if (!registerReason || registerWrapper) {
                 renderer = t.addComment(renderer, "leading", "@__PURE__");
+              }
+
+              // A flush binds registered content by id (a loop's values ride along).
+              if (registerReason && isPatch()) {
+                importRuntimeFeature("patches/bind");
               }
 
               if (objProps.length) {

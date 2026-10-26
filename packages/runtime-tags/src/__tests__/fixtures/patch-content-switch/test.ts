@@ -1,0 +1,20 @@
+import type { TestConfig } from "../../main.test";
+
+const click = (document: Document) => {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+};
+
+// A content body switching arms (static, with a hole, none) at a
+// server-fed and a client-fed site.
+export const config: TestConfig = {
+  patches: true,
+  steps: [
+    { kind: "a", inner: "b" },
+    { kind: "b", inner: "b" },
+    click,
+    { kind: undefined, inner: "a" },
+    click,
+    { kind: "b", inner: undefined },
+    { kind: "a", inner: "a" },
+  ],
+};

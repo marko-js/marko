@@ -1,0 +1,10 @@
+<main>
+  <if=input.show>
+    <try>
+      <await|value|=input.promise>
+        <em>${value}</em>
+      </await>
+      <@catch|err|><p>${err.message}</p></@catch>
+    </try>
+  </if>
+</main>

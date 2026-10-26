@@ -23,7 +23,7 @@ export type Renderer = {
   [RendererProp.LocalClosures]?: SetupFn;
   // A debug build marks a lazily loaded template, for a dynamic tag variable check.
   [RendererProp.Lazy]?: 1;
-};
+} & ReturnMark; // A patch's shell marks its renderer.
 
 export type SetupFn = ((scope: Scope) => void) & ReturnMark;
 
