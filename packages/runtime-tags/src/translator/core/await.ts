@@ -90,6 +90,7 @@ export default {
     initBranchSection(bodySection, valueExtra, {
       nodeBinding,
       optional: false,
+      await: true,
     });
 
     // The content renderer is initialized unconditionally in setup.

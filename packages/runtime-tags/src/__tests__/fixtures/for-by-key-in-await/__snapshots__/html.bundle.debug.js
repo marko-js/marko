@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$wg__input_value || _resume_branch($scope2_id);
 		});
 		_html("</div>");
-		_scope($scope1_id, { "#LoopKey": _write_if($scope0_reason, 0) && item?.id }, "__tests__/template.marko", "3:2", { "#LoopKey": ["item.id", "3:6"] });
+		_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 	}, "id", $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

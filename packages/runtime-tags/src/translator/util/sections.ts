@@ -169,6 +169,8 @@ export interface Section {
         optional: boolean;
         /** An `<if>` branch's place in its chain, the renderer index it renders as. */
         index?: number;
+        /** An `<await>` body, made with its owner: its promise settles into it. */
+        await?: true;
       }
     | undefined;
   content: null | {

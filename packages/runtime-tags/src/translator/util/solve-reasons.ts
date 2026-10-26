@@ -201,6 +201,8 @@ function getBranchExprReason(section: Section) {
     });
     return reason;
   }
+  // An `<await>`'s promise settles into the body its owner made.
+  if (section.branch?.await) return;
   return branchExpr ? getSourcesForExpr(branchExpr) : ALWAYS;
 }
 

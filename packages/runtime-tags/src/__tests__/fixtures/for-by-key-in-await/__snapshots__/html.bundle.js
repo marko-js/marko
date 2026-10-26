@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			$wg__input_value || _resume_branch($scope2_id);
 		});
 		_html("</div>");
-		_scope($scope1_id, { M: _write_if($scope0_reason, 0) && item?.id });
+		_scope($scope1_id, {});
 	}, "id", $scope0_id, "b", 1, 1, 0, 0, 1);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
