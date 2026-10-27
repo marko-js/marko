@@ -4,7 +4,8 @@ Marko 6 compiles `.marko` templates into one dependency graph, then lowers it
 to streaming HTML and resume state or fine-grained DOM code.
 
 This is the canonical implementation glossary. _Avoid_ lists name misleading
-synonyms, not exact APIs, platform types, or legacy options. See
+synonyms, not exact APIs, platform types, or legacy options. Record a rename
+in the entry's _Avoid_ when it is agreed. See
 [RESUMABILITY.md](./RESUMABILITY.md) for the architecture and code map.
 
 ## Compiler model
