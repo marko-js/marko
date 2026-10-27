@@ -24,7 +24,7 @@ _shells({
 	a3: "a3 a11!a1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $cg__input_keys = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $cg__input_keys = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	_for_of(input.keys, (name) => {
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 					const $countChange = store.set || void 0;
 					_patch_fill($scope3_id, "va2", count, 1);
 					_patch_bind($scope3_id, "wd", $countChange);
-					$scope0_page && _subscribe($for_content__store_set__closures, _scope($scope3_id, {
+					_subscribe($for_content__store_set__closures, _scope($scope3_id, {
 						c: count,
 						_: _scope_with_id($scope2_id),
 						d: $countChange
@@ -56,13 +56,13 @@ var template_default = _template("a", (input) => {
 				}
 			}, $scope2_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a3"], $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_show ? "a6" : "a7");
-			$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope2_id, {
+			_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope2_id, {
 				M: _unfilled_if($scope0_reason, 2) && other,
 				_: _scope_with_id($scope1_id)
 			}), $cg__input_show && "a7", $wg__input_show);
 		}, (n) => n, $scope1_id, "h", 1, void 0, void 0, void 0, void 0, "a5", $scope0_reason, 1);
 		$cg__input_keys && _patch_init($scope1_id, "a8");
-		$scope0_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 2) && name,
 			l: $wi__input_keys__OR__input_show && store?.set,
 			_: $wi__input_keys__OR__input_show && _scope_with_id($scope0_id),
@@ -70,8 +70,8 @@ var template_default = _template("a", (input) => {
 			o: $for_content__store_set__closures
 		});
 	}, (n) => n, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a4", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.show,
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_show__closures
-	}) : _filled_guard($scope0_reason, 2) && $cg__input_keys && _patch_fill($scope0_id, "va9", input.show, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && $cg__input_keys && _patch_fill($scope0_id, "va9", input.show, !_server_guard($scope0_reason, 2));
 }, 1);

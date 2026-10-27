@@ -4,10 +4,10 @@ const $walks$1 = "D l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/icon.marko": "__tests__/tags/icon.marko;D ;<svg viewBox=\"0 0 1 1\"><title></title></svg>" });
 var icon_default = _template("__tests__/tags/icon.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<svg viewBox="0 0 1 1"><title>${_patch_text_content($scope0_id, "PatchTextContent:#title/0", input.name, _escape, $scope0_reason, 0)}</title>${_el_resume($scope0_id, "#title/0", _mask_group($scope0_reason, 0))}</svg>`);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/icon.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/icon.marko", 0);
 });
 
 // template.marko
@@ -20,7 +20,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_page = _write_guard($scope0_reason, 3), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 3), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<nav>");
 	_for_of(input.items, (item) => {
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_child_end();
 		_html(`<span>${_patch_text($scope1_id, "#text/2", item.label, void 0, $scope0_reason, 1)}</span></a>${_el_resume($scope1_id, "#a/0", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 1))}`);
 		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "__tests__/template.marko_1_input_path#0:5_item_href#5/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_path", _filled_guard($scope0_reason, 1) && "item_href");
-		$scope0_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			item_href: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item?.href,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"#childScope/1": _existing_scope($childScope)
@@ -46,11 +46,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_patch_text($scope2_id, "#text/0", input.page, void 0, $scope0_reason, 3)}</p>`);
 			_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_page#0:6/init");
-			$scope0_page && _scope($scope2_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "10:8");
+			_scope($scope2_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "10:8");
 			return 0;
 		}
 	}, $scope0_id, "#main/1", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "#main/1", $wg__input_page)}`);
 	_filled_guard($scope0_reason, 2) && $cg__input_items && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0/unpatched", input.path);
-	$scope0_page && _scope($scope0_id, { input_path: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.path }, "__tests__/template.marko", 0, { input_path: ["input.path"] });
+	_scope($scope0_id, { input_path: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.path }, "__tests__/template.marko", 0, { input_path: ["input.path"] });
 }, 1);

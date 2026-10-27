@@ -4,7 +4,7 @@ _shells({
 	a1: "a1 a4;D%c%c%;<li><!>:<!>:<!></li>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	let n = 0;
@@ -13,9 +13,9 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_patch_text($scope1_id, "a", item, void 0, $scope0_reason, 0)}:${_patch_text($scope1_id, "b", $global$1.x, 2)}:${_text_resume($scope1_id, "c", n, 2)}</li>`);
 		_fill_global_subscribe("a0", $scope0_id);
-		$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a2");
-	$scope0_page && _scope($scope0_id, { g: n });
+	_scope($scope0_id, { g: n });
 }, 1);

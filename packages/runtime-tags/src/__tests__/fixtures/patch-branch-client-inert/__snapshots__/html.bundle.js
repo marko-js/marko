@@ -8,5 +8,5 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>show</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

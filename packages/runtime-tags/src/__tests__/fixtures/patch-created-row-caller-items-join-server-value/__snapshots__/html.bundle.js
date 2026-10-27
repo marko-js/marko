@@ -14,7 +14,7 @@ var child_default = _template("b", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<i>${_text_resume($scope1_id, "a", input.b, $wg__input_b)}</i>`);
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 0, 0, 1);
@@ -24,7 +24,7 @@ var child_default = _template("b", (input) => {
 		const d = input.b + item;
 		_html(`<p>${_patch_text($scope2_id, "a", d, void 0, $scope0_reason, 0)}</p>`);
 		(_filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope2_id, "b0", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">f", _filled_guard($scope0_reason, 2) && "c");
-		$scope0_page && _scope($scope2_id, {
+		_scope($scope2_id, {
 			c: _write_if($scope0_reason, 1) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		});
@@ -32,10 +32,10 @@ var child_default = _template("b", (input) => {
 	_html(`<button class=t>t</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b2");
 	_patch_fill($scope0_id, "vb5", open, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.b,
 		h: open
-	}) : _filled_guard($scope0_reason, 1) && ($cg__input_items ? _patch_fill($scope0_id, "vb4", input.b) : _patch_fill($scope0_id, "vb3", input.b, !_server_guard($scope0_reason, 1)));
+	}) || _filled_guard($scope0_reason, 1) && ($cg__input_items ? _patch_fill($scope0_id, "vb4", input.b) : _patch_fill($scope0_id, "vb3", input.b, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko
@@ -44,7 +44,7 @@ _shells({
 	a1: /*@__PURE__*/ (() => `a1${_shell_marker(_shell_setup([["a5"], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let list = ["p", "q"];
 	_if(() => {
@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a0");
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
 			});
@@ -67,8 +67,8 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
 	_html(`<button class=l>l</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.b,
 		g: list
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va3", input.b, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va3", input.b, !_server_guard($scope0_reason, 1));
 }, 1);

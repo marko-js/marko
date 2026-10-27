@@ -18,7 +18,7 @@ var picker_default = _template("b", (input) => {
 	if ($scope0_page) _for_of(catalog || [], (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "a", item)}</li>`);
-		$scope0_page && _scope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "b", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "b1");
 	_patch_write($scope0_id, "wk", load, 1);
@@ -26,12 +26,12 @@ var picker_default = _template("b", (input) => {
 	const $refreshingChange = input.refreshingChange || void 0;
 	_patch_let_change($scope0_id, "vb5", refreshing, "wi", $refreshingChange, $scope0_reason, 0);
 	_patch_fill($scope0_id, "vb6", catalog, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.refreshing,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.refreshingChange,
 		k: load,
 		i: $refreshingChange
-	}) : (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "vb2", input.refreshing, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb3", input.refreshingChange, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "vb2", input.refreshing, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb3", input.refreshingChange, !_server_guard($scope0_reason, 2)));
 	return $return;
 });
 
@@ -40,7 +40,6 @@ const $setup = _shell_setup([[], ["a1"]], ["a>", $setup$1]);
 _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `0${_w0}&D l b`)($walks)};${((_w0) => `${_w0}<p> </p><button id=outer>outer</button>`)($template)}`)() });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let busy = false;
 	_set_scope_reason(0);
@@ -51,7 +50,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<p>${_text_resume($scope0_id, "c", busy ? "busy" : "idle")}</p><button id=outer>outer</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: refresh,
 		a: _existing_scope($childScope)
 	});

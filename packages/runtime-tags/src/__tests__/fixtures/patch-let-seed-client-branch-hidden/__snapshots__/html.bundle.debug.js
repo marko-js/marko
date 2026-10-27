@@ -13,16 +13,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			let x = input.v;
 			_html(`<p>${_text_resume($scope1_id, "#text/0", x)}</p>`);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "3:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_v: input.v,
 		on
 	}, "__tests__/template.marko", 0, {
 		input_v: ["input.v"],
 		on: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.v, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.v, !_server_guard($scope0_reason, 0));
 }, 1);

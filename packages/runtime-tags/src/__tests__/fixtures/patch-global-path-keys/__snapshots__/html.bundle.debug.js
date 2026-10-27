@@ -16,10 +16,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_fill_global_subscribe("__tests__/template.marko_1_$global_o#0:7", $scope1_id, 1);
 			_fill_global_subscribe("__tests__/template.marko_1_$global_c_d#0:15", $scope1_id, 1);
 			_fill_global_subscribe("__tests__/template.marko_1_$global_p#0:17", $scope1_id, 1);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "3:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, { open }, "__tests__/template.marko", 0, { open: "1:6" });
+	_scope($scope0_id, { open }, "__tests__/template.marko", 0, { open: "1:6" });
 }, 1);

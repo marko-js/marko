@@ -7,12 +7,12 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var row_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "a", input.item.promise, (value) => {
 		const $scope1_id = _scope_id();
 		_html(`<em>${_patch_text($scope1_id, "a", value, void 0, $scope0_reason, 0)}</em>`);
-		$scope0_page && _scope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 1, "b0", 1);
 });
 
@@ -22,7 +22,7 @@ _shells({
 	a0: /*@__PURE__*/ (() => `a0${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_for_of(input.items, (item) => {
@@ -31,9 +31,9 @@ var template_default = _template("a", (input) => {
 		const $childScope = _patch_child($scope1_id, "a", 0);
 		row_default({ item });
 		_patch_child_end();
-		$scope0_page && _scope($scope1_id, { a: _existing_scope($childScope) });
+		_scope($scope1_id, { a: _existing_scope($childScope) });
 	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

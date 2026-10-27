@@ -15,13 +15,13 @@ var template_default = _template("a", (input) => {
 			if ($scope0_page) _for_of(items, (item) => {
 				const $scope2_id = _scope_id();
 				_html(`<li>${_text_resume($scope2_id, "a", item)}</li>`);
-				$scope0_page && _scope($scope2_id, {});
+				_scope($scope2_id, {});
 			}, 0, $scope1_id, "a", 1, 1, 1, "</ul>", 1);
-			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a0"], $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, { f: items });
+	_scope($scope0_id, { f: items });
 }, 1);

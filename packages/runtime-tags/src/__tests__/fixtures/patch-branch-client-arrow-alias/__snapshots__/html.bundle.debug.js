@@ -14,13 +14,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "#text/0", mk(), $wg__input_title)}</p>`);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "4:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_title: input.title,
 		mk,
 		open
@@ -28,5 +28,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_title: ["input.title"],
 		mk: "1:8",
 		open: "2:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", mk, !$sg__input_title);
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", mk, !$sg__input_title);
 }, 1);

@@ -12,7 +12,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>x</button></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_a = _client_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $pending__closures = new Set();
@@ -28,16 +28,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_await($scope2_id, "#text/0", input.a, (a) => {
 				const $scope6_id = _scope_id();
 				_html(`<b>${_patch_text($scope6_id, "#text/0", a, void 0, $scope0_reason, 0)}</b>`);
-				$scope0_page && _scope($scope6_id, {}, "__tests__/template.marko", "6:10");
+				_scope($scope6_id, {}, "__tests__/template.marko", "6:10");
 			}, 1, "__tests__/template.marko_6*content", 1);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_a ? "__tests__/template.marko_2_input_a#0:4/init" : "__tests__/template.marko_2_input_a#0:4/subscribe");
-			$scope0_page && $wi__input_a && _subscribe(_unfilled_if($scope0_reason, 0) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:8"), $cg__input_a && "__tests__/template.marko_2_input_a#0:4/subscribe", 0);
+			$wi__input_a && _subscribe(_unfilled_if($scope0_reason, 0) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:8"), $cg__input_a && "__tests__/template.marko_2_input_a#0:4/subscribe", 0);
 			$wi__input_a && _resume_branch($scope2_id);
 		}, void 0, (e) => {
-			const $scope5_reason = _scope_reason(), $scope5_page = _page_render();
+			const $scope5_reason = _scope_reason();
 			const $scope5_id = _scope_id();
 			_html(`<s>${_patch_text($scope5_id, "#text/0", e.message)}</s>`);
-			$scope5_page && _scope($scope5_id, {}, "__tests__/template.marko", "7:10");
+			_scope($scope5_id, {}, "__tests__/template.marko", "7:10");
 		}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", 1, 1, 1);
 		if ($scope0_page) _if(() => {
 			if (pending) {
@@ -45,14 +45,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_await($scope3_id, "#text/0", pending, (c) => {
 					const $scope7_id = _scope_id();
 					_html(`<em>${_text_resume($scope7_id, "#text/0", c)}</em>`);
-					$scope0_page && _scope($scope7_id, {}, "__tests__/template.marko", "10:10");
+					_scope($scope7_id, {}, "__tests__/template.marko", "10:10");
 				}, void 0, 0);
-				$scope0_page && _subscribe($pending__closures, _scope($scope3_id, { "ClosureSignalIndex:pending/7": 1 }, "__tests__/template.marko", "9:8"), "__tests__/template.marko_3_pending#0:5/subscribe", 0);
+				_subscribe($pending__closures, _scope($scope3_id, { "ClosureSignalIndex:pending/7": 1 }, "__tests__/template.marko", "9:8"), "__tests__/template.marko_3_pending#0:5/subscribe", 0);
 				return 0;
 			}
 		}, $scope1_id, "#text/1");
 		_html("</div>");
-		$scope0_page && _subscribe($pending__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_1_pending#0:5/subscribe");
+		_subscribe($pending__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_1_pending#0:5/subscribe");
 	}, () => {
 		const $scope4_reason = _scope_reason();
 		const $scope4_id = _scope_id();
@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_1*content", 1, void 0, 2);
 	_html(`<button>x</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		"ClosureScopes:input_a/6": $wi__input_a && _unfilled_if($scope0_reason, 0) && $input_a__closures,
 		"ClosureScopes:pending/7": $pending__closures
 	}, "__tests__/template.marko", 0);

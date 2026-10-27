@@ -21,12 +21,12 @@ const $template = "<section><!></section>";
 const $setup$1 = [[], []];
 _shells({ b: "b;D%;<section><!></section>" });
 var frame_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_dynamic_tag($scope0_id, "a", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
 	_html("</section>");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -36,7 +36,7 @@ _shells({
 	a3: "a3 a8!a1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $store_set__closures = /* @__PURE__ */ new Set();
 	const $input_show__closures = /* @__PURE__ */ new Set();
@@ -49,13 +49,11 @@ var template_default = _template("a", (input) => {
 	const $childScope3 = _patch_child($scope0_id, "d", 2);
 	frame_default({ content: _content("a6", () => {
 		_scope_reason();
-		const $scope1_page = _page_render();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(0);
 		const $childScope2 = _patch_child($scope1_id, "a", 1);
 		frame_default({ content: _content("a5", () => {
 			_scope_reason();
-			const $scope2_page = _page_render();
 			const $scope2_id = _scope_id();
 			_if(() => {
 				if (input.show) {
@@ -66,7 +64,7 @@ var template_default = _template("a", (input) => {
 					const $countChange = store.set || void 0;
 					_patch_fill($scope3_id, "va2", count, 1);
 					_patch_bind($scope3_id, "wd", $countChange);
-					$scope2_page && _subscribe($store_set__closures, _scope($scope3_id, {
+					_subscribe($store_set__closures, _scope($scope3_id, {
 						c: count,
 						_: _scope_with_id($scope2_id),
 						d: $countChange
@@ -74,17 +72,17 @@ var template_default = _template("a", (input) => {
 					return 0;
 				}
 			}, $scope2_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a3"], $scope0_reason, 0);
-			$scope2_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 0) && "a4", $wg__input_show);
+			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 0) && "a4", $wg__input_show);
 			$wg__input_show || _resume_branch($scope2_id);
 		}, $scope1_id) });
 		_patch_child_end();
-		$scope1_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope2)
 		});
 	}, $scope0_id) });
 	_patch_child_end();
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		j: $wi__input_show && store?.set,
 		a: _existing_scope($childScope),
 		l: $store_set__closures,

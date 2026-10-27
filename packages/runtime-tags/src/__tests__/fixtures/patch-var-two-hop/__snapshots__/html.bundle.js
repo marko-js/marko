@@ -15,10 +15,10 @@ const $template = "<em> </em>";
 const $setup$1 = [[], []];
 _shells({ c: "c;D ;<em> </em>" });
 var shower_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<em>${_patch_text($scope0_id, "a", input.value, void 0, $scope0_reason, 0)}</em>`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -26,7 +26,6 @@ const $setup = _shell_setup([[], ["a1"]], ["a>", $setup$2], ["c>", $setup$1]);
 _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0, _w1) => `D0${_w0}&/${_w1}& l`)("b", "D l")};${((_w0, _w1) => `<main>${_w0}${_w1}<button>+</button></main>`)($template$1, $template)}`)() });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 1;
 	_html("<main>");
@@ -40,7 +39,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>+</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: count,
 		a: _existing_scope($childScope),
 		c: _existing_scope($childScope2)

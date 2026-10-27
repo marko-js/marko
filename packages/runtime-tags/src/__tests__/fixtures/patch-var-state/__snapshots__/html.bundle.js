@@ -15,7 +15,6 @@ const $setup = _shell_setup([[], ["a1"]], ["a>", $setup$1]);
 _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `D0${_w0}&D l l`)("b")};${((_w0) => `<main>${_w0}<p> </p><button>+</button></main>`)($template)}`)() });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let count = 1;
 	_html("<main>");
@@ -25,7 +24,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<p>${_text_resume($scope0_id, "c", double)}</p><button>+</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: count,
 		a: _existing_scope($childScope)
 	});

@@ -9,7 +9,6 @@ _shells({
 });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const params = $global$1.data.params;
@@ -22,9 +21,9 @@ var template_default = _template("a", (input) => {
 			_for_of(items, (item) => {
 				const $scope3_id = _scope_id();
 				_html(`<a${_patch_attr($scope3_id, "aa$href", "href", `?q=${params.q.trim()}&i=${item}`)}>${_patch_text($scope3_id, "b", item)}</a>${_el_resume($scope3_id, "a")}`);
-				$scope0_page && _scope($scope3_id, {});
+				_scope($scope3_id, {});
 			}, 0, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "a0");
-			$scope0_page && _scope($scope2_id, {});
+			_scope($scope2_id, {});
 		}, 1, "a2", 1);
 		_fill_global_subscribe("a5", $scope1_id);
 	}, () => {
@@ -34,5 +33,5 @@ var template_default = _template("a", (input) => {
 	}, void 0, "a1", void 0, "a4", void 0, void 0, 2);
 	_fill_global_subscribe("a6", $scope0_id);
 	_script($scope0_id, "a7");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

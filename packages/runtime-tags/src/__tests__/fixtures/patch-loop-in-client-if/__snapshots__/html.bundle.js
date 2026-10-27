@@ -10,10 +10,10 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button class=toggle>t</button>${_el_resume($scope0_id, "b")}<button class=add>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.note,
 		g: show,
 		h: items,
 		i: $wi__input_note && $input_note__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 0));
 }, 1);

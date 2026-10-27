@@ -4,11 +4,11 @@ const $walks$1 = " b b";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/field.marko": "__tests__/tags/field.marko; b ;<label>field</label><input>" });
 var field_default = _template("__tests__/tags/field.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = _id("uid");
 	_html(`<label${_patch_attr($scope0_id, "PatchAttr:#label/0 for", "for", uid, 0, 0)}>field</label>${_el_resume($scope0_id, "#label/0", 0)}<input${_patch_attr($scope0_id, "PatchAttr:#input/1 id", "id", uid, 0, 0)}>${_el_resume($scope0_id, "#input/1", 0)}`);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/field.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/field.marko", 0);
 });
 
 // template.marko
@@ -24,7 +24,7 @@ _shells({
 	"__tests__/template.marko_5*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_5*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.mode === 0) {
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $childScope3 = _patch_child($scope4_id, "#childScope/1", 2);
 					field_default({});
 					_patch_child_end();
-					$scope0_page && _scope($scope4_id, {
+					_scope($scope4_id, {
 						"#childScope/0": _existing_scope($childScope2),
 						"#childScope/1": _existing_scope($childScope3)
 					}, "__tests__/template.marko", "1:29");
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}
 			}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_nested#0:7/init");
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/template.marko", "1:2");
@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope7 = _patch_child($scope2_id, "#childScope/3", 3);
 			field_default({});
 			_patch_child_end();
-			$scope0_page && _scope($scope2_id, {
+			_scope($scope2_id, {
 				"#childScope/0": _existing_scope($childScope4),
 				"#childScope/1": _existing_scope($childScope5),
 				"#childScope/2": _existing_scope($childScope6),
@@ -80,7 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope8 = _patch_child($scope3_id, "#childScope/0", 0);
 			field_default({});
 			_patch_child_end();
-			$scope0_page && _scope($scope3_id, { "#childScope/0": _existing_scope($childScope8) }, "__tests__/template.marko", "3:2");
+			_scope($scope3_id, { "#childScope/0": _existing_scope($childScope8) }, "__tests__/template.marko", "3:2");
 			return 2;
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, [
@@ -100,13 +100,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope11 = _patch_child($scope5_id, "#childScope/0", 6);
 			field_default({});
 			_patch_child_end();
-			$scope0_page && _scope($scope5_id, { "#childScope/0": _existing_scope($childScope11) }, "__tests__/template.marko", "5:2");
+			_scope($scope5_id, { "#childScope/0": _existing_scope($childScope11) }, "__tests__/template.marko", "5:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/3", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_5*shell"], $scope0_reason, 2);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_nested: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.nested,
 		"#childScope/1": _existing_scope($childScope9),
 		"#childScope/2": _existing_scope($childScope10)
-	}, "__tests__/template.marko", 0, { input_nested: ["input.nested"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.nested, !_server_guard($scope0_reason, 1));
+	}, "__tests__/template.marko", 0, { input_nested: ["input.nested"] }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.nested, !_server_guard($scope0_reason, 1));
 }, 1);

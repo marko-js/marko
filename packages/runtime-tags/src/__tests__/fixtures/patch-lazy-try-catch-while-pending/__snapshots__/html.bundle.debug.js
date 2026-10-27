@@ -11,7 +11,7 @@ _shells({
 	"__tests__/child.marko": "__tests__/child.marko;b%;<!><!><!>"
 });
 var child_default = _template("__tests__/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_try($scope0_id, "#text/0", () => {
@@ -21,7 +21,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_patch_text($scope4_id, "#text/0", $global$1.name)} ${_patch_text($scope4_id, "#text/1", v, 2)}</em>`);
 			_fill_global_subscribe("__tests__/child.marko_4_$global_name#0:9", $scope4_id);
-			$scope0_page && _scope($scope4_id, {}, "__tests__/child.marko", "2:4");
+			_scope($scope4_id, {}, "__tests__/child.marko", "2:4");
 		}, 1, "__tests__/child.marko_4*content", 1);
 		_fill_global_subscribe("__tests__/child.marko_1_$global_promise#0:7", $scope1_id);
 	}, () => {
@@ -42,12 +42,12 @@ const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/chi
 const $setup = _shell_setup([[], []], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `D%b/${_w0}&l`)("b%c")};${((_w0) => `<main><!>${_w0}</main>`)($template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
 	$Child_withLoadAssets({});
 	_patch_child_end();
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

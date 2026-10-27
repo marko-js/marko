@@ -23,18 +23,18 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_patch_text($scope1_id, "a", collect($global$1, item), void 0, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
 		_fill_global_subscribe("a0", $scope0_id);
-		$scope0_page && _scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && item });
+		_scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && item });
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 0);
 	const summary = collected($global$1);
 	_if(() => {
 		if (summary) {
 			const $scope2_id = _scope_id();
 			_html(`<style${_attr_nonce()}>${_patch_text_content($scope2_id, "ma", summary, _escape_style)}</style>${_el_resume($scope2_id, "a")}`);
-			$scope0_page && _scope($scope2_id, {});
+			_scope($scope2_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, $scope0_page, void 0, void 0, void 0, ["a2"]);
 	_html("</main>");
 	_fill_global_subscribe("a3", $scope0_id);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

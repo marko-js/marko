@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/tree-b.marko_1*shell": "__tests__/tags/tree-b.marko_1*shell;D%;<ul><!></ul>"
 });
 var tree_b_default = _template("__tests__/tags/tree-b.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_node_kid = _write_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_node_kid = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<div>${_patch_text($scope0_id, "#text/0", input.node.name, void 0, $scope0_reason, 0)}`);
 	_if(() => {
@@ -17,12 +17,12 @@ var tree_b_default = _template("__tests__/tags/tree-b.marko", (input) => {
 			_dynamic_tag($scope1_id, "#text/0", tree_a_default, { node: input.node.kid }, 1, 0, 0, $wg__input_node_kid, $scope0_reason, 1);
 			_html("</ul>");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/tree-b.marko_1_input_node_kid#0:6/init");
-			$scope0_page && _write_if($scope0_reason, 1) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/tree-b.marko", "2:4");
+			_write_if($scope0_reason, 1) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/tree-b.marko", "2:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, $wg__input_node_kid, void 0, void 0, void 0, ["__tests__/tags/tree-b.marko_1*shell"], $scope0_reason, 1);
 	_html("</div>");
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/tree-b.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/tree-b.marko", 0);
 });
 
 // tags/tree-a.marko
@@ -34,7 +34,7 @@ _shells({
 	"__tests__/tags/tree-a.marko_1*shell": /*@__PURE__*/ (() => `__tests__/tags/tree-a.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$2]))};${/*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks$2)};${/*@__PURE__*/ ((_w0) => `<ul>${_w0}</ul>`)($template$2)}`)()
 });
 var tree_a_default = _template("__tests__/tags/tree-a.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<li>${_patch_text($scope0_id, "#text/0", input.node.name, void 0, $scope0_reason, 0)}`);
 	_if(() => {
@@ -47,7 +47,7 @@ var tree_a_default = _template("__tests__/tags/tree-a.marko", (input) => {
 			_patch_child_end();
 			_html("</ul>");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/tree-a.marko_1_input_node_kid#0:6/init");
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/tags/tree-a.marko", "2:4");
@@ -55,7 +55,7 @@ var tree_a_default = _template("__tests__/tags/tree-a.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/tags/tree-a.marko_1*shell"], $scope0_reason, 1);
 	_html("</li>");
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/tree-a.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/tree-a.marko", 0);
 });
 
 // template.marko
@@ -67,7 +67,7 @@ _shells({
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_if(() => {
@@ -78,7 +78,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			tree_a_default({ node: input.node });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_node#0:4/init");
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/template.marko", "1:6");
@@ -86,5 +86,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#ul/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { input_node: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.node }, "__tests__/template.marko", 0, { input_node: ["input.node"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.node, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { input_node: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.node }, "__tests__/template.marko", 0, { input_node: ["input.node"] }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.node, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -9,12 +9,12 @@ const $walks$1 = "D%b%l b";
 const $setup$1 = [[], ["__tests__/tags/widget/index.marko_0"]];
 _shells({ "__tests__/tags/widget/index.marko": "__tests__/tags/widget/index.marko !__tests__/tags/widget/index.marko_0;D%b%l ;<p><!><!></p><button class=run>run</button>" });
 var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let last = "";
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}${_patch_text($scope0_id, "#text/1", last, 2, 0, 0, 1)}</p><button class=run>run</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/widget/index.marko_0");
-	$scope0_page ? _scope($scope0_id, { input_label: input.label }, "__tests__/tags/widget/index.marko", 0, { input_label: ["input.label"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
+	_scope($scope0_id, { input_label: input.label }, "__tests__/tags/widget/index.marko", 0, { input_label: ["input.label"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -34,17 +34,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
 			widget_default({ label: input.label });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button class=outer>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_label: input.label,
 		show
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		show: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

@@ -3,26 +3,26 @@ const $template = "<output></output>";
 const $setup$1 = [[], []];
 _shells({ b: "b !; ;<output></output>" });
 var label_view_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_flag__OR__input_a__OR__input_b = _client_guard($scope0_reason, 3), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_flag__OR__input_a__OR__input_b = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const get = input.flag ? input.a : input.b;
 	_html(`<output></output>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_filled_guard($scope0_reason, 3) && _patch_effect($scope0_id, $cg__input_flag__OR__input_a__OR__input_b ? "hb0" : "eb0", "h");
 	$cg__input_flag__OR__input_a__OR__input_b && _patch_init($scope0_id, "b4");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.flag,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.a,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.b,
 		h: get
-	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "vb1", input.flag, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb2", input.a, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb3", input.b, !_server_guard($scope0_reason, 6)), _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xh", get, !_server_guard($scope0_reason, 3)));
+	}) || (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "vb1", input.flag, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb2", input.a, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb3", input.b, !_server_guard($scope0_reason, 6)), _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xh", get, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko
 const $setup = _shell_setup([[], ["a2"]], ["a>", $setup$1]);
 _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)(" b")};${((_w0) => `${_w0}<button>toggle</button>`)($template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_title = _server_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_title = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.title, !$sg__input_title);
 	let upper = false;
@@ -39,11 +39,11 @@ var template_default = _template("a", (input) => {
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
 	_patch_effect($scope0_id, "ia3", _filled_guard($scope0_reason, 0) && "g", _filled_guard($scope0_reason, 0) && "h");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.title,
 		f: upper,
 		g: up,
 		h: low,
 		a: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", up, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xh", low, !$sg__input_title));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", up, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xh", low, !$sg__input_title));
 }, 1);

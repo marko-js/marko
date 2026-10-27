@@ -9,11 +9,11 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const headingId = _id("A");
 		_html(`<h2${_attr("id", headingId)}>${_escape(item.key)}</h2><input${_attr("aria-describedby", headingId)}${_attr("title", input.prefix + " " + headingId)}>${_el_resume($scope1_id, "c", $wg__input_prefix)}`);
-		$scope0_page && _scope($scope1_id, { e: _write_if($scope0_reason, 1) && headingId });
+		_scope($scope1_id, { e: _write_if($scope0_reason, 1) && headingId });
 	}, "key", $scope0_id, "b");
 	_script($scope0_id, "a0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.prefix,
 		g: items
-	}) : _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va1", input.prefix, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va1", input.prefix, !_server_guard($scope0_reason, 1));
 }, 1);

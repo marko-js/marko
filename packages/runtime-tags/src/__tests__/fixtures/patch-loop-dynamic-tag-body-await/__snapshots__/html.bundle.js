@@ -9,16 +9,16 @@ var card_default = _template("b", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, 0, $wg__input_content);
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb2", open, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.content,
 		f: open
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
 });
 
 // template.marko
@@ -43,11 +43,10 @@ var template_default = _template("a", (input) => {
 			_dynamic_tag($scope2_id, "a", row.card ? card_default : "div", {}, 2, _content_resume("a0", () => {
 				const $scope3_id = _scope_id();
 				_scope_reason();
-				const $scope3_page = _page_render();
 				_html(`<b>${_patch_text($scope3_id, "a", row.label, void 0, $scope0_reason, 0)} ${_patch_text($scope3_id, "b", v, 2, $scope0_reason, 0)}</b>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, $cg__input_rows ? "a1" : "a2");
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, $cg__input_rows ? "a3" : "a4");
-				$scope3_page && _subscribe(_unfilled_if($scope0_reason, 0) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope3_id, { _: $wi__input_rows && _scope_with_id($scope2_id) })));
+				_subscribe(_unfilled_if($scope0_reason, 0) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope3_id, { _: $wi__input_rows && _scope_with_id($scope2_id) })));
 			}, $scope2_id, ($scope) => $scope0_page ? [{ f: row?.label }, {
 				c: v,
 				_: $scope($scope1_id)
@@ -55,13 +54,13 @@ var template_default = _template("a", (input) => {
 			_filled_guard($scope0_reason, 0) && _content_withheld("a0", $scope2_id) && _patch_fill($scope2_id, "va5", v);
 			_filled_guard($scope0_reason, 0) && _content_withheld("a0", $scope2_id) && _patch_fill($scope1_id, "va6", row?.label);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_rows ? "a7" : "a8");
-			$scope0_page && $wi__input_rows && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_card__closures, _scope($scope2_id, { i: $await_content__v__closures }), $cg__input_rows && "a8", $wg__input_rows);
+			$wi__input_rows && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_card__closures, _scope($scope2_id, { i: $await_content__v__closures }), $cg__input_rows && "a8", $wg__input_rows);
 			$wg__input_rows || $wi__input_rows && _resume_branch($scope2_id);
 		}, 1, "a9", void 0, 1);
-		$scope0_page && $wi__input_rows && _scope($scope1_id, {
+		$wi__input_rows && _scope($scope1_id, {
 			h: $for_content__row_label__closures,
 			g: _unfilled_if($scope0_reason, 0) && $for_content__row_card__closures
 		});
 	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a11", $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

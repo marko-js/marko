@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1; b ;<input><input>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -21,12 +21,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko_1/valueChange2", $scope1_id), "PatchControl:2#input/1", 0, 0, "PatchWrite:ControlledHandler:#input/1", 0, 0)}>${_el_resume($scope1_id, "#input/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_text#0:4/init");
-			$scope0_page && _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2", {
+			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2", {
 				"ControlledHandler:#input/0": ["valueChange"],
 				"ControlledHandler:#input/1": ["valueChange"]
 			});
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, { input_text: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.text }, "__tests__/template.marko", 0, { input_text: ["input.text"] }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.text, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { input_text: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.text }, "__tests__/template.marko", 0, { input_text: ["input.text"] }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.text, !_server_guard($scope0_reason, 1));
 }, 1);

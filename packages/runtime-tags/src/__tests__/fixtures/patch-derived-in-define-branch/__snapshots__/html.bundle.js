@@ -10,12 +10,11 @@ var template_default = _template("a", (input) => {
 	const Show = { content: _content("a0", ({ value }) => {
 		const $scope1_id = _scope_id(), $scope1_reason = _scope_reason();
 		_write_guard($scope1_reason, 0);
-		const $scope1_page = _page_render();
 		if ($scope0_page) _if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
-		$scope1_page ? _subscribe($count__closures, _scope($scope1_id, {
+		_subscribe($count__closures, _scope($scope1_id, {
 			d: value,
 			_: _scope_with_id($scope0_id)
-		}), "a2") : _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "va1", value, !_server_guard($scope1_reason, 0));
+		}), "a2") || _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "va1", value, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "a", 0);
@@ -23,7 +22,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a3");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: count,
 		g: $count__closures,
 		a: _existing_scope($childScope)

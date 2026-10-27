@@ -5,22 +5,22 @@ _shells({
 	a1: "a1;D ;<li> </li>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div class=wrap><h1>Hello ${_patch_text($scope0_id, "a", input.name, 2, $scope0_reason, 0)}</h1>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<p>shown</p>");
-			$scope0_page && _write_if($scope0_reason, 1) && _scope($scope1_id, {});
+			_write_if($scope0_reason, 1) && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a0"], $scope0_reason, 1);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		_html(`<li>${_patch_text($scope2_id, "a", item, void 0, $scope0_reason, 2)}</li>`);
-		$scope0_page && _scope($scope2_id, {});
+		_scope($scope2_id, {});
 	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 2);
 	_html("</div>");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

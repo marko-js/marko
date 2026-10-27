@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "e", count)}</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		h: input.label,
 		i: count
 	});

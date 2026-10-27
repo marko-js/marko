@@ -11,14 +11,14 @@ var ret_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ c: /*@__PURE__*/ (() => `c${_shell_marker($setup)};${((_w0) => `0${_w0}&Db%l`)("")};${((_w0) => `${_w0}<p>r:<!></p>`)("")}`)() });
 var w_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _patch_child($scope0_id, "a", 0, $cg__input_x && 1);
 	let r = ret_default({ x: input.x });
 	$cg__input_x && _var($scope0_id, "b", $childScope, "c0");
 	_patch_child_end();
 	_html(`<p>r:${_patch_text($scope0_id, "c", r, 2, $scope0_reason, 0)}</p>`);
-	$scope0_page && _scope($scope0_id, { a: _existing_scope($childScope) });
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 });
 
 // template.marko
@@ -35,8 +35,8 @@ var template_default = _template("a", (input) => {
 		const $childScope = _patch_child($scope1_id, "a", 0);
 		w_default({ x: s + n });
 		_patch_child_end();
-		$scope0_page && _scope($scope1_id, { a: _existing_scope($childScope) });
+		_scope($scope1_id, { a: _existing_scope($childScope) });
 	}, 0, $scope0_id, "c", 1, 1, 0, 0, 1);
 	_script($scope0_id, "a0");
-	$scope0_page && _scope($scope0_id, { d: s });
+	_scope($scope0_id, { d: s });
 }, 1);

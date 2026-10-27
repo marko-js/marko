@@ -8,14 +8,14 @@ _shells({
 	a2: "a2;D ;<b> </b>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const label = names.join("+");
 	_html(`<main><p>${_patch_text($scope0_id, "a", ++renders, void 0, 0, 0)} ${_patch_text($scope0_id, "b", label, 2, 0, 0)}</p><h1>${_patch_text($scope0_id, "c", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_for_of(names, (name) => {
 		const $scope2_id = _scope_id();
 		_html(`<i>${_patch_text($scope2_id, "a", name, void 0, 0, 0)}</i>`);
-		$scope0_page && _scope($scope2_id, {});
+		_scope($scope2_id, {});
 	}, 0, $scope0_id, "d", 1, void 0, void 0, void 0, void 0, "a0", 0, 0);
 	_if(() => {
 		if (input.show) {
@@ -24,12 +24,12 @@ var template_default = _template("a", (input) => {
 			_for_of(names, (name) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_patch_text($scope3_id, "a", name, void 0, 0, 0)}</b>`);
-				$scope0_page && _scope($scope3_id, {});
+				_scope($scope3_id, {});
 			}, 0, $scope1_id, "c", 1, void 0, void 0, void 0, void 0, "a2", 0, 0);
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "e", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a1"], $scope0_reason, 1);
 	_html("</main>");
-	$scope0_page ? _scope($scope0_id, { j: _unfilled_if($scope0_reason, 1) && label }) : _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va3", label);
+	_scope($scope0_id, { j: _unfilled_if($scope0_reason, 1) && label }) || _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va3", label);
 }, 1);

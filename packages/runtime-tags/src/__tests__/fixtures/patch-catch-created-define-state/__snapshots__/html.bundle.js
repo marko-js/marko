@@ -4,13 +4,13 @@ const $walks$1 = " D%c%l";
 const $setup$1 = [[], ["b0"]];
 _shells({ b: "b !b0; D%c%;<button><!>:<!></button>" });
 var lazy_child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb1", count, 1);
-	$scope0_page && _scope($scope0_id, { g: count });
+	_scope($scope0_id, { g: count });
 });
 
 // child.marko
@@ -19,13 +19,13 @@ const $walks = " D%c%l";
 const $setup = [[], ["a0"]];
 _shells({ a: "a !a0; D%c%;<button><!>:<!></button>" });
 var child_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_patch_fill($scope0_id, "va1", count, 1);
-	$scope0_page && _scope($scope0_id, { g: count });
+	_scope($scope0_id, { g: count });
 });
 
 // template.marko
@@ -49,20 +49,19 @@ _shells({
 	c: "c !;b%;<!><!><!>"
 });
 var template_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $scope0_page = _page_render(), $wi__input_error = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $wi__input_error = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_error__closures = /* @__PURE__ */ new Set();
 	const LazyBody = { content: _content("c0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		const $scope1_page = _page_render();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 		const $childScope = _patch_child($scope1_id, "b", 0);
 		$LazyChild_withLoadAssets({ label: input.label });
 		_patch_child_end();
 		$cg__input_label && _patch_init($scope1_id, "c1");
-		$scope1_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
 		}), "c2");
@@ -70,13 +69,12 @@ var template_default = _template("c", (input) => {
 	const ChildBody = { content: _content("c3", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		const $scope2_page = _page_render();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 		const $childScope2 = _patch_child($scope2_id, "a", 1);
 		child_default({ label: input.label });
 		_patch_child_end();
 		$cg__input_label && _patch_init($scope2_id, "c4");
-		$scope2_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope2),
 			Cf: $wi__input_label && 1
@@ -85,23 +83,21 @@ var template_default = _template("c", (input) => {
 	const OwnBody = { content: _content("c6", () => {
 		const $scope6_id = _scope_id();
 		_scope_reason();
-		const $scope6_page = _page_render();
 		let count = 0;
 		_html(`<button>own:${_text_resume($scope6_id, "b", count, 2)}</button>${_el_resume($scope6_id, "a")}`);
 		_script($scope6_id, "c7");
 		_patch_fill($scope6_id, "vc8", count, 1);
-		$scope6_page && _scope($scope6_id, { c: count });
+		_scope($scope6_id, { c: count });
 	}, $scope0_id) };
 	const Inner = { content: _content("c9", () => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
-		const $scope3_page = _page_render();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 		const $childScope3 = _patch_child($scope3_id, "b", 2);
 		$LazyChild_withLoadAssets({ label: input.label });
 		_patch_child_end();
 		$cg__input_label && _patch_init($scope3_id, "c10");
-		$scope3_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope3_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope3_id, {
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope3),
 			Cf: $wi__input_label && 2
@@ -110,11 +106,10 @@ var template_default = _template("c", (input) => {
 	const Outer = { content: _content("c12", () => {
 		const $scope7_id = _scope_id();
 		_scope_reason();
-		const $scope7_page = _page_render();
 		const $childScope4 = _patch_child($scope7_id, "a", 3, void 0, $scope0_id);
 		Inner.content({});
 		_patch_child_end();
-		$scope7_page && _scope($scope7_id, {
+		_scope($scope7_id, {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope4)
 		});
@@ -124,10 +119,9 @@ var template_default = _template("c", (input) => {
 		const $scope4_id = _scope_id();
 		_html(`<p>${_patch_text($scope4_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope4_id, $cg__input_error ? "c13" : "c14");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope4_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), $cg__input_error && "c14");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope4_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), $cg__input_error && "c14");
 	}, void 0, (err) => {
 		_scope_reason();
-		const $scope5_page = _page_render();
 		const $scope5_id = _scope_id();
 		_html(`<b>${_patch_text($scope5_id, "a", err.message)}</b>`);
 		const $childScope5 = _patch_child($scope5_id, "b", 4, void 0, $scope0_id);
@@ -142,7 +136,7 @@ var template_default = _template("c", (input) => {
 		const $childScope8 = _patch_child($scope5_id, "e", 7, void 0, $scope0_id);
 		Outer.content({});
 		_patch_child_end();
-		$scope5_page && _scope($scope5_id, {
+		_scope($scope5_id, {
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope5),
 			c: _existing_scope($childScope6),
@@ -150,9 +144,9 @@ var template_default = _template("c", (input) => {
 			e: _existing_scope($childScope8)
 		});
 	}, void 0, "c15", "c16", 1, 1, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		d: input.label,
 		f: $wi__input_label && $input_label__closures,
 		g: $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vc17", input.label, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vc17", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

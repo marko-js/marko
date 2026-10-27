@@ -3,11 +3,11 @@ const $template = "<button>pick</button>";
 const $setup = [[], ["b0"]];
 _shells({ b: "b !b0; ;<button>pick</button>" });
 var picker_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<button>pick</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	$scope0_page ? _scope($scope0_id, { d: input.onPick }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.onPick, !_server_guard($scope0_reason, 0));
+	_scope($scope0_id, { d: input.onPick }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.onPick, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 				count++;
 			}, "a0", $scope1_id) });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				b: _existing_scope($childScope)
 			});
@@ -37,5 +37,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
 	_html(`<span>${_text_resume($scope0_id, "b", count)}</span>`);
-	$scope0_page && _scope($scope0_id, { f: count });
+	_scope($scope0_id, { f: count });
 }, 1);

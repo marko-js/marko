@@ -8,7 +8,7 @@ _shells({
 	b0: /*@__PURE__*/ ((_w0) => `b0${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template)
 });
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<li>${_patch_text($scope0_id, "a", input.node.name, void 0, $scope0_reason, 0)}`);
 	_if(() => {
@@ -21,16 +21,16 @@ const $content = (input) => {
 				const $childScope = _patch_child($scope2_id, "a", 0);
 				$content({ node: child });
 				_patch_child_end();
-				$scope0_page && _scope($scope2_id, { a: _existing_scope($childScope) });
+				_scope($scope2_id, { a: _existing_scope($childScope) });
 			}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "b0", $scope0_reason, 1);
 			_html(`</ul>${_el_resume($scope1_id, "a")}`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b2");
-			$scope0_page && _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["b1"], $scope0_reason, 1);
 	_html("</li>");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 };
 var tree_default = _template("b", $content);
 
@@ -40,7 +40,7 @@ _shells({
 	a1: /*@__PURE__*/ ((_w0) => `a1${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 			tree_default({ node: input.tree });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a0");
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
 			});
@@ -59,5 +59,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.tree }) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", input.tree, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.tree }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", input.tree, !_server_guard($scope0_reason, 1));
 }, 1);

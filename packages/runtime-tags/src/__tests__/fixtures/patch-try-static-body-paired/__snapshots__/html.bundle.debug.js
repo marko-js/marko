@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;E l%b%;<main><p> </p><!><!></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<main><p>${_patch_text($scope0_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</p>`);
 	_try($scope0_id, "#text/1", () => {
@@ -27,11 +27,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html("<b>static</b>");
 	}, void 0, (e) => {
-		const $scope4_reason = _scope_reason(), $scope4_page = _page_render();
+		const $scope4_reason = _scope_reason();
 		const $scope4_id = _scope_id();
 		_html(`<s>${_patch_text($scope4_id, "#text/0", e.message)}</s>`);
-		$scope4_page && _scope($scope4_id, {}, "__tests__/template.marko", "9:6");
+		_scope($scope4_id, {}, "__tests__/template.marko", "9:6");
 	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_3*content", void 0, 1, 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

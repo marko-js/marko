@@ -19,14 +19,14 @@ _shells({
 	b16: "b16;D ;<span id=s15> </span>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_p = _write_guard($scope0_reason, 1), $wg__input_p2 = _write_guard($scope0_reason, 2), $wg__input_p3 = _write_guard($scope0_reason, 3), $wg__input_p4 = _write_guard($scope0_reason, 4), $wg__input_p5 = _write_guard($scope0_reason, 5), $wg__input_p6 = _write_guard($scope0_reason, 6), $wg__input_p7 = _write_guard($scope0_reason, 7), $wg__input_p8 = _write_guard($scope0_reason, 8), $wg__input_p9 = _write_guard($scope0_reason, 9), $wg__input_p10 = _write_guard($scope0_reason, 10), $wg__input_p11 = _write_guard($scope0_reason, 11), $wg__input_p12 = _write_guard($scope0_reason, 12), $wg__input_p13 = _write_guard($scope0_reason, 13), $wg__input_p14 = _write_guard($scope0_reason, 14), $wg__input_p15 = _write_guard($scope0_reason, 15), $wg__input_p16 = _write_guard($scope0_reason, 16);
+	const $scope0_reason = _scope_reason(), $wg__input_p = _write_guard($scope0_reason, 1), $wg__input_p2 = _write_guard($scope0_reason, 2), $wg__input_p3 = _write_guard($scope0_reason, 3), $wg__input_p4 = _write_guard($scope0_reason, 4), $wg__input_p5 = _write_guard($scope0_reason, 5), $wg__input_p6 = _write_guard($scope0_reason, 6), $wg__input_p7 = _write_guard($scope0_reason, 7), $wg__input_p8 = _write_guard($scope0_reason, 8), $wg__input_p9 = _write_guard($scope0_reason, 9), $wg__input_p10 = _write_guard($scope0_reason, 10), $wg__input_p11 = _write_guard($scope0_reason, 11), $wg__input_p12 = _write_guard($scope0_reason, 12), $wg__input_p13 = _write_guard($scope0_reason, 13), $wg__input_p14 = _write_guard($scope0_reason, 14), $wg__input_p15 = _write_guard($scope0_reason, 15), $wg__input_p16 = _write_guard($scope0_reason, 16);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.p0) {
 			const $scope1_id = _scope_id();
 			_html(`<span id=s0>${_patch_text($scope1_id, "a", input.p0, void 0, $scope0_reason, 1)}</span>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b0");
-			$scope0_page && _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_p, void 0, void 0, void 0, ["b1"], $scope0_reason, 1);
@@ -35,7 +35,7 @@ var child_default = _template("b", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<span id=s1>${_patch_text($scope2_id, "a", input.p1, void 0, $scope0_reason, 2)}</span>`);
 			_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "b17");
-			$scope0_page && _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
+			_scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, $wg__input_p2, void 0, void 0, void 0, ["b2"], $scope0_reason, 2);
@@ -44,7 +44,7 @@ var child_default = _template("b", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<span id=s2>${_patch_text($scope3_id, "a", input.p2, void 0, $scope0_reason, 3)}</span>`);
 			_client_guard($scope0_reason, 3) && _patch_init($scope3_id, "b18");
-			$scope0_page && _scope($scope3_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) });
+			_scope($scope3_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "c", 1, $wg__input_p3, void 0, void 0, void 0, ["b3"], $scope0_reason, 3);
@@ -53,7 +53,7 @@ var child_default = _template("b", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<span id=s3>${_patch_text($scope4_id, "a", input.p3, void 0, $scope0_reason, 4)}</span>`);
 			_client_guard($scope0_reason, 4) && _patch_init($scope4_id, "b19");
-			$scope0_page && _scope($scope4_id, { _: _write_if($scope0_reason, 4) && _scope_with_id($scope0_id) });
+			_scope($scope4_id, { _: _write_if($scope0_reason, 4) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "d", 1, $wg__input_p4, void 0, void 0, void 0, ["b4"], $scope0_reason, 4);
@@ -62,7 +62,7 @@ var child_default = _template("b", (input) => {
 			const $scope5_id = _scope_id();
 			_html(`<span id=s4>${_patch_text($scope5_id, "a", input.p4, void 0, $scope0_reason, 5)}</span>`);
 			_client_guard($scope0_reason, 5) && _patch_init($scope5_id, "b20");
-			$scope0_page && _scope($scope5_id, { _: _write_if($scope0_reason, 5) && _scope_with_id($scope0_id) });
+			_scope($scope5_id, { _: _write_if($scope0_reason, 5) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "e", 1, $wg__input_p5, void 0, void 0, void 0, ["b5"], $scope0_reason, 5);
@@ -71,7 +71,7 @@ var child_default = _template("b", (input) => {
 			const $scope6_id = _scope_id();
 			_html(`<span id=s5>${_patch_text($scope6_id, "a", input.p5, void 0, $scope0_reason, 6)}</span>`);
 			_client_guard($scope0_reason, 6) && _patch_init($scope6_id, "b21");
-			$scope0_page && _scope($scope6_id, { _: _write_if($scope0_reason, 6) && _scope_with_id($scope0_id) });
+			_scope($scope6_id, { _: _write_if($scope0_reason, 6) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "f", 1, $wg__input_p6, void 0, void 0, void 0, ["b6"], $scope0_reason, 6);
@@ -80,7 +80,7 @@ var child_default = _template("b", (input) => {
 			const $scope7_id = _scope_id();
 			_html(`<span id=s6>${_patch_text($scope7_id, "a", input.p6, void 0, $scope0_reason, 7)}</span>`);
 			_client_guard($scope0_reason, 7) && _patch_init($scope7_id, "b22");
-			$scope0_page && _scope($scope7_id, { _: _write_if($scope0_reason, 7) && _scope_with_id($scope0_id) });
+			_scope($scope7_id, { _: _write_if($scope0_reason, 7) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "g", 1, $wg__input_p7, void 0, void 0, void 0, ["b7"], $scope0_reason, 7);
@@ -89,7 +89,7 @@ var child_default = _template("b", (input) => {
 			const $scope8_id = _scope_id();
 			_html(`<span id=s7>${_patch_text($scope8_id, "a", input.p7, void 0, $scope0_reason, 8)}</span>`);
 			_client_guard($scope0_reason, 8) && _patch_init($scope8_id, "b23");
-			$scope0_page && _scope($scope8_id, { _: _write_if($scope0_reason, 8) && _scope_with_id($scope0_id) });
+			_scope($scope8_id, { _: _write_if($scope0_reason, 8) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "h", 1, $wg__input_p8, void 0, void 0, void 0, ["b8"], $scope0_reason, 8);
@@ -98,7 +98,7 @@ var child_default = _template("b", (input) => {
 			const $scope9_id = _scope_id();
 			_html(`<span id=s8>${_patch_text($scope9_id, "a", input.p8, void 0, $scope0_reason, 9)}</span>`);
 			_client_guard($scope0_reason, 9) && _patch_init($scope9_id, "b24");
-			$scope0_page && _scope($scope9_id, { _: _write_if($scope0_reason, 9) && _scope_with_id($scope0_id) });
+			_scope($scope9_id, { _: _write_if($scope0_reason, 9) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "i", 1, $wg__input_p9, void 0, void 0, void 0, ["b9"], $scope0_reason, 9);
@@ -107,7 +107,7 @@ var child_default = _template("b", (input) => {
 			const $scope10_id = _scope_id();
 			_html(`<span id=s9>${_patch_text($scope10_id, "a", input.p9, void 0, $scope0_reason, 10)}</span>`);
 			_client_guard($scope0_reason, 10) && _patch_init($scope10_id, "b25");
-			$scope0_page && _scope($scope10_id, { _: _write_if($scope0_reason, 10) && _scope_with_id($scope0_id) });
+			_scope($scope10_id, { _: _write_if($scope0_reason, 10) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "j", 1, $wg__input_p10, void 0, void 0, void 0, ["b10"], $scope0_reason, 10);
@@ -116,7 +116,7 @@ var child_default = _template("b", (input) => {
 			const $scope11_id = _scope_id();
 			_html(`<span id=s10>${_patch_text($scope11_id, "a", input.p10, void 0, $scope0_reason, 11)}</span>`);
 			_client_guard($scope0_reason, 11) && _patch_init($scope11_id, "b26");
-			$scope0_page && _scope($scope11_id, { _: _write_if($scope0_reason, 11) && _scope_with_id($scope0_id) });
+			_scope($scope11_id, { _: _write_if($scope0_reason, 11) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "k", 1, $wg__input_p11, void 0, void 0, void 0, ["b11"], $scope0_reason, 11);
@@ -125,7 +125,7 @@ var child_default = _template("b", (input) => {
 			const $scope12_id = _scope_id();
 			_html(`<span id=s11>${_patch_text($scope12_id, "a", input.p11, void 0, $scope0_reason, 12)}</span>`);
 			_client_guard($scope0_reason, 12) && _patch_init($scope12_id, "b27");
-			$scope0_page && _scope($scope12_id, { _: _write_if($scope0_reason, 12) && _scope_with_id($scope0_id) });
+			_scope($scope12_id, { _: _write_if($scope0_reason, 12) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "l", 1, $wg__input_p12, void 0, void 0, void 0, ["b12"], $scope0_reason, 12);
@@ -134,7 +134,7 @@ var child_default = _template("b", (input) => {
 			const $scope13_id = _scope_id();
 			_html(`<span id=s12>${_patch_text($scope13_id, "a", input.p12, void 0, $scope0_reason, 13)}</span>`);
 			_client_guard($scope0_reason, 13) && _patch_init($scope13_id, "b28");
-			$scope0_page && _scope($scope13_id, { _: _write_if($scope0_reason, 13) && _scope_with_id($scope0_id) });
+			_scope($scope13_id, { _: _write_if($scope0_reason, 13) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "m", 1, $wg__input_p13, void 0, void 0, void 0, ["b13"], $scope0_reason, 13);
@@ -143,7 +143,7 @@ var child_default = _template("b", (input) => {
 			const $scope14_id = _scope_id();
 			_html(`<span id=s13>${_patch_text($scope14_id, "a", input.p13, void 0, $scope0_reason, 14)}</span>`);
 			_client_guard($scope0_reason, 14) && _patch_init($scope14_id, "b29");
-			$scope0_page && _scope($scope14_id, { _: _write_if($scope0_reason, 14) && _scope_with_id($scope0_id) });
+			_scope($scope14_id, { _: _write_if($scope0_reason, 14) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "n", 1, $wg__input_p14, void 0, void 0, void 0, ["b14"], $scope0_reason, 14);
@@ -152,7 +152,7 @@ var child_default = _template("b", (input) => {
 			const $scope15_id = _scope_id();
 			_html(`<span id=s14>${_patch_text($scope15_id, "a", input.p14, void 0, $scope0_reason, 15)}</span>`);
 			_client_guard($scope0_reason, 15) && _patch_init($scope15_id, "b30");
-			$scope0_page && _scope($scope15_id, { _: _write_if($scope0_reason, 15) && _scope_with_id($scope0_id) });
+			_scope($scope15_id, { _: _write_if($scope0_reason, 15) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "o", 1, $wg__input_p15, void 0, void 0, void 0, ["b15"], $scope0_reason, 15);
@@ -161,17 +161,17 @@ var child_default = _template("b", (input) => {
 			const $scope16_id = _scope_id();
 			_html(`<span id=s15>${_patch_text($scope16_id, "a", input.p15, void 0, $scope0_reason, 16)}</span>`);
 			_client_guard($scope0_reason, 16) && _patch_init($scope16_id, "b31");
-			$scope0_page && _scope($scope16_id, { _: _write_if($scope0_reason, 16) && _scope_with_id($scope0_id) });
+			_scope($scope16_id, { _: _write_if($scope0_reason, 16) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "p", 1, $wg__input_p16, void 0, void 0, void 0, ["b16"], $scope0_reason, 16);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
 _shells({ a: "a;b%;<!><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_v = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_v = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.v !== void 0 ? child_default : null, {
 		p0: input.v && `v0-${input.v}`,
@@ -191,5 +191,5 @@ var template_default = _template("a", (input) => {
 		p14: input.v && `v14-${input.v}`,
 		p15: input.v && `v15-${input.v}`
 	}, 1, 0, 0, $wg__input_v, $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

@@ -17,7 +17,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 		if (flag) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "#text/0", input.wrap, {}, 0, 0, 0, $wg__input_wrap);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/tags/host.marko", "3:2");
+			_scope($scope1_id, {}, "__tests__/tags/host.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
@@ -26,20 +26,20 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_dynamic_tag($scope2_id, "#text/0", input.native ? "section" : input.wrap, {}, 10, _content_resume("__tests__/tags/host.marko_3*content", () => {
 				const $scope3_id = _scope_id();
-				const $scope3_reason = _scope_reason(), $scope3_page = _page_render();
+				const $scope3_reason = _scope_reason();
 				_html(`<i>${_patch_text($scope3_id, "#text/0", input.label, void 0, $scope0_reason, 7)}</i>`);
 				_unfilled_if($scope0_reason, 7) && _patch_init($scope3_id, _client_guard($scope0_reason, 7) ? "__tests__/tags/host.marko_3_input_label#0:8/init" : "__tests__/tags/host.marko_3_input_label#0:8/subscribe");
-				$scope3_page && _subscribe(_unfilled_if($scope0_reason, 7) && $input_label__closures, _scope($scope3_id, { _: $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope_with_id($scope2_id) }, "__tests__/tags/host.marko", "5:6"));
+				_subscribe(_unfilled_if($scope0_reason, 7) && $input_label__closures, _scope($scope3_id, { _: $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope_with_id($scope2_id) }, "__tests__/tags/host.marko", "5:6"));
 			}, $scope2_id, ($scope) => $scope0_page ? [{ input_label: input.label }, { _: $scope($scope0_id) }] : []), 0, $wg__input_wrap__OR__input_native, $scope0_reason, 1);
 			_patch_join_init($scope2_id, "__tests__/tags/host.marko_2_input_wrap#0:5_input_native#0:7/init", $scope0_reason, 1, _filled_guard($scope0_reason, 4) && ">input_wrap", _filled_guard($scope0_reason, 6) && ">input_native");
-			$scope0_page && $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/host.marko", "4:2");
+			$wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/host.marko", "4:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["__tests__/tags/host.marko_2*shell"], $scope0_reason, 5);
 	_script($scope0_id, "__tests__/tags/host.marko_0");
 	_filled_guard($scope0_reason, 6) && $cg__input_show ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_fill1/unpatched", input.native) : _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_native", input.native, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4)));
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_fill3", flag, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_wrap: input.wrap,
 		input_native: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.native,
 		input_label: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 7)) && input.label,
@@ -50,7 +50,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 		input_native: ["input.native"],
 		input_label: ["input.label"],
 		flag: "1:6"
-	}) : (_filled_guard($scope0_reason, 4) && ($cg__input_show ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_fill0/unpatched", input.wrap) : _patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_fill0", input.wrap, !_server_guard($scope0_reason, 4))), _content_withhold(input.wrap), _filled_guard($scope0_reason, 7) && _content_withheld("__tests__/tags/host.marko_3*content", $scope0_id) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_fill2", input.label, !_server_guard($scope0_reason, 7)));
+	}) || (_filled_guard($scope0_reason, 4) && ($cg__input_show ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_fill0/unpatched", input.wrap) : _patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_fill0", input.wrap, !_server_guard($scope0_reason, 4))), _content_withhold(input.wrap), _filled_guard($scope0_reason, 7) && _content_withheld("__tests__/tags/host.marko_3*content", $scope0_id) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_fill2", input.label, !_server_guard($scope0_reason, 7)));
 });
 
 // template.marko
@@ -72,7 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		native: input.native,
 		label: input.label,
 		wrap: attrTag({ content: _content_resume("__tests__/template.marko_1*content", ({ content }) => {
-			const $scope1_reason = _scope_reason(), $wg__content = _write_guard($scope1_reason, 0), $scope1_page = _page_render();
+			const $scope1_reason = _scope_reason(), $wg__content = _write_guard($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			_content_withhold(content), _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", content);
 			let open = true;
@@ -81,13 +81,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (open) {
 					const $scope2_id = _scope_id();
 					_dynamic_tag($scope2_id, "#text/0", content, {}, 0, 0, 0, $wg__content);
-					$scope1_page && _scope($scope2_id, {}, "__tests__/template.marko", "6:8");
+					_scope($scope2_id, {}, "__tests__/template.marko", "6:8");
 					return 0;
 				}
 			}, $scope1_id, "#text/1");
 			_script($scope1_id, "__tests__/template.marko_1");
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", open, 1);
-			$scope1_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				content,
 				open
 			}, "__tests__/template.marko", "3:6", {
@@ -98,5 +98,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

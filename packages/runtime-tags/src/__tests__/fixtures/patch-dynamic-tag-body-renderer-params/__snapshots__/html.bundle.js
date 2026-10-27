@@ -22,26 +22,25 @@ var host_default = _template("b", (input) => {
 			_dynamic_tag($scope2_id, "a", input.native ? "section" : input.wrap, {}, 10, _content_resume("b0", () => {
 				const $scope3_id = _scope_id();
 				_scope_reason();
-				const $scope3_page = _page_render();
 				_html(`<i>${_patch_text($scope3_id, "a", input.label, void 0, $scope0_reason, 7)}</i>`);
 				_unfilled_if($scope0_reason, 7) && _patch_init($scope3_id, _client_guard($scope0_reason, 7) ? "b1" : "b2");
-				$scope3_page && _subscribe(_unfilled_if($scope0_reason, 7) && $input_label__closures, _scope($scope3_id, { _: $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope_with_id($scope2_id) }));
+				_subscribe(_unfilled_if($scope0_reason, 7) && $input_label__closures, _scope($scope3_id, { _: $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope_with_id($scope2_id) }));
 			}, $scope2_id, ($scope) => $scope0_page ? [{ i: input.label }, { _: $scope($scope0_id) }] : []), 0, $wg__input_wrap__OR__input_native, $scope0_reason, 1);
 			_patch_join_init($scope2_id, "b3", $scope0_reason, 1, _filled_guard($scope0_reason, 4) && ">f", _filled_guard($scope0_reason, 6) && ">h");
-			$scope0_page && $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope($scope2_id, { _: _scope_with_id($scope0_id) });
+			$wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope($scope2_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["b4"], $scope0_reason, 5);
 	_script($scope0_id, "b5");
 	_filled_guard($scope0_reason, 6) && $cg__input_show ? _patch_fill($scope0_id, "vb9", input.native) : _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.native, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4)));
 	_patch_fill($scope0_id, "vb10", flag, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.wrap,
 		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.native,
 		i: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 7)) && input.label,
 		j: flag,
 		m: _write_if($scope0_reason, 7) && $input_label__closures
-	}) : (_filled_guard($scope0_reason, 4) && ($cg__input_show ? _patch_fill($scope0_id, "vb7", input.wrap) : _patch_fill($scope0_id, "vb6", input.wrap, !_server_guard($scope0_reason, 4))), _content_withhold(input.wrap), _filled_guard($scope0_reason, 7) && _content_withheld("b0", $scope0_id) && _patch_fill($scope0_id, "vb8", input.label, !_server_guard($scope0_reason, 7)));
+	}) || (_filled_guard($scope0_reason, 4) && ($cg__input_show ? _patch_fill($scope0_id, "vb7", input.wrap) : _patch_fill($scope0_id, "vb6", input.wrap, !_server_guard($scope0_reason, 4))), _content_withhold(input.wrap), _filled_guard($scope0_reason, 7) && _content_withheld("b0", $scope0_id) && _patch_fill($scope0_id, "vb8", input.label, !_server_guard($scope0_reason, 7)));
 });
 
 // template.marko
@@ -61,7 +60,7 @@ var template_default = _template("a", (input) => {
 		native: input.native,
 		label: input.label,
 		wrap: attrTag({ content: _content_resume("a3", ({ content }) => {
-			const $scope1_reason = _scope_reason(), $wg__content = _write_guard($scope1_reason, 0), $scope1_page = _page_render();
+			const $scope1_reason = _scope_reason(), $wg__content = _write_guard($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			_content_withhold(content), _patch_fill($scope1_id, "va1", content);
 			let open = true;
@@ -70,13 +69,13 @@ var template_default = _template("a", (input) => {
 				{
 					const $scope2_id = _scope_id();
 					_dynamic_tag($scope2_id, "a", content, {}, 0, 0, 0, $wg__content);
-					$scope1_page && _scope($scope2_id, {});
+					_scope($scope2_id, {});
 					return 0;
 				}
 			}, $scope1_id, "b");
 			_script($scope1_id, "a0");
 			_patch_fill($scope1_id, "va2", open, 1);
-			$scope1_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				e: content,
 				f: open
 			});
@@ -84,5 +83,5 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { a: _existing_scope($childScope) });
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

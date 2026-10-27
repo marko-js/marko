@@ -4,10 +4,10 @@ const $walks$2 = "D l";
 const $setup$2 = [[], []];
 _shells({ "__tests__/tags/badge.marko": "__tests__/tags/badge.marko;D ;<b class=badge> </b>" });
 var badge_default = _template("__tests__/tags/badge.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<b class=badge>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</b>`);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/badge.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/badge.marko", 0);
 });
 
 // tags/card.marko
@@ -16,13 +16,13 @@ const $walks$1 = "E lD l D m";
 const $setup$1 = [[], ["__tests__/tags/card.marko_0"]];
 _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko !__tests__/tags/card.marko_0;E lD l D ;<div class=card><h2> </h2><p> </p><button class=t> </button></div>" });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<div class=card><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2><p>${_patch_text($scope0_id, "#text/1", input.note, void 0, $scope0_reason, 1)}</p><button class=t>${_text_resume($scope0_id, "#text/3", open ? "hide" : "show")}</button>${_el_resume($scope0_id, "#button/2")}</div>`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", open, 1);
-	$scope0_page && _scope($scope0_id, { open }, "__tests__/tags/card.marko", 0, { open: "1:6" });
+	_scope($scope0_id, { open }, "__tests__/tags/card.marko", 0, { open: "1:6" });
 });
 
 // template.marko
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
 			badge_default(input.badge);
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 1) && _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 1) && _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button id=o>o</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_props: input.props,
 		on,
 		input_badge_label: input.badge?.label,
@@ -64,5 +64,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_props: ["input.props"],
 		on: "1:6",
 		input_badge_label: ["input.badge.label"]
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.props, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.badge?.label, !_server_guard($scope0_reason, 1)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.props, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.badge?.label, !_server_guard($scope0_reason, 1)));
 }, 1);

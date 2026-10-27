@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E l%b ;<main><h1> </h1><!><button>Next</button></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $n__closures = new Set();
 	let n = 0;
@@ -20,9 +20,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", resolveAfter("v" + n, n), (value) => {
 			const $scope3_id = _scope_id();
 			_html(`<em>${_text_resume($scope3_id, "#text/0", value)}</em>`);
-			$scope0_page && _scope($scope3_id, {}, "__tests__/template.marko", "8:6");
+			_scope($scope3_id, {}, "__tests__/template.marko", "8:6");
 		}, 1, 0, 1);
-		$scope0_page && _subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), "__tests__/template.marko_1_n#0:6/subscribe", 0);
+		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), "__tests__/template.marko_1_n#0:6/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, () => {
 		const $scope2_reason = _scope_reason();
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, void 0, 2);
 	_html(`<button>Next</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		n,
 		"ClosureScopes:n/7": $n__closures
 	}, "__tests__/template.marko", 0, { n: "3:6" });

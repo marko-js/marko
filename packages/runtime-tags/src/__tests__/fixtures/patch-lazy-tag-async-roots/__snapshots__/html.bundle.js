@@ -4,13 +4,13 @@ const $walks = " D%c%l";
 const $setup = [[], ["a0"]];
 _shells({ a: "a !a0; D%c%;<button><!>:<!></button>" });
 var child_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_patch_fill($scope0_id, "va1", count, 1);
-	$scope0_page && _scope($scope0_id, { g: count });
+	_scope($scope0_id, { g: count });
 });
 
 // template.marko
@@ -23,7 +23,7 @@ _shells({
 	b: "b;D%b%;<main><!><!></main>"
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_await($scope0_id, "a", input.first, (first) => {
@@ -32,7 +32,7 @@ var template_default = _template("b", (input) => {
 		const $childScope = _patch_child($scope1_id, "b", 0);
 		$Child_withLoadAssets({ label: first });
 		_patch_child_end();
-		$scope0_page && _scope($scope1_id, { b: _existing_scope($childScope) });
+		_scope($scope1_id, { b: _existing_scope($childScope) });
 	}, 1, "b1", 1);
 	_await($scope0_id, "b", input.second, (second) => {
 		const $scope2_id = _scope_id();
@@ -40,7 +40,7 @@ var template_default = _template("b", (input) => {
 		const $childScope2 = _patch_child($scope2_id, "b", 1);
 		$Child_withLoadAssets({ label: second });
 		_patch_child_end();
-		$scope0_page && _scope($scope2_id, { b: _existing_scope($childScope2) });
+		_scope($scope2_id, { b: _existing_scope($childScope2) });
 	}, 1, "b0", 1);
 	_html("</main>");
 }, 1);

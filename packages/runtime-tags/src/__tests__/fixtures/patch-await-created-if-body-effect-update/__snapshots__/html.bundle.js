@@ -20,17 +20,17 @@ var template_default = _template("a", (input) => {
 				_html(`<p>${_patch_text($scope2_id, "a", x, void 0, $scope0_reason, 1)}</p>`);
 				if ($scope0_page) _if(() => {}, $scope2_id, "b", 1, 1, 0, 0, 1);
 				_script($scope2_id, "a1");
-				$scope0_page && _subscribe($n__closures, _scope($scope2_id, { d: x }), "a3");
+				_subscribe($n__closures, _scope($scope2_id, { d: x }), "a3");
 			}, 1, "a4");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a7");
-			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a6"], $scope0_reason, 0);
 	_script($scope0_id, "a8");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 0) && input.label,
 		g: n,
 		i: $n__closures
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va9", input.label, !$sg__input_label);
+	}) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va9", input.label, !$sg__input_label);
 }, 1);

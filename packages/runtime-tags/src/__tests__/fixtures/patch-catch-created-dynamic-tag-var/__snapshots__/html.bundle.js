@@ -1,22 +1,22 @@
 // tags/huge-label.marko
 _shells({ b: "b;D ;<em> </em>" });
 var huge_label_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<em>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</em>`);
 	const $return = input.label + "!";
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 	return $return;
 });
 
 // tags/tiny-label.marko
 _shells({ c: "c;D ;<b> </b>" });
 var tiny_label_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<b>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</b>`);
 	const $return = input.label + "?";
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 	return $return;
 });
 
@@ -30,7 +30,7 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_fail = _client_guard($scope0_reason, 3), $scope0_page = _page_render(), $wi__input_fail = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_fail = _client_guard($scope0_reason, 3), $wi__input_fail = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_big__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -40,10 +40,9 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "a", input.fail ? boom() : "ok", void 0, $scope0_reason, 3)}</p>`);
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_fail ? "a4" : "a5");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), $cg__input_fail && "a5");
+		_subscribe(_unfilled_if($scope0_reason, 3) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), $cg__input_fail && "a5");
 	}, void 0, (err) => {
 		_scope_reason();
-		const $scope1_page = _page_render();
 		const $scope1_id = _scope_id();
 		_html(`<b>${_patch_text($scope1_id, "a", err.message)}</b>`);
 		const $inputbigBigSmall_scope = _peek_scope_id();
@@ -53,11 +52,11 @@ var template_default = _template("a", (input) => {
 		(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "a1");
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "a2");
 		_patch_join_init($scope1_id, "a3", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">d", _filled_guard($scope0_reason, 2) && ">e");
-		$scope1_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_big__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a1"), _client_guard($scope0_reason, 2) && "a2");
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_big__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a1"), _client_guard($scope0_reason, 2) && "a2");
 	}, void 0, "a6", "a7", 1, 1, 1);
 	_filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va8", input.big);
 	_filled_guard($scope0_reason, 2) && _patch_fill($scope0_id, "va9", input.label);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		d: input.big,
 		e: input.label,
 		g: _write_if($scope0_reason, 1) && $input_big__closures,

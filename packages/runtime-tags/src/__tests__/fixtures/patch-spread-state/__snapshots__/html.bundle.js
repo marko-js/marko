@@ -4,7 +4,7 @@ _shells({
 	a1: "a1 a5; ;<a>go</a>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let on = false;
 	_html("<main>");
@@ -16,14 +16,14 @@ var template_default = _template("a", (input) => {
 				class: "off"
 			}, "a", $scope1_id, "a")}>go</a>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a0");
-			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.attrs,
 		g: on
-	}) : (_filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va3", input.attrs, !_server_guard($scope0_reason, 1)), _content_withhold(input.attrs));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va3", input.attrs, !_server_guard($scope0_reason, 1)), _content_withhold(input.attrs));
 }, 1);

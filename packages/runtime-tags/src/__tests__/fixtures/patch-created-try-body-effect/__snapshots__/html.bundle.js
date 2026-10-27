@@ -8,7 +8,7 @@ _shells({
 	a6: "a6;b%b%;<!><!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -33,9 +33,9 @@ var template_default = _template("a", (input) => {
 				_scope_id();
 				_html("loading");
 			}, void 0, "a4", void 0, "a5", void 0, void 0, 2);
-			$scope0_page && _write_if($scope0_reason, 0) && _scope($scope1_id, {});
+			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a6"], $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

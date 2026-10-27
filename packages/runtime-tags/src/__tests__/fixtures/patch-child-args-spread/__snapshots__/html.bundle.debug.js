@@ -9,9 +9,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let show = true;
 	const badge = { content: _content("__tests__/template.marko_2*content", (a, b) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $scope2_page = _page_render();
+		const $scope2_reason = _scope_reason();
 		_html(`<em>${_patch_text($scope2_id, "#text/0", a, void 0, $scope2_reason, 0)}${_patch_text($scope2_id, "#text/1", b, 2, $scope2_reason, 1)}</em>`);
-		$scope2_page && _scope($scope2_id, {}, "__tests__/template.marko", "2:2");
+		_scope($scope2_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	_html("<main>");
 	if ($scope0_page) _if(() => {
@@ -21,17 +21,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
 			badge.content(...input.parts);
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", "6:4");
+			_scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", "6:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_parts: input.parts,
 		show
 	}, "__tests__/template.marko", 0, {
 		input_parts: ["input.parts"],
 		show: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.parts, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.parts, !_server_guard($scope0_reason, 0));
 }, 1);

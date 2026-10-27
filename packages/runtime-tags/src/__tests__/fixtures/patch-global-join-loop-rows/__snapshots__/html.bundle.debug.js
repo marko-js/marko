@@ -13,8 +13,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_escape(i)}:${_text_resume($scope1_id, "#text/1", $global$1.x, $scope0_page * 2)}</li>`);
 		_fill_global_subscribe("__tests__/template.marko_1_$global_x#0:11", $scope0_id, 1);
-		$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "5:4");
+		_scope($scope1_id, {}, "__tests__/template.marko", "5:4");
 	}, 0, $scope0_id, "#ul/2", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "1:6" });
+	_scope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "1:6" });
 }, 1);

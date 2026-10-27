@@ -24,11 +24,11 @@ const $walks$1 = " D%c%l";
 const $setup$1 = [[], ["__tests__/tags/child.marko_0"]];
 _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !__tests__/tags/child.marko_0; D%c%;<button><!> <!></button>" });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<button>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 2)} ${_patch_text($scope0_id, "#text/2", input.s.last, 2, $scope0_reason, 1)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	$scope0_page ? _scope($scope0_id, { input_s: input.s }, "__tests__/tags/child.marko", 0, { input_s: ["input.s"] }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_s", input.s, !_server_guard($scope0_reason, 0));
+	_scope($scope0_id, { input_s: input.s }, "__tests__/tags/child.marko", 0, { input_s: ["input.s"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_s", input.s, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -37,7 +37,7 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&/${_w1}&`)("", $walks$1);
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$2], ["#childScope/2>", $setup$1]);
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `0${_w0}&/${_w1}&`)("", $walks$1)};${((_w0, _w1) => `${_w0}${_w1}`)("", $template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, 1);
 	let s = store_default({});
@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		label: input.label
 	});
 	_patch_child_end();
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/2": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0);

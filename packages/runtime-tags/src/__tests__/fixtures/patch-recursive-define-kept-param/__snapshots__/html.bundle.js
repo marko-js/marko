@@ -12,16 +12,16 @@ var keeper_default = _template("b", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, 0, $wg__input_content);
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb2", open, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.content,
 		f: open
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
 });
 
 // template.marko
@@ -34,13 +34,13 @@ _shells({
 	a5: /*@__PURE__*/ (() => `a5${_shell_marker(_shell_setup([[], []], [">>a>", _shell_setup([[], []], ["b>", $setup$1])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Level_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Level_content__template)}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const Level = { content: _content("a6", ({ n, label, content }) => {
 		const $scope1_id = _scope_id();
 		const $Level_content__n__closures = /* @__PURE__ */ new Set();
 		const $Level_content__label__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 1), $scope1_page = _page_render();
+		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 1);
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();
@@ -51,17 +51,16 @@ var template_default = _template("a", (input) => {
 					label,
 					content: _content_resume("a3", () => {
 						_scope_reason();
-						const $scope3_page = _page_render();
 						const $scope3_id = _scope_id();
 						_html(`<em>${_patch_text($scope3_id, "a", n, void 0, $scope1_reason, 0)}:${_patch_text($scope3_id, "b", label, 2, $scope1_reason, 1)}</em>`);
 						_unfilled_if($scope1_reason, 0) && _patch_init($scope3_id, "a0");
 						_unfilled_if($scope1_reason, 1) && _patch_init($scope3_id, $cg__label ? "a1" : "a2");
-						$scope3_page && _subscribe(_unfilled_if($scope1_reason, 1) && $Level_content__label__closures, _subscribe(_unfilled_if($scope1_reason, 0) && $Level_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) })));
+						_subscribe(_unfilled_if($scope1_reason, 1) && $Level_content__label__closures, _subscribe(_unfilled_if($scope1_reason, 0) && $Level_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) })));
 					}, $scope2_id)
 				});
 				_patch_child_end();
 				$cg__label && _patch_init($scope2_id, "a4");
-				$scope1_page && _scope($scope2_id, {
+				_scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
 				});
@@ -72,13 +71,13 @@ var template_default = _template("a", (input) => {
 		const $childScope2 = _patch_child($scope1_id, "b", 1);
 		keeper_default({ content });
 		_patch_child_end();
-		$scope1_page ? _scope($scope1_id, {
+		_scope($scope1_id, {
 			e: n,
 			f: label,
 			h: _write_if($scope1_reason, 0) && $Level_content__n__closures,
 			i: _write_if($scope1_reason, 1) && $Level_content__label__closures,
 			b: _existing_scope($childScope2)
-		}) : (_filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "va7", n, !_server_guard($scope1_reason, 0)), _filled_guard($scope1_reason, 1) && _patch_fill($scope1_id, "va8", label, !_server_guard($scope1_reason, 1)));
+		}) || (_filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "va7", n, !_server_guard($scope1_reason, 0)), _filled_guard($scope1_reason, 1) && _patch_fill($scope1_id, "va8", label, !_server_guard($scope1_reason, 1)));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
@@ -89,5 +88,5 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { a: _existing_scope($childScope3) });
+	_scope($scope0_id, { a: _existing_scope($childScope3) });
 }, 1);

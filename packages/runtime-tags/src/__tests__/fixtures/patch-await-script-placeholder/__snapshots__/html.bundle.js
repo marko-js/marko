@@ -7,7 +7,7 @@ _shells({
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -20,10 +20,10 @@ var template_default = _template("a", (input) => {
 			_html(`<span id=v>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
 			_script($scope3_id, "a0");
 			_filled_guard($scope0_reason, 0) && _patch_effect($scope3_id, $cg__input_promise ? "ha0" : "ea0", "c");
-			$scope0_page && _scope($scope3_id, { c: value });
+			_scope($scope3_id, { c: value });
 		}, 1, "a1", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "a5" : "a6");
-		$scope0_page && $wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a6", 0);
+		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a6", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
@@ -31,5 +31,5 @@ var template_default = _template("a", (input) => {
 		_html("loading");
 	}, void 0, "a2", void 0, "a4", 1, void 0, 2);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, { e: $wi__input_promise && $input_promise__closures });
+	_scope($scope0_id, { e: $wi__input_promise && $input_promise__closures });
 }, 1);

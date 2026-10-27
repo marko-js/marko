@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html("<main>");
@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_patch_text($scope4_id, "#text/0", $global$1.name)} ${_patch_text($scope4_id, "#text/1", v, 2)}</em>`);
 			_fill_global_subscribe("__tests__/template.marko_4_$global_name#0:9", $scope4_id);
-			$scope0_page && _scope($scope4_id, {}, "__tests__/template.marko", "3:6");
+			_scope($scope4_id, {}, "__tests__/template.marko", "3:6");
 		}, 1, "__tests__/template.marko_4*content", 1);
 		_fill_global_subscribe("__tests__/template.marko_1_$global_promise#0:7", $scope1_id);
 	}, () => {

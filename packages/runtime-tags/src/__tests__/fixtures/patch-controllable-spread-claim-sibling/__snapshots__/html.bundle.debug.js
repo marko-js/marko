@@ -4,7 +4,7 @@ const $walks = " b c b";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b c ;<input><input><p id=out>-</p><button>interactive</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_on = _client_guard($scope0_reason, 2), $cg__input_attrs = _client_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_on = _client_guard($scope0_reason, 2), $cg__input_attrs = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<input${_patch_attrs({
 		type: "checkbox",
@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5_input_on#6");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_attrs: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.attrs,
 		input_on: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.on
 	}, "__tests__/template.marko", 0, {
@@ -24,5 +24,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"EventAttributes:#input/0": ["...input.attrs", "1:27"],
 		"ControlledHandler:#input/1": ["...input.attrs", "2:11"],
 		"EventAttributes:#input/1": ["...input.attrs", "2:11"]
-	}) : (_filled_guard($scope0_reason, 1) && $cg__input_on && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.attrs, !_server_guard($scope0_reason, 1)), $cg__input_on && _content_withhold(input.attrs), _filled_guard($scope0_reason, 2) && $cg__input_attrs && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.on, !_server_guard($scope0_reason, 2)), $cg__input_attrs && _content_withhold(input.on));
+	}) || (_filled_guard($scope0_reason, 1) && $cg__input_on && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.attrs, !_server_guard($scope0_reason, 1)), $cg__input_on && _content_withhold(input.attrs), _filled_guard($scope0_reason, 2) && $cg__input_attrs && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.on, !_server_guard($scope0_reason, 2)), $cg__input_attrs && _content_withhold(input.on));
 }, 1);

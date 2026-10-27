@@ -4,14 +4,14 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/panel.marko": "__tests__/tags/panel.marko !;b%;<!><!><!>" });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_label__OR__input_items = _write_guard($scope0_reason, 3), $cg__input_label__OR__input_items = _client_guard($scope0_reason, 2), $cg__input_content__OR__input_items = _client_guard($scope0_reason, 1), $cg__input_content__OR__input_label = _client_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_label__OR__input_items = _write_guard($scope0_reason, 3), $cg__input_label__OR__input_items = _client_guard($scope0_reason, 2), $cg__input_content__OR__input_items = _client_guard($scope0_reason, 1), $cg__input_content__OR__input_label = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", input.content, {
 		label: input.label,
 		items: input.items
 	}, 1, 0, 0, $wg__input_content__OR__input_label__OR__input_items, $scope0_reason, 3, 0, 4);
 	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "__tests__/tags/panel.marko_0_input_content#3_input_label#4_input_items#5/init");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_content: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.content,
 		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.label,
 		input_items: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.items
@@ -19,7 +19,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		input_content: ["input.content"],
 		input_label: ["input.label"],
 		input_items: ["input.items"]
-	}) : (_filled_guard($scope0_reason, 4) && $cg__input_label__OR__input_items && _patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill0", input.content, !_server_guard($scope0_reason, 4)), $cg__input_label__OR__input_items && _content_withhold(input.content), _filled_guard($scope0_reason, 5) && $cg__input_content__OR__input_items && _patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill1", input.label, !_server_guard($scope0_reason, 5)), $cg__input_content__OR__input_items && _content_withhold(input.label), _filled_guard($scope0_reason, 6) && $cg__input_content__OR__input_label && _patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill2", input.items, !_server_guard($scope0_reason, 6)), $cg__input_content__OR__input_label && _content_withhold(input.items));
+	}) || (_filled_guard($scope0_reason, 4) && $cg__input_label__OR__input_items && _patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill0", input.content, !_server_guard($scope0_reason, 4)), $cg__input_label__OR__input_items && _content_withhold(input.content), _filled_guard($scope0_reason, 5) && $cg__input_content__OR__input_items && _patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill1", input.label, !_server_guard($scope0_reason, 5)), $cg__input_content__OR__input_items && _content_withhold(input.label), _filled_guard($scope0_reason, 6) && $cg__input_content__OR__input_label && _patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill2", input.items, !_server_guard($scope0_reason, 6)), $cg__input_content__OR__input_label && _content_withhold(input.items));
 });
 
 // template.marko
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		label: input.label,
 		items: input.items,
 		content: _content_resume("__tests__/template.marko_1*content", ({ label, items }) => {
-			const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0), $scope1_page = _page_render(), $wg__items = _write_guard($scope1_reason, 1), $wi__label = _write_if($scope1_reason, 0);
+			const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0), $wg__items = _write_guard($scope1_reason, 1), $wi__label = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			const $panel_content__label__closures = new Set();
 			let open = true;
@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						if (label) {
 							const $scope3_id = _scope_id();
 							_html(`<p>${_text_resume($scope3_id, "#text/0", label, $wg__label)}</p>`);
-							$scope1_page && _subscribe($wi__label && $panel_content__label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:6"), "__tests__/template.marko_3_label#1:4/subscribe", $wg__label);
+							_subscribe($wi__label && $panel_content__label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:6"), "__tests__/template.marko_3_label#1:4/subscribe", $wg__label);
 							return 0;
 						}
 					}, $scope2_id, "#text/0", $wg__label, $wg__label, 0, 0, 1);
@@ -55,15 +55,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					if ($scope0_page) _for_of(items, (item) => {
 						const $scope4_id = _scope_id();
 						_html(`<li>${_text_resume($scope4_id, "#text/0", item, $wg__items)}</li>`);
-						$scope1_page && _write_if($scope1_reason, 1) && _scope($scope4_id, {}, "__tests__/template.marko", "8:8");
+						_write_if($scope1_reason, 1) && _scope($scope4_id, {}, "__tests__/template.marko", "8:8");
 					}, 0, $scope2_id, "#ul/1", $wg__items, $wg__items, $wg__items, "</ul>", 1);
-					$scope1_page && _scope($scope2_id, {}, "__tests__/template.marko", "3:4");
+					_scope($scope2_id, {}, "__tests__/template.marko", "3:4");
 					return 0;
 				}
 			}, $scope1_id, "#text/0");
 			_html(`<button>toggle</button>${_el_resume($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
-			$scope1_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				label,
 				items,
 				open,
@@ -76,5 +76,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id, void 0, 1)
 	});
 	_patch_child_end();
-	$scope0_page && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

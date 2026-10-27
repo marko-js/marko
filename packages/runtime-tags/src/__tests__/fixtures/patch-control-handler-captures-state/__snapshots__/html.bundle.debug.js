@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_v#0:6/init __tests__/template.marko_1_suffix#0:7/init!__tests__/template.marko_1; ;<input>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let v = "";
 	let suffix = "!";
@@ -19,13 +19,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				v = x + suffix;
 			}, "__tests__/template.marko_1/valueChange", $scope1_id))}>${_el_resume($scope1_id, "#input/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
-			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4", { "ControlledHandler:#input/0": ["valueChange", "5:20"] });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4", { "ControlledHandler:#input/0": ["valueChange", "5:20"] });
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`<em>${_text_resume($scope0_id, "#text/1", v)}</em><button>s</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		v,
 		suffix
 	}, "__tests__/template.marko", 0, {

@@ -8,22 +8,22 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show__OR__input_n = _write_guard($scope0_reason, 0), $cg__input_n = _client_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_show__OR__input_n = _write_guard($scope0_reason, 0), $cg__input_n = _client_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const Outer = { content: _content_resume("__tests__/template.marko_1*content", ({ value }) => {
 		const $scope1_id = _scope_id();
 		const $Outer_content__value__closures = new Set();
-		const $scope1_reason = _scope_reason(), $wi__value = _write_if($scope1_reason, 0), $scope1_page = _page_render();
+		const $scope1_reason = _scope_reason(), $wi__value = _write_if($scope1_reason, 0);
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill2", value);
 		let count = 0;
 		const Inner = { content: _content_elide("__tests__/template.marko_2*content", ({ y }) => {
 			const $scope2_id = _scope_id();
-			const $scope2_reason = _scope_reason(), $scope2_page = _page_render();
+			const $scope2_reason = _scope_reason();
 			const b = value + y;
 			_html(`<p>${_patch_text($scope2_id, "#text/0", b, void 0, $scope2_reason, 0)}</p>`);
 			_patch_write($scope2_id, "PatchWrite:y", y, 1);
 			_client_guard($scope2_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_value#1:4_y#3/init");
-			$scope2_page && _subscribe(_unfilled_if($scope2_reason, 0) && $wi__value && $Outer_content__value__closures, _scope($scope2_id, {
+			_subscribe(_unfilled_if($scope2_reason, 0) && $wi__value && $Outer_content__value__closures, _scope($scope2_id, {
 				y: $wi__value && y,
 				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "3:4", { y: "3:19" }));
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button>inc</button>${_el_resume($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill3", count, 1);
-		$scope1_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			value,
 			count,
 			"ClosureScopes:value/6": $wi__value && $Outer_content__value__closures,
@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.show && Outer, { value: input.n }, 9, 0, 0, $wg__input_show__OR__input_n, $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_show: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.show,
 		input_n: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.n,
 		Outer: _unfilled_if($scope0_reason, 0) && Outer
@@ -54,5 +54,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_show: ["input.show"],
 		input_n: ["input.n"],
 		Outer: "1:9"
-	}) : (_filled_guard($scope0_reason, 1) && $cg__input_n && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.show, !_server_guard($scope0_reason, 1)), $cg__input_n && _content_withhold(input.show), _filled_guard($scope0_reason, 2) && $cg__input_show && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.n, !_server_guard($scope0_reason, 2)), $cg__input_show && _content_withhold(input.n));
+	}) || (_filled_guard($scope0_reason, 1) && $cg__input_n && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.show, !_server_guard($scope0_reason, 1)), $cg__input_n && _content_withhold(input.show), _filled_guard($scope0_reason, 2) && $cg__input_show && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.n, !_server_guard($scope0_reason, 2)), $cg__input_show && _content_withhold(input.n));
 }, 1);

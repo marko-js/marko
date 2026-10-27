@@ -7,7 +7,7 @@ _shells({
 	a: "a;E l%;<main><p> </p><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<main><p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</p>`);
@@ -25,5 +25,5 @@ var template_default = _template("a", (input) => {
 		_html("<s>caught</s>");
 	}, void 0, "a1", "a3", void 0, void 0, 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

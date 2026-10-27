@@ -9,16 +9,16 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	const Panel = { content: _content("a1", ({ open }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wg__open = _write_guard($scope1_reason, 0), $wi__open = _write_if($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__open = _write_guard($scope1_reason, 0), $wi__open = _write_if($scope1_reason, 0);
 		if ($scope0_page) _if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_resume($scope2_id, "a", input.title, $wg__input_title)}</em>`);
-				$scope1_page && ($wi__input_title || $wi__open) && _subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0", $wg__input_title);
+				($wi__input_title || $wi__open) && _subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0", $wg__input_title);
 				return 0;
 			}
 		}, $scope1_id, "a", $wg__open, $wg__open, 0, 0, 1);
-		$scope1_page && ($wi__input_title || $wi__open) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+		($wi__input_title || $wi__open) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(2);
@@ -27,10 +27,10 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.title,
 		f: count,
 		g: $wi__input_title && $input_title__closures,
 		a: _existing_scope($childScope)
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va3", input.title, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va3", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

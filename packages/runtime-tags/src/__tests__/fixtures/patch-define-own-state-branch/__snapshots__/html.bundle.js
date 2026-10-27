@@ -8,20 +8,19 @@ var template_default = _template("a", (input) => {
 	const Panel = { content: _content("a0", ({ label }) => {
 		const $scope1_id = _scope_id(), $scope1_reason = _scope_reason();
 		_write_guard($scope1_reason, 0);
-		const $scope1_page = _page_render();
 		let open = false;
 		if ($scope0_page) _if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
 		_html(`<button>toggle</button>${_el_resume($scope1_id, "b")}`);
 		_script($scope1_id, "a1");
 		_patch_fill($scope1_id, "va3", open, 1);
-		$scope1_page ? _scope($scope1_id, {
+		_scope($scope1_id, {
 			e: label,
 			f: open
-		}) : _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "va2", label, !_server_guard($scope1_reason, 0));
+		}) || _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "va2", label, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "a", 0);
 	Panel.content({ label: input.label });
 	_patch_child_end();
-	$scope0_page && _scope($scope0_id, { a: _existing_scope($childScope) });
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

@@ -4,10 +4,10 @@ const $walks$1 = "D%b%l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/row.marko": "__tests__/tags/row.marko;D%b%;<li><!><!></li>" });
 var row_default = _template("__tests__/tags/row.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<li>${_patch_text($scope0_id, "#text/0", input.item.name, void 0, $scope0_reason, 0)}${_patch_text($scope0_id, "#text/1", input.item.hot ? " 🔥" : "", 2, $scope0_reason, 1)}</li>`);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/row.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/row.marko", 0);
 });
 
 // template.marko
@@ -19,7 +19,7 @@ _shells({
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<ul>");
@@ -29,9 +29,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
 		row_default({ item });
 		_patch_child_end();
-		$scope0_page && _scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
+		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
 	}, (item) => item.id, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
+	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

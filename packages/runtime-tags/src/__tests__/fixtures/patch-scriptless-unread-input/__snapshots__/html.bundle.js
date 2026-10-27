@@ -3,10 +3,10 @@ const $template = "<div> </div>";
 const $setup$1 = [[], []];
 _shells({ b: "b;D ;<div> </div>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div>${_patch_text($scope0_id, "a", input.user.name, void 0, $scope0_reason, 0)}</div>`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 			card_default({ user: input.user });
 			_patch_child_end();
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "a0");
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
 			});
@@ -42,17 +42,16 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "c", input.tag, { class: input.cls }, 17, _content_resume("a2", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		const $scope2_page = _page_render();
 		_html(_patch_text($scope2_id, "a", input.user3.name, void 0, $scope0_reason, 7));
 		_unfilled_if($scope0_reason, 7) && _patch_init($scope2_id, _client_guard($scope0_reason, 7) ? "a3" : "a4");
-		$scope2_page && _subscribe(_unfilled_if($scope0_reason, 7) && $input_user3_name__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }));
+		_subscribe(_unfilled_if($scope0_reason, 7) && $input_user3_name__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }));
 	}, $scope0_id, ($scope) => $scope0_page ? [{ m: input.user3?.name }] : []), 0, _write_guard($scope0_reason, 0), $scope0_reason, 0, 0, 5);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.user,
 		i: (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 0)) && input.tag,
 		j: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && input.cls,
 		m: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 7)) && input.user3?.name,
 		b: _existing_scope($childScope2),
 		o: _write_if($scope0_reason, 7) && $input_user3_name__closures
-	}) : (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "va5", input.user, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 5) && $cg__input_cls && _patch_fill($scope0_id, "va6", input.tag, !_server_guard($scope0_reason, 5)), $cg__input_cls && _content_withhold(input.tag), _filled_guard($scope0_reason, 6) && $cg__input_tag && _patch_fill($scope0_id, "va7", input.cls, !_server_guard($scope0_reason, 6)), $cg__input_tag && _content_withhold(input.cls), _filled_guard($scope0_reason, 7) && _content_withheld("a2", $scope0_id) && _patch_fill($scope0_id, "va8", input.user3?.name, !_server_guard($scope0_reason, 7)));
+	}) || (_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "va5", input.user, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 5) && $cg__input_cls && _patch_fill($scope0_id, "va6", input.tag, !_server_guard($scope0_reason, 5)), $cg__input_cls && _content_withhold(input.tag), _filled_guard($scope0_reason, 6) && $cg__input_tag && _patch_fill($scope0_id, "va7", input.cls, !_server_guard($scope0_reason, 6)), $cg__input_tag && _content_withhold(input.cls), _filled_guard($scope0_reason, 7) && _content_withheld("a2", $scope0_id) && _patch_fill($scope0_id, "va8", input.user3?.name, !_server_guard($scope0_reason, 7)));
 }, 1);

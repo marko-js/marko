@@ -4,7 +4,7 @@ _shells({
 	a0: "a0 a3;Db%;<p>Twice <!></p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	const double = 0;
@@ -13,13 +13,13 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<p>Twice ${_text_resume($scope1_id, "a", double, 2)}</p>`);
-			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a0"], $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		h: count,
 		i: _write_if($scope0_reason, 1) && double
 	});

@@ -17,12 +17,11 @@ const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `D0${_w0}&D m`)("b")};${((_w0) => `<main>${_w0}<p> </p></main>`)($template)}`)() });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	const $childScope = _patch_child($scope0_id, "a", 0);
 	let tag = tagger_default({});
 	_patch_child_end();
 	_html(`<p>${_patch_text($scope0_id, "c", tag)}</p></main>`);
-	$scope0_page && _scope($scope0_id, { a: _existing_scope($childScope) });
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

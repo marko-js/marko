@@ -4,7 +4,7 @@ _shells({
 	a2: "a2,<p>promo</p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_value = _client_guard($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_value = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	$global();
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
@@ -15,11 +15,11 @@ var template_default = _template("a", (input) => {
 			_script($scope1_id, "a0", 0);
 			_filled_guard($scope0_reason, 2) && _patch_effect($scope1_id, $cg__input_value ? "ha0" : "ea0", ">g");
 			$cg__input_value && _patch_init($scope1_id, "a1");
-			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
 	_html("</main>");
 	_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_effect($scope0_id, "ia1", "g");
-	$scope0_page ? _scope($scope0_id, { g: input.value }) : _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.value, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { g: input.value }) || _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.value, !_server_guard($scope0_reason, 2));
 }, 1);

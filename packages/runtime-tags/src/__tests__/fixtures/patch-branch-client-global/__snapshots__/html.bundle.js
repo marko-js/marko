@@ -10,5 +10,5 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, { c: count });
+	_scope($scope0_id, { c: count });
 }, 1);

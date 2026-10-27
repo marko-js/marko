@@ -8,5 +8,5 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "b");
 	_html(`<p>${_patch_text($scope0_id, "c", input.title, void 0, $scope0_reason, 0)}</p>`);
 	_script($scope0_id, "a0");
-	$scope0_page && _scope($scope0_id, { g: open });
+	_scope($scope0_id, { g: open });
 }, 1);

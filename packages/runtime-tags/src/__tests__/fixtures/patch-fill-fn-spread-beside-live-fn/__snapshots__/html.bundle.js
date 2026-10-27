@@ -1,10 +1,10 @@
 // tags/card/index.marko
 _shells({ b: "b;D ;<em> </em>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<em>${_patch_text($scope0_id, "a", input.fn("x"), void 0, $scope0_reason, 0)}</em>`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			const $childScope3 = _patch_child($scope1_id, "c", 2);
 			card_default({ fn: tag });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				a: $wi__input_title && _existing_scope($childScope),
 				b: $wi__input_title && _existing_scope($childScope2),
 				c: $wi__input_title && _existing_scope($childScope3)
@@ -43,11 +43,11 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a");
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.title,
 		g: chars,
 		i: items,
 		j: tag,
 		k: show
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va4", chars, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va5", items, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va6", tag, !$sg__input_title));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va4", chars, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va5", items, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va6", tag, !$sg__input_title));
 }, 1);

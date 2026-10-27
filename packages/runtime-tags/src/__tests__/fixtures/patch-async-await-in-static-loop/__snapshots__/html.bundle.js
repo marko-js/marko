@@ -6,7 +6,7 @@ _shells({
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_p = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_p = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_for_of([1, 2], (n) => {
@@ -15,16 +15,16 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<em>${_patch_text($scope2_id, "a", value + n, void 0, $scope0_reason, 0)}</em>`);
 			$cg__input_p && _patch_init($scope2_id, "a0");
-			$scope0_page && _scope($scope2_id, {});
+			_scope($scope2_id, {});
 		}, 1, "a1");
 		$cg__input_p && _patch_write($scope1_id, "wc", n, 1);
 		$cg__input_p && _patch_init($scope1_id, "a4");
-		$scope0_page && _write_if($scope0_reason, 0) && _scope($scope1_id, {
+		_write_if($scope0_reason, 0) && _scope($scope1_id, {
 			c: _unfilled_if($scope0_reason, 0) && n,
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a3", 0, 0);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a5");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

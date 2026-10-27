@@ -4,12 +4,12 @@ const $walks$1 = "E l l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/row.marko": "__tests__/tags/row.marko;E l ;<li><span> </span><button>Pick</button></li>" });
 var row_default = _template("__tests__/tags/row.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<li><span>${_patch_text($scope0_id, "#text/0", input.item.name, void 0, $scope0_reason, 0)}</span><button>Pick</button>${_el_resume($scope0_id, "#button/1")}</li>`);
 	_script($scope0_id, "__tests__/tags/row.marko_0_input_onPick#6");
 	_filled_guard($scope0_reason, 1) && _patch_effect($scope0_id, _client_guard($scope0_reason, 1) ? "PatchQueuedEffect:__tests__/tags/row.marko_0_input_onPick#6" : "PatchEffect:__tests__/tags/row.marko_0_input_onPick#6", "input_onPick");
-	$scope0_page ? _scope($scope0_id, { input_onPick: input.onPick }, "__tests__/tags/row.marko", 0, { input_onPick: ["input.onPick"] }) : _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_onPick", input.onPick, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { input_onPick: input.onPick }, "__tests__/tags/row.marko", 0, { input_onPick: ["input.onPick"] }) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_onPick", input.onPick, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
@@ -37,12 +37,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko_1/onPick", $scope1_id)
 		});
 		_patch_child_end();
-		$scope0_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			i,
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "4:4", { i: "4:14" });
 	}, "id", $scope0_id, "#ul/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/1")}`);
-	$scope0_page && _scope($scope0_id, { selected }, "__tests__/template.marko", 0, { selected: "1:6" });
+	_scope($scope0_id, { selected }, "__tests__/template.marko", 0, { selected: "1:6" });
 }, 1);

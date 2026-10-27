@@ -9,7 +9,7 @@ _shells({
 	a6: "a6;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_message = _client_guard($scope0_reason, 2), $cg__input_boom = _client_guard($scope0_reason, 3), $scope0_page = _page_render(), $wi__input_show__OR__input_message__OR__input_boom = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_message = _client_guard($scope0_reason, 2), $cg__input_boom = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_message__OR__input_boom = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_message__closures = /* @__PURE__ */ new Set();
 	const $input_boom__closures = /* @__PURE__ */ new Set();
@@ -23,23 +23,22 @@ var template_default = _template("a", (input) => {
 				_html(`<em>${_patch_text($scope2_id, "a", input.message, void 0, $scope0_reason, 2)}${_patch_text($scope2_id, "b", input.boom ? boom() : "", 2, $scope0_reason, 3)}</em>`);
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_message ? "a0" : "a1");
 				_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_boom ? "a2" : "a3");
-				$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_boom__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_message__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_message__OR__input_boom && _scope_with_id($scope1_id) }), $cg__input_message && "a1"), $cg__input_boom && "a3");
+				_subscribe(_unfilled_if($scope0_reason, 3) && $input_boom__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_message__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_message__OR__input_boom && _scope_with_id($scope1_id) }), $cg__input_message && "a1"), $cg__input_boom && "a3");
 			}, void 0, (err) => {
 				_scope_reason();
-				const $scope3_page = _page_render();
 				const $scope3_id = _scope_id();
 				_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b>`);
-				$scope3_page && _scope($scope3_id, {});
+				_scope($scope3_id, {});
 			}, void 0, "a4", "a5", void 0, 1, 1);
-			$scope0_page && $wi__input_show__OR__input_message__OR__input_boom && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			$wi__input_show__OR__input_message__OR__input_boom && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a6"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.message,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.boom,
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_message__closures,
 		h: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_boom__closures
-	}) : (_filled_guard($scope0_reason, 2) && $cg__input_show && _patch_fill($scope0_id, "va7", input.message, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && $cg__input_show && _patch_fill($scope0_id, "va8", input.boom, !_server_guard($scope0_reason, 3)));
+	}) || (_filled_guard($scope0_reason, 2) && $cg__input_show && _patch_fill($scope0_id, "va7", input.message, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && $cg__input_show && _patch_fill($scope0_id, "va8", input.boom, !_server_guard($scope0_reason, 3)));
 }, 1);

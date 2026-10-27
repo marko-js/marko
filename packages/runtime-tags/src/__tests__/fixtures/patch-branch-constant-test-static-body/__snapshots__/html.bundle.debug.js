@@ -9,7 +9,7 @@ _shells({
 	"__tests__/page.marko_2*shell": "__tests__/page.marko_2*shell,<p>last</p>"
 });
 var page_default = _template("__tests__/page.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_for_of(ITEMS, (m) => {
 		const $scope1_id = _scope_id();
@@ -21,9 +21,9 @@ var page_default = _template("__tests__/page.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, 0, void 0, void 0, void 0, ["__tests__/page.marko_2*shell"], 0, 0);
-		$scope0_page && _scope($scope1_id, {}, "__tests__/page.marko", "2:2");
+		_scope($scope1_id, {}, "__tests__/page.marko", "2:2");
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/page.marko_1*shell", 0, 0);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/page.marko", 0);
+	_scope($scope0_id, {}, "__tests__/page.marko", 0);
 });
 
 // template.marko
@@ -35,7 +35,7 @@ _shells({
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -43,9 +43,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
 			page_default({});
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:2");
+			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

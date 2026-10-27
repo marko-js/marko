@@ -14,13 +14,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (count < 2) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_resume($scope1_id, "#text/0", greeting, $scope0_page || _write_guard($scope0_reason, 0))} ${_text_resume($scope1_id, "#text/1", count, 2)}</span>`);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "4:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_fill_global_subscribe("__tests__/template.marko_0_input_name#4_$global_prefix#5", $scope0_id, _client_guard($scope0_reason, 0));
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_name: _unfilled_if($scope0_reason, 0) && input.name,
 		greeting,
 		count
@@ -28,5 +28,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_name: ["input.name"],
 		greeting: "1:8",
 		count: "2:6"
-	}) : _filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", greeting, !_server_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0));
+	}) || _filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", greeting, !_server_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0));
 }, 1);

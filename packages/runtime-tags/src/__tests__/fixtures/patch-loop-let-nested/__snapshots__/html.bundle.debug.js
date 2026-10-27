@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell !__tests__/template.marko_2;D l ;<span> </span><button>note</button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.items, (item) => {
@@ -21,13 +21,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<span>${_text_resume($scope2_id, "#text/0", notes)}</span><button>note</button>${_el_resume($scope2_id, "#button/1")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", notes, 1);
-				$scope0_page && _scope($scope2_id, { notes }, "__tests__/template.marko", "5:8", { notes: "6:14" });
+				_scope($scope2_id, { notes }, "__tests__/template.marko", "5:8", { notes: "6:14" });
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
 		_html("</li>");
-		$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "2:4");
+		_scope($scope1_id, {}, "__tests__/template.marko", "2:4");
 	}, "id", $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

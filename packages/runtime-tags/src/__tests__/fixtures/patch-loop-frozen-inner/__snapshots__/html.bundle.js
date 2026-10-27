@@ -12,13 +12,13 @@ var template_default = _template("a", (input) => {
 		if ($scope0_page) _for_of(inner, (i) => {
 			const $scope2_id = _scope_id();
 			_html(`<div>${_text_resume($scope2_id, "a", o)}${_escape(i)}</div>`);
-			$scope0_page && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
+			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 		}, 0, $scope1_id, "a", 1, 0, 0, 0, 1);
-		$scope0_page && _scope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a");
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		c: outer,
 		d: inner
 	});

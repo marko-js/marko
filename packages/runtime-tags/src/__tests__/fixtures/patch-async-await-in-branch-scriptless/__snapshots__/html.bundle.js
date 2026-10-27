@@ -7,7 +7,7 @@ _shells({
 	a3: "a3,<em>closed</em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -16,18 +16,18 @@ var template_default = _template("a", (input) => {
 			_await($scope1_id, "a", input.promise, (value) => {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 2)}</em>`);
-				$scope0_page && _scope($scope3_id, {});
+				_scope($scope3_id, {});
 			}, 1, "a0");
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a4");
-			$scope0_page && _write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
+			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
 			_html("<em>closed</em>");
-			$scope0_page && _write_if($scope0_reason, 1) && _scope($scope2_id, {});
+			_write_if($scope0_reason, 1) && _scope($scope2_id, {});
 			return 1;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a2", "a3"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
-	$scope0_page ? _scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.promise }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va5", input.promise, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.promise }) || _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va5", input.promise, !_server_guard($scope0_reason, 2));
 }, 1);

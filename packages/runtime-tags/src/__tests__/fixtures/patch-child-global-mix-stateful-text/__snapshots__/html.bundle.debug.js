@@ -4,7 +4,7 @@ const $walks$1 = "D l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/gm/index.marko": "__tests__/tags/gm/index.marko;D ;<p> </p>" });
 var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const z = input.v + $global$1.flag;
@@ -13,7 +13,7 @@ var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
 	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_z#4_$global_mark#7", $scope0_id);
 	$cg__input_v && _patch_write($scope0_id, "PatchWrite:input_v", input.v, 1);
 	_client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_write($scope0_id, "PatchWrite:z", z, 1);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_v: _unfilled_if($scope0_reason, 0) && input.v,
 		z: (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && z
 	}, "__tests__/tags/gm/index.marko", 0, {
@@ -39,11 +39,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_patch_child($scope1_id, "#childScope/0", 0);
 			gm_default({ v: "a" });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, { open }, "__tests__/template.marko", 0, { open: "1:6" });
+	_scope($scope0_id, { open }, "__tests__/template.marko", 0, { open: "1:6" });
 }, 1);

@@ -10,7 +10,7 @@ var badge_default = _template("b", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_script($scope0_id, "b1");
 	_patch_fill($scope0_id, "vb2", open, 1);
-	$scope0_page && _scope($scope0_id, { c: open });
+	_scope($scope0_id, { c: open });
 });
 
 // template.marko
@@ -23,5 +23,5 @@ var template_default = _template("a", (input) => {
 	_html(`<button class=a>s</button>${_el_resume($scope0_id, "a")}`);
 	if ($scope0_page) _if(() => {}, $scope0_id, "b");
 	_script($scope0_id, "a0");
-	$scope0_page && _scope($scope0_id, { c: show });
+	_scope($scope0_id, { c: show });
 }, 1);

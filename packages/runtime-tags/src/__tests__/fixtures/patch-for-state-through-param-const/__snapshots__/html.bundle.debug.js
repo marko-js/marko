@@ -13,10 +13,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _for_of(input.active ? shown : shown.slice(0, 1), (s) => {
 		const $scope1_id = _scope_id();
 		_html(`<div>${_escape(s.id)}</div>`);
-		$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "5:2");
+		_scope($scope1_id, {}, "__tests__/template.marko", "5:2");
 	}, "id", $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_active: input.active,
 		sessions: _write_if($scope0_reason, 0) && sessions,
 		ws,
@@ -26,5 +26,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		sessions: "1:6",
 		ws: "2:8",
 		shown: "3:8"
-	}) : (_filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.active, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", ws, !_server_guard($scope0_reason, 0)));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.active, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", ws, !_server_guard($scope0_reason, 0)));
 }, 1);

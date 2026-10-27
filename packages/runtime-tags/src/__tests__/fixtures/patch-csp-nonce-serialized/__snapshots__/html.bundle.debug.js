@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.page === 0) {
 			const $scope1_id = _scope_id();
 			_html("<p>a</p>");
-			$scope0_page && _write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
+			_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
@@ -25,15 +25,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(`<style${_attr_nonce()}>
       p {}
     </style>`);
-					$scope0_page && _scope($scope3_id, {}, "__tests__/template.marko", "7:4");
+					_scope($scope3_id, {}, "__tests__/template.marko", "7:4");
 					return 0;
 				}
 			}, $scope2_id, "#text/0", 1, 1, 0, 0, 1);
 			_script($scope2_id, "__tests__/template.marko_2");
 			_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", mounted, 1);
-			$scope0_page && _scope($scope2_id, {}, "__tests__/template.marko", "4:2");
+			_scope($scope2_id, {}, "__tests__/template.marko", "4:2");
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_1*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

@@ -18,22 +18,21 @@ var template_default = _template("a", (input) => {
 		_await($scope1_id, "a", input.promise, (value) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_patch_text($scope4_id, "a", value, void 0, $scope0_reason, 0)}</em>`);
-			$scope0_page && _scope($scope4_id, {});
+			_scope($scope4_id, {});
 		}, 1, "a3", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "a6" : "a7");
-		$scope0_page && $wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a7", 0);
+		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a7", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
-		const $scope2_page = _page_render();
 		const $scope2_id = _scope_id();
 		_html("<p>loading</p>");
 		if ($scope0_page) _if(() => {}, $scope2_id, "a", 1, 1, 0, 0, 1);
-		$scope2_page && _subscribe($n__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), "a2");
+		_subscribe($n__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), "a2");
 	}, void 0, "a8", void 0, "a5", 1);
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a9");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		g: n,
 		i: $n__closures,
 		h: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures

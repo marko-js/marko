@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/panel.marko_2*shell": "__tests__/tags/panel.marko_2*shell !__tests__/tags/panel.marko_2; D ;<button class=read> </button>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_y = _write_guard($scope0_reason, 2), $cg__input_a = _client_guard($scope0_reason, 1), $cg__input_y = _client_guard($scope0_reason, 2), $sg__input_a = _server_guard($scope0_reason, 1), $cg__input_x = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_y = _write_guard($scope0_reason, 2), $cg__input_a = _client_guard($scope0_reason, 1), $cg__input_y = _client_guard($scope0_reason, 2), $sg__input_a = _server_guard($scope0_reason, 1), $cg__input_x = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 1) && ($cg__input_x ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill0", input.a, !$sg__input_a) : _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !$sg__input_a));
 	let out = "";
@@ -25,14 +25,14 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 					_html(`<button class=read>${_patch_text($scope2_id, "#text/1", f(), void 0, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "#button/0")}`);
 					_script($scope2_id, "__tests__/tags/panel.marko_2");
 					$cg__input_a && _patch_init($scope2_id, "__tests__/tags/panel.marko_2_f#1:1/init");
-					$scope0_page && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "4:4");
+					_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "4:4");
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, $wg__input_y, void 0, void 0, void 0, ["__tests__/tags/panel.marko_2*shell"], $scope0_reason, 2);
 			_filled_guard($scope0_reason, 1) && ($cg__input_x || $cg__input_y) && _patch_effect($scope1_id, "PatchInit:__tests__/tags/panel.marko_2_f#1:1/init", "f");
 			$cg__input_a && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:5/init");
 			$cg__input_y && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_y#0:6/init");
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				f,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/tags/panel.marko", "2:2", { f: "3:10" });
@@ -40,13 +40,13 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 0);
 	_html(`<output>${_patch_text($scope0_id, "#text/1", out, void 0, 0, 0, 1)}</output>`);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_a: input.a,
 		input_y: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.y
 	}, "__tests__/tags/panel.marko", 0, {
 		input_a: ["input.a"],
 		input_y: ["input.y"]
-	}) : _filled_guard($scope0_reason, 2) && $cg__input_x && _patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill1", input.y, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && $cg__input_x && _patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill1", input.y, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
@@ -55,7 +55,7 @@ const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)($walks$1);
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0) => ` b/${_w0}&`)($walks$1)};${((_w0) => `<button class=toggle>toggle</button>${_w0}`)($template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let y = true;
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		y,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { y: "1:6" });

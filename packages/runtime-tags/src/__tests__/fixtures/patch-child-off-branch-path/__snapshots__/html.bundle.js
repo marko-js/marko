@@ -1,10 +1,10 @@
 // tags/note.marko
 _shells({ c: "c;D ;<p> </p>" });
 var note_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</p>`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // tags/toggle.marko
@@ -13,17 +13,17 @@ _shells({
 	d0: "d0,<i>on</i>"
 });
 var toggle_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.on) {
 			const $scope1_id = _scope_id();
 			_html("<i>on</i>");
-			$scope0_page && _write_if($scope0_reason, 0) && _scope($scope1_id, {});
+			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_on, void 0, void 0, void 0, ["d0"], $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // tags/card.marko
@@ -41,7 +41,7 @@ _shells({
 	b: "b !;b%b%;<!><!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $scope0_page = _page_render(), $cg__input_slow = _client_guard($scope0_reason, 1), $wi__input_slow = _write_if($scope0_reason, 1), $wg__input_other = _write_guard($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_other = _write_if($scope0_reason, 2), $cg__input_failing = _client_guard($scope0_reason, 3), $wi__input_failing = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_slow = _client_guard($scope0_reason, 1), $wi__input_slow = _write_if($scope0_reason, 1), $wg__input_other = _write_guard($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_other = _write_if($scope0_reason, 2), $cg__input_failing = _client_guard($scope0_reason, 3), $wi__input_failing = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_slow__closures = /* @__PURE__ */ new Set();
@@ -53,20 +53,19 @@ var card_default = _template("b", (input) => {
 		_await($scope2_id, "a", input.slow, (v) => {
 			const $scope5_id = _scope_id();
 			_html(`<em>${_patch_text($scope5_id, "a", v, void 0, $scope0_reason, 1)}</em>`);
-			$scope0_page && _scope($scope5_id, {});
+			_scope($scope5_id, {});
 		}, 1, "b3", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_slow ? "b8" : "b9");
-		$scope0_page && $wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), $cg__input_slow && "b9", 0);
+		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), $cg__input_slow && "b9", 0);
 		$wi__input_slow && _resume_branch($scope2_id);
 	}, () => {
 		_scope_reason();
-		const $scope1_page = _page_render();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 		const $childScope = _patch_child($scope1_id, "a", 0);
 		note_default({ label: input.label });
 		_patch_child_end();
-		$scope1_page && _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: $wi__input_label && _existing_scope($childScope)
 		}), "b0", $wg__input_label);
@@ -78,14 +77,13 @@ var card_default = _template("b", (input) => {
 		_await($scope4_id, "a", input.failing, (v) => {
 			const $scope7_id = _scope_id();
 			_html(`<em>${_patch_text($scope7_id, "a", v, void 0, $scope0_reason, 3)}</em>`);
-			$scope0_page && _scope($scope7_id, {});
+			_scope($scope7_id, {});
 		}, 1, "b1", 1);
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope4_id, $cg__input_failing ? "b13" : "b14");
-		$scope0_page && $wi__input_failing && _subscribe(_unfilled_if($scope0_reason, 3) && $input_failing__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }), $cg__input_failing && "b14", 0);
+		$wi__input_failing && _subscribe(_unfilled_if($scope0_reason, 3) && $input_failing__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }), $cg__input_failing && "b14", 0);
 		$wi__input_failing && _resume_branch($scope4_id);
 	}, void 0, () => {
 		_scope_reason();
-		const $scope3_page = _page_render();
 		const $scope3_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 		const $childScope2 = _patch_child($scope3_id, "a", 1);
@@ -94,23 +92,23 @@ var card_default = _template("b", (input) => {
 		_await($scope3_id, "b", input.other, (w) => {
 			const $scope6_id = _scope_id();
 			_html(`<b>${_text_resume($scope6_id, "a", w, $wg__input_other)}</b>`);
-			$scope3_page && $wi__input_other && _scope($scope6_id, {});
+			$wi__input_other && _scope($scope6_id, {});
 		}, $wg__input_other, "b2");
-		$scope3_page && _subscribe($wi__input_other && $input_other__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope3_id, {
+		_subscribe($wi__input_other && $input_other__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope3_id, {
 			_: _scope_with_id($scope0_id),
 			a: $wi__input_label && _existing_scope($childScope2),
 			Ci: $wi__input_label && 1
 		}), "b11", $wg__input_label), "b12", $wg__input_label);
 		$wg__input_label || _resume_branch($scope3_id);
 	}, void 0, "b15", "b5", 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.label,
 		g: input.other,
 		i: $wi__input_label && $input_label__closures,
 		j: $wi__input_slow && _unfilled_if($scope0_reason, 1) && $input_slow__closures,
 		k: $wi__input_other && $input_other__closures,
 		l: $wi__input_failing && _unfilled_if($scope0_reason, 3) && $input_failing__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb16", input.label, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 2) && _patch_fill($scope0_id, "vb17", input.other, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb16", input.label, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 2) && _patch_fill($scope0_id, "vb17", input.other, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -122,7 +120,7 @@ _shells({
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => ` D l%b/${_w0}&b`)($walks)};${((_w0) => `<button> </button><!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_slow = _client_guard($scope0_reason, 1), $wi__input_slow = _write_if($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_slow = _client_guard($scope0_reason, 1), $wi__input_slow = _write_if($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $n__closures = /* @__PURE__ */ new Set();
@@ -136,10 +134,10 @@ var template_default = _template("a", (input) => {
 		_await($scope2_id, "a", input.slow, (v) => {
 			const $scope3_id = _scope_id();
 			_html(`<em>${_patch_text($scope3_id, "a", v, void 0, $scope0_reason, 1)}</em>`);
-			$scope0_page && _scope($scope3_id, {});
+			_scope($scope3_id, {});
 		}, 1, "a2", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_slow ? "a5" : "a6");
-		$scope0_page && $wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), $cg__input_slow && "a6", 0);
+		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), $cg__input_slow && "a6", 0);
 		$wi__input_slow && _resume_branch($scope2_id);
 	}, () => {
 		_scope_reason();
@@ -156,7 +154,7 @@ var template_default = _template("a", (input) => {
 		const $childScope3 = _patch_child($scope1_id, "c", 2);
 		toggle_default({ on: n });
 		_patch_child_end();
-		$scope1_page && _subscribe($n__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe($n__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: $scope1_page && _existing_scope($childScope),
 			b: _existing_scope($childScope2),
@@ -174,7 +172,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_fill_global_subscribe("a8", $scope0_id);
 	_script($scope0_id, "a9");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		g: input.label,
 		k: brand,
 		l: n,
@@ -182,5 +180,5 @@ var template_default = _template("a", (input) => {
 		p: $n__closures,
 		n: $wi__input_slow && _unfilled_if($scope0_reason, 1) && $input_slow__closures,
 		d: _existing_scope($childScope4)
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va10", input.label, !_server_guard($scope0_reason, 0)), _patch_fill($scope0_id, "va11", brand));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va10", input.label, !_server_guard($scope0_reason, 0)), _patch_fill($scope0_id, "va11", brand));
 }, 1);

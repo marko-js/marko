@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_input_suffix#0:7/subscribe __tests__/template.marko_2_count#0:8/init __tests__/template.marko_2_input_suffix#0:7_count#0:8/init;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_suffix = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_suffix = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	const $count__closures = new Set();
@@ -19,16 +19,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_for_of(row.cells, (cell) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "#text/0", cell + ":" + input.suffix + "@" + count)}</p>`);
-			$scope0_page && _subscribe($count__closures, _subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, {
+			_subscribe($count__closures, _subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, {
 				"#LoopKey": cell,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "5:6", { "#LoopKey": "5:10" }), _client_guard($scope0_reason, 2) && "__tests__/template.marko_2_input_suffix#0:7/subscribe"), "__tests__/template.marko_2_count#0:8/subscribe");
 		}, (cell) => cell, $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 1);
-		$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
 	}, (row) => row.id, $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_suffix: input.suffix,
 		count,
 		"ClosureScopes:input_suffix/9": $wi__input_suffix && $input_suffix__closures,
@@ -36,5 +36,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_suffix: ["input.suffix"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 2) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.suffix, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.suffix, !_server_guard($scope0_reason, 2));
 }, 1);

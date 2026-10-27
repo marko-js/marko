@@ -13,17 +13,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (count > limit) {
 			const $scope1_id = _scope_id();
 			_html("<p>over</p>");
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "4:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		limit
 	}, "__tests__/template.marko", 0, {
 		count: "1:6",
 		limit: "2:8"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", limit, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", limit, !_server_guard($scope0_reason, 0));
 }, 1);

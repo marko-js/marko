@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1_input_img#0:10; ;<img>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<main><a${_patch_attrs({
@@ -23,19 +23,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "#img/0", $scope1_id, "img", void 0, $scope0_reason, 3)}>${_el_resume($scope1_id, "#img/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1_input_img#0:10");
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_img#0:10/init");
-			$scope0_page && _scope($scope1_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4", { "EventAttributes:#img/0": ["...input.img", "5:24"] });
+			_scope($scope1_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4", { "EventAttributes:#img/0": ["...input.img", "5:24"] });
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
 	_html(`<button>${_text_resume($scope0_id, "#text/4", count)}</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#7");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_img: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.img,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_img: ["input.img"],
 		count: "1:6",
 		"EventAttributes:#a/0": ["...input.attrs", "3:24"]
-	}) : (_filled_guard($scope0_reason, 3) && $cg__input_show && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.img, !_server_guard($scope0_reason, 3)), $cg__input_show && _content_withhold(input.img));
+	}) || (_filled_guard($scope0_reason, 3) && $cg__input_show && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.img, !_server_guard($scope0_reason, 3)), $cg__input_show && _content_withhold(input.img));
 }, 1);

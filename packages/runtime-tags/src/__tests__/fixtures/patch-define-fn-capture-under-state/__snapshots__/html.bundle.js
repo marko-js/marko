@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	let show = true;
 	const Show = { content: _content("a3", ({ v }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $sg__v = _server_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $sg__v = _server_guard($scope1_reason, 0);
 		_filled_guard($scope1_reason, 0) && _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "xd", v, !$sg__v);
 		const f = _bind_resume(function() {
 			return v;
@@ -20,15 +20,15 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<span>${_patch_text($scope3_id, "a", f(), void 0, $scope1_reason, 0)}</span>`);
 				_client_guard($scope1_reason, 0) && _patch_init($scope3_id, "a1");
-				$scope1_page && _scope($scope3_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) });
+				_scope($scope3_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) });
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_x, void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
-		$scope1_page ? _subscribe(_unfilled_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && v,
 			e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && f,
 			_: _scope_with_id($scope0_id)
-		}), "a5", $wg__input_x) : _filled_guard($scope1_reason, 0) && _client_guard($scope0_reason, 0) && _patch_fill($scope1_id, "va4", f, !$sg__v);
+		}), "a5", $wg__input_x) || _filled_guard($scope1_reason, 0) && _client_guard($scope0_reason, 0) && _patch_fill($scope1_id, "va4", f, !$sg__v);
 		$wg__input_x || _resume_branch($scope1_id);
 	}, $scope0_id) };
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
@@ -39,15 +39,15 @@ var template_default = _template("a", (input) => {
 			const $childScope = _patch_child($scope2_id, "a", 0);
 			Show.content({ v: input.a });
 			_patch_child_end();
-			$scope0_page && _scope($scope2_id, { a: _write_if($scope0_reason, 1) && _existing_scope($childScope) });
+			_scope($scope2_id, { a: _write_if($scope0_reason, 1) && _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "b");
 	_script($scope0_id, "a6");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.x,
 		f: input.a,
 		g: show,
 		h: _write_if($scope0_reason, 0) && $input_x__closures
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va7", input.x, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va8", input.a, !_server_guard($scope0_reason, 1)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va7", input.x, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va8", input.a, !_server_guard($scope0_reason, 1)));
 }, 1);

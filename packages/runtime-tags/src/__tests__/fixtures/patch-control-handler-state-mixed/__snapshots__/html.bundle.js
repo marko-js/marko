@@ -4,7 +4,7 @@ _shells({
 	a4: "a4 a8!a1; bD ;<input><span> </span>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let s = 0;
 	const cm = `${input.a}:${s}`;
@@ -18,15 +18,15 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope1_id), void 0, void 0, void 0, "wEa")}>${_el_resume($scope1_id, "a")}<span>${_patch_text($scope1_id, "b", cv, void 0, 0, 0, 1)}</span>`);
 		_script($scope1_id, "a1");
 		_patch_effect($scope1_id, "ia3", ">j", _filled_guard($scope0_reason, 1) && "e");
-		$scope0_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			e: it?.v,
 			_: _scope_with_id($scope0_id)
 		});
 	}, "id", $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "a4", $scope0_reason, 1);
 	_script($scope0_id, "a5");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.a,
 		h: s,
 		j: _write_if($scope0_reason, 1) && cm
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va6", input.a, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va6", input.a, !_server_guard($scope0_reason, 0));
 }, 1);

@@ -8,7 +8,7 @@ const $setup = [[], [
 ]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0_input_c#10 __tests__/template.marko_0_input_a#8 __tests__/template.marko_0; D D lb lD l ;<select><option> </option><option value=b>b</option><option>c</option></select><span> </span><button>t</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let v = "b";
 	_patch_select_value($scope0_id, "#select/0", v, _resume((_new_v) => {
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_input_c#10");
 	_script($scope0_id, "__tests__/template.marko_0_input_a#8");
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, { v }, "__tests__/template.marko", 0, {
+	_scope($scope0_id, { v }, "__tests__/template.marko", 0, {
 		v: "1:6",
 		"ControlledHandler:#select/0": ["valueChange"],
 		"EventAttributes:#option/1": ["...input.a", "3:14"],

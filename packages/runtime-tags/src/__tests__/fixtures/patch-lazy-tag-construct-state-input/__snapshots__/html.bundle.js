@@ -3,10 +3,10 @@ const $template = "<span> </span>";
 const $setup = [[], []];
 _shells({ a: "a;D ;<span> </span>" });
 var child_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<span>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</span>`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -16,7 +16,7 @@ _shells({
 	b0: /*@__PURE__*/ (() => `b0${_shell_marker(_shell_setup([["b4"], []], ["b>", $setup]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D l")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=n>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}<main>`);
@@ -27,7 +27,7 @@ var template_default = _template("b", (input) => {
 			const $childScope = _patch_child($scope1_id, "b", 0);
 			$Child_withLoadAssets({ label: `${input.label}${n}` });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				b: _existing_scope($childScope)
 			});
@@ -36,8 +36,8 @@ var template_default = _template("b", (input) => {
 	}, $scope0_id, "c", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "c", $wg__input_show)}`);
 	_script($scope0_id, "b1");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		g: input.label,
 		h: n
-	}) : _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb2", input.label, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb2", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

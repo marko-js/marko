@@ -15,7 +15,7 @@ import {
   RenderDataProp,
   RendererProp,
 } from "../../common/types";
-import { K_SCOPE_ID, REGISTRY } from "../serializer";
+import { K_SCOPE_ID, REGISTRY, setDebugInfo } from "../serializer";
 import type { ServerRenderer } from "../template";
 import {
   type Boundary,
@@ -30,8 +30,9 @@ import {
   _var as _base_var,
   _html,
   _peek_scope_id,
+  _existing_scope as _base_existing_scope,
   _resume,
-  _scope,
+  _scope as _base_scope,
   _script,
   getChunk,
   getState,
@@ -370,7 +371,7 @@ export function linkScopePatch(
   } else if (scopeId === ROOT_SCOPE_ID) {
     // Every other patch nests inside an ancestor's structural entry rooted
     // here (`queueScope` is patch-inert, so the root registers directly).
-    _scope(scopeId, patch);
+    _base_scope(scopeId, patch);
     // A lazy module is named only by the flush that first needs it.
     state.patchFlushReadyIds = undefined;
     const { channel } = getChunk()!;
@@ -1181,6 +1182,27 @@ export function _subscribe(
   return getState() instanceof PatchRenderState
     ? scope
     : _base_subscribe(subscribers, scope, resumeId || undefined, markerGuard);
+}
+
+// A patch render resumes no scope: its writes stop before main's, which count
+// resume writes and owe async visits.
+export function _scope(
+  scopeId: number,
+  partialScope: PartialScope,
+  file?: string,
+  loc?: string | 0,
+  vars?: Parameters<typeof setDebugInfo>[3],
+): ScopeInternals | undefined {
+  if (!(getState() instanceof PatchRenderState)) {
+    // Main's debug `_scope` takes the debug arguments its type leaves out.
+    return MARKO_DEBUG
+      ? (_base_scope as typeof _scope)(scopeId, partialScope, file, loc, vars)
+      : _base_scope(scopeId, partialScope);
+  }
+}
+
+export function _existing_scope(scopeId: number) {
+  return _scope(scopeId, {});
 }
 
 // Names the wiring `_patch_child` placed in a created child's setup.

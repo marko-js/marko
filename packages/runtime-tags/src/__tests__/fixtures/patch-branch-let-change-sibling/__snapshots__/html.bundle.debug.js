@@ -27,7 +27,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_store_set#0:11/init!__tests__/template.marko_1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, 1);
 	let store = store_default({});
@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $countChange = store.set || void 0;
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", count, 1);
 			_patch_bind($scope1_id, "PatchWrite:TagVariableChange:count", $countChange);
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				count,
 				_: _scope_with_id($scope0_id),
 				"TagVariableChange:count": $countChange
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/4", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		store_set: _write_if($scope0_reason, 1) && store?.set,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { store_set: ["store.set", "1:8"] });

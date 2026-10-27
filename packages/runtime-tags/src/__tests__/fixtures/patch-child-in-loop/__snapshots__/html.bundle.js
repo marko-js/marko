@@ -1,10 +1,10 @@
 // tags/badge/index.marko
 _shells({ b: "b;D ;<em> </em>" });
 var badge_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<em>${_patch_text($scope0_id, "a", input.text, void 0, $scope0_reason, 0)}</em>`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -22,12 +22,12 @@ var template_default = _template("a", (input) => {
 		badge_default({ text: input.note });
 		_patch_child_end();
 		_html("</li>");
-		$scope0_page && _scope($scope1_id, { b: _write_if($scope0_reason, 0) && _existing_scope($childScope) });
+		_scope($scope1_id, { b: _write_if($scope0_reason, 0) && _existing_scope($childScope) });
 	}, 0, $scope0_id, "a", 1, 1, 1, "</ul>", 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.note,
 		f: items
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.note, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.note, !_server_guard($scope0_reason, 0));
 }, 1);

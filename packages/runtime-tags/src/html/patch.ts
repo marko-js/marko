@@ -29,8 +29,10 @@ export {
 } from "./patches/dynamic-tag";
 export { _template_patch as _template } from "./patches/template";
 export {
+  _existing_scope,
   _id,
   _resume_locals,
+  _scope,
   _subscribe,
   _var,
   _write_guard,

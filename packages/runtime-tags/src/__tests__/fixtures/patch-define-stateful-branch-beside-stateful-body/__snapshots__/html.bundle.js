@@ -7,16 +7,16 @@ var template_default = _template("a", (input) => {
 	let shown = true;
 	const Panel = { content: _content_resume("a0", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__label = _write_guard($scope2_reason, 2), $scope2_page = _page_render(), $wg__isOpen = _write_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason(), $wg__label = _write_guard($scope2_reason, 2), $wg__isOpen = _write_guard($scope2_reason, 1);
 		if ($scope0_page) _if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_text_resume($scope3_id, "a", label, $wg__label)}</em>`);
-				$scope2_page && _write_if($scope2_reason, 0) && _scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) });
+				_write_if($scope2_reason, 0) && _scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) });
 				return 0;
 			}
 		}, $scope2_id, "a", _write_guard($scope2_reason, 0), $wg__isOpen, 0, 0, 1);
-		$scope2_page && _write_if($scope2_reason, 1) && _scope($scope2_id, { e: label });
+		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: label });
 	}, $scope0_id) };
 	if ($scope0_page) _if(() => {
 		{
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 				label: input.label
 			});
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });
+			_scope($scope1_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "a");
@@ -39,11 +39,11 @@ var template_default = _template("a", (input) => {
 	}, 8);
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "c")}<button>shown</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a1");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		g: input.label,
 		i: open,
 		j: shown,
 		k: _unfilled_if($scope0_reason, 1) && Panel,
 		m: Tag
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", input.label, !_server_guard($scope0_reason, 0)), _content_withhold(input.label), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va3", Tag, !_server_guard($scope0_reason, 1)), _content_withhold(Tag));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", input.label, !_server_guard($scope0_reason, 0)), _content_withhold(input.label), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va3", Tag, !_server_guard($scope0_reason, 1)), _content_withhold(Tag));
 }, 1);

@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a1 a2 a3; D D lb lD l ;<select><option> </option><option value=b>b</option><option>c</option></select><span> </span><button>t</button>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let v = "b";
 	_patch_select_value($scope0_id, "a", v, _resume((_new_v) => {
@@ -16,5 +16,5 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	_script($scope0_id, "a3");
-	$scope0_page && _scope($scope0_id, { l: v });
+	_scope($scope0_id, { l: v });
 }, 1);

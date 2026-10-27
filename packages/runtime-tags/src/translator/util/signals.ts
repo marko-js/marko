@@ -153,8 +153,6 @@ import {
   getBranchWriteReason,
   getWriteReason,
   isSameReason,
-  getReasonSection,
-  scopePageIdentifier,
   getSlotWriteReason,
   getSectionWriteReason,
   getEmittedReasonStatement,
@@ -2560,36 +2558,17 @@ export function writeHTMLResumeStatements(
     const write = scopeGuardsReason
       ? getExprIfWritten(section, sectionReason, writeCall)
       : writeCall;
-    const fills = fillCalls.length && isKnownChild(section);
+    // A known child's fills take its write's place in a patch render, where
+    // `_scope` writes nothing.
     body.push(
       t.expressionStatement(
-        // A known child's fills take its write's place in a patch render.
-        fills
-          ? t.conditionalExpression(
-              scopePageIdentifier(section),
-              write,
-              toSequenceExpression(fillCalls),
-            )
-          : scopeGuardsReason && !patches
-            ? write
-            : // A patch render reads no scope write: its page guard skips building one.
-              t.logicalExpression(
-                "&&",
-                scopePageIdentifier(getReasonSection(section)),
-                write,
-              ),
+        fillCalls.length && isKnownChild(section)
+          ? t.logicalExpression("||", write, toSequenceExpression(fillCalls))
+          : write,
       ),
     );
   } else if (fillCalls.length) {
-    body.push(
-      t.expressionStatement(
-        t.logicalExpression(
-          "||",
-          scopePageIdentifier(section),
-          toSequenceExpression(fillCalls),
-        ),
-      ),
-    );
+    body.push(t.expressionStatement(toSequenceExpression(fillCalls)));
   }
 
   const resumeClosestBranch =

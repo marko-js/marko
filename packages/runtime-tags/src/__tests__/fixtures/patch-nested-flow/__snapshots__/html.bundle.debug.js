@@ -4,13 +4,13 @@ const $walks$1 = "E%c%l l";
 const $setup$1 = [[], ["__tests__/tags/badge.marko_0"]];
 _shells({ "__tests__/tags/badge.marko": "__tests__/tags/badge.marko !__tests__/tags/badge.marko_0;E%c%l ;<footer><span><!> (<!>)</span><button>ack</button></footer>" });
 var badge_default = _template("__tests__/tags/badge.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let seen = 0;
 	_html(`<footer><span>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)} (${_text_resume($scope0_id, "#text/1", seen, 2)})</span><button>ack</button>${_el_resume($scope0_id, "#button/2")}</footer>`);
 	_script($scope0_id, "__tests__/tags/badge.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/badge.marko_fill0", seen, 1);
-	$scope0_page && _scope($scope0_id, { seen }, "__tests__/tags/badge.marko", 0, { seen: "1:6" });
+	_scope($scope0_id, { seen }, "__tests__/tags/badge.marko", 0, { seen: "1:6" });
 });
 
 // template.marko
@@ -25,7 +25,7 @@ _shells({
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell,<em>on sale</em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_detail = _client_guard($scope0_reason, 3), $wi__input_summary__OR__input_detail = _write_if($scope0_reason, 0), $cg__input_summary = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_detail = _client_guard($scope0_reason, 3), $wi__input_summary__OR__input_detail = _write_if($scope0_reason, 0), $cg__input_summary = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_detail__closures = new Set();
 	_html("<main><ul>");
@@ -36,12 +36,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (item.sale) {
 				const $scope4_id = _scope_id();
 				_html("<em>on sale</em>");
-				$scope0_page && _write_if($scope0_reason, 1) && _scope($scope4_id, {}, "__tests__/template.marko", "6:10");
+				_write_if($scope0_reason, 1) && _scope($scope4_id, {}, "__tests__/template.marko", "6:10");
 				return 0;
 			}
 		}, $scope3_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
 		_html("</li>");
-		$scope0_page && _scope($scope3_id, {}, "__tests__/template.marko", "3:6");
+		_scope($scope3_id, {}, "__tests__/template.marko", "3:6");
 	}, "id", $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 1);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	_if(() => {
@@ -53,14 +53,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope2_id = _scope_id();
 					_html(`<small>${_patch_text($scope2_id, "#text/0", input.detail, void 0, $scope0_reason, 3)}</small>`);
 					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_detail ? "__tests__/template.marko_2_input_detail#0:7/init" : "__tests__/template.marko_2_input_detail#0:7/subscribe");
-					$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_detail__closures, _scope($scope2_id, { _: $wi__input_summary__OR__input_detail && _scope_with_id($scope1_id) }, "__tests__/template.marko", "15:8"), $cg__input_detail && "__tests__/template.marko_2_input_detail#0:7/subscribe");
+					_subscribe(_unfilled_if($scope0_reason, 3) && $input_detail__closures, _scope($scope2_id, { _: $wi__input_summary__OR__input_detail && _scope_with_id($scope1_id) }, "__tests__/template.marko", "15:8"), $cg__input_detail && "__tests__/template.marko_2_input_detail#0:7/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 3), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
 			_html("</section>");
 			$cg__input_summary && _patch_init($scope1_id, "__tests__/template.marko_1_input_summary#0:6/init");
 			$cg__input_detail && _patch_init($scope1_id, "__tests__/template.marko_1_input_detail#0:7/init");
-			$scope0_page && _scope($scope1_id, { _: $wi__input_summary__OR__input_detail && _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:4");
+			_scope($scope1_id, { _: $wi__input_summary__OR__input_detail && _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
@@ -69,9 +69,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	badge_default({ label: input.badge });
 	_patch_child_end();
 	_html("</main>");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_detail: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.detail,
 		"ClosureScopes:input_detail/10": _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_detail__closures,
 		"#childScope/2": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_detail: ["input.detail"] }) : _filled_guard($scope0_reason, 3) && $cg__input_summary && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.detail, !_server_guard($scope0_reason, 3));
+	}, "__tests__/template.marko", 0, { input_detail: ["input.detail"] }) || _filled_guard($scope0_reason, 3) && $cg__input_summary && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.detail, !_server_guard($scope0_reason, 3));
 }, 1);

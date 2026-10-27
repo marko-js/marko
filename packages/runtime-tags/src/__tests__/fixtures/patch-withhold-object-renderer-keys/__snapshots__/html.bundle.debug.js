@@ -12,19 +12,19 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "#text/0", input.content, { class: "x" }, 0, 0, 0, $wg__input_content);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/tags/card.marko", "3:2");
+			_scope($scope1_id, {}, "__tests__/tags/card.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill1", open, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_content: input.content,
 		open
 	}, "__tests__/tags/card.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
 });
 
 // tags/holder.marko
@@ -36,7 +36,7 @@ _shells({
 	"__tests__/tags/holder.marko": "__tests__/tags/holder.marko; ;<section></section>"
 });
 var holder_default = _template("__tests__/tags/holder.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_mode = _client_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_mode = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const frag = { content: _content_resume("__tests__/tags/holder.marko_1*content", () => {
 		const $scope1_id = _scope_id();
@@ -48,7 +48,7 @@ var holder_default = _template("__tests__/tags/holder.marko", (input) => {
 	_html(`</section>${_el_resume($scope0_id, "#section/0", _mask_group($scope0_reason, 0))}`);
 	$cg__input_mode && _patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
 	$cg__input_mode && _patch_init($scope0_id, "__tests__/tags/holder.marko_0_input_mode#3_frag_content#5/init");
-	$scope0_page && _scope($scope0_id, { frag_content: _unfilled_if($scope0_reason, 0) && frag?.content }, "__tests__/tags/holder.marko", 0, { frag_content: ["frag.content", "1:9"] });
+	_scope($scope0_id, { frag_content: _unfilled_if($scope0_reason, 0) && frag?.content }, "__tests__/tags/holder.marko", 0, { frag_content: ["frag.content", "1:9"] });
 });
 
 // template.marko
@@ -71,14 +71,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<main>");
 	_dynamic_tag($scope0_id, "#text/1", input.on ? card_default : "div", {}, 10, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
+		const $scope1_reason = _scope_reason();
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_reason, 3)}</em>`);
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, _client_guard($scope0_reason, 3) ? "__tests__/template.marko_1_input_note#0:7/init" : "__tests__/template.marko_1_input_note#0:7/subscribe");
-		$scope1_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:6"));
+		_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:6"));
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_note: input.note }] : []), 0, _write_guard($scope0_reason, 2), $scope0_reason, 2);
 	_html(`</main><button class=m>m</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_mode: input.mode,
 		input_note: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.note,
 		m,
@@ -88,5 +88,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_mode: ["input.mode"],
 		input_note: ["input.note"],
 		m: "3:6"
-	}) : (_filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.mode, !_server_guard($scope0_reason, 1)), _content_withhold(input.mode), _filled_guard($scope0_reason, 3) && _content_withheld("__tests__/template.marko_1*content", $scope0_id) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.note, !_server_guard($scope0_reason, 3)));
+	}) || (_filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.mode, !_server_guard($scope0_reason, 1)), _content_withhold(input.mode), _filled_guard($scope0_reason, 3) && _content_withheld("__tests__/template.marko_1*content", $scope0_id) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.note, !_server_guard($scope0_reason, 3)));
 }, 1);

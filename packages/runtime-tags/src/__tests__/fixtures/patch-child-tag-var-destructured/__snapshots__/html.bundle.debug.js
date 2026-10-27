@@ -5,7 +5,7 @@ const $setup$1 = [[], []];
 _shells({ "__tests__/tags/counter/index.marko": "^__tests__/tags/counter/index.marko !;Db%;<span>box <!></span>" });
 _stateful_return("__tests__/tags/counter/index.marko");
 var counter_default = _template("__tests__/tags/counter/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 1;
 	_html(`<span>box ${_text_resume($scope0_id, "#text/0", count, 2)}</span>`);
@@ -16,7 +16,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 		}, "__tests__/tags/counter/index.marko_0/_return", $scope0_id)
 	};
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter/index.marko_fill0", count, 1);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/counter/index.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/counter/index.marko", 0);
 	return $return;
 });
 
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_patch_child_end();
 			_html(`<p>${_text_resume($scope1_id, "#text/2", value)}</p><button class=reset>r</button>${_el_resume($scope1_id, "#button/3")}`);
 			_script($scope1_id, "__tests__/template.marko_1_$valueChange#6");
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				$valueChange,
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/template.marko", "3:4", { $valueChange: "6:31" });
@@ -48,5 +48,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0");
 	_html(`<button class=toggle>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
+	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
 }, 1);

@@ -5,7 +5,7 @@ _shells({
 	a3: "a3 !a4;Db%l ;<p class=pb>B <!></p><button class=bb>+</button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_if(() => {
@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 			_html(`<p class=pa>A ${_text_resume($scope1_id, "a", x, 2)}</p><button class=ba>+</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a0");
 			_patch_fill($scope1_id, "va1", x, 1);
-			$scope0_page && _scope($scope1_id, { c: x });
+			_scope($scope1_id, { c: x });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
@@ -26,10 +26,10 @@ var template_default = _template("a", (input) => {
 			_html(`<p class=pb>B ${_text_resume($scope2_id, "a", y, 2)}</p><button class=bb>+</button>${_el_resume($scope2_id, "b")}`);
 			_script($scope2_id, "a4");
 			_patch_fill($scope2_id, "va5", y, 1);
-			$scope0_page && _scope($scope2_id, { c: y });
+			_scope($scope2_id, { c: y });
 			return 0;
 		}
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["a3"], $scope0_reason, 2);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

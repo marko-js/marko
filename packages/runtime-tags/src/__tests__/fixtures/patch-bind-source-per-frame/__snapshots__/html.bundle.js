@@ -7,7 +7,7 @@ _shells({
 	a: "a;D%b%bD ;<main><!><!><em> </em></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $scope0_page = _page_render(), $wi__input_title = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $handler2__closures = /* @__PURE__ */ new Set();
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a2");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a3");
 		$cg__input_title && _patch_init($scope1_id, "a4");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, {}), $cg__input_title && "a2"), $cg__input_title && "a3");
+		_subscribe(_unfilled_if($scope0_reason, 0) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, {}), $cg__input_title && "a2"), $cg__input_title && "a3");
 	}, 1, "a6", 1, 1);
 	_await($scope0_id, "b", input.two, () => {
 		const $scope2_id = _scope_id();
@@ -39,13 +39,13 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a10");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a11");
 		$cg__input_title && _patch_init($scope2_id, "a12");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, {
 			Ck: $wi__input_title && 1,
 			Cl: $wi__input_title && 1
 		}), $cg__input_title && "a10"), $cg__input_title && "a11");
 	}, 1, "a5", 1, 1);
 	_html(`<em>${_patch_text($scope0_id, "c", count, void 0, 0, 0)}</em></main>`);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.title,
 		k: $wi__input_title && $input_title__closures,
 		l: $wi__input_title && _unfilled_if($scope0_reason, 0) && $handler2__closures

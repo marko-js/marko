@@ -4,7 +4,7 @@ _shells({
 	a0: "a0 a4;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -13,14 +13,14 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			const mixed = input.title + "@0";
 			_html(`<p>${_text_resume($scope1_id, "a", mixed)}</p>`);
-			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a0"], $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.title,
 		g: count
-	}) : _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va2", input.title, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va2", input.title, !_server_guard($scope0_reason, 1));
 }, 1);

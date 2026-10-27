@@ -24,7 +24,7 @@ _shells({
 	a3: "a3 a9!a1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	_for_of(["x", "y"], (name) => {
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 					const $countChange = store.set || void 0;
 					_patch_fill($scope3_id, "va2", count, 1);
 					_patch_bind($scope3_id, "wd", $countChange);
-					$scope0_page && _subscribe($for_content__store_set__closures, _scope($scope3_id, {
+					_subscribe($for_content__store_set__closures, _scope($scope3_id, {
 						c: count,
 						_: _scope_with_id($scope2_id),
 						d: $countChange
@@ -58,13 +58,13 @@ var template_default = _template("a", (input) => {
 			$cg__input_show && _patch_write($scope2_id, "wc", other, 1);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a6");
 			$cg__input_show && _patch_init($scope2_id, "a7");
-			$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
+			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
 				c: _unfilled_if($scope0_reason, 0) && other,
 				_: _scope_with_id($scope1_id)
 			}), $cg__input_show && "a6", $wg__input_show);
 		}, 0, $scope1_id, "h", 1, void 0, void 0, void 0, void 0, "a5", 0, 0);
 		$cg__input_show && _patch_write($scope1_id, "wj", name, 1);
-		$scope0_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			j: _unfilled_if($scope0_reason, 0) && name,
 			m: $wi__input_show && store?.set,
 			_: $wi__input_show && _scope_with_id($scope0_id),
@@ -72,5 +72,5 @@ var template_default = _template("a", (input) => {
 			p: $for_content__store_set__closures
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a4", 0, 0);
-	$scope0_page && _scope($scope0_id, { e: $wi__input_show && _unfilled_if($scope0_reason, 0) && $input_show__closures });
+	_scope($scope0_id, { e: $wi__input_show && _unfilled_if($scope0_reason, 0) && $input_show__closures });
 }, 1);

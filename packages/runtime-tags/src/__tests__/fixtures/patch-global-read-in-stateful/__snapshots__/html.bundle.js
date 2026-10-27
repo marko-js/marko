@@ -12,10 +12,10 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "a", $global$1.brand, $scope0_page)}</em>`);
 			_fill_global_subscribe("a0", $scope1_id, 1);
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, { c: on });
+	_scope($scope0_id, { c: on });
 }, 1);

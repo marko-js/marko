@@ -4,7 +4,7 @@ _shells({
 	a3: "a3 !a1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let last = 0;
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "b", last, 2)}</p>`);
@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 				last = next;
 			}, "a0", $scope1_id) || void 0;
 			_patch_let_change($scope1_id, "va2", count, "wd", $countChange);
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				c: count,
 				_: _scope_with_id($scope0_id),
 				d: $countChange
@@ -27,5 +27,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a3"], $scope0_reason, 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

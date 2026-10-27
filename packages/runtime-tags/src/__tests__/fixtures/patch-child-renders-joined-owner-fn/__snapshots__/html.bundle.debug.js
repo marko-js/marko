@@ -4,12 +4,12 @@ const $walks$1 = "D l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/label-view.marko": "__tests__/tags/label-view.marko !;D ;<p> </p>" });
 var label_view_default = _template("__tests__/tags/label-view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const get = input.flag ? input.a : input.b;
 	_html(`<p>${_patch_text($scope0_id, "#text/0", get(), void 0, $scope0_reason, 3)}</p>`);
 	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "__tests__/tags/label-view.marko_0_input_flag#3_input_a#4_input_b#5/init");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_flag: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.flag,
 		input_a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.a,
 		input_b: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.b
@@ -17,7 +17,7 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 		input_flag: ["input.flag"],
 		input_a: ["input.a"],
 		input_b: ["input.b"]
-	}) : (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/label-view.marko_fill0", input.flag, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/label-view.marko_fill1", input.a, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/label-view.marko_fill2", input.b, !_server_guard($scope0_reason, 6)));
+	}) || (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/label-view.marko_fill0", input.flag, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/label-view.marko_fill1", input.a, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/label-view.marko_fill2", input.b, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>more</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_title: input.title,
 		n,
 		"#childScope/0": _existing_scope($childScope)

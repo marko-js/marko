@@ -12,19 +12,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = false;
 	const Panel = { content: _content("__tests__/template.marko_1*content", ({ label }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0), $scope1_page = _page_render();
+		const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0);
 		if ($scope0_page) _if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_resume($scope2_id, "#text/0", label, $wg__label)}</em>`);
-				$scope1_page && _scope($scope2_id, {}, "__tests__/template.marko", "3:4");
+				_scope($scope2_id, {}, "__tests__/template.marko", "3:4");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
-		$scope1_page ? _subscribe($open__closures, _scope($scope1_id, {
+		_subscribe($open__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "2:2", { label: "2:17" }), "__tests__/template.marko_1_open#0:5/subscribe") : _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", label, !_server_guard($scope1_reason, 0));
+		}, "__tests__/template.marko", "2:2", { label: "2:17" }), "__tests__/template.marko_1_open#0:5/subscribe") || _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", label, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		open,
 		"ClosureScopes:open/6": $open__closures,
 		"#childScope/0": _existing_scope($childScope)

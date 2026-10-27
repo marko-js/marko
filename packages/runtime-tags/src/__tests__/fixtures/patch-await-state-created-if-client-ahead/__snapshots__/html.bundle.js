@@ -3,13 +3,13 @@ const $template = "<button class=child><!>:<!></button>";
 const $walks = " D%c%l";
 _shells({ a: "a !a0; D%c%;<button class=child><!>:<!></button>" });
 var lazy_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=child>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_patch_fill($scope0_id, "va1", count, 1);
-	$scope0_page && _scope($scope0_id, { g: count });
+	_scope($scope0_id, { g: count });
 });
 
 // template.marko
@@ -20,7 +20,7 @@ _shells({
 	b2: "b2 b8 b9;b%;<!><!><!>"
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -35,19 +35,19 @@ var template_default = _template("b", (input) => {
 				$Lazy_withLoadAssets({ label: input.label + x });
 				_patch_child_end();
 				_script($scope2_id, "b0");
-				$scope0_page && _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {
+				_subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {
 					d: x,
 					b: _existing_scope($childScope)
 				}), "b1");
 			}, 1, 0);
-			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b2"], $scope0_reason, 0);
 	_script($scope0_id, "b4");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.label,
 		g: n,
 		h: $wi__input_label && $input_label__closures
-	}) : _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb5", input.label, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb5", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

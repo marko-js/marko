@@ -11,5 +11,5 @@ var template_default = _template("a", (input) => {
 	_fill_global_subscribe("a1", $scope0_id, 1);
 	_fill_global_subscribe("a2", $scope0_id, 1);
 	_script($scope0_id, "a3");
-	$scope0_page && _scope($scope0_id, { e: count });
+	_scope($scope0_id, { e: count });
 }, 1);

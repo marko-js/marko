@@ -4,7 +4,7 @@ const $walks$3 = "D D mD%l";
 const $setup$3 = [[], ["__tests__/layout.marko_0"]];
 _shells({ "__tests__/layout.marko": "__tests__/layout.marko !__tests__/layout.marko_0;D D mD%;<header><button> </button></header><main><!></main>" });
 var layout_default = _template("__tests__/layout.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<header><button>${_text_resume($scope0_id, "#text/1", open ? "close" : "open")}</button>${_el_resume($scope0_id, "#button/0")}</header><main>`);
@@ -12,7 +12,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 	_html("</main>");
 	_script($scope0_id, "__tests__/layout.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/layout.marko_fill0", open, 1);
-	$scope0_page && _scope($scope0_id, { open }, "__tests__/layout.marko", 0, { open: "1:6" });
+	_scope($scope0_id, { open }, "__tests__/layout.marko", 0, { open: "1:6" });
 });
 
 // page-a.marko
@@ -21,13 +21,13 @@ const $walks$2 = " Db%l";
 const $setup$2 = [[], ["__tests__/page-a.marko_0"]];
 _shells({ "__tests__/page-a.marko": "__tests__/page-a.marko !__tests__/page-a.marko_0; Db%;<button class=a>a:<!></button>" });
 var page_a_default = _template("__tests__/page-a.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=a>a:${_text_resume($scope0_id, "#text/1", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/page-a.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/page-a.marko_fill0", count, 1);
-	$scope0_page && _scope($scope0_id, { count }, "__tests__/page-a.marko", 0, { count: "1:6" });
+	_scope($scope0_id, { count }, "__tests__/page-a.marko", 0, { count: "1:6" });
 });
 
 // page-b.marko
@@ -36,7 +36,7 @@ const $walks$1 = " Db%c%c%l";
 const $setup$1 = [[], ["__tests__/page-b.marko_0"]];
 _shells({ "__tests__/page-b.marko": "__tests__/page-b.marko !__tests__/page-b.marko_0; Db%c%c%;<button class=b>b:<!>:<!>:<!></button>" });
 var page_b_default = _template("__tests__/page-b.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$2 = $global();
 	const [q, issues] = $global$2.search;
@@ -45,7 +45,7 @@ var page_b_default = _template("__tests__/page-b.marko", (input) => {
 	_fill_global_subscribe("__tests__/page-b.marko_0_$global_search#6", $scope0_id);
 	_script($scope0_id, "__tests__/page-b.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/page-b.marko_fill0", count, 1);
-	$scope0_page && _scope($scope0_id, { count }, "__tests__/page-b.marko", 0, { count: "2:6" });
+	_scope($scope0_id, { count }, "__tests__/page-b.marko", 0, { count: "2:6" });
 });
 
 // template.marko
@@ -60,14 +60,14 @@ _shells({
 	"__tests__/template.marko_3*shell": /*@__PURE__*/ (() => `__tests__/template.marko_3*shell${_shell_marker(_shell_setup([[], []], ["#childScope/1>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 0), $wi__input_page = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 0), $wi__input_page = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_page__closures = new Set();
 	const $global$1 = $global();
 	_set_scope_reason(0);
 	const $childScope3 = _patch_child($scope0_id, "#childScope/0", 1);
 	layout_default({ content: _content("__tests__/template.marko_1*content", () => {
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (input.page <= 0) {
@@ -75,23 +75,23 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $childScope = _patch_child($scope2_id, "#childScope/1", 0);
 				$PageA_withLoadAssets({});
 				_patch_child_end();
-				$scope1_page && _scope($scope2_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "7:4");
+				_scope($scope2_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "7:4");
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
 				const $childScope2 = _patch_child($scope3_id, "#childScope/1", 0);
 				$PageB_withLoadAssets({});
 				_patch_child_end();
-				$scope1_page && _scope($scope3_id, { "#childScope/1": _existing_scope($childScope2) }, "__tests__/template.marko", "10:4");
+				_scope($scope3_id, { "#childScope/1": _existing_scope($childScope2) }, "__tests__/template.marko", "10:4");
 				return 1;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_3*shell"], $scope0_reason, 0);
-		$scope1_page && $wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_page#0:3/subscribe", $wg__input_page);
+		$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_page#0:3/subscribe", $wg__input_page);
 		$wg__input_page || $wi__input_page && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0_$global#3");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		"ClosureScopes:input_page/4": $wi__input_page && _unfilled_if($scope0_reason, 0) && $input_page__closures,
 		"#childScope/0": _existing_scope($childScope3)
 	}, "__tests__/template.marko", 0);

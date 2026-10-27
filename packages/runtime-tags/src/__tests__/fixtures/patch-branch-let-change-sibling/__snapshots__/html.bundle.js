@@ -23,7 +23,7 @@ _shells({
 	a3: "a3 a5!a1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $childScope = _patch_child($scope0_id, "a", 0, 1);
 	let store = store_default({});
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 			const $countChange = store.set || void 0;
 			_patch_fill($scope1_id, "va2", count, 1);
 			_patch_bind($scope1_id, "wd", $countChange);
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				c: count,
 				_: _scope_with_id($scope0_id),
 				d: $countChange
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "e", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a3"], $scope0_reason, 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		l: _write_if($scope0_reason, 1) && store?.set,
 		a: _existing_scope($childScope)
 	});

@@ -15,17 +15,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<p>${_text_resume($scope1_id, "#text/0", $global$1.brand, $scope0_page)}</p><b>${_text_resume($scope1_id, "#text/1", input.name + ":" + $global$1.brand, $scope0_page || $wg__input_name)}</b>`);
 			_fill_global_subscribe("__tests__/template.marko_1_input_name#0:4_$global_brand#0:8", $scope1_id, 1);
 			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:8", $scope1_id, 1);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "4:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
 	_html("</main>");
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_name: input.name,
 		open
 	}, "__tests__/template.marko", 0, {
 		input_name: ["input.name"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.name, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.name, !_server_guard($scope0_reason, 0));
 }, 1);

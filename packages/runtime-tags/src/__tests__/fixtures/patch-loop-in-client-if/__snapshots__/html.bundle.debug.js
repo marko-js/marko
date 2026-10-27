@@ -17,15 +17,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if ($scope0_page) _for_of(items, (item) => {
 				const $scope2_id = _scope_id();
 				_html(`<li>${_text_resume($scope2_id, "#text/0", item)}: ${_text_resume($scope2_id, "#text/1", input.note, _write_guard($scope0_reason, 0) * 2)}</li>`);
-				$scope0_page && _subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, {}, "__tests__/template.marko", "6:8"), "__tests__/template.marko_2_input_note#0:5/subscribe");
+				_subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, {}, "__tests__/template.marko", "6:8"), "__tests__/template.marko_2_input_note#0:5/subscribe");
 			}, 0, $scope1_id, "#ul/0", 1, 1, 1, "</ul>", 1);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "4:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button class=toggle>t</button>${_el_resume($scope0_id, "#button/1")}<button class=add>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_note: input.note,
 		show,
 		items,
@@ -34,5 +34,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_note: ["input.note"],
 		show: "1:6",
 		items: "2:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 0));
 }, 1);

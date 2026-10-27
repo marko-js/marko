@@ -5,22 +5,22 @@ _shells({
 	b1: "b1,<span>b</span>"
 });
 var tabs_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_tab_on = _write_if($scope0_reason, 0), $wg__input_tab_on = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_tab_on = _write_if($scope0_reason, 0), $wg__input_tab_on = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.tab.on) {
 			const $scope1_id = _scope_id();
 			_html("<div>a</div>");
-			$scope0_page && $wi__input_tab_on && _scope($scope1_id, {});
+			$wi__input_tab_on && _scope($scope1_id, {});
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
 			_html("<span>b</span>");
-			$scope0_page && $wi__input_tab_on && _scope($scope2_id, {});
+			$wi__input_tab_on && _scope($scope2_id, {});
 			return 1;
 		}
 	}, $scope0_id, "a", 1, $wg__input_tab_on, void 0, void 0, void 0, ["b0", "b1"], $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -38,11 +38,11 @@ var template_default = _template("a", (input) => {
 			_patch_child($scope1_id, "a", 0);
 			tabs_default({ tab: attrTag({ on: false }) });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_page && _scope($scope0_id, { c: show });
+	_scope($scope0_id, { c: show });
 }, 1);

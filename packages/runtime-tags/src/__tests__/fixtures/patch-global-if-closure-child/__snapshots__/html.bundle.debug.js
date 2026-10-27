@@ -4,12 +4,12 @@ const $walks$1 = "D l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/brand.marko": "__tests__/tags/brand.marko;D ;<b> </b>" });
 var brand_default = _template("__tests__/tags/brand.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$2 = $global();
 	_html(`<b>${_patch_text($scope0_id, "#text/0", $global$2.brand)}</b>`);
 	_fill_global_subscribe("__tests__/tags/brand.marko_0_$global_brand#4", $scope0_id);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/brand.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/brand.marko", 0);
 });
 
 // template.marko
@@ -31,10 +31,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			brand_default({});
 			_patch_child_end();
 			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:7", $scope1_id, 1);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "3:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, { on }, "__tests__/template.marko", 0, { on: "1:6" });
+	_scope($scope0_id, { on }, "__tests__/template.marko", 0, { on: "1:6" });
 }, 1);

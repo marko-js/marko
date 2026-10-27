@@ -13,5 +13,5 @@ var template_default = _template("a", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_fill_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, { c: count });
+	_scope($scope0_id, { c: count });
 }, 1);

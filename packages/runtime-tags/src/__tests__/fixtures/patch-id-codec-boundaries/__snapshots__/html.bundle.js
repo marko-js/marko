@@ -5,11 +5,10 @@ const $setup$1 = [[], []];
 _shells({ b: "b; b ;<label>field</label><input>" });
 var field_default = _template("b", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const uid = _id("A");
 	_html(`<label${_patch_attr($scope0_id, "aa$for", "for", uid, 0, 0)}>field</label>${_el_resume($scope0_id, "a", 0)}<input${_patch_attr($scope0_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope0_id, "b", 0)}`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -79,20 +78,20 @@ _shells({
 	a60: "a60; b ;<label>decl59</label><input>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_of(input.keys, (key) => {
 		const $scope1_id = _scope_id();
 		const keyId = _id("A");
 		_html(`<label${_patch_attr($scope1_id, "aa$for", "for", keyId, 0, 0)}>key</label>${_el_resume($scope1_id, "a", 0)}<input${_patch_attr($scope1_id, "ab$id", "id", keyId, 0, 0)}>${_el_resume($scope1_id, "b", 0)}`);
-		$scope0_page && _scope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, (key) => key, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			const uid = _id("B");
 			_html(`<label${_patch_attr($scope2_id, "aa$for", "for", uid, 0, 0)}>decl0</label>${_el_resume($scope2_id, "a", 0)}<input${_patch_attr($scope2_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope2_id, "b", 0)}`);
-			$scope0_page && _scope($scope2_id, {});
+			_scope($scope2_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, $wg__input_show, void 0, void 0, void 0, ["a1"], $scope0_reason, 1);
@@ -101,7 +100,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			const uid = _id("C");
 			_html(`<label${_patch_attr($scope3_id, "aa$for", "for", uid, 0, 0)}>decl1</label>${_el_resume($scope3_id, "a", 0)}<input${_patch_attr($scope3_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope3_id, "b", 0)}`);
-			$scope0_page && _scope($scope3_id, {});
+			_scope($scope3_id, {});
 			return 0;
 		}
 	}, $scope0_id, "c", 1, $wg__input_show, void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
@@ -110,7 +109,7 @@ var template_default = _template("a", (input) => {
 			const $scope4_id = _scope_id();
 			const uid = _id("D");
 			_html(`<label${_patch_attr($scope4_id, "aa$for", "for", uid, 0, 0)}>decl2</label>${_el_resume($scope4_id, "a", 0)}<input${_patch_attr($scope4_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope4_id, "b", 0)}`);
-			$scope0_page && _scope($scope4_id, {});
+			_scope($scope4_id, {});
 			return 0;
 		}
 	}, $scope0_id, "d", 1, $wg__input_show, void 0, void 0, void 0, ["a3"], $scope0_reason, 1);
@@ -119,7 +118,7 @@ var template_default = _template("a", (input) => {
 			const $scope5_id = _scope_id();
 			const uid = _id("E");
 			_html(`<label${_patch_attr($scope5_id, "aa$for", "for", uid, 0, 0)}>decl3</label>${_el_resume($scope5_id, "a", 0)}<input${_patch_attr($scope5_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope5_id, "b", 0)}`);
-			$scope0_page && _scope($scope5_id, {});
+			_scope($scope5_id, {});
 			return 0;
 		}
 	}, $scope0_id, "e", 1, $wg__input_show, void 0, void 0, void 0, ["a4"], $scope0_reason, 1);
@@ -128,7 +127,7 @@ var template_default = _template("a", (input) => {
 			const $scope6_id = _scope_id();
 			const uid = _id("F");
 			_html(`<label${_patch_attr($scope6_id, "aa$for", "for", uid, 0, 0)}>decl4</label>${_el_resume($scope6_id, "a", 0)}<input${_patch_attr($scope6_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope6_id, "b", 0)}`);
-			$scope0_page && _scope($scope6_id, {});
+			_scope($scope6_id, {});
 			return 0;
 		}
 	}, $scope0_id, "f", 1, $wg__input_show, void 0, void 0, void 0, ["a5"], $scope0_reason, 1);
@@ -137,7 +136,7 @@ var template_default = _template("a", (input) => {
 			const $scope7_id = _scope_id();
 			const uid = _id("G");
 			_html(`<label${_patch_attr($scope7_id, "aa$for", "for", uid, 0, 0)}>decl5</label>${_el_resume($scope7_id, "a", 0)}<input${_patch_attr($scope7_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope7_id, "b", 0)}`);
-			$scope0_page && _scope($scope7_id, {});
+			_scope($scope7_id, {});
 			return 0;
 		}
 	}, $scope0_id, "g", 1, $wg__input_show, void 0, void 0, void 0, ["a6"], $scope0_reason, 1);
@@ -146,7 +145,7 @@ var template_default = _template("a", (input) => {
 			const $scope8_id = _scope_id();
 			const uid = _id("H");
 			_html(`<label${_patch_attr($scope8_id, "aa$for", "for", uid, 0, 0)}>decl6</label>${_el_resume($scope8_id, "a", 0)}<input${_patch_attr($scope8_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope8_id, "b", 0)}`);
-			$scope0_page && _scope($scope8_id, {});
+			_scope($scope8_id, {});
 			return 0;
 		}
 	}, $scope0_id, "h", 1, $wg__input_show, void 0, void 0, void 0, ["a7"], $scope0_reason, 1);
@@ -155,7 +154,7 @@ var template_default = _template("a", (input) => {
 			const $scope9_id = _scope_id();
 			const uid = _id("I");
 			_html(`<label${_patch_attr($scope9_id, "aa$for", "for", uid, 0, 0)}>decl7</label>${_el_resume($scope9_id, "a", 0)}<input${_patch_attr($scope9_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope9_id, "b", 0)}`);
-			$scope0_page && _scope($scope9_id, {});
+			_scope($scope9_id, {});
 			return 0;
 		}
 	}, $scope0_id, "i", 1, $wg__input_show, void 0, void 0, void 0, ["a8"], $scope0_reason, 1);
@@ -164,7 +163,7 @@ var template_default = _template("a", (input) => {
 			const $scope10_id = _scope_id();
 			const uid = _id("J");
 			_html(`<label${_patch_attr($scope10_id, "aa$for", "for", uid, 0, 0)}>decl8</label>${_el_resume($scope10_id, "a", 0)}<input${_patch_attr($scope10_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope10_id, "b", 0)}`);
-			$scope0_page && _scope($scope10_id, {});
+			_scope($scope10_id, {});
 			return 0;
 		}
 	}, $scope0_id, "j", 1, $wg__input_show, void 0, void 0, void 0, ["a9"], $scope0_reason, 1);
@@ -173,7 +172,7 @@ var template_default = _template("a", (input) => {
 			const $scope11_id = _scope_id();
 			const uid = _id("K");
 			_html(`<label${_patch_attr($scope11_id, "aa$for", "for", uid, 0, 0)}>decl9</label>${_el_resume($scope11_id, "a", 0)}<input${_patch_attr($scope11_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope11_id, "b", 0)}`);
-			$scope0_page && _scope($scope11_id, {});
+			_scope($scope11_id, {});
 			return 0;
 		}
 	}, $scope0_id, "k", 1, $wg__input_show, void 0, void 0, void 0, ["a10"], $scope0_reason, 1);
@@ -182,7 +181,7 @@ var template_default = _template("a", (input) => {
 			const $scope12_id = _scope_id();
 			const uid = _id("L");
 			_html(`<label${_patch_attr($scope12_id, "aa$for", "for", uid, 0, 0)}>decl10</label>${_el_resume($scope12_id, "a", 0)}<input${_patch_attr($scope12_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope12_id, "b", 0)}`);
-			$scope0_page && _scope($scope12_id, {});
+			_scope($scope12_id, {});
 			return 0;
 		}
 	}, $scope0_id, "l", 1, $wg__input_show, void 0, void 0, void 0, ["a11"], $scope0_reason, 1);
@@ -191,7 +190,7 @@ var template_default = _template("a", (input) => {
 			const $scope13_id = _scope_id();
 			const uid = _id("M");
 			_html(`<label${_patch_attr($scope13_id, "aa$for", "for", uid, 0, 0)}>decl11</label>${_el_resume($scope13_id, "a", 0)}<input${_patch_attr($scope13_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope13_id, "b", 0)}`);
-			$scope0_page && _scope($scope13_id, {});
+			_scope($scope13_id, {});
 			return 0;
 		}
 	}, $scope0_id, "m", 1, $wg__input_show, void 0, void 0, void 0, ["a12"], $scope0_reason, 1);
@@ -200,7 +199,7 @@ var template_default = _template("a", (input) => {
 			const $scope14_id = _scope_id();
 			const uid = _id("N");
 			_html(`<label${_patch_attr($scope14_id, "aa$for", "for", uid, 0, 0)}>decl12</label>${_el_resume($scope14_id, "a", 0)}<input${_patch_attr($scope14_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope14_id, "b", 0)}`);
-			$scope0_page && _scope($scope14_id, {});
+			_scope($scope14_id, {});
 			return 0;
 		}
 	}, $scope0_id, "n", 1, $wg__input_show, void 0, void 0, void 0, ["a13"], $scope0_reason, 1);
@@ -209,7 +208,7 @@ var template_default = _template("a", (input) => {
 			const $scope15_id = _scope_id();
 			const uid = _id("O");
 			_html(`<label${_patch_attr($scope15_id, "aa$for", "for", uid, 0, 0)}>decl13</label>${_el_resume($scope15_id, "a", 0)}<input${_patch_attr($scope15_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope15_id, "b", 0)}`);
-			$scope0_page && _scope($scope15_id, {});
+			_scope($scope15_id, {});
 			return 0;
 		}
 	}, $scope0_id, "o", 1, $wg__input_show, void 0, void 0, void 0, ["a14"], $scope0_reason, 1);
@@ -218,7 +217,7 @@ var template_default = _template("a", (input) => {
 			const $scope16_id = _scope_id();
 			const uid = _id("P");
 			_html(`<label${_patch_attr($scope16_id, "aa$for", "for", uid, 0, 0)}>decl14</label>${_el_resume($scope16_id, "a", 0)}<input${_patch_attr($scope16_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope16_id, "b", 0)}`);
-			$scope0_page && _scope($scope16_id, {});
+			_scope($scope16_id, {});
 			return 0;
 		}
 	}, $scope0_id, "p", 1, $wg__input_show, void 0, void 0, void 0, ["a15"], $scope0_reason, 1);
@@ -227,7 +226,7 @@ var template_default = _template("a", (input) => {
 			const $scope17_id = _scope_id();
 			const uid = _id("Q");
 			_html(`<label${_patch_attr($scope17_id, "aa$for", "for", uid, 0, 0)}>decl15</label>${_el_resume($scope17_id, "a", 0)}<input${_patch_attr($scope17_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope17_id, "b", 0)}`);
-			$scope0_page && _scope($scope17_id, {});
+			_scope($scope17_id, {});
 			return 0;
 		}
 	}, $scope0_id, "q", 1, $wg__input_show, void 0, void 0, void 0, ["a16"], $scope0_reason, 1);
@@ -236,7 +235,7 @@ var template_default = _template("a", (input) => {
 			const $scope18_id = _scope_id();
 			const uid = _id("R");
 			_html(`<label${_patch_attr($scope18_id, "aa$for", "for", uid, 0, 0)}>decl16</label>${_el_resume($scope18_id, "a", 0)}<input${_patch_attr($scope18_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope18_id, "b", 0)}`);
-			$scope0_page && _scope($scope18_id, {});
+			_scope($scope18_id, {});
 			return 0;
 		}
 	}, $scope0_id, "r", 1, $wg__input_show, void 0, void 0, void 0, ["a17"], $scope0_reason, 1);
@@ -245,7 +244,7 @@ var template_default = _template("a", (input) => {
 			const $scope19_id = _scope_id();
 			const uid = _id("S");
 			_html(`<label${_patch_attr($scope19_id, "aa$for", "for", uid, 0, 0)}>decl17</label>${_el_resume($scope19_id, "a", 0)}<input${_patch_attr($scope19_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope19_id, "b", 0)}`);
-			$scope0_page && _scope($scope19_id, {});
+			_scope($scope19_id, {});
 			return 0;
 		}
 	}, $scope0_id, "s", 1, $wg__input_show, void 0, void 0, void 0, ["a18"], $scope0_reason, 1);
@@ -254,7 +253,7 @@ var template_default = _template("a", (input) => {
 			const $scope20_id = _scope_id();
 			const uid = _id("T");
 			_html(`<label${_patch_attr($scope20_id, "aa$for", "for", uid, 0, 0)}>decl18</label>${_el_resume($scope20_id, "a", 0)}<input${_patch_attr($scope20_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope20_id, "b", 0)}`);
-			$scope0_page && _scope($scope20_id, {});
+			_scope($scope20_id, {});
 			return 0;
 		}
 	}, $scope0_id, "t", 1, $wg__input_show, void 0, void 0, void 0, ["a19"], $scope0_reason, 1);
@@ -263,7 +262,7 @@ var template_default = _template("a", (input) => {
 			const $scope21_id = _scope_id();
 			const uid = _id("U");
 			_html(`<label${_patch_attr($scope21_id, "aa$for", "for", uid, 0, 0)}>decl19</label>${_el_resume($scope21_id, "a", 0)}<input${_patch_attr($scope21_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope21_id, "b", 0)}`);
-			$scope0_page && _scope($scope21_id, {});
+			_scope($scope21_id, {});
 			return 0;
 		}
 	}, $scope0_id, "u", 1, $wg__input_show, void 0, void 0, void 0, ["a20"], $scope0_reason, 1);
@@ -272,7 +271,7 @@ var template_default = _template("a", (input) => {
 			const $scope22_id = _scope_id();
 			const uid = _id("V");
 			_html(`<label${_patch_attr($scope22_id, "aa$for", "for", uid, 0, 0)}>decl20</label>${_el_resume($scope22_id, "a", 0)}<input${_patch_attr($scope22_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope22_id, "b", 0)}`);
-			$scope0_page && _scope($scope22_id, {});
+			_scope($scope22_id, {});
 			return 0;
 		}
 	}, $scope0_id, "v", 1, $wg__input_show, void 0, void 0, void 0, ["a21"], $scope0_reason, 1);
@@ -281,7 +280,7 @@ var template_default = _template("a", (input) => {
 			const $scope23_id = _scope_id();
 			const uid = _id("W");
 			_html(`<label${_patch_attr($scope23_id, "aa$for", "for", uid, 0, 0)}>decl21</label>${_el_resume($scope23_id, "a", 0)}<input${_patch_attr($scope23_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope23_id, "b", 0)}`);
-			$scope0_page && _scope($scope23_id, {});
+			_scope($scope23_id, {});
 			return 0;
 		}
 	}, $scope0_id, "w", 1, $wg__input_show, void 0, void 0, void 0, ["a22"], $scope0_reason, 1);
@@ -290,7 +289,7 @@ var template_default = _template("a", (input) => {
 			const $scope24_id = _scope_id();
 			const uid = _id("X");
 			_html(`<label${_patch_attr($scope24_id, "aa$for", "for", uid, 0, 0)}>decl22</label>${_el_resume($scope24_id, "a", 0)}<input${_patch_attr($scope24_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope24_id, "b", 0)}`);
-			$scope0_page && _scope($scope24_id, {});
+			_scope($scope24_id, {});
 			return 0;
 		}
 	}, $scope0_id, "x", 1, $wg__input_show, void 0, void 0, void 0, ["a23"], $scope0_reason, 1);
@@ -299,7 +298,7 @@ var template_default = _template("a", (input) => {
 			const $scope25_id = _scope_id();
 			const uid = _id("Y");
 			_html(`<label${_patch_attr($scope25_id, "aa$for", "for", uid, 0, 0)}>decl23</label>${_el_resume($scope25_id, "a", 0)}<input${_patch_attr($scope25_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope25_id, "b", 0)}`);
-			$scope0_page && _scope($scope25_id, {});
+			_scope($scope25_id, {});
 			return 0;
 		}
 	}, $scope0_id, "y", 1, $wg__input_show, void 0, void 0, void 0, ["a24"], $scope0_reason, 1);
@@ -308,7 +307,7 @@ var template_default = _template("a", (input) => {
 			const $scope26_id = _scope_id();
 			const uid = _id("Z");
 			_html(`<label${_patch_attr($scope26_id, "aa$for", "for", uid, 0, 0)}>decl24</label>${_el_resume($scope26_id, "a", 0)}<input${_patch_attr($scope26_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope26_id, "b", 0)}`);
-			$scope0_page && _scope($scope26_id, {});
+			_scope($scope26_id, {});
 			return 0;
 		}
 	}, $scope0_id, "z", 1, $wg__input_show, void 0, void 0, void 0, ["a25"], $scope0_reason, 1);
@@ -317,7 +316,7 @@ var template_default = _template("a", (input) => {
 			const $scope27_id = _scope_id();
 			const uid = _id("_");
 			_html(`<label${_patch_attr($scope27_id, "aa$for", "for", uid, 0, 0)}>decl25</label>${_el_resume($scope27_id, "a", 0)}<input${_patch_attr($scope27_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope27_id, "b", 0)}`);
-			$scope0_page && _scope($scope27_id, {});
+			_scope($scope27_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a0", 1, $wg__input_show, void 0, void 0, void 0, ["a26"], $scope0_reason, 1);
@@ -326,7 +325,7 @@ var template_default = _template("a", (input) => {
 			const $scope28_id = _scope_id();
 			const uid = _id("-");
 			_html(`<label${_patch_attr($scope28_id, "aa$for", "for", uid, 0, 0)}>decl26</label>${_el_resume($scope28_id, "a", 0)}<input${_patch_attr($scope28_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope28_id, "b", 0)}`);
-			$scope0_page && _scope($scope28_id, {});
+			_scope($scope28_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a1", 1, $wg__input_show, void 0, void 0, void 0, ["a27"], $scope0_reason, 1);
@@ -335,7 +334,7 @@ var template_default = _template("a", (input) => {
 			const $scope29_id = _scope_id();
 			const uid = _id("A0");
 			_html(`<label${_patch_attr($scope29_id, "aa$for", "for", uid, 0, 0)}>decl27</label>${_el_resume($scope29_id, "a", 0)}<input${_patch_attr($scope29_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope29_id, "b", 0)}`);
-			$scope0_page && _scope($scope29_id, {});
+			_scope($scope29_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a2", 1, $wg__input_show, void 0, void 0, void 0, ["a28"], $scope0_reason, 1);
@@ -344,7 +343,7 @@ var template_default = _template("a", (input) => {
 			const $scope30_id = _scope_id();
 			const uid = _id("B0");
 			_html(`<label${_patch_attr($scope30_id, "aa$for", "for", uid, 0, 0)}>decl28</label>${_el_resume($scope30_id, "a", 0)}<input${_patch_attr($scope30_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope30_id, "b", 0)}`);
-			$scope0_page && _scope($scope30_id, {});
+			_scope($scope30_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a3", 1, $wg__input_show, void 0, void 0, void 0, ["a29"], $scope0_reason, 1);
@@ -353,7 +352,7 @@ var template_default = _template("a", (input) => {
 			const $scope31_id = _scope_id();
 			const uid = _id("C0");
 			_html(`<label${_patch_attr($scope31_id, "aa$for", "for", uid, 0, 0)}>decl29</label>${_el_resume($scope31_id, "a", 0)}<input${_patch_attr($scope31_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope31_id, "b", 0)}`);
-			$scope0_page && _scope($scope31_id, {});
+			_scope($scope31_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a4", 1, $wg__input_show, void 0, void 0, void 0, ["a30"], $scope0_reason, 1);
@@ -362,7 +361,7 @@ var template_default = _template("a", (input) => {
 			const $scope32_id = _scope_id();
 			const uid = _id("D0");
 			_html(`<label${_patch_attr($scope32_id, "aa$for", "for", uid, 0, 0)}>decl30</label>${_el_resume($scope32_id, "a", 0)}<input${_patch_attr($scope32_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope32_id, "b", 0)}`);
-			$scope0_page && _scope($scope32_id, {});
+			_scope($scope32_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a5", 1, $wg__input_show, void 0, void 0, void 0, ["a31"], $scope0_reason, 1);
@@ -371,7 +370,7 @@ var template_default = _template("a", (input) => {
 			const $scope33_id = _scope_id();
 			const uid = _id("E0");
 			_html(`<label${_patch_attr($scope33_id, "aa$for", "for", uid, 0, 0)}>decl31</label>${_el_resume($scope33_id, "a", 0)}<input${_patch_attr($scope33_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope33_id, "b", 0)}`);
-			$scope0_page && _scope($scope33_id, {});
+			_scope($scope33_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a6", 1, $wg__input_show, void 0, void 0, void 0, ["a32"], $scope0_reason, 1);
@@ -380,7 +379,7 @@ var template_default = _template("a", (input) => {
 			const $scope34_id = _scope_id();
 			const uid = _id("F0");
 			_html(`<label${_patch_attr($scope34_id, "aa$for", "for", uid, 0, 0)}>decl32</label>${_el_resume($scope34_id, "a", 0)}<input${_patch_attr($scope34_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope34_id, "b", 0)}`);
-			$scope0_page && _scope($scope34_id, {});
+			_scope($scope34_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a7", 1, $wg__input_show, void 0, void 0, void 0, ["a33"], $scope0_reason, 1);
@@ -389,7 +388,7 @@ var template_default = _template("a", (input) => {
 			const $scope35_id = _scope_id();
 			const uid = _id("G0");
 			_html(`<label${_patch_attr($scope35_id, "aa$for", "for", uid, 0, 0)}>decl33</label>${_el_resume($scope35_id, "a", 0)}<input${_patch_attr($scope35_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope35_id, "b", 0)}`);
-			$scope0_page && _scope($scope35_id, {});
+			_scope($scope35_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a8", 1, $wg__input_show, void 0, void 0, void 0, ["a34"], $scope0_reason, 1);
@@ -398,7 +397,7 @@ var template_default = _template("a", (input) => {
 			const $scope36_id = _scope_id();
 			const uid = _id("H0");
 			_html(`<label${_patch_attr($scope36_id, "aa$for", "for", uid, 0, 0)}>decl34</label>${_el_resume($scope36_id, "a", 0)}<input${_patch_attr($scope36_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope36_id, "b", 0)}`);
-			$scope0_page && _scope($scope36_id, {});
+			_scope($scope36_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a9", 1, $wg__input_show, void 0, void 0, void 0, ["a35"], $scope0_reason, 1);
@@ -407,7 +406,7 @@ var template_default = _template("a", (input) => {
 			const $scope37_id = _scope_id();
 			const uid = _id("I0");
 			_html(`<label${_patch_attr($scope37_id, "aa$for", "for", uid, 0, 0)}>decl35</label>${_el_resume($scope37_id, "a", 0)}<input${_patch_attr($scope37_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope37_id, "b", 0)}`);
-			$scope0_page && _scope($scope37_id, {});
+			_scope($scope37_id, {});
 			return 0;
 		}
 	}, $scope0_id, "aa", 1, $wg__input_show, void 0, void 0, void 0, ["a36"], $scope0_reason, 1);
@@ -416,7 +415,7 @@ var template_default = _template("a", (input) => {
 			const $scope38_id = _scope_id();
 			const uid = _id("J0");
 			_html(`<label${_patch_attr($scope38_id, "aa$for", "for", uid, 0, 0)}>decl36</label>${_el_resume($scope38_id, "a", 0)}<input${_patch_attr($scope38_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope38_id, "b", 0)}`);
-			$scope0_page && _scope($scope38_id, {});
+			_scope($scope38_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ab", 1, $wg__input_show, void 0, void 0, void 0, ["a37"], $scope0_reason, 1);
@@ -425,7 +424,7 @@ var template_default = _template("a", (input) => {
 			const $scope39_id = _scope_id();
 			const uid = _id("K0");
 			_html(`<label${_patch_attr($scope39_id, "aa$for", "for", uid, 0, 0)}>decl37</label>${_el_resume($scope39_id, "a", 0)}<input${_patch_attr($scope39_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope39_id, "b", 0)}`);
-			$scope0_page && _scope($scope39_id, {});
+			_scope($scope39_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ac", 1, $wg__input_show, void 0, void 0, void 0, ["a38"], $scope0_reason, 1);
@@ -434,7 +433,7 @@ var template_default = _template("a", (input) => {
 			const $scope40_id = _scope_id();
 			const uid = _id("L0");
 			_html(`<label${_patch_attr($scope40_id, "aa$for", "for", uid, 0, 0)}>decl38</label>${_el_resume($scope40_id, "a", 0)}<input${_patch_attr($scope40_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope40_id, "b", 0)}`);
-			$scope0_page && _scope($scope40_id, {});
+			_scope($scope40_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ad", 1, $wg__input_show, void 0, void 0, void 0, ["a39"], $scope0_reason, 1);
@@ -443,7 +442,7 @@ var template_default = _template("a", (input) => {
 			const $scope41_id = _scope_id();
 			const uid = _id("M0");
 			_html(`<label${_patch_attr($scope41_id, "aa$for", "for", uid, 0, 0)}>decl39</label>${_el_resume($scope41_id, "a", 0)}<input${_patch_attr($scope41_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope41_id, "b", 0)}`);
-			$scope0_page && _scope($scope41_id, {});
+			_scope($scope41_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ae", 1, $wg__input_show, void 0, void 0, void 0, ["a40"], $scope0_reason, 1);
@@ -452,7 +451,7 @@ var template_default = _template("a", (input) => {
 			const $scope42_id = _scope_id();
 			const uid = _id("N0");
 			_html(`<label${_patch_attr($scope42_id, "aa$for", "for", uid, 0, 0)}>decl40</label>${_el_resume($scope42_id, "a", 0)}<input${_patch_attr($scope42_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope42_id, "b", 0)}`);
-			$scope0_page && _scope($scope42_id, {});
+			_scope($scope42_id, {});
 			return 0;
 		}
 	}, $scope0_id, "af", 1, $wg__input_show, void 0, void 0, void 0, ["a41"], $scope0_reason, 1);
@@ -461,7 +460,7 @@ var template_default = _template("a", (input) => {
 			const $scope43_id = _scope_id();
 			const uid = _id("O0");
 			_html(`<label${_patch_attr($scope43_id, "aa$for", "for", uid, 0, 0)}>decl41</label>${_el_resume($scope43_id, "a", 0)}<input${_patch_attr($scope43_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope43_id, "b", 0)}`);
-			$scope0_page && _scope($scope43_id, {});
+			_scope($scope43_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ag", 1, $wg__input_show, void 0, void 0, void 0, ["a42"], $scope0_reason, 1);
@@ -470,7 +469,7 @@ var template_default = _template("a", (input) => {
 			const $scope44_id = _scope_id();
 			const uid = _id("P0");
 			_html(`<label${_patch_attr($scope44_id, "aa$for", "for", uid, 0, 0)}>decl42</label>${_el_resume($scope44_id, "a", 0)}<input${_patch_attr($scope44_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope44_id, "b", 0)}`);
-			$scope0_page && _scope($scope44_id, {});
+			_scope($scope44_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ah", 1, $wg__input_show, void 0, void 0, void 0, ["a43"], $scope0_reason, 1);
@@ -479,7 +478,7 @@ var template_default = _template("a", (input) => {
 			const $scope45_id = _scope_id();
 			const uid = _id("Q0");
 			_html(`<label${_patch_attr($scope45_id, "aa$for", "for", uid, 0, 0)}>decl43</label>${_el_resume($scope45_id, "a", 0)}<input${_patch_attr($scope45_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope45_id, "b", 0)}`);
-			$scope0_page && _scope($scope45_id, {});
+			_scope($scope45_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ai", 1, $wg__input_show, void 0, void 0, void 0, ["a44"], $scope0_reason, 1);
@@ -488,7 +487,7 @@ var template_default = _template("a", (input) => {
 			const $scope46_id = _scope_id();
 			const uid = _id("R0");
 			_html(`<label${_patch_attr($scope46_id, "aa$for", "for", uid, 0, 0)}>decl44</label>${_el_resume($scope46_id, "a", 0)}<input${_patch_attr($scope46_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope46_id, "b", 0)}`);
-			$scope0_page && _scope($scope46_id, {});
+			_scope($scope46_id, {});
 			return 0;
 		}
 	}, $scope0_id, "aj", 1, $wg__input_show, void 0, void 0, void 0, ["a45"], $scope0_reason, 1);
@@ -497,7 +496,7 @@ var template_default = _template("a", (input) => {
 			const $scope47_id = _scope_id();
 			const uid = _id("S0");
 			_html(`<label${_patch_attr($scope47_id, "aa$for", "for", uid, 0, 0)}>decl45</label>${_el_resume($scope47_id, "a", 0)}<input${_patch_attr($scope47_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope47_id, "b", 0)}`);
-			$scope0_page && _scope($scope47_id, {});
+			_scope($scope47_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ak", 1, $wg__input_show, void 0, void 0, void 0, ["a46"], $scope0_reason, 1);
@@ -506,7 +505,7 @@ var template_default = _template("a", (input) => {
 			const $scope48_id = _scope_id();
 			const uid = _id("T0");
 			_html(`<label${_patch_attr($scope48_id, "aa$for", "for", uid, 0, 0)}>decl46</label>${_el_resume($scope48_id, "a", 0)}<input${_patch_attr($scope48_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope48_id, "b", 0)}`);
-			$scope0_page && _scope($scope48_id, {});
+			_scope($scope48_id, {});
 			return 0;
 		}
 	}, $scope0_id, "al", 1, $wg__input_show, void 0, void 0, void 0, ["a47"], $scope0_reason, 1);
@@ -515,7 +514,7 @@ var template_default = _template("a", (input) => {
 			const $scope49_id = _scope_id();
 			const uid = _id("U0");
 			_html(`<label${_patch_attr($scope49_id, "aa$for", "for", uid, 0, 0)}>decl47</label>${_el_resume($scope49_id, "a", 0)}<input${_patch_attr($scope49_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope49_id, "b", 0)}`);
-			$scope0_page && _scope($scope49_id, {});
+			_scope($scope49_id, {});
 			return 0;
 		}
 	}, $scope0_id, "am", 1, $wg__input_show, void 0, void 0, void 0, ["a48"], $scope0_reason, 1);
@@ -524,7 +523,7 @@ var template_default = _template("a", (input) => {
 			const $scope50_id = _scope_id();
 			const uid = _id("V0");
 			_html(`<label${_patch_attr($scope50_id, "aa$for", "for", uid, 0, 0)}>decl48</label>${_el_resume($scope50_id, "a", 0)}<input${_patch_attr($scope50_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope50_id, "b", 0)}`);
-			$scope0_page && _scope($scope50_id, {});
+			_scope($scope50_id, {});
 			return 0;
 		}
 	}, $scope0_id, "an", 1, $wg__input_show, void 0, void 0, void 0, ["a49"], $scope0_reason, 1);
@@ -533,7 +532,7 @@ var template_default = _template("a", (input) => {
 			const $scope51_id = _scope_id();
 			const uid = _id("W0");
 			_html(`<label${_patch_attr($scope51_id, "aa$for", "for", uid, 0, 0)}>decl49</label>${_el_resume($scope51_id, "a", 0)}<input${_patch_attr($scope51_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope51_id, "b", 0)}`);
-			$scope0_page && _scope($scope51_id, {});
+			_scope($scope51_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ao", 1, $wg__input_show, void 0, void 0, void 0, ["a50"], $scope0_reason, 1);
@@ -542,7 +541,7 @@ var template_default = _template("a", (input) => {
 			const $scope52_id = _scope_id();
 			const uid = _id("X0");
 			_html(`<label${_patch_attr($scope52_id, "aa$for", "for", uid, 0, 0)}>decl50</label>${_el_resume($scope52_id, "a", 0)}<input${_patch_attr($scope52_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope52_id, "b", 0)}`);
-			$scope0_page && _scope($scope52_id, {});
+			_scope($scope52_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ap", 1, $wg__input_show, void 0, void 0, void 0, ["a51"], $scope0_reason, 1);
@@ -551,7 +550,7 @@ var template_default = _template("a", (input) => {
 			const $scope53_id = _scope_id();
 			const uid = _id("Y0");
 			_html(`<label${_patch_attr($scope53_id, "aa$for", "for", uid, 0, 0)}>decl51</label>${_el_resume($scope53_id, "a", 0)}<input${_patch_attr($scope53_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope53_id, "b", 0)}`);
-			$scope0_page && _scope($scope53_id, {});
+			_scope($scope53_id, {});
 			return 0;
 		}
 	}, $scope0_id, "aq", 1, $wg__input_show, void 0, void 0, void 0, ["a52"], $scope0_reason, 1);
@@ -560,7 +559,7 @@ var template_default = _template("a", (input) => {
 			const $scope54_id = _scope_id();
 			const uid = _id("Z0");
 			_html(`<label${_patch_attr($scope54_id, "aa$for", "for", uid, 0, 0)}>decl52</label>${_el_resume($scope54_id, "a", 0)}<input${_patch_attr($scope54_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope54_id, "b", 0)}`);
-			$scope0_page && _scope($scope54_id, {});
+			_scope($scope54_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ar", 1, $wg__input_show, void 0, void 0, void 0, ["a53"], $scope0_reason, 1);
@@ -569,7 +568,7 @@ var template_default = _template("a", (input) => {
 			const $scope55_id = _scope_id();
 			const uid = _id("_0");
 			_html(`<label${_patch_attr($scope55_id, "aa$for", "for", uid, 0, 0)}>decl53</label>${_el_resume($scope55_id, "a", 0)}<input${_patch_attr($scope55_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope55_id, "b", 0)}`);
-			$scope0_page && _scope($scope55_id, {});
+			_scope($scope55_id, {});
 			return 0;
 		}
 	}, $scope0_id, "as", 1, $wg__input_show, void 0, void 0, void 0, ["a54"], $scope0_reason, 1);
@@ -578,7 +577,7 @@ var template_default = _template("a", (input) => {
 			const $scope56_id = _scope_id();
 			const uid = _id("-0");
 			_html(`<label${_patch_attr($scope56_id, "aa$for", "for", uid, 0, 0)}>decl54</label>${_el_resume($scope56_id, "a", 0)}<input${_patch_attr($scope56_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope56_id, "b", 0)}`);
-			$scope0_page && _scope($scope56_id, {});
+			_scope($scope56_id, {});
 			return 0;
 		}
 	}, $scope0_id, "at", 1, $wg__input_show, void 0, void 0, void 0, ["a55"], $scope0_reason, 1);
@@ -587,7 +586,7 @@ var template_default = _template("a", (input) => {
 			const $scope57_id = _scope_id();
 			const uid = _id("A1");
 			_html(`<label${_patch_attr($scope57_id, "aa$for", "for", uid, 0, 0)}>decl55</label>${_el_resume($scope57_id, "a", 0)}<input${_patch_attr($scope57_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope57_id, "b", 0)}`);
-			$scope0_page && _scope($scope57_id, {});
+			_scope($scope57_id, {});
 			return 0;
 		}
 	}, $scope0_id, "au", 1, $wg__input_show, void 0, void 0, void 0, ["a56"], $scope0_reason, 1);
@@ -596,7 +595,7 @@ var template_default = _template("a", (input) => {
 			const $scope58_id = _scope_id();
 			const uid = _id("B1");
 			_html(`<label${_patch_attr($scope58_id, "aa$for", "for", uid, 0, 0)}>decl56</label>${_el_resume($scope58_id, "a", 0)}<input${_patch_attr($scope58_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope58_id, "b", 0)}`);
-			$scope0_page && _scope($scope58_id, {});
+			_scope($scope58_id, {});
 			return 0;
 		}
 	}, $scope0_id, "av", 1, $wg__input_show, void 0, void 0, void 0, ["a57"], $scope0_reason, 1);
@@ -605,7 +604,7 @@ var template_default = _template("a", (input) => {
 			const $scope59_id = _scope_id();
 			const uid = _id("C1");
 			_html(`<label${_patch_attr($scope59_id, "aa$for", "for", uid, 0, 0)}>decl57</label>${_el_resume($scope59_id, "a", 0)}<input${_patch_attr($scope59_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope59_id, "b", 0)}`);
-			$scope0_page && _scope($scope59_id, {});
+			_scope($scope59_id, {});
 			return 0;
 		}
 	}, $scope0_id, "aw", 1, $wg__input_show, void 0, void 0, void 0, ["a58"], $scope0_reason, 1);
@@ -614,7 +613,7 @@ var template_default = _template("a", (input) => {
 			const $scope60_id = _scope_id();
 			const uid = _id("D1");
 			_html(`<label${_patch_attr($scope60_id, "aa$for", "for", uid, 0, 0)}>decl58</label>${_el_resume($scope60_id, "a", 0)}<input${_patch_attr($scope60_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope60_id, "b", 0)}`);
-			$scope0_page && _scope($scope60_id, {});
+			_scope($scope60_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ax", 1, $wg__input_show, void 0, void 0, void 0, ["a59"], $scope0_reason, 1);
@@ -623,7 +622,7 @@ var template_default = _template("a", (input) => {
 			const $scope61_id = _scope_id();
 			const uid = _id("E1");
 			_html(`<label${_patch_attr($scope61_id, "aa$for", "for", uid, 0, 0)}>decl59</label>${_el_resume($scope61_id, "a", 0)}<input${_patch_attr($scope61_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope61_id, "b", 0)}`);
-			$scope0_page && _scope($scope61_id, {});
+			_scope($scope61_id, {});
 			return 0;
 		}
 	}, $scope0_id, "ay", 1, $wg__input_show, void 0, void 0, void 0, ["a60"], $scope0_reason, 1);
@@ -663,7 +662,7 @@ var template_default = _template("a", (input) => {
 	const $childScope12 = _patch_child($scope0_id, "ba", 11);
 	field_default({});
 	_patch_child_end();
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		az: _existing_scope($childScope),
 		b0: _existing_scope($childScope2),
 		b1: _existing_scope($childScope3),

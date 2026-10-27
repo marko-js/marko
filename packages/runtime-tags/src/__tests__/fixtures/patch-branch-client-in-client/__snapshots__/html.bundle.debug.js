@@ -18,17 +18,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (on) {
 					const $scope2_id = _scope_id();
 					_html(`<p>${_text_resume($scope2_id, "#text/0", input.inner, $wg__input_inner)}</p>`);
-					$scope0_page && _subscribe($wi__input_inner && $input_inner__closures, _scope($scope2_id, {}, "__tests__/template.marko", "6:6"), "__tests__/template.marko_2_input_inner#0:5/subscribe", $wg__input_inner);
+					_subscribe($wi__input_inner && $input_inner__closures, _scope($scope2_id, {}, "__tests__/template.marko", "6:6"), "__tests__/template.marko_2_input_inner#0:5/subscribe", $wg__input_inner);
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, 1, 0, 0, 1);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "4:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_outer: input.outer,
 		input_inner: input.inner,
 		count,
@@ -39,5 +39,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_inner: ["input.inner"],
 		count: "1:6",
 		on: "2:6"
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.outer, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.inner, !_server_guard($scope0_reason, 1)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.outer, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.inner, !_server_guard($scope0_reason, 1)));
 }, 1);

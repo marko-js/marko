@@ -29,7 +29,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_store_set#1:11/init!__tests__/template.marko_3;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $cg__input_keys = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $cg__input_keys = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	_for_of(input.keys, (name) => {
@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $countChange = store.set || void 0;
 					_patch_fill($scope3_id, "PatchFill:__tests__/template.marko_fill1", count, 1);
 					_patch_bind($scope3_id, "PatchWrite:TagVariableChange:count", $countChange);
-					$scope0_page && _subscribe($for_content__store_set__closures, _scope($scope3_id, {
+					_subscribe($for_content__store_set__closures, _scope($scope3_id, {
 						count,
 						_: _scope_with_id($scope2_id),
 						"TagVariableChange:count": $countChange
@@ -64,13 +64,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}
 			}, $scope2_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_show ? "__tests__/template.marko_2_input_show#0:4/init" : "__tests__/template.marko_2_input_show#0:4/subscribe");
-			$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope2_id, {
+			_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope2_id, {
 				"#LoopKey": _unfilled_if($scope0_reason, 2) && other,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "5:4", { "#LoopKey": "5:8" }), $cg__input_show && "__tests__/template.marko_2_input_show#0:4/subscribe", $wg__input_show);
 		}, (n) => n, $scope1_id, "#text/7", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 1);
 		$cg__input_keys && _patch_init($scope1_id, "__tests__/template.marko_1_input_keys#0:3/init");
-		$scope0_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			"#LoopKey": _unfilled_if($scope0_reason, 2) && name,
 			store_set: $wi__input_keys__OR__input_show && store?.set,
 			_: $wi__input_keys__OR__input_show && _scope_with_id($scope0_id),
@@ -81,8 +81,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			store_set: ["store.set", "2:10"]
 		});
 	}, (n) => n, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_show: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.show,
 		"ClosureScopes:input_show/6": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_show__closures
-	}, "__tests__/template.marko", 0, { input_show: ["input.show"] }) : _filled_guard($scope0_reason, 2) && $cg__input_keys && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.show, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_show: ["input.show"] }) || _filled_guard($scope0_reason, 2) && $cg__input_keys && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.show, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -18,10 +18,10 @@ const $walks$1 = "D l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/shower/index.marko": "__tests__/tags/shower/index.marko;D ;<em> </em>" });
 var shower_default = _template("__tests__/tags/shower/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<em>${_patch_text($scope0_id, "#text/0", input.value, void 0, $scope0_reason, 0)}</em>`);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/shower/index.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/shower/index.marko", 0);
 });
 
 // template.marko
@@ -30,7 +30,7 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `D0${_w0}&/${_w1}& l`)("b", "D l");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$2], ["#childScope/2>", $setup$1]);
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `D0${_w0}&/${_w1}& l`)("b", "D l")};${((_w0, _w1) => `<main>${_w0}${_w1}<button>+</button></main>`)($template$2, $template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 1;
 	_html("<main>");
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/2": _existing_scope($childScope2)

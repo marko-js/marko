@@ -5,7 +5,6 @@ _shells({
 });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = 0;
 	const x = _id("A");
@@ -15,8 +14,8 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const y = _id("C");
 		_html(`<input${_patch_attr($scope1_id, "aa$id", "id", y, 0, 0)}>${_el_resume($scope1_id, "a", 0)}`);
-		$scope0_page && _scope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, "k", $scope0_id, "g", 1, void 0, void 0, void 0, void 0, "a0", 0, 0);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, { h: n });
+	_scope($scope0_id, { h: n });
 }, 1);

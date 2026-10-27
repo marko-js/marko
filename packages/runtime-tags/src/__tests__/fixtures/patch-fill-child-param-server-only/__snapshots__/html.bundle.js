@@ -4,10 +4,10 @@ const $walks = " D l";
 const $setup = [[], []];
 _shells({ b: "b; D ;<a> </a>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<a${_patch_attr($scope0_id, "aa$href", "href", input.href, $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -20,7 +20,6 @@ _shells({
 });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const data = $global().data;
 	let hovered = void 0;
@@ -37,7 +36,7 @@ var template_default = _template("a", (input) => {
 		_patch_child_end();
 		_html(`</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
-		$scope0_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			e: item?.id,
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
@@ -45,5 +44,5 @@ var template_default = _template("a", (input) => {
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a2");
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_fill_global_subscribe("a3", $scope0_id);
-	$scope0_page && _scope($scope0_id, { d: hovered });
+	_scope($scope0_id, { d: hovered });
 }, 1);

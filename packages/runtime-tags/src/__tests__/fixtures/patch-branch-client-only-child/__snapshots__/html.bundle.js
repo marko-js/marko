@@ -10,8 +10,8 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "a", 1, 1, 1, "</div>", 1);
 	_html(`<span>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</span><button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.title,
 		h: show
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.title, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

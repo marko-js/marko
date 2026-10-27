@@ -9,7 +9,6 @@ _shells({
 });
 var page_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_for_of(ITEMS, (m) => {
 		const $scope1_id = _scope_id();
@@ -21,9 +20,9 @@ var page_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "b", 1, 0, void 0, void 0, void 0, ["a0"], 0, 0);
-		$scope0_page && _scope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", 0, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -32,7 +31,7 @@ _shells({
 	b0: /*@__PURE__*/ (() => `b0${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -40,9 +39,9 @@ var template_default = _template("b", (input) => {
 			const $childScope = _patch_child($scope1_id, "a", 0);
 			page_default({});
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, { a: _existing_scope($childScope) });
+			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

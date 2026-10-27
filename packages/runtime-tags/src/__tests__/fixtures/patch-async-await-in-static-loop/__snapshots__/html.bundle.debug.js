@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_p = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_p = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_for_of([1, 2], (n) => {
@@ -18,16 +18,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<em>${_patch_text($scope2_id, "#text/0", value + n, void 0, $scope0_reason, 0)}</em>`);
 			$cg__input_p && _patch_init($scope2_id, "__tests__/template.marko_2_n#1:2_value#2/init");
-			$scope0_page && _scope($scope2_id, {}, "__tests__/template.marko", "3:6");
+			_scope($scope2_id, {}, "__tests__/template.marko", "3:6");
 		}, 1, "__tests__/template.marko_2*content");
 		$cg__input_p && _patch_write($scope1_id, "PatchWrite:n", n, 1);
 		$cg__input_p && _patch_init($scope1_id, "__tests__/template.marko_1_input_p#0:4/init");
-		$scope0_page && _write_if($scope0_reason, 0) && _scope($scope1_id, {
+		_write_if($scope0_reason, 0) && _scope($scope1_id, {
 			n: _unfilled_if($scope0_reason, 0) && n,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:4", { n: "2:8" });
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", 0, 0);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

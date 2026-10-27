@@ -15,16 +15,16 @@ var gm_default = _template("b", (input) => {
 			_html(`<i${_patch_attr($scope1_id, "aa$data-z", "data-z", z + $global$1.mark, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></i>${_el_resume($scope1_id, "a")}`);
 			_fill_global_subscribe("b0", $scope1_id);
 			_client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_init($scope1_id, "b1");
-			$scope0_page && _scope($scope1_id, { _: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b2"], $scope0_reason, 0);
 	_fill_global_subscribe("b3", $scope0_id, $cg__input_v);
 	$cg__input_v && _patch_write($scope0_id, "we", input.v, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 0) && input.v,
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && z
-	}) : _filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && $cg__input_v && _patch_fill($scope0_id, "vb4", z, !_server_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0));
+	}) || _filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && $cg__input_v && _patch_fill($scope0_id, "vb4", z, !_server_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0));
 });
 
 // template.marko
@@ -44,14 +44,14 @@ var template_default = _template("a", (input) => {
 				w: input.w
 			});
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });
+			_scope($scope1_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.w,
 		f: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.w, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.w, !_server_guard($scope0_reason, 0));
 }, 1);

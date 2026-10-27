@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		if ($global$1.meta.headings) {
 			const $scope1_id = _scope_id();
 			_html("<a href=#main>Skip to content</a>");
-			$scope0_page && $scope0_page && _scope($scope1_id, {});
+			$scope0_page && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $scope0_page, void 0, void 0, void 0, ["a0"]);
@@ -34,11 +34,11 @@ var template_default = _template("a", (input) => {
 			const $childScope = _patch_child($scope2_id, "a", 0);
 			site_footer_default({});
 			_patch_child_end();
-			$scope0_page && _scope($scope2_id, { a: _existing_scope($childScope) });
+			_scope($scope2_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "c", 1, $scope0_page, void 0, void 0, void 0, ["a1"]);
 	_trailers("</body></html>");
 	_fill_global_subscribe("a2", $scope0_id);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

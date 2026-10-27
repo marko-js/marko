@@ -1,10 +1,10 @@
 // tags/card/index.marko
 _shells({ b: "b;D ;<em> </em>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<em>${_patch_text($scope0_id, "a", input.fn("x"), void 0, $scope0_reason, 0)}</em>`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 			const $childScope4 = _patch_child($scope1_id, "d", 3);
 			card_default({ fn: tag });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				a: _write_if($scope0_reason, 0) && _existing_scope($childScope),
 				b: _write_if($scope0_reason, 1) && _existing_scope($childScope2),
 				c: $wi__input_title && _existing_scope($childScope3),
@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a");
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a5");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5)) && input.flag,
 		f: input.title,
 		h: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5)) && input.alt,
@@ -58,5 +58,5 @@ var template_default = _template("a", (input) => {
 		l: last,
 		m: tag,
 		n: show
-	}) : (_filled_guard($scope0_reason, 3) && $cg__input_title && _patch_fill($scope0_id, "va6", input.flag, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 5) && $cg__input_title && _patch_fill($scope0_id, "va8", input.alt, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va9", fmt, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va10", alt, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 4) && _patch_fill($scope0_id, "va11", last, !$sg__input_title), _filled_guard($scope0_reason, 4) && _patch_fill($scope0_id, "va12", tag, !$sg__input_title));
+	}) || (_filled_guard($scope0_reason, 3) && $cg__input_title && _patch_fill($scope0_id, "va6", input.flag, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 5) && $cg__input_title && _patch_fill($scope0_id, "va8", input.alt, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va9", fmt, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va10", alt, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 4) && _patch_fill($scope0_id, "va11", last, !$sg__input_title), _filled_guard($scope0_reason, 4) && _patch_fill($scope0_id, "va12", tag, !$sg__input_title));
 }, 1);

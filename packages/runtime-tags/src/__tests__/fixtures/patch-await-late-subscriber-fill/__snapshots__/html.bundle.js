@@ -7,7 +7,7 @@ _shells({
 	a: "a !a8; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $n__closures = /* @__PURE__ */ new Set();
@@ -20,10 +20,10 @@ var template_default = _template("a", (input) => {
 		_await($scope1_id, "a", input.promise, (v) => {
 			const $scope2_id = _scope_id();
 			_html(`<div id=done>${_text_resume($scope2_id, "a", input.label + n)}</div>`);
-			$scope0_page && _subscribe($n__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {}), "a0"), "a1");
+			_subscribe($n__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {}), "a0"), "a1");
 		}, 1, "a3", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "a6" : "a7");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a7", 0);
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a7", 0);
 		_resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
@@ -31,11 +31,11 @@ var template_default = _template("a", (input) => {
 		_html("<em>loading</em>");
 	}, void 0, "a2", void 0, "a5", 1, void 0, 2);
 	_script($scope0_id, "a8");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		g: input.label,
 		h: n,
 		j: $wi__input_label && $input_label__closures,
 		k: $n__closures,
 		i: _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $input_promise__closures
-	}) : _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va9", input.label, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va9", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

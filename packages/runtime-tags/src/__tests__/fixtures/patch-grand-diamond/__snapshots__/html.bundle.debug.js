@@ -4,10 +4,10 @@ const $walks$4 = "D l";
 const $setup$4 = [[], []];
 _shells({ "__tests__/tags/dia-d/index.marko": "__tests__/tags/dia-d/index.marko;D ;<em> </em>" });
 var dia_d_default = _template("__tests__/tags/dia-d/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<em>${_patch_text($scope0_id, "#text/0", input.note, void 0, $scope0_reason, 0)}</em>`);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/dia-d/index.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/dia-d/index.marko", 0);
 });
 
 // tags/dia-b/index.marko
@@ -16,13 +16,13 @@ const $walks$3 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l");
 const $setup$3 = _shell_setup([[], []], ["#childScope/0>", $setup$4]);
 _shells({ "__tests__/tags/dia-b/index.marko": /*@__PURE__*/ ((_w0) => `__tests__/tags/dia-b/index.marko${_shell_marker($setup$3)};${((_w0) => `/${_w0}&`)("D l")};${_w0}`)($template$4) });
 var dia_b_default = _template("__tests__/tags/dia-b/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
 	dia_d_default({ note: input.note });
 	_patch_child_end();
-	$scope0_page && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/dia-b/index.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/dia-b/index.marko", 0);
 });
 
 // tags/dia-c/index.marko
@@ -31,13 +31,13 @@ const $walks$2 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l");
 const $setup$2 = _shell_setup([[], []], ["#childScope/0>", $setup$4]);
 _shells({ "__tests__/tags/dia-c/index.marko": /*@__PURE__*/ ((_w0) => `__tests__/tags/dia-c/index.marko${_shell_marker($setup$2)};${((_w0) => `/${_w0}&`)("D l")};${_w0}`)($template$4) });
 var dia_c_default = _template("__tests__/tags/dia-c/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
 	dia_d_default({ note: input.note });
 	_patch_child_end();
-	$scope0_page && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/dia-c/index.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/dia-c/index.marko", 0);
 });
 
 // tags/dia-a/index.marko
@@ -46,7 +46,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$3, $wal
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$3], ["#childScope/1>", $setup$2]);
 _shells({ "__tests__/tags/dia-a/index.marko": /*@__PURE__*/ (() => `__tests__/tags/dia-a/index.marko${_shell_marker($setup$1)};${((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$3, $walks$2)};${((_w0, _w1) => `${_w0}${_w1}`)($template$3, $template$2)}`)() });
 var dia_a_default = _template("__tests__/tags/dia-a/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
@@ -56,7 +56,7 @@ var dia_a_default = _template("__tests__/tags/dia-a/index.marko", (input) => {
 	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
 	dia_c_default({ note: input.note });
 	_patch_child_end();
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2)
 	}, "__tests__/tags/dia-a/index.marko", 0);
@@ -79,17 +79,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
 			dia_a_default({ note: input.note });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_note: input.note,
 		show
 	}, "__tests__/template.marko", 0, {
 		input_note: ["input.note"],
 		show: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 0));
 }, 1);

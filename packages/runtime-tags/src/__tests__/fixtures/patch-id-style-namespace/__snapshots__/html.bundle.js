@@ -4,7 +4,7 @@ _shells({
 	a2: "a2; ;<style></style>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = _id("A");
 	_html(`<label${_patch_attr($scope0_id, "aa$for", "for", uid, 0, 0)}>field</label>${_el_resume($scope0_id, "a", 0)}<input${_patch_attr($scope0_id, "ab$id", "id", uid, 0, 0)}${_patch_attr_class($scope0_id, "ab$class", uid, 0, 0)}>${_el_resume($scope0_id, "b", 0)}`);
@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`${_style_html(`--idsa0:${_patch_style($scope1_id, "ya$--idsa0", input.color, $scope0_reason, 0)};`)}${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a1");
-		$scope0_page && _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
+		_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "a2", 0, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

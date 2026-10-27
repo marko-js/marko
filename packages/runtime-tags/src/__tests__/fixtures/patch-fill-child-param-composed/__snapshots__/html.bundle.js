@@ -4,10 +4,10 @@ const $walks = " D l";
 const $setup$2 = [[], []];
 _shells({ b: "b; D ;<a> </a>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<a${_patch_attr($scope0_id, "aa$href", "href", input.href, $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // tags/feed-list.marko
@@ -21,7 +21,7 @@ _shells({
 	c3: /*@__PURE__*/ (() => `c3${_shell_marker(_shell_setup([["c7"], ["c0"]], ["b>", $setup$2]))};${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)}`)()
 });
 var feed_list_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_items = _write_if($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let hovered = void 0;
 	_html("<ul>");
@@ -39,7 +39,7 @@ var feed_list_default = _template("c", (input) => {
 		_html(`</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "c0");
 		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "c2", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "e");
-		$scope0_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			e: item?.id,
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
@@ -48,7 +48,7 @@ var feed_list_default = _template("c", (input) => {
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_filled_guard($scope0_reason, 2) && $cg__input_items ? _patch_fill($scope0_id, "vc4", input.data) : $cg__input_items && _patch_write($scope0_id, "xe", input.data, 1);
 	_patch_fill($scope0_id, "vc5", hovered, 1);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: $wi__input_items && input.data,
 		f: $wi__input_items && hovered
 	});
@@ -73,7 +73,7 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
 	_fill_global_subscribe("a0", $scope0_id);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: open,
 		b: _existing_scope($childScope)
 	});

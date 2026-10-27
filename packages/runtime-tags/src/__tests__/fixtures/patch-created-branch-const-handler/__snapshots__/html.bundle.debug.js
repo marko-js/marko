@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1_opts_step#3; D ;<button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope1_id, "__tests__/template.marko_1_opts_step#3");
 			_patch_write($scope1_id, "PatchWrite:opts_step", opts.step, 1);
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				opts_step: opts.step,
 				n
 			}, "__tests__/template.marko", "1:2", {
@@ -28,5 +28,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

@@ -29,7 +29,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_store_set#1:8/init!__tests__/template.marko_3;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	_for_of(["x", "y"], (name) => {
@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $countChange = store.set || void 0;
 					_patch_fill($scope3_id, "PatchFill:__tests__/template.marko_fill0", count, 1);
 					_patch_bind($scope3_id, "PatchWrite:TagVariableChange:count", $countChange);
-					$scope0_page && _subscribe($for_content__store_set__closures, _scope($scope3_id, {
+					_subscribe($for_content__store_set__closures, _scope($scope3_id, {
 						count,
 						_: _scope_with_id($scope2_id),
 						"TagVariableChange:count": $countChange
@@ -63,12 +63,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}
 			}, $scope2_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_show ? "__tests__/template.marko_2_input_show#0:3/init" : "__tests__/template.marko_2_input_show#0:3/subscribe");
-			$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
+			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
 				"#LoopKey": _unfilled_if($scope0_reason, 0) && other,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "4:4", { "#LoopKey": "4:8" }), $cg__input_show && "__tests__/template.marko_2_input_show#0:3/subscribe", $wg__input_show);
 		}, (n) => n, $scope1_id, "#text/4", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", 0, 0);
-		$scope0_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			"#LoopKey": _unfilled_if($scope0_reason, 0) && name,
 			store_set: $wi__input_show && store?.set,
 			_: $wi__input_show && _scope_with_id($scope0_id),
@@ -79,5 +79,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			store_set: ["store.set", "2:10"]
 		});
 	}, (n) => n, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", 0, 0);
-	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_show/4": $wi__input_show && _unfilled_if($scope0_reason, 0) && $input_show__closures }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "ClosureScopes:input_show/4": $wi__input_show && _unfilled_if($scope0_reason, 0) && $input_show__closures }, "__tests__/template.marko", 0);
 }, 1);

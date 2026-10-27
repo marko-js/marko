@@ -18,17 +18,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (show) {
 					const $scope2_id = _scope_id();
 					_html(`<p>${_text_resume($scope2_id, "#text/0", label, $wg__input_title)}</p>`);
-					$scope0_page && _subscribe($wi__input_title && $label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6"), "__tests__/template.marko_2_label#0:6/subscribe", $wg__input_title);
+					_subscribe($wi__input_title && $label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6"), "__tests__/template.marko_2_label#0:6/subscribe", $wg__input_title);
 					return 0;
 				}
 			}, $scope1_id, "#text/0", $wg__input_title, $wg__input_title, 0, 0, 1);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "5:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "5:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		open,
 		label,
 		show,
@@ -37,5 +37,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		open: "1:6",
 		label: "2:8",
 		show: "3:8"
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", label, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", show, !$sg__input_title));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", label, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", show, !$sg__input_title));
 }, 1);

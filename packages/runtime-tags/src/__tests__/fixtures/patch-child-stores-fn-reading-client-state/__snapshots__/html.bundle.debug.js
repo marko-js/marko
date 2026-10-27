@@ -4,7 +4,7 @@ const $walks$1 = "";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko," });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_fn = _client_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_fn = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const g = open ? input.fn : _resume(() => "-", "__tests__/tags/card.marko_0/g");
@@ -12,13 +12,13 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, $cg__input_fn ? "PatchQueuedEffect:__tests__/tags/card.marko_0_g#5" : "PatchEffect:__tests__/tags/card.marko_0_g#5", "g");
 	$cg__input_fn && _patch_write($scope0_id, "PatchWrite:open", open, 1);
 	$cg__input_fn && _patch_init($scope0_id, "__tests__/tags/card.marko_0_input_fn#2_open#3/init");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		open: _unfilled_if($scope0_reason, 0) && open,
 		g
 	}, "__tests__/tags/card.marko", 0, {
 		open: "1:6",
 		g: "2:8"
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:g", g, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:g", g, !_server_guard($scope0_reason, 0));
 	_resume_branch($scope0_id);
 });
 
@@ -39,12 +39,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>more</button>${_el_resume($scope0_id, "#button/1")}<span>${_patch_text($scope0_id, "#text/2", input.x, void 0, $scope0_reason, 1)}</span>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_label: input.label,
 		n,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		n: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

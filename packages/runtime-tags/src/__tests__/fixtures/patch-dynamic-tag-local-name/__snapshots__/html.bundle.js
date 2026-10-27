@@ -2,12 +2,11 @@
 _shells({ b: "b;Db%;<i>A <!></i>" });
 var alpha_default = _template("b", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<i>A ${_patch_text($scope0_id, "a", $global$1.brand, 2)}</i>`);
 	_fill_global_subscribe("b0", $scope0_id);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // tags/beta.marko
@@ -23,18 +22,18 @@ const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({ d: "d;b%;<!><!><!>" });
 var child_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Tag = input.value % 2 ? alpha_default : beta_default;
 	_dynamic_tag($scope0_id, "a", Tag, {}, 2, 0, 0, $wg__input_value, $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
 const $setup = _shell_setup([[], ["a0"]], ["c>", $setup$1]);
 _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `E l b/${_w0}&l`)("b%c")};${((_w0) => `<main><h1> </h1><button>+</button>${_w0}</main>`)($template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 1;
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><button>+</button>${_el_resume($scope0_id, "b")}`);
@@ -44,7 +43,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html("</main>");
 	_script($scope0_id, "a0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		g: n,
 		c: _existing_scope($childScope)
 	});

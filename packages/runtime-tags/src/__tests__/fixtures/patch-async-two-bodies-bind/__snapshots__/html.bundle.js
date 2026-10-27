@@ -7,13 +7,13 @@ _shells({
 	a: "a;D%b%;<main><!><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_second = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_second = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_await($scope0_id, "a", input.first, (first) => {
 		const $scope1_id = _scope_id();
 		_html(`<em>${_patch_text($scope1_id, "a", first, void 0, $scope0_reason, 0)}</em>`);
-		$scope0_page && _scope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 1, "a2", 1);
 	_await($scope0_id, "b", input.second, (second) => {
 		const $scope2_id = _scope_id();
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		_script($scope2_id, "a5");
 		$cg__input_second && _patch_write($scope2_id, "we", handler, 1);
 		$cg__input_second && _patch_init($scope2_id, "a6");
-		$scope0_page && _scope($scope2_id, {
+		_scope($scope2_id, {
 			d: second,
 			e: _unfilled_if($scope0_reason, 1) && handler
 		});

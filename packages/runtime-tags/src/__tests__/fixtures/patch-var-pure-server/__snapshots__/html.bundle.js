@@ -25,7 +25,7 @@ var labeler_default = _template("c", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$2], ["c>", $setup$1]);
 _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0, _w1) => `D0${_w0}&/${_w1}&l`)("b", "b")};${((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($template$1, $template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	const $childScope = _patch_child($scope0_id, "a", 0, $cg__input_n && 1);
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 	labeler_default({ title: double });
 	_patch_child_end();
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		a: _existing_scope($childScope),
 		c: _existing_scope($childScope2)
 	});

@@ -44,7 +44,7 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 					const have = withDrops(bankCount(p, part), drops, part);
 					const live = have + now * proj;
 					_html(`<span${live < 2 ? " class=short" : ""}>${_patch_text($scope3_id, "#text/1", part, void 0, 0, 0)} ${_text_resume($scope3_id, "#text/2", have, 2)}</span>${_el_resume($scope3_id, "#span/0")}`);
-					$scope0_page && _subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
+					_subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
 						part,
 						have,
 						_: _scope_with_id($scope2_id)
@@ -53,17 +53,17 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 						have: "21:14"
 					}), "__tests__/shop.marko_3_now#0:8/subscribe"), "__tests__/shop.marko_3_drops#0:9/subscribe");
 				}, 0, $scope2_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/shop.marko_3*shell", 0, 0);
-				$scope0_page && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/shop.marko", "19:4");
+				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/shop.marko", "19:4");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/shop.marko_2*shell"]);
-		$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/shop.marko", "17:2");
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/shop.marko", "17:2");
 	}, 0, $scope0_id, "#text/3", 1, void 0, void 0, void 0, void 0, "__tests__/shop.marko_1*shell", 0, 0);
 	_fill_global_subscribe("__tests__/shop.marko_0_$global_data#6", $scope0_id);
 	_script($scope0_id, "__tests__/shop.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/shop.marko_fill2", now, 1);
 	_patch_fill($scope0_id, "PatchFill:__tests__/shop.marko_fill3", drops, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		p,
 		proj,
 		now,
@@ -75,7 +75,7 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 		proj: "12:8",
 		now: "13:6",
 		drops: "14:6"
-	}) : (_patch_fill($scope0_id, "PatchFill:__tests__/shop.marko_fill0", p), _patch_fill($scope0_id, "PatchFill:__tests__/shop.marko_fill1", proj));
+	}) || (_patch_fill($scope0_id, "PatchFill:__tests__/shop.marko_fill0", p), _patch_fill($scope0_id, "PatchFill:__tests__/shop.marko_fill1", proj));
 });
 
 // template.marko
@@ -85,10 +85,10 @@ const $Shop_withLoadAssets = withLoadAssets(() => shop_default, "__tests__/shop.
 const $setup = _shell_setup([[], []], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `b%b/${_w0}&b`)($walks$1)};${((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
 	$Shop_withLoadAssets({});
 	_patch_child_end();
-	$scope0_page && _scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

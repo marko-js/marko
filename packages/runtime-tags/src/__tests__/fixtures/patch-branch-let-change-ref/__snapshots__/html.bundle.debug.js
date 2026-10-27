@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let last = 0;
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "#text/1", last, 2)}</p>`);
@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope1_id, "__tests__/template.marko_1");
 			const $countChange = handler || void 0;
 			_patch_let_change($scope1_id, "PatchFill:__tests__/template.marko_fill0", count, "PatchWrite:TagVariableChange:count", $countChange);
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				count,
 				_: _scope_with_id($scope0_id),
 				"TagVariableChange:count": $countChange
@@ -34,5 +34,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

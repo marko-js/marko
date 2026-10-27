@@ -4,13 +4,13 @@ const $walks = " D%c%l";
 const $setup = [[], ["a0"]];
 _shells({ a: "a !a0; D%c%;<button class=child><!>:<!></button>" });
 var lazy_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=child>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_patch_fill($scope0_id, "va1", count, 1);
-	$scope0_page && _scope($scope0_id, { g: count });
+	_scope($scope0_id, { g: count });
 });
 
 // template.marko
@@ -22,7 +22,7 @@ _shells({
 	b5: "b5;b%;<!><!><!>"
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_label = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $n__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -38,20 +38,20 @@ var template_default = _template("b", (input) => {
 				$Lazy_withLoadAssets({ label: x + n });
 				_patch_child_end();
 				_script($scope2_id, "b0");
-				$scope0_page && _subscribe($n__closures, _scope($scope2_id, {
+				_subscribe($n__closures, _scope($scope2_id, {
 					d: x,
 					b: _existing_scope($childScope)
 				}), "b2");
 			}, 1, "b3");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b6");
-			$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b5"], $scope0_reason, 0);
 	_script($scope0_id, "b7");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 0) && input.label,
 		g: n,
 		i: $n__closures
-	}) : _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb8", input.label, !$sg__input_label);
+	}) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb8", input.label, !$sg__input_label);
 }, 1);

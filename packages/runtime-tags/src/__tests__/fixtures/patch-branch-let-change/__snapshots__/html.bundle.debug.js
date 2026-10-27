@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1;Db%l ;<p>Seen <!></p><button>+</button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_if(() => {
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				document.querySelector("main").dataset.attempt = String(next);
 			}, "__tests__/template.marko_1/valueChange") || void 0;
 			_patch_let_change($scope1_id, "PatchFill:__tests__/template.marko_fill0", count, "PatchWrite:TagVariableChange:count", $countChange);
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				count,
 				"TagVariableChange:count": $countChange
 			}, "__tests__/template.marko", "3:4", {
@@ -31,5 +31,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html("</main>");
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

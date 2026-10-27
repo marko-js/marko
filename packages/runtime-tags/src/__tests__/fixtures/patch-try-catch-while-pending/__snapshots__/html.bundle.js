@@ -9,7 +9,6 @@ _shells({
 });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html("<main>");
@@ -20,7 +19,7 @@ var template_default = _template("a", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_patch_text($scope4_id, "a", $global$1.name)} ${_patch_text($scope4_id, "b", v, 2)}</em>`);
 			_fill_global_subscribe("a0", $scope4_id);
-			$scope0_page && _scope($scope4_id, {});
+			_scope($scope4_id, {});
 		}, 1, "a1", 1);
 		_fill_global_subscribe("a6", $scope1_id);
 	}, () => {

@@ -4,13 +4,13 @@ const $walks = " D%c%l";
 const $setup$1 = [[], ["a0"]];
 _shells({ a: "a !a0; D%c%;<button><!>:<!></button>" });
 var child_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_patch_fill($scope0_id, "va1", count, 1);
-	$scope0_page && _scope($scope0_id, { g: count });
+	_scope($scope0_id, { g: count });
 });
 
 // template.marko
@@ -26,7 +26,7 @@ _shells({
 	b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0) => `b%b/${_w0}&%c`)($walks)};${((_w0) => `<!><!>${_w0}<!><!>`)($template)}`)()
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_a = _client_guard($scope0_reason, 2), $cg__input_b = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 2), $cg__input_b = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
@@ -40,7 +40,7 @@ var template_default = _template("b", (input) => {
 		_await($scope1_id, "a", input.a, (a) => {
 			const $scope3_id = _scope_id();
 			_html(`<b>${_patch_text($scope3_id, "a", a, void 0, $scope0_reason, 2)}</b>`);
-			$scope0_page && _scope($scope3_id, {});
+			_scope($scope3_id, {});
 		}, 1, "b1", 1);
 		_set_scope_reason(0);
 		const $childScope2 = _patch_child($scope1_id, "c", 1);
@@ -49,11 +49,11 @@ var template_default = _template("b", (input) => {
 		_await($scope1_id, "d", input.b, (b) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_patch_text($scope4_id, "a", b, void 0, $scope0_reason, 3)}</em>`);
-			$scope0_page && _scope($scope4_id, {});
+			_scope($scope4_id, {});
 		}, 1, "b0", 1);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_a ? "b6" : "b7");
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, $cg__input_b ? "b8" : "b9");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			c: _existing_scope($childScope2)
 		}), $cg__input_a && "b7"), $cg__input_b && "b9");
@@ -62,7 +62,7 @@ var template_default = _template("b", (input) => {
 		_scope_id();
 		_html("<i>loading</i>");
 	}, void 0, "b2", void 0, "b5", 1, void 0, 2);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		b: _existing_scope($childScope),
 		i: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_a__closures,
 		j: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_b__closures

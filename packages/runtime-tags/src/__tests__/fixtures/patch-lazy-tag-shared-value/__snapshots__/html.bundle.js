@@ -11,10 +11,10 @@ var child_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_script($scope0_id, "a0");
 	_patch_fill($scope0_id, "va1", open, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.item,
 		f: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.item, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.item, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko
@@ -25,7 +25,7 @@ const $Child_withLoadAssets = withLoadAssets(() => child_default, "a", flush, "_
 const $setup = _shell_setup([[], ["b0"]], ["d>", $setup$1]);
 _shells({ b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0) => ` D l%b/${_w0}&b`)($walks)};${((_w0) => `<button> </button><!>${_w0}<!>`)($template)}`)() });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const item = { label: input.label };
 	let count = 0;
@@ -35,9 +35,9 @@ var template_default = _template("b", (input) => {
 	$Child_withLoadAssets({ item: _patch_live($childScope, item, $scope0_id, "g") });
 	_patch_child_end();
 	_script($scope0_id, "b0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		h: item,
 		i: count,
 		d: _existing_scope($childScope)
-	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.label, !$sg__input_label), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wh", item, !$sg__input_label));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.label, !$sg__input_label), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wh", item, !$sg__input_label));
 }, 1);

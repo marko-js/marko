@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<b>${_text_resume($scope1_id, "a", $global$1.a + $global$1.c, $scope0_page)}</b>`);
 			_fill_global_subscribe("a0", $scope1_id, 1);
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<li>${_text_resume($scope2_id, "a", $global$1.a + $global$1.c, $scope0_page)}</li>`);
 		_fill_global_subscribe("a1", $scope0_id, 1);
-		$scope0_page && _scope($scope2_id, {});
+		_scope($scope2_id, {});
 	}, 0, $scope0_id, "c", 1, 1, 1, "</ul>", 1);
 	_html(`<div></div>${_el_resume($scope0_id, "d")}<div></div>${_el_resume($scope0_id, "e")}<div></div>${_el_resume($scope0_id, "f")}<div></div>${_el_resume($scope0_id, "g")}<div></div>${_el_resume($scope0_id, "h")}`);
 	_script($scope0_id, "a6");
@@ -30,5 +30,5 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a3");
 	_script($scope0_id, "a2");
 	_script($scope0_id, "a7");
-	$scope0_page && _scope($scope0_id, { i: open });
+	_scope($scope0_id, { i: open });
 }, 1);

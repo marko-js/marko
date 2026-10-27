@@ -8,16 +8,16 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_flag__OR__input_a = _write_guard($scope0_reason, 0), $cg__input_a = _client_guard($scope0_reason, 2), $cg__input_flag = _client_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_flag__OR__input_a = _write_guard($scope0_reason, 0), $cg__input_a = _client_guard($scope0_reason, 2), $cg__input_flag = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const A = { content: _content_resume("__tests__/template.marko_1*content", ({ x }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
+		const $scope1_reason = _scope_reason();
 		let l = String(x);
 		_html(`<button>${_text_resume($scope1_id, "#text/1", l)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill2", l, 1);
-		$scope1_page && _scope($scope1_id, { l }, "__tests__/template.marko", "1:2", { l: "2:8" });
+		_scope($scope1_id, { l }, "__tests__/template.marko", "1:2", { l: "2:8" });
 	}, $scope0_id) };
 	const B = { content: _content_resume("__tests__/template.marko_2*content", ({ x }) => {
 		const $scope2_id = _scope_id();
@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<b>B</b>");
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.flag ? B : A, { x: input.a }, 1, 0, 0, $wg__input_flag__OR__input_a, $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_flag: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.flag,
 		input_a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.a,
 		A: _unfilled_if($scope0_reason, 0) && A,
@@ -35,5 +35,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_a: ["input.a"],
 		A: "1:9",
 		B: "5:9"
-	}) : (_filled_guard($scope0_reason, 1) && $cg__input_a && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.flag, !_server_guard($scope0_reason, 1)), $cg__input_a && _content_withhold(input.flag), _filled_guard($scope0_reason, 2) && $cg__input_flag && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.a, !_server_guard($scope0_reason, 2)), $cg__input_flag && _content_withhold(input.a));
+	}) || (_filled_guard($scope0_reason, 1) && $cg__input_a && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.flag, !_server_guard($scope0_reason, 1)), $cg__input_a && _content_withhold(input.flag), _filled_guard($scope0_reason, 2) && $cg__input_flag && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", input.a, !_server_guard($scope0_reason, 2)), $cg__input_flag && _content_withhold(input.a));
 }, 1);

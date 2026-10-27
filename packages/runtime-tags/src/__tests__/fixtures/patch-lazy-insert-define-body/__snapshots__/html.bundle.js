@@ -4,13 +4,13 @@ const $walks = " D%c%l";
 const $setup = [[], ["a0"]];
 _shells({ a: "a !a0; D%c%;<button class=child><!>:<!></button>" });
 var lazy_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button class=child>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_patch_fill($scope0_id, "va1", count, 1);
-	$scope0_page && _scope($scope0_id, { g: count });
+	_scope($scope0_id, { g: count });
 });
 
 // template.marko
@@ -26,12 +26,12 @@ var template_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const Row = { content: _content("b0", ({ label }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
+		const $scope1_reason = _scope_reason();
 		_set_scope_reason(_mask_group($scope1_reason, 0) << 1);
 		const $childScope = _patch_child($scope1_id, "b", 0);
 		$Lazy_withLoadAssets({ label });
 		_patch_child_end();
-		$scope1_page && _scope($scope1_id, { b: _existing_scope($childScope) });
+		_scope($scope1_id, { b: _existing_scope($childScope) });
 	}, $scope0_id) };
 	_html(`<button class=open>open</button>${_el_resume($scope0_id, "a")}`);
 	_if(() => {
@@ -41,11 +41,11 @@ var template_default = _template("b", (input) => {
 			const $childScope2 = _patch_child($scope2_id, "a", 1);
 			Row.content({ label: "s" });
 			_patch_child_end();
-			$scope0_page && _scope($scope2_id, { a: _existing_scope($childScope2) });
+			_scope($scope2_id, { a: _existing_scope($childScope2) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b1"], $scope0_reason, 0);
 	if ($scope0_page) _if(() => {}, $scope0_id, "c");
 	_script($scope0_id, "b2");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

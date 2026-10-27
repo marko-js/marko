@@ -2,13 +2,12 @@
 _shells({ b: "b !b0; D ;<button class=c> </button>" });
 var counter_default = _template("b", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=c>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb1", n, 1);
-	$scope0_page && _scope($scope0_id, { c: n });
+	_scope($scope0_id, { c: n });
 });
 
 // template.marko
@@ -22,5 +21,5 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button class=t>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_page && _scope($scope0_id, { c: show });
+	_scope($scope0_id, { c: show });
 }, 1);

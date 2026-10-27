@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1;D bD l ;<li> <span> </span><button>+</button></li>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.items, (item) => {
@@ -16,8 +16,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<li>${_patch_text($scope1_id, "#text/0", item.label, void 0, $scope0_reason, 0)}<span>${_text_resume($scope1_id, "#text/1", votes)}</span><button>+</button>${_el_resume($scope1_id, "#button/2")}</li>`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", votes, 1);
-		$scope0_page && _scope($scope1_id, { votes }, "__tests__/template.marko", "2:4", { votes: "5:12" });
+		_scope($scope1_id, { votes }, "__tests__/template.marko", "2:4", { votes: "5:12" });
 	}, "id", $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

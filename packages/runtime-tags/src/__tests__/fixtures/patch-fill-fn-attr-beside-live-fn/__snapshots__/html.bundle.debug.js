@@ -4,10 +4,10 @@ const $walks$1 = "D l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;D ;<em> </em>" });
 var card_default = _template("__tests__/tags/card/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<em>${_patch_text($scope0_id, "#text/0", input.fn("x"), void 0, $scope0_reason, 0)}</em>`);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 });
 
 // template.marko
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope2 = _patch_child($scope1_id, "#childScope/1", 1);
 			card_default({ fn: tag });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				"#childScope/0": $wi__input_title && _existing_scope($childScope),
 				"#childScope/1": $wi__input_title && _existing_scope($childScope2)
 			}, "__tests__/template.marko", "4:4");
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0");
 	_html(`<button>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_title: input.title,
 		tag,
 		show
@@ -50,5 +50,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_title: ["input.title"],
 		tag: "1:8",
 		show: "2:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", tag, !$sg__input_title);
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", tag, !$sg__input_title);
 }, 1);

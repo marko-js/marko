@@ -32,11 +32,11 @@ var template_default = _template("a", (input) => {
 			_patch_child($scope1_id, "a", 0);
 			widget_default({});
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_page && _scope($scope0_id, { c: show });
+	_scope($scope0_id, { c: show });
 }, 1);

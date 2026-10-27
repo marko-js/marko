@@ -9,5 +9,5 @@ var template_default = _template("a", (input) => {
 	_html(`<button>t</button>${_el_resume($scope0_id, "a")}`);
 	if ($scope0_page) _if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, { c: open });
+	_scope($scope0_id, { c: open });
 }, 1);

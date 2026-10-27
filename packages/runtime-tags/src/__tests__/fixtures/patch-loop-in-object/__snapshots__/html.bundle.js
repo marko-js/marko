@@ -8,12 +8,12 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _for_in(pairs, (k, v) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_escape(k)}=${_text_resume($scope1_id, "b", v, 2)} (${_text_resume($scope1_id, "c", input.note, _write_guard($scope0_reason, 0) * 2)})</li>`);
-		$scope0_page && _scope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, 1, 1, "</ul>", 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.note,
 		f: pairs
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.note, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.note, !_server_guard($scope0_reason, 0));
 }, 1);

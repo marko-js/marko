@@ -44,30 +44,30 @@ var shop_default = _template("a", (input) => {
 					const have = withDrops(bankCount(p, part), drops, part);
 					const live = have + now * proj;
 					_html(`<span${live < 2 ? " class=short" : ""}>${_patch_text($scope3_id, "b", part, void 0, 0, 0)} ${_text_resume($scope3_id, "c", have, 2)}</span>${_el_resume($scope3_id, "a")}`);
-					$scope0_page && _subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
+					_subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
 						e: part,
 						g: have,
 						_: _scope_with_id($scope2_id)
 					}), "a1"), "a2");
 				}, 0, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "a3", 0, 0);
-				$scope0_page && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
+				_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $scope0_page, void 0, void 0, void 0, ["a5"]);
-		$scope0_page && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "d", 1, void 0, void 0, void 0, void 0, "a4", 0, 0);
 	_fill_global_subscribe("a6", $scope0_id);
 	_script($scope0_id, "a7");
 	_patch_fill($scope0_id, "va10", now, 1);
 	_patch_fill($scope0_id, "va11", drops, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: p,
 		h: proj,
 		i: now,
 		j: drops,
 		n: $now__closures,
 		o: $drops__closures
-	}) : (_patch_fill($scope0_id, "va8", p), _patch_fill($scope0_id, "va9", proj));
+	}) || (_patch_fill($scope0_id, "va8", p), _patch_fill($scope0_id, "va9", proj));
 });
 
 // template.marko
@@ -76,10 +76,9 @@ const $setup = _shell_setup([[], []], ["b>", $setup$1]);
 _shells({ b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0) => `b%b/${_w0}&b`)($walks)};${((_w0) => `<!><!>${_w0}<!>`)($template)}`)() });
 var template_default = _template("b", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $childScope = _patch_child($scope0_id, "b", 0);
 	$Shop_withLoadAssets({});
 	_patch_child_end();
-	$scope0_page && _scope($scope0_id, { b: _existing_scope($childScope) });
+	_scope($scope0_id, { b: _existing_scope($childScope) });
 }, 1);

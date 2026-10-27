@@ -4,7 +4,7 @@ const $walks = " E l l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; E l ;<main><p> </p><button>+</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_value = _server_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_value = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	const uid = _id("uid");
@@ -13,11 +13,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_input_value#5_count#7");
 	$sg__input_value && _patch_effect($scope0_id, "PatchQueuedEffect:__tests__/template.marko_0_input_value#5_count#7", "input_value");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_value: input.value,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],
 		count: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !$sg__input_value);
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !$sg__input_value);
 }, 1);

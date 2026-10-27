@@ -11,15 +11,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _for_in(pairs, (k, v) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_escape(k)}=${_text_resume($scope1_id, "#text/1", v, 2)} (${_text_resume($scope1_id, "#text/2", input.note, _write_guard($scope0_reason, 0) * 2)})</li>`);
-		$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "4:6");
+		_scope($scope1_id, {}, "__tests__/template.marko", "4:6");
 	}, 0, $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_note: input.note,
 		pairs
 	}, "__tests__/template.marko", 0, {
 		input_note: ["input.note"],
 		pairs: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 0));
 }, 1);

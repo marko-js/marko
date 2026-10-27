@@ -4,17 +4,17 @@ _shells({
 	b0: "b0,<em>open</em>"
 });
 var widget_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_open = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_open = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.open) {
 			const $scope1_id = _scope_id();
 			_html("<em>open</em>");
-			$scope0_page && _write_if($scope0_reason, 0) && _scope($scope1_id, {});
+			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_open, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -31,14 +31,14 @@ var template_default = _template("a", (input) => {
 			const $childScope = _patch_child($scope1_id, "a", 0);
 			widget_default({ open: input.o });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });
+			_scope($scope1_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.o,
 		f: show
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.o, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.o, !_server_guard($scope0_reason, 0));
 }, 1);

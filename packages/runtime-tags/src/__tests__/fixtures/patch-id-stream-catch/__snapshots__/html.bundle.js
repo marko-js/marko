@@ -4,11 +4,11 @@ const $walks = " D l b";
 const $setup = [[], []];
 _shells({ b: "b; D l ;<label> </label><input>" });
 var field_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("A");
 	_html(`<label${_patch_attr($scope0_id, "aa$for", "for", uid, $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<input${_patch_attr($scope0_id, "ac$id", "id", uid, $scope0_reason, 0)}${_patch_attr($scope0_id, "ac$aria-describedby", "aria-describedby", input.heading, $scope0_reason, 2)}>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 2))}`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -21,7 +21,7 @@ _shells({
 	a0: /*@__PURE__*/ ((_w0) => `a0${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_promise = _write_if($scope0_reason, 0), $cg__input_promise = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0), $cg__input_promise = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const heading = _id("A");
@@ -47,21 +47,20 @@ var template_default = _template("a", (input) => {
 					heading
 				});
 				_patch_child_end();
-				$scope0_page && _scope($scope5_id, {
+				_scope($scope5_id, {
 					_: $wi__input_promise && _scope_with_id($scope4_id),
 					a: _existing_scope($childScope3)
 				});
 			}, "key", $scope4_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
-			$scope0_page && _scope($scope4_id, {});
+			_scope($scope4_id, {});
 		}, 1, "a1", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "a5" : "a6");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, {
 			_: $wi__input_promise && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope2)
 		}), $cg__input_promise && "a6");
 	}, () => {
 		_scope_reason();
-		const $scope2_page = _page_render();
 		const $scope2_id = _scope_id();
 		_set_scope_reason(0);
 		_patch_child($scope2_id, "a", 0);
@@ -70,11 +69,10 @@ var template_default = _template("a", (input) => {
 			heading
 		});
 		_patch_child_end();
-		$scope2_page && _scope($scope2_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 		_resume_branch($scope2_id);
 	}, (error) => {
 		_scope_reason();
-		const $scope3_page = _page_render();
 		const $scope3_id = _scope_id();
 		_set_scope_reason(16);
 		const $childScope = _patch_child($scope3_id, "a", 1);
@@ -83,12 +81,12 @@ var template_default = _template("a", (input) => {
 			heading
 		});
 		_patch_child_end();
-		$scope3_page && _scope($scope3_id, {
+		_scope($scope3_id, {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});
 	}, "a7", "a2", "a4", 1, 1, 1);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: heading,
 		g: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures
 	});

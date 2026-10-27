@@ -5,7 +5,7 @@ const $setup$1 = [[], []];
 _shells({ "__tests__/tags/counter-box/index.marko": "^__tests__/tags/counter-box/index.marko !;Db%;<span>box <!></span>" });
 _stateful_return("__tests__/tags/counter-box/index.marko");
 var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = input.start;
 	_html(`<span>box ${_text_resume($scope0_id, "#text/0", count, 2)}</span>`);
@@ -14,7 +14,7 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 		count = v;
 	}, "__tests__/tags/counter-box/index.marko_0/valueChange", $scope0_id) || void 0, 0, 0);
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/counter-box/index.marko_fill0", count, 1);
-	$scope0_page && _scope($scope0_id, { "#TagVariableChange": $valueChange2 }, "__tests__/tags/counter-box/index.marko", 0);
+	_scope($scope0_id, { "#TagVariableChange": $valueChange2 }, "__tests__/tags/counter-box/index.marko", 0);
 	return $return;
 });
 
@@ -38,11 +38,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_patch_child_end();
 			_html(`<p>${_text_resume($scope1_id, "#text/2", count)}</p><button class=reset>r</button>${_el_resume($scope1_id, "#button/3")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
-			$scope0_page && _scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button class=toggle>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
+	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
 }, 1);

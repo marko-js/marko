@@ -6,7 +6,7 @@ _shells({
 	a: "a;b%bD ;<!><!><output> </output>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_name = _client_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_name = _client_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_name__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -19,10 +19,10 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a1");
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_label ? "a2" : "a3");
 		$cg__input_name && _patch_init($scope1_id, "a4");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_name__closures, _scope($scope1_id, { e: uid }), $cg__input_name && "a1"), $cg__input_label && "a3");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_name__closures, _scope($scope1_id, { e: uid }), $cg__input_name && "a1"), $cg__input_label && "a3");
 	}, 1, "a5", 1);
 	_html(`<output>${_text_resume($scope0_id, "b", shown)}</output>`);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		h: _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $input_name__closures,
 		i: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_label__closures
 	});

@@ -6,9 +6,9 @@ var template_default = _template("a", (input) => {
 	let show = true;
 	const badge = { content: _content("a0", (a, b) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $scope2_page = _page_render();
+		const $scope2_reason = _scope_reason();
 		_html(`<em>${_patch_text($scope2_id, "a", a, void 0, $scope2_reason, 0)}${_patch_text($scope2_id, "b", b, 2, $scope2_reason, 1)}</em>`);
-		$scope2_page && _scope($scope2_id, {});
+		_scope($scope2_id, {});
 	}, $scope0_id) };
 	_html("<main>");
 	if ($scope0_page) _if(() => {
@@ -18,14 +18,14 @@ var template_default = _template("a", (input) => {
 			const $childScope = _patch_child($scope1_id, "a", 0);
 			badge.content(...input.parts);
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });
+			_scope($scope1_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.parts,
 		f: show
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", input.parts, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", input.parts, !_server_guard($scope0_reason, 0));
 }, 1);

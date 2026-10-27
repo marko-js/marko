@@ -2,7 +2,7 @@
 _shells({ b: "b !;Db%;<span>box <!></span>" });
 _stateful_return("b");
 var counter_box_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = input.start;
 	_html(`<span>box ${_text_resume($scope0_id, "a", count, 2)}</span>`);
@@ -11,7 +11,7 @@ var counter_box_default = _template("b", (input) => {
 		count = v;
 	}, "b0", $scope0_id) || void 0, 0, 0);
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", count, 1);
-	$scope0_page && _scope($scope0_id, { U: $valueChange2 });
+	_scope($scope0_id, { U: $valueChange2 });
 	return $return;
 });
 
@@ -33,11 +33,11 @@ var template_default = _template("a", (input) => {
 			_patch_child_end();
 			_html(`<p>${_text_resume($scope1_id, "c", count)}</p><button class=reset>r</button>${_el_resume($scope1_id, "d")}`);
 			_script($scope1_id, "a1");
-			$scope0_page && _scope($scope1_id, { a: _existing_scope($childScope) });
+			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button class=toggle>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
-	$scope0_page && _scope($scope0_id, { c: show });
+	_scope($scope0_id, { c: show });
 }, 1);

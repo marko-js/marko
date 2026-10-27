@@ -1,10 +1,10 @@
 // tags/card/index.marko
 _shells({ b: "b;D ;<em> </em>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<em>${_patch_text($scope0_id, "a", input.fn("x"), void 0, $scope0_reason, 0)}</em>`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -64,7 +64,7 @@ var template_default = _template("a", (input) => {
 			const $childScope8 = _patch_child($scope1_id, "h", 7);
 			card_default({ fn: tag });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				a: $wi__input_title && _existing_scope($childScope),
 				b: $wi__input_title && _existing_scope($childScope2),
 				c: $wi__input_title && _existing_scope($childScope3),
@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a");
 	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a8");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.title,
 		g: fmt,
 		h: wrap,
@@ -90,5 +90,5 @@ var template_default = _template("a", (input) => {
 		n: o[0],
 		o: tag,
 		p: show
-	}) : (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va9", fmt, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va10", wrap, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va11", quoted, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va12", keyed, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va13", templated, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va14", o.get, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va15", o[0], !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va16", tag, !$sg__input_title));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va9", fmt, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va10", wrap, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va11", quoted, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va12", keyed, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va13", templated, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va14", o.get, !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va15", o[0], !$sg__input_title), _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va16", tag, !$sg__input_title));
 }, 1);

@@ -9,7 +9,7 @@ _shells({
 	a6: "a6;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0), $scope0_page = _page_render(), $wi__input_items = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
@@ -22,18 +22,17 @@ var template_default = _template("a", (input) => {
 			_script($scope2_id, "a0");
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_items ? "a1" : "a2");
 			_patch_fill($scope2_id, "va3", n, 1);
-			$scope0_page && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_fail__closures, _scope($scope2_id, {
+			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_fail__closures, _scope($scope2_id, {
 				e: n,
 				_: $wi__input_items && _scope_with_id($scope1_id)
 			}), $cg__input_items && "a2");
 		}, void 0, (err) => {
 			_scope_reason();
-			const $scope3_page = _page_render();
 			const $scope3_id = _scope_id();
 			_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b>`);
-			$scope3_page && _scope($scope3_id, {});
+			_scope($scope3_id, {});
 		}, void 0, "a4", "a5", void 0, 1, 1);
-		$scope0_page && $wi__input_items && _scope($scope1_id, { f: _unfilled_if($scope0_reason, 0) && $for_content__item_fail__closures });
+		$wi__input_items && _scope($scope1_id, { f: _unfilled_if($scope0_reason, 0) && $for_content__item_fail__closures });
 	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a6", $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

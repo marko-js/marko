@@ -11,15 +11,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	if ($scope0_page) _for_of(l, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "#text/0", input.format(i))}</li>`);
-		$scope0_page && _scope($scope1_id, { i: _write_if($scope0_reason, 0) && i }, "__tests__/template.marko", "3:4", { i: "3:8" });
+		_scope($scope1_id, { i: _write_if($scope0_reason, 0) && i }, "__tests__/template.marko", "3:4", { i: "3:8" });
 	}, 0, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input,
 		l
 	}, "__tests__/template.marko", 0, {
 		input: 0,
 		l: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input, !_server_guard($scope0_reason, 0));
 }, 1);

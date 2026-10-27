@@ -5,7 +5,7 @@ const $setup$2 = [[], ["__tests__/tags/widget/tags/inner/index.marko_0"]];
 _shells({ "__tests__/tags/widget/tags/inner/index.marko": "^__tests__/tags/widget/tags/inner/index.marko !__tests__/tags/widget/tags/inner/index.marko_0; ;<button class=bump>+</button>" });
 _stateful_return("__tests__/tags/widget/tags/inner/index.marko");
 var inner_default = _template("__tests__/tags/widget/tags/inner/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 1;
 	_html(`<button class=bump>+</button>${_el_resume($scope0_id, "#button/0")}`);
@@ -15,7 +15,7 @@ var inner_default = _template("__tests__/tags/widget/tags/inner/index.marko", (i
 		n = v;
 	}, "__tests__/tags/widget/tags/inner/index.marko_0/valueChange", $scope0_id) || void 0, 0, 0);
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/widget/tags/inner/index.marko_fill0", n, 1);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		n,
 		"#TagVariableChange": $valueChange2
 	}, "__tests__/tags/widget/tags/inner/index.marko", 0, { n: "1:6" });
@@ -28,7 +28,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `0${_w0}&D l b`)(" b");
 const $setup$1 = _shell_setup([[], ["__tests__/tags/widget/index.marko_0"]], ["#childScope/0>", $setup$2]);
 _shells({ "__tests__/tags/widget/index.marko": /*@__PURE__*/ (() => `__tests__/tags/widget/index.marko${_shell_marker($setup$1)};${((_w0) => `0${_w0}&D l b`)(" b")};${((_w0) => `${_w0}<em> </em><button class=reset>r</button>`)($template$2)}`)() });
 var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, 1);
 	let v = inner_default({});
@@ -36,7 +36,7 @@ var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
 	_patch_child_end();
 	_html(`<em>${_text_resume($scope0_id, "#text/2", v)}</em><button class=reset>r</button>${_el_resume($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/tags/widget/index.marko_0");
-	$scope0_page && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/widget/index.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/widget/index.marko", 0);
 });
 
 // template.marko
@@ -55,11 +55,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_patch_child($scope1_id, "#childScope/0", 0);
 			widget_default({});
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
 	_html(`<button class=toggle>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
+	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
 }, 1);

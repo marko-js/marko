@@ -14,10 +14,10 @@ var template_default = _template("a", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a2");
 	_script($scope0_id, "a3");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		g: _unfilled_if($scope0_reason, 0) && fa,
 		h: _unfilled_if($scope0_reason, 0) && fb,
 		j: pick,
 		k: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va4", pick, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va4", pick, !_server_guard($scope0_reason, 0));
 }, 1);

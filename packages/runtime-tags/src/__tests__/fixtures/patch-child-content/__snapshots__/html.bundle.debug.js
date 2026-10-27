@@ -4,12 +4,12 @@ const $walks$1 = "D%l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/box/index.marko": "__tests__/tags/box/index.marko;D%;<div class=box><!></div>" });
 var box_default = _template("__tests__/tags/box/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<div class=box>");
 	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
 	_html("</div>");
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/box/index.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/box/index.marko", 0);
 });
 
 // template.marko
@@ -29,25 +29,25 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_set_scope_reason(0);
 			_patch_child($scope1_id, "#childScope/0", 0);
 			box_default({ content: _content("__tests__/template.marko_2*content", () => {
-				const $scope2_reason = _scope_reason(), $scope2_page = _page_render();
+				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_resume($scope2_id, "#text/0", "t:" + input.title, $wg__input_title)}</p>`);
-				$scope2_page && _subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), "__tests__/template.marko_2_input_title#0:4/subscribe", $wg__input_title);
+				_subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), "__tests__/template.marko_2_input_title#0:4/subscribe", $wg__input_title);
 				$wg__input_title || _resume_branch($scope2_id);
 			}, $scope1_id) });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_title: input.title,
 		open,
 		"ClosureScopes:input_title/6": $wi__input_title && $input_title__closures
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		open: "1:6"
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

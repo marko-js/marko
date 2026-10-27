@@ -6,11 +6,11 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($TextField_content__walks);
 const $setup = [[], []];
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko;${((_w0) => `b/${_w0}&b`)($TextField_content__walks)};${((_w0) => `<!>${_w0}<!>`)($TextField_content__template)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const TextField = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $cg__valueChange = _client_guard($scope1_reason, 2), $scope1_page = _page_render();
+		const $scope1_reason = _scope_reason(), $cg__valueChange = _client_guard($scope1_reason, 2);
 		const { value, valueChange, ...attrs } = input;
 		_html(`<input${_patch_input_value($scope1_id, "#input/0", value, valueChange, "PatchControl:2#input/0", $scope1_reason, 0, "PatchWrite:ControlledHandler:#input/0", $scope1_reason, 0)}${_patch_attrs_partial(attrs, {
 			value: 1,
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$cg__valueChange && _patch_write($scope1_id, "PatchMarkedWrite:value", value, !(_filled_guard($scope1_reason, 1) && $cg__valueChange));
 		_client_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:valueChange", valueChange, !(_filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1)));
 		_patch_join_init($scope1_id, "__tests__/template.marko_1_value#3_valueChange#4/init", $scope1_reason, 0, _filled_guard($scope1_reason, 1) && "value", _filled_guard($scope1_reason, 2) && "valueChange");
-		$scope1_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			value: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0)) && value,
 			valueChange: _unfilled_if($scope1_reason, 0) && valueChange
 		}, "__tests__/template.marko", "1:2", {
@@ -40,5 +40,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/valueChange")
 	});
 	_patch_child_end();
-	$scope0_page && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

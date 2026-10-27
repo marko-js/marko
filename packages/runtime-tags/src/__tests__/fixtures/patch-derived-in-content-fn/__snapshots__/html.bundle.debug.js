@@ -4,11 +4,11 @@ const $walks$2 = " b";
 const $setup$2 = [[], ["__tests__/tags/reader.marko_0"]];
 _shells({ "__tests__/tags/reader.marko": "__tests__/tags/reader.marko !__tests__/tags/reader.marko_0; ;<button>read</button>" });
 var reader_default = _template("__tests__/tags/reader.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<button>read</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/reader.marko_0");
-	$scope0_page ? _scope($scope0_id, { input }, "__tests__/tags/reader.marko", 0, { input: 0 }) : _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input", input, !_server_guard($scope0_reason, 0));
+	_scope($scope0_id, { input }, "__tests__/tags/reader.marko", 0, { input: 0 }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input", input, !_server_guard($scope0_reason, 0));
 });
 
 // tags/wrapper.marko
@@ -17,12 +17,12 @@ const $walks$1 = "D%l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/wrapper.marko": "__tests__/tags/wrapper.marko;D%;<div><!></div>" });
 var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<div>");
 	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
 	_html("</div>");
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/wrapper.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/wrapper.marko", 0);
 });
 
 // template.marko
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(0);
 	const $childScope2 = _patch_child($scope0_id, "#childScope/0", 1);
 	wrapper_default({ content: _content("__tests__/template.marko_1*content", () => {
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		const label = input.label;
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope0_reason, 0));
@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko_1/onRead", $scope1_id)
 		}, $scope1_id, "label"));
 		_patch_child_end();
-		$scope1_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) });
 	_patch_child_end();
 	_html(`<p>${_text_resume($scope0_id, "#text/1", shown)}</p>`);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		"ClosureScopes:input_label/6": _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $input_label__closures,
 		"#childScope/0": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0);

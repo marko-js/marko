@@ -4,10 +4,10 @@ const $walks$2 = " D l";
 const $setup$2 = [[], []];
 _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko; D ;<a> </a>" });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<a${_patch_attr($scope0_id, "PatchAttr:#a/0 href", "href", input.href, $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "#a/0", _mask_group($scope0_reason, 0))}`);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 });
 
 // tags/feed-list.marko
@@ -22,7 +22,7 @@ _shells({
 	"__tests__/tags/feed-list.marko_1*shell": /*@__PURE__*/ (() => `__tests__/tags/feed-list.marko_1*shell${_shell_marker(_shell_setup([["__tests__/tags/feed-list.marko_1_hovered#0:5/init"], ["__tests__/tags/feed-list.marko_1"]], ["#childScope/1>", $setup$2]))};${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks$2)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$2)}`)()
 });
 var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_items = _write_if($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let hovered = undefined;
 	_html("<ul>");
@@ -40,7 +40,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 		_html(`</li>${_el_resume($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/tags/feed-list.marko_1");
 		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#4/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_data", _filled_guard($scope0_reason, 1) && "item_id");
-		$scope0_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			item_id: item?.id,
 			_: _scope_with_id($scope0_id),
 			"#childScope/1": _existing_scope($childScope)
@@ -49,7 +49,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	_filled_guard($scope0_reason, 2) && $cg__input_items ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/feed-list.marko_fill0/unpatched", input.data) : $cg__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_data", input.data, 1);
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/feed-list.marko_fill1", hovered, 1);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_data: $wi__input_items && input.data,
 		hovered: $wi__input_items && hovered
 	}, "__tests__/tags/feed-list.marko", 0, {
@@ -86,13 +86,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				data: { q: "client" }
 			});
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "5:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "5:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, 1, 0, 0, 1);
 	_fill_global_subscribe("__tests__/template.marko_0_$global_data#5", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		open,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { open: "2:6" });

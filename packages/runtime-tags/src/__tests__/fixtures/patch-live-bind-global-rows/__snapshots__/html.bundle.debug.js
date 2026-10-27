@@ -4,7 +4,7 @@ const $walks$1 = " b";
 const $setup$1 = [[], ["__tests__/tags/stepper.marko_0"]];
 _shells({ "__tests__/tags/stepper.marko": "__tests__/tags/stepper.marko !__tests__/tags/stepper.marko_0; ;<input type=number>" });
 var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_max = _server_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_max = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_max", input.max, !$sg__input_max);
 	const clamp = _bind_resume((v) => Math.min(input.max, Number(v)), "__tests__/tags/stepper.marko_0/clamp", $scope0_id);
@@ -18,7 +18,7 @@ var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
 	_patch_effect($scope0_id, "PatchInit:__tests__/tags/stepper.marko_0_clamp#7_current#8/init", _filled_guard($scope0_reason, 1) && "clamp");
 	const $currentChange = input.valueChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/stepper.marko_fill2", current, "PatchWrite:TagVariableChange:current", $currentChange, $scope0_reason, 0);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_max: input.max,
 		input_value: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.value,
 		input_valueChange: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.valueChange,
@@ -33,7 +33,7 @@ var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
 		current: "2:6",
 		"TagVariableChange:current": ["currentChange", "2:6"],
 		"ControlledHandler:#input/0": ["valueChange"]
-	}) : (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/stepper.marko_fill0", input.value, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/stepper.marko_fill1", input.valueChange, !_server_guard($scope0_reason, 3)));
+	}) || (_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/stepper.marko_fill0", input.value, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/stepper.marko_fill1", input.valueChange, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko
@@ -45,7 +45,7 @@ _shells({
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b")};${_w0}`)($template$1)
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_for_of($global$1.rows, (row) => {
@@ -62,8 +62,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", qty, 1);
-		$scope0_page && _scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "1:2");
+		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "1:2");
 	}, "id", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell");
 	_fill_global_subscribe("__tests__/template.marko_0_$global_rows#7", $scope0_id);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

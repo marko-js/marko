@@ -15,7 +15,7 @@ _shells({
 	b0: /*@__PURE__*/ (() => `b0${_shell_marker(_shell_setup([[], []], ["b>", $setup]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("b")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -24,10 +24,10 @@ var template_default = _template("b", (input) => {
 			const $childScope = _patch_child($scope1_id, "b", 0);
 			$Page_withLoadAssets({});
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, { b: _existing_scope($childScope) });
+			_scope($scope1_id, { b: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

@@ -10,9 +10,9 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "a", item)}<button>x</button>${_el_resume($scope1_id, "b")}</li>`);
 		_script($scope1_id, "a0");
-		$scope0_page && _scope($scope1_id, { M: i });
+		_scope($scope1_id, { M: i });
 	}, 0, $scope0_id, "a", 1, 1, 1, "</ul>", 1);
 	_html(`<button class=add>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, { c: items });
+	_scope($scope0_id, { c: items });
 }, 1);

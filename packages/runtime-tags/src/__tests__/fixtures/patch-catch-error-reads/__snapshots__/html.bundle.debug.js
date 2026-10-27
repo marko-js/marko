@@ -15,7 +15,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b%b D ;<main><!><!><button> </button></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $wi__input_error = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $wi__input_error = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = new Set();
 	const $input_error__closures = new Set();
@@ -27,32 +27,32 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", input.promise, (v) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_patch_text($scope4_id, "#text/0", v, void 0, $scope0_reason, 0)}</em>`);
-			$scope0_page && _scope($scope4_id, {}, "__tests__/template.marko", "7:6");
+			_scope($scope4_id, {}, "__tests__/template.marko", "7:6");
 		}, 1, "__tests__/template.marko_4*content", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "__tests__/template.marko_1_input_promise#0:6/init" : "__tests__/template.marko_1_input_promise#0:6/subscribe");
-		$scope0_page && $wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), $cg__input_promise && "__tests__/template.marko_1_input_promise#0:6/subscribe", 0);
+		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), $cg__input_promise && "__tests__/template.marko_1_input_promise#0:6/subscribe", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, void 0, (err) => {
-		const $scope3_reason = _scope_reason(), $scope3_page = _page_render();
+		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html(`<b>${_patch_text($scope3_id, "#text/0", err.message)}</b>`);
-		$scope3_page && _scope($scope3_id, {}, "__tests__/template.marko", "8:6");
+		_scope($scope3_id, {}, "__tests__/template.marko", "8:6");
 	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1, 1);
 	_try($scope0_id, "#text/1", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_error ? "__tests__/template.marko_2_input_error#0:7/init" : "__tests__/template.marko_2_input_error#0:7/subscribe");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "10:4"), $cg__input_error && "__tests__/template.marko_2_input_error#0:7/subscribe");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "10:4"), $cg__input_error && "__tests__/template.marko_2_input_error#0:7/subscribe");
 	}, void 0, ({ cause }) => {
-		const $scope5_reason = _scope_reason(), $scope5_page = _page_render();
+		const $scope5_reason = _scope_reason();
 		const $scope5_id = _scope_id();
 		_html(`<i>${_patch_text($scope5_id, "#text/0", cause.code)}</i>`);
-		$scope5_page && _scope($scope5_id, {}, "__tests__/template.marko", "12:6");
+		_scope($scope5_id, {}, "__tests__/template.marko", "12:6");
 	}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", 1, 1, 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/3", count)}</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		"ClosureScopes:input_promise/9": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures,
 		"ClosureScopes:input_error/10": $wi__input_error && _unfilled_if($scope0_reason, 1) && $input_error__closures

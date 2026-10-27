@@ -9,13 +9,13 @@ var template_default = _template("a", (input) => {
 		if (input.opts.show && on) {
 			const $scope1_id = _scope_id();
 			_html("<span>shown</span>");
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_script($scope0_id, "a0");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.opts?.show,
 		g: on
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.opts?.show, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", input.opts?.show, !_server_guard($scope0_reason, 0));
 }, 1);

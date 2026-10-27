@@ -13,7 +13,7 @@ var labeler_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["a1"]], ["a>", $setup$1]);
 _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `D0${_w0}&D%c%l l`)("b")};${((_w0) => `<main>${_w0}<p><!> <!></p><button>+</button></main>`)($template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<p>${_patch_text($scope0_id, "c", label, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "d", count, 2)}</p><button>+</button>${_el_resume($scope0_id, "e")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		i: count,
 		a: _existing_scope($childScope)
 	});

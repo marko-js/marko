@@ -8,24 +8,24 @@ _shells({
 	"__tests__/tags/tabs/index.marko_2*shell": "__tests__/tags/tabs/index.marko_2*shell,<span>b</span>"
 });
 var tabs_default = _template("__tests__/tags/tabs/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tab = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_tab = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.tab) {
 			const $scope1_id = _scope_id();
 			_html(`<div>a ${_patch_text($scope1_id, "#text/0", input.tab.on, 2, $scope0_reason, 1)}</div>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/tabs/index.marko_1_input_tab_on#0:4/init");
-			$scope0_page && _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/tabs/index.marko", "1:2");
+			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/tabs/index.marko", "1:2");
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
 			_html("<span>b</span>");
-			$scope0_page && _write_if($scope0_reason, 0) && _scope($scope2_id, {}, "__tests__/tags/tabs/index.marko", "4:2");
+			_write_if($scope0_reason, 0) && _scope($scope2_id, {}, "__tests__/tags/tabs/index.marko", "4:2");
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_tab, void 0, void 0, void 0, ["__tests__/tags/tabs/index.marko_1*shell", "__tests__/tags/tabs/index.marko_2*shell"], $scope0_reason, 0);
 	_client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_tab_on", input.tab?.on, 1);
-	$scope0_page && _scope($scope0_id, { input_tab_on: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.tab?.on }, "__tests__/tags/tabs/index.marko", 0, { input_tab_on: ["input.tab.on"] });
+	_scope($scope0_id, { input_tab_on: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.tab?.on }, "__tests__/tags/tabs/index.marko", 0, { input_tab_on: ["input.tab.on"] });
 });
 
 // template.marko
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope3 = _patch_child($scope1_id, "#childScope/2", 2);
 			tabs_default({ tab: { on } });
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				"#childScope/0": _existing_scope($childScope),
 				"#childScope/1": _existing_scope($childScope2),
 				"#childScope/2": _existing_scope($childScope3)
@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0");
 	_html(`<button class=flip>f</button>${_el_resume($scope0_id, "#button/1")}<button class=toggle>t</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		show,
 		on,
 		o

@@ -14,11 +14,11 @@ const $walks$1 = " D l b";
 const $setup$2 = [[], []];
 _shells({ c: "c; D l ;<label> </label><input>" });
 var field_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("A");
 	_html(`<label${_patch_attr($scope0_id, "aa$for", "for", uid, $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<input${_patch_attr($scope0_id, "ac$id", "id", uid, $scope0_reason, 0)}${_patch_attr($scope0_id, "ac$aria-describedby", "aria-describedby", input.heading, $scope0_reason, 2)}>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 2))}`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // tags/thrower.marko
@@ -30,10 +30,9 @@ const $setup$1 = [[], []];
 _shells({ e: "e;D ;<p> </p>" });
 var thrower_default = _template("e", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	_html(`<p>${_patch_text($scope0_id, "a", fail(), void 0, 0, 0)}</p>`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // tags/a-tag.marko
@@ -46,7 +45,7 @@ _shells({
 	b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0, _w1) => `/${_w0}&/${_w1}&%c`)("b", $walks$1)};${((_w0, _w1) => `${_w0}${_w1}<!><!>`)($template$3, $template$2)}`)()
 });
 var a_tag_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $childScope = _patch_child($scope0_id, "a", 0);
 	plain_default({});
@@ -61,13 +60,13 @@ var a_tag_default = _template("b", (input) => {
 		const $childScope3 = _patch_child($scope1_id, "a", 2);
 		thrower_default({});
 		_patch_child_end();
-		$scope0_page && _scope($scope1_id, { a: _existing_scope($childScope3) });
+		_scope($scope1_id, { a: _existing_scope($childScope3) });
 	}, void 0, (error) => {
 		_scope_reason();
 		_scope_id();
 		_html("caught");
 	}, void 0, "b0", "b1", 1, void 0, 1);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
 	});
@@ -79,7 +78,7 @@ _shells({
 	a0: /*@__PURE__*/ (() => `a0${_shell_marker(_shell_setup([[], []], ["a>", $setup], ["b>", $setup$2]))};${/*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks, $walks$1)};${/*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template, $template$2)}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
@@ -91,10 +90,10 @@ var template_default = _template("a", (input) => {
 		const $childScope2 = _patch_child($scope1_id, "b", 1);
 		field_default({ name: `row ${row.id}` });
 		_patch_child_end();
-		$scope0_page && _scope($scope1_id, {
+		_scope($scope1_id, {
 			a: _existing_scope($childScope),
 			b: _existing_scope($childScope2)
 		});
 	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

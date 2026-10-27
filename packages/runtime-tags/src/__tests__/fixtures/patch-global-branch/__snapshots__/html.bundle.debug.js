@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if ($global$1.meta.headings) {
 			const $scope1_id = _scope_id();
 			_html("<a href=#main>Skip to content</a>");
-			$scope0_page && $scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "3:6");
+			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "3:6");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"]);
@@ -38,11 +38,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _patch_child($scope2_id, "#childScope/0", 0);
 			site_footer_default({});
 			_patch_child_end();
-			$scope0_page && _scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "7:6");
+			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "7:6");
 			return 0;
 		}
 	}, $scope0_id, "#text/2", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"]);
 	_trailers("</body></html>");
 	_fill_global_subscribe("__tests__/template.marko_0_$global_meta#5", $scope0_id);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

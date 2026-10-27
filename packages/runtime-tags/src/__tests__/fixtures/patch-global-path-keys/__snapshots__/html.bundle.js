@@ -14,10 +14,10 @@ var template_default = _template("a", (input) => {
 			_fill_global_subscribe("a0", $scope1_id, 1);
 			_fill_global_subscribe("a1", $scope1_id, 1);
 			_fill_global_subscribe("a2", $scope1_id, 1);
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "b");
 	_script($scope0_id, "a3");
-	$scope0_page && _scope($scope0_id, { c: open });
+	_scope($scope0_id, { c: open });
 }, 1);

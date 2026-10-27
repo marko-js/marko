@@ -19,24 +19,24 @@ var template_default = _template("a", (input) => {
 						{
 							const $scope3_id = _scope_id();
 							_html(`<u>${_text_resume($scope3_id, "a", "z:" + input.title, $wg__input_title)}</u>`);
-							$scope0_page && _subscribe($wi__input_title && $input_title__closures, _scope($scope3_id, { Cg: $wi__input_title && 1 }), "a0", $wg__input_title);
+							_subscribe($wi__input_title && $input_title__closures, _scope($scope3_id, { Cg: $wi__input_title && 1 }), "a0", $wg__input_title);
 							return 0;
 						}
 					}, $scope2_id, "b", 1, 1, 0, 0, 1);
-					$scope0_page && _subscribe($open__closures, _subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, {}), "a1"), "a2");
+					_subscribe($open__closures, _subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, {}), "a1"), "a2");
 					return 0;
 				}
 			}, $scope1_id, "b");
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a");
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.title,
 		f: open,
 		g: $wi__input_title && $input_title__closures,
 		h: $open__closures
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va4", input.title, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va4", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

@@ -4,10 +4,10 @@ const $walks$1 = "D%c%l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko;D%c%;<span><!> <!></span>" });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<span>${_patch_text($scope0_id, "#text/0", input.message, void 0, $scope0_reason, 0)} ${_patch_text($scope0_id, "#text/1", input.count, 2, $scope0_reason, 1)}</span>`);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
 // template.marko
@@ -23,7 +23,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_msg = _client_guard($scope0_reason, 2), $cg__input_fail = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 2), $cg__input_fail = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	const $input_fail__closures = new Set();
@@ -37,9 +37,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/template.marko_1_input_fail#0:5/subscribe");
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/template.marko_1_input_msg#0:6/subscribe");
 		_patch_join_init($scope1_id, "__tests__/template.marko_1_input_fail#0:5_input_msg#0:6/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">input_fail", _filled_guard($scope0_reason, 2) && ">input_msg");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_msg__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"), $cg__input_fail && "__tests__/template.marko_1_input_fail#0:5/subscribe"), $cg__input_msg && "__tests__/template.marko_1_input_msg#0:6/subscribe");
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_msg__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"), $cg__input_fail && "__tests__/template.marko_1_input_fail#0:5/subscribe"), $cg__input_msg && "__tests__/template.marko_1_input_msg#0:6/subscribe");
 	}, void 0, (err) => {
-		const $scope2_reason = _scope_reason(), $scope2_page = _page_render();
+		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_set_scope_reason(12);
 		const $childScope = _patch_child($scope2_id, "#childScope/0", 0);
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			count
 		});
 		_patch_child_end();
-		$scope2_page && _subscribe($count__closures, _scope($scope2_id, {
+		_subscribe($count__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "8:4"), "__tests__/template.marko_2_count#0:7/subscribe");
@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_filled_guard($scope0_reason, 1) && $cg__input_msg && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail);
 	_filled_guard($scope0_reason, 2) && $cg__input_fail && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_fail: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.fail,
 		input_msg: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.msg,
 		count,

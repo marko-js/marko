@@ -2,10 +2,10 @@
 const $setup = [[], []];
 _shells({ b: "b;D%c%;<span><!> <!></span>" });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<span>${_patch_text($scope0_id, "a", input.message, void 0, $scope0_reason, 0)} ${_patch_text($scope0_id, "b", input.count, 2, $scope0_reason, 1)}</span>`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // template.marko
@@ -18,7 +18,7 @@ _shells({
 	a: "a !a6; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_msg = _client_guard($scope0_reason, 2), $cg__input_fail = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 2), $cg__input_fail = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -32,10 +32,9 @@ var template_default = _template("a", (input) => {
 		(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "a1");
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "a2");
 		_patch_join_init($scope1_id, "a3", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">f", _filled_guard($scope0_reason, 2) && ">g");
-		$scope0_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_msg__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_fail && "a1"), $cg__input_msg && "a2");
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_msg__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_fail && "a1"), $cg__input_msg && "a2");
 	}, void 0, (err) => {
 		_scope_reason();
-		const $scope2_page = _page_render();
 		const $scope2_id = _scope_id();
 		_set_scope_reason(12);
 		const $childScope = _patch_child($scope2_id, "a", 0);
@@ -44,7 +43,7 @@ var template_default = _template("a", (input) => {
 			count
 		});
 		_patch_child_end();
-		$scope2_page && _subscribe($count__closures, _scope($scope2_id, {
+		_subscribe($count__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		}), "a0");
@@ -52,7 +51,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a6");
 	_filled_guard($scope0_reason, 1) && $cg__input_msg && _patch_write($scope0_id, "xf", input.fail);
 	_filled_guard($scope0_reason, 2) && $cg__input_fail && _patch_write($scope0_id, "xg", input.msg);
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.fail,
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.msg,
 		h: count,

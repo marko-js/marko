@@ -5,7 +5,7 @@ const $setup = [["b3"], ["b1"]];
 _shells({ b: "b b3!b1;D l b ;<span> </span><button class=mode>b</button><button class=go>go</button>" });
 _stateful_return("b");
 var counter_box_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_onA = _server_guard($scope0_reason, 0), $sg__input_onB = _server_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $sg__input_onA = _server_guard($scope0_reason, 0), $sg__input_onB = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let mode = "a";
 	_html(`<span>${_text_resume($scope0_id, "a", mode)}</span><button class=mode>b</button>${_el_resume($scope0_id, "b")}<button class=go>go</button>${_el_resume($scope0_id, "c")}`);
@@ -15,12 +15,12 @@ var counter_box_default = _template("b", (input) => {
 	($sg__input_onA || $sg__input_onB) && _patch_effect($scope0_id, "hb0", $sg__input_onA && "f", $sg__input_onB && "g");
 	const $valueChange = input.onA || void 0;
 	_patch_fill($scope0_id, "vb2", mode, 1);
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		f: input.onA,
 		g: input.onB,
 		h: mode,
 		U: $valueChange
-	}) : (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.onA, !$sg__input_onA), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.onB, !$sg__input_onB));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.onA, !$sg__input_onA), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.onB, !$sg__input_onB));
 	return $return;
 });
 
@@ -30,7 +30,7 @@ _shells({
 	a5: /*@__PURE__*/ (() => `a5${_shell_marker(_shell_setup([[], ["a3"]], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `0${_w0}& b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<button class=set>set</button>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_p = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_p = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 1) && (_client_guard($scope0_reason, 0) ? _patch_fill($scope0_id, "va6", input.p, !$sg__input_p) : _patch_write($scope0_id, "xf", input.p, !$sg__input_p));
 	let last = "none";
@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 			_html(`<button class=set>set</button>${_el_resume($scope1_id, "c")}`);
 			_script($scope1_id, "a3");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a4");
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
 			});
@@ -60,5 +60,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a5"], $scope0_reason, 0);
 	_html(`<p>${_text_resume($scope0_id, "b", last)}</p>`);
-	$scope0_page && _scope($scope0_id, { f: input.p });
+	_scope($scope0_id, { f: input.p });
 }, 1);

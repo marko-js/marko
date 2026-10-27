@@ -22,7 +22,7 @@ _shells({
 	a3: /*@__PURE__*/ (() => `a3${_shell_marker(_shell_setup([[], ["a1"]], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `0${_w0}&D lDb%l b`)("")};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p><span>Seen <!></span><button>+</button>`)("")}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			const $countChange = store.set || void 0;
 			_patch_fill($scope1_id, "va2", count, 1);
 			_patch_bind($scope1_id, "wj", $countChange);
-			$scope0_page && _scope($scope1_id, {
+			_scope($scope1_id, {
 				i: count,
 				a: _existing_scope($childScope),
 				j: $countChange
@@ -45,5 +45,5 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a3"], $scope0_reason, 0);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);

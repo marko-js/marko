@@ -4,12 +4,12 @@ const $walks$1 = "D%l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/wrapper.marko": "__tests__/tags/wrapper.marko;D%;<div><!></div>" });
 var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<div>");
 	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
 	_html("</div>");
-	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/wrapper.marko", 0);
+	_scope($scope0_id, {}, "__tests__/tags/wrapper.marko", 0);
 });
 
 // template.marko
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(0);
 	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
 	wrapper_default({ content: _content("__tests__/template.marko_1*content", () => {
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
+		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		const $wrapper_content__label__closures = new Set();
 		const label = input.label;
@@ -41,15 +41,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					if (count > 0 && label) {
 						const $scope3_id = _scope_id();
 						_html(`<p>${_text_resume($scope3_id, "#text/0", label, $wg__input_label)}</p>`);
-						$scope1_page && _subscribe($wi__input_label && $wrapper_content__label__closures, _scope($scope3_id, {}, "__tests__/template.marko", "5:6"), "__tests__/template.marko_3_label#1:1/subscribe", $wg__input_label);
+						_subscribe($wi__input_label && $wrapper_content__label__closures, _scope($scope3_id, {}, "__tests__/template.marko", "5:6"), "__tests__/template.marko_3_label#1:1/subscribe", $wg__input_label);
 						return 0;
 					}
 				}, $scope2_id, "#text/0", 1, 1, 0, 0, 1);
-				$scope1_page && _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"), "__tests__/template.marko_2_count#0:5/subscribe");
+				_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"), "__tests__/template.marko_2_count#0:5/subscribe");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_label, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
-		$scope1_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:label/8": $wi__input_label && $wrapper_content__label__closures
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, {
+	_scope($scope0_id, {
 		count,
 		"ClosureScopes:count/7": $count__closures,
 		"ClosureScopes:input_label/6": $wi__input_label && $input_label__closures,

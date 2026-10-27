@@ -16,13 +16,13 @@ const $walks$1 = "D b D m";
 const $setup$1 = [[], ["__tests__/tags/row.marko_0"]];
 _shells({ "__tests__/tags/row.marko": "__tests__/tags/row.marko !__tests__/tags/row.marko_0;D b D ;<p> <button> </button></p>" });
 var row_default = _template("__tests__/tags/row.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let clicks = 0;
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}<button>${_text_resume($scope0_id, "#text/2", clicks)}</button>${_el_resume($scope0_id, "#button/1")}</p>`);
 	_script($scope0_id, "__tests__/tags/row.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/row.marko_fill0", clicks, 1);
-	$scope0_page && _scope($scope0_id, { clicks }, "__tests__/tags/row.marko", 0, { clicks: "6:6" });
+	_scope($scope0_id, { clicks }, "__tests__/tags/row.marko", 0, { clicks: "6:6" });
 });
 
 // template.marko
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (issues) {
 			const $scope2_id = _scope_id();
 			_html("<p>invalid</p>");
-			$scope0_page && $scope0_page && _scope($scope2_id, {}, "__tests__/template.marko", "4:2");
+			$scope0_page && _scope($scope2_id, {}, "__tests__/template.marko", "4:2");
 			return 0;
 		} else {
 			const $scope1_id = _scope_id();
@@ -55,13 +55,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $childScope = _patch_child($scope3_id, "#childScope/0", 0);
 				row_default(item);
 				_patch_child_end();
-				$scope0_page && _scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "10:6");
+				_scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "10:6");
 			}, "id", $scope1_id, "#div/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell");
 			_html(`</div>${_el_resume($scope1_id, "#div/0")}`);
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "7:2");
+			_scope($scope1_id, {}, "__tests__/template.marko", "7:2");
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_1*shell"]);
 	_fill_global_subscribe("__tests__/template.marko_0_$global_search#7", $scope0_id);
-	$scope0_page && _scope($scope0_id, {}, "__tests__/template.marko", 0);
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

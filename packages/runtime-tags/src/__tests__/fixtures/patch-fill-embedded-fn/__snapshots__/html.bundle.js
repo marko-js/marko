@@ -12,9 +12,9 @@ var template_default = _template("a", (input) => {
 	if ($scope0_page) _if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: input.title,
 		g: bag,
 		h: open
-	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", bag, !$sg__input_title);
+	}) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", bag, !$sg__input_title);
 }, 1);

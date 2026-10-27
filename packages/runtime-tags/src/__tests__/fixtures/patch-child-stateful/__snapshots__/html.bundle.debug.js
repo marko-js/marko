@@ -4,13 +4,13 @@ const $walks$1 = " D l";
 const $setup$1 = [[], ["__tests__/tags/counter/index.marko_0"]];
 _shells({ "__tests__/tags/counter/index.marko": "__tests__/tags/counter/index.marko !__tests__/tags/counter/index.marko_0; D ;<button class=c> </button>" });
 var counter_default = _template("__tests__/tags/counter/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=c>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter/index.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter/index.marko_fill0", n, 1);
-	$scope0_page && _scope($scope0_id, { n }, "__tests__/tags/counter/index.marko", 0, { n: "1:6" });
+	_scope($scope0_id, { n }, "__tests__/tags/counter/index.marko", 0, { n: "1:6" });
 });
 
 // template.marko
@@ -29,11 +29,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_patch_child($scope1_id, "#childScope/0", 0);
 			counter_default({});
 			_patch_child_end();
-			$scope0_page && _scope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button class=t>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$scope0_page && _scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
+	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
 }, 1);

@@ -4,12 +4,12 @@ const $walks$1 = "EbD%n";
 const $setup$5 = [[], []];
 _shells({ d: "d;EbD%;<html><body><header>site</header><main><!></main></body></html>" });
 var root_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<html>${_flush_head()}<body><header>site</header><main>`);
 	_dynamic_tag($scope0_id, "a", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
 	_html("</main>"), _trailers("</body></html>");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 }, 1);
 
 // tags/icon.marko
@@ -20,7 +20,7 @@ _shells({
 	f1: "f1; ;<path></path>"
 });
 var icon_default = _template("f", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<svg${_patch_attr($scope0_id, "aa$viewBox", "viewBox", input.name, $scope0_reason, 0)}>`);
 	_if(() => {
@@ -28,12 +28,12 @@ var icon_default = _template("f", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<path${_patch_attr($scope1_id, "aa$d", "d", input.name, $scope0_reason, 0)}></path>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "f0");
-			$scope0_page && _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, ["f1"], $scope0_reason, 0);
 	_html(`</svg>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // docs.marko
@@ -48,7 +48,7 @@ _shells({
 	a0: "a0;D ;<a> </a>"
 });
 var docs_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_content = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<nav>");
 	_await($scope0_id, "a", input.list, (list) => {
@@ -56,7 +56,7 @@ var docs_default = _template("a", (input) => {
 		_for_of(list, (item) => {
 			const $scope3_id = _scope_id();
 			_html(`<a>${_patch_text($scope3_id, "a", item, void 0, $scope0_reason, 0)}</a>`);
-			$scope0_page && _scope($scope3_id, {});
+			_scope($scope3_id, {});
 		}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
 		_if(() => {
 			if (list[0]) {
@@ -66,19 +66,19 @@ var docs_default = _template("a", (input) => {
 				icon_default({ name: list[0] });
 				_patch_child_end();
 				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a4");
-				$scope0_page && _scope($scope2_id, {
+				_scope($scope2_id, {
 					_: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
 				});
 				return 0;
 			}
 		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a3"], $scope0_reason, 0);
-		$scope0_page && _scope($scope1_id, {});
+		_scope($scope1_id, {});
 	}, 1, "a1", 1);
 	_html("</nav><article>");
 	_dynamic_tag($scope0_id, "b", input.content, {}, 10, 0, 0, $wg__input_content, $scope0_reason, 1);
 	_html("</article>");
-	$scope0_page && _scope($scope0_id, {});
+	_scope($scope0_id, {});
 });
 
 // page-a.marko
@@ -115,7 +115,7 @@ _shells({
 	e4: /*@__PURE__*/ (() => `e4${_shell_marker(_shell_setup([[], []], ["b>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("b")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("e", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 1), $wi__input_page = _write_if($scope0_reason, 1), $cg__input_list = _client_guard($scope0_reason, 2), $cg__input_page = _client_guard($scope0_reason, 1), $wi__input_page__OR__input_list = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 1), $wi__input_page = _write_if($scope0_reason, 1), $cg__input_list = _client_guard($scope0_reason, 2), $cg__input_page = _client_guard($scope0_reason, 1), $wi__input_page__OR__input_list = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_page__closures = /* @__PURE__ */ new Set();
 	const $input_list__closures = /* @__PURE__ */ new Set();
@@ -123,13 +123,12 @@ var template_default = _template("e", (input) => {
 	const $childScope4 = _patch_child($scope0_id, "a", 2);
 	root_default({ content: _content("e9", () => {
 		_scope_reason();
-		const $scope1_page = _page_render();
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (input.page === 0) {
 				const $scope4_id = _scope_id();
 				_html("<p>home</p>");
-				$scope1_page && $wi__input_page && _scope($scope4_id, {});
+				$wi__input_page && _scope($scope4_id, {});
 				return 0;
 			} else {
 				const $scope2_id = _scope_id();
@@ -139,7 +138,6 @@ var template_default = _template("e", (input) => {
 					list: input.list,
 					content: _content_elide("e1", () => {
 						_scope_reason();
-						const $scope3_page = _page_render();
 						const $scope3_id = _scope_id();
 						_if(() => {
 							if (input.page === 1) {
@@ -147,19 +145,19 @@ var template_default = _template("e", (input) => {
 								const $childScope = _patch_child($scope5_id, "b", 0);
 								$PageA_withLoadAssets({});
 								_patch_child_end();
-								$scope3_page && _scope($scope5_id, { b: _existing_scope($childScope) });
+								_scope($scope5_id, { b: _existing_scope($childScope) });
 								return 0;
 							} else {
 								const $scope6_id = _scope_id();
 								const $childScope2 = _patch_child($scope6_id, "b", 0);
 								$PageB_withLoadAssets({});
 								_patch_child_end();
-								$scope3_page && _scope($scope6_id, { b: _existing_scope($childScope2) });
+								_scope($scope6_id, { b: _existing_scope($childScope2) });
 								return 1;
 							}
 						}, $scope3_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["e0", "e4"], $scope0_reason, 1);
 						$cg__input_page && _patch_init($scope3_id, "e5");
-						$scope3_page && $wi__input_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope3_id, {
+						$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope3_id, {
 							_: _scope_with_id($scope2_id),
 							Cf: 1
 						}));
@@ -168,21 +166,21 @@ var template_default = _template("e", (input) => {
 				});
 				_patch_child_end();
 				$cg__input_list && _patch_init($scope2_id, "e6");
-				$scope1_page && _subscribe(_unfilled_if($scope0_reason, 2) && $input_list__closures, _scope($scope2_id, {
+				_subscribe(_unfilled_if($scope0_reason, 2) && $input_list__closures, _scope($scope2_id, {
 					_: $wi__input_page__OR__input_list && _scope_with_id($scope1_id),
 					b: _existing_scope($childScope3)
 				}), $cg__input_list && "e7");
 				return 1;
 			}
 		}, $scope1_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["e3", "e2"], $scope0_reason, 1);
-		$scope1_page && $wi__input_page__OR__input_list && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_page && "e8", $wg__input_page);
+		$wi__input_page__OR__input_list && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_page && "e8", $wg__input_page);
 		$wg__input_page || $wi__input_page__OR__input_list && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
-	$scope0_page ? _scope($scope0_id, {
+	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.list,
 		f: $wi__input_page && _unfilled_if($scope0_reason, 1) && $input_page__closures,
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_list__closures,
 		a: _existing_scope($childScope4)
-	}) : _filled_guard($scope0_reason, 2) && $cg__input_page && _patch_fill($scope0_id, "ve10", input.list, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && $cg__input_page && _patch_fill($scope0_id, "ve10", input.list, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -6,7 +6,7 @@ _shells({
 	a2: "a2;D%;<section><!></section>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -15,14 +15,14 @@ var template_default = _template("a", (input) => {
 			_await($scope1_id, "a", input.value, (v) => {
 				const $scope2_id = _scope_id();
 				_html(`<b>${_patch_text($scope2_id, "a", v, void 0, $scope0_reason, 2)}</b>`);
-				$scope0_page && _scope($scope2_id, {});
+				_scope($scope2_id, {});
 			}, 1, "a0");
 			_html("</section>");
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a3");
-			$scope0_page && _write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
+			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
 	_html(`<p>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 3)}</p>`);
-	$scope0_page ? _scope($scope0_id, { f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.value }) : _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va4", input.value, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.value }) || _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va4", input.value, !_server_guard($scope0_reason, 2));
 }, 1);
