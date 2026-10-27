@@ -1,4 +1,4 @@
-// size: 27389 (min) 10220 (brotli)
+// size: 27506 (min) 10258 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -84,14 +84,7 @@ let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
         (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
       )),
         value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-    else if (value < 92)
-      for (value = 25 * currentMultiplier + value - 67; value--;)
-        if (currentNode.firstChild) currentNode = currentNode.firstChild;
-        else {
-          for (; !currentNode.nextSibling && currentNode.parentNode;)
-            currentNode = currentNode.parentNode;
-          walkNextSibling();
-        }
+    else if (value < 92) for (value = 25 * currentMultiplier + value - 67; value--;) walkNextNode();
     else if (value < 107)
       for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
     else if (value < 117) {
@@ -99,6 +92,11 @@ let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
         currentNode = currentNode.parentNode || currentNode;
       walkNextSibling();
     } else storedMultiplier = currentMultiplier * 10 + value - 117;
+};
+let walkNextNode = (_) => {
+  if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
+  for (; !currentNode.nextSibling && currentNode.parentNode;) currentNode = currentNode.parentNode;
+  walkNextSibling();
 };
 let walkNextSibling = (_) => (currentNode = currentNode.nextSibling || currentNode);
 let _resumed = {};
@@ -559,7 +557,8 @@ function push(opt, item) {
   return opt ? (Array.isArray(opt) ? (opt.push(item), opt) : [opt, item]) : item;
 }
 function _on(element, type, handler) {
-  (delegate(type, handleDelegated), (element[1 + type] = handler || null));
+  (element[1 + type] === void 0 && delegate(type, handleDelegated),
+    (element[1 + type] = handler || null));
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
@@ -699,9 +698,10 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
     };
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
-function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn) {
+function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccessor, fn) {
   ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
-    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)));
+    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)),
+    keyValueAccessor !== "M" && (keyValueAccessor = decodeAccessor(keyValueAccessor)));
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
     mapAccessor = "O" + ownerLoopNodeAccessor,
     prevKeyProp = `_${ownerValueAccessor}`,
@@ -711,7 +711,7 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn) {
         queueRender(
           ownerScope,
           (_) => {
-            let map = keyedScopes(ownerScope, scopeAccessor, mapAccessor);
+            let map = keyedScopes(ownerScope, scopeAccessor, mapAccessor, keyValueAccessor);
             if (map && prevKeyProp in map) {
               let prevScope = map.get(map[prevKeyProp]),
                 nextScope = map.get(nextKey);
@@ -726,13 +726,13 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn) {
     };
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
-function keyedScopes(ownerScope, scopeAccessor, mapAccessor) {
+function keyedScopes(ownerScope, scopeAccessor, mapAccessor, keyValueAccessor) {
   let map = (ownerScope[mapAccessor] ||= /* @__PURE__ */ new Map());
   if (!map.size)
     for (let scope of toArray(ownerScope[scopeAccessor])) {
-      let key = scope.M;
+      let key = scope.M ?? scope[keyValueAccessor];
       if (key === void 0) return (ownerScope[mapAccessor] = null);
-      map.set(key, scope);
+      ((scope.M = key), map.set(key, scope));
     }
   return map;
 }
@@ -799,13 +799,13 @@ function _return_change(scope, changeHandler) {
   scope.U = changeHandler || void 0;
 }
 function _id(scope, accessor) {
-  let id = accessor && scope[accessor];
+  let id = accessor !== void 0 && scope[accessor];
   if (!id) {
     let $global = scope.$,
       n = tagIdsByGlobal.get($global) || 0;
     (tagIdsByGlobal.set($global, n + 1),
       (id = "c" + $global.runtimeId + $global.renderId + n.toString(36)),
-      accessor && (scope[accessor] = id));
+      accessor !== void 0 && (scope[accessor] = id));
   }
   return id;
 }
@@ -1235,7 +1235,9 @@ function _attr(element, name, value) {
 }
 function setAttribute(element, name, value) {
   element.getAttribute(name) != value &&
-    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
+    (value === void 0
+      ? element.removeAttribute(name)
+      : (name !== "nonce" || element.nonce !== value) && element.setAttribute(name, value));
 }
 function _attr_class(element, value) {
   setAttribute(element, "class", toDelimitedString(value, " ", stringifyClassEntry) || void 0);
