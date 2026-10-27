@@ -31,7 +31,7 @@ throw new Error("guess dropped by a patch");
 
 # Update
 ```js
-wait(150);
+wait(700);
 ```
 ```html
 <button>

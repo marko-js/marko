@@ -19,6 +19,6 @@ export const config: TestConfig = {
         throw new Error("guess dropped by a patch");
       }
     },
-    () => wait(150),
+    () => wait(700),
   ],
 };
