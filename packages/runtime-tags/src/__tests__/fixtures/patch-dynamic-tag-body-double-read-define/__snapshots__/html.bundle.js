@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		_html(`<button class=toggle>t</button>${_el_resume($scope2_id, "a")}<section>`);
 		_dynamic_tag($scope2_id, "b", content, {}, 2, 0, 0, $wg__content);
 		_html("</section>");
-		if ($scope0_page) _if(() => {}, $scope2_id, "c");
+		_if(() => {}, $scope2_id, "c");
 		_script($scope2_id, "a1");
 		_patch_fill($scope2_id, "va3", open, 1);
 		_scope($scope2_id, {

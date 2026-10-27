@@ -24,11 +24,10 @@ _shells({ d: "d !d0; b%;<button>toggle</button><!><!>" });
 var chooser_default = _template("d", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 0);
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let show = false;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {}, $scope0_id, "b");
+	_if(() => {}, $scope0_id, "b");
 	_script($scope0_id, "d0");
 	_patch_fill($scope0_id, "vd3", show, 1);
 	_scope($scope0_id, {

@@ -4,11 +4,11 @@ const $walks$1 = " b%c";
 const $setup$1 = [[], ["__tests__/tags/child.marko_0"]];
 _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !__tests__/tags/child.marko_0; b%;<button>toggle</button><!><!>" });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_v = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_v = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "#text/0", input.v, $wg__input_v)}</p>`);

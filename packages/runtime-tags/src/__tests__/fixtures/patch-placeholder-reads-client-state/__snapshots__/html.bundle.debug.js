@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $n__closures = new Set();
 	const $input_promise__closures = new Set();
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<p>loading</p>");
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (n) {
 				const $scope3_id = _scope_id();
 				_html(`<b>ph ${_text_resume($scope3_id, "#text/0", n, 2)}</b>`);

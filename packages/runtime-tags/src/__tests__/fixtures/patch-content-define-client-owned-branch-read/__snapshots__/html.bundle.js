@@ -3,14 +3,14 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 _shells({ a: /*@__PURE__*/ (() => `a !a2;${((_w0) => `D/${_w0}& l`)($Panel_content__walks)};${((_w0) => `<main>${_w0}<button>+</button></main>`)($Panel_content__template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	const Panel = { content: _content("a1", ({ open }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__open = _write_guard($scope1_reason, 0), $wi__open = _write_if($scope1_reason, 0);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_resume($scope2_id, "a", input.title, $wg__input_title)}</em>`);

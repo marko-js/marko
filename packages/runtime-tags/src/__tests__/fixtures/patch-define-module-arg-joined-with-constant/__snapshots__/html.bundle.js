@@ -9,7 +9,7 @@ const lib = {
 // template.marko
 _shells({ a: "a !a2;b%b ;<!><!><button class=toggle>toggle</button>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("a0", ({ fmt, sep, label }) => {
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			f: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 3)) && label
 		});
 	}, $scope0_id) };
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 0) << 7 | _mask_group($scope0_reason, 0) << 13);

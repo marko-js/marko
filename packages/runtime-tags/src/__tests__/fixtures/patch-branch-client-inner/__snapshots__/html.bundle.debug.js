@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_count#0:6/init;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 1), $scope0_page = _page_render(), $wi__input_title = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	let count = 0;
@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			if ($scope0_page) _if(() => {
+			_if(() => {
 				if (count > 1) {
 					const $scope2_id = _scope_id();
 					_html(`<p>${_text_resume($scope2_id, "#text/0", input.title, $wg__input_title)}</p>`);

@@ -18,7 +18,7 @@ var fwd_default = _template("__tests__/tags/fwd.marko", (input) => {
 		_content_withhold(content), _patch_fill($scope2_id, "PatchFill:__tests__/tags/fwd.marko_fill1", content);
 		let open = true;
 		_html(`<button class=toggle>t</button>${_el_resume($scope2_id, "#button/0")}`);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (open) {
 				const $scope3_id = _scope_id();
 				_dynamic_tag($scope3_id, "#text/0", content, {}, 0, 0, 0, $wg__content);

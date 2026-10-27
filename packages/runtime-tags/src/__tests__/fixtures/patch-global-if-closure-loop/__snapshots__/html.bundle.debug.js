@@ -9,11 +9,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	let on = true;
 	_html(`<button>t</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (on) {
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "#text/0", $global$1.brand, $scope0_page)}</em>`);
-			if ($scope0_page) forOf([1, 2], (x) => {
+			forOf([1, 2], (x) => {
 				const $scope2_id = _scope_id();
 				_html(`<i>${_escape(x)}${_text_resume($scope2_id, "#text/1", $global$1.brand, $scope0_page * 2)}</i>`);
 				_fill_global_subscribe("__tests__/template.marko_2_$global_brand#0:7", $scope2_id, 1);

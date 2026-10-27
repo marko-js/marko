@@ -1,13 +1,13 @@
 // template.marko
 _shells({ a: "a !a4; b%;<button>toggle</button><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $wg__input_p = _write_guard($scope0_reason, 1), $wi__input_p = _write_if($scope0_reason, 1), $scope0_page = _page_render(), $wi__input_title = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $wg__input_p = _write_guard($scope0_reason, 1), $wi__input_p = _write_if($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $input_p__closures = /* @__PURE__ */ new Set();
 	let show = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_try($scope1_id, "a", () => {

@@ -18,7 +18,7 @@ _shells({
 	a4: "a4 a9 a10;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $scope0_page = _page_render(), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (input.label) {
 				const $scope2_id = _scope_id();
-				if ($scope0_page) _if(() => {}, $scope2_id, "a", 1, 1, 0, 0, 1);
+				_if(() => {}, $scope2_id, "a", 1, 1, 0, 0, 1);
 				_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a3");
 				return 0;
 			}

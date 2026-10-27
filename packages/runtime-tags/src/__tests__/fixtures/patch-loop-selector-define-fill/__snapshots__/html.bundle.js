@@ -3,7 +3,7 @@ const $List_content__walks = " b b";
 const $List_content__template = "<ul></ul><button class=add>+</button>";
 _shells({ a: /*@__PURE__*/ (() => `a !a6;${((_w0) => `b/${_w0}& b`)($List_content__walks)};${((_w0) => `<!>${_w0}<button class=toggle>toggle</button>`)($List_content__template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let on = true;
 	const List = { content: _content("a1", ({ selected, flag }) => {
@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 			{ id: 3 }
 		];
 		_html("<ul>");
-		if ($scope0_page) _for_of(rows, (row) => {
+		_for_of(rows, (row) => {
 			const $scope2_id = _scope_id();
 			_html(`<li>${_escape(row.id)}</li>${_el_resume($scope2_id, "a")}`);
 			_script($scope2_id, "a0");

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button class=toggle>t</button>${_el_resume($scope2_id, "#button/0")}<section>`);
 		_dynamic_tag($scope2_id, "#text/1", content, {}, 2, 0, 0, $wg__content);
 		_html("</section>");
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (open) {
 				const $scope3_id = _scope_id();
 				_dynamic_tag($scope3_id, "#text/0", content, {}, 8, 0, 0, $wg__content);

@@ -7,11 +7,11 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<li> </li>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<ul>");
-	if ($scope0_page) _for_in({
+	_for_in({
 		a: input.label,
 		b: count
 	}, (k, v) => {

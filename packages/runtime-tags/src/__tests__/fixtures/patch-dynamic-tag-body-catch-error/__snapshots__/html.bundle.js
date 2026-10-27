@@ -6,7 +6,7 @@ _shells({
 	b2: "b2;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	const $fail__closures = /* @__PURE__ */ new Set();
@@ -15,7 +15,7 @@ var card_default = _template("b", (input) => {
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
-		if ($scope0_page) _if(() => {}, $scope3_id, "a");
+		_if(() => {}, $scope3_id, "a");
 		_subscribe($fail__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }), "b5");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();

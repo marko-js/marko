@@ -4,11 +4,11 @@ const $walks = "b%b b";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>+</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	const label = input.label;
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (count > 0 && label) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "#text/0", label, $wg__input_label)}</p>`);

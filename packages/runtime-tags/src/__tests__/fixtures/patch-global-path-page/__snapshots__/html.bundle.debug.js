@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	let open = true;
 	_html(`<button>t</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<b>${_text_resume($scope1_id, "#text/0", $global$1.a + $global$1.c, $scope0_page)}</b>`);
@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_html("<ul>");
-	if ($scope0_page) _for_until(open ? 1 : 0, 0, 1, (i) => {
+	_for_until(open ? 1 : 0, 0, 1, (i) => {
 		const $scope2_id = _scope_id();
 		_html(`<li>${_text_resume($scope2_id, "#text/0", $global$1.a + $global$1.c, $scope0_page)}</li>`);
 		_fill_global_subscribe("__tests__/template.marko_2_$global_a#0:7_$global_c#0:8", $scope0_id, 1);

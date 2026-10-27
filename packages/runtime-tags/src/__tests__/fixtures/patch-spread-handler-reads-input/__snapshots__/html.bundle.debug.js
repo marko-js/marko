@@ -4,7 +4,7 @@ const $walks = "D l b%b D l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D l b%b D ;<p> </p><div></div><!><button> </button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
 	let count = 0;
@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/onClick", $scope0_id)
 	}, "#div/1", $scope0_id, "div", 0, void 0, void 0, $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/1")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (count) {
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "#text/0", input.label, $wg__input_label)}</em>`);

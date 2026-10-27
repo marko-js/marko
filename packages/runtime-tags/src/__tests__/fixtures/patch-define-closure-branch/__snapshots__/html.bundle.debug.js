@@ -6,14 +6,14 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Panel_content__walks);
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => `b/${_w0}& b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<button>toggle</button>`)($Panel_content__template)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $open__closures = new Set();
 	let open = false;
 	const Panel = { content: _content("__tests__/template.marko_1*content", ({ label }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_resume($scope2_id, "#text/0", label, $wg__label)}</em>`);

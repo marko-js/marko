@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_expand#0:6/init;D%b%;<li><!><!></li>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 1), $scope0_page = _page_render(), $wi__input_note = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	let expand = false;
@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_patch_text($scope1_id, "#text/0", item, void 0, $scope0_reason, 0)}`);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (expand) {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_resume($scope2_id, "#text/0", input.note, $wg__input_note)}</p>`);

@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell #childScope/0>!__tests__/template.marko_1;${/*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<button>x</button>`)($Panel_content__template)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 3), $scope0_page = _page_render(), $wi__input_on__OR__input_w = _write_if($scope0_reason, 0), $wg__input_on = _write_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 3), $wi__input_on__OR__input_w = _write_if($scope0_reason, 0), $wg__input_on = _write_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = new Set();
 	_if(() => {
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const Panel = { content: _content_elide("__tests__/template.marko_2*content", ({ open }) => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason(), $wg__open = _write_guard($scope2_reason, 0), $wi__open = _write_if($scope2_reason, 0);
-				if ($scope0_page) _if(() => {
+				_if(() => {
 					if (open) {
 						const $scope3_id = _scope_id();
 						_html(`<p>${_text_resume($scope3_id, "#text/0", input.w, $wg__input_w)}</p>`);

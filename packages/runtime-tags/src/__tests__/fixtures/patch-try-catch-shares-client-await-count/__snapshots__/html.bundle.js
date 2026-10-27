@@ -9,7 +9,7 @@ _shells({
 	a: "a !a10;D%b ;<main><!><button>x</button></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $pending__closures = /* @__PURE__ */ new Set();
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			_html(`<s>${_patch_text($scope5_id, "a", e.message)}</s>`);
 			_scope($scope5_id, {});
 		}, void 0, "a1", "a4", 1, 1, 1);
-		if ($scope0_page) _if(() => {}, $scope1_id, "b");
+		_if(() => {}, $scope1_id, "b");
 		_html("</div>");
 		_subscribe($pending__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a9");
 	}, () => {

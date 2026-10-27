@@ -4,11 +4,11 @@ const $walks = "D%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 4;
 	_html("<main>");
-	if ($scope0_page) _for_until(count, 0, input.step, (i) => {
+	_for_until(count, 0, input.step, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<span>${_escape(i)}</span>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "3:4");

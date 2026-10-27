@@ -16,12 +16,11 @@ var field_default = _template("b", (input) => {
 _shells({ a: "a !a1;D%bD l ;<main><!><p> </p><button>+</button></main>" });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let text = "hi";
 	let open = true;
 	_html("<main>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(10);

@@ -6,14 +6,14 @@ const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)($Panel_content__walks);
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => `D/${_w0}& l`)($Panel_content__walks)};${((_w0) => `<main>${_w0}<button>+</button></main>`)($Panel_content__template)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	let count = 0;
 	const Panel = { content: _content("__tests__/template.marko_2*content", ({ open, body }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__body = _write_guard($scope2_reason, 2), $wg__open = _write_guard($scope2_reason, 1);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (open) {
 				const $scope3_id = _scope_id();
 				_dynamic_tag($scope3_id, "#text/0", body, {}, 0, 0, 0, $wg__body);

@@ -1,13 +1,13 @@
 // tags/card.marko
 _shells({ b: "b !b0; bD%l%;<button class=toggle>toggle</button><section><!></section><!><!>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "a")}<section>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
 	_html("</section>");
-	if ($scope0_page) _if(() => {}, $scope0_id, "c");
+	_if(() => {}, $scope0_id, "c");
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb2", open, 1);
 	_scope($scope0_id, {

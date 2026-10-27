@@ -6,11 +6,10 @@ _shells({ b: "b !b0;D l%b ;<div> </div><!><button>t</button>" });
 var kid_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 1);
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let on = false;
 	_html(`<div>${_patch_text($scope0_id, "a", input.a, void 0, $scope0_reason, 0)}</div>`);
-	if ($scope0_page) _if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
+	_if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_html(`<button>t</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb2", on, 1);

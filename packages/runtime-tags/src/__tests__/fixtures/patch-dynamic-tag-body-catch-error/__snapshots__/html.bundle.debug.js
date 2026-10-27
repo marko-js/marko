@@ -12,7 +12,7 @@ _shells({
 	"__tests__/tags/card.marko_2*shell": "__tests__/tags/card.marko_2*shell;b%;<!><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
 	const $fail__closures = new Set();
@@ -21,7 +21,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_try($scope0_id, "#text/1", () => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (fail) {
 				const $scope4_id = _scope_id();
 				_html(_escape(boom()));

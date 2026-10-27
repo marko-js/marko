@@ -14,13 +14,13 @@ _shells({ a: "a !a3;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 0);
-	const $scope0_page = _page_render(), $wi__input_a = _write_if($scope0_reason, 1), $wi__input_b = _write_if($scope0_reason, 2);
+	const $wi__input_a = _write_if($scope0_reason, 1), $wi__input_b = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	let open = false;
 	_html("<main>");
-	if ($scope0_page) _if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
+	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {

@@ -3,14 +3,14 @@ const $Show_content__walks = "b%c";
 const $Show_content__template = "<!><!><!>";
 _shells({ a: /*@__PURE__*/ (() => `a !a3;${((_w0) => `b/${_w0}& b`)($Show_content__walks)};${((_w0) => `<!>${_w0}<button>+</button>`)($Show_content__template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	const Show = { content: _content("a0", ({ value }) => {
 		const $scope1_id = _scope_id(), $scope1_reason = _scope_reason();
 		_write_guard($scope1_reason, 0);
-		if ($scope0_page) _if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
+		_if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
 		_subscribe($count__closures, _scope($scope1_id, {
 			d: value,
 			_: _scope_with_id($scope0_id)

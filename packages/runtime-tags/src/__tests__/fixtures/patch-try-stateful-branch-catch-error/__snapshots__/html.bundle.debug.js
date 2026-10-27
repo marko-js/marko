@@ -4,13 +4,13 @@ const $walks = " b%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%;<button>toggle</button><!><!>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $wg__input_p = _write_guard($scope0_reason, 1), $wi__input_p = _write_if($scope0_reason, 1), $scope0_page = _page_render(), $wi__input_title = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $wg__input_p = _write_guard($scope0_reason, 1), $wi__input_p = _write_if($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $input_p__closures = new Set();
 	let show = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_try($scope1_id, "#text/0", () => {

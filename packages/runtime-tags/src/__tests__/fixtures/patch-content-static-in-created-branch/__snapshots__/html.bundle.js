@@ -6,11 +6,10 @@ _shells({ b: "b !b0;D b%;<div><button class=open>toggle</button><!></div>" });
 var toggle_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 0);
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<div><button class=open>toggle</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {}, $scope0_id, "b");
+	_if(() => {}, $scope0_id, "b");
 	_html("</div>");
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb2", open, 1);

@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_input_b#0:5_x#3/init!__tests__/template.marko_1;b%b D ;<!><!><button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	_if(() => {
@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			let x = 1;
 			let y = x;
-			if ($scope0_page) _if(() => {
+			_if(() => {
 				if (y) {
 					const $scope2_id = _scope_id();
 					_html(`<span>${_text_resume($scope2_id, "#text/0", input.a, $wg__input_a)}</span>`);

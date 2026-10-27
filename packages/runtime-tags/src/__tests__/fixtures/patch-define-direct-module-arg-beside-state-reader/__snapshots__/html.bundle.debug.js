@@ -19,7 +19,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D ;<em> </em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("__tests__/template.marko_2*content", ({ isOpen, fmt, label }) => {
@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		label: input.label
 	});
 	_patch_child_end();
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<b>${_text_resume($scope1_id, "#text/0", input.label, $wg__input_label)}</b>`);

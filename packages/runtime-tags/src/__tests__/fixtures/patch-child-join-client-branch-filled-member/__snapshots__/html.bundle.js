@@ -7,7 +7,7 @@ _shells({
 	b1: "b1;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_if(() => {
@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["b1"], $scope0_reason, 2);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope2_id = _scope_id();
 			_html(`<div></div>${_el_resume($scope2_id, "a")}`);

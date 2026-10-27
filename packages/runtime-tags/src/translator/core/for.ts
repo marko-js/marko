@@ -32,7 +32,6 @@ import { isPatch } from "../util/marko-config";
 import { fromIter } from "../util/optional";
 import { getWriteSources, onReasonsSettled } from "../util/patch/decisions";
 import {
-  isStatefulBranch,
   patchesBranchesAt,
   recordStructuralParams,
 } from "../util/patch/structure";
@@ -69,7 +68,7 @@ import { hasCallerParamSource } from "../util/sources";
 import * as structure from "../util/structure";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
-import { getBranchWriteReason, scopePageIdentifier } from "../util/write-guard";
+import { getBranchWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 export default {
@@ -224,9 +223,6 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
-        // A stateful loop compiles as it does on a plain page: no marker
-        // retention, shells, or loop entry.
-        const stateful = isStatefulBranch(bodySection);
         // A patchable loop keeps its markers: item pairing and insertion
         // go through branch markers, which elision would remove.
         const patchesBranches = patchesBranchesAt(nodeBinding);
@@ -269,18 +265,9 @@ export default {
           }
         }
 
-        let statement: t.Statement = t.expressionStatement(
-          callRuntime(forTagHTMLRuntime, ...forTagArgs),
+        statements.push(
+          t.expressionStatement(callRuntime(forTagHTMLRuntime, ...forTagArgs)),
         );
-        if (stateful) {
-          // Patch renders skip the loop: its collection is server-stale, so
-          // a flush writes no loop entry for it.
-          statement = t.ifStatement(
-            scopePageIdentifier(tagSection.program),
-            statement,
-          );
-        }
-        statements.push(statement);
 
         for (const replacement of tag.replaceWithMultiple(statements)) {
           replacement.skip();

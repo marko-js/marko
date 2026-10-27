@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const $global$1 = $global();
 	let n = 0;
 	_html(`<button class=dec>-</button>${_el_resume($scope0_id, "a")}<button class=inc>+</button>${_el_resume($scope0_id, "b")}<ul>`);
-	if ($scope0_page) _for_until(n, 0, 1, (i) => {
+	_for_until(n, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_escape(i)}:${_text_resume($scope1_id, "b", $global$1.o.x, $scope0_page * 2)}</li>`);
 		_fill_global_subscribe("a0", $scope0_id, 1);

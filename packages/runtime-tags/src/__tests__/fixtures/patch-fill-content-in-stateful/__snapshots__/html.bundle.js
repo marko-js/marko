@@ -12,13 +12,13 @@ var wrap_default = _template("b", (input) => {
 // template.marko
 _shells({ a: "a !a3; b%;<button>inc</button><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_msg = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_msg = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);

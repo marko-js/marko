@@ -4,11 +4,11 @@ const $walks = " b%c";
 const $setup = [[], ["b0"]];
 _shells({ b: "b !b0; b%;<button>t</button><!><!>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button>t</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "a", input.fn(), $wg__input)}</p>`);

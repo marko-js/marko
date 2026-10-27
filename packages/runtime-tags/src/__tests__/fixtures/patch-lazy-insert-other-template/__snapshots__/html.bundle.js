@@ -21,11 +21,10 @@ const $setup$1 = [[], ["c0"]];
 _shells({ c: "c !c0; b%;<button class=open>open</button><!><!>" });
 var opener_default = _template("c", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<button class=open>open</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {}, $scope0_id, "b");
+	_if(() => {}, $scope0_id, "b");
 	_script($scope0_id, "c0");
 	_patch_fill($scope0_id, "vc1", open, 1);
 	_scope($scope0_id, { c: open });

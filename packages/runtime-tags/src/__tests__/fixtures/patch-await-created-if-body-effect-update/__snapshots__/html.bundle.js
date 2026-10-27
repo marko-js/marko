@@ -6,7 +6,7 @@ _shells({
 	a6: "a6;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_label = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $n__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_filled_guard($scope0_reason, 1) && _patch_fill($scope2_id, "va2", x);
 				_html(`<p>${_patch_text($scope2_id, "a", x, void 0, $scope0_reason, 1)}</p>`);
-				if ($scope0_page) _if(() => {}, $scope2_id, "b", 1, 1, 0, 0, 1);
+				_if(() => {}, $scope2_id, "b", 1, 1, 0, 0, 1);
 				_script($scope2_id, "a1");
 				_subscribe($n__closures, _scope($scope2_id, { d: x }), "a3");
 			}, 1, "a4");

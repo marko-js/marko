@@ -20,15 +20,15 @@ const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/chi
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b ;<button class=toggle>toggle</button><main></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let open = false;
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}<main>`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			if ($scope0_page) _if(() => {
+			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
 					_set_scope_reason(_mask_group($scope0_reason, 1) << 1);

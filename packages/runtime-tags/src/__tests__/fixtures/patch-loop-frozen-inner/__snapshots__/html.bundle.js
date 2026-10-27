@@ -2,14 +2,13 @@
 _shells({ a: "a !a0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let outer = ["a"];
 	let inner = ["x"];
 	_html("<main>");
-	if ($scope0_page) _for_of(outer, (o) => {
+	_for_of(outer, (o) => {
 		const $scope1_id = _scope_id();
-		if ($scope0_page) _for_of(inner, (i) => {
+		_for_of(inner, (i) => {
 			const $scope2_id = _scope_id();
 			_html(`<div>${_text_resume($scope2_id, "a", o)}${_escape(i)}</div>`);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });

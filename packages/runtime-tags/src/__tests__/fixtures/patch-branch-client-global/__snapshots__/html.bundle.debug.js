@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	let count = 0;
 	_html("<main>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (count > 1) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "#text/0", $global$1.brand, $scope0_page)}</p>`);

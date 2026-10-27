@@ -4,7 +4,7 @@ const $walks = " b b";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b ;<button>drop</button><ul></ul>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let items = [
 		{ id: 1 },
@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		{ id: 3 }
 	];
 	_html(`<button>drop</button>${_el_resume($scope0_id, "#button/0")}<ul>`);
-	if ($scope0_page) _for_of(items, (item) => {
+	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_escape(item.id)}: ${_text_resume($scope1_id, "#text/1", input.label, $wg__input_label * 2)}</li>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "4:4");

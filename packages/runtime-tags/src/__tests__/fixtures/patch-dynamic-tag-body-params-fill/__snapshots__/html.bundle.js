@@ -5,7 +5,7 @@ _shells({
 	a: "a !;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_card__OR__input_tag = _write_guard($scope0_reason, 0), $cg__input_tag = _client_guard($scope0_reason, 4), $cg__input_card = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_card__OR__input_tag = _write_guard($scope0_reason, 0), $cg__input_tag = _client_guard($scope0_reason, 4), $cg__input_card = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const Card = { content: _content_resume("a0", ({ label, content }) => {
@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		_content_withhold(content), _patch_fill($scope2_id, "va2", content);
 		let open = true;
 		_html(`<button class=toggle>t</button>${_el_resume($scope2_id, "a")}<p>${_patch_text($scope2_id, "b", label)}`);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			{
 				const $scope3_id = _scope_id();
 				_dynamic_tag($scope3_id, "a", content, {}, 0, 0, 0, $wg__content);

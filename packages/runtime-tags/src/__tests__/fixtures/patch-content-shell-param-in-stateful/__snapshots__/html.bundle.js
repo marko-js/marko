@@ -31,7 +31,7 @@ _shells({
 	a5: /*@__PURE__*/ ((_w0) => `a5${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 					const $scope2_id = _scope_id();
 					_patch_fill($scope2_id, "va1", label);
 					let open = true;
-					if ($scope0_page) _if(() => {
+					_if(() => {
 						{
 							const $scope3_id = _scope_id();
 							_html(`<p>${_text_resume($scope3_id, "a", label, $wg__label)}</p>`);

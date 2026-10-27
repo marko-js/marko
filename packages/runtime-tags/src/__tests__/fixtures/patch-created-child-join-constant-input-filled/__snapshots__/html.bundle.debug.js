@@ -4,11 +4,11 @@ const $walks$1 = "D l%b b";
 const $setup$1 = [[], ["__tests__/tags/child.marko_0"]];
 _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !__tests__/tags/child.marko_0;D l%b ;<p> </p><!><button class=t>t</button>" });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 2), $scope0_page = _page_render(), $cg__input_b = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 2), $cg__input_b = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<p>${_patch_text($scope0_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 0)}</p>`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<i>${_text_resume($scope1_id, "#text/0", input.b, $wg__input_b)}</i>`);

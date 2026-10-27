@@ -4,7 +4,7 @@ const $walks = "D%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a__OR__input_b = _write_guard($scope0_reason, 0), $scope0_page = _page_render(), $sg__input_a = _server_guard($scope0_reason, 1), $sg__input_b = _server_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_a__OR__input_b = _write_guard($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 1), $sg__input_b = _server_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !$sg__input_a);
 	_filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !$sg__input_b);
@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const fb = _bind_resume(() => input.b, "__tests__/template.marko_0/fb", $scope0_id);
 	let open = false;
 	_html("<main>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "#text/0", fa() + ":" + fb(), $wg__input_a__OR__input_b)}</p>`);

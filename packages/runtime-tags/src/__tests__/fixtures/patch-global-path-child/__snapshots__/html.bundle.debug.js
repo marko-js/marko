@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	let open = true;
 	_html(`<button>t</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<b>${_text_resume($scope1_id, "#text/0", $global$1.k, $scope0_page)}</b>`);

@@ -5,7 +5,7 @@ _shells({
 	a3: "a3 !a0;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_page = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.page === 0) {
@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		} else {
 			const $scope2_id = _scope_id();
 			let mounted = false;
-			if ($scope0_page) _if(() => {}, $scope2_id, "a", 1, 1, 0, 0, 1);
+			_if(() => {}, $scope2_id, "a", 1, 1, 0, 0, 1);
 			_script($scope2_id, "a0");
 			_patch_fill($scope2_id, "va1", mounted, 1);
 			_scope($scope2_id, {});

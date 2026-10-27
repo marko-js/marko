@@ -27,11 +27,10 @@ var tabs_default = _template("b", (input) => {
 _shells({ a: "a !a0;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let show = true;
 	_html("<main>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);

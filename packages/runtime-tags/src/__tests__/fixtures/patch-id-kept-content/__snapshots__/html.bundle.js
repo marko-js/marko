@@ -4,12 +4,12 @@ const $walks = " b%c";
 const $setup$1 = [[], ["b0"]];
 _shells({ b: "b !b0; b%;<button>toggle</button><!><!>" });
 var keeper_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let content = input.content;
 	let show = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "a", content, {});

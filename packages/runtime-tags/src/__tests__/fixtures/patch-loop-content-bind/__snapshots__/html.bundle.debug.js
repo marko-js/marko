@@ -7,14 +7,14 @@ _shells({
 	"__tests__/tags/list.marko_1*shell": "__tests__/tags/list.marko_1*shell __tests__/tags/list.marko_1_open#0:5/init;b%;<!><!><!>"
 });
 var list_default = _template("__tests__/tags/list.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
 	_for_of(input.item, (item) => {
 		const $scope1_id = _scope_id();
 		_content_withhold(item?.content), _filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/list.marko_fill1", item?.content);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "#text/0", item.content, {}, 0, 0, 0, $wg__input_item);

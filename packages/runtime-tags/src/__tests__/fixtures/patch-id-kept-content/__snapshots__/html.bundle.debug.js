@@ -4,12 +4,12 @@ const $walks$1 = " b%c";
 const $setup$1 = [[], ["__tests__/tags/keeper.marko_0"]];
 _shells({ "__tests__/tags/keeper.marko": "__tests__/tags/keeper.marko !__tests__/tags/keeper.marko_0; b%;<button>toggle</button><!><!>" });
 var keeper_default = _template("__tests__/tags/keeper.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let content = input.content;
 	let show = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "#text/0", content, {});

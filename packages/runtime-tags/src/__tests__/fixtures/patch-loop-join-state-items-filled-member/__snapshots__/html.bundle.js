@@ -7,7 +7,7 @@ _shells({
 	b1: "b1;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_for_of(input.items, (item) => {
@@ -20,7 +20,7 @@ var child_default = _template("b", (input) => {
 			_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 1);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope2_id = _scope_id();
 			_html(`<div></div>${_el_resume($scope2_id, "a")}`);

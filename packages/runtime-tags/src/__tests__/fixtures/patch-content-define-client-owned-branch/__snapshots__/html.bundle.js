@@ -3,14 +3,14 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 _shells({ a: /*@__PURE__*/ (() => `a !a4;${((_w0) => `D/${_w0}& l`)($Panel_content__walks)};${((_w0) => `<main>${_w0}<button>+</button></main>`)($Panel_content__template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	const Panel = { content: _content("a0", ({ open, body }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__body = _write_guard($scope2_reason, 2), $wg__open = _write_guard($scope2_reason, 1);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (open) {
 				const $scope3_id = _scope_id();
 				_dynamic_tag($scope3_id, "a", body, {}, 0, 0, 0, $wg__body);

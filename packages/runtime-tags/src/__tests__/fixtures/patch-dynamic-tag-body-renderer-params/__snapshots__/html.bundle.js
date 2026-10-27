@@ -15,7 +15,7 @@ var host_default = _template("b", (input) => {
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let flag = false;
 	_html(`<button class=flag>f</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {}, $scope0_id, "b");
+	_if(() => {}, $scope0_id, "b");
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
@@ -50,7 +50,7 @@ _shells({
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)($walks)};${((_w0) => `<main>${_w0}</main>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 3) << 3 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 1) << 7 | _mask_group($scope0_reason, 2) << 11 | _mask_group($scope0_reason, 3) << 13 | _mask_group($scope0_reason, 4) << 15);
@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 			_content_withhold(content), _patch_fill($scope1_id, "va1", content);
 			let open = true;
 			_html(`<button class=toggle>t</button>${_el_resume($scope1_id, "a")}`);
-			if ($scope0_page) _if(() => {
+			_if(() => {
 				{
 					const $scope2_id = _scope_id();
 					_dynamic_tag($scope2_id, "a", content, {}, 0, 0, 0, $wg__content);

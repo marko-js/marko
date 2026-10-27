@@ -13,14 +13,14 @@ const $walks = " b b b";
 const $setup$1 = [[], ["c0"]];
 _shells({ c: "c !c0; b b ;<button>add</button><button>rename</button><ul></ul>" });
 var list_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_row = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_row = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let items = [{
 		id: "1",
 		label: "one"
 	}];
 	_html(`<button>add</button>${_el_resume($scope0_id, "a")}<button>rename</button>${_el_resume($scope0_id, "b")}<ul>`);
-	if ($scope0_page) _for_of(items, (item) => {
+	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html("<li>");
 		_dynamic_tag($scope1_id, "a", input.row, {

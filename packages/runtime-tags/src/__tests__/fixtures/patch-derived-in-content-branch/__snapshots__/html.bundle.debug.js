@@ -18,7 +18,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $count__closures = new Set();
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const label = input.label;
 		_filled_guard($scope0_reason, 0) ? _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", label) : _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:4/init");
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (count > 0 && label) {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_resume($scope2_id, "#text/0", label, $wg__input_label)}</p>`);

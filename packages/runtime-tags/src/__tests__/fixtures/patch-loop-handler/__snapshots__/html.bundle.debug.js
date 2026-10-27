@@ -4,11 +4,11 @@ const $walks = "D b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D b ;<main><ul></ul><button class=add>+</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let items = ["a"];
 	_html("<main><ul>");
-	if ($scope0_page) _for_of(items, (item, i) => {
+	_for_of(items, (item, i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "#text/0", item)}<button>x</button>${_el_resume($scope1_id, "#button/1")}</li>`);
 		_script($scope1_id, "__tests__/template.marko_1");

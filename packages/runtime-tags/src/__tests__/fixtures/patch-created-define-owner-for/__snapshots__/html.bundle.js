@@ -9,14 +9,14 @@ _shells({
 	b: /*@__PURE__*/ (() => `b a>!b2;${((_w0) => `b/${_w0}& b`)($List_content__walks)};${((_w0) => `<!>${_w0}<button>x</button>`)($List_content__template)}`)()
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = /* @__PURE__ */ new Set();
 	let k = [input.n];
 	const List = { content: _content_elide("b1", ({ items }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__items = _write_guard($scope1_reason, 0), $wi__items = _write_if($scope1_reason, 0);
-		if ($scope0_page) _for_of(items, (x) => {
+		_for_of(items, (x) => {
 			const $scope2_id = _scope_id();
 			_html(`<li>${_text_resume($scope2_id, "a", x, $wg__items)} ${_text_resume($scope2_id, "b", input.w, $wg__input_w * 2)}</li>`);
 			($wi__input_w || $wi__items) && _subscribe($wi__input_w && $input_w__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b0", $wg__input_w || $wg__items);

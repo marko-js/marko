@@ -32,11 +32,11 @@ const $walks = " D l%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let s = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", s)}</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _for_until(1 + s % 3, 0, 1, (n) => {
+	_for_until(1 + s % 3, 0, 1, (n) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(2);
 		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);

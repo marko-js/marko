@@ -16,7 +16,7 @@ _shells({
 	a3: /*@__PURE__*/ (() => `a3;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)()
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("a0", ({ fmt, label }) => {
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			e: (_unfilled_if($scope3_reason, 1) || _unfilled_if($scope3_reason, 0)) && label
 		});
 	}, $scope0_id) };
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);

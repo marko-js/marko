@@ -7,11 +7,11 @@ var template_default = _template("a", (input) => {
 	const $global$1 = $global();
 	let on = true;
 	_html(`<button>t</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "a", $global$1.brand, $scope0_page)}</em>`);
-			if ($scope0_page) forOf([1, 2], (x) => {
+			forOf([1, 2], (x) => {
 				const $scope2_id = _scope_id();
 				_html(`<i>${_escape(x)}${_text_resume($scope2_id, "b", $global$1.brand, $scope0_page * 2)}</i>`);
 				_fill_global_subscribe("a0", $scope2_id, 1);

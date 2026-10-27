@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_card__OR__input_tag = _write_guard($scope0_reason, 0), $cg__input_tag = _client_guard($scope0_reason, 4), $cg__input_card = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_card__OR__input_tag = _write_guard($scope0_reason, 0), $cg__input_tag = _client_guard($scope0_reason, 4), $cg__input_card = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const Card = { content: _content_resume("__tests__/template.marko_2*content", ({ label, content }) => {
@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_content_withhold(content), _patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill3", content);
 		let open = true;
 		_html(`<button class=toggle>t</button>${_el_resume($scope2_id, "#button/0")}<p>${_patch_text($scope2_id, "#text/1", label)}`);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (open) {
 				const $scope3_id = _scope_id();
 				_dynamic_tag($scope3_id, "#text/0", content, {}, 0, 0, 0, $wg__content);

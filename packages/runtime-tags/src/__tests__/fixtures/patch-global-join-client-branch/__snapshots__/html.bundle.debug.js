@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	let s = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", s)}</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (s % 2 === 1) {
 			const $scope1_id = _scope_id();
 			_html(`<p>t:${_text_resume($scope1_id, "#text/0", input.a + $global$1.g, ($scope0_page || $wg__input_a) * 2)}</p>`);

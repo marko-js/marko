@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const $global$1 = $global();
 	let open = true;
 	_html(`<button>t</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<b>${_text_resume($scope1_id, "a", $global$1.a + $global$1.c, $scope0_page)}</b>`);
@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_html("<ul>");
-	if ($scope0_page) _for_until(1, 0, 1, (i) => {
+	_for_until(1, 0, 1, (i) => {
 		const $scope2_id = _scope_id();
 		_html(`<li>${_text_resume($scope2_id, "a", $global$1.a + $global$1.c, $scope0_page)}</li>`);
 		_fill_global_subscribe("a1", $scope0_id, 1);

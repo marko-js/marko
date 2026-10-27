@@ -69,7 +69,7 @@ var row_list_default = _template("c", (input) => {
 const $setup = _shell_setup([[], ["a0"]], ["a>", $setup$1]);
 _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `b/${_w0}& b%c`)($walks)};${((_w0) => `<!>${_w0}<p></p><!><!>`)($template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
 	const $childScope = _patch_child($scope0_id, "a", 0);
@@ -80,7 +80,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_html(`<p></p>${_el_resume($scope0_id, "b")}`);
-	if ($scope0_page) _if(() => {}, $scope0_id, "c");
+	_if(() => {}, $scope0_id, "c");
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

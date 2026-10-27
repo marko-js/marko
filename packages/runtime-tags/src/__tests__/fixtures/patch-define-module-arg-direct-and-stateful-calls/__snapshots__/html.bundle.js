@@ -13,7 +13,7 @@ const $Panel_content__walks = "D l";
 const $Panel_content__template = "<em> </em>";
 _shells({ a: /*@__PURE__*/ (() => `a !a2;${((_w0) => `b/${_w0}&%b b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!><button class=toggle>toggle</button>`)($Panel_content__template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("a0", ({ fmt, label }) => {
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		label: input.label
 	});
 	_patch_child_end();
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);

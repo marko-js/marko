@@ -4,14 +4,14 @@ _shells({
 	b: "b b5!b1; b%;<button class=toggle>toggle</button><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render(), $wi__input_content = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	let n = 1;
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
 	_await($scope0_id, "b", Promise.resolve(n), (x) => {
 		const $scope1_id = _scope_id();
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (x) {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "a", input.content, {}, 0, 0, 0, $wg__input_content);

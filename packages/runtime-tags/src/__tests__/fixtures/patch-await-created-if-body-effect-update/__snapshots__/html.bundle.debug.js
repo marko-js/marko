@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_label = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $n__closures = new Set();
 	let n = 0;
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_filled_guard($scope0_reason, 1) && _patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill1", x);
 				_html(`<p>${_patch_text($scope2_id, "#text/0", x, void 0, $scope0_reason, 1)}</p>`);
-				if ($scope0_page) _if(() => {
+				_if(() => {
 					if (n % 2) {
 						const $scope3_id = _scope_id();
 						_html(`<em>${_text_resume($scope3_id, "#text/0", x, _write_guard($scope0_reason, 1))}:${_text_resume($scope3_id, "#text/1", n, 2)}</em>`);

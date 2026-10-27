@@ -4,10 +4,10 @@ const $walks = "b%b b";
 const $setup$1 = [[], ["b1"]];
 _shells({ b: "b !b1;b%b ;<!><!><button>+</button>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = input.open;
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html("<div");

@@ -4,17 +4,17 @@ const $walks = "D%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 1), $scope0_page = _page_render(), $wi__input_inner = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 1), $wi__input_inner = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_inner__closures = new Set();
 	let count = 0;
 	let on = false;
 	_html("<main>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (count > 1) {
 			const $scope1_id = _scope_id();
 			_html(`<h2>${_text_resume($scope1_id, "#text/0", input.outer, _write_guard($scope0_reason, 0))}</h2>`);
-			if ($scope0_page) _if(() => {
+			_if(() => {
 				if (on) {
 					const $scope2_id = _scope_id();
 					_html(`<p>${_text_resume($scope2_id, "#text/0", input.inner, $wg__input_inner)}</p>`);

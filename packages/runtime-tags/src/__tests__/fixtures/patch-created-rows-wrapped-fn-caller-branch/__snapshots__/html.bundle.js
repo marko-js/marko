@@ -21,7 +21,7 @@ _shells({
 	b2: "b2;D ;<em> </em>"
 });
 var rowsx_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 4), $scope0_page = _page_render(), $cg__input_items = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content_elide("b3", ({ isOpen, fmt, label }) => {
@@ -62,7 +62,7 @@ var rowsx_default = _template("b", (input) => {
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b4", $scope0_reason, 2);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope2_id = _scope_id();
 			_html(`<b>${_text_resume($scope2_id, "a", input.label, $wg__input_label)}</b>`);

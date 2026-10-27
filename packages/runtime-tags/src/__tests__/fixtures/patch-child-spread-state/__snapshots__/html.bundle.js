@@ -26,11 +26,11 @@ var card_default = _template("c", (input) => {
 const $setup = _shell_setup([[], ["a0"]], ["b>", $setup$1]);
 _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `D%b/${_w0}& l`)($walks)};${((_w0) => `<main><!>${_w0}<button id=o>o</button></main>`)($template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let on = false;
 	_html("<main>");
-	if ($scope0_page) _if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
+	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_set_scope_reason(30);
 	const $childScope2 = _patch_child($scope0_id, "b", 1);
 	card_default({

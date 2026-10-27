@@ -18,13 +18,13 @@ const $walks = " b%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%;<button>inc</button><!><!>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_msg = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_msg = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = new Set();
 	const $count__closures = new Set();
 	let count = 0;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (count < 2) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);

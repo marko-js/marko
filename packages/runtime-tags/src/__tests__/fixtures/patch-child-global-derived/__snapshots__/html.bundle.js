@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	const brand = `${$global().brand}`;
 	let show = true;
 	_html("<main>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			const $childScope = _patch_child($scope1_id, "a", 0);

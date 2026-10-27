@@ -10,11 +10,11 @@ var show_header_default = _template("d", (input) => {
 // tags/card.marko
 _shells({ b: "b !b0; b%;<button class=toggle>toggle</button><!><!>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);

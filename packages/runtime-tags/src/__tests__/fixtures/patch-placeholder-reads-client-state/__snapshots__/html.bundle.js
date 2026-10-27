@@ -6,7 +6,7 @@ _shells({
 	a: "a !a9;D%b D ;<main><!><button> </button></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $n__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<p>loading</p>");
-		if ($scope0_page) _if(() => {}, $scope2_id, "a", 1, 1, 0, 0, 1);
+		_if(() => {}, $scope2_id, "a", 1, 1, 0, 0, 1);
 		_subscribe($n__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), "a2");
 	}, void 0, "a8", void 0, "a5", 1);
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);

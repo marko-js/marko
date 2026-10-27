@@ -6,11 +6,10 @@ _shells({ c: "c !c0; b%;<button>show</button><!><!>" });
 var reveal_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 0);
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let show = false;
 	_html(`<button>show</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {}, $scope0_id, "b");
+	_if(() => {}, $scope0_id, "b");
 	_script($scope0_id, "c0");
 	_patch_fill($scope0_id, "vc2", show, 1);
 	_scope($scope0_id, {

@@ -4,12 +4,12 @@ const $walks = "E l%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E l%b ;<main><h2> </h2><!><button>toggle</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_yes = _write_guard($scope0_reason, 1), $wg__input_no = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_yes = _write_guard($scope0_reason, 1), $wg__input_no = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let on = false;
 	const label = input.no + "!";
 	_html(`<main><h2>${_patch_text($scope0_id, "#text/0", input.yes, void 0, $scope0_reason, 1)}</h2>`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (on) {
 			const $scope1_id = _scope_id();
 			_html(`<b>${_text_resume($scope1_id, "#text/0", input.yes, $wg__input_yes)}</b>`);

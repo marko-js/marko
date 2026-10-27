@@ -4,11 +4,11 @@ const $walks$1 = "D%b l";
 const $setup$2 = [[], ["c0"]];
 _shells({ c: "c !c0;D%b ;<div><!><button>+</button></div>" });
 var grand_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html("<div>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, 0, $wg__input_content);

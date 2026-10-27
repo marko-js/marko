@@ -10,14 +10,14 @@ _shells({
 	b2: /*@__PURE__*/ (() => `b2 >a> b8;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)()
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = /* @__PURE__ */ new Set();
 	let k = input.n;
 	const Panel = { content: _content_elide("b1", ({ open }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__open = _write_guard($scope1_reason, 0), $wi__open = _write_if($scope1_reason, 0);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_resume($scope2_id, "a", input.w, $wg__input_w)}</p>`);

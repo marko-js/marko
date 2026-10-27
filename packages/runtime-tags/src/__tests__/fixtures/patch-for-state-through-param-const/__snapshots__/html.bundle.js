@@ -1,13 +1,13 @@
 // template.marko
 _shells({ a: "a !a0; b%;<button>load</button><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let sessions = null;
 	const ws = input.workspace;
 	const shown = ws ? ws.sessions : [];
 	_html(`<button>load</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _for_of(input.active ? shown : shown.slice(0, 1), (s) => {
+	_for_of(input.active ? shown : shown.slice(0, 1), (s) => {
 		const $scope1_id = _scope_id();
 		_html(`<div>${_escape(s.id)}</div>`);
 		_scope($scope1_id, {});

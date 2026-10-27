@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		_content_withhold(item), _patch_fill($scope2_id, "va2", item);
 		let open = true;
 		_html(`<button class=toggle>t</button>${_el_resume($scope2_id, "a")}`);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			{
 				const $scope3_id = _scope_id();
 				_dynamic_tag($scope3_id, "a", item, {}, 0, 0, 0, $wg__item);

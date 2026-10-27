@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell !__tests__/template.marko_2;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_page = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.page === 0) {
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		} else {
 			const $scope2_id = _scope_id();
 			let mounted = false;
-			if ($scope0_page) _if(() => {
+			_if(() => {
 				if (mounted) {
 					const $scope3_id = _scope_id();
 					_html(`<style${_attr_nonce()}>

@@ -4,13 +4,13 @@ const $walks$1 = " bD%l%c";
 const $setup$1 = [[], ["__tests__/tags/card.marko_0"]];
 _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko !__tests__/tags/card.marko_0; bD%l%;<button class=toggle>toggle</button><section><!></section><!><!>" });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}<section>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
 	_html("</section>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_resume($scope1_id, "#text/0", input.content ? "has" : "none", $wg__input_content)}</span>`);

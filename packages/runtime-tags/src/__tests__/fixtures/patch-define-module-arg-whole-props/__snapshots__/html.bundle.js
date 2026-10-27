@@ -11,7 +11,7 @@ const lib = { format(value) {
 // template.marko
 _shells({ a: "a !a1;b%b ;<!><!><button class=toggle>toggle</button>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("a0", (props) => {
@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_patch_text($scope2_id, "a", props.fmt(props.label), void 0, $scope2_reason, 0)}</em>`);
 		_scope($scope2_id, {});
 	}, $scope0_id) };
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);

@@ -9,13 +9,13 @@ _shells({
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell __tests__/template.marko_1_o#0:6/init;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let o = true;
 	const Panel = { content: _content("__tests__/template.marko_2*content", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__label = _write_guard($scope2_reason, 2), $wg__isOpen = _write_guard($scope2_reason, 1);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_text_resume($scope3_id, "#text/0", label, $wg__label)}</em>`);

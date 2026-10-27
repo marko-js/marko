@@ -13,11 +13,11 @@ const $walks = "E l b%l";
 const $setup = [[], ["c0"]];
 _shells({ c: "c !c0;E l b%;<section class=card><h2> </h2><button class=toggle>toggle</button><!></section>" });
 var card_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<section class=card><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2><button class=toggle>toggle</button>${_el_resume($scope0_id, "b")}`);
-	if ($scope0_page) _if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
+	_if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
 	_html("</section>");
 	_script($scope0_id, "c0");
 	_patch_fill($scope0_id, "vc2", open, 1);

@@ -112,7 +112,9 @@ export function _if(
 ) {
   const { state } = getChunk()!.boundary;
   if (state instanceof PatchRenderState) {
-    writeBranch(state, scopeId, accessor, cb, shellIds, mask, group);
+    // A chain with no shells is the resumed page's (unpatched): a patch skips it.
+    if (shellIds)
+      writeBranch(state, scopeId, accessor, cb, shellIds, mask, group);
     return;
   }
   // A patchable conditional's markers must resume even on a page with no
@@ -141,7 +143,7 @@ export function writeBranch(
   scopeId: number,
   accessor: string,
   cb: () => number | undefined | void,
-  shellIds?: string[],
+  shellIds: string[],
   mask?: GroupMask,
   group?: number,
 ) {
@@ -162,7 +164,7 @@ export function writeBranch(
   const shellId =
     branchIndex === undefined || kept
       ? undefined
-      : shipShell(state, shellIds?.[branchIndex]);
+      : shipShell(state, shellIds[branchIndex]);
   if (kept && !hasKeys(opened)) {
     if (branchIndex === undefined) _scope_id();
     return;
@@ -388,7 +390,20 @@ function patchLoop<A, B>(
   const chunk = getChunk()!;
   const { state } = chunk.boundary;
   if (state instanceof PatchRenderState) {
-    writeLoop(state, by, cb, iterate, scopeId, accessor, shellId, mask, group);
+    // A loop with no shell slot is the resumed page's (unpatched): a patch skips it.
+    if (shellId !== undefined) {
+      writeLoop(
+        state,
+        by,
+        cb,
+        iterate,
+        scopeId,
+        accessor,
+        shellId,
+        mask,
+        group,
+      );
+    }
     return;
   }
   // A patchable loop's markers must resume even on a page with no other
@@ -420,7 +435,7 @@ export function writeLoop<A, B>(
   iterate: LoopIterate<A, B>,
   scopeId: number,
   accessor: string,
-  shellId?: string | 0,
+  shellId: string | 0,
   mask?: GroupMask,
   group?: number,
 ) {

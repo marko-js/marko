@@ -4,7 +4,7 @@ const $walks$1 = " b b";
 const $setup$1 = [[], ["__tests__/tags/picker.marko_0"]];
 _shells({ "__tests__/tags/picker.marko": "^__tests__/tags/picker.marko !__tests__/tags/picker.marko_0; b ;<button>load</button><ul></ul>" });
 var picker_default = _template("__tests__/tags/picker.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let refreshing = input.refreshing;
 	let catalog = null;
@@ -15,7 +15,7 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 	}, "__tests__/tags/picker.marko_0/load", $scope0_id);
 	const $return = load;
 	_html(`<button>load</button>${_el_resume($scope0_id, "#button/0")}<ul>`);
-	if ($scope0_page) _for_of(catalog || [], (item) => {
+	_for_of(catalog || [], (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "#text/0", item)}</li>`);
 		_scope($scope1_id, {}, "__tests__/tags/picker.marko", "10:6");

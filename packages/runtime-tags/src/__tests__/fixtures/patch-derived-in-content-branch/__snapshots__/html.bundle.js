@@ -17,7 +17,6 @@ _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `/${_w0
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 0);
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -29,7 +28,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const label = input.label;
 		_filled_guard($scope0_reason, 0) ? _patch_fill($scope1_id, "va0", label) : _patch_init($scope1_id, "a1");
-		if ($scope0_page) _if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
+		_if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
 		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id)

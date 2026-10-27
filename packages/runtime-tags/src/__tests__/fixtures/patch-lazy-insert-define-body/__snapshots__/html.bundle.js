@@ -22,7 +22,7 @@ _shells({
 	b1: /*@__PURE__*/ (() => `b1${_shell_marker(_shell_setup([[], []], [">a>", _shell_setup([[], []], ["b>", $setup])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`)()
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const Row = { content: _content("b0", ({ label }) => {
 		const $scope1_id = _scope_id();
@@ -45,7 +45,7 @@ var template_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b1"], $scope0_reason, 0);
-	if ($scope0_page) _if(() => {}, $scope0_id, "c");
+	_if(() => {}, $scope0_id, "c");
 	_script($scope0_id, "b2");
 	_scope($scope0_id, {});
 }, 1);

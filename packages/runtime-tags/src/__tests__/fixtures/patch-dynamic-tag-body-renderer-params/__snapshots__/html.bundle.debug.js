@@ -13,7 +13,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 	const $input_label__closures = new Set();
 	let flag = false;
 	_html(`<button class=flag>f</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (flag) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "#text/0", input.wrap, {}, 0, 0, 0, $wg__input_wrap);
@@ -62,7 +62,7 @@ _shells({
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)($walks$1)};${((_w0) => `<main>${_w0}</main>`)($template$1)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 3) << 3 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 1) << 7 | _mask_group($scope0_reason, 2) << 11 | _mask_group($scope0_reason, 3) << 13 | _mask_group($scope0_reason, 4) << 15);
@@ -77,7 +77,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_content_withhold(content), _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", content);
 			let open = true;
 			_html(`<button class=toggle>t</button>${_el_resume($scope1_id, "#button/0")}`);
-			if ($scope0_page) _if(() => {
+			_if(() => {
 				if (open) {
 					const $scope2_id = _scope_id();
 					_dynamic_tag($scope2_id, "#text/0", content, {}, 0, 0, 0, $wg__content);

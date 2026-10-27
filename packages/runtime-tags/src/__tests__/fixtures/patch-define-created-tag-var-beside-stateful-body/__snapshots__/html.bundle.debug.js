@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D ;<em> </em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_label = _write_guard($scope0_reason, 1), $scope0_page = _page_render(), $sg__input_label = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_label = _write_guard($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_2*content", ({ isOpen, label }) => {
@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$cg__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_ret#4/var");
 			_patch_child_end();
 			_html(`<b>${_patch_text($scope1_id, "#text/2", ret, void 0, $scope0_reason, 1)}</b>`);
-			if ($scope0_page) _if(() => {
+			_if(() => {
 				if (open) {
 					const $scope4_id = _scope_id();
 					_html(`<span>${_text_resume($scope4_id, "#text/0", ret, $wg__input_label)}</span>`);

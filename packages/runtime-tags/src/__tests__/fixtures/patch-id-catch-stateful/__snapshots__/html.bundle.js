@@ -21,10 +21,9 @@ function fail() {
 _shells({ a: "a !a3;b%b ;<!><!><button>toggle</button>" });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let show = true;
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_try($scope1_id, "a", () => {

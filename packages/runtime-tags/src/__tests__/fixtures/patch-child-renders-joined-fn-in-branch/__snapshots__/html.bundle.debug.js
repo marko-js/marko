@@ -4,11 +4,11 @@ const $walks$1 = "b%b b";
 const $setup$1 = [[], ["__tests__/tags/label-view.marko_0"]];
 _shells({ "__tests__/tags/label-view.marko": "__tests__/tags/label-view.marko !__tests__/tags/label-view.marko_0;b%b ;<!><!><span>x</span>" });
 var label_view_default = _template("__tests__/tags/label-view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_flag__OR__input_a__OR__input_b = _write_guard($scope0_reason, 3), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_flag__OR__input_a__OR__input_b = _write_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const get = input.flag ? input.a : input.b;
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "#text/0", get(), $wg__input_flag__OR__input_a__OR__input_b)}</p>`);

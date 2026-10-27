@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	let open = true;
 	_html(`<button>t</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "#text/0", $global$1.o.x.toUpperCase(), $scope0_page)}</p><b>${_text_resume($scope1_id, "#text/1", $global$1.o.list.length, $scope0_page)}</b><i>${_text_resume($scope1_id, "#text/2", $global$1.o["a.b"], $scope0_page)}</i><u>${_text_resume($scope1_id, "#text/3", $global$1["c.d"], $scope0_page)}</u><s>${_text_resume($scope1_id, "#text/4", $global$1.p?.x, $scope0_page)}</s>`);

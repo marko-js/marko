@@ -4,13 +4,13 @@ const $walks = " b%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%;<button>load</button><!><!>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let sessions = null;
 	const ws = input.workspace;
 	const shown = ws ? sessions ?? ws.sessions : [];
 	_html(`<button>load</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _for_of(input.active ? shown : shown.slice(0, 1), (s) => {
+	_for_of(input.active ? shown : shown.slice(0, 1), (s) => {
 		const $scope1_id = _scope_id();
 		_html(`<div>${_escape(s.id)}</div>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "5:2");

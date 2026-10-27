@@ -17,7 +17,7 @@ _shells({
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 3), $scope0_page = _page_render(), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("a3", ({ isOpen, fmt, label }) => {
@@ -59,7 +59,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope2_id = _scope_id();
 			_html(`<b>${_text_resume($scope2_id, "a", input.label, $wg__input_label)}</b>`);

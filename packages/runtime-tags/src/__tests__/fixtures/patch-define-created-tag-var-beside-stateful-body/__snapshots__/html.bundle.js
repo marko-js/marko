@@ -9,7 +9,7 @@ _shells({
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1);
 	_write_guard($scope0_reason, 1);
-	const $scope0_page = _page_render(), $sg__input_label = _server_guard($scope0_reason, 1);
+	const $sg__input_label = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label }) => {
@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 			$cg__input_label && _var($scope1_id, "b", $childScope, "a6");
 			_patch_child_end();
 			_html(`<b>${_patch_text($scope1_id, "c", ret, void 0, $scope0_reason, 1)}</b>`);
-			if ($scope0_page) _if(() => {}, $scope1_id, "d", 1, 1, 0, 0, 1);
+			_if(() => {}, $scope1_id, "d", 1, 1, 0, 0, 1);
 			_scope($scope1_id, {
 				e: ret,
 				_: _scope_with_id($scope0_id),

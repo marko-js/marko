@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const brand = `${$global$1.brand}`;
 	let show = true;
 	_html("<main>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);

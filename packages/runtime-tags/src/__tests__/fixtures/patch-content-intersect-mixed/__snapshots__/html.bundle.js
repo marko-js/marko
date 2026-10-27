@@ -12,14 +12,14 @@ var box_default = _template("b", (input) => {
 // template.marko
 _shells({ a: "a !a3;D%b b D ;<main><!><button class=toggle>+</button><button class=bump> </button></main>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_a = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_a = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let open = false;
 	let count = 0;
 	_html("<main>");
-	if ($scope0_page) _if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
+	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button class=toggle>+</button>${_el_resume($scope0_id, "b")}<button class=bump>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {

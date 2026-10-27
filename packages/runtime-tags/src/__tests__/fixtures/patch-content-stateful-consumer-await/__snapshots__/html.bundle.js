@@ -4,13 +4,13 @@ const $walks = " bD%l%c";
 const $setup$1 = [[], ["b0"]];
 _shells({ b: "b !b0; bD%l%;<button>toggle</button><div><!></div><!><!>" });
 var wrap_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}<div>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
 	_html("</div>");
-	if ($scope0_page) _if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
+	_if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb2", open, 1);
 	_scope($scope0_id, {

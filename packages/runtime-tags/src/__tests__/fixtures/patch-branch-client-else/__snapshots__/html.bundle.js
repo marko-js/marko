@@ -3,12 +3,12 @@ _shells({ a: "a !a0;E l%b ;<main><h2> </h2><!><button>toggle</button></main>" })
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 1);
-	const $wg__input_no = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $wg__input_no = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let on = false;
 	const label = input.no + "!";
 	_html(`<main><h2>${_patch_text($scope0_id, "a", input.yes, void 0, $scope0_reason, 1)}</h2>`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope2_id = _scope_id();
 			_html(`<i>${_text_resume($scope2_id, "a", label, $wg__input_no)}</i>`);

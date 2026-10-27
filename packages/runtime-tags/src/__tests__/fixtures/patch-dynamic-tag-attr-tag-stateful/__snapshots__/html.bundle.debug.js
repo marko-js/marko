@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_content_withhold(item), _patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill1", item);
 		let open = true;
 		_html(`<button class=toggle>t</button>${_el_resume($scope2_id, "#button/0")}`);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (open) {
 				const $scope3_id = _scope_id();
 				_dynamic_tag($scope3_id, "#text/0", item, {}, 0, 0, 0, $wg__item);

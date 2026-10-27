@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_6*shell": "__tests__/template.marko_6*shell,<b>A</b>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_kind = _write_if($scope0_reason, 0), $cg__input_kind = _client_guard($scope0_reason, 0), $wg__input_kind = _write_guard($scope0_reason, 0), $wg__input_inner = _write_guard($scope0_reason, 1), $wi__input_inner = _write_if($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wi__input_kind = _write_if($scope0_reason, 0), $cg__input_kind = _client_guard($scope0_reason, 0), $wg__input_kind = _write_guard($scope0_reason, 0), $wg__input_inner = _write_guard($scope0_reason, 1), $wi__input_inner = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_kind__closures = new Set();
 	const $input_inner__closures = new Set();
@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wg__input_kind || $wi__input_kind && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope3_id = _scope_id();
 			_set_scope_reason(0);
@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			widget_default({ content: _content("__tests__/template.marko_4*content", () => {
 				const $scope4_reason = _scope_reason();
 				const $scope4_id = _scope_id();
-				if ($scope0_page) _if(() => {
+				_if(() => {
 					if (input.inner === "a") {
 						const $scope7_id = _scope_id();
 						_html("<b>A</b>");

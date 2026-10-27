@@ -10,7 +10,7 @@ _shells({
 	"__tests__/tags/panel.marko_3*shell": /*@__PURE__*/ (() => `__tests__/tags/panel.marko_3*shell >#childScope/0>;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Info_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Info_content__template)}`)()
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_a = _client_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
@@ -37,7 +37,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["__tests__/tags/panel.marko_3*shell"], $scope0_reason, 5);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope2_id = _scope_id();
 			_html(`<div></div>${_el_resume($scope2_id, "#div/0")}`);

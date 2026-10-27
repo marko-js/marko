@@ -4,11 +4,11 @@ const $walks$1 = "D l%b b";
 const $setup$2 = [[], ["b1"]];
 _shells({ b: "b !b1;D l%b ;<p> </p><!><button class=t>t</button>" });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_a = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<p>${_patch_text($scope0_id, "a", input.a + input.b, void 0, $scope0_reason, 0)}</p>`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<div></div>${_el_resume($scope1_id, "a")}`);

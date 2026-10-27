@@ -25,11 +25,10 @@ var w_default = _template("c", (input) => {
 _shells({ a: "a !a0; D l%;<button> </button><!><!>" });
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let s = 0;
 	_html(`<button>${_text_resume($scope0_id, "b", s)}</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _for_until(1, 0, 1, (n) => {
+	_for_until(1, 0, 1, (n) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(2);
 		const $childScope = _patch_child($scope1_id, "a", 0);

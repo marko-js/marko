@@ -1,14 +1,14 @@
 // template.marko
 _shells({ a: "a !a1;b%b%b b ;<!><!><!><button>toggle</button><button>shown</button>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
 	let shown = true;
 	const Panel = { content: _content_resume("a0", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__label = _write_guard($scope2_reason, 2), $wg__isOpen = _write_guard($scope2_reason, 1);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_text_resume($scope3_id, "a", label, $wg__label)}</em>`);
@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		}, $scope2_id, "a", _write_guard($scope2_reason, 0), $wg__isOpen, 0, 0, 1);
 		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: label });
 	}, $scope0_id) };
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);

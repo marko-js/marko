@@ -4,10 +4,10 @@ const $walks = "b%b b";
 const $setup = [[], ["b2"]];
 _shells({ b: "b !b2;b%b ;<!><!><button class=toggle>t</button>" });
 var counter_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = true;
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			let count = 0;

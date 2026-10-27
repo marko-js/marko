@@ -4,7 +4,7 @@ const $walks = "b%b b";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>+</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_x__closures = new Set();
 	let s = 1;
@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<em>${_patch_text($scope1_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</em>`);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), "__tests__/template.marko_1_input_x#0:4/subscribe");
 	}, $scope0_id) };
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (s) {
 			const $scope2_id = _scope_id();
 			_patch_child($scope2_id, "#childScope/0", 0);

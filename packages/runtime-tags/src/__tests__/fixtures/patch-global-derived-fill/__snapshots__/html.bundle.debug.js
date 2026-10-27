@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const greeting = $global$1.prefix + ":" + input.name;
 	let count = 0;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (count < 2) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_resume($scope1_id, "#text/0", greeting, $scope0_page || _write_guard($scope0_reason, 0))} ${_text_resume($scope1_id, "#text/1", count, 2)}</span>`);

@@ -12,7 +12,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>x</button></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $pending__closures = new Set();
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<s>${_patch_text($scope5_id, "#text/0", e.message)}</s>`);
 			_scope($scope5_id, {}, "__tests__/template.marko", "7:10");
 		}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", 1, 1, 1);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (pending) {
 				const $scope3_id = _scope_id();
 				_await($scope3_id, "#text/0", pending, (c) => {

@@ -6,7 +6,7 @@ _shells({
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 1);
-	const $scope0_page = _page_render(), $wi__input_title = _write_if($scope0_reason, 1);
+	const $wi__input_title = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			if ($scope0_page) _if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
+			_if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

@@ -15,7 +15,7 @@ _shells({
 });
 var panel_default = _template("b", (input) => {
 	_scope_reason();
-	const $scope0_page = _page_render();
+	_page_render();
 	const $scope0_id = _scope_id();
 	const data = $global().data;
 	const summary = summarize(data);
@@ -23,7 +23,7 @@ var panel_default = _template("b", (input) => {
 	let count = 0;
 	let open = false;
 	_html(`<button class=count>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}<button class=open>open</button>${_el_resume($scope0_id, "c")}`);
-	if ($scope0_page) _if(() => {}, $scope0_id, "d");
+	_if(() => {}, $scope0_id, "d");
 	_for_of(pending, (row) => {
 		const $scope2_id = _scope_id();
 		_html(`<p>${_patch_text($scope2_id, "a", row.name)}/${_text_resume($scope2_id, "b", count, 2)}</p>`);

@@ -7,10 +7,10 @@ const $walks = "b%b b";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>toggle</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_color = _write_guard($scope0_reason, 1), $wg__input_x = _write_guard($scope0_reason, 2), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_color = _write_guard($scope0_reason, 1), $wg__input_x = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let s = true;
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (s) {
 			const $scope1_id = _scope_id();
 			_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19stateful-19branch-1btemplate-1amarko_0:${_escape_style_value(input.color)};`)}${_el_resume($scope1_id, "#style/0", $wg__input_color)}<b class=x>${_text_resume($scope1_id, "#text/1", input.x, $wg__input_x)}</b>`);

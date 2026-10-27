@@ -5,7 +5,7 @@ _shells({
 	b: "b !b7; b%;<button class=toggle>toggle</button><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	const $open__closures = /* @__PURE__ */ new Set();
@@ -15,7 +15,7 @@ var card_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		const c = x && input.content;
 		_content_withhold(c), _filled_guard($scope0_reason, 0) ? _patch_fill($scope1_id, "vb0", c) : _patch_init($scope1_id, "b1");
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			{
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "a", c, {}, 0, 0, 0, $wg__input_p__OR__input_content);

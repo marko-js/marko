@@ -4,7 +4,7 @@ _shells({
 	a2: "a2;D ;<span> </span>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_x__closures = /* @__PURE__ */ new Set();
 	let show = true;
@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		$wg__input_x || _resume_branch($scope1_id);
 	}, $scope0_id) };
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope2_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);

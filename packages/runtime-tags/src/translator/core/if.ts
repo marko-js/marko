@@ -26,7 +26,6 @@ import { enterBranchIdSites, exitBranchIdSites } from "../util/known-tag";
 import { isPatch } from "../util/marko-config";
 import { onReasonsSettled } from "../util/patch/decisions";
 import {
-  hasStatefulBranchAt,
   patchesBranchesAt,
   recordStructuralParams,
 } from "../util/patch/structure";
@@ -61,7 +60,7 @@ import * as structure from "../util/structure";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { toOnlyStatementOrBlock } from "../util/to-only-or-block";
 import { translateByTarget } from "../util/visitors";
-import { getBranchWriteReason, scopePageIdentifier } from "../util/write-guard";
+import { getBranchWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 const BRANCHES_LOOKUP = new WeakMap<
@@ -156,9 +155,6 @@ export const IfTag = {
           let branchReasons: Reasons | undefined;
           let statement: t.Statement | undefined;
 
-          // A stateful chain compiles as it does on a plain page: no marker
-          // retention, shells, or branch entry.
-          const stateful = hasStatefulBranchAt(nodeBinding);
           // A patchable conditional keeps its markers: the shipped-branch
           // swap inserts at the marker node, which elision would remove.
           const patchesBranches = patchesBranchesAt(nodeBinding);
@@ -218,15 +214,6 @@ export const IfTag = {
                   ? getExprRootGroupArgs(ifTagSection, ifTagExtra)
                   : []),
               ),
-            );
-          }
-
-          if (stateful) {
-            // Patch renders skip the chain: its tests are server-stale, so a
-            // flush writes no branch entry for it.
-            statement = t.ifStatement(
-              scopePageIdentifier(ifTagSection.program),
-              statement!,
             );
           }
 

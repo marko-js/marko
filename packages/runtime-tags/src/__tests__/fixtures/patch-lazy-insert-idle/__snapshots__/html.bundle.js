@@ -20,7 +20,7 @@ _shells({
 	b0: /*@__PURE__*/ (() => `b0${_shell_marker(_shell_setup([[], []], ["b>", $setup]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<button class=open>open</button>${_el_resume($scope0_id, "a")}`);
@@ -35,7 +35,7 @@ var template_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
-	if ($scope0_page) _if(() => {}, $scope0_id, "c");
+	_if(() => {}, $scope0_id, "c");
 	_script($scope0_id, "b1");
 	_scope($scope0_id, { g: open });
 }, 1);

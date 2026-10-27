@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko !__tests__/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
 	const $open__closures = new Set();
@@ -18,7 +18,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const c = x && input.content;
 		_content_withhold(c), _filled_guard($scope0_reason, 0) ? _patch_fill($scope1_id, "PatchFill:__tests__/tags/card.marko_fill2", c) : _patch_init($scope1_id, "__tests__/tags/card.marko_1_input_content#0:5/init");
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();
 				_dynamic_tag($scope2_id, "#text/0", c, {}, 0, 0, 0, $wg__input_p__OR__input_content);

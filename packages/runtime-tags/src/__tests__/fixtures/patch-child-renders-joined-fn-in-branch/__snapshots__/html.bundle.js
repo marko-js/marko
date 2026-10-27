@@ -4,11 +4,11 @@ const $walks = "b%b b";
 const $setup$1 = [[], ["b0"]];
 _shells({ b: "b !b0;b%b ;<!><!><span>x</span>" });
 var label_view_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_flag__OR__input_a__OR__input_b = _write_guard($scope0_reason, 3), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_flag__OR__input_a__OR__input_b = _write_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const get = input.flag ? input.a : input.b;
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "a", get(), $wg__input_flag__OR__input_a__OR__input_b)}</p>`);

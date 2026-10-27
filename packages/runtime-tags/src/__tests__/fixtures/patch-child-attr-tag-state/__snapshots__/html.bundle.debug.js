@@ -34,12 +34,12 @@ const $walks = "D%b b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b b ;<main><!><button class=flip>f</button><button class=toggle>t</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let show = true;
 	let on = false;
 	_html("<main>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(10);

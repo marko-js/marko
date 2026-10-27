@@ -4,14 +4,14 @@ _shells({
 	a3: "a3 a7!a1;b%b D ;<!><!><button> </button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $scope0_page = _page_render(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let x = 1;
-			if ($scope0_page) _if(() => {
+			_if(() => {
 				{
 					const $scope2_id = _scope_id();
 					_html(`<span>${_text_resume($scope2_id, "a", input.a, $wg__input_a)}</span>`);

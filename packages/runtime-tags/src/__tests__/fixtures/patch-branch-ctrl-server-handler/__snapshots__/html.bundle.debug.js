@@ -4,7 +4,7 @@ const $walks = "D%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button><output></output></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $sg__input_prefix = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_prefix = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_prefix", input.prefix, !$sg__input_prefix);
 	const onChange = _bind_resume((next) => {
@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/onChange", $scope0_id);
 	let open = false;
 	_html("<main>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<input${_attr_input_value($scope1_id, "#input/0", "x", onChange)}>${_el_resume($scope1_id, "#input/0")}`);

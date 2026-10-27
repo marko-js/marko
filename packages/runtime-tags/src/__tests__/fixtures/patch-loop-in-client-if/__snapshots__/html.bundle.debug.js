@@ -4,17 +4,17 @@ const $walks = "D%b b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b b ;<main><!><button class=toggle>t</button><button class=add>+</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_note = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_note = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	let show = false;
 	let items = ["a"];
 	_html("<main>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_html("<ul>");
-			if ($scope0_page) _for_of(items, (item) => {
+			_for_of(items, (item) => {
 				const $scope2_id = _scope_id();
 				_html(`<li>${_text_resume($scope2_id, "#text/0", item)}: ${_text_resume($scope2_id, "#text/1", input.note, _write_guard($scope0_reason, 0) * 2)}</li>`);
 				_subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, {}, "__tests__/template.marko", "6:8"), "__tests__/template.marko_2_input_note#0:5/subscribe");

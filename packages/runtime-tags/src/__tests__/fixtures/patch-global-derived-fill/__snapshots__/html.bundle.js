@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	const greeting = $global().prefix + ":" + input.name;
 	let count = 0;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_resume($scope1_id, "a", greeting, $scope0_page || _write_guard($scope0_reason, 0))} ${_text_resume($scope1_id, "b", count, 2)}</span>`);

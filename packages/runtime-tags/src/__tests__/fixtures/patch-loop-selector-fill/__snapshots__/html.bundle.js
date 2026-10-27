@@ -1,14 +1,14 @@
 // template.marko
 _shells({ a: "a !a0;D b ;<main><ul></ul><button>+</button></main>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_selected = _write_guard($scope0_reason, 0), $scope0_page = _page_render(), $wi__input_selected = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_selected = _write_guard($scope0_reason, 0), $wi__input_selected = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let items = [{ id: 1 }, { id: 2 }];
 	_html("<main><ul>");
-	if ($scope0_page) _for_of(items, (item) => {
+	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_escape(item.id)}`);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			if (input.selected === item.id) {
 				const $scope2_id = _scope_id();
 				_html("<span>*</span>");

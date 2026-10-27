@@ -4,21 +4,21 @@ const $walks = "D%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $open__closures = new Set();
 	let open = true;
 	_html("<main>");
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<b>${_text_resume($scope1_id, "#text/0", "x:" + input.title, $wg__input_title)}</b>`);
-			if ($scope0_page) _if(() => {
+			_if(() => {
 				if (open) {
 					const $scope2_id = _scope_id();
 					_html(`<i>${_text_resume($scope2_id, "#text/0", "y:" + input.title, $wg__input_title)}</i>`);
-					if ($scope0_page) _if(() => {
+					_if(() => {
 						if (open) {
 							const $scope3_id = _scope_id();
 							_html(`<u>${_text_resume($scope3_id, "#text/0", "z:" + input.title, $wg__input_title)}</u>`);

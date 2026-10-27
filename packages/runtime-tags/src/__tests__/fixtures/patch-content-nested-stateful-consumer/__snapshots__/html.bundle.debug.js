@@ -18,11 +18,11 @@ const $walks$1 = "E l%b l";
 const $setup$1 = [[], ["__tests__/tags/card/index.marko_0"]];
 _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko !__tests__/tags/card/index.marko_0;E l%b ;<section><h2> </h2><!><button>+</button></section>" });
 var card_default = _template("__tests__/tags/card/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<section><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2>`);
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);

@@ -15,7 +15,7 @@ var fwd_default = _template("b", (input) => {
 		_content_withhold(content), _patch_fill($scope2_id, "vb2", content);
 		let open = true;
 		_html(`<button class=toggle>t</button>${_el_resume($scope2_id, "a")}`);
-		if ($scope0_page) _if(() => {
+		_if(() => {
 			{
 				const $scope3_id = _scope_id();
 				_dynamic_tag($scope3_id, "a", content, {}, 0, 0, 0, $wg__content);

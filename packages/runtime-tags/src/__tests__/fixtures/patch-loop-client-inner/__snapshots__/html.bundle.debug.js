@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_items#0:5/init; ;<ul></ul>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let items = ["a"];
 	_html("<main>");
@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<ul>");
-			if ($scope0_page) _for_of(items, (item) => {
+			_for_of(items, (item) => {
 				const $scope2_id = _scope_id();
 				_html(`<li>${_text_resume($scope2_id, "#text/0", item)}</li>`);
 				_scope($scope2_id, {}, "__tests__/template.marko", "5:8");

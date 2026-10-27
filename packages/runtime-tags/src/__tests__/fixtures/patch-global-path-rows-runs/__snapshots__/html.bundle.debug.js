@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	let n = 1;
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/0")}<ul>`);
-	if ($scope0_page) _for_until(n, 0, 1, (i) => {
+	_for_until(n, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "#text/0", track("li", $global$1.o.x), $scope0_page)}</li>`);
 		_fill_global_subscribe("__tests__/template.marko_1_$global_o#0:9", $scope0_id, 1);

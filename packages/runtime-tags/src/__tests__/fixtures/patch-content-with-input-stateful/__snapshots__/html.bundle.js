@@ -4,10 +4,10 @@ const $walks = "b%b b";
 const $setup$1 = [[], ["b0"]];
 _shells({ b: "b !b0;b%b ;<!><!><button>+</button>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let open = input.open;
-	if ($scope0_page) _if(() => {
+	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "a", input.content, { x: 1 }, 0, 0, 0, $wg__input_content);

@@ -4,7 +4,7 @@ const $walks = " b b";
 const $setup$1 = [[], ["b1"]];
 _shells({ b: "b !b1; b ;<button>load</button><ul></ul>" });
 var picker_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let refreshing = input.refreshing;
 	let catalog = null;
@@ -15,7 +15,7 @@ var picker_default = _template("b", (input) => {
 	}, "b0", $scope0_id);
 	const $return = load;
 	_html(`<button>load</button>${_el_resume($scope0_id, "a")}<ul>`);
-	if ($scope0_page) _for_of(catalog || [], (item) => {
+	_for_of(catalog || [], (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "a", item)}</li>`);
 		_scope($scope1_id, {});
