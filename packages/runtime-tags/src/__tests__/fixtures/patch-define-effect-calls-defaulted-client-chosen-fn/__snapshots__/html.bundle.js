@@ -14,8 +14,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason();
 		const g = get ?? _resume(() => "none", "a2");
 		_html(`<output></output>${_el_resume($scope1_id, "a")}`);
-		_script($scope1_id, "a4");
-		_filled_guard($scope1_reason, 0) && _patch_effect($scope1_id, _client_guard($scope1_reason, 0) ? "ha4" : "ea4", "e");
+		_script($scope1_id, "a4", 1, _filled_guard($scope1_reason, 0), "e");
 		_scope($scope1_id, { e: g }) || _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "xe", g, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(6);

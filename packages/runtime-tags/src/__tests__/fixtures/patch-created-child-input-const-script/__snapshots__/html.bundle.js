@@ -10,8 +10,7 @@ var probe_default = _template("b", (input) => {
 		items: []
 	};
 	_html("<p>probe</p>");
-	_script($scope0_id, "b0", 0);
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "hb0" : "eb0", "c", "e", "f");
+	_script($scope0_id, "b0", 0, _filled_guard($scope0_reason, 0), "c", "e", "f");
 	_scope($scope0_id, {
 		c: input.label,
 		e: opts.items,

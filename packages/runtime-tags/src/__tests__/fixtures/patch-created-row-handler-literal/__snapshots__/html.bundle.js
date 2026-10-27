@@ -7,8 +7,7 @@ var row_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<li><span>${_patch_text($scope0_id, "a", input.item.name, void 0, $scope0_reason, 0)}</span><button>Pick</button>${_el_resume($scope0_id, "b")}</li>`);
-	_script($scope0_id, "b0");
-	_filled_guard($scope0_reason, 1) && _patch_effect($scope0_id, _client_guard($scope0_reason, 1) ? "hb0" : "eb0", "g");
+	_script($scope0_id, "b0", 1, _filled_guard($scope0_reason, 1), "g");
 	_scope($scope0_id, { g: input.onPick }) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.onPick, !_server_guard($scope0_reason, 1));
 });
 

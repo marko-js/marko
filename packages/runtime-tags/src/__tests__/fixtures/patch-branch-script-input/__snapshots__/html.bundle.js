@@ -4,16 +4,15 @@ _shells({
 	a2: "a2,<p>promo</p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_value = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
-			_script($scope1_id, "a0", 0);
-			_filled_guard($scope0_reason, 2) && _patch_effect($scope1_id, $cg__input_value ? "ha0" : "ea0", ">g");
-			$cg__input_value && _patch_init($scope1_id, "a1");
+			_script($scope1_id, "a0", 0, _filled_guard($scope0_reason, 2), ">g");
+			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a1");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

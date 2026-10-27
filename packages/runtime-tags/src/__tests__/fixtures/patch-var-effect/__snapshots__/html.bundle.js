@@ -23,8 +23,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a1");
-	_script($scope0_id, "a2");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, $cg__input_title ? "ha2" : "ea2", "i");
+	_script($scope0_id, "a2", 1, _filled_guard($scope0_reason, 0), "i");
 	_scope($scope0_id, {
 		h: count,
 		i: label,

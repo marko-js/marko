@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell; b ;<div></div><section></section>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_mode = _client_guard($scope0_reason, 6), $cg__input_b = _client_guard($scope0_reason, 4), $wi__input_show__OR__input_b__OR__input_a__OR__input_mode = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_mode = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_b__OR__input_a__OR__input_mode = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 3), $cg__input_b = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	_if(() => {
@@ -29,8 +29,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_html("<section>");
 			_patch_attr_content("#section/1", $scope1_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 6);
 			_html(`</section>${_el_resume($scope1_id, "#section/1", _mask_group($scope0_reason, 6))}`);
-			_script($scope1_id, "__tests__/tags/child.marko_1_c#2");
-			_filled_guard($scope0_reason, 4) && _patch_effect($scope1_id, $cg__input_b ? "PatchQueuedEffect:__tests__/tags/child.marko_1_c#2" : "PatchEffect:__tests__/tags/child.marko_1_c#2", "c");
+			_script($scope1_id, "__tests__/tags/child.marko_1_c#2", 1, _filled_guard($scope0_reason, 4), "c");
 			_filled_guard($scope0_reason, 4) && (_content_withheld("__tests__/tags/child.marko_2*content", $scope1_id) || $cg__input_mode ? _patch_fill($scope1_id, "PatchFill:__tests__/tags/child.marko_fill3/unpatched", c) : _patch_write($scope1_id, "PatchMarkedWrite:c", c, !$sg__input_b));
 			$cg__input_mode && _patch_write($scope1_id, "PatchWrite:frag_content", frag?.content, 1);
 			$cg__input_b && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4/init");

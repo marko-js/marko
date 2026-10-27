@@ -4,8 +4,7 @@ var reader_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<button class=call>call</button>${_el_resume($scope0_id, "a")}<pre></pre>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "b0");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "hb0" : "eb0", "e");
+	_script($scope0_id, "b0", 1, _filled_guard($scope0_reason, 0), "e");
 	_scope($scope0_id, { e: input.fn }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.fn, !_server_guard($scope0_reason, 0));
 });
 

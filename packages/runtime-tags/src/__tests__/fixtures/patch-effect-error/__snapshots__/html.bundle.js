@@ -6,8 +6,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</p><button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	_script($scope0_id, "a1");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "ha1" : "ea1", "f");
+	_script($scope0_id, "a1", 1, _filled_guard($scope0_reason, 0), "f");
 	_scope($scope0_id, {
 		f: input.label,
 		g: count

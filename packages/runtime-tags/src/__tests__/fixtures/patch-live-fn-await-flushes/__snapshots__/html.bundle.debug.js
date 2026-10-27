@@ -20,8 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Use = { content: _content("__tests__/template.marko_3*content", ({ fn, where }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
-		_script($scope3_id, "__tests__/template.marko_3_fn#2_where#3", 0);
-		(_filled_guard($scope3_reason, 1) || _filled_guard($scope3_reason, 2)) && _patch_effect($scope3_id, _client_guard($scope3_reason, 1) || _client_guard($scope3_reason, 2) ? "PatchQueuedEffect:__tests__/template.marko_3_fn#2_where#3" : "PatchEffect:__tests__/template.marko_3_fn#2_where#3", _filled_guard($scope3_reason, 1) && "fn", _filled_guard($scope3_reason, 2) && "where");
+		_script($scope3_id, "__tests__/template.marko_3_fn#2_where#3", 0, (_filled_guard($scope3_reason, 1) || _filled_guard($scope3_reason, 2)) && (_client_guard($scope3_reason, 1) || _client_guard($scope3_reason, 2) ? 2 : 1), _filled_guard($scope3_reason, 1) && "fn", _filled_guard($scope3_reason, 2) && "where");
 		_client_guard($scope3_reason, 0) && _patch_init($scope3_id, "__tests__/template.marko_3_fn#2_where#3/init");
 		_scope($scope3_id, {
 			fn,

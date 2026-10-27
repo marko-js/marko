@@ -33,6 +33,7 @@ export {
   _id,
   _resume_locals,
   _scope,
+  _script,
   _subscribe,
   _var,
   _write_guard,

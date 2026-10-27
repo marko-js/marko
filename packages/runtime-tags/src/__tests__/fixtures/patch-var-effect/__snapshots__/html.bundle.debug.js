@@ -27,8 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>${_text_resume($scope0_id, "#text/3", count)}</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_label#8");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, $cg__input_title ? "PatchQueuedEffect:__tests__/template.marko_0_label#8" : "PatchEffect:__tests__/template.marko_0_label#8", "label");
+	_script($scope0_id, "__tests__/template.marko_0_label#8", 1, _filled_guard($scope0_reason, 0), "label");
 	_scope($scope0_id, {
 		count,
 		label,

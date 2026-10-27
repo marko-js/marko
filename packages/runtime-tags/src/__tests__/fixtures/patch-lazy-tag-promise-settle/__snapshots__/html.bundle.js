@@ -6,8 +6,7 @@ var probe_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div>${_patch_text($scope0_id, "a", "pending", void 0, 0, 0, 1)}</div>`);
-	_script($scope0_id, "a0");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "ha0" : "ea0", "d");
+	_script($scope0_id, "a0", 1, _filled_guard($scope0_reason, 0), "d");
 	_scope($scope0_id, { d: input.promise }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.promise, !_server_guard($scope0_reason, 0));
 });
 

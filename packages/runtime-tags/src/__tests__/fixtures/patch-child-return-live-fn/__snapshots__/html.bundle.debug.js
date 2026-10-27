@@ -29,8 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$cg__input_title && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_fn#7/var");
 	_patch_child_end();
 	_html(`<button class=call>call</button>${_el_resume($scope0_id, "#button/2")}<pre></pre>${_el_resume($scope0_id, "#pre/3")}`);
-	_script($scope0_id, "__tests__/template.marko_0_fn#7");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, $cg__input_title ? "PatchQueuedEffect:__tests__/template.marko_0_fn#7" : "PatchEffect:__tests__/template.marko_0_fn#7", "fn");
+	_script($scope0_id, "__tests__/template.marko_0_fn#7", 1, _filled_guard($scope0_reason, 0), "fn");
 	_scope($scope0_id, {
 		fn,
 		"#childScope/0": _existing_scope($childScope)

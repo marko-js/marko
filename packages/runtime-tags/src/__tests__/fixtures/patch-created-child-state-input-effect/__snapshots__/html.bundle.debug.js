@@ -9,8 +9,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let n = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_x#4_n#5");
-	$sg__input_x && _patch_effect($scope0_id, "PatchQueuedEffect:__tests__/tags/child.marko_0_input_x#4_n#5", "input_x");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_x#4_n#5", 1, $sg__input_x && 2, "input_x");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0", n, 1);
 	_scope($scope0_id, {
 		input_x: input.x,

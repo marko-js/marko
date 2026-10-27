@@ -6,8 +6,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const item = input.flag ? { t: input.title } : NONE;
 	_html(`<output></output>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "a0");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "ha0" : "ea0", _filled_guard($scope0_reason, 1) && "d", _filled_guard($scope0_reason, 2) && "e");
+	_script($scope0_id, "a0", 1, _filled_guard($scope0_reason, 0), _filled_guard($scope0_reason, 1) && "d", _filled_guard($scope0_reason, 2) && "e");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.flag,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.title,

@@ -16,8 +16,7 @@ var label_view_default = _template("b", (input) => {
 		const $scope1_reason = _scope_reason(), $cg__b__OR__flag = _client_guard($scope1_reason, 2), $cg__a__OR__flag = _client_guard($scope1_reason, 1), $cg__a__OR__b = _client_guard($scope1_reason, 0);
 		const get = flag ? a : b;
 		_html(`<output></output>${_el_resume($scope1_id, "a")}`);
-		_script($scope1_id, "b1");
-		_filled_guard($scope1_reason, 3) && _patch_effect($scope1_id, _client_guard($scope1_reason, 3) ? "hb1" : "eb1", "h");
+		_script($scope1_id, "b1", 1, _filled_guard($scope1_reason, 3), "h");
 		$cg__b__OR__flag && _patch_write($scope1_id, "xd", a, !(_filled_guard($scope1_reason, 4) && $cg__b__OR__flag));
 		$cg__a__OR__flag && _patch_write($scope1_id, "xe", b, !(_filled_guard($scope1_reason, 5) && $cg__a__OR__flag));
 		$cg__a__OR__b && _patch_write($scope1_id, "xf", flag, !(_filled_guard($scope1_reason, 6) && $cg__a__OR__b));

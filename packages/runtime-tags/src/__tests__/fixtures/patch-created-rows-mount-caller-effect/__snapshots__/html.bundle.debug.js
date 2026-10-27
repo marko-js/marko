@@ -13,8 +13,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:it_label", it?.label, !_server_guard($scope0_reason, 0));
 		_html(`<i>${_patch_text($scope1_id, "#text/0", it.label, void 0, $scope0_reason, 0)}</i>`);
-		_script($scope1_id, "__tests__/tags/list.marko_1_it_label#3");
-		_filled_guard($scope0_reason, 0) && _patch_effect($scope1_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/tags/list.marko_1_it_label#3" : "PatchEffect:__tests__/tags/list.marko_1_it_label#3", "it_label");
+		_script($scope1_id, "__tests__/tags/list.marko_1_it_label#3", 1, _filled_guard($scope0_reason, 0), "it_label");
 		_scope($scope1_id, { it_label: it?.label }, "__tests__/tags/list.marko", "1:2", { it_label: ["it.label", "1:6"] });
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/tags/list.marko", 0);

@@ -32,7 +32,7 @@ _shells({
 	a: "a !;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_w = _server_guard($scope0_reason, 4), $cg__input_w = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $wi__input_outer__OR__input_w__OR__input_inner__OR__input_note = _write_if($scope0_reason, 2), $wg__input_outer = _write_guard($scope0_reason, 3), $cg__input_outer = _client_guard($scope0_reason, 3), $wi__input_w = _write_if($scope0_reason, 4), $wi__input_outer = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $sg__input_w = _server_guard($scope0_reason, 4), $scope0_page = _page_render(), $cg__input_w = _client_guard($scope0_reason, 4), $wi__input_outer__OR__input_w__OR__input_inner__OR__input_note = _write_if($scope0_reason, 2), $wg__input_outer = _write_guard($scope0_reason, 3), $cg__input_outer = _client_guard($scope0_reason, 3), $wi__input_w = _write_if($scope0_reason, 4), $wi__input_outer = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_inner__closures = /* @__PURE__ */ new Set();
@@ -62,8 +62,7 @@ var template_default = _template("a", (input) => {
 					{ _: $scope($scope1_id) },
 					{ _: $scope($scope2_id) }
 				] : []), 0, _write_guard($scope0_reason, 5), $scope0_reason, 5);
-				_script($scope3_id, "a5");
-				_filled_guard($scope0_reason, 4) && _patch_effect($scope3_id, $cg__input_w ? "ha5" : "ea5", "d");
+				_script($scope3_id, "a5", 1, _filled_guard($scope0_reason, 4), "d");
 				_filled_guard($scope0_reason, 4) && (_content_withheld("a0", $scope3_id) ? _patch_fill($scope3_id, "va6", w) : _patch_write($scope3_id, "xd", w, !$sg__input_w));
 				_filled_guard($scope0_reason, 6) && (_content_withheld("a7", $scope3_id) || _content_withheld("a0", $scope3_id)) && _patch_fill($scope0_id, "va8", input.note);
 				_unfilled_if($scope0_reason, 5) && _patch_init($scope3_id, _client_guard($scope0_reason, 5) ? "a9" : "a10");

@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell,<p>promo</p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_value = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
@@ -15,9 +15,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
-			_script($scope1_id, "__tests__/template.marko_1_input_value#0:6_$global#0:7", 0);
-			_filled_guard($scope0_reason, 2) && _patch_effect($scope1_id, $cg__input_value ? "PatchQueuedEffect:__tests__/template.marko_1_input_value#0:6_$global#0:7" : "PatchEffect:__tests__/template.marko_1_input_value#0:6_$global#0:7", ">input_value");
-			$cg__input_value && _patch_init($scope1_id, "__tests__/template.marko_1_input_value#0:6/init");
+			_script($scope1_id, "__tests__/template.marko_1_input_value#0:6_$global#0:7", 0, _filled_guard($scope0_reason, 2), ">input_value");
+			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_value#0:6/init");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}

@@ -9,8 +9,7 @@ var child_default = _template("b", (input) => {
 	let n = 0;
 	_html(`<button>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_script($scope0_id, "b1");
-	$sg__input_x && _patch_effect($scope0_id, "hb1", "e");
+	_script($scope0_id, "b1", 1, $sg__input_x && 2, "e");
 	_patch_fill($scope0_id, "vb2", n, 1);
 	_scope($scope0_id, {
 		e: input.x,

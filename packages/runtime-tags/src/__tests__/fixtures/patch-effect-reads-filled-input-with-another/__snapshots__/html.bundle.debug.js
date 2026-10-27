@@ -8,9 +8,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", n + input.label)}</button>${_el_resume($scope0_id, "#button/0")}<div></div>${_el_resume($scope0_id, "#div/2")}`);
-	_script($scope0_id, "__tests__/template.marko_0_input_label#5_input_other#6");
+	_script($scope0_id, "__tests__/template.marko_0_input_label#5_input_other#6", 1, (_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && (_client_guard($scope0_reason, 2) ? 2 : 1), _filled_guard($scope0_reason, 1) && "input_label", _filled_guard($scope0_reason, 2) && "input_other");
 	_script($scope0_id, "__tests__/template.marko_0");
-	(_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && _patch_effect($scope0_id, _client_guard($scope0_reason, 2) ? "PatchQueuedEffect:__tests__/template.marko_0_input_label#5_input_other#6" : "PatchEffect:__tests__/template.marko_0_input_label#5_input_other#6", _filled_guard($scope0_reason, 1) && "input_label", _filled_guard($scope0_reason, 2) && "input_other");
 	_scope($scope0_id, {
 		input_label: input.label,
 		input_other: input.other,

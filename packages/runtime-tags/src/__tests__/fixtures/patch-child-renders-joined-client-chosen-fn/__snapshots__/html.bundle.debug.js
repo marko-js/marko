@@ -4,13 +4,12 @@ const $walks$1 = "D l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/label-view.marko": "__tests__/tags/label-view.marko !;D ;<p> </p>" });
 var label_view_default = _template("__tests__/tags/label-view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_flag__OR__input_a__OR__input_b = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const get = input.flag ? input.a : input.b;
 	_html(`<p>${_patch_text($scope0_id, "#text/0", get(), void 0, $scope0_reason, 3)}</p>`);
-	_script($scope0_id, "__tests__/tags/label-view.marko_0_get#7");
-	_filled_guard($scope0_reason, 3) && _patch_effect($scope0_id, $cg__input_flag__OR__input_a__OR__input_b ? "PatchQueuedEffect:__tests__/tags/label-view.marko_0_get#7" : "PatchEffect:__tests__/tags/label-view.marko_0_get#7", "get");
-	$cg__input_flag__OR__input_a__OR__input_b && _patch_init($scope0_id, "__tests__/tags/label-view.marko_0_input_flag#3_input_a#4_input_b#5/init");
+	_script($scope0_id, "__tests__/tags/label-view.marko_0_get#7", 1, _filled_guard($scope0_reason, 3), "get");
+	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "__tests__/tags/label-view.marko_0_input_flag#3_input_a#4_input_b#5/init");
 	_scope($scope0_id, {
 		input_flag: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.flag,
 		input_a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.a,

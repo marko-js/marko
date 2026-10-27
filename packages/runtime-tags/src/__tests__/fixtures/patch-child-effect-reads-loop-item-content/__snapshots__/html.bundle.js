@@ -9,8 +9,7 @@ var shows_default = _template("c", (input) => {
 	_html("<div>");
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "a")}<pre></pre>${_el_resume($scope0_id, "c")}`);
-	_script($scope0_id, "c0");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "hc0" : "ec0", "f");
+	_script($scope0_id, "c0", 1, _filled_guard($scope0_reason, 0), "f");
 	_scope($scope0_id, { f: input.content }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.content, !_server_guard($scope0_reason, 0));
 });
 

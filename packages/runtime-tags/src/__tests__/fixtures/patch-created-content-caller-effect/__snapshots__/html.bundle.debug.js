@@ -32,7 +32,7 @@ _shells({
 	"__tests__/tags/child.marko": /*@__PURE__*/ (() => `__tests__/tags/child.marko${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`)()
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_count = _client_guard($scope0_reason, 1), $wi__input_count = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_count = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_count__closures = new Set();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
@@ -43,9 +43,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html("<p>body</p>");
-			_script($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4", 0);
-			_filled_guard($scope0_reason, 1) && _patch_effect($scope1_id, $cg__input_count ? "PatchQueuedEffect:__tests__/tags/child.marko_1_input_count#0:4" : "PatchEffect:__tests__/tags/child.marko_1_input_count#0:4", ">input_count");
-			_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_count ? "__tests__/tags/child.marko_1_input_count#0:4/init" : "__tests__/tags/child.marko_1_input_count#0:4/subscribe");
+			_script($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4", 0, _filled_guard($scope0_reason, 1), ">input_count");
+			_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, _client_guard($scope0_reason, 1) ? "__tests__/tags/child.marko_1_input_count#0:4/init" : "__tests__/tags/child.marko_1_input_count#0:4/subscribe");
 			_subscribe($wi__input_count && $input_count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:4"));
 			_resume_branch($scope1_id);
 		}, $scope0_id) })

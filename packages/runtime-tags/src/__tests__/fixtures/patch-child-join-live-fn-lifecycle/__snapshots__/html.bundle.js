@@ -3,13 +3,12 @@ const $template = "<p> </p>";
 const $setup$1 = [[], []];
 _shells({ b: "b !;D ;<p> </p>" });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_b = _server_guard($scope0_reason, 2), $sg__input_a = _server_guard($scope0_reason, 1), $cg__input_b = _client_guard($scope0_reason, 2), $cg__input_a = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_b = _server_guard($scope0_reason, 2), $cg__input_a = _client_guard($scope0_reason, 1), $sg__input_a = _server_guard($scope0_reason, 1), $cg__input_b = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.a, !$sg__input_a);
 	const fmt = _bind_resume(() => input.a + "!", "b0", $scope0_id);
 	_html(`<p>${_patch_text($scope0_id, "a", fmt() + input.b, void 0, $scope0_reason, 0)}</p>`);
-	_script($scope0_id, "b1");
-	(_filled_guard($scope0_reason, 2) || _filled_guard($scope0_reason, 1)) && _patch_effect($scope0_id, $cg__input_b || $cg__input_a ? "hb1" : "eb1", _filled_guard($scope0_reason, 2) && "e", _filled_guard($scope0_reason, 1) && "f");
+	_script($scope0_id, "b1", 1, (_filled_guard($scope0_reason, 2) || _filled_guard($scope0_reason, 1)) && ($cg__input_b || $cg__input_a ? 2 : 1), _filled_guard($scope0_reason, 2) && "e", _filled_guard($scope0_reason, 1) && "f");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b4");
 	_scope($scope0_id, {
 		d: input.a,

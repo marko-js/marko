@@ -21,8 +21,7 @@ var child_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b1"], $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b2");
-	_script($scope0_id, "b3");
-	$sg__input_x && _patch_effect($scope0_id, "hb3", "f");
+	_script($scope0_id, "b3", 1, $sg__input_x && 2, "f");
 	_patch_fill($scope0_id, "vb5", n, 1);
 	_scope($scope0_id, {
 		f: input.x,

@@ -18,8 +18,7 @@ var template_default = _template("a", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html("<span>inner</span>");
-					_script($scope2_id, "a0", 0);
-					_filled_guard($scope0_reason, 2) && _patch_effect($scope2_id, $cg__input_title ? "ha0" : "ea0", ">c");
+					_script($scope2_id, "a0", 0, _filled_guard($scope0_reason, 2), ">c");
 					$cg__input_title && _patch_init($scope2_id, "a1");
 					_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 					return 0;

@@ -9,8 +9,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<div>box</div>${_el_resume($scope1_id, "a")}`);
-		_script($scope1_id, "a1");
-		_filled_guard($scope1_reason, 0) && _patch_effect($scope1_id, _client_guard($scope1_reason, 0) ? "ha1" : "ea1", "d");
+		_script($scope1_id, "a1", 1, _filled_guard($scope1_reason, 0), "d");
 		_scope($scope1_id, { d: label }) || _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "xd", label, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);

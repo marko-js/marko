@@ -12,18 +12,17 @@ var template_default = _template("a", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 0), $sg__label = _server_guard($scope2_reason, 1), $cg__label = _client_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 0), $sg__label = _server_guard($scope2_reason, 1);
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_patch_text($scope3_id, "a", label, void 0, $scope2_reason, 1)}</em>`);
-				$cg__label && _patch_init($scope3_id, "a0");
+				_client_guard($scope2_reason, 1) && _patch_init($scope3_id, "a0");
 				_scope($scope3_id, { _: _write_if($scope2_reason, 1) && _scope_with_id($scope2_id) });
 				return 0;
 			}
 		}, $scope2_id, "a", 1, $wg__isOpen, void 0, void 0, void 0, ["a1"], $scope2_reason, 0);
-		_script($scope2_id, "a4", $wg__isOpen);
-		_filled_guard($scope2_reason, 1) && _patch_effect($scope2_id, $cg__label ? "ha4" : "ea4", "e");
+		_script($scope2_id, "a4", $wg__isOpen, _filled_guard($scope2_reason, 1), "e");
 		_scope($scope2_id, { e: label }) || _filled_guard($scope2_reason, 1) && (_client_guard($scope2_reason, 0) ? _patch_fill($scope2_id, "va5", label, !$sg__label) : _patch_write($scope2_id, "xe", label, !$sg__label));
 	}, $scope0_id) };
 	_if(() => {

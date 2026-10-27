@@ -6,8 +6,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<div${_patch_attr_class($scope0_id, "aa$class", input.name, $scope0_reason, 1)}></div>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 1))}`);
-	_script($scope0_id, "a0");
-	(_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && _patch_effect($scope0_id, _client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? "ha0" : "ea0", _filled_guard($scope0_reason, 1) && "d", _filled_guard($scope0_reason, 2) && "e");
+	_script($scope0_id, "a0", 1, (_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), _filled_guard($scope0_reason, 1) && "d", _filled_guard($scope0_reason, 2) && "e");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "a1");
 	_scope($scope0_id, {
 		d: input.name,

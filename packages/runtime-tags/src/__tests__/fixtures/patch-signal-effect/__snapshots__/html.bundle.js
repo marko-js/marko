@@ -6,8 +6,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<div></div>${_el_resume($scope0_id, "a")}<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	_script($scope0_id, "a1");
-	$sg__input_label && _patch_effect($scope0_id, "ha1", "e");
+	_script($scope0_id, "a1", 1, $sg__input_label && 2, "e");
 	_scope($scope0_id, {
 		e: input.label,
 		f: count

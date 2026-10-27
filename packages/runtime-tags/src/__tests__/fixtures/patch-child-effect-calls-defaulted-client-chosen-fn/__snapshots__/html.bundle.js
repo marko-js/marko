@@ -7,8 +7,7 @@ var label_view_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const fmt = input.fmt ?? _resume(() => "none", "b0");
 	_html(`<output></output>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "b1");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "hb1" : "eb1", "e");
+	_script($scope0_id, "b1", 1, _filled_guard($scope0_reason, 0), "e");
 	_scope($scope0_id, { e: fmt }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", fmt, !_server_guard($scope0_reason, 0));
 });
 

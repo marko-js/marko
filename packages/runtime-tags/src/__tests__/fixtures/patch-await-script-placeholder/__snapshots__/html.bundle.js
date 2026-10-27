@@ -18,8 +18,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_filled_guard($scope0_reason, 0) && _patch_write($scope3_id, "xc", value, !_server_guard($scope0_reason, 0));
 			_html(`<span id=v>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
-			_script($scope3_id, "a0");
-			_filled_guard($scope0_reason, 0) && _patch_effect($scope3_id, $cg__input_promise ? "ha0" : "ea0", "c");
+			_script($scope3_id, "a0", 1, _filled_guard($scope0_reason, 0), "c");
 			_scope($scope3_id, { c: value });
 		}, 1, "a1", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "a5" : "a6");

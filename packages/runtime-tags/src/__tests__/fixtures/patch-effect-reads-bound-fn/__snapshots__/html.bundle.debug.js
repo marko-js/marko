@@ -9,8 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	const getTitle = _bind_resume(() => input.title, "__tests__/template.marko_0/getTitle", $scope0_id);
 	_html(`<output></output>${_el_resume($scope0_id, "#output/0")}`);
-	_script($scope0_id, "__tests__/template.marko_0_getTitle#4");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/template.marko_0_getTitle#4" : "PatchEffect:__tests__/template.marko_0_getTitle#4", "getTitle");
+	_script($scope0_id, "__tests__/template.marko_0_getTitle#4", 1, _filled_guard($scope0_reason, 0), "getTitle");
 	_scope($scope0_id, {
 		input_title: input.title,
 		getTitle

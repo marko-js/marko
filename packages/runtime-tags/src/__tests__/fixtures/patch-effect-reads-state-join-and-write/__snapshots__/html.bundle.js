@@ -6,9 +6,8 @@ var template_default = _template("a", (input) => {
 	let n = 0;
 	const x = n + input.label;
 	_html(`<button>${_text_resume($scope0_id, "b", x)}</button>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a0", 1, $sg__input_other && 2, "f");
 	_script($scope0_id, "a1");
-	$sg__input_other && _patch_effect($scope0_id, "ha0", "f");
 	_scope($scope0_id, {
 		e: input.label,
 		f: input.other,

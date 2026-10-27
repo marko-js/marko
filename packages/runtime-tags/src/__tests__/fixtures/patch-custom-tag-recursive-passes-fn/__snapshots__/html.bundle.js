@@ -48,8 +48,7 @@ var template_default = _template("a", (input) => {
 		get: getTitle
 	});
 	_patch_child_end();
-	_script($scope0_id, "a1");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "ha1" : "ea1", "e");
+	_script($scope0_id, "a1", 1, _filled_guard($scope0_reason, 0), "e");
 	_scope($scope0_id, {
 		d: input.title,
 		e: getTitle,

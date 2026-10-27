@@ -21,8 +21,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/tags/child/index.marko_1*shell"], $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/child/index.marko_0");
-	_script($scope0_id, "__tests__/tags/child/index.marko_0_input_x#5_n#6");
-	$sg__input_x && _patch_effect($scope0_id, "PatchQueuedEffect:__tests__/tags/child/index.marko_0_input_x#5_n#6", "input_x");
+	_script($scope0_id, "__tests__/tags/child/index.marko_0_input_x#5_n#6", 1, $sg__input_x && 2, "input_x");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child/index.marko_fill1", n, 1);
 	_scope($scope0_id, {
 		input_x: input.x,

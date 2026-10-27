@@ -25,8 +25,7 @@ var template_default = _template("a", (input) => {
 	$cg__input_title && _var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
 	_html(`<button class=call>call</button>${_el_resume($scope0_id, "c")}<pre></pre>${_el_resume($scope0_id, "d")}`);
-	_script($scope0_id, "a1");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, $cg__input_title ? "ha1" : "ea1", "h");
+	_script($scope0_id, "a1", 1, _filled_guard($scope0_reason, 0), "h");
 	_scope($scope0_id, {
 		h: fn,
 		a: _existing_scope($childScope)

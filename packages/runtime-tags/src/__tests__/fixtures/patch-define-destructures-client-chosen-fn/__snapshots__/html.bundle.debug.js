@@ -16,8 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<output></output>${_el_resume($scope1_id, "#output/0")}`);
-		_script($scope1_id, "__tests__/template.marko_1_get#3");
-		_filled_guard($scope1_reason, 0) && _patch_effect($scope1_id, _client_guard($scope1_reason, 0) ? "PatchQueuedEffect:__tests__/template.marko_1_get#3" : "PatchEffect:__tests__/template.marko_1_get#3", "get");
+		_script($scope1_id, "__tests__/template.marko_1_get#3", 1, _filled_guard($scope1_reason, 0), "get");
 		_scope($scope1_id, { get }, "__tests__/template.marko", "4:2", { get: "4:16" }) || _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:get", get, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(6);

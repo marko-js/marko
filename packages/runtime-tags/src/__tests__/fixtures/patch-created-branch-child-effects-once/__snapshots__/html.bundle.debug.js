@@ -56,7 +56,7 @@ _shells({
 	"__tests__/template.marko_8*shell": "__tests__/template.marko_8*shell,"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $cg__input_show = _client_guard($scope0_reason, 3), $wi__input_items = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $scope0_page = _page_render(), $cg__input_items = _client_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 3), $wi__input_items = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_items__closures = new Set();
 	let count = 0;
@@ -80,8 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope5_id = _scope_id();
 				_filled_guard($scope0_reason, 4) && _patch_write($scope5_id, "PatchMarkedWrite:item", item, !$sg__input_items);
 				_html(`<i>${_patch_text($scope5_id, "#text/0", item, void 0, $scope0_reason, 4)}</i>`);
-				_script($scope5_id, "__tests__/template.marko_5_item#2");
-				_filled_guard($scope0_reason, 4) && _patch_effect($scope5_id, $cg__input_items ? "PatchQueuedEffect:__tests__/template.marko_5_item#2" : "PatchEffect:__tests__/template.marko_5_item#2", "item");
+				_script($scope5_id, "__tests__/template.marko_5_item#2", 1, _filled_guard($scope0_reason, 4), "item");
 				_scope($scope5_id, { item }, "__tests__/template.marko", "11:4", { item: "11:8" });
 			}, 0, $scope1_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_5*shell", $scope0_reason, 4);
 			_if(() => {
@@ -102,8 +101,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_for_of(input.items, (item) => {
 					const $scope7_id = _scope_id();
 					_filled_guard($scope0_reason, 4) && _patch_write($scope7_id, "PatchMarkedWrite:item", item, !$sg__input_items);
-					_script($scope7_id, "__tests__/template.marko_7_item#1", 0);
-					_filled_guard($scope0_reason, 4) && _patch_effect($scope7_id, $cg__input_items ? "PatchQueuedEffect:__tests__/template.marko_7_item#1" : "PatchEffect:__tests__/template.marko_7_item#1", "item");
+					_script($scope7_id, "__tests__/template.marko_7_item#1", 0, _filled_guard($scope0_reason, 4), "item");
 					_scope($scope7_id, { item }, "__tests__/template.marko", "23:8", { item: "23:12" });
 				}, 0, $scope2_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_7*shell", $scope0_reason, 4);
 				_script($scope2_id, "__tests__/template.marko_2");
@@ -120,8 +118,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_for_of(input.items, (item) => {
 					const $scope8_id = _scope_id();
 					_filled_guard($scope0_reason, 4) && _patch_write($scope8_id, "PatchMarkedWrite:item", item, !$sg__input_items);
-					_script($scope8_id, "__tests__/template.marko_8_item#1", 0);
-					_filled_guard($scope0_reason, 4) && _patch_effect($scope8_id, $cg__input_items ? "PatchQueuedEffect:__tests__/template.marko_8_item#1" : "PatchEffect:__tests__/template.marko_8_item#1", "item");
+					_script($scope8_id, "__tests__/template.marko_8_item#1", 0, _filled_guard($scope0_reason, 4), "item");
 					_scope($scope8_id, { item }, "__tests__/template.marko", "31:6", { item: "31:10" });
 				}, 0, $scope3_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_8*shell", $scope0_reason, 4);
 				_script($scope3_id, "__tests__/template.marko_3");

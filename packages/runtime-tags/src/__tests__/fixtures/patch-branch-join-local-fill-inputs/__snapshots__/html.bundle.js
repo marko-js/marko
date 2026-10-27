@@ -7,7 +7,7 @@ _shells({
 	b7: "b7 !b4;D lD l ;<p> </p><em> </em><button class=m>m</button>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_a = _server_guard($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2), $cg__input_a = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $sg__input_a = _server_guard($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -31,12 +31,11 @@ var child_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["b7"], $scope0_reason, 2);
 	_html(`<div></div>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "b8");
-	_filled_guard($scope0_reason, 3) && _patch_effect($scope0_id, $cg__input_a ? "hb8" : "eb8", "f");
+	_script($scope0_id, "b8", 1, _filled_guard($scope0_reason, 3), "f");
 	_scope($scope0_id, {
 		f: input.a,
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.b
-	}) || (_filled_guard($scope0_reason, 3) && ($cg__input_show ? _patch_fill($scope0_id, "vb10", input.a) : _client_guard($scope0_reason, 4) ? _patch_fill($scope0_id, "vb9", input.a, !$sg__input_a) : _patch_write($scope0_id, "xf", input.a, !$sg__input_a)), _filled_guard($scope0_reason, 4) && ($cg__input_show ? _patch_fill($scope0_id, "vb12", input.b) : $cg__input_a && _patch_fill($scope0_id, "vb11", input.b, !$sg__input_b)));
+	}) || (_filled_guard($scope0_reason, 3) && ($cg__input_show ? _patch_fill($scope0_id, "vb10", input.a) : _client_guard($scope0_reason, 4) ? _patch_fill($scope0_id, "vb9", input.a, !$sg__input_a) : _patch_write($scope0_id, "xf", input.a, !$sg__input_a)), _filled_guard($scope0_reason, 4) && ($cg__input_show ? _patch_fill($scope0_id, "vb12", input.b) : _client_guard($scope0_reason, 3) && _patch_fill($scope0_id, "vb11", input.b, !$sg__input_b)));
 });
 
 // template.marko

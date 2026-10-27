@@ -48,8 +48,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 	const Log = { content: _content_elide("__tests__/tags/field.marko_2*content", ({ log, value }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_script($scope2_id, "__tests__/tags/field.marko_2_log#2_value#3", 0);
-		(_filled_guard($scope2_reason, 1) || _filled_guard($scope2_reason, 2)) && _patch_effect($scope2_id, _client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? "PatchQueuedEffect:__tests__/tags/field.marko_2_log#2_value#3" : "PatchEffect:__tests__/tags/field.marko_2_log#2_value#3", _filled_guard($scope2_reason, 1) && "log", _filled_guard($scope2_reason, 2) && "value");
+		_script($scope2_id, "__tests__/tags/field.marko_2_log#2_value#3", 0, (_filled_guard($scope2_reason, 1) || _filled_guard($scope2_reason, 2)) && (_client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? 2 : 1), _filled_guard($scope2_reason, 1) && "log", _filled_guard($scope2_reason, 2) && "value");
 		_client_guard($scope2_reason, 0) && _patch_init($scope2_id, "__tests__/tags/field.marko_2_log#2_value#3/init");
 		_scope($scope2_id, {
 			log,

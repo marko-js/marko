@@ -6,8 +6,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "b0");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "hb0" : "eb0", "d");
+	_script($scope0_id, "b0", 1, _filled_guard($scope0_reason, 0), "d");
 	_scope($scope0_id, { d: input.item }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.item, !_server_guard($scope0_reason, 0));
 });
 

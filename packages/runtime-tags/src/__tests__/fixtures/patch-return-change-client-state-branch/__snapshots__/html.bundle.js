@@ -10,9 +10,8 @@ var counter_box_default = _template("b", (input) => {
 	let mode = "a";
 	_html(`<span>${_text_resume($scope0_id, "a", mode)}</span><button class=mode>b</button>${_el_resume($scope0_id, "b")}<button class=go>go</button>${_el_resume($scope0_id, "c")}`);
 	const $return = mode;
-	_script($scope0_id, "b0");
+	_script($scope0_id, "b0", 1, ($sg__input_onA || $sg__input_onB) && 2, $sg__input_onA && "f", $sg__input_onB && "g");
 	_script($scope0_id, "b1");
-	($sg__input_onA || $sg__input_onB) && _patch_effect($scope0_id, "hb0", $sg__input_onA && "f", $sg__input_onB && "g");
 	const $valueChange = input.onA || void 0;
 	_patch_fill($scope0_id, "vb2", mode, 1);
 	_scope($scope0_id, {

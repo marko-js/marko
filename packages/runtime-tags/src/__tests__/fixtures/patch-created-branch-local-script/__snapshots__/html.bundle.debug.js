@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell,<p>shown</p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -16,9 +16,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const label = input.title + "!";
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !$sg__input_title);
 			_html("<p>shown</p>");
-			_script($scope1_id, "__tests__/template.marko_1_label#0", 0);
-			_filled_guard($scope0_reason, 1) && _patch_effect($scope1_id, $cg__input_title ? "PatchQueuedEffect:__tests__/template.marko_1_label#0" : "PatchEffect:__tests__/template.marko_1_label#0", "label");
-			$cg__input_title && _patch_init($scope1_id, "__tests__/template.marko_1_input_title#0:4/init");
+			_script($scope1_id, "__tests__/template.marko_1_label#0", 0, _filled_guard($scope0_reason, 1), "label");
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_title#0:4/init");
 			_scope($scope1_id, {
 				label,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)

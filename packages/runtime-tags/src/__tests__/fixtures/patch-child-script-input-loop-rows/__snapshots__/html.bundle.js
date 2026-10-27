@@ -21,8 +21,7 @@ var child_default = _template("b", (input) => {
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 2);
-	_script($scope0_id, "b2");
-	_filled_guard($scope0_reason, 1) && _patch_effect($scope0_id, _client_guard($scope0_reason, 1) ? "hb2" : "eb2", "e");
+	_script($scope0_id, "b2", 1, _filled_guard($scope0_reason, 1), "e");
 	_scope($scope0_id, { e: input.b }) || _filled_guard($scope0_reason, 1) && ($cg__input_items ? _patch_fill($scope0_id, "vb3", input.b) : _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 1)));
 });
 

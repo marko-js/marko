@@ -22,8 +22,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__isOpen, void 0, void 0, void 0, ["a0"], $scope1_reason, 1);
 		const $return = label + "!";
-		_script($scope1_id, "a3", $wg__isOpen);
-		(_filled_guard($scope1_reason, 1) || _filled_guard($scope1_reason, 2)) && _patch_effect($scope1_id, "ea3", _filled_guard($scope1_reason, 1) && "d", _filled_guard($scope1_reason, 2) && "e");
+		_script($scope1_id, "a3", $wg__isOpen, _filled_guard($scope1_reason, 1) || _filled_guard($scope1_reason, 2), _filled_guard($scope1_reason, 1) && "d", _filled_guard($scope1_reason, 2) && "e");
 		_scope($scope1_id, {
 			d: isOpen,
 			e: label

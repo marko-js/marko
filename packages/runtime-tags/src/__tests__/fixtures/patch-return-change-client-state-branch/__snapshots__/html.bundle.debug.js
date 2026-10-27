@@ -10,9 +10,8 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 	let mode = "a";
 	_html(`<span>${_text_resume($scope0_id, "#text/0", mode)}</span><button class=mode>b</button>${_el_resume($scope0_id, "#button/1")}<button class=go>go</button>${_el_resume($scope0_id, "#button/2")}`);
 	const $return = mode;
-	_script($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7");
+	_script($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7", 1, ($sg__input_onA || $sg__input_onB) && 2, $sg__input_onA && "input_onA", $sg__input_onB && "input_onB");
 	_script($scope0_id, "__tests__/tags/counter-box/index.marko_0");
-	($sg__input_onA || $sg__input_onB) && _patch_effect($scope0_id, "PatchQueuedEffect:__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7", $sg__input_onA && "input_onA", $sg__input_onB && "input_onB");
 	const $valueChange = (mode === "a" ? input.onA : input.onB) || void 0;
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter-box/index.marko_fill0", mode, 1);
 	_scope($scope0_id, {

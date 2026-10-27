@@ -4,7 +4,7 @@ _shells({
 	a2: "a2,<p>shown</p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let clicks = 0;
 	_html(`<button>${_text_resume($scope0_id, "b", clicks)}</button>${_el_resume($scope0_id, "a")}<main>`);
@@ -14,9 +14,8 @@ var template_default = _template("a", (input) => {
 			const label = input.title + "!";
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xa", label, !$sg__input_title);
 			_html("<p>shown</p>");
-			_script($scope1_id, "a0", 0);
-			_filled_guard($scope0_reason, 1) && _patch_effect($scope1_id, $cg__input_title ? "ha0" : "ea0", "a");
-			$cg__input_title && _patch_init($scope1_id, "a1");
+			_script($scope1_id, "a0", 0, _filled_guard($scope0_reason, 1), "a");
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a1");
 			_scope($scope1_id, {
 				a: label,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)

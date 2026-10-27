@@ -8,8 +8,7 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 	const $scope0_id = _scope_id();
 	const fmt = input.fmt ?? _resume(() => "none", "__tests__/tags/label-view.marko_0/fmt");
 	_html(`<output></output>${_el_resume($scope0_id, "#output/0")}`);
-	_script($scope0_id, "__tests__/tags/label-view.marko_0_fmt#4");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/tags/label-view.marko_0_fmt#4" : "PatchEffect:__tests__/tags/label-view.marko_0_fmt#4", "fmt");
+	_script($scope0_id, "__tests__/tags/label-view.marko_0_fmt#4", 1, _filled_guard($scope0_reason, 0), "fmt");
 	_scope($scope0_id, { fmt }, "__tests__/tags/label-view.marko", 0, { fmt: "1:8" }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope0_reason, 0));
 });
 

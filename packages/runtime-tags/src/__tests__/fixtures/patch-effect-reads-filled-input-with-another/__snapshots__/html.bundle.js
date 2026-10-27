@@ -5,9 +5,8 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button>${_text_resume($scope0_id, "b", n + input.label)}</button>${_el_resume($scope0_id, "a")}<div></div>${_el_resume($scope0_id, "c")}`);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a0", 1, (_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && (_client_guard($scope0_reason, 2) ? 2 : 1), _filled_guard($scope0_reason, 1) && "f", _filled_guard($scope0_reason, 2) && "g");
 	_script($scope0_id, "a1");
-	(_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && _patch_effect($scope0_id, _client_guard($scope0_reason, 2) ? "ha0" : "ea0", _filled_guard($scope0_reason, 1) && "f", _filled_guard($scope0_reason, 2) && "g");
 	_scope($scope0_id, {
 		f: input.label,
 		g: input.other,

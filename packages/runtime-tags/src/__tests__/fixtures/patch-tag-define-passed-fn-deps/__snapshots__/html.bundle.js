@@ -44,8 +44,7 @@ var field_default = _template("b", (input) => {
 	const Log = { content: _content_elide("b6", ({ log, value }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_script($scope2_id, "b7", 0);
-		(_filled_guard($scope2_reason, 1) || _filled_guard($scope2_reason, 2)) && _patch_effect($scope2_id, _client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? "hb7" : "eb7", _filled_guard($scope2_reason, 1) && "c", _filled_guard($scope2_reason, 2) && "d");
+		_script($scope2_id, "b7", 0, (_filled_guard($scope2_reason, 1) || _filled_guard($scope2_reason, 2)) && (_client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? 2 : 1), _filled_guard($scope2_reason, 1) && "c", _filled_guard($scope2_reason, 2) && "d");
 		_client_guard($scope2_reason, 0) && _patch_init($scope2_id, "b8");
 		_scope($scope2_id, {
 			c: log,

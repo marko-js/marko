@@ -7,15 +7,14 @@ _shells({
 	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell,<p>shown</p>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_count = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<p>shown</p>");
-			_script($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4", 0);
-			_filled_guard($scope0_reason, 1) && _patch_effect($scope1_id, $cg__input_count ? "PatchQueuedEffect:__tests__/tags/child.marko_1_input_count#0:4" : "PatchEffect:__tests__/tags/child.marko_1_input_count#0:4", ">input_count");
-			$cg__input_count && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4/init");
+			_script($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4", 0, _filled_guard($scope0_reason, 1), ">input_count");
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4/init");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2");
 			return 0;
 		}

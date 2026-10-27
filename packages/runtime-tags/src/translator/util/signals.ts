@@ -73,11 +73,13 @@ import {
   comparesBoundFn,
   getCallerGroupGuard,
   getClosureScopesIfWritten,
+  getEffectEntryArgs,
   getExprIfUnfilled,
   getPatchFillCalls,
   getRootGroupArgs,
   hasCallerGroupsAt,
   isBoundLiveCapture,
+  isJoinInitEffect,
   isScopeBoundFn,
   writePatchResumeStatements,
 } from "./patch/writers";
@@ -2418,18 +2420,25 @@ export function writeHTMLResumeStatements(
 
   // Effects carry no order (CONTEXT.md Effect), so neither this loop's direction
   // nor its place after the section's body holds one.
+  const patches = isPatch();
+  const initScripts = new Map<Signal, t.Expression>();
   for (let i = allSignals.length; i--;) {
-    if (allSignals[i].hasHTMLEffect) {
-      body.push(
-        t.expressionStatement(
-          callRuntime(
-            "_script",
-            scopeIdIdentifier,
-            t.stringLiteral(getSignalRegisterId(allSignals[i])),
-            markerGuard,
-          ),
-        ),
+    const signal = allSignals[i];
+    if (signal.hasHTMLEffect) {
+      const entry = patches && getEffectEntryArgs(section, signal);
+      const script = callRuntime(
+        "_script",
+        scopeIdIdentifier,
+        t.stringLiteral(getSignalRegisterId(signal)),
+        entry ? markerGuard || t.numericLiteral(1) : markerGuard,
+        ...(entry || []),
       );
+      // A patch's join init may run the effect instead of its entry.
+      if (entry && isJoinInitEffect(section, signal)) {
+        initScripts.set(signal, script);
+      } else {
+        body.push(t.expressionStatement(script));
+      }
     }
   }
 
@@ -2437,9 +2446,8 @@ export function writeHTMLResumeStatements(
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   const pendingProperties = getScopeProperties(section);
   const scopeProperties: t.ObjectProperty[] = [];
-  const patches = isPatch();
-  // A patch root writes under `$scope_page`, not its reason, so each
-  // property keeps its own guard.
+  // A patch root writes on every page render, so each property keeps its
+  // own guard.
   const scopeGuardsReason = !patches || !!section.parent;
   const ifWritten = (reason: Reason, expr: t.Expression) => {
     if (scopeGuardsReason && isSameReason(sectionReason, reason)) return expr;
@@ -2487,7 +2495,9 @@ export function writeHTMLResumeStatements(
 
   const paramWrites: t.Statement[] = [];
   const fillCalls = patches ? getPatchFillCalls(section, paramWrites) : [];
-  if (patches) writePatchResumeStatements(section, body, paramWrites);
+  if (patches) {
+    writePatchResumeStatements(section, body, paramWrites, initScripts);
+  }
 
   if (section.parent) {
     const ownerAccessor = getAccessorProp().Owner;

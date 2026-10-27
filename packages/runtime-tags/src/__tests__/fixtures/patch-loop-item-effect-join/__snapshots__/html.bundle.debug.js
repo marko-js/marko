@@ -13,8 +13,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 1));
 		_html(`<p>${_patch_text($scope1_id, "#text/0", input.a + item, void 0, $scope0_reason, 0)}</p><div></div>${_el_resume($scope1_id, "#div/1")}`);
-		_script($scope1_id, "__tests__/tags/child.marko_1_item#3");
-		_filled_guard($scope0_reason, 1) && _patch_effect($scope1_id, $cg__input_items ? "PatchQueuedEffect:__tests__/tags/child.marko_1_item#3" : "PatchEffect:__tests__/tags/child.marko_1_item#3", "item");
+		_script($scope1_id, "__tests__/tags/child.marko_1_item#3", 1, _filled_guard($scope0_reason, 1), "item");
 		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:4_item#3/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_a", _filled_guard($scope0_reason, 1) && "item");
 		_scope($scope1_id, {
 			item,

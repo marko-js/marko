@@ -11,8 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
 	const pick = input.upper ? up : low;
 	_html(`<output></output>${_el_resume($scope0_id, "#output/0")}`);
-	_script($scope0_id, "__tests__/template.marko_0_pick#8");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/template.marko_0_pick#8" : "PatchEffect:__tests__/template.marko_0_pick#8", "pick");
+	_script($scope0_id, "__tests__/template.marko_0_pick#8", 1, _filled_guard($scope0_reason, 0), "pick");
 	_scope($scope0_id, {
 		input_title: input.title,
 		input_upper: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.upper,

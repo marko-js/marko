@@ -25,8 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", 1, $wg__isOpen, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
 		const $return = label + "!";
-		_script($scope1_id, "__tests__/template.marko_1_isOpen#3_label#4", $wg__isOpen);
-		(_filled_guard($scope1_reason, 1) || _filled_guard($scope1_reason, 2)) && _patch_effect($scope1_id, "PatchEffect:__tests__/template.marko_1_isOpen#3_label#4", _filled_guard($scope1_reason, 1) && "isOpen", _filled_guard($scope1_reason, 2) && "label");
+		_script($scope1_id, "__tests__/template.marko_1_isOpen#3_label#4", $wg__isOpen, _filled_guard($scope1_reason, 1) || _filled_guard($scope1_reason, 2), _filled_guard($scope1_reason, 1) && "isOpen", _filled_guard($scope1_reason, 2) && "label");
 		_scope($scope1_id, {
 			isOpen,
 			label

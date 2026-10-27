@@ -7,8 +7,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_resume($scope0_id, "#output/0")}`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_item#3");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/tags/child.marko_0_input_item#3" : "PatchEffect:__tests__/tags/child.marko_0_input_item#3", "input_item");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_item#3", 1, _filled_guard($scope0_reason, 0), "input_item");
 	_scope($scope0_id, { input_item: input.item }, "__tests__/tags/child.marko", 0, { input_item: ["input.item"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_item", input.item, !_server_guard($scope0_reason, 0));
 });
 

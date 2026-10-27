@@ -7,8 +7,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<textarea></textarea>${_el_resume($scope0_id, "#textarea/0")}`);
-	_script($scope0_id, "__tests__/tags/field.marko_0_input_onKeyDown#3");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/tags/field.marko_0_input_onKeyDown#3" : "PatchEffect:__tests__/tags/field.marko_0_input_onKeyDown#3", "input_onKeyDown");
+	_script($scope0_id, "__tests__/tags/field.marko_0_input_onKeyDown#3", 1, _filled_guard($scope0_reason, 0), "input_onKeyDown");
 	_scope($scope0_id, { input_onKeyDown: input.onKeyDown }, "__tests__/tags/field.marko", 0, { input_onKeyDown: ["input.onKeyDown"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_onKeyDown", input.onKeyDown, !_server_guard($scope0_reason, 0));
 });
 

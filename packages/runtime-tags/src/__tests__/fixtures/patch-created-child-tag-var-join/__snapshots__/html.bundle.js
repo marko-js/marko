@@ -7,8 +7,7 @@ var file_store_default = _template("d", (input) => {
 	const $scope0_id = _scope_id();
 	let files = [];
 	const $return = files;
-	_script($scope0_id, "d1", 0);
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "hd1" : "ed1", "c");
+	_script($scope0_id, "d1", 0, _filled_guard($scope0_reason, 0), "c");
 	const $valueChange2 = _patch_bind($scope0_id, "wU", _resume((_new_files) => {
 		files = _new_files;
 	}, "d0", $scope0_id) || void 0, 0, 0);

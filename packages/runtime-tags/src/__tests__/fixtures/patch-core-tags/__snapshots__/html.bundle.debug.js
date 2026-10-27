@@ -11,8 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	console.log(input.title);
 	_html(`<main${_patch_attr($scope0_id, "PatchAttr:#main/0 data-id", "data-id", uid, 0, 0)}><p>${_text_resume($scope0_id, "#text/1", count)}</p><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>${_el_resume($scope0_id, "#main/0", 0)}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_input_value#5_count#7");
-	$sg__input_value && _patch_effect($scope0_id, "PatchQueuedEffect:__tests__/template.marko_0_input_value#5_count#7", "input_value");
+	_script($scope0_id, "__tests__/template.marko_0_input_value#5_count#7", 1, $sg__input_value && 2, "input_value");
 	_scope($scope0_id, {
 		input_value: input.value,
 		count

@@ -9,8 +9,7 @@ var shows_default = _template("__tests__/tags/shows.marko", (input) => {
 	_html("<div>");
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}<pre></pre>${_el_resume($scope0_id, "#pre/2")}`);
-	_script($scope0_id, "__tests__/tags/shows.marko_0_input_content#5");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/tags/shows.marko_0_input_content#5" : "PatchEffect:__tests__/tags/shows.marko_0_input_content#5", "input_content");
+	_script($scope0_id, "__tests__/tags/shows.marko_0_input_content#5", 1, _filled_guard($scope0_reason, 0), "input_content");
 	_scope($scope0_id, { input_content: input.content }, "__tests__/tags/shows.marko", 0, { input_content: ["input.content"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 0));
 });
 

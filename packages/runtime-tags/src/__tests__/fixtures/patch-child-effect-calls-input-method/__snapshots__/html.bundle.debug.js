@@ -6,8 +6,7 @@ _shells({ "__tests__/tags/label.marko": "__tests__/tags/label.marko," });
 var label_default = _template("__tests__/tags/label.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "__tests__/tags/label.marko_0_input#1", 0);
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/tags/label.marko_0_input#1" : "PatchEffect:__tests__/tags/label.marko_0_input#1", "input");
+	_script($scope0_id, "__tests__/tags/label.marko_0_input#1", 0, _filled_guard($scope0_reason, 0), "input");
 	_scope($scope0_id, { input }, "__tests__/tags/label.marko", 0, { input: 0 }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input", input, !_server_guard($scope0_reason, 0));
 });
 

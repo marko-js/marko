@@ -11,8 +11,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason();
 		const shout = label + "!";
 		_html(`<em>${_patch_text($scope1_id, "a", shout, void 0, $scope1_reason, 0)}</em>`);
-		_script($scope1_id, "a1");
-		_filled_guard($scope1_reason, 0) && _patch_effect($scope1_id, _client_guard($scope1_reason, 0) ? "ha1" : "ea1", "e");
+		_script($scope1_id, "a1", 1, _filled_guard($scope1_reason, 0), "e");
 		_scope($scope1_id, { e: shout }) || _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "xe", shout, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason((_mask_group($scope0_reason, 0) | _filled_guard($scope0_reason, 0)) << 1);

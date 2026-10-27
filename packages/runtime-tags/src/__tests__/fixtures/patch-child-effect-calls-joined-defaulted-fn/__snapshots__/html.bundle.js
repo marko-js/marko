@@ -3,13 +3,12 @@ const $template = "<output></output>";
 const $setup$1 = [[], []];
 _shells({ b: "b !; ;<output></output>" });
 var label_view_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_flag__OR__input_a__OR__input_b = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const h = (input.flag ? input.a : input.b) ?? _resume(() => "none", "b0");
 	_html(`<output></output>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "b1");
-	_filled_guard($scope0_reason, 3) && _patch_effect($scope0_id, $cg__input_flag__OR__input_a__OR__input_b ? "hb1" : "eb1", "i");
-	$cg__input_flag__OR__input_a__OR__input_b && _patch_init($scope0_id, "b5");
+	_script($scope0_id, "b1", 1, _filled_guard($scope0_reason, 3), "i");
+	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "b5");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.flag,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.a,

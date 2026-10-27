@@ -51,7 +51,7 @@ _shells({
 	a9: "a9,"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $cg__input_show = _client_guard($scope0_reason, 3), $wi__input_items = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $scope0_page = _page_render(), $cg__input_items = _client_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 3), $wi__input_items = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_items__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -75,8 +75,7 @@ var template_default = _template("a", (input) => {
 				const $scope5_id = _scope_id();
 				_filled_guard($scope0_reason, 4) && _patch_write($scope5_id, "xc", item, !$sg__input_items);
 				_html(`<i>${_patch_text($scope5_id, "a", item, void 0, $scope0_reason, 4)}</i>`);
-				_script($scope5_id, "a2");
-				_filled_guard($scope0_reason, 4) && _patch_effect($scope5_id, $cg__input_items ? "ha2" : "ea2", "c");
+				_script($scope5_id, "a2", 1, _filled_guard($scope0_reason, 4), "c");
 				_scope($scope5_id, { c: item });
 			}, 0, $scope1_id, "c", 1, void 0, void 0, void 0, void 0, "a3", $scope0_reason, 4);
 			_if(() => {
@@ -97,8 +96,7 @@ var template_default = _template("a", (input) => {
 				_for_of(input.items, (item) => {
 					const $scope7_id = _scope_id();
 					_filled_guard($scope0_reason, 4) && _patch_write($scope7_id, "xb", item, !$sg__input_items);
-					_script($scope7_id, "a11", 0);
-					_filled_guard($scope0_reason, 4) && _patch_effect($scope7_id, $cg__input_items ? "ha11" : "ea11", "b");
+					_script($scope7_id, "a11", 0, _filled_guard($scope0_reason, 4), "b");
 					_scope($scope7_id, { b: item });
 				}, 0, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "a8", $scope0_reason, 4);
 				_script($scope2_id, "a12");
@@ -115,8 +113,7 @@ var template_default = _template("a", (input) => {
 				_for_of(input.items, (item) => {
 					const $scope8_id = _scope_id();
 					_filled_guard($scope0_reason, 4) && _patch_write($scope8_id, "xb", item, !$sg__input_items);
-					_script($scope8_id, "a14", 0);
-					_filled_guard($scope0_reason, 4) && _patch_effect($scope8_id, $cg__input_items ? "ha14" : "ea14", "b");
+					_script($scope8_id, "a14", 0, _filled_guard($scope0_reason, 4), "b");
 					_scope($scope8_id, { b: item });
 				}, 0, $scope3_id, "b", 1, void 0, void 0, void 0, void 0, "a9", $scope0_reason, 4);
 				_script($scope3_id, "a15");

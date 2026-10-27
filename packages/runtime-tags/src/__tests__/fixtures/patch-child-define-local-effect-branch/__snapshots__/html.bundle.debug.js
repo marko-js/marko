@@ -10,7 +10,7 @@ _shells({
 	"__tests__/tags/wrap.marko_2*shell": "__tests__/tags/wrap.marko_2*shell;D ;<p> </p>"
 });
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $sg__input_label = _server_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $sg__input_label = _server_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_show__closures = new Set();
@@ -22,8 +22,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			if (input.show) {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_patch_text($scope2_id, "#text/0", x, void 0, $scope0_reason, 1)}</p>`);
-				_script($scope2_id, "__tests__/tags/wrap.marko_2_x#1:1");
-				_filled_guard($scope0_reason, 1) && _patch_effect($scope2_id, $cg__input_label ? "PatchQueuedEffect:__tests__/tags/wrap.marko_2_x#1:1" : "PatchEffect:__tests__/tags/wrap.marko_2_x#1:1", ">x");
+				_script($scope2_id, "__tests__/tags/wrap.marko_2_x#1:1", 1, _filled_guard($scope0_reason, 1), ">x");
 				$cg__input_label && _patch_init($scope2_id, "__tests__/tags/wrap.marko_2_x#1:1/init");
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/wrap.marko", "3:4");
 				return 0;

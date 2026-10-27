@@ -29,8 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "#text/0", 1, $wg__isOpen, void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope2_reason, 0);
-		_script($scope2_id, "__tests__/template.marko_2_text#4", $wg__isOpen);
-		_filled_guard($scope2_reason, 1) && _patch_effect($scope2_id, "PatchEffect:__tests__/template.marko_2_text#4", "text");
+		_script($scope2_id, "__tests__/template.marko_2_text#4", $wg__isOpen, _filled_guard($scope2_reason, 1), "text");
 		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill1", n, 1);
 		_scope($scope2_id, {
 			text,

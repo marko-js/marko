@@ -7,8 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</h1></main>`);
-	_script($scope0_id, "__tests__/template.marko_0_input_a#4_input_b#5");
-	(_filled_guard($scope0_reason, 2) || _filled_guard($scope0_reason, 3)) && _patch_effect($scope0_id, _client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3) ? "PatchQueuedEffect:__tests__/template.marko_0_input_a#4_input_b#5" : "PatchEffect:__tests__/template.marko_0_input_a#4_input_b#5", _filled_guard($scope0_reason, 2) && "input_a", _filled_guard($scope0_reason, 3) && "input_b");
+	_script($scope0_id, "__tests__/template.marko_0_input_a#4_input_b#5", 1, (_filled_guard($scope0_reason, 2) || _filled_guard($scope0_reason, 3)) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 3) ? 2 : 1), _filled_guard($scope0_reason, 2) && "input_a", _filled_guard($scope0_reason, 3) && "input_b");
 	_scope($scope0_id, {
 		input_a: input.a,
 		input_b: input.b

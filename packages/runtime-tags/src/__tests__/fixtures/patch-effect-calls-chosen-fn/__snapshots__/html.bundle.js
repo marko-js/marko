@@ -8,8 +8,7 @@ var template_default = _template("a", (input) => {
 	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id);
 	const pick = input.upper ? up : low;
 	_html(`<output></output>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "a2");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "ha2" : "ea2", "i");
+	_script($scope0_id, "a2", 1, _filled_guard($scope0_reason, 0), "i");
 	_scope($scope0_id, {
 		d: input.title,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.upper,

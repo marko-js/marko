@@ -4,8 +4,7 @@ _shells({ b: "b," });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "b0", 0);
-	(_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && _patch_effect($scope0_id, _client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? "hb0" : "eb0", _filled_guard($scope0_reason, 1) && "c", _filled_guard($scope0_reason, 2) && "d");
+	_script($scope0_id, "b0", 0, (_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), _filled_guard($scope0_reason, 1) && "c", _filled_guard($scope0_reason, 2) && "d");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b1");
 	_scope($scope0_id, {
 		c: input.fn,

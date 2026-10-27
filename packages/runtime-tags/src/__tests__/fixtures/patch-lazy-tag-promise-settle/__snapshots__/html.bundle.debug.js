@@ -8,8 +8,7 @@ var probe_default = _template("__tests__/probe.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let settled = false;
 	_html(`<div>${_patch_text($scope0_id, "#text/0", settled ? "settled" : "pending", void 0, 0, 0, 1)}</div>`);
-	_script($scope0_id, "__tests__/probe.marko_0_input_promise#3");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/probe.marko_0_input_promise#3" : "PatchEffect:__tests__/probe.marko_0_input_promise#3", "input_promise");
+	_script($scope0_id, "__tests__/probe.marko_0_input_promise#3", 1, _filled_guard($scope0_reason, 0), "input_promise");
 	_scope($scope0_id, { input_promise: input.promise }, "__tests__/probe.marko", 0, { input_promise: ["input.promise"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 0));
 });
 

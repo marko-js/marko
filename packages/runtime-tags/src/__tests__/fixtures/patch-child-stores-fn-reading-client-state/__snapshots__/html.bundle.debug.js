@@ -8,8 +8,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let open = true;
 	const g = open ? input.fn : _resume(() => "-", "__tests__/tags/card.marko_0/g");
-	_script($scope0_id, "__tests__/tags/card.marko_0_g#5", 0);
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, $cg__input_fn ? "PatchQueuedEffect:__tests__/tags/card.marko_0_g#5" : "PatchEffect:__tests__/tags/card.marko_0_g#5", "g");
+	_script($scope0_id, "__tests__/tags/card.marko_0_g#5", 0, _filled_guard($scope0_reason, 0), "g");
 	$cg__input_fn && _patch_write($scope0_id, "PatchWrite:open", open, 1);
 	$cg__input_fn && _patch_init($scope0_id, "__tests__/tags/card.marko_0_input_fn#2_open#3/init");
 	_scope($scope0_id, {

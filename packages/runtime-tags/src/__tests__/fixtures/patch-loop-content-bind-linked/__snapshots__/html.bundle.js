@@ -27,9 +27,8 @@ var list_default = _template("b", (input) => {
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 1);
-	_script($scope0_id, "b2");
+	_script($scope0_id, "b2", 1, _filled_guard($scope0_reason, 0), "f");
 	_script($scope0_id, "b3");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "hb2" : "eb2", "f");
 	_patch_fill($scope0_id, "vb4", open, 1);
 	_scope($scope0_id, {
 		f: input.onPick,

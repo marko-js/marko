@@ -10,8 +10,7 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_script($scope1_id, "a0", 0);
-		_filled_guard($scope0_reason, 1) && _patch_effect($scope1_id, $cg__input_title ? "ha0" : "ea0", ">f");
+		_script($scope1_id, "a0", 0, _filled_guard($scope0_reason, 1), ">f");
 		$cg__input_title && _patch_init($scope1_id, "a1");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a2", $scope0_reason, 0);

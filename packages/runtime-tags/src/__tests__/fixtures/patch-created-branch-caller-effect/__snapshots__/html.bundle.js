@@ -6,15 +6,14 @@ _shells({
 	b2: "b2,<p>shown</p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_count = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<p>shown</p>");
-			_script($scope1_id, "b0", 0);
-			_filled_guard($scope0_reason, 1) && _patch_effect($scope1_id, $cg__input_count ? "hb0" : "eb0", ">e");
-			$cg__input_count && _patch_init($scope1_id, "b1");
+			_script($scope1_id, "b0", 0, _filled_guard($scope0_reason, 1), ">e");
+			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b1");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

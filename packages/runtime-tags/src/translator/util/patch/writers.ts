@@ -75,7 +75,6 @@ import {
 import { inCreatedCatch, isQueuedOnCreate } from "../shell";
 import {
   getResumeRegisterId,
-  getSignalRegisterId,
   getScopeProperties,
   getEffectCallerSources,
   getSignals,
@@ -218,12 +217,85 @@ function buildPatchCalls(section: Section, binding: Binding) {
   return calls;
 }
 
-// A section's patch entries beside its resume data: effect re-runs and the
-// setup a created scope gets.
+// The patch side of an effect's `_script`: its entry (`1`, or `2` queued) where
+// a patch writes in place a value the effect read, then those values.
+export function getEffectEntryArgs(section: Section, signal: Signal) {
+  // Only a value the patch writes in place re-runs it: a server group's.
+  let written: Opt<Sources>;
+  let always = false;
+  const deps: Binding[] = [];
+  const byEntry = rerunsByEntry(signal.referencedBindings);
+  forEach(signal.referencedBindings, (binding) => {
+    const root = getCanonicalBinding(binding);
+    if (rerunsEffectOnPatch(root) || (byEntry && getPatchFill(root).fill)) {
+      deps.push(root);
+      const sources = getSourcesForRef(root);
+      if (sources && getRootGroupArgs(section, sources).length) {
+        written = push(written, sources);
+      } else {
+        always = true;
+      }
+    }
+  });
+  // No patch pairs what a created `@catch` holds, so their shells mount their effects.
+  if (!deps.length || inCreatedCatch(section)) return;
+  // The entry mounts the effect in a created scope where no render of the
+  // scope queues it: one its caller passes client state does.
+  const queued = isQueuedOnCreate(section, signal.referencedBindings);
+  // A constant read still mounts the effect where a flush may create.
+  const check = queued ? "_server_guard" : "_filled_guard";
+  const group = !always && getSoleCallerGroup(section, written);
+  const guard =
+    !always && orCallerGroupGuards(section, undefined, check, written);
+  const callerSources =
+    !queued && getEffectCallerSources(section, signal.referencedBindings);
+  // A group the guard fills is no client group there.
+  const clientGuard =
+    callerSources &&
+    orCallerGroupGuards(
+      section,
+      undefined,
+      "_client_guard",
+      callerSources,
+      new Set(group ? [group] : []),
+    );
+  const entry = queued
+    ? t.numericLiteral(2)
+    : clientGuard
+      ? t.conditionalExpression(
+          clientGuard,
+          t.numericLiteral(2),
+          t.numericLiteral(1),
+        )
+      : undefined;
+  return [
+    guard
+      ? entry
+        ? t.logicalExpression("&&", guard, entry)
+        : guard
+      : entry || t.numericLiteral(1),
+    ...getDeps(section, deps, check, group),
+  ];
+}
+
+// An effect whose join a patch inits on the scope: the init runs it, else its
+// entry ships (`writePatchResumeStatements`).
+export function isJoinInitEffect(section: Section, signal: Signal) {
+  const ref = signal.referencedBindings;
+  return (
+    Array.isArray(ref) &&
+    getCreatedInits(section).get(ref)?.init === "mixed" &&
+    getJoinInitGuard(section, ref) !== false
+  );
+}
+
+// A section's patch entries beside its resume data: the setup a created scope
+// gets, and the join inits that run an effect or else its `_script`.
 export function writePatchResumeStatements(
   section: Section,
   body: t.Statement[],
   paramWrites: t.Statement[],
+  initScripts: Map<Signal, t.Expression>,
 ) {
   const pendingProperties = getScopeProperties(section);
   // A branch param writes as its body starts, a local once it exists.
@@ -235,81 +307,6 @@ export function writePatchResumeStatements(
       }
     });
   }
-  // One entry per effect reading a value a patch writes in place, but where the
-  // effect's join inits on the scope, whose render queues it (below).
-  const initEffects = new Map<Signal, t.Expression>();
-  for (const signal of getSignals(section).values()) {
-    if (signal.hasHTMLEffect) {
-      // Only a value the patch writes in place re-runs it: a server group's.
-      let written: Opt<Sources>;
-      let always = false;
-      const deps: Binding[] = [];
-      const byEntry = rerunsByEntry(signal.referencedBindings);
-      forEach(signal.referencedBindings, (binding) => {
-        const root = getCanonicalBinding(binding);
-        if (rerunsEffectOnPatch(root) || (byEntry && getPatchFill(root).fill)) {
-          deps.push(root);
-          const sources = getSourcesForRef(root);
-          if (sources && getRootGroupArgs(section, sources).length) {
-            written = push(written, sources);
-          } else {
-            always = true;
-          }
-        }
-      });
-      // No patch pairs what a created `@catch` holds, so their shells mount their effects.
-      if (deps.length && !inCreatedCatch(section)) {
-        const id = getSignalRegisterId(signal);
-        const queuedEffect = t.stringLiteral(getPatchKey().QueuedEffect + id);
-        const effect = t.stringLiteral(getPatchKey().Effect + id);
-        // The entry mounts the effect in a created scope where no render of the
-        // scope queues it: one its caller passes client state does.
-        const queued = isQueuedOnCreate(section, signal.referencedBindings);
-        const callerSources =
-          !queued && getEffectCallerSources(section, signal.referencedBindings);
-        // A constant read still mounts the effect where a flush may create.
-        const check = queued ? "_server_guard" : "_filled_guard";
-        const entry = andGuard(
-          !always && orCallerGroupGuards(section, undefined, check, written),
-          callRuntime(
-            "_patch_effect",
-            getScopeIdIdentifier(section),
-            queued
-              ? queuedEffect
-              : callerSources
-                ? t.conditionalExpression(
-                    orCallerGroupGuards(
-                      section,
-                      undefined,
-                      "_client_guard",
-                      callerSources,
-                    )!,
-                    queuedEffect,
-                    effect,
-                  )
-                : effect,
-            ...getDeps(
-              section,
-              deps,
-              check,
-              !always && getSoleCallerGroup(section, written),
-            ),
-          ),
-        );
-        const ref = signal.referencedBindings;
-        if (
-          Array.isArray(ref) &&
-          getCreatedInits(section).get(ref)?.init === "mixed" &&
-          getJoinInitGuard(section, ref) !== false
-        ) {
-          initEffects.set(signal, entry);
-        } else {
-          body.push(t.expressionStatement(entry));
-        }
-      }
-    }
-  }
-
   // Beside fills: a created scope's seeds, written join members' slot writes and
   // unpatched values, and a local's fill or write chosen at the section's end.
   forEach(section.bindings, (binding) => {
@@ -484,7 +481,7 @@ export function writePatchResumeStatements(
                 ),
           );
           // The join's effect ships its entry only where the init doesn't run it.
-          const effect = initEffects.get(getSignals(section).get(ref)!);
+          const effect = initScripts.get(getSignals(section).get(ref)!);
           body.push(
             t.expressionStatement(
               effect ? t.logicalExpression("||", init, effect) : init,

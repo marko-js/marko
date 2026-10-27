@@ -14,8 +14,7 @@ var level_watch_default = _template("b", (input) => {
 	_if(() => {
 		if (input.projection) {
 			const $scope1_id = _scope_id();
-			_script($scope1_id, "b0", 0);
-			($sg__input_projection_skill || $sg__input_baseXp || $sg__input_playerId) && _patch_effect($scope1_id, "hb0", $sg__input_projection_skill && ">g", $sg__input_baseXp && ">h", $sg__input_playerId && ">i");
+			_script($scope1_id, "b0", 0, ($sg__input_projection_skill || $sg__input_baseXp || $sg__input_playerId) && 2, $sg__input_projection_skill && ">g", $sg__input_baseXp && ">h", $sg__input_playerId && ">i");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

@@ -8,8 +8,7 @@ var card_default = _template("b", (input) => {
 	let open = true;
 	const g = input.fn;
 	_html(`<p>${_patch_text($scope0_id, "a", g(), void 0, $scope0_reason, 0)}</p>`);
-	_script($scope0_id, "b1");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, $cg__input_fn ? "hb1" : "eb1", "g");
+	_script($scope0_id, "b1", 1, _filled_guard($scope0_reason, 0), "g");
 	$cg__input_fn && _patch_write($scope0_id, "we", open, 1);
 	$cg__input_fn && _patch_init($scope0_id, "b2");
 	_scope($scope0_id, {

@@ -8,8 +8,7 @@ var template_default = _template("a", (input) => {
 	console.log(input.title);
 	_html(`<main${_patch_attr($scope0_id, "aa$data-id", "data-id", uid, 0, 0)}><p>${_text_resume($scope0_id, "b", count)}</p><button>+</button>${_el_resume($scope0_id, "c")}</main>${_el_resume($scope0_id, "a", 0)}`);
 	_script($scope0_id, "a0");
-	_script($scope0_id, "a1");
-	$sg__input_value && _patch_effect($scope0_id, "ha1", "f");
+	_script($scope0_id, "a1", 1, $sg__input_value && 2, "f");
 	_scope($scope0_id, {
 		f: input.value,
 		h: count

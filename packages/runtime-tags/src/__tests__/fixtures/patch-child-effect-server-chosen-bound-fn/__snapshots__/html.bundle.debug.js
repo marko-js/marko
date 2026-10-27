@@ -6,8 +6,7 @@ _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko," });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "__tests__/tags/child.marko_0_fn#2_v#3", 0);
-	(_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && _patch_effect($scope0_id, _client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? "PatchQueuedEffect:__tests__/tags/child.marko_0_fn#2_v#3" : "PatchEffect:__tests__/tags/child.marko_0_fn#2_v#3", _filled_guard($scope0_reason, 1) && "fn", _filled_guard($scope0_reason, 2) && "v");
+	_script($scope0_id, "__tests__/tags/child.marko_0_fn#2_v#3", 0, (_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), _filled_guard($scope0_reason, 1) && "fn", _filled_guard($scope0_reason, 2) && "v");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/child.marko_0_fn#2_v#3/init");
 	_scope($scope0_id, {
 		fn: input.fn,

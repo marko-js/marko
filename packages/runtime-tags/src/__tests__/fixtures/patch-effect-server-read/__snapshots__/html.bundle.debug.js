@@ -9,8 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_input_label#4_count#5");
-	$sg__input_label && _patch_effect($scope0_id, "PatchQueuedEffect:__tests__/template.marko_0_input_label#4_count#5", "input_label");
+	_script($scope0_id, "__tests__/template.marko_0_input_label#4_count#5", 1, $sg__input_label && 2, "input_label");
 	_scope($scope0_id, {
 		input_label: input.label,
 		count

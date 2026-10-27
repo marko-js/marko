@@ -33,7 +33,7 @@ import {
   _existing_scope as _base_existing_scope,
   _resume,
   _scope as _base_scope,
-  _script,
+  _script as _base_script,
   getChunk,
   getState,
   kBranchId,
@@ -1024,7 +1024,28 @@ export function _patch_write(
   return "";
 }
 
-// An effect entry, valued by the writes this instance's patch sends it depends on.
+// An effect, and in a patch render its entry (`1`, or `2` queued) valued by the
+// writes it depends on that the patch sends.
+export function _script(
+  scopeId: number,
+  registryId: string,
+  markerGuard?: number,
+  entry?: 0 | 1 | 2,
+  ...deps: (string | Falsy)[]
+) {
+  _base_script(scopeId, registryId, markerGuard);
+  const state = getState();
+  if (entry && state instanceof PatchRenderState) {
+    writePatchEntry(
+      state,
+      scopeId,
+      (entry > 1 ? PatchKey.QueuedEffect : PatchKey.Effect) + registryId,
+      trackDeps(state, scopeId, deps),
+    );
+  }
+}
+
+// An init entry, valued by the writes this instance's patch sends it depends on.
 export function _patch_effect(
   scopeId: number,
   key: string,

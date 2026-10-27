@@ -27,9 +27,8 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/list.marko", "4:2", { item_content: ["item.content", "4:6"] });
 	}, 0, $scope0_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 1);
-	_script($scope0_id, "__tests__/tags/list.marko_0_input_onPick#5");
+	_script($scope0_id, "__tests__/tags/list.marko_0_input_onPick#5", 1, _filled_guard($scope0_reason, 0), "input_onPick");
 	_script($scope0_id, "__tests__/tags/list.marko_0");
-	_filled_guard($scope0_reason, 0) && _patch_effect($scope0_id, _client_guard($scope0_reason, 0) ? "PatchQueuedEffect:__tests__/tags/list.marko_0_input_onPick#5" : "PatchEffect:__tests__/tags/list.marko_0_input_onPick#5", "input_onPick");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/list.marko_fill0", open, 1);
 	_scope($scope0_id, {
 		input_onPick: input.onPick,
