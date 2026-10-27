@@ -190,7 +190,11 @@ class ServerRendered implements RenderedTemplate {
       },
       return(value: unknown) {
         if (!(done || aborted)) {
-          boundary?.abort(new Error("Iterator returned before consumed."));
+          boundary?.abort(
+            MARKO_DEBUG
+              ? new Error("Iterator returned before consumed.")
+              : new Error(),
+          );
         }
 
         return Promise.resolve({ value, done: true } as const);
@@ -311,7 +315,9 @@ class ServerRendered implements RenderedTemplate {
       this.#head = null;
 
       if (!head) {
-        return reject(new Error(CONSUMED_RESULT_MESSAGE));
+        return reject(
+          MARKO_DEBUG ? new Error(CONSUMED_RESULT_MESSAGE) : new Error(),
+        );
       }
 
       const { boundary } = head;
@@ -349,7 +355,7 @@ class ServerRendered implements RenderedTemplate {
     this.#head = null;
 
     if (!head) {
-      onAbort(new Error(CONSUMED_RESULT_MESSAGE));
+      onAbort(MARKO_DEBUG ? new Error(CONSUMED_RESULT_MESSAGE) : new Error());
       return;
     }
 
@@ -403,7 +409,8 @@ class ServerRendered implements RenderedTemplate {
   toString() {
     const head = this.#head;
     this.#head = null;
-    if (!head) throw new Error(CONSUMED_RESULT_MESSAGE);
+    if (!head)
+      throw MARKO_DEBUG ? new Error(CONSUMED_RESULT_MESSAGE) : new Error();
     const { boundary } = head;
     const html =
       boundary.flush() === FlushStatus.complete
@@ -411,7 +418,9 @@ class ServerRendered implements RenderedTemplate {
         : "";
     if (boundary.count) {
       boundary.abort(
-        new Error("Cannot consume asynchronous render with 'toString'"),
+        MARKO_DEBUG
+          ? new Error("Cannot consume asynchronous render with 'toString'")
+          : new Error(),
       );
     }
     settle(boundary);
