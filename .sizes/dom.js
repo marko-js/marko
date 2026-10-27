@@ -1,4 +1,4 @@
-// size: 29702 (min) 10923 (brotli)
+// size: 29715 (min) 10942 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -53,8 +53,8 @@ let destroyNestedScopes = function destroyNestedScopes(scope) {
   ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
 };
 let isScheduled;
-let isDeferred;
 let channel;
+let flush = flushAndWaitFrame;
 let _return = (scope, value) => (scope.T ? scope.T(value) : (scope.RV = value));
 let _var_change = (scope, value) => scope.U?.(value);
 let tagIdsByGlobal = /* @__PURE__ */ new WeakMap();
@@ -623,16 +623,19 @@ function tempDetachBranch(branch) {
     insertChildNodes(fragment, null, branch.S, branch.K));
 }
 function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+  isScheduled || ((isScheduled = 1), queueMicrotask(() => flush()));
 }
 function _defer_frame() {
-  isDeferred = 1;
+  flush = deferToFrame;
 }
-function flushAndWaitFrame(frameTime) {
-  if (frameTime) ((isDeferred = 0), triggerMacroTask());
-  else if (isDeferred) return requestAnimationFrame(flushAndWaitFrame);
-  else requestAnimationFrame(triggerMacroTask);
-  run();
+function deferToFrame() {
+  ((flush = flushAndWaitFrame), requestAnimationFrame(flushInFrame));
+}
+function flushInFrame() {
+  (triggerMacroTask(), run());
+}
+function flushAndWaitFrame() {
+  (requestAnimationFrame(triggerMacroTask), run());
 }
 function triggerMacroTask() {
   (channel ||

@@ -1,4 +1,4 @@
-// size: 5956 (min) 2618 (brotli)
+// size: 5902 (min) 2610 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
@@ -31,8 +31,8 @@ let destroyNestedScopes = function destroyNestedScopes(scope) {
   ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
 };
 let isScheduled;
-let isDeferred;
 let channel;
+let flush = flushAndWaitFrame;
 let _var_change = (scope, value) => scope.U?.(value);
 let currentNode;
 let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
@@ -284,13 +284,10 @@ function insertBranchBefore(branch, parentNode, nextSibling) {
   insertChildNodes(parentNode, nextSibling, branch.S, branch.K);
 }
 function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+  isScheduled || ((isScheduled = 1), queueMicrotask(() => flush()));
 }
-function flushAndWaitFrame(frameTime) {
-  if (frameTime) ((isDeferred = 0), triggerMacroTask());
-  else if (isDeferred) return requestAnimationFrame(flushAndWaitFrame);
-  else requestAnimationFrame(triggerMacroTask);
-  run();
+function flushAndWaitFrame() {
+  (requestAnimationFrame(triggerMacroTask), run());
 }
 function triggerMacroTask() {
   (channel ||

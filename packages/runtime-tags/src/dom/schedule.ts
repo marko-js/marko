@@ -1,8 +1,8 @@
 import { run } from "./queue";
 let runTask: undefined | (() => void);
 let isScheduled: undefined | 0 | 1;
-let isDeferred: undefined | 0 | 1;
 let channel: MessageChannel | undefined;
+let flush = flushAndWaitFrame;
 
 export function schedule() {
   if (!isScheduled) {
@@ -16,29 +16,35 @@ export function schedule() {
     }
 
     isScheduled = 1;
-    queueMicrotask(flushAndWaitFrame);
+    queueMicrotask(() => flush());
   }
 }
 
 // An act's render may run mid-dispatch (between listeners, before a form or link
 // is read), so a flush with an act in its task waits for the frame instead.
 export function _defer_frame() {
-  isDeferred = 1;
+  flush = deferToFrame;
+}
+
+function deferToFrame() {
+  flush = flushAndWaitFrame;
+  requestAnimationFrame(flushInFrame);
+}
+
+// A frame's callback flushes then waits only for its paint, not another frame.
+function flushInFrame() {
+  triggerMacroTask();
+  if (MARKO_DEBUG) {
+    runTask!();
+  } else {
+    run();
+  }
 }
 
 // Won't fix: rAF gating means hidden documents (background tab, display:none
 // iframe) batch renders/effects until visible; hidden-time work shouldn't use render state.
-// A frame's callback gets its time; a flush already in the frame waits only for its paint.
-function flushAndWaitFrame(frameTime?: number) {
-  if (frameTime) {
-    isDeferred = 0;
-    triggerMacroTask();
-  } else if (isDeferred) {
-    return requestAnimationFrame(flushAndWaitFrame);
-  } else {
-    requestAnimationFrame(triggerMacroTask);
-  }
-
+function flushAndWaitFrame() {
+  requestAnimationFrame(triggerMacroTask);
   if (MARKO_DEBUG) {
     runTask!();
   } else {

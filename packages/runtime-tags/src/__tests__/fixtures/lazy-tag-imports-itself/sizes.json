@@ -9,8 +9,8 @@
       "brotli": 75
     },
     "under.mjs": {
-      "min": 3858,
-      "brotli": 1864
+      "min": 3805,
+      "brotli": 1846
     },
     "v:under.marko.setup.mjs": {
       "min": 77,
