@@ -1,6 +1,7 @@
+import { _defer_frame } from "@marko/runtime-tags/dom";
 <let/busy=false>
 <let/count=0>
-<form onSubmit(ev) { ev.preventDefault(); busy = true; }>
+<form onSubmit(ev) { ev.preventDefault(); count++; _defer_frame(); busy = true; }>
   <button name="_action" value="add" disabled=busy>Add</button>
 </form>
 <button onClick() { count++ }>${count}</button>

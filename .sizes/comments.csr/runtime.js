@@ -1,4 +1,4 @@
-// size: 5997 (min) 2629 (brotli)
+// size: 5956 (min) 2618 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
@@ -31,6 +31,7 @@ let destroyNestedScopes = function destroyNestedScopes(scope) {
   ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
 };
 let isScheduled;
+let isDeferred;
 let channel;
 let _var_change = (scope, value) => scope.U?.(value);
 let currentNode;
@@ -283,16 +284,13 @@ function insertBranchBefore(branch, parentNode, nextSibling) {
   insertChildNodes(parentNode, nextSibling, branch.S, branch.K);
 }
 function schedule() {
-  if (!isScheduled) {
-    isScheduled = 1;
-    let ev = window.event;
-    (ev?.type === "submit" || (ev?.target.form && ev.type === "click")
-      ? requestAnimationFrame
-      : queueMicrotask)(flushAndWaitFrame);
-  }
+  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
 function flushAndWaitFrame(frameTime) {
-  (frameTime ? triggerMacroTask() : requestAnimationFrame(triggerMacroTask), run());
+  if (frameTime) ((isDeferred = 0), triggerMacroTask());
+  else if (isDeferred) return requestAnimationFrame(flushAndWaitFrame);
+  else requestAnimationFrame(triggerMacroTask);
+  run();
 }
 function triggerMacroTask() {
   (channel ||

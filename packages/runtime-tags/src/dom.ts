@@ -117,6 +117,7 @@ export {
   _load_visible_trigger,
 } from "./dom/load";
 export { run } from "./dom/queue";
+export { _defer_frame } from "./dom/schedule";
 export {
   _content,
   _content_closures,

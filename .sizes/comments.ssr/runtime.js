@@ -1,4 +1,4 @@
-// size: 2667 (min) 1317 (brotli)
+// size: 2624 (min) 1293 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
@@ -25,6 +25,7 @@ let catchEnabled;
 let delegate = (type, handler) =>
   (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1));
 let isScheduled;
+let isDeferred;
 let channel;
 let _resumed = {};
 let curRenders;
@@ -96,16 +97,13 @@ function handleDelegated(ev) {
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 function schedule() {
-  if (!isScheduled) {
-    isScheduled = 1;
-    let ev = window.event;
-    (ev?.type === "submit" || (ev?.target.form && ev.type === "click")
-      ? requestAnimationFrame
-      : queueMicrotask)(flushAndWaitFrame);
-  }
+  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
 function flushAndWaitFrame(frameTime) {
-  (frameTime ? triggerMacroTask() : requestAnimationFrame(triggerMacroTask), run());
+  if (frameTime) ((isDeferred = 0), triggerMacroTask());
+  else if (isDeferred) return requestAnimationFrame(flushAndWaitFrame);
+  else requestAnimationFrame(triggerMacroTask);
+  run();
 }
 function triggerMacroTask() {
   (channel ||

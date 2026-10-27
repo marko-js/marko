@@ -6,6 +6,8 @@ const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/3"]
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#form/0"], "submit", function(ev) {
 		ev.preventDefault();
+		$count($scope, +$scope.count + 1);
+		_defer_frame();
 		$busy($scope, true);
 	});
 	_on($scope["#button/2"], "click", function() {

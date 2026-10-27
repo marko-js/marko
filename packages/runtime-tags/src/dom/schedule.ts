@@ -1,6 +1,7 @@
 import { run } from "./queue";
 let runTask: undefined | (() => void);
 let isScheduled: undefined | 0 | 1;
+let isDeferred: undefined | 0 | 1;
 let channel: MessageChannel | undefined;
 
 export function schedule() {
@@ -15,22 +16,28 @@ export function schedule() {
     }
 
     isScheduled = 1;
-    // A form reads its fields once its submit dispatch ends, so a render that
-    // dispatch (or its submitter's click) causes waits for the frame instead.
-    const ev = window.event as
-      | (Event & { target: { form?: unknown } })
-      | undefined;
-    (ev?.type === "submit" || (ev?.target.form && ev.type === "click")
-      ? requestAnimationFrame
-      : queueMicrotask)(flushAndWaitFrame);
+    queueMicrotask(flushAndWaitFrame);
   }
+}
+
+// An act's render may run mid-dispatch (between listeners, before a form or link
+// is read), so a flush with an act in its task waits for the frame instead.
+export function _defer_frame() {
+  isDeferred = 1;
 }
 
 // Won't fix: rAF gating means hidden documents (background tab, display:none
 // iframe) batch renders/effects until visible; hidden-time work shouldn't use render state.
 // A frame's callback gets its time; a flush already in the frame waits only for its paint.
 function flushAndWaitFrame(frameTime?: number) {
-  frameTime ? triggerMacroTask() : requestAnimationFrame(triggerMacroTask);
+  if (frameTime) {
+    isDeferred = 0;
+    triggerMacroTask();
+  } else if (isDeferred) {
+    return requestAnimationFrame(flushAndWaitFrame);
+  } else {
+    requestAnimationFrame(triggerMacroTask);
+  }
 
   if (MARKO_DEBUG) {
     runTask!();

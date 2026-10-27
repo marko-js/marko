@@ -9,8 +9,8 @@
       "brotli": 2830
     },
     "probe.mjs": {
-      "min": 956,
-      "brotli": 531
+      "min": 913,
+      "brotli": 509
     },
     "shared": {
       "min": 8530,
