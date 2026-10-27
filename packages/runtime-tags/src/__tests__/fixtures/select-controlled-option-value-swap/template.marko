@@ -1,0 +1,12 @@
+<let/calls=0/>
+<select value="b" valueChange() { calls++ }>
+  <for|option| of=input.options by="id">
+    <option value=option.value>${option.value}</option>
+  </for>
+</select>
+<select multiple value=["b"] valueChange() { calls++ }>
+  <for|option| of=input.options by="id">
+    <option value=option.value>${option.value}</option>
+  </for>
+</select>
+<span>${calls}</span>
