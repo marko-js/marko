@@ -1,0 +1,4 @@
+<let/busy=false>
+<form onSubmit(ev) { ev.preventDefault(); busy = true; }>
+  <button name="_action" value="add" disabled=busy>Add</button>
+</form>

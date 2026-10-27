@@ -1,4 +1,4 @@
-// size: 29615 (min) 10890 (brotli)
+// size: 29714 (min) 10927 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -622,7 +622,13 @@ function tempDetachBranch(branch) {
     insertChildNodes(fragment, null, branch.S, branch.K));
 }
 function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+  if (!isScheduled) {
+    isScheduled = 1;
+    let ev = window.event;
+    (ev?.type === "submit" || (ev?.target.form && ev.type === "click")
+      ? requestAnimationFrame
+      : queueMicrotask)(flushAndWaitFrame);
+  }
 }
 function flushAndWaitFrame() {
   (requestAnimationFrame(triggerMacroTask), run());

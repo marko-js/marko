@@ -15,7 +15,14 @@ export function schedule() {
     }
 
     isScheduled = 1;
-    queueMicrotask(flushAndWaitFrame);
+    // A form reads its fields once its submit dispatch ends, so a render that
+    // dispatch (or its submitter's click) causes waits for the frame instead.
+    const ev = window.event as
+      | (Event & { target: { form?: unknown } })
+      | undefined;
+    (ev?.type === "submit" || (ev?.target.form && ev.type === "click")
+      ? requestAnimationFrame
+      : queueMicrotask)(flushAndWaitFrame);
   }
 }
 

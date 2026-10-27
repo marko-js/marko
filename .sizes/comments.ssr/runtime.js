@@ -1,4 +1,4 @@
-// size: 2561 (min) 1274 (brotli)
+// size: 2660 (min) 1313 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
@@ -96,7 +96,13 @@ function handleDelegated(ev) {
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+  if (!isScheduled) {
+    isScheduled = 1;
+    let ev = window.event;
+    (ev?.type === "submit" || (ev?.target.form && ev.type === "click")
+      ? requestAnimationFrame
+      : queueMicrotask)(flushAndWaitFrame);
+  }
 }
 function flushAndWaitFrame() {
   (requestAnimationFrame(triggerMacroTask), run());

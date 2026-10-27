@@ -15,8 +15,8 @@
       }
     },
     "counter.mjs": {
-      "min": 1100,
-      "brotli": 590
+      "min": 1199,
+      "brotli": 619
     },
     "shared": {
       "min": 2126,
