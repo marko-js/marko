@@ -11,7 +11,9 @@ function $setup($scope) {
 const $input = ($scope, input) => $input_x($scope, input.x);
 const $hold = ($scope) => async () => {
 	$d($scope, 5);
-	await new Promise((resolve) => setTimeout(resolve, 600));
+	await new Promise((resolve) => {
+		window.release = resolve;
+	});
 };
 _resumed["__tests__/template.marko_0/hold"] = $hold;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

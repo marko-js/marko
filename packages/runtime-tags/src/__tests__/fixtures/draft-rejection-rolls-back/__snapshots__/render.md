@@ -10,8 +10,7 @@
 
 # Update
 ```js
-document.querySelectorAll("button")[0].click();
-await wait(30);
+click(document, 0);
 ```
 ```html
 <button>
@@ -27,9 +26,6 @@ UPDATE: button:nth-of-type(1)::text@0 "1" => "5"
 ```
 
 # Update
-```js
-wait(100);
-```
 ```html
 <button>
   1 failed
@@ -46,8 +42,7 @@ UPDATE: button:nth-of-type(1)::text@2 "" => "failed"
 
 # Update
 ```js
-document.querySelectorAll("button")[1].click();
-await wait(100);
+click(document, 1);
 ```
 ```html
 <button>

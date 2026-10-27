@@ -7,9 +7,10 @@
 
 # Update
 ```js
-document.querySelector("button").click();
-await wait(80);
+click(document);
 ```
+
+# Update
 ```html
 <button>
   9
@@ -21,9 +22,6 @@ UPDATE: button::text "1" => "9"
 ```
 
 # Update
-```js
-wait(150);
-```
 ```html
 <button>
   1

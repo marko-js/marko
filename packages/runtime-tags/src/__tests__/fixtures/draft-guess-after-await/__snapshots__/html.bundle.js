@@ -13,10 +13,10 @@ var template_default = _template("a", (input) => {
 		h: outer,
 		g: _resume(async () => {
 			d = 9;
-			await new Promise((resolve) => setTimeout(resolve, 100));
+			await resolveAfter(0, 2);
 		}, "a0", $scope0_id) || void 0,
 		i: _resume(async () => {
-			await new Promise((resolve) => setTimeout(resolve, 20));
+			await resolveAfter(0, 1);
 			set();
 		}, "a1", $scope0_id) || void 0
 	});

@@ -10,10 +10,8 @@
 
 # Update
 ```js
-document.querySelectorAll("button")[0].click();
-await wait(30);
-document.querySelectorAll("button")[1].click();
-await wait(30);
+click(document, 0);
+click(document, 1);
 ```
 ```html
 <button>
@@ -29,9 +27,6 @@ UPDATE: button:nth-of-type(1)::text "1" => "5"
 ```
 
 # Update
-```js
-wait(150);
-```
 ```html
 <button>
   2

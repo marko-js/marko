@@ -8,7 +8,6 @@
 # Update
 ```js
 document.querySelector("button").click();
-await wait(30);
 ```
 ```html
 <button>
@@ -31,7 +30,7 @@ throw new Error("guess dropped by a patch");
 
 # Update
 ```js
-wait(700);
+(document.defaultView).release();
 ```
 ```html
 <button>

@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	child_default({ act });
 	_scope($scope0_id, {
 		c: _resume(async () => {
-			await new Promise((resolve) => setTimeout(resolve, 100));
+			await resolveAfter(0);
 		}, "a0") || void 0,
 		a: _existing_scope($childScope)
 	});

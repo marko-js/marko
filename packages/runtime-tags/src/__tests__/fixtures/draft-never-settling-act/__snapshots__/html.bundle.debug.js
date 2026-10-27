@@ -20,14 +20,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/hang", $scope0_id) || void 0,
 		"TagVariableChange:brief": _resume(async () => {
 			quick = "quick";
-			await new Promise((resolve) => setTimeout(resolve, 50));
+			await resolveAfter(0);
 		}, "__tests__/template.marko_0/brief", $scope0_id) || void 0
 	}, "__tests__/template.marko", 0, {
-		stuck: "2:8",
-		quick: "3:8",
-		hang: "4:9",
-		brief: "8:9",
-		"TagVariableChange:hang": ["hangFn", "4:9"],
-		"TagVariableChange:brief": ["briefFn", "8:9"]
+		stuck: "3:8",
+		quick: "4:8",
+		hang: "5:9",
+		brief: "9:9",
+		"TagVariableChange:hang": ["hangFn", "5:9"],
+		"TagVariableChange:brief": ["briefFn", "9:9"]
 	});
 }, 1);

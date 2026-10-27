@@ -19,7 +19,26 @@ UPDATE: button::text "1" => "2"
 # Update
 ```js
 document.querySelector("button").click();
-await wait(30);
+```
+```html
+<button>
+  9
+</button>
+```
+## Change
+```
+UPDATE: button::text "2" => "9"
+```
+
+# Update
+```html
+<button>
+  2
+</button>
+```
+## Change
+```
+UPDATE: button::text "9" => "2"
 ```
 
 # Update `{"x":3}`

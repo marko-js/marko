@@ -1,3 +1,4 @@
+import { resolveAfter } from "../../utils/resolve";
 <let/n=1/>
 <draft/stuck=n/>
 <draft/quick=n/>
@@ -7,6 +8,6 @@
 }/>
 <action/brief=async () => {
   quick = "quick";
-  await new Promise((resolve) => setTimeout(resolve, 50));
+  await resolveAfter(0);
 }/>
 <button onClick() { hang(); brief(); }>${stuck} ${quick}</button>

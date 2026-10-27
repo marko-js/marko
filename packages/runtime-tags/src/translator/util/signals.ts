@@ -800,17 +800,12 @@ export function initValue(
       ) {
         return callRuntime(helper, ...trimEmptyArgs(declArgs(accessor, fn)));
       }
-      if (!ownRegistration) {
-        return callRuntime(
-          `_fill${helper}`,
-          ...trimEmptyArgs([key, ...declArgs(accessor, fn), fillFn]),
-        );
+      // An action's fill always registers its value, so it has no fill helper.
+      if (helper !== "_action" && !ownRegistration) {
+        return callRuntime(`_fill${helper}`, key, accessor, fn, fillFn);
       }
-      if (!signal.fillFn && !fillsWithoutStructure) {
-        return callRuntime(
-          `_fill${helper}`,
-          ...trimEmptyArgs([key, ...declArgs(accessor, fn)]),
-        );
+      if (helper !== "_action" && !signal.fillFn && !fillsWithoutStructure) {
+        return callRuntime(`_fill${helper}`, key, accessor, fn);
       }
       const value = callRuntime(
         helper,

@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		failNow,
 		"TagVariableChange:fail": _resume(async () => {
 			d = 5;
-			await new Promise((resolve) => setTimeout(resolve, 50));
+			await resolveAfter(0);
 			throw new Error("failed");
 		}, "__tests__/template.marko_0/fail", $scope0_id) || void 0,
 		"TagVariableChange:failNow": _resume(function() {
@@ -23,10 +23,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			throw new Error("failed now");
 		}, "__tests__/template.marko_0/failNow", $scope0_id) || void 0
 	}, "__tests__/template.marko", 0, {
-		d: "2:8",
-		fail: "3:9",
-		failNow: "8:9",
-		"TagVariableChange:fail": ["failFn", "3:9"],
-		"TagVariableChange:failNow": ["failNowFn", "8:9"]
+		d: "3:8",
+		fail: "4:9",
+		failNow: "9:9",
+		"TagVariableChange:fail": ["failFn", "4:9"],
+		"TagVariableChange:failNow": ["failNowFn", "9:9"]
 	});
 }, 1);

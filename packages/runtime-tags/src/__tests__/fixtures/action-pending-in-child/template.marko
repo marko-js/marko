@@ -1,4 +1,5 @@
+import { resolveAfter } from "../../utils/resolve";
 <action/act=async () => {
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  await resolveAfter(0);
 }/>
 <child act=act/>

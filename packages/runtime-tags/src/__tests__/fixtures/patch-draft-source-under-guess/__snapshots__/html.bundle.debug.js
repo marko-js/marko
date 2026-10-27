@@ -16,7 +16,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		hold,
 		"TagVariableChange:hold": _resume(async () => {
 			d = 5;
-			await new Promise((resolve) => setTimeout(resolve, 600));
+			await new Promise((resolve) => {
+				window.release = resolve;
+			});
 		}, "__tests__/template.marko_0/hold", $scope0_id) || void 0
 	}, "__tests__/template.marko", 0, {
 		d: "1:8",

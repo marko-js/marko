@@ -13,12 +13,12 @@
 
 # Update
 ```js
-document.querySelectorAll("button")[0].click();
-await wait(50);
+click(document, 0);
+await wait();
 ```
 
 # Update
 ```js
-document.querySelectorAll("button")[1].click();
-await wait(100);
+click(document, 1);
+await wait();
 ```

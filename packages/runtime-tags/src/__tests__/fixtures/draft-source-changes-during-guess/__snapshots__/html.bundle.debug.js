@@ -14,12 +14,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		hold,
 		"TagVariableChange:hold": _resume(async () => {
 			d = 5;
-			await new Promise((resolve) => setTimeout(resolve, 100));
+			await resolveAfter(0);
 		}, "__tests__/template.marko_0/hold", $scope0_id) || void 0
 	}, "__tests__/template.marko", 0, {
-		n: "1:6",
-		d: "2:8",
-		hold: "3:9",
-		"TagVariableChange:hold": ["holdFn", "3:9"]
+		n: "2:6",
+		d: "3:8",
+		hold: "4:9",
+		"TagVariableChange:hold": ["holdFn", "4:9"]
 	});
 }, 1);

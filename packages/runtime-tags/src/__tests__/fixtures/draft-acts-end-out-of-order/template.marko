@@ -1,11 +1,12 @@
+import { resolveAfter } from "../../utils/resolve";
 <let/n=1/>
 <draft/d=n/>
 <action/slow=async () => {
   d = "slow";
-  await new Promise((resolve) => setTimeout(resolve, 250));
+  await resolveAfter(0, 2);
 }/>
 <action/fast=async () => {
   d = "fast";
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  await resolveAfter(0, 1);
 }/>
 <button onClick() { slow(); fast(); }>${d}</button>

@@ -19,7 +19,7 @@ const $setup__script = _script("a4", ($scope) => {
 });
 const $fail = ($scope) => async () => {
 	$d($scope, 5);
-	await new Promise((resolve) => setTimeout(resolve, 50));
+	await resolveAfter(0);
 	throw new Error("failed");
 };
 const $failNow = ($scope) => function() {

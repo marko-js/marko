@@ -15,7 +15,7 @@ function $setup($scope) {
 }
 const $hold = ($scope) => async () => {
 	$d($scope, 5);
-	await new Promise((resolve) => setTimeout(resolve, 100));
+	await resolveAfter(0);
 };
 _resumed["__tests__/template.marko_0/hold"] = $hold;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

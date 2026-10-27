@@ -1,6 +1,8 @@
 <draft/d=input.x/>
 <action/hold=async () => {
   d = 5;
-  await new Promise((resolve) => setTimeout(resolve, 600));
+  await new Promise((resolve) => {
+    (window as any).release = resolve;
+  });
 }/>
 <button onClick=hold>${d}</button>

@@ -7,8 +7,7 @@
 
 # Update
 ```js
-document.querySelector("button").click();
-await wait(60);
+click(document);
 ```
 ```html
 <button>
@@ -21,14 +20,6 @@ UPDATE: button::text "1" => "fast"
 ```
 
 # Update
-```js
-wait(100);
-```
-
-# Update
-```js
-wait(150);
-```
 ```html
 <button>
   1

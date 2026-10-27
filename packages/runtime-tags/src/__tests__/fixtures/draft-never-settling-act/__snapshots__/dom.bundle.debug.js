@@ -25,7 +25,7 @@ const $hang = ($scope) => async () => {
 };
 const $brief = ($scope) => async () => {
 	$quick($scope, "quick");
-	await new Promise((resolve) => setTimeout(resolve, 50));
+	await resolveAfter(0);
 };
 _resumed["__tests__/template.marko_0/hang"] = $hang;
 _resumed["__tests__/template.marko_0/brief"] = $brief;

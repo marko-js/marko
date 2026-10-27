@@ -9,6 +9,6 @@ const $input_act = /*@__PURE__*/ _const(3, ($scope) => {
 // template.marko
 const $act2 = _action(1, "a1", ($scope) => $input_act($scope.a, $scope.b));
 async function $act() {
-	await new Promise((resolve) => setTimeout(resolve, 100));
+	await resolveAfter(0);
 }
 _resumed.a0 = $act;

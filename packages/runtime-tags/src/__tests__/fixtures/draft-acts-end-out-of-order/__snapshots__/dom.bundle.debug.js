@@ -17,11 +17,11 @@ function $setup($scope) {
 }
 const $slow = ($scope) => async () => {
 	$d($scope, "slow");
-	await new Promise((resolve) => setTimeout(resolve, 250));
+	await resolveAfter(0, 2);
 };
 const $fast = ($scope) => async () => {
 	$d($scope, "fast");
-	await new Promise((resolve) => setTimeout(resolve, 100));
+	await resolveAfter(0, 1);
 };
 _resumed["__tests__/template.marko_0/slow"] = $slow;
 _resumed["__tests__/template.marko_0/fast"] = $fast;

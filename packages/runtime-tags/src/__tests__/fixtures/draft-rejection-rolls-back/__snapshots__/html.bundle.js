@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		j: failNow,
 		i: _resume(async () => {
 			d = 5;
-			await new Promise((resolve) => setTimeout(resolve, 50));
+			await resolveAfter(0);
 			throw new Error("failed");
 		}, "a0", $scope0_id) || void 0,
 		k: _resume(function() {

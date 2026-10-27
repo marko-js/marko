@@ -14,17 +14,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		fast,
 		"TagVariableChange:slow": _resume(async () => {
 			d = "slow";
-			await new Promise((resolve) => setTimeout(resolve, 250));
+			await resolveAfter(0, 2);
 		}, "__tests__/template.marko_0/slow", $scope0_id) || void 0,
 		"TagVariableChange:fast": _resume(async () => {
 			d = "fast";
-			await new Promise((resolve) => setTimeout(resolve, 100));
+			await resolveAfter(0, 1);
 		}, "__tests__/template.marko_0/fast", $scope0_id) || void 0
 	}, "__tests__/template.marko", 0, {
-		d: "2:8",
-		slow: "3:9",
-		fast: "7:9",
-		"TagVariableChange:slow": ["slowFn", "3:9"],
-		"TagVariableChange:fast": ["fastFn", "7:9"]
+		d: "3:8",
+		slow: "4:9",
+		fast: "8:9",
+		"TagVariableChange:slow": ["slowFn", "4:9"],
+		"TagVariableChange:fast": ["fastFn", "8:9"]
 	});
 }, 1);

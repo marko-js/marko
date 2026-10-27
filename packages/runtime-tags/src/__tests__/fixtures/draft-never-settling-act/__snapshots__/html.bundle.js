@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope0_id) || void 0,
 		l: _resume(async () => {
 			quick = "quick";
-			await new Promise((resolve) => setTimeout(resolve, 50));
+			await resolveAfter(0);
 		}, "a1", $scope0_id) || void 0
 	});
 }, 1);

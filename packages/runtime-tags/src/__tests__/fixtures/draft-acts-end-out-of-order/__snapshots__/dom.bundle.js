@@ -8,11 +8,11 @@ const $setup__script = _script("a4", ($scope) => _on($scope.a, "click", function
 }));
 const $slow = ($scope) => async () => {
 	$d($scope, "slow");
-	await new Promise((resolve) => setTimeout(resolve, 250));
+	await resolveAfter(0, 2);
 };
 const $fast = ($scope) => async () => {
 	$d($scope, "fast");
-	await new Promise((resolve) => setTimeout(resolve, 100));
+	await resolveAfter(0, 1);
 };
 _resumed.a0 = $slow;
 _resumed.a1 = $fast;

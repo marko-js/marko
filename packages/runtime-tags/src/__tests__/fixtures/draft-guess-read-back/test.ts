@@ -1,13 +1,10 @@
 import type { TestConfig } from "../../main.test";
+import { wait } from "../../utils/resolve";
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+function click(document: Document, index = 0) {
+  document.querySelectorAll("button")[index].click();
+}
 
 export const config: TestConfig = {
-  steps: [
-    {},
-    async (document: Document) => {
-      document.querySelector("button")!.click();
-      await wait(100);
-    },
-  ],
+  steps: [{}, (document: Document) => click(document), wait],
 };

@@ -11,7 +11,7 @@ function $setup($scope) {
 }
 const $save = ($scope) => async () => {
 	$d($scope, 2);
-	await new Promise((resolve) => setTimeout(resolve, 50));
+	await resolveAfter(0);
 	$n($scope, 3);
 };
 _resumed["__tests__/template.marko_0/save"] = $save;

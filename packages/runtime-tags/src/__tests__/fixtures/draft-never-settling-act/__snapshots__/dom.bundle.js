@@ -13,7 +13,7 @@ const $hang = ($scope) => async () => {
 };
 const $brief = ($scope) => async () => {
 	$quick($scope, "quick");
-	await new Promise((resolve) => setTimeout(resolve, 50));
+	await resolveAfter(0);
 };
 _resumed.a0 = $hang;
 _resumed.a1 = $brief;

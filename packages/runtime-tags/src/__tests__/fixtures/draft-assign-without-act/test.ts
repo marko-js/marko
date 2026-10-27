@@ -1,6 +1,9 @@
 import type { TestConfig } from "../../main.test";
+import { wait } from "../../utils/resolve";
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+function click(document: Document, index = 0) {
+  document.querySelectorAll("button")[index].click();
+}
 
 export const config: TestConfig = {
   // The debug-only warning is the point.
@@ -8,12 +11,12 @@ export const config: TestConfig = {
   steps: [
     {},
     async (document: Document) => {
-      document.querySelectorAll("button")[0].click();
-      await wait(50);
+      click(document, 0);
+      await wait();
     },
     async (document: Document) => {
-      document.querySelectorAll("button")[1].click();
-      await wait(100);
+      click(document, 1);
+      await wait();
     },
   ],
 };

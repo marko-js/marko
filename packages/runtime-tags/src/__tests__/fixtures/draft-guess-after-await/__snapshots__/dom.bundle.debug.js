@@ -11,12 +11,12 @@ function $setup($scope) {
 	$set2($scope, $set($scope));
 }
 const $outer = ($scope) => async () => {
-	await new Promise((resolve) => setTimeout(resolve, 20));
+	await resolveAfter(0, 1);
 	$scope.set();
 };
 const $set = ($scope) => async () => {
 	$d($scope, 9);
-	await new Promise((resolve) => setTimeout(resolve, 100));
+	await resolveAfter(0, 2);
 };
 _resumed["__tests__/template.marko_0/outer"] = $outer;
 _resumed["__tests__/template.marko_0/set"] = $set;

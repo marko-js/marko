@@ -8,6 +8,6 @@ const $setup__script = _script("a2", ($scope) => _on($scope.c, "click", function
 }));
 const $hold = ($scope) => async () => {
 	$d($scope, 5);
-	await new Promise((resolve) => setTimeout(resolve, 100));
+	await resolveAfter(0);
 };
 _resumed.a0 = $hold;

@@ -16,8 +16,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	child_default({ act });
 	_scope($scope0_id, {
 		"TagVariableChange:act": _resume(async () => {
-			await new Promise((resolve) => setTimeout(resolve, 100));
+			await resolveAfter(0);
 		}, "__tests__/template.marko_0/act") || void 0,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { "TagVariableChange:act": ["actFn", "1:9"] });
+	}, "__tests__/template.marko", 0, { "TagVariableChange:act": ["actFn", "2:9"] });
 }, 1);

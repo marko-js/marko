@@ -7,8 +7,7 @@
 
 # Update
 ```js
-document.querySelector("button").click();
-await wait(50);
+click(document);
 ```
 ```html
 <button
@@ -23,9 +22,6 @@ UPDATE: button[disabled] null => ""
 ```
 
 # Update
-```js
-wait(150);
-```
 ```html
 <button>
   go

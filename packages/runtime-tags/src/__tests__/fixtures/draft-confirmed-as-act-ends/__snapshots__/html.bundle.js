@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		f: save,
 		g: _resume(async () => {
 			d = 2;
-			await new Promise((resolve) => setTimeout(resolve, 50));
+			await resolveAfter(0);
 			n = 3;
 		}, "a0", $scope0_id) || void 0
 	});

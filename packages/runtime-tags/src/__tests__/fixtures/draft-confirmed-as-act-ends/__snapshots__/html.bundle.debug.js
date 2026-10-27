@@ -12,12 +12,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		save,
 		"TagVariableChange:save": _resume(async () => {
 			d = 2;
-			await new Promise((resolve) => setTimeout(resolve, 50));
+			await resolveAfter(0);
 			n = 3;
 		}, "__tests__/template.marko_0/save", $scope0_id) || void 0
 	}, "__tests__/template.marko", 0, {
-		d: "2:8",
-		save: "3:9",
-		"TagVariableChange:save": ["saveFn", "3:9"]
+		d: "3:8",
+		save: "4:9",
+		"TagVariableChange:save": ["saveFn", "4:9"]
 	});
 }, 1);

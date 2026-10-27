@@ -14,17 +14,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		outer,
 		"TagVariableChange:set": _resume(async () => {
 			d = 9;
-			await new Promise((resolve) => setTimeout(resolve, 100));
+			await resolveAfter(0, 2);
 		}, "__tests__/template.marko_0/set", $scope0_id) || void 0,
 		"TagVariableChange:outer": _resume(async () => {
-			await new Promise((resolve) => setTimeout(resolve, 20));
+			await resolveAfter(0, 1);
 			set();
 		}, "__tests__/template.marko_0/outer", $scope0_id) || void 0
 	}, "__tests__/template.marko", 0, {
-		d: "2:8",
-		set: "3:9",
-		outer: "7:9",
-		"TagVariableChange:set": ["setFn", "3:9"],
-		"TagVariableChange:outer": ["outerFn", "7:9"]
+		d: "3:8",
+		set: "4:9",
+		outer: "8:9",
+		"TagVariableChange:set": ["setFn", "4:9"],
+		"TagVariableChange:outer": ["outerFn", "8:9"]
 	});
 }, 1);

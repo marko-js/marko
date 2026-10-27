@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		g: hold,
 		h: _resume(async () => {
 			d = 5;
-			await new Promise((resolve) => setTimeout(resolve, 100));
+			await resolveAfter(0);
 		}, "a0", $scope0_id) || void 0
 	});
 }, 1);
