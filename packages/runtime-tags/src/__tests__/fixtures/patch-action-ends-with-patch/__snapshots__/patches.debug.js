@@ -33,10 +33,14 @@
 // PATCH holding CgM
 {
   "PatchChild:BranchScopes:#text/2": {
-    "PatchPending:#text/0": 1,
+    "PatchPending:#text/0": 1
+  },
+  "PatchText:#text/3": "five"
+}
+{
+  "PatchChild:BranchScopes:#text/2": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchText:#text/0": "a5"
     }
-  },
-  "PatchText:#text/3": "five"
+  }
 }

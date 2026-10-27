@@ -16,9 +16,6 @@ function pending(document: Document, expected: boolean) {
 // with no successor, or the end of the newer patch that replaced it.
 export const config: TestConfig = {
   patches: true,
-  // The acts a patch ends render a frame later: the re-patch the harness
-  // sends sees them settle.
-  same_input_divergence: "the act ends a frame after the patch",
   steps: () => [
     { label: "one", a: Promise.resolve("a1") },
     navigate(
@@ -42,7 +39,7 @@ export const config: TestConfig = {
     ),
     flushRAF,
     (document: Document) => pending(document, true),
-    { label: "five", a: Promise.resolve("a5") },
+    navigate(() => ({ label: "five", a: resolveAfter("a5") }), flushRAF),
     flushRAF,
     (document: Document) => pending(document, false),
   ],

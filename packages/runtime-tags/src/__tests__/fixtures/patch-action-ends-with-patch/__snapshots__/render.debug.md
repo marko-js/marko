@@ -191,7 +191,35 @@ UPDATE: span::text "three" => "four"
 pending(document, true);
 ```
 
-# Update `{"label":"five","a":{}}`
+# Update `{"label":"five","a":{"value":"a5"}}`
+```html
+<a
+  href="/next"
+  id="go"
+>
+  go
+</a>
+<p>
+  pending true
+</p>
+<i>
+  loading
+</i>
+<span>
+  five
+</span>
+```
+## Change
+```
+UPDATE: span::text "four" => "five"
+```
+
+# Update
+```js
+;
+```
+
+# Update `{"label":"five","a":{"value":"a5"}}`
 ```html
 <a
   href="/next"
@@ -211,7 +239,6 @@ pending(document, true);
 ```
 ## Change
 ```
-UPDATE: span::text "four" => "five"
 INSERT: p + b
 REMOVE: b + i
 ```
