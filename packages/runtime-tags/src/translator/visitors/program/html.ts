@@ -24,7 +24,7 @@ import {
   type Section,
 } from "../../util/sections";
 import {
-  addWriteScopeBuilder,
+  addSectionSubscriber,
   getBindingGetterIdentifier,
   getHTMLSectionStatements,
   getResumeRegistryId,
@@ -99,9 +99,7 @@ export default {
                 ]),
               );
 
-              addWriteScopeBuilder(currentSection, (expr) =>
-                callRuntime("_subscribe", subscribersIdentifier, expr),
-              );
+              addSectionSubscriber(currentSection, subscribersIdentifier);
               writeSlot(
                 findSectionSlot(currentSection, SlotKind.Scopes, parentSection),
                 subscribersIdentifier,

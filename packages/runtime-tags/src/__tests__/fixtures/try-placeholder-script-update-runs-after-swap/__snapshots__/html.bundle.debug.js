@@ -17,7 +17,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope3_id, {}, "__tests__/template.marko", "13:4");
 		});
 		_script($scope1_id, "__tests__/template.marko_1_n#0:3");
-		_subscribe($m__closures, _subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"), "__tests__/template.marko_1_n#0:3/subscribe"), "__tests__/template.marko_1_m#0:4/subscribe");
+		const $scope1_write = _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2");
+		_subscribe($n__closures, $scope1_write, "__tests__/template.marko_1_n#0:3/subscribe");
+		_subscribe($m__closures, $scope1_write, "__tests__/template.marko_1_m#0:4/subscribe");
 	}, () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();

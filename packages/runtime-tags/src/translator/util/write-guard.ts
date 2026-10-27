@@ -191,23 +191,49 @@ export function getWriteGuardForAny(
   return expr || t.numericLiteral(0);
 }
 
+// Whether a section writes for a reason at all, and under which guard: `false`
+// when never, `true` when always, the guard when only for some params.
+function getWritesGate(
+  section: Section,
+  reason: undefined | Reason,
+): true | false | t.Expression {
+  const ownReason = mapBodyParams(section, reason);
+  if (!isGuardedReason(ownReason)) return !!ownReason;
+  const bit = getGroupsBit(ownReason.param);
+  if (bit !== undefined) return bit === 1;
+  return orEachParamGroup(ownReason.param, "_write_if") || true;
+}
+
 // The expression where the server writes it: `undefined` where it never does.
 export function getExprIfWritten(
   section: Section,
   reason: undefined | Reason,
   expr: t.Expression,
 ) {
-  const ownReason = mapBodyParams(section, reason);
-  if (!isGuardedReason(ownReason)) {
-    return ownReason && expr;
-  }
-
-  const bit = getGroupsBit(ownReason.param);
-  if (bit !== undefined) return bit ? expr : undefined;
-  return andGuard(orEachParamGroup(ownReason.param, "_write_if"), expr);
+  const gate = getWritesGate(section, reason);
+  return gate === true
+    ? expr
+    : gate === false
+      ? undefined
+      : andGuard(gate, expr);
 }
 
-// Whether the server ever writes what the reason guards, where `section` reads it.
+// The same gate over a run of statements. `getExprIfWritten` can only wrap one
+// expression, so a write that needs several statements — a scope and each of
+// its subscriptions — would have to nest them into that one.
+export function getStatementsIfWritten(
+  section: Section,
+  reason: undefined | Reason,
+  stmts: t.Statement[],
+): undefined | t.Statement[] {
+  if (!stmts.length) return;
+  const gate = getWritesGate(section, reason);
+  if (gate === false) return;
+  if (gate === true) return stmts;
+  const test = t.isParenthesizedExpression(gate) ? gate.expression : gate;
+  return [t.ifStatement(test, t.blockStatement(stmts))];
+}
+
 export function isEverWritten(section: Section, reason: undefined | Reason) {
   const ownReason = mapBodyParams(section, reason);
   return isGuardedReason(ownReason)
@@ -259,6 +285,7 @@ export function getWriteBit(section: Section, reason: undefined | Reason) {
 }
 
 // `1` where some group is always written, `0` where every group never is.
+
 function getGroupsBit(params: Sources["param"]) {
   return reduceParamGroups(params, addGroupBit, 0 as number | undefined);
 }
