@@ -13,7 +13,9 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope2_id = _scope_id();
 			_html(`<div>${_text_resume($scope2_id, "a", a)}</div><div>${_text_resume($scope2_id, "b", b)}</div>`);
-			_subscribe($b__closures, _subscribe($a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0"), "a1");
+			const $scope2_write = _scope($scope2_id, { _: _scope_with_id($scope1_id) });
+			_subscribe($a__closures, $scope2_write, "a0");
+			_subscribe($b__closures, $scope2_write, "a1");
 		}
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, void 0, () => {

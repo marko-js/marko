@@ -15,7 +15,9 @@ var template_default = _template("a", (input) => {
 			let local = n;
 			_html(`<p>${_text_resume($scope2_id, "a", 3)}</p><span>${_escape(local)}</span>`);
 			_script($scope2_id, "a0");
-			_subscribe($m__closures, _subscribe($n__closures, _scope($scope2_id, {}), "a1"), "a2");
+			const $scope2_write = _scope($scope2_id, {});
+			_subscribe($n__closures, $scope2_write, "a1");
+			_subscribe($m__closures, $scope2_write, "a2");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

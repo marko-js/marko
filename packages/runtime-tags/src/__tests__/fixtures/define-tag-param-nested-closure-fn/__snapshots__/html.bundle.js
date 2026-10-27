@@ -37,11 +37,12 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id();
 		E.content({ show: on });
 		_html(`<p>${_text_resume($scope1_id, "b", input.a, $wg__input_a)}</p>`);
+		const $scope1_guard = $wg__input_a || $wg__on;
 		($wi__input_a || $wi__on) && _subscribe($wi__input_a && $input_a__closures, _scope($scope1_id, {
 			_: $wi__input_a && _scope_with_id($scope0_id),
 			a: $wi__on && _existing_scope($childScope)
-		}), "a4", $wg__input_a || $wg__on);
-		$wg__input_a || $wg__on || ($wi__input_a || $wi__on) && _resume_branch($scope1_id);
+		}), "a4", $scope1_guard);
+		$scope1_guard || ($wi__input_a || $wi__on) && _resume_branch($scope1_id);
 	}, $scope0_id) };
 	_set_scope_reason($wg__input_x << 1);
 	const $childScope2 = _peek_scope_id();

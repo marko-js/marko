@@ -25,10 +25,12 @@ var child_default = _template("b", (input) => {
 			_html("content");
 		}, $scope1_id));
 		_var($scope1_id, "b", $inputa11yTextbutton_scope, "b2");
-		_subscribe($wi__input_a11yText && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
+		const $scope1_write = _scope($scope1_id, {
 			c: $btn,
 			_: $wi__input_a11yText && _scope_with_id($scope0_id)
-		})), "b3");
+		});
+		_subscribe($wrapper_content__subscribers, $scope1_write);
+		_subscribe($wi__input_a11yText && $input_a11yText__closures, $scope1_write, "b3");
 	}, $scope0_id) });
 	const $return = { btn: $btn_getter };
 	_scope($scope0_id, {

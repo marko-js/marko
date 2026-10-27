@@ -31,8 +31,13 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
 			_html(`<em>${_text_resume($scope2_id, "a", item, $wg__input_items)} ${_text_resume($scope2_id, "b", input.note, $wg__input_note * 2)}</em>`);
-			$wi__input_items__OR__input_note__OR__input_on && _subscribe($wi__input_items && $for_content__item__closures, _subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1", $wg__input_items || $wg__input_note), "a2", $wg__input_items || $wg__input_note);
-			$wg__input_items || $wg__input_note || $wi__input_items__OR__input_note__OR__input_on && _resume_branch($scope2_id);
+			const $scope2_guard = $wg__input_items || $wg__input_note;
+			if (_write_if($scope0_reason, 1)) {
+				const $scope2_write = _scope($scope2_id, { _: _scope_with_id($scope1_id) });
+				_subscribe($wi__input_note && $input_note__closures, $scope2_write, "a1", $scope2_guard);
+				_subscribe($wi__input_items && $for_content__item__closures, $scope2_write, "a2", $scope2_guard);
+			}
+			$scope2_guard || $wi__input_items__OR__input_note__OR__input_on && _resume_branch($scope2_id);
 		}, $scope1_id, ($scope) => [{ e: input.note }, {
 			c: item,
 			_: $scope($scope0_id)

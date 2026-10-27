@@ -41,10 +41,12 @@ var template_default = _template("a", (input) => {
 		_await($scope2_id, "a", resolveAfter("body", 2), (body) => {
 			const $scope3_id = _scope_id();
 			_dynamic_tag($scope3_id, "a", tag, { label: `${body} ${clicks}` });
-			_subscribe($tag__closures, _subscribe($clicks__closures, _scope($scope3_id, {
+			const $scope3_write = _scope($scope3_id, {
 				c: body,
 				Cg: 1
-			}), "a1"), "a2");
+			});
+			_subscribe($clicks__closures, $scope3_write, "a1");
+			_subscribe($tag__closures, $scope3_write, "a2");
 		});
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

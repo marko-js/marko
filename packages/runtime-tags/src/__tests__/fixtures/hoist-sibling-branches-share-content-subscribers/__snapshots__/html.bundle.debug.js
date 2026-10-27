@@ -36,8 +36,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, $wg__input_b, 0, 0, 1);
-		_subscribe($wi__input_b && $input_b__closures, _subscribe($wi__input_a && $input_a__closures, _subscribe($wrap_content__subscribers, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2")), "__tests__/template.marko_1_input_a#0:4/subscribe", $wg__input_a || $wg__input_b), "__tests__/template.marko_1_input_b#0:5/subscribe", $wg__input_a || $wg__input_b);
-		$wg__input_a || $wg__input_b || _resume_branch($scope1_id);
+		const $scope1_guard = $wg__input_a || $wg__input_b;
+		const $scope1_write = _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
+		_subscribe($wrap_content__subscribers, $scope1_write);
+		_subscribe($wi__input_a && $input_a__closures, $scope1_write, "__tests__/template.marko_1_input_a#0:4/subscribe", $scope1_guard);
+		_subscribe($wi__input_b && $input_b__closures, $scope1_write, "__tests__/template.marko_1_input_b#0:5/subscribe", $scope1_guard);
+		$scope1_guard || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_html(`<button>set</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
