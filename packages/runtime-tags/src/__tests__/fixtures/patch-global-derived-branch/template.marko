@@ -1,0 +1,10 @@
+server import { collect, collected } from "./collect";
+<main>
+  <for|item| of=input.items>
+    <p>${collect($global, item)}</p>
+  </for>
+  <const/summary=collected($global)/>
+  <if=summary>
+    <html-style>${summary}</html-style>
+  </if>
+</main>

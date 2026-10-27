@@ -1,0 +1,4 @@
+<const/get=input.flag ? input.a : input.b/>
+<const/h=get ?? (() => "none")/>
+<output/el/>
+<script>el().textContent = h(); console.log("run", h())</script>

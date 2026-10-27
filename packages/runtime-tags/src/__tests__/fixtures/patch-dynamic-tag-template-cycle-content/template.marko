@@ -1,0 +1,3 @@
+import TreeA from "./tags/tree-a.marko";
+<define/Card|{ node }|><b>${node.name}</b></define>
+<ul><${input.deep ? TreeA : Card} node=input.node/></ul>

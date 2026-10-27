@@ -1,0 +1,11 @@
+<let/count=0/>
+<main>
+  <if=input.show>
+    <const/seen=(count + 1)/>
+    <p>Seen ${seen}</p>
+    <script>
+      document.querySelector("main")!.dataset.seen = String(seen);
+    </script>
+  </if>
+  <button onClick() { count++ }>+</button>
+</main>

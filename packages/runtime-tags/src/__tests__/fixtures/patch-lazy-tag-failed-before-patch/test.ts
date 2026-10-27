@@ -1,0 +1,19 @@
+import type { TestConfig } from "../../main.test";
+import { wait } from "../../utils/resolve";
+
+const load = (document: Document) => {
+  setTimeout(() => document.body.click());
+};
+
+// The lazy chunk fails with NO patch waiting for it: the page must stay as
+// it is (no reload), and a later flush naming the dead module rejects into
+// navigation instead of parking forever.
+export const config: TestConfig = {
+  // Debug intentionally logs the load-failure diagnostic optimize cannot.
+  skip_parity: true,
+  patches: true,
+  equivalent: false,
+  expect_rejection: true,
+  reject_load: ["child.mjs"],
+  steps: [{ label: "a" }, load, wait, { label: "b" }],
+};

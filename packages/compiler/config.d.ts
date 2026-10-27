@@ -4,6 +4,9 @@ declare const Config: {
   output?: "html" | "dom" | "migrate" | "source" | "hydrate";
   /** Compiles a page or lazy-load entry instead of a module; requires `linkAssets`. */
   entry?: EntryKind;
+  /** Enables the patch protocol: pages patched in place across navigations.
+   * @experimental The protocol and its API may change in a minor release. */
+  patches?: boolean;
   /** Links page and lazy-load assets through `runtime`'s `flush`, which a page entry installs as it
    * evaluates; an integration must render templates only after a page entry module has loaded. */
   linkAssets?: {

@@ -1,0 +1,6 @@
+<let/last=""/>
+<fieldset>
+  <input.a type="checkbox" checkedValue=input.picked checkedValueChange(next: string[]) { last = next.join(",") } value="a">
+  <input.b type="checkbox" checkedValue=input.picked checkedValueChange(next: string[]) { last = next.join(",") } value="b">
+</fieldset>
+<p>${last}</p>

@@ -1,0 +1,7 @@
+<let/n=0/>
+<button onClick() { n++ }>${n}</button>
+<ul>
+  <for|item| of=input.items>
+    <li>${item}:${$global.x}:${n}</li>
+  </for>
+</ul>

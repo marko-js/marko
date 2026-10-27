@@ -1,0 +1,6 @@
+<let/count=0/>
+<for|row| of=input.rows>
+  <const/item=row.item/>
+  <tagged label=`${item.id}:${count}`/>
+</for>
+<button onClick() { count++ }>+</button>

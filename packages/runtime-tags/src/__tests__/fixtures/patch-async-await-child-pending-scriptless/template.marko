@@ -1,0 +1,10 @@
+<main>
+  <if=input.show>
+    <await|value|=input.promise>
+      <pill text=value start=2/>
+    </await>
+  </if>
+  <else>
+    <em>closed</em>
+  </else>
+</main>

@@ -1,0 +1,13 @@
+<const/show=input.open/>
+<toggle-if open=show>
+  <p>if ${input.label}</p>
+</toggle-if>
+<toggle-for open=show>
+  <p>for ${input.label}</p>
+</toggle-for>
+<toggle-tag open=show>
+  <p>tag ${input.label}</p>
+</toggle-tag>
+<${show ? "div" : "section"}>
+  <p>own ${input.label}</p>
+</>

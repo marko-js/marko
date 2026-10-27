@@ -1,0 +1,11 @@
+<let/on=true/>
+<button onClick() { on = !on }>toggle</button>
+<if=on>
+  <let/x=input.v/>
+  <if=x === "a">
+    <p>A ${input.w}</p>
+  </if>
+  <else>
+    <p>B ${input.w}</p>
+  </else>
+</if>

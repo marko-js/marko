@@ -2,7 +2,7 @@ import type { Config } from "@marko/compiler";
 
 import pkg from "../../package.json" with { type: "json" };
 import coreTagLib from "./core";
-import { domRuntimeFeatures } from "./util/runtime";
+import { domPatchRuntimeFeatures, domRuntimeFeatures } from "./util/runtime";
 import runtimeInfo from "./util/runtime-info";
 import { extractVisitors } from "./util/visitors";
 import MarkoCDATA from "./visitors/cdata";
@@ -56,15 +56,23 @@ export const taglibs = [
   ],
 ];
 
+// The output's main entry first: a patch build's is its `patch` entry, the
+// runtime with that side of the protocol.
 export function getRuntimeEntryFiles(
   output: Config["output"],
   optimize: boolean,
+  patches?: boolean,
 ) {
   const runtime = `${runtimeInfo.name}${optimize ? "" : "/debug"}`;
-  if (output === "html") return [`${runtime}/html`];
+  const entry = `${runtime}/${output === "html" ? "html" : "dom"}`;
+  const entries = patches ? [`${entry}/patch`, entry] : [entry];
+  if (output === "html") return entries;
   return [
-    `${runtime}/dom`,
-    ...domRuntimeFeatures.map((feature) => `${runtime}/dom/${feature}.feat`),
+    ...entries,
+    ...(patches
+      ? [...domRuntimeFeatures, ...domPatchRuntimeFeatures]
+      : domRuntimeFeatures
+    ).map((feature) => `${runtime}/dom/${feature}.feat`),
   ];
 }
 

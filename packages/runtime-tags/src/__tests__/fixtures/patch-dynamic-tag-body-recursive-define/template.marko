@@ -1,0 +1,12 @@
+import Card from "./tags/card.marko";
+<define/Tree|{ depth }|>
+  <em>${input.note}</em>
+  <if=depth>
+    <${input.on ? Card : "div"}>
+      <Tree depth=depth - 1/>
+    </>
+  </if>
+</define>
+<main>
+  <Tree depth=1/>
+</main>

@@ -1,0 +1,14 @@
+<const/fmt=input.flag ? (s: string) => s + ":" + input.title : (s: string) => s/>
+<const/alt=input.alt || ((s: string) => s + "=" + input.title)/>
+<const/last=(0, (s: string) => s + ";" + input.title)/>
+<const/tag=(s: string) => s + "#" + input.title/>
+<let/show=true/>
+<main>
+  <if=show>
+    <card fn=fmt/>
+    <card fn=alt/>
+    <card fn=last/>
+    <card fn=tag/>
+  </if>
+  <button onClick() { show = !show }>t</button>
+</main>

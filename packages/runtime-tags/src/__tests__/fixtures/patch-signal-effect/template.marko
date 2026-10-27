@@ -1,0 +1,4 @@
+<let/count=0/>
+<div/el/>
+<effect() { const ac = new AbortController(); el().dataset.v = `${input.label}:${count}`; $signal.addEventListener("abort", () => { el().dataset.v = "gone"; }, { signal: ac.signal }); }/>
+<button onClick() { count++ }>+</button>

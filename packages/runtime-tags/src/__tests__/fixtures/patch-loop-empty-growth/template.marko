@@ -1,0 +1,9 @@
+<let/items=[]/>
+<main>
+  <ul>
+    <for|item| of=items>
+      <li>${item}</li>
+    </for>
+  </ul>
+  <button onClick() { items = [...items, "x" + items.length] }>+</button>
+</main>

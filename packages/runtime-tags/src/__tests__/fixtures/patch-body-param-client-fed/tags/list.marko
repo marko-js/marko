@@ -1,0 +1,8 @@
+<let/items=[{ id: "1", label: "one" }]/>
+<button onClick() { items = [...items, { id: String(items.length + 1), label: "new" }] }>add</button>
+<button onClick() { items = items.map((item) => ({ id: item.id + "x", label: item.label + "!" })) }>rename</button>
+<ul>
+  <for|item| of=items>
+    <li><${input.row} id=item.id label=item.label/></li>
+  </for>
+</ul>

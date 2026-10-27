@@ -1,0 +1,14 @@
+import Child from "./child.marko" with { load: "render" }
+static function boom(error: unknown): never {
+  throw error;
+}
+<define/Lazy>
+  <Child label=input.label/>
+</define>
+<try>
+  <p>${input.error ? boom(input.error) : "ok"}</p>
+  <@catch|err|>
+    <b>${(err as Error).message}</b>
+    <Lazy/>
+  </@catch>
+</try>

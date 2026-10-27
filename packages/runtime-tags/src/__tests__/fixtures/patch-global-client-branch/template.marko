@@ -1,0 +1,8 @@
+<let/open=false/>
+<main>
+  <button onClick() { open = !open }>t</button>
+  <if=open>
+    <p>${$global.brand}</p>
+    <b>${input.name + ":" + $global.brand}</b>
+  </if>
+</main>

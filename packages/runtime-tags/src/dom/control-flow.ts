@@ -253,6 +253,15 @@ export function _await_content(
   };
 }
 
+// Written only by `patches/try`: a patch page names a boundary's `@catch` and
+// `@placeholder` content by id, which may resolve to a shell.
+let boundaryContentById: undefined | ((content: unknown) => unknown);
+export function withBoundaryContentIds(
+  resolve: NonNullable<typeof boundaryContentById>,
+) {
+  boundaryContentById = resolve;
+}
+
 export function startAwait(
   scope: Scope,
   tryBranch = findTryWithPlaceholder(scope),
@@ -266,6 +275,11 @@ export function startAwait(
   }
   countAwait(awaitCounter, tryBranch, (_) => {
     // Parented beside the try for effects and awaits; the try still catches its errors.
+    if (boundaryContentById) {
+      tryBranch[AccessorProp.PlaceholderContent] = boundaryContentById(
+        tryBranch[AccessorProp.PlaceholderContent],
+      );
+    }
     (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
       tryBranch[AccessorProp.Global],
       (
@@ -424,6 +438,11 @@ export function renderCatch(scope: Scope, error?: unknown) {
       ] = placeholderBranch;
       destroyBranch(tryWithCatch);
     }
+    if (boundaryContentById) {
+      tryWithCatch[AccessorProp.CatchContent] = boundaryContentById(
+        tryWithCatch[AccessorProp.CatchContent],
+      );
+    }
     const catchContent = tryWithCatch[AccessorProp.CatchContent]();
     setBranch(
       owner,
@@ -447,7 +466,7 @@ export function renderCatch(scope: Scope, error?: unknown) {
 
 // `ParentBranch` links a branch to its enclosing one (on resume through the serialized
 // closest branch id and markers), and a `@placeholder` is parented beside its `<try>`.
-function findTryWithPlaceholder(scope: Scope) {
+export function findTryWithPlaceholder(scope: Scope) {
   let branch = scope[AccessorProp.ClosestBranch];
   while (branch && !branch[AccessorProp.PlaceholderContent]) {
     branch = branch[AccessorProp.ParentBranch];

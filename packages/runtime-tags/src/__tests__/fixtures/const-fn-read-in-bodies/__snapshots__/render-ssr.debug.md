@@ -1,0 +1,60 @@
+# Render `{"a":"A","x":true,"items":[1,2],"value":{}}`
+```html
+<span>
+  A
+</span>
+<em>
+  A1
+</em>
+<span>
+  A
+</span>
+<em>
+  A2
+</em>
+<b>
+  vA
+</b>
+<i>
+  A
+</i>
+<button
+  class="inc"
+>
+  0
+</button>
+```
+
+# Update
+```js
+document.querySelector(".inc").click();
+```
+```html
+<span>
+  A
+</span>
+<em>
+  A1
+</em>
+<span>
+  A
+</span>
+<em>
+  A2
+</em>
+<b>
+  vA
+</b>
+<i>
+  A
+</i>
+<button
+  class="inc"
+>
+  1
+</button>
+```
+## Change
+```
+UPDATE: .inc::text "0" => "1"
+```

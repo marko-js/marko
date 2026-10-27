@@ -1,0 +1,16 @@
+<let/open=false/>
+<define/Inner|{ isOpen, label }|>
+  <if=isOpen>
+    <em>${label}</em>
+  </if>
+</define>
+<define/Outer|{ isOpen, label }|>
+  <Inner isOpen=isOpen label=label/>
+  <Inner isOpen=true label=label/>
+</define>
+<if=input.show>
+  <Outer isOpen=input.open label=input.label/>
+</if>
+<const/Tag=input.other ? "div" : Inner/>
+<${Tag} isOpen=!open label=input.label + "!"/>
+<button onClick() { open = !open }>toggle</button>

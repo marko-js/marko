@@ -1,0 +1,7 @@
+<let/items=[{ id: 1 }, { id: 2 }, { id: 3 }]/>
+<button onClick() { items = items.filter((item) => item.id !== 2) }>drop</button>
+<ul>
+  <for|item| of=items by="id">
+    <li>${item.id}: ${input.label}</li>
+  </for>
+</ul>

@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/n=0/>
+<main>
+  <h1>${input.title}</h1>
+  <try>
+    <@placeholder>loading</@placeholder>
+    <await|value|=resolveAfter("v" + n, n)>
+      <em>${value}</em>
+    </await>
+  </try>
+  <button onClick() { n++ }>Next</button>
+</main>

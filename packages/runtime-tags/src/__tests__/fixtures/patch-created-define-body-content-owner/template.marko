@@ -1,0 +1,10 @@
+<let/count=0/>
+<define/Wrap|{ content }|>
+  <p>${count}</p>
+  <div><${content}/></div>
+</define>
+<if=input.show>
+  <let/n=0/>
+  <Wrap><button onClick() { n++ }>${input.label}:${n}</button></Wrap>
+</if>
+<button onClick() { count++ }>+</button>

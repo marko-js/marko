@@ -1,0 +1,9 @@
+<let/count=0/>
+<define/Show|{ value }|>
+  <const/label=value/>
+  <if=(count > 0 && label)>
+    <p>${label}</p>
+  </if>
+</define>
+<Show value=input.label/>
+<button onClick() { count++ }>+</button>

@@ -1,0 +1,8 @@
+import Child from "./child.marko" with { load: "render" }
+
+<main>
+  <if=input.show>
+    <div ...input.attrs>x</div>
+    <Child label=input.label/>
+  </if>
+</main>

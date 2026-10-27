@@ -1,0 +1,7 @@
+<let/open=true/>
+<button onClick() { open = !open }>t</button>
+<if=open>
+  <p>${$global.o.x}</p>
+</if>
+<div/el/>
+<script>el().textContent = $global.o.x + $global.k</script>

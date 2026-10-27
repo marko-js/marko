@@ -1,0 +1,8 @@
+<let/v="b"/>
+<select value:=v>
+  <option ...input.a>${input.label}</option>
+  <option value="b">b</option>
+  <option value="c" ...input.c>c</option>
+</select>
+<span>${v}</span>
+<button onClick() { v = v === "b" ? "c" : "b" }>t</button>

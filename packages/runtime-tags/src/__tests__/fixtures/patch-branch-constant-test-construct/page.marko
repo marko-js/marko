@@ -1,0 +1,16 @@
+static const ITEMS = ["a", "b"];
+<for|m| of=ITEMS>
+  <panel>
+    <@aside>
+      <span>${m}</span>
+      <if=m === "b">
+        <if=input.down>
+          <p>down</p>
+        </if>
+        <else>
+          <p>up</p>
+        </else>
+      </if>
+    </@aside>
+  </panel>
+</for>

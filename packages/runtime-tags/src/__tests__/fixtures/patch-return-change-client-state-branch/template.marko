@@ -1,0 +1,6 @@
+<let/last="none"/>
+<if=input.show>
+  <counter-box/count onA(v) { last = input.p + "a" + v } onB(v) { last = input.p + "b" + v }/>
+  <button.set onClick() { count = 5 }>set</button>
+</if>
+<p>${last}</p>

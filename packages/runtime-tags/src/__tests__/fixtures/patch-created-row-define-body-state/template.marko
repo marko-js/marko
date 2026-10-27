@@ -1,0 +1,13 @@
+<let/count=0/>
+<define/Info|{ id, value }|>
+  <try>
+    <await|v|=value>
+      <p>${id}:${v}:${count}</p>
+    </await>
+    <@placeholder>loading ${id}</@placeholder>
+  </try>
+</define>
+<for|item| of=input.items>
+  <Info id=item value=input.value/>
+</for>
+<button onClick() { count++ }>+</button>

@@ -1,0 +1,9 @@
+import Lazy from "./lazy.marko" with { load: "render" }
+<let/items=[] as string[]/>
+<button.open onClick() { items = [...items, "c" + items.length] }>open</button>
+<if=input.show>
+  <Lazy label="s"/>
+</if>
+<for|item| of=items>
+  <Lazy label=item/>
+</for>

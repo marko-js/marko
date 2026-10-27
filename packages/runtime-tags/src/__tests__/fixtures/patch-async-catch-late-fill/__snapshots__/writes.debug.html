@@ -1,0 +1,33 @@
+<main><!--M_[--><!--M_!^b-->
+  <script>
+    WALKER_RUNTIME("M")("_").patchBuild = "b";
+    M._.r = [_ => [1, {
+      input_title: "first",
+      n: 0,
+      "ClosureScopes:input_title/8": new Set
+    }, {
+      _: _(1),
+      "#CatchContent": "packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-late-fill/template.marko_1*content"
+    }]]
+  </script>
+
+  <!-- FLUSH -->
+
+  <!--M_!b-->
+  <p>first<!--M_$3 #text/0-->
+    <!>boom<!--M_$3 #text/1-->
+  </p>
+  <!--M_]1 #text/0 2--><button>0<!--M_$1 #text/2--></button><!--M_$1 #button/1-->
+</main>
+<t hidden M_=b></t>
+<script>
+  REORDER_RUNTIME(M._);
+  M._.r.push(_ => [2, {
+      "#CatchContent": 0
+    }, {
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-late-fill/template.marko_1_input_title#0:5/subscribe 3 packages/runtime-tags/src/__tests__/fixtures/patch-async-catch-late-fill/template.marko_0 1"
+    );
+  M._.w()
+</script>

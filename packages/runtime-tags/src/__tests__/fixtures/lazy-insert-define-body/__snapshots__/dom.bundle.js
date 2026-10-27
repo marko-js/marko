@@ -1,0 +1,36 @@
+// template.marko
+const $Row_content__walks = "b%/&c";
+const $Row_content__template = "<!><!><!>";
+let $load_Lazy_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy.marko.setup.mjs"));
+let $load_Lazy_tag_input_label = /*@__PURE__*/ _load_signal(($_) => import("./v:lazy.marko.input_label.mjs"));
+const $if_content2__setup = ($scope) => {
+	$Row_content__setup($scope.a);
+	$Row_content__label($scope.a, "c");
+};
+const $Row_content__setup = ($scope) => $load_Lazy_setup($scope, $scope.b, $scope.a);
+const $Row_content__label = ($scope, label) => $load_Lazy_tag_input_label($scope.b, label);
+const $if2 = /*@__PURE__*/ _if(2, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks), $if_content2__setup);
+const $open = /*@__PURE__*/ _let(6, ($scope) => $if2($scope, $scope.g ? 0 : 1));
+const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
+	$open($scope, true);
+}));
+
+// lazy.marko
+const $template = "<button class=child><!>:<!></button>";
+const $walks = " D%c%l";
+const $count = /*@__PURE__*/ _let(6, ($scope) => _text($scope.c, $scope.g));
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+	$count($scope, +$scope.g + 1);
+}));
+function $setup($scope) {
+	$count($scope, 0);
+	$setup__script($scope);
+}
+const $input_label = ($scope, input_label) => _text($scope.b, input_label);
+
+// v:lazy.marko.setup.js
+const _ = [
+	$template,
+	$walks,
+	$setup
+];

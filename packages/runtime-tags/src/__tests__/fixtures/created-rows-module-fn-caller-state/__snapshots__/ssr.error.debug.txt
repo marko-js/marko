@@ -1,0 +1,1 @@
+Unable to serialize "fmt" in packages/runtime-tags/src/__tests__/fixtures/created-rows-module-fn-caller-state/tags/rowsx.marko:3:25. Values referenced in the browser must be serializable.

@@ -1,0 +1,9 @@
+<h1>B</h1>
+<let/count=0/>
+<const/p=input.note/>
+<for|item| of=[1, 2]>
+  <card title=item>
+    <span>${p}/${count}/${item}</span>
+  </card>
+</for>
+<button onClick() { count++ }>${count}</button>

@@ -1,0 +1,10 @@
+static function boom(): never {
+  throw new Error("boom");
+}
+<for|item| of=input.items by="id">
+  <try>
+    <let/n=0/>
+    <button onClick() { n++ }>${item.fail ? boom() : item.id}${n ? boom() : ""}</button>
+    <@catch|err|><b>${(err as Error).message}</b></@catch>
+  </try>
+</for>

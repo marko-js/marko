@@ -1,0 +1,6 @@
+<define/PlainChild|input|>
+  <p>t=${input.a + input.b}</p>
+</define>
+<let/tab=0>
+<button onClick() { tab++ }>+</button>
+<if=input.show><PlainChild a=tab b=input.x/></if>

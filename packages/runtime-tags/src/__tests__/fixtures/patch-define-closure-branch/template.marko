@@ -1,0 +1,8 @@
+<let/open=false/>
+<define/Panel|{ label }|>
+  <if=open>
+    <em>${label}</em>
+  </if>
+</define>
+<Panel label=input.label/>
+<button onClick() { open = !open }>toggle</button>

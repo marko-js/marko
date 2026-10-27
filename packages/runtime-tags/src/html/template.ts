@@ -25,6 +25,8 @@ export type ServerRenderer = ((...args: unknown[]) => unknown) & {
   [RendererProp.Embed]?: boolean;
   // A debug build marks a lazily loaded template, for a dynamic tag variable check.
   [RendererProp.Lazy]?: 1;
+  // A lazy template's ready id (`withLoadAssets`).
+  [RendererProp.ReadyId]?: string;
 };
 
 export const _template = (
@@ -40,6 +42,11 @@ export const _template = (
     (renderer as unknown as Template).mount = () => {
       throw new Error(
         `mount() is not implemented for the HTML compilation of a Marko template`,
+      );
+    };
+    (renderer as unknown as Template).patch = () => {
+      throw new Error(
+        `patch() is only implemented for templates compiled with the \`patches\` option`,
       );
     };
   }

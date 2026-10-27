@@ -1,0 +1,9 @@
+<let/mode=false/>
+<button onClick() { mode = !mode }>toggle</button>
+<define/one>
+  <em>one ${input.b}</em>
+</define>
+<define/two>
+  <strong>two ${input.b}</strong>
+</define>
+<section content=(mode ? one : two)/>

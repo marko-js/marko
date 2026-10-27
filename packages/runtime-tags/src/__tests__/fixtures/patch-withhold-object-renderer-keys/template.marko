@@ -1,0 +1,8 @@
+import Card from "./tags/card.marko";
+
+<let/m=false/>
+<holder mode=(m || input.mode)/>
+<main>
+  <${input.on ? Card : "div"}><em>${input.note}</em></>
+</main>
+<button.m onClick() { m = !m }>m</button>

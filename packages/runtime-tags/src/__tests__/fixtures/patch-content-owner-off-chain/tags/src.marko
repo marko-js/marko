@@ -1,0 +1,7 @@
+<let/count=0/>
+<holder/h>
+  <for|t| of=input.items>
+    <@tab><button onClick() { count++ }>${t} ${count}</button></@tab>
+  </for>
+</holder>
+<return=h/>

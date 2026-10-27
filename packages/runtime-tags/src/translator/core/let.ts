@@ -101,6 +101,7 @@ export default {
     setDerivedFrom(binding, tagExtra);
 
     if (valueChangeAttr) {
+      valueChangeAttr.value.extra!.changeHandler = true;
       const changeSlot = ensureSlot(binding, SlotKind.ChangeHandler);
       // The runtime reads the change handler at the value's reserved id.
       reserveId(binding, ReservedId.ChangeHandler);

@@ -1,0 +1,7 @@
+<let/settled=false>
+<div>${settled ? "settled" : "pending"}</div>
+<script>
+  input.promise.then(() => {
+    settled = true;
+  });
+</script>

@@ -1,0 +1,7 @@
+<const/data=$global.data>
+<let/open=false/>
+<button onClick() { open = !open }>toggle</button>
+<feed-list items=data.items data=data/>
+<if=open>
+  <feed-list items=[{ id: "c" }] data={ q: "client" }/>
+</if>

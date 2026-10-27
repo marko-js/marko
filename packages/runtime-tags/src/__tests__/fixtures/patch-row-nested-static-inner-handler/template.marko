@@ -1,0 +1,7 @@
+<let/count=0/>
+<for|row| of=input.rows>
+  <for|c| of=[1, 2]>
+    <button.r onClick() { count += c * 10 + row }>x</button>
+  </for>
+</for>
+<p>${count}</p>

@@ -1,0 +1,5 @@
+<let/items=[{ href: "/a", label: "A" }]/>
+<if=input.show>
+  <navlist items=items path=input.path/>
+</if>
+<button.add onClick() { items = items.concat({ href: "/b", label: "B" }) }>add</button>

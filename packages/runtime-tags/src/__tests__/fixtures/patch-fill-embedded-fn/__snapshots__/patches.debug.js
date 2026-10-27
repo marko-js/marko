@@ -1,0 +1,7 @@
+// PATCH
+{
+  "PatchMarkedWrite:input_title": "b",
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-fill-embedded-fn/template.marko_fill0": {
+    get: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-fill-embedded-fn/template.marko_0/mk")
+  }
+}

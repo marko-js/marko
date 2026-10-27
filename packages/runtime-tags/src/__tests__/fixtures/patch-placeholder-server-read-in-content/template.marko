@@ -1,0 +1,12 @@
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<wrap>
+  <try>
+    <await=input.promise>
+      <div id="done">done</div>
+    </await>
+    <@placeholder>
+      <em>loading ${input.msg}</em>
+    </@placeholder>
+  </try>
+</wrap>

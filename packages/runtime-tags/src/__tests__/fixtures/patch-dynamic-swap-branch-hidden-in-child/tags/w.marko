@@ -1,0 +1,13 @@
+<define/A|{ x }|>
+  <u>A</u>
+  <if=input.show>
+    <button onClick() { console.log(x) }>a</button>
+  </if>
+</define>
+<define/B|{ x }|>
+  <u>B</u>
+  <if=input.show>
+    <button onClick() { console.log(x) }>b</button>
+  </if>
+</define>
+<${input.flag ? A : B} x=input.x/>

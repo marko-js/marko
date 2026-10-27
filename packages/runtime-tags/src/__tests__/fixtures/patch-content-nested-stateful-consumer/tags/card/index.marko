@@ -1,0 +1,8 @@
+<let/open=false/>
+<section>
+  <h2>${input.title}</h2>
+  <if=open>
+    <grand content=input.content/>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</section>

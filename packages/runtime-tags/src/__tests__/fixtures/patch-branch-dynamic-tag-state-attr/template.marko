@@ -1,0 +1,5 @@
+<let/count=0/>
+<if=input.show>
+  <section><${input.on ? "p" : "div"} data-n=count>x</></section>
+</if>
+<button onClick() { count++ }>+</button>

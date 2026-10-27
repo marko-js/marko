@@ -76,6 +76,7 @@ export function getRuntimeEntryFiles(output, requestedTranslator) {
     return translator.getRuntimeEntryFiles(
       output,
       globalConfig.optimize ?? shouldOptimize(),
+      !!globalConfig.patches,
     );
   }
 

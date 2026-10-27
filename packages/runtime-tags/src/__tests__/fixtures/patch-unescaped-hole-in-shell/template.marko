@@ -1,0 +1,13 @@
+<main>
+  <if=input.show>
+    <div>$!{input.html}</div>
+    <div class="x">$!{input.html}</div>
+    <if=(input.show > 1)>
+      <if=input.html>
+        <div>$!{input.html}</div>
+        <div class="y">$!{input.html}</div>
+      </if>
+      <if=input.html>$!{input.html}</if>
+    </if>
+  </if>
+</main>

@@ -1,0 +1,19 @@
+// PATCH
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-style/tags/route-bar.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-style/template.marko_1*shell !#childScope/1>packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-style/tags/route-bar.marko_0;b%b// b D l& b&b;<!><!><style></style><div><div></div></div><button>+</button><!>`, {
+  "PatchBranch:#text/0": [{
+    "PatchChild:#childScope/1": {
+      "PatchChild:#childScope/0": {
+        "PatchSetup:": {
+          "PatchStyle:#style/0 --M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19created-19dynamic-19style-1btags-1bbar-1amarko_0": "40px",
+          "PatchAttr:#div/1 class": $,
+          "PatchAttr:#div/2 class": $,
+          "PatchAttr:#div/2 id": "fill"
+        }
+      },
+      "PatchSetupValues:": {
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-style/tags/route-bar.marko_fill0": 40
+      }
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-style/template.marko_1*shell"]
+}]
+;CAM

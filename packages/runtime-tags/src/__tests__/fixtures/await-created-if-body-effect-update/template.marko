@@ -1,0 +1,9 @@
+<let/n=0/>
+<button.open onClick() { n++ }>inc</button>
+<if=input.show>
+  <await|x|=Promise.resolve(input.label)>
+    <p>${x}</p>
+    <if=n % 2><em>${x}:${n}</em></if>
+    <script>console.log("await", x)</script>
+  </await>
+</if>

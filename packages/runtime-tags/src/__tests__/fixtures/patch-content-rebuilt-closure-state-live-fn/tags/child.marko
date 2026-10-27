@@ -1,0 +1,8 @@
+<let/items=[1, 2]>
+<button onClick() { items = [...items, items.length + 1] }>add</button>
+<list>
+  <for|item| of=items>
+    <@item><if=input.show><span>shown</span></if></@item>
+  </for>
+</list>
+<probe get() { return "s:" + input.show }/>

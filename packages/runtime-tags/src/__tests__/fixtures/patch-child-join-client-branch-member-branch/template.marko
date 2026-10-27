@@ -1,0 +1,8 @@
+<let/n="k"/>
+<let/s=true/>
+<let/o=true/>
+<child a=input.a b=n show=s other=o/>
+<child a=input.a b=input.b show=input.show other=o/>
+<button.n onClick() { n = n + "k" }>+</button>
+<button.o onClick() { o = !o }>o</button>
+<button.s onClick() { s = !s }>s</button>

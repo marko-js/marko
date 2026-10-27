@@ -1,0 +1,42 @@
+// tags/widget/tags/inner/index.marko
+const $template = "<em>leaf</em>";
+const $setup$1 = [[], []];
+_shells({ c: "c,<em>leaf</em>" });
+var inner_default = _template("c", (input) => {
+	_scope_reason();
+	_scope_id();
+	_html("<em>leaf</em>");
+});
+
+// tags/widget/index.marko
+const $setup = _shell_setup([[], []], ["a>", $setup$1]);
+_shells({ b: /*@__PURE__*/ ((_w0) => `b${_shell_marker($setup)};${((_w0) => `/${_w0}&`)("b")};${_w0}`)($template) });
+var widget_default = _template("b", (input) => {
+	_scope_reason();
+	const $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const $childScope = _patch_child($scope0_id, "a");
+	inner_default({});
+	$scope0_page && _scope($scope0_id, { a: _existing_scope($childScope) });
+});
+
+// template.marko
+_shells({ a: "a !a0;D%b ;<main><!><button>t</button></main>" });
+var template_default = _template("a", (input) => {
+	_scope_reason();
+	const $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	let show = true;
+	_html("<main>");
+	if ($scope0_page) _if(() => {
+		{
+			const $scope1_id = _scope_id();
+			widget_default({});
+			$scope0_page && _scope($scope1_id, {});
+			return 0;
+		}
+	}, $scope0_id, "a", 1, 1, 0, 0, 1);
+	_html(`<button>t</button>${_el_resume($scope0_id, "b")}</main>`);
+	_script($scope0_id, "a0");
+	$scope0_page && _scope($scope0_id, { c: show });
+}, 1);

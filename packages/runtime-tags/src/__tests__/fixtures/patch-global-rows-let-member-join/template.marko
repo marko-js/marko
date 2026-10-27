@@ -1,0 +1,12 @@
+<const/p=$global.data.player>
+<for|row| of=p.entries by=(row) => row.item.id>
+  <const/item=row.item>
+  <article>
+    <strong>${item.name}</strong>
+    <form>
+      <let/qty=row.qty>
+      <number-stepper value:=qty max=row.qty/>
+      <button class="sell">Sell ${qty * item.value}</button>
+    </form>
+  </article>
+</for>

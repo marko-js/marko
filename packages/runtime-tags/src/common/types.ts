@@ -4,8 +4,11 @@ import type { SignalFn } from "../dom/signals";
 import type { AccessorProp } from "./accessor.debug";
 import * as ControlledType from "./constants/controlled-type";
 import * as NodeType from "./constants/node-type";
+import * as PatchPairing from "./constants/patch-pairing";
+import * as PatchRequestKind from "./constants/patch-request-kind";
 import * as ReservedId from "./constants/reserved-id";
 import * as ResumeSymbol from "./constants/resume-symbol";
+import * as UpdatesFrom from "./constants/updates-from";
 import * as WalkCode from "./constants/walk-code";
 import * as WalkRangeSize from "./constants/walk-range-size";
 export type Falsy = undefined | null | false | 0 | "";
@@ -56,9 +59,13 @@ export {
   AccessorPrefix,
   AccessorProp,
   ClosureScopesProp,
+  PatchKey,
   ClosureSignalProp,
+  HeldFlushProp,
   KeyedScopesProp,
+  PatchPendingProp,
   PendingRenderProp,
+  RenderDataProp,
   RendererProp,
 } from "./accessor.debug";
 
@@ -103,6 +110,14 @@ export interface Template {
     position?: InsertPosition,
   ): MountedTemplate;
   render(input?: Input): RenderedTemplate;
+  /** Renders a patch for a request `patchRequestKind` reads as `PatchRequestKind.Patch`, under `patchResponseHeaders`.
+   * @experimental The patch protocol may change in a minor release. */
+  patch(
+    input?: Input,
+    headers?:
+      | Record<string, string | undefined>
+      | { get(name: string): string | null },
+  ): RenderedTemplate;
 }
 
 export interface MountedTemplate {
@@ -130,3 +145,12 @@ export type RenderedTemplate = PromiseLike<string> &
 
 type ControlledType = ControlledType.Value;
 export { ControlledType };
+
+type UpdatesFrom = UpdatesFrom.Value;
+export { UpdatesFrom };
+
+type PatchPairing = PatchPairing.Value;
+export { PatchPairing };
+
+type PatchRequestKind = PatchRequestKind.Value;
+export { PatchRequestKind };

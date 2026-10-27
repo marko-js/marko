@@ -1,0 +1,6 @@
+<let/shown=""/>
+<wrapper>
+  <const/label=input.label/>
+  <reader read=() => label onRead(value) { shown = value }/>
+</wrapper>
+<p>${shown}</p>

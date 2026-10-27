@@ -1,0 +1,15 @@
+<let/n=0/>
+<button.inc onClick() { n++ }>${n}</button>
+<if=input.show>
+  <await|user|=input.user><p>${user.name}</p></await>
+</if>
+<if=input.show>
+  <try>
+    <await|user|=input.card><card user=user/></await>
+    <@catch|err|><b>failed</b></@catch>
+  </try>
+</if>
+<${input.tag} class="box">
+  <await|user|=input.boxed><p>${user.name}</p></await>
+</>
+<p>end</p>

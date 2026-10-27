@@ -1,0 +1,15 @@
+static function link(data: { q: string }, id: string) {
+  return `/?q=${data.q}&sel=${id}`;
+}
+<const/data=$global.data>
+<let/hovered=(undefined as string | undefined)>
+<ul>
+  <for|item| of=data.items>
+    <li
+      class=(hovered === item.id ? "hovered" : undefined)
+      onMouseEnter() { hovered = item.id }
+    >
+      <card label=item.id href=link(data, item.id)/>
+    </li>
+  </for>
+</ul>

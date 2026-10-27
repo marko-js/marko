@@ -1,0 +1,17 @@
+<let/count=0/>
+<define/Inner|{ open, body }|>
+  <if=open>
+    <${body}/>
+  </if>
+</define>
+<define/Outer|{ open, body }|>
+  <section>
+    <Inner open=open body=body/>
+  </section>
+</define>
+<main>
+  <Outer open=(count % 2 === 0)>
+    <@body><em>${input.title}</em></@body>
+  </Outer>
+  <button onClick() { count++ }>+</button>
+</main>

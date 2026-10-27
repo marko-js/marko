@@ -1,0 +1,31 @@
+import LazyChild from "./lazy-child.marko" with { load: "render" }
+import Child from "./child.marko"
+static function boom(error: unknown): never {
+  throw error;
+}
+<define/LazyBody>
+  <LazyChild label=input.label/>
+</define>
+<define/ChildBody>
+  <Child label=input.label/>
+</define>
+<define/OwnBody>
+  <let/count=0/>
+  <button onClick() { count++ }>own:${count}</button>
+</define>
+<define/Inner>
+  <LazyChild label=input.label/>
+</define>
+<define/Outer>
+  <Inner/>
+</define>
+<try>
+  <p>${input.error ? boom(input.error) : "ok"}</p>
+  <@catch|err|>
+    <b>${(err as Error).message}</b>
+    <LazyBody/>
+    <ChildBody/>
+    <OwnBody/>
+    <Outer/>
+  </@catch>
+</try>

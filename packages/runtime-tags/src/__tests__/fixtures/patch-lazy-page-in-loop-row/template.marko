@@ -1,0 +1,9 @@
+import Page from "./page.marko" with { load: "render" }
+
+<let/open=false/>
+<button onClick() { open = !open }>${open ? "close" : "open"}</button>
+<ul>
+  <for|n| of=input.rows by=(n) => n>
+    <li><Page n=n/></li>
+  </for>
+</ul>

@@ -1,0 +1,12 @@
+<main>
+  <if=input.show>
+    <const/label=input.title + "!"/>
+    <p>${label}</p>
+    <if=input.inner>
+      <script>
+        document.querySelector("main").dataset.label = label + input.suffix;
+      </script>
+      <span>inner</span>
+    </if>
+  </if>
+</main>

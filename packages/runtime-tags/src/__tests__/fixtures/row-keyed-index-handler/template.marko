@@ -1,0 +1,5 @@
+<let/count=0/>
+<for|item, i| of=input.items by="id">
+  <button.r onClick() { count += (i + 1) * 100 + item.v }>${item.id}</button>
+</for>
+<p>${count}</p>

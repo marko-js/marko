@@ -1,0 +1,6 @@
+<if=input.show>
+  <card/r label=input.label/>
+  <let/shown="-"/>
+  <p>${r.fn()} ${shown}</p>
+  <button onClick() { shown = r.fn() }>show</button>
+</if>

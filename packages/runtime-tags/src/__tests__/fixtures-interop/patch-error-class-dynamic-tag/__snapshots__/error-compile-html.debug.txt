@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures-interop/patch-error-class-dynamic-tag/components/class-layout.marko:1:1
+    > 1 | class {
+        | ^^^^^ A Marko 5 (class API) template cannot compile with the experimental `patches` option, which compiles the tags API only. This one uses a class API feature (<class> tag). Migrate it to the tags API, stop rendering it, or turn `patches` off.
+      2 |   onCreate() {
+      3 |     this.state = { count: 0 };
+      4 |   }

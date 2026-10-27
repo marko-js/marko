@@ -1,0 +1,5 @@
+<let/open=true/>
+<const/g=open ? input.fn : () => "-"/>
+<output/el/>
+<script>el().textContent = g(); console.log("run", g())</script>
+<button onClick() { open = !open }>toggle</button>

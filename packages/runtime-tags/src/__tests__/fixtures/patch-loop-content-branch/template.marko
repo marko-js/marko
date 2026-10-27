@@ -1,0 +1,12 @@
+<ul>
+  <for|item| of=input.items>
+    <card title=item.t>
+      <if=item.alt>
+        <em>${item.n}</em>
+      </if>
+      <else>
+        <span>${item.n}</span>
+      </else>
+    </card>
+  </for>
+</ul>

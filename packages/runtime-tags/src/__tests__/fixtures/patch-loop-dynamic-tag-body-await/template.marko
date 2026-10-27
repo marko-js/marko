@@ -1,0 +1,6 @@
+import Card from "./tags/card.marko";
+<for|row| of=input.rows by="id">
+  <await|v|=row.p>
+    <${row.card ? Card : "div"}><b>${row.label} ${v}</b></>
+  </await>
+</for>

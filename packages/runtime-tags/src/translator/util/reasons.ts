@@ -22,11 +22,13 @@ import {
 import {
   isReferencedExtra,
   getCanonicalExtra,
+  getGlobalReads,
   getReferencedBindings,
 } from "./references";
 import {
   forEachAncestorSection,
   isSameOrAncestorSection,
+  type ParamReasonGroup,
   type ParamReasonGroups,
   type Section,
 } from "./sections";
@@ -34,11 +36,13 @@ import { ensureSectionSlot, ensureSlot, type Slot, SlotKind } from "./slots";
 import {
   compareSources,
   ALWAYS,
+  globalSources,
   mergeSources,
   type Sources,
   sourcesUtil,
   withSources,
 } from "./sources";
+import { getSlotWriteReason } from "./write-guard";
 
 // Alternatives any one of which leads to a read (a chain's branches, a
 // section's dom nodes); a guard answers for the set.
@@ -49,12 +53,18 @@ export type Reasons = SortedOneMany<Sources>;
 export type Reason = Sources;
 
 export function addReason(slot: Slot, reason: undefined | false | Reason) {
-  if (reason) {
-    const curReason = slot.reason;
-    const newReason = mergeSources(curReason, reason);
-    if (curReason !== newReason) {
-      setSlotReason(slot, newReason);
-    }
+  // A value read for a `$global` alone is never read after resume (the client
+  // reads the globals object); what a slot holds or renders keeps it.
+  if (reason && (reason.state || reason.param || reason.always)) {
+    mergeIntoSlot(slot, reason);
+  }
+}
+
+function mergeIntoSlot(slot: Slot, reason: Reason) {
+  const curReason = slot.reason;
+  const newReason = mergeSources(curReason, reason);
+  if (curReason !== newReason) {
+    setSlotReason(slot, newReason);
   }
 }
 
@@ -129,9 +139,12 @@ export function isStateReason(reason: undefined | Reason): reason is Sources {
 
 export function getSourcesForExpr(expr: t.NodeExtra) {
   const root = getCanonicalExtra(expr);
-  return isReferencedExtra(root)
-    ? getSourcesForRef(getReferencedBindings(root))
-    : undefined;
+  if (isReferencedExtra(root)) {
+    const sources = getSourcesForRef(getReferencedBindings(root));
+    return getGlobalReads(root)
+      ? mergeSources(globalSources, sources)
+      : sources;
+  }
 }
 
 export function getSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {
@@ -287,7 +300,8 @@ export function applyReasonExprs(section: Section) {
 }
 
 function applySlotExprs(slot: Slot) {
-  addReason(slot, getSourcesForExprs(slot.reasonExprs));
+  const reason = getSourcesForExprs(slot.reasonExprs);
+  if (reason) mergeIntoSlot(slot, reason);
 }
 
 export function mergeSlotReasons(section: Section) {
@@ -306,15 +320,15 @@ export function getNodeReasons(section: Section) {
 }
 
 function addNodeReason(reasons: Reasons | undefined, slot: Slot) {
-  return slot.reason &&
+  const reason =
     slot.kind === SlotKind.Value &&
-    slot.owner.type === BindingType.dom
-    ? sourcesUtil.add(reasons, slot.reason)
-    : reasons;
+    slot.owner.type === BindingType.dom &&
+    getSlotWriteReason(slot);
+  return reason ? sourcesUtil.add(reasons, reason) : reasons;
 }
 
-// Moves when a slot's reason gains a source or a section gains a param reason
-// group; both only grow, so a pass repeating until this holds settles.
+// Moves when a slot's reason or a section's param reason groups or structural
+// params grow; all only grow, so a pass repeating until this holds settles.
 let reasonsVersion = 0;
 export function getReasonsVersion() {
   return reasonsVersion;
@@ -334,6 +348,21 @@ export function setParamReasonGroups(
 ) {
   reasonsVersion++;
   section.paramReasonGroups = groups;
+}
+
+// Exists as the single point of adding structural params: call sites roll
+// them up from their callees', so a new one moves the version too.
+export function addStructuralParams(
+  section: Section,
+  params: ParamReasonGroup,
+) {
+  if (!bindingUtil.isSuperset(section.structuralParams, params)) {
+    reasonsVersion++;
+    section.structuralParams = bindingUtil.union(
+      section.structuralParams,
+      params,
+    );
+  }
 }
 
 // Merges rebuild equal sources, so only a change in them counts.

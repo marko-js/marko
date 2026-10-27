@@ -1,0 +1,7 @@
+<let/count=0/>
+<main>
+  <panel open=(count % 2 === 0)>
+    <@body><em>${input.title}</em></@body>
+  </panel>
+  <button onClick() { count++ }>+</button>
+</main>

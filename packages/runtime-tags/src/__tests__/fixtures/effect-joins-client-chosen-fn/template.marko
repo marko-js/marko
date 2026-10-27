@@ -1,0 +1,7 @@
+<let/upper=false/>
+<let/n=0/>
+<const/up=() => "U" + input.title/>
+<const/low=() => "l" + input.title/>
+<const/pick=upper ? up : low/>
+<script>console.log("run", pick(), n)</script>
+<button onClick() { upper = !upper; n++ }>toggle</button>

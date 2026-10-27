@@ -1,0 +1,15 @@
+<define/Card|{ label, content }|>
+  <p>${label}<if=label><${content}/></if></p>
+</define>
+<for|row| of=input.rows by="id">
+  <let/n=0/>
+  <define/Label><em>${row.label} ${n}</em></define>
+  <section>
+    <button onClick() { n++ }>${n}</button>
+    <Card label="direct"><i>${row.label} ${n}</i></Card>
+    <${row.card ? Card : "span"} label="dynamic"><b>${row.label} ${n}</b></>
+    <for|tag| of=row.tags>
+      <${row.card ? Card : "span"} label=tag content=Label/>
+    </for>
+  </section>
+</for>

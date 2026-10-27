@@ -1,0 +1,6 @@
+import Badge from "./tags/badge.marko";
+<let/open=false/>
+<button onClick() { open = !open }>t</button>
+<if=open>
+  <${input.plain ? "span" : Badge}/>
+</if>

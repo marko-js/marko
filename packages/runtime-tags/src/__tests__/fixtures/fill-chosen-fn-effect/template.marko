@@ -1,0 +1,17 @@
+<pre id="log"></pre>
+<div/el id="d"/>
+<const/fa=() => "a:" + el().id/>
+<const/fb=() => "b:" + el().id/>
+<const/pick=input.upper ? fa : fb/>
+<let/open=false/>
+<main>
+  <if=open>
+    <p>${typeof pick}</p>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>
+<script>
+  const log = document.getElementById("log");
+  log.textContent += log.last === pick ? "same;" : "new;";
+  log.last = pick;
+</script>

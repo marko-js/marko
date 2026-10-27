@@ -1,0 +1,13 @@
+<let/open=false/>
+<define/Panel|{ isOpen, label }|>
+  <if=isOpen><em>${label}</em></if>
+  <script>console.log("effect", label, isOpen)</script>
+  <return=label + "!"/>
+</define>
+<if=input.show>
+  <Panel/r isOpen=true label="k"/>
+  <b>${r}</b>
+</if>
+<const/Tag=input.other ? "div" : Panel/>
+<${Tag} isOpen=!open label=input.label/>
+<button id="t" onClick() { open = !open }>toggle</button>

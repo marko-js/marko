@@ -1,0 +1,6 @@
+static function read(reads) {
+  reads.count++;
+}
+<let/count=input.start/>
+<span>box ${count}</span>
+<return=count valueChange=read(input.reads) || function (v) { count = v }/>

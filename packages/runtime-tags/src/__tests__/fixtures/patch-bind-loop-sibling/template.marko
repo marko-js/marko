@@ -1,0 +1,11 @@
+<for|name| of=["x", "y"] by=(n) => n>
+  <store/store/>
+  <p>${name}:${store.last}</p>
+  <for|other| of=["y", "x"] by=(n) => n>
+    <if=(input.show && other === name)>
+      <let/count=0 valueChange=store.set/>
+      <span>Seen ${count}</span>
+      <button onClick() { count++ }>+</button>
+    </if>
+  </for>
+</for>

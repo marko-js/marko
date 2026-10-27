@@ -1,0 +1,7 @@
+import Card from "./tags/card.marko";
+import Plain from "./tags/plain.marko";
+<main>
+  <${input.on ? Card : "div"}>
+    <${input.p ? Plain : "span"}><em>${input.note}</em></>
+  </>
+</main>

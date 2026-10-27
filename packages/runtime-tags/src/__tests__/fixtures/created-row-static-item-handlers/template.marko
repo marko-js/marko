@@ -1,0 +1,8 @@
+<let/count=0>
+<if=input.show>
+  <for|i| of=[1, 2]>
+    <field onKeyDown() { count += i; }/>
+    <button onClick() { count += i * 10; }>+</button>
+  </for>
+</if>
+<p>${count}</p>

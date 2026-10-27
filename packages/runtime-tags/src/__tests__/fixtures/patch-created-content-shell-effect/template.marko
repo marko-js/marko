@@ -1,0 +1,10 @@
+<let/n=0/>
+<button onClick() { n++ }>${n}</button>
+<if=input.show>
+  <wrap>
+    <@body>
+      <p>body</p>
+      <script>console.log("body setup")</script>
+    </@body>
+  </wrap>
+</if>

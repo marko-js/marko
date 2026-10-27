@@ -1,0 +1,12 @@
+import Keeper from "./tags/keeper.marko";
+import Plain from "./tags/plain.marko";
+<define/D|{ label, prev }|>
+  <define/X><em>${label}</em></define>
+  <${input.on ? Keeper : Plain} content=X/>
+  <${input.on ? Keeper : Plain} content=prev/>
+  <return=X/>
+</define>
+<main>
+  <D/first label=input.a/>
+  <D label=input.b prev=first/>
+</main>

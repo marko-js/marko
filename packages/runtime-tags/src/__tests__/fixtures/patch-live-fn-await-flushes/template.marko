@@ -1,0 +1,16 @@
+<pre id="log"></pre>
+<const/fn=() => input.x/>
+<define/Use|{ fn, where }|>
+  <script>
+    const el = document.getElementById("log");
+    el.textContent += where + ":" + (el.last === fn ? "same;" : "new;");
+    el.last = fn;
+  </script>
+</define>
+<Use fn=fn where="early"/>
+<try>
+  <await|value|=input.promise>
+    <Use fn=fn where="late"/>
+  </await>
+  <@placeholder>loading</@placeholder>
+</try>

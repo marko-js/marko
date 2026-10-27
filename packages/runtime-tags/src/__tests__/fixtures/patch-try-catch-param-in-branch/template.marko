@@ -1,0 +1,8 @@
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<if=input.show>
+  <try>
+    <await=input.promise>done</await>
+    <@catch|err|><em>${err.message} ${input.title}</em></@catch>
+  </try>
+</if>

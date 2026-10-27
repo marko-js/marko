@@ -1,0 +1,9 @@
+import Card from "./tags/card.marko";
+<define/Body><em>${input.note}</em></define>
+<main>
+  <if=input.show>
+    <await|v|=input.v>
+      <${input.on ? Card : "div"}><Body/></>
+    </await>
+  </if>
+</main>

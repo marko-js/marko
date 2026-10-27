@@ -1,0 +1,11 @@
+<main>
+  <h1>${input.title}</h1>
+  <if=input.show>
+    <p>promo</p>
+    <script>
+      const el = document.querySelector("main")!;
+      el.dataset.log =
+        (el.dataset.log || "") + "[" + input.value + ":" + $global.brand + "]";
+    </script>
+  </if>
+</main>

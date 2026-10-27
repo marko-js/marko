@@ -1,0 +1,21 @@
+<main><!--M_[--><button id=one
+    title=a>one</button><!--M_$2 a--><!--M_]1 a 2--><!--M_[--><button id=two
+    title=a>two</button><!--M_$3 a--><!--M_]1 b 3--><em>0</em></main>
+<script>
+  WALKER_RUNTIME("M")("_").n = "b";
+  M._.r = [_ => [1, {
+    f: "a",
+    k: new Set
+  }], _ => [2, {
+    Ia: {
+      click: _(1, "a0")
+    }
+  }], _ => [3, {
+    Ia: {
+      click: _(2).Ia.click
+    },
+    Ck: 1,
+    Cl: 1
+  }], "a1 2 a9 3"];
+  M._.w()
+</script>

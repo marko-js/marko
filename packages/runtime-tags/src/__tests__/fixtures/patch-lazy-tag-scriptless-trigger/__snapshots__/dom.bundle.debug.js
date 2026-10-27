@@ -1,0 +1,35 @@
+// template.marko
+const $template = "<main></main>";
+const $walks = " b";
+const $setup = ($_) => {};
+const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
+let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
+let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:child.marko.input_label.mjs"), "ready:__tests__/child.marko", $load_Child_trigger);
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._.input_label))));
+const $if_content__setup = ($scope) => {
+	$if_content__input_label._($scope);
+	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
+};
+const $if = /*@__PURE__*/ _if("#main/0", "<!><!><!>", "b%/&", $if_content__setup);
+const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
+const $input = ($scope, input) => {
+	$input_show($scope, input.show);
+	$input_label($scope, input.label);
+};
+const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", $if_content__input_label);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);
+
+// child.marko
+const $template = "<p class=child> </p>";
+const $walks = "D l";
+const $setup = ($_) => {};
+const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
+const $input = ($scope, input) => $input_label($scope, input.label);
+var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "D l", 0, $input);
+
+// v:child.marko.setup.js
+const _ = [
+	$template,
+	"D l",
+	$setup
+];

@@ -1,0 +1,20 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<main>
+  <h1>${input.title}</h1>
+  <section>
+    <try>
+      <@placeholder>loading</@placeholder>
+      <await|related|=resolveAfter(input.related, input.slow ? 1 : 0)>
+        <em>${related}</em>
+      </await>
+    </try>
+  </section>
+  <footer>
+    <await|note|=resolveAfter(input.note, input.slow ? 2 : 0)>
+      <span>${note}</span>
+    </await>
+  </footer>
+  <button onClick() { count++ }>Count ${count}</button>
+</main>

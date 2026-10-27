@@ -1,0 +1,14 @@
+static function boom(): string {
+  throw new Error("boom");
+}
+<let/fail=false>
+<button#toggle onClick() { fail = true }>fail</button>
+<try>
+  <@catch|err|>
+    <i>${err.message}</i>
+    <if=err>
+      <${input.content}/>
+    </if>
+  </@catch>
+  <if=fail>${boom()}</if>
+</try>

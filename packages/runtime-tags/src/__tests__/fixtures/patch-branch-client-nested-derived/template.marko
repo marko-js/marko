@@ -1,0 +1,11 @@
+<let/open=false/>
+<const/label=("t:" + input.title)/>
+<const/show=(input.title !== "hide")/>
+<main>
+  <if=open>
+    <if=show>
+      <p>${label}</p>
+    </if>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

@@ -1,0 +1,6 @@
+<main>
+  <h1>${input.title}</h1>
+  <input type="checkbox" checked=input.agree checkedChange(next: boolean) {
+    document.querySelector("main")!.dataset.agree = String(next);
+  }>
+</main>

@@ -1,0 +1,9 @@
+<let/open=false/>
+<define/Panel|{ label }|>
+  <const/shout=label + "!"/>
+  <em>${shout}</em>
+  <script>document.body.dataset.label = shout</script>
+</define>
+<Panel label=input.label/>
+<${open ? "b" : Panel} label=input.label/>
+<button onClick() { open = !open }>toggle</button>

@@ -1,0 +1,11 @@
+import * as styles from "./styles.css.ts";
+<let/on=false/>
+<button onClick() { on = !on }>toggle</button>
+<div class=styles.box/>
+<div class=[styles.item, on && styles.on]/>
+<div class=[styles.item, input.lit && styles.on]/>
+<div class={ [styles.on]: input.lit }/>
+<div class=input.lit ? styles.on : styles.box/>
+<if=input.show>
+  <span class=styles.item/>
+</if>

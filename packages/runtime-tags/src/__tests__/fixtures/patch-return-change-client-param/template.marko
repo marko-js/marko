@@ -1,0 +1,6 @@
+<let/mode="a"/>
+<let/last="none"/>
+<counter-box/count onChange=(mode === "a" ? function (v) { last = "a" + v } : function (v) { last = "b" + v })/>
+<p>${last}</p>
+<button.mode onClick() { mode = "b" }>b</button>
+<button.set onClick() { count = 5 }>set</button>

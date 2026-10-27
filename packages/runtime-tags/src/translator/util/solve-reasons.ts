@@ -18,7 +18,8 @@ import {
   createPassPathMemo,
   resetPassMemos,
 } from "./cyclic-memo";
-import { addKnownTagReasons } from "./known-tag";
+import { addKnownTagReasons, recordKnownTagPatchFacts } from "./known-tag";
+import { isPatch } from "./marko-config";
 import { addFunctionReasons } from "./module-registrations";
 import {
   concat,
@@ -29,6 +30,7 @@ import {
   rest,
   some,
 } from "./optional";
+import { ensurePatchReasonGroups } from "./patch/refresh";
 import {
   addOwnerReason,
   addReason,
@@ -43,6 +45,7 @@ import {
   type ReferencedExtra,
   getFunctionReadsByExpression,
   getConstantBindingsInFunction,
+  getReferencedBindings,
   getReferencedBindingsInFunction,
   getBindingsDerivedFrom,
 } from "./references";
@@ -82,15 +85,24 @@ export function solveReasons(
     forEachSection(addClosureReasons);
     forEachSection(addCallOwnerReasons);
     addRegisteredFnReasons(getFunctionReadsByExpression());
-    forEachSectionReverse(solveSectionReasons);
+    forEachSectionReverse((section) =>
+      solveSectionReasons(section, intersectionsBySection.get(section)),
+    );
   } while (reasonsVersion !== getReasonsVersion());
   getFunctionReadsByExpression().clear();
 }
 
-function solveSectionReasons(section: Section) {
+function solveSectionReasons(
+  section: Section,
+  intersections: Intersection[] | undefined,
+) {
   addKnownTagReasons(section);
+  if (isPatch()) recordKnownTagPatchFacts(section);
   mergeSlotReasons(section);
+  // Groups lay out the mask callers pack: one per set of params a runtime
+  // question asks of, whether the client reads a write and what sources a patch's.
   ensureSectionReasonGroups(section);
+  if (isPatch()) ensurePatchReasonGroups(section, intersections);
 }
 
 // An intersection member is read when its partners' sources change, unless
@@ -126,19 +138,43 @@ function addIntersectionMemberReason(
   member: Binding,
   partner: Binding,
 ) {
-  if (
-    !findSlot(member)?.reason?.always &&
-    (!isSupersetSources(member, partner) ||
-      hasReadIntermediate(member, partner, new Set()))
-  ) {
+  if (findSlot(member)?.reason?.always) return;
+  // A partner a changed `$global` key refreshes re-runs the join wherever the
+  // client holds the member, so the member's own sources say where.
+  addMemberReason(
+    section,
+    member,
+    !isSupersetSources(member, partner) ||
+      hasReadIntermediate(member, partner, new Set())
+      ? partner.sources
+      : partner.sources?.global && member.sources,
+  );
+}
+
+// A changed `$global` key re-runs what reads it wherever the client holds the
+// values it reads, so each value's own sources say where it is read.
+export function addGlobalReadReasons(section: Section) {
+  for (const expr of section.globalReadExprs || []) {
+    forEach(getReferencedBindings(expr), (member) => {
+      addMemberReason(section, member, member.sources);
+    });
+  }
+}
+
+function addMemberReason(
+  section: Section,
+  member: Binding,
+  reason: Reason | undefined | false,
+) {
+  if (reason) {
     if (member.section !== section) {
       addOwnerReason(
         section,
         member.section,
-        mergeSources(member.sources, partner.sources),
+        mergeSources(member.sources, reason),
       );
     }
-    addReason(ensureSlot(member), partner.sources);
+    addReason(ensureSlot(member), reason);
   }
 }
 
@@ -208,7 +244,7 @@ function getBranchExprReason(section: Section) {
 
 // What creates `section`, or a section between it and `ancestor`, anew on the
 // client (always, still with its sources, when anything can).
-function getBranchExprReasonUntil(section: Section, ancestor: Section) {
+export function getBranchExprReasonUntil(section: Section, ancestor: Section) {
   let reason: Sources | undefined;
   for (let cur = section; cur !== ancestor; cur = cur.parent!) {
     reason = mergeSources(reason, getBranchExprReason(cur));

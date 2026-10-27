@@ -1,0 +1,6 @@
+<p>${$global.x}</p>
+<div/el/>
+<script>
+  el().textContent = $global.cspNonce;
+  el().dataset.runs = String(+(el().dataset.runs || 0) + 1);
+</script>

@@ -1,0 +1,11 @@
+<main>
+  <p>${input.x}</p>
+  <try>
+    <em>static</em>
+    <@placeholder><i>loading</i></@placeholder>
+  </try>
+  <try>
+    <b>static</b>
+    <@catch|e|><s>${e.message}</s></@catch>
+  </try>
+</main>

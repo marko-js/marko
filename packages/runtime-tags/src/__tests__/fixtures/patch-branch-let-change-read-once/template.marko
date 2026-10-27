@@ -1,0 +1,19 @@
+static const reads = new WeakSet();
+static function read($global, handler) {
+  if (reads.has($global)) {
+    throw new Error("A `valueChange` was read twice in one render.");
+  }
+  reads.add($global);
+  queueMicrotask(() => reads.delete($global));
+  return handler;
+}
+
+<let/last=0/>
+<const/onCount=(next) => { last = next; }/>
+<main>
+  <p>last ${last}</p>
+  <if=input.show>
+    <let/count=input.start valueChange=read($global, onCount)/>
+    <button onClick() { count++ }>${count}</button>
+  </if>
+</main>

@@ -1,0 +1,4 @@
+// PATCH
+{
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-fn-server/template.marko_fill0": "?"
+}

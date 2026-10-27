@@ -1,0 +1,11 @@
+static function link(data: { q: string }, id: string) {
+  return `/?q=${data.q}&sel=${id}`;
+}
+<let/hovered=(undefined as string | undefined)>
+<ul>
+  <for|item| of=input.items>
+    <li class=(hovered === item.id ? "hovered" : undefined) onClick() { hovered = item.id }>
+      <a href=link(input.data, item.id)>${item.id}</a>
+    </li>
+  </for>
+</ul>

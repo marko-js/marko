@@ -1,0 +1,10 @@
+<const/up=() => "U" + input.title/>
+<const/low=() => "l" + input.title/>
+<const/pick=input.upper ? up : low/>
+<let/open=false/>
+<main>
+  <if=open>
+    <p>${pick()}</p>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

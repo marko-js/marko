@@ -1,0 +1,10 @@
+<let/count=0/>
+<main>
+  <if=input.show>
+    <badge label=input.title note=input.note/>
+  </if>
+  <else>
+    <em>closed</em>
+  </else>
+  <button onClick() { count++ }>${count}</button>
+</main>

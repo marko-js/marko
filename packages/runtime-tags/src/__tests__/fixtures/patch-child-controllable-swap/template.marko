@@ -1,0 +1,8 @@
+<let/last=0/>
+<const/plain=(next: number) => { last = next }/>
+<const/tenfold=(next: number) => { last = next * 10 }/>
+<main>
+  <h1>${input.title}</h1>
+  <p>Last ${last}</p>
+  <counter show=input.show onCount=(input.big ? tenfold : plain)/>
+</main>

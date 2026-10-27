@@ -1,0 +1,7 @@
+<let/n=0/>
+<define/Row|{ a, b, c }|>
+  <p>${a + b + c}</p>
+  <em>${input.y + b}</em>
+</define>
+<Row a=n b=input.x c=input.z/>
+<button.n onClick() { n++ }>+</button>

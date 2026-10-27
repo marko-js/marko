@@ -1,0 +1,14 @@
+<const/brand=`${$global.brand}!`/>
+<let/n=0/>
+<button onClick() { n++ }>${n}</button>
+<try>
+  <await|v|=input.slow>
+    <em>${v}</em>
+  </await>
+  <@placeholder>
+    <note label=brand/>
+    <note label=`${n} ${input.label}`/>
+    <toggle on=n/>
+  </@placeholder>
+</try>
+<card label="fixed" slow=input.slow failing=input.failing other=input.other/>

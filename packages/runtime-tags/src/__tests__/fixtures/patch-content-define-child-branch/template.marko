@@ -1,0 +1,12 @@
+<define/Card|{ show, content }|>
+  <section>
+    <if=show>
+      <${content}/>
+    </if>
+  </section>
+</define>
+<main>
+  <Card show=input.show>
+    <em>${input.note}</em>
+  </Card>
+</main>

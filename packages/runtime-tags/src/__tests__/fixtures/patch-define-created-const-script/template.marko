@@ -1,0 +1,8 @@
+<define/Probe|input|>
+  <const/bag={ items: [] as string[] }>
+  <script>
+    bag.items.push("seen");
+  </script>
+  <p>probe</p>
+</define>
+<if=input.show><Probe/></if>

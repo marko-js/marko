@@ -1,0 +1,10 @@
+import { lib } from "./lib";
+<let/open=true/>
+<define/Panel|{ fmt, label }|>
+  <em>${fmt(label)}</em>
+</define>
+<Panel fmt=lib.format label=input.label/>
+<if=open>
+  <Panel fmt=lib.format label=input.label/>
+</if>
+<button.toggle onClick() { open = !open }>toggle</button>

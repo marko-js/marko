@@ -1,0 +1,12 @@
+<let/n=0/>
+<define/Outer|{ x, y }|>
+  <define/Inner|{ z }|>
+    <p>${input.label + x + z}</p>
+  </define>
+  <Inner z=y/>
+</define>
+<define/Wrapper|{ a, b }|>
+  <Outer x=a y=b/>
+</define>
+<Wrapper a=input.a b=n/>
+<button onClick() { n++ }>+</button>

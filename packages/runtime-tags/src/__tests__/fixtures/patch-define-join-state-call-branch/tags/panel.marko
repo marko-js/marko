@@ -1,0 +1,9 @@
+<define/Row|{ show }|>
+  <if=show>
+    <p>${input.a + input.b}</p>
+  </if>
+</define>
+<let/t=true/>
+<Row show=t/>
+<Row show=input.show/>
+<button.t onClick() { t = !t }>t</button>

@@ -1,0 +1,10 @@
+import Card from "./tags/card.marko";
+<define/Body>
+  <${input.on ? Card : "div"}><em>${input.note}</em></>
+</define>
+<main>
+  <section><Body/></section>
+  <await|v|=input.v>
+    <Body/>
+  </await>
+</main>

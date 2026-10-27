@@ -1,0 +1,24 @@
+static function boom(error: unknown): never {
+  throw error;
+}
+<let/count=0/>
+<main>
+  <try>
+    <p>${input.error ? boom(input.error) : "ok"}</p>
+    <@catch|err|>
+      <script>
+        console.log("mounted");
+      </script>
+      <if=(err as { status?: number }).status === 404>
+        <b>missing ${(err as Error).message}</b>
+      </if>
+      <else>
+        <i>failed</i>
+      </else>
+      <for|item| of=(err as { items: string[] }).items>
+        <span>${item}</span>
+      </for>
+    </@catch>
+  </try>
+  <button onClick() { count++ }>${count}</button>
+</main>

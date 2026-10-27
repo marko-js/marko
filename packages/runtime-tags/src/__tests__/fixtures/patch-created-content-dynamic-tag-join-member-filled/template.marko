@@ -1,0 +1,9 @@
+import One from "./tags/one.marko"
+import Two from "./tags/two.marko"
+<wrap show=input.show>
+  <${input.which ? One : Two} id=input.id/>
+  <try>
+    <p>${input.id}</p>
+    <@placeholder>loading ${input.id}</@placeholder>
+  </try>
+</wrap>

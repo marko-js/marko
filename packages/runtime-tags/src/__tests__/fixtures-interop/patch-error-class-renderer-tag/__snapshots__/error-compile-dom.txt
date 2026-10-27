@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures-interop/patch-error-class-renderer-tag/template.marko:5:4
+      3 | <button id="toggle" onClick() { show = !show }>toggle</button>
+      4 | <if=show>
+    > 5 |   <legacy-greeting/>
+        |    ^^^^^^^^^^^^^^^ The Marko 5 (class API) tag `legacy-greeting` cannot render with the experimental `patches` option, which compiles the tags API only. Migrate it to the tags API, stop rendering it, or turn `patches` off.
+      6 |   <button id="inc" onClick() { count++ }>${count}</button>
+      7 | </if>
+      8 |
