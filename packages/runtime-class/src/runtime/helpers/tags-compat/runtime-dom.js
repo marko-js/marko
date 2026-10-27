@@ -159,6 +159,18 @@ exports.p = function (domCompat) {
         renderer.renderer;
 
       if (!domCompat.isRenderer(rendererFromAnywhere || renderer)) {
+        // A `<define>` value keeps its tags content under `content`, which the
+        // tags dynamic tag reads for itself. Converting it here instead pushed
+        // that tags renderer into the class runtime's dynamic tag, which answers
+        // `Invalid dynamic tag value`. The html side already allows for it
+        // (`getRenderer` reads `tag._ || tag.content || tag`); only dom missed.
+        if (
+          !rendererFromAnywhere &&
+          renderer.content &&
+          domCompat.isRenderer(renderer.content)
+        ) {
+          return renderer;
+        }
         newRenderer = rendererCache.get(renderer);
         if (!newRenderer) {
           newRenderer = domCompat.createRenderer(
