@@ -122,7 +122,7 @@ export function insertBranchBefore(
   );
 }
 
-export function tempDetachBranch(branch: BranchScope) {
+export function tempDetachBranch(branch: BranchScope): DocumentFragment {
   // Park the range in a DocumentFragment; the namespaceURI shim preserves the
   // namespace for branches created while it is detached.
   const fragment = new DocumentFragment() as any;
@@ -135,4 +135,5 @@ export function tempDetachBranch(branch: BranchScope) {
     branch[AccessorProp.StartNode],
     branch[AccessorProp.EndNode],
   );
+  return fragment;
 }

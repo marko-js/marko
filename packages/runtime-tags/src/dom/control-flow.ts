@@ -561,27 +561,47 @@ export const _show = /*@__PURE__*/ withBranches(
         wrapper.replaceWith(...wrapper.childNodes);
       }
 
-      // An only child owns every node in the parent, so the parent being empty is
-      // what says it is hidden; its cached marker may have been replaced by the body.
-      const inDom = onlyChild
-        ? !!parentNode.firstChild
-        : startNode.parentNode === parentNode;
+      // An only child has no markers of its own, so what says it is hidden is the
+      // fragment its body was parked in. The parent being empty does not: a nested
+      // only child parks inside an ancestor's fragment while the parent is empty
+      // for both of them.
+      const parked = onlyChild
+        ? range[AccessorProp.DetachedFragment]
+        : undefined;
+      const inDom = onlyChild ? !parked : startNode.parentNode === parentNode;
       if (display) {
         if (!inDom) {
-          insertBranchBefore(
-            range,
-            parentNode,
-            onlyChild ? null : referenceNode,
-          );
+          // Body control flow replaces nodes inside the fragment while the body is
+          // hidden, so the range has to follow whatever it ended up holding rather
+          // than the boundaries read when it was parked.
+          const first = parked
+            ? parked.firstChild
+            : range[AccessorProp.StartNode];
+          if (first) {
+            if (parked) {
+              range[AccessorProp.DetachedFragment] = undefined;
+              range[AccessorProp.StartNode] = first;
+              range[AccessorProp.EndNode] = parked.lastChild!;
+            }
+            insertBranchBefore(
+              range,
+              parentNode,
+              onlyChild ? null : referenceNode,
+            );
+          }
         }
       } else if (inDom) {
-        if (onlyChild) {
-          // An only child has no markers; body control flow can replace the
-          // parent's first and last child, so read them at each hide.
-          range[AccessorProp.StartNode] = parentNode.firstChild!;
+        // Read the parent's boundaries only while it still holds the body: an empty
+        // parent means this body is already parked inside an ancestor, and the
+        // stored range is what still points at those nodes.
+        if (onlyChild && parentNode.firstChild) {
+          range[AccessorProp.StartNode] = parentNode.firstChild;
           range[AccessorProp.EndNode] = parentNode.lastChild!;
         }
-        tempDetachBranch(range);
+        const parkedInto = tempDetachBranch(range);
+        if (onlyChild) {
+          range[AccessorProp.DetachedFragment] = parkedInto;
+        }
       }
     };
   },

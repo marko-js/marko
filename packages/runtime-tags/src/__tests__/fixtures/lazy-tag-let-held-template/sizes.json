@@ -13,12 +13,12 @@
       "brotli": 123
     },
     "shared": {
-      "min": 15620,
-      "brotli": 6168
+      "min": 15661,
+      "brotli": 6177
     }
   },
   "html": {
-    "min": 481,
-    "brotli": 309
+    "min": 485,
+    "brotli": 313
   }
 }

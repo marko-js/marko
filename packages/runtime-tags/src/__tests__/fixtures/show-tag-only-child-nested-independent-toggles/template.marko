@@ -1,0 +1,11 @@
+<let/outer=true/>
+<let/inner=true/>
+<button onClick() { outer = !outer }>outer</button>
+<button onClick() { inner = !inner }>inner</button>
+<section>
+  <show=outer>
+    <show=inner>
+      <p>body</p>
+    </show>
+  </show>
+</section>
