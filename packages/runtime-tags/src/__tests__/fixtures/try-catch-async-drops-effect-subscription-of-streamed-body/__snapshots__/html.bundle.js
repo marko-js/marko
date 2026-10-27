@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 				_html(`caught ${_text_resume($scope5_id, "a", err.message, $wg__err_message * 2)}`);
 				_write_if($scope5_reason, 0) && _scope($scope5_id, {});
 			}, void 0, "a3");
-			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
+			_scope($scope2_id, {});
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

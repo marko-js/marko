@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`caught ${_text_resume($scope5_id, "#text/0", err.message, $wg__err_message * 2)}`);
 				_write_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "15:8");
 			}, void 0, "__tests__/template.marko_5*content");
-			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:4");
+			_scope($scope2_id, {}, "__tests__/template.marko", "6:4");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 	}, () => {

@@ -31,7 +31,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					note_default({ label: `${inner} ${clicks}` });
 					_subscribe($clicks__closures, _scope($scope4_id, {
 						inner,
-						_: _scope_with_id($scope3_id),
 						"#childScope/0": _existing_scope($childScope),
 						"ClosureSignalIndex:clicks/4": 1
 					}, "__tests__/template.marko", "11:8", { inner: "11:14" }), "__tests__/template.marko_4_clicks#0:3/subscribe");
@@ -42,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope6_id = _scope_id();
 				note_default({ label: "inner placeholder" });
 			}, void 0, "__tests__/template.marko_6*content");
-			_subscribe($clicks__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4"), "__tests__/template.marko_2_clicks#0:3/subscribe");
+			_subscribe($clicks__closures, _scope($scope2_id, {}, "__tests__/template.marko", "7:4"), "__tests__/template.marko_2_clicks#0:3/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 	}, () => {

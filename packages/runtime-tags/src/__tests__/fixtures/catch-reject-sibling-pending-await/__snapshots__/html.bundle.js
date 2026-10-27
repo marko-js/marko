@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 			}, void 0, "a0");
 			_html(`<div>changes: ${_text_resume($scope2_id, "c", changes, 2)}</div>${_el_resume($scope2_id, "b")}`);
 			_script($scope2_id, "a1");
-			_subscribe($changes__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a2");
+			_subscribe($changes__closures, _scope($scope2_id, {}), "a2");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

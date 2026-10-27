@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 					const $scope3_id = _scope_id();
 					_html(_text_resume($scope3_id, "a", show));
 					_script($scope3_id, "a0");
-					_subscribe($show__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), "a1");
+					_subscribe($show__closures, _scope($scope3_id, {}), "a1");
 				});
 				_await($scope2_id, "b", resolveAfter(0, 1), () => {
 					const $scope5_id = _scope_id();

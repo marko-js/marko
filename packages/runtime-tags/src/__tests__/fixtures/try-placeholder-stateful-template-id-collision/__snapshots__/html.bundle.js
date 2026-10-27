@@ -43,7 +43,6 @@ var template_default = _template("a", (input) => {
 			_dynamic_tag($scope3_id, "a", tag, { label: `${body} ${clicks}` });
 			_subscribe($tag__closures, _subscribe($clicks__closures, _scope($scope3_id, {
 				c: body,
-				_: _scope_with_id($scope2_id),
 				Cg: 1
 			}), "a1"), "a2");
 		});

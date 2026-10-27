@@ -31,7 +31,6 @@ var template_default = _template("a", (input) => {
 					note_default({ label: `${inner} ${clicks}` });
 					_subscribe($clicks__closures, _scope($scope4_id, {
 						c: inner,
-						_: _scope_with_id($scope3_id),
 						a: _existing_scope($childScope),
 						Ce: 1
 					}), "a0");
@@ -42,7 +41,7 @@ var template_default = _template("a", (input) => {
 				_scope_id();
 				note_default({ label: "inner placeholder" });
 			}, void 0, "a1");
-			_subscribe($clicks__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a2");
+			_subscribe($clicks__closures, _scope($scope2_id, {}), "a2");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 					const $scope3_id = _scope_id();
 					_html(`<span>${_text_resume($scope3_id, "a", count)}</span>`);
 					_script($scope3_id, "a0");
-					_subscribe($count__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), "a1");
+					_subscribe($count__closures, _scope($scope3_id, {}), "a1");
 				});
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			}, void 0, "a2");

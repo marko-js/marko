@@ -10,7 +10,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			_scope_reason();
 			_html("<i>x</i>");
 		}, $scope1_id), 0, $wg__input_content);
-		$wi__input_content && _subscribe($input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "1:2"), "__tests__/tags/card.marko_1_input_content#0:4/subscribe", $wg__input_content);
+		$wi__input_content && _subscribe($input_content__closures, _scope($scope1_id, {}, "__tests__/tags/card.marko", "1:2"), "__tests__/tags/card.marko_1_input_content#0:4/subscribe", $wg__input_content);
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
 	}, $wg__input_content);
 	$wi__input_content && _scope($scope0_id, { "ClosureScopes:input_content/5": $input_content__closures }, "__tests__/tags/card.marko", 0);

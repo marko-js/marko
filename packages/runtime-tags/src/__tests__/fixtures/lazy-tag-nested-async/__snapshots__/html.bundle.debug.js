@@ -26,10 +26,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		_set_scope_reason(2);
 		const $childScope = _peek_scope_id();
 		$GrandChild_withLoadAssets({ value: count });
-		_subscribe($count__closures, _scope($scope1_id, {
-			_: _scope_with_id($scope0_id),
-			"#childScope/2": _existing_scope($childScope)
-		}, "__tests__/child.marko", "6:2"), "__tests__/child.marko_1_count#0:6/subscribe");
+		_subscribe($count__closures, _scope($scope1_id, { "#childScope/2": _existing_scope($childScope) }, "__tests__/child.marko", "6:2"), "__tests__/child.marko_1_count#0:6/subscribe");
 	});
 	_script($scope0_id, "__tests__/child.marko_0");
 	_scope($scope0_id, {
