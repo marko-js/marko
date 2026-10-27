@@ -160,7 +160,7 @@ export default {
           return;
         }
 
-        const signal = initValue(binding, true);
+        const signal = initValue(binding, "_let");
 
         addValue(section, tagExtra, signal, valueAttr.value);
 

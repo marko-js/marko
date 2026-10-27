@@ -750,7 +750,12 @@ function toGlobalKey(read: Binding) {
   return read;
 }
 
-export function initValue(binding: Binding, isLet = false) {
+type FillHelper = "_const" | "_let" | "_let_change";
+
+export function initValue(
+  binding: Binding,
+  letHelper?: "_let" | "_draft" | "_action",
+) {
   const section = binding.section;
   const signal = getSignal(section, binding);
   // Lazy reads read the value from its scope slot.
@@ -764,10 +769,10 @@ export function initValue(binding: Binding, isLet = false) {
     const fills = isPatch() && getPatchFill(binding).fillsReads;
     if (fills) signal.storesValue = true;
     const fn = buildSignalFn(signal);
-    const helper = isLet
+    const helper = letHelper
       ? signal.extraArgs
         ? "_let_change"
-        : "_let"
+        : letHelper
       : "_const";
     // A fill binding's own declaration doubles as its fill registration
     // (even a pure forwarder); renders the flush writes itself stay out.
@@ -775,7 +780,7 @@ export function initValue(binding: Binding, isLet = false) {
       const { fillsWithoutStructure, ownRegistration, unpatchedSections } =
         getPatchFill(binding);
       const key = t.stringLiteral(getPatchFillKey(binding));
-      const accessor = getScopeAccessorLiteral(binding, true, isLet);
+      const accessor = getScopeAccessorLiteral(binding, true, !!letHelper);
       // Where only the key reaches it, the fill's registration ships it and
       // its value signal stays pure; elsewhere what reaches the signal does.
       const fillFn = signal.fillFn && markFill(signal, signal.fillFn);
@@ -789,10 +794,16 @@ export function initValue(binding: Binding, isLet = false) {
         return callRuntime(helper, ...trimEmptyArgs([accessor, fn]));
       }
       if (!ownRegistration) {
-        return callRuntime(`_fill${helper}`, key, accessor, fn, fillFn);
+        return callRuntime(
+          `_fill${helper as FillHelper}`,
+          key,
+          accessor,
+          fn,
+          fillFn,
+        );
       }
       if (!signal.fillFn && !fillsWithoutStructure) {
-        return callRuntime(`_fill${helper}`, key, accessor, fn);
+        return callRuntime(`_fill${helper as FillHelper}`, key, accessor, fn);
       }
       const value = callRuntime(helper, ...trimEmptyArgs([accessor, fn]));
       // A fill that ships only with param-selected structure is reached where
@@ -824,11 +835,17 @@ export function initValue(binding: Binding, isLet = false) {
       return fn;
     }
 
-    return callRuntime(
-      helper,
-      getScopeAccessorLiteral(binding, true, isLet),
-      fn,
-    );
+    const accessor = getScopeAccessorLiteral(binding, true, !!letHelper);
+    return helper === "_action"
+      ? callRuntime(
+          helper,
+          ...trimEmptyArgs([
+            accessor,
+            t.stringLiteral(getResumeRegisterId(section, binding, "action")),
+            fn,
+          ]),
+        )
+      : callRuntime(helper, accessor, fn);
   };
 
   binding.aliases.forEach(initAliasValue);

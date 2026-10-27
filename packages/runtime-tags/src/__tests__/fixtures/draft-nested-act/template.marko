@@ -1,0 +1,10 @@
+<let/n=1/>
+<draft/d=n/>
+<let/seen=""/>
+<action/inner() {}/>
+<action/outer() {
+  inner();
+  d = 4;
+  seen = d;
+}/>
+<button onClick=outer>${d} ${seen}</button>

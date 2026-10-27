@@ -1,4 +1,5 @@
 import runtimeInfo from "../util/runtime-info";
+import ActionTag from "./action";
 import AttrsTag from "./attrs";
 import AwaitTag from "./await";
 import ClassTag from "./class";
@@ -6,6 +7,7 @@ import ClientTag from "./client";
 import ConstTag from "./const";
 import DebugTag from "./debug";
 import DefineTag from "./define";
+import DraftTag from "./draft";
 import EffectTag from "./effect";
 import ExportTag from "./export";
 import ForTag from "./for";
@@ -28,6 +30,7 @@ import TryTag from "./try";
 
 export default {
   taglibId: runtimeInfo.taglibId,
+  "<action>": ActionTag,
   "<attrs>": AttrsTag,
   "<await>": AwaitTag,
   "<class>": ClassTag,
@@ -35,6 +38,7 @@ export default {
   "<const>": ConstTag,
   "<debug>": DebugTag,
   "<define>": DefineTag,
+  "<draft>": DraftTag,
   "<effect>": EffectTag,
   "<else-if>": ElseIfTag,
   "<else>": ElseTag,

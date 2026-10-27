@@ -1,0 +1,9 @@
+<let/n=1/>
+<draft/d=n/>
+<action/act=async () => {
+  await 0;
+  d = 7;
+}/>
+<button onClick() { d = 5 }>plain</button>
+<button onClick=act>after await</button>
+<div>${d}</div>

@@ -1,0 +1,14 @@
+<let/n=1/>
+<draft/d=n/>
+<action/fail=async () => {
+  d = 5;
+  await new Promise((resolve) => setTimeout(resolve, 50));
+  throw new Error("failed");
+}/>
+<action/failNow() {
+  d = 6;
+  throw new Error("failed now");
+}/>
+<let/caught=""/>
+<button onClick() { fail().catch((error) => { caught = error.message }) }>${d} ${caught}</button>
+<button onClick() { try { failNow() } catch (error) { caught = error.message } }>sync</button>

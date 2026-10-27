@@ -1,0 +1,8 @@
+<let/n=1/>
+<draft/d=n/>
+<action/save=async () => {
+  d = 2;
+  await new Promise((resolve) => setTimeout(resolve, 50));
+  n = 3;
+}/>
+<button onClick=save>${d}</button>

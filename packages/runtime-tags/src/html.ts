@@ -56,6 +56,7 @@ export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";
 export { forIn, forOf, forTo, forUntil } from "./html/for";
 export { _template } from "./html/template";
 export {
+  _action,
   _attr_content,
   _el,
   _el_resume,

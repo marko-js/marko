@@ -291,6 +291,12 @@ export function _el(scopeId: number, id: string) {
   return _resume(() => _el_read_error(), id, scopeId);
 }
 
+export function _action(scopeId: number, id: string) {
+  const call = () => {};
+  call.pending = false;
+  return _resume(call, id, scopeId);
+}
+
 export function _hoist(scopeId: number, id: string) {
   const getter = () => _hoist_read_error();
   getter[Symbol.iterator] = _hoist_read_error;

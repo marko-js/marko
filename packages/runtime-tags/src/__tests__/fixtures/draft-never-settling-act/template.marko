@@ -1,0 +1,12 @@
+<let/n=1/>
+<draft/stuck=n/>
+<draft/quick=n/>
+<action/hang=async () => {
+  stuck = "stuck";
+  await new Promise(() => {});
+}/>
+<action/brief=async () => {
+  quick = "quick";
+  await new Promise((resolve) => setTimeout(resolve, 50));
+}/>
+<button onClick() { hang(); brief(); }>${stuck} ${quick}</button>

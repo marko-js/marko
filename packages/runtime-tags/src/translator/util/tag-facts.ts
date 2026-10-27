@@ -37,12 +37,14 @@ type CoreTagName = {
 
 // Every core tag, so a new one decides what it renders.
 const coreTagFacts: Record<CoreTagName, TagFacts> = {
+  action: noContentFacts,
   attrs: noContentFacts,
   class: noContentFacts,
   client: noContentFacts,
   const: noContentFacts,
   debug: noContentFacts,
   define: noContentFacts,
+  draft: noContentFacts,
   effect: noContentFacts,
   export: noContentFacts,
   id: noContentFacts,

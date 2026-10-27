@@ -1,0 +1,11 @@
+<let/n=1/>
+<draft/d=n/>
+<action/set=async () => {
+  d = 9;
+  await new Promise((resolve) => setTimeout(resolve, 100));
+}/>
+<action/outer=async () => {
+  await new Promise((resolve) => setTimeout(resolve, 20));
+  set();
+}/>
+<button onClick=outer>${d}</button>

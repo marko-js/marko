@@ -1,0 +1,8 @@
+<let/n=1/>
+<draft/d=n/>
+<action/hold=async () => {
+  d = 5;
+  await new Promise((resolve) => setTimeout(resolve, 100));
+}/>
+<button onClick=hold>${d}</button>
+<button onClick() { n++ }>source</button>

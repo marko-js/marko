@@ -51,7 +51,7 @@ assert.equal(counter.textContent, "2", "a flush with no act renders at once");
 ```
 ## Change
 ```
-UPDATE: form > button[disabled] null => ""
 UPDATE: button::text "0" => "2"
+UPDATE: form > button[disabled] null => ""
 UPDATE: button::text "1" => "2"
 ```

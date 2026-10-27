@@ -1,7 +1,10 @@
-import { _defer_frame } from "@marko/runtime-tags/dom";
-<let/busy=false>
 <let/count=0>
-<form onSubmit(ev) { ev.preventDefault(); count++; _defer_frame(); busy = true; }>
-  <button name="_action" value="add" disabled=busy>Add</button>
+<action/act=async (ev) => {
+  ev.preventDefault();
+  count++;
+  await new Promise((resolve) => setTimeout(resolve, 100));
+}/>
+<form onSubmit=act>
+  <button name="_action" value="add" disabled=act.pending>Add</button>
 </form>
 <button onClick() { count++ }>${count}</button>

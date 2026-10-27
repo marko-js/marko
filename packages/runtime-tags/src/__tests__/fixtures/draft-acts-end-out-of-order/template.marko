@@ -1,0 +1,11 @@
+<let/n=1/>
+<draft/d=n/>
+<action/slow=async () => {
+  d = "slow";
+  await new Promise((resolve) => setTimeout(resolve, 250));
+}/>
+<action/fast=async () => {
+  d = "fast";
+  await new Promise((resolve) => setTimeout(resolve, 100));
+}/>
+<button onClick() { slow(); fast(); }>${d}</button>

@@ -61,6 +61,7 @@ const pureDOMFunctions = new Set<string>([
   "_hoist",
   "_let",
   "_let_change",
+  "_draft",
   "_const",
   "_load_signal",
   "_load_signal_patch",

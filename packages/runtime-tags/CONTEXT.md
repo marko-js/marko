@@ -217,6 +217,19 @@ intercepts the element's own change (typing, a `<details>` toggling): it receive
 the new value, and the element then shows only what the bound state holds.
 _Avoid_: controlled component
 
+**Act**:
+One call of an `<action>`'s function, running from the call until its returned
+promise settles, or until the end of the task that called it when it returns
+none. It holds the guesses it writes and, until it ends, defers the next
+render to the frame.
+_Avoid_: transaction, mutation
+
+**Guess**:
+The value an act gives a `<draft>` ahead of its source. A draft keeps one guess,
+its latest write, and drops it once every act that wrote it has ended, showing
+its source again.
+_Avoid_: optimistic value, pending value, override
+
 **Walk string**:
 A compact program that locates nodes and ranges while cloning a fresh branch.
 

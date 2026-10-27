@@ -1,4 +1,4 @@
-// size: 29715 (min) 10942 (brotli)
+// size: 30301 (min) 11156 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2589,5 +2589,61 @@ function _closure_resume(resumeId, closureSignal) {
 }
 function _init_resume(id, signal) {
   return (_resumed[id] = signal);
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom/action.feat.mjs
+let act;
+function _draft(id, fn) {
+  let valueAccessor = decodeAccessor(id),
+    guessAccessor = decodeAccessor(id + 1),
+    assign = _let(id, fn);
+  return (scope, value) => {
+    let guess = (scope[guessAccessor] ||= {
+      n: 0,
+      l: () => --guess.n || assign(scope, guess.s),
+    });
+    return (
+      rendering
+        ? ((guess.s = value),
+          !guess.n &&
+            (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+            ((scope[valueAccessor] = value), fn?.(scope)))
+        : act &&
+          (act.has(guess.l) || (act.add(guess.l), guess.n++ || (guess.s = scope[valueAccessor])),
+          assign(scope, value)),
+      value
+    );
+  };
+}
+function _action(id, registerId, fn) {
+  let valueAccessor = decodeAccessor(id),
+    fnAccessor = decodeAccessor(id + 1),
+    set = _let(id, fn),
+    create = (scope, pending) => {
+      let call = (...args) => {
+        let prev = act,
+          mine = (act = /* @__PURE__ */ new Set()),
+          end = (_) => {
+            (mine.forEach((leave) => leave()), --pending.n || set(scope, create(scope, pending)));
+          },
+          result;
+        (pending.n++ || set(scope, create(scope, pending)), _defer_frame());
+        try {
+          result = scope[fnAccessor]?.(...args);
+        } catch (error) {
+          throw (end(), error);
+        } finally {
+          act = prev;
+        }
+        return (result?.then ? result.then(end, end) : setTimeout(end), result);
+      };
+      return ((call.pending = !!pending.n), call);
+    };
+  return (
+    (_resumed[registerId] = (scope) => create(scope, { n: 0 })),
+    (scope, value) => {
+      ((scope[fnAccessor] = value), valueAccessor in scope || set(scope, create(scope, { n: 0 })));
+    }
+  );
 }
 //#endregion

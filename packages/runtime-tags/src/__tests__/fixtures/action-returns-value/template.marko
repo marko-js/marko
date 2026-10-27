@@ -1,0 +1,6 @@
+<let/result=0/>
+<action/idle=() => {}/>
+<action/double=(x) => x * 2/>
+<action/busy/>
+<action/bump(by) { result += by }/>
+<button onClick() { result = double(4); busy(); bump(1) }>${result}</button>
