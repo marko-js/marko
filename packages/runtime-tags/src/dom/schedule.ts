@@ -28,8 +28,9 @@ export function schedule() {
 
 // Won't fix: rAF gating means hidden documents (background tab, display:none
 // iframe) batch renders/effects until visible; hidden-time work shouldn't use render state.
-function flushAndWaitFrame() {
-  requestAnimationFrame(triggerMacroTask);
+// A frame's callback gets its time; a flush already in the frame waits only for its paint.
+function flushAndWaitFrame(frameTime?: number) {
+  frameTime ? triggerMacroTask() : requestAnimationFrame(triggerMacroTask);
 
   if (MARKO_DEBUG) {
     runTask!();

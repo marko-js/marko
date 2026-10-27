@@ -9,8 +9,8 @@
       "brotli": 652
     },
     "child.mjs": {
-      "min": 3494,
-      "brotli": 1741
+      "min": 3501,
+      "brotli": 1746
     },
     "shared": {
       "min": 7234,
