@@ -543,6 +543,7 @@ export function writePatchResumeStatements(
   forEach(getPatchFillBindings(section), (binding) => {
     const change =
       binding.reserveSize &&
+      binding.derivedFrom &&
       pendingProperties.get(
         getPrefixedScopeAccessor(
           binding,
@@ -565,7 +566,8 @@ export function writePatchResumeStatements(
   // envelope; content an attribute tag `<for>` creates also seeds its loop params.
   if (patchWritesScope(section)) {
     forEach(getPatchFillBindings(section), (binding) => {
-      if (!isStateSourced(binding)) return;
+      // An action's function arrives as a bound function, never a seed.
+      if (!isStateSourced(binding) || !binding.derivedFrom) return;
       const change = letChanges.get(binding);
       letChanges.delete(binding);
       for (const write of change
@@ -667,8 +669,17 @@ function buildLetSeeds(section: Section, binding: Binding) {
   const sources = getSourcesForExpr(binding.derivedFrom as t.NodeExtra);
   const guard = getCallerGroupGuard(section, "_filled_guard", sources);
   if (seedsLetWhole(binding)) {
+    // A draft's source keeps arriving, so a live scope takes it too.
     return [
-      andGuard(guard, buildPatchFill(section, binding, undefined, setup)),
+      andGuard(
+        guard,
+        buildPatchFill(
+          section,
+          binding,
+          undefined,
+          binding.reserveSize ? undefined : setup,
+        ),
+      ),
     ];
   }
   // A client source's init sets the members.

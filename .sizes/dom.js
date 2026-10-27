@@ -1,4 +1,4 @@
-// size: 30301 (min) 11156 (brotli)
+// size: 30397 (min) 11178 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2477,6 +2477,62 @@ function _load_signal_patch(load, id, trigger) {
     };
   return (_load_lazy(id, (_) => load().then((mod) => (apply._ = mod._))), apply);
 }
+//#endregion
+//#region packages/runtime-tags/dist/dom/action.feat.mjs
+let act;
+function _draft(id, fn) {
+  let valueAccessor = decodeAccessor(id),
+    guessAccessor = decodeAccessor(id + 1),
+    assign = _let(id, fn);
+  return (scope, value) => {
+    let guess = (scope[guessAccessor] ||= {
+      n: 0,
+      l: () => --guess.n || assign(scope, guess.s),
+    });
+    return (
+      rendering
+        ? ((guess.s = value),
+          !guess.n &&
+            (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+            ((scope[valueAccessor] = value), fn?.(scope)))
+        : act &&
+          (act.has(guess.l) || (act.add(guess.l), guess.n++ || (guess.s = scope[valueAccessor])),
+          assign(scope, value)),
+      value
+    );
+  };
+}
+function _action(id, registerId, fn) {
+  let valueAccessor = decodeAccessor(id),
+    fnAccessor = decodeAccessor(id + 1),
+    set = _let(id, fn),
+    create = (scope, pending) => {
+      let call = (...args) => {
+        let prev = act,
+          mine = (act = /* @__PURE__ */ new Set()),
+          end = (_) => {
+            (mine.forEach((leave) => leave()), --pending.n || set(scope, create(scope, pending)));
+          },
+          result;
+        (pending.n++ || set(scope, create(scope, pending)), _defer_frame());
+        try {
+          result = scope[fnAccessor]?.(...args);
+        } catch (error) {
+          throw (end(), error);
+        } finally {
+          act = prev;
+        }
+        return (result?.then ? result.then(end, end) : setTimeout(end), result);
+      };
+      return ((call.pending = !!pending.n), call);
+    };
+  return (
+    (_resumed[registerId] = (scope) => create(scope, { n: 0 })),
+    (scope, value) => {
+      ((scope[fnAccessor] = value), valueAccessor in scope || set(scope, create(scope, { n: 0 })));
+    }
+  );
+}
 let closureFillJoins = {};
 let liveCaptures = {};
 function markFillChanged(scope, valueAccessor) {
@@ -2567,6 +2623,12 @@ function _fill_let(key, id, fn, fillFn) {
 function _fill_let_change(key, id, fn, fillFn) {
   return fill(key, _let_change(id, fn), id, fillFn ?? fn ?? 0);
 }
+function _fill_draft(key, id, fn, fillFn) {
+  return fill(key, _draft(id, fn), id, fillFn);
+}
+function _fill_action(key, id, registerId, fn, fillFn) {
+  return fill(key, _action(id, registerId, fn), id, fillFn);
+}
 function _bind_resume(key, factory) {
   let [id, ...captures] = key.split(" ");
   ((liveCaptures[id] = (owner) => depChanged(owner, captures)), (_resumed[id] = factory));
@@ -2589,61 +2651,5 @@ function _closure_resume(resumeId, closureSignal) {
 }
 function _init_resume(id, signal) {
   return (_resumed[id] = signal);
-}
-//#endregion
-//#region packages/runtime-tags/dist/dom/action.feat.mjs
-let act;
-function _draft(id, fn) {
-  let valueAccessor = decodeAccessor(id),
-    guessAccessor = decodeAccessor(id + 1),
-    assign = _let(id, fn);
-  return (scope, value) => {
-    let guess = (scope[guessAccessor] ||= {
-      n: 0,
-      l: () => --guess.n || assign(scope, guess.s),
-    });
-    return (
-      rendering
-        ? ((guess.s = value),
-          !guess.n &&
-            (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
-            ((scope[valueAccessor] = value), fn?.(scope)))
-        : act &&
-          (act.has(guess.l) || (act.add(guess.l), guess.n++ || (guess.s = scope[valueAccessor])),
-          assign(scope, value)),
-      value
-    );
-  };
-}
-function _action(id, registerId, fn) {
-  let valueAccessor = decodeAccessor(id),
-    fnAccessor = decodeAccessor(id + 1),
-    set = _let(id, fn),
-    create = (scope, pending) => {
-      let call = (...args) => {
-        let prev = act,
-          mine = (act = /* @__PURE__ */ new Set()),
-          end = (_) => {
-            (mine.forEach((leave) => leave()), --pending.n || set(scope, create(scope, pending)));
-          },
-          result;
-        (pending.n++ || set(scope, create(scope, pending)), _defer_frame());
-        try {
-          result = scope[fnAccessor]?.(...args);
-        } catch (error) {
-          throw (end(), error);
-        } finally {
-          act = prev;
-        }
-        return (result?.then ? result.then(end, end) : setTimeout(end), result);
-      };
-      return ((call.pending = !!pending.n), call);
-    };
-  return (
-    (_resumed[registerId] = (scope) => create(scope, { n: 0 })),
-    (scope, value) => {
-      ((scope[fnAccessor] = value), valueAccessor in scope || set(scope, create(scope, { n: 0 })));
-    }
-  );
 }
 //#endregion

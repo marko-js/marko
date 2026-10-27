@@ -750,8 +750,6 @@ function toGlobalKey(read: Binding) {
   return read;
 }
 
-type FillHelper = "_const" | "_let" | "_let_change";
-
 export function initValue(
   binding: Binding,
   letHelper?: "_let" | "_draft" | "_action",
@@ -774,6 +772,15 @@ export function initValue(
         ? "_let_change"
         : letHelper
       : "_const";
+    // An action's resume registration rides between its accessor and function.
+    const declArgs = (accessor: t.Expression, fn?: t.Expression) =>
+      helper === "_action"
+        ? [
+            accessor,
+            t.stringLiteral(getResumeRegisterId(section, binding, "action")),
+            fn,
+          ]
+        : [accessor, fn];
     // A fill binding's own declaration doubles as its fill registration
     // (even a pure forwarder); renders the flush writes itself stay out.
     if (fills) {
@@ -791,21 +798,24 @@ export function initValue(
         registersJoinFill(binding) &&
         runsOneJoin(signal)
       ) {
-        return callRuntime(helper, ...trimEmptyArgs([accessor, fn]));
+        return callRuntime(helper, ...trimEmptyArgs(declArgs(accessor, fn)));
       }
       if (!ownRegistration) {
         return callRuntime(
-          `_fill${helper as FillHelper}`,
-          key,
-          accessor,
-          fn,
-          fillFn,
+          `_fill${helper}`,
+          ...trimEmptyArgs([key, ...declArgs(accessor, fn), fillFn]),
         );
       }
       if (!signal.fillFn && !fillsWithoutStructure) {
-        return callRuntime(`_fill${helper as FillHelper}`, key, accessor, fn);
+        return callRuntime(
+          `_fill${helper}`,
+          ...trimEmptyArgs([key, ...declArgs(accessor, fn)]),
+        );
       }
-      const value = callRuntime(helper, ...trimEmptyArgs([accessor, fn]));
+      const value = callRuntime(
+        helper,
+        ...trimEmptyArgs(declArgs(accessor, fn)),
+      );
       // A fill that ships only with param-selected structure is reached where
       // that structure's render code (plain's) keeps its signal.
       if (!signal.fillFn) return callRuntime("_fill_resume", key, value);
@@ -837,14 +847,7 @@ export function initValue(
 
     const accessor = getScopeAccessorLiteral(binding, true, !!letHelper);
     return helper === "_action"
-      ? callRuntime(
-          helper,
-          ...trimEmptyArgs([
-            accessor,
-            t.stringLiteral(getResumeRegisterId(section, binding, "action")),
-            fn,
-          ]),
-        )
+      ? callRuntime(helper, ...trimEmptyArgs(declArgs(accessor, fn)))
       : callRuntime(helper, accessor, fn);
   };
 

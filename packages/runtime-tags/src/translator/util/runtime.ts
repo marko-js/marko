@@ -36,6 +36,8 @@ const pureDOMFunctions = new Set<string>([
   "_fill_const",
   "_fill_let",
   "_fill_let_change",
+  "_fill_draft",
+  "_fill_action",
   "_await_content",
   "_if",
   "_if_closure",

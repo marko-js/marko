@@ -8,6 +8,7 @@ import {
   RenderDataProp,
   type Scope,
 } from "../../common/types";
+import { _action, _draft } from "../action.feat";
 import { queueRender, runId } from "../queue";
 import { _resumed, _var_resume } from "../resume";
 import {
@@ -267,6 +268,36 @@ export function _fill_let_change<T>(
     _let_change<T>(id, fn),
     MARKO_DEBUG ? (id as string).slice(0, (id as string).lastIndexOf("/")) : id,
     fillFn ?? fn ?? 0,
+  );
+}
+// A patch runs as a render: a draft takes the new source there, which a held
+// guess defers until it drops.
+export function _fill_draft<T>(
+  key: string,
+  id: EncodedAccessor,
+  fn?: SignalFn,
+  fillFn?: SignalFn | 0,
+) {
+  return fill(
+    key,
+    _draft<T>(id, fn),
+    MARKO_DEBUG ? (id as string).slice(0, (id as string).lastIndexOf("/")) : id,
+    fillFn,
+  );
+}
+// A fill replaces the function an action calls; its callable stays.
+export function _fill_action(
+  key: string,
+  id: EncodedAccessor,
+  registerId: string,
+  fn?: SignalFn,
+  fillFn?: SignalFn | 0,
+) {
+  return fill(
+    key,
+    _action(id, registerId, fn),
+    MARKO_DEBUG ? (id as string).slice(0, (id as string).lastIndexOf("/")) : id,
+    fillFn,
   );
 }
 

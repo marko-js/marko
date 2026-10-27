@@ -27,6 +27,7 @@ import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
 import { addValue, initValue, signalHasWork } from "../util/signals";
+import { ensureSlot, SlotKind } from "../util/slots";
 import translateVar from "../util/translate-var";
 
 export default {
@@ -45,6 +46,8 @@ export default {
     ]);
 
     setDerivedFrom(binding, tagExtra);
+    // A patch fills a draft's source as it fills a controlled `<let>`'s.
+    ensureSlot(binding, SlotKind.ChangeHandler);
     // The runtime keeps the draft's guess where a controlled `<let>` keeps its change handler.
     reserveId(binding, ReservedId.ChangeHandler);
     tagExtra.retained = true;
