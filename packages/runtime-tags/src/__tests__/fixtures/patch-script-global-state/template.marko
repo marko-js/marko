@@ -1,0 +1,5 @@
+<let/count=0/>
+<button/btn onClick() { count++ }>${count + $global.brand}</button>
+<script>
+  btn().dataset.log = (btn().dataset.log || "") + "[" + count + $global.brand + "]";
+</script>

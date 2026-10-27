@@ -1,0 +1,7 @@
+<let/count=0/>
+<p>${input.label}</p>
+<div ...{ title: input.label, onClick() { console.log("clicked " + input.label) } }/>
+<if=count>
+  <em>${input.label}</em>
+</if>
+<button onClick() { count++ }>${count}</button>

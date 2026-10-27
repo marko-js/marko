@@ -1,0 +1,36 @@
+{
+  "dom": {
+    "lazy.marko.load.mjs": {
+      "min": 107,
+      "brotli": 102
+    },
+    "template.marko.page.mjs": {
+      "total": {
+        "min": 2972,
+        "brotli": 1462
+      },
+      "files": {
+        "layout.marko": 367,
+        "template.marko": 249
+      }
+    },
+    "v:lazy.marko.setup.mjs": {
+      "total": {
+        "min": 49,
+        "brotli": 51
+      },
+      "files": {
+        "lazy.marko": 94,
+        "v:lazy.marko.setup.js": 86
+      }
+    },
+    "shared": {
+      "min": 5493,
+      "brotli": 2498
+    }
+  },
+  "html": {
+    "min": 417,
+    "brotli": 279
+  }
+}

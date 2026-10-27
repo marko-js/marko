@@ -1,0 +1,1 @@
+Unable to serialize (reading ["PatchBranch:#text/0"][0]["PatchChild:#childScope/0"]["PatchLoop:#text/0"][0]["PatchChild:#childScope/0"]["PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-module-fn-caller-branch/tags/rowsx.marko_fill3/unpatched"]). Values referenced in the browser must be serializable.

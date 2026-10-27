@@ -1,0 +1,103 @@
+// tags/field.marko
+const $template$1 = "<label> </label><input>";
+const $walks$1 = " D l b";
+const $setup$1 = [[], []];
+_shells({ "__tests__/tags/field.marko": "__tests__/tags/field.marko; D l ;<label> </label><input>" });
+var field_default = _template("__tests__/tags/field.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	const uid = input.uid || _id("uid");
+	_html(`<label${_patch_attr($scope0_id, "PatchAttr:#label/0 for", "for", uid, $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", input.name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "#label/0", _mask_group($scope0_reason, 0))}<input${_patch_attr($scope0_id, "PatchAttr:#input/2 id", "id", uid, $scope0_reason, 0)}${_patch_attr($scope0_id, "PatchAttr:#input/2 aria-describedby", "aria-describedby", input.heading, $scope0_reason, 2)}>${_el_resume($scope0_id, "#input/2", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 2))}`);
+	$scope0_page && _scope($scope0_id, {}, "__tests__/tags/field.marko", 0);
+});
+
+// template.marko
+const $template = "<!><!><!>";
+const $walks = "b%c";
+const $setup = [[], []];
+_shells({
+	"__tests__/template.marko_11*content": "__tests__/template.marko_11*content;D ;<p> </p>",
+	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<p> </p>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;b%;<!><!><!>",
+	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>"
+});
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	const $input_promise__closures = new Set();
+	_try($scope0_id, "#text/0", () => {
+		const $scope1_reason = _scope_reason();
+		const $scope1_id = _scope_id();
+		_await($scope1_id, "#text/0", input.promise, (value) => {
+			const $scope11_id = _scope_id();
+			_html(`<p>${_patch_text($scope11_id, "#text/0", value, void 0, $scope0_reason, 0)}</p>`);
+			$scope0_page && _scope($scope11_id, {}, "__tests__/template.marko", "1:7");
+		}, 1, "__tests__/template.marko_11*content", 1);
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "__tests__/template.marko_1_input_promise#0:3/init" : "__tests__/template.marko_1_input_promise#0:3/subscribe");
+		$scope0_page && $wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), $cg__input_promise && "__tests__/template.marko_1_input_promise#0:3/subscribe", 0);
+		$wi__input_promise && _resume_branch($scope1_id);
+	}, void 0, (error) => {
+		const $scope2_reason = _scope_reason();
+		const $scope2_id = _scope_id();
+		forOf([0, 1], (i) => {
+			const $scope3_id = _scope_id();
+			const rowId = _id("rowId");
+			_html(`<label${_attr("for", rowId)}>row</label><input${_attr("id", rowId)}>`);
+			if (true) {
+				const $scope4_id = _scope_id();
+				const branchId = _id("branchId");
+				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
+				_set_scope_reason(0);
+				_patch_child($scope4_id, "#childScope/2", 0);
+				field_default({ name: "caught" });
+				_patch_child_end();
+			}
+		});
+		forIn({
+			a: 0,
+			b: 1
+		}, (i) => {
+			const $scope5_id = _scope_id();
+			const rowId = _id("rowId~1");
+			_html(`<label${_attr("for", rowId)}>row</label><input${_attr("id", rowId)}>`);
+			if (true) {
+				const $scope6_id = _scope_id();
+				const branchId = _id("branchId~1");
+				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
+				_set_scope_reason(0);
+				_patch_child($scope6_id, "#childScope/2", 1);
+				field_default({ name: "caught" });
+				_patch_child_end();
+			}
+		});
+		forTo(1, 0, 1, (i) => {
+			const $scope7_id = _scope_id();
+			const rowId = _id("rowId~2");
+			_html(`<label${_attr("for", rowId)}>row</label><input${_attr("id", rowId)}>`);
+			if (true) {
+				const $scope8_id = _scope_id();
+				const branchId = _id("branchId~2");
+				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
+				_set_scope_reason(0);
+				_patch_child($scope8_id, "#childScope/2", 2);
+				field_default({ name: "caught" });
+				_patch_child_end();
+			}
+		});
+		forUntil(2, 0, 1, (i) => {
+			const $scope9_id = _scope_id();
+			const rowId = _id("rowId~3");
+			_html(`<label${_attr("for", rowId)}>row</label><input${_attr("id", rowId)}>`);
+			if (true) {
+				const $scope10_id = _scope_id();
+				const branchId = _id("branchId~3");
+				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
+				_set_scope_reason(0);
+				_patch_child($scope10_id, "#childScope/2", 3);
+				field_default({ name: "caught" });
+				_patch_child_end();
+			}
+		});
+	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1);
+	$scope0_page && _scope($scope0_id, { "ClosureScopes:input_promise/4": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/template.marko", 0);
+}, 1);

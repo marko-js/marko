@@ -1,0 +1,41 @@
+// PATCH
+[`packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell >#childScope/0> >#childScope/1>;b/D%c%l&/D%c%l&b;<!><li><!>: <!></li><li><!>: <!></li><!>`, {
+  "PatchBranch:#ul/0": [{
+    "PatchChild:#childScope/0": {
+      "PatchSetup:": {
+        "PatchText:#text/0": "a"
+      },
+      "PatchText:#text/1": "1"
+    },
+    "PatchChild:#childScope/1": {
+      "PatchSetup:": {
+        "PatchText:#text/0": "b"
+      },
+      "PatchText:#text/1": "1"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell"]
+}]
+;BAE
+
+// PATCH holding BAE
+{
+  "PatchBranch:#ul/0": [{
+    "PatchChild:#childScope/0": {
+      "PatchSetup:": {
+        "PatchText:#text/0": "a"
+      },
+      "PatchText:#text/1": "2"
+    },
+    "PatchChild:#childScope/1": {
+      "PatchSetup:": {
+        "PatchText:#text/0": "b"
+      },
+      "PatchText:#text/1": "2"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell"]
+}
+
+// PATCH holding BAE
+{
+  "PatchBranch:#ul/0": 0
+}

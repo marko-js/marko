@@ -5,6 +5,7 @@ import {
   assertNoParams,
   assertNoVar,
   type Tag,
+  getProgram,
 } from "@marko/compiler/babel-utils";
 
 import type { Falsy } from "../../common/types";
@@ -12,9 +13,18 @@ import { assertHasBody } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
+import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
+import { onReasonsSettled } from "../util/patch/decisions";
+import { patchCreates } from "../util/patch/refresh";
+import { patchMayWrite } from "../util/patch/structure";
+import { alwaysPairs } from "../util/patch/writers";
 import { mergeTagReferences } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -23,8 +33,10 @@ import {
   ensureBodySection,
   getScopeIdIdentifier,
   getSection,
+  type Section,
   getSectionForBody,
 } from "../util/sections";
+import { createsFromShell } from "../util/shell";
 import {
   addValue,
   getResumeRegisterId,
@@ -104,6 +116,26 @@ export default {
       nodeBinding,
       optional: false,
     });
+    if (isPatch()) {
+      // A `<try>` a patch may reach applies its body through `patches/try`, and
+      // a `@catch` a patch creates from its shell, `patches/catch-created`.
+      onReasonsSettled(() => {
+        if (patchMayWrite(section)) {
+          linkRuntimeFeature("patches/try");
+          if (attrTags["@catch"]) {
+            const { catchSection } = getTryParts(tag);
+            linkRuntimeFeature(
+              catchSection && patchCreates(catchSection)
+                ? "patches/catch-created"
+                : "patches/catch",
+            );
+            // An empty `@catch` renders by the renderer its module registers.
+            if (!catchSection)
+              getProgram().node.extra.registersBoundaryContent = true;
+          }
+        }
+      });
+    }
     structure.marker(tag, nodeBinding);
     structure.enterShallow(tag);
   },
@@ -115,6 +147,7 @@ export default {
       exit(tag) {
         const section = getSection(tag);
         const tagBody = tag.get("body");
+        const bodySection = getSectionForBody(tagBody)!;
         const nodeBinding = tag.node.extra!.nodeBinding!;
         const { catchTag, catchSection, placeholderTag, placeholderSection } =
           getTryParts(tag);
@@ -139,6 +172,17 @@ export default {
                 : getResumeRegisterId(section, nodeBinding, "catch"),
             ),
         ];
+        if (isPatch()) {
+          // A patch creates from the body's shell; an always-pairing body
+          // drops it outside divergent contexts.
+          tryArgs.push(
+            t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+            alwaysPairs(bodySection) && t.numericLiteral(1),
+            // A flush creates a catch whose effects its entries mount.
+            !!catchSection && patchCreates(catchSection) && t.numericLiteral(1),
+            getShellContentArg(catchSection, placeholderSection),
+          );
+        }
 
         tag
           .replaceWith(
@@ -238,4 +282,16 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
       ...body.node.body,
     ]),
   );
+}
+
+// The content a patch creates from its shell, as `_try`'s bits: 1 the catch,
+// 2 the placeholder.
+function getShellContentArg(
+  catchSection: Section | undefined,
+  placeholderSection: Section | undefined,
+) {
+  const bits =
+    (catchSection && createsFromShell(catchSection) ? 1 : 0) |
+    (placeholderSection && createsFromShell(placeholderSection) ? 2 : 0);
+  return bits && t.numericLiteral(bits);
 }

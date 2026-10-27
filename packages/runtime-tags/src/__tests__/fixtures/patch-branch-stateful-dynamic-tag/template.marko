@@ -1,0 +1,5 @@
+<let/count=0/>
+<if=input.show>
+  <${count ? "b" : "i"}>${input.label}</>
+</if>
+<button onClick() { count++ }>+</button>

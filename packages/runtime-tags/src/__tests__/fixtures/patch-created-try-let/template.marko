@@ -1,0 +1,7 @@
+<if=input.show>
+  <try>
+    <let/open=false/>
+    <button onClick() { open = !open }>${open ? "close" : "open"}</button>
+    <@catch>caught</@catch>
+  </try>
+</if>

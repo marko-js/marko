@@ -1,0 +1,21 @@
+// template.marko
+const $template = "<main><!><p> </p><button>+</button></main>";
+const $walks = "D%bD l l";
+const $setup = [[], ["__tests__/template.marko_0"]];
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%bD l ;<main><!><p> </p><button>+</button></main>" });
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html("<main>");
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
+	_html(`<p>${_text_resume($scope0_id, "#text/1", input.content + ":" + count)}</p><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	$scope0_page ? _scope($scope0_id, {
+		input_content: input.content,
+		count
+	}, "__tests__/template.marko", 0, {
+		input_content: ["input.content"],
+		count: "1:6"
+	}) : _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.content, !_server_guard($scope0_reason, 0));
+}, 1);
