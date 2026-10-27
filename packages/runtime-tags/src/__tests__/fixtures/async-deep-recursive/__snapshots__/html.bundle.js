@@ -15,10 +15,7 @@ const $content = (input) => {
 					_set_scope_reason($wg__input_level << 1);
 					const $childScope = _peek_scope_id();
 					$content({ level: input.level - 1 });
-					$wi__input_level && _subscribe($input_level__closures, _scope($scope3_id, {
-						_: _scope_with_id($scope2_id),
-						a: _existing_scope($childScope)
-					}), "b0", $wg__input_level);
+					$wi__input_level && _subscribe($input_level__closures, _scope($scope3_id, { a: _existing_scope($childScope) }), "b0", $wg__input_level);
 					$wg__input_level || $wi__input_level && _resume_branch($scope3_id);
 				}, $wg__input_level);
 				$wi__input_level && _scope($scope2_id, { _: _scope_with_id($scope1_id) });

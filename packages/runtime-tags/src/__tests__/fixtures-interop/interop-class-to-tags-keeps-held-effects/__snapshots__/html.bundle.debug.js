@@ -10,7 +10,7 @@ var tags_child_default = _template("__tests__/components/tags-child.marko", (inp
 			const $scope2_id = _scope_id();
 			_html(_escape(value));
 			_script($scope2_id, "__tests__/components/tags-child.marko_2_input_name#0:3", 0);
-			_subscribe($wi__input_name && $input_name__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/components/tags-child.marko", "6:4"), "__tests__/components/tags-child.marko_2_input_name#0:3/subscribe", 0);
+			_subscribe($wi__input_name && $input_name__closures, _scope($scope2_id, {}, "__tests__/components/tags-child.marko", "6:4"), "__tests__/components/tags-child.marko_2_input_name#0:3/subscribe", 0);
 			_resume_branch($scope2_id);
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/components/tags-child.marko", "5:2");

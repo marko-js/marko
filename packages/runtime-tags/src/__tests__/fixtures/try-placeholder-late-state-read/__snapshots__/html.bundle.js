@@ -13,10 +13,7 @@ var template_default = _template("a", (input) => {
 			_await($scope3_id, "a", resolveAfter("done", 2), () => {
 				const $scope4_id = _scope_id();
 				_html(`<b>loaded ${_text_resume($scope4_id, "a", clicks, 2)}</b>`);
-				_subscribe($clicks__closures, _scope($scope4_id, {
-					_: _scope_with_id($scope3_id),
-					Ce: 1
-				}), "a1");
+				_subscribe($clicks__closures, _scope($scope4_id, { Ce: 1 }), "a1");
 			});
 			_scope($scope3_id, { _: _scope_with_id($scope1_id) });
 		}, () => {
@@ -25,7 +22,7 @@ var template_default = _template("a", (input) => {
 			_html(`<i>loading ${_text_resume($scope2_id, "a", clicks, 2)}</i>`);
 			_subscribe($clicks__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0");
 		}, void 0, "a2");
-		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
+		_scope($scope1_id, {});
 	});
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {

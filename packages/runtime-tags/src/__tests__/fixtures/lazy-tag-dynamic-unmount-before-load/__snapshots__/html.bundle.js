@@ -21,7 +21,7 @@ var template_default = _template("b", (input) => {
 		_await($scope1_id, "a", resolveAfter(void 0, 1), (_) => {
 			const $scope2_id = _scope_id();
 			_dynamic_tag($scope2_id, "a", $Child_withLoadAssets, { value: 1 });
-			_subscribe($show__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b0");
+			_subscribe($show__closures, _scope($scope2_id, {}), "b0");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

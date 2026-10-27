@@ -24,10 +24,7 @@ var template_default = _template("a", (input) => {
 				q: 1,
 				on
 			});
-			_subscribe($on__closures, _scope($scope2_id, {
-				_: _scope_with_id($scope1_id),
-				a: _existing_scope($childScope)
-			}));
+			_subscribe($on__closures, _scope($scope2_id, { a: _existing_scope($childScope) }));
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

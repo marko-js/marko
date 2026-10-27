@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 				_await($scope2_id, "a", resolveAfter(1, 1), (v) => {
 					const $scope3_id = _scope_id();
 					_html(`<span class=body>${_escape(v)}${_text_resume($scope3_id, "b", count, 2)}</span>`);
-					_subscribe($count__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), "a0");
+					_subscribe($count__closures, _scope($scope3_id, {}), "a0");
 				});
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			}, () => {
@@ -29,10 +29,7 @@ var template_default = _template("a", (input) => {
 	_await($scope0_id, "e", resolveAfter(1, 2), (y) => {
 		const $scope4_id = _scope_id();
 		_html(`<span class=after>${_text_resume($scope4_id, "a", count)}</span>`);
-		_subscribe($count__closures, _scope($scope4_id, {
-			_: _scope_with_id($scope0_id),
-			Ch: 1
-		}), "a2");
+		_subscribe($count__closures, _scope($scope4_id, { Ch: 1 }), "a2");
 	});
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {

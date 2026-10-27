@@ -10,7 +10,7 @@ var tags_child_default = _template("b", (input) => {
 			const $scope2_id = _scope_id();
 			_html(_escape(value));
 			_script($scope2_id, "b0", 0);
-			_subscribe($wi__input_name && $input_name__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b1", 0);
+			_subscribe($wi__input_name && $input_name__closures, _scope($scope2_id, {}), "b1", 0);
 			_resume_branch($scope2_id);
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });

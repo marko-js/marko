@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 					const $scope4_id = _scope_id();
 					_html(`<div>changes: ${_text_resume($scope4_id, "b", changes, 2)}</div>${_el_resume($scope4_id, "a")}`);
 					_script($scope4_id, "a0");
-					_subscribe($changes__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }), "a1");
+					_subscribe($changes__closures, _scope($scope4_id, {}), "a1");
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 			}, () => {
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 				_scope_id();
 				_html("loading inner...");
 			}, void 0, "a2");
-			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
+			_scope($scope2_id, {});
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

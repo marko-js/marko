@@ -40,10 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_await($scope0_id, "#text/4", resolveAfter(1, 3), (y) => {
 		const $scope3_id = _scope_id();
 		_html(`<span class=after>${_text_resume($scope3_id, "#text/0", count)}</span>`);
-		_subscribe($count__closures, _scope($scope3_id, {
-			_: _scope_with_id($scope0_id),
-			"ClosureSignalIndex:count/7": 1
-		}, "__tests__/template.marko", "19:2"), "__tests__/template.marko_3_count#0:5/subscribe");
+		_subscribe($count__closures, _scope($scope3_id, { "ClosureSignalIndex:count/7": 1 }, "__tests__/template.marko", "19:2"), "__tests__/template.marko_3_count#0:5/subscribe");
 	});
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_await($scope4_id, "a", resolveAfter("retried", 2), (retry) => {
 				const $scope5_id = _scope_id();
 				_html(`<p>caught ${_text_resume($scope5_id, "a", err.message, $wg__err_message * 2)}, ${_escape(retry)}</p>`);
-				$wi__err_message && _subscribe($catch_content__err_message__closures, _scope($scope5_id, { _: _scope_with_id($scope4_id) }), "a0", $wg__err_message);
+				$wi__err_message && _subscribe($catch_content__err_message__closures, _scope($scope5_id, {}), "a0", $wg__err_message);
 				$wg__err_message || $wi__err_message && _resume_branch($scope5_id);
 			}, $wg__err_message);
 			$wi__err_message && _scope($scope4_id, { e: $catch_content__err_message__closures });
