@@ -26,11 +26,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 								const $scope5_id = _scope_id();
 								_html(`${_text_resume($scope5_id, "#text/0", input.depth, $wg__input_depth)}: `);
 								_dynamic_tag($scope5_id, "#text/1", input.content, {}, 0, 0, $wg__input_content);
-								_subscribe($wi__input_content && $Tree_content2__input_content__closures, _subscribe($wi__input_depth && $Tree_content2__input_depth__closures, _scope($scope5_id, {
+								const $scope5_guard = $wg__input_depth || $wg__input_content;
+								const $scope5_write = _scope($scope5_id, {
 									_: _scope_with_id($scope4_id),
 									"ClosureSignalIndex:input_depth/8": $wi__input_depth && 1
-								}, "__tests__/template.marko", "7:8"), "__tests__/template.marko_5_input_depth#2:5/subscribe", $wg__input_depth || $wg__input_content), "__tests__/template.marko_5_input_content#2:6/subscribe", $wg__input_depth || $wg__input_content);
-								$wg__input_depth || $wg__input_content || _resume_branch($scope5_id);
+								}, "__tests__/template.marko", "7:8");
+								_subscribe($wi__input_depth && $Tree_content2__input_depth__closures, $scope5_write, "__tests__/template.marko_5_input_depth#2:5/subscribe", $scope5_guard);
+								_subscribe($wi__input_content && $Tree_content2__input_content__closures, $scope5_write, "__tests__/template.marko_5_input_content#2:6/subscribe", $scope5_guard);
+								$scope5_guard || _resume_branch($scope5_id);
 							}, $scope4_id)
 						});
 						_subscribe($wi__input_depth && $Tree_content2__input_depth__closures, _scope($scope4_id, {

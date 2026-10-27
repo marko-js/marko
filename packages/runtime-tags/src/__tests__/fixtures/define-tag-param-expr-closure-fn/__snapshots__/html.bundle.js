@@ -20,11 +20,12 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 0), $wi__on = _write_if($scope1_reason, 0);
 		_html(`<span>${_text_resume($scope1_id, "a", on && f(), $wg__input_a || $wg__on)}</span>`);
+		const $scope1_guard = $wg__input_a || $wg__on;
 		($wi__input_a || $wi__on) && _subscribe($wi__input_a && $f2__closures, _scope($scope1_id, {
 			d: $wi__input_a && on,
 			_: _scope_with_id($scope0_id)
-		}), "a2", $wg__input_a || $wg__on);
-		$wg__input_a || $wg__on || ($wi__input_a || $wi__on) && _resume_branch($scope1_id);
+		}), "a2", $scope1_guard);
+		$scope1_guard || ($wi__input_a || $wi__on) && _resume_branch($scope1_id);
 	}, $scope0_id) };
 	_set_scope_reason($wg__input_x << 1);
 	const $childScope = _peek_scope_id();

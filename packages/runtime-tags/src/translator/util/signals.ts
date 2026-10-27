@@ -25,7 +25,11 @@ import {
 } from "./bindings";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
-import { generateUid, generateUidIdentifier } from "./generate-uid";
+import {
+  ensureSharedUid,
+  generateUid,
+  generateUidIdentifier,
+} from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
@@ -84,6 +88,7 @@ import { traverseReplace } from "./traverse";
 import { withLeadingComment } from "./with-comment";
 import {
   getExprIfWritten,
+  getStatementsIfWritten,
   getWriteGuardForAny,
   getWriteReason,
   isSameReason,
@@ -242,19 +247,30 @@ export function setSectionDebugVar(
   }
 }
 
-const [getSectionWriteScopeBuilder, setSectionWriteScopeBuilder] =
-  createOutputSectionState<
-    undefined | ((expr: t.Expression) => t.Expression)
-  >();
-export function addWriteScopeBuilder(
+// A subscription a section's html renderer makes to the scope it writes. One
+// per closure it reads, kept apart so they can follow the write in order:
+// nesting them inside it would make a section reading N closures nest N deep.
+interface SectionSubscriber {
+  subscribers: t.Expression;
+  // Built when emitted: a resume id is assigned in the order they are first
+  // asked for, so a subscription must not ask before the mount effects did.
+  resumeId?: () => t.StringLiteral;
+}
+const [getSectionSubscribers] = createOutputSectionState<SectionSubscriber[]>(
+  () => [],
+);
+export function addSectionSubscriber(
   section: Section,
-  builder: (writeCall: t.Expression) => t.Expression,
+  subscribers: t.Expression,
+  closure?: Binding,
 ) {
-  const prev = getSectionWriteScopeBuilder(section);
-  setSectionWriteScopeBuilder(
-    section,
-    prev ? (expr) => builder(prev(expr)) : builder,
-  );
+  getSectionSubscribers(section).push({
+    subscribers,
+    resumeId:
+      closure &&
+      (() =>
+        t.stringLiteral(getResumeRegisterId(section, closure, "subscribe"))),
+  });
 }
 
 const htmlDynamicClosureInstancesIdentifier = new WeakMap<
@@ -1249,11 +1265,7 @@ export function writeHTMLResumeStatements(
   const scopeIdIdentifier = getScopeIdIdentifier(section);
   // Whether any node of the section writes a marker, as the same argument
   // shape `_if` and `_await` take: absent when always, `0` when never.
-  const markerGuard = getWriteGuardForAny(
-    section,
-    getNodeReasons(section),
-    true,
-  );
+  let markerGuard = getWriteGuardForAny(section, getNodeReasons(section), true);
   const sectionReason = section.reason;
   forEach(section.referencedClosures, (closure) => {
     // A constant never changes, so nothing subscribes to it.
@@ -1299,21 +1311,41 @@ export function writeHTMLResumeStatements(
             ? getExprIfWritten(closure.section, closureScopesReason, identifier)
             : identifier;
         const changeable = isChangeableDynamicClosure(section, closure);
-        addWriteScopeBuilder(section, (expr) => {
-          const resumeId =
-            changeable &&
-            t.stringLiteral(getResumeRegisterId(section, closure, "subscribe"));
-          return callRuntime(
-            "_subscribe",
-            subscribeArg,
-            expr,
-            resumeId,
-            resumeId && markerGuard,
-          );
-        });
+        addSectionSubscriber(
+          section,
+          subscribeArg,
+          changeable ? closure : undefined,
+        );
       }
     }
   });
+
+  const subscribers = getSectionSubscribers(section);
+  const resumeClosestBranch =
+    !isOptionalBranch(section) &&
+    (section.hasAbortSignal ||
+      !!section.referencedClosures ||
+      (sectionReason && some(section.bindings, isLetBinding)));
+
+  // A guard over several node reasons reads once per subscription, mount
+  // effect and branch link; naming it lets a section that reads many closures
+  // refer to it instead of reprinting the whole chain each time.
+  if (
+    markerGuard &&
+    t.isLogicalExpression(markerGuard) &&
+    subscribers.filter((subscriber) => subscriber.resumeId).length +
+      allSignals.filter((signal) => signal.hasHTMLEffect).length +
+      (resumeClosestBranch ? 1 : 0) >
+      1
+  ) {
+    const name = ensureSharedUid(`scope${section.id}_guard`, section);
+    body.push(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(t.identifier(name), markerGuard),
+      ]),
+    );
+    markerGuard = t.identifier(name);
+  }
 
   // Effects carry no order (CONTEXT.md Effect), so neither this loop's direction
   // nor its place after the section's body holds one.
@@ -1334,7 +1366,6 @@ export function writeHTMLResumeStatements(
   }
 
   const debug = !isOptimize();
-  const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   const pendingProperties = getScopeProperties(section);
   const scopeProperties: t.ObjectProperty[] = [];
   const ifWritten = (reason: Reason, expr: t.Expression) => {
@@ -1440,21 +1471,50 @@ export function writeHTMLResumeStatements(
       }
     }
 
-    const writeCall = writeScopeBuilder
-      ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
-      : callRuntime("_scope", ...writeScopeArgs);
-    body.push(
-      t.expressionStatement(
-        getExprIfWritten(section, sectionReason, writeCall),
-      ),
-    );
-  }
+    const writeCall = callRuntime("_scope", ...writeScopeArgs);
+    const toSubscribe = (
+      { subscribers, resumeId }: SectionSubscriber,
+      scopeExpr: t.Expression,
+    ) => {
+      const id = resumeId?.();
+      return callRuntime(
+        "_subscribe",
+        subscribers,
+        scopeExpr,
+        id,
+        id && markerGuard,
+      );
+    };
 
-  const resumeClosestBranch =
-    !isOptionalBranch(section) &&
-    (section.hasAbortSignal ||
-      !!section.referencedClosures ||
-      (sectionReason && some(section.bindings, isLetBinding)));
+    if (subscribers.length > 1) {
+      // One statement each, in the order the subscriptions ran nested: the
+      // write, then the closures that read the scope.
+      const scopeName = ensureSharedUid(`scope${section.id}_write`, section);
+      const stmts = getStatementsIfWritten(section, sectionReason, [
+        t.variableDeclaration("const", [
+          t.variableDeclarator(t.identifier(scopeName), writeCall),
+        ]),
+        ...subscribers.map((subscriber) =>
+          t.expressionStatement(
+            toSubscribe(subscriber, t.identifier(scopeName)),
+          ),
+        ),
+      ]);
+      if (stmts) body.push(...stmts);
+    } else {
+      body.push(
+        t.expressionStatement(
+          getExprIfWritten(
+            section,
+            sectionReason,
+            subscribers.length
+              ? toSubscribe(subscribers[0], writeCall)
+              : writeCall,
+          ),
+        ),
+      );
+    }
+  }
 
   // The walker places a scope whose marker it visits, so a section that always
   // writes one needs no link; a dynamic marker guards it, none writes it plain.
