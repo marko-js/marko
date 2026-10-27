@@ -1,0 +1,11 @@
+class {
+  onCreate() {
+    this.state = { which: true };
+  }
+  toggle() {
+    this.state.which = !this.state.which;
+  }
+}
+<button id="class" onClick("toggle")>toggle</button>
+<tags-define which=state.which/>
+<init-components/>
