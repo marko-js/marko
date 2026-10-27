@@ -3,7 +3,18 @@ export { PatchRequestKind } from "../common/types";
 // Main's helpers, as a patch build runs them.
 export { withLoadAssets } from "./patches/assets";
 export {
+  _attr,
+  _attr_class,
   _attr_content,
+  _attr_details_or_dialog_open as _attr_details_open,
+  _attr_details_or_dialog_open as _attr_dialog_open,
+  _attr_input_checked,
+  _attr_input_checkedValue,
+  _attr_input_value,
+  _attr_option_value,
+  _attr_select_value,
+  _attr_style,
+  _attr_textarea_value,
   _attrs_content,
   _attrs_partial_content,
 } from "./patches/attrs";
@@ -41,22 +52,11 @@ export {
 } from "./patches/writer";
 // Patch-only.
 export {
-  _patch_attr,
-  _patch_attr_class,
-  _patch_attr_option_value,
-  _patch_attr_style,
   _patch_attrs,
   _patch_attr_content,
   _patch_attrs_content,
   _patch_attrs_partial,
   _patch_attrs_partial_content,
-  _patch_details_or_dialog_open as _patch_details_open,
-  _patch_details_or_dialog_open as _patch_dialog_open,
-  _patch_input_checked,
-  _patch_input_checkedValue,
-  _patch_input_value,
-  _patch_select_value,
-  _patch_textarea_value,
 } from "./patches/attrs";
 export {
   _patch_html,

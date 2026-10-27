@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		const uid = _id("uid");
-		_html(`<label${_patch_attr($scope1_id, "PatchAttr:#label/0 for", "for", uid, 0, 0)}>body</label>${_el_resume($scope1_id, "#label/0", 0)}<input${_patch_attr($scope1_id, "PatchAttr:#input/1 id", "id", uid, 0, 0)}>${_el_resume($scope1_id, "#input/1", 0)}`);
+		_html(`<label${_attr("for", uid, $scope1_id, "#label/0", 0, 0)}>body</label>${_el_resume($scope1_id, "#label/0", 0)}<input${_attr("id", uid, $scope1_id, "#input/1", 0, 0)}>${_el_resume($scope1_id, "#input/1", 0)}`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	_for_of(input.items, (item) => {

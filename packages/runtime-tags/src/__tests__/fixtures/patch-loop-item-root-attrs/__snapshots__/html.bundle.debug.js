@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:item_href", item?.href, !_server_guard($scope0_reason, 1));
 		const active = item.href === input.path;
-		_html(`<a${_patch_attr_class($scope1_id, "PatchAttr:#a/0 class", ["link", { active }], $scope0_reason, 0)}${_patch_attr($scope1_id, "PatchAttr:#a/0 href", "href", item.href, $scope0_reason, 1)}>`);
+		_html(`<a${_attr_class(["link", { active }], $scope1_id, "#a/0", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "#a/0", $scope0_reason, 1)}>`);
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 		const $childScope = _patch_child($scope1_id, "#childScope/1", 0);
 		icon_default({ name: item.icon });

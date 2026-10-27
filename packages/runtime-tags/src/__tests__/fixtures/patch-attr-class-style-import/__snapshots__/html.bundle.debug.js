@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let on$1 = false;
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}<div${$class}></div><div${_assert_class_toggles(item, ["on"]), $class2[on$1 ? 1 : 0]}></div>${_el_resume($scope0_id, "#div/1")}<div${_patch_attr_class($scope0_id, "PatchAttr:#div/2 class", [item, input.lit && "on"], $scope0_reason, 0)}></div>${_el_resume($scope0_id, "#div/2", _mask_group($scope0_reason, 0))}<div${_patch_attr_class($scope0_id, "PatchAttr:#div/3 class", { ["on"]: input.lit }, $scope0_reason, 0)}></div>${_el_resume($scope0_id, "#div/3", _mask_group($scope0_reason, 0))}<div${_patch_attr_class($scope0_id, "PatchAttr:#div/4 class", input.lit ? "on" : "box", $scope0_reason, 0)}></div>${_el_resume($scope0_id, "#div/4", _mask_group($scope0_reason, 0))}`);
+	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}<div${$class}></div><div${_assert_class_toggles(item, ["on"]), $class2[on$1 ? 1 : 0]}></div>${_el_resume($scope0_id, "#div/1")}<div${_attr_class([item, input.lit && "on"], $scope0_id, "#div/2", $scope0_reason, 0)}></div>${_el_resume($scope0_id, "#div/2", _mask_group($scope0_reason, 0))}<div${_attr_class({ ["on"]: input.lit }, $scope0_id, "#div/3", $scope0_reason, 0)}></div>${_el_resume($scope0_id, "#div/3", _mask_group($scope0_reason, 0))}<div${_attr_class(input.lit ? "on" : "box", $scope0_id, "#div/4", $scope0_reason, 0)}></div>${_el_resume($scope0_id, "#div/4", _mask_group($scope0_reason, 0))}`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

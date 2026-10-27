@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<em${_patch_attr_class($scope1_id, "PatchAttr:#em/0 class", input.tone, $scope0_reason, 0)}>note</em>${_el_resume($scope1_id, "#em/0", _mask_group($scope0_reason, 0))}`);
+			_html(`<em${_attr_class(input.tone, $scope1_id, "#em/0", $scope0_reason, 0)}>note</em>${_el_resume($scope1_id, "#em/0", _mask_group($scope0_reason, 0))}`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_tone#0:5/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4");
 			return 0;

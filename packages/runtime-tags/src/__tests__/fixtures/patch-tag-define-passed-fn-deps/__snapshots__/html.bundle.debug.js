@@ -17,7 +17,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $cg__valueChange = _client_guard($scope1_reason, 2);
 		const { value, valueChange, ...attrs } = input;
-		_html(`<input${_patch_input_value($scope1_id, "#input/0", value, valueChange, "PatchControl:2#input/0", $scope1_reason, 0, "PatchWrite:ControlledHandler:#input/0", $scope1_reason, 0)}${_patch_attrs_partial(attrs, {
+		_html(`<input${_attr_input_value($scope1_id, "#input/0", value, valueChange, 1, $scope1_reason, 0, 1, $scope1_reason, 0)}${_patch_attrs_partial(attrs, {
 			value: 1,
 			valueChange: 1
 		}, "#input/0", $scope1_id, "input", void 0, $scope1_reason, 3)}>${_el_resume($scope1_id, "#input/0")}`);

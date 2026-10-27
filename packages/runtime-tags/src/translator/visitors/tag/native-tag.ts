@@ -22,7 +22,7 @@ import {
   stringifyStyleEntry,
   toDelimitedString,
 } from "../../../common/helpers";
-import { ControlledType, type Falsy } from "../../../common/types";
+import type { Falsy } from "../../../common/types";
 import {
   _attr,
   _attr_class,
@@ -43,7 +43,6 @@ import {
 import {
   getAccessorPrefix,
   getAccessorProp,
-  getPatchKey,
 } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
@@ -66,9 +65,7 @@ import {
 } from "../../util/patch/decisions";
 import {
   buildPatchTextContent,
-  callPatchRuntime,
   getExprRootGroupArgs,
-  getNamedPatchKey,
 } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
@@ -86,7 +83,6 @@ import {
 } from "../../util/runtime";
 import {
   getPrefixedScopeAccessor,
-  getScopeAccessor,
   getScopeAccessorLiteral,
 } from "../../util/scope-accessor";
 import {
@@ -482,8 +478,9 @@ export default {
           linkHolePatcher(
             tagSection,
             controlExtra,
-            patchControls[getControllableHelper(tagName, controllable.state)]
-              .feature,
+            patchControlFeatures[
+              getControllableHelper(tagName, controllable.state)
+            ],
           );
         }
 
@@ -691,8 +688,8 @@ export default {
           write`${callRuntime("_attr_nonce")}`;
         }
 
-        // A patched control renders through its helper's `_patch_` variant, which
-        // writes the bind and control entries from the values it renders.
+        // A patched control's helper writes the bind and control entries from
+        // the values it renders.
         let patchArgs: (t.Expression | Falsy)[] = [];
         const controlHelper =
           controllable && getControllableHelper(tagName, controllable.state);
@@ -716,22 +713,10 @@ export default {
               ? getExprRootGroupArgs(tagSection, changeAttr!.value.extra!)
               : [];
             patchArgs = [
-              writesControl &&
-                t.stringLiteral(
-                  getPatchKey().Control +
-                    patchControls[controlHelper!].kind +
-                    getScopeAccessor(nodeBinding!),
-                ),
+              writesControl && t.numericLiteral(1),
               mask,
               group,
-              bindsHandler &&
-                t.stringLiteral(
-                  getPatchKey().Write +
-                    getPrefixedScopeAccessor(
-                      nodeBinding!,
-                      getAccessorPrefix().ControlledHandler,
-                    ),
-                ),
+              bindsHandler && t.numericLiteral(1),
               bindMask,
               bindGroup,
             ];
@@ -739,9 +724,7 @@ export default {
 
           if (tagName !== "select" && tagName !== "textarea") {
             write`${callRuntime(
-              patchArgs.length
-                ? patchControls[controlHelper!].writer
-                : controlHelper!,
+              controlHelper!,
               getScopeIdIdentifier(tagSection),
               nodeAccessor,
               ...controllable.attrs.map(
@@ -805,9 +788,7 @@ export default {
             writeAtStartOfBody =
               valueChange || patchArgs.length
                 ? callRuntime(
-                    patchArgs.length
-                      ? patchControls[controlHelper!].writer
-                      : controlHelper!,
+                    controlHelper!,
                     getScopeIdIdentifier(tagSection),
                     nodeAccessor,
                     value?.value,
@@ -840,15 +821,15 @@ export default {
               value.extra?.rendersValue &&
               writesPatchHole(tagSection, value.extra)
             ) {
-              // The patch write renders the attribute itself (the expression
-              // appears once); its group args trail.
+              // The attribute's helper also writes its patch entry (the
+              // expression appears once): the element and group args trail.
               const helper = getPatchAttrHelper(tagName, name);
-              write`${callPatchRuntime(
+              write`${callRuntime(
                 helper,
-                tagSection,
-                getNamedPatchKey(getPatchKey().Attr, nodeBinding!, name),
-                ...(helper === "_patch_attr" ? [t.stringLiteral(name)] : []),
+                ...(helper === "_attr" ? [t.stringLiteral(name)] : []),
                 value,
+                getScopeIdIdentifier(tagSection),
+                nodeAccessor,
                 ...getExprRootGroupArgs(tagSection, value.extra!),
               )}`;
               continue;
@@ -1027,9 +1008,7 @@ export default {
           tag.insertBefore(
             t.expressionStatement(
               callRuntime(
-                selectArgs.patchArgs.length
-                  ? "_patch_select_value"
-                  : selectArgs.helper,
+                selectArgs.helper,
                 getScopeIdIdentifier(tagSection),
                 nodeBinding && getScopeAccessorLiteral(nodeBinding),
                 ...selectArgs.args,
@@ -1650,43 +1629,15 @@ function getControllableHelper(tagName: string, state: Controllable["state"]) {
   }
 }
 
-// By a control's server helper: its patch writer, wire kind and feature.
-const patchControls = {
-  _attr_input_checked: {
-    writer: "_patch_input_checked",
-    kind: ControlledType.InputChecked,
-    feature: "patches/control-input",
-  },
-  _attr_input_checkedValue: {
-    writer: "_patch_input_checkedValue",
-    kind: ControlledType.InputCheckedValue,
-    feature: "patches/control-checked-value",
-  },
-  _attr_details_open: {
-    writer: "_patch_details_open",
-    kind: ControlledType.DetailsOrDialogOpen,
-    feature: "patches/control-open",
-  },
-  _attr_dialog_open: {
-    writer: "_patch_dialog_open",
-    kind: ControlledType.DetailsOrDialogOpen,
-    feature: "patches/control-open",
-  },
-  _attr_select_value: {
-    writer: "_patch_select_value",
-    kind: ControlledType.SelectValue,
-    feature: "patches/control-select",
-  },
-  _attr_textarea_value: {
-    writer: "_patch_textarea_value",
-    kind: ControlledType.InputValue,
-    feature: "patches/control-input",
-  },
-  _attr_input_value: {
-    writer: "_patch_input_value",
-    kind: ControlledType.InputValue,
-    feature: "patches/control-input",
-  },
+// By a control's server helper: the feature that applies its patch entries.
+const patchControlFeatures = {
+  _attr_input_checked: "patches/control-input",
+  _attr_input_checkedValue: "patches/control-checked-value",
+  _attr_details_open: "patches/control-open",
+  _attr_dialog_open: "patches/control-open",
+  _attr_select_value: "patches/control-select",
+  _attr_textarea_value: "patches/control-input",
+  _attr_input_value: "patches/control-input",
 } as const;
 
 function assertValidNativeAttrName(
@@ -2290,15 +2241,15 @@ function getClassNames(part: DelimitedAttrPart | undefined) {
       : [part.join(".")];
 }
 
-// The attribute's patch writer; class, style and an `<option>`'s value (which
+// The patched attribute's helper; class, style and an `<option>`'s value (which
 // marks it selected) each have their own.
 function getPatchAttrHelper(tagName: string, name: string) {
   if (tagName === "option" && name === "value") {
-    return "_patch_attr_option_value";
+    return "_attr_option_value";
   }
   return name === "class" || name === "style"
-    ? (`_patch_attr_${name}` as const)
-    : "_patch_attr";
+    ? (`_attr_${name}` as const)
+    : "_attr";
 }
 
 // A class or style value the template holds whole never needs the element.

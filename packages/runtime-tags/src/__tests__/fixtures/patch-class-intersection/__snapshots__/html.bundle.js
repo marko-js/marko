@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<em${_patch_attr_class($scope1_id, "aa$class", input.tone, $scope0_reason, 0)}>note</em>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
+			_html(`<em${_attr_class(input.tone, $scope1_id, "a", $scope0_reason, 0)}>note</em>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;

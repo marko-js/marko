@@ -13,9 +13,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<input${_patch_input_value($scope1_id, "#input/0", input.value, _resume(function(next) {
+			_html(`<input${_attr_input_value($scope1_id, "#input/0", input.value, _resume(function(next) {
 				document.querySelector("main").dataset.got = next;
-			}, "__tests__/template.marko_1/valueChange"), "PatchControl:2#input/0", $scope0_reason, 2, "PatchWrite:ControlledHandler:#input/0", $scope0_reason, 2)}>${_el_resume($scope1_id, "#input/0")}`);
+			}, "__tests__/template.marko_1/valueChange"), 1, $scope0_reason, 2, 1, $scope0_reason, 2)}>${_el_resume($scope1_id, "#input/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_value#0:6/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4", { "ControlledHandler:#input/0": ["valueChange", "4:30"] });

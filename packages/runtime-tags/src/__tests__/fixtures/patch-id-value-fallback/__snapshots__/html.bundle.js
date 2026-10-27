@@ -7,7 +7,7 @@ var field_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("A");
-	_html(`<label${_patch_attr($scope0_id, "aa$for", "for", uid, $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<input${_patch_attr($scope0_id, "ac$id", "id", uid, $scope0_reason, 0)}${_patch_attr($scope0_id, "ac$aria-describedby", "aria-describedby", input.heading, $scope0_reason, 2)}>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 2))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "a", $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "c", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "c", $scope0_reason, 2)}>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 2))}`);
 	_scope($scope0_id, {});
 });
 
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const heading = input.heading || _id("A");
 	const second = _id("B");
-	_html(`<h1${_patch_attr($scope0_id, "aa$id", "id", heading, $scope0_reason, 0)}>Fields</h1>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<label${_patch_attr($scope0_id, "ab$for", "for", second, 0, 0)}>second</label>${_el_resume($scope0_id, "b", 0)}<input${_patch_attr($scope0_id, "ac$id", "id", second, 0, 0)}>${_el_resume($scope0_id, "c", 0)}`);
+	_html(`<h1${_attr("id", heading, $scope0_id, "a", $scope0_reason, 0)}>Fields</h1>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<label${_attr("for", second, $scope0_id, "b", 0, 0)}>second</label>${_el_resume($scope0_id, "b", 0)}<input${_attr("id", second, $scope0_id, "c", 0, 0)}>${_el_resume($scope0_id, "c", 0)}`);
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 0) << 5);

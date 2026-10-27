@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/badge.marko": "__tests__/tags/badge.marko; D ;<span> <
 var badge_default = _template("__tests__/tags/badge.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span${_patch_attr_class($scope0_id, "PatchAttr:#span/0 class", ["badge", input.tone], $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}</span>${_el_resume($scope0_id, "#span/0", _mask_group($scope0_reason, 0))}`);
+	_html(`<span${_attr_class(["badge", input.tone], $scope0_id, "#span/0", $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}</span>${_el_resume($scope0_id, "#span/0", _mask_group($scope0_reason, 0))}`);
 	_scope($scope0_id, {}, "__tests__/tags/badge.marko", 0);
 });
 

@@ -12,7 +12,7 @@ var bar_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const pct = Math.round(Math.max(0, Math.min(100, input.pct)));
 	const fillClass = v_bar_marko_module_exports[input.variant || "hp"];
-	_html(`${_style_html(`--M_b0:${_patch_style($scope0_id, "ya$--M_b0", pct + "px", $scope0_reason, 0)};`)}${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<div${_patch_attr_class($scope0_id, "ab$class", [void 0, input.class], $scope0_reason, 2)}><div${_patch_attr_class($scope0_id, "ac$class", [void 0, fillClass], $scope0_reason, 1)}${_patch_attr($scope0_id, "ac$id", "id", `fill${input.variant || ""}`, $scope0_reason, 1)}></div>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 1))}</div>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 2))}`);
+	_html(`${_style_html(`--M_b0:${_patch_style($scope0_id, "ya$--M_b0", pct + "px", $scope0_reason, 0)};`)}${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<div${_attr_class([void 0, input.class], $scope0_id, "b", $scope0_reason, 2)}><div${_attr_class([void 0, fillClass], $scope0_id, "c", $scope0_reason, 1)}${_attr("id", `fill${input.variant || ""}`, $scope0_id, "c", $scope0_reason, 1)}></div>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 1))}</div>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 2))}`);
 	_scope($scope0_id, {});
 });
 

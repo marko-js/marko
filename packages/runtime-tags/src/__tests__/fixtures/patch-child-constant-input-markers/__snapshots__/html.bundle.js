@@ -6,7 +6,7 @@ _shells({ b: "b; D ;<span> </span>" });
 var badge_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span${_patch_attr_class($scope0_id, "aa$class", ["badge", input.tone], $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</span>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
+	_html(`<span${_attr_class(["badge", input.tone], $scope0_id, "a", $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</span>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
 	_scope($scope0_id, {});
 });
 

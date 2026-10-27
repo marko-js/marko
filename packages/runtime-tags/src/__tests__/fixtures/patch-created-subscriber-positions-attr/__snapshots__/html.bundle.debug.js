@@ -20,7 +20,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					_html(`<em${_patch_attr($scope2_id, "PatchAttr:#em/0 title", "title", input.b, $scope0_reason, 5)}></em>${_el_resume($scope2_id, "#em/0", _mask_group($scope0_reason, 5))}`);
+					_html(`<em${_attr("title", input.b, $scope2_id, "#em/0", $scope0_reason, 5)}></em>${_el_resume($scope2_id, "#em/0", _mask_group($scope0_reason, 5))}`);
 					_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, $cg__input_b ? "__tests__/tags/panel.marko_2_input_b#0:4/init" : "__tests__/tags/panel.marko_2_input_b#0:4/subscribe");
 					_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "3:6"), $cg__input_b && "__tests__/tags/panel.marko_2_input_b#0:4/subscribe");
 					return 0;

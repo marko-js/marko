@@ -10,9 +10,9 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<input${_patch_input_value($scope1_id, "a", input.value, _resume(function(next) {
+			_html(`<input${_attr_input_value($scope1_id, "a", input.value, _resume(function(next) {
 				document.querySelector("main").dataset.got = next;
-			}, "a0"), "n2a", $scope0_reason, 2, "wEa", $scope0_reason, 2)}>${_el_resume($scope1_id, "a")}`);
+			}, "a0"), 1, $scope0_reason, 2, 1, $scope0_reason, 2)}>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a1");
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a2");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });

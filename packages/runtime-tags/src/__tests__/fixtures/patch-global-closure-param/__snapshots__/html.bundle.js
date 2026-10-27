@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_page = _page_render();
 		const $scope1_id = _scope_id();
-		_html(`<p${_patch_attr($scope1_id, "aa$data-z", "data-z", z + $global$1.mark, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></p>${_el_resume($scope1_id, "a")}`);
+		_html(`<p${_attr("data-z", z + $global$1.mark, $scope1_id, "a", (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></p>${_el_resume($scope1_id, "a")}`);
 		_fill_global_subscribe("a0", $scope1_id);
 		_subscribe(_unfilled_if((2 | _mask_group($scope0_reason, 0)) << 1, 0) && $z__closures, _scope($scope1_id, { _: ($scope1_page || $wi__input_v) && _scope_with_id($scope0_id) }), _client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && "a1");
 	}, $scope0_id) });

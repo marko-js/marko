@@ -13,11 +13,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<div${_patch_attr_class($scope0_id, "PatchAttr:#div/0 class", "box", 0, 0)}></div>${_el_resume($scope0_id, "#div/0", 0)}`);
+	_html(`<div${_attr_class("box", $scope0_id, "#div/0", 0, 0)}></div>${_el_resume($scope0_id, "#div/0", 0)}`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<span${_patch_attr_class($scope1_id, "PatchAttr:#span/0 class", "box", 0, 0)}></span>${_el_resume($scope1_id, "#span/0", 0)}`);
+			_html(`<span${_attr_class("box", $scope1_id, "#span/0", 0, 0)}></span>${_el_resume($scope1_id, "#span/0", 0)}`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "4:2");
 			return 0;
 		}

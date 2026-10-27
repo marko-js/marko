@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<a${_patch_attr($scope1_id, "PatchAttr:#a/0 href", "href", input.href, $scope0_reason, 3)}${_patch_attr($scope1_id, "PatchAttr:#a/0 hidden", "hidden", input.hidden, $scope0_reason, 4)}>${_patch_text($scope1_id, "#text/1", input.label, void 0, $scope0_reason, 5)}</a>${_el_resume($scope1_id, "#a/0", _mask_group($scope0_reason, 3) || _mask_group($scope0_reason, 4))}`);
+			_html(`<a${_attr("href", input.href, $scope1_id, "#a/0", $scope0_reason, 3)}${_attr("hidden", input.hidden, $scope1_id, "#a/0", $scope0_reason, 4)}>${_patch_text($scope1_id, "#text/1", input.label, void 0, $scope0_reason, 5)}</a>${_el_resume($scope1_id, "#a/0", _mask_group($scope0_reason, 3) || _mask_group($scope0_reason, 4))}`);
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_href#0:6/init");
 			_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/template.marko_1_input_hidden#0:7/init");
 			_client_guard($scope0_reason, 5) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:8/init");

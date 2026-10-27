@@ -17,7 +17,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/feed-list.marko_fill2", item?.id);
-		_html(`<li${hovered === item.id ? " class=hovered" : ""}><a${_patch_attr($scope1_id, "PatchAttr:#a/1 href", "href", link(input.data, item.id), $scope0_reason, 0)}>${_patch_text($scope1_id, "#text/2", item.id, void 0, $scope0_reason, 1)}</a>${_el_resume($scope1_id, "#a/1", _mask_group($scope0_reason, 0))}</li>${_el_resume($scope1_id, "#li/0")}`);
+		_html(`<li${hovered === item.id ? " class=hovered" : ""}><a${_attr("href", link(input.data, item.id), $scope1_id, "#a/1", $scope0_reason, 0)}>${_patch_text($scope1_id, "#text/2", item.id, void 0, $scope0_reason, 1)}</a>${_el_resume($scope1_id, "#a/1", _mask_group($scope0_reason, 0))}</li>${_el_resume($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/tags/feed-list.marko_1");
 		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#5/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_data", _filled_guard($scope0_reason, 1) && "item_id");
 		_scope($scope1_id, {

@@ -22,11 +22,11 @@ _shells({
 var icon_default = _template("f", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<svg${_patch_attr($scope0_id, "aa$viewBox", "viewBox", input.name, $scope0_reason, 0)}>`);
+	_html(`<svg${_attr("viewBox", input.name, $scope0_id, "a", $scope0_reason, 0)}>`);
 	_if(() => {
 		if (input.name) {
 			const $scope1_id = _scope_id();
-			_html(`<path${_patch_attr($scope1_id, "aa$d", "d", input.name, $scope0_reason, 0)}></path>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
+			_html(`<path${_attr("d", input.name, $scope1_id, "a", $scope0_reason, 0)}></path>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "f0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;

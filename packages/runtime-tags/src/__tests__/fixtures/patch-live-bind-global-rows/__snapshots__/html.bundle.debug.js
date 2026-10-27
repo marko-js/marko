@@ -10,9 +10,9 @@ var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
 	const clamp = _bind_resume((v) => Math.min(input.max, Number(v)), "__tests__/tags/stepper.marko_0/clamp", $scope0_id);
 	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:clamp", clamp, !$sg__input_max);
 	let current = input.value;
-	_html(`<input${_patch_input_value($scope0_id, "#input/0", current, _bind_resume((_new_current) => {
+	_html(`<input${_attr_input_value($scope0_id, "#input/0", current, _bind_resume((_new_current) => {
 		current = clamp(_new_current);
-	}, "__tests__/tags/stepper.marko_0/valueChange", $scope0_id), void 0, void 0, void 0, "PatchWrite:ControlledHandler:#input/0")} type=number>${_el_resume($scope0_id, "#input/0")}`);
+	}, "__tests__/tags/stepper.marko_0/valueChange", $scope0_id), void 0, void 0, void 0, 1)} type=number>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/stepper.marko_0");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/stepper.marko_0_input_value#4_input_valueChange#5/init");
 	_patch_effect($scope0_id, "PatchInit:__tests__/tags/stepper.marko_0_clamp#7_current#8/init", _filled_guard($scope0_reason, 1) && "clamp");

@@ -7,11 +7,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
-	_patch_select_value($scope0_id, "#select/1", input.choice, _resume(function(next) {
+	_attr_select_value($scope0_id, "#select/1", input.choice, _resume(function(next) {
 		document.querySelector("main").dataset.choice = String(next);
 	}, "__tests__/template.marko_0/valueChange"), () => {
-		_html(`<select${_patch_attr($scope0_id, "PatchAttr:#select/1 multiple", "multiple", input.many, $scope0_reason, 1)}><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
-	}, "PatchControl:3#select/1", $scope0_reason, 2, "PatchWrite:ControlledHandler:#select/1", $scope0_reason, 2);
+		_html(`<select${_attr("multiple", input.many, $scope0_id, "#select/1", $scope0_reason, 1)}><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
+	}, 1, $scope0_reason, 2, 1, $scope0_reason, 2);
 	_html(`${_el_resume($scope0_id, "#select/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#select/1": ["valueChange", "3:50"] });

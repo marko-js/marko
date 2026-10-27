@@ -6,7 +6,7 @@ var field_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	const uid = _id("A");
-	_html(`<label${_patch_attr($scope0_id, "aa$for", "for", uid, 0, 0)}>${_patch_text($scope0_id, "b", input.name, void 0, $scope0_reason, 0)}</label>${_el_resume($scope0_id, "a", 0)}<input${_patch_attr($scope0_id, "ac$id", "id", uid, 0, 0)}>${_el_resume($scope0_id, "c", 0)}<button>+</button>${_el_resume($scope0_id, "d")}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "a", 0, 0)}>${_patch_text($scope0_id, "b", input.name, void 0, $scope0_reason, 0)}</label>${_el_resume($scope0_id, "a", 0)}<input${_attr("id", uid, $scope0_id, "c", 0, 0)}>${_el_resume($scope0_id, "c", 0)}<button>+</button>${_el_resume($scope0_id, "d")}`);
 	const $return = count;
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb1", count, 1);

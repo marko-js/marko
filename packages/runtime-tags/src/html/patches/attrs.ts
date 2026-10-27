@@ -7,19 +7,21 @@ import {
 } from "../../common/helpers";
 import {
   type Accessor,
+  AccessorPrefix,
+  ControlledType,
   IdHop,
   PatchKey,
   PatchPairing,
 } from "../../common/types";
 import {
-  _attr,
-  _attr_details_or_dialog_open,
-  _attr_input_checked,
-  _attr_input_checkedValue,
-  _attr_input_value,
-  _attr_option_value,
-  _attr_select_value,
-  _attr_textarea_value,
+  _attr as _base_attr,
+  _attr_details_or_dialog_open as _base_attr_details_or_dialog_open,
+  _attr_input_checked as _base_attr_input_checked,
+  _attr_input_checkedValue as _base_attr_input_checkedValue,
+  _attr_input_value as _base_attr_input_value,
+  _attr_option_value as _base_attr_option_value,
+  _attr_select_value as _base_attr_select_value,
+  _attr_textarea_value as _base_attr_textarea_value,
   _attrs,
   _attrs_partial,
   stringAttr,
@@ -42,57 +44,57 @@ import {
   pushIdHop,
   walkMarkers,
   withKeptBranchId,
-  writeFill,
   withUnpatched,
 } from "./writer";
 
-// Patch writers double as the output writers so the compiled template
-// evaluates each patch-written expression once.
-export function _patch_attr(
-  scopeId: number,
-  key: string,
+// A patched attribute (`scopeId` and its element's `accessor` given) renders on
+// a page and writes its entry in a patch render, so its value evaluates once.
+export function _attr(
   name: string,
   value: unknown,
+  scopeId?: number,
+  accessor?: Accessor,
   mask?: GroupMask,
   group?: number,
 ) {
-  const fills = ensureFills(scopeId, mask, group!);
+  const fills =
+    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group!);
   return fills === undefined
-    ? _attr(name, value)
-    : writeFill(fills, key, normalizeAttrValue(value));
+    ? _base_attr(name, value)
+    : writeAttrFill(fills, accessor!, name, normalizeAttrValue(value));
 }
 
 // Class/style normalize on the server into the same string the dom helper
 // writes, so the client applies them as plain attr fills.
-export function _patch_attr_class(
-  scopeId: number,
-  key: string,
+export function _attr_class(
   value: unknown,
+  scopeId?: number,
+  accessor?: Accessor,
   mask?: GroupMask,
   group?: number,
 ) {
   return patchStringAttr(
-    scopeId,
-    key,
     "class",
     toDelimitedString(value, " ", stringifyClassEntry),
+    scopeId,
+    accessor,
     mask,
     group,
   );
 }
 
-export function _patch_attr_style(
-  scopeId: number,
-  key: string,
+export function _attr_style(
   value: unknown,
+  scopeId?: number,
+  accessor?: Accessor,
   mask?: GroupMask,
   group?: number,
 ) {
   return patchStringAttr(
-    scopeId,
-    key,
     "style",
     toDelimitedString(value, ";", stringifyStyleEntry),
+    scopeId,
+    accessor,
     mask,
     group,
   );
@@ -100,31 +102,44 @@ export function _patch_attr_style(
 
 // An option's `value` renders through the select-aware writer (it may add
 // `selected`); the patch entry is the plain attribute the client re-syncs.
-export function _patch_attr_option_value(
-  scopeId: number,
-  key: string,
+export function _attr_option_value(
   value: unknown,
+  scopeId?: number,
+  accessor?: Accessor,
   mask?: GroupMask,
   group?: number,
 ) {
-  const fills = ensureFills(scopeId, mask, group!);
+  const fills =
+    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group!);
   return fills === undefined
-    ? _attr_option_value(value)
-    : writeFill(fills, key, normalizeAttrValue(value));
+    ? _base_attr_option_value(value)
+    : writeAttrFill(fills, accessor!, "value", normalizeAttrValue(value));
 }
 
 function patchStringAttr(
-  scopeId: number,
-  key: string,
   name: string,
   value: string,
-  mask?: GroupMask,
-  group?: number,
+  scopeId: number | undefined,
+  accessor: Accessor | undefined,
+  mask: GroupMask | undefined,
+  group: number | undefined,
 ) {
-  const fills = ensureFills(scopeId, mask, group!);
+  const fills =
+    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group!);
   return fills === undefined
     ? stringAttr(name, value)
-    : writeFill(fills, key, value || undefined);
+    : writeAttrFill(fills, accessor!, name, value || undefined);
+}
+
+function writeAttrFill(
+  fills: Record<string, unknown> | 0,
+  accessor: Accessor,
+  name: string,
+  value: string | undefined,
+) {
+  if (fills)
+    fills[PatchKey.Attr + accessor + (MARKO_DEBUG ? " " : "$") + name] = value;
+  return "";
 }
 
 // An attribute's value as the client's `_attr` sets it: `""` for `true`, none
@@ -362,90 +377,93 @@ function withoutContent(data: Record<string, unknown>) {
 
 // A patched control writes its entries from the values it renders, so each
 // evaluates once; a patch render ships the entries alone.
-export function _patch_input_value(
+export function _attr_input_value(
   scopeId: number,
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
-  controlKey?: string,
+  control?: 1,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
+  bind?: 1,
   bindMask?: GroupMask,
   bindGroup?: number,
 ) {
-  const isPatchRender = patchControl(
+  return patchControl(
     scopeId,
+    nodeAccessor,
+    ControlledType.InputValue,
     value,
     valueChange,
-    controlKey,
+    control,
     mask,
     group,
-    bindKey,
+    bind,
     bindMask,
     bindGroup,
-  );
-  return isPatchRender
+  )
     ? ""
-    : _attr_input_value(scopeId, nodeAccessor, value, valueChange);
+    : _base_attr_input_value(scopeId, nodeAccessor, value, valueChange);
 }
 
-export function _patch_input_checked(
+export function _attr_input_checked(
   scopeId: number,
   nodeAccessor: Accessor,
   checked: unknown,
   checkedChange: unknown,
-  controlKey?: string,
+  control?: 1,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
+  bind?: 1,
   bindMask?: GroupMask,
   bindGroup?: number,
 ) {
-  const isPatchRender = patchControl(
+  return patchControl(
     scopeId,
+    nodeAccessor,
+    ControlledType.InputChecked,
     checked,
     checkedChange,
-    controlKey,
+    control,
     mask,
     group,
-    bindKey,
+    bind,
     bindMask,
     bindGroup,
-  );
-  return isPatchRender
+  )
     ? ""
-    : _attr_input_checked(scopeId, nodeAccessor, checked, checkedChange);
+    : _base_attr_input_checked(scopeId, nodeAccessor, checked, checkedChange);
 }
 
 // The control entry pairs the group's value with this input's own.
-export function _patch_input_checkedValue(
+export function _attr_input_checkedValue(
   scopeId: number,
   nodeAccessor: Accessor,
   checkedValue: unknown,
   checkedValueChange: unknown,
   value: unknown,
-  controlKey?: string,
+  control?: 1,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
+  bind?: 1,
   bindMask?: GroupMask,
   bindGroup?: number,
 ) {
-  const isPatchRender = patchControl(
+  return patchControl(
     scopeId,
-    controlKey && [checkedValue, value],
+    nodeAccessor,
+    ControlledType.InputCheckedValue,
+    control && [checkedValue, value],
     checkedValueChange,
-    controlKey,
+    control,
     mask,
     group,
-    bindKey,
+    bind,
     bindMask,
     bindGroup,
-  );
-  return isPatchRender
+  )
     ? ""
-    : _attr_input_checkedValue(
+    : _base_attr_input_checkedValue(
         scopeId,
         nodeAccessor,
         checkedValue,
@@ -454,114 +472,140 @@ export function _patch_input_checkedValue(
       );
 }
 
-export function _patch_details_or_dialog_open(
+export function _attr_details_or_dialog_open(
   scopeId: number,
   nodeAccessor: Accessor,
   open: unknown,
   openChange: unknown,
-  controlKey?: string,
+  control?: 1,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
+  bind?: 1,
   bindMask?: GroupMask,
   bindGroup?: number,
 ) {
-  const isPatchRender = patchControl(
+  return patchControl(
     scopeId,
+    nodeAccessor,
+    ControlledType.DetailsOrDialogOpen,
     open,
     openChange,
-    controlKey,
+    control,
     mask,
     group,
-    bindKey,
+    bind,
     bindMask,
     bindGroup,
-  );
-  return isPatchRender
+  )
     ? ""
-    : _attr_details_or_dialog_open(scopeId, nodeAccessor, open, openChange);
+    : _base_attr_details_or_dialog_open(
+        scopeId,
+        nodeAccessor,
+        open,
+        openChange,
+      );
 }
 
 // The entries precede the content, whose options write their own.
-export function _patch_select_value(
+export function _attr_select_value(
   scopeId: number,
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
   content: () => void,
-  controlKey?: string,
+  control?: 1,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
+  bind?: 1,
   bindMask?: GroupMask,
   bindGroup?: number,
 ) {
-  const isPatchRender = patchControl(
-    scopeId,
-    value,
-    valueChange,
-    controlKey,
-    mask,
-    group,
-    bindKey,
-    bindMask,
-    bindGroup,
-  );
-  if (isPatchRender) content();
-  else _attr_select_value(scopeId, nodeAccessor, value, valueChange, content);
+  if (
+    patchControl(
+      scopeId,
+      nodeAccessor,
+      ControlledType.SelectValue,
+      value,
+      valueChange,
+      control,
+      mask,
+      group,
+      bind,
+      bindMask,
+      bindGroup,
+    )
+  ) {
+    content();
+  } else {
+    _base_attr_select_value(scopeId, nodeAccessor, value, valueChange, content);
+  }
 }
 
-export function _patch_textarea_value(
+export function _attr_textarea_value(
   scopeId: number,
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
-  controlKey?: string,
+  control?: 1,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
+  bind?: 1,
   bindMask?: GroupMask,
   bindGroup?: number,
 ) {
-  const isPatchRender = patchControl(
+  return patchControl(
     scopeId,
+    nodeAccessor,
+    ControlledType.InputValue,
     value,
     valueChange,
-    controlKey,
+    control,
     mask,
     group,
-    bindKey,
+    bind,
     bindMask,
     bindGroup,
-  );
-  return isPatchRender
+  )
     ? ""
-    : _attr_textarea_value(scopeId, nodeAccessor, value, valueChange);
+    : _base_attr_textarea_value(scopeId, nodeAccessor, value, valueChange);
 }
 
 // The handler's bind entry applies first, then the value's control entry (its
 // kind digit rides the key ahead of the accessor); true on a patch render.
 function patchControl(
   scopeId: number,
+  nodeAccessor: Accessor,
+  kind: ControlledType,
   value: unknown,
   handler: unknown,
-  controlKey: string | undefined,
+  control: 1 | undefined,
   mask: GroupMask | undefined,
   group: number | undefined,
-  bindKey: string | undefined,
+  bind: 1 | undefined,
   bindMask: GroupMask | undefined,
   bindGroup: number | undefined,
 ) {
   const state = getState();
   if (!(state instanceof PatchRenderState)) {
     // A page render only walks the markers a control entry pairs through.
-    if (controlKey) walkMarkers(state);
+    if (control) walkMarkers(state);
     return false;
   }
-  if (bindKey) _patch_bind(scopeId, bindKey, handler, bindMask, bindGroup);
-  if (controlKey) {
+  if (bind) {
+    _patch_bind(
+      scopeId,
+      PatchKey.Write + AccessorPrefix.ControlledHandler + nodeAccessor,
+      handler,
+      bindMask,
+      bindGroup,
+    );
+  }
+  if (control) {
     const fills = ensureFills(scopeId, mask, group!);
-    if (fills) fills[controlKey] = normalizePatchValue(value);
+    if (fills) {
+      fills[PatchKey.Control + kind + nodeAccessor] =
+        normalizePatchValue(value);
+    }
   }
   return true;
 }

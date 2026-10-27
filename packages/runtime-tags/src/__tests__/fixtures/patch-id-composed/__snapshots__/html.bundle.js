@@ -7,7 +7,7 @@ var field_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = _id("A");
-	_html(`<label${_patch_attr($scope0_id, "aa$for", "for", uid, 0, 0)}>${_patch_text($scope0_id, "b", input.name, void 0, $scope0_reason, 0)}</label>${_el_resume($scope0_id, "a", 0)}<input${_patch_attr($scope0_id, "ac$id", "id", uid, 0, 0)}${_patch_attr($scope0_id, "ac$aria-describedby", "aria-describedby", input.headingId, $scope0_reason, 1)}>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 1))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "a", 0, 0)}>${_patch_text($scope0_id, "b", input.name, void 0, $scope0_reason, 0)}</label>${_el_resume($scope0_id, "a", 0)}<input${_attr("id", uid, $scope0_id, "c", 0, 0)}${_attr("aria-describedby", input.headingId, $scope0_id, "c", $scope0_reason, 1)}>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 1))}`);
 	_scope($scope0_id, {});
 });
 
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_visible__OR__input_items = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const headingId = _id("A");
-	_html(`<h2${_patch_attr($scope0_id, "aa$id", "id", headingId, 0, 0)}>Fields</h2>${_el_resume($scope0_id, "a", 0)}`);
+	_html(`<h2${_attr("id", headingId, $scope0_id, "a", 0, 0)}>Fields</h2>${_el_resume($scope0_id, "a", 0)}`);
 	_if(() => {
 		if (input.visible !== false) {
 			const $scope1_id = _scope_id();

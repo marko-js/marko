@@ -7,9 +7,9 @@ var field_default = _template("__tests__/tags/field/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let v = "";
-	_html(`<input${_patch_input_value($scope0_id, "#input/0", v, _resume((_new_v) => {
+	_html(`<input${_attr_input_value($scope0_id, "#input/0", v, _resume((_new_v) => {
 		v = _new_v;
-	}, "__tests__/tags/field/index.marko_0/valueChange", $scope0_id), "PatchControl:2#input/0", 0, 0, "PatchWrite:ControlledHandler:#input/0", 0, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_patch_text($scope0_id, "#text/1", v, void 0, 0, 0, 1)}</em>`);
+	}, "__tests__/tags/field/index.marko_0/valueChange", $scope0_id), 1, 0, 0, 1, 0, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_patch_text($scope0_id, "#text/1", v, void 0, 0, 0, 1)}</em>`);
 	_script($scope0_id, "__tests__/tags/field/index.marko_0");
 	_scope($scope0_id, {}, "__tests__/tags/field/index.marko", 0, { "ControlledHandler:#input/0": ["valueChange"] });
 });

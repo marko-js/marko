@@ -9,9 +9,9 @@ var stepper_default = _template("b", (input) => {
 	const clamp = _bind_resume((v) => Math.min(input.max, Number(v)), "b0", $scope0_id);
 	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xh", clamp, !$sg__input_max);
 	let current = input.value;
-	_html(`<input${_patch_input_value($scope0_id, "a", current, _bind_resume((_new_current) => {
+	_html(`<input${_attr_input_value($scope0_id, "a", current, _bind_resume((_new_current) => {
 		current = clamp(_new_current);
-	}, "b1", $scope0_id), void 0, void 0, void 0, "wEa")} type=number>${_el_resume($scope0_id, "a")}`);
+	}, "b1", $scope0_id), void 0, void 0, void 0, 1)} type=number>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b2");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b5");
 	_patch_effect($scope0_id, "ib6", _filled_guard($scope0_reason, 1) && "h");

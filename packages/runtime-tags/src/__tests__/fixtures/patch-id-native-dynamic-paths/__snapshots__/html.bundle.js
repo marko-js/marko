@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const uid = _id("A");
-		_html(`<label${_patch_attr($scope1_id, "aa$for", "for", uid, 0, 0)}>body</label>${_el_resume($scope1_id, "a", 0)}<input${_patch_attr($scope1_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope1_id, "b", 0)}`);
+		_html(`<label${_attr("for", uid, $scope1_id, "a", 0, 0)}>body</label>${_el_resume($scope1_id, "a", 0)}<input${_attr("id", uid, $scope1_id, "b", 0, 0)}>${_el_resume($scope1_id, "b", 0)}`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	const Wrap = { content: _content("a1", ({ on, content }) => {
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope4_id = _scope_id();
 			const uid = _id("B");
-			_html(`<label${_patch_attr($scope4_id, "aa$for", "for", uid, 0, 0)}>attr</label>${_el_resume($scope4_id, "a", 0)}<input${_patch_attr($scope4_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope4_id, "b", 0)}`);
+			_html(`<label${_attr("for", uid, $scope4_id, "a", 0, 0)}>attr</label>${_el_resume($scope4_id, "a", 0)}<input${_attr("id", uid, $scope4_id, "b", 0, 0)}>${_el_resume($scope4_id, "b", 0)}`);
 			_scope($scope4_id, {});
 		}, $scope2_id) }) }, 9, 0, 0, $wg__input_items, $scope0_reason, 0);
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);

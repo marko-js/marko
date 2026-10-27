@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_store#9/var");
 		_patch_child_end();
 		const uid = _id("uid");
-		_html(`<label${_patch_attr($scope1_id, "PatchAttr:#label/2 for", "for", uid, 0, 0)}>${_patch_text($scope1_id, "#text/3", name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope1_id, "#label/2", 0)}<input${_patch_attr($scope1_id, "PatchAttr:#input/4 id", "id", uid, 0, 0)}>${_el_resume($scope1_id, "#input/4", 0)}<p>${_patch_text($scope1_id, "#text/5", name, void 0, $scope0_reason, 1)}:${_text_resume($scope1_id, "#text/6", store.last, 2)}</p>`);
+		_html(`<label${_attr("for", uid, $scope1_id, "#label/2", 0, 0)}>${_patch_text($scope1_id, "#text/3", name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope1_id, "#label/2", 0)}<input${_attr("id", uid, $scope1_id, "#input/4", 0, 0)}>${_el_resume($scope1_id, "#input/4", 0)}<p>${_patch_text($scope1_id, "#text/5", name, void 0, $scope0_reason, 1)}:${_text_resume($scope1_id, "#text/6", store.last, 2)}</p>`);
 		_for_of(input.keys.toReversed(), (other) => {
 			const $scope2_id = _scope_id();
 			_if(() => {

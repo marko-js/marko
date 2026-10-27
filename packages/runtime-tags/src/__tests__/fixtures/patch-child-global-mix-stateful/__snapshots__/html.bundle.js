@@ -5,7 +5,7 @@ var gm_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const z = input.v + $global$1.flag;
-	_html(`<p${_patch_attr($scope0_id, "aa$data-z", "data-z", z + $global$1.mark, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></p>${_el_resume($scope0_id, "a")}`);
+	_html(`<p${_attr("data-z", z + $global$1.mark, $scope0_id, "a", (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></p>${_el_resume($scope0_id, "a")}`);
 	_fill_global_subscribe("b0", $scope0_id, $cg__input_v);
 	_fill_global_subscribe("b1", $scope0_id);
 	$cg__input_v && _patch_write($scope0_id, "wd", input.v, 1);

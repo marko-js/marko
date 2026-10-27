@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<script${_patch_attr($scope1_id, "aa$nonce", "nonce", input.nonce, $scope0_reason, 1)}>
+			_html(`<script${_attr("nonce", input.nonce, $scope1_id, "a", $scope0_reason, 1)}>
       { const main = document.querySelector("main");
       main.dataset.ran = (+main.dataset.ran || 0) + 1;
       main.dataset.nonce = document.currentScript.getAttribute("nonce");

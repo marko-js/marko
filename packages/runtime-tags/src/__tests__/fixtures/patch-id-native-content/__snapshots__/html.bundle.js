@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const uid = _id("A");
-		_html(`<label${_patch_attr($scope1_id, "aa$for", "for", uid, 0, 0)}>body</label>${_el_resume($scope1_id, "a", 0)}<input${_patch_attr($scope1_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope1_id, "b", 0)}`);
+		_html(`<label${_attr("for", uid, $scope1_id, "a", 0, 0)}>body</label>${_el_resume($scope1_id, "a", 0)}<input${_attr("id", uid, $scope1_id, "b", 0, 0)}>${_el_resume($scope1_id, "b", 0)}`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	_for_of(input.items, (item) => {

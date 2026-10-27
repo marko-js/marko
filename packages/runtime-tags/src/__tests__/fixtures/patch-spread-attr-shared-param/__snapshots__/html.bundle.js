@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		href: input.url,
 		title: input.title,
 		class: input.cls
-	}, "a", $scope0_id, "a", void 0, $scope0_reason, 4)}>x</a>${_el_resume($scope0_id, "a")}<img${_patch_attr($scope0_id, "ab$src", "src", `${input.url}?w=${input.width}`, $scope0_reason, 2)}>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 2))}`);
+	}, "a", $scope0_id, "a", void 0, $scope0_reason, 4)}>x</a>${_el_resume($scope0_id, "a")}<img${_attr("src", `${input.url}?w=${input.width}`, $scope0_id, "b", $scope0_reason, 2)}>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 2))}`);
 	_script($scope0_id, "a0");
 	_filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 9)) && _patch_write($scope0_id, "xe", input.url);
 	_filled_guard($scope0_reason, 7) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.title);

@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<script${_patch_attr($scope1_id, "PatchAttr:#script/0 nonce", "nonce", input.nonce, $scope0_reason, 1)}>
+			_html(`<script${_attr("nonce", input.nonce, $scope1_id, "#script/0", $scope0_reason, 1)}>
       { const main = document.querySelector("main");
       main.dataset.ran = (+main.dataset.ran || 0) + 1;
       main.dataset.nonce = document.currentScript.getAttribute("nonce");

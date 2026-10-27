@@ -7,7 +7,7 @@ var field_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = _id("A");
-	_html(`<label${_patch_attr($scope0_id, "aa$for", "for", uid, 0, 0)}>field</label>${_el_resume($scope0_id, "a", 0)}<input${_patch_attr($scope0_id, "ab$id", "id", uid, 0, 0)}>${_el_resume($scope0_id, "b", 0)}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "a", 0, 0)}>field</label>${_el_resume($scope0_id, "a", 0)}<input${_attr("id", uid, $scope0_id, "b", 0, 0)}>${_el_resume($scope0_id, "b", 0)}`);
 	_scope($scope0_id, {});
 });
 

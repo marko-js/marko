@@ -9,11 +9,11 @@ var template_default = _template("a", (input) => {
 	let n = 0;
 	const x = _id("A");
 	const $x = _id("B");
-	_html(`<button>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}<div><input${_patch_attr($scope0_id, "ac$id", "id", x, 0, 0)}>${_el_resume($scope0_id, "c", 0)}<label${_patch_attr($scope0_id, "ad$for", "for", x, 0, 0)}>${_text_resume($scope0_id, "e", n)}</label>${_el_resume($scope0_id, "d", 0)}</div><div><input${_patch_attr($scope0_id, "af$id", "id", $x, 0, 0)}>${_el_resume($scope0_id, "f", 0)}</div>`);
+	_html(`<button>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}<div><input${_attr("id", x, $scope0_id, "c", 0, 0)}>${_el_resume($scope0_id, "c", 0)}<label${_attr("for", x, $scope0_id, "d", 0, 0)}>${_text_resume($scope0_id, "e", n)}</label>${_el_resume($scope0_id, "d", 0)}</div><div><input${_attr("id", $x, $scope0_id, "f", 0, 0)}>${_el_resume($scope0_id, "f", 0)}</div>`);
 	_for_of([{ k: "a b" }, { k: "a]" }], (item) => {
 		const $scope1_id = _scope_id();
 		const y = _id("C");
-		_html(`<input${_patch_attr($scope1_id, "aa$id", "id", y, 0, 0)}>${_el_resume($scope1_id, "a", 0)}`);
+		_html(`<input${_attr("id", y, $scope1_id, "a", 0, 0)}>${_el_resume($scope1_id, "a", 0)}`);
 		_scope($scope1_id, {});
 	}, "k", $scope0_id, "g", 1, void 0, void 0, void 0, void 0, "a0", 0, 0);
 	_script($scope0_id, "a1");

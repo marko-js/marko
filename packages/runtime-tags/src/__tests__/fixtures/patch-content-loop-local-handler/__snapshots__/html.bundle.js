@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "xe", x?.name);
-			_html(`<button${_patch_attr_class($scope1_id, "aa$class", "b" + x.id)}>${_patch_text($scope1_id, "b", x.name)}</button>${_el_resume($scope1_id, "a")}<span></span>${_el_resume($scope1_id, "c")}`);
+			_html(`<button${_attr_class("b" + x.id, $scope1_id, "a")}>${_patch_text($scope1_id, "b", x.name)}</button>${_el_resume($scope1_id, "a")}<span></span>${_el_resume($scope1_id, "c")}`);
 			_script($scope1_id, "a0", 1, 1, "e");
 			_script($scope1_id, "a1");
 			_scope($scope1_id, {

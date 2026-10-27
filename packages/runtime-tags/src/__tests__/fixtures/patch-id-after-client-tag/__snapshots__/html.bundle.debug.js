@@ -7,7 +7,7 @@ var labeled_default = _template("__tests__/tags/labeled.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = _id("uid");
-	_html(`<label${_patch_attr($scope0_id, "PatchAttr:#label/0 for", "for", uid, 0, 0)}>${_patch_text($scope0_id, "#text/1", input.name, void 0, $scope0_reason, 0)}</label>${_el_resume($scope0_id, "#label/0", 0)}<input${_patch_attr($scope0_id, "PatchAttr:#input/2 id", "id", uid, 0, 0)}>${_el_resume($scope0_id, "#input/2", 0)}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "#label/0", 0, 0)}>${_patch_text($scope0_id, "#text/1", input.name, void 0, $scope0_reason, 0)}</label>${_el_resume($scope0_id, "#label/0", 0)}<input${_attr("id", uid, $scope0_id, "#input/2", 0, 0)}>${_el_resume($scope0_id, "#input/2", 0)}`);
 	_scope($scope0_id, {}, "__tests__/tags/labeled.marko", 0);
 });
 
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/1", on ? labeled_default : null, { name: "client" });
 	const after = _id("after");
-	_html(`<input${_patch_attr($scope0_id, "PatchAttr:#input/2 id", "id", after, 0, 0)}>${_el_resume($scope0_id, "#input/2", 0)}<label${_patch_attr($scope0_id, "PatchAttr:#label/3 for", "for", after, 0, 0)}>after</label>${_el_resume($scope0_id, "#label/3", 0)}`);
+	_html(`<input${_attr("id", after, $scope0_id, "#input/2", 0, 0)}>${_el_resume($scope0_id, "#input/2", 0)}<label${_attr("for", after, $scope0_id, "#label/3", 0, 0)}>after</label>${_el_resume($scope0_id, "#label/3", 0)}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { on }, "__tests__/template.marko", 0, { on: "2:6" });
 }, 1);
