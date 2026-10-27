@@ -6,4 +6,6 @@ import { wait } from "../../utils/resolve";
 export const config: TestConfig = {
   steps: [{}, wait, wait],
   skip_csr: true,
+  // Only debug builds carry the error's message, which the `@catch` renders.
+  skip_parity: true,
 };
