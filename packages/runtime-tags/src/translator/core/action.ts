@@ -16,14 +16,14 @@ import {
 } from "../util/assert";
 import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
-import { isOptimize, isOutputDOM } from "../util/marko-config";
+import { isOptimize, isOutputDOM, isPatch } from "../util/marko-config";
 import { addReason } from "../util/reasons";
 import {
   mergeReferences,
   onFinalizeReferences,
   trackVarReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   ensureSection,
@@ -65,7 +65,11 @@ export default {
     tagExtra.retained = true;
     tagExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
     onFinalizeReferences(() => {
-      if (!binding.pruned) addReason(fnSlot, ALWAYS);
+      if (!binding.pruned) {
+        addReason(fnSlot, ALWAYS);
+        // A patch's end ends the acts it waits on.
+        if (isPatch()) linkRuntimeFeature("patches/action");
+      }
     });
   },
   translate: {

@@ -708,7 +708,7 @@ function testFixtures(interop?: true) {
                   }
                 : undefined,
               onInput: usesPatches
-                ? async (input, betweenFlushes, throwsError) => {
+                ? async (input, betweenFlushes, throwsError, navigation) => {
                     // A navigation follows the delivered document unless the
                     // fixture wants the race with a still-streaming one.
                     if (hasFlush && !config.patch_while_streaming) {
@@ -732,7 +732,26 @@ function testFixtures(interop?: true) {
                     if (config.patch_build) {
                       server.setPatchBuild!(config.patch_build);
                     }
-                    response = streamPatch(patch, pageGlobal, server);
+                    // A router starts its patch in a bubble listener of the
+                    // event it routes, inside that event's dispatch.
+                    let started!: ReturnType<typeof streamPatch>;
+                    const start = (_?: Event) =>
+                      (started = streamPatch(
+                        patch,
+                        pageGlobal,
+                        server,
+                        navigation?.stays,
+                      ));
+                    if (navigation?.click) {
+                      const { document } = browser.window;
+                      document.addEventListener("click", start, { once: true });
+                      document
+                        .querySelector<HTMLElement>(navigation.click)!
+                        .click();
+                    } else {
+                      start();
+                    }
+                    response = started;
                     previous?.superseded();
                     if (previous?.ended) assertCommittedOnce(previous);
                     const { headers } = response;
@@ -1096,6 +1115,7 @@ async function runSteps(
       input: Input,
       betweenFlushes?: (document: Document) => unknown,
       throwsError?: boolean,
+      navigation?: Navigate,
     ) => void | boolean | Promise<void | boolean>;
     onFlush?: () => Promise<void>;
     onDestroy?: () => void;
@@ -1155,7 +1175,14 @@ async function runSteps(
           : update.navigateInput
         : update;
       const between = isNavigate(update) ? update.betweenFlushes : undefined;
-      if ((await opts.onInput(input, between, isThrows(update))) === false) {
+      if (
+        (await opts.onInput(
+          input,
+          between,
+          isThrows(update),
+          isNavigate(update) ? update : undefined,
+        )) === false
+      ) {
         break;
       }
     } else {
@@ -1306,6 +1333,8 @@ function streamPatch(
   $global: Parameters<typeof patch>[0],
   // The server that rendered the patch, whatever the request's build.
   server: Partial<Pick<typeof import("../html/patch"), "patchResponseHeaders">>,
+  // A failed response's page stays: the navigation was not leaving.
+  stays?: 1,
 ) {
   const encoder = new TextEncoder();
   const navigation = new AbortController();
@@ -1333,10 +1362,12 @@ function streamPatch(
     reportedStopped: false,
   };
   // A stopped response reports nothing.
-  const report = (fn: () => unknown) => (): undefined => {
-    if (state.stopped) state.reportedStopped = true;
-    else fn();
-  };
+  const report =
+    <T>(fn: () => T) =>
+    (): T | undefined => {
+      if (state.stopped) state.reportedStopped = true;
+      else return fn();
+    };
   apply(
     new Response(
       new ReadableStream(
@@ -1351,12 +1382,13 @@ function streamPatch(
       ),
       { headers: server.patchResponseHeaders!("patch") },
     ),
-    report(() => state.commits++),
+    report(() => void state.commits++),
     report(() => ++applied === sent && settle(1)),
     report(() => (state.ended = true)),
     report(() => {
       state.failed = true;
       settle(0);
+      return stays;
     }),
   );
   return Object.assign(state, {

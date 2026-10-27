@@ -1,4 +1,4 @@
-// size: 30347 (min) 11184 (brotli)
+// size: 31090 (min) 11475 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2478,8 +2478,46 @@ function _load_signal_patch(load, id, trigger) {
   return (_load_lazy(id, (_) => load().then((mod) => (apply._ = mod._))), apply);
 }
 //#endregion
-//#region packages/runtime-tags/dist/dom/action.feat.mjs
+//#region packages/runtime-tags/dist/dom.mjs
 let act;
+let dispatched;
+let held = [];
+/**
+ * Whether the event that ran, or is running, navigates this document: a submit,
+ * or a primary click without modifier keys on `a[href]` without `download`;
+ * aimed at this browsing context, that no handler prevented, and not a
+ * fragment of this page. A `patch()` started in the dispatch counts as
+ * navigating too: the runtime asks only for events no patch claimed.
+ */
+function navigates(ev) {
+  let { button, metaKey, ctrlKey, shiftKey, altKey } = ev,
+    source =
+      ev.type == "submit"
+        ? ev.target
+        : !(button || metaKey || ctrlKey || shiftKey || altKey) && ev.target.closest?.("a[href]");
+  if (!source || ev.defaultPrevented || source.hasAttribute("download")) return !1;
+  let target = ev.submitter?.getAttribute("formtarget") ?? source.getAttribute("target"),
+    { href } = source;
+  return (
+    (!target || target == "_self") &&
+    !(href?.includes("#") && href.split("#")[0] == location.href.split("#")[0])
+  );
+}
+function listen() {
+  return (
+    addEventListener("click", dispatchEnd),
+    addEventListener("submit", dispatchEnd),
+    addEventListener("pageshow", (ev) => {
+      ev.persisted && held.splice(0).forEach((end) => end());
+    }),
+    []
+  );
+}
+function dispatchEnd(ev) {
+  dispatched = dispatched.filter(
+    ([e, end]) => e != ev || (navigates(ev) ? held.push(end) : end(), 0),
+  );
+}
 function _draft(id, fn) {
   let valueAccessor = decodeAccessor(id),
     guessAccessor = decodeAccessor(id + 1),
@@ -2510,19 +2548,27 @@ function _action(id, registerId, fn) {
       let call = (...args) => {
         let prev = act,
           mine = (act = /* @__PURE__ */ new Set()),
-          end = (_) => {
+          ev = window.event,
+          waits = 1,
+          finish = () => {
             (mine.forEach((leave) => leave()), --pending.n || set(scope, create(scope, pending)));
           },
+          end = (_) => --waits || finish(),
           result;
         (pending.n++ || set(scope, create(scope, pending)), _defer_frame());
         try {
           result = scope[fnAccessor]?.(...args);
         } catch (error) {
-          throw (end(), error);
+          throw (finish(), error);
         } finally {
           act = prev;
         }
-        return (result?.then ? result.then(end, end) : setTimeout(end), result);
+        return (
+          (ev?.type == "click" || ev?.type == "submit") &&
+            (waits++, (dispatched ||= listen()).push([ev, end]), setTimeout(dispatchEnd, 0, ev)),
+          result?.then ? result.then(end, end) : setTimeout(end),
+          result
+        );
       };
       return ((call.pending = !!pending.n), call);
     };

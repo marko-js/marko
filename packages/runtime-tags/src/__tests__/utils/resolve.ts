@@ -115,12 +115,17 @@ export function isThrows(value: any): value is Throws {
 export type Navigate = {
   navigateInput: Record<string, unknown> | (() => Record<string, unknown>);
   betweenFlushes?: (document: Document) => unknown;
+  /** Starts the patch inside the dispatch of a click on this selector. */
+  click?: string;
+  /** A failed response reports that the page stays (the browser was not leaving). */
+  stays?: 1;
 };
 export function navigate(
   input: Navigate["navigateInput"],
   betweenFlushes?: (document: Document) => unknown,
+  options?: Pick<Navigate, "click" | "stays">,
 ): Navigate {
-  return { navigateInput: input, betweenFlushes };
+  return { navigateInput: input, betweenFlushes, ...options };
 }
 export function isNavigate(value: any): value is Navigate {
   return (

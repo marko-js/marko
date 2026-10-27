@@ -146,6 +146,7 @@ export const domRuntimeFeatures = [
 ] as const;
 // Listed only for an app compiled with `patches`.
 export const domPatchRuntimeFeatures = [
+  "patches/action",
   "patches/attr",
   "patches/attrs",
   "patches/await",

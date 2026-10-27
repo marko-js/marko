@@ -1,0 +1,12 @@
+<action/prevented(ev) { ev.preventDefault() }/>
+<action/modified/>
+<action/blank/>
+<action/download/>
+<action/fragment/>
+<action/button/>
+<form onSubmit=prevented><button>prevented ${prevented.pending}</button></form>
+<a href="/a" onClick=modified>modified ${modified.pending}</a>
+<a href="/a" target="_blank" onClick=blank>blank ${blank.pending}</a>
+<a href="/a" download onClick=download>download ${download.pending}</a>
+<a href="#top" onClick=fragment>fragment ${fragment.pending}</a>
+<button onClick=button>button ${button.pending}</button>

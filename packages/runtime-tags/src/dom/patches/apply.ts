@@ -119,6 +119,17 @@ export function installBindRef(resolve: NonNullable<typeof bindRef>) {
   bindRef = resolve;
 }
 
+// Installed by `patches/action`: the acts a patch waits on, keyed by its stop.
+let claimActs: ((prev: unknown, next: unknown) => void) | undefined;
+let endActs: ((stop: unknown) => void) | undefined;
+export function installPatchActs(
+  claim: NonNullable<typeof claimActs>,
+  end: NonNullable<typeof endActs>,
+) {
+  claimActs = claim;
+  endActs = end;
+}
+
 // A loop's live item: the one where it rendered while its key still matches
 // there (the reconciler's own check), else found by key.
 export function getLoopItem(
@@ -171,15 +182,18 @@ export function patch(
       : trees[data as number]) as SerializeContext;
   responseCtx._ = _resumed;
   // The signal, a failure or the next `patch()` stops the response at once:
-  // it stops reading, and nothing it left waiting applies or reports.
+  // it stops reading, and nothing it left waiting applies or reports. A signal
+  // that stops the patch still in its slot leaves no successor to take its acts.
   const render = curRenders[$global.renderId];
   const stop = (_?: Event) => {
     if (render[RenderDataProp.StopPatch] === stop) {
       render[RenderDataProp.StopPatch] = undefined;
       // A body the fetch's own abort or a network error ended rejects this.
       reader?.cancel().catch((_) => 0);
+      _ && endActs?.(stop);
     }
   };
+  claimActs?.(render[RenderDataProp.StopPatch], stop);
   render[RenderDataProp.StopPatch]?.();
   render[RenderDataProp.StopPatch] = stop;
   signal.addEventListener("abort", stop);
@@ -254,7 +268,8 @@ export function patch(
       onCommit: () => undefined,
       onApplied: () => void,
       onEnd: () => void,
-      onFail: () => void,
+      // Truthy when the page stays, which ends the acts the patch waited on.
+      onFail: () => unknown,
     ) => {
       let ended: unknown;
       let waiting = 0;
@@ -262,7 +277,7 @@ export function patch(
         if (render[RenderDataProp.StopPatch] === stop) {
           if (MARKO_DEBUG) console.warn(`A patch rejected: ${why}.`);
           stop();
-          onFail();
+          onFail() && endActs?.(stop);
         }
       };
       // Each flush reports once it (and anything it waited on) applied; the end
@@ -270,7 +285,7 @@ export function patch(
       const done: FlushDone = (applied) =>
         applied
           ? render[RenderDataProp.StopPatch] === stop &&
-            (onApplied(), --waiting || (ended && onEnd()))
+            (onApplied(), --waiting || (ended && (endActs?.(stop), onEnd())))
           : MARKO_DEBUG
             ? fail("a flush did not apply")
             : fail();
@@ -323,6 +338,7 @@ export function patch(
         } else if (!waiting) {
           // A response with no flush to apply still commits, once.
           commit &&= commit();
+          endActs?.(stop);
           onEnd();
         }
       }
