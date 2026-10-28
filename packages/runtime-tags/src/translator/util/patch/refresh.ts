@@ -104,6 +104,7 @@ import {
   getStatefulConsumers,
   isPassedStateByEveryCall,
   isStatefulLeaf,
+  usesApart,
 } from "./structure";
 
 // Stable wire/registry key for a fill: a register id for a template-wide fill
@@ -1224,13 +1225,13 @@ function rendersWithOwner(content: Section) {
   );
 }
 
-// A read rendering the content in structure or beside other inputs, or using
-// it any other way than passing it on.
+// A read rendering the content in structure or beside other inputs, passing it
+// on in stateful structure, or using it any other way.
 function rendersApart(read: ReferencedExtra) {
   return isContentRender(read)
     ? !!read.section.parent ||
         Array.isArray(getReferencedBindings(read.merged || read))
-    : !read.derives;
+    : usesApart(read);
 }
 
 // The branch of the control flow tag whose expression the read is.

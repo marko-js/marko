@@ -60,6 +60,12 @@ export function isStatefulLeaf(read: ReferencedExtra) {
   );
 }
 
+// A read using content other than to render it: anything but passing it on, or
+// passing it on in stateful structure, where no patch renders.
+export function usesApart(read: ReferencedExtra) {
+  return !read.derives || inStatefulBranch(read.section);
+}
+
 function holdsClientState(binding: Binding) {
   return hasClientState(binding.sources);
 }
