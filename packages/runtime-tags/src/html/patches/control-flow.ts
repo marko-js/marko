@@ -648,6 +648,7 @@ export function _try(
   );
   const chunk = getChunk()!;
   const beforeBranch = deferBranchStart(chunk);
+  const shellsBefore = state.pendingShells.length;
   // In its branch, the body's own setup rides its shell; it is creatable
   // only where the try's scope is.
   const bodyContent = inCreatable()
@@ -663,8 +664,6 @@ export function _try(
           ? placeholderId
           : _resume(placeholderContent, placeholderId!)),
     );
-  // A placeholder created from its shell shows while the body is pending.
-  if (shellContent! & 2) shipShell(state, placeholderId);
   // A patch shows `@placeholder` from received client state and creates
   // `@catch` in its entry, so no document reorder rides the flush stream.
   let writesRenderers = false;
@@ -725,6 +724,11 @@ export function _try(
     // nothing.
     if (create) ensureScopePatch(state, branchId);
     withBranchId(branchId, bodyContent);
+  }
+  // A placeholder created from its shell ships, ahead of the body's, only with
+  // a body left pending, which is when a flush shows it.
+  if (shellContent! & 2 && getChunk() !== chunk) {
+    shipShell(state, placeholderId, false, shellsBefore);
   }
   applyBranchStart(chunk, beforeBranch, true);
   if (!writesRenderers) renderers();

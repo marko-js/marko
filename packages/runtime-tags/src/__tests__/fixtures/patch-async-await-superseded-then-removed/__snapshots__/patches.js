@@ -9,10 +9,9 @@
 }]
 
 // PATCH
-[`a1,<i>loading</i>`, {
+{
   cAa: {
     ba: 0,
     tb: "three"
   }
-}]
-;DAI
+}

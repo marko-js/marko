@@ -9,10 +9,9 @@
 }]
 
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-superseded-then-removed/template.marko_3*content,<i>loading</i>`, {
+{
   "PatchChild:BranchScopes:#text/0": {
     "PatchBranch:#text/0": 0,
     "PatchText:#text/1": "three"
   }
-}]
-;DAQ
+}
