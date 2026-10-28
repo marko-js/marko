@@ -1,0 +1,6 @@
+<if=input.on>
+  <let/k=input.n/>
+  <define/Panel|{ open }|><if=open><p>${input.w}</p></if></define>
+  <Panel open=k/>
+  <button onClick() { k = 0 }>x</button>
+</if>

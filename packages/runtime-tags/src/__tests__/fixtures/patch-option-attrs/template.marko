@@ -1,0 +1,14 @@
+<let/count=0/>
+<main>
+  <select value=input.picked>
+    <for|o| of=input.options by=(o) => o.id>
+      <option value=o.value>${o.label}</option>
+    </for>
+  </select>
+  <select id="plain">
+    <option value="a" selected=(input.pick === "a")>A</option>
+    <option value="b" selected=(input.pick === "b")>B</option>
+  </select>
+  <em>${count}</em>
+  <button onClick() { count++ }>+</button>
+</main>

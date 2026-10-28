@@ -1,0 +1,8 @@
+<const/f() { return input.a }/>
+<let/out=""/>
+<if=input.y>
+  <for|i| of=[1]>
+    <button.read onClick() { out = f() }>${f()}</button>
+  </for>
+</if>
+<output>${out}</output>

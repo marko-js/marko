@@ -1,0 +1,10 @@
+<let/refreshing:=input.refreshing/>
+<let/catalog=null as string[] | null/>
+<const/load=async (refresh: boolean) => {
+  if (refresh) refreshing = true;
+  catalog = ["a", "b"];
+  if (refresh) refreshing = false;
+}/>
+<return=load/>
+<button onClick() { load(true) }>load</button>
+<ul><for|item| of=catalog || []><li>${item}</li></for></ul>

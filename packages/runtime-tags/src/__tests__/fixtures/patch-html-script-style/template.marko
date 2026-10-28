@@ -1,0 +1,5 @@
+<let/count=0/>
+<html-style>.x { color: ${input.on ? "red" : "blue"} }</html-style>
+<html-script>window.__label = ${JSON.stringify(input.label)};</html-script>
+<p class="x">${input.label} ${count}</p>
+<button onClick() { count++ }>+</button>

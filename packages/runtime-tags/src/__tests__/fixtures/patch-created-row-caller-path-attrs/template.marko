@@ -1,0 +1,5 @@
+<let/path="/a"/>
+<if=input.show>
+  <navlist items=input.items path=path/>
+</if>
+<button.p onClick() { path = path === "/a" ? "/b" : "/a" }>p</button>

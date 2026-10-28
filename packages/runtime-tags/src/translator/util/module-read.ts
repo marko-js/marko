@@ -23,7 +23,7 @@ export interface ModuleRead {
 
 /** The module read an expression is, resolved on first use: translate replaces
  * a `<style/name>` tag. */
-function getModuleRead(
+export function getModuleRead(
   path: t.NodePath,
   expr: t.Expression,
 ): ModuleRead | undefined {
@@ -31,6 +31,11 @@ function getModuleRead(
     ((expr.extra ??= {})[kModuleRead] ??= resolveModuleRead(path, expr)) ||
     undefined
   );
+}
+
+/** A module read `getModuleRead` resolved, read from the extra alone. */
+export function isResolvedModuleRead(extra: t.NodeExtra | undefined) {
+  return !!extra?.[kModuleRead];
 }
 
 /** A module read of a stylesheet module, whose reads are class name strings. */

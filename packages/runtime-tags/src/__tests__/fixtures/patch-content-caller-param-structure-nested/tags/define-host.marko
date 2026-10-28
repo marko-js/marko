@@ -1,0 +1,15 @@
+<define/Sel|{ open }|>
+  <toggle-if open=open>
+    <p>if ${input.label}</p>
+  </toggle-if>
+  <toggle-for open=open>
+    <p>for ${input.label}</p>
+  </toggle-for>
+  <toggle-tag open=open>
+    <p>tag ${input.label}</p>
+  </toggle-tag>
+  <${open ? "div" : "section"}>
+    <p>own ${input.label}</p>
+  </>
+</define>
+<Sel open=input.open/>

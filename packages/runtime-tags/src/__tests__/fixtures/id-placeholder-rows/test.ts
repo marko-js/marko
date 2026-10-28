@@ -1,0 +1,29 @@
+import assert from "node:assert/strict";
+
+import type { TestConfig } from "../../main.test";
+import { flush, rejectAfter, wait } from "../../utils/resolve";
+export const config: TestConfig = {
+  equivalent: false,
+  steps: () => [
+    // Each row's placeholder while its body waits (not in a client render),
+    // then its catch.
+    {
+      rows: [
+        { key: "a", promise: rejectAfter(new Error("x")) },
+        { key: "b", promise: rejectAfter(new Error("y")) },
+      ],
+    },
+    checkIds,
+    wait,
+    flush,
+    checkIds,
+  ],
+};
+function checkIds(document: Document) {
+  const seen = new Set<string>();
+  for (const input of document.querySelectorAll("input")) {
+    assert(!seen.has(input.id), "duplicate " + input.id);
+    seen.add(input.id);
+    assert.equal(input.labels?.length, 1);
+  }
+}

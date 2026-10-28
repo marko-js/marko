@@ -1,0 +1,4 @@
+// PATCH
+{
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-ctrl-handler-param/template.marko_fill0": $
+}

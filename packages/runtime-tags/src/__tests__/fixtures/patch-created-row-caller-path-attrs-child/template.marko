@@ -1,0 +1,5 @@
+<let/path="/a"/>
+<if=input.show>
+  <navx items=input.items path=path page=input.page/>
+</if>
+<button.p onClick() { path = path === "/a" ? "/b" : "/a" }>p</button>

@@ -1,0 +1,5 @@
+<let/alt=false/>
+<button onClick() { alt = !alt }>${alt ? "A" : "B"}</button>
+<define/A><em>A ${input.label}</em></define>
+<define/B><i>B ${input.label}</i></define>
+<wrapper fail=false content=(alt ? A : B)/>

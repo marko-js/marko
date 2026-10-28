@@ -1,0 +1,46 @@
+// tags/show-await.marko
+var show_await_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_promise = _write_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	const $input_promise__closures = /* @__PURE__ */ new Set();
+	_await($scope0_id, "a", input.promise, (x) => {
+		const $scope1_id = _scope_id();
+		const $await_content__x__closures = /* @__PURE__ */ new Set();
+		_try($scope1_id, "a", () => {
+			_scope_reason();
+			const $scope2_id = _scope_id();
+			_html(`<p>${_text_resume($scope2_id, "a", x, $wg__input_promise)}:${_text_resume($scope2_id, "b", input.promise ? "p" : "-", $wg__input_promise * 2)}</p>`);
+			$wi__input_promise && _subscribe($await_content__x__closures, _subscribe($input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b0", $wg__input_promise), "b1", $wg__input_promise);
+			$wg__input_promise || $wi__input_promise && _resume_branch($scope2_id);
+		}, void 0, () => {
+			_scope_reason();
+			_scope_id();
+			_html("error");
+		}, void 0, "b2");
+		$wi__input_promise && _scope($scope1_id, { f: $await_content__x__closures });
+	}, $wg__input_promise);
+	$wi__input_promise && _scope($scope0_id, { e: $input_promise__closures });
+});
+
+// template.marko
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let p = input.promise;
+	_html(`<button class=swap>swap</button>${_el_resume($scope0_id, "a")}`);
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_set_scope_reason(2);
+			const $childScope = _peek_scope_id();
+			show_await_default({ promise: p });
+			_scope($scope1_id, {
+				_: _scope_with_id($scope0_id),
+				a: _existing_scope($childScope)
+			});
+			return 0;
+		}
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0));
+	_script($scope0_id, "a0");
+	_scope($scope0_id, { g: _write_if($scope0_reason, 0) && p });
+}, 1);

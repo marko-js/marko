@@ -1,0 +1,27 @@
+<button class=inc>0<!--M_$1 #text/1--></button><!--M_$1 #button/0-->
+<section class=SHOWN_on1 style=color:red title=SHOWN_t1></section>
+<!--M_(1 #text/2 2--><input checked type=checkbox><!--M_(1 #text/3 3-->
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  M._.r = [_ => [1, {
+      "ConditionalRenderer:#text/2": "section",
+      "ConditionalRenderer:#text/3": "input",
+      n: 0
+    }, {
+      "EventAttributes:#section/0": {
+        click: _._[
+          "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-attrs/template.marko_0/onClick"
+          ]
+      },
+      "#Renderer": "section"
+    }, {
+      "ControlledType:#input/0": 0,
+      "ControlledHandler:#input/0": _._[
+        "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-attrs/template.marko_0/checkedChange"
+        ],
+      "#Renderer": "input"
+    }],
+    "_dynamicTagScript 2 3 packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-attrs/template.marko_0 1"
+  ];
+  M._.w()
+</script>

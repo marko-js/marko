@@ -1,0 +1,16 @@
+<let/show=true/>
+<let/on=false/>
+<const/o={ on: on }/>
+<main>
+  <if=show>
+    <tabs>
+      <@tab ...{ on: on }/>
+    </tabs>
+    <tabs>
+      <@tab ...o/>
+    </tabs>
+    <tabs ...{ tab: { on: on } }/>
+  </if>
+  <button.flip onClick() { on = !on }>f</button>
+  <button.toggle onClick() { show = !show }>t</button>
+</main>

@@ -1,0 +1,14 @@
+<define/Wrap|{ item }|>
+  <let/open=true/>
+  <button.toggle onClick() { open = !open }>t</button>
+  <if=open><for|it| of=item><${it}/></for></if>
+</define>
+<define/Plain|{ item }|>
+  <for|it| of=item><${it}/></for>
+</define>
+<main>
+  <${input.on ? Wrap : Plain}>
+    <@item><em>${input.a}</em></@item>
+    <@item><b>${input.b}</b></@item>
+  </>
+</main>

@@ -1,0 +1,9 @@
+<let/open=true/>
+<for|item| of=input.items>
+  <p>${input.a + item}</p>
+</for>
+<if=open>
+  <div/el/>
+  <script>el().textContent = "s:" + input.a</script>
+</if>
+<button.t onClick() { open = !open }>t</button>

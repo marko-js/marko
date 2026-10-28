@@ -1,0 +1,18 @@
+<let/open=false/>
+<define/Panel|{ isOpen, label }|>
+  <if=isOpen>
+    <em>${label}</em>
+  </if>
+</define>
+<try>
+  <if=input.fail>
+    ${(() => { throw new Error("fail"); })()}
+  </if>
+  <span>ok</span>
+  <@catch|err|>
+    <Panel isOpen=true label=input.label/>
+  </@catch>
+</try>
+<const/Tag=input.other ? "div" : Panel/>
+<${Tag} isOpen=!open label=input.label + "!"/>
+<button onClick() { open = !open }>toggle</button>
