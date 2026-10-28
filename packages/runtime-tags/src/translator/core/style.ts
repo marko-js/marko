@@ -25,10 +25,7 @@ import { isOutputDOM, isPatch } from "../util/marko-config";
 import { type Opt, push } from "../util/optional";
 import { onReasonsSettled, writesPatchHole } from "../util/patch/decisions";
 import { patchWrites } from "../util/patch/structure";
-import {
-  getExprRootGroupArgs,
-  getNamedPatchKey,
-} from "../util/patch/writers";
+import { getExprRootGroupArgs, getNamedPatchKey } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { getReferencedBindings, mergeReferences } from "../util/references";
 import { callRuntime, linkRuntimeFeature } from "../util/runtime";

@@ -101,9 +101,7 @@ export function _escape_style_value(
 // A text-only body a patch writes passes its scope, key and group: its entry
 // carries the plain text, which a page escapes per namespace.
 export const _escape = /*@__PURE__*/ withTextFill(_base_escape);
-export const _escape_comment = /*@__PURE__*/ withTextFill(
-  _base_escape_comment,
-);
+export const _escape_comment = /*@__PURE__*/ withTextFill(_base_escape_comment);
 export const _escape_script = /*@__PURE__*/ withTextFill(_base_escape_script);
 export const _escape_style = /*@__PURE__*/ withTextFill(_base_escape_style);
 

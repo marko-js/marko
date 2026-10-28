@@ -163,7 +163,9 @@ export default {
                 // An always-pairing body's Pending entry drops its
                 // creation id outside divergent contexts.
                 isPatch() &&
-                  (alwaysPairs(bodySection) ? t.numericLiteral(1) : absentArg(0)),
+                  (alwaysPairs(bodySection)
+                    ? t.numericLiteral(1)
+                    : absentArg(0)),
                 // Pending, its body may yet keep content made before it.
                 isPatch() &&
                   awaitMayWithhold(bodySection) &&

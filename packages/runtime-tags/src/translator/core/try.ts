@@ -165,7 +165,9 @@ export default {
               ? buildContent(catchTag.get("body"))
               : t.arrowFunctionExpression([], t.blockStatement([]))),
           placeholderSection
-            ? t.stringLiteral(getResumeRegisterId(placeholderSection, "content"))
+            ? t.stringLiteral(
+                getResumeRegisterId(placeholderSection, "content"),
+              )
             : isPatch() && absentArg(0),
           catchTag &&
             t.stringLiteral(
