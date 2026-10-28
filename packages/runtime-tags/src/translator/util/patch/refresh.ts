@@ -462,7 +462,7 @@ function patchWritesValues(section: Section) {
 // A page's root is the document's, which neither a flush nor the client creates:
 // a flush that would swap it (a route switching `<html>` layouts) is rejected.
 function mayBeCreated(section: Section) {
-  return !!section.parent || !section.template.page;
+  return !!section.parent || !section.template!.page;
 }
 
 // A value a created scope gets from no other channel (a resumed one reads it

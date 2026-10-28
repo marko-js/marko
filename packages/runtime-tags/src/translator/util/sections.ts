@@ -122,8 +122,8 @@ export interface Section {
   parent: Section | undefined;
   children: Section[];
   program: Section;
-  /** The template the section is compiled in. */
-  template: t.ProgramExtra;
+  /** A template root's: the template it compiles. */
+  template: t.ProgramExtra | undefined;
   params: undefined | ParamBinding;
   /** The attribute tag `<for>` params this content reads, held as its own
    * bindings that the loop binds as it creates it. */
@@ -261,7 +261,7 @@ export function ensureBodySection(
       parent: parentSection,
       children: [],
       program: undefined as unknown as Section,
-      template: programExtra,
+      template: parentSection ? undefined : programExtra,
       params: undefined,
       localClosures: undefined,
       referencedClosures: undefined,
