@@ -1,11 +1,7 @@
 // Patch fill decisions (which bindings a patch fills or writes, fill identity,
 // what a created scope runs) and the finalizers recording what they need.
 import type { types as t } from "@marko/compiler";
-import {
-  getFile,
-  getProgram,
-  getTemplateId,
-} from "@marko/compiler/babel-utils";
+import { getFile, getTemplateId } from "@marko/compiler/babel-utils";
 
 import {
   type Binding,
@@ -32,7 +28,7 @@ import {
   isKnownTagExtra,
   someCallPasses,
 } from "../known-tag";
-import { isPage, isPatch } from "../marko-config";
+import { isPatch } from "../marko-config";
 import { isTrackedFunction } from "../module-registrations";
 import { every, forEach, reduce, some, type SortedOpt } from "../optional";
 import {
@@ -465,7 +461,7 @@ function patchWritesValues(section: Section) {
 // A page's root is the document's, which neither a flush nor the client creates:
 // a flush that would swap it (a route switching `<html>` layouts) is rejected.
 function mayBeCreated(section: Section) {
-  return !!section.parent || !isPage();
+  return !!section.parent || !section.template.page;
 }
 
 // A value a created scope gets from no other channel (a resumed one reads it
@@ -1478,7 +1474,7 @@ export function keepsClosureFills(section: Section) {
     !getRendererReason(section) &&
     rendersFromChildState(section) &&
     !keepsContent(section) &&
-    !patchMayCreateEnclosing(section.parent!)
+    !patchMayCreateEnclosing(section.parent!, mayBeCreated(section.program))
   );
 }
 
@@ -1935,14 +1931,15 @@ function patchRefreshes(binding: Binding): boolean {
 
 // Whether a patch may create this content: its tag can diverge, a consumer
 // renders it in creatable structure, or an enclosing branch is created.
-export const patchMayCreate = createPassMemo(
-  (section: Section) =>
+export function patchMayCreate(section: Section) {
+  return (
     patchMayCreateOwn(section) ||
-    (!!section.parent && patchMayCreateEnclosing(section.parent)),
-  false,
-);
+    (!!section.parent &&
+      patchMayCreateEnclosing(section.parent, mayBeCreated(section.program)))
+  );
+}
 
-function patchMayCreateOwn(section: Section): boolean {
+const patchMayCreateOwn = createPassMemo((section: Section): boolean => {
   if (section.branch) {
     // An `<await>` or `<try>` body is created with its parent.
     return section.branch.optional && patchWrites(section);
@@ -1957,14 +1954,19 @@ function patchMayCreateOwn(section: Section): boolean {
   if (!derives) return true;
   const readers = getDerivedReaders(derives);
   return someLandingRead(readers, (read) =>
-    patchMayCreateAtRead(read, readers),
+    patchMayCreateAtRead(read, readers, section),
   );
-}
+}, false);
 
 // A consumer rendering the content client-side creates it on the client, and a
 // read passing it on within the template leaves it to the reads of what it derives.
-function patchMayCreateAtRead(read: ReferencedExtra, readers: Readers) {
+function patchMayCreateAtRead(
+  read: ReferencedExtra,
+  readers: Readers,
+  content: Section,
+) {
   const rendersContent = isContentRender(read);
+  const inTemplate = read.section.program === content.program;
   return (
     !isStatefulLeaf(read) &&
     (rendersContent ||
@@ -1975,10 +1977,16 @@ function patchMayCreateAtRead(read: ReferencedExtra, readers: Readers) {
       )) &&
     // A dynamic tag a patch switches creates what it renders; a child's read renders
     // what its call site hands it, unless the child picks it.
-    ((read.section.program === getProgram().node.extra.section
+    ((inTemplate
       ? rendersContent && patchWrites(read.section)
       : picksContent(read, readers)) ||
-      patchMayCreateEnclosing(read.section, true))
+      // A tag a read hands content to may create it; a callee's root renders
+      // where its call site does, which the content's own sections answer.
+      patchMayCreateEnclosing(
+        read.section,
+        inTemplate &&
+          (!read.section.parent || mayBeCreated(read.section.program)),
+      ))
   );
 }
 
@@ -2038,21 +2046,17 @@ function keepsWithInput(read: ReferencedExtra) {
   return !read.nameOnly && !!getRendererRead(read);
 }
 
-function patchMayCreateEnclosing(
-  section: Section,
-  fromRead?: boolean,
-): boolean {
+// Whether a patch may create the section or one around it, where `root` says
+// whether its template's root may be created.
+function patchMayCreateEnclosing(section: Section, root: boolean): boolean {
   // A `@catch` or `@placeholder` a patch shows is created as a branch is.
   if (section.branch?.optional || section.boundaryContent) {
     return patchWrites(section);
   }
-  if (section.branchExpr || section.derives) return patchMayCreate(section);
-  // A caller may compose any template but the page, and a tag a read hands content
-  // to may create it, but a child's root renders only what its call site hands it.
-  if (fromRead && section.program !== getProgram().node.extra.section) {
-    return false;
-  }
-  return fromRead || mayBeCreated(section.program);
+  return section.parent
+    ? patchMayCreateOwn(section) ||
+        patchMayCreateEnclosing(section.parent, root)
+    : root;
 }
 
 // A section whose scopes a flush creates from its shell: a branch, `<await>` or
