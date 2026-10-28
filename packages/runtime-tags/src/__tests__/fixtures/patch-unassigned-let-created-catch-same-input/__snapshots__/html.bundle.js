@@ -4,7 +4,7 @@ function boom() {
 }
 _shells({
 	a3: "a3;D ;<p> </p>",
-	a: "a !;b%;<!><!><!>"
+	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1);
@@ -24,7 +24,6 @@ var template_default = _template("a", (input) => {
 		_html(`<b>${_text_resume($scope2_id, "a", x)}</b>`);
 		_subscribe($x__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
 	}, 0, "a2", "a3", 1);
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va4", x, 1);
 	_scope($scope0_id, {
 		f: x,
 		h: $x__closures,

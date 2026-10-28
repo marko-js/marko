@@ -45,7 +45,6 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b");
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va4", show, 1);
 	_scope($scope0_id, {
 		f: input.promise,
 		a: _existing_scope($childScope),

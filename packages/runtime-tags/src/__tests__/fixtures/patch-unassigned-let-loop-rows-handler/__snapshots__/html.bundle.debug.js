@@ -3,7 +3,7 @@ const $template = "<!><!><p> </p>";
 const $walks = "b%bD l";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !;b%bD ;<!><!><p> </p>",
+	"__tests__/template.marko": "__tests__/template.marko;b%bD ;<!><!><p> </p>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1; D ;<button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -22,6 +22,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "3:2", { i: "3:6" });
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_html(`<p>${_text_resume($scope0_id, "#text/1", seen)}</p>`);
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", x, 1);
 	_scope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "1:6" });
 }, 1);

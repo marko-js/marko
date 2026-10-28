@@ -12,7 +12,6 @@ var template_default = _template("a", (input) => {
 		_subscribe($wi__input_w && $input_w__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1", $wg__input_w);
 		$wg__input_w || _resume_branch($scope1_id);
 	}, $scope0_id));
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va3", x, 1);
 	_scope($scope0_id, {
 		e: input.w,
 		g: $wi__input_w && $input_w__closures

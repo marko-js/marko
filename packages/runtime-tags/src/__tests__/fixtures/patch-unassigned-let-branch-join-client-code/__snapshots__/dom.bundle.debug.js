@@ -8,7 +8,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__uid._($scope);
 };
 const $if_content__uid = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_name__OR__uid);
-const $uid = _fill_resume("__tests__/template.marko_fill1", /*@__PURE__*/ _let("uid/8", $if_content__uid));
+const $uid = _let("uid/8", $if_content__uid);
 const $input_id = $uid;
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

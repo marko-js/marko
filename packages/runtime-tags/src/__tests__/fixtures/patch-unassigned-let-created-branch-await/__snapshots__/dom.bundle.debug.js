@@ -11,7 +11,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__x._($scope);
 	$await_content($scope);
 };
-const $x = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _let("x/5", $if_content__x));
+const $x = _let("x/5", $if_content__x);
 const $input_v = $x;
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

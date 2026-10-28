@@ -6,7 +6,7 @@ const $xabi_content__input_w = /*@__PURE__*/ _fill_join_closure("__tests__/templ
 const $xabi_content__setup = $xabi_content__input_w;
 const $xabi_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $xabi_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $xabi_content);
-const $x = _fill_resume("__tests__/template.marko_fill1", /*@__PURE__*/ _let("x/5", ($scope) => $dynamicTag($scope, $scope.x === "a" ? "b" : "i")));
+const $x = _let("x/5", ($scope) => $dynamicTag($scope, $scope.x === "a" ? "b" : "i"));
 const $input_v = $x;
 const $input = ($scope, input) => {
 	$input_v($scope, input.v);

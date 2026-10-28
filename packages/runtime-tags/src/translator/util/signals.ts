@@ -68,6 +68,7 @@ import {
   effectEntryNamesFill,
   initedJoinDependsOn,
   rerunsByEntry,
+  rootsOwnReads,
 } from "./patch/refresh";
 import { patchesBranchesAt } from "./patch/structure";
 import {
@@ -826,11 +827,12 @@ export function initValue(binding: Binding, isLet = false) {
       return fn;
     }
 
-    return callRuntime(
+    const value = callRuntime(
       helper,
       getScopeAccessorLiteral(binding, true, isLet),
       fn,
     );
+    return rootsOwnReads(binding) ? t.removeComments(value) : value;
   };
 
   binding.aliases.forEach(initAliasValue);

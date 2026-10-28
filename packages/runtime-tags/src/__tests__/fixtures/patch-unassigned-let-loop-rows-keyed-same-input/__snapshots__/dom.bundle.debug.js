@@ -7,7 +7,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__x._($scope);
 	_text($scope["#text/1"], $scope["#LoopKey"]);
 };
-const $x = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _let("x/5", $for_content__x));
+const $x = _let("x/5", $for_content__x);
 const $input_v = $x;
 const $for = /*@__PURE__*/ _for_of("#text/0", "<p><!><!></p>", "D%b%", $for_content__setup);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, (i) => i]);

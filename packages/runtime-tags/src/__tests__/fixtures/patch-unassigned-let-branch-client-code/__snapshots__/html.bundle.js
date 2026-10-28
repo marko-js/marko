@@ -14,6 +14,5 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>log</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", show, 1);
 	_scope($scope0_id, { f: input.w }) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va1", input.w, !_server_guard($scope0_reason, 1));
 }, 1);

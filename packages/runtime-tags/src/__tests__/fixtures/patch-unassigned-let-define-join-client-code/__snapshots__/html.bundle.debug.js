@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($uid__closures, _scope($scope1_id, {
 			n,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "2:2", { n: "2:15" })) || _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", n, !_server_guard($scope1_reason, 0));
+		}, "__tests__/template.marko", "2:2", { n: "2:15" })) || _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", n, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
@@ -26,7 +26,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", uid, 1);
 	_scope($scope0_id, {
 		uid: _write_if($scope0_reason, 1) && uid,
 		n,

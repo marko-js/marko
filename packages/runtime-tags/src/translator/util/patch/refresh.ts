@@ -411,13 +411,11 @@ export function canPatchFill(binding: Binding) {
         patchWritesScope(binding.section) &&
         (!!findSlot(binding, SlotKind.ChangeHandler) ||
           differsPerRender(binding) ||
-          // The seed runs a `<let>`'s signal where a created scope renders or reads it,
-          // and roots one no resumed assignment reaches wherever a created scope reads it.
+          // The seed runs a `<let>`'s signal where a created scope renders or reads it.
           (binding.type === BindingType.let &&
-            ((mayBeCreated(binding.section) && !!getWriteReason(binding)) ||
-              (readsPastRenders(binding, binding.section) &&
-                (mayBeCreated(binding.section) ||
-                  !hasResumableAssignment(binding)))))) &&
+            mayBeCreated(binding.section) &&
+            (!!getWriteReason(binding) ||
+              readsPastRenders(binding, binding.section)))) &&
         bindingUtil.has(binding.sources.state, binding)
       );
     }
@@ -476,6 +474,28 @@ function patchWritesValues(section: Section) {
 // a flush that would swap it (a route switching `<html>` layouts) is rejected.
 function mayBeCreated(section: Section) {
   return !!section.parent || !section.template!.page;
+}
+
+// A page's own `<let>` nothing resumed assigns, read past its renders: no handler roots
+// the client code reading it, so its signal does.
+export function rootsOwnReads(binding: Binding) {
+  return (
+    isPatch() &&
+    binding.type === BindingType.let &&
+    !mayBeCreated(binding.section) &&
+    bindingUtil.has(binding.sources?.state, binding) &&
+    !hasResumableAssignment(binding) &&
+    readsPastRenders(binding, binding.section)
+  );
+}
+
+// A `<let>` at its initial value as `section`'s scope is created: created with it, or
+// nothing assigns it and it is no page's own, which keeps its first value.
+export function atInitialValueAsCreated(state: Binding, section: Section) {
+  return (
+    state.section === section ||
+    (!state.assignments && mayBeCreated(state.section))
+  );
 }
 
 // A value a created scope gets from no other channel, unless a seeded join's client

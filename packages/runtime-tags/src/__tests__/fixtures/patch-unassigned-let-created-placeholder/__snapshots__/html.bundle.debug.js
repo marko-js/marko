@@ -41,7 +41,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<i>${_text_resume($scope3_id, "#text/0", x)}</i>`);
 		_subscribe($x__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4"));
 	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1);
-	!_client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", x, 1);
 	_scope($scope0_id, {
 		input_p: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.p,
 		x,

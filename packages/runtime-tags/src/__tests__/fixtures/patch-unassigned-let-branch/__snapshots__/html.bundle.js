@@ -12,6 +12,5 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 0, 0, 1);
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", show, 1);
 	_scope($scope0_id, { e: input.w }) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va0", input.w, !_server_guard($scope0_reason, 1));
 }, 1);

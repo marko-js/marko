@@ -38,7 +38,7 @@ import {
   reduce,
   some,
 } from "./optional";
-import { hasEffectRead } from "./patch/refresh";
+import { atInitialValueAsCreated, hasEffectRead } from "./patch/refresh";
 import {
   addAlwaysReason,
   addOwnerReason,
@@ -624,7 +624,7 @@ function resolveInitialValue(binding: Binding) {
     sources?.state,
     (state) =>
       state.initReadsInitialValues &&
-      (state.section === binding.section || !state.assignments),
+      atInitialValueAsCreated(state, binding.section),
   );
   return !!sources;
 }

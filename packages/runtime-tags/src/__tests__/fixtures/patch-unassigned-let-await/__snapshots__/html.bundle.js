@@ -1,7 +1,7 @@
 // template.marko
 _shells({
-	a3: "a3;D%c%;<p><!> <!></p>",
-	a: "a a4;b%;<!><!><!>"
+	a2: "a2;D%c%;<p><!> <!></p>",
+	a: "a a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_w = _write_if($scope0_reason, 1);
@@ -13,7 +13,6 @@ var template_default = _template("a", (input) => {
 		_html(`<p>${_text_resume($scope1_id, "a", r)} ${_text_resume($scope1_id, "b", input.w, _write_guard($scope0_reason, 1) * 2)}</p>`);
 		_subscribe($wi__input_w && $input_w__closures, _scope($scope1_id, {}), "a0");
 	}, 1, 0);
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", x, 1);
 	_scope($scope0_id, { g: $wi__input_w && $input_w__closures }) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va1", input.w, !_server_guard($scope0_reason, 1));
 	$wi__input_w && _resume_branch($scope0_id);
 }, 1);

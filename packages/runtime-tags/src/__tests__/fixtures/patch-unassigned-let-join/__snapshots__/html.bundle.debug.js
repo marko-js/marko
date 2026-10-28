@@ -8,7 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let x = input.v;
 	_html(`<p>${_text_resume($scope0_id, "#text/0", x)}</p><p>${_text_resume($scope0_id, "#text/1", x + input.w)}</p>`);
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", x, 1);
 	_scope($scope0_id, {
 		input_w: input.w,
 		x: _write_if($scope0_reason, 1) && x

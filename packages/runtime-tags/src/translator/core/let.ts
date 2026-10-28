@@ -21,7 +21,7 @@ import evaluate from "../util/evaluate";
 import { hasEmittedAssignment } from "../util/finalize-references";
 import { isOptimize, isOutputDOM, isPatch } from "../util/marko-config";
 import { onReasonsSettled } from "../util/patch/decisions";
-import { getPatchFill } from "../util/patch/refresh";
+import { getPatchFill, rootsOwnReads } from "../util/patch/refresh";
 import { addReason } from "../util/reasons";
 import {
   mergeReferences,
@@ -96,10 +96,11 @@ export default {
 
     const tagSection = ensureSection(tag);
     const binding = trackVarReferences(tag, BindingType.let)!;
-    // A `<let>` a patch fills registers its fill, which only the page's module holds.
+    // A `<let>` a patch fills registers its fill, and a page root's may root its reads:
+    // only the page's module holds either.
     if (isPatch()) {
       onReasonsSettled(() => {
-        if (getPatchFill(binding).fill)
+        if (getPatchFill(binding).fill || rootsOwnReads(binding))
           getProgram().node.extra.isInteractive = true;
       });
     }

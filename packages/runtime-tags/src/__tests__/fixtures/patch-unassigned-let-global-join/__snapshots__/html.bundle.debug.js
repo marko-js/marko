@@ -10,7 +10,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let x = $global$1.v;
 	_html(`<p>${_text_resume($scope0_id, "#text/0", x + input.w)}</p>`);
 	_fill_global_subscribe("__tests__/template.marko_0_$global_v#5", $scope0_id);
-	_patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", x, 1);
 	_scope($scope0_id, {
 		input_w: input.w,
 		x: _write_if($scope0_reason, 0) && x

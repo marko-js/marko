@@ -16,7 +16,7 @@ const $if_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $if_content__e);
 };
 const $if_content__e = _var_resume("__tests__/template.marko_1_e#3/var", ($scope, e) => _text($scope["#text/2"], e));
-const $x = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _let("x/5", $if_content__x));
+const $x = _let("x/5", $if_content__x);
 const $input_v = $x;
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)(""), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

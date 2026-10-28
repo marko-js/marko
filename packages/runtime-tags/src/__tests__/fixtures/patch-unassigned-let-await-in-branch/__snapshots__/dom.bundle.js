@@ -9,4 +9,4 @@ const $if_content__setup = ($scope) => {
 	$await_content($scope);
 };
 const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__setup);
-const $show = fill("a1", /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1)));
+const $show = _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));

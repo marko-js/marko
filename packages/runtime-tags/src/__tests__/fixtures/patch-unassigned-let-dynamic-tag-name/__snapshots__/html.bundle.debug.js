@@ -15,7 +15,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($wi__input_w && $input_w__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), "__tests__/template.marko_1_input_w#0:4/subscribe", $wg__input_w);
 		$wg__input_w || _resume_branch($scope1_id);
 	}, $scope0_id));
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", x, 1);
 	_scope($scope0_id, {
 		input_w: input.w,
 		"ClosureScopes:input_w/6": $wi__input_w && $input_w__closures

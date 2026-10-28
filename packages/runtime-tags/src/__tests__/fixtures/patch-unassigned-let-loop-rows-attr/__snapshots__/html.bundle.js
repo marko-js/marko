@@ -1,7 +1,7 @@
 // template.marko
 _shells({
-	a: "a !;b%;<!><!><!>",
-	a0: "a0 a3; D ;<p> </p>"
+	a: "a;b%;<!><!><!>",
+	a0: "a0 a2; D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -12,6 +12,5 @@ var template_default = _template("a", (input) => {
 		_html(`<p${_attr_class(x)}>${_text_resume($scope1_id, "b", i, 1, $scope0_reason, 1)}</p>${_el_resume($scope1_id, "a")}`);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 1);
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", x, 1);
 	_scope($scope0_id, { f: _write_if($scope0_reason, 1) && x });
 }, 1);

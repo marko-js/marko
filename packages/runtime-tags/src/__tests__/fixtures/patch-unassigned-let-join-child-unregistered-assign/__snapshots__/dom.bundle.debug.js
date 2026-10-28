@@ -19,7 +19,7 @@ const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$2, $tem
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)("D l", "D l");
 const $joined = ($scope, joined) => $input_value($scope["#childScope/1"], joined);
 const $input_w__OR__x = /*@__PURE__*/ _or(7, ($scope) => $joined($scope, $scope.x + $scope.input_w));
-const $x = _fill_resume("__tests__/template.marko_fill1", /*@__PURE__*/ _let("x/6", $input_w__OR__x));
+const $x = _let("x/6", $input_w__OR__x);
 const $input_v = $x;
 function $setup($scope) {
 	$input_onHide($scope["#childScope/0"], function() {

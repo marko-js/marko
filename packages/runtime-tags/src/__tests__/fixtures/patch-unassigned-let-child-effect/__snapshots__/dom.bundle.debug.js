@@ -18,7 +18,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 const $setup = ($_) => {};
-const $x = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _let("x/5", ($scope) => $input_v$1($scope["#childScope/0"], $scope.x)));
+const $x = _let("x/5", ($scope) => $input_v$1($scope["#childScope/0"], $scope.x));
 const $input_v = $x;
 const $input_w = ($scope, input_w) => $input_w$1($scope["#childScope/0"], input_w);
 const $input = ($scope, input) => {

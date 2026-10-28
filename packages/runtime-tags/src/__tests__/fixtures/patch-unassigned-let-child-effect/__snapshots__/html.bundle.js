@@ -25,6 +25,5 @@ var template_default = _template("a", (input) => {
 		w: input.w
 	});
 	_patch_child_end();
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va0", x, 1);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

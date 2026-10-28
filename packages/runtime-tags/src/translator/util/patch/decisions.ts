@@ -40,6 +40,7 @@ import { findSlot, SlotKind, type Slot } from "../slots";
 import { mergeSources, type Sources, withSources } from "../sources";
 import { createAnalysisState } from "../state";
 import {
+  atInitialValueAsCreated,
   fillsInitialValue,
   getPatchFill,
   patchCreatesOrComposes,
@@ -78,11 +79,11 @@ export function seedsOnly(section: Section, sources: Sources | undefined) {
 }
 
 // A `<let>` at the initial value the server renders as the section's scope is created:
-// from initial values only, created with the scope or never assigned, and unfilled.
+// from initial values only, at its own (`atInitialValueAsCreated`), and unfilled.
 export function holdsInitialValue(state: Binding, section: Section) {
   return (
     state.initReadsInitialValues &&
-    (state.section === section || !state.assignments) &&
+    atInitialValueAsCreated(state, section) &&
     !fillsInitialValue(state)
   );
 }

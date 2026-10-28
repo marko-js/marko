@@ -12,7 +12,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&%c`)("D l");
 const $if_content__input_w = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_w", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_w)));
 const $if_content__setup = $if_content__input_w;
 const $if = /*@__PURE__*/ _if("#text/1", "<p> </p>", "D ", $if_content__setup);
-const $x = _fill_resume("__tests__/template.marko_fill1", /*@__PURE__*/ _let("x/6", ($scope) => $if($scope, $scope.x ? 0 : 1)));
+const $x = _let("x/6", ($scope) => $if($scope, $scope.x ? 0 : 1));
 const $input_v = $x;
 function $setup($scope) {
 	$input_onHide($scope["#childScope/0"], function() {

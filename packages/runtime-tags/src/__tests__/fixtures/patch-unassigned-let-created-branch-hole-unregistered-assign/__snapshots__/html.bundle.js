@@ -13,7 +13,7 @@ var label_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `/${_w0}&%c`)("D l")};${((_w0) => `${_w0}<!><!>`)($template)}`)(),
-	a0: "a0 a3;D ;<p> </p>"
+	a0: "a0 a2;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -33,7 +33,6 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a0"], $scope0_reason, 1);
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", x, 1);
 	_scope($scope0_id, {
 		g: _write_if($scope0_reason, 1) && x,
 		a: _existing_scope($childScope)

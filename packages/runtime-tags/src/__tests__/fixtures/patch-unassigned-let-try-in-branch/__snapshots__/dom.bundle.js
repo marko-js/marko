@@ -12,4 +12,4 @@ const $try_content__setup = ($scope) => {
 const $if_content__try = /*@__PURE__*/ _try(0, "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);
 const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__setup);
-const $show = fill("a4", /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1)));
+const $show = _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));

@@ -43,7 +43,7 @@ export interface Binding {
   assignments: Opt<AssignedBindingExtra>;
   sources: undefined | Sources;
   /** For an uncontrolled `<let>`: its init reads no state but `<let>`s at their
-   * initial value as its scope is created (created with it, or nothing assigns them). */
+   * initial value as its scope is created (`atInitialValueAsCreated`). */
   initReadsInitialValues: boolean;
   /** For a `<let>` that is its own state source (patch builds): the sources its
    * init reads, through the inits of the state it reads. */

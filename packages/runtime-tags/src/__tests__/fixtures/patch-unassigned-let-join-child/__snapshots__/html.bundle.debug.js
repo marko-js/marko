@@ -24,7 +24,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	show_value_default({ value: joined });
 	_patch_child_end();
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", x, 1);
 	_scope($scope0_id, {
 		input_w: input.w,
 		x: _write_if($scope0_reason, 1) && x,

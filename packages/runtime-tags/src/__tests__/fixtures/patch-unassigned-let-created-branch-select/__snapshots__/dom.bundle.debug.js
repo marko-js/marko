@@ -5,7 +5,7 @@ const $setup = ($_) => {};
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<p>A</p>", 0, 0, "<p>B</p>");
 const $if_content__x = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_x#0:5/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.x === "a" ? 0 : 1)));
 const $if_content__setup = $if_content__x;
-const $x = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _let("x/5", $if_content__x));
+const $x = _let("x/5", $if_content__x);
 const $input_v = $x;
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

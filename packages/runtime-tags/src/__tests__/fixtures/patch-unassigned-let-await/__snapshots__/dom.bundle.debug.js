@@ -7,7 +7,7 @@ const $await_content__r = ($scope, r) => _text($scope["#text/0"], r);
 const $await_content__$params = ($scope, $params2) => $await_content__r($scope, $params2[0]);
 const $await_content = _resumed["__tests__/template.marko_0_#text#0/init"] = /*@__PURE__*/ _await_content("#text/0", "<p><!> <!></p>", "D%c%", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $x = _fill_resume("__tests__/template.marko_fill1", /*@__PURE__*/ _let("x/5", ($scope) => $await_promise($scope, Promise.resolve($scope.x))));
+const $x = _let("x/5", ($scope) => $await_promise($scope, Promise.resolve($scope.x)));
 const $input_v = $x;
 const $setup = $await_content;
 const $input = ($scope, input) => {

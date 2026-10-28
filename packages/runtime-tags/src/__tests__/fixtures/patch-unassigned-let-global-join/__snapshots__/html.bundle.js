@@ -6,7 +6,6 @@ var template_default = _template("a", (input) => {
 	let x = $global().v;
 	_html(`<p>${_text_resume($scope0_id, "a", x + input.w)}</p>`);
 	_fill_global_subscribe("a0", $scope0_id);
-	_patch_fill($scope0_id, "va2", x, 1);
 	_scope($scope0_id, {
 		d: input.w,
 		e: _write_if($scope0_reason, 0) && x

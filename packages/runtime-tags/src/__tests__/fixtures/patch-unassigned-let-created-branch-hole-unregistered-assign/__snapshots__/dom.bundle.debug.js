@@ -11,7 +11,7 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&%c`)("D l");
 const $if_content__x = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_x#0:6/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.x)));
 const $if_content__setup = $if_content__x;
-const $x = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _let("x/6", $if_content__x));
+const $x = _let("x/6", $if_content__x);
 const $input_v = $x;
 function $setup($scope) {
 	$input_onHide($scope["#childScope/0"], function() {

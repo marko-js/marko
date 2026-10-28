@@ -10,7 +10,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	_html(`<p${_attr("title", `${uid}-${input.name}`)}></p>${_el_resume($scope0_id, "#p/0")}<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", uid, 1);
 	_scope($scope0_id, {
 		input_name: input.name,
 		uid: _write_if($scope0_reason, 1) && uid,

@@ -38,7 +38,6 @@ var template_default = _template("a", (input) => {
 		_html(`<i>${_text_resume($scope3_id, "a", x)}</i>`);
 		_subscribe($x__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }));
 	}, void 0, "a8", void 0, "a1", 1);
-	!_client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va10", x, 1);
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.p,
 		g: x,

@@ -3,7 +3,7 @@ const $Body_content__walks = "b%c";
 const $Body_content__template = "<!><!><!>";
 _shells({ a: /*@__PURE__*/ (() => `a !a2;${((_w0) => ` D l/${_w0}&b`)($Body_content__walks)};${((_w0) => `<button> </button>${_w0}<!>`)($Body_content__template)}`)() });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	_scope_reason();
 	const $scope0_id = _scope_id();
 	let k = input.v;
 	let c = 0;
@@ -26,7 +26,6 @@ var template_default = _template("a", (input) => {
 	Body.content({ a: "" });
 	_patch_child_end();
 	_script($scope0_id, "a2");
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va3", k, 1);
 	_scope($scope0_id, {
 		g: k,
 		h: c,

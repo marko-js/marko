@@ -1,6 +1,6 @@
 // template.marko
 _shells({
-	a: "a !;b%bD ;<!><!><p> </p>",
+	a: "a;b%bD ;<!><!><p> </p>",
 	a1: "a1 !a0; D ;<button> </button>"
 });
 var template_default = _template("a", (input) => {
@@ -19,6 +19,5 @@ var template_default = _template("a", (input) => {
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 1);
 	_html(`<p>${_text_resume($scope0_id, "b", seen)}</p>`);
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", x, 1);
 	_scope($scope0_id, { g: x });
 }, 1);

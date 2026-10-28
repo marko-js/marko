@@ -48,7 +48,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", show, 1);
 	_scope($scope0_id, {
 		input_promise: input.promise,
 		"#childScope/0": _existing_scope($childScope),

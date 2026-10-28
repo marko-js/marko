@@ -27,6 +27,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		w: input.w
 	});
 	_patch_child_end();
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", x, 1);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

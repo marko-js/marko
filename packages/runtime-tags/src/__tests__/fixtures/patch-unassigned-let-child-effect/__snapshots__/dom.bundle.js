@@ -6,4 +6,4 @@ const $input_v = /*@__PURE__*/ _const(4, ($scope) => {
 });
 
 // template.marko
-const $x = fill("a0", /*@__PURE__*/ _let(5, ($scope) => $input_v($scope.a, $scope.f)));
+const $x = _let(5, ($scope) => $input_v($scope.a, $scope.f));

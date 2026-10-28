@@ -11,8 +11,8 @@ var child_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a: "a !;b%;<!><!><!>",
-	a0: /*@__PURE__*/ ((_w0) => `a0${_shell_marker(_shell_setup([["a3"], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${_w0}`)($template)
+	a: "a;b%;<!><!><!>",
+	a0: /*@__PURE__*/ ((_w0) => `a0${_shell_marker(_shell_setup([["a2"], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1);
@@ -32,7 +32,6 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a0"], $scope0_reason, 1);
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", x, 1);
 	_scope($scope0_id, { f: $wi__input_show && x });
 	$wg__input_show || $wi__input_show && _resume_branch($scope0_id);
 }, 1);

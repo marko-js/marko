@@ -22,7 +22,7 @@ const $try_content__setup = ($scope) => {
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
-const $show = _fill_resume("__tests__/template.marko_fill1", /*@__PURE__*/ _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1)));
+const $show = _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $input_show = $show;
 function $setup($scope) {
 	$input_onHide($scope["#childScope/0"], function() {

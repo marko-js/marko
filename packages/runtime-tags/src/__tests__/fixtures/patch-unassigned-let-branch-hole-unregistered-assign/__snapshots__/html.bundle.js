@@ -30,7 +30,6 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
-	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va1", x, 1);
 	_scope($scope0_id, {
 		f: input.w,
 		a: _existing_scope($childScope)
