@@ -18,10 +18,7 @@ export function _on<
     );
   }
 
-  if ((element as any)[1 + type] === undefined) {
-    delegate(type, handleDelegated);
-  }
-
+  delegate(type, handleDelegated);
   (element as any)[1 + type] = handler || null;
 }
 
