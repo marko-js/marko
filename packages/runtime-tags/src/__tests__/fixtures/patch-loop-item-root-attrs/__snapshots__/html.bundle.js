@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		icon_default({ name: item.icon });
 		_patch_child_end();
-		_html(`<span>${_text_resume($scope1_id, "c", item.label, void 0, $scope0_reason, 1)}</span></a>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 1))}`);
+		_html(`<span>${_text_resume($scope1_id, "c", item.label, 1, $scope0_reason, 1)}</span></a>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 1))}`);
 		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "a0", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">f", _filled_guard($scope0_reason, 1) && "f");
 		_scope($scope1_id, {
 			f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item?.href,
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.page) {
 			const $scope2_id = _scope_id();
-			_html(`<p>${_text_resume($scope2_id, "a", input.page, void 0, $scope0_reason, 3)}</p>`);
+			_html(`<p>${_text_resume($scope2_id, "a", input.page, 1, $scope0_reason, 3)}</p>`);
 			_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a3");
 			_scope($scope2_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) });
 			return 0;

@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 			id: "one",
 			title: input.title,
 			onClick: handler
-		}, "a", $scope1_id, "button", void 0, $scope0_reason, 0)}>one</button>${_el_resume($scope1_id, "a")}`);
+		}, "a", $scope1_id, "button", 0, $scope0_reason, 0)}>one</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a2");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a3");
@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 			id: "two",
 			title: input.title,
 			onClick: handler
-		}, "a", $scope2_id, "button", void 0, $scope0_reason, 0)}>two</button>${_el_resume($scope2_id, "a")}`);
+		}, "a", $scope2_id, "button", 0, $scope0_reason, 0)}>two</button>${_el_resume($scope2_id, "a")}`);
 		_script($scope2_id, "a9");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a10");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a11");
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 			Cl: $wi__input_title && 1
 		}), $cg__input_title && "a10"), $cg__input_title && "a11");
 	}, 1, "a5", 1, 1);
-	_html(`<em>${_text_resume($scope0_id, "c", count, void 0, 0, 0)}</em></main>`);
+	_html(`<em>${_text_resume($scope0_id, "c", count, 1, 0, 0)}</em></main>`);
 	_scope($scope0_id, {
 		f: input.title,
 		k: $wi__input_title && $input_title__closures,

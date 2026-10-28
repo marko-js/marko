@@ -13,13 +13,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, 1, $scope0_reason, 1)}</h1>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "#text/0", input.promise, (value) => {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_text_resume($scope3_id, "#text/0", value, void 0, $scope0_reason, 3)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "#text/0", value, 1, $scope0_reason, 3)}</em>`);
 				_scope($scope3_id, {}, "__tests__/template.marko", "5:6");
 			}, 1, "__tests__/template.marko_3*content");
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:8/init");

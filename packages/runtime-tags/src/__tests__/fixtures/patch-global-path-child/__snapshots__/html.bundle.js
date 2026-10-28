@@ -4,7 +4,7 @@ var path_child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$2 = $global();
-	_html(`<p>${_text_resume($scope0_id, "a", $global$2.o.x, void 0, 4, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", $global$2.o.x, 1, 4, 0)}</p>`);
 	_fill_global_subscribe("b0", $scope0_id);
 	_scope($scope0_id, {});
 });

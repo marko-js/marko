@@ -6,7 +6,7 @@ _shells({ b: "b;E l%;<section><h2> </h2><!></section>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2>`);
+	_html(`<section><h2>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h2>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</section>");
 	_scope($scope0_id, {});
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_text_resume($scope1_id, "a", input.note, void 0, $scope0_reason, 3)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "a", input.note, 1, $scope0_reason, 3)}</em>`);
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope1_id, { _: $wi__input_note && _scope_with_id($scope0_id) }), $cg__input_note && "a0");
 		}, $scope0_id)
 	});
@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 				content: _content("a3", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
-					_html(`<em>${_text_resume($scope3_id, "a", input.note, void 0, $scope0_reason, 3)}</em>`);
+					_html(`<em>${_text_resume($scope3_id, "a", input.note, 1, $scope0_reason, 3)}</em>`);
 					$cg__input_note && _patch_init($scope3_id, "a2");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope3_id, {
 						_: _write_if($scope0_reason, 0) && _scope_with_id($scope2_id),

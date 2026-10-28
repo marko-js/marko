@@ -11,13 +11,13 @@ var template_default = _template("a", (input) => {
 	const Card = { content: _content_resume("a0", ({ record }) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<h4>${_text_resume($scope1_id, "a", record.name, void 0, 4, 0)}</h4>`);
+		_html(`<h4>${_text_resume($scope1_id, "a", record.name, 1, 4, 0)}</h4>`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	const Other = { content: _content_resume("a1", ({ record }) => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
-		_html(`<h5>${_text_resume($scope3_id, "a", record.name, void 0, 4, 0)}</h5>`);
+		_html(`<h5>${_text_resume($scope3_id, "a", record.name, 1, 4, 0)}</h5>`);
 		_scope($scope3_id, {});
 	}, $scope0_id) };
 	_html("<main>");

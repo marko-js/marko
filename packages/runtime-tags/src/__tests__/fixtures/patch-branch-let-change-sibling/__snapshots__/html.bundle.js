@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	let store = store_default({});
 	_var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
-	_html(`<main><h1>${_text_resume($scope0_id, "c", input.title, void 0, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "d", store.last, 2)}</p>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "c", input.title, 1, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "d", store.last, 2)}</p>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

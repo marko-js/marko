@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_for_of(first.item, (it) => {
 					const $scope4_id = _scope_id();
-					_html(`<em>${_text_resume($scope4_id, "#text/0", it.label, void 0, $scope1_reason, 0)}</em>`);
+					_html(`<em>${_text_resume($scope4_id, "#text/0", it.label, 1, $scope1_reason, 0)}</em>`);
 					_scope($scope4_id, {}, "__tests__/template.marko", "5:6");
 				}, 0, $scope3_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_4*shell", $scope1_reason, 0);
 				_scope($scope3_id, { _: $wi__all && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4");

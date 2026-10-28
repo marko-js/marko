@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_await($scope2_id, "a", input.promise, (value) => {
 			const $scope3_id = _scope_id();
-			_html(`<em>${_text_resume($scope3_id, "a", value, void 0, $scope0_reason, 1)}</em>`);
+			_html(`<em>${_text_resume($scope3_id, "a", value, 1, $scope0_reason, 1)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a2", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_promise ? "a6" : "a7");
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<p>${_text_resume($scope1_id, "a", input.title, void 0, $scope0_reason, 0)} ${_text_resume($scope1_id, "b", err.message, 2, 4, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", input.title, 1, $scope0_reason, 0)} ${_text_resume($scope1_id, "b", err.message, 2, 4, 0)}</p>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "a0" : "a1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
 	}, void 0, "a5", "a4", 1, 1, 1);

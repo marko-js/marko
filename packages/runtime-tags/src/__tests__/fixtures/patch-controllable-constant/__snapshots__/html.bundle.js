@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	_attr_select_value($scope0_id, "b", "b", void 0, () => {
 		_html(`<select><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
 	}, "n3b", 0, 0);
-	_html(`<p>${_text_resume($scope0_id, "c", input.note, void 0, $scope0_reason, 0)}</p><button>${_text_resume($scope0_id, "e", count)}</button>${_el_resume($scope0_id, "d")}</main>`);
+	_html(`<p>${_text_resume($scope0_id, "c", input.note, 1, $scope0_reason, 0)}</p><button>${_text_resume($scope0_id, "e", count)}</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { i: count });
 }, 1);

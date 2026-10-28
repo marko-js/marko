@@ -7,7 +7,7 @@ var counter_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let c = 0;
-	_html(`<button>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "c", c, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", input.label, 1, $scope0_reason, 0)} ${_text_resume($scope0_id, "c", c, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb1", c, 1);
 	_scope($scope0_id, { g: c });

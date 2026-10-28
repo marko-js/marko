@@ -13,7 +13,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let f = input.fn;
-			_html(`<button>${_text_resume($scope1_id, "#text/1", f(), void 0, (_mask_group($scope0_reason, 1) & 1) << 1, 0, 1)}</button>${_el_resume($scope1_id, "#button/0")}`);
+			_html(`<button>${_text_resume($scope1_id, "#text/1", f(), 1, (_mask_group($scope0_reason, 1) & 1) << 1, 0, 1)}</button>${_el_resume($scope1_id, "#button/0")}`);
 			_script($scope1_id, "__tests__/tags/card.marko_1");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/card.marko_1_input_fn#0:4/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "1:2");

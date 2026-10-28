@@ -22,7 +22,7 @@ var host_default = _template("b", (input) => {
 			_dynamic_tag($scope2_id, "a", input.native ? "section" : input.wrap, {}, 10, _content_resume("b0", () => {
 				const $scope3_id = _scope_id();
 				_scope_reason();
-				_html(`<i>${_text_resume($scope3_id, "a", input.label, void 0, $scope0_reason, 7)}</i>`);
+				_html(`<i>${_text_resume($scope3_id, "a", input.label, 1, $scope0_reason, 7)}</i>`);
 				_unfilled_if($scope0_reason, 7) && _patch_init($scope3_id, _client_guard($scope0_reason, 7) ? "b1" : "b2");
 				_subscribe(_unfilled_if($scope0_reason, 7) && $input_label__closures, _scope($scope3_id, { _: $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope_with_id($scope2_id) }));
 			}, $scope2_id, ($scope) => $scope0_page ? [{ i: input.label }, { _: $scope($scope0_id) }] : []), 0, $wg__input_wrap__OR__input_native, $scope0_reason, 1);

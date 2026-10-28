@@ -16,7 +16,7 @@ var panel_default = _template("b", (input) => {
 	const Info = { content: _content("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<p>${_text_resume($scope1_id, "a", input.a + ":" + input.b, void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", input.a + ":" + input.b, 1, $scope0_reason, 0)}</p>`);
 		(_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b1");
 		(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b2");
 		_patch_join_init($scope1_id, "b3", $scope0_reason, 0, _filled_guard($scope0_reason, 4) && ">d", _filled_guard($scope0_reason, 5) && ">e");
@@ -25,7 +25,7 @@ var panel_default = _template("b", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
-			const $childScope = _peek_scope_id($scope2_id, "a", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope2_id, "a", 0, 0, $scope0_id);
 			Info.content({});
 			_patch_child_end();
 			_scope($scope2_id, {

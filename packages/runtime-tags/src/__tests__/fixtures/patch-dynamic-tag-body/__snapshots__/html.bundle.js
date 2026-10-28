@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "b", input.wrap ? wrap_default : null, {}, 10, _content("a1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(_text_resume($scope1_id, "a", input.note, void 0, $scope0_reason, 6));
+		_html(_text_resume($scope1_id, "a", input.note, 1, $scope0_reason, 6));
 		_client_guard($scope0_reason, 6) && _patch_init($scope1_id, "a2");
 		_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }));
 	}, $scope0_id, 1), 0, $wg__input_wrap, $scope0_reason, 5);

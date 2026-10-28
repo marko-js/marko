@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 			content: _content_resume("a2", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<p>${_text_resume($scope2_id, "a", p.text, void 0, $scope0_reason, 0)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "a", p.text, 1, $scope0_reason, 0)}</p>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, _client_guard($scope0_reason, 0) ? "a0" : "a1");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 			}, $scope1_id)

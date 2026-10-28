@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.labels, (label) => {
 		const $scope1_id = _scope_id();
 		let picks = 0;
-		_html(`<li>${_text_resume($scope1_id, "a", label, void 0, $scope0_reason, 0)}<span>${_text_resume($scope1_id, "b", picks)}</span><button>+</button>${_el_resume($scope1_id, "c")}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "a", label, 1, $scope0_reason, 0)}<span>${_text_resume($scope1_id, "b", picks)}</span><button>+</button>${_el_resume($scope1_id, "c")}</li>`);
 		_script($scope1_id, "a0");
 		_patch_fill($scope1_id, "va1", picks, 1);
 		_scope($scope1_id, { f: picks });

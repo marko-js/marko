@@ -16,14 +16,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Info = { content: _content("__tests__/template.marko_2*content", ({ id }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<p>${_text_resume($scope2_id, "#text/0", id, void 0, $scope2_reason, 0)}:${_text_resume($scope2_id, "#text/1", count, 2)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", id, 1, $scope2_reason, 0)}:${_text_resume($scope2_id, "#text/1", count, 2)}</p>`);
 		_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), "__tests__/template.marko_2_count#0:6/subscribe");
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
-			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, 0, $scope0_id);
 			Info.content({ id: input.id });
 			_patch_child_end();
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_id#0:5/init");

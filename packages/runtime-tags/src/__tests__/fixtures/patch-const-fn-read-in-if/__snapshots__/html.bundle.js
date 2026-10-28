@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.x) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "a", f(), void 0, $scope0_reason, 0)}</span>`);
+			_html(`<span>${_text_resume($scope1_id, "a", f(), 1, $scope0_reason, 0)}</span>`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a1");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;

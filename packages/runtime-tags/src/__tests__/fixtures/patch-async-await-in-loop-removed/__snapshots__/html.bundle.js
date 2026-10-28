@@ -15,7 +15,7 @@ var rows_default = _template("b", (input) => {
 		_html("<div>");
 		_await($scope1_id, "a", input.promise, (v) => {
 			const $scope2_id = _scope_id();
-			_html(`<em>${_text_resume($scope2_id, "a", item.id, void 0, $scope0_reason, 1)}:${_text_resume($scope2_id, "b", v, 2, $scope0_reason, 2)}</em>`);
+			_html(`<em>${_text_resume($scope2_id, "a", item.id, 1, $scope0_reason, 1)}:${_text_resume($scope2_id, "b", v, 2, $scope0_reason, 2)}</em>`);
 			_scope($scope2_id, {});
 		}, 1, "b0");
 		_html("</div>");

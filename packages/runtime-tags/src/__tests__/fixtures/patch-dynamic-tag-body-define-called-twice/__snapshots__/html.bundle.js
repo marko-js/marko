@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 	const Note = { content: _content("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<em>${_text_resume($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", input.note, 1, $scope0_reason, 1)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_note ? "a1" : "a2");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_note && "a2");
 	}, $scope0_id) };
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope2_id, "a", input.on ? card_default : "div", {}, 10, _content_resume("a3", () => {
 			const $scope3_id = _scope_id();
 			_scope_reason();
-			const $childScope = _peek_scope_id($scope3_id, "a", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope3_id, "a", 0, 0, $scope0_id);
 			Note.content({});
 			_patch_child_end();
 			_scope($scope3_id, {

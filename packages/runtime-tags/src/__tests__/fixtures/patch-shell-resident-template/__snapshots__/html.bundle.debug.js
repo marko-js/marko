@@ -6,7 +6,7 @@ _shells({ "__tests__/counter.marko": "__tests__/counter.marko;D ;<b> </b>" });
 var counter_default = _template("__tests__/counter.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<b>${_text_resume($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)}</b>`);
 	_scope($scope0_id, {}, "__tests__/counter.marko", 0);
 });
 
@@ -18,7 +18,7 @@ _shells({ "__tests__/other.marko": "__tests__/other.marko;D ;<i> </i>" });
 var other_default = _template("__tests__/other.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<i>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</i>`);
+	_html(`<i>${_text_resume($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)}</i>`);
 	_scope($scope0_id, {}, "__tests__/other.marko", 0);
 });
 

@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Card = { content: _content_resume("__tests__/template.marko_3*content", ({ label, content }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $wg__content = _write_guard($scope3_reason, 2);
-		_html(`<p>${_text_resume($scope3_id, "#text/0", label, void 0, 4, 0)}`);
+		_html(`<p>${_text_resume($scope3_id, "#text/0", label, 1, 4, 0)}`);
 		_if(() => {
 			if (label) {
 				const $scope4_id = _scope_id();
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Label = { content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>${_text_resume($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 1)} ${_text_resume($scope1_id, "#text/1", n, 2)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", input.label, 1, $scope0_reason, 1)} ${_text_resume($scope1_id, "#text/1", n, 2)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, _client_guard($scope0_reason, 1) ? "__tests__/template.marko_1_input_label#0:5/init" : "__tests__/template.marko_1_input_label#0:5/subscribe");
 		_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2")));
 	}, $scope0_id) };

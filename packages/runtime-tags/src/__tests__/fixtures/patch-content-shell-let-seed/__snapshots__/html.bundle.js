@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				let n = 0;
-				_html(`<button>${_text_resume($scope2_id, "b", input.label, void 0, $scope0_reason, 2)} ${_text_resume($scope2_id, "c", n, 2)}</button>${_el_resume($scope2_id, "a")}`);
+				_html(`<button>${_text_resume($scope2_id, "b", input.label, 1, $scope0_reason, 2)} ${_text_resume($scope2_id, "c", n, 2)}</button>${_el_resume($scope2_id, "a")}`);
 				_script($scope2_id, "a0");
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a1");
 				_patch_fill($scope2_id, "va2", n, 1);

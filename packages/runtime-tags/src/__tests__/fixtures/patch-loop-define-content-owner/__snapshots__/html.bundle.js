@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	const Card = { content: _content_resume("a4", ({ label, content }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__content = _write_guard($scope1_reason, 2);
-		_html(`<p>${_text_resume($scope1_id, "a", label, void 0, $scope1_reason, 1)}`);
+		_html(`<p>${_text_resume($scope1_id, "a", label, 1, $scope1_reason, 1)}`);
 		_if(() => {
 			if (label) {
 				const $scope4_id = _scope_id();
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		const Label = { content: _content_resume("a3", () => {
 			const $scope5_id = _scope_id();
 			_scope_reason();
-			_html(`<em>${_text_resume($scope5_id, "a", row.label, void 0, $scope0_reason, 0)} ${_text_resume($scope5_id, "b", n, 2)}</em>`);
+			_html(`<em>${_text_resume($scope5_id, "a", row.label, 1, $scope0_reason, 0)} ${_text_resume($scope5_id, "b", n, 2)}</em>`);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope5_id, $cg__input_rows ? "a7" : "a8");
 			_subscribe($for_content__n__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope5_id, { _: _scope_with_id($scope2_id) })));
 		}, $scope2_id) };
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 			content: _content("a2", () => {
 				_scope_reason();
 				const $scope6_id = _scope_id();
-				_html(`<i>${_text_resume($scope6_id, "a", row.label, void 0, $scope0_reason, 0)} ${_text_resume($scope6_id, "b", n, 2)}</i>`);
+				_html(`<i>${_text_resume($scope6_id, "a", row.label, 1, $scope0_reason, 0)} ${_text_resume($scope6_id, "b", n, 2)}</i>`);
 				$cg__input_rows && _patch_init($scope6_id, "a9");
 				_subscribe($for_content__n__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope6_id, {
 					_: _scope_with_id($scope2_id),
@@ -63,7 +63,7 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope2_id, "d", row.card ? Card : "span", { label: "dynamic" }, 17, _content_resume("a1", () => {
 			const $scope7_id = _scope_id();
 			_scope_reason();
-			_html(`<b>${_text_resume($scope7_id, "a", row.label, void 0, $scope0_reason, 0)} ${_text_resume($scope7_id, "b", n, 2)}</b>`);
+			_html(`<b>${_text_resume($scope7_id, "a", row.label, 1, $scope0_reason, 0)} ${_text_resume($scope7_id, "b", n, 2)}</b>`);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope7_id, $cg__input_rows ? "a10" : "a11");
 			_subscribe($for_content__n__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope7_id, {
 				_: _scope_with_id($scope2_id),

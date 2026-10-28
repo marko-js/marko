@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_text_resume($scope3_id, "#text/0", label, void 0, $scope1_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "#text/0", label, 1, $scope1_reason, 2)}</em>`);
 				_scope($scope3_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4");
 				return 0;
 			}
@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				label: "k"
 			});
 			_patch_child_end();
-			_html(`<b>${_text_resume($scope2_id, "#text/2", r, void 0, 0, 0)}</b>`);
+			_html(`<b>${_text_resume($scope2_id, "#text/2", r, 1, 0, 0)}</b>`);
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "7:2");
 			return 0;
 		}

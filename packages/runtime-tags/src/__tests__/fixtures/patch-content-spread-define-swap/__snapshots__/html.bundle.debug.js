@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "2:2"));
 	}, $scope0_id) };
 	_html("<div");
-	_attrs_content({ content: input.which ? one : two }, "#div/0", $scope0_id, "div", 0, void 0, void 0, $scope0_reason, 1);
+	_attrs_content({ content: input.which ? one : two }, "#div/0", $scope0_id, "div", 0, 1, 0, $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_input_which#4_one#5_two#6");
 	_scope($scope0_id, {

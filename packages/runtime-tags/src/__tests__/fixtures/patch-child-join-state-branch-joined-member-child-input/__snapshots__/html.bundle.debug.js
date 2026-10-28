@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/cell.marko": "__tests__/tags/cell.marko;D ;<em> </em>"
 var cell_default = _template("__tests__/tags/cell.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_text_resume($scope0_id, "#text/0", input.v, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", input.v, 1, $scope0_reason, 0)}</em>`);
 	_scope($scope0_id, {}, "__tests__/tags/cell.marko", 0);
 });
 
@@ -25,7 +25,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 2)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + input.b, 1, $scope0_reason, 2)}</p>`);
 			_patch_join_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:4_input_b#0:8/init", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && ">input_a", _filled_guard($scope0_reason, 7) && ">input_b");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2");
 			return 0;

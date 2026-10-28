@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_html = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><div>${_html_resume($scope0_id, "#text/0", input.html, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<main><div>${_html_resume($scope0_id, "#text/0", input.html, 1, $scope0_reason, 0)}</div>`);
 	_if(() => {
 		if (count) {
 			const $scope1_id = _scope_id();

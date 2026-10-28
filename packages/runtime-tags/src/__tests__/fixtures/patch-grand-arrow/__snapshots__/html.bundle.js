@@ -4,7 +4,7 @@ var widget_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const label = () => "t:" + input.title;
-	_html(`<p>${_text_resume($scope0_id, "a", label(), void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", label(), 1, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, {});
 });
 

@@ -19,14 +19,14 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	const two = { content: _content_resume("__tests__/tags/frag-host.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<strong>${_text_resume($scope1_id, "#text/0", input.b, void 0, $scope0_reason, 0)}</strong>`);
+		_html(`<strong>${_text_resume($scope1_id, "#text/0", input.b, 1, $scope0_reason, 0)}</strong>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "__tests__/tags/frag-host.marko_1_input_b#0:4/init" : "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frag-host.marko", "2:2"));
 	}, $scope0_id) };
 	_html("<section");
-	_attrs_content({ content: input.mode ? one : two }, "#section/0", $scope0_id, "section", 0, void 0, void 0, $scope0_reason, 1);
+	_attrs_content({ content: input.mode ? one : two }, "#section/0", $scope0_id, "section", 0, 1, 0, $scope0_reason, 1);
 	_html(`</section>${_el_resume($scope0_id, "#section/0")}<div id=partial`);
-	_attrs_partial_content({ content: input.mode ? two : one }, { id: 1 }, "#div/1", $scope0_id, "div", 1, void 0, void 0, $scope0_reason, 1);
+	_attrs_partial_content({ content: input.mode ? two : one }, { id: 1 }, "#div/1", $scope0_id, "div", 1, 1, 0, $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "#div/1")}`);
 	_script($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#5_one#6_two#7");
 	$cg__input_mode && _patch_write($scope0_id, "PatchWrite:one", one, 1);

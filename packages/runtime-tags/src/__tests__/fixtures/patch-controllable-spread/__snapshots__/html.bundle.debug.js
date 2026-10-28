@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/valueChange", $scope0_id), void 0, void 0, void 0, "PatchWrite:ControlledHandler:#input/0")}${_attrs_partial(input.attrs, {
 		value: 1,
 		valueChange: 1
-	}, "#input/0", $scope0_id, "input", void 0, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<p>${_text_resume($scope0_id, "#text/1", value)}</p>`);
+	}, "#input/0", $scope0_id, "input", 0, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<p>${_text_resume($scope0_id, "#text/1", value)}</p>`);
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#4");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#input/0": ["valueChange", "2:35"] });

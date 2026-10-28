@@ -4,7 +4,7 @@ var widget_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button class=c>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=c>${_text_resume($scope0_id, "b", input.label, 1, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "c0");
 	_patch_fill($scope0_id, "vc1", n, 1);
 	_scope($scope0_id, { g: n });

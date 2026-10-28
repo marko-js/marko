@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
 			const b = value + y;
-			_html(`<p>${_text_resume($scope2_id, "#text/0", b, void 0, $scope2_reason, 0)}</p>`);
+			_html(`<p>${_text_resume($scope2_id, "#text/0", b, 1, $scope2_reason, 0)}</p>`);
 			_patch_write($scope2_id, "PatchWrite:y", y, 1);
 			_client_guard($scope2_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_value#1:4_y#3/init");
 			_subscribe(_unfilled_if($scope2_reason, 0) && $wi__value && $Outer_content__value__closures, _scope($scope2_id, {

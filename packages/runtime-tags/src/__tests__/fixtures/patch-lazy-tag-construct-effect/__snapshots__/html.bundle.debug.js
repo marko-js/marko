@@ -7,7 +7,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, 1, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill0", count, 1);
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<div${_attrs(input.attrs, "#div/0", $scope1_id, "div", void 0, $scope0_reason, 2)}>x</div>${_el_resume($scope1_id, "#div/0")}`);
+			_html(`<div${_attrs(input.attrs, "#div/0", $scope1_id, "div", 0, $scope0_reason, 2)}>x</div>${_el_resume($scope1_id, "#div/0")}`);
 			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/2", 0);
 			$Child_withLoadAssets({ label: input.label });

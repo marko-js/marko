@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko;D ;<div> </div
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.user.name, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.user.name, 1, $scope0_reason, 0)}</div>`);
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 });
 
@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/2", input.tag, { class: input.cls }, 17, _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(_text_resume($scope2_id, "#text/0", input.user3.name, void 0, $scope0_reason, 7));
+		_html(_text_resume($scope2_id, "#text/0", input.user3.name, 1, $scope0_reason, 7));
 		_unfilled_if($scope0_reason, 7) && _patch_init($scope2_id, _client_guard($scope0_reason, 7) ? "__tests__/template.marko_2_input_user3_name#0:12/init" : "__tests__/template.marko_2_input_user3_name#0:12/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 7) && $input_user3_name__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_user3_name: input.user3?.name }] : []), 0, _write_guard($scope0_reason, 0), $scope0_reason, 0, 0, 5);

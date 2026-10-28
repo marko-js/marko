@@ -3,7 +3,7 @@ _shells({ a: "a;D ;<section class=a> </section>" });
 var card_a_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section class=a>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</section>`);
+	_html(`<section class=a>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</section>`);
 	_scope($scope0_id, {});
 });
 
@@ -12,7 +12,7 @@ _shells({ b: "b;D%;<article class=b><!>!</article>" });
 var card_b_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<article class=b>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}!</article>`);
+	_html(`<article class=b>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}!</article>`);
 	_scope($scope0_id, {});
 });
 

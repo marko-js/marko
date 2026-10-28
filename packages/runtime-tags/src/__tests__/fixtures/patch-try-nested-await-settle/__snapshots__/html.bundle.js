@@ -19,10 +19,10 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.a, (a) => {
 			const $scope2_id = _scope_id();
-			_html(`<em>${_text_resume($scope2_id, "a", a, void 0, $scope0_reason, 1)}</em>`);
+			_html(`<em>${_text_resume($scope2_id, "a", a, 1, $scope0_reason, 1)}</em>`);
 			_await($scope2_id, "b", input.b, (b) => {
 				const $scope4_id = _scope_id();
-				_html(`<strong>${_text_resume($scope4_id, "a", b, void 0, $scope0_reason, 2)}</strong>`);
+				_html(`<strong>${_text_resume($scope4_id, "a", b, 1, $scope0_reason, 2)}</strong>`);
 				_scope($scope4_id, {});
 			}, 1, "a0", 1);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_b ? "a6" : "a7");

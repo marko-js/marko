@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_await($scope0_id, "#text/0", Promise.resolve("u" + ++n), (uid) => {
 		const $scope1_id = _scope_id();
 		_patch_write($scope1_id, "PatchWrite:uid", uid);
-		_html(`<label${_attr("for", `${uid}-${input.name}`, $scope1_id, "PatchAttr:#label/0 for", $scope0_reason, 0)}>${_text_resume($scope1_id, "#text/1", input.label, void 0, $scope0_reason, 1)}</label>${_el_resume($scope1_id, "#label/0", _mask_group($scope0_reason, 0))}<button>show</button>${_el_resume($scope1_id, "#button/2")}`);
+		_html(`<label${_attr("for", `${uid}-${input.name}`, $scope1_id, "PatchAttr:#label/0 for", $scope0_reason, 0)}>${_text_resume($scope1_id, "#text/1", input.label, 1, $scope0_reason, 1)}</label>${_el_resume($scope1_id, "#label/0", _mask_group($scope0_reason, 0))}<button>show</button>${_el_resume($scope1_id, "#button/2")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_name#0:4/subscribe");
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_label ? "__tests__/template.marko_1_input_label#0:5/init" : "__tests__/template.marko_1_input_label#0:5/subscribe");

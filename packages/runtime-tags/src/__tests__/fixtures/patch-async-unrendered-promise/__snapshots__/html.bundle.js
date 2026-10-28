@@ -5,7 +5,7 @@ _shells({ b: "b;D ;<div> </div>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", input.user.name, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", input.user.name, 1, $scope0_reason, 0)}</div>`);
 	_scope($scope0_id, {});
 });
 
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "a", input.user, (user) => {
 				const $scope5_id = _scope_id();
-				_html(`<p>${_text_resume($scope5_id, "a", user.name, void 0, $scope0_reason, 4)}</p>`);
+				_html(`<p>${_text_resume($scope5_id, "a", user.name, 1, $scope0_reason, 4)}</p>`);
 				_scope($scope5_id, {});
 			}, 1, "a3");
 			_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "a11");
@@ -75,7 +75,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_await($scope4_id, "a", input.boxed, (user) => {
 			const $scope8_id = _scope_id();
-			_html(`<p>${_text_resume($scope8_id, "a", user.name, void 0, $scope0_reason, 7)}</p>`);
+			_html(`<p>${_text_resume($scope8_id, "a", user.name, 1, $scope0_reason, 7)}</p>`);
 			_scope($scope8_id, {});
 		}, 1, "a0");
 		_client_guard($scope0_reason, 7) && _patch_init($scope4_id, "a14");

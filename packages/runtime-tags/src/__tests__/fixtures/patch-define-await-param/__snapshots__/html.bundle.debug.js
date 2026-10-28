@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_await($scope2_id, "#text/0", value, (v) => {
 				const $scope3_id = _scope_id();
-				_html(`<p>${_text_resume($scope3_id, "#text/0", id, void 0, $scope1_reason, 0)}:${_text_resume($scope3_id, "#text/1", v, 2, $scope1_reason, 1)}:${_text_resume($scope3_id, "#text/2", count, 2)}</p>`);
+				_html(`<p>${_text_resume($scope3_id, "#text/0", id, 1, $scope1_reason, 0)}:${_text_resume($scope3_id, "#text/1", v, 2, $scope1_reason, 1)}:${_text_resume($scope3_id, "#text/2", count, 2)}</p>`);
 				_unfilled_if($scope1_reason, 0) && _patch_init($scope3_id, _client_guard($scope1_reason, 0) ? "__tests__/template.marko_3_id#1:3/init" : "__tests__/template.marko_3_id#1:3/subscribe");
 				_subscribe(_unfilled_if($scope1_reason, 0) && $Info_content__id__closures, _subscribe($count__closures, _scope($scope3_id, {}, "__tests__/template.marko", "4:6"), "__tests__/template.marko_3_count#0:6/subscribe"), "__tests__/template.marko_3_id#1:3/subscribe");
 			}, 1, "__tests__/template.marko_3*content");

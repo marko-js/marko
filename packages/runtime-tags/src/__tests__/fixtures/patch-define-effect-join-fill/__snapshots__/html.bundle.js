@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	const Row = { content: _content("a0", ({ a, b }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__a = _server_guard($scope1_reason, 1);
-		_html(`<p>${_text_resume($scope1_id, "a", a + b, void 0, $scope1_reason, 0)}</p><div></div>${_el_resume($scope1_id, "b")}`);
+		_html(`<p>${_text_resume($scope1_id, "a", a + b, 1, $scope1_reason, 0)}</p><div></div>${_el_resume($scope1_id, "b")}`);
 		_script($scope1_id, "a1", 1, _filled_guard($scope1_reason, 1), "e");
 		_scope($scope1_id, {
 			e: a,

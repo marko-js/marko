@@ -11,17 +11,17 @@ var template_default = _template("a", (input) => {
 	const extra = { content: _content_resume("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<em>${_text_resume($scope1_id, "a", input.title, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", input.title, 1, $scope0_reason, 0)}</em>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "a1" : "a2");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
-	_html(`<main><div${_attrs(input.attrs, "a", $scope0_id, "div", void 0, $scope0_reason, 1)}>`);
-	_attr_content("a", $scope0_id, extra, 0, void 0, 0, 0);
+	_html(`<main><div${_attrs(input.attrs, "a", $scope0_id, "div", 0, $scope0_reason, 1)}>`);
+	_attr_content("a", $scope0_id, extra, 0, 1, 0, 0);
 	_html(`</div>${_el_resume($scope0_id, "a")}<section`);
 	_attrs_content({
 		...input.attrs,
 		content: extra
-	}, "b", $scope0_id, "section", 1, void 0, void 0, $scope0_reason, 1);
+	}, "b", $scope0_id, "section", 1, 1, 0, $scope0_reason, 1);
 	_html(`</section>${_el_resume($scope0_id, "b")}<button>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a3");
 	_script($scope0_id, "a4");

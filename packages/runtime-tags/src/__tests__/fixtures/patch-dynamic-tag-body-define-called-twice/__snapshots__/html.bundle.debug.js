@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Note = { content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>${_text_resume($scope1_id, "#text/0", input.note, void 0, $scope0_reason, 1)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", input.note, 1, $scope0_reason, 1)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_note ? "__tests__/template.marko_1_input_note#0:4/init" : "__tests__/template.marko_1_input_note#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), $cg__input_note && "__tests__/template.marko_1_input_note#0:4/subscribe");
 	}, $scope0_id) };
@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope2_id, "#text/0", input.on ? card_default : "div", {}, 10, _content_resume("__tests__/template.marko_3*content", () => {
 			const $scope3_id = _scope_id();
 			const $scope3_reason = _scope_reason();
-			const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 0, 0, $scope0_id);
 			Note.content({});
 			_patch_child_end();
 			_scope($scope3_id, {

@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/relay/tags/leaf/index.marko": "__tests__/tags/relay/ta
 var leaf_default = _template("__tests__/tags/relay/tags/leaf/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>${_text_resume($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 0)}</b><i>${_text_resume($scope0_id, "#text/1", input.note, void 0, $scope0_reason, 1)}</i>`);
+	_html(`<b>${_text_resume($scope0_id, "#text/0", input.text, 1, $scope0_reason, 0)}</b><i>${_text_resume($scope0_id, "#text/1", input.note, 1, $scope0_reason, 1)}</i>`);
 	_scope($scope0_id, {}, "__tests__/tags/relay/tags/leaf/index.marko", 0);
 });
 

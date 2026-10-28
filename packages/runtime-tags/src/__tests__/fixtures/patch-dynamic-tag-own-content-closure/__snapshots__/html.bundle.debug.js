@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		let count = 0;
-		_html(`<em>${_text_resume($scope1_id, "#text/1", label, void 0, 4, 0)} ${_text_resume($scope1_id, "#text/2", count, 2)} ${_text_resume($scope1_id, "#text/3", n, 2)}</em>${_el_resume($scope1_id, "#em/0")}`);
+		_html(`<em>${_text_resume($scope1_id, "#text/1", label, 1, 4, 0)} ${_text_resume($scope1_id, "#text/2", count, 2)} ${_text_resume($scope1_id, "#text/3", n, 2)}</em>${_el_resume($scope1_id, "#em/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill2", count, 1);
 		_subscribe($n__closures, _scope($scope1_id, {

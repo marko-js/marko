@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_for_of(["a", "b"], (item, i) => {
 				const $scope2_id = _scope_id();
-				_html(`<button class=r>${_text_resume($scope2_id, "b", item, void 0, 0, 0)}</button>${_el_resume($scope2_id, "a")}`);
+				_html(`<button class=r>${_text_resume($scope2_id, "b", item, 1, 0, 0)}</button>${_el_resume($scope2_id, "a")}`);
 				_script($scope2_id, "a0");
 				_scope($scope2_id, {
 					M: i,

@@ -5,7 +5,7 @@ _shells({ b: "b;E ;<section><h2> </h2></section>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2></section>`);
+	_html(`<section><h2>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h2></section>`);
 	_scope($scope0_id, {});
 });
 

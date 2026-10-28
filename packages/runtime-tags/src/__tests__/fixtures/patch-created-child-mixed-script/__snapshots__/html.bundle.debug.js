@@ -7,7 +7,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_x = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<p>${_text_resume($scope0_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</p><button>+</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.x, 1, $scope0_reason, 0)}</p><button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/child/index.marko_0");
 	_script($scope0_id, "__tests__/tags/child/index.marko_0_input_x#4_n#5", 1, $sg__input_x && 2, "input_x");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child/index.marko_fill0", n, 1);

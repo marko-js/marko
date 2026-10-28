@@ -6,7 +6,7 @@ _shells({ "__tests__/card.marko": "__tests__/card.marko;E l%b%;<section><em> </e
 var card_default = _template("__tests__/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><em>${_text_resume($scope0_id, "#text/0", input.meta.n, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<section><em>${_text_resume($scope0_id, "#text/0", input.meta.n, 1, $scope0_reason, 0)}</em>`);
 	_dynamic_tag($scope0_id, "#text/1", input.meta.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_dynamic_tag($scope0_id, "#text/2", input.content, {}, 10, 0, 0, _write_guard($scope0_reason, 2), $scope0_reason, 2);
 	_html("</section>");
@@ -31,14 +31,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			content: _content("__tests__/template.marko_1*content", () => {
 				const $scope1_reason = _scope_reason();
 				const $scope1_id = _scope_id();
-				_html(_text_resume($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 0));
+				_html(_text_resume($scope1_id, "#text/0", input.label, 1, $scope0_reason, 0));
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: $wi__input_label && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4"), $cg__input_label && "__tests__/template.marko_1_input_label#0:4/subscribe");
 			}, $scope0_id)
 		}),
 		content: _content("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(_text_resume($scope2_id, "#text/0", input.label, void 0, $scope0_reason, 0));
+			_html(_text_resume($scope2_id, "#text/0", input.label, 1, $scope0_reason, 0));
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, {
 				_: $wi__input_label && _scope_with_id($scope0_id),
 				"ClosureSignalIndex:input_label/6": $wi__input_label && 1

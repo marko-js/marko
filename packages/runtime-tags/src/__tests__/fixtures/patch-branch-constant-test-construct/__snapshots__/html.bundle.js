@@ -35,7 +35,7 @@ var page_default = _template("a", (input) => {
 		panel_default({ aside: attrTag({ content: _content("a1", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<span>${_text_resume($scope2_id, "a", m, void 0, 0, 0)}</span>`);
+			_html(`<span>${_text_resume($scope2_id, "a", m, 1, 0, 0)}</span>`);
 			_if(() => {
 				if (m === "b") {
 					const $scope3_id = _scope_id();

@@ -18,7 +18,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	const Info = { content: _content("__tests__/tags/panel.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + ":" + input.b, void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + ":" + input.b, 1, $scope0_reason, 0)}</p>`);
 		(_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:5/subscribe");
 		(_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_b#0:6/subscribe");
 		_patch_join_init($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:5_input_b#0:6/init", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && ">input_a", _filled_guard($scope0_reason, 4) && ">input_b");
@@ -27,7 +27,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope3_id = _scope_id();
-			const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 0, 0, $scope0_id);
 			Info.content({});
 			_patch_child_end();
 			_scope($scope3_id, {

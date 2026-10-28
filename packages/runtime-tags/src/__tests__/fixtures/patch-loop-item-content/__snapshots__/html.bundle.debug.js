@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;D 
 var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<b>${_text_resume($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</b>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 });
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			content: _content("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "#text/0", item.n, void 0, $scope0_reason, 0)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "#text/0", item.n, 1, $scope0_reason, 0)}</em>`);
 				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_item_n#1:4/init");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope2_id, { _: $wi__input_items && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:10"));
 			}, $scope1_id, 1)

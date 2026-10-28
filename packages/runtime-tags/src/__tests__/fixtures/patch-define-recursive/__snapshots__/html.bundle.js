@@ -12,12 +12,12 @@ var template_default = _template("a", (input) => {
 	const foo = { content: _content("a1", (n) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wi__n = _write_if($scope1_reason, 0);
-		_html(`<b>${_text_resume($scope1_id, "a", input.x, void 0, $scope0_reason, 0)}</b>`);
+		_html(`<b>${_text_resume($scope1_id, "a", input.x, 1, $scope0_reason, 0)}</b>`);
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(_mask_group($scope1_reason, 0) << 1);
-				const $childScope = _peek_scope_id($scope2_id, "a", 0, void 0, $scope0_id);
+				const $childScope = _peek_scope_id($scope2_id, "a", 0, 0, $scope0_id);
 				foo.content(n - 1);
 				_patch_child_end();
 				_scope($scope2_id, {

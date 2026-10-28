@@ -18,7 +18,7 @@ var child_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_for_of([1, 2], (x) => {
 				const $scope2_id = _scope_id();
-				_html(`<i>${_text_resume($scope2_id, "a", x, void 0, 0, 0)}${_text_resume($scope2_id, "b", $global$1.brand, 2, 4, 0)}</i>`);
+				_html(`<i>${_text_resume($scope2_id, "a", x, 1, 0, 0)}${_text_resume($scope2_id, "b", $global$1.brand, 2, 4, 0)}</i>`);
 				_fill_global_subscribe("a0", $scope1_id);
 				_scope($scope2_id, {});
 			}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a1", 0, 0);

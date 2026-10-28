@@ -3,7 +3,7 @@ _shells({ b: "b;D lD ;<h3> </h3><p> </p>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<h3>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h3><p>${_text_resume($scope0_id, "b", input.body, void 0, $scope0_reason, 1)}</p>`);
+	_html(`<h3>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h3><p>${_text_resume($scope0_id, "b", input.body, 1, $scope0_reason, 1)}</p>`);
 	_scope($scope0_id, {});
 });
 

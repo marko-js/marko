@@ -15,7 +15,7 @@ var panel_default = _template("b", (input) => {
 	const Info = { content: _content("b0", ({ id }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<p>${_text_resume($scope1_id, "a", id, void 0, $scope1_reason, 0)}:${_text_resume($scope1_id, "b", input.n, 2, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", id, 1, $scope1_reason, 0)}:${_text_resume($scope1_id, "b", input.n, 2, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_n ? "b1" : "b2");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_n && "b2");
 	}, $scope0_id, 1) };
@@ -23,7 +23,7 @@ var panel_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope = _peek_scope_id($scope2_id, "a", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope2_id, "a", 0, 0, $scope0_id);
 			Info.content({ id: "x" });
 			_patch_child_end();
 			_scope($scope2_id, {

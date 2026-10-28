@@ -10,7 +10,7 @@ var child_default = _template("a", (input) => {
 	_html(`<button${_attrs({
 		title: input.title,
 		onClick: handler
-	}, "a", $scope0_id, "button", void 0, $scope0_reason, 0)}>go</button>${_el_resume($scope0_id, "a")}`);
+	}, "a", $scope0_id, "button", 0, $scope0_reason, 0)}>go</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { d: input.title });
 });

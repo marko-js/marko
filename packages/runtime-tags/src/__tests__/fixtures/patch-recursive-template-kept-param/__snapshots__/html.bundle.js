@@ -49,7 +49,7 @@ const $content = (input) => {
 				content: _content_resume("c4", () => {
 					_scope_reason();
 					const $scope2_id = _scope_id();
-					_html(`<em>${_text_resume($scope2_id, "a", input.n, void 0, $scope0_reason, 0)}:${_text_resume($scope2_id, "b", input.label, 2, $scope0_reason, 1)}</em>`);
+					_html(`<em>${_text_resume($scope2_id, "a", input.n, 1, $scope0_reason, 0)}:${_text_resume($scope2_id, "b", input.label, 2, $scope0_reason, 1)}</em>`);
 					_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_n ? "c0" : "c1");
 					_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_label ? "c2" : "c3");
 					_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));

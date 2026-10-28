@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	const Panel = { content: _content("a0", (props) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<em>${_text_resume($scope2_id, "a", props.fmt(props.label), void 0, $scope2_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope2_id, "a", props.fmt(props.label), 1, $scope2_reason, 0)}</em>`);
 		_scope($scope2_id, {});
 	}, $scope0_id) };
 	_if(() => {

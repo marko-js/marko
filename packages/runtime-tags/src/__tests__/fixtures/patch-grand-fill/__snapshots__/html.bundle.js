@@ -5,7 +5,7 @@ _shells({ c: "c;D ;<em> </em>" });
 var badge_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_text_resume($scope0_id, "a", input.text, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "a", input.text, 1, $scope0_reason, 0)}</em>`);
 	_scope($scope0_id, {});
 });
 
@@ -15,7 +15,7 @@ _shells({ b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0) => `D l/${
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<h3>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h3>`);
+	_html(`<h3>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h3>`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	badge_default({ text: input.subtitle });

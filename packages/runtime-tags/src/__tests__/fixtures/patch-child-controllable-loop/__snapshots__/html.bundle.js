@@ -36,11 +36,11 @@ _shells({
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h1>`);
 	_for_of(["a", "b"], (name) => {
 		const $scope1_id = _scope_id();
 		let hits = 0;
-		_html(`<p>${_text_resume($scope1_id, "a", name, void 0, 0, 0)} hit ${_text_resume($scope1_id, "b", hits, 2, 0, 0, 1)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", name, 1, 0, 0)} hit ${_text_resume($scope1_id, "b", hits, 2, 0, 0, 1)}</p>`);
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "c", 0);
 		counter_default({

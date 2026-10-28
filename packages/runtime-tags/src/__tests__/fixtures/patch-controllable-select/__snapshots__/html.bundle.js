@@ -3,7 +3,7 @@ _shells({ a: "a !a1;E l ;<main><h1> </h1><select><option value=a>A</option><opti
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h1>`);
 	_attr_select_value($scope0_id, "b", input.choice, _resume(function(next) {
 		document.querySelector("main").dataset.choice = next;
 	}, "a0"), () => {

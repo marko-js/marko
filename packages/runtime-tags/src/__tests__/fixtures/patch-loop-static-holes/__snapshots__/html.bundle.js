@@ -13,14 +13,14 @@ var template_default = _template("a", (input) => {
 	_html("<ul>");
 	_for_of([1, 2], (x) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "a", x, void 0, 0, 0)}:${_text_resume($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "a", x, 1, 0, 0)}:${_text_resume($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</li>`);
 		$cg__input_note && _patch_init($scope1_id, "a0");
 		_scope($scope1_id, { _: $wi__input_note && _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", 0, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}<ol>`);
 	_for_of([1, 2], (x) => {
 		const $scope4_id = _scope_id();
-		_html(`<li>${_text_resume($scope4_id, "a", x, void 0, 0, 0)}</li>`);
+		_html(`<li>${_text_resume($scope4_id, "a", x, 1, 0, 0)}</li>`);
 		_scope($scope4_id, {});
 	}, 0, $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "a4", 0, 0);
 	_html(`</ol>${_el_resume($scope0_id, "b")}`);
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 			_html("<div>");
 			_for_of([1, 2], (x) => {
 				const $scope3_id = _scope_id();
-				_html(`<p>${_text_resume($scope3_id, "a", x, void 0, 0, 0)}:${_text_resume($scope3_id, "b", input.note, 2, $scope0_reason, 1)}</p>`);
+				_html(`<p>${_text_resume($scope3_id, "a", x, 1, 0, 0)}:${_text_resume($scope3_id, "b", input.note, 2, $scope0_reason, 1)}</p>`);
 				_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, $cg__input_note ? "a5" : "a6");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope3_id, { _: $wi__input_note__OR__input_show && _scope_with_id($scope2_id) }), $cg__input_note && "a6");
 			}, 0, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "a3", 0, 0);

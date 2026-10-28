@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_text_resume($scope3_id, "#text/0", label, void 0, $scope2_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "#text/0", label, 1, $scope2_reason, 2)}</em>`);
 				$cg__label && _patch_init($scope3_id, "__tests__/template.marko_3_label#2:4/init");
 				_scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:4");
 				return 0;
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_filled_guard($scope0_reason, 1) ? _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill2", ret) : _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:6/init");
 			$cg__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_ret#4/var");
 			_patch_child_end();
-			_html(`<b>${_text_resume($scope1_id, "#text/2", ret, void 0, $scope0_reason, 1)}</b>`);
+			_html(`<b>${_text_resume($scope1_id, "#text/2", ret, 1, $scope0_reason, 1)}</b>`);
 			_if(() => {
 				if (open) {
 					const $scope4_id = _scope_id();

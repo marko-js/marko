@@ -6,7 +6,7 @@ _shells({ b: "b;E l%;<section><em> </em><!></section>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><em>${_text_resume($scope0_id, "a", input.meta ? input.meta.n : "-", void 0, $scope0_reason, 0)}</em>`);
+	_html(`<section><em>${_text_resume($scope0_id, "a", input.meta ? input.meta.n : "-", 1, $scope0_reason, 0)}</em>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</section>");
 	_scope($scope0_id, {});
@@ -39,7 +39,7 @@ var template_default = _template("c", (input) => {
 					_html("<ul>");
 					_for_of(input.items, (x) => {
 						const $scope3_id = _scope_id();
-						_html(`<li>${_text_resume($scope3_id, "a", x, void 0, $scope0_reason, 3)}:${_text_resume($scope3_id, "b", input.label, 2, $scope0_reason, 4)}</li>`);
+						_html(`<li>${_text_resume($scope3_id, "a", x, 1, $scope0_reason, 3)}:${_text_resume($scope3_id, "b", input.label, 2, $scope0_reason, 4)}</li>`);
 						$cg__input_label && _patch_init($scope3_id, "c0");
 						_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope3_id, { _: $wi__input_on__OR__input_items__OR__input_label && _scope_with_id($scope2_id) }), $cg__input_label && "c1");
 					}, 0, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "c2", $scope0_reason, 3);

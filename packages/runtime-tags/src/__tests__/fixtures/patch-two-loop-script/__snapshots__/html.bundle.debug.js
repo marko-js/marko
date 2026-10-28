@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_for_of(input.items2, (item) => {
 		const $scope2_id = _scope_id();
-		_html(`<p>${_text_resume($scope2_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", input.title, 1, $scope0_reason, 1)}</p>`);
 		$cg__input_title && _patch_init($scope2_id, "__tests__/template.marko_2_input_title#0:5/init");
 		_scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4");
 	}, 0, $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);

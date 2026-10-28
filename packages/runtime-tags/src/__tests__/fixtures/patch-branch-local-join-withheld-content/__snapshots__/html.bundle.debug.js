@@ -15,16 +15,16 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const $scope1_id = _scope_id();
 			const $if_content__c__closures = new Set();
 			const c = input.b + "!";
-			_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + c, void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + c, 1, $scope0_reason, 1)}</p>`);
 			const frag = { content: _content_resume("__tests__/tags/child.marko_2*content", () => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
-				_html(`<em>${_text_resume($scope2_id, "#text/0", c, void 0, $scope0_reason, 6)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "#text/0", c, 1, $scope0_reason, 6)}</em>`);
 				_unfilled_if($scope0_reason, 6) && _patch_init($scope2_id, $cg__input_b ? "__tests__/tags/child.marko_2_c#1:2/init" : "__tests__/tags/child.marko_2_c#1:2/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 6) && $if_content__c__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "4:4"));
 			}, $scope1_id) };
 			_html("<section>");
-			_attr_content("#section/1", $scope1_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 8);
+			_attr_content("#section/1", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 8);
 			_html(`</section>${_el_resume($scope1_id, "#section/1", _mask_group($scope0_reason, 8))}`);
 			_filled_guard($scope0_reason, 6) ? ($cg__input_a || _content_withheld("__tests__/tags/child.marko_2*content", $scope1_id) || $cg__input_mode) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/child.marko_fill3", c) : _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4/init");
 			$cg__input_mode && _patch_write($scope1_id, "PatchWrite:frag_content", frag?.content, 1);

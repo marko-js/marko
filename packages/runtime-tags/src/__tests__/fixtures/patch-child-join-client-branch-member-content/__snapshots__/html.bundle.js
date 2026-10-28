@@ -14,7 +14,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "a", input.a + input.b, void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "a", input.a + input.b, 1, $scope0_reason, 1)}</p>`);
 			_patch_join_init($scope1_id, "b0", $scope0_reason, 1, _filled_guard($scope0_reason, 5) && ">f", _filled_guard($scope0_reason, 6) && ">g");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
@@ -23,12 +23,12 @@ var child_default = _template("b", (input) => {
 	const frag = { content: _content_resume("b2", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_html(`<em>${_text_resume($scope2_id, "a", input.a, void 0, $scope0_reason, 5)}</em>`);
+		_html(`<em>${_text_resume($scope2_id, "a", input.a, 1, $scope0_reason, 5)}</em>`);
 		_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, $cg__input_a ? "b3" : "b4");
 		_subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	_html("<section>");
-	_attr_content("b", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 7);
+	_attr_content("b", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 7);
 	_html(`</section>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 7))}`);
 	_filled_guard($scope0_reason, 6) && $cg__input_show ? _patch_fill($scope0_id, "vb7", input.b) : _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.b, !(_filled_guard($scope0_reason, 6) && $cg__input_a));
 	$cg__input_mode && _patch_write($scope0_id, "wj", frag?.content, 1);

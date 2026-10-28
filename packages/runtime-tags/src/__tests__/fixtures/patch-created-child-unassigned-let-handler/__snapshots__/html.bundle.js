@@ -7,7 +7,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let x = input.foo;
-	_html(`<em>${_text_resume($scope0_id, "a", 0, void 0, 0, 0, 1)}</em><button>set</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<em>${_text_resume($scope0_id, "a", 0, 1, 0, 0, 1)}</em><button>set</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b0");
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wg", x?.length, 1);
 	_scope($scope0_id, { g: x?.length });

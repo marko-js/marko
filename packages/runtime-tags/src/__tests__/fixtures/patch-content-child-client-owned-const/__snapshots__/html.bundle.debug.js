@@ -7,7 +7,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let open = true;
-	_html(`<section><h2>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2>`);
+	_html(`<section><h2>${_text_resume($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</h2>`);
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	card_default({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<em>${_text_resume($scope1_id, "#text/0", input.note, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", input.note, 1, $scope0_reason, 0)}</em>`);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), "__tests__/template.marko_1_input_note#0:3/subscribe");
 	}, $scope0_id) });
 	_patch_child_end();

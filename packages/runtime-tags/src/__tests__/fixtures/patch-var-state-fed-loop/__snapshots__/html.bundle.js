@@ -5,7 +5,7 @@ _shells({ b: "b;D ;<span> </span>" });
 var labeler_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</span>`);
 	const $return = "[" + input.title + "]";
 	_scope($scope0_id, {});
 	return $return;
@@ -29,7 +29,7 @@ var list_default = _template("c", (input) => {
 		let label = labeler_default({ title: item + input.suffix });
 		$cg__input_items__OR__input_suffix && _var($scope1_id, "b", $childScope, "c0");
 		_patch_child_end();
-		_html(`<p>${_text_resume($scope1_id, "c", label, void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "c", label, 1, $scope0_reason, 0)}</p>`);
 		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "c1", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "e");
 		_scope($scope1_id, {
 			e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item,

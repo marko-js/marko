@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	const Panel = { content: _content("a0", ({ fmt, label }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $cg__fmt = _client_guard($scope3_reason, 1);
-		_html(`<em>${_text_resume($scope3_id, "a", fmt(label), void 0, $scope3_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope3_id, "a", fmt(label), 1, $scope3_reason, 0)}</em>`);
 		_filled_guard($scope3_reason, 1) && _client_guard($scope3_reason, 2) && _patch_write($scope3_id, "xd", fmt);
 		$cg__fmt && _patch_write($scope3_id, "xe", label, !(_filled_guard($scope3_reason, 2) && $cg__fmt));
 		_patch_join_init($scope3_id, "a1", $scope3_reason, 0, _filled_guard($scope3_reason, 1) && "d", _filled_guard($scope3_reason, 2) && "e");

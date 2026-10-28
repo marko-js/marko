@@ -19,10 +19,10 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_for_of(attrs.item, (it) => {
 					const $scope4_id = _scope_id();
-					_html(`<em>${_text_resume($scope4_id, "a", it.label, void 0, $scope1_reason, 2)}</em>`);
+					_html(`<em>${_text_resume($scope4_id, "a", it.label, 1, $scope1_reason, 2)}</em>`);
 					_scope($scope4_id, {});
 				}, 0, $scope3_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope1_reason, 2);
-				_html(`<span>${_text_resume($scope3_id, "b", Object.keys(attrs).length, void 0, $scope1_reason, 0)}</span>`);
+				_html(`<span>${_text_resume($scope3_id, "b", Object.keys(attrs).length, 1, $scope1_reason, 0)}</span>`);
 				_scope($scope3_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) });
 				return 0;
 			}

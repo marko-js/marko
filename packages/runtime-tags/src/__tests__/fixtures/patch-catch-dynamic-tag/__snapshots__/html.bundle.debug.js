@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/large-label.marko": "__tests__/tags/large-label.marko;
 var large_label_default = _template("__tests__/tags/large-label.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<strong>${_text_resume($scope0_id, "#text/0", input.message, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "#text/1", input.count, 2, $scope0_reason, 1)} ${_text_resume($scope0_id, "#text/2", input.label, 2, $scope0_reason, 2)}</strong>`);
+	_html(`<strong>${_text_resume($scope0_id, "#text/0", input.message, 1, $scope0_reason, 0)} ${_text_resume($scope0_id, "#text/1", input.count, 2, $scope0_reason, 1)} ${_text_resume($scope0_id, "#text/2", input.label, 2, $scope0_reason, 2)}</strong>`);
 	_scope($scope0_id, {}, "__tests__/tags/large-label.marko", 0);
 });
 
@@ -18,7 +18,7 @@ _shells({ "__tests__/tags/small-label.marko": "__tests__/tags/small-label.marko;
 var small_label_default = _template("__tests__/tags/small-label.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<small>${_text_resume($scope0_id, "#text/0", input.message, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "#text/1", input.count, 2, $scope0_reason, 1)} ${_text_resume($scope0_id, "#text/2", input.label, 2, $scope0_reason, 2)}</small>`);
+	_html(`<small>${_text_resume($scope0_id, "#text/0", input.message, 1, $scope0_reason, 0)} ${_text_resume($scope0_id, "#text/1", input.count, 2, $scope0_reason, 1)} ${_text_resume($scope0_id, "#text/2", input.label, 2, $scope0_reason, 2)}</small>`);
 	_scope($scope0_id, {}, "__tests__/tags/small-label.marko", 0);
 });
 
@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_try($scope0_id, "#text/2", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_text_resume($scope2_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 2)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", input.error ? boom(input.error) : "ok", 1, $scope0_reason, 2)}</p>`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_error ? "__tests__/template.marko_2_input_error#0:7/init" : "__tests__/template.marko_2_input_error#0:7/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:2"), $cg__input_error && "__tests__/template.marko_2_input_error#0:7/subscribe");
 	}, void 0, (err) => {

@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 	});
 	_var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
-	_html(`<p>${_text_resume($scope0_id, "c", reads.count, void 0, 0, 0)}</p><button>+</button>${_el_resume($scope0_id, "d")}</main>`);
+	_html(`<p>${_text_resume($scope0_id, "c", reads.count, 1, 0, 0)}</p><button>+</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		g: count,

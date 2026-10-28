@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 		a,
 		b
 	};
-	_html(`<p>${_text_resume($scope0_id, "a", input.x, void 0, $scope0_reason, 1)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", input.x, 1, $scope0_reason, 1)}</p>`);
 	_script($scope0_id, "a0", 1, _filled_guard($scope0_reason, 0), _filled_guard($scope0_reason, 2) && "e", _filled_guard($scope0_reason, 1) && "d");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && a,

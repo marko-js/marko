@@ -3,7 +3,7 @@ _shells({ b: "b;D ;<span> </span>" });
 var card_plain_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</span>`);
 	_scope($scope0_id, {});
 });
 
@@ -13,7 +13,7 @@ var card_live_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "c", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", input.label, 1, $scope0_reason, 0)} ${_text_resume($scope0_id, "c", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_patch_fill($scope0_id, "va1", n, 1);
 	_scope($scope0_id, { g: n });

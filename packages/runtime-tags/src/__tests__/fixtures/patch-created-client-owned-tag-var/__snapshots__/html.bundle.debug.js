@@ -7,7 +7,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $return = input.x + "!";
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.x, 1, $scope0_reason, 0)}</span>`);
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 	return $return;
 });
@@ -32,7 +32,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchWrite:v", v, !$sg__input_label);
 			$cg__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/tags/wrap.marko_1_v#4/var");
 			_patch_child_end();
-			_html(`<p>${_text_resume($scope1_id, "#text/2", v, void 0, $scope0_reason, 1)}</p><button class=log>log</button>${_el_resume($scope1_id, "#button/3")}`);
+			_html(`<p>${_text_resume($scope1_id, "#text/2", v, 1, $scope0_reason, 1)}</p><button class=log>log</button>${_el_resume($scope1_id, "#button/3")}`);
 			_script($scope1_id, "__tests__/tags/wrap.marko_1");
 			$cg__input_label && _patch_init($scope1_id, "__tests__/tags/wrap.marko_1_input_label#0:4/init");
 			_scope($scope1_id, {

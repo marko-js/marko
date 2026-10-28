@@ -13,13 +13,13 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "a", input.a + input.b, void 0, $scope0_reason, 2)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "a", input.a + input.b, 1, $scope0_reason, 2)}</p>`);
 			_patch_join_init($scope1_id, "b0", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && ">e", _filled_guard($scope0_reason, 7) && ">i");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 6), void 0, void 0, void 0, ["b1"], $scope0_reason, 6);
-	_html(`<em>${_text_resume($scope0_id, "b", c, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "b", c, 1, $scope0_reason, 0)}</em>`);
 	_filled_guard($scope0_reason, 4) && $cg__input_show ? _patch_fill($scope0_id, "vb2", input.a) : _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xe", input.a, !(_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 5) || _client_guard($scope0_reason, 7))));
 	$cg__input_a && _patch_write($scope0_id, "xf", input.d, !(_filled_guard($scope0_reason, 5) && $cg__input_a));
 	_filled_guard($scope0_reason, 7) && $cg__input_show ? _patch_fill($scope0_id, "vb3", input.b) : _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xi", input.b, !(_filled_guard($scope0_reason, 7) && $cg__input_a));

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				b: 2
 			}, (k, v) => {
 				const $scope2_id = _scope_id();
-				_html(`<button class=r>${_text_resume($scope2_id, "#text/1", k, void 0, 0, 0)}</button>${_el_resume($scope2_id, "#button/0")}`);
+				_html(`<button class=r>${_text_resume($scope2_id, "#text/1", k, 1, 0, 0)}</button>${_el_resume($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_patch_write($scope2_id, "PatchWrite:v", v, 1);
 				_scope($scope2_id, {

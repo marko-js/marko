@@ -5,7 +5,7 @@ _shells({ b: "b !;D ;<p> </p>" });
 var combo_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_text_resume($scope0_id, "a", input.label + input.qty, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", input.label + input.qty, 1, $scope0_reason, 0)}</p>`);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b2");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.label,

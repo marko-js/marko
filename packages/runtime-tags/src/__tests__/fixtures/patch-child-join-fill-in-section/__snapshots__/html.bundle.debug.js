@@ -16,7 +16,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	const x = input.a + input.c;
-	_html(`<p>${_text_resume($scope0_id, "#text/1", x, void 0, $scope0_reason, 0)}</p><button class=t>t</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<p>${_text_resume($scope0_id, "#text/1", x, 1, $scope0_reason, 0)}</p><button class=t>t</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	$cg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_c", input.c, !(_filled_guard($scope0_reason, 2) && $cg__input_a));
 	_patch_join_init($scope0_id, "__tests__/tags/child.marko_0_input_a#5_input_c#6/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "input_a", _filled_guard($scope0_reason, 2) && "input_c");

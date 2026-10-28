@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<main>");
 	_await($scope0_id, "#text/0", input.first, (first) => {
 		const $scope1_id = _scope_id();
-		_html(`<em>${_text_resume($scope1_id, "#text/0", first, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", first, 1, $scope0_reason, 0)}</em>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "2:4");
 	}, 1, "__tests__/template.marko_1*content", 1);
 	_await($scope0_id, "#text/1", input.second, (second) => {
@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button${_attrs({
 			title: second,
 			onClick: handler
-		}, "#button/0", $scope2_id, "button", void 0, $scope0_reason, 1)}>${_text_resume($scope2_id, "#text/1", second, void 0, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "#button/0")}`);
+		}, "#button/0", $scope2_id, "button", 0, $scope0_reason, 1)}>${_text_resume($scope2_id, "#text/1", second, 1, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "#button/0")}`);
 		_script($scope2_id, "__tests__/template.marko_2_second#3_handler#4");
 		$cg__input_second && _patch_write($scope2_id, "PatchWrite:handler", handler, 1);
 		$cg__input_second && _patch_init($scope2_id, "__tests__/template.marko_2_second#3_handler#4/init");

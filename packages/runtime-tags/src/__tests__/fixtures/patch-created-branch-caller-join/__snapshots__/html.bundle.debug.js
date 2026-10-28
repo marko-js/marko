@@ -12,7 +12,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<em>${_text_resume($scope1_id, "#text/0", input.a + ":" + input.b, void 0, $scope0_reason, 2)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "#text/0", input.a + ":" + input.b, 1, $scope0_reason, 2)}</em>`);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:4_input_b#0:5/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "1:2");
 			return 0;

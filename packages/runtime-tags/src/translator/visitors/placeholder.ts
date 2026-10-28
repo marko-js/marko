@@ -167,7 +167,8 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     if (isHTML) {
       if (markerReason) {
         // `2` (or a guard scaled to 0/2) also asks the runtime to write a
-        // `<!>` between non-empty text and the mergeable text before it.
+        // `<!>` between non-empty text and the mergeable text before it; `1`
+        // reads as no guard where group args follow.
         const guard = getWriteGuard(section, markerReason, true);
         write`${callRuntime(
           node.escape ? "_text_resume" : "_html_resume",
@@ -178,7 +179,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
             ? guard
               ? t.binaryExpression("*", guard, t.numericLiteral(2))
               : t.numericLiteral(2)
-            : guard,
+            : guard || (isPatchText && t.numericLiteral(1)),
           // The patch write is also the output and resume writer, so the value
           // evaluates once; its group args follow.
           ...(isPatchText

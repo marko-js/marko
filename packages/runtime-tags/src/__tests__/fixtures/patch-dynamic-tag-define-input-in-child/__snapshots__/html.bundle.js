@@ -12,13 +12,13 @@ var picker_default = _template("b", (input) => {
 	const Card = { content: _content_resume("b0", ({ record }) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<h4>${_text_resume($scope1_id, "a", record.name, void 0, 4, 0)}</h4>`);
+		_html(`<h4>${_text_resume($scope1_id, "a", record.name, 1, 4, 0)}</h4>`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	const Other = { content: _content_resume("b1", ({ record }) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_html(`<h5>${_text_resume($scope2_id, "a", record.name, void 0, 4, 0)}</h5>`);
+		_html(`<h5>${_text_resume($scope2_id, "a", record.name, 1, 4, 0)}</h5>`);
 		_scope($scope2_id, {});
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.useA ? Card : Other, { record: input.record }, 1, 0, 0, $wg__input_useA__OR__input_record, $scope0_reason, 0);

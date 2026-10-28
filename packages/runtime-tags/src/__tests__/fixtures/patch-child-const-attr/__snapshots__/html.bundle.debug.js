@@ -13,13 +13,13 @@ var badge_default = _template("__tests__/tags/badge/index.marko", (input) => {
 	_if(() => {
 		if (input.label) {
 			const $scope1_id = _scope_id();
-			_html(`<b>${_text_resume($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</b>`);
+			_html(`<b>${_text_resume($scope1_id, "#text/0", input.label, 1, $scope0_reason, 0)}</b>`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/badge/index.marko_1_input_label#0:4/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/badge/index.marko", "2:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/tags/badge/index.marko_1*shell"], $scope0_reason, 0);
-	_html(`<i>${_text_resume($scope0_id, "#text/1", input.note, void 0, $scope0_reason, 1)}</i></div>`);
+	_html(`<i>${_text_resume($scope0_id, "#text/1", input.note, 1, $scope0_reason, 1)}</i></div>`);
 	_scope($scope0_id, {}, "__tests__/tags/badge/index.marko", 0);
 });
 

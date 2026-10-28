@@ -5,7 +5,7 @@ _shells({ b: "b;D ;<span> </span>" });
 var tagged_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</span>`);
 	_scope($scope0_id, {});
 });
 

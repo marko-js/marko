@@ -18,7 +18,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_try($scope0_id, "#text/0", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_text_resume($scope2_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", input.error ? boom(input.error) : "ok", 1, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_error ? "__tests__/tags/panel.marko_2_input_error#0:4/init" : "__tests__/tags/panel.marko_2_input_error#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "4:2"), $cg__input_error && "__tests__/tags/panel.marko_2_input_error#0:4/subscribe");
 	}, void 0, (err) => {
@@ -26,7 +26,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		const $scope1_id = _scope_id();
 		let n = 0;
 		const text = `${input.label}: ${err.message}`;
-		_html(`<button class=inc>${_text_resume($scope1_id, "#text/1", text, void 0, $scope0_reason, 0)} ${_text_resume($scope1_id, "#text/2", n, 2)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button class=inc>${_text_resume($scope1_id, "#text/1", text, 1, $scope0_reason, 0)} ${_text_resume($scope1_id, "#text/2", n, 2)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/panel.marko_1");
 		$cg__input_label && _patch_write($scope1_id, "PatchWrite:err_message", err?.message, 1);
 		$cg__input_label && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_label#0:3_err_message#5/init");

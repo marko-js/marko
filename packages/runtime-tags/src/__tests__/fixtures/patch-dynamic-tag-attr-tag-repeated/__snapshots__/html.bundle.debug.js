@@ -57,13 +57,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.on ? Wrap : Plain, { item: attrTags(attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<em>${_text_resume($scope1_id, "#text/0", input.a, void 0, $scope0_reason, 4)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", input.a, 1, $scope0_reason, 4)}</em>`);
 		_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, _client_guard($scope0_reason, 4) ? "__tests__/template.marko_1_input_a#0:4/init" : "__tests__/template.marko_1_input_a#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "11:6"));
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_a: input.a }] : []) }), { content: _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<b>${_text_resume($scope2_id, "#text/0", input.b, void 0, $scope0_reason, 5)}</b>`);
+		_html(`<b>${_text_resume($scope2_id, "#text/0", input.b, 1, $scope0_reason, 5)}</b>`);
 		_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, _client_guard($scope0_reason, 5) ? "__tests__/template.marko_2_input_b#0:5/init" : "__tests__/template.marko_2_input_b#0:5/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:6"));
 	}, $scope0_id, ($scope2) => $scope0_page ? [{ input_b: input.b }] : []) }) }, 17, 0, 0, $wg__input_on, $scope0_reason, 3);

@@ -43,7 +43,7 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 					_patch_fill($scope3_id, "PatchFill:__tests__/shop.marko_fill4", part);
 					const have = withDrops(bankCount(p, part), drops, part);
 					const live = have + now * proj;
-					_html(`<span${live < 2 ? " class=short" : ""}>${_text_resume($scope3_id, "#text/1", part, void 0, 0, 0)} ${_text_resume($scope3_id, "#text/2", have, 2)}</span>${_el_resume($scope3_id, "#span/0")}`);
+					_html(`<span${live < 2 ? " class=short" : ""}>${_text_resume($scope3_id, "#text/1", part, 1, 0, 0)} ${_text_resume($scope3_id, "#text/2", have, 2)}</span>${_el_resume($scope3_id, "#span/0")}`);
 					_subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
 						part,
 						have,

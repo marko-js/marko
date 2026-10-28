@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_try($scope0_id, "#text/2", () => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<p>${_text_resume($scope3_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope3_id, "#text/0", input.error ? boom(input.error) : "ok", 1, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, $cg__input_error ? "__tests__/template.marko_3_input_error#0:6/init" : "__tests__/template.marko_3_input_error#0:6/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope3_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"), $cg__input_error && "__tests__/template.marko_3_input_error#0:6/subscribe");
 	}, void 0, (err) => {
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		box_default({ content: _content("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<span>${_text_resume($scope2_id, "#text/0", err.message, void 0, 4, 0)} ${_text_resume($scope2_id, "#text/1", count, 2)} ${_text_resume($scope2_id, "#text/2", input.label, 2, $scope0_reason, 0)}</span>`);
+			_html(`<span>${_text_resume($scope2_id, "#text/0", err.message, 1, 4, 0)} ${_text_resume($scope2_id, "#text/1", count, 2)} ${_text_resume($scope2_id, "#text/2", input.label, 2, $scope0_reason, 0)}</span>`);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, _client_guard($scope0_reason, 0) ? "__tests__/template.marko_2_input_label#0:5/init" : "__tests__/template.marko_2_input_label#0:5/subscribe");
 			_subscribe(_unfilled_if() && $wi__err_message && $catch_content__err_message__closures, _subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "9:6"))));
 		}, $scope1_id, 1) });

@@ -13,7 +13,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	let n = input.n;
 	_await($scope0_id, "#text/0", Promise.resolve(n), (x) => {
 		const $scope1_id = _scope_id();
-		_html(`<p>${_text_resume($scope1_id, "#text/0", x, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", x, 1, (_mask_group($scope0_reason, 0) & 1) << 1, 0)}</p>`);
 		_scope($scope1_id, {}, "__tests__/tags/card.marko", "2:2");
 	}, 1, "__tests__/tags/card.marko_1*content", 1);
 });

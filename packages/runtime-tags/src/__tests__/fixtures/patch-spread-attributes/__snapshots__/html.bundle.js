@@ -10,14 +10,14 @@ var template_default = _template("a", (input) => {
 	_html(`<main><a${_attrs({
 		href: "/static",
 		...input.attrs
-	}, "a", $scope0_id, "a", void 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "a")}`);
+	}, "a", $scope0_id, "a", 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "b", input.label, 1, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "a")}`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<img${_attrs({
 				alt: "hero",
 				...input.img
-			}, "a", $scope1_id, "img", void 0, $scope0_reason, 3)}>${_el_resume($scope1_id, "a")}`);
+			}, "a", $scope1_id, "img", 0, $scope0_reason, 3)}>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a0");
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "a1");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) });

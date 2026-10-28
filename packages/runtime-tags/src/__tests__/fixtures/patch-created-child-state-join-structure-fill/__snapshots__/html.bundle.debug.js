@@ -13,7 +13,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	_if(() => {
 		if (input.more) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "#text/0", input.x, void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", input.x, 1, $scope0_reason, 1)}</p>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/child/index.marko_1_input_x#0:5/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/child/index.marko", "2:2");
 			return 0;

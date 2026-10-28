@@ -6,7 +6,7 @@ _shells({ b: "b;D%b%;<li><!><!></li>" });
 var row_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<li>${_text_resume($scope0_id, "a", input.item.name, void 0, $scope0_reason, 0)}${_text_resume($scope0_id, "b", input.item.hot ? " 🔥" : "", 2, $scope0_reason, 1)}</li>`);
+	_html(`<li>${_text_resume($scope0_id, "a", input.item.name, 1, $scope0_reason, 0)}${_text_resume($scope0_id, "b", input.item.hot ? " 🔥" : "", 2, $scope0_reason, 1)}</li>`);
 	_scope($scope0_id, {});
 });
 

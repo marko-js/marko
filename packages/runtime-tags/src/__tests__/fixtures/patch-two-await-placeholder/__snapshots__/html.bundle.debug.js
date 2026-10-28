@@ -21,12 +21,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.a, (a) => {
 			const $scope3_id = _scope_id();
-			_html(`<span>${_text_resume($scope3_id, "#text/0", a, void 0, $scope0_reason, 1)}</span>`);
+			_html(`<span>${_text_resume($scope3_id, "#text/0", a, 1, $scope0_reason, 1)}</span>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "3:4");
 		}, 1, "__tests__/template.marko_3*content", 1);
 		_await($scope1_id, "#text/1", input.b, (b) => {
 			const $scope4_id = _scope_id();
-			_html(`<span>${_text_resume($scope4_id, "#text/0", b, void 0, $scope0_reason, 2)}</span>`);
+			_html(`<span>${_text_resume($scope4_id, "#text/0", b, 1, $scope0_reason, 2)}</span>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "4:4");
 		}, 1, "__tests__/template.marko_4*content", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_a ? "__tests__/template.marko_1_input_a#0:3/init" : "__tests__/template.marko_1_input_a#0:3/subscribe");

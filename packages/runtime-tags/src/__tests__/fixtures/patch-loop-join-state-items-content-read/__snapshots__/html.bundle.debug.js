@@ -14,18 +14,18 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const frag = { content: _content_resume("__tests__/tags/child.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<i>${_text_resume($scope1_id, "#text/0", input.b, void 0, $scope0_reason, 3)}</i>`);
+		_html(`<i>${_text_resume($scope1_id, "#text/0", input.b, 1, $scope0_reason, 3)}</i>`);
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, _client_guard($scope0_reason, 3) ? "__tests__/tags/child.marko_1_input_b#0:4/init" : "__tests__/tags/child.marko_1_input_b#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2"));
 	}, $scope0_id) };
 	_html("<section>");
-	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 4);
+	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 4);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", _mask_group($scope0_reason, 4))}`);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		_filled_guard($scope0_reason, 5) && _patch_write($scope2_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 5));
 		const d = input.b + item;
-		_html(`<p>${_text_resume($scope2_id, "#text/0", d, void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", d, 1, $scope0_reason, 1)}</p>`);
 		(_filled_guard($scope0_reason, 3) && !$cg__input_items || _filled_guard($scope0_reason, 5)) && _patch_join_init($scope2_id, "__tests__/tags/child.marko_2_input_b#0:4_item#2/init", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && ">input_b", _filled_guard($scope0_reason, 5) && "item");
 		_scope($scope2_id, {
 			item: $wi__input_b && item,

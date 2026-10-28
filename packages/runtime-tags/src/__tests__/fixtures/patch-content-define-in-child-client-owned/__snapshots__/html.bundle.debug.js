@@ -19,7 +19,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		_if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "#text/0", input.title, 1, $scope0_reason, 0)}</em>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_title ? "__tests__/tags/wrap.marko_2_input_title#0:3/init" : "__tests__/tags/wrap.marko_2_input_title#0:3/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, { _: ($wi__input_title || $wi__open) && _scope_with_id($scope1_id) }, "__tests__/tags/wrap.marko", "2:4"), $cg__input_title && "__tests__/tags/wrap.marko_2_input_title#0:3/subscribe");
 				return 0;

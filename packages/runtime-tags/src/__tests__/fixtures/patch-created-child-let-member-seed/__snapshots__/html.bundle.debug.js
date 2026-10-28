@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let user = input.user;
 	let count = 0;
-	_html(`<em>${_text_resume($scope0_id, "#text/0", count, void 0, 0, 0, 1)}</em><button>set</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", count, 1, 0, 0, 1)}</em><button>set</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_user_name_length#7");
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:user_name_length", user?.name?.length, 1);
 	_scope($scope0_id, { user_name_length: user?.name?.length }, "__tests__/tags/child.marko", 0, { user_name_length: ["user.name.length", "1:6"] });

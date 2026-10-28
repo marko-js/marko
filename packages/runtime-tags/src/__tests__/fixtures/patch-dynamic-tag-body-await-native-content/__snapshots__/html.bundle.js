@@ -13,7 +13,7 @@ var card_default = _template("b", (input) => {
 	_await($scope0_id, "a", input.p, (x) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
-		_attr_content("a", $scope1_id, input.content, 0, void 0, $scope0_reason, 0);
+		_attr_content("a", $scope1_id, input.content, 0, 1, $scope0_reason, 0);
 		_html(`</div>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_content ? "b0" : "b1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, {}), $cg__input_content && "b1");
@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 			_dynamic_tag($scope1_id, "a", input.on ? keeper_default : "div", {}, 2, _content_resume("a0", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
-				_html(`<em>${_text_resume($scope2_id, "a", input.note, void 0, $scope0_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "a", input.note, 1, $scope0_reason, 2)}</em>`);
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, _client_guard($scope0_reason, 2) ? "a1" : "a2");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: $wi__input_on__OR__input_note && _scope_with_id($scope1_id) }));
 			}, $scope1_id, ($scope) => $scope1_page ? [{ f: input.note }, { _: $scope($scope0_id) }] : []), 0, $wg__input_on, $scope0_reason, 1);

@@ -17,7 +17,7 @@ var child_default = _template("b", (input) => {
 			_filled_guard($scope0_reason, 3) ? _patch_fill($scope1_id, "vb0", x) : _patch_init($scope1_id, "b1");
 			const y = input.b + "?";
 			_filled_guard($scope0_reason, 4) ? _patch_fill($scope1_id, "vb2", y) : _patch_init($scope1_id, "b3");
-			_html(`<p>${_text_resume($scope1_id, "a", x + y + m)}</p><em>${_text_resume($scope1_id, "b", input.a + input.b, void 0, $scope0_reason, 1)}</em><button class=m>m</button>${_el_resume($scope1_id, "c")}`);
+			_html(`<p>${_text_resume($scope1_id, "a", x + y + m)}</p><em>${_text_resume($scope1_id, "b", input.a + input.b, 1, $scope0_reason, 1)}</em><button class=m>m</button>${_el_resume($scope1_id, "c")}`);
 			_script($scope1_id, "b4");
 			_patch_join_init($scope1_id, "b5", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && ">f", _filled_guard($scope0_reason, 4) && ">g");
 			_patch_fill($scope1_id, "vb6", m, 1);

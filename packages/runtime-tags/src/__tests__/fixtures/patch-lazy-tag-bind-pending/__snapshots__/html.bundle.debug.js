@@ -11,7 +11,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	_html(`<button${_attrs({
 		title: input.title,
 		onClick: handler
-	}, "#button/0", $scope0_id, "button", void 0, $scope0_reason, 0)}>go</button>${_el_resume($scope0_id, "#button/0")}`);
+	}, "#button/0", $scope0_id, "button", 0, $scope0_reason, 0)}>go</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0_input_title#3_handler#4");
 	_scope($scope0_id, { input_title: input.title }, "__tests__/child.marko", 0, {
 		input_title: ["input.title"],

@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_await($scope2_id, "a", input.promise, (value) => {
 					const $scope4_id = _scope_id();
-					_html(`<em>${_text_resume($scope4_id, "a", value, void 0, $scope0_reason, 2)}</em>`);
+					_html(`<em>${_text_resume($scope4_id, "a", value, 1, $scope0_reason, 2)}</em>`);
 					_scope($scope4_id, {});
 				}, 1, "a0");
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_promise ? "a5" : "a6");
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 			}, void 0, (err) => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
-				_html(`<p>${_text_resume($scope3_id, "a", err.message, void 0, 4, 0)}</p>`);
+				_html(`<p>${_text_resume($scope3_id, "a", err.message, 1, 4, 0)}</p>`);
 				_scope($scope3_id, {});
 			}, void 0, "a1", "a3", void 0, 1, 1);
 			$wi__input_show__OR__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) });

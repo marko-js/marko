@@ -9,7 +9,7 @@ _shells({
 var tree_b_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_node_kid = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", input.node.name, void 0, $scope0_reason, 0)}`);
+	_html(`<div>${_text_resume($scope0_id, "a", input.node.name, 1, $scope0_reason, 0)}`);
 	_if(() => {
 		if (input.node.kid) {
 			const $scope1_id = _scope_id();
@@ -36,7 +36,7 @@ _shells({
 var tree_a_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<li>${_text_resume($scope0_id, "a", input.node.name, void 0, $scope0_reason, 0)}`);
+	_html(`<li>${_text_resume($scope0_id, "a", input.node.name, 1, $scope0_reason, 0)}`);
 	_if(() => {
 		if (input.node.kid) {
 			const $scope1_id = _scope_id();

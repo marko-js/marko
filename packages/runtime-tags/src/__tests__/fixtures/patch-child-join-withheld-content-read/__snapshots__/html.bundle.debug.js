@@ -14,17 +14,17 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const frag = { content: _content_resume("__tests__/tags/child.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<i>${_text_resume($scope1_id, "#text/0", input.a, void 0, $scope0_reason, 3)}</i>`);
+		_html(`<i>${_text_resume($scope1_id, "#text/0", input.a, 1, $scope0_reason, 3)}</i>`);
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, $cg__input_a ? "__tests__/tags/child.marko_1_input_a#0:4/init" : "__tests__/tags/child.marko_1_input_a#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2"));
 	}, $scope0_id) };
 	_html("<section>");
-	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 4);
+	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 4);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", _mask_group($scope0_reason, 4))}`);
 	_if(() => {
 		if (input.b) {
 			const $scope2_id = _scope_id();
-			_html(`<p>${_text_resume($scope2_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_text_resume($scope2_id, "#text/0", input.a + input.b, 1, $scope0_reason, 1)}</p>`);
 			_patch_join_init($scope2_id, "__tests__/tags/child.marko_2_input_a#0:4_input_b#0:6/init", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && ">input_a", _filled_guard($scope0_reason, 5) && ">input_b");
 			_scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "3:2");
 			return 0;

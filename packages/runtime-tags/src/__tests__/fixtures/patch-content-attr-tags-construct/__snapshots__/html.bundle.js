@@ -8,7 +8,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section><header>");
 	_dynamic_tag($scope0_id, "a", input.header, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
-	_html(`</header><h2>${_text_resume($scope0_id, "b", input.title, void 0, $scope0_reason, 1)}</h2>`);
+	_html(`</header><h2>${_text_resume($scope0_id, "b", input.title, 1, $scope0_reason, 1)}</h2>`);
 	_dynamic_tag($scope0_id, "c", input.content, {}, 10, 0, 0, _write_guard($scope0_reason, 2), $scope0_reason, 2);
 	_html("</section>");
 	_scope($scope0_id, {});

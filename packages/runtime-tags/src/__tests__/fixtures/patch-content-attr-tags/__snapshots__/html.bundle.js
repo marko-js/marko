@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		header: attrTag({ content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<b>${_text_resume($scope1_id, "a", input.h, void 0, $scope0_reason, 0)}</b>`);
+			_html(`<b>${_text_resume($scope1_id, "a", input.h, 1, $scope0_reason, 0)}</b>`);
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_h__closures, _scope($scope1_id, { _: $wi__input_h && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a0");
 		}, $scope0_id) }),
 		footer: attrTag({ content: _content("a2", () => {

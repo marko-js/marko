@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $scope0_page, void 0, void 0, void 0, ["a0"]);
-	_html(`<main>${_text_resume($scope0_id, "b", input.msg, void 0, $scope0_reason, 0)}</main>`);
+	_html(`<main>${_text_resume($scope0_id, "b", input.msg, 1, $scope0_reason, 0)}</main>`);
 	_if(() => {
 		if (!$global$1.meta.hideFooter) {
 			const $scope2_id = _scope_id();

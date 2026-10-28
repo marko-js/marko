@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 					const $scope3_id = _scope_id();
 					_await($scope3_id, "a", Promise.resolve(input.value), () => {
 						const $scope4_id = _scope_id();
-						_html(`<em>${_text_resume($scope4_id, "a", input.value, void 0, $scope0_reason, 2)}</em>`);
+						_html(`<em>${_text_resume($scope4_id, "a", input.value, 1, $scope0_reason, 2)}</em>`);
 						$cg__input_value && _patch_init($scope4_id, "a0");
 						_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope4_id, { Cf: $wi__input_value && 1 }));
 					}, 1, "a2");

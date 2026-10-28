@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_await($scope1_id, "#text/0", input.p, (v) => {
 			const $scope3_id = _scope_id();
-			_html(`<em>${_text_resume($scope3_id, "#text/0", v, void 0, $scope0_reason, 2)}</em>`);
+			_html(`<em>${_text_resume($scope3_id, "#text/0", v, 1, $scope0_reason, 2)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "3:6");
 		}, 1, "__tests__/template.marko_3*content");
 		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_p#0:6/init");
@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_await($scope2_id, "#text/0", input.q, (w) => {
 			const $scope4_id = _scope_id();
-			_html(`<b>${_text_resume($scope4_id, "#text/0", w, void 0, $scope0_reason, 3)}</b>`);
+			_html(`<b>${_text_resume($scope4_id, "#text/0", w, 1, $scope0_reason, 3)}</b>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "6:6");
 		}, 1, "__tests__/template.marko_4*content");
 		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_q#0:7/init");

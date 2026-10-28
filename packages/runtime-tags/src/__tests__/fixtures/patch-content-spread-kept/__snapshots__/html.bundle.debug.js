@@ -14,13 +14,13 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	const one = { content: _content_resume("__tests__/tags/frag-host.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>${_text_resume($scope1_id, "#text/0", input.mode ? "x" : "y", void 0, $scope0_reason, 0)} ${_text_resume($scope1_id, "#text/1", input.b, 2, $scope0_reason, 1)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", input.mode ? "x" : "y", 1, $scope0_reason, 0)} ${_text_resume($scope1_id, "#text/1", input.b, 2, $scope0_reason, 1)}</em>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_mode ? "__tests__/tags/frag-host.marko_1_input_mode#0:3/init" : "__tests__/tags/frag-host.marko_1_input_mode#0:3/subscribe");
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, _client_guard($scope0_reason, 1) ? "__tests__/tags/frag-host.marko_1_input_b#0:4/init" : "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_mode__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frag-host.marko", "1:2")));
 	}, $scope0_id) };
 	_html("<section");
-	_attrs_content({ content: input.mode ? one : null }, "#section/0", $scope0_id, "section", 0, void 0, void 0, $scope0_reason, 0);
+	_attrs_content({ content: input.mode ? one : null }, "#section/0", $scope0_id, "section", 0, 1, 0, $scope0_reason, 0);
 	_html(`</section>${_el_resume($scope0_id, "#section/0")}`);
 	_script($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#3_one#5");
 	$cg__input_mode && _patch_write($scope0_id, "PatchWrite:one", one, 1);

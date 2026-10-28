@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Panel = { content: _content("__tests__/template.marko_3*content", ({ fmt, label }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $cg__fmt = _client_guard($scope3_reason, 1);
-		_html(`<em>${_text_resume($scope3_id, "#text/0", fmt(label), void 0, $scope3_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope3_id, "#text/0", fmt(label), 1, $scope3_reason, 0)}</em>`);
 		_filled_guard($scope3_reason, 1) && _client_guard($scope3_reason, 2) && _patch_write($scope3_id, "PatchMarkedWrite:fmt", fmt);
 		$cg__fmt && _patch_write($scope3_id, "PatchMarkedWrite:label", label, !(_filled_guard($scope3_reason, 2) && $cg__fmt));
 		_patch_join_init($scope3_id, "__tests__/template.marko_3_fmt#3_label#4/init", $scope3_reason, 0, _filled_guard($scope3_reason, 1) && "fmt", _filled_guard($scope3_reason, 2) && "label");

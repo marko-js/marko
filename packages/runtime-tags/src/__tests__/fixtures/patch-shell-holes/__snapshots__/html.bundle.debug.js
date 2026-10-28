@@ -9,11 +9,11 @@ _shells({
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, 1, $scope0_reason, 1)}</h1>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<a${_attr("href", input.href, $scope1_id, "PatchAttr:#a/0 href", $scope0_reason, 3)}${_attr("hidden", input.hidden, $scope1_id, "PatchAttr:#a/0 hidden", $scope0_reason, 4)}>${_text_resume($scope1_id, "#text/1", input.label, void 0, $scope0_reason, 5)}</a>${_el_resume($scope1_id, "#a/0", _mask_group($scope0_reason, 3) || _mask_group($scope0_reason, 4))}`);
+			_html(`<a${_attr("href", input.href, $scope1_id, "PatchAttr:#a/0 href", $scope0_reason, 3)}${_attr("hidden", input.hidden, $scope1_id, "PatchAttr:#a/0 hidden", $scope0_reason, 4)}>${_text_resume($scope1_id, "#text/1", input.label, 1, $scope0_reason, 5)}</a>${_el_resume($scope1_id, "#a/0", _mask_group($scope0_reason, 3) || _mask_group($scope0_reason, 4))}`);
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_href#0:6/init");
 			_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/template.marko_1_input_hidden#0:7/init");
 			_client_guard($scope0_reason, 5) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:8/init");

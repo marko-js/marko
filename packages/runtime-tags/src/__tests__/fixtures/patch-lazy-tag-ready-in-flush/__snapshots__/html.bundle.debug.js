@@ -7,7 +7,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, 1, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill0", count, 1);
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.a, (a) => {
 			const $scope3_id = _scope_id();
-			_html(`<b>${_text_resume($scope3_id, "#text/0", a, void 0, $scope0_reason, 2)}</b>`);
+			_html(`<b>${_text_resume($scope3_id, "#text/0", a, 1, $scope0_reason, 2)}</b>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "5:4");
 		}, 1, "__tests__/template.marko_3*content", 1);
 		_set_scope_reason(0);
@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_child_end();
 		_await($scope1_id, "#text/3", input.b, (b) => {
 			const $scope4_id = _scope_id();
-			_html(`<em>${_text_resume($scope4_id, "#text/0", b, void 0, $scope0_reason, 3)}</em>`);
+			_html(`<em>${_text_resume($scope4_id, "#text/0", b, 1, $scope0_reason, 3)}</em>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "7:4");
 		}, 1, "__tests__/template.marko_4*content", 1);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_a ? "__tests__/template.marko_1_input_a#0:6/init" : "__tests__/template.marko_1_input_a#0:6/subscribe");

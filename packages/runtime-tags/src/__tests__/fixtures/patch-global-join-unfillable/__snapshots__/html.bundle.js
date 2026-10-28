@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason(), $cg__y = _client_guard($scope2_reason, 0);
 			const b = value + y;
-			_html(`<p>${_text_resume($scope2_id, "a", b + $global$1.suffix, void 0, (2 | _mask_group($scope2_reason, 0)) << 1, 0)}</p>`);
+			_html(`<p>${_text_resume($scope2_id, "a", b + $global$1.suffix, 1, (2 | _mask_group($scope2_reason, 0)) << 1, 0)}</p>`);
 			_fill_global_subscribe("a1", $scope2_id, $cg__y);
 			_patch_write($scope2_id, "wd", y, 1);
 			$cg__y && _patch_init($scope2_id, "a2");

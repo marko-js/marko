@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		let n = 0;
-		_html(`<button class=inc>${_text_resume($scope1_id, "#text/1", input.label, void 0, $scope0_reason, 1)} ${_text_resume($scope1_id, "#text/2", n, 2)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button class=inc>${_text_resume($scope1_id, "#text/1", input.label, 1, $scope0_reason, 1)} ${_text_resume($scope1_id, "#text/2", n, 2)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_label ? "__tests__/template.marko_1_input_label#0:3/init" : "__tests__/template.marko_1_input_label#0:3/subscribe");
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", n, 1);
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Other = { content: _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<i>${_text_resume($scope2_id, "#text/0", input.label, void 0, $scope0_reason, 1)}</i>`);
+		_html(`<i>${_text_resume($scope2_id, "#text/0", input.label, 1, $scope0_reason, 1)}</i>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_label ? "__tests__/template.marko_2_input_label#0:3/init" : "__tests__/template.marko_2_input_label#0:3/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 			_: $wi__input_label__OR__input_which && _scope_with_id($scope0_id),

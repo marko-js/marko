@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/price-card/index.marko": "__tests__/tags/price-card/in
 var price_card_default = _template("__tests__/tags/price-card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)} x${_text_resume($scope0_id, "#text/1", input.qty, 2, $scope0_reason, 1)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)} x${_text_resume($scope0_id, "#text/1", input.qty, 2, $scope0_reason, 1)}</p>`);
 	_scope($scope0_id, {}, "__tests__/tags/price-card/index.marko", 0);
 });
 

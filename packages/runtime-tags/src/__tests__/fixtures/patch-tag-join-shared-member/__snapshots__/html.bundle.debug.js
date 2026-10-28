@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/rows.marko": "__tests__/tags/rows.marko;D lD ;<div> </
 var rows_default = _template("__tests__/tags/rows.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_a__OR__input_c = _client_guard($scope0_reason, 1), $cg__input_a__OR__input_b = _client_guard($scope0_reason, 0), $cg__input_a = _client_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a + input.b + input.c, void 0, $scope0_reason, 4)}</div><div>${_text_resume($scope0_id, "#text/1", input.a + input.d, void 0, $scope0_reason, 2)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a + input.b + input.c, 1, $scope0_reason, 4)}</div><div>${_text_resume($scope0_id, "#text/1", input.a + input.d, 1, $scope0_reason, 2)}</div>`);
 	_client_guard($scope0_reason, 5) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !(_filled_guard($scope0_reason, 6) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 9))));
 	$cg__input_a__OR__input_c && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !(_filled_guard($scope0_reason, 7) && $cg__input_a__OR__input_c));
 	$cg__input_a__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_c", input.c, !(_filled_guard($scope0_reason, 8) && $cg__input_a__OR__input_b));

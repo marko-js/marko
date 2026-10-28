@@ -6,7 +6,7 @@ _shells({ b: "b !b0; bD l ;<button class=dec>-</button><span class=v> </span><bu
 var number_stepper_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<button class=dec>-</button>${_el_resume($scope0_id, "a")}<span class=v>${_text_resume($scope0_id, "b", input.value, void 0, $scope0_reason, 1)}</span><button class=inc>+</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button class=dec>-</button>${_el_resume($scope0_id, "a")}<span class=v>${_text_resume($scope0_id, "b", input.value, 1, $scope0_reason, 1)}</span><button class=inc>+</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {
 		f: input.valueChange,
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		const item = row.item;
 		_patch_fill($scope1_id, "va1", item?.value);
 		let qty = row.qty;
-		_html(`<article><strong>${_text_resume($scope1_id, "a", item.name, void 0, 4, 0)}</strong><form>`);
+		_html(`<article><strong>${_text_resume($scope1_id, "a", item.name, 1, 4, 0)}</strong><form>`);
 		_set_scope_reason(72);
 		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		number_stepper_default({

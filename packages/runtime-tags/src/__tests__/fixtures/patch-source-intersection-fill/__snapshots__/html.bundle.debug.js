@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let qty = 1;
 	const price = input.item.price;
 	const tax = input.item.price * .1;
-	_html(`<p>${_text_resume($scope0_id, "#text/0", price + tax, void 0, $scope0_reason, 0)}</p><p>${_text_resume($scope0_id, "#text/1", price * qty)}</p><button>+</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", price + tax, 1, $scope0_reason, 0)}</p><p>${_text_resume($scope0_id, "#text/1", price * qty)}</p><button>+</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		qty,

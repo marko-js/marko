@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	_write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><div>${_html_resume($scope0_id, "a", input.html, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<main><div>${_html_resume($scope0_id, "a", input.html, 1, $scope0_reason, 0)}</div>`);
 	_if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a0");

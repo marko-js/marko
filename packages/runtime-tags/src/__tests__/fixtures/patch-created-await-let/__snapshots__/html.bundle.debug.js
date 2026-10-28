@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_await($scope1_id, "#text/0", input.promise, (v) => {
 				const $scope2_id = _scope_id();
 				let open = false;
-				_html(`<button>${_text_resume($scope2_id, "#text/1", v, void 0, $scope0_reason, 2)} ${_text_resume($scope2_id, "#text/2", open ? "close" : "open", 2)}</button>${_el_resume($scope2_id, "#button/0")}`);
+				_html(`<button>${_text_resume($scope2_id, "#text/1", v, 1, $scope0_reason, 2)} ${_text_resume($scope2_id, "#text/2", open ? "close" : "open", 2)}</button>${_el_resume($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill1", open, 1);
 				_scope($scope2_id, { open }, "__tests__/template.marko", "2:4", { open: "3:10" });

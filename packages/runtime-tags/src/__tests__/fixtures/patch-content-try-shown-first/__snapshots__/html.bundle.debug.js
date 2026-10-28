@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_try($scope1_id, "#text/0", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<p>${_text_resume($scope2_id, "#text/0", input.id, void 0, $scope0_reason, 2)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "#text/0", input.id, 1, $scope0_reason, 2)}</p>`);
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, _client_guard($scope0_reason, 2) ? "__tests__/template.marko_2_input_id#0:4/init" : "__tests__/template.marko_2_input_id#0:4/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_id__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_id && _scope_with_id($scope1_id) }, "__tests__/template.marko", "2:4"));
 			}, void 0, () => {

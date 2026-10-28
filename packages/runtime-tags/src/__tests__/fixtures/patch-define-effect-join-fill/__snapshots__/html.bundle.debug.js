@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Row = { content: _content("__tests__/template.marko_1*content", ({ a, b }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__a = _server_guard($scope1_reason, 1);
-		_html(`<p>${_text_resume($scope1_id, "#text/0", a + b, void 0, $scope1_reason, 0)}</p><div></div>${_el_resume($scope1_id, "#div/1")}`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", a + b, 1, $scope1_reason, 0)}</p><div></div>${_el_resume($scope1_id, "#div/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1_a#4", 1, _filled_guard($scope1_reason, 1), "a");
 		_scope($scope1_id, {
 			a,

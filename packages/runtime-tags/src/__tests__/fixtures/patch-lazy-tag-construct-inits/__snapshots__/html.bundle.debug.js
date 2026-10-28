@@ -14,7 +14,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	_for_of([1, 2], (i) => {
 		const $scope1_id = _scope_id();
 		_patch_fill($scope1_id, "PatchFill:__tests__/child.marko_fill1", i);
-		_html(`<span>${_text_resume($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope1_id, "#text/1", count + i, 2)}</span>`);
+		_html(`<span>${_text_resume($scope1_id, "#text/0", input.label, 1, $scope0_reason, 0)}:${_text_resume($scope1_id, "#text/1", count + i, 2)}</span>`);
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/child.marko_1_input_label#0:4/init");
 		_scope($scope1_id, {
 			i,
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#main/2", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
-	_html(`</main>${_el_resume($scope0_id, "#main/2", $wg__input_show)}<p>${_text_resume($scope0_id, "#text/3", input.label, void 0, $scope0_reason, 1)}</p>`);
+	_html(`</main>${_el_resume($scope0_id, "#main/2", $wg__input_show)}<p>${_text_resume($scope0_id, "#text/3", input.label, 1, $scope0_reason, 1)}</p>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,

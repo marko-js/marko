@@ -16,7 +16,7 @@ var wrapper_default = _template("b", (input) => {
 	_try($scope0_id, "a", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_text_resume($scope2_id, "a", input.fail ? boom() : "ok", void 0, $scope0_reason, 2)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "a", input.fail ? boom() : "ok", 1, $scope0_reason, 2)}</p>`);
 		_dynamic_tag($scope2_id, "b", input.content, {}, 10, 0, 0, $wg__input_content, $scope0_reason, 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, _client_guard($scope0_reason, 1) ? "b1" : "b2");
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_fail ? "b3" : "b4");

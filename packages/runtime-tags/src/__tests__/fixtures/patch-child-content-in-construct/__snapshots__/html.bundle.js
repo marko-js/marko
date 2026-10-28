@@ -30,7 +30,7 @@ var card_default = _template("b", (input) => {
 	wrap_default({ content: _content("b1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<em>${_text_resume($scope1_id, "a", input.note, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", input.note, 1, $scope0_reason, 0)}</em>`);
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "b0");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: $wi__input_note && _scope_with_id($scope0_id) }));
 	}, $scope0_id, 1) });

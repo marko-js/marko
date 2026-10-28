@@ -20,7 +20,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 		_html(`<input${_attr_input_value($scope1_id, "#input/0", value, valueChange, "PatchControl:2#input/0", $scope1_reason, 0, "PatchWrite:ControlledHandler:#input/0", $scope1_reason, 0)}${_attrs_partial(attrs, {
 			value: 1,
 			valueChange: 1
-		}, "#input/0", $scope1_id, "input", void 0, $scope1_reason, 3)}>${_el_resume($scope1_id, "#input/0")}`);
+		}, "#input/0", $scope1_id, "input", 0, $scope1_reason, 3)}>${_el_resume($scope1_id, "#input/0")}`);
 		_script($scope1_id, "__tests__/tags/field.marko_1_attrs#6");
 		_script($scope1_id, "__tests__/tags/field.marko_1");
 		$cg__valueChange && _patch_write($scope1_id, "PatchMarkedWrite:value", value, !(_filled_guard($scope1_reason, 1) && $cg__valueChange));

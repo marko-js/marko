@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_dynamic_tag($scope2_id, "#text/0", row.card ? card_default : "div", {}, 2, _content_resume("__tests__/template.marko_3*content", () => {
 				const $scope3_id = _scope_id();
 				const $scope3_reason = _scope_reason();
-				_html(`<b>${_text_resume($scope3_id, "#text/0", row.label, void 0, $scope0_reason, 0)} ${_text_resume($scope3_id, "#text/1", v, 2, $scope0_reason, 0)}</b>`);
+				_html(`<b>${_text_resume($scope3_id, "#text/0", row.label, 1, $scope0_reason, 0)} ${_text_resume($scope3_id, "#text/1", v, 2, $scope0_reason, 0)}</b>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, $cg__input_rows ? "__tests__/template.marko_3_row_label#1:5/init" : "__tests__/template.marko_3_row_label#1:5/subscribe");
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, $cg__input_rows ? "__tests__/template.marko_3_v#2:2/init" : "__tests__/template.marko_3_v#2:2/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope3_id, { _: $wi__input_rows && _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8")));

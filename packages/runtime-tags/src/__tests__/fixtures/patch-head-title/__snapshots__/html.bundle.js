@@ -3,6 +3,6 @@ _shells({ a: "a;E b lE ;<html><head><title></title><meta name=description></head
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<html><head><title>${_patch_text_content($scope0_id, "ma", `${_to_text(input.title)} | Shop`, _escape, $scope0_reason, 0)}</title>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<meta name=description${_attr("content", input.description, $scope0_id, "ab$content", $scope0_reason, 1)}>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 1))}${_flush_head()}</head><body><main>${_text_resume($scope0_id, "c", input.body, void 0, $scope0_reason, 2)}</main>`), _trailers("</body></html>");
+	_html(`<html><head><title>${_patch_text_content($scope0_id, "ma", `${_to_text(input.title)} | Shop`, _escape, $scope0_reason, 0)}</title>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<meta name=description${_attr("content", input.description, $scope0_id, "ab$content", $scope0_reason, 1)}>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 1))}${_flush_head()}</head><body><main>${_text_resume($scope0_id, "c", input.body, 1, $scope0_reason, 2)}</main>`), _trailers("</body></html>");
 	_scope($scope0_id, {});
 }, 1);

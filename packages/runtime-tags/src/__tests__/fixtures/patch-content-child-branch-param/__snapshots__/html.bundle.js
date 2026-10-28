@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 		content: _content_resume("a0", ({ item }) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_text_resume($scope1_id, "a", item.name.toUpperCase(), void 0, 4, 0)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "a", item.name.toUpperCase(), 1, 4, 0)}</em>`);
 			_scope($scope1_id, {});
 		}, $scope0_id)
 	});

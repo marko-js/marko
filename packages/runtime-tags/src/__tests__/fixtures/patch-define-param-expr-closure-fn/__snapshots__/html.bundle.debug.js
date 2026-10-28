@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const D = { content: _content("__tests__/template.marko_1*content", ({ on }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<span>${_text_resume($scope1_id, "#text/0", on && f(), void 0, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</span>`);
+		_html(`<span>${_text_resume($scope1_id, "#text/0", on && f(), 1, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</span>`);
 		$cg__input_a && _patch_write($scope1_id, "PatchMarkedWrite:on", on, !(_filled_guard($scope1_reason, 0) && $cg__input_a));
 		_patch_join_init($scope1_id, "__tests__/template.marko_1_f#0:6_on#3/init", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, _filled_guard($scope0_reason, 0) && ">f", _filled_guard($scope1_reason, 0) && "on");
 		_subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_a && $f2__closures, _scope($scope1_id, {

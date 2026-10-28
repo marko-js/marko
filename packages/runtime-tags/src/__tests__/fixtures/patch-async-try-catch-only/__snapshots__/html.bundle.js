@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_try($scope0_id, "a", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<em>${_text_resume($scope1_id, "a", input.message, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", input.message, 1, $scope0_reason, 0)}</em>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_message ? "a0" : "a1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_message__closures, _scope($scope1_id, { _: $wi__input_message && _scope_with_id($scope0_id) }), $cg__input_message && "a1");
 	}, void 0, () => {

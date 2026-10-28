@@ -7,7 +7,7 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const get = input.flag ? input.a : null;
-	_html(`<p>${_text_resume($scope0_id, "#text/0", get && get(), void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", get && get(), 1, $scope0_reason, 0)}</p>`);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/label-view.marko_0_input_flag#3_input_a#4/init");
 	_scope($scope0_id, {
 		input_flag: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.flag,

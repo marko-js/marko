@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		}));
 	}, $scope0_id) };
 	_html("<div");
-	_attrs_content({ content: input.which ? one : two }, "a", $scope0_id, "div", 0, void 0, void 0, $scope0_reason, 1);
+	_attrs_content({ content: input.which ? one : two }, "a", $scope0_id, "div", 0, 1, 0, $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a6");
 	_scope($scope0_id, {

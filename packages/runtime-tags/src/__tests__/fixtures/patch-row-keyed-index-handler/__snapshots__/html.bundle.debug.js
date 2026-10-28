@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchWrite:item_v", item?.v, !$sg__input_items);
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchWrite:i", i, !$sg__input_items);
-		_html(`<button class=r>${_text_resume($scope1_id, "#text/1", item.id, void 0, $scope0_reason, 0)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button class=r>${_text_resume($scope1_id, "#text/1", item.id, 1, $scope0_reason, 0)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {
 			item_v: item?.v,

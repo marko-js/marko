@@ -10,7 +10,7 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 	const highlight = _bind_resume(function(text) {
 		return text.replace(input.cursor.test, (m) => `<b>${input.cursor.content((s) => s)}</b>`);
 	}, "__tests__/tags/code-block.marko_0/highlight", $scope0_id);
-	_html(`<div>${_html_resume($scope0_id, "#text/0", highlight(input.text), void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div>${_html_resume($scope0_id, "#text/0", highlight(input.text), 1, $scope0_reason, 0)}</div>`);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/code-block.marko_0_input_text#4_highlight#5/init");
 	_scope($scope0_id, {
 		input_cursor: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.cursor,

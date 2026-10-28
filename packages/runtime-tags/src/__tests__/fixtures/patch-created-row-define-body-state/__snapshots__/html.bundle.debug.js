@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_await($scope3_id, "#text/0", value, (v) => {
 				const $scope4_id = _scope_id();
-				_html(`<p>${_text_resume($scope4_id, "#text/0", id, void 0, $scope2_reason, 0)}:${_text_resume($scope4_id, "#text/1", v, 2, $scope2_reason, 1)}:${_text_resume($scope4_id, "#text/2", count, 2)}</p>`);
+				_html(`<p>${_text_resume($scope4_id, "#text/0", id, 1, $scope2_reason, 0)}:${_text_resume($scope4_id, "#text/1", v, 2, $scope2_reason, 1)}:${_text_resume($scope4_id, "#text/2", count, 2)}</p>`);
 				_unfilled_if($scope2_reason, 0) && _patch_init($scope4_id, _client_guard($scope2_reason, 0) ? "__tests__/template.marko_4_id#2:3/init" : "__tests__/template.marko_4_id#2:3/subscribe");
 				_subscribe(_unfilled_if($scope2_reason, 0) && $Info_content__id__closures, _subscribe($count__closures, _scope($scope4_id, {}, "__tests__/template.marko", "4:6"), "__tests__/template.marko_4_count#0:6/subscribe"), "__tests__/template.marko_4_id#2:3/subscribe");
 			}, 1, "__tests__/template.marko_4*content");
@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 2) << 3);
-		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, void 0, $scope0_id);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, 0, $scope0_id);
 		Info.content({
 			id: item,
 			value: input.value

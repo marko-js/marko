@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	}, "a0"), "n2a", $scope0_reason, 1, "wEa", $scope0_reason, 1)}${_attrs_partial(input.attrs, {
 		value: 1,
 		valueChange: 1
-	}, "a", $scope0_id, "input", void 0, $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}`);
+	}, "a", $scope0_id, "input", 0, $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {});

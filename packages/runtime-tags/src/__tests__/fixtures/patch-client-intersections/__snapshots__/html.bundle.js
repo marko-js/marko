@@ -42,7 +42,7 @@ var site_footer_default = _template("d", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_year = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let frozen = 0;
-	_html(`<footer>${_text_resume($scope0_id, "a", input.year + frozen, void 0, $scope0_reason, 0)}</footer>`);
+	_html(`<footer>${_text_resume($scope0_id, "a", input.year + frozen, 1, $scope0_reason, 0)}</footer>`);
 	$cg__input_year && _patch_write($scope0_id, "we", frozen, 1);
 	$cg__input_year && _patch_init($scope0_id, "d0");
 	_scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && frozen });
@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><p${_attr("title", $global$1.locale, $scope0_id, "ab$title")}>${_text_resume($scope0_id, "c", $global$1.brand, void 0, 4, 0)}</p>${_el_resume($scope0_id, "b")}`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h1><p${_attr("title", $global$1.locale, $scope0_id, "ab$title")}>${_text_resume($scope0_id, "c", $global$1.brand, 1, 4, 0)}</p>${_el_resume($scope0_id, "b")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "d", 0);
 	price_card_default({ label: input.label });

@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Label = { content: _content("__tests__/template.marko_1*content", ({ n }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<p>${_text_resume($scope1_id, "#text/0", n + input.suffix, void 0, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", n + input.suffix, 1, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
 		_subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			n: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && n,
 			_: ($wi__input_suffix || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)

@@ -6,7 +6,7 @@ _shells({ b: "b; D ;<span> </span>" });
 var badge_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span${_attr_class(["badge", input.tone], $scope0_id, "aa$class", $scope0_reason, 0)}>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</span>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
+	_html(`<span${_attr_class(["badge", input.tone], $scope0_id, "aa$class", $scope0_reason, 0)}>${_text_resume($scope0_id, "b", input.label, 1, $scope0_reason, 1)}</span>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
 	_scope($scope0_id, {});
 });
 
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_for_of(input.items, (p) => {
 		const $scope1_id = _scope_id();
-		_html(`<p>${_text_resume($scope1_id, "a", p.name, void 0, $scope0_reason, 1)} `);
+		_html(`<p>${_text_resume($scope1_id, "a", p.name, 1, $scope0_reason, 1)} `);
 		_set_scope_reason(0);
 		const $childScope5 = _peek_scope_id($scope1_id, "b", 4);
 		badge_default({

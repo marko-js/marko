@@ -5,7 +5,7 @@ _shells({ c: "c;D ;<section> </section>" });
 var panel_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section>${_text_resume($scope0_id, "a", input.data.title, void 0, $scope0_reason, 0)}</section>`);
+	_html(`<section>${_text_resume($scope0_id, "a", input.data.title, 1, $scope0_reason, 0)}</section>`);
 	_scope($scope0_id, {});
 });
 
@@ -16,7 +16,7 @@ _shells({ b: "b;D ;<div> </div>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", input.user.name, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", input.user.name, 1, $scope0_reason, 0)}</div>`);
 	_scope($scope0_id, {});
 });
 

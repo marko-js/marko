@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 				content: _content_resume("a1", () => {
 					_scope_reason();
 					const $scope2_id = _scope_id();
-					_html(`<em>${_text_resume($scope2_id, "a", input.label, void 0, $scope0_reason, 4)}</em>`);
+					_html(`<em>${_text_resume($scope2_id, "a", input.label, 1, $scope0_reason, 4)}</em>`);
 					_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, _client_guard($scope0_reason, 4) ? "a5" : "a6");
 					_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_open__OR__input_label && _scope_with_id($scope1_id) }));
 				}, $scope1_id)

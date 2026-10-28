@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	let show = false;
 	_html("<main><div>");
 	_if(() => {}, $scope0_id, "a", 1, 1, 1, "</div>", 1);
-	_html(`<span>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</span><button>+</button>${_el_resume($scope0_id, "c")}</main>`);
+	_html(`<span>${_text_resume($scope0_id, "b", input.label, 1, $scope0_reason, 1)}</span><button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		f: input.title,

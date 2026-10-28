@@ -19,7 +19,7 @@ var row_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let clicks = 0;
-	_html(`<p>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}<button>${_text_resume($scope0_id, "c", clicks)}</button>${_el_resume($scope0_id, "b")}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}<button>${_text_resume($scope0_id, "c", clicks)}</button>${_el_resume($scope0_id, "b")}</p>`);
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb1", clicks, 1);
 	_scope($scope0_id, { g: clicks });

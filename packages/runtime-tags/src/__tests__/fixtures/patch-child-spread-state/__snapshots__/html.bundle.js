@@ -3,7 +3,7 @@ _shells({ b: "b;D ;<b class=badge> </b>" });
 var badge_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b class=badge>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<b class=badge>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</b>`);
 	_scope($scope0_id, {});
 });
 
@@ -16,7 +16,7 @@ var card_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<div class=card><h2>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2><p>${_text_resume($scope0_id, "b", input.note, void 0, $scope0_reason, 1)}</p><button class=t>${_text_resume($scope0_id, "d", "show")}</button>${_el_resume($scope0_id, "c")}</div>`);
+	_html(`<div class=card><h2>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h2><p>${_text_resume($scope0_id, "b", input.note, 1, $scope0_reason, 1)}</p><button class=t>${_text_resume($scope0_id, "d", "show")}</button>${_el_resume($scope0_id, "c")}</div>`);
 	_script($scope0_id, "c0");
 	_patch_fill($scope0_id, "vc1", open, 1);
 	_scope($scope0_id, { i: open });

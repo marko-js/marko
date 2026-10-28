@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		card_default({ content: _content("a3", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<i>${_text_resume($scope2_id, "a", $global$1.brand, void 0, 4, 0)}:${_text_resume($scope2_id, "b", input.prefix, 2, $scope0_reason, 2)}:${_text_resume($scope2_id, "c", item, 2, $scope0_reason, 1)}</i>`);
+			_html(`<i>${_text_resume($scope2_id, "a", $global$1.brand, 1, 4, 0)}:${_text_resume($scope2_id, "b", input.prefix, 2, $scope0_reason, 2)}:${_text_resume($scope2_id, "c", item, 2, $scope0_reason, 1)}</i>`);
 			_fill_global_subscribe("a0", $scope2_id);
 			_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a1");
 			$cg__input_items && _patch_init($scope2_id, "a2");

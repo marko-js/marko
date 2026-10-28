@@ -7,7 +7,7 @@ var gm_badge_default = _template("__tests__/tags/gm-badge/index.marko", (input) 
 	const $scope0_reason = _scope_reason(), $cg__input_value = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<p>${_text_resume($scope0_id, "#text/0", input.value + $global$1.flag, void 0, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.value + $global$1.flag, 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
 	_fill_global_subscribe("__tests__/tags/gm-badge/index.marko_0_input_value#3_$global_flag#5", $scope0_id, $cg__input_value);
 	$cg__input_value && _patch_write($scope0_id, "PatchWrite:input_value", input.value, 1);
 	_scope($scope0_id, { input_value: _unfilled_if($scope0_reason, 0) && input.value }, "__tests__/tags/gm-badge/index.marko", 0, { input_value: ["input.value"] });

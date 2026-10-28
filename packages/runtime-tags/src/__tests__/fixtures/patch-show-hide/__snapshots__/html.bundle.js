@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	const $show = input.on;
 	_show_start($show, 0);
-	_html(`<p>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "b", input.label, 1, $scope0_reason, 1)}</p>`);
 	_show_end($scope0_id, "c", $show, 1, 0, 0, 1, 2, 0, void 0, $scope0_reason, 0);
 	_html(`<button>${_text_resume($scope0_id, "e", count)}</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a0");

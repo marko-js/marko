@@ -17,7 +17,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 	_try($scope0_id, "#text/0", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_text_resume($scope2_id, "#text/0", input.fail ? boom() : "ok", void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", input.fail ? boom() : "ok", 1, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_fail ? "__tests__/tags/wrapper.marko_2_input_fail#0:4/init" : "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }, "__tests__/tags/wrapper.marko", "4:2"), $cg__input_fail && "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe");
 	}, void 0, () => {
@@ -54,7 +54,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		fallback: attrTag({ content: _content_resume("__tests__/tags/panel.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_text_resume($scope1_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "#text/0", input.a + input.b, 1, $scope0_reason, 0)}</em>`);
 			(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:4/subscribe");
 			(_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_b#0:5/subscribe");
 			_patch_join_init($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:4_input_b#0:5/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_a", _filled_guard($scope0_reason, 3) && ">input_b");

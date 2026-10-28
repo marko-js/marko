@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/dump/index.marko": "__tests__/tags/dump/index.marko;D 
 var dump_default = _template("__tests__/tags/dump/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_text_resume($scope0_id, "#text/0", JSON.stringify(input), void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", JSON.stringify(input), 1, $scope0_reason, 0)}</p>`);
 	_script($scope0_id, "__tests__/tags/dump/index.marko_0_input_label#3", 1, _filled_guard($scope0_reason, 1), "input_label");
 	_scope($scope0_id, { input_label: input.label }, "__tests__/tags/dump/index.marko", 0, { input_label: ["input.label"] }) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1));
 });

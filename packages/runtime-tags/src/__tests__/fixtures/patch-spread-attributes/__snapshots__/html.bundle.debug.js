@@ -13,14 +13,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<main><a${_attrs({
 		href: "/static",
 		...input.attrs
-	}, "#a/0", $scope0_id, "a", void 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "#a/0")}`);
+	}, "#a/0", $scope0_id, "a", 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", input.label, 1, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "#a/0")}`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<img${_attrs({
 				alt: "hero",
 				...input.img
-			}, "#img/0", $scope1_id, "img", void 0, $scope0_reason, 3)}>${_el_resume($scope1_id, "#img/0")}`);
+			}, "#img/0", $scope1_id, "img", 0, $scope0_reason, 3)}>${_el_resume($scope1_id, "#img/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1_input_img#0:10");
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_img#0:10/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4", { "EventAttributes:#img/0": ["...input.img", "5:24"] });

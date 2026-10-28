@@ -4,7 +4,7 @@ var store_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let last = 0;
-	_html(`<p>${_text_resume($scope0_id, "a", last, void 0, 0, 0, 1)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", last, 1, 0, 0, 1)}</p>`);
 	const $return = _resume((next) => {
 		last = next;
 	}, "c0", $scope0_id);

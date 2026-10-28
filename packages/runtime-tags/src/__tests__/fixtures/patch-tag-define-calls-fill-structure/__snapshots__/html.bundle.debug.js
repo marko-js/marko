@@ -24,7 +24,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 		_if(() => {
 			if (on) {
 				const $scope2_id = _scope_id();
-				_html(`<span>${_text_resume($scope2_id, "#text/0", f(), void 0, $scope0_reason, 1)}</span>`);
+				_html(`<span>${_text_resume($scope2_id, "#text/0", f(), 1, $scope0_reason, 1)}</span>`);
 				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_a ? "__tests__/tags/shape.marko_2_f#0:10/init" : "__tests__/tags/shape.marko_2_f#0:10/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $f2__closures, _scope($scope2_id, { _: ($wi__input_a || $wi__on) && _scope_with_id($scope1_id) }, "__tests__/tags/shape.marko", "2:52"), $cg__input_a && "__tests__/tags/shape.marko_2_f#0:10/subscribe");
 				return 0;

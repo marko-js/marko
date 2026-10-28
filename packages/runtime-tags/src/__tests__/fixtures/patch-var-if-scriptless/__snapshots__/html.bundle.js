@@ -5,7 +5,7 @@ _shells({ b: "b;D ;<span> </span>" });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</span>`);
 	const $return = input.label + "!";
 	_scope($scope0_id, {});
 	return $return;
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 			let x = child_default({ label: input.label });
 			$cg__input_label && _var($scope1_id, "b", $childScope, "a0");
 			_patch_child_end();
-			_html(`<p>${_text_resume($scope1_id, "c", x, void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "c", x, 1, $scope0_reason, 1)}</p>`);
 			$cg__input_label && _patch_init($scope1_id, "a1");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),

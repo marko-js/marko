@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					_html(`<b>${_text_resume($scope2_id, "a", label, void 0, 4, 0)}!</b>`);
+					_html(`<b>${_text_resume($scope2_id, "a", label, 1, 4, 0)}!</b>`);
 					_scope($scope2_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) });
 					return 0;
 				}

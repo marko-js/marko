@@ -19,14 +19,14 @@ var frag_host_default = _template("b", (input) => {
 	const two = { content: _content_resume("b1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<strong>${_text_resume($scope1_id, "a", input.b, void 0, $scope0_reason, 0)}</strong>`);
+		_html(`<strong>${_text_resume($scope1_id, "a", input.b, 1, $scope0_reason, 0)}</strong>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "b2" : "b3");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	_html("<section");
-	_attrs_content({ content: input.mode ? one : two }, "a", $scope0_id, "section", 0, void 0, void 0, $scope0_reason, 1);
+	_attrs_content({ content: input.mode ? one : two }, "a", $scope0_id, "section", 0, 1, 0, $scope0_reason, 1);
 	_html(`</section>${_el_resume($scope0_id, "a")}<div id=partial`);
-	_attrs_partial_content({ content: input.mode ? two : one }, { id: 1 }, "b", $scope0_id, "div", 1, void 0, void 0, $scope0_reason, 1);
+	_attrs_partial_content({ content: input.mode ? two : one }, { id: 1 }, "b", $scope0_id, "div", 1, 1, 0, $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b4");
 	$cg__input_mode && _patch_write($scope0_id, "wg", one, 1);

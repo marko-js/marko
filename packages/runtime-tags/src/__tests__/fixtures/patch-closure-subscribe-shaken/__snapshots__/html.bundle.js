@@ -43,7 +43,7 @@ var shop_default = _template("a", (input) => {
 					_patch_fill($scope3_id, "va0", part);
 					const have = withDrops(bankCount(p, part), drops, part);
 					const live = have + now * proj;
-					_html(`<span${live < 2 ? " class=short" : ""}>${_text_resume($scope3_id, "b", part, void 0, 0, 0)} ${_text_resume($scope3_id, "c", have, 2)}</span>${_el_resume($scope3_id, "a")}`);
+					_html(`<span${live < 2 ? " class=short" : ""}>${_text_resume($scope3_id, "b", part, 1, 0, 0)} ${_text_resume($scope3_id, "c", have, 2)}</span>${_el_resume($scope3_id, "a")}`);
 					_subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
 						e: part,
 						g: have,

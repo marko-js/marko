@@ -14,7 +14,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_await($scope0_id, "#text/0", input.p, (x) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
-		_attr_content("#div/0", $scope1_id, input.content, 0, void 0, $scope0_reason, 0);
+		_attr_content("#div/0", $scope1_id, input.content, 0, 1, $scope0_reason, 0);
 		_html(`</div>${_el_resume($scope1_id, "#div/0", _mask_group($scope0_reason, 0))}`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_content ? "__tests__/tags/card.marko_1_input_content#0:4/init" : "__tests__/tags/card.marko_1_input_content#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, {}, "__tests__/tags/card.marko", "1:2"), $cg__input_content && "__tests__/tags/card.marko_1_input_content#0:4/subscribe");
@@ -75,7 +75,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_dynamic_tag($scope1_id, "#text/0", input.on ? keeper_default : "div", {}, 2, _content_resume("__tests__/template.marko_2*content", () => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
-				_html(`<em>${_text_resume($scope2_id, "#text/0", input.note, void 0, $scope0_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "#text/0", input.note, 1, $scope0_reason, 2)}</em>`);
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, _client_guard($scope0_reason, 2) ? "__tests__/template.marko_2_input_note#0:5/init" : "__tests__/template.marko_2_input_note#0:5/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: $wi__input_on__OR__input_note && _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:8"));
 			}, $scope1_id, ($scope) => $scope1_page ? [{ input_note: input.note }, { _: $scope($scope0_id) }] : []), 0, $wg__input_on, $scope0_reason, 1);

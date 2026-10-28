@@ -18,14 +18,14 @@ var child_default = _template("b", (input) => {
 			const frag = { content: _content_resume("b0", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
-				_html(`<em>${_text_resume($scope2_id, "a", input.a + c, void 0, $scope0_reason, 0)}</em><i>${_text_resume($scope2_id, "b", c, void 0, $scope0_reason, 5)}</i>`);
+				_html(`<em>${_text_resume($scope2_id, "a", input.a + c, 1, $scope0_reason, 0)}</em><i>${_text_resume($scope2_id, "b", c, 1, $scope0_reason, 5)}</i>`);
 				(_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "b1");
 				(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, $cg__input_b ? "b2" : "b3");
 				_patch_join_init($scope2_id, "b4", $scope0_reason, 0, _filled_guard($scope0_reason, 6) && ">>f", _filled_guard($scope0_reason, 5) && ">b");
 				_subscribe(_unfilled_if($scope0_reason, 5) && $if_content__c__closures, _subscribe(_unfilled_if($scope0_reason, 6) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_b__OR__input_a__OR__input_mode && _scope_with_id($scope1_id) })));
 			}, $scope1_id) };
 			_html("<section>");
-			_attr_content("a", $scope1_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 7);
+			_attr_content("a", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 7);
 			_html(`</section>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 7))}`);
 			_filled_guard($scope0_reason, 5) ? _content_withheld("b0", $scope1_id) || $cg__input_mode ? _patch_fill($scope1_id, "vb6", c) : ($cg__input_a || _content_withheld("b0", $scope1_id) || $cg__input_mode) && _patch_fill($scope1_id, "vb5", c) : _patch_init($scope1_id, "b7");
 			$cg__input_mode && _patch_write($scope1_id, "wd", frag?.content, 1);

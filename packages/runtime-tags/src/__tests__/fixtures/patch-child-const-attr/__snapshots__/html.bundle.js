@@ -13,13 +13,13 @@ var badge_default = _template("b", (input) => {
 	_if(() => {
 		if (input.label) {
 			const $scope1_id = _scope_id();
-			_html(`<b>${_text_resume($scope1_id, "a", input.label, void 0, $scope0_reason, 0)}</b>`);
+			_html(`<b>${_text_resume($scope1_id, "a", input.label, 1, $scope0_reason, 0)}</b>`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "b0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b1"], $scope0_reason, 0);
-	_html(`<i>${_text_resume($scope0_id, "b", input.note, void 0, $scope0_reason, 1)}</i></div>`);
+	_html(`<i>${_text_resume($scope0_id, "b", input.note, 1, $scope0_reason, 1)}</i></div>`);
 	_scope($scope0_id, {});
 });
 

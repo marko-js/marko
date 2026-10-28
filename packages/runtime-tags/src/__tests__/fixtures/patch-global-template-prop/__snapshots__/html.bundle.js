@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div>");
 	_dynamic_tag($scope0_id, "a", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
-	_html(`<b>${_text_resume($scope0_id, "b", input.n, void 0, $scope0_reason, 1)}</b></div>`);
+	_html(`<b>${_text_resume($scope0_id, "b", input.n, 1, $scope0_reason, 1)}</b></div>`);
 	_scope($scope0_id, {});
 });
 

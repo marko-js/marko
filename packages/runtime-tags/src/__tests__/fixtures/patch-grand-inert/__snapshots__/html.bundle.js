@@ -8,7 +8,7 @@ _shells({ b: "b;D ;<p> </p>" });
 var stamp_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_text_resume($scope0_id, "a", stamp(), void 0, 0, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", stamp(), 1, 0, 0)}</p>`);
 	_scope($scope0_id, {});
 });
 

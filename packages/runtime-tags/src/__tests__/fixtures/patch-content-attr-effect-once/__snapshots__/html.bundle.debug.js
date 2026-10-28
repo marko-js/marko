@@ -13,13 +13,13 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 	const extra = { content: _content_resume("__tests__/tags/host.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>${_text_resume($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", input.label, 1, $scope0_reason, 0)}</em>`);
 		_script($scope1_id, "__tests__/tags/host.marko_1");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "__tests__/tags/host.marko_1_input_label#0:3/init" : "__tests__/tags/host.marko_1_input_label#0:3/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/host.marko", "1:2"));
 	}, $scope0_id) };
 	_html("<div>");
-	_attr_content("#div/0", $scope0_id, extra, 0, void 0, 0, 0);
+	_attr_content("#div/0", $scope0_id, extra, 0, 1, 0, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", 0)}`);
 	_script($scope0_id, "__tests__/tags/host.marko_0_extra#4");
 	_patch_write($scope0_id, "PatchWrite:extra", extra, 1);

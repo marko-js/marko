@@ -7,7 +7,7 @@ var pick_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_a__OR__input_b = _client_guard($scope0_reason, 2), $cg__input_on__OR__input_b = _client_guard($scope0_reason, 1), $cg__input_on__OR__input_a = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const c = input.on ? input.a : input.b;
-	_html(`<div>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 7)}`);
+	_html(`<div>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 7)}`);
 	_dynamic_tag($scope0_id, "b", c, {}, 2, 0, 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
 	_html("</div>");
 	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "b3");

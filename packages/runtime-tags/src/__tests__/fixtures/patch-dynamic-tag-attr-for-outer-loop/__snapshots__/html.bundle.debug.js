@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$item = attrTags($item, { content: _content_resume("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`${_text_resume($scope2_id, "#text/0", a, void 0, $scope0_reason, 5)}:${_text_resume($scope2_id, "#text/1", b, 2, 4, 0)}:${_text_resume($scope2_id, "#text/2", input.note, 2, $scope0_reason, 8)}`);
+				_html(`${_text_resume($scope2_id, "#text/0", a, 1, $scope0_reason, 5)}:${_text_resume($scope2_id, "#text/1", b, 2, 4, 0)}:${_text_resume($scope2_id, "#text/2", input.note, 2, $scope0_reason, 8)}`);
 				_unfilled_if($scope0_reason, 8) && _patch_init($scope2_id, _client_guard($scope0_reason, 8) ? "__tests__/template.marko_2_input_note#0:8/init" : "__tests__/template.marko_2_input_note#0:8/subscribe");
 				_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, $cg__input_as ? "__tests__/template.marko_2_a#1:3/init" : "__tests__/template.marko_2_a#1:3/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 5) && $for_content__a__closures, _subscribe(_unfilled_if($scope0_reason, 8) && $input_note__closures, _scope($scope2_id, { _: $wi__input_as__OR__input_on__OR__input_bs__OR__input_note && _scope_with_id($scope1_id) }, "__tests__/template.marko", "8:8")));

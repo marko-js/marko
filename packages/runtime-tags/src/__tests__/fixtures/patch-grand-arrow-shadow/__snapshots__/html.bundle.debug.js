@@ -7,7 +7,7 @@ var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const label = () => "t:" + input.title;
-	_html(`<p>${_text_resume($scope0_id, "#text/0", label(), void 0, $scope0_reason, 0)}</p><button>run</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", label(), 1, $scope0_reason, 0)}</p><button>run</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/widget/index.marko_0");
 	_scope($scope0_id, { input_title: input.title }, "__tests__/tags/widget/index.marko", 0, { input_title: ["input.title"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
 });

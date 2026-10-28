@@ -8,7 +8,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let open = true;
 	const g = open ? input.fn : _resume(() => "-", "__tests__/tags/card.marko_0/g");
-	_html(`<p>${_text_resume($scope0_id, "#text/0", g(), void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", g(), 1, $scope0_reason, 0)}</p>`);
 	_script($scope0_id, "__tests__/tags/card.marko_0_g#6", 1, _filled_guard($scope0_reason, 0), "g");
 	$cg__input_fn && _patch_write($scope0_id, "PatchWrite:open", open, 1);
 	$cg__input_fn && _patch_init($scope0_id, "__tests__/tags/card.marko_0_input_fn#3_open#4/init");
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		return "f:" + input.label + n;
 	}, "__tests__/template.marko_0/fn", $scope0_id) });
 	_patch_child_end();
-	_html(`<button>more</button>${_el_resume($scope0_id, "#button/1")}<span>${_text_resume($scope0_id, "#text/2", input.x, void 0, $scope0_reason, 1)}</span>`);
+	_html(`<button>more</button>${_el_resume($scope0_id, "#button/1")}<span>${_text_resume($scope0_id, "#text/2", input.x, 1, $scope0_reason, 1)}</span>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_label: input.label,

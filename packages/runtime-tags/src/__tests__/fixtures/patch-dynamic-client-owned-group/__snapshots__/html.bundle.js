@@ -4,7 +4,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<em>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "b", $global$1.brand, 2, 4, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)} ${_text_resume($scope0_id, "b", $global$1.brand, 2, 4, 0)}</em>`);
 	_fill_global_subscribe("b0", $scope0_id);
 	_scope($scope0_id, {});
 });

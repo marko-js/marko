@@ -5,7 +5,7 @@ var counter_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button class=inc>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "c", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=inc>${_text_resume($scope0_id, "b", input.label, 1, $scope0_reason, 0)} ${_text_resume($scope0_id, "c", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	const $return = n;
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb1", n, 1);
@@ -18,7 +18,7 @@ _shells({ c: "c;D ;<i> </i>" });
 var other_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<i>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</i>`);
+	_html(`<i>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</i>`);
 	const $return = -1;
 	_scope($scope0_id, {});
 	return $return;

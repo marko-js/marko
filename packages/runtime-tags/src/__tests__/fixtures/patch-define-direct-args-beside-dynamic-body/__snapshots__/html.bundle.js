@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	const Panel = { content: _content_resume("a0", (label) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>${_text_resume($scope1_id, "a", label, void 0, $scope1_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", label, 1, $scope1_reason, 0)}</em>`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	const Other = { content: _content_resume("a1", (label) => {

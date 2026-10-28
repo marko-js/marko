@@ -6,7 +6,7 @@ _shells({ b: "b;D lD ;<h2> </h2><p> </p>" });
 var duo_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<h2>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 1)}</h2><p>${_text_resume($scope0_id, "b", JSON.stringify(input), void 0, $scope0_reason, 0)}</p>`);
+	_html(`<h2>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 1)}</h2><p>${_text_resume($scope0_id, "b", JSON.stringify(input), 1, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, {});
 });
 

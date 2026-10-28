@@ -5,7 +5,7 @@ _shells({ b: "b;D ;<em> </em>" });
 var cell_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_text_resume($scope0_id, "a", input.v, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "a", input.v, 1, $scope0_reason, 0)}</em>`);
 	_scope($scope0_id, {});
 });
 
@@ -24,7 +24,7 @@ var child_default = _template("c", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "a", input.a + input.b, void 0, $scope0_reason, 2)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "a", input.a + input.b, 1, $scope0_reason, 2)}</p>`);
 			_patch_join_init($scope1_id, "c0", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && ">e", _filled_guard($scope0_reason, 7) && ">i");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;

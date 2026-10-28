@@ -7,7 +7,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $cg__input_a = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let open = true;
-	_html(`<em>${_text_resume($scope0_id, "a", input.a, void 0, $scope0_reason, 1)}</em><p>${_text_resume($scope0_id, "b", input.a + input.b, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<em>${_text_resume($scope0_id, "a", input.a, 1, $scope0_reason, 1)}</em><p>${_text_resume($scope0_id, "b", input.a + input.b, 1, $scope0_reason, 0)}</p>`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();

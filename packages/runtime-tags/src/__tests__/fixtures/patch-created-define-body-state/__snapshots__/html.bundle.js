@@ -13,14 +13,14 @@ var template_default = _template("a", (input) => {
 	const Info = { content: _content("a0", ({ id }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<p>${_text_resume($scope2_id, "a", id, void 0, $scope2_reason, 0)}:${_text_resume($scope2_id, "b", count, 2)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "a", id, 1, $scope2_reason, 0)}:${_text_resume($scope2_id, "b", count, 2)}</p>`);
 		_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), "a1");
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
-			const $childScope = _peek_scope_id($scope1_id, "a", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0, 0, $scope0_id);
 			Info.content({ id: input.id });
 			_patch_child_end();
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a2");

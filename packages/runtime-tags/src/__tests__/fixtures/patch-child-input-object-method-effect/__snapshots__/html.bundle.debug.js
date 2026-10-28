@@ -7,7 +7,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let seen = "";
-	_html(`<p>${_text_resume($scope0_id, "#text/0", seen, void 0, 0, 0, 1)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", seen, 1, 0, 0, 1)}</p>`);
 	_script($scope0_id, "__tests__/tags/probe.marko_0_input_opts#3_input_label#4", 1, (_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), _filled_guard($scope0_reason, 1) && "input_opts", _filled_guard($scope0_reason, 2) && "input_label");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/probe.marko_0_input_opts#3_input_label#4/init");
 	_scope($scope0_id, {

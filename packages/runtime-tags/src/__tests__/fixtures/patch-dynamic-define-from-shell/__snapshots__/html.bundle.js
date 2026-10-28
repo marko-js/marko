@@ -4,7 +4,7 @@ _shells({ b: "b;D ;<p> </p>" });
 var address_view_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_text_resume($scope0_id, "a", input.address.city, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", input.address.city, 1, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, {});
 });
 
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_patch_write($scope1_id, "wg", user?.name);
-		_html(`<h4>${_text_resume($scope1_id, "a", user.name, void 0, 4, 0)}</h4>`);
+		_html(`<h4>${_text_resume($scope1_id, "a", user.name, 1, 4, 0)}</h4>`);
 		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		address_view_default({ address: user.address });
 		_patch_child_end();
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	const Other = { content: _content_resume("a2", ({ user }) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_html(`<h5>${_text_resume($scope2_id, "a", user.name, void 0, 4, 0)}</h5>`);
+		_html(`<h5>${_text_resume($scope2_id, "a", user.name, 1, 4, 0)}</h5>`);
 		_scope($scope2_id, {});
 	}, $scope0_id) };
 	_html("<main>");

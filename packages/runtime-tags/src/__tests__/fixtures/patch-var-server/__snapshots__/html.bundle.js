@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	let label = labeler_default({ title: input.title });
 	$cg__input_title && _var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
-	_html(`<p>${_text_resume($scope0_id, "c", label, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "d", count, 2)}</p><button>+</button>${_el_resume($scope0_id, "e")}</main>`);
+	_html(`<p>${_text_resume($scope0_id, "c", label, 1, $scope0_reason, 0)} ${_text_resume($scope0_id, "d", count, 2)}</p><button>+</button>${_el_resume($scope0_id, "e")}</main>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		i: count,

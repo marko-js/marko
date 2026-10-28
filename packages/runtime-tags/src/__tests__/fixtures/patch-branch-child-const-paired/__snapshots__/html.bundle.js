@@ -6,7 +6,7 @@ _shells({ b: "b;D D ;<section><h2> </h2></section>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2${_attr_class(input.title, $scope0_id, "aa$class", $scope0_reason, 0)}>${_text_resume($scope0_id, "b", input.title, void 0, $scope0_reason, 0)}</h2>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}</section>`);
+	_html(`<section><h2${_attr_class(input.title, $scope0_id, "aa$class", $scope0_reason, 0)}>${_text_resume($scope0_id, "b", input.title, 1, $scope0_reason, 0)}</h2>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}</section>`);
 	_scope($scope0_id, {});
 });
 
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			const $childScope2 = _peek_scope_id($scope1_id, "a", 1);
 			card_default({ title: "branch" });
 			_patch_child_end();
-			_html(`<p>${_text_resume($scope1_id, "b", input.note, void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "b", input.note, 1, $scope0_reason, 1)}</p>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a0");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),

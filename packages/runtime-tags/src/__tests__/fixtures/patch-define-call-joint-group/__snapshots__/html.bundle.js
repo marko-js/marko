@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	const Row = { content: _content("a0", ({ a, b }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $cg__b = _client_guard($scope1_reason, 2);
-		_html(`<p>${_text_resume($scope1_id, "a", a + b, void 0, $scope1_reason, 0)}</p><em>${_text_resume($scope1_id, "b", input.y + b, void 0, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 2)) << 1, 0)}</em>`);
+		_html(`<p>${_text_resume($scope1_id, "a", a + b, 1, $scope1_reason, 0)}</p><em>${_text_resume($scope1_id, "b", input.y + b, 1, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 2)) << 1, 0)}</em>`);
 		$cg__b && _patch_write($scope1_id, "xe", a, !(_filled_guard($scope1_reason, 1) && $cg__b));
 		_client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1)) << 1, 0) && _patch_write($scope1_id, "xf", b, !(_filled_guard($scope1_reason, 2) && (_client_guard($scope0_reason, 0) || _client_guard($scope1_reason, 1))));
 		_patch_join_init($scope1_id, "a1", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 2)) << 1, 0, _filled_guard($scope0_reason, 0) && ">e", _filled_guard($scope1_reason, 2) && "f");

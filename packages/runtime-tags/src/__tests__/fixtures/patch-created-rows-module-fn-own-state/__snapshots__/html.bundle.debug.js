@@ -30,7 +30,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_text_resume($scope3_id, "#text/0", fmt(label), void 0, $scope2_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "#text/0", fmt(label), 1, $scope2_reason, 2)}</em>`);
 				_client_guard($scope2_reason, 2) && _patch_init($scope3_id, "__tests__/tags/rowsx.marko_3_fmt#2:4_label#2:5/init");
 				_scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) }, "__tests__/tags/rowsx.marko", "4:4");
 				return 0;

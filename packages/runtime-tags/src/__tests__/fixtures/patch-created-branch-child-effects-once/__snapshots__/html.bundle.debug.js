@@ -79,7 +79,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_for_of(input.items, (item) => {
 				const $scope5_id = _scope_id();
 				_filled_guard($scope0_reason, 4) && _patch_write($scope5_id, "PatchMarkedWrite:item", item, !$sg__input_items);
-				_html(`<i>${_text_resume($scope5_id, "#text/0", item, void 0, $scope0_reason, 4)}</i>`);
+				_html(`<i>${_text_resume($scope5_id, "#text/0", item, 1, $scope0_reason, 4)}</i>`);
 				_script($scope5_id, "__tests__/template.marko_5_item#2", 1, _filled_guard($scope0_reason, 4), "item");
 				_scope($scope5_id, { item }, "__tests__/template.marko", "11:4", { item: "11:8" });
 			}, 0, $scope1_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_5*shell", $scope0_reason, 4);

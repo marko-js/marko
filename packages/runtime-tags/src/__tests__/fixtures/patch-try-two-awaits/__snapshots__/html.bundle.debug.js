@@ -23,12 +23,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<div>");
 		_await($scope1_id, "#text/0", input.fast, (a) => {
 			const $scope3_id = _scope_id();
-			_html(`<b>${_text_resume($scope3_id, "#text/0", a, void 0, $scope0_reason, 1)}</b>`);
+			_html(`<b>${_text_resume($scope3_id, "#text/0", a, 1, $scope0_reason, 1)}</b>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "4:8");
 		}, 1, "__tests__/template.marko_3*content", 1);
 		_await($scope1_id, "#text/1", input.slow, (b) => {
 			const $scope4_id = _scope_id();
-			_html(`<em>${_text_resume($scope4_id, "#text/0", b, void 0, $scope0_reason, 2)}</em>`);
+			_html(`<em>${_text_resume($scope4_id, "#text/0", b, 1, $scope0_reason, 2)}</em>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "5:8");
 		}, 1, "__tests__/template.marko_4*content", 1);
 		_html("</div>");

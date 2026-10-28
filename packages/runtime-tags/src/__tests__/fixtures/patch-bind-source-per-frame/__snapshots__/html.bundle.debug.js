@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				title: input.title,
 				onClick: handler
 			}
-		}, "#button/0", $scope1_id, "button", void 0, $scope0_reason, 0)}>one</button>${_el_resume($scope1_id, "#button/0")}`);
+		}, "#button/0", $scope1_id, "button", 0, $scope0_reason, 0)}>one</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1_input_title#0:5_handler#0:9");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_title#0:5/subscribe");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_handler#0:9/subscribe");
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				title: input.title,
 				onClick: handler
 			}
-		}, "#button/0", $scope2_id, "button", void 0, $scope0_reason, 0)}>two</button>${_el_resume($scope2_id, "#button/0")}`);
+		}, "#button/0", $scope2_id, "button", 0, $scope0_reason, 0)}>two</button>${_el_resume($scope2_id, "#button/0")}`);
 		_script($scope2_id, "__tests__/template.marko_2_input_title#0:5_handler#0:9");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_title#0:5/subscribe");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_handler#0:9/subscribe");
@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureSignalIndex:handler/11": $wi__input_title && 1
 		}, "__tests__/template.marko", "7:4", { "EventAttributes:#button/0": ["...{ title: input.title, onClick: handler }", "8:25"] }), $cg__input_title && "__tests__/template.marko_2_input_title#0:5/subscribe"), $cg__input_title && "__tests__/template.marko_2_handler#0:9/subscribe");
 	}, 1, "__tests__/template.marko_2*content", 1, 1);
-	_html(`<em>${_text_resume($scope0_id, "#text/2", count, void 0, 0, 0)}</em></main>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/2", count, 1, 0, 0)}</em></main>`);
 	_scope($scope0_id, {
 		input_title: input.title,
 		"ClosureScopes:input_title/10": $wi__input_title && $input_title__closures,

@@ -7,7 +7,7 @@ var kid_default = _template("__tests__/tags/kid.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let on = false;
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a, 1, $scope0_reason, 0)}</div>`);
 	_if(() => {
 		if (on) {
 			const $scope1_id = _scope_id();

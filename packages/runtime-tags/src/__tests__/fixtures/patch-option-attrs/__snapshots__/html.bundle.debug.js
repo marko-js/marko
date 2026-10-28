@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<select>");
 		_for_of(input.options, (o) => {
 			const $scope1_id = _scope_id();
-			_html(`<option${_attr_option_value(o.value, $scope1_id, "PatchAttr:#option/0 value", $scope0_reason, 1)}>${_text_resume($scope1_id, "#text/1", o.label, void 0, $scope0_reason, 1)}</option>${_el_resume($scope1_id, "#option/0", _mask_group($scope0_reason, 1))}`);
+			_html(`<option${_attr_option_value(o.value, $scope1_id, "PatchAttr:#option/0 value", $scope0_reason, 1)}>${_text_resume($scope1_id, "#text/1", o.label, 1, $scope0_reason, 1)}</option>${_el_resume($scope1_id, "#option/0", _mask_group($scope0_reason, 1))}`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "4:6");
 		}, (o) => o.id, $scope0_id, "#select/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 		_html("</select>");

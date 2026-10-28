@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.mode === "a" ? box_a_default : box_b_default, {}, 2, _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(_text_resume($scope1_id, "#text/0", input.text, void 0, $scope0_reason, 2));
+		_html(_text_resume($scope1_id, "#text/0", input.text, 1, $scope0_reason, 2));
 		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_text#0:4/init");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_text__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:6"));
 	}, $scope0_id, 1), 0, $wg__input_mode, $scope0_reason, 1);

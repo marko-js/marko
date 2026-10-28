@@ -18,17 +18,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const extra = { content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>${_text_resume($scope1_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", input.title, 1, $scope0_reason, 0)}</em>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "__tests__/template.marko_1_input_title#0:6/init" : "__tests__/template.marko_1_input_title#0:6/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
 	}, $scope0_id) };
-	_html(`<main><div${_attrs(input.attrs, "#div/0", $scope0_id, "div", void 0, $scope0_reason, 1)}>`);
-	_attr_content("#div/0", $scope0_id, extra, 0, void 0, 0, 0);
+	_html(`<main><div${_attrs(input.attrs, "#div/0", $scope0_id, "div", 0, $scope0_reason, 1)}>`);
+	_attr_content("#div/0", $scope0_id, extra, 0, 1, 0, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}<section`);
 	_attrs_content({
 		...input.attrs,
 		content: extra
-	}, "#section/1", $scope0_id, "section", 1, void 0, void 0, $scope0_reason, 1);
+	}, "#section/1", $scope0_id, "section", 1, 1, 0, $scope0_reason, 1);
 	_html(`</section>${_el_resume($scope0_id, "#section/1")}<button>${_text_resume($scope0_id, "#text/3", count)}</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#7_extra#9");

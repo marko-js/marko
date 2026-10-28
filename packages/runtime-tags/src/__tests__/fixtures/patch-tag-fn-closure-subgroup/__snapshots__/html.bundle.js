@@ -11,7 +11,7 @@ var code_block_default = _template("b", (input) => {
 	const f = _bind_resume(function(t) {
 		return t + input.a + input.b + input.c;
 	}, "b0", $scope0_id);
-	_html(`<div>${_text_resume($scope0_id, "a", f(input.d), void 0, $scope0_reason, 7)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", f(input.d), 1, $scope0_reason, 7)}</div>`);
 	$cg__input_a__OR__input_b__OR__input_c && _patch_init($scope0_id, "b6");
 	_client_guard($scope0_reason, 7) && _patch_init($scope0_id, "b7");
 	_scope($scope0_id, {

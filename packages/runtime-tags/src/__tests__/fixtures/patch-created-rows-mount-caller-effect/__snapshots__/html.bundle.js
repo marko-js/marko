@@ -11,7 +11,7 @@ var list_default = _template("b", (input) => {
 	_for_of(input.item, (it) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", it?.label, !_server_guard($scope0_reason, 0));
-		_html(`<i>${_text_resume($scope1_id, "a", it.label, void 0, $scope0_reason, 0)}</i>`);
+		_html(`<i>${_text_resume($scope1_id, "a", it.label, 1, $scope0_reason, 0)}</i>`);
 		_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 0), "d");
 		_scope($scope1_id, { d: it?.label });
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 0);

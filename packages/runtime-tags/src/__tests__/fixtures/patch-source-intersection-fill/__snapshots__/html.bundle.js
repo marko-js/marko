@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	let qty = 1;
 	const price = input.item.price;
 	const tax = input.item.price * .1;
-	_html(`<p>${_text_resume($scope0_id, "a", price + tax, void 0, $scope0_reason, 0)}</p><p>${_text_resume($scope0_id, "b", price * qty)}</p><button>+</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<p>${_text_resume($scope0_id, "a", price + tax, 1, $scope0_reason, 0)}</p><p>${_text_resume($scope0_id, "b", price * qty)}</p><button>+</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		h: qty,

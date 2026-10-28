@@ -18,7 +18,7 @@ var panel_default = _template("b", (input) => {
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					_html(`<em>${_text_resume($scope2_id, "a", input.a + ":" + input.b, void 0, $scope0_reason, 2)}</em>`);
+					_html(`<em>${_text_resume($scope2_id, "a", input.a + ":" + input.b, 1, $scope0_reason, 2)}</em>`);
 					(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2)) && _patch_init($scope2_id, "b0");
 					(_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 2)) && _patch_init($scope2_id, "b1");
 					_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "b2");

@@ -11,7 +11,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
-		_html(`<p>${_text_resume($scope1_id, "a", x, void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", x, 1, $scope0_reason, 0)}</p>`);
 		_scope($scope1_id, {});
 	}, 1, "b0", 1);
 });

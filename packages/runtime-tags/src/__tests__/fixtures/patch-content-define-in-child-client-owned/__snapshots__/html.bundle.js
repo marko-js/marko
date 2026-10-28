@@ -19,7 +19,7 @@ var wrap_default = _template("b", (input) => {
 		_if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "a", input.title, void 0, $scope0_reason, 0)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "a", input.title, 1, $scope0_reason, 0)}</em>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_title ? "b0" : "b1");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, { _: ($wi__input_title || $wi__open) && _scope_with_id($scope1_id) }), $cg__input_title && "b1");
 				return 0;

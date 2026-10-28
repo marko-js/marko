@@ -6,7 +6,7 @@ var badge_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<span>${_text_resume($scope0_id, "a", $global$1.brand, void 0, 4, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", $global$1.brand, 1, 4, 0)}</span>`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });

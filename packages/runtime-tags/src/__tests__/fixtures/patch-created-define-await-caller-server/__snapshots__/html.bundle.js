@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_reason = _scope_reason();
 		_await($scope2_id, "a", promise, (x) => {
 			const $scope3_id = _scope_id();
-			_html(`<p>${_text_resume($scope3_id, "a", x, void 0, $scope2_reason, 0)}</p>`);
+			_html(`<p>${_text_resume($scope3_id, "a", x, 1, $scope2_reason, 0)}</p>`);
 			_scope($scope3_id, {});
 		}, 1, "a0");
 	}, $scope0_id) };

@@ -10,7 +10,7 @@ var panel_default = _template("c", (input) => {
 	_html("<ul>");
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "a", row.name, void 0, $scope0_reason, 0)}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "a", row.name, 1, $scope0_reason, 0)}</li>`);
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c0", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
@@ -109,7 +109,7 @@ var template_default = _template("a", (input) => {
 		guest: attrTag({ content: _content_resume("a5", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<p>${_text_resume($scope2_id, "a", input.guestText, void 0, $scope0_reason, 5)}</p>`);
+			_html(`<p>${_text_resume($scope2_id, "a", input.guestText, 1, $scope0_reason, 5)}</p>`);
 			_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, _client_guard($scope0_reason, 5) ? "a2" : "a3");
 			_subscribe(_unfilled_if($scope0_reason, 5) && $input_guestText__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }));
 		}, $scope0_id) })
@@ -122,7 +122,7 @@ var template_default = _template("a", (input) => {
 		content: _content_resume("a8", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<p>${_text_resume($scope3_id, "a", input.bodyText, void 0, $scope0_reason, 7)}</p>`);
+			_html(`<p>${_text_resume($scope3_id, "a", input.bodyText, 1, $scope0_reason, 7)}</p>`);
 			_unfilled_if($scope0_reason, 7) && _patch_init($scope3_id, _client_guard($scope0_reason, 7) ? "a6" : "a7");
 			_subscribe(_unfilled_if($scope0_reason, 7) && $input_bodyText__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }));
 		}, $scope0_id)

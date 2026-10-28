@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_await($scope3_id, "a", item.promise, (v) => {
 					const $scope4_id = _scope_id();
-					_html(`<em>${_text_resume($scope4_id, "a", group.id, void 0, $scope0_reason, 0)}.${_text_resume($scope4_id, "b", v, 2, $scope0_reason, 0)}</em>`);
+					_html(`<em>${_text_resume($scope4_id, "a", group.id, 1, $scope0_reason, 0)}.${_text_resume($scope4_id, "b", v, 2, $scope0_reason, 0)}</em>`);
 					_scope($scope4_id, {});
 				}, 1, "a1");
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, $cg__input_groups ? "a6" : "a7");
@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 			}, void 0, (err) => {
 				_scope_reason();
 				const $scope5_id = _scope_id();
-				_html(`<b>${_text_resume($scope5_id, "a", err.message, void 0, 4, 0)}</b>`);
+				_html(`<b>${_text_resume($scope5_id, "a", err.message, 1, 4, 0)}</b>`);
 				_scope($scope5_id, {});
 			}, void 0, "a0", "a3", void 0, 1, 1);
 			$wi__input_groups && _scope($scope2_id, {

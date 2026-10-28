@@ -19,7 +19,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.p, (v) => {
 			const $scope4_id = _scope_id();
-			_html(`<em>${_text_resume($scope4_id, "#text/0", v, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_resume($scope4_id, "#text/0", v, 1, $scope0_reason, 0)}</em>`);
 			_scope($scope4_id, {}, "__tests__/child.marko", "2:4");
 		}, 1, "__tests__/child.marko_4*content", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_p ? "__tests__/child.marko_1_input_p#0:3/init" : "__tests__/child.marko_1_input_p#0:3/subscribe");
@@ -32,7 +32,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	}, (e) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<b>${_text_resume($scope3_id, "#text/0", e.message, void 0, 4, 0)}</b>`);
+		_html(`<b>${_text_resume($scope3_id, "#text/0", e.message, 1, 4, 0)}</b>`);
 		_scope($scope3_id, {}, "__tests__/child.marko", "6:4");
 	}, "__tests__/child.marko_2*content", "__tests__/child.marko_3*content", "__tests__/child.marko_1*content", 1, 1, 3);
 	_scope($scope0_id, { "ClosureScopes:input_p/4": $wi__input_p && _unfilled_if($scope0_reason, 0) && $input_p__closures }, "__tests__/child.marko", 0);

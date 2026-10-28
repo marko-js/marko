@@ -26,13 +26,13 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.outer, (a) => {
 			const $scope2_id = _scope_id();
-			_html(`<div id=outer>${_text_resume($scope2_id, "a", input.msg, void 0, $scope0_reason, 3)} ${_text_resume($scope2_id, "b", a, 2, $scope0_reason, 2)}</div>`);
+			_html(`<div id=outer>${_text_resume($scope2_id, "a", input.msg, 1, $scope0_reason, 3)} ${_text_resume($scope2_id, "b", a, 2, $scope0_reason, 2)}</div>`);
 			_try($scope2_id, "c", () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
 				_await($scope3_id, "a", input.inner, (b) => {
 					const $scope4_id = _scope_id();
-					_html(`<div id=inner>${_text_resume($scope4_id, "a", input.msg, void 0, $scope0_reason, 3)} ${_text_resume($scope4_id, "b", b, 2, $scope0_reason, 4)}</div>`);
+					_html(`<div id=inner>${_text_resume($scope4_id, "a", input.msg, 1, $scope0_reason, 3)} ${_text_resume($scope4_id, "b", b, 2, $scope0_reason, 4)}</div>`);
 					_unfilled_if($scope0_reason, 3) && _patch_init($scope4_id, $cg__input_msg ? "a0" : "a1");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope4_id, { Cm: $wi__input_msg && 1 }), $cg__input_msg && "a1");
 				}, 1, "a6", 1);
@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 	}, void 0, "a4", void 0, "a11", 1, void 0, 2);
 	_await($scope0_id, "d", input.last, (c) => {
 		const $scope5_id = _scope_id();
-		_html(`<span id=last>${_text_resume($scope5_id, "a", input.msg, void 0, $scope0_reason, 3)} ${_text_resume($scope5_id, "b", c, 2, $scope0_reason, 5)}</span>`);
+		_html(`<span id=last>${_text_resume($scope5_id, "a", input.msg, 1, $scope0_reason, 3)} ${_text_resume($scope5_id, "b", c, 2, $scope0_reason, 5)}</span>`);
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope5_id, $cg__input_msg ? "a19" : "a20");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope5_id, { Cm: $wi__input_msg && 2 }), $cg__input_msg && "a20");
 	}, 1, "a5", 1);

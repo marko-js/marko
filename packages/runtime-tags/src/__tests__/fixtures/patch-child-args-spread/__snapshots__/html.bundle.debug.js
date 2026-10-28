@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const badge = { content: _content("__tests__/template.marko_2*content", (a, b) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<em>${_text_resume($scope2_id, "#text/0", a, void 0, $scope2_reason, 0)}${_text_resume($scope2_id, "#text/1", b, 2, $scope2_reason, 1)}</em>`);
+		_html(`<em>${_text_resume($scope2_id, "#text/0", a, 1, $scope2_reason, 0)}${_text_resume($scope2_id, "#text/1", b, 2, $scope2_reason, 1)}</em>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	_html("<main>");

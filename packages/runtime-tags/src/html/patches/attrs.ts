@@ -143,7 +143,7 @@ export function _attrs(
   accessor: Accessor,
   scopeId: number,
   tagName: string,
-  flag?: 1 | 2,
+  flag?: 0 | 1 | 2,
   mask?: GroupMask,
   group?: number,
 ) {
@@ -168,7 +168,7 @@ export function _attrs_partial(
   accessor: Accessor,
   scopeId: number,
   tagName: string,
-  flag?: 1 | 2,
+  flag?: 0 | 1 | 2,
   mask?: GroupMask,
   group?: number,
 ) {
@@ -197,7 +197,7 @@ function writeAttrsFill(
   accessor: Accessor,
   set: Record<string, unknown>,
   skip: Record<string, 1> | 0,
-  flag: 1 | 2 | undefined,
+  flag: 0 | 1 | 2 | undefined,
 ) {
   if (fills) {
     fills[PatchKey.Attrs + accessor] =
@@ -236,7 +236,7 @@ export function _attrs_content(
   tagName: string,
   site: number,
   markerGuard?: 1 | 0,
-  controllable?: 1,
+  controllable?: 0 | 1,
   mask?: GroupMask,
   group?: number,
 ) {
@@ -260,7 +260,7 @@ export function _attrs_partial_content(
   tagName: string,
   site: number,
   markerGuard?: 1 | 0,
-  controllable?: 1,
+  controllable?: 0 | 1,
   mask?: GroupMask,
   group?: number,
 ) {

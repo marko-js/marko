@@ -6,7 +6,7 @@ _shells({ b: "b;D%b%;<span class=badge><!><!></span>" });
 var badge_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span class=badge>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}${_text_resume($scope0_id, "b", input.note ? ` (${_to_text(input.note)})` : "", 2, $scope0_reason, 1)}</span>`);
+	_html(`<span class=badge>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}${_text_resume($scope0_id, "b", input.note ? ` (${_to_text(input.note)})` : "", 2, $scope0_reason, 1)}</span>`);
 	_scope($scope0_id, {});
 });
 

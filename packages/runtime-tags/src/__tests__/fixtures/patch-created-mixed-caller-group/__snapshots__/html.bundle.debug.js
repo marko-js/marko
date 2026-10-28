@@ -14,11 +14,11 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "#text/0", input.n, void 0, $scope0_reason, 2)}</p><div>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", input.n, 1, $scope0_reason, 2)}</p><div>`);
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					_html(`<em>${_text_resume($scope2_id, "#text/0", input.n, void 0, $scope0_reason, 2)}</em>`);
+					_html(`<em>${_text_resume($scope2_id, "#text/0", input.n, 1, $scope0_reason, 2)}</em>`);
 					_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_n ? "__tests__/tags/panel.marko_2_input_n#0:4/init" : "__tests__/tags/panel.marko_2_input_n#0:4/subscribe");
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_n__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_n && _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "4:6"), $cg__input_n && "__tests__/tags/panel.marko_2_input_n#0:4/subscribe");
 					return 0;

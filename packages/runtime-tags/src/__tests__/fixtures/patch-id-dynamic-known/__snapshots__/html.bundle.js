@@ -4,7 +4,7 @@ var labeled_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = _id("A");
-	_html(`<label${_attr("for", uid, $scope0_id, "aa$for", 0, 0)}>${_text_resume($scope0_id, "b", input.name, void 0, $scope0_reason, 0)}</label>${_el_resume($scope0_id, "a", 0)}<input${_attr("id", uid, $scope0_id, "ac$id", 0, 0)}>${_el_resume($scope0_id, "c", 0)}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "aa$for", 0, 0)}>${_text_resume($scope0_id, "b", input.name, 1, $scope0_reason, 0)}</label>${_el_resume($scope0_id, "a", 0)}<input${_attr("id", uid, $scope0_id, "ac$id", 0, 0)}>${_el_resume($scope0_id, "c", 0)}`);
 	_scope($scope0_id, {});
 });
 
@@ -13,7 +13,7 @@ _shells({ c: "c;D ;<span> </span>" });
 var plain_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.name, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", input.name, 1, $scope0_reason, 0)}</span>`);
 	_scope($scope0_id, {});
 });
 
@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_scope_reason();
 			const bodyId = _id("A");
-			_html(`<label${_attr("for", bodyId, $scope3_id, "aa$for", 0, 0)}>${_text_resume($scope3_id, "b", item.key, void 0, $scope0_reason, 0)}</label>${_el_resume($scope3_id, "a", 0)}<input${_attr("id", bodyId, $scope3_id, "ac$id", 0, 0)}>${_el_resume($scope3_id, "c", 0)}`);
+			_html(`<label${_attr("for", bodyId, $scope3_id, "aa$for", 0, 0)}>${_text_resume($scope3_id, "b", item.key, 1, $scope0_reason, 0)}</label>${_el_resume($scope3_id, "a", 0)}<input${_attr("id", bodyId, $scope3_id, "ac$id", 0, 0)}>${_el_resume($scope3_id, "c", 0)}`);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, $cg__input_items ? "a6" : "a7");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_key__closures, _scope($scope3_id, { _: $wi__input_items && _scope_with_id($scope2_id) }));
 		}, $scope2_id, 1), 0, $wg__input_items, $scope0_reason, 0);
@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 			const $scope5_id = _scope_id();
 			_scope_reason();
 			const nullId = _id("B");
-			_html(`<label${_attr("for", nullId, $scope5_id, "aa$for", 0, 0)}>${_text_resume($scope5_id, "b", item.key, void 0, $scope0_reason, 0)}</label>${_el_resume($scope5_id, "a", 0)}<input${_attr("id", nullId, $scope5_id, "ac$id", 0, 0)}>${_el_resume($scope5_id, "c", 0)}`);
+			_html(`<label${_attr("for", nullId, $scope5_id, "aa$for", 0, 0)}>${_text_resume($scope5_id, "b", item.key, 1, $scope0_reason, 0)}</label>${_el_resume($scope5_id, "a", 0)}<input${_attr("id", nullId, $scope5_id, "ac$id", 0, 0)}>${_el_resume($scope5_id, "c", 0)}`);
 			$cg__input_items && _patch_init($scope5_id, "a8");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content3__item_key__closures, _scope($scope5_id, { _: $wi__input_items && _scope_with_id($scope4_id) }));
 		}, $scope4_id, 1), 0, $wg__input_items, $scope0_reason, 0);

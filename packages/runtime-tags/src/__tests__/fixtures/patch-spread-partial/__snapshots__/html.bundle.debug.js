@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><button${_attrs_partial(input.attrs, { "on-click": 1 }, "#button/0", $scope0_id, "button", void 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}<div class=fixed${_attrs_partial(input.box, { class: 1 }, "#div/2", $scope0_id, "div", void 0, $scope0_reason, 1)}>${_text_resume($scope0_id, "#text/3", input.label, void 0, $scope0_reason, 2)}</div>${_el_resume($scope0_id, "#div/2")}</main>`);
+	_html(`<main><button${_attrs_partial(input.attrs, { "on-click": 1 }, "#button/0", $scope0_id, "button", 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}<div class=fixed${_attrs_partial(input.box, { class: 1 }, "#div/2", $scope0_id, "div", 0, $scope0_reason, 1)}>${_text_resume($scope0_id, "#text/3", input.label, 1, $scope0_reason, 2)}</div>${_el_resume($scope0_id, "#div/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0_input_box#7");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#6");
 	_script($scope0_id, "__tests__/template.marko_0");

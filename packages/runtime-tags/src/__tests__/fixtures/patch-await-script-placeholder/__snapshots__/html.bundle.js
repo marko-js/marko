@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		_await($scope1_id, "a", input.promise, (value) => {
 			const $scope3_id = _scope_id();
 			_filled_guard($scope0_reason, 0) && _patch_write($scope3_id, "xc", value, !_server_guard($scope0_reason, 0));
-			_html(`<span id=v>${_text_resume($scope3_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
+			_html(`<span id=v>${_text_resume($scope3_id, "a", value, 1, $scope0_reason, 0)}</span>`);
 			_script($scope3_id, "a0", 1, _filled_guard($scope0_reason, 0), "c");
 			_scope($scope3_id, { c: value });
 		}, 1, "a1", 1);

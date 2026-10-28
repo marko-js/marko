@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/labeler.marko": "^__tests__/tags/labeler.marko;D ;<spa
 var labeler_default = _template("__tests__/tags/labeler.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</span>`);
 	const $return = "[" + input.title + "]";
 	_scope($scope0_id, {}, "__tests__/tags/labeler.marko", 0);
 	return $return;
@@ -31,7 +31,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 		let label = labeler_default({ title: item + input.suffix });
 		$cg__input_items__OR__input_suffix && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/tags/list.marko_1_label#6/var");
 		_patch_child_end();
-		_html(`<p>${_text_resume($scope1_id, "#text/2", label, void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/2", label, 1, $scope0_reason, 0)}</p>`);
 		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "__tests__/tags/list.marko_1_input_suffix#0:4_item#4/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_suffix", _filled_guard($scope0_reason, 1) && "item");
 		_scope($scope1_id, {
 			item: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item,

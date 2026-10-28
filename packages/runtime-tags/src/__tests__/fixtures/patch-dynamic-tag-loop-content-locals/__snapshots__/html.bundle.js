@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 		$tab = attrTags($tab, { content: _content_resume("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<b>${_text_resume($scope1_id, "a", t, void 0, 4, 0)}</b>`);
+			_html(`<b>${_text_resume($scope1_id, "a", t, 1, 4, 0)}</b>`);
 			_scope($scope1_id, {});
 		}, $scope0_id, () => [{ 1: t }]) });
 	});

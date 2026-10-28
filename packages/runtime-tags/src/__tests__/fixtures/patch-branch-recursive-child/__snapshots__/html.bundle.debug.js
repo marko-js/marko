@@ -10,7 +10,7 @@ _shells({
 const $content = (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<li>${_text_resume($scope0_id, "#text/0", input.node.name, void 0, $scope0_reason, 0)}`);
+	_html(`<li>${_text_resume($scope0_id, "#text/0", input.node.name, 1, $scope0_reason, 0)}`);
 	_if(() => {
 		if (input.node.children) {
 			const $scope1_id = _scope_id();

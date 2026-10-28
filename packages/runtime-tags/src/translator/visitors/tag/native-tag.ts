@@ -927,11 +927,13 @@ export default {
                 getScopeIdIdentifier(tagSection),
                 contentAttr.value,
                 ...(isPatch() ? [t.numericLiteral(nextIdSite())] : []),
+                // `1` reads as no guard where group args follow.
                 getWriteGuard(
                   tagSection,
                   nodeBinding && getWriteReason(nodeBinding),
                   true,
-                ),
+                ) ||
+                  (patches && t.numericLiteral(1)),
                 ...(patches
                   ? getPatchHoleGroupArgs(tagSection, contentAttr.value.extra!)
                   : []),
@@ -947,15 +949,15 @@ export default {
           const patches = writesPatchHole(tagSection, tagExtra);
           const contentArgs = [
             ...(isPatch() ? [t.numericLiteral(nextIdSite())] : []),
-            markerGuard,
             ...(patches
               ? [
-                  !controllable &&
-                    controllableElements.has(tagName) &&
-                    t.numericLiteral(1),
+                  markerGuard || t.numericLiteral(1),
+                  t.numericLiteral(
+                    !controllable && controllableElements.has(tagName) ? 1 : 0,
+                  ),
                   ...getPatchHoleGroupArgs(tagSection, tagExtra),
                 ]
-              : []),
+              : [markerGuard]),
           ];
           htmlContentAttrTags.add(tag.node);
           (tag.node.body.body as t.Statement[]) = [
@@ -1544,9 +1546,9 @@ function getPatchSpreadFlag(
   controllable: boolean,
   injectsNonce: boolean,
 ) {
-  return !controllable && controllableElements.has(tagName)
-    ? t.numericLiteral(1)
-    : injectsNonce && t.numericLiteral(2);
+  return t.numericLiteral(
+    !controllable && controllableElements.has(tagName) ? 1 : injectsNonce ? 2 : 0,
+  );
 }
 
 // The spread object both outputs write: the spreads and the attributes among

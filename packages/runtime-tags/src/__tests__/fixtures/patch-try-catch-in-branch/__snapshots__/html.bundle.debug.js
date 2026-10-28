@@ -23,14 +23,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_try($scope1_id, "#text/0", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "#text/0", input.message, void 0, $scope0_reason, 2)}${_text_resume($scope2_id, "#text/1", input.boom ? boom() : "", 2, $scope0_reason, 3)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "#text/0", input.message, 1, $scope0_reason, 2)}${_text_resume($scope2_id, "#text/1", input.boom ? boom() : "", 2, $scope0_reason, 3)}</em>`);
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_message ? "__tests__/template.marko_2_input_message#0:4/init" : "__tests__/template.marko_2_input_message#0:4/subscribe");
 				_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_boom ? "__tests__/template.marko_2_input_boom#0:5/init" : "__tests__/template.marko_2_input_boom#0:5/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 3) && $input_boom__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_message__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_message__OR__input_boom && _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6"), $cg__input_message && "__tests__/template.marko_2_input_message#0:4/subscribe"), $cg__input_boom && "__tests__/template.marko_2_input_boom#0:5/subscribe");
 			}, void 0, (err) => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
-				_html(`<b>${_text_resume($scope3_id, "#text/0", err.message, void 0, 4, 0)}</b>`);
+				_html(`<b>${_text_resume($scope3_id, "#text/0", err.message, 1, 4, 0)}</b>`);
 				_scope($scope3_id, {}, "__tests__/template.marko", "8:8");
 			}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", void 0, 1, 1);
 			$wi__input_show__OR__input_message__OR__input_boom && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4");

@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.p, (value) => {
 			const $scope2_id = _scope_id();
-			_html(`<em>${_text_resume($scope2_id, "a", value + n, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_resume($scope2_id, "a", value + n, 1, $scope0_reason, 0)}</em>`);
 			$cg__input_p && _patch_init($scope2_id, "a0");
 			_scope($scope2_id, {});
 		}, 1, "a1");

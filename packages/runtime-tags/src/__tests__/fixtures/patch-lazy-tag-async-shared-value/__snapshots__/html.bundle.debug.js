@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.promise, (value) => {
 			const $scope2_id = _scope_id();
-			_html(`<span>${_text_resume($scope2_id, "#text/0", value, void 0, $scope0_reason, 2)}</span>`);
+			_html(`<span>${_text_resume($scope2_id, "#text/0", value, 1, $scope0_reason, 2)}</span>`);
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
 			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/2", 1);
 			$Child_withLoadAssets({

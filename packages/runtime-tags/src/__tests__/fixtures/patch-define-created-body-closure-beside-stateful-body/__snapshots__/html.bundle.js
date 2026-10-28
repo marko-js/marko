@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_text_resume($scope3_id, "a", label, void 0, $scope0_reason, 1)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "a", label, 1, $scope0_reason, 1)}</em>`);
 				_client_guard($scope0_reason, 1) && _patch_init($scope3_id, "a0");
 				_scope($scope3_id, { _: $wi__input_label && _scope_with_id($scope1_id) });
 				return 0;
@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
-			const $childScope = _peek_scope_id($scope2_id, "a", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope2_id, "a", 0, 0, $scope0_id);
 			Panel.content({ isOpen: input.open });
 			_patch_child_end();
 			_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a6");

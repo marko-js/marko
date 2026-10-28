@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/label-view.marko": "__tests__/tags/label-view.marko; D
 var label_view_default = _template("__tests__/tags/label-view.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<output>${_text_resume($scope0_id, "#text/1", input.get(), void 0, $scope0_reason, 0)}</output>${_el_resume($scope0_id, "#output/0")}`);
+	_html(`<output>${_text_resume($scope0_id, "#text/1", input.get(), 1, $scope0_reason, 0)}</output>${_el_resume($scope0_id, "#output/0")}`);
 	_script($scope0_id, "__tests__/tags/label-view.marko_0_get#4", 1, _filled_guard($scope0_reason, 0), "get");
 	_scope($scope0_id, { get: input.get }, "__tests__/tags/label-view.marko", 0, { get: "1:10" }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:get", input.get, !_server_guard($scope0_reason, 0));
 });

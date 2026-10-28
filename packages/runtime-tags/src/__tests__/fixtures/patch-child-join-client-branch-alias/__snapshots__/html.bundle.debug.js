@@ -9,11 +9,11 @@ _shells({
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
-	_html(`<em>${_text_resume($scope0_id, "#text/0", input.a, void 0, $scope0_reason, 3)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", input.a, 1, $scope0_reason, 3)}</em>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + input.b, 1, $scope0_reason, 1)}</p>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_b#0:6_a#0:6/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "3:2");
 			return 0;

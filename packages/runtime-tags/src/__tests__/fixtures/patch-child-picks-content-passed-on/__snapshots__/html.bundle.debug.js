@@ -7,7 +7,7 @@ var view_default = _template("__tests__/tags/view.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
-	_html(`<span>${_text_resume($scope0_id, "#text/1", input.title, void 0, $scope0_reason, 1)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/1", input.title, 1, $scope0_reason, 1)}</span>`);
 	_scope($scope0_id, {}, "__tests__/tags/view.marko", 0);
 });
 

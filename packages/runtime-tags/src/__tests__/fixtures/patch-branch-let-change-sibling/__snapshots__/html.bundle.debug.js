@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let store = store_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_store#9/var");
 	_patch_child_end();
-	_html(`<main><h1>${_text_resume($scope0_id, "#text/2", input.title, void 0, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "#text/3", store.last, 2)}</p>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "#text/2", input.title, 1, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "#text/3", store.last, 2)}</p>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

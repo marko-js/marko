@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/echo/index.marko": "__tests__/tags/echo/index.marko;D 
 var echo_default = _template("__tests__/tags/echo/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_text_resume($scope0_id, "#text/0", input.cfg.label, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", input.cfg.label, 1, $scope0_reason, 0)}</em>`);
 	_scope($scope0_id, {}, "__tests__/tags/echo/index.marko", 0);
 });
 

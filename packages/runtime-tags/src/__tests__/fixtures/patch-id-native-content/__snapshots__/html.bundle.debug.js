@@ -21,14 +21,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		_html("<div>");
-		_attr_content("#div/0", $scope2_id, Body, 0, void 0, 0, 0);
+		_attr_content("#div/0", $scope2_id, Body, 0, 1, 0, 0);
 		_html(`</div>${_el_resume($scope2_id, "#div/0", 0)}`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "2:2");
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
 	_for_of(input.items, (item) => {
 		const $scope3_id = _scope_id();
 		_html("<section");
-		_attrs_content({ content: Body }, "#section/0", $scope3_id, "section", 1, void 0, void 0, 0, 0);
+		_attrs_content({ content: Body }, "#section/0", $scope3_id, "section", 1, 1, 0, 0, 0);
 		_html(`</section>${_el_resume($scope3_id, "#section/0")}`);
 		_script($scope3_id, "__tests__/template.marko_3_Body#0:5");
 		_scope($scope3_id, {}, "__tests__/template.marko", "3:2", { "EventAttributes:#section/0": ["...{ content: Body }", "3:39"] });

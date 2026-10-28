@@ -6,7 +6,7 @@ _shells({ b: "b !;D l ;<p> </p><div></div>" });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_a = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_html(`<p>${_text_resume($scope0_id, "a", input.a + input.b, void 0, $scope0_reason, 0)}</p><div></div>${_el_resume($scope0_id, "b")}`);
+	_html(`<p>${_text_resume($scope0_id, "a", input.a + input.b, 1, $scope0_reason, 0)}</p><div></div>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b0", 1, _filled_guard($scope0_reason, 1), "e");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b3");
 	_scope($scope0_id, {

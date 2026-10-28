@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/text-view.marko": "__tests__/tags/text-view.marko;D ;<
 var text_view_default = _template("__tests__/tags/text-view.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<output>${_text_resume($scope0_id, "#text/0", input.get(), void 0, $scope0_reason, 0)}</output>`);
+	_html(`<output>${_text_resume($scope0_id, "#text/0", input.get(), 1, $scope0_reason, 0)}</output>`);
 	_scope($scope0_id, {}, "__tests__/tags/text-view.marko", 0);
 });
 

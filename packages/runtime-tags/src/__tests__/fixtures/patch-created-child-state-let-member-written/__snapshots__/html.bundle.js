@@ -7,7 +7,7 @@ var card_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let o = { label: input.label };
-	_html(`<p>${_text_resume($scope0_id, "a", o.label, void 0, 0, 0)}</p><button>log</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<p>${_text_resume($scope0_id, "a", o.label, 1, 0, 0)}</p><button>log</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b0");
 	_patch_write($scope0_id, "wh", o?.label, 1);
 	_scope($scope0_id, { h: o?.label });

@@ -12,7 +12,7 @@ var row_default = _template("__tests__/tags/row.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "#text/0", input.item.promise, (value) => {
 		const $scope1_id = _scope_id();
-		_html(`<em>${_text_resume($scope1_id, "#text/0", value, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", value, 1, $scope0_reason, 0)}</em>`);
 		_scope($scope1_id, {}, "__tests__/tags/row.marko", "1:2");
 	}, 1, "__tests__/tags/row.marko_1*content", 1);
 });

@@ -36,14 +36,14 @@ var template_default = _template("a", (input) => {
 		_try($scope1_id, "a", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<p>${_text_resume($scope2_id, "a", SITE, void 0, 0, 0)} ${_text_resume($scope2_id, "b", page.title, 2, $scope0_reason, 0)}</p>`);
+			_html(`<p>${_text_resume($scope2_id, "a", SITE, 1, 0, 0)} ${_text_resume($scope2_id, "b", page.title, 2, $scope0_reason, 0)}</p>`);
 			const $childScope = _peek_scope_id($scope2_id, "c", 0);
 			counter_default({});
 			_patch_child_end();
 			_if(() => {
 				if (page.fail) {
 					const $scope4_id = _scope_id();
-					_html(_text_resume($scope4_id, "a", throwIt(), void 0, 0, 0));
+					_html(_text_resume($scope4_id, "a", throwIt(), 1, 0, 0));
 					_scope($scope4_id, {});
 					return 0;
 				}

@@ -6,7 +6,7 @@ _shells({ b: "b;D%c%;<span class=title><!> <!></span>" });
 var demo_card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span class=title>${_text_resume($scope0_id, "a", input.name, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "b", input.progress, 2, $scope0_reason, 1)}</span>`);
+	_html(`<span class=title>${_text_resume($scope0_id, "a", input.name, 1, $scope0_reason, 0)} ${_text_resume($scope0_id, "b", input.progress, 2, $scope0_reason, 1)}</span>`);
 	_scope($scope0_id, {});
 });
 

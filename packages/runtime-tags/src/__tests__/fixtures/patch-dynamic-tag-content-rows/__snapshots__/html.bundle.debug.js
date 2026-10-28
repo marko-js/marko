@@ -10,14 +10,14 @@ _shells({
 var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $cg__input_rows = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</h1>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 1);
 	_html("<header>");
 	_dynamic_tag($scope0_id, "#text/2", input.header, {}, 10, 0, 0, _write_guard($scope0_reason, 2), $scope0_reason, 2);
 	_html("</header><ul>");
 	_for_of(input.rows, (n) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "#text/0", n, void 0, $scope0_reason, 3)}`);
+		_html(`<li>${_text_resume($scope1_id, "#text/0", n, 1, $scope0_reason, 3)}`);
 		_dynamic_tag($scope1_id, "#text/1", input.row, {}, 18, 0, 0, _write_guard($scope0_reason, 4), $scope0_reason, 4);
 		_html("</li>");
 		_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/tags/layout.marko_1_input_row#0:11/init");
@@ -26,7 +26,7 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 	_html(`</ul>${_el_resume($scope0_id, "#ul/3")}<ol>`);
 	_for_of(input.rows, (n) => {
 		const $scope2_id = _scope_id();
-		_html(`<li>${_text_resume($scope2_id, "#text/0", n, void 0, $scope0_reason, 3)}`);
+		_html(`<li>${_text_resume($scope2_id, "#text/0", n, 1, $scope0_reason, 3)}`);
 		_dynamic_tag($scope2_id, "#text/1", input.content, {}, 26, 0, 0, $wg__input_content, $scope0_reason, 1);
 		_html("</li>");
 		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/layout.marko_2_input_content#0:8/init");
@@ -63,13 +63,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		header: attrTag({ content: _content("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<b>${_text_resume($scope1_id, "#text/0", input.text, void 0, $scope0_reason, 3)}<input></b>`);
+			_html(`<b>${_text_resume($scope1_id, "#text/0", input.text, 1, $scope0_reason, 3)}<input></b>`);
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_text__closures, _scope($scope1_id, { _: $wi__input_text && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), $cg__input_text && "__tests__/template.marko_1_input_text#0:5/subscribe");
 		}, $scope0_id) }),
 		row: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<em>${_text_resume($scope2_id, "#text/0", input.text, void 0, $scope0_reason, 3)}<input></em>`);
+			_html(`<em>${_text_resume($scope2_id, "#text/0", input.text, 1, $scope0_reason, 3)}<input></em>`);
 			_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_text ? "__tests__/template.marko_2_input_text#0:5/init" : "__tests__/template.marko_2_input_text#0:5/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_text__closures, _scope($scope2_id, {
 				_: $wi__input_rows__OR__input_text && _scope_with_id($scope0_id),
@@ -79,7 +79,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content_resume("__tests__/template.marko_3*content", () => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<p>${_text_resume($scope3_id, "#text/0", input.text, void 0, $scope0_reason, 3)}<input></p>`);
+			_html(`<p>${_text_resume($scope3_id, "#text/0", input.text, 1, $scope0_reason, 3)}<input></p>`);
 			_unfilled_if($scope0_reason, 3) && _patch_init($scope3_id, $cg__input_text ? "__tests__/template.marko_3_input_text#0:5/init" : "__tests__/template.marko_3_input_text#0:5/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_text__closures, _scope($scope3_id, {
 				_: $wi__input_rows__OR__input_text && _scope_with_id($scope0_id),

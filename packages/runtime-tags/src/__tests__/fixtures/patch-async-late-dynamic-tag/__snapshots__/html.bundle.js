@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_await($scope1_id, "a", input.p, (v) => {
 			const $scope3_id = _scope_id();
-			_html(`<em>${_text_resume($scope3_id, "a", v, void 0, $scope0_reason, 2)}</em>`);
+			_html(`<em>${_text_resume($scope3_id, "a", v, 1, $scope0_reason, 2)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a1");
 		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a6");
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_await($scope2_id, "a", input.q, (w) => {
 			const $scope4_id = _scope_id();
-			_html(`<b>${_text_resume($scope4_id, "a", w, void 0, $scope0_reason, 3)}</b>`);
+			_html(`<b>${_text_resume($scope4_id, "a", w, 1, $scope0_reason, 3)}</b>`);
 			_scope($scope4_id, {});
 		}, 1, "a0");
 		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a7");

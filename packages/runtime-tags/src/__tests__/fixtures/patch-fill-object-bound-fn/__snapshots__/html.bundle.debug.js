@@ -26,7 +26,7 @@ _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !__tests__/t
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 2)} ${_text_resume($scope0_id, "#text/2", input.s.last, 2, $scope0_reason, 1)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, 1, $scope0_reason, 2)} ${_text_resume($scope0_id, "#text/2", input.s.last, 2, $scope0_reason, 1)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_scope($scope0_id, { input_s: input.s }, "__tests__/tags/child.marko", 0, { input_s: ["input.s"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_s", input.s, !_server_guard($scope0_reason, 0));
 });

@@ -12,7 +12,7 @@ _shells({
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<main><p>${_text_resume($scope0_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<main><p>${_text_resume($scope0_id, "#text/0", input.x, 1, $scope0_reason, 0)}</p>`);
 	_try($scope0_id, "#text/1", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (e) => {
 		const $scope4_reason = _scope_reason();
 		const $scope4_id = _scope_id();
-		_html(`<s>${_text_resume($scope4_id, "#text/0", e.message, void 0, 4, 0)}</s>`);
+		_html(`<s>${_text_resume($scope4_id, "#text/0", e.message, 1, 4, 0)}</s>`);
 		_scope($scope4_id, {}, "__tests__/template.marko", "9:6");
 	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_3*content", void 0, 1, 1);
 	_html("</main>");

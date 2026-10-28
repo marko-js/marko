@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_text_resume($scope3_id, "#text/0", label, void 0, $scope0_reason, 1)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "#text/0", label, 1, $scope0_reason, 1)}</em>`);
 				_client_guard($scope0_reason, 1) && _patch_init($scope3_id, "__tests__/template.marko_3_label#1:4/init");
 				_scope($scope3_id, { _: $wi__input_label && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4");
 				return 0;
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
-			const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0, 0, $scope0_id);
 			Panel.content({ isOpen: input.open });
 			_patch_child_end();
 			_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_open#0:7/init");

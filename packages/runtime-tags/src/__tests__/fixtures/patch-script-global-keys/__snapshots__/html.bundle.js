@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<main><h1>${_text_resume($scope0_id, "a", $global$1.other, void 0, 4, 0)}</h1></main>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", $global$1.other, 1, 4, 0)}</h1></main>`);
 	_fill_global_subscribe("a1", $scope0_id);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {});

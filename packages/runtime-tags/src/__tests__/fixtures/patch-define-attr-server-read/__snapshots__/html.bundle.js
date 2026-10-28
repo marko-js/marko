@@ -5,7 +5,7 @@ _shells({ c: "c;D ;<em> </em>" });
 var echo_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_text_resume($scope0_id, "a", input.text, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "a", input.text, 1, $scope0_reason, 0)}</em>`);
 	_scope($scope0_id, {});
 });
 
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const Foo = { label: input.label };
-	_html(`<span>${_text_resume($scope0_id, "a", Foo.label, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", Foo.label, 1, $scope0_reason, 0)}</span>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	echo_default({ text: Foo.label });

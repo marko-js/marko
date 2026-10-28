@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const row = { content: _content("__tests__/template.marko_1*content", (label) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<li>${_text_resume($scope1_id, "#text/0", label, void 0, $scope1_reason, 0)}: ${_text_resume($scope1_id, "#text/1", input.suffix, 2, $scope0_reason, 1)}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "#text/0", label, 1, $scope1_reason, 0)}: ${_text_resume($scope1_id, "#text/1", input.suffix, 2, $scope0_reason, 1)}</li>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_suffix ? "__tests__/template.marko_1_input_suffix#0:3/init" : "__tests__/template.marko_1_input_suffix#0:3/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_suffix__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), $cg__input_suffix && "__tests__/template.marko_1_input_suffix#0:3/subscribe");
 	}, $scope0_id) };
@@ -24,11 +24,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0, 0, $scope0_id);
 			row.content("a");
 			_patch_child_end();
 			_set_scope_reason(0);
-			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/1", 1, void 0, $scope0_id);
+			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/1", 1, 0, $scope0_id);
 			row.content("b");
 			_patch_child_end();
 			_scope($scope2_id, {

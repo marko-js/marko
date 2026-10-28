@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
-				_html(`<em>${_text_resume($scope4_id, "#text/0", label, void 0, $scope3_reason, 1)}</em>`);
+				_html(`<em>${_text_resume($scope4_id, "#text/0", label, 1, $scope3_reason, 1)}</em>`);
 				_client_guard($scope3_reason, 1) && _patch_init($scope4_id, "__tests__/template.marko_4_label#3:4/init");
 				_scope($scope4_id, { _: _write_if($scope3_reason, 1) && _scope_with_id($scope3_id) }, "__tests__/template.marko", "3:4");
 				return 0;
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope5_id = _scope_id();
 				_html(_text_resume($scope5_id, "#text/0", (() => {
 					throw new Error("fail");
-				})(), void 0, 0, 0));
+				})(), 1, 0, 0));
 				_scope($scope5_id, {}, "__tests__/template.marko", "8:4");
 				return 0;
 			}

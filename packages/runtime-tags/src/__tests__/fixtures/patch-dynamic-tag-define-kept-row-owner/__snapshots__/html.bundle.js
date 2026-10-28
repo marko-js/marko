@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	const Card = { content: _content_resume("a1", ({ label, content }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $wg__content = _write_guard($scope3_reason, 2);
-		_html(`<p>${_text_resume($scope3_id, "a", label, void 0, 4, 0)}`);
+		_html(`<p>${_text_resume($scope3_id, "a", label, 1, 4, 0)}`);
 		_if(() => {
 			if (label) {
 				const $scope4_id = _scope_id();
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	const Label = { content: _content_resume("a2", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<em>${_text_resume($scope1_id, "a", input.label, void 0, $scope0_reason, 1)} ${_text_resume($scope1_id, "b", n, 2)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", input.label, 1, $scope0_reason, 1)} ${_text_resume($scope1_id, "b", n, 2)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, _client_guard($scope0_reason, 1) ? "a4" : "a5");
 		_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 	}, $scope0_id) };

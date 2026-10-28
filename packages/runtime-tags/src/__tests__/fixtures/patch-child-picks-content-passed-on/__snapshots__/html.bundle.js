@@ -7,7 +7,7 @@ var view_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
-	_html(`<span>${_text_resume($scope0_id, "b", input.title, void 0, $scope0_reason, 1)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "b", input.title, 1, $scope0_reason, 1)}</span>`);
 	_scope($scope0_id, {});
 });
 

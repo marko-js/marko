@@ -6,7 +6,7 @@ var label_view_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const fmt = input.fmt ?? (() => "none");
-	_html(`<p>${_text_resume($scope0_id, "a", fmt(), void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", fmt(), 1, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, {});
 });
 

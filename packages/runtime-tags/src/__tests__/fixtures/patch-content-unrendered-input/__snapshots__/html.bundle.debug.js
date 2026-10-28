@@ -12,7 +12,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_html("<ul>");
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "#text/0", row.name, void 0, $scope0_reason, 0)}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "#text/0", row.name, 1, $scope0_reason, 0)}</li>`);
 		_scope($scope1_id, {}, "__tests__/tags/panel.marko", "1:6");
 	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/panel.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
@@ -118,7 +118,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		guest: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<p>${_text_resume($scope2_id, "#text/0", input.guestText, void 0, $scope0_reason, 5)}</p>`);
+			_html(`<p>${_text_resume($scope2_id, "#text/0", input.guestText, 1, $scope0_reason, 5)}</p>`);
 			_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, _client_guard($scope0_reason, 5) ? "__tests__/template.marko_2_input_guestText#0:8/init" : "__tests__/template.marko_2_input_guestText#0:8/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 5) && $input_guestText__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
 		}, $scope0_id) })
@@ -131,7 +131,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content_resume("__tests__/template.marko_3*content", () => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<p>${_text_resume($scope3_id, "#text/0", input.bodyText, void 0, $scope0_reason, 7)}</p>`);
+			_html(`<p>${_text_resume($scope3_id, "#text/0", input.bodyText, 1, $scope0_reason, 7)}</p>`);
 			_unfilled_if($scope0_reason, 7) && _patch_init($scope3_id, _client_guard($scope0_reason, 7) ? "__tests__/template.marko_3_input_bodyText#0:10/init" : "__tests__/template.marko_3_input_bodyText#0:10/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 7) && $input_bodyText__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"));
 		}, $scope0_id)

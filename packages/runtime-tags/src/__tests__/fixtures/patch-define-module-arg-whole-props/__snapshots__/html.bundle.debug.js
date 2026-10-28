@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Panel = { content: _content("__tests__/template.marko_2*content", (props) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<em>${_text_resume($scope2_id, "#text/0", props.fmt(props.label), void 0, $scope2_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope2_id, "#text/0", props.fmt(props.label), 1, $scope2_reason, 0)}</em>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "3:2");
 	}, $scope0_id) };
 	_if(() => {

@@ -17,7 +17,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 	_try($scope0_id, "#text/0", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_text_resume($scope2_id, "#text/0", input.fail ? boom() : "ok", void 0, $scope0_reason, 2)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", input.fail ? boom() : "ok", 1, $scope0_reason, 2)}</p>`);
 		_dynamic_tag($scope2_id, "#text/1", input.content, {}, 10, 0, 0, $wg__input_content, $scope0_reason, 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, _client_guard($scope0_reason, 1) ? "__tests__/tags/wrapper.marko_2_input_content#0:3/init" : "__tests__/tags/wrapper.marko_2_input_content#0:3/subscribe");
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_fail ? "__tests__/tags/wrapper.marko_2_input_fail#0:4/init" : "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe");

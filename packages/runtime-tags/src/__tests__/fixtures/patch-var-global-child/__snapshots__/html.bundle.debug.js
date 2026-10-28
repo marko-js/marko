@@ -8,7 +8,7 @@ var greet_default = _template("__tests__/tags/greet/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const double = input.n * 2;
-	_html(`<span>${_text_resume($scope0_id, "#text/0", $global$1.locale, void 0, 4, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", $global$1.locale, 1, 4, 0)}</span>`);
 	const $return = double;
 	_fill_global_subscribe("__tests__/tags/greet/index.marko_0_$global_locale#5", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/tags/greet/index.marko", 0);

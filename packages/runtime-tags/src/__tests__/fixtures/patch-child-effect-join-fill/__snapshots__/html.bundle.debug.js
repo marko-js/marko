@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !;D l ;<p> <
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_a = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_html(`<p>${_text_resume($scope0_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 0)}</p><div></div>${_el_resume($scope0_id, "#div/1")}`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.a + input.b, 1, $scope0_reason, 0)}</p><div></div>${_el_resume($scope0_id, "#div/1")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_input_a#4", 1, _filled_guard($scope0_reason, 1), "input_a");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/child.marko_0_input_a#4_input_b#5/init");
 	_scope($scope0_id, {

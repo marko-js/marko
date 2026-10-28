@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	const foo = { content: _content("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<em>${_text_resume($scope1_id, "a", input.x, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", input.x, 1, $scope0_reason, 0)}</em>`);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
 	}, $scope0_id) };
 	_if(() => {

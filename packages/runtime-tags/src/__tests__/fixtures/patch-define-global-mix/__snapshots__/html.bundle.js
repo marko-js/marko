@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	const Badge = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $cg__input_value = _client_guard($scope1_reason, 0);
-		_html(`<p>${_text_resume($scope1_id, "a", input.value + $global$1.flag, void 0, (2 | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", input.value + $global$1.flag, 1, (2 | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
 		_fill_global_subscribe("a1", $scope1_id, $cg__input_value);
 		$cg__input_value && _patch_write($scope1_id, "wd", input.value, 1);
 		_scope($scope1_id, { d: _unfilled_if($scope1_reason, 0) && input.value });

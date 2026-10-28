@@ -41,7 +41,7 @@ var card_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "a", input.on ? keeper_default : "div", {}, 2, _content_resume("b0", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
-			_html(`<em>${_text_resume($scope2_id, "a", input.note, void 0, $scope0_reason, 4)} ${_text_resume($scope2_id, "b", v, 2, $scope0_reason, 2)}</em>`);
+			_html(`<em>${_text_resume($scope2_id, "a", input.note, 1, $scope0_reason, 4)} ${_text_resume($scope2_id, "b", v, 2, $scope0_reason, 2)}</em>`);
 			_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, _client_guard($scope0_reason, 4) ? "b1" : "b2");
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, _client_guard($scope0_reason, 2) ? "b3" : "b4");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope2_id, { _: $wi__input_v__OR__input_on__OR__input_note && _scope_with_id($scope1_id) })));

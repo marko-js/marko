@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", item.promise, (value) => {
 			const $scope2_id = _scope_id();
-			_html(`<em>${_text_resume($scope2_id, "#text/0", value, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_resume($scope2_id, "#text/0", value, 1, $scope0_reason, 0)}</em>`);
 			_scope($scope2_id, {}, "__tests__/template.marko", "3:6");
 		}, 1, "__tests__/template.marko_2*content");
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "2:4");

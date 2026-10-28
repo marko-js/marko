@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_text_resume($scope3_id, "#text/0", v, void 0, $scope1_reason, 0)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "#text/0", v, 1, $scope1_reason, 0)}</em>`);
 				_client_guard($scope1_reason, 0) && _patch_init($scope3_id, "__tests__/template.marko_3_v#1:3/init");
 				_scope($scope3_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4");
 				return 0;

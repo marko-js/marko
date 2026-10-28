@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let label = labeler_default({ title: input.title });
 	$cg__input_title && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_label#9/var");
 	_patch_child_end();
-	_html(`<p>${_text_resume($scope0_id, "#text/2", label, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "#text/3", count, 2)}</p><button>+</button>${_el_resume($scope0_id, "#button/4")}</main>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/2", label, 1, $scope0_reason, 0)} ${_text_resume($scope0_id, "#text/3", count, 2)}</p><button>+</button>${_el_resume($scope0_id, "#button/4")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,

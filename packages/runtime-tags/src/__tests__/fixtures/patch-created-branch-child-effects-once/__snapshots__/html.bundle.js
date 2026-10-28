@@ -74,7 +74,7 @@ var template_default = _template("a", (input) => {
 			_for_of(input.items, (item) => {
 				const $scope5_id = _scope_id();
 				_filled_guard($scope0_reason, 4) && _patch_write($scope5_id, "xc", item, !$sg__input_items);
-				_html(`<i>${_text_resume($scope5_id, "a", item, void 0, $scope0_reason, 4)}</i>`);
+				_html(`<i>${_text_resume($scope5_id, "a", item, 1, $scope0_reason, 4)}</i>`);
 				_script($scope5_id, "a2", 1, _filled_guard($scope0_reason, 4), "c");
 				_scope($scope5_id, { c: item });
 			}, 0, $scope1_id, "c", 1, void 0, void 0, void 0, void 0, "a3", $scope0_reason, 4);

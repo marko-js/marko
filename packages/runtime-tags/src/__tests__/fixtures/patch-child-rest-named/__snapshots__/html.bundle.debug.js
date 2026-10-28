@@ -7,7 +7,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { label, ...rest } = input;
-	_html(`<h2>${_text_resume($scope0_id, "#text/0", label, void 0, $scope0_reason, 0)}</h2><p>${_text_resume($scope0_id, "#text/1", JSON.stringify(rest), void 0, $scope0_reason, 1)}</p>`);
+	_html(`<h2>${_text_resume($scope0_id, "#text/0", label, 1, $scope0_reason, 0)}</h2><p>${_text_resume($scope0_id, "#text/1", JSON.stringify(rest), 1, $scope0_reason, 1)}</p>`);
 	_scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 });
 

@@ -7,7 +7,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = input.count + 10;
-	_html(`<span>${_text_resume($scope0_id, "#text/0", n, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", n, 1, (_mask_group($scope0_reason, 0) & 1) << 1, 0)}</span>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_n#4");
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:n", n, 1);
 	_scope($scope0_id, { n }, "__tests__/tags/child.marko", 0, { n: "1:6" });

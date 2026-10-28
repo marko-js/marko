@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		a,
 		b
 	};
-	_html(`<p>${_text_resume($scope0_id, "#text/0", input.x, void 0, $scope0_reason, 1)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.x, 1, $scope0_reason, 1)}</p>`);
 	_script($scope0_id, "__tests__/template.marko_0_c#8", 1, _filled_guard($scope0_reason, 0), _filled_guard($scope0_reason, 2) && "input_y", _filled_guard($scope0_reason, 1) && "input_x");
 	_scope($scope0_id, {
 		a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && a,

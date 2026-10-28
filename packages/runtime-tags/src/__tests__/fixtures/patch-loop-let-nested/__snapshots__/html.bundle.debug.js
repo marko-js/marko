@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<ul>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "#text/0", item.label, void 0, $scope0_reason, 0)}`);
+		_html(`<li>${_text_resume($scope1_id, "#text/0", item.label, 1, $scope0_reason, 0)}`);
 		_if(() => {
 			if (item.detailed) {
 				const $scope2_id = _scope_id();

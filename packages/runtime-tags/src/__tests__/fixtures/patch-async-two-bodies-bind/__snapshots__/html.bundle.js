@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_await($scope0_id, "a", input.first, (first) => {
 		const $scope1_id = _scope_id();
-		_html(`<em>${_text_resume($scope1_id, "a", first, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", first, 1, $scope0_reason, 0)}</em>`);
 		_scope($scope1_id, {});
 	}, 1, "a2", 1);
 	_await($scope0_id, "b", input.second, (second) => {
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		_html(`<button${_attrs({
 			title: second,
 			onClick: handler
-		}, "a", $scope2_id, "button", void 0, $scope0_reason, 1)}>${_text_resume($scope2_id, "b", second, void 0, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "a")}`);
+		}, "a", $scope2_id, "button", 0, $scope0_reason, 1)}>${_text_resume($scope2_id, "b", second, 1, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "a")}`);
 		_script($scope2_id, "a5");
 		$cg__input_second && _patch_write($scope2_id, "we", handler, 1);
 		$cg__input_second && _patch_init($scope2_id, "a6");

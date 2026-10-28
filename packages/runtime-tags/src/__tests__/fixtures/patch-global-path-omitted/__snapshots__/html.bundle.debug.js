@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}<p>${_text_resume($scope0_id, "#text/1", $global$1.k, void 0, 4, 0)}</p>`);
+	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}<p>${_text_resume($scope0_id, "#text/1", $global$1.k, 1, 4, 0)}</p>`);
 	_fill_global_subscribe("__tests__/template.marko_0_$global_k#7", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0_$global_o_x#5");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);

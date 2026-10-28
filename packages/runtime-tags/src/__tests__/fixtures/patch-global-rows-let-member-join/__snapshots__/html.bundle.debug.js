@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/number-stepper.marko": "__tests__/tags/number-stepper.
 var number_stepper_default = _template("__tests__/tags/number-stepper.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<button class=dec>-</button>${_el_resume($scope0_id, "#button/0")}<span class=v>${_text_resume($scope0_id, "#text/1", input.value, void 0, $scope0_reason, 1)}</span><button class=inc>+</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button class=dec>-</button>${_el_resume($scope0_id, "#button/0")}<span class=v>${_text_resume($scope0_id, "#text/1", input.value, 1, $scope0_reason, 1)}</span><button class=inc>+</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/number-stepper.marko_0");
 	_scope($scope0_id, {
 		input_valueChange: input.valueChange,
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const item = row.item;
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", item?.value);
 		let qty = row.qty;
-		_html(`<article><strong>${_text_resume($scope1_id, "#text/0", item.name, void 0, 4, 0)}</strong><form>`);
+		_html(`<article><strong>${_text_resume($scope1_id, "#text/0", item.name, 1, 4, 0)}</strong><form>`);
 		_set_scope_reason(72);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 		number_stepper_default({

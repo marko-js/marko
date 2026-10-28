@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let on = false;
 	const label = input.no + "!";
-	_html(`<main><h2>${_text_resume($scope0_id, "#text/0", input.yes, void 0, $scope0_reason, 1)}</h2>`);
+	_html(`<main><h2>${_text_resume($scope0_id, "#text/0", input.yes, 1, $scope0_reason, 1)}</h2>`);
 	_if(() => {
 		if (on) {
 			const $scope1_id = _scope_id();

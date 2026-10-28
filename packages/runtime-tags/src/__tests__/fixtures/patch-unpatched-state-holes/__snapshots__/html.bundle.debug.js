@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let attrs = { title: "a" };
 	_html("<div id=spread");
 	_attrs_partial_content(attrs, { id: 1 }, "#div/0", $scope0_id, "div", 0);
-	_html(`</div>${_el_resume($scope0_id, "#div/0")}<input name=spread${_attrs_partial(attrs, { name: 1 }, "#input/1", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/1")}<div>${_html_resume($scope0_id, "#text/2", html)}</div><p>${_text_resume($scope0_id, "#text/3", input.n, void 0, $scope0_reason, 0)}</p><button>+</button>${_el_resume($scope0_id, "#button/4")}`);
+	_html(`</div>${_el_resume($scope0_id, "#div/0")}<input name=spread${_attrs_partial(attrs, { name: 1 }, "#input/1", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/1")}<div>${_html_resume($scope0_id, "#text/2", html)}</div><p>${_text_resume($scope0_id, "#text/3", input.n, 1, $scope0_reason, 0)}</p><button>+</button>${_el_resume($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_attrs#9");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, {

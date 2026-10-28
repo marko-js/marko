@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 		let store = store_default({});
 		_var($scope1_id, "b", $childScope, "a0");
 		_patch_child_end();
-		_html(`<p>${_text_resume($scope1_id, "c", name, void 0, 0, 0)}:${_text_resume($scope1_id, "d", store.last, 2)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "c", name, 1, 0, 0)}:${_text_resume($scope1_id, "d", store.last, 2)}</p>`);
 		_for_of(["y", "x"], (other) => {
 			const $scope2_id = _scope_id();
 			_if(() => {

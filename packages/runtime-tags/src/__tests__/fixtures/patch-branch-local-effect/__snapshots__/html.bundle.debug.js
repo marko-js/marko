@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			const label = input.title + "!";
 			_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !$sg__input_title);
-			_html(`<p>${_text_resume($scope1_id, "#text/0", label, void 0, $scope0_reason, 2)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", label, 1, $scope0_reason, 2)}</p>`);
 			_if(() => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();

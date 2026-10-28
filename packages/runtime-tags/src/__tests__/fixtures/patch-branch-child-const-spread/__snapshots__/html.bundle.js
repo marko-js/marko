@@ -6,7 +6,7 @@ _shells({ b: "b !b0; D ;<div id=fixed> </div>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div id=fixed${_attrs_partial(input.attrs, { id: 1 }, "a", $scope0_id, "div", void 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "b", input.title, void 0, $scope0_reason, 1)}</div>${_el_resume($scope0_id, "a")}`);
+	_html(`<div id=fixed${_attrs_partial(input.attrs, { id: 1 }, "a", $scope0_id, "div", 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "b", input.title, 1, $scope0_reason, 1)}</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });

@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/labeler.marko": "^__tests__/tags/labeler.marko;D ;<spa
 var labeler_default = _template("__tests__/tags/labeler.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</span>`);
 	const $return = "[" + input.title + "]";
 	_scope($scope0_id, {}, "__tests__/tags/labeler.marko", 0);
 	return $return;

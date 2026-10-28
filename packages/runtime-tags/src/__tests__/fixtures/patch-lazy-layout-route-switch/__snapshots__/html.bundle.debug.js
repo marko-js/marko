@@ -16,7 +16,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_for_of(list, (item) => {
 			const $scope2_id = _scope_id();
-			_html(`<a>${_text_resume($scope2_id, "#text/0", item, void 0, $scope0_reason, 0)}</a>`);
+			_html(`<a>${_text_resume($scope2_id, "#text/0", item, 1, $scope0_reason, 0)}</a>`);
 			_scope($scope2_id, {}, "__tests__/layout.marko", "3:6");
 		}, 0, $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/layout.marko_2*shell", $scope0_reason, 0);
 		_scope($scope1_id, {}, "__tests__/layout.marko", "2:4");

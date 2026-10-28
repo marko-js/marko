@@ -14,10 +14,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_attr_select_value($scope0_id, "#select/0", v, _resume((_new_v) => {
 		v = _new_v;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id), () => {
-		_html(`<select><option${_attrs(input.a, "#option/1", $scope0_id, "option", void 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/2", input.label, void 0, $scope0_reason, 1)}</option>${_el_resume($scope0_id, "#option/1")}<option${_attr_option_value("b")}>b</option><option${_attrs({
+		_html(`<select><option${_attrs(input.a, "#option/1", $scope0_id, "option", 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/2", input.label, 1, $scope0_reason, 1)}</option>${_el_resume($scope0_id, "#option/1")}<option${_attr_option_value("b")}>b</option><option${_attrs({
 			value: "c",
 			...input.c
-		}, "#option/3", $scope0_id, "option", void 0, $scope0_reason, 2)}>c</option>${_el_resume($scope0_id, "#option/3")}</select>`);
+		}, "#option/3", $scope0_id, "option", 0, $scope0_reason, 2)}>c</option>${_el_resume($scope0_id, "#option/3")}</select>`);
 	}, void 0, void 0, void 0, "PatchWrite:ControlledHandler:#select/0");
 	_html(`${_el_resume($scope0_id, "#select/0")}<span>${_text_resume($scope0_id, "#text/4", v)}</span><button>t</button>${_el_resume($scope0_id, "#button/5")}`);
 	_script($scope0_id, "__tests__/template.marko_0_input_c#10");

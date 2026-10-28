@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		content: _content("a0", (i) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(_text_resume($scope1_id, "a", i, void 0, 4, 0));
+			_html(_text_resume($scope1_id, "a", i, 1, 4, 0));
 			_scope($scope1_id, {});
 		}, $scope0_id, 1)
 	});

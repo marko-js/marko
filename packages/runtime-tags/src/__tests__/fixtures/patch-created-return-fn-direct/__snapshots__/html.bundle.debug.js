@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$cg__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_r#5/var");
 			_patch_child_end();
 			let shown = "-";
-			_html(`<p>${_text_resume($scope1_id, "#text/2", r.fn(), void 0, $scope0_reason, 1)} ${_text_resume($scope1_id, "#text/3", shown, 2, 0, 0, 1)}</p><button>show</button>${_el_resume($scope1_id, "#button/4")}`);
+			_html(`<p>${_text_resume($scope1_id, "#text/2", r.fn(), 1, $scope0_reason, 1)} ${_text_resume($scope1_id, "#text/3", shown, 2, 0, 0, 1)}</p><button>show</button>${_el_resume($scope1_id, "#button/4")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			$cg__input_label && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:4/init");
 			_scope($scope1_id, {

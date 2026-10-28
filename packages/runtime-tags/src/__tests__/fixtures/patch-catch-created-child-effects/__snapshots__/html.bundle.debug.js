@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !__tests__/t
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.message, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.message, 1, $scope0_reason, 0)}</span>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_input_count#5", 1, _filled_guard($scope0_reason, 2), "input_count");
 	_script($scope0_id, "__tests__/tags/child.marko_0_input_label#4", 1, _filled_guard($scope0_reason, 1), "input_label");
 	_script($scope0_id, "__tests__/tags/child.marko_0_input_message#3", 1, _filled_guard($scope0_reason, 0), "input_message");
@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_try($scope0_id, "#text/2", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_text_resume($scope2_id, "#text/0", input.fail ? boom(input.msg) : input.msg, void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", input.fail ? boom(input.msg) : input.msg, 1, $scope0_reason, 0)}</p>`);
 		(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "__tests__/template.marko_2_input_msg#0:5/subscribe");
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "__tests__/template.marko_2_input_fail#0:6/subscribe");
 		_patch_join_init($scope2_id, "__tests__/template.marko_2_input_msg#0:5_input_fail#0:6/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">input_msg", _filled_guard($scope0_reason, 2) && ">input_fail");

@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 	const Card = { content: _content("a0", ({ opts }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<p>${_text_resume($scope2_id, "a", opts.fn(), void 0, (_mask_group($scope2_reason, 0) & 1) << 1, 0)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "a", opts.fn(), 1, (_mask_group($scope2_reason, 0) & 1) << 1, 0)}</p>`);
 		_scope($scope2_id, {});
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);

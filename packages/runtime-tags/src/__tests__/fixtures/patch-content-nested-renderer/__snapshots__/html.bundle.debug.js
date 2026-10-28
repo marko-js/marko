@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			card_default({ content: _content("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<p>${_text_resume($scope2_id, "#text/0", input.note, void 0, $scope0_reason, 2)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "#text/0", input.note, 1, $scope0_reason, 2)}</p>`);
 				_dynamic_tag($scope2_id, "#text/1", input.inner, {}, 2, 0, 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_note#0:4/init");
 				_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_inner#0:5/init");

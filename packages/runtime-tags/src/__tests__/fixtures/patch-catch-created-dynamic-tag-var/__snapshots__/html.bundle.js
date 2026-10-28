@@ -3,7 +3,7 @@ _shells({ b: "b;D ;<em> </em>" });
 var huge_label_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</em>`);
 	const $return = input.label + "!";
 	_scope($scope0_id, {});
 	return $return;
@@ -14,7 +14,7 @@ _shells({ c: "c;D ;<b> </b>" });
 var tiny_label_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<b>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</b>`);
 	const $return = input.label + "?";
 	_scope($scope0_id, {});
 	return $return;
@@ -38,13 +38,13 @@ var template_default = _template("a", (input) => {
 	_try($scope0_id, "a", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_text_resume($scope2_id, "a", input.fail ? boom() : "ok", void 0, $scope0_reason, 3)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "a", input.fail ? boom() : "ok", 1, $scope0_reason, 3)}</p>`);
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_fail ? "a4" : "a5");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), $cg__input_fail && "a5");
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<b>${_text_resume($scope1_id, "a", err.message, void 0, 4, 0)}</b>`);
+		_html(`<b>${_text_resume($scope1_id, "a", err.message, 1, 4, 0)}</b>`);
 		const $inputbigBigSmall_scope = _peek_scope_id();
 		let v = _dynamic_tag($scope1_id, "b", input.big ? huge_label_default : tiny_label_default, { label: input.label }, 5, void 0, void 0, void 0, $scope0_reason, 0, void 0, void 0, void 0, "a0");
 		_var($scope1_id, "c", $inputbigBigSmall_scope, "a0");

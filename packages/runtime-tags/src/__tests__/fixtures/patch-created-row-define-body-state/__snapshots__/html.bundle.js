@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_await($scope3_id, "a", value, (v) => {
 				const $scope4_id = _scope_id();
-				_html(`<p>${_text_resume($scope4_id, "a", id, void 0, $scope2_reason, 0)}:${_text_resume($scope4_id, "b", v, 2, $scope2_reason, 1)}:${_text_resume($scope4_id, "c", count, 2)}</p>`);
+				_html(`<p>${_text_resume($scope4_id, "a", id, 1, $scope2_reason, 0)}:${_text_resume($scope4_id, "b", v, 2, $scope2_reason, 1)}:${_text_resume($scope4_id, "c", count, 2)}</p>`);
 				_unfilled_if($scope2_reason, 0) && _patch_init($scope4_id, _client_guard($scope2_reason, 0) ? "a1" : "a2");
 				_subscribe(_unfilled_if($scope2_reason, 0) && $Info_content__id__closures, _subscribe($count__closures, _scope($scope4_id, {}), "a3"), "a2");
 			}, 1, "a4");
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 2) << 3);
-		const $childScope = _peek_scope_id($scope1_id, "a", 0, void 0, $scope0_id);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0, 0, $scope0_id);
 		Info.content({
 			id: item,
 			value: input.value

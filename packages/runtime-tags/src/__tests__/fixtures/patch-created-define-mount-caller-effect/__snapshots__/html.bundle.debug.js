@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
-			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1, void 0, $scope0_id);
+			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1, 0, $scope0_id);
 			Info.content({ label: input.label });
 			_patch_child_end();
 			_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:8/init");

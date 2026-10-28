@@ -42,11 +42,11 @@ var template_default = _template("a", (input) => {
 		const g = _bind_resume(function() {
 			return v;
 		}, "a1", $scope1_id);
-		_html(`<span>${_text_resume($scope1_id, "a", f(), void 0, $scope0_reason, 2)}</span>`);
+		_html(`<span>${_text_resume($scope1_id, "a", f(), 1, $scope0_reason, 2)}</span>`);
 		_if(() => {
 			if (input.x) {
 				const $scope4_id = _scope_id();
-				_html(`<em>${_text_resume($scope4_id, "a", g(), void 0, $scope0_reason, 0)}</em>`);
+				_html(`<em>${_text_resume($scope4_id, "a", g(), 1, $scope0_reason, 0)}</em>`);
 				_client_guard($scope0_reason, 0) && _patch_init($scope4_id, "a3");
 				_scope($scope4_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) });
 				return 0;
@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a7", $scope0_reason, 3);
 	_await($scope0_id, "b", input.value, (v) => {
 		const $scope3_id = _scope_id();
-		_html(`<b>${_text_resume($scope3_id, "a", v, void 0, $scope0_reason, 5)}${_text_resume($scope3_id, "b", f(), 2, $scope0_reason, 2)}</b>`);
+		_html(`<b>${_text_resume($scope3_id, "a", v, 1, $scope0_reason, 5)}${_text_resume($scope3_id, "b", f(), 2, $scope0_reason, 2)}</b>`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope3_id, $cg__input_a ? "a12" : "a13");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $f2__closures, _scope($scope3_id, {}), $cg__input_a && "a13");
 	}, 1, "a5", 1);
@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (input.x) {
 				const $scope5_id = _scope_id();
-				_html(`<i>${_text_resume($scope5_id, "a", h(), void 0, $scope2_reason, 0)}</i>`);
+				_html(`<i>${_text_resume($scope5_id, "a", h(), 1, $scope2_reason, 0)}</i>`);
 				_client_guard($scope2_reason, 0) && _patch_init($scope5_id, "a14");
 				_scope($scope5_id, { _: _write_if($scope2_reason, 0) && _scope_with_id($scope2_id) });
 				return 0;

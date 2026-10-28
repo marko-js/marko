@@ -9,7 +9,7 @@ var text_field_default = _template("b", (input) => {
 	_html(`<input${_attr_input_value($scope0_id, "a", value, valueChange, "n2a", $scope0_reason, 0, "wEa", $scope0_reason, 0)}${_attrs_partial(attrs, {
 		value: 1,
 		valueChange: 1
-	}, "a", $scope0_id, "input", void 0, $scope0_reason, 3)}>${_el_resume($scope0_id, "a")}`);
+	}, "a", $scope0_id, "input", 0, $scope0_reason, 3)}>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_script($scope0_id, "b1");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b4");

@@ -15,7 +15,7 @@ var page_default = _template("__tests__/tags/page.marko", (input) => {
 	_await($scope0_id, "#text/0", input.promise, (v) => {
 		const $scope1_id = _scope_id();
 		let open = false;
-		_html(`<button>${_text_resume($scope1_id, "#text/1", v, void 0, $scope0_reason, 0)} ${_text_resume($scope1_id, "#text/2", likes, 2)} ${_text_resume($scope1_id, "#text/3", open ? "open" : "closed", 2)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button>${_text_resume($scope1_id, "#text/1", v, 1, $scope0_reason, 0)} ${_text_resume($scope1_id, "#text/2", likes, 2)} ${_text_resume($scope1_id, "#text/3", open ? "open" : "closed", 2)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/page.marko_1");
 		_patch_fill($scope1_id, "PatchFill:__tests__/tags/page.marko_fill1", open, 1);
 		_subscribe($likes__closures, _scope($scope1_id, { open }, "__tests__/tags/page.marko", "2:2", { open: "3:8" }), "__tests__/tags/page.marko_1_likes#0:4/subscribe");

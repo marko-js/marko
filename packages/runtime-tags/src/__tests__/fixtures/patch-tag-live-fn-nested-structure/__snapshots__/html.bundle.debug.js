@@ -22,7 +22,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			_if(() => {
 				if (input.y) {
 					const $scope2_id = _scope_id();
-					_html(`<button class=read>${_text_resume($scope2_id, "#text/1", f(), void 0, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "#button/0")}`);
+					_html(`<button class=read>${_text_resume($scope2_id, "#text/1", f(), 1, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "#button/0")}`);
 					_script($scope2_id, "__tests__/tags/panel.marko_2");
 					$cg__input_a && _patch_init($scope2_id, "__tests__/tags/panel.marko_2_f#1:1/init");
 					_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "4:4");
@@ -39,7 +39,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 0);
-	_html(`<output>${_text_resume($scope0_id, "#text/1", out, void 0, 0, 0, 1)}</output>`);
+	_html(`<output>${_text_resume($scope0_id, "#text/1", out, 1, 0, 0, 1)}</output>`);
 	_scope($scope0_id, {
 		input_a: input.a,
 		input_y: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.y

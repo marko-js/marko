@@ -10,6 +10,6 @@ _shells({ "__tests__/template.marko": "__tests__/template.marko;D ;<a href=\"/\"
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<a href="/">${_text_resume($scope0_id, "#text/0", random(), void 0, 0, 0)}</a>`);
+	_html(`<a href="/">${_text_resume($scope0_id, "#text/0", random(), 1, 0, 0)}</a>`);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

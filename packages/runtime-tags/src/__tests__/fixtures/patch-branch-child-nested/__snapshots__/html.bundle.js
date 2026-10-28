@@ -16,7 +16,7 @@ var card_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<section class=card><h2>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2><button class=toggle>toggle</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<section class=card><h2>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h2><button class=toggle>toggle</button>${_el_resume($scope0_id, "b")}`);
 	_if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
 	_html("</section>");
 	_script($scope0_id, "c0");

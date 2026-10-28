@@ -26,13 +26,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.outer, (a) => {
 			const $scope2_id = _scope_id();
-			_html(`<div id=outer>${_text_resume($scope2_id, "#text/0", input.msg, void 0, $scope0_reason, 3)} ${_text_resume($scope2_id, "#text/1", a, 2, $scope0_reason, 2)}</div>`);
+			_html(`<div id=outer>${_text_resume($scope2_id, "#text/0", input.msg, 1, $scope0_reason, 3)} ${_text_resume($scope2_id, "#text/1", a, 2, $scope0_reason, 2)}</div>`);
 			_try($scope2_id, "#text/2", () => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
 				_await($scope3_id, "#text/0", input.inner, (b) => {
 					const $scope4_id = _scope_id();
-					_html(`<div id=inner>${_text_resume($scope4_id, "#text/0", input.msg, void 0, $scope0_reason, 3)} ${_text_resume($scope4_id, "#text/1", b, 2, $scope0_reason, 4)}</div>`);
+					_html(`<div id=inner>${_text_resume($scope4_id, "#text/0", input.msg, 1, $scope0_reason, 3)} ${_text_resume($scope4_id, "#text/1", b, 2, $scope0_reason, 4)}</div>`);
 					_unfilled_if($scope0_reason, 3) && _patch_init($scope4_id, $cg__input_msg ? "__tests__/template.marko_4_input_msg#0:6/init" : "__tests__/template.marko_4_input_msg#0:6/subscribe");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope4_id, { "ClosureSignalIndex:input_msg/10": $wi__input_msg && 1 }, "__tests__/template.marko", "7:8"), $cg__input_msg && "__tests__/template.marko_4_input_msg#0:6/subscribe");
 				}, 1, "__tests__/template.marko_4*content", 1);

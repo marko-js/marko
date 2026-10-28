@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 		$item = attrTags($item, { content: _content_resume("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_text_resume($scope1_id, "a", label, void 0, 4, 0)}:${_text_resume($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "a", label, 1, 4, 0)}:${_text_resume($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</em>`);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
 		}, $scope0_id, () => [{ 2: label }]) });
 	});

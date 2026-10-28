@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/huge-label.marko": "^__tests__/tags/huge-label.marko;D
 var huge_label_default = _template("__tests__/tags/huge-label.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)}</em>`);
 	const $return = input.label + "!";
 	_scope($scope0_id, {}, "__tests__/tags/huge-label.marko", 0);
 	return $return;
@@ -20,7 +20,7 @@ _shells({ "__tests__/tags/tiny-label.marko": "^__tests__/tags/tiny-label.marko;D
 var tiny_label_default = _template("__tests__/tags/tiny-label.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<b>${_text_resume($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)}</b>`);
 	const $return = input.label + "?";
 	_scope($scope0_id, {}, "__tests__/tags/tiny-label.marko", 0);
 	return $return;
@@ -47,13 +47,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_try($scope0_id, "#text/0", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_text_resume($scope2_id, "#text/0", input.fail ? boom() : "ok", void 0, $scope0_reason, 3)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", input.fail ? boom() : "ok", 1, $scope0_reason, 3)}</p>`);
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_fail ? "__tests__/template.marko_2_input_fail#0:5/init" : "__tests__/template.marko_2_input_fail#0:5/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"), $cg__input_fail && "__tests__/template.marko_2_input_fail#0:5/subscribe");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<b>${_text_resume($scope1_id, "#text/0", err.message, void 0, 4, 0)}</b>`);
+		_html(`<b>${_text_resume($scope1_id, "#text/0", err.message, 1, 4, 0)}</b>`);
 		const $inputbigBigSmall_scope = _peek_scope_id();
 		let v = _dynamic_tag($scope1_id, "#text/1", input.big ? huge_label_default : tiny_label_default, { label: input.label }, 5, void 0, void 0, void 0, $scope0_reason, 0, void 0, void 0, void 0, "__tests__/template.marko_1_v#8/var");
 		_var($scope1_id, "#scopeOffset/2", $inputbigBigSmall_scope, "__tests__/template.marko_1_v#8/var");

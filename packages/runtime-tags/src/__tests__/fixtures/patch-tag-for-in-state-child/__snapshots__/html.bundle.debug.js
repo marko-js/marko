@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko;D%b%b%;<span
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.a, void 0, $scope0_reason, 1)}${_text_resume($scope0_id, "#text/1", input.b, 2, $scope0_reason, 2)}${_text_resume($scope0_id, "#text/2", typeof input.get === "function" ? input.get() : "", 2, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.a, 1, $scope0_reason, 1)}${_text_resume($scope0_id, "#text/1", input.b, 2, $scope0_reason, 2)}${_text_resume($scope0_id, "#text/2", typeof input.get === "function" ? input.get() : "", 2, $scope0_reason, 0)}</span>`);
 	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

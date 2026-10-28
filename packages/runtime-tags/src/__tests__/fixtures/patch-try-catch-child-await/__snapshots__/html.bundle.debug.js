@@ -13,7 +13,7 @@ var loader_default = _template("__tests__/tags/loader.marko", (input) => {
 	_html("<div class=ld>");
 	_await($scope0_id, "#text/0", input.promise, (v) => {
 		const $scope1_id = _scope_id();
-		_html(`<em>${_text_resume($scope1_id, "#text/0", v, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", v, 1, $scope0_reason, 0)}</em>`);
 		_scope($scope1_id, {}, "__tests__/tags/loader.marko", "1:18");
 	}, 1, "__tests__/tags/loader.marko_1*content", 1);
 	_html("</div>");
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<b>${_text_resume($scope2_id, "#text/0", err.message, void 0, 4, 0)}</b>`);
+		_html(`<b>${_text_resume($scope2_id, "#text/0", err.message, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "4:6");
 	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, 1, 1);
 	_html("</main>");

@@ -24,7 +24,7 @@ var shape_default = _template("b", (input) => {
 		_if(() => {
 			if (on) {
 				const $scope2_id = _scope_id();
-				_html(`<span>${_text_resume($scope2_id, "a", f(), void 0, $scope0_reason, 1)}</span>`);
+				_html(`<span>${_text_resume($scope2_id, "a", f(), 1, $scope0_reason, 1)}</span>`);
 				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_a ? "b1" : "b2");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $f2__closures, _scope($scope2_id, { _: ($wi__input_a || $wi__on) && _scope_with_id($scope1_id) }), $cg__input_a && "b2");
 				return 0;

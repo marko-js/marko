@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", input.on ? card_default : "div", {}, 2, _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
-			_html(`<em>${_text_resume($scope2_id, "#text/0", input.note, void 0, $scope0_reason, 4)} ${_text_resume($scope2_id, "#text/1", v, 2, $scope0_reason, 2)}</em>`);
+			_html(`<em>${_text_resume($scope2_id, "#text/0", input.note, 1, $scope0_reason, 4)} ${_text_resume($scope2_id, "#text/1", v, 2, $scope0_reason, 2)}</em>`);
 			_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, $cg__input_note ? "__tests__/template.marko_2_input_note#0:6/init" : "__tests__/template.marko_2_input_note#0:6/subscribe");
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, _client_guard($scope0_reason, 2) ? "__tests__/template.marko_2_v#1:2/init" : "__tests__/template.marko_2_v#1:2/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope2_id, { _: $wi__input_v__OR__input_on__OR__input_note && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:8")));
@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/1", input.on ? card_default : "div", {}, 10, _content_resume("__tests__/template.marko_3*content", () => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
-		_html(`<b>${_text_resume($scope3_id, "#text/0", input.note, void 0, $scope0_reason, 4)}</b>`);
+		_html(`<b>${_text_resume($scope3_id, "#text/0", input.note, 1, $scope0_reason, 4)}</b>`);
 		_unfilled_if($scope0_reason, 4) && _patch_init($scope3_id, $cg__input_note ? "__tests__/template.marko_3_input_note#0:6/init" : "__tests__/template.marko_3_input_note#0:6/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope3_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

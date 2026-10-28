@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a0"], $scope0_reason, 1);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
-		_html(`<li>${_text_resume($scope2_id, "a", item, void 0, $scope0_reason, 2)}</li>`);
+		_html(`<li>${_text_resume($scope2_id, "a", item, 1, $scope0_reason, 2)}</li>`);
 		_scope($scope2_id, {});
 	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 2);
 	_html("</div>");

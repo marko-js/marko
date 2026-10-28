@@ -14,18 +14,18 @@ var child_default = _template("b", (input) => {
 	const frag = { content: _content_resume("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<i>${_text_resume($scope1_id, "a", input.b, void 0, $scope0_reason, 3)}</i>`);
+		_html(`<i>${_text_resume($scope1_id, "a", input.b, 1, $scope0_reason, 3)}</i>`);
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope1_id, _client_guard($scope0_reason, 3) ? "b1" : "b2");
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	_html("<section>");
-	_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 4);
+	_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 4);
 	_html(`</section>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 4))}`);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		_filled_guard($scope0_reason, 5) && _patch_write($scope2_id, "xc", item, !_server_guard($scope0_reason, 5));
 		const d = input.b + item;
-		_html(`<p>${_text_resume($scope2_id, "a", d, void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "a", d, 1, $scope0_reason, 1)}</p>`);
 		(_filled_guard($scope0_reason, 3) && !$cg__input_items || _filled_guard($scope0_reason, 5)) && _patch_join_init($scope2_id, "b3", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && ">e", _filled_guard($scope0_reason, 5) && "c");
 		_scope($scope2_id, {
 			c: $wi__input_b && item,

@@ -9,7 +9,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	let c = input.content;
 	_html(`<section><button>clear</button>${_el_resume($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/1", c, {}, 2, void 0, void 0, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
-	_html(`<p>${_text_resume($scope0_id, "#text/2", input.user.name, void 0, $scope0_reason, 1)}</p></section>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/2", input.user.name, 1, $scope0_reason, 1)}</p></section>`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0) || _content_withhold(input.content);
 });
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			content: _content("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "#text/0", row.id, void 0, $scope0_reason, 1)} ${_text_resume($scope2_id, "#text/1", input.label, 2, $scope0_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "#text/0", row.id, 1, $scope0_reason, 1)} ${_text_resume($scope2_id, "#text/1", input.label, 2, $scope0_reason, 2)}</em>`);
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:4/init");
 				$cg__input_rows && _patch_init($scope2_id, "__tests__/template.marko_2_row_id#1:4/init");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__row_id__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_label && _scope_with_id($scope1_id) }, "__tests__/template.marko", "1:26")));

@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_await($scope2_id, "a", input.promise, () => {
 				const $scope3_id = _scope_id();
-				_html(`<div id=done>${_text_resume($scope3_id, "a", input.msg, void 0, $scope0_reason, 2)} done</div>`);
+				_html(`<div id=done>${_text_resume($scope3_id, "a", input.msg, 1, $scope0_reason, 2)} done</div>`);
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope3_id, $cg__input_msg ? "a0" : "a1");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_msg__closures, _scope($scope3_id, {}), $cg__input_msg && "a1");
 			}, 1, "a4", 1);

@@ -72,7 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_try($scope1_id, "#text/1", () => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
-				_html(`<p>${_text_resume($scope3_id, "#text/0", input.id, void 0, $scope0_reason, 4)}</p>`);
+				_html(`<p>${_text_resume($scope3_id, "#text/0", input.id, 1, $scope0_reason, 4)}</p>`);
 				_unfilled_if($scope0_reason, 4) && _patch_init($scope3_id, $cg__input_id ? "__tests__/template.marko_3_input_id#0:5/init" : "__tests__/template.marko_3_input_id#0:5/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 4) && $input_id__closures, _scope($scope3_id, {
 					_: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id),

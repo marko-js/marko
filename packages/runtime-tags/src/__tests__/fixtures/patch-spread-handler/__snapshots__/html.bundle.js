@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 				onClick: _resume(function() {
 					count++;
 				}, "a0", $scope1_id)
-			}, "a", $scope1_id, "a", void 0, $scope0_reason, 1)}>go</a>${_el_resume($scope1_id, "a")}`);
+			}, "a", $scope1_id, "a", 0, $scope0_reason, 1)}>go</a>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a1");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a2");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });

@@ -8,13 +8,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
 	let count = 0;
-	_html(`<p>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</p><div`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)}</p><div`);
 	_attrs_content({
 		title: input.label,
 		onClick: _bind_resume(function() {
 			console.log("clicked " + input.label);
 		}, "__tests__/template.marko_0/onClick", $scope0_id)
-	}, "#div/1", $scope0_id, "div", 0, void 0, void 0, $scope0_reason, 0);
+	}, "#div/1", $scope0_id, "div", 0, 1, 0, $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/1")}`);
 	_if(() => {
 		if (count) {

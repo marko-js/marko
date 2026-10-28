@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;D 
 var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2${_attr_class(input.title, $scope0_id, "PatchAttr:#h2/0 class", $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", input.title, void 0, $scope0_reason, 0)}</h2>${_el_resume($scope0_id, "#h2/0", _mask_group($scope0_reason, 0))}</section>`);
+	_html(`<section><h2${_attr_class(input.title, $scope0_id, "PatchAttr:#h2/0 class", $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", input.title, 1, $scope0_reason, 0)}</h2>${_el_resume($scope0_id, "#h2/0", _mask_group($scope0_reason, 0))}</section>`);
 	_scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 });
 
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1);
 			card_default({ title: "branch" });
 			_patch_child_end();
-			_html(`<p>${_text_resume($scope1_id, "#text/1", input.note, void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/1", input.note, 1, $scope0_reason, 1)}</p>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_note#0:5/init");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),

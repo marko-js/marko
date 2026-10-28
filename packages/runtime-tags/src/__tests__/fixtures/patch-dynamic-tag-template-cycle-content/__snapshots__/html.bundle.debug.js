@@ -35,7 +35,7 @@ var tree_b_default = _template("__tests__/tags/tree-b.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_node_kid = _write_guard($scope0_reason, 1), $wi__input_node_kid = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_node_kid__closures = new Set();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.node.name, void 0, $scope0_reason, 0)}`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.node.name, 1, $scope0_reason, 0)}`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	wrap_default({
@@ -69,7 +69,7 @@ var tree_a_default = _template("__tests__/tags/tree-a.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_node_kid = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_node_kid__closures = new Set();
-	_html(`<li>${_text_resume($scope0_id, "#text/0", input.node.name, void 0, $scope0_reason, 0)}`);
+	_html(`<li>${_text_resume($scope0_id, "#text/0", input.node.name, 1, $scope0_reason, 0)}`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	wrap_default({
@@ -110,7 +110,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Card = { content: _content_resume("__tests__/template.marko_1*content", ({ node }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<b>${_text_resume($scope1_id, "#text/0", node.name, void 0, 4, 0)}</b>`);
+		_html(`<b>${_text_resume($scope1_id, "#text/0", node.name, 1, 4, 0)}</b>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	_html("<ul>");

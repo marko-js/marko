@@ -19,7 +19,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<section class=card><h2>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2><button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<section class=card><h2>${_text_resume($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</h2><button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/1")}`);
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();

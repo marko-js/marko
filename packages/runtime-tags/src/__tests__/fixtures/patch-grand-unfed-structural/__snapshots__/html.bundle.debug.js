@@ -17,7 +17,7 @@ var badge_default = _template("__tests__/tags/badge/index.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/tags/badge/index.marko_1*shell"], $scope0_reason, 0);
-	_html(`<p>${_text_resume($scope0_id, "#text/1", input.text, void 0, $scope0_reason, 1)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/1", input.text, 1, $scope0_reason, 1)}</p>`);
 	_scope($scope0_id, {}, "__tests__/tags/badge/index.marko", 0);
 });
 

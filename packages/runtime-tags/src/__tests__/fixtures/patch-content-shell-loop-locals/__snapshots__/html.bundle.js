@@ -24,7 +24,7 @@ var src_default = _template("c", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "wc", t);
-			_html(`<button>${_text_resume($scope1_id, "b", t, void 0, 4, 0)}</button>${_el_resume($scope1_id, "a")}`);
+			_html(`<button>${_text_resume($scope1_id, "b", t, 1, 4, 0)}</button>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "c0");
 			_scope($scope1_id, { c: t });
 		}, $scope0_id, 1) });

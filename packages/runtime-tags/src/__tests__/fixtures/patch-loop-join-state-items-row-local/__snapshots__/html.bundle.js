@@ -11,7 +11,7 @@ var child_default = _template("b", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const d = input.b + "!";
-		_html(`<p>${_text_resume($scope1_id, "a", input.a + d, void 0, (_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 3) ? _mask_group($scope0_reason, 1) : 1) << 1, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", input.a + d, 1, (_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 3) ? _mask_group($scope0_reason, 1) : 1) << 1, 0)}</p>`);
 		$cg__input_a && _patch_write($scope1_id, "xb", d, !(_filled_guard($scope0_reason, 3) && $cg__input_a));
 		$cg__input_b && _patch_init($scope1_id, "b0");
 		(_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 3)) && _patch_join_init($scope1_id, "b1", $scope0_reason, 1, _filled_guard($scope0_reason, 4) && ">f", _filled_guard($scope0_reason, 3) && "b");
