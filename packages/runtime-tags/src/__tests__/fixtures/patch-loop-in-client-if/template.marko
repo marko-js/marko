@@ -1,0 +1,13 @@
+<let/show=false/>
+<let/items=["a"]/>
+<main>
+  <if=show>
+    <ul>
+      <for|item| of=items>
+        <li>${item}: ${input.note}</li>
+      </for>
+    </ul>
+  </if>
+  <button.toggle onClick() { show = !show }>t</button>
+  <button.add onClick() { items = [...items, "b"] }>+</button>
+</main>

@@ -23,7 +23,6 @@ import {
   applyBranchStart,
   type AsyncContent,
   Boundary,
-  captureContext,
   Chunk,
   deferBranchStart,
   getAsyncContent,
@@ -81,7 +80,7 @@ export function _show_end(
 export function _for_of(
   list: Falsy | Iterable<unknown>,
   cb: (item: unknown, index: number) => void,
-  by: Falsy | ((item: unknown, index: number) => unknown),
+  by: Falsy | ((item: unknown, index: number) => string | number),
   scopeId: number,
   accessor: Accessor,
   branchGuard?: number,
@@ -107,7 +106,7 @@ export function _for_of(
 export function iterateForOf(
   list: Falsy | Iterable<unknown>,
   cb: (item: unknown, index: number) => void,
-  by: Falsy | ((item: unknown, index: number) => unknown),
+  by: Falsy | ((item: unknown, index: number) => string | number),
 ): LoopIterate<unknown, number> {
   return (each) =>
     each
@@ -121,7 +120,7 @@ export function iterateForOf(
 export function _for_in(
   obj: Falsy | {},
   cb: (key: string, value: unknown) => void,
-  by: Falsy | ((key: string, v: unknown) => unknown),
+  by: Falsy | ((key: string, v: unknown) => string | number),
   scopeId: number,
   accessor: Accessor,
   branchGuard?: number,
@@ -147,7 +146,7 @@ export function _for_in(
 export function iterateForIn(
   obj: Falsy | {},
   cb: (key: string, value: unknown) => void,
-  by: Falsy | ((key: string, v: unknown) => unknown),
+  by: Falsy | ((key: string, v: unknown) => string | number),
 ): LoopIterate<string, unknown> {
   return (each) =>
     each
@@ -164,7 +163,7 @@ export function _for_to(
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
-  by: Falsy | ((v: number) => unknown),
+  by: Falsy | ((v: number) => string | number),
   scopeId: number,
   accessor: Accessor,
   branchGuard?: number,
@@ -192,7 +191,7 @@ export function iterateForTo(
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
-  by: Falsy | ((v: number) => unknown),
+  by: Falsy | ((v: number) => string | number),
 ): LoopIterate<number> {
   return (each) => {
     let index = 0;
@@ -210,7 +209,7 @@ export function _for_until(
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
-  by: Falsy | ((v: number) => unknown),
+  by: Falsy | ((v: number) => string | number),
   scopeId: number,
   accessor: Accessor,
   branchGuard?: number,
@@ -238,7 +237,7 @@ export function iterateForUntil(
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
-  by: Falsy | ((v: number) => unknown),
+  by: Falsy | ((v: number) => string | number),
 ): LoopIterate<number> {
   return (each) => {
     let index = 0;
@@ -254,7 +253,9 @@ export function iterateForUntil(
 // A loop's iteration: each row's key and `cb` arguments, where its branches
 // resume (`each`).
 export type LoopIterate<A, B = void> = (
-  each: 0 | ((itemKey: unknown, sameAsIndex: boolean, a: A, b: B) => void),
+  each:
+    | 0
+    | ((itemKey: string | number, sameAsIndex: boolean, a: A, b: B) => void),
 ) => void;
 
 // Asserts, in debug builds, that a keyed loop's keys are unique.
@@ -479,7 +480,7 @@ export function _await<T>(
   const startId = _peek_scope_id();
   const after = (chunk.next = chunk.forkRest(boundary));
   chunk.async = true;
-  captureContext(chunk);
+  boundary.state.captureContext(chunk);
   boundary.startAsync();
   // Won't fix: a thenable that calls back synchronously settles before a `<try>`
   // waits on it; adopting it through `Promise.resolve` would cost another promise.
@@ -550,6 +551,9 @@ export function _try(
   catchContent?: ServerRenderer,
   placeholderId?: string,
   catchId?: string,
+  // A patch page's content created from its shell (1 the catch, 2 the
+  // placeholder), which the client finds by id.
+  shellContent?: number,
 ) {
   // The placeholder's branch id precedes the body's so the walker parents it
   // to the try's enclosing branch (a sibling of the try), as CSR does.
@@ -563,8 +567,12 @@ export function _try(
   const renderers = (): void =>
     writeTryRenderers(
       branchId,
-      catchContent && _resume(catchContent, catchId!),
-      placeholderContent && _resume(placeholderContent, placeholderId!),
+      catchContent &&
+        (shellContent! & 1 ? catchId : _resume(catchContent, catchId!)),
+      placeholderContent &&
+        (shellContent! & 2
+          ? placeholderId
+          : _resume(placeholderContent, placeholderId!)),
     );
   // Whether `tryBoundary` writes the renderers itself once the body settles,
   // or not at all once its `@catch` rendered.
@@ -614,7 +622,7 @@ function tryPlaceholder(
   }
 
   chunk.next = chunk.forkRest(boundary);
-  captureContext(chunk);
+  boundary.state.captureContext(chunk);
   chunk.placeholder = {
     body,
     render: placeholder,
@@ -632,6 +640,11 @@ export function tryBoundary(
   catchContent: ServerRenderer | undefined,
   branchId: number,
   renderers: () => void,
+  // A patch's catch, writing its own entry: nothing of the body streams
+  // once caught, and nothing reorders.
+  onCatch?: (err: unknown) => void,
+  // A patch's body that settled without throwing.
+  onSettle?: () => void,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
@@ -648,7 +661,7 @@ export function tryBoundary(
     if (!catchContent) throw bodyBoundary.reason;
     // Sync error. The body's already-written scopes stay in the resume payload
     // unused; a `@catch` firing is rare enough not to warrant dropping them.
-    catchContent(bodyBoundary.reason);
+    (onCatch || catchContent)(bodyBoundary.reason);
     // A rendered `@catch` is not a try, as on the client: it gets no renderers.
     return true;
   }
@@ -656,10 +669,15 @@ export function tryBoundary(
   if (body === bodyEnd) {
     // Sync success
     chunk.append(body);
+    onSettle?.();
     return false;
   }
 
-  const renderersAtSettle = !bodyBoundary.resumeWrites;
+  // Marks kept whatever the body does (a patch page's) let a patch pair the
+  // body before it settles, telling it from a catch by its renderers.
+  const renderersAtSettle =
+    !bodyBoundary.resumeWrites &&
+    !state.keepsTryMarks(chunk, boundary.resumeWrites);
   // Forked from the try's chunk: an `_await` in the body replaces the body's
   // context with a copy, on which the branch id would never restore.
   const bodyNext = (bodyEnd.next = chunk.forkRest(boundary));
@@ -668,16 +686,27 @@ export function tryBoundary(
 
   // With a catch, markers let it take the body's place once the stream reaches
   // it pending (`markCatchRange`); a body settled or caught first needs none.
-  const reorderId = catchContent ? state.nextReorderId() : "";
-  if (reorderId) {
-    chunk.catchRange = { id: reorderId, end: bodyEnd };
-    // The catch renders later, forked from this chunk.
-    captureContext(chunk);
-  }
+  const reorderId = catchContent && !onCatch ? state.nextReorderId() : "";
+  if (reorderId) chunk.catchRange = { id: reorderId, end: bodyEnd };
+  // The catch renders later, forked from this chunk.
+  if (catchContent) state.captureContext(chunk);
 
   bodyBoundary.onNext = () => {
     if (boundary.aborted) return;
     if (bodyBoundary.aborted) {
+      if (onCatch) {
+        if (!bodyEnd.consumed) {
+          let cut = body;
+          while (cut.consumed) cut = cut.next!;
+          cut.async = false;
+          cut.next = bodyNext;
+          cut.html = cut.scripts = cut.effects = cut.lastEffect = "";
+          cut.placeholder = cut.reorderId = cut.catchRange = null;
+        }
+        chunk.fork(boundary, null).render(onCatch, bodyBoundary.reason);
+        boundary.endAsync();
+        return;
+      }
       if (!reorderId) {
         boundary.abort(bodyBoundary.reason);
         return;
@@ -733,6 +762,7 @@ export function tryBoundary(
         bodyEnd.render(renderers);
       }
       chunk.catchRange = null;
+      if (onSettle) bodyEnd.render(onSettle);
       boundary.endAsync();
     } else {
       boundary.onNext();

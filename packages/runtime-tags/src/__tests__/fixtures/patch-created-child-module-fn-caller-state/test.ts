@@ -1,0 +1,12 @@
+import type { TestConfig } from "../../main.test";
+
+const clickLabel = (d: Document) =>
+  (d.querySelector(".l") as HTMLElement).click();
+
+// A bare module function can't be serialized: a patch creating the scope that holds it
+// fails as main's document does.
+export const config: TestConfig = {
+  patches: true,
+  error_html: true,
+  steps: [{ show: false, open: true }, { show: true, open: true }, clickLabel],
+};

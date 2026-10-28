@@ -1,0 +1,5 @@
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<error-wrapper fail=input.fail>
+  <@fallback><i>${input.label} ${count}</i></@fallback>
+</error-wrapper>

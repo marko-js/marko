@@ -1,0 +1,13 @@
+<let/a=false/>
+<let/b=false/>
+<main>
+  <if=a>
+    <if=b>
+      <p>${"p:" + input.title}</p>
+    </if>
+    <if=b>
+      <span>${"s:" + input.title}</span>
+    </if>
+  </if>
+  <button onClick() { a = !a; b = !b }>+</button>
+</main>

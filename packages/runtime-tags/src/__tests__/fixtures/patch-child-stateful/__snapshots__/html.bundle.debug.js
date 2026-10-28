@@ -1,0 +1,39 @@
+// tags/counter/index.marko
+const $template$1 = "<button class=c> </button>";
+const $walks$1 = " D l";
+const $setup$1 = [[], ["__tests__/tags/counter/index.marko_0"]];
+_shells({ "__tests__/tags/counter/index.marko": "__tests__/tags/counter/index.marko !__tests__/tags/counter/index.marko_0; D ;<button class=c> </button>" });
+var counter_default = _template("__tests__/tags/counter/index.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let n = 0;
+	_html(`<button class=c>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_script($scope0_id, "__tests__/tags/counter/index.marko_0");
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter/index.marko_fill0", n, 1);
+	_scope($scope0_id, { n }, "__tests__/tags/counter/index.marko", 0, { n: "1:6" });
+});
+
+// template.marko
+const $template = "<main><!><button class=t>t</button></main>";
+const $walks = "D%b l";
+const $setup = [[], ["__tests__/template.marko_0"]];
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button class=t>t</button></main>" });
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let show = false;
+	_html("<main>");
+	_if(() => {
+		if (show) {
+			const $scope1_id = _scope_id();
+			_patch_child(0, "#childScope/0");
+			counter_default({});
+			_patch_child_end();
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			return 0;
+		}
+	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
+	_html(`<button class=t>t</button>${_el_resume($scope0_id, "#button/1")}</main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "1:6" });
+}, 1);

@@ -1,0 +1,10 @@
+<let/a=0/>
+<let/b=0/>
+<if=input.show>
+  <main>
+    <frame><p class="a">${input.label + ":" + a}</p></frame>
+    <frame><p class="b">${b} ${input.label + ":" + b}</p></frame>
+  </main>
+</if>
+<button class="a" onClick() { a++ }>a</button>
+<button class="b" onClick() { b += 10 }>b</button>

@@ -1,0 +1,6 @@
+<const/plain=(next: string) => { document.querySelector("main")!.dataset.got = next }/>
+<const/loud=(next: string) => { document.querySelector("main")!.dataset.got = next.toUpperCase() }/>
+<main>
+  <h1>${input.title}</h1>
+  <input value=input.value valueChange=(input.big ? loud : plain)>
+</main>
