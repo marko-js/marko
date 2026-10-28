@@ -20,19 +20,24 @@ import {
   getParamsTreeAt,
   hasAllKnownProps,
 } from "./params-tree";
+import {
+  keepsHoles,
+  readsKeptInputOnClient,
+  registersContent,
+} from "./patch/refresh";
 import { callRuntime } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
 import { scopeIdentifier } from "./scope-read";
 import { getSectionRendererIdentifier } from "./section-renderer";
-import {
-  getScopeIdIdentifier,
-  getSection,
-  getRendererReason,
-  type Section,
-} from "./sections";
+import { getScopeIdIdentifier, getSection, type Section } from "./sections";
+import { shipsContentShell } from "./shell";
 import { getContentClosureValues, getResumeRegisterId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
-import { getScopeReasonStatement } from "./write-guard";
+import {
+  getReasonSection,
+  getScopeReasonStatement,
+  scopePageIdentifier,
+} from "./write-guard";
 
 const contentProps = new WeakSet<t.Node>();
 type ContentKey = "renderBody" | "content";
@@ -416,9 +421,11 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   const bodySection = body.node.extra?.section;
   if (bodySection) {
     if (isOutputHTML()) {
-      const serialized = getRendererReason(bodySection);
+      const serialized = registersContent(bodySection);
       body.node.body.unshift(getScopeReasonStatement(bodySection) as any);
 
+      // An unregistered shell content elides its slot (`1`), and kept content
+      // also keeps its instances' holes (`2`).
       return callRuntime(
         serialized ? "_content_resume" : "_content",
         t.stringLiteral(getResumeRegisterId(bodySection, "content")),
@@ -431,7 +438,14 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
             getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
           )!,
         ),
-        serialized && getRegisteredLocals(bodySection),
+        serialized
+          ? getRegisteredLocals(bodySection)
+          : keepsHoles(bodySection)
+            ? t.numericLiteral(2)
+            : shipsContentShell(bodySection) && t.numericLiteral(1),
+        serialized &&
+          readsKeptInputOnClient(bodySection) &&
+          t.numericLiteral(1),
       );
     } else {
       // Nothing reads content whose renderer is elided, so it has no property.
@@ -455,12 +469,21 @@ function getRegisteredLocals(bodySection: Section) {
   const contentClosureValues = getContentClosureValues(bodySection);
   const localClosureValues = getLocalClosureValues(bodySection);
   if (contentClosureValues || localClosureValues) {
+    const locals = localClosureValues ? [localClosureValues] : [];
+    const values = t.arrayExpression([
+      ...locals,
+      ...(contentClosureValues?.levels || []),
+    ]);
+    const patchLevels = contentClosureValues?.patchLevels;
     return t.arrowFunctionExpression(
       contentClosureValues ? [contentClosureValues.scope] : [],
-      t.arrayExpression([
-        ...(localClosureValues ? [localClosureValues] : []),
-        ...(contentClosureValues?.levels || []),
-      ]),
+      patchLevels
+        ? t.conditionalExpression(
+            scopePageIdentifier(getReasonSection(bodySection.parent!)),
+            values,
+            t.arrayExpression([...locals, ...patchLevels]),
+          )
+        : values,
     );
   }
 }

@@ -1,0 +1,5 @@
+<let/n=0/>
+<const/up=() => "U" + input.title + n/>
+<const/low=() => "l" + input.title/>
+<mid get=(input.upper ? up : low)/>
+<button onClick() { n++ }>inc</button>

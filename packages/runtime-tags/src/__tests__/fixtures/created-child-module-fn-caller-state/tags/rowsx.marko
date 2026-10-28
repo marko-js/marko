@@ -1,0 +1,7 @@
+import { lib } from "./lib";
+<define/Panel|{ isOpen, fmt, label }|>
+  <if=isOpen>
+    <em>${fmt(label)}</em>
+  </if>
+</define>
+<Panel isOpen=input.open fmt=lib.format label=input.label + "1"/>

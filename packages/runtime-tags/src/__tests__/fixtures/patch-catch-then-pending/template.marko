@@ -1,0 +1,14 @@
+<let/count=0/>
+<main>
+  <try>
+    <await=input.promise>
+      <span>ok</span>
+    </await>
+    <@catch>
+      <if=input.detail>
+        <p>${input.detail}</p>
+      </if>
+    </@catch>
+  </try>
+  <button onClick() { count++ }>${count}</button>
+</main>

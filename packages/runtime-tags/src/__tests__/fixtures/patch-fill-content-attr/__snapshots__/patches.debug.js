@@ -1,0 +1,4 @@
+// PATCH
+{
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-fill-content-attr/template.marko_fill0": "b"
+}

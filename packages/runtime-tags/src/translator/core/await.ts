@@ -6,6 +6,7 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
+import type { Falsy } from "../../common/types";
 import {
   assertHasBody,
   assertNoSpreadAttrs,
@@ -13,23 +14,46 @@ import {
 } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
+import { isPatch } from "../util/marko-config";
+import {
+  getUnwrittenBodies,
+  getWriteSources,
+  onReasonsSettled,
+} from "../util/patch/decisions";
+import { awaitMayWithhold } from "../util/patch/refresh";
+import {
+  isStatefulBranch,
+  patchWrites,
+  patchMayWrite,
+} from "../util/patch/structure";
+import { alwaysPairs, getCallerGroupGuard } from "../util/patch/writers";
 import { setDerivedFrom, trackParamsReferences } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  absentArg,
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+  registerRuntimeValue,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { scopeIdentifier } from "../util/scope-read";
 import {
   getBranchRendererArgs,
+  getCallerParamGroupsAt,
   ensureSection,
   ensureBodySection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  type Section,
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
+import { findShellId, initsAwaitContent } from "../util/shell";
 import {
   addStatement,
   addValue,
+  getResumeRegisterId,
   getSignal,
   setSectionOwnerResumedByMarker,
   trimEmptyArgs,
@@ -78,6 +102,12 @@ export default {
     }
 
     const bodySection = ensureBodySection(tagBody)!;
+    // An await a patch may reach pairs its body through a `PatchChild` entry.
+    if (isPatch()) {
+      onReasonsSettled(() => {
+        if (patchMayWrite(section)) linkRuntimeFeature("patches/await");
+      });
+    }
     const valueExtra = (valueAttr.value.extra ??= {});
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
@@ -130,7 +160,12 @@ export default {
                   node.body.params,
                   toOnlyExpressionOrBlock(node.body.body),
                 ),
-                getWriteGuard(section, bodySection.reason, true),
+                // A patch page always marks a patchable boundary: the
+                // flush pairs its body through the resumed branch link.
+                patchWrites(section)
+                  ? t.numericLiteral(1)
+                  : getWriteGuard(section, bodySection.reason, true),
+                ...(isPatch() ? getPendingArgs(bodySection) : []),
               ),
             ),
           )[0]
@@ -150,15 +185,21 @@ export default {
         signal.build = () => {
           const branchRenderArgs = getBranchRendererArgs(bodySection);
           const branchParams = branchRenderArgs.pop();
+          const content = callRuntime(
+            "_await_content",
+            getScopeAccessorLiteral(nodeBinding, true),
+            ...trimEmptyArgs(branchRenderArgs),
+          );
           (signal.prependStatements ||= []).push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 t.identifier(bodySection.name),
-                callRuntime(
-                  "_await_content",
-                  getScopeAccessorLiteral(nodeBinding, true),
-                  ...trimEmptyArgs(branchRenderArgs),
-                ),
+                initsAwaitContent(bodySection)
+                  ? registerRuntimeValue(
+                      getResumeRegisterId(section, nodeBinding, "init"),
+                      content,
+                    )
+                  : content,
               ),
             ]),
           );
@@ -192,3 +233,39 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/await.d.marko",
 } as Tag;
+
+// A stateful body settles by `_await_promise` alone: its `0` skips the Pending entry.
+function getPendingArgs(bodySection: Section): Array<t.Expression | Falsy> {
+  if (isStatefulBranch(bodySection)) return [t.numericLiteral(0)];
+  const shellId = findShellId(bodySection);
+  const sources = getWriteSources(bodySection.branchExpr);
+  // Where no patch fills the promise, the client settles the branch it rendered.
+  const unfilled = getCallerGroupGuard(
+    bodySection.parent!,
+    "_unfilled_if",
+    sources,
+  );
+  const unwritten =
+    unfilled &&
+    getUnwrittenBodies(
+      bodySection,
+      getCallerParamGroupsAt(sources!.param, bodySection.parent!),
+    );
+  return [
+    shellId && t.stringLiteral(shellId),
+    // Where the client owns the promise, `2`: no render of the body writes what the
+    // client lacks; `3`: only a created one does, writing the body's setup work.
+    unwritten
+      ? t.logicalExpression(
+          "&&",
+          unfilled,
+          t.numericLiteral(unwritten === "all" ? 2 : 3),
+        )
+      : unfilled,
+    // An always-pairing body's Pending entry drops its creation id outside
+    // divergent contexts.
+    alwaysPairs(bodySection) ? t.numericLiteral(1) : absentArg(0),
+    // Pending, its body may yet keep content made before it.
+    awaitMayWithhold(bodySection) && t.numericLiteral(1),
+  ];
+}

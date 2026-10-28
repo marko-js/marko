@@ -1,0 +1,1 @@
+Unable to serialize (reading ["PatchBranch:#text/0"][0]["PatchChild:#childScope/0"]["PatchLoop:#text/0"][0]["PatchChild:#childScope/0"]["PatchMarkedWrite:fmt"]). Values referenced in the browser must be serializable.
