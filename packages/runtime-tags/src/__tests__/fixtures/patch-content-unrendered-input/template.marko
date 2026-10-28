@@ -1,0 +1,9 @@
+<let/n=0/>
+<button.inc onClick() { n++ }>${n}</button>
+<gate show=input.admin>
+  <@admin><panel rows=input.rows/></@admin>
+  <@guest><p>${input.guestText}</p></@guest>
+</gate>
+<wrapper show=input.showBody>
+  <p>${input.bodyText}</p>
+</wrapper>

@@ -42,6 +42,12 @@ export interface Binding {
   /** The identifier of each emitted assignment to it (set in finalize). */
   assignments: Opt<AssignedBindingExtra>;
   sources: undefined | Sources;
+  /** For an uncontrolled `<let>`: its init reads no state but `<let>`s at their
+   * initial value as its scope is created (created with it, or nothing assigns them). */
+  initReadsInitialValues: boolean;
+  /** For a `<let>` that is its own state source (patch builds): the sources its
+   * init reads, through the inits of the state it reads. */
+  initSources: undefined | Sources;
   /** The intersection whose work computes it, or the nearest one it derives
    * from. Set on alias roots only. */
   intersection: Intersection | undefined;
@@ -156,6 +162,8 @@ export function createBinding(
     excludeProperties,
     assignedProperties: undefined,
     sources: undefined,
+    initReadsInitialValues: false,
+    initSources: undefined,
     intersection: undefined,
     derivedFrom: undefined,
     reads: new Map(),
@@ -382,6 +390,18 @@ export function someAlias<A>(
   return false;
 }
 
+// Whether a read of the binding in `section` passes `test`.
+export function someReadIn(
+  binding: Binding,
+  section: Section,
+  test: (read: ReferencedExtra, binding: Binding) => boolean,
+) {
+  for (const read of binding.reads.keys()) {
+    if (read.section === section && test(read, binding)) return true;
+  }
+  return false;
+}
+
 // Whether the binding, or a value it aliases (transitively), passes `test`.
 export function someUpToAliasRoot<A>(
   binding: Binding | undefined,
@@ -455,6 +475,16 @@ export function getDebugAccess(
 // other modules.
 export function isTemplateParam(binding: Binding) {
   return binding.type === BindingType.param && !binding.section.parent;
+}
+
+// A section's params, or an alias of them.
+export function isParamBinding(binding: Binding) {
+  const root = getAliasRoot(binding);
+  return root === root.section.params;
+}
+
+export function isStateSourced(binding: Binding) {
+  return !!binding.sources?.state;
 }
 
 export function getDebugName(binding: Binding) {

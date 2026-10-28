@@ -1,0 +1,26 @@
+// template.marko
+_shells({
+	a: "a;Eb%l%b%;<div class=wrap><h1>Hello <!></h1><!><!></div>",
+	a0: "a0,<p>shown</p>",
+	a1: "a1;D ;<li> </li>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	_html(`<div class=wrap><h1>Hello ${_text_resume($scope0_id, "a", input.name, 2, $scope0_reason, 0)}</h1>`);
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_html("<p>shown</p>");
+			_write_if($scope0_reason, 1) && _scope($scope1_id, {});
+			return 0;
+		}
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a0"], $scope0_reason, 1);
+	_for_of(input.items, (item) => {
+		const $scope2_id = _scope_id();
+		_html(`<li>${_text_resume($scope2_id, "a", item, 1, $scope0_reason, 2)}</li>`);
+		_scope($scope2_id, {});
+	}, 0, $scope0_id, "c", 1, 1, 1, 0, 0, "a1", $scope0_reason, 2);
+	_html("</div>");
+	_scope($scope0_id, {});
+}, 1);

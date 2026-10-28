@@ -1,0 +1,16 @@
+<let/n=0/>
+<define/Outer|{ x, y }|>
+  <define/Inner|{ z }|>
+    <p>${input.label + x + z}</p>
+  </define>
+  <Inner z=y/>
+</define>
+<define/Wrapper|{ a, b, depth }|>
+  <define/Relay|{ a, b, depth }|>
+    <Wrapper a=b b=a depth=depth/>
+  </define>
+  <Outer x=a y=b/>
+  <if=depth><Relay a=b b=a depth=(depth - 1)/></if>
+</define>
+<Wrapper a=input.a b=n depth=2/>
+<button onClick() { n++ }>+</button>

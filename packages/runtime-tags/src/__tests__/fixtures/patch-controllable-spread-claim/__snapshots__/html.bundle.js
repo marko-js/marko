@@ -1,0 +1,17 @@
+// template.marko
+_shells({ a: "a !a0; c ;<input><p id=out>-</p><button>interactive</button>" });
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $cg__input_on = _client_guard($scope0_reason, 2), $cg__input_attrs = _client_guard($scope0_reason, 1);
+	const $scope0_id = _scope_id();
+	_html(`<input${_attrs({
+		type: "checkbox",
+		...input.attrs,
+		checked: input.on
+	}, "a", $scope0_id, "input", 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}<p id=out>-</p><button>interactive</button>${_el_resume($scope0_id, "b")}`);
+	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
+	_scope($scope0_id, {
+		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.attrs,
+		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.on
+	}) || (_filled_guard($scope0_reason, 1) && $cg__input_on && _patch_fill($scope0_id, "va2", input.attrs, !_server_guard($scope0_reason, 1)), $cg__input_on && _content_withhold(input.attrs), _filled_guard($scope0_reason, 2) && $cg__input_attrs && _patch_fill($scope0_id, "va3", input.on, !_server_guard($scope0_reason, 2)), $cg__input_attrs && _content_withhold(input.on));
+}, 1);

@@ -1,0 +1,7 @@
+<main>
+  <await|first|=input.first><em>${first}</em></await>
+  <await|second|=input.second>
+    <const/handler=(event: Event) => ((event.target as HTMLElement).dataset.seen = second)/>
+    <button ...{ title: second, onClick: handler }>${second}</button>
+  </await>
+</main>

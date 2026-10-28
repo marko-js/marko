@@ -1,0 +1,6 @@
+// template.marko
+const $two_content__input_title = /*@__PURE__*/ _init_resume("a4", /*@__PURE__*/ _fill_closure("a7", 3, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.d), 0, "a5"), 1));
+const $two_content = _content$1("a3", "<strong>two <!></strong>", "Db%", $two_content__input_title);
+const $one_content__input_title = /*@__PURE__*/ _init_resume("a1", /*@__PURE__*/ _fill_closure("a7", 3, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.d), 0, "a2"), 0));
+const $one_content = _content$1("a0", "<em>one <!></em>", "Db%", $one_content__input_title);
+const $input_which__OR__one__OR__two__script = _script("a6", ($scope) => _attrs_script($scope, "a"));

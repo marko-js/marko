@@ -1,0 +1,8 @@
+<let/first=0/>
+<let/second=0/>
+<main>
+  <h1>${input.title}</h1>
+  <p>First ${first} Second ${second}</p>
+  <counter show=input.show onCount(next: number) { first = next }/>
+  <counter show=input.show onCount(next: number) { second = next * 2 }/>
+</main>

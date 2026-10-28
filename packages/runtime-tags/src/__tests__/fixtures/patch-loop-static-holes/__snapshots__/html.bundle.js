@@ -1,0 +1,46 @@
+// template.marko
+_shells({
+	a: "a !; b b%;<ul></ul><ol></ol><!><!>",
+	a1: "a1;D%c%;<li><!>:<!></li>",
+	a2: "a2; ;<div></div>",
+	a3: "a3;D%c%;<p><!>:<!></p>",
+	a4: "a4;D ;<li> </li>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wi__input_note__OR__input_show = _write_if($scope0_reason, 0), $wi__input_note = _write_if($scope0_reason, 1);
+	const $scope0_id = _scope_id();
+	const $input_note__closures = /* @__PURE__ */ new Set();
+	_html("<ul>");
+	_for_of([1, 2], (x) => {
+		const $scope1_id = _scope_id();
+		_html(`<li>${_text_resume($scope1_id, "a", x, 1, 0, 0)}:${_text_resume($scope1_id, "b", input.note, 2, $scope0_reason, 1)}</li>`);
+		$cg__input_note && _patch_init($scope1_id, "a0");
+		_scope($scope1_id, { _: $wi__input_note && _scope_with_id($scope0_id) });
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a1", 0, 0);
+	_html(`</ul>${_el_resume($scope0_id, "a")}<ol>`);
+	_for_of([1, 2], (x) => {
+		const $scope4_id = _scope_id();
+		_html(`<li>${_text_resume($scope4_id, "a", x, 1, 0, 0)}</li>`);
+		_scope($scope4_id, {});
+	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "a4", 0, 0);
+	_html(`</ol>${_el_resume($scope0_id, "b")}`);
+	_if(() => {
+		if (input.show) {
+			const $scope2_id = _scope_id();
+			_html("<div>");
+			_for_of([1, 2], (x) => {
+				const $scope3_id = _scope_id();
+				_html(`<p>${_text_resume($scope3_id, "a", x, 1, 0, 0)}:${_text_resume($scope3_id, "b", input.note, 2, $scope0_reason, 1)}</p>`);
+				_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, $cg__input_note ? "a5" : "a6");
+				_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope3_id, { _: $wi__input_note__OR__input_show && _scope_with_id($scope2_id) }), $cg__input_note && "a6");
+			}, 0, $scope2_id, "a", 1, 1, 1, 0, 0, "a3", 0, 0);
+			_html(`</div>${_el_resume($scope2_id, "a")}`);
+			_scope($scope2_id, { _: $wi__input_note__OR__input_show && _scope_with_id($scope0_id) });
+			return 0;
+		}
+	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a2"], $scope0_reason, 2);
+	_scope($scope0_id, {
+		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
+		h: $wi__input_note && _unfilled_if($scope0_reason, 1) && $input_note__closures
+	}) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "va7", input.note, !_server_guard($scope0_reason, 1));
+}, 1);

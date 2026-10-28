@@ -1,0 +1,28 @@
+// PATCH
+[`packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member/tags/child.marko_1*shell;D ;<p> </p>`, {
+  "PatchChild:#childScope/0": {
+    "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member/tags/child.marko_fill0/unpatched": "y",
+    "PatchInit:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member/tags/child.marko_0_input_a#4_input_d#5/init": "input_a"
+  },
+  "PatchChild:#childScope/1": {
+    "PatchBranch:#text/0": [{
+      "PatchText:#text/0": "yq"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member/tags/child.marko_1*shell"],
+    "PatchText:#text/1": "y-q"
+  }
+}]
+;BgE
+
+// PATCH holding BgE
+{
+  "PatchChild:#childScope/0": {
+    "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member/tags/child.marko_fill0/unpatched": "z",
+    "PatchInit:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member/tags/child.marko_0_input_a#4_input_d#5/init": "input_a"
+  },
+  "PatchChild:#childScope/1": {
+    "PatchBranch:#text/0": [{
+      "PatchText:#text/0": "zr"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-state-branch-joined-member/tags/child.marko_1*shell"],
+    "PatchText:#text/1": "z-r"
+  }
+}

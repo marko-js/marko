@@ -1,0 +1,8 @@
+<main>
+  <if=input.show>
+    <try>
+      <await|value|=input.value><p>${value}</p></await>
+      <@catch>Unavailable</@catch>
+    </try>
+  </if>
+</main>

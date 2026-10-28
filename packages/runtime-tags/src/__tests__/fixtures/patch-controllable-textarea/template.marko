@@ -1,0 +1,6 @@
+<main>
+  <h1>${input.title}</h1>
+  <textarea value=input.text valueChange(next: string) {
+    document.querySelector("main")!.dataset.text = next;
+  }/>
+</main>

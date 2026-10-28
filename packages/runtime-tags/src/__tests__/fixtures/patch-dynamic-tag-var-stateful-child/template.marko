@@ -1,0 +1,5 @@
+import counter from "./tags/counter.marko";
+import other from "./tags/other.marko";
+<${input.which ? counter : other}/count label=input.label/>
+<p/el>${count}</p>
+<script>el().dataset.count = String(count)</script>

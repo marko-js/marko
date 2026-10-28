@@ -1,0 +1,7 @@
+import Keeper from "./keeper.marko";
+<define/K|{ x }|>
+  <${x ? Keeper : "div"}><${input.content}/></>
+</define>
+<await|x|=input.p>
+  <K x=x/>
+</await>

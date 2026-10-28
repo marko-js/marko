@@ -1,0 +1,26 @@
+static function bankCount(p: { bank: Record<string, number> }, id: string) {
+  return p.bank[id];
+}
+static function withDrops(base: number, drops: Record<string, number>, id: string) {
+  return base + (drops[id] ?? 0);
+}
+static const UPGRADES = [
+  { id: "a", parts: ["x", "y"] },
+  { id: "b", parts: ["y"] },
+];
+<const/p=$global.data.player/>
+<const/proj=p.rate/>
+<let/now=0/>
+<let/drops={}/>
+<button onClick() { now++ }>${now}</button>
+<button onClick() { drops = { x: 1 } }>drop</button>
+<for|u| of=UPGRADES>
+  <const/owned=p.owned.includes(u.id)/>
+  <if=u.parts && !owned>
+    <for|part| of=u.parts>
+      <const/have=withDrops(bankCount(p, part), drops, part)/>
+      <const/live=have + now * proj/>
+      <span class={ short: live < 2 }>${part} ${have}</span>
+    </for>
+  </if>
+</for>
