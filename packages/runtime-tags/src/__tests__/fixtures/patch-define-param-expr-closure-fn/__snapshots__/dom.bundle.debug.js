@@ -10,7 +10,7 @@ const $D_content__on = /*@__PURE__*/ _const("on", $D_content__f__OR__on);
 const $D_content__$params = ($scope, $params2) => $D_content__$temp($scope, $params2[0]);
 const $D_content__$temp = ($scope, $temp) => $D_content__on($scope, $temp.on);
 const $f2__closure = /*@__PURE__*/ _closure($D_content__f);
-const $f2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "f", $f2__closure);
+const $f2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "f", $f2__closure, /*@__PURE__*/ _fill_mark("f", $f2__closure));
 const $input_a = /*@__PURE__*/ _const("input_a", ($scope) => $f2($scope, $f($scope)));
 function $setup($scope) {
 	$scope["#childScope/0"]._ = $scope;

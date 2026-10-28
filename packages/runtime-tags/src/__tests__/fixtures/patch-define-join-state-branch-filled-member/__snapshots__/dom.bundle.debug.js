@@ -37,7 +37,10 @@ const $input_a__closure = /*@__PURE__*/ _closure($Info_content__input_a);
 const $input_a$1 = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill0", "input_a", ($scope) => {
 	$input_a__closure($scope);
 	$if_content__input_a($scope);
-});
+}, /*@__PURE__*/ _fill_mark("input_a", ($scope) => {
+	$input_a__closure($scope);
+	$if_content__input_a($scope);
+}));
 const $input_b__closure = /*@__PURE__*/ _closure($Info_content__input_b);
 const $input_b$1 = /*@__PURE__*/ _const("input_b", $input_b__closure);
 var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$1, $walks$1, $setup$1, $input$1);

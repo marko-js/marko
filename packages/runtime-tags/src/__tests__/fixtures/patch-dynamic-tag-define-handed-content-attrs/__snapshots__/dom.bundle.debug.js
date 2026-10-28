@@ -20,7 +20,7 @@ const $input$1 = ($scope, input) => {
 	$input_t($scope, input.t);
 };
 const $input_content__closure = /*@__PURE__*/ _closure($Wrap_content__input_content);
-const $input_content = /*@__PURE__*/ _fill_const("__tests__/tags/one.marko_fill0", "input_content", $input_content__closure);
+const $input_content = /*@__PURE__*/ _fill_const("__tests__/tags/one.marko_fill0", "input_content", $input_content__closure, /*@__PURE__*/ _fill_mark("input_content", $input_content__closure));
 var one_default = /*@__PURE__*/ _template("__tests__/tags/one.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko

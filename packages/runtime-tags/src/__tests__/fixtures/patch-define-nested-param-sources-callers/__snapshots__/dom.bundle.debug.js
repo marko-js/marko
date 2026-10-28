@@ -38,7 +38,7 @@ const $Outer_content__setup = ($scope) => {
 };
 const $Outer_content__y = ($scope, y) => $Inner_content__z($scope["#childScope/0"], y);
 const $Outer_content__tag_input_x__closure = /*@__PURE__*/ _closure($Inner_content__x);
-const $Outer_content__tag_input_x = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "x", $Outer_content__tag_input_x__closure);
+const $Outer_content__tag_input_x = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "x", $Outer_content__tag_input_x__closure, /*@__PURE__*/ _fill_mark("x", $Outer_content__tag_input_x__closure));
 const $Outer_content__$params = ($scope, $params2) => $Outer_content__$temp($scope, $params2[0]);
 const $Outer_content__$temp = ($scope, $temp) => {
 	$Outer_content__tag_input_x($scope, $temp.x);
@@ -60,5 +60,5 @@ const $input = ($scope, input) => {
 	$input_a($scope, input.a);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($Inner_content__input_label);
-const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", $input_label__closure);
+const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", $input_label__closure, /*@__PURE__*/ _fill_mark("input_label", $input_label__closure));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -30,9 +30,9 @@ const $for_content__if = /*@__PURE__*/ _if("#text/0", $template$2, /*@__PURE__*/
 const $for_content__input_sel = /*@__PURE__*/ _init_resume("__tests__/tags/shape.marko_1_input_sel#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/shape.marko_fill0", "input_sel", /*@__PURE__*/ _for_selector("#text/0", "input_sel", "#LoopKey", ($scope) => $for_content__if($scope, $scope["#LoopKey"] === $scope._.input_sel ? 0 : 1))));
 const $for_content__setup = $for_content__input_sel;
 const $for_content__$params = ($scope, $params2) => $for_content__v($scope, $params2[1]);
-const $for_content__v = /*@__PURE__*/ _fill_const("__tests__/tags/shape.marko_fill3", "v", $if_content__v);
+const $for_content__v = /*@__PURE__*/ _fill_const("__tests__/tags/shape.marko_fill3", "v", $if_content__v, /*@__PURE__*/ _fill_mark("v", $if_content__v));
 const $s__closure = /*@__PURE__*/ _closure($if_content__s);
-const $s = /*@__PURE__*/ _fill_let("__tests__/tags/shape.marko_fill2", "s/7", $s__closure);
+const $s = /*@__PURE__*/ _fill_let("__tests__/tags/shape.marko_fill2", "s/7", $s__closure, /*@__PURE__*/ _fill_mark("s/7", $s__closure));
 const $setup__script$1 = _script("__tests__/tags/shape.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$s($scope, +$scope.s + 1);
 }));
@@ -49,7 +49,7 @@ const $input$1 = ($scope, input) => {
 };
 const $input_sel$1 = /*@__PURE__*/ _fill_const("__tests__/tags/shape.marko_fill0", "input_sel", $for_content__input_sel);
 const $input_b__closure = /*@__PURE__*/ _closure($if_content__input_b);
-const $input_b = /*@__PURE__*/ _fill_const("__tests__/tags/shape.marko_fill1", "input_b", $input_b__closure);
+const $input_b = /*@__PURE__*/ _fill_const("__tests__/tags/shape.marko_fill1", "input_b", $input_b__closure, /*@__PURE__*/ _fill_mark("input_b", $input_b__closure));
 var shape_default = /*@__PURE__*/ _template("__tests__/tags/shape.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko

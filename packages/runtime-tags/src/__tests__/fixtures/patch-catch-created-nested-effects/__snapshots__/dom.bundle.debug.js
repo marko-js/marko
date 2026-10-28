@@ -80,7 +80,7 @@ const $input = ($scope, input) => {
 	$input_msg($scope, input.msg);
 };
 const $input_v__closure = /*@__PURE__*/ _closure($catch_content__input_v, $if_content__input_v, $for_content__input_v, $wrap_content__input_v);
-const $input_v = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_v", $input_v__closure);
+const $input_v = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_v", $input_v__closure, /*@__PURE__*/ _fill_mark("input_v", $input_v__closure));
 const $input_show__closure = /*@__PURE__*/ _closure($catch_content__input_show);
 const $input_show = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "input_show", $input_show__closure);
 const $input_items__closure = /*@__PURE__*/ _closure($catch_content__input_items);

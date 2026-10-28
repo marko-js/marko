@@ -14,7 +14,7 @@ const $frag_content__c = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_
 }, 0, "__tests__/tags/child.marko_2_c#1:1/subscribe"), 0));
 const $frag_content = _content("__tests__/tags/child.marko_2*content", "<em> </em><i> </i>", "D lD ", $frag_content__setup);
 const $if_content__c__closure = /*@__PURE__*/ _closure($frag_content__c);
-const $if_content__c = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill3", "c", $if_content__c__closure);
+const $if_content__c = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill3", "c", $if_content__c__closure, /*@__PURE__*/ _fill_mark("c", $if_content__c__closure));
 const $if_content__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_b#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_b", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__c($scope, $scope._.input_b + "!"))));
 const $if_content__frag = ($scope, frag) => $if_content__frag_content($scope, frag?.content);
 const $if_content__setup = ($scope) => {

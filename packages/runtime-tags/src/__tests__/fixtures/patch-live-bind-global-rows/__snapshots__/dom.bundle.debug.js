@@ -4,7 +4,7 @@ const $walks$1 = " b";
 const $clamp__OR__current = /*@__PURE__*/ _or_resume("__tests__/tags/stepper.marko_0_clamp#7_current#8/init", 10, ($scope) => _attr_input_value($scope, "#input/0", $scope.current, $valueChange$1($scope)));
 const $clamp2 = /*@__PURE__*/ _const("clamp", $clamp__OR__current);
 const $input_max = /*@__PURE__*/ _const("input_max", ($scope) => $clamp2($scope, $clamp($scope)));
-const $current = /*@__PURE__*/ _fill_let_change("__tests__/tags/stepper.marko_fill2", "current/8", $clamp__OR__current);
+const $current = /*@__PURE__*/ _fill_let_change("__tests__/tags/stepper.marko_fill2", "current/8", $clamp__OR__current, /*@__PURE__*/ _fill_mark("current/8", $clamp__OR__current));
 const $input_value__OR__input_valueChange = /*@__PURE__*/ _fill_join("__tests__/tags/stepper.marko_fill1", "input_valueChange", /*@__PURE__*/ _fill_join("__tests__/tags/stepper.marko_fill0", "input_value", /*@__PURE__*/ _or_resume("__tests__/tags/stepper.marko_0_input_value#4_input_valueChange#5/init", 6, ($scope) => $current($scope, $scope.input_value, $scope.input_valueChange))));
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__OR__input_valueChange);
 const $input_valueChange = /*@__PURE__*/ _const("input_valueChange", $input_value__OR__input_valueChange);

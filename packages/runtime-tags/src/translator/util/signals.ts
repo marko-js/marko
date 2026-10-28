@@ -789,7 +789,14 @@ export function initValue(binding: Binding, isLet = false) {
         return callRuntime(helper, ...trimEmptyArgs([accessor, fn]));
       }
       if (!ownRegistration) {
-        return callRuntime(`_fill${helper}`, key, accessor, fn, fillFn);
+        // Where it ships it replaces the joins' registrations of its key, so
+        // it marks the change their mixed inits re-run on, as theirs do.
+        const run =
+          fillFn ||
+          (initsMixedJoinOn(binding)
+            ? callRuntime("_fill_mark", accessor, fn)
+            : undefined);
+        return callRuntime(`_fill${helper}`, key, accessor, fn, run);
       }
       if (!signal.fillFn && !fillsWithoutStructure) {
         return callRuntime(`_fill${helper}`, key, accessor, fn);
@@ -943,6 +950,21 @@ function markFill(signal: Signal, fillFn: t.Expression) {
     isBoundLiveCapture(binding)
     ? callRuntime("_fill_mark", getScopeAccessorLiteral(binding, true), fillFn)
     : fillFn;
+}
+
+// A join reading it whose init a flush names on any scope (`mixed`): it re-runs
+// where a member it depends on is marked changed.
+function initsMixedJoinOn(binding: Binding) {
+  for (const read of binding.reads.keys()) {
+    const join = getReferencedBindings(read);
+    if (
+      Array.isArray(join) &&
+      getCreatedInits(read.section).get(join)?.init === "mixed"
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 // A value an entry depends on that a join's fill sets, under its key or its

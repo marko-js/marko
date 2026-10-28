@@ -61,5 +61,5 @@ const $input = ($scope, input) => {
 const $input_which__closure = /*@__PURE__*/ _closure($wrap_content__input_which);
 const $input_which = /*@__PURE__*/ _const("input_which", $input_which__closure);
 const $input_id__closure = /*@__PURE__*/ _closure($wrap_content__input_id, $placeholder_content__input_id, $try_content__input_id);
-const $input_id = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "input_id", $input_id__closure);
+const $input_id = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "input_id", $input_id__closure, /*@__PURE__*/ _fill_mark("input_id", $input_id__closure));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

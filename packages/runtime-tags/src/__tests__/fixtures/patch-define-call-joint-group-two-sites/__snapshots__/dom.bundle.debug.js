@@ -38,7 +38,7 @@ const $input = ($scope, input) => {
 	$input_row($scope, input.row);
 };
 const $input_y__closure = /*@__PURE__*/ _closure($Row_content__input_y);
-const $input_y = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_y", $input_y__closure);
+const $input_y = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_y", $input_y__closure, /*@__PURE__*/ _fill_mark("input_y", $input_y__closure));
 const $input_row = ($scope, input_row) => {
 	$input_row_a($scope, input_row?.a);
 	$input_row_b($scope, input_row?.b);

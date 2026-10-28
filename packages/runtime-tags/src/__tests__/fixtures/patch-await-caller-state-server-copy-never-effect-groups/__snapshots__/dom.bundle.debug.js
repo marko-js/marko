@@ -30,7 +30,7 @@ const $input$1 = ($scope, input) => {
 	$input_label$1($scope, input.label);
 };
 const $input_promise__closure = /*@__PURE__*/ _closure($Row_content__input_promise);
-const $input_promise$1 = /*@__PURE__*/ _fill_const("__tests__/tags/show-await.marko_fill0", "input_promise", $input_promise__closure);
+const $input_promise$1 = /*@__PURE__*/ _fill_const("__tests__/tags/show-await.marko_fill0", "input_promise", $input_promise__closure, /*@__PURE__*/ _fill_mark("input_promise", $input_promise__closure));
 var show_await_default = /*@__PURE__*/ _template("__tests__/tags/show-await.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko

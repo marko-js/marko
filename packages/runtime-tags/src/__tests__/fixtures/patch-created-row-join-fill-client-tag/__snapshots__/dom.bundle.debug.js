@@ -29,7 +29,7 @@ const $for_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", "D ", $i
 const $for_content__input_type = /*@__PURE__*/ _init_resume("__tests__/tags/row-list.marko_1_input_type#0:7/init", /*@__PURE__*/ _fill_join("__tests__/tags/row-list.marko_fill0", "input_type", /*@__PURE__*/ _for_closure("#text/2", ($scope) => $for_content__if($scope, $scope._.input_type ? 0 : 1))));
 const $for_content__setup = $for_content__input_type;
 const $for_content__$params = ($scope, $params2) => $for_content__t($scope, $params2[0]);
-const $for_content__t = /*@__PURE__*/ _fill_const("__tests__/tags/row-list.marko_fill2", "t", $if_content__t);
+const $for_content__t = /*@__PURE__*/ _fill_const("__tests__/tags/row-list.marko_fill2", "t", $if_content__t, /*@__PURE__*/ _fill_mark("t", $if_content__t));
 const $bounty__closure = /*@__PURE__*/ _closure($if_content__bounty);
 const $bounty = _var_resume("__tests__/tags/row-list.marko_0_bounty#9/var", /*@__PURE__*/ _const("bounty", $bounty__closure));
 const $setup__script$1 = _script("__tests__/tags/row-list.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
@@ -50,7 +50,7 @@ const $input$1 = ($scope, input) => {
 };
 const $input_type$1 = /*@__PURE__*/ _fill_const("__tests__/tags/row-list.marko_fill0", "input_type", $for_content__input_type);
 const $input_settled__closure = /*@__PURE__*/ _closure($if_content__input_settled);
-const $input_settled$1 = /*@__PURE__*/ _fill_const("__tests__/tags/row-list.marko_fill1", "input_settled", $input_settled__closure);
+const $input_settled$1 = /*@__PURE__*/ _fill_const("__tests__/tags/row-list.marko_fill1", "input_settled", $input_settled__closure, /*@__PURE__*/ _fill_mark("input_settled", $input_settled__closure));
 var row_list_default = /*@__PURE__*/ _template("__tests__/tags/row-list.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko

@@ -33,5 +33,5 @@ const $input = ($scope, input) => {
 	$input_x($scope, input.x);
 };
 const $input_t__closure = /*@__PURE__*/ _closure($Wrap_content__input_t);
-const $input_t = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_t", $input_t__closure);
+const $input_t = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_t", $input_t__closure, /*@__PURE__*/ _fill_mark("input_t", $input_t__closure));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

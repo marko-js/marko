@@ -37,7 +37,7 @@ const $input$1 = ($scope, input) => {
 	$input_a($scope, input.a);
 	$input_b($scope, input.b);
 };
-const $input_b = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill1", "input_b", $if_content__input_b);
+const $input_b = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill1", "input_b", $if_content__input_b, /*@__PURE__*/ _fill_mark("input_b", $if_content__input_b));
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, $walks$1, 0, $input$1);
 
 // template.marko

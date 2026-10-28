@@ -13,7 +13,8 @@ const $Inner_content__input_label__OR__x__OR__z = /*@__PURE__*/ _fill_join("| a5
 const $Inner_content__x = /*@__PURE__*/ _closure_get(8, $Inner_content__input_label__OR__x__OR__z, 0, "a2");
 const $Inner_content__z = /*@__PURE__*/ _const(3, $Inner_content__input_label__OR__x__OR__z);
 const $Outer_content__y = ($scope, y) => $Inner_content__z($scope.a, y);
-const $Outer_content__tag_input_x = /*@__PURE__*/ _fill_const("a5", 3, /* @__PURE__ */ _closure($Inner_content__x));
+const $Outer_content__tag_input_x__closure = /*@__PURE__*/ _closure($Inner_content__x);
+const $Outer_content__tag_input_x = /*@__PURE__*/ _fill_const("a5", 3, $Outer_content__tag_input_x__closure, /*@__PURE__*/ _fill_mark(3, $Outer_content__tag_input_x__closure));
 const $n = /*@__PURE__*/ _let(6, ($scope) => $Wrapper_content__b($scope.a, $scope.g));
 const $setup__script = _script("a10", ($scope) => _on($scope.b, "click", function() {
 	$n($scope, +$scope.g + 1);

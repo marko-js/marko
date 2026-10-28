@@ -61,7 +61,7 @@ const $input = ($scope, input) => {
 	$input_fail($scope, input.fail);
 };
 const $input_msg__closure = /*@__PURE__*/ _closure($catch_content__input_msg, $try_content__input_msg);
-const $input_msg = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_msg", $input_msg__closure);
+const $input_msg = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_msg", $input_msg__closure, /*@__PURE__*/ _fill_mark("input_msg", $input_msg__closure));
 const $input_fail__closure = /*@__PURE__*/ _closure($try_content__input_fail);
 const $input_fail = /*@__PURE__*/ _const("input_fail", $input_fail__closure);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -25,7 +25,7 @@ const $for_content__if = /*@__PURE__*/ _if(0, "<span> </span>", "D ", $if_conten
 const $for_content__input_type = /*@__PURE__*/ _init_resume("c7", /*@__PURE__*/ _fill_join("c9", 7, /*@__PURE__*/ _for_closure(2, ($scope) => $for_content__if($scope, $scope._.h ? 0 : 1))));
 const $for_content__setup = $for_content__input_type;
 const $for_content__$params = ($scope, $params2) => $for_content__t($scope, $params2[0]);
-const $for_content__t = /*@__PURE__*/ _fill_const("c6", 2, $if_content__t);
+const $for_content__t = /*@__PURE__*/ _fill_const("c6", 2, $if_content__t, /*@__PURE__*/ _fill_mark(2, $if_content__t));
 const $bounty = _var_resume("c0", /*@__PURE__*/ _const(9, /* @__PURE__ */ _closure($if_content__bounty)));
 const $setup__script$1 = _script("c8", ($scope) => _on($scope.d, "click", function() {
 	_var_change($scope.a, +$scope.j + 1);
@@ -40,7 +40,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(2, "<!><!><!>", "b%", $for_content__s
 const $input_tally = ($scope, input_tally) => $for($scope, [input_tally]);
 const $input_type = /*@__PURE__*/ _fill_const("c9", 7, $for_content__input_type);
 const $input_settled__closure = /*@__PURE__*/ _closure($if_content__input_settled);
-const $input_settled = /*@__PURE__*/ _fill_const("c10", 8, $input_settled__closure);
+const $input_settled = /*@__PURE__*/ _fill_const("c10", 8, $input_settled__closure, /*@__PURE__*/ _fill_mark(8, $input_settled__closure));
 
 // template.marko
 const $if_content__setup = ($scope) => {

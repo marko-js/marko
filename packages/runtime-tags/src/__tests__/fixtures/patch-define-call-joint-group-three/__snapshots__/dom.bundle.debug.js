@@ -37,5 +37,5 @@ const $input = ($scope, input) => {
 	$input_z($scope, input.z);
 };
 const $input_y__closure = /*@__PURE__*/ _closure($Row_content__input_y);
-const $input_y = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_y", $input_y__closure);
+const $input_y = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_y", $input_y__closure, /*@__PURE__*/ _fill_mark("input_y", $input_y__closure));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
