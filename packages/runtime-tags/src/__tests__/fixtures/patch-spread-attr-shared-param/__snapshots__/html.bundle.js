@@ -3,7 +3,7 @@ _shells({ a: "a !a0; b ;<a>x</a><img>" });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<a${_patch_attrs({
+	_html(`<a${_attrs({
 		href: input.url,
 		title: input.title,
 		class: input.cls

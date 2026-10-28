@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:second", second, !_server_guard($scope0_reason, 1));
 		const handler = _bind_resume((event) => event.target.dataset.seen = second, "__tests__/template.marko_2/handler", $scope2_id);
-		_html(`<button${_patch_attrs({
+		_html(`<button${_attrs({
 			title: second,
 			onClick: handler
 		}, "#button/0", $scope2_id, "button", void 0, $scope0_reason, 1)}>${_text_resume($scope2_id, "#text/1", second, void 0, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "#button/0")}`);

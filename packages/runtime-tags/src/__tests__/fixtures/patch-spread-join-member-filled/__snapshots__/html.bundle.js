@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_id = _write_guard($scope0_reason, 2), $wi__input_id = _write_if($scope0_reason, 2), $cg__input_id = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_id__closures = /* @__PURE__ */ new Set();
-	_html(`<div${_patch_attrs(input.which ? {
+	_html(`<div${_attrs(input.which ? {
 		class: "one",
 		title: input.id
 	} : { class: "two" }, "a", $scope0_id, "div", void 0, $scope0_reason, 0)}>x</div>${_el_resume($scope0_id, "a")}`);

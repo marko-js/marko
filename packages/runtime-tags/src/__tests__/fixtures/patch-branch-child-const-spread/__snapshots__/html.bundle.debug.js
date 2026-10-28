@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko !_
 var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div id=fixed${_patch_attrs_partial(input.attrs, { id: 1 }, "#div/0", $scope0_id, "div", void 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", input.title, void 0, $scope0_reason, 1)}</div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`<div id=fixed${_attrs_partial(input.attrs, { id: 1 }, "#div/0", $scope0_id, "div", void 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", input.title, void 0, $scope0_reason, 1)}</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/card/index.marko_0_input_attrs#4");
 	_scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0, { "EventAttributes:#div/0": ["...input.attrs", "1:9"] });
 });

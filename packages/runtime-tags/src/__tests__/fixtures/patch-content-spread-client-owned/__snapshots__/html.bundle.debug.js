@@ -24,9 +24,9 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frag-host.marko", "2:2"));
 	}, $scope0_id) };
 	_html("<section");
-	_patch_attrs_content({ content: input.mode ? one : two }, "#section/0", $scope0_id, "section", 0, void 0, void 0, $scope0_reason, 1);
+	_attrs_content({ content: input.mode ? one : two }, "#section/0", $scope0_id, "section", 0, void 0, void 0, $scope0_reason, 1);
 	_html(`</section>${_el_resume($scope0_id, "#section/0")}<div id=partial`);
-	_patch_attrs_partial_content({ content: input.mode ? two : one }, { id: 1 }, "#div/1", $scope0_id, "div", 1, void 0, void 0, $scope0_reason, 1);
+	_attrs_partial_content({ content: input.mode ? two : one }, { id: 1 }, "#div/1", $scope0_id, "div", 1, void 0, void 0, $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "#div/1")}`);
 	_script($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#5_one#6_two#7");
 	$cg__input_mode && _patch_write($scope0_id, "PatchWrite:one", one, 1);

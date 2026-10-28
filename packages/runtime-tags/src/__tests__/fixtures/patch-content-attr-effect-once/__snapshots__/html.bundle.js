@@ -16,7 +16,7 @@ var host_default = _template("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	_html("<div>");
-	_patch_attr_content("a", $scope0_id, extra, 0, void 0, 0, 0);
+	_attr_content("a", $scope0_id, extra, 0, void 0, 0, 0);
 	_html(`</div>${_el_resume($scope0_id, "a", 0)}`);
 	_script($scope0_id, "b4");
 	_patch_write($scope0_id, "we", extra, 1);

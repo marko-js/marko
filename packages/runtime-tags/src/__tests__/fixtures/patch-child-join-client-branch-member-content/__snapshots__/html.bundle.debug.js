@@ -28,7 +28,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "4:2"));
 	}, $scope0_id) };
 	_html("<section>");
-	_patch_attr_content("#section/1", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 7);
+	_attr_content("#section/1", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 7);
 	_html(`</section>${_el_resume($scope0_id, "#section/1", _mask_group($scope0_reason, 7))}`);
 	_filled_guard($scope0_reason, 6) && $cg__input_show ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill1/unpatched", input.b) : _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !(_filled_guard($scope0_reason, 6) && $cg__input_a));
 	$cg__input_mode && _patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);

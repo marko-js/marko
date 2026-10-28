@@ -11,7 +11,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_button = _write_guard($scope0_reason, 0), $wi__input_button = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const { button: buttons, ...htmlInput } = input;
-	_html(`<div${_patch_attrs(htmlInput, "#div/0", $scope0_id, "div", void 0, $scope0_reason, 1)}>`);
+	_html(`<div${_attrs(htmlInput, "#div/0", $scope0_id, "div", void 0, $scope0_reason, 1)}>`);
 	_for_of(buttons, (button) => {
 		const $scope1_id = _scope_id();
 		_if(() => {

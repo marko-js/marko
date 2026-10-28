@@ -22,10 +22,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "__tests__/template.marko_1_input_title#0:6/init" : "__tests__/template.marko_1_input_title#0:6/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
 	}, $scope0_id) };
-	_html(`<main><div${_patch_attrs(input.attrs, "#div/0", $scope0_id, "div", void 0, $scope0_reason, 1)}>`);
-	_patch_attr_content("#div/0", $scope0_id, extra, 0, void 0, 0, 0);
+	_html(`<main><div${_attrs(input.attrs, "#div/0", $scope0_id, "div", void 0, $scope0_reason, 1)}>`);
+	_attr_content("#div/0", $scope0_id, extra, 0, void 0, 0, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}<section`);
-	_patch_attrs_content({
+	_attrs_content({
 		...input.attrs,
 		content: extra
 	}, "#section/1", $scope0_id, "section", 1, void 0, void 0, $scope0_reason, 1);

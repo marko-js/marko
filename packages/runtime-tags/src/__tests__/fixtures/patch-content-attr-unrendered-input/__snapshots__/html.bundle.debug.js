@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_rec_name__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"));
 	}, $scope0_id) };
 	_html("<section>");
-	_patch_attr_content("#section/2", $scope0_id, input.on ? frag.content : null, 0, void 0, $scope0_reason, 2);
+	_attr_content("#section/2", $scope0_id, input.on ? frag.content : null, 0, void 0, $scope0_reason, 2);
 	_html(`</section>${_el_resume($scope0_id, "#section/2", _mask_group($scope0_reason, 2))}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

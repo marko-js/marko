@@ -24,7 +24,7 @@ var child_default = _template("b", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 6) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_a__OR__input_b__OR__input_mode && _scope_with_id($scope1_id) })));
 			}, $scope1_id) };
 			_html("<section>");
-			_patch_attr_content("a", $scope1_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 7);
+			_attr_content("a", $scope1_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 7);
 			_html(`</section>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 7))}`);
 			$cg__input_mode && _patch_write($scope1_id, "wc", frag?.content, 1);
 			$cg__input_mode && _patch_init($scope1_id, "b4");

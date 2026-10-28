@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 
-import { UpdatesFrom } from "../../common/types";
 import { _escape, _unescaped } from "../../html/content";
 import { BindingType, createBinding } from "../util/bindings";
 import { injectTextCoercion } from "../util/body-to-text";
@@ -12,7 +11,10 @@ import {
   linkHolePatcher,
   writesPatchHole,
 } from "../util/patch/decisions";
-import { getExprRootGroupArgs } from "../util/patch/writers";
+import {
+  getExprRootGroupArgs,
+  getPatchHoleGroupArgs,
+} from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -23,7 +25,6 @@ import {
   ensureSection,
   getScopeIdIdentifier,
   getSection,
-  type Section,
 } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
@@ -36,11 +37,7 @@ import {
 import * as structure from "../util/structure";
 import { getTagFacts, isInTextBody } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
-import {
-  buildGroupMask,
-  getWriteGuard,
-  getWriteReason,
-} from "../util/write-guard";
+import { getWriteGuard, getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 import * as SiblingText from "./constants/sibling-text";
 
@@ -184,7 +181,14 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
             : guard,
           // The patch write is also the output and resume writer, so the value
           // evaluates once; its group args follow.
-          ...(isPatchText ? getPatchTextArgs(section, valueExtra) : []),
+          ...(isPatchText
+            ? keepsSeededMarker(section, valueExtra)
+              ? [
+                  ...getExprRootGroupArgs(section, valueExtra),
+                  t.numericLiteral(1),
+                ]
+              : getPatchHoleGroupArgs(section, valueExtra)
+            : []),
         )}`;
       } else {
         write`${
@@ -212,20 +216,6 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   }
 
   placeholder.remove();
-}
-
-// A hole with no group passes the server's group `0`: main's holes pass none.
-function getPatchTextArgs(section: Section, extra: t.NodeExtra) {
-  const groupArgs = getExprRootGroupArgs(section, extra);
-  if (!groupArgs.length) {
-    return [
-      buildGroupMask([{ value: UpdatesFrom.Server, names: "" }])!,
-      t.numericLiteral(0),
-    ];
-  }
-  return keepsSeededMarker(section, extra)
-    ? [...groupArgs, t.numericLiteral(1)]
-    : groupArgs;
 }
 
 // Produces an expression equivalent to `_escape(value)` that escapes as little as

@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		} else {
 			const $scope1_id = _scope_id();
-			_html(`<style${_attr_nonce()}>p.s { color: red }</style><style${_patch_attrs({
+			_html(`<style${_attr_nonce()}>p.s { color: red }</style><style${_attrs({
 				nonce: _patch_nonce(),
 				...input.attrs
 			}, "#style/1", $scope1_id, "style", 2, $scope0_reason, 1)}>p.t { color: green }</style>${_el_resume($scope1_id, "#style/1")}`);
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_1*shell"], $scope0_reason, 0);
-	_html(`<style${_patch_attrs({
+	_html(`<style${_attrs({
 		nonce: _patch_nonce(),
 		...input.attrs
 	}, "#style/1", $scope0_id, "style", 2, $scope0_reason, 1)}>${_patch_text_content($scope0_id, "PatchTextContent:#style/1", `p.u { --page: ${_to_text(input.page)} }`, _escape_style, $scope0_reason, 0)}</style>${_el_resume($scope0_id, "#style/1")}`);

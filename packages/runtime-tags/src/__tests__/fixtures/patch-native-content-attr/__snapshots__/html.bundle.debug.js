@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main><section>");
-	_patch_attr_content("#section/0", $scope0_id, input.mode === "a" ? frag_a_default : frag_b_default, 0, void 0, $scope0_reason, 0);
+	_attr_content("#section/0", $scope0_id, input.mode === "a" ? frag_a_default : frag_b_default, 0, void 0, $scope0_reason, 0);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", _mask_group($scope0_reason, 0))}<p>${_text_resume($scope0_id, "#text/1", input.note, void 0, $scope0_reason, 1)}</p></main>`);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

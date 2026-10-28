@@ -25,7 +25,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 6) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_a__OR__input_b__OR__input_mode && _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "2:4")));
 			}, $scope1_id) };
 			_html("<section>");
-			_patch_attr_content("#section/0", $scope1_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 7);
+			_attr_content("#section/0", $scope1_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 7);
 			_html(`</section>${_el_resume($scope1_id, "#section/0", _mask_group($scope0_reason, 7))}`);
 			$cg__input_mode && _patch_write($scope1_id, "PatchWrite:frag_content", frag?.content, 1);
 			$cg__input_mode && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_mode#0:6_frag_content#2/init");

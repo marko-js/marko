@@ -13,7 +13,7 @@ var card_default = _template("b", (input) => {
 	_await($scope0_id, "a", input.p, (x) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
-		_patch_attr_content("a", $scope1_id, input.content, 0, void 0, $scope0_reason, 0);
+		_attr_content("a", $scope1_id, input.content, 0, void 0, $scope0_reason, 0);
 		_html(`</div>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_content ? "b0" : "b1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, {}), $cg__input_content && "b1");

@@ -1114,6 +1114,18 @@ function buildSubscribe(
   );
 }
 
+// Group args for a hole whose helper shares main's name: one with no group
+// passes the server's group `0`, since main's calls pass none.
+export function getPatchHoleGroupArgs(section: Section, extra: t.NodeExtra) {
+  const groupArgs = getExprRootGroupArgs(section, extra);
+  return groupArgs.length
+    ? groupArgs
+    : [
+        buildGroupMask([{ value: UpdatesFrom.Server, names: "" }])!,
+        t.numericLiteral(0),
+      ];
+}
+
 // Group args for an expression's write in `section`; a value fixed for the
 // scope's lifetime (constant, `<id>`, `<define>`) only seeds a created scope.
 export function getExprRootGroupArgs(section: Section, extra: t.NodeExtra) {

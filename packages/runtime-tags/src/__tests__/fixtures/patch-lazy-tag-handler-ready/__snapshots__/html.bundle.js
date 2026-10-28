@@ -7,7 +7,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.title, !_server_guard($scope0_reason, 0));
 	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "a0", $scope0_id);
-	_html(`<button${_patch_attrs({
+	_html(`<button${_attrs({
 		title: input.title,
 		onClick: handler
 	}, "a", $scope0_id, "button", void 0, $scope0_reason, 0)}>go</button>${_el_resume($scope0_id, "a")}`);

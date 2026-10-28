@@ -3,11 +3,11 @@ _shells({ a: "a !a0; b c ;<input><input><p id=out>-</p><button>interactive</butt
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_on = _client_guard($scope0_reason, 2), $cg__input_attrs = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_html(`<input${_patch_attrs({
+	_html(`<input${_attrs({
 		type: "checkbox",
 		...input.attrs,
 		checked: input.on
-	}, "a", $scope0_id, "input", 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}<input${_patch_attrs(input.attrs, "b", $scope0_id, "input", 1, $scope0_reason, 1)}>${_el_resume($scope0_id, "b")}<p id=out>-</p><button>interactive</button>${_el_resume($scope0_id, "c")}`);
+	}, "a", $scope0_id, "input", 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}<input${_attrs(input.attrs, "b", $scope0_id, "input", 1, $scope0_reason, 1)}>${_el_resume($scope0_id, "b")}<p id=out>-</p><button>interactive</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");

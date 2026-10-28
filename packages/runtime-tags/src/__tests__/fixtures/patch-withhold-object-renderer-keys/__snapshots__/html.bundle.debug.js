@@ -44,7 +44,7 @@ var holder_default = _template("__tests__/tags/holder.marko", (input) => {
 		_html("<em>held</em>");
 	}, $scope0_id) };
 	_html("<section>");
-	_patch_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 0);
+	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 0);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", _mask_group($scope0_reason, 0))}`);
 	$cg__input_mode && _patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
 	$cg__input_mode && _patch_init($scope0_id, "__tests__/tags/holder.marko_0_input_mode#3_frag_content#5/init");

@@ -19,7 +19,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/host.marko", "1:2"));
 	}, $scope0_id) };
 	_html("<div>");
-	_patch_attr_content("#div/0", $scope0_id, extra, 0, void 0, 0, 0);
+	_attr_content("#div/0", $scope0_id, extra, 0, void 0, 0, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", 0)}`);
 	_script($scope0_id, "__tests__/tags/host.marko_0_extra#4");
 	_patch_write($scope0_id, "PatchWrite:extra", extra, 1);

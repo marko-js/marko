@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "xd", second, !_server_guard($scope0_reason, 1));
 		const handler = _bind_resume((event) => event.target.dataset.seen = second, "a0", $scope2_id);
-		_html(`<button${_patch_attrs({
+		_html(`<button${_attrs({
 			title: second,
 			onClick: handler
 		}, "a", $scope2_id, "button", void 0, $scope0_reason, 1)}>${_text_resume($scope2_id, "b", second, void 0, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "a")}`);

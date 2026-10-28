@@ -66,6 +66,7 @@ import {
 import {
   buildPatchTextContent,
   getExprRootGroupArgs,
+  getPatchHoleGroupArgs,
 } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
@@ -864,18 +865,16 @@ export default {
           addHTMLEffectCall(tagSection, tagExtra);
 
           if (!spreadContent) {
-            const patches = writesPatchHole(tagSection, tagExtra);
-            // A patch write renders the set itself; its group args trail
-            // (see `_patch_attr`).
-            const patchArgs = patches
+            // A patch write renders the set itself; its group args trail.
+            const patchArgs = writesPatchHole(tagSection, tagExtra)
               ? [
                   getPatchSpreadFlag(tagName, !!controllable, injectsNonce),
-                  ...getExprRootGroupArgs(tagSection, tagExtra),
+                  ...getPatchHoleGroupArgs(tagSection, tagExtra),
                 ]
               : [];
             if (skipExpression) {
               write`${callRuntime(
-                patches ? "_patch_attrs_partial" : "_attrs_partial",
+                "_attrs_partial",
                 spreadExpression,
                 skipExpression,
                 nodeAccessor,
@@ -885,7 +884,7 @@ export default {
               )}`;
             } else {
               write`${callRuntime(
-                patches ? "_patch_attrs" : "_attrs",
+                "_attrs",
                 spreadExpression,
                 nodeAccessor,
                 getScopeIdIdentifier(tagSection),
@@ -907,7 +906,7 @@ export default {
           (tag.node.body.body as t.Statement[]) = [
             t.expressionStatement(
               callRuntime(
-                patches ? "_patch_attr_content" : "_attr_content",
+                "_attr_content",
                 nodeAccessor,
                 getScopeIdIdentifier(tagSection),
                 contentAttr.value,
@@ -918,7 +917,7 @@ export default {
                   true,
                 ),
                 ...(patches
-                  ? getExprRootGroupArgs(tagSection, contentAttr.value.extra!)
+                  ? getPatchHoleGroupArgs(tagSection, contentAttr.value.extra!)
                   : []),
               ),
             ),
@@ -938,7 +937,7 @@ export default {
                   !controllable &&
                     controllableElements.has(tagName) &&
                     t.numericLiteral(1),
-                  ...getExprRootGroupArgs(tagSection, tagExtra),
+                  ...getPatchHoleGroupArgs(tagSection, tagExtra),
                 ]
               : []),
           ];
@@ -947,9 +946,7 @@ export default {
             skipExpression
               ? t.expressionStatement(
                   callRuntime(
-                    patches
-                      ? "_patch_attrs_partial_content"
-                      : "_attrs_partial_content",
+                    "_attrs_partial_content",
                     spreadExpression,
                     skipExpression,
                     nodeAccessor,
@@ -960,7 +957,7 @@ export default {
                 )
               : t.expressionStatement(
                   callRuntime(
-                    patches ? "_patch_attrs_content" : "_attrs_content",
+                    "_attrs_content",
                     spreadExpression,
                     nodeAccessor,
                     getScopeIdIdentifier(tagSection),

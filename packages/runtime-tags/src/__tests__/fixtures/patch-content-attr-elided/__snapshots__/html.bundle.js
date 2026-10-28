@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	_html("<main><section>");
-	_patch_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 2);
+	_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 2);
 	_html(`</section>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 2))}<p>${_text_resume($scope0_id, "b", input.note, void 0, $scope0_reason, 1)}</p></main>`);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,

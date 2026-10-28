@@ -22,8 +22,8 @@ import {
   _attr_option_value as _base_attr_option_value,
   _attr_select_value as _base_attr_select_value,
   _attr_textarea_value as _base_attr_textarea_value,
-  _attrs,
-  _attrs_partial,
+  _attrs as _base_attrs,
+  _attrs_partial as _base_attrs_partial,
   stringAttr,
 } from "../attrs";
 import type { ServerRenderer } from "../template";
@@ -148,9 +148,9 @@ function normalizeAttrValue(value: unknown) {
   if (isNotNullishOrFalse(value)) return value === true ? "" : value + "";
 }
 
-// A spread's attribute set: the entry carries the merged object and the
-// client's `_attrs` re-applies it (removing what the new set lacks).
-export function _patch_attrs(
+// A spread a patch writes passes its group: the entry carries the merged object
+// and the client's `_attrs` re-applies it (removing what the new set lacks).
+export function _attrs(
   data: Record<string, unknown>,
   accessor: Accessor,
   scopeId: number,
@@ -159,9 +159,10 @@ export function _patch_attrs(
   mask?: GroupMask,
   group?: number,
 ) {
-  const fills = ensureFills(scopeId, mask, group!);
+  const fills =
+    group === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
-    ? _attrs(data, accessor, scopeId, tagName)
+    ? _base_attrs(data, accessor, scopeId, tagName)
     : writeAttrsFill(
         fills,
         accessor,
@@ -171,9 +172,9 @@ export function _patch_attrs(
       );
 }
 
-// The patch form: static attrs after the spread render separately, so
-// the entry names them (`skip`) for the client to leave alone.
-export function _patch_attrs_partial(
+// Static attrs after the spread render separately, so the entry names them
+// (`skip`) for the client to leave alone.
+export function _attrs_partial(
   data: Record<string, unknown>,
   skip: Record<string, 1>,
   accessor: Accessor,
@@ -183,9 +184,10 @@ export function _patch_attrs_partial(
   mask?: GroupMask,
   group?: number,
 ) {
-  const fills = ensureFills(scopeId, mask, group!);
+  const fills =
+    group === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
-    ? _attrs_partial(data, skip, accessor, scopeId, tagName)
+    ? _base_attrs_partial(data, skip, accessor, scopeId, tagName)
     : writeAttrsFill(
         fills,
         accessor,
@@ -216,111 +218,9 @@ function writeAttrsFill(
   return "";
 }
 
-// Content no patch entry names renders as an unpaired dynamic tag's does.
+// A native tag's `content=` a patch writes passes its group and ships as a
+// dynamic tag entry; other content renders as an unpaired dynamic tag's does.
 export function _attr_content(
-  nodeAccessor: Accessor,
-  scopeId: number,
-  content: unknown,
-  site: number,
-  markerGuard?: 1 | 0,
-) {
-  renderPatchedContent(nodeAccessor, scopeId, content, markerGuard, 2, site);
-}
-
-// Main's spread content helpers call main's `_attr_content`, not this one.
-export function _attrs_content(
-  data: Record<string, unknown>,
-  nodeAccessor: Accessor,
-  scopeId: number,
-  tagName: string,
-  site: number,
-  markerGuard?: 1 | 0,
-) {
-  _html(`${_attrs(data, nodeAccessor, scopeId, tagName)}>`);
-  _attr_content(nodeAccessor, scopeId, data?.content, site, markerGuard);
-}
-
-export function _attrs_partial_content(
-  data: Record<string, unknown>,
-  skip: Record<string, 1>,
-  nodeAccessor: Accessor,
-  scopeId: number,
-  tagName: string,
-  site: number,
-  markerGuard?: 1 | 0,
-) {
-  _html(`${_attrs_partial(data, skip, nodeAccessor, scopeId, tagName)}>`);
-  _attr_content(nodeAccessor, scopeId, data?.content, site, markerGuard);
-}
-
-// A spread that may carry `content`: the set patches as attributes and
-// the content as a dynamic tag entry, the way a static `content=` does.
-export function _patch_attrs_content(
-  data: Record<string, unknown>,
-  accessor: Accessor,
-  scopeId: number,
-  tagName: string,
-  site: number,
-  markerGuard?: 1 | 0,
-  controllable?: 1,
-  mask?: GroupMask,
-  group?: number,
-) {
-  const content = data?.content;
-  const pairing = writeDynamicTagEntry(
-    scopeId,
-    accessor,
-    content,
-    0,
-    0,
-    0,
-    mask,
-    group,
-  );
-  const fills = ensureFills(scopeId, mask, group!);
-  if (fills === undefined) {
-    _html(`${_attrs(data, accessor, scopeId, tagName)}>`);
-  } else {
-    writeAttrsFill(fills, accessor, withoutContent(data), 0, controllable);
-  }
-  renderPatchedContent(accessor, scopeId, content, markerGuard, pairing, site);
-}
-
-export function _patch_attrs_partial_content(
-  data: Record<string, unknown>,
-  skip: Record<string, 1>,
-  accessor: Accessor,
-  scopeId: number,
-  tagName: string,
-  site: number,
-  markerGuard?: 1 | 0,
-  controllable?: 1,
-  mask?: GroupMask,
-  group?: number,
-) {
-  const content = data?.content;
-  const pairing = writeDynamicTagEntry(
-    scopeId,
-    accessor,
-    content,
-    0,
-    0,
-    0,
-    mask,
-    group,
-  );
-  const fills = ensureFills(scopeId, mask, group!);
-  if (fills === undefined) {
-    _html(`${_attrs_partial(data, skip, accessor, scopeId, tagName)}>`);
-  } else {
-    writeAttrsFill(fills, accessor, withoutContent(data), skip, controllable);
-  }
-  renderPatchedContent(accessor, scopeId, content, markerGuard, pairing, site);
-}
-
-// A native tag's `content=` ships as a dynamic tag entry and renders as spread
-// content does.
-export function _patch_attr_content(
   accessor: Accessor,
   scopeId: number,
   content: unknown,
@@ -334,9 +234,71 @@ export function _patch_attr_content(
     scopeId,
     content,
     markerGuard,
-    writeDynamicTagEntry(scopeId, accessor, content, 0, 0, 0, mask, group),
+    getContentPairing(scopeId, accessor, content, mask, group),
     site,
   );
+}
+
+// A spread that may carry `content`: the set patches as attributes and
+// the content as a dynamic tag entry, the way a static `content=` does.
+export function _attrs_content(
+  data: Record<string, unknown>,
+  accessor: Accessor,
+  scopeId: number,
+  tagName: string,
+  site: number,
+  markerGuard?: 1 | 0,
+  controllable?: 1,
+  mask?: GroupMask,
+  group?: number,
+) {
+  const content = data?.content;
+  const pairing = getContentPairing(scopeId, accessor, content, mask, group);
+  const fills =
+    group === undefined ? undefined : ensureFills(scopeId, mask, group);
+  if (fills === undefined) {
+    _html(`${_base_attrs(data, accessor, scopeId, tagName)}>`);
+  } else {
+    writeAttrsFill(fills, accessor, withoutContent(data), 0, controllable);
+  }
+  renderPatchedContent(accessor, scopeId, content, markerGuard, pairing, site);
+}
+
+export function _attrs_partial_content(
+  data: Record<string, unknown>,
+  skip: Record<string, 1>,
+  accessor: Accessor,
+  scopeId: number,
+  tagName: string,
+  site: number,
+  markerGuard?: 1 | 0,
+  controllable?: 1,
+  mask?: GroupMask,
+  group?: number,
+) {
+  const content = data?.content;
+  const pairing = getContentPairing(scopeId, accessor, content, mask, group);
+  const fills =
+    group === undefined ? undefined : ensureFills(scopeId, mask, group);
+  if (fills === undefined) {
+    _html(`${_base_attrs_partial(data, skip, accessor, scopeId, tagName)}>`);
+  } else {
+    writeAttrsFill(fills, accessor, withoutContent(data), skip, controllable);
+  }
+  renderPatchedContent(accessor, scopeId, content, markerGuard, pairing, site);
+}
+
+// Content no patch entry names (no group passed) is the resumed page's.
+function getContentPairing(
+  scopeId: number,
+  accessor: Accessor,
+  content: unknown,
+  mask: GroupMask | undefined,
+  group: number | undefined,
+) {
+  return group === undefined
+    ? PatchPairing.Skip
+    : writeDynamicTagEntry(scopeId, accessor, content, 0, 0, 0, mask, group);
 }
 
 // Content pairs as a dynamic tag's does: a kept body seeds no creation, and one

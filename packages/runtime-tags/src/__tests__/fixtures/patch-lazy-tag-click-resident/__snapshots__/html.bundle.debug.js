@@ -8,7 +8,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
 	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "__tests__/child.marko_0/handler", $scope0_id);
-	_html(`<button${_patch_attrs({
+	_html(`<button${_attrs({
 		title: input.title,
 		onClick: handler
 	}, "#button/0", $scope0_id, "button", void 0, $scope0_reason, 0)}>go</button>${_el_resume($scope0_id, "#button/0")}`);

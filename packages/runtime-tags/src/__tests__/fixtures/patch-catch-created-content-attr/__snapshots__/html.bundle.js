@@ -24,7 +24,7 @@ var error_wrapper_default = _template("b", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_resume($scope1_id, "a", err.message, void 0, 4, 0)}</b><div>`);
-		_patch_attr_content("b", $scope1_id, input.fallback, 0, void 0, $scope0_reason, 0);
+		_attr_content("b", $scope1_id, input.fallback, 0, void 0, $scope0_reason, 0);
 		_html(`</div>${_el_resume($scope1_id, "b", _mask_group($scope0_reason, 0))}`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "b0" : "b1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");

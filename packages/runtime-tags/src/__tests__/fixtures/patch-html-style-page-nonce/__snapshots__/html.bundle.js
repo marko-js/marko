@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		} else {
 			const $scope1_id = _scope_id();
-			_html(`<style${_attr_nonce()}>p.s { color: red }</style><style${_patch_attrs({
+			_html(`<style${_attr_nonce()}>p.s { color: red }</style><style${_attrs({
 				nonce: _patch_nonce(),
 				...input.attrs
 			}, "b", $scope1_id, "style", 2, $scope0_reason, 1)}>p.t { color: green }</style>${_el_resume($scope1_id, "b")}`);
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 			return 1;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a2", "a3"], $scope0_reason, 0);
-	_html(`<style${_patch_attrs({
+	_html(`<style${_attrs({
 		nonce: _patch_nonce(),
 		...input.attrs
 	}, "b", $scope0_id, "style", 2, $scope0_reason, 1)}>${_patch_text_content($scope0_id, "mb", `p.u { --page: ${_to_text(input.page)} }`, _escape_style, $scope0_reason, 0)}</style>${_el_resume($scope0_id, "b")}`);

@@ -14,18 +14,18 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button class=inc>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}<div${_patch_attrs(input.attrs, "#div/2", $scope0_id, "div", void 0, $scope0_reason, 0)}>x</div>${_el_resume($scope0_id, "#div/2")}`);
+	_html(`<button class=inc>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}<div${_attrs(input.attrs, "#div/2", $scope0_id, "div", void 0, $scope0_reason, 0)}>x</div>${_el_resume($scope0_id, "#div/2")}`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<a${_patch_attrs(input.link, "#a/0", $scope1_id, "a", void 0, $scope0_reason, 2)}>z</a>${_el_resume($scope1_id, "#a/0")}`);
+			_html(`<a${_attrs(input.link, "#a/0", $scope1_id, "a", void 0, $scope0_reason, 2)}>z</a>${_el_resume($scope1_id, "#a/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1_input_link#0:9");
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_link#0:9/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2", { "EventAttributes:#a/0": ["...input.link", "4:22"] });
 			return 0;
 		}
 	}, $scope0_id, "#text/3", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
-	_html(`<input${_patch_attrs(input.field, "#input/4", $scope0_id, "input", 1, $scope0_reason, 3)}>${_el_resume($scope0_id, "#input/4")}`);
+	_html(`<input${_attrs(input.field, "#input/4", $scope0_id, "input", 1, $scope0_reason, 3)}>${_el_resume($scope0_id, "#input/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0_input_field#10");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#7");
 	_script($scope0_id, "__tests__/template.marko_0");

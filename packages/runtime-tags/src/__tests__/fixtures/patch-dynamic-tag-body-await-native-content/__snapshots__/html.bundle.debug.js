@@ -14,7 +14,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_await($scope0_id, "#text/0", input.p, (x) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
-		_patch_attr_content("#div/0", $scope1_id, input.content, 0, void 0, $scope0_reason, 0);
+		_attr_content("#div/0", $scope1_id, input.content, 0, void 0, $scope0_reason, 0);
 		_html(`</div>${_el_resume($scope1_id, "#div/0", _mask_group($scope0_reason, 0))}`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_content ? "__tests__/tags/card.marko_1_input_content#0:4/init" : "__tests__/tags/card.marko_1_input_content#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, {}, "__tests__/tags/card.marko", "1:2"), $cg__input_content && "__tests__/tags/card.marko_1_input_content#0:4/subscribe");

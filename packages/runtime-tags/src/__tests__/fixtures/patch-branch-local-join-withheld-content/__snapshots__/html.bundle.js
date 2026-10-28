@@ -23,7 +23,7 @@ var child_default = _template("b", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 6) && $if_content__c__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) }));
 			}, $scope1_id) };
 			_html("<section>");
-			_patch_attr_content("b", $scope1_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 8);
+			_attr_content("b", $scope1_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 8);
 			_html(`</section>${_el_resume($scope1_id, "b", _mask_group($scope0_reason, 8))}`);
 			_filled_guard($scope0_reason, 6) ? ($cg__input_a || _content_withheld("b0", $scope1_id) || $cg__input_mode) && _patch_fill($scope1_id, "vb3", c) : _patch_init($scope1_id, "b4");
 			$cg__input_mode && _patch_write($scope1_id, "wf", frag?.content, 1);

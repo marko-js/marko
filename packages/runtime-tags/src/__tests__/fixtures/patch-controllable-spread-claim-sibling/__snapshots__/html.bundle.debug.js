@@ -6,11 +6,11 @@ _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/templ
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_on = _client_guard($scope0_reason, 2), $cg__input_attrs = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_html(`<input${_patch_attrs({
+	_html(`<input${_attrs({
 		type: "checkbox",
 		...input.attrs,
 		checked: input.on
-	}, "#input/0", $scope0_id, "input", 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<input${_patch_attrs(input.attrs, "#input/1", $scope0_id, "input", 1, $scope0_reason, 1)}>${_el_resume($scope0_id, "#input/1")}<p id=out>-</p><button>interactive</button>${_el_resume($scope0_id, "#button/2")}`);
+	}, "#input/0", $scope0_id, "input", 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<input${_attrs(input.attrs, "#input/1", $scope0_id, "input", 1, $scope0_reason, 1)}>${_el_resume($scope0_id, "#input/1")}<p id=out>-</p><button>interactive</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5_input_on#6");

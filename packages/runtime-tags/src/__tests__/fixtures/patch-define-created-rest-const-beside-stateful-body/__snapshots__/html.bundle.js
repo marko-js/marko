@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
-				_html(`<em${_patch_attrs(rest, "a", $scope3_id, "em", void 0, $scope2_reason, 1)}>${_text_resume($scope3_id, "b", Object.keys(rest).join(), void 0, $scope2_reason, 1)}</em>${_el_resume($scope3_id, "a")}`);
+				_html(`<em${_attrs(rest, "a", $scope3_id, "em", void 0, $scope2_reason, 1)}>${_text_resume($scope3_id, "b", Object.keys(rest).join(), void 0, $scope2_reason, 1)}</em>${_el_resume($scope3_id, "a")}`);
 				_script($scope3_id, "a0");
 				_scope($scope3_id, { _: _write_if($scope2_reason, 1) && _scope_with_id($scope2_id) });
 				return 0;

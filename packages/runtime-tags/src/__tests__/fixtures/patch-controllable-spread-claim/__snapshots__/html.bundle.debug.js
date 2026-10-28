@@ -6,7 +6,7 @@ _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/templ
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_on = _client_guard($scope0_reason, 2), $cg__input_attrs = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_html(`<input${_patch_attrs({
+	_html(`<input${_attrs({
 		type: "checkbox",
 		...input.attrs,
 		checked: input.on

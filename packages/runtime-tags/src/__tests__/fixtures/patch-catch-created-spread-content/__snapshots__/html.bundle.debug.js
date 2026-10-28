@@ -25,7 +25,7 @@ var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (inp
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_resume($scope1_id, "#text/0", err.message, void 0, 4, 0)}</b><div`);
-		_patch_attrs_content({ content: input.fallback }, "#div/1", $scope1_id, "div", 0, void 0, void 0, $scope0_reason, 0);
+		_attrs_content({ content: input.fallback }, "#div/1", $scope1_id, "div", 0, void 0, void 0, $scope0_reason, 0);
 		_html(`</div>${_el_resume($scope1_id, "#div/1")}`);
 		_script($scope1_id, "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/init" : "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe");

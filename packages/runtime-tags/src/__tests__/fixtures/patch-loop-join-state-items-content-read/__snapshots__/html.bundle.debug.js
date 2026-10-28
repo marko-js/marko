@@ -19,7 +19,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2"));
 	}, $scope0_id) };
 	_html("<section>");
-	_patch_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 4);
+	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 4);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", _mask_group($scope0_reason, 4))}`);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();

@@ -19,7 +19,7 @@ var frag_host_default = _template("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_mode__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 	}, $scope0_id) };
 	_html("<section");
-	_patch_attrs_content({ content: input.mode ? one : null }, "a", $scope0_id, "section", 0, void 0, void 0, $scope0_reason, 0);
+	_attrs_content({ content: input.mode ? one : null }, "a", $scope0_id, "section", 0, void 0, void 0, $scope0_reason, 0);
 	_html(`</section>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b5");
 	$cg__input_mode && _patch_write($scope0_id, "wf", one, 1);

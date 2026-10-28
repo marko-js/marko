@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_await($scope0_id, "a", input.one, () => {
 		const $scope1_id = _scope_id();
-		_html(`<button${_patch_attrs({
+		_html(`<button${_attrs({
 			id: "one",
 			title: input.title,
 			onClick: handler
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	}, 1, "a6", 1, 1);
 	_await($scope0_id, "b", input.two, () => {
 		const $scope2_id = _scope_id();
-		_html(`<button${_patch_attrs({
+		_html(`<button${_attrs({
 			id: "two",
 			title: input.title,
 			onClick: handler

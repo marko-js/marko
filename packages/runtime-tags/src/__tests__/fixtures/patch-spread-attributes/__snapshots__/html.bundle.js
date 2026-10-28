@@ -7,14 +7,14 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><a${_patch_attrs({
+	_html(`<main><a${_attrs({
 		href: "/static",
 		...input.attrs
 	}, "a", $scope0_id, "a", void 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "a")}`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<img${_patch_attrs({
+			_html(`<img${_attrs({
 				alt: "hero",
 				...input.img
 			}, "a", $scope1_id, "img", void 0, $scope0_reason, 3)}>${_el_resume($scope1_id, "a")}`);

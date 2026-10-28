@@ -6,7 +6,7 @@ var text_field_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { value, valueChange, ...attrs } = input;
-	_html(`<input${_attr_input_value($scope0_id, "a", value, valueChange, 1, $scope0_reason, 0, 1, $scope0_reason, 0)}${_patch_attrs_partial(attrs, {
+	_html(`<input${_attr_input_value($scope0_id, "a", value, valueChange, 1, $scope0_reason, 0, 1, $scope0_reason, 0)}${_attrs_partial(attrs, {
 		value: 1,
 		valueChange: 1
 	}, "a", $scope0_id, "input", void 0, $scope0_reason, 3)}>${_el_resume($scope0_id, "a")}`);

@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<main>");
 	_await($scope0_id, "#text/0", input.one, () => {
 		const $scope1_id = _scope_id();
-		_html(`<button${_patch_attrs({
+		_html(`<button${_attrs({
 			id: "one",
 			...{
 				title: input.title,
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 1, "__tests__/template.marko_1*content", 1, 1);
 	_await($scope0_id, "#text/1", input.two, () => {
 		const $scope2_id = _scope_id();
-		_html(`<button${_patch_attrs({
+		_html(`<button${_attrs({
 			id: "two",
 			...{
 				title: input.title,

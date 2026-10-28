@@ -18,14 +18,14 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		_html("<div>");
-		_patch_attr_content("a", $scope2_id, Body, 0, void 0, 0, 0);
+		_attr_content("a", $scope2_id, Body, 0, void 0, 0, 0);
 		_html(`</div>${_el_resume($scope2_id, "a", 0)}`);
 		_scope($scope2_id, {});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 0);
 	_for_of(input.items, (item) => {
 		const $scope3_id = _scope_id();
 		_html("<section");
-		_patch_attrs_content({ content: Body }, "a", $scope3_id, "section", 1, void 0, void 0, 0, 0);
+		_attrs_content({ content: Body }, "a", $scope3_id, "section", 1, void 0, void 0, 0, 0);
 		_html(`</section>${_el_resume($scope3_id, "a")}`);
 		_script($scope3_id, "a3");
 		_scope($scope3_id, {});

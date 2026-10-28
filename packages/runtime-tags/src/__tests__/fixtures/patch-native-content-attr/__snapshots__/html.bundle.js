@@ -20,7 +20,7 @@ var template_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main><section>");
-	_patch_attr_content("a", $scope0_id, input.mode === "a" ? frag_a_default : frag_b_default, 0, void 0, $scope0_reason, 0);
+	_attr_content("a", $scope0_id, input.mode === "a" ? frag_a_default : frag_b_default, 0, void 0, $scope0_reason, 0);
 	_html(`</section>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<p>${_text_resume($scope0_id, "b", input.note, void 0, $scope0_reason, 1)}</p></main>`);
 	_scope($scope0_id, {});
 }, 1);

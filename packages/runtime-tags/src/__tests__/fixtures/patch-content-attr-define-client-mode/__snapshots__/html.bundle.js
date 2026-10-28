@@ -17,7 +17,7 @@ var frag_host_default = _template("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	_html("<section>");
-	_patch_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 2);
+	_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 2);
 	_html(`</section>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 2))}`);
 	$cg__input_mode && _patch_write($scope0_id, "wg", frag?.content, 1);
 	$cg__input_mode && _patch_init($scope0_id, "b4");

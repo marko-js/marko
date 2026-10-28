@@ -15,7 +15,9 @@ export {
   _attr_select_value,
   _attr_style,
   _attr_textarea_value,
+  _attrs,
   _attrs_content,
+  _attrs_partial,
   _attrs_partial_content,
 } from "./patches/attrs";
 export {
@@ -53,13 +55,6 @@ export {
   _write_if,
 } from "./patches/writer";
 // Patch-only.
-export {
-  _patch_attrs,
-  _patch_attr_content,
-  _patch_attrs_content,
-  _patch_attrs_partial,
-  _patch_attrs_partial_content,
-} from "./patches/attrs";
 export { _patch_style, _patch_text_content } from "./patches/content";
 export { _content_withheld, _stateful_return } from "./patches/dynamic-tag";
 export { _shell_marker, _shell_setup, _shells } from "./patches/shells";

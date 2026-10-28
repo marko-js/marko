@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<a${_patch_attrs({
+			_html(`<a${_attrs({
 				...input.attrs,
 				onClick: _resume(function() {
 					count++;

@@ -24,9 +24,9 @@ var frag_host_default = _template("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	_html("<section");
-	_patch_attrs_content({ content: input.mode ? one : two }, "a", $scope0_id, "section", 0, void 0, void 0, $scope0_reason, 1);
+	_attrs_content({ content: input.mode ? one : two }, "a", $scope0_id, "section", 0, void 0, void 0, $scope0_reason, 1);
 	_html(`</section>${_el_resume($scope0_id, "a")}<div id=partial`);
-	_patch_attrs_partial_content({ content: input.mode ? two : one }, { id: 1 }, "b", $scope0_id, "div", 1, void 0, void 0, $scope0_reason, 1);
+	_attrs_partial_content({ content: input.mode ? two : one }, { id: 1 }, "b", $scope0_id, "div", 1, void 0, void 0, $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b4");
 	$cg__input_mode && _patch_write($scope0_id, "wg", one, 1);
