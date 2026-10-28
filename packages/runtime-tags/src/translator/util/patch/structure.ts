@@ -18,7 +18,7 @@ import {
   type Section,
   type ParamReasonGroup,
 } from "../sections";
-import { getDerivedReaders, someLandingRead } from "../solve-reasons";
+import { getDerivedReaders, someRead } from "../solve-reasons";
 import { hasParamOrGlobalSource, type Sources } from "../sources";
 import { hasClientState, serverRendersFirstValue } from "./decisions";
 
@@ -77,9 +77,9 @@ export const getStatefulConsumers = createPassMemo(
   (section: Section): "some" | "every" | undefined => {
     const { derives } = section;
     const readers = derives && getDerivedReaders(derives);
-    if (!readers || !someLandingRead(readers, isStatefulLeaf)) return;
+    if (!readers || !someRead(readers, isStatefulLeaf)) return;
     return some(section.callSections, isPatchedCall) ||
-      someLandingRead(readers, isPatchedLeaf)
+      someRead(readers, isPatchedLeaf)
       ? "some"
       : "every";
   },
@@ -122,7 +122,7 @@ export function isPassedStateByEveryCall(
     const { derives } = body;
     const groupPasses =
       !!derives &&
-      !someLandingRead(getDerivedReaders(derives), isAnyRead) &&
+      !someRead(getDerivedReaders(derives), isAnyRead) &&
       everyCallPasses(body, params, hasClientState);
     passes = anyGroup ? passes || groupPasses : passes && groupPasses;
   });

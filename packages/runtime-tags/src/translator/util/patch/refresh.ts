@@ -70,8 +70,8 @@ import {
   extraReaders,
   getBranchExprReasonUntil,
   getDerivedReaders,
-  type Readers,
-  someLandingRead,
+  READ_AS_INPUT,
+  READ_BEFORE_CALL,
   someRead,
 } from "../solve-reasons";
 import {
@@ -690,9 +690,7 @@ function computeFillReadKind(binding: Binding) {
           rendersContent = true;
           keptInLet ||= derived.type === BindingType.let;
         }
-      } else if (
-        someLandingRead(bindingReaders(derived, true), isContentRender)
-      ) {
+      } else if (someRead(bindingReaders(derived, true), isContentRender)) {
         rendersContent = true;
       }
     });
@@ -1131,7 +1129,7 @@ function rendersWithOwner(content: Section) {
     !!derives &&
     isKnownTagExtra(derives.tag) &&
     !isStatefulBranch(content) &&
-    !someLandingRead(getDerivedReaders(derives), rendersApart)
+    !someRead(getDerivedReaders(derives), rendersApart)
   );
 }
 
@@ -1820,7 +1818,7 @@ export const isPatchWrittenJoin = createPassMemo((join: Intersection) => {
 // re-run and the calls whose callees keep their inputs, through derived values.
 function leavesReadToPatch(read: ReferencedExtra): boolean {
   return (
-    !rendersAtSite(read) && !someRead(extraReaders(read).reads, rendersAtSite)
+    !rendersAtSite(read) && !someRead(extraReaders(read), rendersBeforeCall)
   );
 }
 
@@ -1837,6 +1835,12 @@ function rendersAtSite(read: ReferencedExtra) {
           : derived.type === BindingType.derived,
       ))
   );
+}
+
+// A read the client renders where it sits, in the value's own derives: a call site
+// answers for its callee's reads.
+function rendersBeforeCall(read: ReferencedExtra, how: number) {
+  return !!(how & READ_BEFORE_CALL) && rendersAtSite(read);
 }
 
 function readsOtherJoin(binding: Binding, join: Intersection) {
@@ -1965,9 +1969,8 @@ const patchMayCreateOwn = createPassMemo((section: Section): boolean => {
   // A known consumer decides by where it renders the content; an unknown
   // one may do anything.
   if (!derives) return true;
-  const readers = getDerivedReaders(derives);
-  return someLandingRead(readers, (read) =>
-    patchMayCreateAtRead(read, readers, section),
+  return someRead(getDerivedReaders(derives), (read, how) =>
+    patchMayCreateAtRead(read, how, section),
   );
 }, false);
 
@@ -1975,7 +1978,7 @@ const patchMayCreateOwn = createPassMemo((section: Section): boolean => {
 // read passing it on within the template leaves it to the reads of what it derives.
 function patchMayCreateAtRead(
   read: ReferencedExtra,
-  readers: Readers,
+  how: number,
   content: Section,
 ) {
   const rendersContent = isContentRender(read);
@@ -1992,9 +1995,9 @@ function patchMayCreateAtRead(
     // what its call site hands it, unless the child picks it.
     ((inTemplate
       ? rendersContent &&
-        switchesContent(read, readers) &&
+        switchesContent(read, how) &&
         patchWrites(read.section)
-      : picksContent(read, readers)) ||
+      : picksContent(read, how)) ||
       // A callee's root renders where its call site does, which the content's
       // own sections answer.
       patchMayCreateEnclosing(
@@ -2006,20 +2009,16 @@ function patchMayCreateAtRead(
 
 // A read that may switch the content it renders: its input, or by a name with
 // sources (one with none renders the same content for its scope's life).
-function switchesContent(read: ReferencedExtra, readers: Readers) {
+function switchesContent(read: ReferencedExtra, how: number) {
   const name = getNameRead(read);
-  return !name || !!name.binding.sources || !!readers.inputReads?.has(read);
+  return !name || !!name.binding.sources || !!(how & READ_AS_INPUT);
 }
 
 // A read choosing what it renders or passes on, unless handed on as is: a
 // dynamic tag's name (its renderer may render its input anywhere), else itself.
-function picksContent(read: ReferencedExtra, readers: Readers) {
+function picksContent(read: ReferencedExtra, how: number) {
   const passed = getNameRead(read) || read.read;
-  return (
-    !passed ||
-    !isSectionParam(passed.binding) ||
-    !!readers.inputReads?.has(read)
-  );
+  return !passed || !isSectionParam(passed.binding) || !!(how & READ_AS_INPUT);
 }
 
 // The read a dynamic tag's name renders unchanged by the tag: a param its caller
@@ -2044,7 +2043,7 @@ export function getRendererCallerSources(extra: t.NodeExtra) {
 const [takesKeptInput] = createAnalysisMemo(
   (section: Section) =>
     !!section.derives &&
-    someLandingRead(getDerivedReaders(section.derives), keepsWithInput),
+    someRead(getDerivedReaders(section.derives), keepsWithInput),
   false,
 );
 
