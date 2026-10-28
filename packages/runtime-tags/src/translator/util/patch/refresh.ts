@@ -438,7 +438,7 @@ export function canPatchFill(binding: Binding) {
 // A `<let>` whose first value client code runs where a patch creates its scope:
 // a patch fills it, or state its init reads.
 export const fillsFirstValue = createPassMemo(
-  (state: Binding) =>
+  (state: Binding): boolean =>
     canPatchFill(state) || some(state.initSources?.state, canPatchFill),
   false,
 );
