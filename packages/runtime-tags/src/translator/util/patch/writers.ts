@@ -604,7 +604,7 @@ function buildLetChangeWrites(
   const controller = getSourcesForExpr(binding.derivedFrom as t.NodeExtra);
   if (controller?.state) {
     // A state-sourced controller is the client's: the value only seeds, but
-    // where its first value reads a caller group, in that group.
+    // where its initial value reads a caller group, in that group.
     const seedGroup = getSeedOnlyGroupArgs(section, binding);
     return [
       buildPatchFill(
@@ -1161,7 +1161,7 @@ export function getRendererGroupArgs(
     : [args[1], args[0]];
 }
 
-// A hole of first values seeds a created scope alone (a group mask of `0`), and
+// A hole of initial values seeds a created scope alone (a group mask of `0`), and
 // is the client's where it holds a caller group their inits read.
 function getSeedOnlyGroupArgs(section: Section, states: Sources["state"]) {
   return buildWriteGroupArgs(getSeedWriteGroups(section, states));

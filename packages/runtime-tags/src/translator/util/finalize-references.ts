@@ -614,29 +614,23 @@ function resolveRootSources(binding: Binding) {
 }
 
 // A `<let>`'s init: what it reads, through the inits of the state it reads, and for an
-// uncontrolled one (taken once, as its scope is created), whether it reads only first values.
+// uncontrolled one (taken once, as its scope is created), whether it reads only initial values.
 function resolveInitialValue(binding: Binding) {
   const init = binding.derivedFrom as t.NodeExtra;
   const sources = resolveInitSources(init);
   binding.initSources = reduce(sources?.state, mergeInitSources, sources);
   if (!init.initialValue) return false;
-  binding.initReadsFirstValues = every(sources?.state, (state) =>
-    holdsFirstValue(state, binding.section),
+  binding.initReadsInitialValues = every(
+    sources?.state,
+    (state) =>
+      state.initReadsInitialValues &&
+      (state.section === binding.section || !state.assignments),
   );
   return !!sources;
 }
 
 export function mergeInitSources(sources: Sources | undefined, state: Binding) {
   return mergeSources(sources, state.initSources);
-}
-
-// A `<let>` at its first value as the section's scope is created: created with
-// it, or nothing assigns it, from an init reading only first values.
-export function holdsFirstValue(state: Binding, section: Section) {
-  return (
-    state.initReadsFirstValues &&
-    (state.section === section || !state.assignments)
-  );
 }
 
 function resolveDerivedSources(binding: Binding) {

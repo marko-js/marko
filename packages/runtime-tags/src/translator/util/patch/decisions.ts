@@ -12,7 +12,7 @@ import {
   isStateSourced,
 } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
-import { holdsFirstValue, mergeInitSources } from "../finalize-references";
+import { mergeInitSources } from "../finalize-references";
 import { isPatch } from "../marko-config";
 import { every, forEach, type Opt, push, reduce, some } from "../optional";
 import {
@@ -40,7 +40,7 @@ import { findSlot, SlotKind, type Slot } from "../slots";
 import { mergeSources, type Sources, withSources } from "../sources";
 import { createAnalysisState } from "../state";
 import {
-  fillsFirstValue,
+  fillsInitialValue,
   getPatchFill,
   patchCreatesOrComposes,
   rerunsByEntry,
@@ -65,22 +65,26 @@ export function writesPatchHole(
   );
 }
 
-// Read only from `<let>`s whose first value the server renders where the scope is
-// created: the hole seeds a created scope alone.
+// Read only from `<let>`s at the initial value the server renders where the scope
+// is created: the hole seeds a created scope alone.
 export function seedsOnly(section: Section, sources: Sources | undefined) {
   return (
     patchCreatesOrComposes(section) &&
     !!sources?.state &&
     !sources.param &&
     !sources.global &&
-    every(sources.state, (state) => serverRendersFirstValue(state, section))
+    every(sources.state, (state) => holdsInitialValue(state, section))
   );
 }
 
-// A `<let>` at its first value as the section's scope is created, which the server
-// renders there: unless a patch fills it or state its init reads, so the client runs it.
-export function serverRendersFirstValue(state: Binding, section: Section) {
-  return holdsFirstValue(state, section) && !fillsFirstValue(state);
+// A `<let>` at the initial value the server renders as the section's scope is created:
+// from initial values only, created with the scope or never assigned, and unfilled.
+export function holdsInitialValue(state: Binding, section: Section) {
+  return (
+    state.initReadsInitialValues &&
+    (state.section === section || !state.assignments) &&
+    !fillsInitialValue(state)
+  );
 }
 
 // A seed-only hole a `<let>` the client assigns sources: that `<let>`'s signal
@@ -97,16 +101,16 @@ function isAssigned(state: Binding) {
   return !!state.assignments;
 }
 
-// A `<let>` fixed at creation (`resolveRootSources`): client-held once created,
-// and the server renders its first value where it creates the scope.
-export function keepsFirstValue(state: Binding) {
-  return !state.assignments && serverRendersFirstValue(state, state.section);
+// A `<let>` the client never changes: nothing assigns it, and it holds the
+// initial value the server renders.
+export function keepsInitialValue(state: Binding) {
+  return !state.assignments && holdsInitialValue(state, state.section);
 }
 
-// The sources take client state: a `<let>` that keeps its first value renders
+// The sources take client state: a `<let>` that keeps its initial value renders
 // as the server does.
 export function hasClientState(sources: Sources | undefined) {
-  return !every(sources?.state, keepsFirstValue);
+  return !every(sources?.state, keepsInitialValue);
 }
 
 // A handler written inline merged its references with its control's, so
@@ -247,7 +251,7 @@ export function getExprWriteGroups(
     : getWriteGroups(section, sources, !sources);
 }
 
-// A seed of the states' first values: the client's bit of the groups they read.
+// A seed of the states' initial values: the client's bit of the groups they read.
 export function getSeedWriteGroups(
   section: Section,
   states: Sources["state"],
@@ -315,7 +319,7 @@ export function getEffectWrites(section: Section, signal: Signal) {
   }
 }
 
-// The params and `$global` each state's first value reads, through other states.
+// The params and `$global` each state's initial value reads, through other states.
 // A controlled `<let>` that is no state root has no init fact, so it answers none.
 export function getStateInitSources(states: Sources["state"]) {
   const inits = reduce(states, mergeInitSources);

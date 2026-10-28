@@ -435,9 +435,9 @@ export function canPatchFill(binding: Binding) {
   return isPatchSent(binding) && patchWritesScope(binding.section);
 }
 
-// A `<let>` whose first value client code runs where a patch creates its scope:
-// a patch fills it, or state its init reads.
-export const fillsFirstValue = createPassMemo(
+// A `<let>` whose initial value client code computes where a patch creates its
+// scope: a patch fills it, or state its init reads.
+export const fillsInitialValue = createPassMemo(
   (state: Binding): boolean =>
     canPatchFill(state) || some(state.initSources?.state, canPatchFill),
   false,
@@ -543,7 +543,7 @@ export function isFirstState(state: Binding, section: Section) {
   return (
     state.type === BindingType.let &&
     state.section === section &&
-    !fillsFirstValue(state)
+    !fillsInitialValue(state)
   );
 }
 
@@ -697,7 +697,7 @@ function computeFillReadKind(binding: Binding) {
     const handOff: { under?: SortedOpt<Section> } | undefined = rendersContent
       ? {}
       : undefined;
-    // A `<let>`'s first value is read again only where the client creates its scope.
+    // A `<let>`'s initial value is read again only where the client creates its scope.
     const readKind = read.initialValue
       ? getReadStructure(binding, read, effect)
       : getReadKind(binding, read, effect, written, handOff);
@@ -940,7 +940,7 @@ function getReadStructure(
     // What creates the read's section anew on the client (main's reason): a
     // caller's group there, or a `<define>` body's calls, leave it unfilled.
     const reason = getBranchExprReasonUntil(readAt, binding.section);
-    // State here can only be a `<let>` keeping its first value: it never re-creates it.
+    // State here can only be a `<let>` keeping its initial value: it never re-creates it.
     const created = reason?.state
       ? withSources(reason, undefined, reason.param)
       : reason;
@@ -2366,7 +2366,7 @@ function ensureBindingGroups(binding: Binding) {
   ensureConditionGroups(fill);
   ensureConditionGroups(contentKind);
   ensureConditionGroups(unpatchedStructure);
-  // A created scope's `<let>` seeds by what its first value reads.
+  // A created scope's `<let>` seeds by what its initial value reads.
   if (binding.type === BindingType.let) {
     ensureCallerParamGroups(getStateInitSources(binding));
   }

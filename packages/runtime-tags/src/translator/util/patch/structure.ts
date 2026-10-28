@@ -20,7 +20,7 @@ import {
 } from "../sections";
 import { getDerivedReaders, someRead } from "../solve-reasons";
 import { hasParamOrGlobalSource, type Sources } from "../sources";
-import { hasClientState, serverRendersFirstValue } from "./decisions";
+import { hasClientState, holdsInitialValue } from "./decisions";
 
 // Every render of the section is patch-written: on the branch path, outside
 // stateful structure.
@@ -66,7 +66,7 @@ function isPatchedLeaf(read: ReferencedExtra) {
     (!isStatefulLeaf(read) ||
       (!!read.nameOnly &&
         every(getSourcesForExpr(read)?.state, (state) =>
-          serverRendersFirstValue(state, read.section),
+          holdsInitialValue(state, read.section),
         )))
   );
 }

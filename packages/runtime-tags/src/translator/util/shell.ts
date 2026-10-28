@@ -105,7 +105,10 @@ export const [getShells] = createOutputState(() => {
         ? createsFromShell(section)
         : section.branch
           ? shipsBoundaryShell(section)
-          : shipsContentShell(section) || namedByShell(section))
+          : shipsContentShell(section) ||
+            // A kept dynamic tag's entry names content by its shell: the params its
+            // own client code reads ride the entry only to a page that registers it.
+            (readsKeptInputOnClient(section) && !clientRegisters(section)))
     ) {
       addShell(shells, section, "content");
     }
@@ -115,12 +118,6 @@ export const [getShells] = createOutputState(() => {
   });
   return shells;
 });
-
-// Content a kept dynamic tag's entry names by its shell: the params its own client
-// code reads ride the entry only to a page that registers it.
-function namedByShell(section: Section) {
-  return readsKeptInputOnClient(section) && !clientRegisters(section);
-}
 
 // At analyze exit, what a page links for the module's patches: the sends a
 // caller's params decide (read in its compile) and the module's registrations.
