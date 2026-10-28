@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $await_content__g = /*@__PURE__*/ _fill_let_change("__tests__/tags/show-await.marko_fill2", "g/6", ($scope) => _text($scope["#text/0"], $scope.g));
 const $await_content__input_label__OR__a = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/show-await.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/tags/show-await.marko_1_input_label#0:4_a#4/init", 5, ($scope) => $await_content__g($scope, $scope.a + ":" + $scope._.input_label, $valueChange($scope))), "input_label/5", 0);
-const $await_content__input_label = _closure_resume("__tests__/tags/show-await.marko_1_input_label#0:4/subscribe", /*@__PURE__*/ _closure_get("input_label/5", $await_content__input_label__OR__a));
+const $await_content__input_label = _closure_get("input_label/5", $await_content__input_label__OR__a, 0, "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe");
 const $await_content__setup__script = _script("__tests__/tags/show-await.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$await_content__g($scope, "q");
 }));

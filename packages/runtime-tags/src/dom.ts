@@ -89,7 +89,6 @@ export {
 export { _load_lazy, _load_signal_patch } from "./dom/patches/load";
 export {
   _closure_index,
-  _closure_resume,
   _fill_const,
   _fill_join,
   _fill_join_closure,

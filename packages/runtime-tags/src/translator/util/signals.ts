@@ -578,7 +578,7 @@ export function getSignal(
                   [scopeIdentifier],
                   getScopeExpression(section, closure.section),
                 ),
-            !kept && resumeId,
+            resumeId,
           ]),
         );
         const index = getDynamicClosureIndex(closure, section);
@@ -601,9 +601,10 @@ export function getSignal(
             closureGet,
           );
         }
-        return kept
-          ? callRuntime("_closure_resume", resumeId, closureGet)
-          : closureGet;
+        // Main's `_content` rule: a registration the server names that no
+        // client code reaches is left impure at its outermost call.
+        if (kept) closureGet.leadingComments = null;
+        return closureGet;
       };
     }
   }

@@ -22,7 +22,7 @@ const $try_content__setup = ($scope) => {
 };
 const $try_content__input_msg = /*@__PURE__*/ _closure_get("input_msg/12", $try_content__input_fail__OR__input_msg, 0, "__tests__/template.marko_5_input_msg#0:7/subscribe");
 const $wrap_content__input_v__script = _script("__tests__/template.marko_4_input_v#0:3", ($scope) => console.log("content", $scope._._.input_v));
-const $wrap_content__input_v = /*@__PURE__*/ _init_resume("__tests__/template.marko_4_input_v#0:3/init", _closure_resume("__tests__/template.marko_4_input_v#0:3/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_v", /*@__PURE__*/ _closure_get("input_v/8", $wrap_content__input_v__script, ($scope) => $scope._._), 3)));
+const $wrap_content__input_v = /*@__PURE__*/ _init_resume("__tests__/template.marko_4_input_v#0:3/init", _fill_join_closure("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_v", /*@__PURE__*/ _closure_get("input_v/8", $wrap_content__input_v__script, ($scope) => $scope._._, "__tests__/template.marko_4_input_v#0:3/subscribe"), 3));
 const $wrap_content__setup = ($scope) => {
 	$wrap_content__input_v($scope);
 	$wrap_content__w($scope);
@@ -31,7 +31,7 @@ const $wrap_content__w = /*@__PURE__*/ _init_resume("__tests__/template.marko_4_
 const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_4*content", "<s> </s>", "D ", $wrap_content__setup);
 const $for_content__input_v__OR__x__script = _script("__tests__/template.marko_3_input_v#0:3_x#2", ($scope) => console.log("for", $scope.x, $scope._._.input_v));
 const $for_content__input_v__OR__x = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0/unpatched | __tests__/template.marko_fill0", "input_v", /*@__PURE__*/ _or_resume("__tests__/template.marko_3_input_v#0:3_x#2/init", 3, $for_content__input_v__OR__x__script), "input_v/8", 2);
-const $for_content__input_v = _closure_resume("__tests__/template.marko_3_input_v#0:3/subscribe", /*@__PURE__*/ _closure_index(2, /*@__PURE__*/ _closure_get("input_v/8", $for_content__input_v__OR__x, ($scope) => $scope._._)));
+const $for_content__input_v = _closure_index(2, /*@__PURE__*/ _closure_get("input_v/8", $for_content__input_v__OR__x, ($scope) => $scope._._, "__tests__/template.marko_3_input_v#0:3/subscribe"));
 const $for_content__setup = $for_content__input_v;
 const $for_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 	_text($scope["#text/0"], $scope.x);
@@ -39,7 +39,7 @@ const $for_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 });
 const $for_content__$params = ($scope, $params3) => $for_content__x($scope, $params3[0]);
 const $if_content__input_v__script = _script("__tests__/template.marko_2_input_v#0:3", ($scope) => console.log("if", $scope._._.input_v));
-const $if_content__input_v = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_v#0:3/init", _closure_resume("__tests__/template.marko_2_input_v#0:3/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_v", /*@__PURE__*/ _closure_get("input_v/8", $if_content__input_v__script, ($scope) => $scope._._), 1)));
+const $if_content__input_v = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_v#0:3/init", _fill_join_closure("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_v", /*@__PURE__*/ _closure_get("input_v/8", $if_content__input_v__script, ($scope) => $scope._._, "__tests__/template.marko_2_input_v#0:3/subscribe"), 1));
 const $if_content__setup = ($scope) => {
 	$if_content__input_v($scope);
 	$if_content__w._($scope);
@@ -51,10 +51,10 @@ const $catch_content__w = /*@__PURE__*/ _const("w", ($scope) => {
 	$if_content__w($scope);
 });
 const $catch_content__input_v__script = _script("__tests__/template.marko_1_input_v#0:3", ($scope) => console.log("catch", $scope._.input_v));
-const $catch_content__input_v = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_v#0:3/init", _closure_resume("__tests__/template.marko_1_input_v#0:3/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_v", /*@__PURE__*/ _closure_get("input_v/8", ($scope) => {
+const $catch_content__input_v = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_v#0:3/init", _fill_join_closure("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_v", /*@__PURE__*/ _closure_get("input_v/8", ($scope) => {
 	$catch_content__w($scope, $scope._.input_v * 10);
 	$catch_content__input_v__script($scope);
-}), 0)));
+}, 0, "__tests__/template.marko_1_input_v#0:3/subscribe"), 0));
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_v($scope);
 	$catch_content__input_show($scope);
@@ -62,9 +62,9 @@ const $catch_content__setup = ($scope) => {
 	$input_content_direct($scope["#childScope/3"], $wrap_content($scope));
 };
 const $catch_content__if = /*@__PURE__*/ _if("#text/1", "<i> </i>", "D ", $if_content__setup);
-const $catch_content__input_show = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_show#0:4/init", _closure_resume("__tests__/template.marko_1_input_show#0:4/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_show", /*@__PURE__*/ _closure_get("input_show/9", ($scope) => $catch_content__if($scope, $scope._.input_show ? 0 : 1)), 0)));
+const $catch_content__input_show = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_show#0:4/init", _fill_join_closure("__tests__/template.marko_fill1", "input_show", /*@__PURE__*/ _closure_get("input_show/9", ($scope) => $catch_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/template.marko_1_input_show#0:4/subscribe"), 0));
 const $catch_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<u> </u>", "D ", $for_content__setup, $for_content__$params);
-const $catch_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_items#0:5/init", _closure_resume("__tests__/template.marko_1_input_items#0:5/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill2", "input_items", /*@__PURE__*/ _closure_get("input_items/10", ($scope) => $catch_content__for($scope, [$scope._.input_items])), 0)));
+const $catch_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_items#0:5/init", _fill_join_closure("__tests__/template.marko_fill2", "input_items", /*@__PURE__*/ _closure_get("input_items/10", ($scope) => $catch_content__for($scope, [$scope._.input_items]), 0, "__tests__/template.marko_1_input_items#0:5/subscribe"), 0));
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_1*content", /*@__PURE__*/ ((_w0) => `<b> </b><!><!>${_w0}`)($template$1), /*@__PURE__*/ ((_w0) => `D l%b%b/${_w0}&`)("D%l"), $catch_content__setup, $catch_content__$params);

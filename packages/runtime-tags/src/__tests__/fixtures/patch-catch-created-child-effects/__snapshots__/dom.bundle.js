@@ -13,7 +13,7 @@ const $input_count__script = _script("b0", ($scope) => console.log("count", $sco
 const $input_count = /*@__PURE__*/ _const(5, $input_count__script);
 
 // template.marko
-const $catch_content__input_msg = /*@__PURE__*/ _init_resume("a0", _closure_resume("a1", /*@__PURE__*/ _fill_join_closure("a9", 5, /*@__PURE__*/ _closure_get(8, ($scope) => $input_label($scope.a, $scope._.f)), 0)));
+const $catch_content__input_msg = /*@__PURE__*/ _init_resume("a0", _fill_join_closure("a9", 5, /*@__PURE__*/ _closure_get(8, ($scope) => $input_label($scope.a, $scope._.f), 0, "a1"), 0));
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_msg($scope);
 	$catch_content__count($scope);

@@ -32,7 +32,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_fail($scope);
 };
 const $try_content__input_fail = /*@__PURE__*/ _closure_get("input_fail/9", $try_content__input_msg__OR__input_fail, 0, "__tests__/template.marko_2_input_fail#0:6/subscribe");
-const $catch_content__input_msg = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_msg#0:5/init", _closure_resume("__tests__/template.marko_1_input_msg#0:5/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/8", ($scope) => $input_label($scope["#childScope/0"], $scope._.input_msg)), 0)));
+const $catch_content__input_msg = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_msg#0:5/init", _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/8", ($scope) => $input_label($scope["#childScope/0"], $scope._.input_msg), 0, "__tests__/template.marko_1_input_msg#0:5/subscribe"), 0));
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_msg($scope);
 	$catch_content__count($scope);

@@ -14,7 +14,7 @@ const $await_content__w = ($scope, w) => _text($scope.b, w);
 const $await_content__$params = ($scope, $params2) => $await_content__w($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content(0, "<em><!> <!></em>", "D%c%", $await_content__setup);
 const $inputonCarddiv_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
-const $inputonCarddiv_content__input_w = /*@__PURE__*/ _init_resume("a5", _closure_resume("a10", /*@__PURE__*/ _fill_join_closure("a6", 4, /*@__PURE__*/ _closure_get(6, ($scope) => $inputonCarddiv_content__await_promise($scope, $scope._.e)), 0)));
+const $inputonCarddiv_content__input_w = /*@__PURE__*/ _init_resume("a5", _fill_join_closure("a6", 4, /*@__PURE__*/ _closure_get(6, ($scope) => $inputonCarddiv_content__await_promise($scope, $scope._.e), 0, "a10"), 0));
 const $inputonCarddiv_content__setup = ($scope) => {
 	$inputonCarddiv_content__input_w($scope);
 	$await_content($scope);

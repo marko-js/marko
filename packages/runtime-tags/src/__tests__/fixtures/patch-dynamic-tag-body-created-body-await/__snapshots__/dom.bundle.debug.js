@@ -27,7 +27,7 @@ const $await_content__w = ($scope, w) => _text($scope["#text/1"], w);
 const $await_content__$params = ($scope, $params2) => $await_content__w($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em><!> <!></em>", "D%c%", $await_content__setup);
 const $inputonCarddiv_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $inputonCarddiv_content__input_w = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_w#0:4/init", _closure_resume("__tests__/template.marko_1_input_w#0:4/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_w", /*@__PURE__*/ _closure_get("input_w/6", ($scope) => $inputonCarddiv_content__await_promise($scope, $scope._.input_w)), 0)));
+const $inputonCarddiv_content__input_w = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_w#0:4/init", _fill_join_closure("__tests__/template.marko_fill0", "input_w", /*@__PURE__*/ _closure_get("input_w/6", ($scope) => $inputonCarddiv_content__await_promise($scope, $scope._.input_w), 0, "__tests__/template.marko_1_input_w#0:4/subscribe"), 0));
 const $inputonCarddiv_content__setup = ($scope) => {
 	$inputonCarddiv_content__input_w($scope);
 	$await_content($scope);

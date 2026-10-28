@@ -19,7 +19,7 @@ var card_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $inpu
 // template.marko
 const $Tree_content__walks = "D l%c";
 const $Tree_content__template = "<em> </em><!><!>";
-const $inputonCarddiv_content__depth = _closure_resume("a12", /*@__PURE__*/ _fill_join_closure("a5", 4, /*@__PURE__*/ _closure_get(7, ($scope) => $Tree_content__tag_input_depth($scope.a, $scope._._.e - 1), ($scope) => $scope._._), 0));
+const $inputonCarddiv_content__depth = _fill_join_closure("a5", 4, /*@__PURE__*/ _closure_get(7, ($scope) => $Tree_content__tag_input_depth($scope.a, $scope._._.e - 1), ($scope) => $scope._._, "a12"), 0);
 const $inputonCarddiv_content__setup = ($scope) => {
 	$inputonCarddiv_content__depth($scope);
 	$scope.a._ = $scope._._._;

@@ -3,7 +3,7 @@ const $Inner_content__walks = "D l";
 const $Inner_content__template = "<p> </p>";
 const $Inner_content__b = ($scope, b) => _text($scope.a, b);
 const $Inner_content__value__OR__y = /*@__PURE__*/ _fill_join_subscribers("a4", 4, /*@__PURE__*/ _or_resume("a1", 4, ($scope) => $Inner_content__b($scope, $scope._.e + $scope.d)), 6, 0);
-const $Inner_content__value = _closure_resume("a9", /*@__PURE__*/ _closure_get(6, $Inner_content__value__OR__y));
+const $Inner_content__value = _closure_get(6, $Inner_content__value__OR__y, 0, "a9");
 const $Inner_content__setup = $Inner_content__value;
 const $Inner_content__y = /*@__PURE__*/ _const(3, $Inner_content__value__OR__y);
 const $Outer_content__count = /*@__PURE__*/ _fill_let("a5", 5, ($scope) => $Inner_content__y($scope.a, $scope.f));

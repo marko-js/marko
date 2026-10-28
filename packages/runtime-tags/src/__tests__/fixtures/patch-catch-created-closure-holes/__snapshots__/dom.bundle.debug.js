@@ -16,11 +16,11 @@ const $catch_content__upper = /*@__PURE__*/ _const("upper", ($scope) => {
 	_text($scope["#text/3"], $scope.upper);
 	$catch_content__err_message__OR__upper($scope);
 });
-const $catch_content__input_msg = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_msg#0:3/init", _closure_resume("__tests__/template.marko_1_input_msg#0:3/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/5", ($scope) => {
+const $catch_content__input_msg = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_msg#0:3/init", _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/5", ($scope) => {
 	_attr($scope["#b/0"], "title", $scope._.input_msg);
 	_text($scope["#text/2"], $scope._.input_msg);
 	$catch_content__upper($scope, $scope._.input_msg.toUpperCase());
-}), 0)));
+}, 0, "__tests__/template.marko_1_input_msg#0:3/subscribe"), 0));
 const $catch_content__setup = $catch_content__input_msg;
 const $catch_content__err_message = /*@__PURE__*/ _const("err_message", ($scope) => {
 	_text($scope["#text/1"], $scope.err_message);

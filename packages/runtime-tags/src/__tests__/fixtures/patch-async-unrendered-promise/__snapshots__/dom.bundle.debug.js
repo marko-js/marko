@@ -19,7 +19,7 @@ const $await_content__user_name = ($scope, user_name) => _text($scope["#text/0"]
 const $await_content__$params = ($scope, $params2) => $await_content__user_name($scope, $params2[0]?.name);
 const $await_content3 = /*@__PURE__*/ _await_content("#text/0", "<p> </p>", "D ");
 const $inputtag_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content3__$params);
-const $inputtag_content__input_boxed = /*@__PURE__*/ _init_resume("__tests__/template.marko_4_input_boxed#0:11/init", _closure_resume("__tests__/template.marko_4_input_boxed#0:11/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill2", "input_boxed", /*@__PURE__*/ _closure_get("input_boxed/15", ($scope) => $inputtag_content__await_promise($scope, $scope._.input_boxed)), 0)));
+const $inputtag_content__input_boxed = /*@__PURE__*/ _init_resume("__tests__/template.marko_4_input_boxed#0:11/init", _fill_join_closure("__tests__/template.marko_fill2", "input_boxed", /*@__PURE__*/ _closure_get("input_boxed/15", ($scope) => $inputtag_content__await_promise($scope, $scope._.input_boxed), 0, "__tests__/template.marko_4_input_boxed#0:11/subscribe"), 0));
 const $inputtag_content__setup = ($scope) => {
 	$inputtag_content__input_boxed($scope);
 	$await_content3($scope);

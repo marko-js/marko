@@ -34,7 +34,7 @@ const $if_content__input_b__OR__s__OR__v = /*@__PURE__*/ _fill_join_if("__tests_
 	a: $scope._.v + $scope._._.s,
 	b: $scope._._.input_b
 }), 2), "#text/0", 0);
-const $if_content__input_b = _closure_resume("__tests__/tags/shape.marko_2_input_b#0:6/subscribe", /*@__PURE__*/ _closure_get("input_b/9", $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._));
+const $if_content__input_b = _closure_get("input_b/9", $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._, "__tests__/tags/shape.marko_2_input_b#0:6/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__input_b($scope);
 	$if_content__s($scope);

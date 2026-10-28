@@ -6,7 +6,7 @@ const $walks = "b%c";
 const $Inner_content__b__$global_suffix = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_2_$global_suffix#0:16_b#5", ($scope) => _text($scope["#text/0"], $scope.b + _global_read($scope.$global, "suffix")), "suffix");
 const $Inner_content__b = /*@__PURE__*/ _const("b", $Inner_content__b__$global_suffix);
 const $Inner_content__value__OR__y = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill2", "value", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_value#1:4_y#3/init", 4, ($scope) => $Inner_content__b($scope, $scope._.value + $scope.y)), "value/6", 0);
-const $Inner_content__value = _closure_resume("__tests__/template.marko_2_value#1:4/subscribe", /*@__PURE__*/ _closure_get("value/6", $Inner_content__value__OR__y));
+const $Inner_content__value = _closure_get("value/6", $Inner_content__value__OR__y, 0, "__tests__/template.marko_2_value#1:4/subscribe");
 const $Inner_content__setup = $Inner_content__value;
 const $Inner_content__y = /*@__PURE__*/ _const("y", $Inner_content__value__OR__y);
 const $Inner_content__$params = ($scope, $params3) => $Inner_content__$temp($scope, $params3[0]);

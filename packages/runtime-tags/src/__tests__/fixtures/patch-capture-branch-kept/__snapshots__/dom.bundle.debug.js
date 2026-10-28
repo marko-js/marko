@@ -40,7 +40,7 @@ var probe_default = /*@__PURE__*/ _template("__tests__/tags/probe.marko", $templ
 const $template = "<button>add</button><!><!>";
 const $walks = " b%c";
 const $item_content__if = /*@__PURE__*/ _if("#text/0", "<span>shown</span>");
-const $item_content__s = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_2_s#1:2/init", _closure_resume("__tests__/tags/child.marko_2_s#1:2/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill2", "s", /*@__PURE__*/ _closure_get("s/9", ($scope) => $item_content__if($scope, $scope._.s ? 0 : 1)), 0)));
+const $item_content__s = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_2_s#1:2/init", _fill_join_closure("__tests__/tags/child.marko_fill2", "s", /*@__PURE__*/ _closure_get("s/9", ($scope) => $item_content__if($scope, $scope._.s ? 0 : 1), 0, "__tests__/tags/child.marko_2_s#1:2/subscribe"), 0));
 const $item_content__setup = $item_content__s;
 const $item_content = /*@__PURE__*/ _content("__tests__/tags/child.marko_2*content", "<!><!><!>", "b%", $item_content__setup);
 const $if_content__s__closure = /*@__PURE__*/ _closure($item_content__s);

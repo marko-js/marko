@@ -48,17 +48,17 @@ const $catch_content__setup = ($scope) => {
 };
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content$1("c15", /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `<b> </b>${_w0}${_w1}${_w2}${_w3}<!>`)($LazyBody_content__template, $ChildBody_content__template, $OwnBody_content__template, $Outer_content__template), /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `D l/${_w0}&/${_w1}&/${_w2}&/${_w3}&b`)($LazyBody_content__walks, $ChildBody_content__walks, $OwnBody_content__walks, $Outer_content__walks), $catch_content__setup, $catch_content__$params);
-const $Inner_content__input_label = /*@__PURE__*/ _init_resume("c10", _closure_resume("c11", /*@__PURE__*/ _fill_join_closure("c17", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $load_LazyChild_tag_input_label($scope.b, $scope._.d)), 2)));
+const $Inner_content__input_label = /*@__PURE__*/ _init_resume("c10", _fill_join_closure("c17", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $load_LazyChild_tag_input_label($scope.b, $scope._.d), 0, "c11"), 2));
 const $Inner_content__setup = ($scope) => {
 	$Inner_content__input_label($scope);
 	$load_LazyChild_setup($scope, $scope.b, $scope.a);
 };
-const $ChildBody_content__input_label = /*@__PURE__*/ _init_resume("c4", _closure_resume("c5", /*@__PURE__*/ _fill_join_closure("c17", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $input_label($scope.a, $scope._.d)), 1)));
+const $ChildBody_content__input_label = /*@__PURE__*/ _init_resume("c4", _fill_join_closure("c17", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $input_label($scope.a, $scope._.d), 0, "c5"), 1));
 const $ChildBody_content__setup = ($scope) => {
 	$ChildBody_content__input_label($scope);
 	$setup($scope.a);
 };
-const $LazyBody_content__input_label = /*@__PURE__*/ _init_resume("c1", _closure_resume("c2", /*@__PURE__*/ _fill_join_closure("c17", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $load_LazyChild_tag_input_label($scope.b, $scope._.d)), 0)));
+const $LazyBody_content__input_label = /*@__PURE__*/ _init_resume("c1", _fill_join_closure("c17", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $load_LazyChild_tag_input_label($scope.b, $scope._.d), 0, "c2"), 0));
 const $LazyBody_content__setup = ($scope) => {
 	$LazyBody_content__input_label($scope);
 	$load_LazyChild_setup($scope, $scope.b, $scope.a);

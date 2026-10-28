@@ -25,7 +25,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_msg($scope);
 };
 const $try_content__input_msg = /*@__PURE__*/ _closure_get("input_msg/11", $try_content__input_fail__OR__input_msg, 0, "__tests__/template.marko_2_input_msg#0:7/subscribe");
-const $catch_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", _closure_resume("__tests__/template.marko_1_input_label#0:5/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/9", ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label)), 0)));
+const $catch_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/9", ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0));
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_label($scope);
 	$catch_content__n($scope);

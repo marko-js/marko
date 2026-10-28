@@ -22,7 +22,7 @@ const $Tree_content__walks = "D l%c";
 const $Tree_content__template = "<em> </em><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($Tree_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($Tree_content__walks);
-const $inputonCarddiv_content__depth = _closure_resume("__tests__/template.marko_3_depth#1:4/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill2", "depth", /*@__PURE__*/ _closure_get("depth/7", ($scope) => $Tree_content__tag_input_depth($scope["#childScope/0"], $scope._._.depth - 1), ($scope) => $scope._._), 0));
+const $inputonCarddiv_content__depth = _fill_join_closure("__tests__/template.marko_fill2", "depth", /*@__PURE__*/ _closure_get("depth/7", ($scope) => $Tree_content__tag_input_depth($scope["#childScope/0"], $scope._._.depth - 1), ($scope) => $scope._._, "__tests__/template.marko_3_depth#1:4/subscribe"), 0);
 const $inputonCarddiv_content__setup = ($scope) => {
 	$inputonCarddiv_content__depth($scope);
 	$scope["#childScope/0"]._ = $scope._._._;

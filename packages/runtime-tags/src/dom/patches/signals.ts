@@ -327,16 +327,6 @@ export function _closure_index(
   return signal;
 }
 
-// A created subscriber a shell or flush names by id whether or not client code
-// reaches it: this registration is what ships it, and the fill join around it.
-export function _closure_resume<T extends (scope: Scope, resumed: 1) => void>(
-  resumeId: string,
-  closureSignal: T,
-): T {
-  _resumed[resumeId] = (scope: Scope) => closureSignal(scope, 1);
-  return closureSignal;
-}
-
 // A created scope's init registers with the signal it runs, so it lives exactly
 // as long.
 export function _init_resume<T extends (scope: Scope) => void>(

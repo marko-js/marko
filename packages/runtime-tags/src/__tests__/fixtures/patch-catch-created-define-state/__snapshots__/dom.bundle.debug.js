@@ -72,17 +72,17 @@ const $catch_content__$params = ($scope, $params2) => $catch_content__err_messag
 const $catch_content = _content("__tests__/template.marko_5*content", /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `<b> </b>${_w0}${_w1}${_w2}${_w3}<!>`)($LazyBody_content__template, $ChildBody_content__template, $OwnBody_content__template, $Outer_content__template), /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `D l/${_w0}&/${_w1}&/${_w2}&/${_w3}&b`)($LazyBody_content__walks, $ChildBody_content__walks, $OwnBody_content__walks, $Outer_content__walks), $catch_content__setup, $catch_content__$params);
 const $try_content__input_error = /*@__PURE__*/ _init_resume("__tests__/template.marko_4_input_error#0:4/init", /*@__PURE__*/ _closure_get("input_error/6", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_4_input_error#0:4/subscribe"));
 const $try_content__setup = $try_content__input_error;
-const $Inner_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_label#0:3/init", _closure_resume("__tests__/template.marko_3_input_label#0:3/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $load_LazyChild_tag_input_label($scope["#childScope/1"], $scope._.input_label)), 2)));
+const $Inner_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_label#0:3/init", _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $load_LazyChild_tag_input_label($scope["#childScope/1"], $scope._.input_label), 0, "__tests__/template.marko_3_input_label#0:3/subscribe"), 2));
 const $Inner_content__setup = ($scope) => {
 	$Inner_content__input_label($scope);
 	$load_LazyChild_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
-const $ChildBody_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:3/init", _closure_resume("__tests__/template.marko_2_input_label#0:3/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label)), 1)));
+const $ChildBody_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:3/init", _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label), 0, "__tests__/template.marko_2_input_label#0:3/subscribe"), 1));
 const $ChildBody_content__setup = ($scope) => {
 	$ChildBody_content__input_label($scope);
 	$setup$1($scope["#childScope/0"]);
 };
-const $LazyBody_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:3/init", _closure_resume("__tests__/template.marko_1_input_label#0:3/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $load_LazyChild_tag_input_label($scope["#childScope/1"], $scope._.input_label)), 0)));
+const $LazyBody_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:3/init", _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $load_LazyChild_tag_input_label($scope["#childScope/1"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:3/subscribe"), 0));
 const $LazyBody_content__setup = ($scope) => {
 	$LazyBody_content__input_label($scope);
 	$load_LazyChild_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);

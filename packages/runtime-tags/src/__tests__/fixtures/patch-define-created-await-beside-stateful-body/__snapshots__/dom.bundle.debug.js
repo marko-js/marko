@@ -14,7 +14,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__tag_input_label($scope, $temp.label);
 };
 const $Panel_content = _content("__tests__/template.marko_3*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
-const $await_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:7/init", _closure_resume("__tests__/template.marko_2_input_label#0:7/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/15", ($scope) => $Panel_content__tag_input_label($scope["#childScope/1"], $scope._._.input_label), ($scope) => $scope._._), 0)));
+const $await_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:7/init", _fill_join_closure("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/15", ($scope) => $Panel_content__tag_input_label($scope["#childScope/1"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:7/subscribe"), 0));
 const $await_content__setup = ($scope) => {
 	$await_content__input_label($scope);
 	$Panel_content__isOpen($scope["#childScope/0"], true);

@@ -10,7 +10,7 @@ const $catch_content__setup = ($scope) => {
 };
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content$1("b5", /*@__PURE__*/ ((_w0) => `<b> </b>${_w0}<!>`)($Lazy_content__template), /*@__PURE__*/ ((_w0) => `D l/${_w0}&b`)($Lazy_content__walks), $catch_content__setup, $catch_content__$params);
-const $Lazy_content__input_label = /*@__PURE__*/ _init_resume("b1", _closure_resume("b2", /*@__PURE__*/ _fill_join_closure("b7", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $load_Child_tag_input_label($scope.b, $scope._.d)), 0)));
+const $Lazy_content__input_label = /*@__PURE__*/ _init_resume("b1", _fill_join_closure("b7", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $load_Child_tag_input_label($scope.b, $scope._.d), 0, "b2"), 0));
 const $Lazy_content__setup = ($scope) => {
 	$Lazy_content__input_label($scope);
 	$load_Child_setup($scope, $scope.b, $scope.a);
