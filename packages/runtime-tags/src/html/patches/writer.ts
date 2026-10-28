@@ -188,6 +188,20 @@ export function inCreatable() {
   );
 }
 
+// The `@placeholder` a pending `<await>` here shows: the nearest try's, as the
+// client finds it.
+const kPlaceholder = Symbol("Placeholder");
+
+export function withPlaceholder<T>(placeholderId: string, cb: () => T): T {
+  return withContext(kPlaceholder, placeholderId, cb);
+}
+
+// A pending `<await>` shows its placeholder: the flush ships the placeholder's
+// shell where its try creates it from one.
+export function shipPlaceholder(state: PatchRenderState) {
+  shipShell(state, getChunk()!.context?.[kPlaceholder] as string | undefined);
+}
+
 // Renders a branch a flush pairs but never creates.
 export function withKeptBranchId<T>(branchId: number, cb: () => T): T {
   return withBranchId(branchId, keepBranch<T, void, void>, cb);
@@ -524,17 +538,12 @@ export function shipShell(
   state: PatchRenderState,
   shellId: string | 0 | undefined,
   ref?: boolean,
-  // Its place among the shells pending, by default after them.
-  at = state.pendingShells.length,
 ) {
   if (shellId && shellId in rawShells) {
     if (rawShells[shellId] && !(state.heldShells ??= new Set()).has(shellId)) {
       state.heldShells.add(shellId);
-      state.pendingShells =
-        state.pendingShells.slice(0, at) +
-        quotedShell(shellId, ref) +
-        "," +
-        state.pendingShells.slice(at);
+      state.pendingShells +=
+        (state.pendingShells && ",") + quotedShell(shellId, ref);
     }
     return shellId;
   }
@@ -547,7 +556,6 @@ export class PatchRenderState extends PatchPageState {
   // How many shells the request's token named: a response that shipped
   // none leaves the page's token as it is.
   public heldCount = 0;
-  // The quoted shells the next flush line leads with, each closed by a comma.
   public pendingShells = "";
   override serializer = new PatchSerializerState(this);
   // The flush's merge tree of patches by scope; `joinFlush` drops it.
@@ -646,7 +654,7 @@ export class PatchRenderState extends PatchPageState {
       channel.resumes =
         ready +
         (this.pendingShells
-          ? "[" + this.pendingShells + resumes + "]"
+          ? "[" + this.pendingShells + "," + resumes + "]"
           : resumes);
       this.pendingShells = "";
       this.patchFlushReadyIds = undefined;

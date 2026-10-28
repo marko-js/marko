@@ -100,8 +100,8 @@ export function _dynamic_tag(
     markerGuard,
     tagVar,
     pairing,
-    // A kept tag whose input never changes writes nothing in its child, whose
-    // holes the page may have left unmarked.
+    // A kept tag with constant input needs no param writes; the page may have
+    // left those holes unmarked.
     pairing === PatchPairing.Keep && !getUpdatesFrom(mask, group!)
       ? 0
       : undefined,

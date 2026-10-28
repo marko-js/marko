@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-try-nested-placeholder-direct/template.marko_3*content,outer`, `packages/runtime-tags/src/__tests__/fixtures/patch-try-nested-placeholder-direct/template.marko_4*content,inner`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-try-nested-placeholder-direct/template.marko_4*content,inner`, {
   "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/0": [{
       "PatchPending:#text/0": 1,
@@ -9,4 +9,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-nested-placeholder-direct/template.marko_5*content"]
   }
 }]
-;ETA
+;EAU

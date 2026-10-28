@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_4*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_1*content;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_4*content`, {
   "PatchChild:BranchScopes:#text/1": [{
     "PatchPending:#text/0": 1
   }, $, "packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-pending-replay-server-value/template.marko_4*content"]

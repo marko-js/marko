@@ -1,5 +1,5 @@
 // PATCH
-"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_2*content,<i>loading</i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_4*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/template.marko_1*shell;b%b/b%c&b;<!><!><!><!><!><!>`, {
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_2*content,<i>loading</i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_4*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/template.marko_1*shell;b%b/b%c&b;<!><!><!><!><!><!>`, {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/1": {
       "PatchChild:BranchScopes:#text/0": [{

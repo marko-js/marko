@@ -52,9 +52,11 @@ import {
   ensureScopePatch,
   popIdHop,
   pushIdHop,
+  shipPlaceholder,
   shipShell,
   walkMarkers,
   withKeptBranchId,
+  withPlaceholder,
   withUnpatched,
   writePatchEntry,
 } from "./writer";
@@ -545,6 +547,7 @@ export function _await<T>(
     // `2`: no render of the body writes what the client lacks; `3`: only a
     // created one's (setup work).
     if (unfilled > 2 ? !creatable : unfilled > 1) return;
+    if (isPromise(promise)) shipPlaceholder(state);
     const settle = (value: T | typeof skipped) => {
       if (value !== skipped) {
         linkBranch(state, scopeId, accessor, _peek_scope_id());
@@ -561,6 +564,7 @@ export function _await<T>(
   // A created scope builds the body from this shell, even when settled; an
   // always-pairing body outside creatable structure only pairs, rendered kept.
   const elide = alwaysPairs && !inCreatable();
+  if (isPromise(promise)) shipPlaceholder(state);
   if (!elide) shipShell(state, shellId);
   writePatchEntry(
     state,
@@ -648,12 +652,14 @@ export function _try(
   );
   const chunk = getChunk()!;
   const beforeBranch = deferBranchStart(chunk);
-  const shellsBefore = state.pendingShells.length;
   // In its branch, the body's own setup rides its shell; it is creatable
   // only where the try's scope is.
-  const bodyContent = inCreatable()
+  const branchContent = inCreatable()
     ? content
     : () => withKeptBranchId(branchId, content);
+  const bodyContent = placeholderContent
+    ? () => withPlaceholder(placeholderId!, branchContent)
+    : branchContent;
   const renderers = (): void =>
     writeTryRenderers(
       branchId,
@@ -724,11 +730,6 @@ export function _try(
     // nothing.
     if (create) ensureScopePatch(state, branchId);
     withBranchId(branchId, bodyContent);
-  }
-  // A placeholder created from its shell ships, ahead of the body's, only with
-  // a body left pending, which is when a flush shows it.
-  if (shellContent! & 2 && getChunk() !== chunk) {
-    shipShell(state, placeholderId, false, shellsBefore);
   }
   applyBranchStart(chunk, beforeBranch, true);
   if (!writesRenderers) renderers();

@@ -1,5 +1,5 @@
 // PATCH
-[`a3,<i>loading</i>`, `a5;b%;<!><!><!>`, {
+[`a5;b%;<!><!><!>`, `a3,<i>loading</i>`, {
   cAa: [{
     pa: 1,
     cAa: {
