@@ -1,0 +1,9 @@
+<let/count=0/>
+<if=input.show>
+  <let/n=0/>
+  <p>${n}:${count}</p>
+  <script>
+    console.log(`effect ${n + count}`);
+  </script>
+</if>
+<button onClick() { count++ }>+</button>

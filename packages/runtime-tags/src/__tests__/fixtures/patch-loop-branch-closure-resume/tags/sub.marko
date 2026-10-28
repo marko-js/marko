@@ -1,0 +1,9 @@
+export interface Input { n: number; items: { k: number; on: boolean }[] }
+<let/g=10/>
+<for|t| of=input.items by="k">
+  <if=t.on>
+    <span class="v">${g - input.n}</span>
+  </if>
+</for>
+<button class="inc" onClick() { g++ }>+</button>
+<script>document.body.dataset.ok = "1";</script>

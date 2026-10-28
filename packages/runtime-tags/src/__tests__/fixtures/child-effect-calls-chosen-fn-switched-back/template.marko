@@ -1,0 +1,7 @@
+<let/flag=0/>
+<const/fa() { flag = 1; const m = document.querySelector("main")!; m.dataset.a = String(+(m.dataset.a || 0) + 1); }/>
+<const/fb() { flag = 2; const m = document.querySelector("main")!; m.dataset.b = String(+(m.dataset.b || 0) + 1); }/>
+<main>
+  <child label=input.x fn=(input.pick ? fa : fb)/>
+  <p>${flag}</p>
+</main>

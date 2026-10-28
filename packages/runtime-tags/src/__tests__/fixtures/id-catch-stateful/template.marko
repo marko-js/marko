@@ -1,0 +1,4 @@
+static function fail() {throw new Error("caught")}
+<let/show=true/>
+<if=show><try>${fail()}<@catch|error|><field/count name=error.message/><p>${count}</p></@catch></try></if>
+<button onClick(){show=!show}>toggle</button>

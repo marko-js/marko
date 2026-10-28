@@ -1,0 +1,4 @@
+<let/s=0/>
+<const/fmt=(v: number) => input.prefix + v/>
+<for|k, v| in=input.obj><if=(k === input.sel)><span>${fmt(v + s)}</span></if></for>
+<button.s onClick() { s++ }>+</button>

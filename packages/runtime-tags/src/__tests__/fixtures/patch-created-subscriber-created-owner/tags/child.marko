@@ -1,0 +1,11 @@
+static function boom(error: unknown): never {
+  throw error;
+}
+<try>
+  <p>${input.error ? boom(input.error) : "ok"}</p>
+  <@catch|err|>
+    <box>
+      <span>${(err as Error).message} ${input.label}</span>
+    </box>
+  </@catch>
+</try>

@@ -7,8 +7,10 @@ import debugPlugin from "./build-plugins/debug.mts";
 import declHoistPlugin from "./build-plugins/decl-hoist.mts";
 
 const cwd = path.join(import.meta.dirname, "..");
-const featureEntries = globSync("src/{dom,html}/**/*.feat.ts", { cwd }).map(
-  (file) => file.replaceAll(path.sep, "/").slice("src/".length, -".ts".length),
+const featureEntries = globSync("src/{dom,html}/{**/*.feat,patch}.ts", {
+  cwd,
+}).map((file) =>
+  file.replaceAll(path.sep, "/").slice("src/".length, -".ts".length),
 );
 
 rmSync(path.join(cwd, "dist"), { recursive: true, force: true });

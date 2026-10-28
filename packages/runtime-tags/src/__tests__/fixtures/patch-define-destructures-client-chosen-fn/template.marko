@@ -1,0 +1,9 @@
+<let/upper=false/>
+<const/up=() => "U" + input.title/>
+<const/low=() => "l" + input.title/>
+<define/Show|{ get }|>
+  <output/el/>
+  <script>el().textContent = get(); console.log("run", get())</script>
+</define>
+<Show get=(upper ? up : low)/>
+<button onClick() { upper = !upper }>toggle</button>

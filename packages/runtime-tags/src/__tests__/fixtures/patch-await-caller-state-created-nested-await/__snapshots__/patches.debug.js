@@ -1,0 +1,16 @@
+// PATCH
+[`packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-created-nested-await/tags/show-await.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-created-nested-await/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-created-nested-await/template.marko_1_p#0:6/init;b/b%c&b;<!><!><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-created-nested-await/tags/show-await.marko_2*content;D ;<b> </b>`, {
+  "PatchBranch:#text/1": [{
+    "PatchChild:#childScope/0": {
+      "PatchSetup:": {
+        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-created-nested-await/tags/show-await.marko_1*content"
+      },
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchSetup:": {
+          "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-created-nested-await/tags/show-await.marko_2*content"
+        }
+      }
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-created-nested-await/template.marko_1*shell"]
+}]
+;D1Q

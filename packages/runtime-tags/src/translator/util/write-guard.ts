@@ -6,7 +6,9 @@ import {
   getDebugNamesAsIdentifier,
 } from "./bindings";
 import { generateUid, ensureSharedUid } from "./generate-uid";
+import { isPatch } from "./marko-config";
 import { some } from "./optional";
+import { hasPatchKeyedNodes, isPatchKeyedSlot } from "./patch/decisions";
 import {
   isConditionalReason,
   mapBodyParams,
@@ -22,7 +24,7 @@ import {
   type Section,
 } from "./sections";
 import { findSectionSlot, findSlot, type Slot, SlotKind } from "./slots";
-import { compareSources, type Sources } from "./sources";
+import { compareSources, mergeSources, type Sources, ALWAYS } from "./sources";
 import { createOutputSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 
@@ -41,12 +43,22 @@ export function isSameReason(a: Reason | undefined, b: Reason | undefined) {
 const groupCheckPrefixes = {
   _write_guard: "wg",
   _write_if: "wi",
+  // A patch build's checks that read only the mask (not the render context).
+  _client_guard: "cg",
+  _server_guard: "sg",
 } satisfies Partial<Record<HTMLRuntimeHelpers, string>>;
 type GroupCheck = keyof typeof groupCheckPrefixes;
+
+export function isHoistedGroupCheck(check: string): check is GroupCheck {
+  return check in groupCheckPrefixes;
+}
 
 interface SectionGuards {
   hoists: Map<GroupCheck, GuardHoists>;
   declarators: t.VariableDeclarator[];
+  page?: true;
+  /** The statement binding the reason, once a body has it. */
+  statement?: t.Statement;
 }
 
 // Keyed by param reason group: a section's guard for a set of params is
@@ -115,22 +127,45 @@ export function buildGroupMask(
 }
 
 // Every section body consumes (and clears) its caller's reason; it binds it,
-// with its hoisted guards, only when a guard is dynamic.
+// with its hoisted guards, only when a guard is dynamic or in a patch build.
 export function getScopeReasonStatement(section: Section): t.Statement {
-  return hasConditionalReason(section)
-    ? t.variableDeclaration("const", getSectionGuards(section).declarators)
-    : t.expressionStatement(callRuntime("_scope_reason"));
+  // A patch build's child scope writes may still add this body's page guard.
+  const guards = getSectionGuards(section);
+  return (guards.statement =
+    isPatch() || hasConditionalReason(section)
+      ? t.variableDeclaration("const", guards.declarators)
+      : t.expressionStatement(callRuntime("_scope_reason")));
+}
+
+// The statement binding the section's reason, once its body has one.
+export function getEmittedReasonStatement(section: Section) {
+  return getSectionGuards(section).statement;
 }
 
 // A binding's write reason: whether, and under which guard, the server
-// writes it.
+// writes it (always where a patch keys an entry on it).
 export function getWriteReason(binding: Binding) {
-  return findSlot(binding)?.reason;
+  return getSlotWriteReason(findSlot(binding));
 }
 
 // A branch's write reason: whether the server writes the scope it resumes.
 export function getBranchWriteReason(section: Section) {
-  return findSectionSlot(section, SlotKind.Branch)?.reason;
+  return getSlotWriteReason(findSectionSlot(section, SlotKind.Branch));
+}
+
+// The reason a slot writes with (its write reason): its reason, always where
+// a patch keys an entry on it.
+export function getSlotWriteReason(slot: Slot | undefined) {
+  return slot && isPatchKeyedSlot(slot)
+    ? mergeSources(ALWAYS, slot.reason)
+    : slot?.reason;
+}
+
+// A scope is written when any slot in it is, a patch-keyed node's included.
+export function getSectionWriteReason(section: Section) {
+  return isPatch() && hasPatchKeyedNodes(section)
+    ? mergeSources(ALWAYS, section.reason)
+    : section.reason;
 }
 
 export function getWriteGuard(
@@ -149,7 +184,7 @@ export function getWriteGuard(
         );
   }
 
-  return orEachParamGroup(reason.param, "_write_guard");
+  return getDynamicGuard(section, reason, "_write_guard");
 }
 
 export function getWriteGuardForAny(
@@ -187,7 +222,75 @@ export function getExprIfWritten<
     return (ownReason && expr) as R;
   }
 
-  return andGuard(orEachParamGroup(ownReason.param, "_write_if"), expr) as R;
+  return andGuard(getDynamicGuard(section, ownReason, "_write_if"), expr) as R;
+}
+
+// The global dimension has no param slots: it is patch-only, where a
+// page render serializes it and a patch render re-ships every global instead.
+function getDynamicGuard(
+  section: Section,
+  reason: ConditionalReason,
+  check: GroupCheck,
+) {
+  const paramGuard = orEachParamGroup(reason.param, check);
+  if (!reason.global) return paramGuard;
+  const globalGuard = scopePageIdentifier(getReasonSection(section));
+  return paramGuard
+    ? t.logicalExpression("||", globalGuard, paramGuard)
+    : globalGuard;
+}
+
+// Branch and boundary bodies declare no reason of their own; the nearest
+// enclosing content body or the root does.
+export function getReasonSection(section: Section) {
+  let cur = section;
+  while (cur.parent && cur.branch) cur = cur.parent;
+  return cur;
+}
+
+// A page render's gate, for what a page and a patch render pass differently:
+// a known child's group arguments, content locals, the global dimension.
+export function scopePageIdentifier(section: Section) {
+  const state = getSectionGuards(section);
+  const id = t.identifier(ensureSharedUid(`scope${section.id}_page`, section));
+  if (!state.page) {
+    state.page = true;
+    state.declarators.push(
+      t.variableDeclarator(t.cloneNode(id), callRuntime("_page_render")),
+    );
+  }
+  return id;
+}
+
+// Whether the client owns a param of the reason, in whichever section it
+// lives: what a value written for a patch needs to wire on the client.
+export function getClientGuard(section: Section, reason: Reason) {
+  if (isDynamicWriteGuard(section, reason)) {
+    return orEachParamGroup(reason.param, "_client_guard");
+  }
+}
+
+// A group's runtime check arguments: its section's reason and its index.
+export function getGroupArgs(
+  section: Section,
+  group: ParamReasonGroup,
+  index = getParamReasonGroupIndex(section, group),
+): [t.Expression, t.Expression] {
+  return [
+    scopeReasonIdentifier(section),
+    withLeadingComment(t.numericLiteral(index), getDebugNames(group)),
+  ];
+}
+
+// The 2-bit value of caller groups read together, or'd: what a child's mask
+// composes for them, and a write reading several callers' groups.
+export function buildComposedGroupValue(groups: [Section, ParamReasonGroup][]) {
+  let value: t.Expression | undefined;
+  for (const [section, group] of groups) {
+    const bits = callRuntime("_mask_group", ...getGroupArgs(section, group));
+    value = value ? t.binaryExpression("|", value, bits) : bits;
+  }
+  return value!;
 }
 
 // Each param group's `check`, or-ed together.
@@ -200,16 +303,19 @@ function orEachParamGroup(params: Sources["param"], check: GroupCheck) {
   );
 }
 
-function orGuard(guard: t.Expression | undefined, other: t.Expression) {
+export function orGuard(guard: t.Expression | undefined, other: t.Expression) {
   return guard ? t.logicalExpression("||", guard, other) : other;
 }
 
-function andGuard(guard: t.Expression | undefined | false, expr: t.Expression) {
+export function andGuard(
+  guard: t.Expression | undefined | false,
+  expr: t.Expression,
+) {
   return guard ? t.logicalExpression("&&", guard, expr) : expr;
 }
 
 // The first use stays inline; a second hoists it into a shared declarator.
-function getOrHoistSectionGuard(
+export function getOrHoistSectionGuard(
   section: Section,
   params: ParamReasonGroup,
   check: GroupCheck,
@@ -223,11 +329,7 @@ function getOrHoistSectionGuard(
   const name = tracking.names.get(index);
   if (name) return t.identifier(name);
 
-  const guard = callRuntime(
-    check,
-    scopeReasonIdentifier(section),
-    withLeadingComment(t.numericLiteral(index), getDebugNames(params)),
-  );
+  const guard = callRuntime(check, ...getGroupArgs(section, params, index));
   const pending = tracking.pending.get(index);
   if (!pending) {
     const expr = t.parenthesizedExpression(guard);
@@ -246,7 +348,7 @@ function getOrHoistSectionGuard(
 }
 
 // Whether the guard for a reason is a runtime mask rather than a constant.
-function isDynamicWriteGuard(
+export function isDynamicWriteGuard(
   section: Section,
   reason: undefined | Reason,
 ): reason is ConditionalReason {

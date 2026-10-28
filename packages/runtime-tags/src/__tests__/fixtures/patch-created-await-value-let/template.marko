@@ -1,0 +1,9 @@
+<main>
+  <h1>${input.title}</h1>
+  <if=input.show>
+    <await|v|=input.value>
+      <let/open=false/>
+      <button onClick() { open = !open }>${open ? "close" : "open"} ${v}</button>
+    </await>
+  </if>
+</main>

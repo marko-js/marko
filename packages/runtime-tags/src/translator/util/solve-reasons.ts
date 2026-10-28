@@ -18,7 +18,8 @@ import {
   createPassPathMemo,
   resetPassMemos,
 } from "./cyclic-memo";
-import { addKnownTagReasons } from "./known-tag";
+import { addKnownTagReasons, recordKnownTagPatchFacts } from "./known-tag";
+import { isPatch } from "./marko-config";
 import { addFunctionReasons } from "./module-registrations";
 import {
   concat,
@@ -26,9 +27,11 @@ import {
   forEach,
   type OneMany,
   type Opt,
+  reduce,
   rest,
   some,
 } from "./optional";
+import { ensurePatchReasonGroups } from "./patch/refresh";
 import {
   addOwnerReason,
   addReason,
@@ -43,8 +46,10 @@ import {
   type ReferencedExtra,
   getFunctionReadsByExpression,
   getConstantBindingsInFunction,
+  getReferencedBindings,
   getReferencedBindingsInFunction,
   getBindingsDerivedFrom,
+  getNameRead,
 } from "./references";
 import {
   ensureSectionReasonGroups,
@@ -82,15 +87,24 @@ export function solveReasons(
     forEachSection(addClosureReasons);
     forEachSection(addCallOwnerReasons);
     addRegisteredFnReasons(getFunctionReadsByExpression());
-    forEachSectionReverse(solveSectionReasons);
+    forEachSectionReverse((section) =>
+      solveSectionReasons(section, intersectionsBySection.get(section)),
+    );
   } while (reasonsVersion !== getReasonsVersion());
   getFunctionReadsByExpression().clear();
 }
 
-function solveSectionReasons(section: Section) {
+function solveSectionReasons(
+  section: Section,
+  intersections: Intersection[] | undefined,
+) {
   addKnownTagReasons(section);
+  if (isPatch()) recordKnownTagPatchFacts(section);
   mergeSlotReasons(section);
+  // Groups lay out the mask callers pack: one per set of params a runtime
+  // question asks of, whether the client reads a write and what sources a patch's.
   ensureSectionReasonGroups(section);
+  if (isPatch()) ensurePatchReasonGroups(section, intersections);
 }
 
 // An intersection member is read when its partners' sources change, unless
@@ -126,19 +140,43 @@ function addIntersectionMemberReason(
   member: Binding,
   partner: Binding,
 ) {
-  if (
-    !findSlot(member)?.reason?.always &&
-    (!isSupersetSources(member, partner) ||
-      hasReadIntermediate(member, partner, new Set()))
-  ) {
+  if (findSlot(member)?.reason?.always) return;
+  // A partner a changed `$global` key refreshes re-runs the join wherever the
+  // client holds the member, so the member's own sources say where.
+  addMemberReason(
+    section,
+    member,
+    !isSupersetSources(member, partner) ||
+      hasReadIntermediate(member, partner, new Set())
+      ? partner.sources
+      : partner.sources?.global && member.sources,
+  );
+}
+
+// A changed `$global` key re-runs what reads it wherever the client holds the
+// values it reads, so each value's own sources say where it is read.
+export function addGlobalReadReasons(section: Section) {
+  for (const expr of section.globalReadExprs || []) {
+    forEach(getReferencedBindings(expr), (member) => {
+      addMemberReason(section, member, member.sources);
+    });
+  }
+}
+
+function addMemberReason(
+  section: Section,
+  member: Binding,
+  reason: Reason | undefined | false,
+) {
+  if (reason) {
     if (member.section !== section) {
       addOwnerReason(
         section,
         member.section,
-        mergeSources(member.sources, partner.sources),
+        mergeSources(member.sources, reason),
       );
     }
-    addReason(ensureSlot(member), partner.sources);
+    addReason(ensureSlot(member), reason);
   }
 }
 
@@ -208,7 +246,7 @@ function getBranchExprReason(section: Section) {
 
 // What creates `section`, or a section between it and `ancestor`, anew on the
 // client (always, still with its sources, when anything can).
-function getBranchExprReasonUntil(section: Section, ancestor: Section) {
+export function getBranchExprReasonUntil(section: Section, ancestor: Section) {
   let reason: Sources | undefined;
   for (let cur = section; cur !== ancestor; cur = cur.parent!) {
     reason = mergeSources(reason, getBranchExprReason(cur));
@@ -284,11 +322,18 @@ function addRegisteredFnReasons(
 }
 
 // Who reads a value through its aliases and derives links (a cyclic graph):
-// what rereads it after resume, and the reads it lands in (an effect, an input).
-interface Readers {
+// what rereads it after resume, and each read it reaches, with how as bits.
+export interface Readers {
   reason: undefined | Reason;
-  reads: ReadonlySet<ReferencedExtra> | undefined;
+  reads: ReadMap;
 }
+
+// How a value reaches a read: before a call site hands it to a callee, and as a
+// dynamic tag's input rather than its name.
+export const READ_BEFORE_CALL = 1;
+export const READ_AS_INPUT = 2;
+
+type ReadMap = ReadonlyMap<ReferencedExtra, number> | undefined;
 
 const UNREAD: Readers = { reason: undefined, reads: undefined };
 
@@ -297,11 +342,11 @@ const ALWAYS_READ: Readers = {
   reads: undefined,
 };
 
-const extraReaders = createPassMemo(computeExtraReaders, UNREAD);
+export const extraReaders = createPassMemo(computeExtraReaders, UNREAD);
 
 // A binding's answer is per asked path: the value itself, one of its
 // properties (a destructured part), or the whole with every property.
-const bindingReaders = createPassPathMemo(computeBindingReaders, UNREAD);
+export const bindingReaders = createPassPathMemo(computeBindingReaders, UNREAD);
 
 export function getReasonForBinding(
   binding: Binding,
@@ -319,14 +364,38 @@ export function getReasonForExpr(extra: t.NodeExtra): undefined | Reason {
 // Whether the value lands somewhere retained (itself included), where client
 // code may read a function as is.
 export function landsRetained(extra: t.NodeExtra) {
-  if (extra.retained) return true;
-  if (!extra.isEffect) {
-    const { reads } = extraReaders(extra);
-    if (reads) {
-      for (const read of reads) if (read.retained) return true;
-    }
+  return (
+    !!extra.retained ||
+    (!extra.isEffect && someRead(extraReaders(extra), isRetained))
+  );
+}
+
+// Whether a read the value reaches passes `leaf`, given how it reaches it.
+export function someRead(
+  { reads }: Readers,
+  leaf: (read: ReferencedExtra, how: number) => boolean,
+) {
+  if (reads) {
+    for (const [read, how] of reads) if (leaf(read, how)) return true;
   }
   return false;
+}
+
+// Who reads what content derives: the bindings it passes through, at its path.
+export function getDerivedReaders({
+  binding,
+  properties,
+}: NonNullable<Section["derives"]>) {
+  return reduce(
+    binding,
+    (readers, derived) =>
+      mergeReaders(readers, bindingReaders(derived, properties)),
+    UNREAD,
+  );
+}
+
+function isRetained(read: ReferencedExtra) {
+  return !!read.retained;
 }
 
 function computeExtraReaders(extra: t.NodeExtra): Readers {
@@ -367,15 +436,14 @@ function readersOfDerived(
     getDerivedPath(extra, binding, part, properties),
   );
   const exprs = extra.callSiteExprs;
-  return linked.reason && exprs
+  if (!exprs) return linked;
+  const reads = readsPastCall(linked.reads);
+  return linked.reason || reads !== linked.reads
     ? {
-        reason: mapParamReason(
-          binding.section.program,
-          linked.reason,
-          exprs,
-          true,
-        ),
-        reads: linked.reads,
+        reason:
+          linked.reason &&
+          mapParamReason(binding.section.program, linked.reason, exprs, true),
+        reads,
       }
     : linked;
 }
@@ -454,10 +522,12 @@ function computeBindingReaders(
       ) {
         readers = mergeReaders(readers, ALWAYS_READ);
       }
+      // A patch template asks which effects render content.
+      if (isPatch()) readers = withRead(readers, expr, binding);
       continue;
     }
     readers = mergeReaders(
-      withLandingRead(readers, expr),
+      withRead(readers, expr, binding),
       readersOfDerives(expr, binding, properties),
     );
   }
@@ -503,21 +573,48 @@ function mergeReaders(a: Readers, b: Readers): Readers {
 }
 
 // Answers are shared across memo keys: adding copies (at most once per
-// merge), and adding nothing new keeps the identity.
-function withLandingRead(readers: Readers, read: ReferencedExtra): Readers {
-  return readers.reads?.has(read)
-    ? readers
-    : { reason: readers.reason, reads: new Set(readers.reads).add(read) };
+// merge), and adding nothing new keeps the identity. Only a patch asks how.
+function withRead(
+  readers: Readers,
+  read: ReferencedExtra,
+  binding: Binding,
+): Readers {
+  const name = getNameRead(read);
+  const reads = addRead(
+    readers.reads,
+    read,
+    (isPatch() ? READ_BEFORE_CALL : 0) |
+      (name && name.binding !== binding ? READ_AS_INPUT : 0),
+  );
+  return reads === readers.reads ? readers : { reason: readers.reason, reads };
 }
 
-function unionReads(
-  a: ReadonlySet<ReferencedExtra> | undefined,
-  b: ReadonlySet<ReferencedExtra> | undefined,
-) {
+function addRead(reads: ReadMap, read: ReferencedExtra, how: number) {
+  const had = reads?.get(read);
+  const merged = (had ?? 0) | how;
+  return had === merged ? reads : new Map(reads).set(read, merged);
+}
+
+function unionReads(a: ReadMap, b: ReadMap) {
   if (!a || !b || a === b) return a || b;
-  let result: Set<ReferencedExtra> | undefined;
-  for (const read of b) {
-    if (!a.has(read)) (result ??= new Set(a)).add(read);
+  let result: Map<ReferencedExtra, number> | undefined;
+  for (const [read, how] of b) {
+    const had = a.get(read);
+    const merged = (had ?? 0) | how;
+    if (had !== merged) (result ??= new Map(a)).set(read, merged);
   }
   return result || a;
+}
+
+// A callee's reads, as its call site's: past the call.
+function readsPastCall(reads: ReadMap) {
+  let result: Map<ReferencedExtra, number> | undefined;
+  if (reads) {
+    for (const [read, how] of reads) {
+      if (how & READ_BEFORE_CALL) {
+        (result ??= new Map(reads)).set(read, how & ~READ_BEFORE_CALL);
+      }
+    }
+  }
+  return result || reads;
 }

@@ -1,0 +1,9 @@
+<let/count=0/>
+<if=input.show>
+  <const/a=(input.x + "a")/>
+  <const/b=(input.y + "b")/>
+  <p>${a + count}</p>
+  <p>${b + count}</p>
+  <em>${a + b}</em>
+</if>
+<button onClick() { count++ }>+</button>

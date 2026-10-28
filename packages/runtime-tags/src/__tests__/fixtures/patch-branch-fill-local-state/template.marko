@@ -1,0 +1,10 @@
+<let/count=0/>
+<main>
+  <if=input.show>
+    <let/n=0/>
+    <p>${input.title + "@" + n}</p>
+    <button id="n" onClick() { n++ }>n</button>
+  </if>
+  <em>${count}</em>
+  <button id="c" onClick() { count++ }>+</button>
+</main>

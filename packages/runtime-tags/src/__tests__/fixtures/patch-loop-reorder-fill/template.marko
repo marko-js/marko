@@ -1,0 +1,9 @@
+<let/items=[{ id: 1 }, { id: 2 }]/>
+<main>
+  <ul>
+    <for|item| of=items by="id">
+      <li>${item.id}: ${input.note}</li>
+    </for>
+  </ul>
+  <button onClick() { items = [{ id: items.length + 1 }, ...items] }>+</button>
+</main>
