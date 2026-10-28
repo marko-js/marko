@@ -19,7 +19,7 @@ const $D_content__walks = "b%c";
 const $D_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<button> </button>`)($D_content__template, $D_content__template);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& D l`)($D_content__walks, $D_content__walks);
-const $if_content__f = /*@__PURE__*/ _init_resume("__tests__/tags/shape.marko_2_f#0:10/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/shape.marko_fill1", "f", /*@__PURE__*/ _closure_get("f/11", ($scope) => _text($scope["#text/0"], $scope._._.f()), ($scope) => $scope._._, "__tests__/tags/shape.marko_2_f#0:10/subscribe"), 0));
+const $if_content__f = /*@__PURE__*/ _init_resume("__tests__/tags/shape.marko_2_f#0:10/init", /*@__PURE__*/ _fill_closure("__tests__/tags/shape.marko_fill1", "f", /*@__PURE__*/ _closure_get("f/11", ($scope) => _text($scope["#text/0"], $scope._._.f()), ($scope) => $scope._._, "__tests__/tags/shape.marko_2_f#0:10/subscribe"), 0));
 const $if_content__setup = $if_content__f;
 const $D_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", "D ", $if_content__setup);
 const $D_content__on = ($scope, on) => $D_content__if($scope, on ? 0 : 1);

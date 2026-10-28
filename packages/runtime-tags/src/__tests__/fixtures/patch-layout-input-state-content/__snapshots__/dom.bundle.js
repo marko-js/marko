@@ -1,6 +1,6 @@
 // tags/wrap.marko
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $if_content__input_content = /*@__PURE__*/ _init_resume("c0", /*@__PURE__*/ _fill_join("c2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.e))));
+const $if_content__input_content = /*@__PURE__*/ _init_resume("c0", /*@__PURE__*/ _fill_signal("4 c2", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.e))));
 const $if = /*@__PURE__*/ _if(0, "<div><!></div>", "D%", $if_content__input_content);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 

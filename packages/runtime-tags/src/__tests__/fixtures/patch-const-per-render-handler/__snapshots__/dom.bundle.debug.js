@@ -2,7 +2,7 @@
 const $template = "<label> </label><input><button>show</button><output> </output>";
 const $walks = " D l b bD l";
 let n = 0;
-const $input_name__OR__uid = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_name", /*@__PURE__*/ _or(11, ($scope) => {
+const $input_name__OR__uid = /*@__PURE__*/ _fill_signal("input_name __tests__/template.marko_fill0", /*@__PURE__*/ _or(11, ($scope) => {
 	_attr($scope["#label/0"], "for", `${$scope.uid}-${$scope.input_name}`);
 	_attr($scope["#input/2"], "id", `${$scope.uid}-${$scope.input_name}`);
 }));

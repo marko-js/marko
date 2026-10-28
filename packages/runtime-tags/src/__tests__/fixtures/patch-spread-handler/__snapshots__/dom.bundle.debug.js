@@ -2,7 +2,7 @@
 const $template = "<main><!><em> </em></main>";
 const $walks = "D%bD m";
 const $if_content__input_attrs__script = _script("__tests__/template.marko_1_input_attrs#0:5", ($scope) => _attrs_script($scope, "#a/0"));
-const $if_content__input_attrs = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_attrs#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_attrs", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
+const $if_content__input_attrs = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_attrs#0:5/init", /*@__PURE__*/ _fill_signal("input_attrs __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$if_content__input_attrs__script($scope);
 	_attrs($scope, "#a/0", {
 		...$scope._.input_attrs,

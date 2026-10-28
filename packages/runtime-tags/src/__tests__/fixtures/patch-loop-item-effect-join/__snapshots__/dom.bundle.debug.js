@@ -14,7 +14,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_a#0:4_item#3/init", 4, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.item)), "#text/0");
+const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_signal("input_a __tests__/tags/child.marko_fill0/unpatched", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_a#0:4_item#3/init", 4, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.item)), _for_closure, "#text/0");
 const $for_content__input_a = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_a__OR__item);
 const $for_content__setup = $for_content__input_a;
 const $for_content__item__script = _script("__tests__/tags/child.marko_1_item#3", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.item);

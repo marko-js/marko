@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__input_prefix__OR__headingId = /*@__PURE__*/ _fill_join_for("a1", 5, /*@__PURE__*/ _or(5, ($scope) => _attr($scope.c, "title", $scope._.f + " " + $scope.e)), 1);
+const $for_content__input_prefix__OR__headingId = /*@__PURE__*/ _fill_signal("5 a1", /*@__PURE__*/ _or(5, ($scope) => _attr($scope.c, "title", $scope._.f + " " + $scope.e)), _for_closure, 1);
 const $for_content__input_prefix = /*@__PURE__*/ _for_closure(1, $for_content__input_prefix__OR__headingId);
 const $for_content__headingId = /*@__PURE__*/ _const(4, ($scope) => {
 	_attr($scope.a, "id", $scope.e);

@@ -32,7 +32,7 @@ const $catch_content__$params = ($scope, $params2) => $catch_content__err_messag
 const $catch_content = _content("__tests__/template.marko_3*content", /*@__PURE__*/ ((_w0) => `<b> </b>${_w0}<!>`)($Lazy_content__template), /*@__PURE__*/ ((_w0) => `D l/${_w0}&b`)($Lazy_content__walks), $catch_content__setup, $catch_content__$params);
 const $try_content__input_error = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_error#0:4/init", /*@__PURE__*/ _closure_get("input_error/6", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_2_input_error#0:4/subscribe"));
 const $try_content__setup = $try_content__input_error;
-const $Lazy_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:3/init", _closure_resume("__tests__/template.marko_1_input_label#0:3/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._.input_label)), 0)));
+const $Lazy_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:3/init", _closure_resume("__tests__/template.marko_1_input_label#0:3/subscribe", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._.input_label)), 0)));
 const $Lazy_content__setup = ($scope) => {
 	$Lazy_content__input_label($scope);
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);

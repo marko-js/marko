@@ -2,13 +2,13 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $await_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/show-await.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/tags/show-await.marko_2_input_label#0:5/subscribe"), 0));
+const $await_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/tags/show-await.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/tags/show-await.marko_2_input_label#0:5/subscribe"), 0));
 const $await_content__setup = $await_content__input_label;
 const $await_content__x = ($scope, x) => _text($scope["#text/1"], x);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p><!>:<!></p>", "D%c%", $await_content__setup);
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $if_content__input_promise = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_1_input_promise#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/show-await.marko_fill0", "input_promise", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__await_promise($scope, $scope._.input_promise))));
+const $if_content__input_promise = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_1_input_promise#0:4/init", /*@__PURE__*/ _fill_signal("input_promise __tests__/tags/show-await.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__await_promise($scope, $scope._.input_promise))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_promise._($scope);
 	$await_content($scope);

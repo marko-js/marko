@@ -29,7 +29,7 @@ var box_default = /*@__PURE__*/ _template("__tests__/box.marko", $template$1, $w
 // template.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
-const $Box_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._), 0));
+const $Box_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._), 0));
 const $Box_content__setup = $Box_content__input_label;
 const $Box_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", " ", " ", $Box_content__setup);
 const $inputonCardnull_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_count#0:6/init", /*@__PURE__*/ _closure_get("count/8", ($scope) => $input_k($scope["#childScope/0"], $scope._.count)));

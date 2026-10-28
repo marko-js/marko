@@ -2,13 +2,13 @@
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
 const $if_content__input_attrs__OR__on__script = _script("__tests__/template.marko_1_input_attrs#0:5_on#0:6", ($scope) => _attrs_script($scope, "#a/0"));
-const $if_content__input_attrs__OR__on = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_attrs", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_attrs#0:5_on#0:6/init", 1, ($scope) => {
+const $if_content__input_attrs__OR__on = /*@__PURE__*/ _fill_signal("input_attrs __tests__/template.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_attrs#0:5_on#0:6/init", 1, ($scope) => {
 	_attrs($scope, "#a/0", {
 		...$scope._.input_attrs,
 		class: $scope._.on ? "on" : "off"
 	});
 	$if_content__input_attrs__OR__on__script($scope);
-}), "#text/0", 0);
+}), _if_closure, "#text/0", 0);
 const $if_content__input_attrs = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_attrs__OR__on);
 const $if_content__setup = ($scope) => {
 	$if_content__input_attrs._($scope);

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><section></section><p> </p></main>";
 const $walks = "D bD m";
-const $frag_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/9", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0));
+const $frag_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/9", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0));
 const $frag_content__setup = $frag_content__input_note;
 const $frag_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $frag_content__setup);
 const $frag = ($scope, frag) => $frag_content2($scope, frag?.content);

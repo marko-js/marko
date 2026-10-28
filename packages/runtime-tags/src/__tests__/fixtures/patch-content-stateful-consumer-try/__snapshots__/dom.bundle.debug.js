@@ -2,7 +2,7 @@
 const $template$1 = "<button>toggle</button><div><!></div><!><!>";
 const $walks$1 = " bD%l%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill_signal("input_content __tests__/tags/wrap.marko_fill0", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/2", "<section><!></section>", "D%", $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/wrap.marko_fill1", "open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -31,7 +31,7 @@ function check(fail, x) {
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_3*content", "<b> </b>", "D ", 0, $catch_content__$params);
-const $try_content__input_fail__OR__input_x = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill1/unpatched", "input_x", /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0/unpatched", "input_fail", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_fail#0:3_input_x#0:4/init", 1, ($scope) => _text($scope["#text/0"], check($scope._._.input_fail, $scope._._.input_x))), "input_fail/5", 0), "input_x/6", 0);
+const $try_content__input_fail__OR__input_x = /*@__PURE__*/ _fill_signal("input_fail __tests__/template.marko_fill0/unpatched,input_x __tests__/template.marko_fill1/unpatched", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_fail#0:3_input_x#0:4/init", 1, ($scope) => _text($scope["#text/0"], check($scope._._.input_fail, $scope._._.input_x))), _closure_subscribers, "input_fail/5", 0);
 const $try_content__input_fail = /*@__PURE__*/ _closure_get("input_fail/5", $try_content__input_fail__OR__input_x, ($scope) => $scope._._, "__tests__/template.marko_2_input_fail#0:3/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_fail($scope);

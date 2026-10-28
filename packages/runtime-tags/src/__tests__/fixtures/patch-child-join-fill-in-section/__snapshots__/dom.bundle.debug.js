@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<!><!><p> </p><button class=t>t</button>";
 const $walks$1 = "b%bD l b";
-const $if_content__input_a = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_a)));
+const $if_content__input_a = /*@__PURE__*/ _fill_signal("input_a __tests__/tags/child.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_a)));
 const $if_content__setup = $if_content__input_a;
 const $if = /*@__PURE__*/ _if("#text/0", "<i> </i>", "D ", $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill1", "open/8", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -13,7 +13,7 @@ function $setup$1($scope) {
 	$open($scope, true);
 }
 const $x = ($scope, x) => _text($scope["#text/1"], x);
-const $input_a__OR__input_c = /*@__PURE__*/ _fill_join("| __tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_0_input_a#5_input_c#6/init", 7, ($scope) => $x($scope, $scope.input_a + $scope.input_c)));
+const $input_a__OR__input_c = /*@__PURE__*/ _fill_signal("input_a | __tests__/tags/child.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_0_input_a#5_input_c#6/init", 7, ($scope) => $x($scope, $scope.input_a + $scope.input_c)));
 const $input_a$1 = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill0", "input_a", ($scope) => {
 	$if_content__input_a($scope);
 	$input_a__OR__input_c($scope);

@@ -8,7 +8,7 @@ const $Wrap_content__setup = ($scope) => $setup$1($scope["#childScope/0"]);
 const $Wrap_content__w_fn = ($scope, w_fn) => $input_fn($scope["#childScope/0"], w_fn);
 const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__w($scope, $params2[0]);
 const $Wrap_content__w = ($scope, w) => $Wrap_content__w_fn($scope, w.fn);
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Wrap_content__w_fn($scope["#childScope/0"], function() {
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Wrap_content__w_fn($scope["#childScope/0"], function() {
 	return "f:" + $scope._.input_label;
 }))));
 const $if_content__setup = ($scope) => {

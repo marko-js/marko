@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__greeting = /*@__PURE__*/ _fill_join("a2", 5, /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.f)));
+const $if_content__greeting = /*@__PURE__*/ _fill_signal("5 a2", /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.f)));
 const $if_content__setup = ($scope) => {
 	$if_content__greeting._($scope);
 	$if_content__count._($scope);

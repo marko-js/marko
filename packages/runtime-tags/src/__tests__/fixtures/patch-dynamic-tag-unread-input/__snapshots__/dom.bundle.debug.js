@@ -27,7 +27,7 @@ const $Row_content__$params = ($scope, $params2) => $Row_content__user_name($sco
 const $Row_content = _content("__tests__/template.marko_1*content", "<p> </p>", "D ", 0, $Row_content__$params);
 const $n = /*@__PURE__*/ _let("n/20", ($scope) => _text($scope["#text/1"], $scope.n));
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/3");
-const $input_alt__OR__input_user2__OR__Row__OR__Alt = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill3", "input_user2", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_alt", /*@__PURE__*/ _or(23, ($scope) => $dynamicTag2($scope, $scope.input_alt ? $scope.Alt : $scope.Row, ($_) => ({ user: $scope.input_user2 })), 3)));
+const $input_alt__OR__input_user2__OR__Row__OR__Alt = /*@__PURE__*/ _fill_signal("input_alt __tests__/template.marko_fill2,input_user2 __tests__/template.marko_fill3", /*@__PURE__*/ _or(23, ($scope) => $dynamicTag2($scope, $scope.input_alt ? $scope.Alt : $scope.Row, ($_) => ({ user: $scope.input_user2 })), 3));
 const $Row = /*@__PURE__*/ _const("Row", $input_alt__OR__input_user2__OR__Row__OR__Alt);
 const $Alt = /*@__PURE__*/ _const("Alt", $input_alt__OR__input_user2__OR__Row__OR__Alt);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
@@ -40,21 +40,21 @@ function $setup($scope) {
 	$Alt($scope, { content: $Alt_content($scope) });
 }
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
-const $input_which__OR__input_user = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_user", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_which", /*@__PURE__*/ _or(10, ($scope) => $dynamicTag($scope, $scope.input_which ? card_a_default : card_b_default, ($_) => ({ user: $scope.input_user })))));
+const $input_which__OR__input_user = /*@__PURE__*/ _fill_signal("input_which __tests__/template.marko_fill0,input_user __tests__/template.marko_fill1", /*@__PURE__*/ _or(10, ($scope) => $dynamicTag($scope, $scope.input_which ? card_a_default : card_b_default, ($_) => ({ user: $scope.input_user }))));
 const $input_which = /*@__PURE__*/ _const("input_which", $input_which__OR__input_user);
 const $input_user = /*@__PURE__*/ _const("input_user", $input_which__OR__input_user);
 const $input_alt = /*@__PURE__*/ _const("input_alt", $input_alt__OR__input_user2__OR__Row__OR__Alt);
 const $input_user2 = /*@__PURE__*/ _const("input_user2", $input_alt__OR__input_user2__OR__Row__OR__Alt);
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/4");
-const $input_tag__OR__input_cls__OR__input_title = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill6", "input_title", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill5", "input_cls", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill4", "input_tag", /*@__PURE__*/ _or(16, ($scope) => $dynamicTag3($scope, $scope.input_tag, ($_) => ({
+const $input_tag__OR__input_cls__OR__input_title = /*@__PURE__*/ _fill_signal("input_tag __tests__/template.marko_fill4,input_cls __tests__/template.marko_fill5,input_title __tests__/template.marko_fill6", /*@__PURE__*/ _or(16, ($scope) => $dynamicTag3($scope, $scope.input_tag, ($_) => ({
 	class: $scope.input_cls,
 	title: $scope.input_title
-})), 2))));
+})), 2));
 const $input_tag = /*@__PURE__*/ _const("input_tag", $input_tag__OR__input_cls__OR__input_title);
 const $input_cls = /*@__PURE__*/ _const("input_cls", $input_tag__OR__input_cls__OR__input_title);
 const $input_title = /*@__PURE__*/ _const("input_title", $input_tag__OR__input_cls__OR__input_title);
 const $dynamicTag4 = /*@__PURE__*/ _dynamic_tag("#text/5");
-const $input_none__OR__input_hidden = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill8", "input_hidden", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill7", "input_none", /*@__PURE__*/ _or(19, ($scope) => $dynamicTag4($scope, $scope.input_none ? card_a_default : null, ($_) => ({ user: $scope.input_hidden })))));
+const $input_none__OR__input_hidden = /*@__PURE__*/ _fill_signal("input_none __tests__/template.marko_fill7,input_hidden __tests__/template.marko_fill8", /*@__PURE__*/ _or(19, ($scope) => $dynamicTag4($scope, $scope.input_none ? card_a_default : null, ($_) => ({ user: $scope.input_hidden }))));
 const $input_none = /*@__PURE__*/ _const("input_none", $input_none__OR__input_hidden);
 const $input_hidden = /*@__PURE__*/ _const("input_hidden", $input_none__OR__input_hidden);
 const $input = ($scope, input) => {

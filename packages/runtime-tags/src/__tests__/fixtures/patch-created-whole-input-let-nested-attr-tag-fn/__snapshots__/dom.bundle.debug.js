@@ -14,7 +14,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_on__OR__input_label = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_on", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_on#0:4_input_label#0:5/init", 1, ($scope) => {
+const $if_content__input_on__OR__input_label = /*@__PURE__*/ _fill_signal("input_on __tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched,input_label __tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_on#0:4_input_label#0:5/init", 1, ($scope) => {
 	let $b;
 	if ($scope._.input_on) {
 		$b = attrTag({ fn: function() {
@@ -22,7 +22,7 @@ const $if_content__input_on__OR__input_label = /*@__PURE__*/ _fill_join_if("__te
 		} });
 	}
 	$input$1($scope["#childScope/0"], { a: attrTag({ b: $b }) });
-}), "#text/0", 0), "#text/0", 0);
+}), _if_closure, "#text/0", 0);
 const $if_content__input_on = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_on__OR__input_label);
 const $if_content__setup = ($scope) => {
 	$if_content__input_on._($scope);

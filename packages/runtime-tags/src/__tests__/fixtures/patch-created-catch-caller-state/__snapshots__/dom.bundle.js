@@ -1,11 +1,11 @@
 // tags/detail-view.marko
 const $if_content__input_detail__script = _script("b0", ($scope) => console.log("detail", $scope._._.d));
-const $if_content__input_detail = /*@__PURE__*/ _init_resume("b1", _closure_resume("b2", /*@__PURE__*/ _fill_join_closure("b10", 3, /*@__PURE__*/ _closure_get(5, ($scope) => {
+const $if_content__input_detail = /*@__PURE__*/ _init_resume("b1", _closure_resume("b2", /*@__PURE__*/ _fill_closure("b10", 3, /*@__PURE__*/ _closure_get(5, ($scope) => {
 	$if_content__input_detail__script($scope);
 	_text($scope.a, $scope._._.d);
 }, ($scope) => $scope._._), 1)));
 const $catch_content__if = /*@__PURE__*/ _if(1, "<i> </i>", "D ", $if_content__input_detail);
-const $catch_content__input_detail = /*@__PURE__*/ _init_resume("b6", _closure_resume("b7", /*@__PURE__*/ _fill_join_closure("b10", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $catch_content__if($scope, $scope._.d ? 0 : 1)), 0)));
+const $catch_content__input_detail = /*@__PURE__*/ _init_resume("b6", _closure_resume("b7", /*@__PURE__*/ _fill_closure("b10", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $catch_content__if($scope, $scope._.d ? 0 : 1)), 0)));
 const $catch_content__setup = $catch_content__input_detail;
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);

@@ -11,12 +11,12 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__tag_input_label($scope, $temp.label);
 };
 const $Panel_content = _content$1("a5", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
-const $await_content__input_label = /*@__PURE__*/ _init_resume("a6", _closure_resume("a7", /*@__PURE__*/ _fill_join_closure("a11", 7, /*@__PURE__*/ _closure_get(15, ($scope) => $Panel_content__tag_input_label($scope.b, $scope._._.h), ($scope) => $scope._._), 0)));
+const $await_content__input_label = /*@__PURE__*/ _init_resume("a6", _closure_resume("a7", /*@__PURE__*/ _fill_closure("a11", 7, /*@__PURE__*/ _closure_get(15, ($scope) => $Panel_content__tag_input_label($scope.b, $scope._._.h), ($scope) => $scope._._), 0)));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a12", 12, /*@__PURE__*/ _fill_join("a11", 7, /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.m, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_signal("7 a11,12 a12", /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.m, ($_) => ({
 	isOpen: !$scope.j,
 	label: $scope.h + "!"
-})), 2)));
+})), 2));
 const $open = /*@__PURE__*/ _let(9, $input_label__OR__open__OR__Tag);
 const $setup__script = _script("a9", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.j);

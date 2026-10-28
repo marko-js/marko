@@ -3,7 +3,7 @@ const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for = /*@__PURE__*/ _for_to("#text/0", "<span> </span>", "D ", $for_content__setup);
-const $input_end__OR__start = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_end", /*@__PURE__*/ _or(6, ($scope) => $for($scope, [
+const $input_end__OR__start = /*@__PURE__*/ _fill_signal("input_end __tests__/template.marko_fill0", /*@__PURE__*/ _or(6, ($scope) => $for($scope, [
 	$scope.input_end,
 	Math.max(0, $scope.start),
 	1

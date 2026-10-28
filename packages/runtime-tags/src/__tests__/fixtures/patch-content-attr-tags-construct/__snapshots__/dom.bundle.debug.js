@@ -22,7 +22,7 @@ const $walks = " b";
 const $setup = ($_) => {};
 const $header_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<b>static header</b>");
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "body");
-const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_title$1($scope["#childScope/0"], $scope._.input_title))));
+const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_signal("input_title __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_title$1($scope["#childScope/0"], $scope._.input_title))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
 	$input_header($scope["#childScope/0"], attrTag({ content: $header_content($scope) }));

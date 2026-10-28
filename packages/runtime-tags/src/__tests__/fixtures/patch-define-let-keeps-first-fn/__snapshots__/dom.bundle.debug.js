@@ -8,7 +8,7 @@ const $Card_content__o = /*@__PURE__*/ _let("o/4", ($scope) => _text($scope["#te
 const $Card_content__opts = $Card_content__o;
 const $Card_content__$params = ($scope, $params2) => $Card_content__$temp($scope, $params2[0]);
 const $Card_content__$temp = ($scope, $temp) => $Card_content__opts($scope, $temp.opts);
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Card_content__opts($scope["#childScope/0"], { fn() {
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Card_content__opts($scope["#childScope/0"], { fn() {
 	return "if:" + $scope._.input_label;
 } }))));
 const $if_content__setup = $if_content__input_label;

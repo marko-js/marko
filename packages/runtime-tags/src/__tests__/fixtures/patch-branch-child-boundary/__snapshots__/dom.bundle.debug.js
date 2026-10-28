@@ -14,7 +14,7 @@ var loader_default = /*@__PURE__*/ _template("__tests__/tags/loader.marko", $tem
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $if_content__input_promise = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_promise#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_promise", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.input_promise))));
+const $if_content__input_promise = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_promise#0:4/init", /*@__PURE__*/ _fill_signal("input_promise __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.input_promise))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_promise._($scope);
 	$setup$1($scope["#childScope/0"]);

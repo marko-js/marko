@@ -1,11 +1,11 @@
 // template.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
-const $i2pdiv_content__i = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "i", /*@__PURE__*/ _closure_get("i/7", ($scope) => _text($scope["#text/0"], $scope._.i), 0, "__tests__/template.marko_2_i#1:2/subscribe"), 0);
+const $i2pdiv_content__i = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "i", /*@__PURE__*/ _closure_get("i/7", ($scope) => _text($scope["#text/0"], $scope._.i), 0, "__tests__/template.marko_2_i#1:2/subscribe"), 0);
 const $i2pdiv_content__setup = $i2pdiv_content__i;
 const $i2pdiv_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", " ", " ", $i2pdiv_content__setup);
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $i2pdiv_content);
-const $for_content__count__OR__i = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "i", /*@__PURE__*/ _or(3, ($scope) => $for_content__dynamicTag($scope, $scope.i % 2 ? "p" : "div", ($_) => ({ "data-n": $scope._.count }))));
+const $for_content__count__OR__i = /*@__PURE__*/ _fill_signal("i __tests__/template.marko_fill0", /*@__PURE__*/ _or(3, ($scope) => $for_content__dynamicTag($scope, $scope.i % 2 ? "p" : "div", ($_) => ({ "data-n": $scope._.count }))));
 const $for_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_count#0:5/init", /*@__PURE__*/ _for_closure("#text/0", $for_content__count__OR__i));
 const $for_content__setup = $for_content__count;
 const $for_content__i__closure = /*@__PURE__*/ _closure($i2pdiv_content__i);

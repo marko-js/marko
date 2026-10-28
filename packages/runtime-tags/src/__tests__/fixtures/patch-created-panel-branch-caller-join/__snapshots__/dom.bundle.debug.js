@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("__tests__/tags/panel.marko_fill1 __tests__/tags/panel.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_join_if("__tests__/tags/panel.marko_fill0 __tests__/tags/panel.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_1_input_a#0:4_input_b#0:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + ":" + $scope._.input_b)), "#text/0", 0), "#text/0", 0);
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_signal("input_a __tests__/tags/panel.marko_fill0 __tests__/tags/panel.marko_fill0/unpatched,input_b __tests__/tags/panel.marko_fill1 __tests__/tags/panel.marko_fill1/unpatched", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_1_input_a#0:4_input_b#0:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + ":" + $scope._.input_b)), _if_closure, "#text/0", 0);
 const $if_content__input_a = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_a__OR__input_b);
 const $if_content__setup$1 = ($scope) => {
 	$if_content__input_a._($scope);
@@ -23,13 +23,13 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 // template.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
-const $if_content__input_x = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_x#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_x", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_b($scope["#childScope/0"], $scope._.input_x))));
+const $if_content__input_x = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_x#0:5/init", /*@__PURE__*/ _fill_signal("input_x __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_b($scope["#childScope/0"], $scope._.input_x))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_x._($scope);
 	$if_content__input_show._($scope);
 	$if_content__count._($scope);
 };
-const $if_content__input_show = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_show#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_show", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_show$1($scope["#childScope/0"], $scope._.input_show))));
+const $if_content__input_show = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_show#0:6/init", /*@__PURE__*/ _fill_signal("input_show __tests__/template.marko_fill1", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_show$1($scope["#childScope/0"], $scope._.input_show))));
 const $if_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_count#0:7/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_a($scope["#childScope/0"], $scope._.count)));
 const $count = /*@__PURE__*/ _let("count/7", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

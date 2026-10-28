@@ -10,7 +10,7 @@ _resumed.c0 = $_return;
 
 // tags/child.marko
 const $if_content__count = /*@__PURE__*/ _fill_let_change("b2", 2, ($scope) => _text($scope.a, $scope.c));
-const $if_content__input_on = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_join("b4", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__count($scope, 0, $scope._.e))));
+const $if_content__input_on = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_signal("4 b4", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__count($scope, 0, $scope._.e))));
 const $if_content__setup__script = _script("b0", ($scope) => _on($scope.b, "click", function() {
 	$if_content__count($scope, +$scope.c + 1);
 }));

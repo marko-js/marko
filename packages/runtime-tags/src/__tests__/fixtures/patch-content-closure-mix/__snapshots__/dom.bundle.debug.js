@@ -12,7 +12,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $card_content__input_prefix = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_prefix#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_prefix", /*@__PURE__*/ _closure_get("input_prefix/5", ($scope) => _text($scope["#text/1"], $scope._._.input_prefix), ($scope) => $scope._._), 0));
+const $card_content__input_prefix = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_prefix#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_prefix", /*@__PURE__*/ _closure_get("input_prefix/5", ($scope) => _text($scope["#text/1"], $scope._._.input_prefix), ($scope) => $scope._._), 0));
 const $card_content__setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_2_$global_brand#0:10", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
 const $card_content__setup = ($scope) => {
 	$card_content__input_prefix($scope);

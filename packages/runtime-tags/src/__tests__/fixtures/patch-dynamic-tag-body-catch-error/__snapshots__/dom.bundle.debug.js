@@ -9,7 +9,7 @@ const $try_content__if = /*@__PURE__*/ _if("#text/0", " ", " ", $if_content2__se
 const $try_content__fail = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_3_fail#0:5/init", /*@__PURE__*/ _closure_get("fail/7", ($scope) => $try_content__if($scope, $scope._.fail ? 0 : 1), 0, "__tests__/tags/card.marko_3_fail#0:5/subscribe"));
 const $try_content__setup = $try_content__fail;
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_2_input_content#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/card.marko_fill0", "input_content", /*@__PURE__*/ _closure_get("input_content/6", ($scope) => $if_content__dynamicTag($scope, $scope._._.input_content), ($scope) => $scope._._, "__tests__/tags/card.marko_2_input_content#0:4/subscribe"), 0));
+const $if_content__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_2_input_content#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/tags/card.marko_fill0", "input_content", /*@__PURE__*/ _closure_get("input_content/6", ($scope) => $if_content__dynamicTag($scope, $scope._._.input_content), ($scope) => $scope._._, "__tests__/tags/card.marko_2_input_content#0:4/subscribe"), 0));
 const $if_content__setup = $if_content__input_content;
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
@@ -39,7 +39,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = "<main><!></main>";
 const $walks = "D%l";
 const $setup = ($_) => {};
-const $inputonCarddiv_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0));
+const $inputonCarddiv_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0));
 const $inputonCarddiv_content__setup = $inputonCarddiv_content__input_note;
 const $inputonCarddiv_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $inputonCarddiv_content__setup);
 _content_resume($inputonCarddiv_content);

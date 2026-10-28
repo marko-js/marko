@@ -1,6 +1,6 @@
 // tags/wrap.marko
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $if_content__input_row__OR__input_label = /*@__PURE__*/ _fill_join_if("b2", 5, /*@__PURE__*/ _fill_join_if("b1", 4, /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.e, ($_) => ({ label: $scope._.f }))), 1, 0), 1, 0);
+const $if_content__input_row__OR__input_label = /*@__PURE__*/ _fill_signal("4 b1,5 b2", /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.e, ($_) => ({ label: $scope._.f }))), _if_closure, 1, 0);
 const $if_content__input_row = /*@__PURE__*/ _if_closure(1, 0, $if_content__input_row__OR__input_label);
 const $if_content__setup = ($scope) => {
 	$if_content__input_row._($scope);

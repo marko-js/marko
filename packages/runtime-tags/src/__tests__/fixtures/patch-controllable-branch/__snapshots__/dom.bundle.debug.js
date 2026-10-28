@@ -2,7 +2,7 @@
 const $template = "<main><h1> </h1><!></main>";
 const $walks = "E l%l";
 const $setup = ($_) => {};
-const $if_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_value#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _attr_input_value($scope, "#input/0", $scope._.input_value, $valueChange))));
+const $if_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_value#0:6/init", /*@__PURE__*/ _fill_signal("input_value __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _attr_input_value($scope, "#input/0", $scope._.input_value, $valueChange))));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _attr_input_value_script($scope, "#input/0"));
 const $if_content__setup = ($scope) => {
 	$if_content__input_value._($scope);

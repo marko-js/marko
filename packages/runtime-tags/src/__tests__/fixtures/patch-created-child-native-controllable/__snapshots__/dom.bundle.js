@@ -1,5 +1,5 @@
 // tags/field.marko
-const $input_value__OR__input_valueChange = /*@__PURE__*/ _fill_join("b2", 4, /*@__PURE__*/ _fill_join("b1", 3, /*@__PURE__*/ _or_resume("b3", 5, ($scope) => _attr_input_value($scope, "a", $scope.d, $scope.e))));
+const $input_value__OR__input_valueChange = /*@__PURE__*/ _fill_signal("3 b1,4 b2", /*@__PURE__*/ _or_resume("b3", 5, ($scope) => _attr_input_value($scope, "a", $scope.d, $scope.e)));
 const $input_value = /*@__PURE__*/ _const(3, $input_value__OR__input_valueChange);
 const $setup__script = _script("b0", ($scope) => _attr_input_value_script($scope, "a"));
 

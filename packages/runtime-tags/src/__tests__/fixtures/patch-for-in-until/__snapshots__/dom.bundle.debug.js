@@ -6,7 +6,7 @@ const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKe
 const $for_content__v = ($scope, v) => _text($scope["#text/1"], v);
 const $for_content__$params = ($scope, $params2) => $for_content__v($scope, $params2[1]);
 const $for = /*@__PURE__*/ _for_in("#text/0", "<li><!>=<!></li>", "D%c%", $for_content__setup, $for_content__$params);
-const $input_label__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(8, ($scope) => $for($scope, [{
+const $input_label__OR__count = /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _or(8, ($scope) => $for($scope, [{
 	a: $scope.input_label,
 	b: $scope.count
 }])));

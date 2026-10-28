@@ -30,7 +30,7 @@ var file_store_default = /*@__PURE__*/ _template("__tests__/tags/file-store.mark
 const $template$3 = "<p> </p><button>+</button>";
 const $walks$3 = "D l b";
 const $tabs = /*@__PURE__*/ _fill_let_change("__tests__/tags/file-tabs.marko_fill2", "tabs/7", ($scope) => _text($scope["#text/0"], $scope.tabs.map((tab) => tab.path).join()));
-const $input_files__OR__input_filesChange = /*@__PURE__*/ _fill_join("__tests__/tags/file-tabs.marko_fill1", "input_filesChange", /*@__PURE__*/ _fill_join("__tests__/tags/file-tabs.marko_fill0", "input_files", /*@__PURE__*/ _or_resume("__tests__/tags/file-tabs.marko_0_input_files#4_input_filesChange#5/init", 6, ($scope) => $tabs($scope, $scope.input_files, $scope.input_filesChange))));
+const $input_files__OR__input_filesChange = /*@__PURE__*/ _fill_signal("input_files __tests__/tags/file-tabs.marko_fill0,input_filesChange __tests__/tags/file-tabs.marko_fill1", /*@__PURE__*/ _or_resume("__tests__/tags/file-tabs.marko_0_input_files#4_input_filesChange#5/init", 6, ($scope) => $tabs($scope, $scope.input_files, $scope.input_filesChange)));
 const $input_files$1 = /*@__PURE__*/ _const("input_files", $input_files__OR__input_filesChange);
 const $input_filesChange$1 = /*@__PURE__*/ _const("input_filesChange", $input_files__OR__input_filesChange);
 const $setup__script = _script("__tests__/tags/file-tabs.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

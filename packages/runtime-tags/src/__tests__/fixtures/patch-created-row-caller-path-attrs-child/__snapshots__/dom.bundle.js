@@ -1,6 +1,6 @@
 // tags/navx.marko
 const $for_content__active = ($scope, active) => _attr_class_item($scope.a, "active", active);
-const $for_content__input_path__OR__item_href = /*@__PURE__*/ _fill_join_for("c4", 5, /*@__PURE__*/ _or_resume("c0", 6, ($scope) => $for_content__active($scope, $scope.f === $scope._.f)), 0);
+const $for_content__input_path__OR__item_href = /*@__PURE__*/ _fill_signal("5 c4", /*@__PURE__*/ _or_resume("c0", 6, ($scope) => $for_content__active($scope, $scope.f === $scope._.f)), _for_closure, 0);
 const $for_content__input_path = /*@__PURE__*/ _for_closure(0, $for_content__input_path__OR__item_href);
 const $input_path = /*@__PURE__*/ _const(5, $for_content__input_path);
 

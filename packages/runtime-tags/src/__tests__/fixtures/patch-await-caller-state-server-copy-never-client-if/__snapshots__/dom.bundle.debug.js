@@ -4,7 +4,7 @@ var v_show_await_marko_default = "\n      .b { color: var(--M_packages-1bruntime
 // tags/show-await.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $if_content__input_label$1 = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_2_input_label#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/show-await.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/3"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/tags/show-await.marko_2_input_label#0:4/subscribe"), 0));
+const $if_content__input_label$1 = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_2_input_label#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/tags/show-await.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/3"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/tags/show-await.marko_2_input_label#0:4/subscribe"), 0));
 const $if_content__n = /*@__PURE__*/ _let("n/4", ($scope) => _text($scope["#text/2"], $scope.n));
 const $if_content__setup$1 = ($scope) => {
 	$if_content__input_label$1($scope);
@@ -36,7 +36,7 @@ var show_await_default = /*@__PURE__*/ _template("__tests__/tags/show-await.mark
 // template.marko
 const $template = "<button class=swap>swap</button><!><!>";
 const $walks = " b%c";
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:6/init", /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$if_content__p._($scope);

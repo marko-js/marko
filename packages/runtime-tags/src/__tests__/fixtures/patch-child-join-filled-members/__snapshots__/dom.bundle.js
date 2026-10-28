@@ -1,11 +1,11 @@
 // tags/child.marko
-const $if_content__input_a = /*@__PURE__*/ _init_resume("b0", /*@__PURE__*/ _fill_join("b3", 4, /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.e))));
+const $if_content__input_a = /*@__PURE__*/ _init_resume("b0", /*@__PURE__*/ _fill_signal("4 b3", /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.e))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);
 	$if_content__input_b._($scope);
 };
-const $if_content__input_b = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_join("b4", 5, /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.b, $scope._.f))));
-const $input_a__OR__input_b = /*@__PURE__*/ _fill_join("| b4", 5, /*@__PURE__*/ _fill_join("| b3", 4, /*@__PURE__*/ _or_resume("b5", 6, ($scope) => _text($scope.a, $scope.e + $scope.f))));
+const $if_content__input_b = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_signal("5 b4", /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.b, $scope._.f))));
+const $input_a__OR__input_b = /*@__PURE__*/ _fill_signal("4 | b3,5 | b4", /*@__PURE__*/ _or_resume("b5", 6, ($scope) => _text($scope.a, $scope.e + $scope.f)));
 const $input_a = /*@__PURE__*/ _fill_const("b3", 4, ($scope) => {
 	$if_content__input_a($scope);
 	$input_a__OR__input_b($scope);

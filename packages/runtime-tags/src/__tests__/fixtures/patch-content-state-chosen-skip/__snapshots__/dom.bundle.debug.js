@@ -11,13 +11,13 @@ function takeRenders() {
 	contentRenders = 0;
 	return renders;
 }
-const $two_content__input_b = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _closure_get("input_b/13", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/template.marko_2_input_b#0:6/subscribe"), 1);
+const $two_content__input_b = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _closure_get("input_b/13", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/template.marko_2_input_b#0:6/subscribe"), 1);
 const $two_content__setup = ($scope) => {
 	$two_content__input_b($scope);
 	_text($scope["#text/1"], rendering());
 };
 const $two_content = _content("__tests__/template.marko_2*content", "<strong>two <!><!></strong>", "Db%b%", $two_content__setup);
-const $one_content__input_b = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _closure_get("input_b/13", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/template.marko_1_input_b#0:6/subscribe"), 0);
+const $one_content__input_b = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _closure_get("input_b/13", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/template.marko_1_input_b#0:6/subscribe"), 0);
 const $one_content__setup = ($scope) => {
 	$one_content__input_b($scope);
 	_text($scope["#text/1"], rendering());
@@ -28,7 +28,7 @@ const $input_b__OR__mode__OR__one__OR__two__script = _script("__tests__/template
 	_attrs_script($scope, "#section/2");
 	_attrs_script($scope, "#section/3");
 });
-const $input_b__OR__mode__OR__one__OR__two = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _or(11, ($scope) => {
+const $input_b__OR__mode__OR__one__OR__two = /*@__PURE__*/ _fill_signal("input_b __tests__/template.marko_fill0", /*@__PURE__*/ _or(11, ($scope) => {
 	_attrs_content($scope, "#section/2", {
 		class: $scope.input_b,
 		content: $scope.mode ? $scope.one : $scope.two

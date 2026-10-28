@@ -24,7 +24,7 @@ var one_default = /*@__PURE__*/ _template("__tests__/tags/one.marko", $template$
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button class=s>s</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)($walks$1);
-const $one_content__input_y = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_y", /*@__PURE__*/ _closure_get("input_y/6", ($scope) => _text($scope["#text/0"], $scope._.input_y), 0, "__tests__/template.marko_1_input_y#0:4/subscribe"), 0);
+const $one_content__input_y = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_y", /*@__PURE__*/ _closure_get("input_y/6", ($scope) => _text($scope["#text/0"], $scope._.input_y), 0, "__tests__/template.marko_1_input_y#0:4/subscribe"), 0);
 const $one_content__setup = $one_content__input_y;
 const $one_content = _content("__tests__/template.marko_1*content", "A<!>", "b%", $one_content__setup);
 const $s = /*@__PURE__*/ _let("s/5", ($scope) => $input_t($scope["#childScope/1"], $scope.s));

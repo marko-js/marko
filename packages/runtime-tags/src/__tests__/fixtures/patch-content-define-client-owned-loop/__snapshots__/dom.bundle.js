@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__input_suffix = /*@__PURE__*/ _init_resume("a0", /*@__PURE__*/ _fill_join_closure("a5", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.b, $scope._._.f), ($scope) => $scope._._, "a1"), 0));
+const $for_content__input_suffix = /*@__PURE__*/ _init_resume("a0", /*@__PURE__*/ _fill_closure("a5", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.b, $scope._._.f), ($scope) => $scope._._, "a1"), 0));
 const $for_content__setup = $for_content__input_suffix;
 const $for_content__item = ($scope, item) => _text($scope.a, item);
 const $for_content__$params = ($scope, $params3) => $for_content__item($scope, $params3[0]);

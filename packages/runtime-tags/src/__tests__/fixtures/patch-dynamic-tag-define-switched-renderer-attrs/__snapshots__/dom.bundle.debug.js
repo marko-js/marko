@@ -6,7 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks);
 const $B_content = _content("__tests__/template.marko_3*content", "b");
 const $A_content = _content("__tests__/template.marko_2*content", "a");
 const $Wrap_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $Wrap_content__input_t__OR__content = /*@__PURE__*/ _fill_join("| __tests__/template.marko_fill0", "input_t", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_t#0:3_content#5/init", 6, ($scope) => $Wrap_content__dynamicTag($scope, $scope.content, ($_) => ({ title: $scope._.input_t }))));
+const $Wrap_content__input_t__OR__content = /*@__PURE__*/ _fill_signal("input_t | __tests__/template.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_t#0:3_content#5/init", 6, ($scope) => $Wrap_content__dynamicTag($scope, $scope.content, ($_) => ({ title: $scope._.input_t }))));
 const $Wrap_content__input_t = /*@__PURE__*/ _closure_get("input_t/9", $Wrap_content__input_t__OR__content, 0, "__tests__/template.marko_1_input_t#0:3/subscribe");
 const $Wrap_content__setup = $Wrap_content__input_t;
 const $Wrap_content__n = ($scope, n) => _text($scope["#text/0"], n);

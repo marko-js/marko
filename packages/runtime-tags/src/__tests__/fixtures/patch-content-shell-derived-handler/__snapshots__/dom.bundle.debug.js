@@ -12,7 +12,7 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $t
 const $template = "<!><!><p> </p>";
 const $walks = "b%bD l";
 const $wrapper_content__label = /*@__PURE__*/ _const("label");
-const $wrapper_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => $wrapper_content__label($scope, $scope._._.input_label), ($scope) => $scope._._), 0));
+const $wrapper_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => $wrapper_content__label($scope, $scope._._.input_label), ($scope) => $scope._._), 0));
 const $wrapper_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$shown($scope._._, $scope.label);
 }));

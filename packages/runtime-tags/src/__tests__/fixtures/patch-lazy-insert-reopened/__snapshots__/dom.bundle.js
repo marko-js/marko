@@ -1,7 +1,7 @@
 // template.marko
 let $load_Lazy_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy.marko.setup.mjs"));
 let $load_Lazy_tag_input_label = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:lazy.marko.input_label.mjs"), "_a");
-const $if_content__input_label = /*@__PURE__*/ _fill_join("b2", 6, /*@__PURE__*/ _if_closure(2, 0, ($scope) => $load_Lazy_tag_input_label($scope.b, $scope._.g)));
+const $if_content__input_label = /*@__PURE__*/ _fill_signal("6 b2", /*@__PURE__*/ _if_closure(2, 0, ($scope) => $load_Lazy_tag_input_label($scope.b, $scope._.g)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$load_Lazy_setup($scope, $scope.b, $scope.a);

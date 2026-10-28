@@ -7,7 +7,7 @@ const $setup = ($_) => {};
 const $Card_content__href = ($scope, href) => _attr($scope["#a/0"], "href", href);
 const $Card_content__$params = ($scope, $params2) => $Card_content__$temp($scope, $params2[0]);
 const $Card_content__$temp = ($scope, $temp) => $Card_content__href($scope, $temp.href);
-const $input_q__OR__input_item = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_item", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_q", /*@__PURE__*/ _or(5, ($scope) => $Card_content__href($scope["#childScope/0"], $scope.input_q + $scope.input_item))));
+const $input_q__OR__input_item = /*@__PURE__*/ _fill_signal("input_q __tests__/template.marko_fill0,input_item __tests__/template.marko_fill1", /*@__PURE__*/ _or(5, ($scope) => $Card_content__href($scope["#childScope/0"], $scope.input_q + $scope.input_item)));
 const $input_q = /*@__PURE__*/ _const("input_q", $input_q__OR__input_item);
 const $input_item = /*@__PURE__*/ _const("input_item", $input_q__OR__input_item);
 const $input = ($scope, input) => {

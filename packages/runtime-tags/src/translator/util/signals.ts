@@ -105,6 +105,7 @@ import {
 } from "./references";
 import {
   callRuntime,
+  importRuntime,
   importRuntimeFeature,
   registerRuntimeValue,
 } from "./runtime";
@@ -585,16 +586,10 @@ export function getSignal(
         if (fills) {
           // Deep closure positions reassemble the indexed composite via a
           // shared per-key table, keyed by the serialized index.
-          closureGet = buildClosureFillJoin(
-            "_fill_join_closure",
-            section,
-            closure,
-            closureGet,
-            index,
-          );
+          closureGet = buildClosureFill(section, closure, closureGet, index);
         } else if (index && isPatch() && dispatchesByIndex(closure)) {
           // A created later position carries the index its owner's composite
-          // would stamp, which a fill join over the subscribers matches.
+          // would stamp, which a fill over the subscribers matches.
           closureGet = callRuntime(
             "_closure_index",
             t.numericLiteral(index),
@@ -1726,7 +1721,7 @@ export function writeSignals(section: Section) {
         if (signal.globalReads) {
           if (!onlyEffect) value = wrapGlobalJoins(signal, value);
         } else if (Array.isArray(binding)) {
-          value = wrapJoinFills(signal, binding, value);
+          value = wrapIntersectionFills(signal, binding, value);
         } else if (binding) {
           value = wrapCreatedInit(
             signal,
@@ -1799,30 +1794,34 @@ export function writeSignals(section: Section) {
   return written;
 }
 
-// A join's fill members register on its declaration, so tree-shaking keeps
-// each with the join.
-function wrapJoinFills(
+// An intersection's members register their fills on it, so tree-shaking keeps
+// each with it: one `_fill_signal` for the members of each section.
+function wrapIntersectionFills(
   signal: Signal,
-  join: Intersection,
+  intersection: Intersection,
   value: t.Expression,
 ) {
   const { section } = signal;
-  let expr = value;
-  // A written join's members re-run it by their join fills where the scope does
-  // not init it, else only set their values; an unpatched key re-runs it too.
-  const written = isPatchWrittenJoin(join);
-  for (const ref of join) {
+  // Members of one section reach it by one closure; a value-only member rides any.
+  const groups = new Map<
+    Section,
+    { closure: t.Expression[]; fills: string[] }
+  >();
+  const valueOnly: string[] = [];
+  // A written intersection's members re-run it by their join fills where the scope
+  // does not init it, else only set their values; an unpatched key re-runs it too.
+  const written = isPatchWrittenJoin(intersection);
+  for (const ref of intersection) {
     const member = getCanonicalBinding(ref);
     const registers = registersJoinFill(member);
     const { unpatchedJoins, joinFill, unpatchedSections } =
       getPatchFill(member);
-    expr = keepDerivedFills(member, expr);
     const keys: string[] = [];
     let valueKey: string | undefined;
     if (written) {
-      if (joinFill === join) keys.push(getPatchFillKey(member));
+      if (joinFill === intersection) keys.push(getPatchFillKey(member));
       else if (registers) valueKey = getPatchFillKey(member);
-      if (unpatchedJoins?.includes(join)) {
+      if (unpatchedJoins?.includes(intersection)) {
         keys.push(getPatchFillKey(member, "unpatched"));
       }
     } else if (registers) {
@@ -1835,79 +1834,89 @@ function wrapJoinFills(
         keys.push(getPatchFillKey(member, "unpatched"));
       }
     }
-    // Its keys run the join where its scope reaches it; one after `|` sets the value
-    // alone (another signal's may be shaken where this join is kept), on any path.
-    const path = keys.length ? getJoinFillPath(section, member) : undefined;
-    if (!path) keys.length = 0;
+    // Its keys run the intersection where its scope reaches it; one after `|` sets
+    // the value alone (another signal's may be shaken where this one is kept).
+    const closure = keys.length ? getFillClosure(section, member) : undefined;
+    if (!closure) keys.length = 0;
     if (valueKey) keys.push("|", valueKey);
     if (keys.length) {
-      const { helper, args } = path || ownSectionPath;
-      expr = callRuntime(
-        helper,
-        t.stringLiteral(keys.join(" ")),
-        getScopeAccessorLiteral(member, true),
-        expr,
-        ...args,
-      );
+      const fill = `${getScopeAccessor(member, true)} ${keys.join(" ")}`;
+      if (closure) {
+        const group = groups.get(member.section);
+        if (group) group.fills.push(fill);
+        else groups.set(member.section, { closure, fills: [fill] });
+      } else {
+        valueOnly.push(fill);
+      }
     }
+  }
+  const registrations = [...groups.values()];
+  if (valueOnly.length) {
+    (registrations[0] ||= { closure: [], fills: [] }).fills.push(...valueOnly);
+  }
+  let expr = value;
+  for (const ref of intersection) {
+    expr = keepDerivedFills(getCanonicalBinding(ref), expr);
+  }
+  for (const { closure, fills } of registrations) {
+    expr = buildFillSignal(closure, fills, expr);
   }
   return expr;
 }
 
-const ownSectionPath = { helper: "_fill_join", args: [] } as const;
+// `fills` comma separated, then the closure they run the signal through, if any.
+function buildFillSignal(
+  closure: t.Expression[],
+  fills: string[],
+  signal: t.Expression,
+) {
+  return callRuntime(
+    "_fill_signal",
+    t.stringLiteral(fills.join(",")),
+    signal,
+    ...closure,
+  );
+}
 
-// What runs the join from the member's fill: the join in its own section, the
-// branch hops from the member's section, or its owner's closure subscribers.
-function getJoinFillPath(section: Section, member: Binding) {
-  if (member.section === section) return ownSectionPath;
+// What runs the intersection from the member's fill, as main's closure signals:
+// none in its own section, the hops from the member's section, or its subscribers.
+function getFillClosure(
+  section: Section,
+  member: Binding,
+): t.Expression[] | undefined {
+  if (member.section === section) return [];
   if (
     section.enclosing.nonOptionalAncestor ===
     member.section.enclosing.nonOptionalAncestor
   ) {
-    return getFillJoinHops(section, member.section);
+    const { hop } = getClosureSignalBuilder(section)!;
+    if (section.parent === member.section) {
+      return [
+        importRuntime(hop.kind === "if" ? "_if_closure" : "_for_closure"),
+        ...getHopArgs(hop),
+      ];
+    }
+    // A chain of hops compiles main's closure signals around the intersection.
+    const signalId = generateUidIdentifier("signal");
+    let run: t.Expression = signalId;
+    for (let cur = section; cur !== member.section; cur = cur.parent!) {
+      run = buildClosureHop(getClosureSignalBuilder(cur)!.hop, run);
+    }
+    return [t.arrowFunctionExpression([signalId], run)];
   }
   if (joinsFillOverSubscribers(section, member)) {
-    // A chain passing a non-optional section runs the join in its owner's
+    // A chain passing a non-optional section runs the intersection in its owner's
     // closure subscribers; in stateful structure its closure signal does.
-    return {
-      helper: "_fill_join_subscribers",
-      args: [
-        getClosureAccessorLiteral(member),
-        t.numericLiteral(getDynamicClosureIndex(member, section)),
-      ],
-    } as const;
+    return [
+      importRuntime("_closure_subscribers"),
+      getClosureAccessorLiteral(member),
+      t.numericLiteral(getDynamicClosureIndex(member, section)),
+    ];
   }
-}
-
-// The fill join over the branch hops from `section` up to `owner`: a chain of one
-// kind flattens onto its helper owner-first, as the runtime folds trailing hops.
-function getFillJoinHops(section: Section, owner: Section) {
-  const hops: ClosureHop[] = [];
-  for (let cur = section; cur !== owner; cur = cur.parent!) {
-    hops.push(getClosureSignalBuilder(cur)!.hop);
-  }
-  const conditional = hops[0].kind === "if";
-  if (hops.every((hop) => (hop.kind === "if") === conditional)) {
-    return {
-      helper: conditional ? "_fill_join_if" : "_fill_join_for",
-      args: hops.reverse().flatMap(getHopArgs),
-    } as const;
-  }
-  // A mixed chain compiles a dispatch builder: the arrow pulls in only the
-  // closure kinds its chain uses.
-  const joinId = generateUidIdentifier("join");
-  let dispatch: t.Expression = joinId;
-  for (const hop of hops) {
-    dispatch = buildClosureHop(hop, dispatch);
-  }
-  return {
-    helper: "_fill_join",
-    args: [t.arrowFunctionExpression([joinId], dispatch)],
-  } as const;
 }
 
 // Inside unpatched structure a lone closure over a server fill IS the refresh
-// channel: it registers the fill join itself (a branch hop's, here).
+// channel: it registers its fill itself (a branch hop's, here).
 function wrapClosureFill(
   signal: Signal,
   closure: Binding,
@@ -1919,7 +1928,7 @@ function wrapClosureFill(
     return value;
   }
   return registersClosureFill(section, closure)
-    ? buildClosureFillJoin("_fill_join", section, closure, value)
+    ? buildClosureFill(section, closure, value)
     : value;
 }
 
@@ -1951,24 +1960,26 @@ function addDerivedFillClosures(
   });
 }
 
-// A reader of such a local carries those fill joins: each runs the closure in its
-// subscribed scopes, deriving the local, whose signal re-runs its readers.
+// A reader of such a local carries those closures' fills: each runs the closure in
+// its subscribed scopes, deriving the local, whose signal re-runs its readers.
 function keepDerivedFills(local: Binding, expr: t.Expression) {
   const { section } = local;
   for (const closure of getDerivedFillClosures(local)) {
-    expr = callRuntime(
-      "_fill_join_subscribers",
-      t.stringLiteral(getPatchFillKey(closure)),
-      getScopeAccessorLiteral(closure, true),
+    // The subscribers run the closure, given last, rather than `expr`.
+    expr = buildFillSignal(
+      [
+        importRuntime("_closure_subscribers"),
+        getClosureAccessorLiteral(closure),
+        t.numericLiteral(getDynamicClosureIndex(closure, section)),
+        t.arrowFunctionExpression(
+          [scopeIdentifier],
+          t.callExpression(getSignal(section, closure).identifier, [
+            scopeIdentifier,
+          ]),
+        ),
+      ],
+      [`${getScopeAccessor(closure, true)} ${getPatchFillKey(closure)}`],
       expr,
-      getClosureAccessorLiteral(closure),
-      t.numericLiteral(getDynamicClosureIndex(closure, section)),
-      t.arrowFunctionExpression(
-        [scopeIdentifier],
-        t.callExpression(getSignal(section, closure).identifier, [
-          scopeIdentifier,
-        ]),
-      ),
     );
   }
   return expr;
@@ -1995,10 +2006,9 @@ const [readsOnResume] = createAnalysisMemo((binding: Binding): boolean => {
   return false;
 }, false);
 
-// A closure's fill join in `section`, under its key unless its declaration's
-// registration carries it, and under its unpatched key, which re-runs joins too.
-function buildClosureFillJoin(
-  helper: "_fill_join" | "_fill_join_closure",
+// A closure's fill in `section`, under its key unless its declaration's registration
+// carries it, and under its unpatched key, which re-runs intersections too.
+function buildClosureFill(
   section: Section,
   closure: Binding,
   value: t.Expression,
@@ -2024,15 +2034,21 @@ function buildClosureFillJoin(
   ) {
     keys.push(getPatchFillKey(closure, "unpatched"));
   }
-  return keys.length
-    ? callRuntime(
-        helper,
+  if (!keys.length) return value;
+  // A deep closure position goes through the composite its positions share.
+  return index === undefined
+    ? buildFillSignal(
+        [],
+        [`${getScopeAccessor(closure, true)} ${keys.join(" ")}`],
+        value,
+      )
+    : callRuntime(
+        "_fill_closure",
         t.stringLiteral(keys.join(" ")),
         getScopeAccessorLiteral(closure, true),
         value,
-        index !== undefined && t.numericLiteral(index),
-      )
-    : value;
+        t.numericLiteral(index),
+      );
 }
 
 // A scope a flush creates runs the closure by its init, registered with the

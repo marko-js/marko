@@ -1,5 +1,5 @@
 // tags/panel.marko
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("b7", 6, /*@__PURE__*/ _fill_join_subscribers("b6", 5, /*@__PURE__*/ _or_resume("b2", 1, ($scope) => _text($scope.a, $scope._._.f + $scope._._.g)), 9, 0), 10, 0);
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_signal("5 b6,6 b7", /*@__PURE__*/ _or_resume("b2", 1, ($scope) => _text($scope.a, $scope._._.f + $scope._._.g)), _closure_subscribers, 9, 0);
 const $if_content__input_a = /*@__PURE__*/ _closure_get(9, $if_content__input_a__OR__input_b, ($scope) => $scope._._, "b0");
 const $if_content__setup = ($scope) => {
 	$if_content__input_a($scope);

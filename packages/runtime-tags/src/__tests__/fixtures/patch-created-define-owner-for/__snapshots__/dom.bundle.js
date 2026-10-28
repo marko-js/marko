@@ -1,5 +1,5 @@
 // tags/card.marko
-const $for_content__input_w = /*@__PURE__*/ _fill_join_closure("b3", 5, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.b, $scope._._.f), ($scope) => $scope._._, "b0"), 0);
+const $for_content__input_w = /*@__PURE__*/ _fill_closure("b3", 5, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.b, $scope._._.f), ($scope) => $scope._._, "b0"), 0);
 const $for_content__setup = $for_content__input_w;
 const $for_content__x = ($scope, x) => _text($scope.a, x);
 const $for_content__$params = ($scope, $params3) => $for_content__x($scope, $params3[0]);

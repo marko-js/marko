@@ -3,7 +3,7 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks);
-const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_2_input_title#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/wrap.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/5", ($scope) => _text($scope["#text/0"], $scope._._.input_title), ($scope) => $scope._._, "__tests__/tags/wrap.marko_2_input_title#0:3/subscribe"), 0));
+const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_2_input_title#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/tags/wrap.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/5", ($scope) => _text($scope["#text/0"], $scope._._.input_title), ($scope) => $scope._._, "__tests__/tags/wrap.marko_2_input_title#0:3/subscribe"), 0));
 const $if_content__setup = $if_content__input_title;
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_content__setup);
 const $Panel_content__open = ($scope, open) => $Panel_content__if($scope, open ? 0 : 1);

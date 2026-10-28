@@ -12,15 +12,15 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/frag-host.marko
 const $template = "<section></section>";
 const $walks = " b";
-const $one_content__input_mode = /*@__PURE__*/ _init_resume("__tests__/tags/frag-host.marko_1_input_mode#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/frag-host.marko_fill0", "input_mode", /*@__PURE__*/ _closure_get("input_mode/7", ($scope) => _text($scope["#text/0"], $scope._.input_mode ? "x" : "y"), 0, "__tests__/tags/frag-host.marko_1_input_mode#0:3/subscribe"), 0));
+const $one_content__input_mode = /*@__PURE__*/ _init_resume("__tests__/tags/frag-host.marko_1_input_mode#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/tags/frag-host.marko_fill0", "input_mode", /*@__PURE__*/ _closure_get("input_mode/7", ($scope) => _text($scope["#text/0"], $scope._.input_mode ? "x" : "y"), 0, "__tests__/tags/frag-host.marko_1_input_mode#0:3/subscribe"), 0));
 const $one_content__setup = ($scope) => {
 	$one_content__input_mode($scope);
 	$one_content__input_b($scope);
 };
-const $one_content__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/frag-host.marko_1_input_b#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/frag-host.marko_fill1", "input_b", /*@__PURE__*/ _closure_get("input_b/8", ($scope) => _text($scope["#text/1"], $scope._.input_b), 0, "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe"), 0));
+const $one_content__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/frag-host.marko_1_input_b#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/tags/frag-host.marko_fill1", "input_b", /*@__PURE__*/ _closure_get("input_b/8", ($scope) => _text($scope["#text/1"], $scope._.input_b), 0, "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe"), 0));
 const $one_content = _content("__tests__/tags/frag-host.marko_1*content", "<em><!> <!></em>", "D%c%", $one_content__setup);
 const $input_mode__OR__one__script = _script("__tests__/tags/frag-host.marko_0_input_mode#3_one#5", ($scope) => _attrs_script($scope, "#section/0"));
-const $input_mode__OR__one = /*@__PURE__*/ _fill_join("__tests__/tags/frag-host.marko_fill0", "input_mode", /*@__PURE__*/ _or_resume("__tests__/tags/frag-host.marko_0_input_mode#3_one#5/init", 6, ($scope) => {
+const $input_mode__OR__one = /*@__PURE__*/ _fill_signal("input_mode __tests__/tags/frag-host.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/tags/frag-host.marko_0_input_mode#3_one#5/init", 6, ($scope) => {
 	$input_mode__OR__one__script($scope);
 	_attrs_content($scope, "#section/0", { content: $scope.input_mode ? $scope.one : null });
 }));

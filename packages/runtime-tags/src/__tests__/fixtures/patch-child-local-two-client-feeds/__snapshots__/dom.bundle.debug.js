@@ -1,9 +1,9 @@
 // tags/child.marko
 const $template$1 = "<div><!><button id=c>c</button></div>";
 const $walks$1 = "D%b l";
-const $if_content__c__OR__l = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill3", "l", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.l + "#" + $scope._.c)));
+const $if_content__c__OR__l = /*@__PURE__*/ _fill_signal("l __tests__/tags/child.marko_fill3", /*@__PURE__*/ _or(3, ($scope) => _text($scope["#text/0"], $scope.l + "#" + $scope._.c)));
 const $if_content__l = /*@__PURE__*/ _const("l", $if_content__c__OR__l);
-const $if_content__input_label__OR__input_other = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1", "input_other", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill0", "input_label", /*@__PURE__*/ _or(1, ($scope) => $if_content__l($scope, $scope._.input_label + $scope._.input_other + "!")), "#text/0", 0), "#text/0", 0);
+const $if_content__input_label__OR__input_other = /*@__PURE__*/ _fill_signal("input_label __tests__/tags/child.marko_fill0,input_other __tests__/tags/child.marko_fill1", /*@__PURE__*/ _or(1, ($scope) => $if_content__l($scope, $scope._.input_label + $scope._.input_other + "!")), _if_closure, "#text/0", 0);
 const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_label#0:5/init", /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_label__OR__input_other));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);

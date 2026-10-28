@@ -6,7 +6,7 @@ function boom() {
 }
 const $try_content__input_fail = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_fail#0:4/init", /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/template.marko_2_input_fail#0:4/subscribe"));
 const $try_content__setup = $try_content__input_fail;
-const $catch_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _attr_input_value($scope, "#input/1", $scope._.input_label, $valueChange), 0, "__tests__/template.marko_1_input_label#0:3/subscribe"), 0));
+const $catch_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _attr_input_value($scope, "#input/1", $scope._.input_label, $valueChange), 0, "__tests__/template.marko_1_input_label#0:3/subscribe"), 0));
 const $catch_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _attr_input_value_script($scope, "#input/1"));
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_label($scope);

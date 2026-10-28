@@ -4,7 +4,7 @@ const $walks = "b%c";
 function boom(msg) {
 	throw new Error(msg);
 }
-const $try_content__input_msg__OR__input_fail = /*@__PURE__*/ _fill_join("| __tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_msg#0:3_input_fail#0:4/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom($scope._.input_msg) : $scope._.input_msg)));
+const $try_content__input_msg__OR__input_fail = /*@__PURE__*/ _fill_signal("input_msg | __tests__/template.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_msg#0:3_input_fail#0:4/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom($scope._.input_msg) : $scope._.input_msg)));
 const $try_content__input_msg = /*@__PURE__*/ _closure_index(1, /*@__PURE__*/ _closure_get("input_msg/5", $try_content__input_msg__OR__input_fail, 0, "__tests__/template.marko_2_input_msg#0:3/subscribe"));
 const $try_content__setup = ($scope) => {
 	$try_content__input_msg($scope);
@@ -16,7 +16,7 @@ const $catch_content__upper = /*@__PURE__*/ _const("upper", ($scope) => {
 	_text($scope["#text/3"], $scope.upper);
 	$catch_content__err_message__OR__upper($scope);
 });
-const $catch_content__input_msg = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_msg#0:3/init", _closure_resume("__tests__/template.marko_1_input_msg#0:3/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/5", ($scope) => {
+const $catch_content__input_msg = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_msg#0:3/init", _closure_resume("__tests__/template.marko_1_input_msg#0:3/subscribe", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/5", ($scope) => {
 	_attr($scope["#b/0"], "title", $scope._.input_msg);
 	_text($scope["#text/2"], $scope._.input_msg);
 	$catch_content__upper($scope, $scope._.input_msg.toUpperCase());

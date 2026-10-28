@@ -3,10 +3,10 @@ const $Show_content__walks = "b%c";
 const $Show_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>+</button>`)($Show_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Show_content__walks);
-const $if_content__value = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "value", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.value)));
+const $if_content__value = /*@__PURE__*/ _fill_signal("value __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.value)));
 const $if_content__setup = $if_content__value;
 const $Show_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
-const $Show_content__count__OR__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "value", /*@__PURE__*/ _or(4, ($scope) => $Show_content__if($scope, $scope._.count > 0 && $scope.value ? 0 : 1)));
+const $Show_content__count__OR__label = /*@__PURE__*/ _fill_signal("value __tests__/template.marko_fill0", /*@__PURE__*/ _or(4, ($scope) => $Show_content__if($scope, $scope._.count > 0 && $scope.value ? 0 : 1)));
 const $Show_content__count = /*@__PURE__*/ _closure_get("count/6", $Show_content__count__OR__label, 0, "__tests__/template.marko_1_count#0:5/subscribe");
 const $Show_content__setup = $Show_content__count;
 const $Show_content__value = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "value", ($scope) => {

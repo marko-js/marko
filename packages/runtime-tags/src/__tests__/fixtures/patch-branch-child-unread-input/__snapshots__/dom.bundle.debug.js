@@ -19,7 +19,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // tags/toggle.marko
 const $template$1 = "<button> </button>";
 const $walks$1 = " D l";
-const $input_user_bio__OR__input_user_name__OR__open = /*@__PURE__*/ _fill_join("__tests__/tags/toggle.marko_fill1", "input_user_name", /*@__PURE__*/ _fill_join("__tests__/tags/toggle.marko_fill0", "input_user_bio", /*@__PURE__*/ _or(8, ($scope) => _text($scope["#text/1"], $scope.open ? $scope.input_user_bio : $scope.input_user_name), 2)));
+const $input_user_bio__OR__input_user_name__OR__open = /*@__PURE__*/ _fill_signal("input_user_bio __tests__/tags/toggle.marko_fill0,input_user_name __tests__/tags/toggle.marko_fill1", /*@__PURE__*/ _or(8, ($scope) => _text($scope["#text/1"], $scope.open ? $scope.input_user_bio : $scope.input_user_name), 2));
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/toggle.marko_fill2", "open/7", $input_user_bio__OR__input_user_name__OR__open);
 const $setup__script$1 = _script("__tests__/tags/toggle.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
@@ -40,16 +40,16 @@ var toggle_default = /*@__PURE__*/ _template("__tests__/tags/toggle.marko", $tem
 // template.marko
 const $template = "<button class=inc> </button><!><!><!>";
 const $walks = " D l%b%c";
-const $if_content2__input_other = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_other#0:11/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_other", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $input_user$1($scope["#childScope/1"], $scope._.input_other))));
+const $if_content2__input_other = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_other#0:11/init", /*@__PURE__*/ _fill_signal("input_other __tests__/template.marko_fill2", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $input_user$1($scope["#childScope/1"], $scope._.input_other))));
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_other._($scope);
 	$if_content2__input_props_user._($scope);
 	$setup$1($scope["#childScope/1"]);
 };
-const $if_content2__input_props_user = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_props_user#0:13/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill3", "input_props_user", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $input_user$2($scope["#childScope/0"], $scope._.input_props_user))));
-const $else_content__input_user = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_user#0:8/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_user", /*@__PURE__*/ _if_closure("#text/2", 1, ($scope) => $input_user$2($scope["#childScope/0"], $scope._.input_user))));
+const $if_content2__input_props_user = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_props_user#0:13/init", /*@__PURE__*/ _fill_signal("input_props_user __tests__/template.marko_fill3", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $input_user$2($scope["#childScope/0"], $scope._.input_props_user))));
+const $else_content__input_user = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_user#0:8/init", /*@__PURE__*/ _fill_signal("input_user __tests__/template.marko_fill1", /*@__PURE__*/ _if_closure("#text/2", 1, ($scope) => $input_user$2($scope["#childScope/0"], $scope._.input_user))));
 const $else_content__setup = $else_content__input_user;
-const $if_content__input_adminData = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_adminData#0:7/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_adminData", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_data($scope["#childScope/0"], $scope._.input_adminData))));
+const $if_content__input_adminData = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_adminData#0:7/init", /*@__PURE__*/ _fill_signal("input_adminData __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_data($scope["#childScope/0"], $scope._.input_adminData))));
 const $if_content__setup = $if_content__input_adminData;
 const $n = /*@__PURE__*/ _let("n/12", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

@@ -19,7 +19,7 @@ const $template = "<button class=inc> </button><!><!><!>";
 const $walks = " D l%/&b%c";
 let $load_Card_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:card.marko.setup.mjs"));
 let $load_Card_tag_input_user = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:card.marko.input_user.mjs"), "ready:__tests__/card.marko");
-const $if_content__input_user = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_user2#0:9/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_user2", /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => $load_Card_tag_input_user($scope["#childScope/1"], $scope._.input_user2))));
+const $if_content__input_user = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_user2#0:9/init", /*@__PURE__*/ _fill_signal("input_user2 __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => $load_Card_tag_input_user($scope["#childScope/1"], $scope._.input_user2))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_user._($scope);
 	$load_Card_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);

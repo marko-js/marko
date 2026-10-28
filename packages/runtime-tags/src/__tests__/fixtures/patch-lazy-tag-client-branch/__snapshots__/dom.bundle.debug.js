@@ -18,13 +18,13 @@ const $template = "<button class=toggle>toggle</button><main></main>";
 const $walks = " b b";
 let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_label = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:child.marko.input_label.mjs"), "ready:__tests__/child.marko");
-const $if_content2__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0);
+const $if_content2__input_label = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => $load_Child_tag_input_label($scope["#childScope/1"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0);
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_label($scope);
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", $if_content2__setup);
-const $if_content__input_show = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _if_closure("#main/1", 0, ($scope) => $if_content__if($scope, $scope._.input_show ? 0 : 1)));
+const $if_content__input_show = /*@__PURE__*/ _fill_signal("input_show __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#main/1", 0, ($scope) => $if_content__if($scope, $scope._.input_show ? 0 : 1)));
 const $if_content__setup = $if_content__input_show;
 const $if = /*@__PURE__*/ _if("#main/1", "<!><!><!>", "b%", $if_content__setup);
 const $open = /*@__PURE__*/ _let("open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));

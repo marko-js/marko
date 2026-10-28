@@ -7,7 +7,7 @@ const $for_content2__name = ($scope, name) => _text($scope["#text/0"], name);
 const $for_content2__$params = ($scope, $params3) => $for_content2__name($scope, $params3[0]);
 const $for_content__name = ($scope, name) => _text($scope["#text/0"], name);
 const $for_content__$params = ($scope, $params2) => $for_content__name($scope, $params2[0]);
-const $if_content__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => _text($scope["#text/1"], $scope._.label)));
+const $if_content__label = /*@__PURE__*/ _fill_signal("label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => _text($scope["#text/1"], $scope._.label)));
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<b> </b>", "D ", 0, $for_content2__$params);
 const $if_content__setup = ($scope) => {
 	$if_content__label._($scope);

@@ -14,7 +14,7 @@ var other_default = /*@__PURE__*/ _template("b", $template, "D l", 0, $input);
 
 // tags/chooser.marko
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $if_content__input_Tag__OR__input_label = /*@__PURE__*/ _fill_join_if("d2", 5, /*@__PURE__*/ _fill_join_if("d1", 4, /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.e, ($_) => ({ label: $scope._.f }))), 1, 0), 1, 0);
+const $if_content__input_Tag__OR__input_label = /*@__PURE__*/ _fill_signal("4 d1,5 d2", /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.e, ($_) => ({ label: $scope._.f }))), _if_closure, 1, 0);
 const $if_content__input_Tag = /*@__PURE__*/ _if_closure(1, 0, $if_content__input_Tag__OR__input_label);
 const $if_content__setup = ($scope) => {
 	$if_content__input_Tag._($scope);

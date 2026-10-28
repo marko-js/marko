@@ -38,19 +38,19 @@ const $if_content__setup__script = _script("__tests__/tags/w.marko_3", ($scope) 
 }));
 const $if_content__setup = $if_content__setup__script;
 const $B_content__if = /*@__PURE__*/ _if("#text/0", "<button>b</button>", " ", $if_content2__setup);
-const $B_content__input_show = /*@__PURE__*/ _init_resume("__tests__/tags/w.marko_2_input_show#0:4/init", _closure_resume("__tests__/tags/w.marko_2_input_show#0:4/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/tags/w.marko_fill0", "input_show", /*@__PURE__*/ _closure_get("input_show/10", ($scope) => $B_content__if($scope, $scope._.input_show ? 0 : 1)), 1)));
+const $B_content__input_show = /*@__PURE__*/ _init_resume("__tests__/tags/w.marko_2_input_show#0:4/init", _closure_resume("__tests__/tags/w.marko_2_input_show#0:4/subscribe", /*@__PURE__*/ _fill_closure("__tests__/tags/w.marko_fill0", "input_show", /*@__PURE__*/ _closure_get("input_show/10", ($scope) => $B_content__if($scope, $scope._.input_show ? 0 : 1)), 1)));
 const $B_content__setup = $B_content__input_show;
 const $B_content__$params = ($scope, $params3) => $B_content__x($scope, $params3[0].x);
 const $B_content__x = /*@__PURE__*/ _const("x");
 const $B_content = _content("__tests__/tags/w.marko_2*content", "<u>B</u><!><!>", "b%", $B_content__setup, $B_content__$params);
 const $A_content__if = /*@__PURE__*/ _if("#text/0", "<button>a</button>", " ", $if_content__setup);
-const $A_content__input_show = /*@__PURE__*/ _init_resume("__tests__/tags/w.marko_1_input_show#0:4/init", _closure_resume("__tests__/tags/w.marko_1_input_show#0:4/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/tags/w.marko_fill0", "input_show", /*@__PURE__*/ _closure_get("input_show/10", ($scope) => $A_content__if($scope, $scope._.input_show ? 0 : 1)), 0)));
+const $A_content__input_show = /*@__PURE__*/ _init_resume("__tests__/tags/w.marko_1_input_show#0:4/init", _closure_resume("__tests__/tags/w.marko_1_input_show#0:4/subscribe", /*@__PURE__*/ _fill_closure("__tests__/tags/w.marko_fill0", "input_show", /*@__PURE__*/ _closure_get("input_show/10", ($scope) => $A_content__if($scope, $scope._.input_show ? 0 : 1)), 0)));
 const $A_content__setup = $A_content__input_show;
 const $A_content__$params = ($scope, $params2) => $A_content__x($scope, $params2[0].x);
 const $A_content__x = /*@__PURE__*/ _const("x");
 const $A_content = _content("__tests__/tags/w.marko_1*content", "<u>A</u><!><!>", "b%", $A_content__setup, $A_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_flag__OR__input_x__OR__A__OR__B = /*@__PURE__*/ _fill_join("__tests__/tags/w.marko_fill2", "input_x", /*@__PURE__*/ _fill_join("__tests__/tags/w.marko_fill1", "input_flag", /*@__PURE__*/ _or_resume("__tests__/tags/w.marko_0_input_flag#5_input_x#6_A#7_B#8/init", 9, ($scope) => $dynamicTag($scope, $scope.input_flag ? $scope.A : $scope.B, ($_) => ({ x: $scope.input_x })), 3)));
+const $input_flag__OR__input_x__OR__A__OR__B = /*@__PURE__*/ _fill_signal("input_flag __tests__/tags/w.marko_fill1,input_x __tests__/tags/w.marko_fill2", /*@__PURE__*/ _or_resume("__tests__/tags/w.marko_0_input_flag#5_input_x#6_A#7_B#8/init", 9, ($scope) => $dynamicTag($scope, $scope.input_flag ? $scope.A : $scope.B, ($_) => ({ x: $scope.input_x })), 3));
 const $A = /*@__PURE__*/ _const("A", $input_flag__OR__input_x__OR__A__OR__B);
 const $B = /*@__PURE__*/ _const("B", $input_flag__OR__input_x__OR__A__OR__B);
 function $setup($scope) {

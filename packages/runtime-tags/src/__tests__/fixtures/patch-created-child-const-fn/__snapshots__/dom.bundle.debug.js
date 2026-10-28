@@ -2,7 +2,7 @@
 const $template$1 = "<button> </button>";
 const $walks$1 = " D l";
 const $g = ($scope, g) => _text($scope["#text/1"], g());
-const $input_fn__OR__open = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_fn", /*@__PURE__*/ _or(6, ($scope) => $g($scope, $scope.open ? $scope.input_fn : () => "-")));
+const $input_fn__OR__open = /*@__PURE__*/ _fill_signal("input_fn __tests__/tags/card.marko_fill0", /*@__PURE__*/ _or(6, ($scope) => $g($scope, $scope.open ? $scope.input_fn : () => "-")));
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill1", "open/5", $input_fn__OR__open);
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
@@ -19,7 +19,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_fn($scope["#childScope/0"], $fn($scope)))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_fn($scope["#childScope/0"], $fn($scope)))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$setup$1($scope["#childScope/0"]);

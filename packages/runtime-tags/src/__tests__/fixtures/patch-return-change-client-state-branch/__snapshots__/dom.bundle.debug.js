@@ -32,7 +32,7 @@ var counter_box_default = /*@__PURE__*/ _template("__tests__/tags/counter-box/in
 // template.marko
 const $template = "<!><!><p> </p>";
 const $walks = "b%bD l";
-const $if_content__input_p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_p#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_p", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
+const $if_content__input_p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_p#0:5/init", /*@__PURE__*/ _fill_signal("input_p __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$input_onA($scope["#childScope/0"], $onA($scope));
 	$input_onB($scope["#childScope/0"], $onB($scope));
 })));

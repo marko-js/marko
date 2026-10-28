@@ -2,7 +2,7 @@
 const $template$1 = "<button class=toggle>toggle</button><!><!>";
 const $walks$1 = " b%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill_signal("input_content __tests__/tags/card.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill1", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -21,16 +21,16 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $inputwrapCarddiv_content__input_suffix = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_suffix#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_suffix", /*@__PURE__*/ _closure_get("input_suffix/7", ($scope) => _text($scope["#text/1"], $scope._._.input_suffix), ($scope) => $scope._._, "__tests__/template.marko_2_input_suffix#0:5/subscribe"), 0));
+const $inputwrapCarddiv_content__input_suffix = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_suffix#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill1", "input_suffix", /*@__PURE__*/ _closure_get("input_suffix/7", ($scope) => _text($scope["#text/1"], $scope._._.input_suffix), ($scope) => $scope._._, "__tests__/template.marko_2_input_suffix#0:5/subscribe"), 0));
 const $inputwrapCarddiv_content__setup = ($scope) => {
 	$inputwrapCarddiv_content__input_suffix($scope);
 	$inputwrapCarddiv_content__row_label($scope);
 };
-const $inputwrapCarddiv_content__row_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_row_label#1:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill2", "row_label", /*@__PURE__*/ _closure_get("row_label/8", ($scope) => _text($scope["#text/0"], $scope._.row_label), 0, "__tests__/template.marko_2_row_label#1:3/subscribe"), 0));
+const $inputwrapCarddiv_content__row_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_row_label#1:3/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill2", "row_label", /*@__PURE__*/ _closure_get("row_label/8", ($scope) => _text($scope["#text/0"], $scope._.row_label), 0, "__tests__/template.marko_2_row_label#1:3/subscribe"), 0));
 const $inputwrapCarddiv_content = _content("__tests__/template.marko_2*content", "<b><!><!></b>", "D%b%", $inputwrapCarddiv_content__setup);
 _content_resume($inputwrapCarddiv_content);
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputwrapCarddiv_content);
-const $for_content__input_wrap = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_wrap#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_wrap", /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__dynamicTag($scope, $scope._.input_wrap ? card_default : "div"))));
+const $for_content__input_wrap = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_wrap#0:4/init", /*@__PURE__*/ _fill_signal("input_wrap __tests__/template.marko_fill0", /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__dynamicTag($scope, $scope._.input_wrap ? card_default : "div"))));
 const $for_content__setup = $for_content__input_wrap;
 const $for_content__$params = ($scope, $params2) => $for_content__row_label($scope, $params2[0]?.label);
 const $for_content__row_label__closure = /*@__PURE__*/ _closure($inputwrapCarddiv_content__row_label);

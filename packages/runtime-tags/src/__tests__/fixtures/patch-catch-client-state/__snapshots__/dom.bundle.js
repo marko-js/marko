@@ -1,6 +1,6 @@
 // tags/panel.marko
 const $catch_content__text = ($scope, text) => _text($scope.b, text);
-const $catch_content__input_label__OR__err_message = /*@__PURE__*/ _fill_join_subscribers("b8", 3, /*@__PURE__*/ _or_resume("b1", 6, ($scope) => $catch_content__text($scope, `${$scope._.d}: ${$scope.f}`)), 5, 0);
+const $catch_content__input_label__OR__err_message = /*@__PURE__*/ _fill_signal("3 b8", /*@__PURE__*/ _or_resume("b1", 6, ($scope) => $catch_content__text($scope, `${$scope._.d}: ${$scope.f}`)), _closure_subscribers, 5, 0);
 const $catch_content__input_label = /*@__PURE__*/ _closure_get(5, $catch_content__input_label__OR__err_message, 0, "b3");
 const $catch_content__n = /*@__PURE__*/ _fill_let("b2", 7, ($scope) => _text($scope.c, $scope.h));
 const $catch_content__setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {

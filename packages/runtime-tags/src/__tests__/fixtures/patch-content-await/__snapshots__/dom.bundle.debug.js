@@ -12,11 +12,11 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $await_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_value#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _closure_get("input_value/5", ($scope) => _text($scope["#text/0"], $scope._._._.input_value), ($scope) => $scope._._._), 1));
+const $await_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_value#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _closure_get("input_value/5", ($scope) => _text($scope["#text/0"], $scope._._._.input_value), ($scope) => $scope._._._), 1));
 const $await_content__setup = $await_content__input_value;
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ", $await_content__setup);
 const $card_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
-const $card_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_value#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _closure_get("input_value/5", ($scope) => $card_content__await_promise($scope, Promise.resolve($scope._._.input_value)), ($scope) => $scope._._), 0));
+const $card_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_value#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _closure_get("input_value/5", ($scope) => $card_content__await_promise($scope, Promise.resolve($scope._._.input_value)), ($scope) => $scope._._), 0));
 const $card_content__setup = ($scope) => {
 	$card_content__input_value($scope);
 	$await_content($scope);

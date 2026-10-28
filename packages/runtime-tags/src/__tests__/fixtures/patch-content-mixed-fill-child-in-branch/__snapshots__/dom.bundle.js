@@ -6,7 +6,7 @@ const $valueChange = ($scope) => function(next) {
 _resumed.c0 = $valueChange;
 
 // tags/counter.marko
-const $input_base__OR__tick = /*@__PURE__*/ _fill_join("d1", 4, /*@__PURE__*/ _or(6, ($scope) => _text($scope.b, $scope.e + $scope.f)));
+const $input_base__OR__tick = /*@__PURE__*/ _fill_signal("4 d1", /*@__PURE__*/ _or(6, ($scope) => _text($scope.b, $scope.e + $scope.f)));
 const $tick = /*@__PURE__*/ _fill_let("d2", 5, $input_base__OR__tick);
 const $setup__script$1 = _script("d0", ($scope) => _on($scope.a, "click", function() {
 	$tick($scope, +$scope.f + 1);
@@ -16,7 +16,7 @@ const $input_base = /*@__PURE__*/ _const(4, $input_base__OR__tick);
 // page.marko
 const $aside_content__live = /*@__PURE__*/ _init_resume("a5", /*@__PURE__*/ _closure_get(10, ($scope) => $input_base($scope.a, $scope._.j)));
 const $live = /*@__PURE__*/ _const(9, /* @__PURE__ */ _closure($aside_content__live));
-const $input_base__OR__bonus = /*@__PURE__*/ _fill_join("a3", 6, /*@__PURE__*/ _or(8, ($scope) => $live($scope, $scope.h ?? $scope.g), 1, 1));
+const $input_base__OR__bonus = /*@__PURE__*/ _fill_signal("6 a3", /*@__PURE__*/ _or(8, ($scope) => $live($scope, $scope.h ?? $scope.g), 1, 1));
 const $bonus = _var_resume("a0", /*@__PURE__*/ _const(7, $input_base__OR__bonus));
 const $setup__script = _script("a2", ($scope) => _on($scope.c, "click", function() {
 	_var_change($scope.a, 5);

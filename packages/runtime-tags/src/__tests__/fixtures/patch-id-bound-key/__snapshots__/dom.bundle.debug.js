@@ -28,7 +28,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $for_content2__if = /*@__PURE__*/ _if("#text/0", "<span>Seen <!></span><button>+</button>", "Db%l ", $if_content__setup);
-const $for_content2__input_show = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_show#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _closure_get("input_show/6", ($scope) => $for_content2__if($scope, $scope._._.input_show && $scope["#LoopKey"] === $scope._["#LoopKey"] ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_show#0:4/subscribe"), 0));
+const $for_content2__input_show = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_show#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _closure_get("input_show/6", ($scope) => $for_content2__if($scope, $scope._._.input_show && $scope["#LoopKey"] === $scope._["#LoopKey"] ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_input_show#0:4/subscribe"), 0));
 const $for_content2__setup = $for_content2__input_show;
 const $for_content__for = /*@__PURE__*/ _for_of("#text/7", "<!><!><!>", "b%", $for_content2__setup);
 const $for_content__input_keys = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_keys#0:3/init", /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__for($scope, [$scope._.input_keys.toReversed(), (n) => n])));

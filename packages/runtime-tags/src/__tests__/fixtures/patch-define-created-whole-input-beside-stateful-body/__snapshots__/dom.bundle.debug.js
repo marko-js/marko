@@ -33,10 +33,10 @@ const $Panel_content__$params = ($scope, $params2) => $Panel_content__tag_input(
 const $Panel_content__attrs_item = /*@__PURE__*/ _const("attrs_item", $if_content2__attrs_item);
 const $Panel_content = _content("__tests__/template.marko_1*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "Tag", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0,Tag __tests__/template.marko_fill1", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
 	isOpen: !$scope.open,
 	item: attrTag({ label: $scope.input_label + "!" })
-})), 2)));
+})), 2));
 const $open = /*@__PURE__*/ _let("open/8", $input_label__OR__open__OR__Tag);
 const $Tag = /*@__PURE__*/ _const("Tag", $input_label__OR__open__OR__Tag);
 const $input_other__OR__Panel = /*@__PURE__*/ _or(10, ($scope) => $Tag($scope, $scope.input_other ? "div" : $scope.Panel));

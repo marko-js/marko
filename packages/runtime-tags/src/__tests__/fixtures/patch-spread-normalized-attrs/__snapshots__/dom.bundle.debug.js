@@ -2,7 +2,7 @@
 const $template = "<button class=inc> </button><div>x</div><!><input>";
 const $walks = " D l b%b b";
 const $if_content__input_link__script = _script("__tests__/template.marko_1_input_link#0:9", ($scope) => _attrs_script($scope, "#a/0"));
-const $if_content__input_link = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_link#0:9/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_link", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => {
+const $if_content__input_link = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_link#0:9/init", /*@__PURE__*/ _fill_signal("input_link __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => {
 	$if_content__input_link__script($scope);
 	_attrs($scope, "#a/0", $scope._.input_link);
 })));

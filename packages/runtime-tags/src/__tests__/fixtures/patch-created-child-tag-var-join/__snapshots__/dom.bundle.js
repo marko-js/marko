@@ -8,7 +8,7 @@ _resumed.d0 = $valueChange;
 
 // tags/file-tabs.marko
 const $tabs = /*@__PURE__*/ _fill_let_change("e4", 7, ($scope) => _text($scope.a, $scope.h.map((tab) => tab.path).join()));
-const $input_files__OR__input_filesChange = /*@__PURE__*/ _fill_join("e2", 5, /*@__PURE__*/ _fill_join("e1", 4, /*@__PURE__*/ _or_resume("e3", 6, ($scope) => $tabs($scope, $scope.e, $scope.f))));
+const $input_files__OR__input_filesChange = /*@__PURE__*/ _fill_signal("4 e1,5 e2", /*@__PURE__*/ _or_resume("e3", 6, ($scope) => $tabs($scope, $scope.e, $scope.f)));
 const $input_files$1 = /*@__PURE__*/ _const(4, $input_files__OR__input_filesChange);
 const $setup__script = _script("e0", ($scope) => _on($scope.b, "click", function() {
 	$tabs($scope, [...$scope.h, { path: "b" }]);

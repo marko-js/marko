@@ -2,7 +2,7 @@
 const $template$2 = "<button class=toggle>toggle</button><!><!>";
 const $walks$2 = " b%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/keeper.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill_signal("input_content __tests__/tags/keeper.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
 const $if_content__setup$1 = $if_content__input_content;
 const $if$1 = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup$1);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/keeper.marko_fill1", "open/5", ($scope) => $if$1($scope, $scope.open ? 0 : 1));
@@ -22,7 +22,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $await_content__input_content__OR__x = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/card.marko_fill0/unpatched", "input_content", /*@__PURE__*/ _or_resume("__tests__/tags/card.marko_2_input_content#0:4_x#2/init", 3, ($scope) => $await_content__dynamicTag($scope, $scope.x ? keeper_default : "div", ($_) => ({ content: $scope._._.input_content }))), "input_content/6", 0);
+const $await_content__input_content__OR__x = /*@__PURE__*/ _fill_signal("input_content __tests__/tags/card.marko_fill0/unpatched", /*@__PURE__*/ _or_resume("__tests__/tags/card.marko_2_input_content#0:4_x#2/init", 3, ($scope) => $await_content__dynamicTag($scope, $scope.x ? keeper_default : "div", ($_) => ({ content: $scope._._.input_content }))), _closure_subscribers, "input_content/6", 0);
 const $await_content__input_content = /*@__PURE__*/ _closure_get("input_content/6", $await_content__input_content__OR__x, ($scope) => $scope._._, "__tests__/tags/card.marko_2_input_content#0:4/subscribe");
 const $await_content__setup = $await_content__input_content;
 const $await_content__x = /*@__PURE__*/ _const("x", $await_content__input_content__OR__x);
@@ -51,12 +51,12 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = "<main><!></main>";
 const $walks = "D%l";
 const $setup = ($_) => {};
-const $inputonCarddiv_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:6/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill2", "input_note", /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:6/subscribe"), 0));
+const $inputonCarddiv_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:6/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill2", "input_note", /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:6/subscribe"), 0));
 const $inputonCarddiv_content__setup = $inputonCarddiv_content__input_note;
 const $inputonCarddiv_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $inputonCarddiv_content__setup);
 _content_resume($inputonCarddiv_content);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputonCarddiv_content);
-const $input_on__OR__input_p = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_p", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_on", /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_on ? card_default : "div", ($_) => ({ p: $scope.input_on && $scope.input_p })))));
+const $input_on__OR__input_p = /*@__PURE__*/ _fill_signal("input_on __tests__/template.marko_fill0,input_p __tests__/template.marko_fill1", /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_on ? card_default : "div", ($_) => ({ p: $scope.input_on && $scope.input_p }))));
 const $input_on = /*@__PURE__*/ _const("input_on", $input_on__OR__input_p);
 const $input_p = /*@__PURE__*/ _const("input_p", $input_on__OR__input_p);
 const $input = ($scope, input) => {

@@ -2,14 +2,14 @@
 const $template = "<main><h1> </h1><!></main>";
 const $walks = "E l%l";
 const $setup = ($_) => {};
-const $if_content__input_href = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_href#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_href", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _attr($scope["#a/0"], "href", $scope._.input_href))));
+const $if_content__input_href = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_href#0:6/init", /*@__PURE__*/ _fill_signal("input_href __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _attr($scope["#a/0"], "href", $scope._.input_href))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_href._($scope);
 	$if_content__input_hidden._($scope);
 	$if_content__input_label._($scope);
 };
-const $if_content__input_hidden = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_hidden#0:7/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_hidden", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _attr($scope["#a/0"], "hidden", $scope._.input_hidden))));
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:8/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.input_label))));
+const $if_content__input_hidden = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_hidden#0:7/init", /*@__PURE__*/ _fill_signal("input_hidden __tests__/template.marko_fill1", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _attr($scope["#a/0"], "hidden", $scope._.input_hidden))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:8/init", /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill2", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.input_label))));
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $if = /*@__PURE__*/ _if("#text/1", "<a> </a>", " D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

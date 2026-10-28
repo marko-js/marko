@@ -24,12 +24,12 @@ const UPGRADES = [{
 	parts: ["y"]
 }];
 const $for_content2__live = ($scope, live) => _attr_class_item($scope["#span/0"], "short", live < 2);
-const $for_content2__proj__OR__now__OR__have = /*@__PURE__*/ _fill_join("__tests__/shop.marko_fill1", "proj", /*@__PURE__*/ _or_resume("__tests__/shop.marko_3_proj#0:7_now#0:8_have#6/init", 7, ($scope) => $for_content2__live($scope, $scope.have + $scope._._._.now * $scope._._._.proj), 2), ($join) => /*@__PURE__*/ _for_closure("#text/3", /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $join))));
+const $for_content2__proj__OR__now__OR__have = /*@__PURE__*/ _fill_signal("proj __tests__/shop.marko_fill1", /*@__PURE__*/ _or_resume("__tests__/shop.marko_3_proj#0:7_now#0:8_have#6/init", 7, ($scope) => $for_content2__live($scope, $scope.have + $scope._._._.now * $scope._._._.proj), 2), ($signal) => /*@__PURE__*/ _for_closure("#text/3", /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $signal))));
 const $for_content2__have = /*@__PURE__*/ _const("have", ($scope) => {
 	_text($scope["#text/2"], $scope.have);
 	$for_content2__proj__OR__now__OR__have($scope);
 });
-const $for_content2__p__OR__drops__OR__part = /*@__PURE__*/ _fill_join("__tests__/shop.marko_fill0", "p", /*@__PURE__*/ _or_resume("__tests__/shop.marko_3_p#0:4_drops#0:9_part#4/init", 5, ($scope) => $for_content2__have($scope, withDrops(bankCount($scope._._._.p, $scope.part), $scope._._._.drops, $scope.part)), 2), ($join2) => /*@__PURE__*/ _for_closure("#text/3", /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $join2))));
+const $for_content2__p__OR__drops__OR__part = /*@__PURE__*/ _fill_signal("p __tests__/shop.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/shop.marko_3_p#0:4_drops#0:9_part#4/init", 5, ($scope) => $for_content2__have($scope, withDrops(bankCount($scope._._._.p, $scope.part), $scope._._._.drops, $scope.part)), 2), ($signal2) => /*@__PURE__*/ _for_closure("#text/3", /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $signal2))));
 const $for_content2__p = /*@__PURE__*/ _closure_get("p/10", $for_content2__p__OR__drops__OR__part, ($scope) => $scope._._._);
 const $for_content2__setup = ($scope) => {
 	$for_content2__p($scope);

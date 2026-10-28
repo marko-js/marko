@@ -2,7 +2,7 @@
 const $template$1 = "<ul></ul>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $for_content__input_suffix = /*@__PURE__*/ _init_resume("__tests__/tags/list/index.marko_1_input_suffix#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/list/index.marko_fill0", "input_suffix", /*@__PURE__*/ _for_closure("#ul/0", ($scope) => _text($scope["#text/1"], $scope._.input_suffix))));
+const $for_content__input_suffix = /*@__PURE__*/ _init_resume("__tests__/tags/list/index.marko_1_input_suffix#0:4/init", /*@__PURE__*/ _fill_signal("input_suffix __tests__/tags/list/index.marko_fill0", /*@__PURE__*/ _for_closure("#ul/0", ($scope) => _text($scope["#text/1"], $scope._.input_suffix))));
 const $for_content__setup = $for_content__input_suffix;
 const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);

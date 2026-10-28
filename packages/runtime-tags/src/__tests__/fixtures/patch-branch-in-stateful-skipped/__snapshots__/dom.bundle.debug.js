@@ -3,10 +3,10 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_content__OR__input_label__OR__input_items = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill2", "input_items", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "input_content", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_0_input_content#3_input_label#4_input_items#5/init", 6, ($scope) => $dynamicTag($scope, $scope.input_content, ($_) => ({
+const $input_content__OR__input_label__OR__input_items = /*@__PURE__*/ _fill_signal("input_content __tests__/tags/panel.marko_fill0,input_label __tests__/tags/panel.marko_fill1,input_items __tests__/tags/panel.marko_fill2", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_0_input_content#3_input_label#4_input_items#5/init", 6, ($scope) => $dynamicTag($scope, $scope.input_content, ($_) => ({
 	label: $scope.input_label,
 	items: $scope.input_items
-})), 2))));
+})), 2));
 const $input_content = /*@__PURE__*/ _const("input_content", $input_content__OR__input_label__OR__input_items);
 const $input_label$1 = /*@__PURE__*/ _const("input_label", $input_content__OR__input_label__OR__input_items);
 const $input_items$1 = /*@__PURE__*/ _const("input_items", $input_content__OR__input_label__OR__input_items);

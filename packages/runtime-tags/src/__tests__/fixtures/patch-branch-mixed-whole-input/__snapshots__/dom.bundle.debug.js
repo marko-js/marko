@@ -2,7 +2,7 @@
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $if = /*@__PURE__*/ _if("#text/0", "<p>ok</p>");
-const $input__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input", /*@__PURE__*/ _or(5, ($scope) => $if($scope, $scope.input && $scope.count > 1 ? 0 : 1)));
+const $input__OR__count = /*@__PURE__*/ _fill_signal("input __tests__/template.marko_fill0", /*@__PURE__*/ _or(5, ($scope) => $if($scope, $scope.input && $scope.count > 1 ? 0 : 1)));
 const $count = /*@__PURE__*/ _let("count/4", $input__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.count + 1);

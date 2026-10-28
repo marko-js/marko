@@ -15,7 +15,7 @@ const $if_content2__setup = _script("a10", ($scope) => console.log("nested setup
 const $for_content__item__script = _script("a2", ($scope) => console.log("row setup", $scope.c));
 const $Body_content__setup = _script("a1", ($scope) => console.log("define setup"));
 const $inputtag_content__for = /*@__PURE__*/ _for_of_unkeyed(1, 0, 0, 0, $for_content3__$params);
-const $inputtag_content__input_items = /*@__PURE__*/ _init_resume("a16", /*@__PURE__*/ _fill_join_closure("a25", 6, /*@__PURE__*/ _closure_get(10, ($scope) => $inputtag_content__for($scope, [$scope._._.g]), ($scope) => $scope._._, "a17"), 1));
+const $inputtag_content__input_items = /*@__PURE__*/ _init_resume("a16", /*@__PURE__*/ _fill_closure("a25", 6, /*@__PURE__*/ _closure_get(10, ($scope) => $inputtag_content__for($scope, [$scope._._.g]), ($scope) => $scope._._, "a17"), 1));
 const $inputtag_content__setup__script = _script("a15", ($scope) => console.log("tag body setup"));
 const $inputtag_content__setup = ($scope) => {
 	$inputtag_content__input_items($scope);

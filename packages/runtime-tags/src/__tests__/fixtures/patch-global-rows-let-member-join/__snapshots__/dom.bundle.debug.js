@@ -30,7 +30,7 @@ const $for_content__item = ($scope, item) => {
 const $for_content__item_name = ($scope, item_name) => _text($scope["#text/0"], item_name);
 const $for_content__item_value = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "item_value");
 const $for_content__row_item = $for_content__item;
-const $for_content__item_value__OR__qty = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "item_value", ($scope) => _text($scope["#text/2"], $scope.qty * $scope.item_value));
+const $for_content__item_value__OR__qty = /*@__PURE__*/ _fill_signal("item_value __tests__/template.marko_fill0", ($scope) => _text($scope["#text/2"], $scope.qty * $scope.item_value));
 const $for_content__qty = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "qty/10", ($scope) => {
 	$input_value($scope["#childScope/1"], $scope.qty);
 	$for_content__item_value__OR__qty($scope);

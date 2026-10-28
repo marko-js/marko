@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><h1> </h1><!><button>+</button></main>";
 const $walks = "E l%b l";
-const $for_content2__input_suffix__OR__count = /*@__PURE__*/ _fill_join_for("__tests__/template.marko_fill0", "input_suffix", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_suffix#0:7_count#0:8/init", 1, ($scope) => _text($scope["#text/0"], $scope["#LoopKey"] + ":" + $scope._._.input_suffix + "@" + $scope._._.count)), "#text/1", "#text/0");
+const $for_content2__input_suffix__OR__count = /*@__PURE__*/ _fill_signal("input_suffix __tests__/template.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_suffix#0:7_count#0:8/init", 1, ($scope) => _text($scope["#text/0"], $scope["#LoopKey"] + ":" + $scope._._.input_suffix + "@" + $scope._._.count)), ($signal) => /*@__PURE__*/ _for_closure("#text/1", /*@__PURE__*/ _for_closure("#text/0", $signal)));
 const $for_content2__input_suffix = /*@__PURE__*/ _closure_get("input_suffix/9", $for_content2__input_suffix__OR__count, ($scope) => $scope._._, "__tests__/template.marko_2_input_suffix#0:7/subscribe");
 const $for_content2__setup = ($scope) => {
 	$for_content2__input_suffix($scope);

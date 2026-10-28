@@ -10,13 +10,13 @@ const $if_content2__setup = ($scope) => {
 	$if_content2__setup__script($scope);
 };
 const $if_content__v = /*@__PURE__*/ _const("v", $if_content2__v);
-const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_a#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__v($scope, $scope._.input_a))));
+const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_a#0:5/init", /*@__PURE__*/ _fill_signal("input_a __tests__/tags/panel.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__v($scope, $scope._.input_a))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);
 	$if_content__input_y._($scope);
 };
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<button class=read> </button>", " D ", $if_content2__setup);
-const $if_content__input_y = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_y#0:6/init", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill1", "input_y", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_y ? 0 : 1))));
+const $if_content__input_y = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_y#0:6/init", /*@__PURE__*/ _fill_signal("input_y __tests__/tags/panel.marko_fill1", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_y ? 0 : 1))));
 const $out = /*@__PURE__*/ _let("out/7", ($scope) => _text($scope["#text/1"], $scope.out));
 function $setup$1($scope) {
 	$out($scope, "");

@@ -51,7 +51,7 @@ const $inputloadedLoadedsection_content__setup = ($scope) => {
 const $inputloadedLoadedsection_content = _content("__tests__/template.marko_4*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $inputloadedLoadedsection_content__setup);
 _content_resume($inputloadedLoadedsection_content);
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputloadedLoadedsection_content);
-const $await_content__input_loaded__OR__ready = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0/unpatched", "input_loaded", /*@__PURE__*/ _or_resume("__tests__/template.marko_3_input_loaded#0:4_ready#2/init", 3, ($scope) => $await_content__dynamicTag($scope, $scope._._._.input_loaded ? loaded_default : "section", ($_) => ({ name: $scope.ready }))), "input_loaded/5", 0);
+const $await_content__input_loaded__OR__ready = /*@__PURE__*/ _fill_signal("input_loaded __tests__/template.marko_fill0/unpatched", /*@__PURE__*/ _or_resume("__tests__/template.marko_3_input_loaded#0:4_ready#2/init", 3, ($scope) => $await_content__dynamicTag($scope, $scope._._._.input_loaded ? loaded_default : "section", ($_) => ({ name: $scope.ready }))), _closure_subscribers, "input_loaded/5", 0);
 const $await_content__input_loaded = /*@__PURE__*/ _closure_get("input_loaded/5", $await_content__input_loaded__OR__ready, ($scope) => $scope._._._, "__tests__/template.marko_3_input_loaded#0:4/subscribe");
 const $await_content__setup = $await_content__input_loaded;
 const $await_content__ready = /*@__PURE__*/ _const("ready", $await_content__input_loaded__OR__ready);

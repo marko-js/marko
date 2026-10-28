@@ -19,7 +19,7 @@ var field_default = /*@__PURE__*/ _template("__tests__/tags/field.marko", $templ
 // template.marko
 const $template = "<h1>Fields</h1><label>second</label><input><!><label>local</label><input><button>toggle</button>";
 const $walks = " b b b%b b b b";
-const $for_content__heading = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_heading#0:11/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "heading", /*@__PURE__*/ _for_closure("#text/3", ($scope) => $input_heading$1($scope["#childScope/0"], $scope._.heading))));
+const $for_content__heading = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_heading#0:11/init", /*@__PURE__*/ _fill_signal("heading __tests__/template.marko_fill0", /*@__PURE__*/ _for_closure("#text/3", ($scope) => $input_heading$1($scope["#childScope/0"], $scope._.heading))));
 const $for_content__setup = ($scope) => {
 	$for_content__heading._($scope);
 	$input_name($scope["#childScope/0"], $scope["#LoopKey"]);

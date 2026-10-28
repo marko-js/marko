@@ -2,7 +2,7 @@
 const $template$1 = "<button id=toggle>toggle</button><!><!>";
 const $walks$1 = " b%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_row__OR__input_label = /*@__PURE__*/ _fill_join_if("__tests__/tags/wrap.marko_fill1", "input_label", /*@__PURE__*/ _fill_join_if("__tests__/tags/wrap.marko_fill0", "input_row", /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.input_row, ($_) => ({ label: $scope._.input_label }))), "#text/1", 0), "#text/1", 0);
+const $if_content__input_row__OR__input_label = /*@__PURE__*/ _fill_signal("input_row __tests__/tags/wrap.marko_fill0,input_label __tests__/tags/wrap.marko_fill1", /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.input_row, ($_) => ({ label: $scope._.input_label }))), _if_closure, "#text/1", 0);
 const $if_content__input_row = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_row__OR__input_label);
 const $if_content__setup$1 = ($scope) => {
 	$if_content__input_row._($scope);
@@ -32,7 +32,7 @@ const $walks = "b%c";
 const $Row_content__label = ($scope, label) => _text($scope["#text/0"], label);
 const $Row_content__$params = ($scope, $params2) => $Row_content__label($scope, $params2[0].label);
 const $Row_content = _content("__tests__/template.marko_2*content", "<em> </em>", "D ", 0, $Row_content__$params);
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$if_content__Row._($scope);

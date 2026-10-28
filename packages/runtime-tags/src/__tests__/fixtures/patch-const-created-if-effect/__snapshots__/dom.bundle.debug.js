@@ -7,7 +7,7 @@ const $if_content__y = _fill_resume("__tests__/template.marko_fill1", /*@__PURE_
 	$if_content__n__OR__y($scope);
 	$if_content__y__script($scope);
 }));
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__y($scope, $scope._.input_label + "!"))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__y($scope, $scope._.input_label + "!"))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$if_content__n._($scope);

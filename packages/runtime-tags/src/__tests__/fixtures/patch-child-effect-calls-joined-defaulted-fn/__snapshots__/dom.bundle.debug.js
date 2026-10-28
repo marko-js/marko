@@ -8,7 +8,7 @@ const $h2__script = _script("__tests__/tags/label-view.marko_0_h#8", ($scope) =>
 });
 const $h2 = /*@__PURE__*/ _const("h", $h2__script);
 const $get = ($scope, get) => $h2($scope, get ?? $h);
-const $input_flag__OR__input_a__OR__input_b = /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill2", "input_b", /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill1", "input_a", /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill0", "input_flag", /*@__PURE__*/ _or_resume("__tests__/tags/label-view.marko_0_input_flag#3_input_a#4_input_b#5/init", 6, ($scope) => $get($scope, $scope.input_flag ? $scope.input_a : $scope.input_b), 2))));
+const $input_flag__OR__input_a__OR__input_b = /*@__PURE__*/ _fill_signal("input_flag __tests__/tags/label-view.marko_fill0,input_a __tests__/tags/label-view.marko_fill1,input_b __tests__/tags/label-view.marko_fill2", /*@__PURE__*/ _or_resume("__tests__/tags/label-view.marko_0_input_flag#3_input_a#4_input_b#5/init", 6, ($scope) => $get($scope, $scope.input_flag ? $scope.input_a : $scope.input_b), 2));
 const $input_flag = /*@__PURE__*/ _const("input_flag", $input_flag__OR__input_a__OR__input_b);
 const $input_a = /*@__PURE__*/ _const("input_a", $input_flag__OR__input_a__OR__input_b);
 const $input_b = /*@__PURE__*/ _const("input_b", $input_flag__OR__input_a__OR__input_b);

@@ -12,7 +12,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)($walks$1);
-const $if_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.input_note))));
+const $if_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:5/init", /*@__PURE__*/ _fill_signal("input_note __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.input_note))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_note._($scope);
 	$input_title($scope["#childScope/0"], "branch");

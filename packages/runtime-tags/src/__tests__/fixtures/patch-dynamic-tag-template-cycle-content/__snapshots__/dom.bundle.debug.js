@@ -3,7 +3,7 @@ const $template$3 = "<!><!><!>";
 const $walks$3 = "b%c";
 const $setup$3 = ($_) => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_1_input_content#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content))));
+const $if_content__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_1_input_content#0:4/init", /*@__PURE__*/ _fill_signal("input_content __tests__/tags/wrap.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content))));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/0", "<ul><!></ul>", "D%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
@@ -69,7 +69,7 @@ const $Card_content__node_name = ($scope, node_name) => _text($scope["#text/0"],
 const $Card_content__$params = ($scope, $params2) => $Card_content__node_name($scope, $params2[0].node?.name);
 const $Card_content = _content("__tests__/template.marko_1*content", "<b> </b>", "D ", 0, $Card_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_deep__OR__input_node__OR__Card = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_node", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_deep", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_deep ? tree_a_default : $scope.Card, ($_) => ({ node: $scope.input_node })), 2)));
+const $input_deep__OR__input_node__OR__Card = /*@__PURE__*/ _fill_signal("input_deep __tests__/template.marko_fill0,input_node __tests__/template.marko_fill1", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_deep ? tree_a_default : $scope.Card, ($_) => ({ node: $scope.input_node })), 2));
 const $Card = /*@__PURE__*/ _const("Card", $input_deep__OR__input_node__OR__Card);
 function $setup($scope) {
 	$Card($scope, { content: $Card_content($scope) });

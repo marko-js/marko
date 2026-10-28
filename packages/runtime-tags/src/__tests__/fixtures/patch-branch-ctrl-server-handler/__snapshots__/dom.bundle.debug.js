@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><button>+</button><output></output></main>";
 const $walks = "D%b l";
-const $if_content__onChange = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "onChange", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _attr_input_value($scope, "#input/0", "x", $scope._.onChange)));
+const $if_content__onChange = /*@__PURE__*/ _fill_signal("onChange __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _attr_input_value($scope, "#input/0", "x", $scope._.onChange)));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _attr_input_value_script($scope, "#input/0"));
 const $if_content__setup = ($scope) => {
 	$if_content__onChange._($scope);

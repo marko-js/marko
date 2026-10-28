@@ -20,7 +20,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!><button id=c> </button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&%b D m`)($walks$1);
-const $if_content__input_more = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_more#0:8/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_more", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => {
+const $if_content__input_more = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_more#0:8/init", /*@__PURE__*/ _fill_signal("input_more __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => {
 	const $card_input_spread = {
 		title: "fixed",
 		...$scope._.input_more

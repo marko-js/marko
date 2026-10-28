@@ -10,23 +10,23 @@ let $load_PageB_tag_input_note = /*@__PURE__*/ _load_signal_patch(($_) => import
 let $load_Layout_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:layout.marko.setup.mjs"));
 let $load_Layout_tag_input_content = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:layout.marko.input_content.mjs"), "ready:__tests__/layout.marko");
 let $load_Layout_tag_input_list = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:layout.marko.input_list.mjs"), "ready:__tests__/layout.marko");
-const $else_content2__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_4_input_note#0:6/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill2", "input_note", /*@__PURE__*/ _closure_get("input_note/10", ($scope) => $load_PageB_tag_input_note($scope["#childScope/1"], $scope._._._.input_note), ($scope) => $scope._._._), 1));
+const $else_content2__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_4_input_note#0:6/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill2", "input_note", /*@__PURE__*/ _closure_get("input_note/10", ($scope) => $load_PageB_tag_input_note($scope["#childScope/1"], $scope._._._.input_note), ($scope) => $scope._._._), 1));
 const $else_content2__setup = ($scope) => {
 	$else_content2__input_note($scope);
 	$load_PageB_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
-const $if_content__input_wide = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_wide#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_wide", /*@__PURE__*/ _closure_get("input_wide/9", ($scope) => $load_PageA_tag_input_wide($scope["#childScope/1"], $scope._._._.input_wide), ($scope) => $scope._._._), 0));
+const $if_content__input_wide = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_wide#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill1", "input_wide", /*@__PURE__*/ _closure_get("input_wide/9", ($scope) => $load_PageA_tag_input_wide($scope["#childScope/1"], $scope._._._.input_wide), ($scope) => $scope._._._), 0));
 const $if_content__setup = ($scope) => {
 	$if_content__input_wide($scope);
 	$if_content__input_note($scope);
 	$load_PageA_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
-const $if_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_note#0:6/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill2", "input_note", /*@__PURE__*/ _closure_get("input_note/10", ($scope) => $load_PageA_tag_input_note($scope["#childScope/1"], $scope._._._.input_note), ($scope) => $scope._._._), 0));
+const $if_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_note#0:6/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill2", "input_note", /*@__PURE__*/ _closure_get("input_note/10", ($scope) => $load_PageA_tag_input_note($scope["#childScope/1"], $scope._._._.input_note), ($scope) => $scope._._._), 0));
 const $Layout_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", $if_content__setup, "<!><!><!>", "b%/&", $else_content2__setup);
 const $Layout_content__input_page = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_page#0:3/init", /*@__PURE__*/ _closure_get("input_page/7", ($scope) => $Layout_content__if($scope, $scope._._.input_page === 1 ? 0 : 1), ($scope) => $scope._._));
 const $Layout_content__setup = $Layout_content__input_page;
 const $Layout_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $Layout_content__setup);
-const $else_content__input_list = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_list#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_list", /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => $load_Layout_tag_input_list($scope["#childScope/1"], $scope._.input_list))));
+const $else_content__input_list = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_list#0:4/init", /*@__PURE__*/ _fill_signal("input_list __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => $load_Layout_tag_input_list($scope["#childScope/1"], $scope._.input_list))));
 const $else_content__setup = ($scope) => {
 	$else_content__input_list._($scope);
 	$load_Layout_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);

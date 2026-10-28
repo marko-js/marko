@@ -10,7 +10,7 @@ const $setup__script = _script("b0", ($scope) => {
 const $input_value = /*@__PURE__*/ _const(6, ($scope) => _text($scope.b, $scope.g));
 
 // template.marko
-const $for_content__item_value__OR__qty = /*@__PURE__*/ _fill_join("a1", 9, ($scope) => _text($scope.c, $scope.k * $scope.j));
+const $for_content__item_value__OR__qty = /*@__PURE__*/ _fill_signal("9 a1", ($scope) => _text($scope.c, $scope.k * $scope.j));
 const $for_content__qty = /*@__PURE__*/ _fill_let("a2", 10, ($scope) => {
 	$input_value($scope.b, $scope.k);
 	$for_content__item_value__OR__qty($scope);

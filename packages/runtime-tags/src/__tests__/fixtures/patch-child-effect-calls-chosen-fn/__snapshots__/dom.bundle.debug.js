@@ -14,7 +14,7 @@ var label_default = /*@__PURE__*/ _template("__tests__/tags/label.marko", $templ
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
 const $setup = ($_) => {};
-const $input_upper__OR__up__OR__low = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "low", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "up", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_upper", /*@__PURE__*/ _or(7, ($scope) => $get($scope["#childScope/0"], $scope.input_upper ? $scope.up : $scope.low), 2))));
+const $input_upper__OR__up__OR__low = /*@__PURE__*/ _fill_signal("input_upper __tests__/template.marko_fill0,up __tests__/template.marko_fill1,low __tests__/template.marko_fill2", /*@__PURE__*/ _or(7, ($scope) => $get($scope["#childScope/0"], $scope.input_upper ? $scope.up : $scope.low), 2));
 const $up2 = /*@__PURE__*/ _const("up", $input_upper__OR__up__OR__low);
 const $low2 = /*@__PURE__*/ _const("low", $input_upper__OR__up__OR__low);
 const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => {

@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content__input_a__OR__input_b__OR__c = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1 __tests__/tags/child.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill0 __tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_a#0:4_input_b#0:5_c#1/init", 2, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b + $scope.c), 2), "#text/0", 0), "#text/0", 0);
+const $if_content__input_a__OR__input_b__OR__c = /*@__PURE__*/ _fill_signal("input_a __tests__/tags/child.marko_fill0 __tests__/tags/child.marko_fill0/unpatched,input_b __tests__/tags/child.marko_fill1 __tests__/tags/child.marko_fill1/unpatched", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_a#0:4_input_b#0:5_c#1/init", 2, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b + $scope.c), 2), _if_closure, "#text/0", 0);
 const $if_content__input_a = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_a__OR__input_b__OR__c);
 const $if_content__c = /*@__PURE__*/ _const("c", $if_content__input_a__OR__input_b__OR__c);
 const $if_content__setup__$global_g = /*@__PURE__*/ _fill_global_join("__tests__/tags/child.marko_1_$global_g#0:8", ($scope) => $if_content__c($scope, $scope.$global.g + "!"), "g");

@@ -1,6 +1,6 @@
 // tags/show-await.marko
 const $await_content__g = /*@__PURE__*/ _fill_let_change("b3", 6, ($scope) => _text($scope.a, $scope.g));
-const $await_content__input_label__OR__a = /*@__PURE__*/ _fill_join_subscribers("b7", 4, /*@__PURE__*/ _or_resume("b9", 5, ($scope) => $await_content__g($scope, $scope.e + ":" + $scope._.e, $valueChange($scope))), 5, 0);
+const $await_content__input_label__OR__a = /*@__PURE__*/ _fill_signal("4 b7", /*@__PURE__*/ _or_resume("b9", 5, ($scope) => $await_content__g($scope, $scope.e + ":" + $scope._.e, $valueChange($scope))), _closure_subscribers, 5, 0);
 const $await_content__input_label = _closure_resume("b4", /*@__PURE__*/ _closure_get(5, $await_content__input_label__OR__a));
 const $await_content__setup__script = _script("b1", ($scope) => _on($scope.b, "click", function() {
 	$await_content__g($scope, "q");

@@ -16,7 +16,7 @@ const $walks = " b";
 function link(data, id) {
 	return `/?q=${data.q}&sel=${id}`;
 }
-const $for_content__data__OR__item_id = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "item_id", /*@__PURE__*/ _or(5, ($scope) => $input_href($scope["#childScope/1"], link($scope._.data, $scope.item_id))));
+const $for_content__data__OR__item_id = /*@__PURE__*/ _fill_signal("item_id __tests__/template.marko_fill0", /*@__PURE__*/ _or(5, ($scope) => $input_href($scope["#childScope/1"], link($scope._.data, $scope.item_id))));
 const $for_content__data = /*@__PURE__*/ _for_closure("#ul/0", $for_content__data__OR__item_id);
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#li/0"], "mouseenter", function() {
 	$hovered($scope._, $scope.item_id);
@@ -26,7 +26,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__hovered._($scope);
 	$for_content__setup__script($scope);
 };
-const $for_content__hovered__OR__item_id = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "item_id", /*@__PURE__*/ _or(6, ($scope) => _attr_class_item($scope["#li/0"], "hovered", $scope._.hovered === $scope.item_id)));
+const $for_content__hovered__OR__item_id = /*@__PURE__*/ _fill_signal("item_id __tests__/template.marko_fill0", /*@__PURE__*/ _or(6, ($scope) => _attr_class_item($scope["#li/0"], "hovered", $scope._.hovered === $scope.item_id)));
 const $for_content__hovered = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_hovered#0:3/init", /*@__PURE__*/ _for_closure("#ul/0", $for_content__hovered__OR__item_id));
 const $for_content__item_id = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "item_id", ($scope) => {
 	$for_content__hovered__OR__item_id($scope);

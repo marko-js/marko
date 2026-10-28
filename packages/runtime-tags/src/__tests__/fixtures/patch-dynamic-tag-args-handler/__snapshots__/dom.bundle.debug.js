@@ -10,10 +10,10 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_tag__OR__input_title = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_title", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_tag", /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_tag, ($_) => ({
+const $input_tag__OR__input_title = /*@__PURE__*/ _fill_signal("input_tag __tests__/template.marko_fill0,input_title __tests__/template.marko_fill1", /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_tag, ($_) => ({
 	title: $scope.input_title,
 	onClick: $onClick($scope)
-})))));
+}))));
 const $input_tag = /*@__PURE__*/ _const("input_tag", $input_tag__OR__input_title);
 const $input_title = /*@__PURE__*/ _const("input_title", $input_tag__OR__input_title);
 const $input = ($scope, input) => {

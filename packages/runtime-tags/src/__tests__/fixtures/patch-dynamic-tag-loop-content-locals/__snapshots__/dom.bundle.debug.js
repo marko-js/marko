@@ -6,7 +6,7 @@ const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__tab_content = /*@__PURE__*/ _init_resume("__tests__/tags/tabs.marko_2_tab_content#1:3/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.tab_content)));
 const $if_content__setup = $if_content__tab_content;
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
-const $for_content__input_selected = /*@__PURE__*/ _init_resume("__tests__/tags/tabs.marko_1_input_selected#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/tabs.marko_fill0", "input_selected", /*@__PURE__*/ _for_selector("#text/0", "input_selected", "#LoopKey", ($scope) => $for_content__if($scope, $scope["#LoopKey"] === $scope._.input_selected ? 0 : 1))));
+const $for_content__input_selected = /*@__PURE__*/ _init_resume("__tests__/tags/tabs.marko_1_input_selected#0:4/init", /*@__PURE__*/ _fill_signal("input_selected __tests__/tags/tabs.marko_fill0", /*@__PURE__*/ _for_selector("#text/0", "input_selected", "#LoopKey", ($scope) => $for_content__if($scope, $scope["#LoopKey"] === $scope._.input_selected ? 0 : 1))));
 const $for_content__setup = $for_content__input_selected;
 const $for_content__$params = ($scope, $params2) => $for_content__tab_content($scope, $params2[0]?.content);
 const $for_content__tab_content = /*@__PURE__*/ _const("tab_content", $if_content__tab_content);

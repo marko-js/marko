@@ -1,6 +1,6 @@
 // tags/tab-editor.marko
 const $selected = /*@__PURE__*/ _let_change(6, ($scope) => _text($scope.a, String($scope.g)));
-const $input_tab__OR__input_tabChange = /*@__PURE__*/ _fill_join("c1", 4, /*@__PURE__*/ _fill_join("c0", 3, /*@__PURE__*/ _or_resume("c2", 5, ($scope) => $selected($scope, $scope.d, $scope.e))));
+const $input_tab__OR__input_tabChange = /*@__PURE__*/ _fill_signal("3 c0,4 c1", /*@__PURE__*/ _or_resume("c2", 5, ($scope) => $selected($scope, $scope.d, $scope.e)));
 const $input_tab = /*@__PURE__*/ _const(3, $input_tab__OR__input_tabChange);
 
 // tags/route-pg.marko

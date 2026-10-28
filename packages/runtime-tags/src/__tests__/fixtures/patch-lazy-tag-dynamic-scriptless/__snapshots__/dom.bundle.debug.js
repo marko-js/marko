@@ -4,7 +4,7 @@ const $walks = "D%l";
 const $setup = ($_) => {};
 const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", ($_) => import("./child.mjs").then((mod) => mod.default));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_show__OR__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_show ? Child : null, ($_) => ({ label: $scope.input_label })))));
+const $input_show__OR__input_label = /*@__PURE__*/ _fill_signal("input_show __tests__/template.marko_fill0,input_label __tests__/template.marko_fill1", /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_show ? Child : null, ($_) => ({ label: $scope.input_label }))));
 const $input_show = /*@__PURE__*/ _const("input_show", $input_show__OR__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", $input_show__OR__input_label);
 const $input = ($scope, input) => {

@@ -2,7 +2,7 @@
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $if_content__input_user = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_user#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_user", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_user$1($scope["#childScope/0"], $scope._.input_user))));
+const $if_content__input_user = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_user#0:4/init", /*@__PURE__*/ _fill_signal("input_user __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_user$1($scope["#childScope/0"], $scope._.input_user))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_user._($scope);
 	$setup$1($scope["#childScope/0"]);

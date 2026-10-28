@@ -1,6 +1,6 @@
 // tags/host.marko
 const $template = "<div></div>";
-const $extra_content__input_label = /*@__PURE__*/ _init_resume("b2", /*@__PURE__*/ _fill_join_closure("b5", 3, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.d), 0, "b3"), 0));
+const $extra_content__input_label = /*@__PURE__*/ _init_resume("b2", /*@__PURE__*/ _fill_closure("b5", 3, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.d), 0, "b3"), 0));
 const $extra_content__setup__script = _script("b1", ($scope) => console.log("child mount"));
 const $extra_content__setup = ($scope) => {
 	$extra_content__input_label($scope);
@@ -19,7 +19,7 @@ const $input_label__closure = /*@__PURE__*/ _closure($extra_content__input_label
 const $input_label = /*@__PURE__*/ _fill_const("b5", 3, $input_label__closure);
 
 // template.marko
-const $if_content__input_label = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _if_closure(1, 0, ($scope) => $input_label($scope.a, $scope._.e)));
+const $if_content__input_label = /*@__PURE__*/ _fill_signal("4 a1", /*@__PURE__*/ _if_closure(1, 0, ($scope) => $input_label($scope.a, $scope._.e)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$setup($scope.a);

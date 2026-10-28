@@ -36,7 +36,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/price-card.marko
 const $template$1 = "<section><h2> </h2><button>+</button></section>";
 const $walks$1 = "E l l";
-const $input_label__OR__qty = /*@__PURE__*/ _fill_join("__tests__/tags/price-card.marko_fill0", "input_label", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_label + " x" + $scope.qty)));
+const $input_label__OR__qty = /*@__PURE__*/ _fill_signal("input_label __tests__/tags/price-card.marko_fill0", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_label + " x" + $scope.qty)));
 const $qty = /*@__PURE__*/ _fill_let("__tests__/tags/price-card.marko_fill1", "qty/5", $input_label__OR__qty);
 const $setup__script$1 = _script("__tests__/tags/price-card.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$qty($scope, +$scope.qty + 1);
@@ -52,7 +52,7 @@ var price_card_default = /*@__PURE__*/ _template("__tests__/tags/price-card.mark
 // tags/promo-tag.marko
 const $template = "<aside> </aside><button class=promo>seen</button>";
 const $walks = "D l b";
-const $input_text__OR__seen = /*@__PURE__*/ _fill_join("__tests__/tags/promo-tag.marko_fill0", "input_text", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_text + " (" + $scope.seen + ")")));
+const $input_text__OR__seen = /*@__PURE__*/ _fill_signal("input_text __tests__/tags/promo-tag.marko_fill0", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_text + " (" + $scope.seen + ")")));
 const $seen = /*@__PURE__*/ _fill_let("__tests__/tags/promo-tag.marko_fill1", "seen/5", $input_text__OR__seen);
 const $setup__script = _script("__tests__/tags/promo-tag.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$seen($scope, +$scope.seen + 1);

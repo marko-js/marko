@@ -13,7 +13,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_x($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_signal("input_label __tests__/tags/wrap.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_x($scope["#childScope/0"], $scope._.input_label))));
 const $if_content__setup__script = _script("__tests__/tags/wrap.marko_1", ($scope) => _on($scope["#button/3"], "click", function() {
 	console.log($scope.v);
 }));

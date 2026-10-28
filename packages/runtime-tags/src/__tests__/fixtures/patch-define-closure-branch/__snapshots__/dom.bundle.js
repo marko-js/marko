@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__label = /*@__PURE__*/ _fill_join("a1", 3, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.d)));
+const $if_content__label = /*@__PURE__*/ _fill_signal("3 a1", /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.d)));
 const $Panel_content__if = /*@__PURE__*/ _if(0, "<em> </em>", "D ", $if_content__label);
 const $Panel_content__open = /*@__PURE__*/ _closure_get(6, ($scope) => $Panel_content__if($scope, $scope._.f ? 0 : 1), 0, "a2");
 const $open = /*@__PURE__*/ _let(5, /* @__PURE__ */ _closure($Panel_content__open));

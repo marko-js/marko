@@ -3,7 +3,7 @@ const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
 const $if_content__label = /*@__PURE__*/ _const("label", ($scope) => _text($scope["#text/0"], $scope.label));
-const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $if_content__label($scope, $scope._.input_title + "!"))));
+const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_signal("input_title __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $if_content__label($scope, $scope._.input_title + "!"))));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	document.querySelector("main").dataset.clicked = $scope.label;
 }));

@@ -12,7 +12,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_then__OR__input_x = /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill1", "input_x", /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill0", "input_then", /*@__PURE__*/ _or_resume("__tests__/tags/wrap.marko_0_input_then#3_input_x#4/init", 5, ($scope) => $dynamicTag($scope, $scope.input_then, ($_) => ({ x: $scope.input_x })))));
+const $input_then__OR__input_x = /*@__PURE__*/ _fill_signal("input_then __tests__/tags/wrap.marko_fill0,input_x __tests__/tags/wrap.marko_fill1", /*@__PURE__*/ _or_resume("__tests__/tags/wrap.marko_0_input_then#3_input_x#4/init", 5, ($scope) => $dynamicTag($scope, $scope.input_then, ($_) => ({ x: $scope.input_x }))));
 const $input_then = /*@__PURE__*/ _const("input_then", $input_then__OR__input_x);
 const $input_x = /*@__PURE__*/ _const("input_x", $input_then__OR__input_x);
 const $input$1 = ($scope, input) => {

@@ -16,10 +16,10 @@ const $Card_content__$params = ($scope, $params2) => {
 const $Card_content__content = /*@__PURE__*/ _const("content", $if_content__content);
 const $Card_content = _content("__tests__/tags/rowsy.marko_3*content", "<p><!><!></p>", "D%b%", 0, $Card_content__$params);
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__input_card__OR__Card__OR__Label__OR__tag = /*@__PURE__*/ _fill_join_for("__tests__/tags/rowsy.marko_fill4/unpatched", "Label", /*@__PURE__*/ _fill_join_for("__tests__/tags/rowsy.marko_fill2/unpatched", "Card", /*@__PURE__*/ _fill_join_for("__tests__/tags/rowsy.marko_fill1/unpatched", "input_card", /*@__PURE__*/ _or_resume("__tests__/tags/rowsy.marko_2_input_card#0:7_Card#0:8_Label#0:10_tag#2/init", 3, ($scope) => $for_content__dynamicTag($scope, $scope._.input_card ? $scope._.Card : "span", ($_) => ({
+const $for_content__input_card__OR__Card__OR__Label__OR__tag = /*@__PURE__*/ _fill_signal("input_card __tests__/tags/rowsy.marko_fill1/unpatched,Card __tests__/tags/rowsy.marko_fill2/unpatched,Label __tests__/tags/rowsy.marko_fill4/unpatched", /*@__PURE__*/ _or_resume("__tests__/tags/rowsy.marko_2_input_card#0:7_Card#0:8_Label#0:10_tag#2/init", 3, ($scope) => $for_content__dynamicTag($scope, $scope._.input_card ? $scope._.Card : "span", ($_) => ({
 	label: $scope.tag,
 	content: $scope._.Label
-})), 3), "#text/2"), "#text/2"), "#text/2");
+})), 3), _for_closure, "#text/2");
 const $for_content__input_card = /*@__PURE__*/ _for_closure("#text/2", $for_content__input_card__OR__Card__OR__Label__OR__tag);
 const $for_content__setup = ($scope) => {
 	$for_content__input_card._($scope);
@@ -30,7 +30,7 @@ const $for_content__Card = /*@__PURE__*/ _for_closure("#text/2", $for_content__i
 const $for_content__Label = /*@__PURE__*/ _for_closure("#text/2", $for_content__input_card__OR__Card__OR__Label__OR__tag);
 const $for_content__tag = /*@__PURE__*/ _const("tag", $for_content__input_card__OR__Card__OR__Label__OR__tag);
 const $for_content__$params = ($scope, $params3) => $for_content__tag($scope, $params3[0]);
-const $Label_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/rowsy.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/rowsy.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/11", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/tags/rowsy.marko_1_input_label#0:5/subscribe"), 0));
+const $Label_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/rowsy.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/tags/rowsy.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/11", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/tags/rowsy.marko_1_input_label#0:5/subscribe"), 0));
 const $Label_content__setup = ($scope) => {
 	$Label_content__input_label($scope);
 	$Label_content__n($scope);

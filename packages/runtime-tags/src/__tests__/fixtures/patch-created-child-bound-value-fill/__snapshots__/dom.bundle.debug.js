@@ -1,7 +1,7 @@
 // tags/text-area.marko
 const $template$1 = "<textarea></textarea>";
 const $walks$1 = " b";
-const $input_value__OR__input_valueChange = /*@__PURE__*/ _fill_join("__tests__/tags/text-area.marko_fill1", "input_valueChange", /*@__PURE__*/ _fill_join("__tests__/tags/text-area.marko_fill0", "input_value", /*@__PURE__*/ _or_resume("__tests__/tags/text-area.marko_0_input_value#3_input_valueChange#4/init", 5, ($scope) => _attr_textarea_value($scope, "#textarea/0", $scope.input_value, $scope.input_valueChange))));
+const $input_value__OR__input_valueChange = /*@__PURE__*/ _fill_signal("input_value __tests__/tags/text-area.marko_fill0,input_valueChange __tests__/tags/text-area.marko_fill1", /*@__PURE__*/ _or_resume("__tests__/tags/text-area.marko_0_input_value#3_input_valueChange#4/init", 5, ($scope) => _attr_textarea_value($scope, "#textarea/0", $scope.input_value, $scope.input_valueChange)));
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__OR__input_valueChange);
 const $input_valueChange = /*@__PURE__*/ _const("input_valueChange", $input_value__OR__input_valueChange);
 const $setup__script = _script("__tests__/tags/text-area.marko_0", ($scope) => {

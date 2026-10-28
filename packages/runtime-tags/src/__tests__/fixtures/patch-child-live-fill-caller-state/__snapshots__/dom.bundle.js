@@ -1,5 +1,5 @@
 // tags/child.marko
-const $if_content__fmt = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_join("b3", 5, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.f("x")))));
+const $if_content__fmt = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_signal("5 b3", /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.f("x")))));
 const $if_content__setup = $if_content__fmt;
 const $fmt2 = /*@__PURE__*/ _fill_const("b3", 5, $if_content__fmt);
 const $input_suffix = /*@__PURE__*/ _const(3, ($scope) => $fmt2($scope, $fmt($scope)));

@@ -12,7 +12,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$1 = "<button id=toggle>toggle</button><!><!>";
 const $walks$1 = " b%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill_signal("input_content __tests__/tags/card.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill1", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -31,7 +31,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $inputtype_content__input_depth = /*@__PURE__*/ _init_resume("__tests__/tags/heading.marko_1_input_depth#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/heading.marko_fill0", "input_depth", /*@__PURE__*/ _closure_get("input_depth/5", ($scope) => _text($scope["#text/0"], $scope._.input_depth), 0, "__tests__/tags/heading.marko_1_input_depth#0:4/subscribe"), 0));
+const $inputtype_content__input_depth = /*@__PURE__*/ _init_resume("__tests__/tags/heading.marko_1_input_depth#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/tags/heading.marko_fill0", "input_depth", /*@__PURE__*/ _closure_get("input_depth/5", ($scope) => _text($scope["#text/0"], $scope._.input_depth), 0, "__tests__/tags/heading.marko_1_input_depth#0:4/subscribe"), 0));
 const $inputtype_content__setup = $inputtype_content__input_depth;
 const $inputtype_content = _content("__tests__/tags/heading.marko_1*content", "depth <!>", "b%", $inputtype_content__setup);
 _content_resume($inputtype_content);

@@ -6,7 +6,7 @@ function boom() {
 }
 const $try_content__input_fail = /*@__PURE__*/ _init_resume("__tests__/tags/error-wrapper.marko_2_input_fail#0:4/init", /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe"));
 const $try_content__setup = $try_content__input_fail;
-const $catch_content__input_fallback = /*@__PURE__*/ _init_resume("__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/error-wrapper.marko_fill0", "input_fallback", /*@__PURE__*/ _closure_get("input_fallback/5", ($scope) => _attr_content($scope, "#div/1", $scope._.input_fallback), 0, "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe"), 0));
+const $catch_content__input_fallback = /*@__PURE__*/ _init_resume("__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/tags/error-wrapper.marko_fill0", "input_fallback", /*@__PURE__*/ _closure_get("input_fallback/5", ($scope) => _attr_content($scope, "#div/1", $scope._.input_fallback), 0, "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe"), 0));
 const $catch_content__setup = $catch_content__input_fallback;
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
@@ -28,7 +28,7 @@ var error_wrapper_default = /*@__PURE__*/ _template("__tests__/tags/error-wrappe
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&b`)("b%c");
-const $fallback_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:6/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:6/subscribe"), 0));
+const $fallback_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:6/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:6/subscribe"), 0));
 const $fallback_content__setup = ($scope) => {
 	$fallback_content__input_label($scope);
 	$fallback_content__count($scope);

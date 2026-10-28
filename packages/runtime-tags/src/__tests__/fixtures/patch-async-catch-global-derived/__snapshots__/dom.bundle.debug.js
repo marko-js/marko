@@ -3,7 +3,7 @@ const $template = "<main><!><button> </button></main>";
 const $walks = "D%b D m";
 const $await_content__value = ($scope, value) => _text($scope["#text/0"], value);
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
-const $catch_content__tag = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "tag", /*@__PURE__*/ _closure_get("tag/9", ($scope) => _text($scope["#text/0"], $scope._.tag)), 0);
+const $catch_content__tag = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "tag", /*@__PURE__*/ _closure_get("tag/9", ($scope) => _text($scope["#text/0"], $scope._.tag)), 0);
 const $catch_content__setup = $catch_content__tag;
 const $catch_content = _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $catch_content__setup);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");

@@ -1,7 +1,7 @@
 // tags/panel.marko
 const $template$1 = "<!><!><output> </output>";
 const $walks$1 = "b%bD l";
-const $for_content__f = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_2_f#0:6/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/panel.marko_fill0", "f", /*@__PURE__*/ _closure_get("f/8", ($scope) => _text($scope["#text/1"], $scope._._.f()), ($scope) => $scope._._, "__tests__/tags/panel.marko_2_f#0:6/subscribe"), 0));
+const $for_content__f = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_2_f#0:6/init", /*@__PURE__*/ _fill_closure("__tests__/tags/panel.marko_fill0", "f", /*@__PURE__*/ _closure_get("f/8", ($scope) => _text($scope["#text/1"], $scope._._.f()), ($scope) => $scope._._, "__tests__/tags/panel.marko_2_f#0:6/subscribe"), 0));
 const $for_content__setup__script = _script("__tests__/tags/panel.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$out($scope._._, $scope._._.f());
 }));

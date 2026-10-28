@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_items#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_items", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_items$1($scope["#childScope/0"], $scope._.input_items))));
+const $if_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_items#0:4/init", /*@__PURE__*/ _fill_signal("input_items __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_items$1($scope["#childScope/0"], $scope._.input_items))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_items._($scope);
 	$setup$1($scope["#childScope/0"]);
@@ -33,7 +33,7 @@ var box_default = /*@__PURE__*/ _template("__tests__/tags/box.marko", "", "", /*
 // tags/counter.marko
 const $template$2 = "<button class=tick> </button>";
 const $walks$2 = " D l";
-const $input_base__OR__tick = /*@__PURE__*/ _fill_join("__tests__/tags/counter.marko_fill0", "input_base", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/1"], $scope.input_base + $scope.tick)));
+const $input_base__OR__tick = /*@__PURE__*/ _fill_signal("input_base __tests__/tags/counter.marko_fill0", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/1"], $scope.input_base + $scope.tick)));
 const $tick = /*@__PURE__*/ _fill_let("__tests__/tags/counter.marko_fill1", "tick/5", $input_base__OR__tick);
 const $setup__script$1 = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$tick($scope, +$scope.tick + 1);
@@ -59,7 +59,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 // page.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b%c`)("");
-const $aside_content__bonus__OR__p_base__OR__item_n = /*@__PURE__*/ _fill_join_subscribers("__tests__/page.marko_fill1", "item_n", /*@__PURE__*/ _fill_join_subscribers("__tests__/page.marko_fill0", "p_base", /*@__PURE__*/ _or_resume("__tests__/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/init", 1, ($scope) => $input_base($scope["#childScope/0"], ($scope._._.bonus ?? $scope._._.p_base) + $scope._.item_n), 2), "p_base/11", 0), "item_n/12", 0);
+const $aside_content__bonus__OR__p_base__OR__item_n = /*@__PURE__*/ _fill_signal("item_n __tests__/page.marko_fill1", /*@__PURE__*/ _fill_signal("p_base __tests__/page.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/init", 1, ($scope) => $input_base($scope["#childScope/0"], ($scope._._.bonus ?? $scope._._.p_base) + $scope._.item_n), 2), _closure_subscribers, "p_base/11", 0), _closure_subscribers, "item_n/12", 0);
 const $aside_content__bonus = /*@__PURE__*/ _init_resume("__tests__/page.marko_2_bonus#0:7/init", /*@__PURE__*/ _closure_get("bonus/10", $aside_content__bonus__OR__p_base__OR__item_n, ($scope) => $scope._._));
 const $aside_content__setup = ($scope) => {
 	$aside_content__bonus($scope);

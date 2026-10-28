@@ -7,7 +7,7 @@ const $item__script = _script("__tests__/template.marko_0_item#6", ($scope) => {
 	console.log("run", JSON.stringify($scope.item));
 });
 const $item = /*@__PURE__*/ _const("item", $item__script);
-const $input_obj__OR__input_title = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_title", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_obj", /*@__PURE__*/ _or(5, ($scope) => $item($scope, $scope.input_obj ?? { t: $scope.input_title }))));
+const $input_obj__OR__input_title = /*@__PURE__*/ _fill_signal("input_obj __tests__/template.marko_fill0,input_title __tests__/template.marko_fill1", /*@__PURE__*/ _or(5, ($scope) => $item($scope, $scope.input_obj ?? { t: $scope.input_title })));
 const $input_obj = /*@__PURE__*/ _const("input_obj", $input_obj__OR__input_title);
 const $input_title = /*@__PURE__*/ _const("input_title", $input_obj__OR__input_title);
 const $input = ($scope, input) => {

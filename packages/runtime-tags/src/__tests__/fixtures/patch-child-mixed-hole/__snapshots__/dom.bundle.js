@@ -1,5 +1,5 @@
 // tags/combo/index.marko
-const $input_label__OR__input_qty = /*@__PURE__*/ _fill_join("b1", 4, /*@__PURE__*/ _fill_join("b0", 3, /*@__PURE__*/ _or_resume("b2", 5, ($scope) => _text($scope.a, $scope.d + $scope.e))));
+const $input_label__OR__input_qty = /*@__PURE__*/ _fill_signal("3 b0,4 b1", /*@__PURE__*/ _or_resume("b2", 5, ($scope) => _text($scope.a, $scope.d + $scope.e)));
 const $input_qty = /*@__PURE__*/ _const(4, $input_label__OR__input_qty);
 
 // template.marko

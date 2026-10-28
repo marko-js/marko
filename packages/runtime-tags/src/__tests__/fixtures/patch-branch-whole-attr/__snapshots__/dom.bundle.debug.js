@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $if_content__input = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _attr($scope["#p/0"], "data-all", JSON.stringify($scope._.input))));
+const $if_content__input = /*@__PURE__*/ _fill_signal("input __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _attr($scope["#p/0"], "data-all", JSON.stringify($scope._.input))));
 const $if_content__setup = $if_content__input;
 const $if = /*@__PURE__*/ _if("#text/0", "<p>x</p>", " ", $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/4", ($scope) => $if($scope, $scope.show ? 0 : 1));

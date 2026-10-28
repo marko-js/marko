@@ -2,7 +2,7 @@
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_title$1($scope["#childScope/0"], $scope._.input_title))));
+const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_signal("input_title __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_title$1($scope["#childScope/0"], $scope._.input_title))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
 	$setup$1($scope["#childScope/0"]);
@@ -27,7 +27,7 @@ var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $templ
 // tags/card.marko
 const $template = "<section class=card><h2> </h2><button class=toggle>toggle</button><!></section>";
 const $walks = "E l b%l";
-const $if_content__input_title = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_title)));
+const $if_content__input_title = /*@__PURE__*/ _fill_signal("input_title __tests__/tags/card.marko_fill0", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_title)));
 const $if_content__setup = $if_content__input_title;
 const $if = /*@__PURE__*/ _if("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill1", "open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));

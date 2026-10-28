@@ -1,5 +1,5 @@
 // template.marko
-const $await_content2__s = /*@__PURE__*/ _fill_join_closure("a1", 2, /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, $scope._.c), 0, "a0"), 0);
+const $await_content2__s = /*@__PURE__*/ _fill_closure("a1", 2, /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, $scope._.c), 0, "a0"), 0);
 const $await_content2__setup = $await_content2__s;
 const $await_content2__x = ($scope, x) => _text($scope.b, x);
 const $await_content2__$params = ($scope, $params3) => $await_content2__x($scope, $params3[0]);

@@ -4,7 +4,7 @@ const $walks$1 = " b";
 function link(data, id) {
 	return `/?q=${data.q}&sel=${id}`;
 }
-const $for_content__input_data__OR__item_id = /*@__PURE__*/ _fill_join("| __tests__/tags/feed-list.marko_fill2", "item_id", /*@__PURE__*/ _fill_join_for("__tests__/tags/feed-list.marko_fill0/unpatched", "input_data", /*@__PURE__*/ _or_resume("__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#5/init", 6, ($scope) => _attr($scope["#a/1"], "href", link($scope._.input_data, $scope.item_id))), "#ul/0"));
+const $for_content__input_data__OR__item_id = /*@__PURE__*/ _fill_signal("input_data __tests__/tags/feed-list.marko_fill0/unpatched,item_id | __tests__/tags/feed-list.marko_fill2", /*@__PURE__*/ _or_resume("__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#5/init", 6, ($scope) => _attr($scope["#a/1"], "href", link($scope._.input_data, $scope.item_id))), _for_closure, "#ul/0");
 const $for_content__input_data = /*@__PURE__*/ _for_closure("#ul/0", $for_content__input_data__OR__item_id);
 const $for_content__setup__script = _script("__tests__/tags/feed-list.marko_1", ($scope) => _on($scope["#li/0"], "click", function() {
 	$hovered($scope._, $scope.item_id);
@@ -14,7 +14,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__hovered._($scope);
 	$for_content__setup__script($scope);
 };
-const $for_content__hovered__OR__item_id = /*@__PURE__*/ _fill_join("__tests__/tags/feed-list.marko_fill2", "item_id", /*@__PURE__*/ _or(7, ($scope) => _attr_class_item($scope["#li/0"], "hovered", $scope._.hovered === $scope.item_id)));
+const $for_content__hovered__OR__item_id = /*@__PURE__*/ _fill_signal("item_id __tests__/tags/feed-list.marko_fill2", /*@__PURE__*/ _or(7, ($scope) => _attr_class_item($scope["#li/0"], "hovered", $scope._.hovered === $scope.item_id)));
 const $for_content__hovered = /*@__PURE__*/ _init_resume("__tests__/tags/feed-list.marko_1_hovered#0:5/init", /*@__PURE__*/ _for_closure("#ul/0", $for_content__hovered__OR__item_id));
 const $for_content__item_id = /*@__PURE__*/ _fill_const("__tests__/tags/feed-list.marko_fill2", "item_id", ($scope) => {
 	$for_content__hovered__OR__item_id($scope);

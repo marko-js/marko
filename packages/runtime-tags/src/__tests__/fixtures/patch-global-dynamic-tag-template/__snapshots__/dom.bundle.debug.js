@@ -9,7 +9,7 @@ var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $templ
 const $template = "<button>t</button><!><!>";
 const $walks = " b%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_plain = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_plain", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_plain ? "span" : badge_default)));
+const $if_content__input_plain = /*@__PURE__*/ _fill_signal("input_plain __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_plain ? "span" : badge_default)));
 const $if_content__setup = $if_content__input_plain;
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $open = /*@__PURE__*/ _let("open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));

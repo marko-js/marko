@@ -11,7 +11,7 @@ const $await_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 const $await_content__$params = ($scope, $params3) => $await_content__x($scope, $params3[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p> </p>", "D ");
 const $Row_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $Row_content__input_promise__OR__text = /*@__PURE__*/ _fill_join("| __tests__/tags/show-await.marko_fill0", "input_promise", /*@__PURE__*/ _or_resume("__tests__/tags/show-await.marko_1_input_promise#0:3_text#3/init", 4, ($scope) => $Row_content__await_promise($scope, $scope.text && $scope._.input_promise)));
+const $Row_content__input_promise__OR__text = /*@__PURE__*/ _fill_signal("input_promise | __tests__/tags/show-await.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/tags/show-await.marko_1_input_promise#0:3_text#3/init", 4, ($scope) => $Row_content__await_promise($scope, $scope.text && $scope._.input_promise)));
 const $Row_content__input_promise = /*@__PURE__*/ _closure_get("input_promise/5", $Row_content__input_promise__OR__text, 0, "__tests__/tags/show-await.marko_1_input_promise#0:3/subscribe");
 const $Row_content__setup = ($scope) => {
 	$Row_content__input_promise($scope);

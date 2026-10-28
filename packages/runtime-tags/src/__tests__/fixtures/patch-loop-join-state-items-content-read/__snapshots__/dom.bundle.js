@@ -1,11 +1,11 @@
 // tags/child.marko
 const $for_content__d = ($scope, d) => _text($scope.a, d);
-const $for_content__input_b__OR__item = /*@__PURE__*/ _fill_join_for("b6 | b5", 4, /*@__PURE__*/ _or_resume("b3", 3, ($scope) => $for_content__d($scope, $scope._.e + $scope.c)), 1);
+const $for_content__input_b__OR__item = /*@__PURE__*/ _fill_signal("4 b6 | b5", /*@__PURE__*/ _or_resume("b3", 3, ($scope) => $for_content__d($scope, $scope._.e + $scope.c)), _for_closure, 1);
 const $for_content__input_b = /*@__PURE__*/ _for_closure(1, $for_content__input_b__OR__item);
 const $for_content__setup = $for_content__input_b;
 const $for_content__item = /*@__PURE__*/ _const(2, $for_content__input_b__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $frag_content__input_b = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_join_closure("b5 b6", 4, /*@__PURE__*/ _closure_get(10, ($scope) => _text($scope.a, $scope._.e), 0, "b2"), 0));
+const $frag_content__input_b = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_closure("b5 b6", 4, /*@__PURE__*/ _closure_get(10, ($scope) => _text($scope.a, $scope._.e), 0, "b2"), 0));
 const $frag_content = _content$1("b0", "<i> </i>", "D ", $frag_content__input_b);
 const $input_mode__OR__frag_content = /*@__PURE__*/ _or_resume("b7", 9, ($scope) => _attr_content($scope, "a", $scope.f ? $scope.i : null));
 const $input_mode = /*@__PURE__*/ _const(5, $input_mode__OR__frag_content);

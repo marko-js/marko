@@ -8,7 +8,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-const $if_content__key__OR__o = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill3", "o", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill2", "key", /*@__PURE__*/ _or(4, ($scope) => $input$1($scope["#childScope/0"], { fn: $scope._.o[$scope._.key] })), "#text/0", 0), "#text/0", 0);
+const $if_content__key__OR__o = /*@__PURE__*/ _fill_signal("key __tests__/template.marko_fill2,o __tests__/template.marko_fill3", /*@__PURE__*/ _or(4, ($scope) => $input$1($scope["#childScope/0"], { fn: $scope._.o[$scope._.key] })), _if_closure, "#text/0", 0);
 const $if_content__key = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__key__OR__o);
 const $if_content__setup = ($scope) => {
 	$if_content__key._($scope);
@@ -18,18 +18,18 @@ const $if_content__setup = ($scope) => {
 	$if_content__tag._($scope);
 };
 const $if_content__o = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__key__OR__o);
-const $if_content__o_key = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill4", "o_key", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/3"], $scope._.o_key)));
-const $if_content__first = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill5", "first", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], { fn: $scope._.first })));
-const $if_content__tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill6", "tag", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/2"], { fn: $scope._.tag })));
+const $if_content__o_key = /*@__PURE__*/ _fill_signal("o_key __tests__/template.marko_fill4", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/3"], $scope._.o_key)));
+const $if_content__first = /*@__PURE__*/ _fill_signal("first __tests__/template.marko_fill5", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], { fn: $scope._.first })));
+const $if_content__tag = /*@__PURE__*/ _fill_signal("tag __tests__/template.marko_fill6", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/2"], { fn: $scope._.tag })));
 const $o_key = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill4", "o_key", $if_content__o_key);
 const $o2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill3", "o", ($scope) => {
 	$if_content__o($scope);
 	$o_key($scope, $scope.o.key);
 }, $if_content__o);
-const $input_title__OR__key = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "key", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _or(9, ($scope) => $o2($scope, {
+const $input_title__OR__key = /*@__PURE__*/ _fill_signal("input_title __tests__/template.marko_fill0,key __tests__/template.marko_fill2", /*@__PURE__*/ _or(9, ($scope) => $o2($scope, {
 	[$scope.key]: $o($scope),
 	key: $scope.input_title
-}))));
+})));
 const $key = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill2", "key", ($scope) => {
 	$if_content__key($scope);
 	$input_title__OR__key($scope);
@@ -37,7 +37,7 @@ const $key = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill2", "key", 
 const $input_key = $key;
 const $tag2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill6", "tag", $if_content__tag);
 const $pattern2 = ($scope, $pattern) => $first2($scope, $pattern[0]);
-const $input_title__OR__input_pre = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_pre", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _or(7, ($scope) => $pattern2($scope, [...$scope.input_pre, $first($scope)]))));
+const $input_title__OR__input_pre = /*@__PURE__*/ _fill_signal("input_title __tests__/template.marko_fill0,input_pre __tests__/template.marko_fill1", /*@__PURE__*/ _or(7, ($scope) => $pattern2($scope, [...$scope.input_pre, $first($scope)])));
 const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => {
 	$tag2($scope, $tag($scope));
 	$input_title__OR__key($scope);

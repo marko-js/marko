@@ -8,7 +8,7 @@ var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge/index.marko", 
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-const $if_content__input_tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_tag", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], $scope._.input_tag)));
+const $if_content__input_tag = /*@__PURE__*/ _fill_signal("input_tag __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], $scope._.input_tag)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_tag._($scope);
 	$input$1($scope["#childScope/0"], "x");

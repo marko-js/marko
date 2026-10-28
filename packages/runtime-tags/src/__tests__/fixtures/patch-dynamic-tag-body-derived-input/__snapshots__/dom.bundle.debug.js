@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
-const $inputtag_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_a#0:6/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _closure_get("input_a/8", ($scope) => _text($scope["#text/0"], $scope._.input_a.toUpperCase()), 0, "__tests__/template.marko_1_input_a#0:6/subscribe"), 0));
+const $inputtag_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_a#0:6/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _closure_get("input_a/8", ($scope) => _text($scope["#text/0"], $scope._.input_a.toUpperCase()), 0, "__tests__/template.marko_1_input_a#0:6/subscribe"), 0));
 const $inputtag_content__setup = $inputtag_content__input_a;
 const $inputtag_content = _content("__tests__/template.marko_1*content", " ", " ", $inputtag_content__setup);
 _content_resume($inputtag_content);

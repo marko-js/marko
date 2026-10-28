@@ -2,7 +2,7 @@
 const $template$1 = "<section></section>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/tags/card/index.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/card/index.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => {
+const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/tags/card/index.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_signal("input_title __tests__/tags/card/index.marko_fill0", /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => {
 	_attr_class($scope["#h2/0"], $scope._.input_title);
 	_text($scope["#text/1"], $scope._.input_title);
 })));
@@ -10,7 +10,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
 	$if_content__input_note._($scope);
 };
-const $if_content__input_note = /*@__PURE__*/ _init_resume("__tests__/tags/card/index.marko_1_input_note#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/card/index.marko_fill1", "input_note", /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => _text($scope["#text/2"], $scope._.input_note))));
+const $if_content__input_note = /*@__PURE__*/ _init_resume("__tests__/tags/card/index.marko_1_input_note#0:5/init", /*@__PURE__*/ _fill_signal("input_note __tests__/tags/card/index.marko_fill1", /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => _text($scope["#text/2"], $scope._.input_note))));
 const $if = /*@__PURE__*/ _if("#section/0", "<h2> </h2><p> </p>", " D lD ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {

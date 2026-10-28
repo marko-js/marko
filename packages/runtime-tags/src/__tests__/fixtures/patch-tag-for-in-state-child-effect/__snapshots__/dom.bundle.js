@@ -8,10 +8,10 @@ const $input = ($scope, input) => {
 };
 
 // tags/shape.marko
-const $if_content__input_b__OR__s__OR__v = /*@__PURE__*/ _fill_join_if("c5", 4, /*@__PURE__*/ _or_resume("c0", 1, ($scope) => $input($scope.a, {
+const $if_content__input_b__OR__s__OR__v = /*@__PURE__*/ _fill_signal("4 c5", /*@__PURE__*/ _or_resume("c0", 1, ($scope) => $input($scope.a, {
 	a: $scope._.e + $scope._._.h,
 	b: $scope._._.g
-}), 2), 0, 0);
+}), 2), _if_closure, 0, 0);
 const $if_content__input_b = _closure_resume("c1", /*@__PURE__*/ _closure_get(9, $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._));
 const $if_content__s = /*@__PURE__*/ _init_resume("c13", /*@__PURE__*/ _closure_get(10, $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._, "c2"));
 const $s = /*@__PURE__*/ _fill_let("c11", 7, /* @__PURE__ */ _closure($if_content__s));

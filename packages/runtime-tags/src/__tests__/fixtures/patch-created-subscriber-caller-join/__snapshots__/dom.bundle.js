@@ -1,5 +1,5 @@
 // tags/panel.marko
-const $if_content2__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("b8 b9", 5, /*@__PURE__*/ _fill_join_if("b6 b7", 4, /*@__PURE__*/ _or_resume("b2", 1, ($scope) => _text($scope.a, $scope._._.e + ":" + $scope._._.f)), 0, 0, 0, 0), 0, 0, 0, 0);
+const $if_content2__input_a__OR__input_b = /*@__PURE__*/ _fill_signal("4 b6 b7,5 b8 b9", /*@__PURE__*/ _or_resume("b2", 1, ($scope) => _text($scope.a, $scope._._.e + ":" + $scope._._.f)), ($signal) => /*@__PURE__*/ _if_closure(0, 0, /*@__PURE__*/ _if_closure(0, 0, $signal)));
 const $if_content2__input_a = /*@__PURE__*/ _closure_get(7, $if_content2__input_a__OR__input_b, ($scope) => $scope._._, "b0");
 const $input_a__closure = /*@__PURE__*/ _closure($if_content2__input_a);
 const $input_a = /*@__PURE__*/ _const(4, $input_a__closure);

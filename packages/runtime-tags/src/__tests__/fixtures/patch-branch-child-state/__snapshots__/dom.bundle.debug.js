@@ -2,13 +2,13 @@
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_title))));
+const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_signal("input_title __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_title))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
 	$if_content__input_start._($scope);
 	$setup$1($scope["#childScope/0"]);
 };
-const $if_content__input_start = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_start#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_start", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_start$1($scope["#childScope/0"], $scope._.input_start))));
+const $if_content__input_start = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_start#0:5/init", /*@__PURE__*/ _fill_signal("input_start __tests__/template.marko_fill1", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_start$1($scope["#childScope/0"], $scope._.input_start))));
 const $if = /*@__PURE__*/ _if("#main/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {

@@ -11,7 +11,7 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
-const $wrapper_content__count__OR__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _or(2, ($scope) => _text($scope["#text/0"], $scope.label + $scope._.count)));
+const $wrapper_content__count__OR__label = /*@__PURE__*/ _fill_signal("label __tests__/template.marko_fill0", /*@__PURE__*/ _or(2, ($scope) => _text($scope["#text/0"], $scope.label + $scope._.count)));
 const $wrapper_content__label = /*@__PURE__*/ _const("label", $wrapper_content__count__OR__label);
 const $wrapper_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _closure_get("input_label/6", ($scope) => $wrapper_content__label($scope, $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:4/subscribe"));
 const $wrapper_content__setup = ($scope) => {

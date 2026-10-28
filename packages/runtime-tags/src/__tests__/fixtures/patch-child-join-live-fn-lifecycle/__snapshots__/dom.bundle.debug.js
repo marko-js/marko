@@ -5,10 +5,10 @@ const $setup$1 = ($_) => {};
 const $input_b__OR__fmt__script = _script("__tests__/tags/child.marko_0_input_b#4_fmt#5", ($scope) => _lifecycle($scope, { onUpdate: function() {
 	console.log("update", $scope.fmt() + $scope.input_b);
 } }));
-const $input_b__OR__fmt = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill1", "fmt", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_b", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_0_input_b#4_fmt#5/init", 6, ($scope) => {
+const $input_b__OR__fmt = /*@__PURE__*/ _fill_signal("input_b __tests__/tags/child.marko_fill0,fmt __tests__/tags/child.marko_fill1", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_0_input_b#4_fmt#5/init", 6, ($scope) => {
 	_text($scope["#text/0"], $scope.fmt() + $scope.input_b);
 	$input_b__OR__fmt__script($scope);
-})));
+}));
 const $fmt2 = /*@__PURE__*/ _const("fmt", $input_b__OR__fmt);
 const $input_a$1 = /*@__PURE__*/ _const("input_a", ($scope) => $fmt2($scope, $fmt($scope)));
 const $input_b$1 = /*@__PURE__*/ _const("input_b", $input_b__OR__fmt);

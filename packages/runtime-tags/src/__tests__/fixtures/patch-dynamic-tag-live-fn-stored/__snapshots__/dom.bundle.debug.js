@@ -18,7 +18,7 @@ const $template = "<output id=out></output><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_alt__OR__fn = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "fn", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_alt", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_alt || reader_default, ($_) => ({ fn: $scope.fn })))));
+const $input_alt__OR__fn = /*@__PURE__*/ _fill_signal("input_alt __tests__/template.marko_fill0,fn __tests__/template.marko_fill1", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_alt || reader_default, ($_) => ({ fn: $scope.fn }))));
 const $fn2 = /*@__PURE__*/ _const("fn", $input_alt__OR__fn);
 const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => $fn2($scope, $fn($scope)));
 const $input_alt = /*@__PURE__*/ _const("input_alt", $input_alt__OR__fn);

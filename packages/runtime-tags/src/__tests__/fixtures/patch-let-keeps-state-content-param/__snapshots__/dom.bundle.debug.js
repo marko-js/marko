@@ -3,7 +3,7 @@ const $template$1 = "<div><!></div>";
 const $walks$1 = "D%l";
 const $setup$1 = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_content__OR__input_x = /*@__PURE__*/ _fill_join("__tests__/tags/boxp.marko_fill1", "input_x", /*@__PURE__*/ _fill_join("__tests__/tags/boxp.marko_fill0", "input_content", /*@__PURE__*/ _or_resume("__tests__/tags/boxp.marko_0_input_content#3_input_x#4/init", 5, ($scope) => $dynamicTag($scope, $scope.input_content, ($_) => ({ x: $scope.input_x })))));
+const $input_content__OR__input_x = /*@__PURE__*/ _fill_signal("input_content __tests__/tags/boxp.marko_fill0,input_x __tests__/tags/boxp.marko_fill1", /*@__PURE__*/ _or_resume("__tests__/tags/boxp.marko_0_input_content#3_input_x#4/init", 5, ($scope) => $dynamicTag($scope, $scope.input_content, ($_) => ({ x: $scope.input_x }))));
 const $input_content = /*@__PURE__*/ _const("input_content", $input_content__OR__input_x);
 const $input_x = /*@__PURE__*/ _const("input_x", $input_content__OR__input_x);
 const $input$1 = ($scope, input) => {

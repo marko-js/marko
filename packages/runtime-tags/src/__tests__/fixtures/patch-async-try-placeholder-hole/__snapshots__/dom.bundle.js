@@ -1,6 +1,6 @@
 // template.marko
 const $placeholder_content__input_title__script = _script("a0", ($scope) => console.log("placeholder shown: " + $scope._.e));
-const $placeholder_content__input_title = /*@__PURE__*/ _fill_join_closure("a8", 4, /*@__PURE__*/ _closure_get(6, ($scope) => {
+const $placeholder_content__input_title = /*@__PURE__*/ _fill_closure("a8", 4, /*@__PURE__*/ _closure_get(6, ($scope) => {
 	_text($scope.a, $scope._.e);
 	$placeholder_content__input_title__script($scope);
 }, 0, "a1"), 0);

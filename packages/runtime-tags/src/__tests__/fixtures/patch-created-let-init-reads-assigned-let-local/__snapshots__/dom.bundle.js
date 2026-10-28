@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__input_a__OR__x = /*@__PURE__*/ _fill_join_if("a5", 4, /*@__PURE__*/ _or_resume("a7", 5, ($scope) => _text($scope.d, $scope.e + $scope._.e)), 0, 0);
+const $if_content__input_a__OR__x = /*@__PURE__*/ _fill_signal("4 a5", /*@__PURE__*/ _or_resume("a7", 5, ($scope) => _text($scope.d, $scope.e + $scope._.e)), _if_closure, 0, 0);
 const $if_content__k = /*@__PURE__*/ _const(7);
 const $if_content__y__script = _script("a1", ($scope) => $scope.a.dataset.y = String($scope.g));
 const $if_content__y = /*@__PURE__*/ _let(6, ($scope) => {

@@ -5,12 +5,12 @@ const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__input_p = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_p", /*@__PURE__*/ _closure_get("input_p/8", ($scope) => $try_content__await_promise($scope, $scope._._.input_p), ($scope) => $scope._._, "__tests__/template.marko_3_input_p#0:5/subscribe"), 0);
+const $try_content__input_p = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill1", "input_p", /*@__PURE__*/ _closure_get("input_p/8", ($scope) => $try_content__await_promise($scope, $scope._._.input_p), ($scope) => $scope._._, "__tests__/template.marko_3_input_p#0:5/subscribe"), 0);
 const $try_content__setup = ($scope) => {
 	$try_content__input_p($scope);
 	$await_content($scope);
 };
-const $catch_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/7", ($scope) => _text($scope["#text/0"], $scope._._.input_title), ($scope) => $scope._._, "__tests__/template.marko_2_input_title#0:4/subscribe"), 0);
+const $catch_content__input_title = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/7", ($scope) => _text($scope["#text/0"], $scope._._.input_title), ($scope) => $scope._._, "__tests__/template.marko_2_input_title#0:4/subscribe"), 0);
 const $catch_content__setup = $catch_content__input_title;
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/1"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);

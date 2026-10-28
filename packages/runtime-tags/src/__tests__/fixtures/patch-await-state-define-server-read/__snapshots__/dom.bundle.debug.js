@@ -9,7 +9,7 @@ const $await_content__setup = ($scope) => {
 };
 const $await_content__x = ($scope, x) => $Row_content__r_v($scope["#childScope/0"], x);
 const $await_content__$params = ($scope, $params3) => $await_content__x($scope, $params3[0]);
-const $Row_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/6", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:4/subscribe"), 0);
+const $Row_content__input_label = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/6", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:4/subscribe"), 0);
 const $Row_content__setup = $Row_content__input_label;
 const $Row_content__r_v = ($scope, r_v) => _text($scope["#text/1"], r_v);
 const $Row_content__$params = ($scope, $params2) => $Row_content__r($scope, $params2[0]);

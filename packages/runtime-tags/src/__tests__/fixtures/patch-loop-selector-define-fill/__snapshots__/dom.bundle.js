@@ -1,6 +1,6 @@
 // template.marko
 const $for_content__selected__OR__flag__script = _script("a0", ($scope) => $scope.a.className = $scope._.f && $scope._.e === $scope.M ? "sel" : "");
-const $for_content__selected__OR__flag = /*@__PURE__*/ _fill_join_for("a4", 5, /*@__PURE__*/ _fill_join_for("a3", 4, /*@__PURE__*/ _or(2, $for_content__selected__OR__flag__script), 0), 0);
+const $for_content__selected__OR__flag = /*@__PURE__*/ _fill_signal("4 a3,5 a4", /*@__PURE__*/ _or(2, $for_content__selected__OR__flag__script), _for_closure, 0);
 const $for_content__selected = /*@__PURE__*/ _for_closure(0, $for_content__selected__OR__flag);
 const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);

@@ -6,7 +6,7 @@ let $load_Page1_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:page1.mark
 let $load_Page2_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:page2.marko.setup.mjs"));
 let $load_Page2_tag_input_error = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:page2.marko.input_error.mjs"), "ready:__tests__/page2.marko");
 const $if_content__setup = ($scope) => $load_Page1_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-const $else_content__input_error = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_error#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_error", /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => $load_Page2_tag_input_error($scope["#childScope/1"], $scope._.input_error))));
+const $else_content__input_error = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_error#0:4/init", /*@__PURE__*/ _fill_signal("input_error __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => $load_Page2_tag_input_error($scope["#childScope/1"], $scope._.input_error))));
 const $else_content__setup = ($scope) => {
 	$else_content__input_error._($scope);
 	$load_Page2_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);

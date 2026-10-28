@@ -49,7 +49,7 @@ const $Content_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!
 const $Content_content__items = ($scope, items) => $Content_content__for($scope, [items]);
 const $Content_content__$params = ($scope, $params2) => $Content_content__$temp($scope, $params2[0]);
 const $Content_content__$temp = ($scope, $temp) => $Content_content__items($scope, $temp.item);
-const $input_items__OR__input_record__OR__input_end = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_end", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_record", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_items", /*@__PURE__*/ _or(6, ($scope) => {
+const $input_items__OR__input_record__OR__input_end = /*@__PURE__*/ _fill_signal("input_items __tests__/template.marko_fill0,input_record __tests__/template.marko_fill1,input_end __tests__/template.marko_fill2", /*@__PURE__*/ _or(6, ($scope) => {
 	let $item;
 	forOf($scope.input_items, (item) => {
 		$item = attrTags($item, { content: $item_content($scope, { item }) });
@@ -64,7 +64,7 @@ const $input_items__OR__input_record__OR__input_end = /*@__PURE__*/ _fill_join("
 		$item = attrTags($item, { content: $item_content4($scope, { i }) });
 	});
 	$Content_content__items($scope["#childScope/0"], $item);
-}, 2))));
+}, 2));
 const $input_items = /*@__PURE__*/ _const("input_items", $input_items__OR__input_record__OR__input_end);
 const $input_record = /*@__PURE__*/ _const("input_record", $input_items__OR__input_record__OR__input_end);
 const $input_end = /*@__PURE__*/ _const("input_end", $input_items__OR__input_record__OR__input_end);

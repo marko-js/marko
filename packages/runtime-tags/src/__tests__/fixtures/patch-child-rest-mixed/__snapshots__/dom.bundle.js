@@ -2,7 +2,7 @@
 const $input = ($scope, input) => _text($scope.a, JSON.stringify(input));
 
 // template.marko
-const $input_title__OR__count = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _or(6, ($scope) => $input($scope.a, {
+const $input_title__OR__count = /*@__PURE__*/ _fill_signal("4 a1", /*@__PURE__*/ _or(6, ($scope) => $input($scope.a, {
 	value: $scope.f,
 	label: $scope.e
 })));

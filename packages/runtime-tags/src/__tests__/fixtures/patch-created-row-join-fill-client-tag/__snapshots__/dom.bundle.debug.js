@@ -16,7 +16,7 @@ var plain_let_default = /*@__PURE__*/ _template("__tests__/tags/plain-let.marko"
 // tags/row-list.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><button>+</button>`)("");
 const $walks$1 = /*@__PURE__*/ ((_w0) => `0${_w0}&b%b b`)("");
-const $if_content__input_settled__OR__bounty__OR__t = /*@__PURE__*/ _fill_join_if("__tests__/tags/row-list.marko_fill2", "t", /*@__PURE__*/ _fill_join("__tests__/tags/row-list.marko_fill1", "input_settled", /*@__PURE__*/ _or_resume("__tests__/tags/row-list.marko_2_input_settled#0:8_bounty#0:9_t#1:2/init", 1, ($scope) => _text($scope["#text/0"], $scope._.t + $scope._._.bounty + $scope._._.input_settled), 2), ($join) => /*@__PURE__*/ _for_closure("#text/2", /*@__PURE__*/ _if_closure("#text/0", 0, $join))), "#text/0", 0);
+const $if_content__input_settled__OR__bounty__OR__t = /*@__PURE__*/ _fill_signal("t __tests__/tags/row-list.marko_fill2", /*@__PURE__*/ _fill_signal("input_settled __tests__/tags/row-list.marko_fill1", /*@__PURE__*/ _or_resume("__tests__/tags/row-list.marko_2_input_settled#0:8_bounty#0:9_t#1:2/init", 1, ($scope) => _text($scope["#text/0"], $scope._.t + $scope._._.bounty + $scope._._.input_settled), 2), ($signal) => /*@__PURE__*/ _for_closure("#text/2", /*@__PURE__*/ _if_closure("#text/0", 0, $signal))), _if_closure, "#text/0", 0);
 const $if_content__input_settled = /*@__PURE__*/ _closure_get("input_settled/11", $if_content__input_settled__OR__bounty__OR__t, ($scope) => $scope._._, "__tests__/tags/row-list.marko_2_input_settled#0:8/subscribe");
 const $if_content__setup$1 = ($scope) => {
 	$if_content__input_settled($scope);
@@ -26,7 +26,7 @@ const $if_content__setup$1 = ($scope) => {
 const $if_content__bounty = /*@__PURE__*/ _init_resume("__tests__/tags/row-list.marko_2_bounty#0:9/init", /*@__PURE__*/ _closure_get("bounty/12", $if_content__input_settled__OR__bounty__OR__t, ($scope) => $scope._._, "__tests__/tags/row-list.marko_2_bounty#0:9/subscribe"));
 const $if_content__t = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_settled__OR__bounty__OR__t);
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", "D ", $if_content__setup$1);
-const $for_content__input_type = /*@__PURE__*/ _init_resume("__tests__/tags/row-list.marko_1_input_type#0:7/init", /*@__PURE__*/ _fill_join("__tests__/tags/row-list.marko_fill0", "input_type", /*@__PURE__*/ _for_closure("#text/2", ($scope) => $for_content__if($scope, $scope._.input_type ? 0 : 1))));
+const $for_content__input_type = /*@__PURE__*/ _init_resume("__tests__/tags/row-list.marko_1_input_type#0:7/init", /*@__PURE__*/ _fill_signal("input_type __tests__/tags/row-list.marko_fill0", /*@__PURE__*/ _for_closure("#text/2", ($scope) => $for_content__if($scope, $scope._.input_type ? 0 : 1))));
 const $for_content__setup = $for_content__input_type;
 const $for_content__$params = ($scope, $params2) => $for_content__t($scope, $params2[0]);
 const $for_content__t = /*@__PURE__*/ _fill_const("__tests__/tags/row-list.marko_fill2", "t", $if_content__t);

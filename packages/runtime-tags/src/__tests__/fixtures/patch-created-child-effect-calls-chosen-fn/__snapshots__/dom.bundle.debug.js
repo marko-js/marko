@@ -14,14 +14,14 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = "<main><!><p> </p></main>";
 const $walks = "D%bD m";
-const $if_content__input_x = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_x#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_x", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $label($scope["#childScope/0"], $scope._.input_x))));
+const $if_content__input_x = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_x#0:5/init", /*@__PURE__*/ _fill_signal("input_x __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $label($scope["#childScope/0"], $scope._.input_x))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_x._($scope);
 	$if_content__input_pick._($scope);
 	$if_content__fa._($scope);
 	$if_content__fb._($scope);
 };
-const $if_content__input_pick__OR__fa__OR__fb = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill1", "input_pick", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_pick#0:6_fa#0:8_fb#0:9/init", 1, ($scope) => $fn($scope["#childScope/0"], $scope._.input_pick ? $scope._.fa : $scope._.fb), 2), "#text/0", 0);
+const $if_content__input_pick__OR__fa__OR__fb = /*@__PURE__*/ _fill_signal("input_pick __tests__/template.marko_fill1", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_pick#0:6_fa#0:8_fb#0:9/init", 1, ($scope) => $fn($scope["#childScope/0"], $scope._.input_pick ? $scope._.fa : $scope._.fb), 2), _if_closure, "#text/0", 0);
 const $if_content__input_pick = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_pick__OR__fa__OR__fb);
 const $if_content__fa = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_pick__OR__fa__OR__fb);
 const $if_content__fb = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_pick__OR__fa__OR__fb);

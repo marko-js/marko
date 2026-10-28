@@ -2,7 +2,7 @@
 const $template = "<main><button>t</button><!></main>";
 const $walks = "D b%l";
 const $if_content__input_name__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_1_input_name#0:4_$global_brand#0:8", ($scope) => _text($scope["#text/1"], $scope._.input_name + ":" + _global_read($scope.$global, "brand")), "brand");
-const $if_content__input_name = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_name", /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_name__$global_brand));
+const $if_content__input_name = /*@__PURE__*/ _fill_signal("input_name __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_name__$global_brand));
 const $if_content__setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_1_$global_brand#0:8", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
 const $if_content__setup = ($scope) => {
 	$if_content__input_name._($scope);

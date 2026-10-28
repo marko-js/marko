@@ -13,7 +13,7 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputonsectionarticle_content);
-const $input_on__OR__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_on", /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_on ? "section" : "article", ($_) => ({ class: $scope.input_label })))));
+const $input_on__OR__input_label = /*@__PURE__*/ _fill_signal("input_on __tests__/template.marko_fill0,input_label __tests__/template.marko_fill1", /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_on ? "section" : "article", ($_) => ({ class: $scope.input_label }))));
 const $input_on = /*@__PURE__*/ _const("input_on", $input_on__OR__input_label);
 const $input_label__closure = /*@__PURE__*/ _closure($inputonsectionarticle_content__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {

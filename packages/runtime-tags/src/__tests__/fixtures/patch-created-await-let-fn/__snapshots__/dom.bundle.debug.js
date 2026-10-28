@@ -14,9 +14,9 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $await_content__input_label__OR__v = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:4_v#2/init", 3, ($scope) => $input_fn($scope["#childScope/0"], function() {
+const $await_content__input_label__OR__v = /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:4_v#2/init", 3, ($scope) => $input_fn($scope["#childScope/0"], function() {
 	return $scope.v + ":" + $scope._._.input_label;
-})), "input_label/5", 0);
+})), _closure_subscribers, "input_label/5", 0);
 const $await_content__input_label = /*@__PURE__*/ _closure_get("input_label/5", $await_content__input_label__OR__v, ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:4/subscribe");
 const $await_content__setup = ($scope) => {
 	$await_content__input_label($scope);

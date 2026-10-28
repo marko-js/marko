@@ -1,11 +1,11 @@
 // tags/child.marko
 const $for_content__d = ($scope, d) => _text($scope.a, d);
-const $for_content__input_b__OR__item = /*@__PURE__*/ _fill_join_for("b4 | b3", 5, /*@__PURE__*/ _or_resume("b0", 3, ($scope) => $for_content__d($scope, $scope._.f + $scope.c)), 1);
+const $for_content__input_b__OR__item = /*@__PURE__*/ _fill_signal("5 b4 | b3", /*@__PURE__*/ _or_resume("b0", 3, ($scope) => $for_content__d($scope, $scope._.f + $scope.c)), _for_closure, 1);
 const $for_content__input_b = /*@__PURE__*/ _for_closure(1, $for_content__input_b__OR__item);
 const $for_content__setup = $for_content__input_b;
 const $for_content__item = /*@__PURE__*/ _const(2, $for_content__input_b__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $if_content__input_b = /*@__PURE__*/ _fill_join("b3 b4", 5, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.f)));
+const $if_content__input_b = /*@__PURE__*/ _fill_signal("5 b3 b4", /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.f)));
 const $if = /*@__PURE__*/ _if(0, "<i> </i>", "D ", $if_content__input_b);
 const $open = /*@__PURE__*/ _fill_let("b5", 7, ($scope) => $if($scope, $scope.h ? 0 : 1));
 const $setup__script$1 = _script("b2", ($scope) => _on($scope.c, "click", function() {

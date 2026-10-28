@@ -46,7 +46,7 @@ const $Inner_content__$temp = ($scope, $temp) => {
 	$Inner_content__text($scope, $temp.text);
 };
 const $Inner_content = _content("__tests__/template.marko_2*content", $Inner_content__template, $Inner_content__walks, $Inner_content__setup, $Inner_content__$params);
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:7/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Outer_content__tag_input_label($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:7/init", /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Outer_content__tag_input_label($scope["#childScope/0"], $scope._.input_label))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$Outer_content__setup($scope["#childScope/0"]);

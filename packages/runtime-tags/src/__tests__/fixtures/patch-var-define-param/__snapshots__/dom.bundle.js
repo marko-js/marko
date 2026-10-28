@@ -5,7 +5,7 @@ const $input_title = /*@__PURE__*/ _const(3, ($scope) => {
 });
 
 // template.marko
-const $Row_content__input_suffix__OR__value = /*@__PURE__*/ _fill_join("a2", 5, /*@__PURE__*/ _fill_join_subscribers("a5", 4, /*@__PURE__*/ _or(6, ($scope) => $input_title($scope.a, $scope.f + $scope._.e)), 6, 0));
+const $Row_content__input_suffix__OR__value = /*@__PURE__*/ _fill_signal("5 a2", /*@__PURE__*/ _fill_signal("4 a5", /*@__PURE__*/ _or(6, ($scope) => $input_title($scope.a, $scope.f + $scope._.e)), _closure_subscribers, 6, 0));
 const $Row_content__label = _var_resume("a0", ($scope, label) => _text($scope.c, label));
 const $Row_content__value = /*@__PURE__*/ _const(5, $Row_content__input_suffix__OR__value);
 const $n = /*@__PURE__*/ _let(5, ($scope) => $Row_content__value($scope.a, $scope.f));

@@ -40,7 +40,7 @@ var other_default = /*@__PURE__*/ _template("__tests__/other.marko", $template$2
 const $template$1 = "<button>toggle</button><!><!>";
 const $walks$1 = " b%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_Tag__OR__input_label = /*@__PURE__*/ _fill_join_if("__tests__/tags/chooser.marko_fill1", "input_label", /*@__PURE__*/ _fill_join_if("__tests__/tags/chooser.marko_fill0", "input_Tag", /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.input_Tag, ($_) => ({ label: $scope._.input_label }))), "#text/1", 0), "#text/1", 0);
+const $if_content__input_Tag__OR__input_label = /*@__PURE__*/ _fill_signal("input_Tag __tests__/tags/chooser.marko_fill0,input_label __tests__/tags/chooser.marko_fill1", /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.input_Tag, ($_) => ({ label: $scope._.input_label }))), _if_closure, "#text/1", 0);
 const $if_content__input_Tag = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_Tag__OR__input_label);
 const $if_content__setup = ($scope) => {
 	$if_content__input_Tag._($scope);
@@ -74,7 +74,7 @@ _resumed["__tests__/other.marko"] = other_default;
 const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_which__OR__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_which", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_which ? counter_default : other_default, ($_) => ({ label: $scope.input_label })))));
+const $input_which__OR__input_label = /*@__PURE__*/ _fill_signal("input_which __tests__/template.marko_fill0,input_label __tests__/template.marko_fill1", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_which ? counter_default : other_default, ($_) => ({ label: $scope.input_label }))));
 const $input_which = /*@__PURE__*/ _const("input_which", ($scope) => {
 	$input_Tag($scope["#childScope/1"], $scope.input_which ? counter_default : other_default);
 	$input_which__OR__input_label($scope);

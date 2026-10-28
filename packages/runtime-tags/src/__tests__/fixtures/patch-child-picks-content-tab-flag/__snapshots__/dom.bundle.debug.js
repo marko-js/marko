@@ -14,7 +14,7 @@ const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
 const $tab_content2__s = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_s#0:6/init", /*@__PURE__*/ _closure_get("s/8", ($scope) => _text($scope["#text/0"], $scope._.s)));
 const $tab_content2__setup = $tab_content2__s;
 const $tab_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "B<!>", "b%", $tab_content2__setup);
-const $tab_content__input_y = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_y#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_y", /*@__PURE__*/ _closure_get("input_y/7", ($scope) => _text($scope["#text/0"], $scope._.input_y)), 0));
+const $tab_content__input_y = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_y#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_y", /*@__PURE__*/ _closure_get("input_y/7", ($scope) => _text($scope["#text/0"], $scope._.input_y)), 0));
 const $tab_content__setup = $tab_content__input_y;
 const $tab_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "A<!>", "b%", $tab_content__setup);
 const $s__closure = /*@__PURE__*/ _closure($tab_content2__s);

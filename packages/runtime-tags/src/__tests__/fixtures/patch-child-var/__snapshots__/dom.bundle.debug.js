@@ -1,7 +1,7 @@
 // tags/price-card.marko
 const $template$1 = "<div><h2> </h2><button class=bump>+</button></div>";
 const $walks$1 = "E l l";
-const $input_label__OR__qty = /*@__PURE__*/ _fill_join("__tests__/tags/price-card.marko_fill0", "input_label", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_label + " x" + $scope.qty)));
+const $input_label__OR__qty = /*@__PURE__*/ _fill_signal("input_label __tests__/tags/price-card.marko_fill0", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/0"], $scope.input_label + " x" + $scope.qty)));
 const $qty = /*@__PURE__*/ _fill_let("__tests__/tags/price-card.marko_fill1", "qty/5", ($scope) => {
 	_return($scope, $scope.qty);
 	$input_label__OR__qty($scope);

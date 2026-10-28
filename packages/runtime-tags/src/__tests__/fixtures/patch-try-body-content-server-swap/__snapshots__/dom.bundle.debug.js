@@ -12,7 +12,7 @@ const $try_content__setup = ($scope) => {
 };
 const $try_content__input_fail = /*@__PURE__*/ _init_resume("__tests__/tags/wrapper.marko_2_input_fail#0:4/init", /*@__PURE__*/ _closure_get("input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe"));
 const $catch_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $catch_content__input_content = /*@__PURE__*/ _fill_join_closure("__tests__/tags/wrapper.marko_fill0", "input_content", /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $catch_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/wrapper.marko_1_input_content#0:3/subscribe"), 0);
+const $catch_content__input_content = /*@__PURE__*/ _fill_closure("__tests__/tags/wrapper.marko_fill0", "input_content", /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $catch_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/wrapper.marko_1_input_content#0:3/subscribe"), 0);
 const $catch_content__setup = $catch_content__input_content;
 const $catch_content = _content("__tests__/tags/wrapper.marko_1*content", "<!><!><!>", "b%", $catch_content__setup);
 const $try = /*@__PURE__*/ _try("#text/0", "<p> </p><!><!>", "D l%", $try_content__setup, 0, $catch_content);
@@ -32,10 +32,10 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&b`)("b%c");
-const $B_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/11", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_2_input_label#0:5/subscribe"), 1);
+const $B_content__input_label = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/11", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_2_input_label#0:5/subscribe"), 1);
 const $B_content__setup = $B_content__input_label;
 const $B_content = _content("__tests__/template.marko_2*content", "<i>B <!></i>", "Db%", $B_content__setup);
-const $A_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/11", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0);
+const $A_content__input_label = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/11", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0);
 const $A_content__setup = $A_content__input_label;
 const $A_content = _content("__tests__/template.marko_1*content", "<em>A <!></em>", "Db%", $A_content__setup);
 const $count = /*@__PURE__*/ _let("count/7", ($scope) => {

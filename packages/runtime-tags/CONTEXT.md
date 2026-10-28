@@ -118,12 +118,6 @@ A canonical set of bindings whose shared work waits for every member in the
 current render generation. Remaining intersections lower through `_or`.
 _Avoid_: dependency array
 
-**Join**:
-Work a signal runs again when any input it reads changes: an intersection's
-(`_or`), or any signal a fill or a `$global` key re-runs, one over a single
-closure included (`_fill_join`, `$global` join). Say intersection where the
-thing is one.
-
 **Signal**:
 The translator's bucket of client work for a section, keyed by setup, one
 binding, or an intersection. Its lowered runtime function receives a scope and
@@ -163,7 +157,7 @@ A param set a template's call sites report as two bits (`paramReasonGroups`),
 built from what each write reason leaves conditional. The list is the
 template's interface to its callers, fixed at analyze exit.
 A patch template adds a group for each question its output asks of where
-existing sources update from: fills, writes, joins, var wiring
+existing sources update from: fills, writes, intersections, var wiring
 (`ensurePatchReasonGroups`), and call sites' param group sources
 (`addKnownTagReasons`).
 
@@ -363,7 +357,7 @@ scopes, which may read them; its values follow the scope's child entries on the
 wire, as their renders may read what those write. A write never sets a slot a
 value's signal sets, which would then skip its renders: a `<let>` whose renders
 read members seeds the written ones in that one value too. Where its group
-mixes, a written join the scope inits rides the scope's own `PatchKey.Init`
+mixes, a written intersection the scope inits rides the scope's own `PatchKey.Init`
 entry, created or paired.
 _Avoid_: seed block, init payload
 
@@ -453,7 +447,7 @@ A structural param, or one whose reads mix with `$global` — the value
 never leaves through an expression channel, so whoever renders must supply
 it. Translate derives which groups a patch must fill from this fact. Where a
 call site hands the param to the client, a changed `$global` key re-runs the
-join there instead: the page ships the value and subscribes the scope.
+`$global` join there instead: the page ships the value and subscribes the scope.
 _Avoid_: server-required param
 
 **`$global` join**:
@@ -493,19 +487,19 @@ _Avoid_: capture path, patch section
 
 **Patch fill**:
 A value a patch writes into a hole is a _fill_. A _patch fill_ is a
-server-sourced binding whose reads intersect client state, so patches refresh
-it through a registered fill signal. A _join fill_ is a known child's input read by a join whose other
-inputs a caller may pass client state: the section owning the join
-registers it on the join alone (`_fill_join`), and writes it only while
-another input is client-sourced (otherwise the value is a write). A written
-join takes them where each member its patch ships is a template input only it
-calls for, its scopes reached by hops; otherwise
-the scope inits it, a member only it reads rides its slot write where another
-member is client-sourced (a created scope's seed otherwise), and one filled
-for other reads registers on it with a dispatch that runs nothing. No template
-fills its value into another's param signal.
-Assigned state registers through its own declaration (`_fill_let`), which
-reaches every join that reads it, so no join registers it again.
+server-sourced binding whose reads intersect client state, so patches refresh it
+through a registered fill signal. A _join fill_ is a known child's input read by
+an intersection whose other inputs a caller may pass client state: the section
+owning the intersection registers it on the intersection alone (`_fill_signal`;
+a closure over one input, on the closure), and writes it only while another
+input is client-sourced (otherwise the value is a write). A written intersection
+takes them where each member its patch ships is a template input only it calls
+for, its scopes reached by hops; otherwise the scope inits it, a member only it
+reads rides its slot write where another member is client-sourced (a created
+scope's seed otherwise), and one filled for other reads registers on it with a
+dispatch that runs nothing. No template fills its value into another's param
+signal. Assigned state registers through its own declaration (`_fill_let`),
+which reaches every intersection that reads it, so none registers it again.
 _Avoid_: deliver/delivery, forwarder
 
 **Withheld content**:
@@ -518,25 +512,26 @@ renders its holes once per owner under the _withheld entry_
 (`PatchWithheld:<id>`), which the client applies to each live instance in the
 owner's `WithheldScopes:<id>` set (`_content_kept`).
 
-**Written join**:
-A join of two or more params, one a caller passes, whose every read the patch
-leaves to a hole it writes or an effect its entry re-runs, through any `<const>`
-of it (`isPatchWrittenJoin`); not where each call of a `<define>` body passes a
-member client state, unless a member reads another join. The patch writes it
-where its group is server-sourced on the instance; where the group mixes, its
-members' join fills re-run it, or, where some member has none (one below the
-template root or reached over subscribers, a member of two, one filled for
-other reads), the patch names the join's init on the scope, fresh or existing
-(`_patch_join_init`), and no member's fill re-runs it.
+**Written intersection**:
+An intersection of two or more params, one a caller passes, whose every read the
+patch leaves to a hole it writes or an effect its entry re-runs, through any
+`<const>` of it (`isPatchWrittenJoin`); not where each call of a `<define>` body
+passes a member client state, unless a member reads another intersection. The
+patch writes it where its group is server-sourced on the instance; where the
+group mixes, its members' join fills re-run it, or, where some member has none
+(one below the template root or reached over subscribers, a member of two, one
+filled for other reads), the patch names the intersection's init on the scope,
+fresh or existing (`_patch_join_init`), and no member's fill re-runs it.
 
 **Unpatched key**:
 A member's fill key with the `/unpatched` suffix (`getPatchFillKey`), as
-withheld content's is `/content`. Where the client may own a written join's
-structure, the member ships under it in place of its fill, slot write or
-seed. Its run re-runs the join, and it registers wherever the fill key does.
-A value a fill ships for other reads too, passed to a call in param-selected
-structure of its own (`dispatchesUnpatchedAt`), reaches that call only under
-it: a patch keeps the callee per instance where it renders the structure.
+withheld content's is `/content`. Where the client may own a written
+intersection's structure, the member ships under it in place of its fill, slot
+write or seed. Its run re-runs the intersection, and it registers wherever the
+fill key does. A value a fill ships for other reads too, passed to a call in
+param-selected structure of its own (`dispatchesUnpatchedAt`), reaches that call
+only under it: a patch keeps the callee per instance where it renders the
+structure.
 
 **Effect write / capture write**:
 Wire channels for values a patch sends that no fill consumes: an accessor write

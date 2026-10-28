@@ -3,7 +3,7 @@ const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
 const $inputonpdiv_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "x");
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputonpdiv_content);
-const $if_content__input_on__OR__count = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_on", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_on#0:5_count#0:6/init", 1, ($scope) => $if_content__dynamicTag($scope, $scope._.input_on ? "p" : "div", ($_) => ({ "data-n": $scope._.count }))), "#text/0", 0);
+const $if_content__input_on__OR__count = /*@__PURE__*/ _fill_signal("input_on __tests__/template.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_on#0:5_count#0:6/init", 1, ($scope) => $if_content__dynamicTag($scope, $scope._.input_on ? "p" : "div", ($_) => ({ "data-n": $scope._.count }))), _if_closure, "#text/0", 0);
 const $if_content__input_on = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_on__OR__count);
 const $if_content__setup = ($scope) => {
 	$if_content__input_on._($scope);

@@ -1,5 +1,5 @@
 // template.marko
-const $catch_content__input_label = /*@__PURE__*/ _init_resume("a2", /*@__PURE__*/ _fill_join_closure("a8", 3, /*@__PURE__*/ _closure_get(5, ($scope) => _attr_input_value($scope, "b", $scope._.d, $valueChange), 0, "a3"), 0));
+const $catch_content__input_label = /*@__PURE__*/ _init_resume("a2", /*@__PURE__*/ _fill_closure("a8", 3, /*@__PURE__*/ _closure_get(5, ($scope) => _attr_input_value($scope, "b", $scope._.d, $valueChange), 0, "a3"), 0));
 const $catch_content__setup__script = _script("a1", ($scope) => _attr_input_value_script($scope, "b"));
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_label($scope);

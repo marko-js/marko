@@ -13,7 +13,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__opts = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_opts#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "opts", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_opts($scope["#childScope/0"], $scope._.opts))));
+const $if_content__opts = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_opts#0:5/init", /*@__PURE__*/ _fill_signal("opts __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_opts($scope["#childScope/0"], $scope._.opts))));
 const $if_content__setup = $if_content__opts;
 const $opts2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "opts", $if_content__opts);
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => $opts2($scope, { fn: $opts($scope) }));

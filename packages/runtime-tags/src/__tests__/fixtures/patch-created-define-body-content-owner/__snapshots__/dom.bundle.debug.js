@@ -10,7 +10,7 @@ const $Wrap_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $Wrap_content2__content = $Wrap_content2__dynamicTag;
 const $Wrap_content2__$params = ($scope, $params2) => $Wrap_content2__$temp($scope, $params2[0]);
 const $Wrap_content2__$temp = ($scope, $temp) => $Wrap_content2__content($scope, $temp.content);
-const $Wrap_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/1"], $scope._._.input_label), ($scope) => $scope._._), 0));
+const $Wrap_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/1"], $scope._._.input_label), ($scope) => $scope._._), 0));
 const $Wrap_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$if_content__n($scope._, +$scope._.n + 1);
 }));

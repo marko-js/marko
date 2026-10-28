@@ -11,10 +11,10 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
-const $if_content2__label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _closure_get("label/8", ($scope) => _text($scope["#text/0"], $scope._._.label), ($scope) => $scope._._, "__tests__/template.marko_3_label#1:1/subscribe"), 0);
+const $if_content2__label = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _closure_get("label/8", ($scope) => _text($scope["#text/0"], $scope._._.label), ($scope) => $scope._._, "__tests__/template.marko_3_label#1:1/subscribe"), 0);
 const $if_content2__setup = $if_content2__label;
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content2__setup);
-const $if_content__count__OR__label = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_count#0:5_label#1:1/init", 1, ($scope) => $if_content__if($scope, $scope._._.count > 0 && $scope._.label ? 0 : 1)), "#text/0", 0);
+const $if_content__count__OR__label = /*@__PURE__*/ _fill_signal("label __tests__/template.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_count#0:5_label#1:1/init", 1, ($scope) => $if_content__if($scope, $scope._._.count > 0 && $scope._.label ? 0 : 1)), _if_closure, "#text/0", 0);
 const $if_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_count#0:5/init", /*@__PURE__*/ _closure_get("count/7", $if_content__count__OR__label, ($scope) => $scope._._, "__tests__/template.marko_2_count#0:5/subscribe"));
 const $if_content__setup = ($scope) => {
 	$if_content__count($scope);

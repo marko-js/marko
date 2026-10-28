@@ -4,7 +4,7 @@ const $List_content__template = "<ul></ul><button class=add>+</button>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button class=toggle>toggle</button>`)($List_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($List_content__walks);
 const $for_content__selected__OR__flag__script = _script("__tests__/template.marko_2_selected#1:4_flag#1:5", ($scope) => _el_read($scope["#li/0"]).className = $scope._.flag && $scope._.selected === $scope["#LoopKey"] ? "sel" : "");
-const $for_content__selected__OR__flag = /*@__PURE__*/ _fill_join_for("__tests__/template.marko_fill1", "flag", /*@__PURE__*/ _fill_join_for("__tests__/template.marko_fill0", "selected", /*@__PURE__*/ _or(2, $for_content__selected__OR__flag__script), "#ul/0"), "#ul/0");
+const $for_content__selected__OR__flag = /*@__PURE__*/ _fill_signal("selected __tests__/template.marko_fill0,flag __tests__/template.marko_fill1", /*@__PURE__*/ _or(2, $for_content__selected__OR__flag__script), _for_closure, "#ul/0");
 const $for_content__selected = /*@__PURE__*/ _for_closure("#ul/0", $for_content__selected__OR__flag);
 const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);

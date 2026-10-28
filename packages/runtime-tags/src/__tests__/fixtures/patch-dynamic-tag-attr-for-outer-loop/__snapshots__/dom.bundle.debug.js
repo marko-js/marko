@@ -25,22 +25,22 @@ var list2_default = /*@__PURE__*/ _template("__tests__/tags/list2.marko", $templ
 // template.marko
 const $template = "<button class=inc> </button><!><!>";
 const $walks = " D l%c";
-const $item_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_note#0:8/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill2", "input_note", /*@__PURE__*/ _closure_get("input_note/12", ($scope) => _text($scope["#text/2"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:8/subscribe"), 0));
+const $item_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_note#0:8/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill2", "input_note", /*@__PURE__*/ _closure_get("input_note/12", ($scope) => _text($scope["#text/2"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:8/subscribe"), 0));
 const $item_content__setup = ($scope) => {
 	$item_content__input_note($scope);
 	$item_content__a($scope);
 };
-const $item_content__a = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_a#1:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill3", "a", /*@__PURE__*/ _closure_get("a/13", ($scope) => _text($scope["#text/0"], $scope._.a), 0, "__tests__/template.marko_2_a#1:3/subscribe"), 0));
+const $item_content__a = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_a#1:3/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill3", "a", /*@__PURE__*/ _closure_get("a/13", ($scope) => _text($scope["#text/0"], $scope._.a), 0, "__tests__/template.marko_2_a#1:3/subscribe"), 0));
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!>:<!>:<!>", "%c%c%", $item_content__setup), { b: ($scope) => _text($scope["#text/1"], $scope.b) });
 _resumed["__tests__/template.marko_2*content"] = $item_content;
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__input_on__OR__input_bs = /*@__PURE__*/ _fill_join_for("__tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", "input_bs", /*@__PURE__*/ _fill_join_for("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_on", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_on#0:6_input_bs#0:7/init", 1, ($scope) => $for_content__dynamicTag($scope, $scope._.input_on ? list_default : list2_default, ($_) => {
+const $for_content__input_on__OR__input_bs = /*@__PURE__*/ _fill_signal("input_on __tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched,input_bs __tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_on#0:6_input_bs#0:7/init", 1, ($scope) => $for_content__dynamicTag($scope, $scope._.input_on ? list_default : list2_default, ($_) => {
 	let $item;
 	forOf($scope._.input_bs, (b) => {
 		$item = attrTags($item, { content: $item_content($scope, { b }) });
 	});
 	return { item: $item };
-})), "#text/2"), "#text/2");
+})), _for_closure, "#text/2");
 const $for_content__input_on = /*@__PURE__*/ _for_closure("#text/2", $for_content__input_on__OR__input_bs);
 const $for_content__setup = ($scope) => {
 	$for_content__input_on._($scope);

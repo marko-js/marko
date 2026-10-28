@@ -1,5 +1,5 @@
 // template.marko
-const $input_tone__OR__count = /*@__PURE__*/ _fill_join("a3", 5, /*@__PURE__*/ _or(8, ($scope) => _attr_class($scope.a, [
+const $input_tone__OR__count = /*@__PURE__*/ _fill_signal("5 a3", /*@__PURE__*/ _or(8, ($scope) => _attr_class($scope.a, [
 	"btn",
 	$scope.f,
 	$scope.h % 2 && "odd"

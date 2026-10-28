@@ -8,7 +8,7 @@ const $await_content__$params = ($scope, $params2) => $await_content__a($scope, 
 const $placeholder_content = _content("__tests__/template.marko_3*content", "<i>loading</i>");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<b> </b>", "D ");
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $if_content__input_fast = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_fast#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_fast", /*@__PURE__*/ _closure_get("input_fast/8", ($scope) => $if_content__await_promise($scope, $scope._._.input_fast), ($scope) => $scope._._, "__tests__/template.marko_2_input_fast#0:5/subscribe"), 0));
+const $if_content__input_fast = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_fast#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_fast", /*@__PURE__*/ _closure_get("input_fast/8", ($scope) => $if_content__await_promise($scope, $scope._._.input_fast), ($scope) => $scope._._, "__tests__/template.marko_2_input_fast#0:5/subscribe"), 0));
 const $if_content__setup = ($scope) => {
 	$if_content__input_fast($scope);
 	$await_content($scope);

@@ -15,18 +15,18 @@ const $for_content__count = /*@__PURE__*/ _init_resume("__tests__/tags/panel.mar
 const $for_content__setup = $for_content__count;
 const $for_content__row_name = ($scope, row_name) => _text($scope["#text/0"], row_name);
 const $for_content__$params = ($scope, $params2) => $for_content__row_name($scope, $params2[0]?.name);
-const $if_content__summary = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "summary", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => _text($scope["#text/0"], JSON.stringify($scope._.summary))));
+const $if_content__summary = /*@__PURE__*/ _fill_signal("summary __tests__/tags/panel.marko_fill0", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => _text($scope["#text/0"], JSON.stringify($scope._.summary))));
 const $if_content__setup = ($scope) => {
 	$if_content__summary._($scope);
 	$if_content__pending_length._($scope);
 };
-const $if_content__pending_length = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill1", "pending_length", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => _text($scope["#text/1"], $scope._.pending_length)));
+const $if_content__pending_length = /*@__PURE__*/ _fill_signal("pending_length __tests__/tags/panel.marko_fill1", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => _text($scope["#text/1"], $scope._.pending_length)));
 const $for = /*@__PURE__*/ _for_of("#text/4", "<p><!>/<!></p>", "D%c%", $for_content__setup, $for_content__$params);
 const $pending = ($scope, pending) => {
 	$pending_length($scope, pending?.length);
 	$for($scope, [pending, "id"]);
 };
-const $data__OR__summary = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "summary", /*@__PURE__*/ _or(7, ($scope) => $pending($scope, rows($scope.data, $scope.summary))));
+const $data__OR__summary = /*@__PURE__*/ _fill_signal("summary __tests__/tags/panel.marko_fill0", /*@__PURE__*/ _or(7, ($scope) => $pending($scope, rows($scope.data, $scope.summary))));
 const $summary = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill0", "summary", ($scope) => {
 	$if_content__summary($scope);
 	$data__OR__summary($scope);

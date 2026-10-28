@@ -5,7 +5,7 @@ _dynamic_tag_var_resume("#text/0");
 const $inputtype_content = _content("__tests__/template.marko_2*content", "body");
 const $el_getter = /*@__PURE__*/ _hoist("el", "BranchScopes:#text/0");
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content, ($_) => $if_content__el);
-const $if_content__input_type = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_type#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_type", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_type))));
+const $if_content__input_type = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_type#0:4/init", /*@__PURE__*/ _fill_signal("input_type __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_type))));
 const $if_content__setup = $if_content__input_type;
 const $if_content__el = _fill_var_resume("__tests__/template.marko_1_el#2/var", /*@__PURE__*/ _const("el", ($scope) => _assert_hoist($scope.el)));
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b1", $if_content__setup);

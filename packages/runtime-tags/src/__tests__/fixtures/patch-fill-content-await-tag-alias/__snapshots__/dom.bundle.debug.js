@@ -30,7 +30,7 @@ const $await_content__$params = ($scope, $params2) => $await_content__value($sco
 const $await_content__value = $await_content__w;
 const $await_content = _resumed["__tests__/tags/inner.marko_1_#text#0/init"] = /*@__PURE__*/ _await_content("#text/0", "<p> </p>", "D ");
 const $frame_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $frame_content__input_second__OR__input_first__OR__showSecond = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/inner.marko_fill1", "input_first", /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/inner.marko_fill0", "input_second", /*@__PURE__*/ _or_resume("__tests__/tags/inner.marko_1_input_second#0:4_input_first#0:5_showSecond#0:6/init", 1, ($scope) => $frame_content__await_promise($scope, $scope._.showSecond ? $scope._.input_second : $scope._.input_first), 2), "input_second/7", 0), "input_first/8", 0);
+const $frame_content__input_second__OR__input_first__OR__showSecond = /*@__PURE__*/ _fill_signal("input_second __tests__/tags/inner.marko_fill0,input_first __tests__/tags/inner.marko_fill1", /*@__PURE__*/ _or_resume("__tests__/tags/inner.marko_1_input_second#0:4_input_first#0:5_showSecond#0:6/init", 1, ($scope) => $frame_content__await_promise($scope, $scope._.showSecond ? $scope._.input_second : $scope._.input_first), 2), _closure_subscribers, "input_second/7", 0);
 const $frame_content__input_second = _closure_resume("__tests__/tags/inner.marko_1_input_second#0:4/subscribe", /*@__PURE__*/ _closure_get("input_second/7", $frame_content__input_second__OR__input_first__OR__showSecond));
 const $frame_content__setup = ($scope) => {
 	$frame_content__input_second($scope);

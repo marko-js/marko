@@ -13,7 +13,7 @@ function $setup($scope) {
 	$thing_content__setup($scope["#childScope/0"]);
 }
 const $input_n = ($scope, input_n) => $thing_content__attrs_x($scope["#childScope/0"], input_n);
-const $input_cls__OR__input_on = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_on", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_cls", /*@__PURE__*/ _or(8, ($scope) => _attr_class($scope["#div/1"], [$scope.input_cls, { on: $scope.input_on }]))));
+const $input_cls__OR__input_on = /*@__PURE__*/ _fill_signal("input_cls __tests__/template.marko_fill0,input_on __tests__/template.marko_fill1", /*@__PURE__*/ _or(8, ($scope) => _attr_class($scope["#div/1"], [$scope.input_cls, { on: $scope.input_on }])));
 const $input_cls = /*@__PURE__*/ _const("input_cls", $input_cls__OR__input_on);
 const $input_on = /*@__PURE__*/ _const("input_on", $input_cls__OR__input_on);
 const $input_color = ($scope, input_color) => _attr_style_item($scope["#div/1"], "color", input_color);

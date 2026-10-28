@@ -5,7 +5,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $Inner_content__b__$global_suffix = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_2_$global_suffix#0:16_b#5", ($scope) => _text($scope["#text/0"], $scope.b + _global_read($scope.$global, "suffix")), "suffix");
 const $Inner_content__b = /*@__PURE__*/ _const("b", $Inner_content__b__$global_suffix);
-const $Inner_content__value__OR__y = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill2", "value", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_value#1:4_y#3/init", 4, ($scope) => $Inner_content__b($scope, $scope._.value + $scope.y)), "value/6", 0);
+const $Inner_content__value__OR__y = /*@__PURE__*/ _fill_signal("value __tests__/template.marko_fill2", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_value#1:4_y#3/init", 4, ($scope) => $Inner_content__b($scope, $scope._.value + $scope.y)), _closure_subscribers, "value/6", 0);
 const $Inner_content__value = _closure_resume("__tests__/template.marko_2_value#1:4/subscribe", /*@__PURE__*/ _closure_get("value/6", $Inner_content__value__OR__y));
 const $Inner_content__setup = $Inner_content__value;
 const $Inner_content__y = /*@__PURE__*/ _const("y", $Inner_content__value__OR__y);
@@ -26,7 +26,7 @@ const $Outer_content__value__closure = /*@__PURE__*/ _closure($Inner_content__va
 const $Outer_content__value = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill2", "value", $Outer_content__value__closure);
 const $Outer_content = _content("__tests__/template.marko_1*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>inc</button>`)($Inner_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Inner_content__walks), $Outer_content__setup, $Outer_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_show__OR__input_n__OR__Outer = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_n", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_show && $scope.Outer, ($_) => ({ value: $scope.input_n })), 2)));
+const $input_show__OR__input_n__OR__Outer = /*@__PURE__*/ _fill_signal("input_show __tests__/template.marko_fill0,input_n __tests__/template.marko_fill1", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_show && $scope.Outer, ($_) => ({ value: $scope.input_n })), 2));
 const $Outer = /*@__PURE__*/ _const("Outer", $input_show__OR__input_n__OR__Outer);
 function $setup($scope) {
 	$Outer($scope, { content: $Outer_content($scope) });

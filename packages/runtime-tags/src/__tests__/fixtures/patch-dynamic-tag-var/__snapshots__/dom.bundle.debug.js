@@ -20,7 +20,7 @@ const $walks = "b1bD l";
 const $setup = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $x);
 const $x = _fill_var_resume("__tests__/template.marko_0_x#8/var", ($scope, x) => _text($scope["#text/2"], x));
-const $input_which__OR__input_a = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_a", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_which", /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_which ? one_default : two_default, ($_) => ({ a: $scope.input_a })))));
+const $input_which__OR__input_a = /*@__PURE__*/ _fill_signal("input_which __tests__/template.marko_fill0,input_a __tests__/template.marko_fill1", /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_which ? one_default : two_default, ($_) => ({ a: $scope.input_a }))));
 const $input_which = /*@__PURE__*/ _const("input_which", $input_which__OR__input_a);
 const $input_a = /*@__PURE__*/ _const("input_a", $input_which__OR__input_a);
 const $input = ($scope, input) => {

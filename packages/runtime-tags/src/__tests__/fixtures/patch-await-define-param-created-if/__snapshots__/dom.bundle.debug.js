@@ -3,7 +3,7 @@ const $Show_content__walks = "b%c";
 const $Show_content__template = "<!><!><!>";
 const $template = "<button class=open>inc</button><!><!>";
 const $walks = " b%c";
-const $await_content__label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "label", /*@__PURE__*/ _closure_get("label/9", ($scope) => _text($scope["#text/0"], $scope._.label), 0, "__tests__/template.marko_3_label#2:4/subscribe"), 0);
+const $await_content__label = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill1", "label", /*@__PURE__*/ _closure_get("label/9", ($scope) => _text($scope["#text/0"], $scope._.label), 0, "__tests__/template.marko_3_label#2:4/subscribe"), 0);
 const $await_content__setup = $await_content__label;
 const $await_content__x = ($scope, x) => _text($scope["#text/1"], x);
 const $await_content__$params = ($scope, $params3) => $await_content__x($scope, $params3[0]);
@@ -18,7 +18,7 @@ const $Show_content__$temp = ($scope, $temp) => {
 	$Show_content__p($scope, $temp.p);
 	$Show_content__tag_input_label($scope, $temp.label);
 };
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Show_content__tag_input_label($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Show_content__tag_input_label($scope["#childScope/0"], $scope._.input_label))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$if_content__n._($scope);

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>inc</button><!><!>";
 const $walks = " b%c";
-const $if_content__greeting = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "greeting", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.greeting)));
+const $if_content__greeting = /*@__PURE__*/ _fill_signal("greeting __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.greeting)));
 const $if_content__setup = ($scope) => {
 	$if_content__greeting._($scope);
 	$if_content__count._($scope);

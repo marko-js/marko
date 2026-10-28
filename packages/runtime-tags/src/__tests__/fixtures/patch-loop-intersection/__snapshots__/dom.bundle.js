@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__input_title__OR__count = /*@__PURE__*/ _fill_join_for("a2", 5, /*@__PURE__*/ _or_resume("a4", 1, ($scope) => _text($scope.a, $scope._.f + " " + $scope.M + " #" + $scope._.g)), 0);
+const $for_content__input_title__OR__count = /*@__PURE__*/ _fill_signal("5 a2", /*@__PURE__*/ _or_resume("a4", 1, ($scope) => _text($scope.a, $scope._.f + " " + $scope.M + " #" + $scope._.g)), _for_closure, 0);
 const $for_content__count = /*@__PURE__*/ _for_closure(0, $for_content__input_title__OR__count);
 const $count = /*@__PURE__*/ _let(6, $for_content__count);
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {

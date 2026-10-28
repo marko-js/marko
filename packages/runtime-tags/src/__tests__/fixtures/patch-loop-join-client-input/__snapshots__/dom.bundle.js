@@ -1,5 +1,5 @@
 // tags/child.marko
-const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_join_for("b2", 4, /*@__PURE__*/ _or_resume("b0", 3, ($scope) => _text($scope.a, $scope._.e + $scope.c)), 0);
+const $for_content__input_a__OR__item = /*@__PURE__*/ _fill_signal("4 b2", /*@__PURE__*/ _or_resume("b0", 3, ($scope) => _text($scope.a, $scope._.e + $scope.c)), _for_closure, 0);
 const $for_content__input_a = /*@__PURE__*/ _for_closure(0, $for_content__input_a__OR__item);
 const $input_a = /*@__PURE__*/ _const(4, $for_content__input_a);
 

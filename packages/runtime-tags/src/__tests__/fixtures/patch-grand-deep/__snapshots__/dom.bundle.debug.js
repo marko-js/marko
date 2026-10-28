@@ -34,7 +34,7 @@ var l1_default = /*@__PURE__*/ _template("__tests__/tags/l1/index.marko", $templ
 // template.marko
 const $template = "<main><!><button class=t>t</button></main>";
 const $walks = "D%b l";
-const $if_content__input_note = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_note$1($scope["#childScope/0"], $scope._.input_note)));
+const $if_content__input_note = /*@__PURE__*/ _fill_signal("input_note __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_note$1($scope["#childScope/0"], $scope._.input_note)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_note._($scope);
 	$setup$1($scope["#childScope/0"]);

@@ -17,7 +17,7 @@ const $if_content__setup = ($scope) => {
 	$Panel_content__isOpen($scope.a, true);
 };
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a3", 12, /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.m, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_signal("12 a3", /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.m, ($_) => ({
 	isOpen: !$scope.i,
 	label: $scope.g + "!"
 })), 2));

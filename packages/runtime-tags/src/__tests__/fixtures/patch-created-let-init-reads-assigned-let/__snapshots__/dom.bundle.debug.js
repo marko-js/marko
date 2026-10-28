@@ -40,10 +40,10 @@ var relay_default = /*@__PURE__*/ _template("__tests__/tags/relay.marko", $templ
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $relay_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_3_input_label#0:4/subscribe"), 1);
+const $relay_content__input_label = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_3_input_label#0:4/subscribe"), 1);
 const $relay_content__setup = $relay_content__input_label;
 const $relay_content = _content("__tests__/template.marko_3*content", "<em>relayed <!></em>", "Db%", $relay_content__setup);
-const $card_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:4/subscribe"), 0);
+const $card_content__input_label = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:4/subscribe"), 0);
 const $card_content__setup = $card_content__input_label;
 const $card_content = _content("__tests__/template.marko_2*content", "<em>static <!></em>", "Db%", $card_content__setup);
 const $if_content__setup = ($scope) => {

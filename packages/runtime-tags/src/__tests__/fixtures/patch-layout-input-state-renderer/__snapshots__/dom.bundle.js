@@ -1,6 +1,6 @@
 // layout.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $input_nav__OR__input_label = /*@__PURE__*/ _fill_join("a1", 5, /*@__PURE__*/ _fill_join("a0", 4, /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.e, ($_) => ({ label: $scope.f })))));
+const $input_nav__OR__input_label = /*@__PURE__*/ _fill_signal("4 a0,5 a1", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.e, ($_) => ({ label: $scope.f }))));
 const $input_nav = /*@__PURE__*/ _const(4, $input_nav__OR__input_label);
 
 // nav-a.marko

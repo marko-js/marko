@@ -26,7 +26,7 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_mode__OR__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_mode", /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_mode === "a" ? card_a_default : card_b_default, ($_) => ({ label: $scope.input_label })))));
+const $input_mode__OR__input_label = /*@__PURE__*/ _fill_signal("input_mode __tests__/template.marko_fill0,input_label __tests__/template.marko_fill1", /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_mode === "a" ? card_a_default : card_b_default, ($_) => ({ label: $scope.input_label }))));
 const $input_mode = /*@__PURE__*/ _const("input_mode", $input_mode__OR__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", $input_mode__OR__input_label);
 const $input = ($scope, input) => {

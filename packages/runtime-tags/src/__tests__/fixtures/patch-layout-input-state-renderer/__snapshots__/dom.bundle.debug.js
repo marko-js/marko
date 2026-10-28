@@ -4,7 +4,7 @@ const $walks$3 = "F%b%n";
 const $setup$3 = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_nav__OR__input_label = /*@__PURE__*/ _fill_join("__tests__/layout.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/layout.marko_fill0", "input_nav", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_nav, ($_) => ({ label: $scope.input_label })))));
+const $input_nav__OR__input_label = /*@__PURE__*/ _fill_signal("input_nav __tests__/layout.marko_fill0,input_label __tests__/layout.marko_fill1", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.input_nav, ($_) => ({ label: $scope.input_label }))));
 const $input_nav = /*@__PURE__*/ _const("input_nav", $input_nav__OR__input_label);
 const $input_label$3 = /*@__PURE__*/ _const("input_label", $input_nav__OR__input_label);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/1");

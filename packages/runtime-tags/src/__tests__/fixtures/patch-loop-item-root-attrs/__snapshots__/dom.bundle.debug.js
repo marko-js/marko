@@ -13,7 +13,7 @@ const $setup = ($_) => {};
 const $if_content__input_page = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_page#0:6/init", /*@__PURE__*/ _if_closure("#main/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_page)));
 const $if_content__setup = $if_content__input_page;
 const $for_content__active = ($scope, active) => _attr_class_item($scope["#a/0"], "active", active);
-const $for_content__input_path__OR__item_href = /*@__PURE__*/ _fill_join_for("__tests__/template.marko_fill0/unpatched", "input_path", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_path#0:5_item_href#5/init", 6, ($scope) => $for_content__active($scope, $scope.item_href === $scope._.input_path)), "#nav/0");
+const $for_content__input_path__OR__item_href = /*@__PURE__*/ _fill_signal("input_path __tests__/template.marko_fill0/unpatched", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_path#0:5_item_href#5/init", 6, ($scope) => $for_content__active($scope, $scope.item_href === $scope._.input_path)), _for_closure, "#nav/0");
 const $for_content__input_path = /*@__PURE__*/ _for_closure("#nav/0", $for_content__input_path__OR__item_href);
 const $for_content__setup = $for_content__input_path;
 const $for_content__item_href = /*@__PURE__*/ _const("item_href", ($scope) => {

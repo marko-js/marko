@@ -5,7 +5,7 @@ const $h2__script = _script("b1", ($scope) => {
 });
 const $h2 = /*@__PURE__*/ _const(8, $h2__script);
 const $get = ($scope, get) => $h2($scope, get ?? $h);
-const $input_flag__OR__input_a__OR__input_b = /*@__PURE__*/ _fill_join("b4", 5, /*@__PURE__*/ _fill_join("b3", 4, /*@__PURE__*/ _fill_join("b2", 3, /*@__PURE__*/ _or_resume("b5", 6, ($scope) => $get($scope, $scope.d ? $scope.e : $scope.f), 2))));
+const $input_flag__OR__input_a__OR__input_b = /*@__PURE__*/ _fill_signal("3 b2,4 b3,5 b4", /*@__PURE__*/ _or_resume("b5", 6, ($scope) => $get($scope, $scope.d ? $scope.e : $scope.f), 2));
 const $input_a = /*@__PURE__*/ _const(4, $input_flag__OR__input_a__OR__input_b);
 function $h() {
 	return "none";

@@ -2,7 +2,7 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 const $setup$2 = ($_) => {};
-const $if_content__fmt = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_fmt#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "fmt", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.fmt("x")))));
+const $if_content__fmt = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_fmt#0:5/init", /*@__PURE__*/ _fill_signal("fmt __tests__/tags/child.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.fmt("x")))));
 const $if_content__setup = $if_content__fmt;
 const $fmt2 = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill0", "fmt", $if_content__fmt);
 const $input_suffix = /*@__PURE__*/ _const("input_suffix", ($scope) => $fmt2($scope, $fmt($scope)));

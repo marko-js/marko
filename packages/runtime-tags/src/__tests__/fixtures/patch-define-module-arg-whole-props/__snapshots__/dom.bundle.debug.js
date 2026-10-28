@@ -15,7 +15,7 @@ const $template = "<!><!><button class=toggle>toggle</button>";
 const $walks = "b%b b";
 const $Panel_content__props = ($scope, props) => _text($scope["#text/0"], props.fmt(props.label));
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__props($scope, $params2[0]);
-const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Panel_content__props($scope["#childScope/0"], {
+const $if_content__input_label = /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Panel_content__props($scope["#childScope/0"], {
 	fmt: lib.format,
 	label: $scope._.input_label
 })));

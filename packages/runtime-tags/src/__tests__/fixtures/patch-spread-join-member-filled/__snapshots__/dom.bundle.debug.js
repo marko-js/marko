@@ -3,11 +3,11 @@ const $template = "<div>x</div><!><!>";
 const $walks = " b%c";
 const $try_content__input_id = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_id#0:5/init", /*@__PURE__*/ _closure_index(1, /*@__PURE__*/ _closure_get("input_id/7", ($scope) => _text($scope["#text/0"], $scope._.input_id), 0, "__tests__/template.marko_2_input_id#0:5/subscribe")));
 const $try_content__setup = $try_content__input_id;
-const $placeholder_content__input_id = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_id", /*@__PURE__*/ _closure_get("input_id/7", ($scope) => _text($scope["#text/0"], $scope._.input_id), 0, "__tests__/template.marko_1_input_id#0:5/subscribe"), 0);
+const $placeholder_content__input_id = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_id", /*@__PURE__*/ _closure_get("input_id/7", ($scope) => _text($scope["#text/0"], $scope._.input_id), 0, "__tests__/template.marko_1_input_id#0:5/subscribe"), 0);
 const $placeholder_content__setup = $placeholder_content__input_id;
 const $placeholder_content = _content("__tests__/template.marko_1*content", "loading <!>", "b%", $placeholder_content__setup);
 const $input_which__OR__input_id__script = _script("__tests__/template.marko_0_input_which#4_input_id#5", ($scope) => _attrs_script($scope, "#div/0"));
-const $input_which__OR__input_id = /*@__PURE__*/ _fill_join("| __tests__/template.marko_fill0", "input_id", /*@__PURE__*/ _or_resume("__tests__/template.marko_0_input_which#4_input_id#5/init", 6, ($scope) => {
+const $input_which__OR__input_id = /*@__PURE__*/ _fill_signal("input_id | __tests__/template.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/template.marko_0_input_which#4_input_id#5/init", 6, ($scope) => {
 	$input_which__OR__input_id__script($scope);
 	_attrs($scope, "#div/0", $scope.input_which ? {
 		class: "one",

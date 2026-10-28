@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $Content_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_label#0:2/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/tags/child.marko_1_input_label#0:2/subscribe"), 0));
+const $Content_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_label#0:2/init", /*@__PURE__*/ _fill_closure("__tests__/tags/child.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/tags/child.marko_1_input_label#0:2/subscribe"), 0));
 const $Content_content__setup__script = _script("__tests__/tags/child.marko_1", ($scope) => _on($scope["#em/0"], "click", function() {
 	$count($scope._, +$scope._.count + 1);
 }));

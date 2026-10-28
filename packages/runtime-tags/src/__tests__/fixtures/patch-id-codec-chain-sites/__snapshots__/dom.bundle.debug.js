@@ -26,7 +26,7 @@ const $elseif_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/3"]);
 };
 const $if_content__if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1), /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$1, $walks$1), $if_content2__setup);
-const $if_content__input_nested = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_nested#0:7/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_nested", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_nested ? 0 : 1))));
+const $if_content__input_nested = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_nested#0:7/init", /*@__PURE__*/ _fill_signal("input_nested __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_nested ? 0 : 1))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_nested._($scope);
 	$setup$1($scope["#childScope/0"]);

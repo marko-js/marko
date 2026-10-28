@@ -1,7 +1,7 @@
 // tags/panel/index.marko
 const $template$1 = "<!><!><!>";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $if_content__input_body = /*@__PURE__*/ _init_resume("c0", /*@__PURE__*/ _fill_join("c2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.e))));
+const $if_content__input_body = /*@__PURE__*/ _init_resume("c0", /*@__PURE__*/ _fill_signal("4 c2", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.e))));
 const $if$1 = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__input_body);
 const $input_open = ($scope, input_open) => $if$1($scope, input_open ? 0 : 1);
 const $input_body = /*@__PURE__*/ _fill_const("c2", 4, $if_content__input_body);

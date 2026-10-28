@@ -15,7 +15,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$2 = "<button id=toggle>toggle</button><!><!>";
 const $walks$2 = " b%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill_signal("input_content __tests__/tags/card.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill1", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -46,16 +46,16 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $setup = ($_) => {};
-const $inputtype_content__input_n = /*@__PURE__*/ _init_resume("__tests__/tags/heading.marko_2_input_n#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/heading.marko_fill0", "input_n", /*@__PURE__*/ _closure_get("input_n/5", ($scope) => _text($scope["#text/1"], $scope._._.input_n), ($scope) => $scope._._, "__tests__/tags/heading.marko_2_input_n#0:3/subscribe"), 0));
+const $inputtype_content__input_n = /*@__PURE__*/ _init_resume("__tests__/tags/heading.marko_2_input_n#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/tags/heading.marko_fill0", "input_n", /*@__PURE__*/ _closure_get("input_n/5", ($scope) => _text($scope["#text/1"], $scope._._.input_n), ($scope) => $scope._._, "__tests__/tags/heading.marko_2_input_n#0:3/subscribe"), 0));
 const $inputtype_content__setup = ($scope) => {
 	$inputtype_content__input_n($scope);
 	$inputtype_content__i($scope);
 };
-const $inputtype_content__i = /*@__PURE__*/ _fill_join_closure("__tests__/tags/heading.marko_fill2", "i", /*@__PURE__*/ _closure_get("i/7", ($scope) => _text($scope["#text/0"], $scope._.i), 0, "__tests__/tags/heading.marko_2_i#1:1/subscribe"), 0);
+const $inputtype_content__i = /*@__PURE__*/ _fill_closure("__tests__/tags/heading.marko_fill2", "i", /*@__PURE__*/ _closure_get("i/7", ($scope) => _text($scope["#text/0"], $scope._.i), 0, "__tests__/tags/heading.marko_2_i#1:1/subscribe"), 0);
 const $inputtype_content = _content("__tests__/tags/heading.marko_2*content", "item <!> of <!>", "b%c%", $inputtype_content__setup);
 _content_resume($inputtype_content);
 const $item_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtype_content);
-const $item_content__input_type = /*@__PURE__*/ _init_resume("__tests__/tags/heading.marko_1_input_type#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/heading.marko_fill1", "input_type", /*@__PURE__*/ _closure_get("input_type/6", ($scope) => $item_content__dynamicTag($scope, $scope._.input_type)), 0));
+const $item_content__input_type = /*@__PURE__*/ _init_resume("__tests__/tags/heading.marko_1_input_type#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/tags/heading.marko_fill1", "input_type", /*@__PURE__*/ _closure_get("input_type/6", ($scope) => $item_content__dynamicTag($scope, $scope._.input_type)), 0));
 const $item_content__setup = $item_content__input_type;
 const $item_content__i__closure = /*@__PURE__*/ _closure($inputtype_content__i);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/tags/heading.marko_1*content", "<!><!><!>", "b%", $item_content__setup), { i: $item_content__i__closure });

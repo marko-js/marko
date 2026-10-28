@@ -3,7 +3,7 @@ const $Info_content__walks = "b";
 const $Info_content__template = "<p>info</p>";
 const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}<!><!>`)($Info_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&%c`)($Info_content__walks);
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:8/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $Info_content__label($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:8/init", /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $Info_content__label($scope["#childScope/0"], $scope._.input_label))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$scope["#childScope/0"]._ = $scope._;

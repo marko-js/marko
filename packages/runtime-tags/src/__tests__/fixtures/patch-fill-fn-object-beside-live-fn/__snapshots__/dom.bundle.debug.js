@@ -8,7 +8,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-const $if_content__fmt = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "fmt", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/0"], { fn: $scope._.fmt })));
+const $if_content__fmt = /*@__PURE__*/ _fill_signal("fmt __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/0"], { fn: $scope._.fmt })));
 const $if_content__setup = ($scope) => {
 	$if_content__fmt._($scope);
 	$if_content__wrap._($scope);
@@ -19,13 +19,13 @@ const $if_content__setup = ($scope) => {
 	$if_content__o_._($scope);
 	$if_content__tag._($scope);
 };
-const $if_content__wrap = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "wrap", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], { fn: $scope._.wrap })));
-const $if_content__quoted = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "quoted", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/2"], { fn: $scope._.quoted })));
-const $if_content__keyed = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill3", "keyed", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/3"], { fn: $scope._.keyed })));
-const $if_content__templated = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill4", "templated", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/4"], { fn: $scope._.templated })));
-const $if_content__o_get = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill5", "o_get", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/5"], { fn: $scope._.o_get })));
-const $if_content__o_ = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill6", "o_0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/6"], { fn: $scope._.o_0 })));
-const $if_content__tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill7", "tag", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/7"], { fn: $scope._.tag })));
+const $if_content__wrap = /*@__PURE__*/ _fill_signal("wrap __tests__/template.marko_fill1", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], { fn: $scope._.wrap })));
+const $if_content__quoted = /*@__PURE__*/ _fill_signal("quoted __tests__/template.marko_fill2", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/2"], { fn: $scope._.quoted })));
+const $if_content__keyed = /*@__PURE__*/ _fill_signal("keyed __tests__/template.marko_fill3", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/3"], { fn: $scope._.keyed })));
+const $if_content__templated = /*@__PURE__*/ _fill_signal("templated __tests__/template.marko_fill4", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/4"], { fn: $scope._.templated })));
+const $if_content__o_get = /*@__PURE__*/ _fill_signal("o_get __tests__/template.marko_fill5", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/5"], { fn: $scope._.o_get })));
+const $if_content__o_ = /*@__PURE__*/ _fill_signal("o_0 __tests__/template.marko_fill6", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/6"], { fn: $scope._.o_0 })));
+const $if_content__tag = /*@__PURE__*/ _fill_signal("tag __tests__/template.marko_fill7", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/7"], { fn: $scope._.tag })));
 const $pattern2 = ($scope, $pattern) => {
 	$fmt($scope, $pattern.fmt);
 	$wrap($scope, $pattern.wrap);

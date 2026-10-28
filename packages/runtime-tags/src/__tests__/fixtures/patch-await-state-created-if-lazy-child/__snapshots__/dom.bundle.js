@@ -2,7 +2,7 @@
 let $load_Lazy_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy.marko.setup.mjs"));
 let $load_Lazy_tag_input_label = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:lazy.marko.input_label.mjs"), "_a");
 const $await_content__input_label__OR__x = /*@__PURE__*/ _or(4, ($scope) => $load_Lazy_tag_input_label($scope.b, $scope._._.f + $scope.d));
-const $await_content__input_label = /*@__PURE__*/ _fill_join_closure("b5", 5, /*@__PURE__*/ _closure_get(7, $await_content__input_label__OR__x, ($scope) => $scope._._, "b1"), 0);
+const $await_content__input_label = /*@__PURE__*/ _fill_closure("b5", 5, /*@__PURE__*/ _closure_get(7, $await_content__input_label__OR__x, ($scope) => $scope._._, "b1"), 0);
 const $await_content__setup = ($scope) => {
 	$await_content__input_label($scope);
 	$load_Lazy_setup($scope, $scope.b, $scope.a);

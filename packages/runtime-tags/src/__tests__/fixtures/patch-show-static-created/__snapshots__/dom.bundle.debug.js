@@ -12,7 +12,7 @@ var hidden_note_default = /*@__PURE__*/ _template("__tests__/tags/hidden-note.ma
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%c`)($walks$1);
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => {
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => {
 	_text($scope["#text/0"], $scope._.input_label);
 	_text($scope["#text/2"], $scope._.input_label);
 	_text($scope["#text/6"], $scope._.input_label);

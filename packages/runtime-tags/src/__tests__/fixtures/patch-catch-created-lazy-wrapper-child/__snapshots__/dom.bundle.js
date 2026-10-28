@@ -9,7 +9,7 @@ function $setup($scope) {
 const $input_label = ($scope, input_label) => $load_Child_tag_input_label($scope.b, input_label);
 
 // template.marko
-const $catch_content__input_label = /*@__PURE__*/ _init_resume("b0", _closure_resume("b1", /*@__PURE__*/ _fill_join_closure("b6", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $input_label($scope.b, $scope._.d)), 0)));
+const $catch_content__input_label = /*@__PURE__*/ _init_resume("b0", _closure_resume("b1", /*@__PURE__*/ _fill_closure("b6", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $input_label($scope.b, $scope._.d)), 0)));
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_label($scope);
 	$setup($scope.b);

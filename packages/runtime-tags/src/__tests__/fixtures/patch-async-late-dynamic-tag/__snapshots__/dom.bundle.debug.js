@@ -30,7 +30,7 @@ const $frame_content__setup = ($scope) => {
 const $frame_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $frame_content__setup);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $inputas_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $inputas_content__input_p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_p#0:6/init", _closure_resume("__tests__/template.marko_1_input_p#0:6/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_p", /*@__PURE__*/ _closure_get("input_p/8", ($scope) => $inputas_content__await_promise($scope, $scope._.input_p)), 0)));
+const $inputas_content__input_p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_p#0:6/init", _closure_resume("__tests__/template.marko_1_input_p#0:6/subscribe", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_p", /*@__PURE__*/ _closure_get("input_p/8", ($scope) => $inputas_content__await_promise($scope, $scope._.input_p)), 0)));
 const $inputas_content__setup = ($scope) => {
 	$inputas_content__input_p($scope);
 	$await_content($scope);

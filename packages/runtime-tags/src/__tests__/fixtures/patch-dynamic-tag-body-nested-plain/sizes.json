@@ -2,13 +2,13 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 14477,
-        "brotli": 6106
+        "min": 14515,
+        "brotli": 6137
       },
       "files": {
-        "tags/card.marko": 551,
+        "tags/card.marko": 552,
         "tags/plain.marko": 345,
-        "template.marko": 920
+        "template.marko": 910
       }
     }
   },

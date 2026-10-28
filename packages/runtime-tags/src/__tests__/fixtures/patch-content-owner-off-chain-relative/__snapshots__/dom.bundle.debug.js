@@ -6,7 +6,7 @@ const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__tab_content = /*@__PURE__*/ _init_resume("__tests__/tags/view.marko_2_tab_content#1:3/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.tab_content)));
 const $if_content__setup$1 = $if_content__tab_content;
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup$1);
-const $for_content__input_selected = /*@__PURE__*/ _init_resume("__tests__/tags/view.marko_1_input_selected#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/view.marko_fill0", "input_selected", /*@__PURE__*/ _for_selector("#text/0", "input_selected", "#LoopKey", ($scope) => $for_content__if($scope, $scope["#LoopKey"] === $scope._.input_selected ? 0 : 1))));
+const $for_content__input_selected = /*@__PURE__*/ _init_resume("__tests__/tags/view.marko_1_input_selected#0:4/init", /*@__PURE__*/ _fill_signal("input_selected __tests__/tags/view.marko_fill0", /*@__PURE__*/ _for_selector("#text/0", "input_selected", "#LoopKey", ($scope) => $for_content__if($scope, $scope["#LoopKey"] === $scope._.input_selected ? 0 : 1))));
 const $for_content__setup = $for_content__input_selected;
 const $for_content__$params = ($scope, $params2) => $for_content__tab_content($scope, $params2[0]?.content);
 const $for_content__tab_content = /*@__PURE__*/ _const("tab_content", $if_content__tab_content);
@@ -39,13 +39,13 @@ var page_default = /*@__PURE__*/ _template("__tests__/tags/page.marko", $templat
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content__input_items = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_1_input_items#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill0", "input_items", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_items$2($scope["#childScope/0"], $scope._.input_items))));
+const $if_content__input_items = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_1_input_items#0:4/init", /*@__PURE__*/ _fill_signal("input_items __tests__/tags/wrap.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_items$2($scope["#childScope/0"], $scope._.input_items))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_items._($scope);
 	$if_content__input_selected._($scope);
 	$setup$2($scope["#childScope/0"]);
 };
-const $if_content__input_selected = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_1_input_selected#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill1", "input_selected", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_selected$2($scope["#childScope/0"], $scope._.input_selected))));
+const $if_content__input_selected = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_1_input_selected#0:5/init", /*@__PURE__*/ _fill_signal("input_selected __tests__/tags/wrap.marko_fill1", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_selected$2($scope["#childScope/0"], $scope._.input_selected))));
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks$2), $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {

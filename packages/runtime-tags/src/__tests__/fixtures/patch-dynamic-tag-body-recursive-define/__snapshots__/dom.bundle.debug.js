@@ -2,7 +2,7 @@
 const $template$1 = "<button class=toggle>toggle</button><!><!>";
 const $walks$1 = " b%c";
 const $if_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag$1($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill_signal("input_content __tests__/tags/card.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag$1($scope, $scope._.input_content)));
 const $if_content__setup$1 = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup$1);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill1", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -22,7 +22,7 @@ const $Tree_content__walks = "D l%c";
 const $Tree_content__template = "<em> </em><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($Tree_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($Tree_content__walks);
-const $inputonCarddiv_content__depth = _closure_resume("__tests__/template.marko_3_depth#1:4/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill2", "depth", /*@__PURE__*/ _closure_get("depth/7", ($scope) => $Tree_content__tag_input_depth($scope["#childScope/0"], $scope._._.depth - 1), ($scope) => $scope._._), 0));
+const $inputonCarddiv_content__depth = _closure_resume("__tests__/template.marko_3_depth#1:4/subscribe", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill2", "depth", /*@__PURE__*/ _closure_get("depth/7", ($scope) => $Tree_content__tag_input_depth($scope["#childScope/0"], $scope._._.depth - 1), ($scope) => $scope._._), 0));
 const $inputonCarddiv_content__setup = ($scope) => {
 	$inputonCarddiv_content__depth($scope);
 	$scope["#childScope/0"]._ = $scope._._._;
@@ -31,9 +31,9 @@ const $inputonCarddiv_content__setup = ($scope) => {
 const $inputonCarddiv_content = _content("__tests__/template.marko_3*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tree_content__walks), $inputonCarddiv_content__setup);
 _content_resume($inputonCarddiv_content);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputonCarddiv_content);
-const $if_content__input_on = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_on#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_on", /*@__PURE__*/ _closure_get("input_on/6", ($scope) => $if_content__dynamicTag($scope, $scope._._.input_on ? card_default : "div"), ($scope) => $scope._._, "__tests__/template.marko_2_input_on#0:4/subscribe"), 0));
+const $if_content__input_on = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_on#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill1", "input_on", /*@__PURE__*/ _closure_get("input_on/6", ($scope) => $if_content__dynamicTag($scope, $scope._._.input_on ? card_default : "div"), ($scope) => $scope._._, "__tests__/template.marko_2_input_on#0:4/subscribe"), 0));
 const $if_content__setup = $if_content__input_on;
-const $Tree_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0/content", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:3/subscribe"), 0));
+const $Tree_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0/content", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:3/subscribe"), 0));
 const $Tree_content__setup = $Tree_content__input_note;
 const $Tree_content__if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $Tree_content__tag_input_depth__closure = /*@__PURE__*/ _closure($inputonCarddiv_content__depth);

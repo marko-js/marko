@@ -1,24 +1,24 @@
 // tags/panel.marko
 const $template$1 = "<!><!><button>+</button>";
 const $walks$1 = "b%b b";
-const $if_content__count__OR__a = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill3", "a", /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/0"], $scope.a + $scope._.count)));
-const $if_content__a__OR__b = /*@__PURE__*/ _fill_join("| __tests__/tags/panel.marko_fill4", "b", /*@__PURE__*/ _fill_join("| __tests__/tags/panel.marko_fill3", "a", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_1_a#3_b#5/init", 7, ($scope) => _text($scope["#text/2"], $scope.a + $scope.b))));
+const $if_content__count__OR__a = /*@__PURE__*/ _fill_signal("a __tests__/tags/panel.marko_fill3", /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/0"], $scope.a + $scope._.count)));
+const $if_content__a__OR__b = /*@__PURE__*/ _fill_signal("a | __tests__/tags/panel.marko_fill3,b | __tests__/tags/panel.marko_fill4", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_1_a#3_b#5/init", 7, ($scope) => _text($scope["#text/2"], $scope.a + $scope.b)));
 const $if_content__a = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill3", "a", ($scope) => {
 	$if_content__count__OR__a($scope);
 	$if_content__a__OR__b($scope);
 }, /*@__PURE__*/ _fill_mark("a", $if_content__count__OR__a));
-const $if_content__input_x = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_x#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "input_x", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__a($scope, $scope._.input_x + "a"))));
+const $if_content__input_x = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_x#0:5/init", /*@__PURE__*/ _fill_signal("input_x __tests__/tags/panel.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__a($scope, $scope._.input_x + "a"))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_x._($scope);
 	$if_content__input_y._($scope);
 	$if_content__count._($scope);
 };
-const $if_content__count__OR__b = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill4", "b", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/1"], $scope.b + $scope._.count)));
+const $if_content__count__OR__b = /*@__PURE__*/ _fill_signal("b __tests__/tags/panel.marko_fill4", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/1"], $scope.b + $scope._.count)));
 const $if_content__b = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill4", "b", ($scope) => {
 	$if_content__count__OR__b($scope);
 	$if_content__a__OR__b($scope);
 }, /*@__PURE__*/ _fill_mark("b", $if_content__count__OR__b));
-const $if_content__input_y = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_y#0:6/init", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill1", "input_y", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__b($scope, $scope._.input_y + "b"))));
+const $if_content__input_y = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_y#0:6/init", /*@__PURE__*/ _fill_signal("input_y __tests__/tags/panel.marko_fill1", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__b($scope, $scope._.input_y + "b"))));
 const $if_content__count = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_count#0:7/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$if_content__count__OR__a($scope);
 	$if_content__count__OR__b($scope);

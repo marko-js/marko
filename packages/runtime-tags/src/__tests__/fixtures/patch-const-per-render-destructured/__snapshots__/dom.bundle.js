@@ -1,6 +1,6 @@
 // template.marko
 const $pattern2 = fill("a3", /*@__PURE__*/ _const(10, ($scope) => $uid($scope, $scope.k.uid)));
-const $input_name__OR__uid = /*@__PURE__*/ _fill_join("a1", 7, /*@__PURE__*/ _or(12, ($scope) => {
+const $input_name__OR__uid = /*@__PURE__*/ _fill_signal("7 a1", /*@__PURE__*/ _or(12, ($scope) => {
 	_attr($scope.a, "for", `${$scope.l}-${$scope.h}`);
 	_attr($scope.c, "id", `${$scope.l}-${$scope.h}`);
 }));

@@ -2,13 +2,13 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_n = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_n#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_n", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_n$1($scope["#childScope/0"], $scope._.input_n))));
+const $if_content__input_n = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_n#0:4/init", /*@__PURE__*/ _fill_signal("input_n __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_n$1($scope["#childScope/0"], $scope._.input_n))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_n._($scope);
 	$if_content__input_w._($scope);
 	$setup$1($scope["#childScope/0"]);
 };
-const $if_content__input_w = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_w#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_w", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_w$1($scope["#childScope/0"], $scope._.input_w))));
+const $if_content__input_w = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_w#0:5/init", /*@__PURE__*/ _fill_signal("input_w __tests__/template.marko_fill1", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_w$1($scope["#childScope/0"], $scope._.input_w))));
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_on = ($scope, input_on) => $if($scope, input_on ? 0 : 1);
 const $input = ($scope, input) => {
@@ -30,7 +30,7 @@ const $if_content2__setup = ($scope) => {
 	$if_content2__k._($scope);
 	$scope["#childScope/0"]._ = $scope._;
 };
-const $if_content__input_w = /*@__PURE__*/ _fill_join_closure("__tests__/tags/card.marko_fill0", "input_w", /*@__PURE__*/ _closure_get("input_w/7", ($scope) => _text($scope["#text/0"], $scope._._.input_w), ($scope) => $scope._._, "__tests__/tags/card.marko_2_input_w#0:5/subscribe"), 0);
+const $if_content__input_w = /*@__PURE__*/ _fill_closure("__tests__/tags/card.marko_fill0", "input_w", /*@__PURE__*/ _closure_get("input_w/7", ($scope) => _text($scope["#text/0"], $scope._._.input_w), ($scope) => $scope._._, "__tests__/tags/card.marko_2_input_w#0:5/subscribe"), 0);
 const $if_content__setup = $if_content__input_w;
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $Panel_content__open = ($scope, open) => $Panel_content__if($scope, open ? 0 : 1);

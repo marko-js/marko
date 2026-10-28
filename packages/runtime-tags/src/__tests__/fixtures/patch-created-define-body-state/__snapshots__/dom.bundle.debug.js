@@ -8,7 +8,7 @@ const $Info_content__setup = $Info_content__count;
 const $Info_content__id = ($scope, id) => _text($scope["#text/0"], id);
 const $Info_content__$params = ($scope, $params2) => $Info_content__$temp($scope, $params2[0]);
 const $Info_content__$temp = ($scope, $temp) => $Info_content__id($scope, $temp.id);
-const $if_content__input_id = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_id#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_id", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Info_content__id($scope["#childScope/0"], $scope._.input_id))));
+const $if_content__input_id = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_id#0:5/init", /*@__PURE__*/ _fill_signal("input_id __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Info_content__id($scope["#childScope/0"], $scope._.input_id))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_id._($scope);
 	$scope["#childScope/0"]._ = $scope._;

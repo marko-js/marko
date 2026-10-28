@@ -11,7 +11,7 @@ const $A_content__setup = $A_content__setup__script;
 const $A_content__$params = ($scope, $params2) => $A_content__x($scope, $params2[0].x);
 const $A_content = _content("__tests__/template.marko_1*content", "<button> </button>", " D ", $A_content__setup, $A_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_flag__OR__input_a__OR__A__OR__B = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_a", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_flag", /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_flag ? $scope.B : $scope.A, ($_) => ({ x: $scope.input_a })), 3)));
+const $input_flag__OR__input_a__OR__A__OR__B = /*@__PURE__*/ _fill_signal("input_flag __tests__/template.marko_fill0,input_a __tests__/template.marko_fill1", /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_flag ? $scope.B : $scope.A, ($_) => ({ x: $scope.input_a })), 3));
 const $A = /*@__PURE__*/ _const("A", $input_flag__OR__input_a__OR__A__OR__B);
 const $B = /*@__PURE__*/ _const("B", $input_flag__OR__input_a__OR__A__OR__B);
 function $setup($scope) {

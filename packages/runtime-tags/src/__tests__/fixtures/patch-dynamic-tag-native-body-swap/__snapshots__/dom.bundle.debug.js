@@ -12,7 +12,7 @@ var outer_default = /*@__PURE__*/ _template("__tests__/outer.marko", $template$1
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $inputwrapouterdiv_content__input_x = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_x#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_x", /*@__PURE__*/ _closure_get("input_x/5", ($scope) => _text($scope["#text/0"], $scope._.input_x), 0, "__tests__/template.marko_1_input_x#0:4/subscribe"), 0));
+const $inputwrapouterdiv_content__input_x = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_x#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_x", /*@__PURE__*/ _closure_get("input_x/5", ($scope) => _text($scope["#text/0"], $scope._.input_x), 0, "__tests__/template.marko_1_input_x#0:4/subscribe"), 0));
 const $inputwrapouterdiv_content__setup = $inputwrapouterdiv_content__input_x;
 const $inputwrapouterdiv_content = _content("__tests__/template.marko_1*content", "body <!>", "b%", $inputwrapouterdiv_content__setup);
 _content_resume($inputwrapouterdiv_content);

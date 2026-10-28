@@ -11,7 +11,7 @@ var show_header_default = /*@__PURE__*/ _template("__tests__/tags/show-header.ma
 // tags/card.marko
 const $template$2 = "<button class=toggle>toggle</button><!><!>";
 const $walks$2 = " b%c";
-const $if_content__input_header = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill1", "input_header", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_header$2($scope["#childScope/0"], $scope._.input_header)));
+const $if_content__input_header = /*@__PURE__*/ _fill_signal("input_header __tests__/tags/card.marko_fill1", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_header$2($scope["#childScope/0"], $scope._.input_header)));
 const $if_content__setup = $if_content__input_header;
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$3), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "open/4", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -39,7 +39,7 @@ var plain_default = /*@__PURE__*/ _template("__tests__/tags/plain.marko", $templ
 // template.marko
 const $template = "<main><!></main>";
 const $walks = "D%l";
-const $H_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:3/subscribe"), 0));
+const $H_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:3/subscribe"), 0));
 const $H_content__setup = $H_content__input_note;
 const $H_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $H_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");

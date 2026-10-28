@@ -6,7 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b b`)($Panel_content__walks);
 const $Other_content__label = ($scope, label) => _text($scope["#text/0"], label);
 const $Other_content__$params = ($scope, $params3) => $Other_content__label($scope, $params3[0].label);
 const $Other_content = _content("__tests__/template.marko_3*content", "<i> </i>", "D ", 0, $Other_content__$params);
-const $if_content__label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_label#1:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label))));
+const $if_content__label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_label#1:4/init", /*@__PURE__*/ _fill_signal("label __tests__/template.marko_fill2", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label))));
 const $if_content__setup = $if_content__label;
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_content__setup);
 const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen ? 0 : 1);
@@ -18,10 +18,10 @@ const $Panel_content__$temp = ($scope, $temp) => {
 };
 const $Panel_content = _content("__tests__/template.marko_1*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "Tag", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_signal("input_label __tests__/template.marko_fill0,Tag __tests__/template.marko_fill1", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
 	isOpen: !$scope.open,
 	label: $scope.input_label + "!"
-})), 2)));
+})), 2));
 const $open = /*@__PURE__*/ _let("open/7", ($scope) => {
 	$Panel_content__isOpen($scope["#childScope/0"], $scope.open);
 	$input_label__OR__open__OR__Tag($scope);

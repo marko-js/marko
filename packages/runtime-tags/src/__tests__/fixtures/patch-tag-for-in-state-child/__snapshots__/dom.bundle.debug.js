@@ -30,10 +30,10 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // tags/shape.marko
 const $template = "<!><!><button></button>";
 const $walks = "b%b b";
-const $if_content__input_b__OR__s__OR__v = /*@__PURE__*/ _fill_join_if("__tests__/tags/shape.marko_fill3", "v", /*@__PURE__*/ _fill_join("__tests__/tags/shape.marko_fill1", "input_b", /*@__PURE__*/ _or_resume("__tests__/tags/shape.marko_2_input_b#0:6_s#0:7_v#1:4/init", 1, ($scope) => $input$1($scope["#childScope/0"], {
+const $if_content__input_b__OR__s__OR__v = /*@__PURE__*/ _fill_signal("v __tests__/tags/shape.marko_fill3", /*@__PURE__*/ _fill_signal("input_b __tests__/tags/shape.marko_fill1", /*@__PURE__*/ _or_resume("__tests__/tags/shape.marko_2_input_b#0:6_s#0:7_v#1:4/init", 1, ($scope) => $input$1($scope["#childScope/0"], {
 	a: $scope._.v + $scope._._.s,
 	b: $scope._._.input_b
-}), 2), ($join) => /*@__PURE__*/ _for_closure("#text/0", /*@__PURE__*/ _if_closure("#text/0", 0, $join))), "#text/0", 0);
+}), 2), ($signal) => /*@__PURE__*/ _for_closure("#text/0", /*@__PURE__*/ _if_closure("#text/0", 0, $signal))), _if_closure, "#text/0", 0);
 const $if_content__input_b = /*@__PURE__*/ _closure_get("input_b/9", $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._, "__tests__/tags/shape.marko_2_input_b#0:6/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__input_b($scope);
@@ -43,7 +43,7 @@ const $if_content__setup = ($scope) => {
 const $if_content__s = /*@__PURE__*/ _init_resume("__tests__/tags/shape.marko_2_s#0:7/init", /*@__PURE__*/ _closure_get("s/10", $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._, "__tests__/tags/shape.marko_2_s#0:7/subscribe"));
 const $if_content__v = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_b__OR__s__OR__v);
 const $for_content__if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
-const $for_content__input_sel = /*@__PURE__*/ _init_resume("__tests__/tags/shape.marko_1_input_sel#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/shape.marko_fill0", "input_sel", /*@__PURE__*/ _for_selector("#text/0", "input_sel", "#LoopKey", ($scope) => $for_content__if($scope, $scope["#LoopKey"] === $scope._.input_sel ? 0 : 1))));
+const $for_content__input_sel = /*@__PURE__*/ _init_resume("__tests__/tags/shape.marko_1_input_sel#0:5/init", /*@__PURE__*/ _fill_signal("input_sel __tests__/tags/shape.marko_fill0", /*@__PURE__*/ _for_selector("#text/0", "input_sel", "#LoopKey", ($scope) => $for_content__if($scope, $scope["#LoopKey"] === $scope._.input_sel ? 0 : 1))));
 const $for_content__setup = $for_content__input_sel;
 const $for_content__$params = ($scope, $params2) => $for_content__v($scope, $params2[1]);
 const $for_content__v = /*@__PURE__*/ _fill_const("__tests__/tags/shape.marko_fill3", "v", $if_content__v);

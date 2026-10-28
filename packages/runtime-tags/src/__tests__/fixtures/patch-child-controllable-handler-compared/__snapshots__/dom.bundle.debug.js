@@ -9,7 +9,7 @@ const $if_content__input_onCount__script = _script("__tests__/tags/counter/index
 		log.fn = $scope._.input_onCount;
 	}
 });
-const $if_content__input_onCount = /*@__PURE__*/ _fill_join("__tests__/tags/counter/index.marko_fill0", "input_onCount", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
+const $if_content__input_onCount = /*@__PURE__*/ _fill_signal("input_onCount __tests__/tags/counter/index.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$if_content__count($scope, 0, $scope._.input_onCount);
 	$if_content__input_onCount__script($scope);
 }));

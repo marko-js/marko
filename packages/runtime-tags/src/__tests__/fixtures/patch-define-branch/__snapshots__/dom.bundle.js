@@ -5,7 +5,7 @@ const $if_content__setup = ($scope) => {
 	$scope.a._ = $scope._;
 	$foo_content__setup($scope.a);
 };
-const $foo_content__input_x = /*@__PURE__*/ _fill_join_closure("a3", 4, /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.a, $scope._.e), 0, "a1"), 0);
+const $foo_content__input_x = /*@__PURE__*/ _fill_closure("a3", 4, /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.a, $scope._.e), 0, "a1"), 0);
 const $foo_content__setup = $foo_content__input_x;
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($foo_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($foo_content__walks), $if_content__setup);
 const $s = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));

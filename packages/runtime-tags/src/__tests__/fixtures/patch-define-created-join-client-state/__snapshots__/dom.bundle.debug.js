@@ -3,7 +3,7 @@ const $PlainChild_content__walks = "Db%l";
 const $PlainChild_content__template = "<p>t=<!></p>";
 const $template = "<button>+</button><!><!>";
 const $walks = " b%c";
-const $PlainChild_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_b", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_a", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_a#3_input_b#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b))));
+const $PlainChild_content__input_a__OR__input_b = /*@__PURE__*/ _fill_signal("input_a __tests__/template.marko_fill1,input_b __tests__/template.marko_fill2", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_a#3_input_b#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b)));
 const $PlainChild_content__input_a = /*@__PURE__*/ _const("input_a", $PlainChild_content__input_a__OR__input_b);
 const $PlainChild_content__input_b = /*@__PURE__*/ _const("input_b", $PlainChild_content__input_a__OR__input_b);
 const $PlainChild_content__$params = ($scope, $params2) => $PlainChild_content__input($scope, $params2[0]);
@@ -11,7 +11,7 @@ const $PlainChild_content__input = ($scope, input) => {
 	$PlainChild_content__input_a($scope, input.a);
 	$PlainChild_content__input_b($scope, input.b);
 };
-const $if_content__input_x = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_x#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_x", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $PlainChild_content__input_b($scope["#childScope/0"], $scope._.input_x))));
+const $if_content__input_x = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_x#0:5/init", /*@__PURE__*/ _fill_signal("input_x __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $PlainChild_content__input_b($scope["#childScope/0"], $scope._.input_x))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_x._($scope);
 	$if_content__tab._($scope);

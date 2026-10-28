@@ -2,7 +2,7 @@
 const $Inner_content__walks = "D l";
 const $Inner_content__template = "<p> </p>";
 const $Inner_content__b = /*@__PURE__*/ _const(5, /* @__PURE__ */ _fill_global_join("a1", ($scope) => _text($scope.a, $scope.f + $scope.$.suffix), "suffix"));
-const $Inner_content__value__OR__y = /*@__PURE__*/ _fill_join_subscribers("a5", 4, /*@__PURE__*/ _or_resume("a2", 4, ($scope) => $Inner_content__b($scope, $scope._.e + $scope.d)), 6, 0);
+const $Inner_content__value__OR__y = /*@__PURE__*/ _fill_signal("4 a5", /*@__PURE__*/ _or_resume("a2", 4, ($scope) => $Inner_content__b($scope, $scope._.e + $scope.d)), _closure_subscribers, 6, 0);
 const $Inner_content__value = _closure_resume("a10", /*@__PURE__*/ _closure_get(6, $Inner_content__value__OR__y));
 const $Inner_content__setup = $Inner_content__value;
 const $Inner_content__y = /*@__PURE__*/ _const(3, $Inner_content__value__OR__y);

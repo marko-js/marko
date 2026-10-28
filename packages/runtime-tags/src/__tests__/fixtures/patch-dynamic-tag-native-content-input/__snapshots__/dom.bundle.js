@@ -12,7 +12,7 @@ const $Card_content__$params = ($scope, $params2) => {
 };
 const $Card_content__content = /*@__PURE__*/ _const(5, $if_content__content);
 const $Card_content = _content$1("a1", "<p><!><!></p>", "D%b%", 0, $Card_content__$params);
-const $Label_content__input_label = /*@__PURE__*/ _init_resume("a4", /*@__PURE__*/ _fill_join_closure("a8", 5, /*@__PURE__*/ _closure_get(11, ($scope) => _text($scope.a, $scope._.f), 0, "a5"), 0));
+const $Label_content__input_label = /*@__PURE__*/ _init_resume("a4", /*@__PURE__*/ _fill_closure("a8", 5, /*@__PURE__*/ _closure_get(11, ($scope) => _text($scope.a, $scope._.f), 0, "a5"), 0));
 const $Label_content__setup = ($scope) => {
 	$Label_content__input_label($scope);
 	$Label_content__n($scope);

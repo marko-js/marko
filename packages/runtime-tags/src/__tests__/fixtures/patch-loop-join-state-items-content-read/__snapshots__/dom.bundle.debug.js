@@ -2,12 +2,12 @@
 const $template$1 = "<section></section><!><!>";
 const $walks$1 = " b%c";
 const $for_content__d = ($scope, d) => _text($scope["#text/0"], d);
-const $for_content__input_b__OR__item = /*@__PURE__*/ _fill_join_for("__tests__/tags/child.marko_fill0/unpatched | __tests__/tags/child.marko_fill0", "input_b", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_2_input_b#0:4_item#2/init", 3, ($scope) => $for_content__d($scope, $scope._.input_b + $scope.item)), "#text/1");
+const $for_content__input_b__OR__item = /*@__PURE__*/ _fill_signal("input_b __tests__/tags/child.marko_fill0/unpatched | __tests__/tags/child.marko_fill0", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_2_input_b#0:4_item#2/init", 3, ($scope) => $for_content__d($scope, $scope._.input_b + $scope.item)), _for_closure, "#text/1");
 const $for_content__input_b = /*@__PURE__*/ _for_closure("#text/1", $for_content__input_b__OR__item);
 const $for_content__setup = $for_content__input_b;
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__input_b__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $frag_content__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_b#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill0 __tests__/tags/child.marko_fill0/unpatched", "input_b", /*@__PURE__*/ _closure_get("input_b/10", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/tags/child.marko_1_input_b#0:4/subscribe"), 0));
+const $frag_content__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_b#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/tags/child.marko_fill0 __tests__/tags/child.marko_fill0/unpatched", "input_b", /*@__PURE__*/ _closure_get("input_b/10", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/tags/child.marko_1_input_b#0:4/subscribe"), 0));
 const $frag_content__setup = $frag_content__input_b;
 const $frag_content = _content("__tests__/tags/child.marko_1*content", "<i> </i>", "D ", $frag_content__setup);
 const $frag = ($scope, frag) => $frag_content2($scope, frag?.content);

@@ -1,6 +1,6 @@
 // template.marko
 const $placeholder_content = _content$1("a2", "loading");
-const $await_content__input_label = /*@__PURE__*/ _fill_join_closure("a7", 5, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._._._.f), ($scope) => $scope._._._, "a0"), 0);
+const $await_content__input_label = /*@__PURE__*/ _fill_closure("a7", 5, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._._._.f), ($scope) => $scope._._._, "a0"), 0);
 const $await_content__setup = $await_content__input_label;
 const $await_content__x = ($scope, x) => _text($scope.b, x);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);

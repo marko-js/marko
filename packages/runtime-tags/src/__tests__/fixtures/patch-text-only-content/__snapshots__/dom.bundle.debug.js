@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<script><\/script><style></style><title></title><!----><button>+</button>";
 const $walks = " b b b b b";
-const $input_title__OR__x = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _or(10, ($scope) => _text_content($scope["#script/0"], `window.log = [${_to_text($scope.x)}, "${_to_text($scope.input_title)}"]`)));
+const $input_title__OR__x = /*@__PURE__*/ _fill_signal("input_title __tests__/template.marko_fill0", /*@__PURE__*/ _or(10, ($scope) => _text_content($scope["#script/0"], `window.log = [${_to_text($scope.x)}, "${_to_text($scope.input_title)}"]`)));
 const $x = /*@__PURE__*/ _let("x/9", $input_title__OR__x);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/4"], "click", function() {
 	$x($scope, +$scope.x + 1);

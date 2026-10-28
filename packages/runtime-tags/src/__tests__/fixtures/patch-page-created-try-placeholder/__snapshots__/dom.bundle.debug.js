@@ -9,7 +9,7 @@ const $template = "<main><!></main>";
 const $walks = "D%l";
 const $setup = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_page__OR__input_promise = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_promise", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_page", /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_page === "b" ? b_default : a_default, ($_) => ({ promise: $scope.input_promise })))));
+const $input_page__OR__input_promise = /*@__PURE__*/ _fill_signal("input_page __tests__/template.marko_fill0,input_promise __tests__/template.marko_fill1", /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_page === "b" ? b_default : a_default, ($_) => ({ promise: $scope.input_promise }))));
 const $input_page = /*@__PURE__*/ _const("input_page", $input_page__OR__input_promise);
 const $input_promise = /*@__PURE__*/ _const("input_promise", $input_page__OR__input_promise);
 const $input = ($scope, input) => {

@@ -4,7 +4,7 @@ const $walks = "b%c";
 const $setup = ($_) => {};
 let $load_Page_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:page.marko.setup.mjs"));
 let $load_Page_tag_input_base = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:page.marko.input_base.mjs"), "ready:__tests__/page.marko");
-const $if_content__input_base = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_base#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_base", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $load_Page_tag_input_base($scope["#childScope/1"], $scope._.input_base))));
+const $if_content__input_base = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_base#0:4/init", /*@__PURE__*/ _fill_signal("input_base __tests__/template.marko_fill0", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $load_Page_tag_input_base($scope["#childScope/1"], $scope._.input_base))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_base._($scope);
 	$load_Page_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
@@ -35,7 +35,7 @@ var box_default = /*@__PURE__*/ _template("__tests__/tags/box.marko", "", "", /*
 // tags/counter.marko
 const $template$2 = "<button class=tick> </button>";
 const $walks$2 = " D l";
-const $input_base__OR__tick = /*@__PURE__*/ _fill_join("__tests__/tags/counter.marko_fill0", "input_base", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/1"], $scope.input_base + $scope.tick)));
+const $input_base__OR__tick = /*@__PURE__*/ _fill_signal("input_base __tests__/tags/counter.marko_fill0", /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/1"], $scope.input_base + $scope.tick)));
 const $tick = /*@__PURE__*/ _fill_let("__tests__/tags/counter.marko_fill1", "tick/5", $input_base__OR__tick);
 const $setup__script$1 = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$tick($scope, +$scope.tick + 1);
@@ -69,7 +69,7 @@ const $aside_content__setup = ($scope) => {
 const $aside_content = /*@__PURE__*/ _content("__tests__/page.marko_1*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $aside_content__setup);
 const $live__closure = /*@__PURE__*/ _closure($aside_content__live);
 const $live = /*@__PURE__*/ _const("live", $live__closure);
-const $input_base__OR__bonus = /*@__PURE__*/ _fill_join("__tests__/page.marko_fill0", "input_base", /*@__PURE__*/ _or(8, ($scope) => $live($scope, $scope.bonus ?? $scope.input_base), 1, "#scopeOffset/1"));
+const $input_base__OR__bonus = /*@__PURE__*/ _fill_signal("input_base __tests__/page.marko_fill0", /*@__PURE__*/ _or(8, ($scope) => $live($scope, $scope.bonus ?? $scope.input_base), 1, "#scopeOffset/1"));
 const $bonus = _var_resume("__tests__/page.marko_0_bonus#7/var", /*@__PURE__*/ _const("bonus", $input_base__OR__bonus));
 const $setup__script = _script("__tests__/page.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	_var_change($scope["#childScope/0"], 5, "bonus");

@@ -91,7 +91,7 @@ const $for5 = /*@__PURE__*/ _for_to("#text/5", $template$1, /*@__PURE__*/ ((_w0)
 const $for6 = /*@__PURE__*/ _for_to("#text/6", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $for_content6__setup, $for_content6__$params);
 const $for7 = /*@__PURE__*/ _for_until("#text/7", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $for_content7__setup);
 const $for8 = /*@__PURE__*/ _for_until("#text/8", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $for_content8__setup, $for_content8__$params);
-const $input_end__OR__input_start = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_start", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_end", /*@__PURE__*/ _or(15, ($scope) => {
+const $input_end__OR__input_start = /*@__PURE__*/ _fill_signal("input_end __tests__/template.marko_fill0,input_start __tests__/template.marko_fill1", /*@__PURE__*/ _or(15, ($scope) => {
 	$for5($scope, [
 		$scope.input_end,
 		$scope.input_start,
@@ -114,7 +114,7 @@ const $input_end__OR__input_start = /*@__PURE__*/ _fill_join("__tests__/template
 		2,
 		(i) => "until-" + i
 	]);
-})));
+}));
 const $input_end = /*@__PURE__*/ _const("input_end", $input_end__OR__input_start);
 const $input_start = /*@__PURE__*/ _const("input_start", $input_end__OR__input_start);
 const $input = ($scope, input) => {

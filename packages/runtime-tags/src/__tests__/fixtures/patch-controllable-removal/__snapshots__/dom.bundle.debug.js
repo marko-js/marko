@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><h1> </h1><input></main>";
 const $walks = "E l l";
-const $input_value__OR__input_wire__OR__handler = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_wire", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _or(8, ($scope) => _attr_input_value($scope, "#input/1", $scope.input_value, $scope.input_wire ? $scope.handler : undefined), 2)));
+const $input_value__OR__input_wire__OR__handler = /*@__PURE__*/ _fill_signal("input_value __tests__/template.marko_fill0,input_wire __tests__/template.marko_fill1", /*@__PURE__*/ _or(8, ($scope) => _attr_input_value($scope, "#input/1", $scope.input_value, $scope.input_wire ? $scope.handler : undefined), 2));
 const $handler2 = /*@__PURE__*/ _const("handler", $input_value__OR__input_wire__OR__handler);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_input_value_script($scope, "#input/1"));
 function $setup($scope) {

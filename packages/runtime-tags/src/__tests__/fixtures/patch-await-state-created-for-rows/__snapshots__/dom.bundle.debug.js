@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button class=open>inc</button><!><!>";
 const $walks = " b%c";
-const $await_content__item = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "item", /*@__PURE__*/ _closure_get("item/7", ($scope) => _text($scope["#text/0"], $scope._.item), 0, "__tests__/template.marko_2_item#1:2/subscribe"), 0);
+const $await_content__item = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "item", /*@__PURE__*/ _closure_get("item/7", ($scope) => _text($scope["#text/0"], $scope._.item), 0, "__tests__/template.marko_2_item#1:2/subscribe"), 0);
 const $await_content__setup = $await_content__item;
 const $await_content__x = ($scope, x) => _text($scope["#text/1"], x);
 const $await_content__$params = ($scope, $params3) => $await_content__x($scope, $params3[0]);

@@ -16,10 +16,10 @@ const $Panel_content__first_item = /*@__PURE__*/ _const(4, $if_content2__first_i
 const $Panel_content__all = ($scope, all) => $Panel_content__first($scope, all.at(0));
 const $Panel_content = _content$1("a3", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__all);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a6", 11, /*@__PURE__*/ _fill_join("a5", 7, /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_signal("7 a5,11 a6", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
 	isOpen: !$scope.i,
 	item: attrTag({ label: $scope.h + "!" })
-})), 2)));
+})), 2));
 const $open = /*@__PURE__*/ _let(8, $input_label__OR__open__OR__Tag);
 const $setup__script = _script("a4", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.i);

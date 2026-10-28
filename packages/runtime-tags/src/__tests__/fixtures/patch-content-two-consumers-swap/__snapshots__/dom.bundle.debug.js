@@ -15,15 +15,15 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)($walks$1);
-const $card_content2__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_note#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/8", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._), 1));
+const $card_content2__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_note#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/8", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._), 1));
 const $card_content2__setup = $card_content2__input_note;
 const $card_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<em> </em>", "D ", $card_content2__setup);
-const $if_content__input_t = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_t2#0:7/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_t2", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_title($scope["#childScope/0"], $scope._.input_t2))));
+const $if_content__input_t = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_t2#0:7/init", /*@__PURE__*/ _fill_signal("input_t2 __tests__/template.marko_fill1", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_title($scope["#childScope/0"], $scope._.input_t2))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_t._($scope);
 	$input_content_direct($scope["#childScope/0"], $card_content2($scope));
 };
-const $card_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/8", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:5/subscribe"), 0);
+const $card_content__input_note = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/8", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:5/subscribe"), 0);
 const $card_content__setup = $card_content__input_note;
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $card_content__setup);
 function $setup($scope) {
