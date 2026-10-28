@@ -65,22 +65,9 @@ UPDATE: i::text " " => "b"
 ```
 
 # Update `{"label":"c"}`
-```html
-<button>
-  2
-</button>
-<em>
-  c
-</em>
-<b>
-  SHOWN_message
-</b>
-<i>
-  c
-</i>
+## Console
 ```
-## Change
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
 ```
-UPDATE: em::text "b" => "c"
-UPDATE: i::text "b" => "c"
-```
+
+## Patch rejected (navigate)

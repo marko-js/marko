@@ -2,8 +2,13 @@ import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
 import { navigate, resolveAfter, rejectAfter, wait } from "../../utils/resolve";
+// Ids stay unique and linked across navigations that stream rows, catch
+// them, and render the body again, which reloads.
 export const config: TestConfig = {
+  // Debug logs the rejection's reason, which optimize cannot.
+  skip_parity: true,
   patches: true,
+  expect_rejection: true,
   skip_fresh_render: true,
   equivalent: false,
   steps: () => [
@@ -15,7 +20,6 @@ export const config: TestConfig = {
     navigate(next2, checkIds),
     checkIds,
     navigate(next3, checkIds),
-    checkIds,
   ],
 };
 

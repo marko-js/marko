@@ -42,7 +42,11 @@ export const patchers: { [K in PatchKind]?: Patcher<K> } = {};
 export const setupPatchers: typeof patchers = {};
 // Structural patchers recurse back through here, so no scope is addressed by
 // id. Debug entry keys are `PatchKind:…`, optimized ones a single character.
-export const patchScope = (patch: Scope, live: Scope, kinds = patchers) => {
+export const patchScope = (
+  patch: Scope | undefined,
+  live: Scope,
+  kinds = patchers,
+) => {
   for (const key in patch) {
     if (MARKO_DEBUG) {
       const kind = key.slice(0, key.indexOf(":") + 1);

@@ -1,15 +1,15 @@
 import type { TestConfig } from "../../main.test";
 
-// The document rendered the `@catch` (a sync throw); later patches keep it,
-// whether their body renders cleanly or throws again.
+// The document rendered the `@catch` (a sync throw): a patch throwing again
+// keeps it, and one rendering the body reloads.
 export const config: TestConfig = {
+  // Debug logs the rejection's reason, which optimize cannot.
+  skip_parity: true,
   patches: true,
-  // A caught `<try>` keeps its `@catch`, which a fresh render of a later
-  // input lacks.
-  skip_fresh_render: true,
+  expect_rejection: true,
   steps: [
     { message: "x", boom: true },
-    { message: "ok" },
     { message: "y", boom: true },
+    { message: "ok" },
   ],
 };

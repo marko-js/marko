@@ -23,3 +23,5 @@ UPDATE: main > b::text " " => "boom"
 ```
 
 # Update `{"message":"back"}`
+
+## Patch rejected (navigate)

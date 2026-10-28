@@ -5,18 +5,19 @@ const click = (document: Document) => {
 };
 
 // A `content=` in a `@catch` reading its error, reading none of it itself:
-// the catch a patch creates renders it, and later patches keep it current.
+// the catch a patch creates renders it, and later patches throwing again keep
+// it current, before and after a click; one rendering the body reloads.
 export const config: TestConfig = {
+  // Debug logs the rejection's reason, which optimize cannot.
+  skip_parity: true,
   patches: true,
-  // A caught `<try>` keeps its `@catch`, which a fresh render of a later
-  // input lacks.
-  skip_fresh_render: true,
+  expect_rejection: true,
   steps: [
     { fail: false, label: "a" },
     { fail: true, label: "b" },
     { fail: true, label: "c" },
-    { fail: false, label: "d" },
     click,
     { fail: true, label: "e" },
+    { fail: false, label: "d" },
   ],
 };

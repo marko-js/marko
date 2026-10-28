@@ -13,8 +13,3 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-then-pending/template.marko_1*content"],
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-then-pending/template.marko_fill0": "c"
 }
-{
-  "PatchChild:BranchScopes:#text/0": [{
-    "PatchChild:BranchScopes:#text/0": {}
-  }, _(0)["PatchChild:BranchScopes:#text/0"][1]]
-}

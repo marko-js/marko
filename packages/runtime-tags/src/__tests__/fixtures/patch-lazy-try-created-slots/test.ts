@@ -2,12 +2,13 @@ import type { TestConfig } from "../../main.test";
 import { navigate, rejectAfter } from "../../utils/resolve";
 
 // A patch creates a lazily loaded child's `<try>`: its `@placeholder` and
-// `@catch` resolve by id once the child's module registers them.
+// `@catch` resolve by id once the child's module registers them; a patch
+// resolving after the catch reloads.
 export const config: TestConfig = {
+  // Debug logs the rejection's reason, which optimize cannot.
+  skip_parity: true,
   patches: true,
-  // A caught `<try>` keeps its `@catch`, which a fresh render of a later
-  // input lacks.
-  skip_fresh_render: true,
+  expect_rejection: true,
   steps: () => [
     { show: false },
     { show: true, p: Promise.resolve("a") },

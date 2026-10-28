@@ -8,10 +8,14 @@ const click = (container: Document) => {
 };
 
 // A child a `@catch` renders reads a member of its error, the page's state
-// and a param: the first error a patch shows stays as later patches throw
-// again, render the body or throw after a click, and the rest updates.
+// and a param: the first error a patch shows stays as later patches
+// throw again, before and after a click, and the rest updates; a patch
+// rendering the body reloads.
 export const config: TestConfig = {
+  // Debug logs the rejection's reason, which optimize cannot.
+  skip_parity: true,
   patches: true,
+  expect_rejection: true,
   // A caught `<try>` keeps its `@catch`, which a fresh render of a later
   // input lacks.
   skip_fresh_render: true,
@@ -19,8 +23,8 @@ export const config: TestConfig = {
     { label: "a" },
     { error: error("1"), label: "b" },
     { error: error("2"), label: "c" },
-    { label: "d" },
     click,
     { error: error("3"), label: "e" },
+    { label: "d" },
   ],
 };

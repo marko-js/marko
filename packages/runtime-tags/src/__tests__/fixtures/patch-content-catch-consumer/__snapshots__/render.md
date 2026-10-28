@@ -61,27 +61,6 @@ UPDATE: i::text@0 "b" => "c"
 UPDATE: em::text@0 "b" => "c"
 ```
 
-# Update `{"fail":false,"label":"d"}`
-```html
-<button>
-  0
-</button>
-<em>
-  d 0
-</em>
-<b>
-  SHOWN_message
-</b>
-<i>
-  d 0
-</i>
-```
-## Change
-```
-UPDATE: i::text@0 "c" => "d"
-UPDATE: em::text@0 "c" => "d"
-```
-
 # Update
 ```js
 container.querySelector("button").click();
@@ -91,13 +70,13 @@ container.querySelector("button").click();
   1
 </button>
 <em>
-  d 1
+  c 1
 </em>
 <b>
   SHOWN_message
 </b>
 <i>
-  d 1
+  c 1
 </i>
 ```
 ## Change
@@ -124,6 +103,10 @@ UPDATE: em::text@2 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: i::text@0 "d" => "e"
-UPDATE: em::text@0 "d" => "e"
+UPDATE: i::text@0 "c" => "e"
+UPDATE: em::text@0 "c" => "e"
 ```
+
+# Update `{"fail":false,"label":"d"}`
+
+## Patch rejected (navigate)

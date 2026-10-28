@@ -65,22 +65,5 @@ UPDATE: i::text " " => "b"
 ```
 
 # Update `{"label":"c"}`
-```html
-<button>
-  2
-</button>
-<em>
-  c
-</em>
-<b>
-  SHOWN_message
-</b>
-<i>
-  c
-</i>
-```
-## Change
-```
-UPDATE: em::text "b" => "c"
-UPDATE: i::text "b" => "c"
-```
+
+## Patch rejected (navigate)

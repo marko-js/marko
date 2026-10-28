@@ -5,9 +5,12 @@ const click = (document: Document) => {
 };
 
 // A sync throw inside a patched `<try>` body renders `@catch`, as a
-// document does; the next patch keeps it.
+// document does; the next patch rendering the body reloads.
 export const config: TestConfig = {
+  // Debug logs the rejection's reason, which optimize cannot.
+  skip_parity: true,
   patches: true,
+  expect_rejection: true,
   steps: [
     { message: "ok" },
     click,

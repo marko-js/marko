@@ -19,7 +19,7 @@ UPDATE: b::text@0 "" => "b"
 UPDATE: b::text@2 "" => "b"
 ```
 
-# Update `{"msg":"c"}`
+# Update `{"fail":true,"msg":"c"}`
 ```html
 <b>
   b c
@@ -29,3 +29,7 @@ UPDATE: b::text@2 "" => "b"
 ```
 UPDATE: b::text@2 "b" => "c"
 ```
+
+# Update `{"msg":"d"}`
+
+## Patch rejected (navigate)

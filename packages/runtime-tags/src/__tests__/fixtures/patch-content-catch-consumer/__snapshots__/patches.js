@@ -42,21 +42,6 @@
 // PATCH holding Dwo
 {
   cc: {
-    cAa: [{
-      ta: "ok"
-    }, "c3"]
-  },
-  cd: {
-    cAa: [{
-      ta: "ok"
-    }, "b4"]
-  },
-  va7: "d"
-}
-
-// PATCH holding Dwo
-{
-  cc: {
     ka: []
   },
   cd: {
@@ -72,4 +57,19 @@
     }, "b4"]
   },
   va7: "e"
+}
+
+// PATCH holding Dwo
+{
+  cc: {
+    cAa: [{
+      ta: "ok"
+    }, "c3"]
+  },
+  cd: {
+    cAa: [{
+      ta: "ok"
+    }, "b4"]
+  },
+  va7: "d"
 }

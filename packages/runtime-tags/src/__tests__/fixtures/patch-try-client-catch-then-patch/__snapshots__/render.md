@@ -34,52 +34,5 @@ UPDATE: main > b::text@5 "" => "a"
 ```
 
 # Update `{"message":"b"}`
-```html
-<main>
-  <b>
-    boom b
-  </b>
-  <button>
-    1
-  </button>
-</main>
-```
-## Change
-```
-UPDATE: main > b::text@5 "a" => "b"
-```
 
-# Update
-```js
-document.querySelector("button").click();
-```
-```html
-<main>
-  <b>
-    boom b
-  </b>
-  <button>
-    2
-  </button>
-</main>
-```
-## Change
-```
-UPDATE: main > button::text "1" => "2"
-```
-
-# Update `{"message":"c"}`
-```html
-<main>
-  <b>
-    boom c
-  </b>
-  <button>
-    2
-  </button>
-</main>
-```
-## Change
-```
-UPDATE: main > b::text@5 "b" => "c"
-```
+## Patch rejected (navigate)

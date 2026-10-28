@@ -58,14 +58,4 @@ INSERT: #sM_A + :is(label, #sM_VA)
 
 # Update `{"promise":{}}`
 
-# Update
-```js
-const seen = new Set();
-for (const input of document.querySelectorAll("input")) {
-  assert(!seen.has(input.id));
-  seen.add(input.id);
-  assert.equal(input.labels?.length, 1);
-  assert(document.getElementById(input.getAttribute("aria-describedby")));
-assert(seen.size > 0);
-}
-```
+## Patch rejected (navigate)

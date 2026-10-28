@@ -77,15 +77,9 @@ UPDATE: span::text@2 "1" => "2"
 ```
 
 # Update `{"fail":false,"msg":"d","label":"L4"}`
-```html
-<button>
-  2
-</button>
-<span>
-  b|2|L4
-</span>
+## Console
 ```
-## Change
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
 ```
-UPDATE: span::text@4 "L3" => "L4"
-```
+
+## Patch rejected (navigate)

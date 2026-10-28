@@ -57,15 +57,9 @@ INSERT: #sM_.heading + :is(label, #sM_.#childScope/0@1.uid)
 ```
 
 # Update `{"promise":{}}`
-
-# Update
-```js
-const seen = new Set();
-for (const input of document.querySelectorAll("input")) {
-  assert(!seen.has(input.id));
-  seen.add(input.id);
-  assert.equal(input.labels?.length, 1);
-  assert(document.getElementById(input.getAttribute("aria-describedby")));
-assert(seen.size > 0);
-}
+## Console
 ```
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
+```
+
+## Patch rejected (navigate)

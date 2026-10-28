@@ -29,12 +29,5 @@ UPDATE: b::text "b" => "c"
 ```
 
 # Update `{"label":"d"}`
-```html
-<b>
-  d
-</b>
-```
-## Change
-```
-UPDATE: b::text "c" => "d"
-```
+
+## Patch rejected (navigate)

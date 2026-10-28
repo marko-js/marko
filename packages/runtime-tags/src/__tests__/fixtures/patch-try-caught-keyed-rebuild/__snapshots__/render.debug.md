@@ -23,8 +23,6 @@ REMOVE: main::text + p
 REMOVE: main::text + button
 ```
 
-# Update `{"pages":[{"key":1,"title":"c"}]}`
-
 # Update `{"pages":[{"key":2,"title":"d"}]}`
 ```html
 <main>
@@ -72,3 +70,13 @@ UPDATE: main > button::text "0" => "1"
 REMOVE: main > :is(p, button)
 INSERT: main::text("caught")
 ```
+
+# Update `{"pages":[{"key":3,"title":"f","fail":true}]}`
+
+# Update `{"pages":[{"key":3,"title":"g"}]}`
+## Console
+```
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
+```
+
+## Patch rejected (navigate)

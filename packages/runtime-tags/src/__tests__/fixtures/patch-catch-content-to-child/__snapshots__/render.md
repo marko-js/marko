@@ -45,22 +45,6 @@ UPDATE: div > span::text@15 "" => "0"
 UPDATE: div > span::text@17 "b" => "c"
 ```
 
-# Update `{"label":"d"}`
-```html
-<button>
-  0
-</button>
-<div>
-  <span>
-    SHOWN_message1 0 d
-  </span>
-</div>
-```
-## Change
-```
-UPDATE: div > span::text@17 "c" => "d"
-```
-
 # Update
 ```js
 container.querySelector("button").click();
@@ -71,7 +55,7 @@ container.querySelector("button").click();
 </button>
 <div>
   <span>
-    SHOWN_message1 1 d
+    SHOWN_message1 1 c
   </span>
 </div>
 ```
@@ -94,5 +78,9 @@ UPDATE: div > span::text@15 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: div > span::text@17 "d" => "e"
+UPDATE: div > span::text@17 "c" => "e"
 ```
+
+# Update `{"label":"d"}`
+
+## Patch rejected (navigate)

@@ -3,12 +3,12 @@ import { navigate, rejectAfter } from "../../utils/resolve";
 
 // A scriptless page with an empty `@catch`: the module registering its
 // empty content loads, and the rejection renders nothing, as a document
-// does.
+// does; a patch resolving the await reloads.
 export const config: TestConfig = {
+  // Debug logs the rejection's reason, which optimize cannot.
+  skip_parity: true,
   patches: true,
-  // A caught `<try>` keeps its `@catch`, which a fresh render of a later
-  // input lacks.
-  skip_fresh_render: true,
+  expect_rejection: true,
   steps: () => [
     { promise: Promise.resolve("hi") },
     navigate(() => ({ promise: rejectAfter(new Error("boom")) })),

@@ -17,3 +17,5 @@ REMOVE: main > em
 ```
 
 # Update `{"promise":{}}`
+
+## Patch rejected (navigate)

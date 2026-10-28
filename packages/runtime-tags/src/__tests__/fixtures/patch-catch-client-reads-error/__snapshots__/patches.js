@@ -12,21 +12,21 @@
 
 // PATCH holding Cwo
 {
-  cAa: [{
-    ta: "ok"
-  }, "a3"],
-  cAb: [{
-    ta: "ok"
-  }, "a8"]
-}
-
-// PATCH holding Cwo
-{
   ka: [{
     we: _.a = "SHOWN_message2",
     ta: _.a
   }, "a3"],
   kb: [{
     wd: "SHOWN_code2"
+  }, "a8"]
+}
+
+// PATCH holding Cwo
+{
+  cAa: [{
+    ta: "ok"
+  }, "a3"],
+  cAb: [{
+    ta: "ok"
   }, "a8"]
 }

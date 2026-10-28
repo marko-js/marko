@@ -80,21 +80,5 @@ UPDATE: em:nth-of-type(2)::text "yq" => "zr"
 ```
 
 # Update `{"a":"w","b":"s","fail":false}`
-```html
-<em>
-  wkk
-</em>
-<em>
-  ws
-</em>
-<button
-  class="n"
->
-  +
-</button>
-```
-## Change
-```
-UPDATE: em:nth-of-type(1)::text "zkk" => "wkk"
-UPDATE: em:nth-of-type(2)::text "zr" => "ws"
-```
+
+## Patch rejected (navigate)

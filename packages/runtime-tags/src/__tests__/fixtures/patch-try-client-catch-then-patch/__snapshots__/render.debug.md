@@ -34,52 +34,9 @@ UPDATE: main > b::text@5 "" => "a"
 ```
 
 # Update `{"message":"b"}`
-```html
-<main>
-  <b>
-    boom b
-  </b>
-  <button>
-    1
-  </button>
-</main>
+## Console
 ```
-## Change
-```
-UPDATE: main > b::text@5 "a" => "b"
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
 ```
 
-# Update
-```js
-document.querySelector("button").click();
-```
-```html
-<main>
-  <b>
-    boom b
-  </b>
-  <button>
-    2
-  </button>
-</main>
-```
-## Change
-```
-UPDATE: main > button::text "1" => "2"
-```
-
-# Update `{"message":"c"}`
-```html
-<main>
-  <b>
-    boom c
-  </b>
-  <button>
-    2
-  </button>
-</main>
-```
-## Change
-```
-UPDATE: main > b::text@5 "b" => "c"
-```
+## Patch rejected (navigate)

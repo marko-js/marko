@@ -65,3 +65,5 @@ UPDATE: main > button::text "0" => "1"
 ```
 
 # Update `{"error":{"status":500,"items":["SHOWN_z"]}}`
+
+## Patch rejected (navigate)

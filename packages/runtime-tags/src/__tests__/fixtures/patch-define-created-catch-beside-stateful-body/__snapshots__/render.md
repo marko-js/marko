@@ -62,20 +62,6 @@ REMOVE: em + em
 UPDATE: em::text "b" => "c"
 ```
 
-# Update `{"fail":false,"label":"d"}`
-```html
-<em>
-  d
-</em>
-<button>
-  toggle
-</button>
-```
-## Change
-```
-UPDATE: em::text "c" => "d"
-```
-
 # Update `{"fail":true,"label":"e"}`
 ```html
 <em>
@@ -87,5 +73,9 @@ UPDATE: em::text "c" => "d"
 ```
 ## Change
 ```
-UPDATE: em::text "d" => "e"
+UPDATE: em::text "c" => "e"
 ```
+
+# Update `{"fail":false,"label":"d"}`
+
+## Patch rejected (navigate)

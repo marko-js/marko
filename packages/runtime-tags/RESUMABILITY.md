@@ -87,9 +87,11 @@ patch, fill, structural param, shell).
   ready channels (`dom/patches/ready.feat.ts`); a module that fails settles
   pending flushes as not applied.
 - **Caught tries.** A `<try>` whose `@catch` shows keeps it, as a client
-  render does (`patches/try` and the catch patchers): a patch never renders its
-  body again or replaces its catch, whose closures subscribe as unpatched
-  structure's do. Only a try a flush creates anew renders its body, or its catch if that throws.
+  render does (`patches/try` and the catch patchers): a patch never replaces its
+  catch, whose closures subscribe as unpatched structure's do. A patch whose
+  body throws again sends no body and the catch stays; one rendering the body
+  rejects, so the caller loads the URL as a document. Only a try a flush creates
+  anew renders its body, or its catch if that throws.
   A body is told from a catch by its catch renderer, which a patch page's
   document writes with the try's marks, before the body settles.
 - **Timing.** Like a reorder, a flush arrives after effects ran and may find

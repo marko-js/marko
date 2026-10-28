@@ -7,6 +7,8 @@
 </main>
 ```
 
+# Update `{"message":"y","boom":true}`
+
 # Update `{"message":"ok"}`
 
-# Update `{"message":"y","boom":true}`
+## Patch rejected (navigate)

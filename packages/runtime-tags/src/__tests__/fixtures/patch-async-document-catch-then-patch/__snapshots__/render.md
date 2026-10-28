@@ -10,3 +10,5 @@
 # Update `{"promise":{}}`
 
 # Update `{"promise":{}}`
+
+## Patch rejected (navigate)

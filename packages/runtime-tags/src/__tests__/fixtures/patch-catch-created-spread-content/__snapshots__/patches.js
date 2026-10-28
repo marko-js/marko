@@ -42,16 +42,6 @@
 // PATCH holding Cwo
 {
   cc: {
-    cAa: [{
-      ta: "ok"
-    }, "b5"]
-  },
-  va4: "d"
-}
-
-// PATCH holding Cwo
-{
-  cc: {
     ka: [{
       ta: "SHOWN_message",
       fb: "^^^a2",
@@ -67,4 +57,14 @@
     }, "b5"]
   },
   va4: "e"
+}
+
+// PATCH holding Cwo
+{
+  cc: {
+    cAa: [{
+      ta: "ok"
+    }, "b5"]
+  },
+  va4: "d"
 }

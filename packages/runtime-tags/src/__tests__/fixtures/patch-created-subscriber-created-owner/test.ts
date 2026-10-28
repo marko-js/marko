@@ -3,9 +3,13 @@ import type { TestConfig } from "../../main.test";
 const error = (id: string) => new Error("SHOWN_message" + id);
 
 // A `@catch` in a child the same patch creates passes content reading the
-// child's input on: its subscriber resumes into an owner holding no set yet.
+// child's input on: its subscriber resumes into an owner holding no set yet;
+// a patch rendering the body reloads.
 export const config: TestConfig = {
+  // Debug logs the rejection's reason, which optimize cannot.
+  skip_parity: true,
   patches: true,
+  expect_rejection: true,
   // A caught `<try>` keeps its `@catch`, which a fresh render of a later
   // input lacks.
   skip_fresh_render: true,

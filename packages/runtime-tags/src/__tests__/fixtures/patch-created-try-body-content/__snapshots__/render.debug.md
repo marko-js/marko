@@ -114,17 +114,9 @@ UPDATE: em::text@2 "" => "e"
 ```
 
 # Update `{"show":true,"alt":false,"label":"f"}`
-```html
-<button>
-  2
-</button>
-<i>
-  B f
-</i>
+## Console
 ```
-## Change
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
 ```
-INSERT: button + i
-REMOVE: i + em
-UPDATE: i::text@2 "" => "f"
-```
+
+## Patch rejected (navigate)

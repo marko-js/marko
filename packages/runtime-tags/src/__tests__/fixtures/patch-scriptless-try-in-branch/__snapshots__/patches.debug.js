@@ -14,7 +14,7 @@
 // PATCH holding DSY
 [`packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_3*content;D ;<p> </p>`, {
   "PatchBranch:#main/0": [{
-    "PatchChild:BranchScopes:#text/0": [{}, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_2*content"],
+    "PatchChild:BranchScopes:#text/0": [$, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-scriptless-try-in-branch/template.marko_2*content"],
     "PatchCatch:#text/0": [{
       "PatchText:#text/0": "boom"
     }, _.a]

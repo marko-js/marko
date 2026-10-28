@@ -23,14 +23,6 @@
 
 // PATCH holding CAI
 {
-  "PatchChild:BranchScopes:#text/2": [{
-    "PatchText:#text/0": "ok"
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-child-reads-error/template.marko_1*content"],
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-child-reads-error/template.marko_fill0": "d"
-}
-
-// PATCH holding CAI
-{
   "PatchCatch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "SHOWN_message3",
@@ -38,4 +30,12 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-child-reads-error/template.marko_1*content"],
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-child-reads-error/template.marko_fill0": "e"
+}
+
+// PATCH holding CAI
+{
+  "PatchChild:BranchScopes:#text/2": [{
+    "PatchText:#text/0": "ok"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-child-reads-error/template.marko_1*content"],
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-child-reads-error/template.marko_fill0": "d"
 }

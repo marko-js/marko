@@ -76,32 +76,9 @@ LOG "for" 2 2
 ```
 
 # Update `{"msg":"d","show":true,"items":[1],"v":3}`
-```html
-<b>
-  b
-</b>
-<i>
-  30
-</i>
-<u>
-  1
-</u>
-<div>
-  <s>
-    30
-  </s>
-</div>
-```
-## Change
-```
-REMOVE: u + u
-UPDATE: i::text "20" => "30"
-UPDATE: div > s::text "20" => "30"
-```
 ## Console
 ```
-LOG "catch" 3
-LOG "if" 3
-LOG "for" 1 3
-LOG "content" 3
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
 ```
+
+## Patch rejected (navigate)

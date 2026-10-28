@@ -65,3 +65,11 @@ UPDATE: main > button::text "0" => "1"
 ```
 
 # Update `{"error":{"status":500,"items":["SHOWN_z"]}}`
+
+# Update
+## Console
+```
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
+```
+
+## Patch rejected (navigate)

@@ -5,13 +5,13 @@ const click = (container: Document) => {
 };
 
 // A child a `@catch` renders reads its error's message, the page's state and
-// a param: patches throwing another error or rendering the body keep the
-// first message, while the count and label update.
+// a param: patches throwing another error keep the first message, while the
+// count and label update; one rendering the body reloads.
 export const config: TestConfig = {
+  // Debug logs the rejection's reason, which optimize cannot.
+  skip_parity: true,
   patches: true,
-  // A caught `<try>` keeps its `@catch`, which a fresh render of a later
-  // input lacks.
-  skip_fresh_render: true,
+  expect_rejection: true,
   steps: [
     { fail: false, msg: "a", label: "L1" },
     { fail: true, msg: "b", label: "L2" },

@@ -23,14 +23,6 @@
 
 // PATCH holding CAE
 {
-  cAc: [{
-    ta: "ok"
-  }, "a5"],
-  va8: "d"
-}
-
-// PATCH holding CAE
-{
   kc: [{
     ca: {
       ta: "SHOWN_message3",
@@ -38,4 +30,12 @@
     }
   }, "a5"],
   va8: "e"
+}
+
+// PATCH holding CAE
+{
+  cAc: [{
+    ta: "ok"
+  }, "a5"],
+  va8: "d"
 }

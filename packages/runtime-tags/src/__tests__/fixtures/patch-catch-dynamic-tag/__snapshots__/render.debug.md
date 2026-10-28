@@ -44,20 +44,6 @@ UPDATE: small::text@15 "" => "0"
 UPDATE: small::text@17 "" => "c"
 ```
 
-# Update `{"large":false,"label":"d"}`
-```html
-<button>
-  0
-</button>
-<small>
-  SHOWN_message1 0 d
-</small>
-```
-## Change
-```
-UPDATE: small::text@17 "c" => "d"
-```
-
 # Update
 ```js
 container.querySelector("button").click();
@@ -67,7 +53,7 @@ container.querySelector("button").click();
   1
 </button>
 <small>
-  SHOWN_message1 1 d
+  SHOWN_message1 1 c
 </small>
 ```
 ## Change
@@ -93,3 +79,11 @@ UPDATE: strong::text@0 "" => "SHOWN_message1"
 UPDATE: strong::text@15 "" => "1"
 UPDATE: strong::text@17 "" => "e"
 ```
+
+# Update `{"large":false,"label":"d"}`
+## Console
+```
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
+```
+
+## Patch rejected (navigate)

@@ -114,17 +114,5 @@ UPDATE: em::text@2 "" => "e"
 ```
 
 # Update `{"show":true,"alt":false,"label":"f"}`
-```html
-<button>
-  2
-</button>
-<i>
-  B f
-</i>
-```
-## Change
-```
-INSERT: button + i
-REMOVE: i + em
-UPDATE: i::text@2 "" => "f"
-```
+
+## Patch rejected (navigate)

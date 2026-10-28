@@ -36,16 +36,6 @@
 // PATCH holding CxI
 {
   "PatchChild:#childScope/2": {
-    "PatchChild:BranchScopes:#text/0": [{
-      "PatchText:#text/0": "ok"
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/tags/error-wrapper.marko_1*content"]
-  },
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_fill0": "d"
-}
-
-// PATCH holding CxI
-{
-  "PatchChild:#childScope/2": {
     "PatchCatch:#text/0": [{
       "PatchText:#text/0": "SHOWN_message",
       "PatchDynamicTag:#div/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_1*content",
@@ -58,4 +48,14 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/tags/error-wrapper.marko_1*content"]
   },
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_fill0": "e"
+}
+
+// PATCH holding CxI
+{
+  "PatchChild:#childScope/2": {
+    "PatchChild:BranchScopes:#text/0": [{
+      "PatchText:#text/0": "ok"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/tags/error-wrapper.marko_1*content"]
+  },
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_fill0": "d"
 }

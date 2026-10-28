@@ -51,25 +51,6 @@ UPDATE: div > i::text@2 "" => "0"
 UPDATE: div > i::text@0 "b" => "c"
 ```
 
-# Update `{"fail":false,"label":"d"}`
-```html
-<button>
-  0
-</button>
-<b>
-  SHOWN_message
-</b>
-<div>
-  <i>
-    d 0
-  </i>
-</div>
-```
-## Change
-```
-UPDATE: div > i::text@0 "c" => "d"
-```
-
 # Update
 ```js
 document.querySelector("button").click();
@@ -83,7 +64,7 @@ document.querySelector("button").click();
 </b>
 <div>
   <i>
-    d 1
+    c 1
   </i>
 </div>
 ```
@@ -109,5 +90,9 @@ UPDATE: div > i::text@2 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: div > i::text@0 "d" => "e"
+UPDATE: div > i::text@0 "c" => "e"
 ```
+
+# Update `{"fail":false,"label":"d"}`
+
+## Patch rejected (navigate)

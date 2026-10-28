@@ -17,12 +17,5 @@ UPDATE: b::text@10 "a" => "b"
 ```
 
 # Update `{"label":"c"}`
-```html
-<b>
-  SHOWN_one c
-</b>
-```
-## Change
-```
-UPDATE: b::text@10 "b" => "c"
-```
+
+## Patch rejected (navigate)

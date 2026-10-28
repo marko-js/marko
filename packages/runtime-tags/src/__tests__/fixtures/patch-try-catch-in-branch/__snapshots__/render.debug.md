@@ -31,8 +31,6 @@ REMOVE: main > b + em
 UPDATE: main > b::text " " => "boom"
 ```
 
-# Update `{"show":true,"message":"back"}`
-
 # Update `{"show":false}`
 ```html
 <main />
@@ -54,3 +52,26 @@ REMOVE: main > b
 ```
 INSERT: main > em
 ```
+
+# Update `{"show":true,"message":"y","boom":true}`
+```html
+<main>
+  <b>
+    boom
+  </b>
+</main>
+```
+## Change
+```
+INSERT: main > b
+REMOVE: main > b + em
+UPDATE: main > b::text " " => "boom"
+```
+
+# Update `{"show":true,"message":"back"}`
+## Console
+```
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
+```
+
+## Patch rejected (navigate)

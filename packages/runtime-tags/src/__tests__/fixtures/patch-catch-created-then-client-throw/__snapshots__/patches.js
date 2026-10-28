@@ -1,7 +1,7 @@
 // PATCH
 [`a5 !a0; D%b%;<button><!><!></button>`, `a4`, `a6;b%;<!><!><!>`, {
   la: ["a", {
-    cAa: [{}, "a4", "a5"],
+    cAa: [$, "a4", "a5"],
     ka: [{
       ta: "boom"
     }, "a4"]

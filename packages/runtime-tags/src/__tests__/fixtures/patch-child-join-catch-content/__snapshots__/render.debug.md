@@ -80,21 +80,9 @@ UPDATE: em:nth-of-type(2)::text "yq" => "zr"
 ```
 
 # Update `{"a":"w","b":"s","fail":false}`
-```html
-<em>
-  wkk
-</em>
-<em>
-  ws
-</em>
-<button
-  class="n"
->
-  +
-</button>
+## Console
 ```
-## Change
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
 ```
-UPDATE: em:nth-of-type(1)::text "zkk" => "wkk"
-UPDATE: em:nth-of-type(2)::text "zr" => "ws"
-```
+
+## Patch rejected (navigate)

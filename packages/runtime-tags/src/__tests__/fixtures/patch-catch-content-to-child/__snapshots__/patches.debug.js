@@ -35,14 +35,6 @@
 
 // PATCH holding Cww
 {
-  "PatchChild:BranchScopes:#text/2": [{
-    "PatchText:#text/0": "ok"
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_1*content"],
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_fill0": "d"
-}
-
-// PATCH holding Cww
-{
   "PatchCatch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_2*content",
@@ -56,4 +48,12 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_1*content"],
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_fill0": "e"
+}
+
+// PATCH holding Cww
+{
+  "PatchChild:BranchScopes:#text/2": [{
+    "PatchText:#text/0": "ok"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_1*content"],
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_fill0": "d"
 }

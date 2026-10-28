@@ -7,3 +7,6 @@
 ;BgI
 
 // PATCH holding BgI
+{
+  "PatchChild:BranchScopes:#text/0": [{}, "packages/runtime-tags/src/__tests__/fixtures/patch-try-caught-body-writes-nothing/template.marko_2*content"]
+}

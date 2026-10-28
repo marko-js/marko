@@ -27,14 +27,9 @@ UPDATE: div > span::text@15 "a" => "b"
 ```
 
 # Update `{"show":true,"label":"c"}`
-```html
-<div>
-  <span>
-    SHOWN_message1 c
-  </span>
-</div>
+## Console
 ```
-## Change
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
 ```
-UPDATE: div > span::text@15 "b" => "c"
-```
+
+## Patch rejected (navigate)

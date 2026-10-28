@@ -27,3 +27,5 @@ UPDATE: main > b::text " " => "boom"
 ```
 
 # Update `{"promise":{}}`
+
+## Patch rejected (navigate)

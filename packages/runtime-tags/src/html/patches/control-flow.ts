@@ -629,7 +629,7 @@ export function _try(
   if (placeholderContent) _scope_id();
   const branchId = _peek_scope_id();
   // The entry carries the creation payload (body shell, slot ids) unless the try
-  // always pairs here; one that only pairs still names its catch, which a caught try keeps.
+  // always pairs here; one that only pairs still names its catch, so a caught try rejects its body.
   const create = !alwaysPairs || inCreatable();
   // Beside the patch: `[catchId, bodyId?, placeholderId?]`, the catch first.
   const slotIds = !create
@@ -669,8 +669,8 @@ export function _try(
   // `@catch` in its entry, so no document reorder rides the flush stream.
   let writesRenderers = false;
   if (catchContent) {
-    // A catch replaces a body that throws, so its patch links only once its sync
-    // part renders unthrown; a later throw empties a creatable entry, else voids it.
+    // Its entry goes out whenever the body renders, so a try the page caught
+    // learns it; a body that throws leaves its patch out (or voids the entry).
     const body = openScopePatch(state, branchId);
     // Its shell ships ahead of those its body ships, as the entry leads them.
     if (create) shipShell(state, bodyId);
@@ -687,11 +687,11 @@ export function _try(
         // A body that threw before claiming its id keeps it paired.
         if (_peek_scope_id() === branchId) _scope_id();
         if (!entry) {
-          if (create) linkScopePatch(state, branchId, patchTreeNode(state, {}));
+          if (create) linkScopePatch(state, branchId, body)![0] = undefined;
         } else if (peekScopePatch(state, branchId) === body) {
           // Still in the flush to go out (a flush sent it pending otherwise).
           if (create) {
-            entry[0] = patchTreeNode(state, {});
+            entry[0] = undefined;
           } else {
             writePatchEntry(
               state,
@@ -715,14 +715,11 @@ export function _try(
       },
       () => {
         settled = true;
-        if (!entry && (create || hasKeys(body))) {
-          linkScopePatch(state, branchId, body);
-        }
+        if (!entry) linkScopePatch(state, branchId, body);
       },
     );
-    if (!settled && (create || hasKeys(body))) {
-      entry = linkScopePatch(state, branchId, body);
-    }
+    // A caught try rejects a body still pending here, even one that later throws.
+    if (!settled) entry = linkScopePatch(state, branchId, body);
   } else {
     // A try this flush may create needs its entry even when its body writes
     // nothing.

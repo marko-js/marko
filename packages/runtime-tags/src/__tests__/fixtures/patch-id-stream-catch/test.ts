@@ -2,8 +2,13 @@ import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
 import { rejectAfter, wait } from "../../utils/resolve";
+// Ids in a document's `@catch` stay unique and linked; a patch rendering the
+// body reloads.
 export const config: TestConfig = {
+  // Debug logs the rejection's reason, which optimize cannot.
+  skip_parity: true,
   patches: true,
+  expect_rejection: true,
   skip_fresh_render: true,
   equivalent: false,
   steps: () => [
@@ -11,8 +16,6 @@ export const config: TestConfig = {
     wait,
     checkIds,
     { promise: Promise.resolve([{ key: "a" }]) },
-    wait,
-    checkIds,
   ],
 };
 function checkIds(document: Document) {

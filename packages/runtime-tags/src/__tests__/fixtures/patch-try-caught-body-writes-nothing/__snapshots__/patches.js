@@ -7,3 +7,6 @@
 ;BgE
 
 // PATCH holding BgE
+{
+  cAa: [{}, "a2"]
+}

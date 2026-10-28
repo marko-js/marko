@@ -17,12 +17,9 @@ UPDATE: b::text@10 "a" => "b"
 ```
 
 # Update `{"label":"c"}`
-```html
-<b>
-  SHOWN_one c
-</b>
+## Console
 ```
-## Change
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
 ```
-UPDATE: b::text@10 "b" => "c"
-```
+
+## Patch rejected (navigate)

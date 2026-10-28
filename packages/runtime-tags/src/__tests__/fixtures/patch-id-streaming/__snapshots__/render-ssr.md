@@ -270,36 +270,4 @@ for (const input of document.querySelectorAll(
 
 # Update `{"promise":{"value":[{"key":"d"},{"key":"b"}]}}`
 
-# Update
-```js
-const seen = new Set();
-for (const element of document.querySelectorAll("[id]")) {
-  assert(!seen.has(element.id), "duplicate id: " + element.id);
-  seen.add(element.id);
-for (const input of document.querySelectorAll(
-  "input[id]",
-)) {
-  assert.equal(input.labels?.length, 1, input.outerHTML);
-  const ref = input.getAttribute("aria-describedby");
-  if (ref) assert(document.getElementById(ref), "missing reference: " + ref);
-}
-}
-```
-
-# Update `{"promise":{"value":[{"key":"d"},{"key":"b"}]}}`
-
-# Update
-```js
-const seen = new Set();
-for (const element of document.querySelectorAll("[id]")) {
-  assert(!seen.has(element.id), "duplicate id: " + element.id);
-  seen.add(element.id);
-for (const input of document.querySelectorAll(
-  "input[id]",
-)) {
-  assert.equal(input.labels?.length, 1, input.outerHTML);
-  const ref = input.getAttribute("aria-describedby");
-  if (ref) assert(document.getElementById(ref), "missing reference: " + ref);
-}
-}
-```
+## Patch rejected (navigate)

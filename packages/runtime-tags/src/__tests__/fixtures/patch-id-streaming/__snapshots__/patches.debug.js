@@ -57,28 +57,3 @@
     "PatchPending:#text/1": 1
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-id-streaming/template.marko_3*content"]
 }
-{
-  "PatchChild:BranchScopes:#text/1": [{
-    "PatchChild:BranchScopes:#text/1": {
-      "PatchLoop:#text/0": ["d", {
-        "PatchChild:#childScope/0": {
-          "PatchSetup:": {
-            "PatchAttr:#label/0 for": _.a = "sM_[\"d\"].#childScope/0@3.uid",
-            "PatchText:#text/1": "d",
-            "PatchAttr:#input/2 id": _.a,
-            "PatchAttr:#input/2 aria-describedby": "sM_.heading"
-          }
-        }
-      }, "b", {
-        "PatchChild:#childScope/0": {
-          "PatchSetup:": {
-            "PatchAttr:#label/0 for": _.b = "sM_[\"b\"].#childScope/0@3.uid",
-            "PatchText:#text/1": "b",
-            "PatchAttr:#input/2 id": _.b,
-            "PatchAttr:#input/2 aria-describedby": "sM_.heading"
-          }
-        }
-      }, "packages/runtime-tags/src/__tests__/fixtures/patch-id-streaming/template.marko_5*shell"]
-    }
-  }, _(0)["PatchChild:BranchScopes:#text/1"][1]]
-}

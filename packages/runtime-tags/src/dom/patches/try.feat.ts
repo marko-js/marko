@@ -19,7 +19,7 @@ withBoundaryContentIds((content) =>
 );
 
 // A boundary entry `[patch, catchId, contentId?, placeholderId?]` creates its
-// branch if missing; a live one pairs the patch unless its catch replaced it.
+// branch if missing; a live one pairs a body that rendered, unless caught.
 const applyChild = patchers[PatchKey.Child]!;
 patchers[PatchKey.Child] = (scope, link, value) => {
   if (Array.isArray(value)) {
@@ -38,9 +38,16 @@ patchers[PatchKey.Child] = (scope, link, value) => {
       } else {
         patchScope(patch, branch);
       }
-    } else if (!catchId || scope[link][AccessorProp.CatchContent]) {
-      // A caught try keeps its `@catch` (no `CatchContent`) until the try
-      // itself is created anew, as on a client render.
+    } else if (patch) {
+      // A caught try (no `CatchContent`) shows its body again only when created
+      // anew, so a patch rendering it rejects and the URL loads as a document.
+      if (catchId && !scope[link][AccessorProp.CatchContent]) {
+        throw MARKO_DEBUG
+          ? new Error(
+              "A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.",
+            )
+          : 0;
+      }
       applyChild(scope, link, patch);
     }
   } else {

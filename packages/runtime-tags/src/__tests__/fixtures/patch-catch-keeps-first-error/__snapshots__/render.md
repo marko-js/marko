@@ -77,15 +77,5 @@ UPDATE: span::text@2 "1" => "2"
 ```
 
 # Update `{"fail":false,"msg":"d","label":"L4"}`
-```html
-<button>
-  2
-</button>
-<span>
-  b|2|L4
-</span>
-```
-## Change
-```
-UPDATE: span::text@4 "L3" => "L4"
-```
+
+## Patch rejected (navigate)

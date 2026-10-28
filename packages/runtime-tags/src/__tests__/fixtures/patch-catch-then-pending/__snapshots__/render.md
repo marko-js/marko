@@ -29,17 +29,5 @@ UPDATE: main > p::text " " => "b"
 ```
 
 # Update `{"promise":{"value":2},"detail":"c"}`
-```html
-<main>
-  <p>
-    c
-  </p>
-  <button>
-    0
-  </button>
-</main>
-```
-## Change
-```
-UPDATE: main > p::text "b" => "c"
-```
+
+## Patch rejected (navigate)

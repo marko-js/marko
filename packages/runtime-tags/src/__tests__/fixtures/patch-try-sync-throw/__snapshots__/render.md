@@ -67,3 +67,5 @@ UPDATE: main > button::text "1" => "2"
 ```
 
 # Update `{"message":"back"}`
+
+## Patch rejected (navigate)

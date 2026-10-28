@@ -27,3 +27,5 @@ UPDATE: main > span::text " " => "boom"
 ```
 
 # Update `{"promise":{}}`
+
+## Patch rejected (navigate)

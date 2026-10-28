@@ -443,8 +443,9 @@ _Avoid_: client-owned structure, client-selected
 **Caught try**:
 A `<try>` whose `@catch` took its body's place, in the document, on a client
 error or in a patch. Like a `<let>`, it is page state: it stays caught until the
-try itself is created anew, so a patch never renders its body again or
-replaces its catch, and the catch follows the page through fills, as unpatched structure does.
+try itself is created anew. A patch never replaces its catch, which follows the
+page through fills as unpatched structure does; one rendering its body rejects,
+so the browser loads the URL as a document.
 _Avoid_: recovered try
 
 **Structural-or-global param**:

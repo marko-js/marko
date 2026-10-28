@@ -34,3 +34,5 @@ UPDATE: main > b::text " " => "boom"
 ```
 
 # Update `{"show":true,"p":{}}`
+
+## Patch rejected (navigate)

@@ -11,8 +11,12 @@ const click = (container: Document) => {
 
 // A `@catch` whose handler and script read members of its error: the patch
 // creating it ships those members, as a document writes them, and nothing
-// else of it; later patches keep it.
+// else of it; later patches throwing again keep it, and one rendering the
+// body reloads.
 export const config: TestConfig = {
+  // Debug logs the rejection's reason, which optimize cannot.
+  skip_parity: true,
   patches: true,
-  steps: [{}, { error: error("1") }, click, {}, { error: error("2") }, click],
+  expect_rejection: true,
+  steps: [{}, { error: error("1") }, click, { error: error("2") }, click, {}],
 };

@@ -27,3 +27,9 @@ UPDATE: main > span::text " " => "boom"
 ```
 
 # Update `{"a":{},"b":{}}`
+## Console
+```
+ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.
+```
+
+## Patch rejected (navigate)

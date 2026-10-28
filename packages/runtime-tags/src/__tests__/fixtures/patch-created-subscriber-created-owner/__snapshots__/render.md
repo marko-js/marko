@@ -27,14 +27,5 @@ UPDATE: div > span::text@15 "a" => "b"
 ```
 
 # Update `{"show":true,"label":"c"}`
-```html
-<div>
-  <span>
-    SHOWN_message1 c
-  </span>
-</div>
-```
-## Change
-```
-UPDATE: div > span::text@15 "b" => "c"
-```
+
+## Patch rejected (navigate)

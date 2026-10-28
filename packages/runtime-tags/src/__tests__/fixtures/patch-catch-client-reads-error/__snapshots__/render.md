@@ -52,3 +52,5 @@ container.querySelector("button").click();
 ```
 LOG "SHOWN_message1"
 ```
+
+## Patch rejected (navigate)

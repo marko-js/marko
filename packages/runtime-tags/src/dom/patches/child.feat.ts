@@ -4,8 +4,11 @@ import { patchers, patchScope, withCreating } from "./apply";
 
 declare module "./apply" {
   interface PatchValues {
-    // A boundary's entry may also be `[patch, catchId, contentId?, placeholderId?]`.
-    [PatchKey.Child]: Scope | [Scope, string | undefined, string?, string?];
+    // A boundary's entry may also be `[patch, catchId, contentId?, placeholderId?]`,
+    // with no patch for a `<try>` body that threw.
+    [PatchKey.Child]:
+      | Scope
+      | [Scope | undefined, string | undefined, string?, string?];
   }
 }
 
