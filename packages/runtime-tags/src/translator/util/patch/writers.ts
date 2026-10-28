@@ -79,6 +79,7 @@ import {
 } from "../signals";
 import { findSlot } from "../slots";
 import { mergeSources, type Sources, sourcesUtil } from "../sources";
+import { createOutputSectionState } from "../state";
 import { TagNameType } from "../tag-name-type";
 import { withLeadingComment } from "../with-comment";
 import {
@@ -274,16 +275,18 @@ export function getEffectEntryArgs(section: Section, signal: Signal) {
   ];
 }
 
-// An effect whose join a patch inits on the scope: the init runs it, else its
-// entry ships (`writePatchResumeStatements`).
-export function isJoinInitEffect(section: Section, signal: Signal) {
-  const ref = signal.referencedBindings;
-  return (
-    Array.isArray(ref) &&
-    getCreatedInits(section).get(ref)?.init === "mixed" &&
-    getJoinInitGuard(section, ref) !== false
-  );
-}
+// The written joins a mixed group's scope inits, each with where its init is
+// needed: an effect of one runs through the init, else its entry ships.
+export const [getMixedJoinInits] = createOutputSectionState((section) => {
+  const inits = new Map<Intersection, t.Expression | undefined>();
+  for (const [ref, init] of getCreatedInits(section)) {
+    if (Array.isArray(ref) && init.init === "mixed") {
+      const needed = getJoinInitGuard(section, ref);
+      if (needed !== false) inits.set(ref, needed);
+    }
+  }
+  return inits;
+});
 
 // A section's patch entries beside its resume data: the setup a created scope
 // gets, and the join inits that run an effect or else its `_script`.
@@ -445,17 +448,18 @@ export function writePatchResumeStatements(
 
   // The inits a flush names: a created or composed scope's where the client
   // contributes the group, a subscriber, and on any scope a written join's.
+  const mixedJoinInits = getMixedJoinInits(section);
   for (const [ref, init] of getCreatedInits(section)) {
     if (Array.isArray(ref)) {
       if (init.init === "mixed") {
-        const needed = getJoinInitGuard(section, ref);
+        const needed = mixedJoinInits.get(ref);
         const groupArgs = getRootGroupArgs(section, getSourcesForRef(ref));
         const deps = getDeps(
           section,
           toArray(ref, getCanonicalBinding),
           "_filled_guard",
         );
-        if (needed !== false) {
+        if (mixedJoinInits.has(ref)) {
           // A mixed join re-runs as its members change, under its group where params decide it.
           const init = andGuard(
             needed,

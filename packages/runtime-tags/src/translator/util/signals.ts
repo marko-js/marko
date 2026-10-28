@@ -78,8 +78,8 @@ import {
   getPatchFillCalls,
   getRootGroupArgs,
   hasCallerGroupsAt,
+  getMixedJoinInits,
   isBoundLiveCapture,
-  isJoinInitEffect,
   isScopeBoundFn,
   writePatchResumeStatements,
 } from "./patch/writers";
@@ -2434,7 +2434,8 @@ export function writeHTMLResumeStatements(
         ...(entry || []),
       );
       // A patch's join init may run the effect instead of its entry.
-      if (entry && isJoinInitEffect(section, signal)) {
+      const ref = signal.referencedBindings;
+      if (entry && Array.isArray(ref) && getMixedJoinInits(section).has(ref)) {
         initScripts.set(signal, script);
       } else {
         body.push(t.expressionStatement(script));
