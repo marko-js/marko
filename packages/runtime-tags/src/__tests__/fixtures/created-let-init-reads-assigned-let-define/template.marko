@@ -1,0 +1,11 @@
+static const WORD = "w";
+<if=input.show>
+  <let/x=1/>
+  <let/y=x/>
+  <define/Body|{ v, w }|>
+    <span>${v + w}</span>
+  </define>
+  <Body v=y w=WORD/>
+  <p>${input.a}</p>
+  <button onClick() { x = 2 }>${x + input.a}</button>
+</if>

@@ -1,5 +1,5 @@
 // PATCH
-[`a5 a>b2 b>c2!a>b0 b>c0;/D b%l&/D b%l&;<section><button>x</button><!></section><section><button>y</button><!></section>`, {
+[`a4 a>b2 b>c2!a>b0 b>c0;/D b%l&/D b%l&;<section><button>x</button><!></section><section><button>y</button><!></section>`, {
   ba: [{
     ca: {
       s: {
@@ -11,18 +11,18 @@
     },
     cb: {
       s: {
-        de: "^a4"
+        de: "^a3"
       },
       o: {
         vc1: !0
       }
     }
-  }, "a5"],
-  va6: "b"
+  }, "a4"],
+  va5: "b"
 }]
-;CgI
+;CAE
 
-// PATCH holding CgI
+// PATCH holding CAE
 {
   ba: [{
     ca: {
@@ -35,17 +35,17 @@
     },
     cb: {
       s: {
-        de: "^a4"
+        de: "^a3"
       },
       o: {
         vc1: !0
       }
     }
-  }, "a5"],
-  va6: "c"
+  }, "a4"],
+  va5: "c"
 }
 
-// PATCH holding CgI
+// PATCH holding CAE
 {
   ba: [{
     ca: {
@@ -58,12 +58,12 @@
     },
     cb: {
       s: {
-        de: "^a4"
+        de: "^a3"
       },
       o: {
         vc1: !0
       }
     }
-  }, "a5"],
-  va6: "d"
+  }, "a4"],
+  va5: "d"
 }

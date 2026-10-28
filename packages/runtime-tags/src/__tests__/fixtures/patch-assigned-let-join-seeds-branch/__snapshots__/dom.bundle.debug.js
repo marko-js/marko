@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content2__input_a = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_a#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _closure_get("input_a/6", ($scope) => _text($scope["#text/0"], $scope._._.input_a), ($scope) => $scope._._, "__tests__/template.marko_2_input_a#0:4/subscribe"), 0));
+const $if_content2__input_a = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _closure_get("input_a/6", ($scope) => _text($scope["#text/0"], $scope._._.input_a), ($scope) => $scope._._, "__tests__/template.marko_2_input_a#0:4/subscribe"), 0);
 const $if_content2__setup = $if_content2__input_a;
 const $if_content__input_b__OR__x = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill1", "input_b", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_b#0:5_x#3/init", 4, ($scope) => _text($scope["#text/2"], $scope.x + $scope._.input_b)), "#text/0", 0);
 const $if_content__input_b = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_b__OR__x);

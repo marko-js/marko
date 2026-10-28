@@ -40,7 +40,7 @@ import { findSlot, SlotKind, type Slot } from "../slots";
 import { mergeSources, type Sources, withSources } from "../sources";
 import { createAnalysisState } from "../state";
 import {
-  canPatchFill,
+  fillsFirstValue,
   getPatchFill,
   patchCreatesOrComposes,
   rerunsByEntry,
@@ -83,12 +83,6 @@ export function serverRendersFirstValue(state: Binding, section: Section) {
   return holdsFirstValue(state, section) && !fillsFirstValue(state);
 }
 
-const fillsFirstValue = createPassMemo(
-  (state: Binding) =>
-    canPatchFill(state) || some(state.initSources?.state, canPatchFill),
-  false,
-);
-
 // A seed-only hole a `<let>` the client assigns sources: that `<let>`'s signal
 // rewrites the node, so the page keeps its marker whatever the group.
 export function keepsSeededMarker(
@@ -106,7 +100,7 @@ function isAssigned(state: Binding) {
 // A `<let>` fixed at creation (`resolveRootSources`): client-held once created,
 // and the server renders its first value where it creates the scope.
 export function keepsFirstValue(state: Binding) {
-  return !state.assignments && state.initReadsFirstValues;
+  return !state.assignments && serverRendersFirstValue(state, state.section);
 }
 
 // The sources take client state: a `<let>` that keeps its first value renders

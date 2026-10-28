@@ -20,9 +20,9 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let/template.marko_1*shell"],
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let/template.marko_fill0": "b"
 }]
-;CgM
+;CAM
 
-// PATCH holding CgM
+// PATCH holding CAM
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -45,7 +45,7 @@
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let/template.marko_fill0": "c"
 }
 
-// PATCH holding CgM
+// PATCH holding CAM
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

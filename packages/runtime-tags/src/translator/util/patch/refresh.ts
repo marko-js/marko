@@ -435,6 +435,14 @@ export function canPatchFill(binding: Binding) {
   return isPatchSent(binding) && patchWritesScope(binding.section);
 }
 
+// A `<let>` whose first value client code runs where a patch creates its scope:
+// a patch fills it, or state its init reads.
+export const fillsFirstValue = createPassMemo(
+  (state: Binding) =>
+    canPatchFill(state) || some(state.initSources?.state, canPatchFill),
+  false,
+);
+
 // A scope a flush writes into: a known child, a branch, `<await>` or `<try>` body, a
 // `@catch`, attribute tag `<for>` content, or content it creates from its shell.
 export function patchWritesScope(section: Section) {
@@ -530,12 +538,12 @@ function readsPastRenders(
 }
 
 // A `<let>` the created scope starts from its render's value, as a resumed
-// one does: its own, with no server value reaching it after.
+// one does: its own, with no server value reaching it or state its init reads.
 export function isFirstState(state: Binding, section: Section) {
   return (
     state.type === BindingType.let &&
     state.section === section &&
-    !canPatchFill(state)
+    !fillsFirstValue(state)
   );
 }
 

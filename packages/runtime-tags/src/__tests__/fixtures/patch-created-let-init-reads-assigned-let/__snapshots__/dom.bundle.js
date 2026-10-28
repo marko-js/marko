@@ -19,7 +19,7 @@ const $setup__script = _script("c0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $relay_content__input_label = /*@__PURE__*/ _init_resume("a2", /*@__PURE__*/ _fill_join_closure("a6", 4, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._._.e), ($scope) => $scope._._, "a3"), 1));
-const $relay_content = _content$1("a4", "<em>relayed <!></em>", "Db%", $relay_content__input_label);
-const $card_content__input_label = /*@__PURE__*/ _fill_join_closure("a6", 4, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._._.e), ($scope) => $scope._._, "a0"), 0);
+const $relay_content__input_label = /*@__PURE__*/ _fill_join_closure("a5", 4, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._._.e), ($scope) => $scope._._, "a2"), 1);
+const $relay_content = _content$1("a3", "<em>relayed <!></em>", "Db%", $relay_content__input_label);
+const $card_content__input_label = /*@__PURE__*/ _fill_join_closure("a5", 4, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._._.e), ($scope) => $scope._._, "a0"), 0);
 const $card_content = _content$1("a1", "<em>static <!></em>", "Db%", $card_content__input_label);

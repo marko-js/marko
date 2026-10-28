@@ -13,6 +13,7 @@
 ```
 INSERT: span, button
 UPDATE: button::text " " => "3"
+UPDATE: span::text " " => "b"
 ```
 
 # Update
@@ -43,6 +44,6 @@ UPDATE: button::text "3" => "4"
 ```
 ## Change
 ```
-UPDATE: span::text "b" => "c"
 UPDATE: button::text "4" => "5"
+UPDATE: span::text "b" => "c"
 ```
