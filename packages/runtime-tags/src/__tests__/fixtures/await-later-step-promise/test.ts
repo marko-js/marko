@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 import { navigate, resolveAfter, wait } from "../../utils/resolve";
 
-// A later step's promise, built with the step list, starts with its step: its
-// patch shows the placeholder between flushes.
+// A later step's `navigate` function builds its promise as the step's render
+// starts, so the client shows the placeholder until it settles.
 export const config: TestConfig = {
   equivalent: false,
   steps: () => [
