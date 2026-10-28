@@ -73,15 +73,7 @@ export function _dynamic_tag(
   // A patch build passes the variable's registration, which a patch fills.
   tagVar?: 1 | string,
 ) {
-  return renderDynamicTag(
-    scopeId,
-    accessor,
-    tag,
-    inputOrArgs,
-    content,
-    inputIsArgs,
-    markerGuard,
-    tagVar,
+  const pairing =
     patched & 3
       ? writeDynamicTagEntry(
           scopeId,
@@ -97,8 +89,22 @@ export function _dynamic_tag(
           rendererMask,
           !!(patched & 4),
         )
+      : undefined;
+  return renderDynamicTag(
+    scopeId,
+    accessor,
+    tag,
+    inputOrArgs,
+    content,
+    inputIsArgs,
+    markerGuard,
+    tagVar,
+    pairing,
+    // A kept tag whose input never changes writes nothing in its child, whose
+    // holes the page may have left unmarked.
+    pairing === PatchPairing.Keep && !getUpdatesFrom(mask, group!)
+      ? 0
       : undefined,
-    undefined,
     patched >> 3,
   );
 }
@@ -114,8 +120,9 @@ function renderDynamicTag(
   markerGuard?: 1 | 0,
   tagVar?: 1 | string,
   pairing?: PatchPairing,
-  // Where base passes a native tag's body its reason.
-  _reason?: unknown,
+  // The child's reason where already decided: a kept tag's with constant input,
+  // or the one base gives a native tag's body.
+  givenReason?: GroupMask,
   // The call site, where a template renders the tag (a native tag's body,
   // rendered by base, has none: its element renders one content).
   site?: number,
@@ -136,7 +143,8 @@ function renderDynamicTag(
   if (isPatchRender && !pairs) return;
   // The child's groups are unknown: a patch template's page or response
   // writes the tag even where nothing resumes.
-  const reason = markerGuard !== 0 || isPatchRender ? SERVER_ALL : 0;
+  const reason =
+    givenReason ?? (markerGuard !== 0 || isPatchRender ? SERVER_ALL : 0);
   if (site !== undefined) {
     pushIdHop(IdHop.Site, MARKO_DEBUG ? [accessor, site] : site);
   }

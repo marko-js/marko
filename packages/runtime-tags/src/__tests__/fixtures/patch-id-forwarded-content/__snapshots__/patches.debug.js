@@ -1,10 +1,5 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-id-forwarded-content/tags/forward-body.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-forwarded-content/template.marko_13*content;/ D l b&;<label> </label><input>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-forwarded-content/template.marko_12*shell;//D%l&&;<section><!></section>`, {
-  "PatchChild:#childScope/10": {
-    "PatchChild:BranchScopes:#text/0": {
-      "PatchText:#text/1": "named"
-    }
-  },
   "PatchBranch:#text/11": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
