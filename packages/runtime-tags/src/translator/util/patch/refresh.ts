@@ -83,6 +83,7 @@ import {
   mergeSources,
   type Sources,
   sourcesUtil,
+  withSources,
 } from "../sources";
 import { createAnalysisState } from "../state";
 import { getWriteReason } from "../write-guard";
@@ -932,7 +933,11 @@ function getReadStructure(
     if (!knownChild || contents) continue;
     // What creates the read's section anew on the client (main's reason): a
     // caller's group there, or a `<define>` body's calls, leave it unfilled.
-    const created = getBranchExprReasonUntil(readAt, binding.section);
+    const reason = getBranchExprReasonUntil(readAt, binding.section);
+    // State here can only be a `<let>` keeping its first value: it never re-creates it.
+    const created = reason?.state
+      ? withSources(reason, undefined, reason.param)
+      : reason;
     const passed = getDefineCallSources(created, binding.section);
     if (passed?.state) return true;
     for (const sources of [created, passed]) {
