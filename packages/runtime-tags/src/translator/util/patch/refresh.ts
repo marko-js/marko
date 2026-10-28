@@ -421,8 +421,8 @@ export function canPatchFill(binding: Binding) {
         bindingUtil.has(binding.sources.state, binding)
       );
     }
-    // A local with no state source that a state join reads: its patch writes
-    // it, refreshing a paired scope and seeding a fresh one.
+    // A local a state join reads that the server's next render may change: its
+    // patch writes it, refreshing a paired scope and seeding a fresh one.
     if (
       binding !== binding.section.params &&
       isSeedableLocal(binding) &&
@@ -1886,16 +1886,16 @@ export function registersJoinFill(member: Binding) {
   return !!fill && !((member.assignments || ownRegistration) && fillsReads);
 }
 
-// A `$global` source is fine, since the shipped value is current per flush;
-// a constant (a loop key) is the reconciler's to set from the entry's keys.
+// A local the server's next render may change (a stable one only seeds): a `$global`
+// source is current per flush; a constant (a loop key) the reconciler sets from keys.
 function isSeedableLocal(binding: Binding) {
   return (
     binding.type !== BindingType.constant &&
     !binding.sources?.state &&
+    hasParamOrGlobalSource(binding.sources) &&
     (isSectionParam(binding) ||
       !!binding.localOf ||
-      binding.type === BindingType.derived ||
-      (binding.type === BindingType.let && !binding.assignments))
+      binding.type === BindingType.derived)
   );
 }
 

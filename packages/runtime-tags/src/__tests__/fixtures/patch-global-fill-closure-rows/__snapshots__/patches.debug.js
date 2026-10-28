@@ -16,17 +16,17 @@
     "PatchLoop:#text/3": [{
       "PatchBranch:#text/0": [{
         "PatchLoop:#text/0": [{
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_fill4": "x",
           "PatchSetup:": {
-            "PatchText:#text/1": "x"
+            "PatchText:#text/1": "x",
+            "PatchWrite:part": "x"
           },
           "PatchChild:#childScope/3": {
             "PatchText:#text/0": 6
           }
         }, {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_fill4": "y",
           "PatchSetup:": {
-            "PatchText:#text/1": "y"
+            "PatchText:#text/1": "y",
+            "PatchWrite:part": "y"
           },
           "PatchChild:#childScope/3": {
             "PatchText:#text/0": 6

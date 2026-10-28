@@ -90,8 +90,8 @@ function isAssigned(state: Binding) {
   return !!state.assignments;
 }
 
-// An uncontrolled `<let>` nothing assigns, from inits that hold theirs: it keeps
-// the first value its inputs give on the client, which the server renders.
+// A `<let>` fixed at creation (`resolveRootSources`): client-held once created,
+// and the server renders its first value where it creates the scope.
 export function keepsFirstValue(state: Binding) {
   return !state.assignments && holdsFirstValue(state, state.section);
 }

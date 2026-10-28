@@ -37,7 +37,7 @@ const $for_content2__have = /*@__PURE__*/ _const("have", ($scope) => {
 	_text($scope["#text/2"], $scope.have);
 	$for_content2__proj__OR__now__OR__have($scope);
 });
-const $for_content2__p__OR__drops__OR__part = /*@__PURE__*/ _fill_join("__tests__/shop.marko_fill4", "part", /*@__PURE__*/ _fill_join("__tests__/shop.marko_fill0", "p", /*@__PURE__*/ _or_resume("__tests__/shop.marko_3_p#0:4_drops#0:9_part#5/init", 6, ($scope) => $for_content2__have($scope, withDrops(bankCount($scope._._._.p, $scope.part), $scope._._._.drops, $scope.part)), 2), ($join2) => /*@__PURE__*/ _for_closure("#text/3", /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $join2)))));
+const $for_content2__p__OR__drops__OR__part = /*@__PURE__*/ _fill_join("__tests__/shop.marko_fill0", "p", /*@__PURE__*/ _or_resume("__tests__/shop.marko_3_p#0:4_drops#0:9_part#5/init", 6, ($scope) => $for_content2__have($scope, withDrops(bankCount($scope._._._.p, $scope.part), $scope._._._.drops, $scope.part)), 2), ($join2) => /*@__PURE__*/ _for_closure("#text/3", /*@__PURE__*/ _if_closure("#text/0", 0, /*@__PURE__*/ _for_closure("#text/0", $join2))));
 const $for_content2__p = /*@__PURE__*/ _closure_get("p/10", $for_content2__p__OR__drops__OR__part, ($scope) => $scope._._._);
 const $for_content2__setup = ($scope) => {
 	$for_content2__p($scope);
@@ -51,10 +51,10 @@ const $for_content2__proj = /*@__PURE__*/ _closure_get("proj/12", ($scope) => {
 }, ($scope) => $scope._._._);
 const $for_content2__now = /*@__PURE__*/ _init_resume("__tests__/shop.marko_3_now#0:8/init", /*@__PURE__*/ _closure_get("now/13", $for_content2__proj__OR__now__OR__have, ($scope) => $scope._._._, "__tests__/shop.marko_3_now#0:8/subscribe"));
 const $for_content2__drops = /*@__PURE__*/ _init_resume("__tests__/shop.marko_3_drops#0:9/init", /*@__PURE__*/ _closure_get("drops/14", $for_content2__p__OR__drops__OR__part, ($scope) => $scope._._._, "__tests__/shop.marko_3_drops#0:9/subscribe"));
-const $for_content2__part = /*@__PURE__*/ _fill_const("__tests__/shop.marko_fill4", "part", ($scope) => {
+const $for_content2__part = /*@__PURE__*/ _const("part", ($scope) => {
 	$for_content2__p__OR__drops__OR__part($scope);
 	_text($scope["#text/1"], $scope.part);
-}, $for_content2__p__OR__drops__OR__part);
+});
 const $for_content2__$params = ($scope, $params3) => $for_content2__part($scope, $params3[0]);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", /*@__PURE__*/ ((_w0) => `<span><!> <!></span>${_w0}`)($template$1), /*@__PURE__*/ ((_w0) => ` D%c%l/${_w0}&`)("D l"), $for_content2__setup, $for_content2__$params);
 const $if_content__u_parts = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__for($scope, [$scope._.u_parts]));

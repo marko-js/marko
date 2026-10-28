@@ -20,6 +20,9 @@ const shownAgrees = (document: Document) => {
     document.querySelector("input")!.id,
   );
 };
+const keepsCreated = (document: Document) => {
+  assert.equal(document.querySelector("output")!.textContent, "u1");
+};
 export const config: TestConfig = {
   patches: true,
   skip_fresh_render: true,
@@ -30,5 +33,6 @@ export const config: TestConfig = {
     agrees,
     click,
     shownAgrees,
+    keepsCreated,
   ],
 };

@@ -4,7 +4,7 @@ const $walks = "D%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>",
-	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_count#0:5/init;D ;<p> </p>"
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_count#0:5_alias#6/init;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -15,8 +15,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const base = 10 * 2;
-			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", base);
 			_html(`<p>${_text_resume($scope1_id, "#text/0", base + count)}</p>`);
+			_patch_write($scope1_id, "PatchWrite:base", base, 1);
 			_scope($scope1_id, {
 				base,
 				_: _scope_with_id($scope0_id)

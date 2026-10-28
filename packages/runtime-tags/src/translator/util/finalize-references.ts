@@ -567,15 +567,10 @@ function resolveBindingSources(binding: Binding) {
       if (aliasRoot !== binding) {
         resolveBindingSources(aliasRoot);
         binding.sources = aliasRoot.sources;
-      } else if (
-        binding.assignments ||
-        (isPatch() &&
-          (some(binding.derivedFrom || undefined, isSourcedInitialValue) ||
-            holdsClientValue(binding)))
-      ) {
+      } else if (binding.assignments) {
         binding.sources = createSources(binding, undefined);
       } else {
-        resolveDerivedSources(binding);
+        resolveRootSources(binding);
       }
       return;
     }
@@ -603,9 +598,16 @@ function resolveBindingSources(binding: Binding) {
   }
 }
 
+// Fixed at creation from what a later server render computes anew: a patch
+// leaves the value client-held once created, a state root.
 function resolveRootSources(binding: Binding) {
   resolveDerivedSources(binding);
-  if (isPatch() && !binding.sources && holdsClientValue(binding)) {
+  if (
+    isPatch() &&
+    !binding.sources &&
+    (some(binding.derivedFrom || undefined, isSourcedInitialValue) ||
+      holdsClientValue(binding))
+  ) {
     binding.sources = createSources(binding, undefined);
   }
 }
@@ -625,7 +627,7 @@ function resolveDerivedSources(binding: Binding) {
   if (exprs) {
     const refs = getValueReferences(exprs);
     binding.sources = reduce(refs, mergeResolvedSources, binding.sources);
-    if (some(exprs, getGlobalReads)) {
+    if (some(exprs, readsGlobalValue)) {
       binding.sources = mergeSources(binding.sources, globalSources);
     }
     binding.intersection = Array.isArray(refs)
@@ -708,6 +710,12 @@ function isSourcedInitialValue(expr: t.NodeExtra) {
         undefined as Sources | undefined,
       ))
   );
+}
+
+// A `<let>`'s init reads `$global` once, at creation, as `getValueReferences`
+// reads its bindings.
+function readsGlobalValue(expr: t.NodeExtra) {
+  return !expr.initialValue && !!getGlobalReads(expr);
 }
 
 function mergeResolvedSources(sources: Sources | undefined, ref: Binding) {

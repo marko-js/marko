@@ -86,3 +86,8 @@ assert.equal(
 document.querySelector("input").id,
   );
 ```
+
+# Update
+```js
+assert.equal(document.querySelector("output").textContent, "u1");
+```

@@ -1,5 +1,5 @@
 // PATCH
-a, [`a3 a13 a14 a15 a16; D%c%l/D l&;<span><!> <!></span><em> </em>`, `a5;b%;<!><!><!>`, {
+a, [`a2 a12 a13 a14 a15; D%c%l/D l&;<span><!> <!></span><em> </em>`, `a4;b%;<!><!><!>`, {
   $: {
     data: {
       player: _.a = {
@@ -16,28 +16,28 @@ a, [`a3 a13 a14 a15 a16; D%c%l/D l&;<span><!> <!></span><em> </em>`, `a5;b%;<!><
     ld: [{
       ba: [{
         la: [{
-          va0: "x",
           s: {
-            tb: "x"
+            tb: "x",
+            wf: "x"
           },
           cd: {
             ta: 6
           }
         }, {
-          va0: "y",
           s: {
-            tb: "y"
+            tb: "y",
+            wf: "y"
           },
           cd: {
             ta: 6
           }
-        }, "a3"]
-      }, "a5"]
+        }, "a2"]
+      }, "a4"]
     }, {
       ba: 0
     }],
-    va8: _.a,
-    va9: 6
+    va7: _.a,
+    va8: 6
   }
 }]
 ;DQo

@@ -1,10 +1,10 @@
 // child.marko
 const $template = "<button>+</button><!><!>";
 const $walks = " b%c";
-const $setup = [[], ["a3"]];
+const $setup = [[], ["a2"]];
 _shells({
-	a: "a !a3; b%;<button>+</button><!><!>",
-	a2: "a2 a6;D%c%;<span><!>:<!></span>"
+	a: "a !a2; b%;<button>+</button><!><!>",
+	a1: "a1 a5;D%c%;<span><!>:<!></span>"
 });
 var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -13,16 +13,16 @@ var child_default = _template("a", (input) => {
 	_html(`<button>+</button>${_el_resume($scope0_id, "a")}`);
 	_for_of([1, 2], (i) => {
 		const $scope1_id = _scope_id();
-		_patch_fill($scope1_id, "va0", i);
 		_html(`<span>${_text_resume($scope1_id, "a", input.label, 1, $scope0_reason, 0)}:${_text_resume($scope1_id, "b", count + i, 2)}</span>`);
-		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a1");
+		_patch_write($scope1_id, "wd", i, 1);
+		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a0");
 		_scope($scope1_id, {
 			d: i,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "a2", 0, 0);
-	_script($scope0_id, "a3");
-	_patch_fill($scope0_id, "va4", count, 1);
+	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "a1", 0, 0);
+	_script($scope0_id, "a2");
+	_patch_fill($scope0_id, "va3", count, 1);
 	_scope($scope0_id, { f: count });
 });
 

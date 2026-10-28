@@ -15,7 +15,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		let n = 0;
 		let m = 1;
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill2", m);
 		_html("<li>");
 		_if(() => {
 			if (input.show) {
@@ -27,6 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope1_id, "#li/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
 		_html(`</li>${_el_resume($scope1_id, "#li/0", $wg__input_show)}`);
+		_patch_write($scope1_id, "PatchWrite:m", m, 1);
 		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_show#0:4/init");
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", n, 1);
 		_scope($scope1_id, {

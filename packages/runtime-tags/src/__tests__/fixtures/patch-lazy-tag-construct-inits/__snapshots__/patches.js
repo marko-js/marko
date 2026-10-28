@@ -1,16 +1,20 @@
 // PATCH
-a, [`a2 a6;D%c%;<span><!>:<!></span>`, `b1 !b>a3;b%b/ b%c&b;<!><!><button>+</button><!><!><!>`, {
+a, [`a1 a5;D%c%;<span><!>:<!></span>`, `b1 !b>a2;b%b/ b%c&b;<!><!><button>+</button><!><!><!>`, {
   bc: [{
     cb: {
       lb: [{
-        va0: 1,
-        ta: "b"
+        ta: "b",
+        s: {
+          wd: 1
+        }
       }, {
-        va0: 2,
-        ta: "b"
-      }, "a2"],
+        ta: "b",
+        s: {
+          wd: 2
+        }
+      }, "a1"],
       o: {
-        va4: 0
+        va3: 0
       }
     }
   }, "b1"],
@@ -23,14 +27,18 @@ a, {
   bc: [{
     cb: {
       lb: [{
-        va0: 1,
-        ta: "c"
+        ta: "c",
+        s: {
+          wd: 1
+        }
       }, {
-        va0: 2,
-        ta: "c"
-      }, "a2"],
+        ta: "c",
+        s: {
+          wd: 2
+        }
+      }, "a1"],
       o: {
-        va4: 0
+        va3: 0
       }
     }
   }, "b1"],

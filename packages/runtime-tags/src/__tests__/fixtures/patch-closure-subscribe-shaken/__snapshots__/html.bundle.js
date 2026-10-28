@@ -14,12 +14,12 @@ const UPGRADES = [{
 	id: "b",
 	parts: ["y"]
 }];
-const $setup$1 = [[], ["a7"]];
+const $setup$1 = [[], ["a6"]];
 _shells({
-	a: "a !a7; D l b%;<button> </button><button>drop</button><!><!>",
+	a: "a !a6; D l b%;<button> </button><button>drop</button><!><!>",
+	a3: "a3;b%;<!><!><!>",
 	a4: "a4;b%;<!><!><!>",
-	a5: "a5;b%;<!><!><!>",
-	a3: "a3 a13 a14 a15 a16; D%c%;<span><!> <!></span>"
+	a2: "a2 a12 a13 a14 a15; D%c%;<span><!> <!></span>"
 });
 var shop_default = _template("a", (input) => {
 	_scope_reason();
@@ -40,26 +40,26 @@ var shop_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_for_of(u.parts, (part) => {
 					const $scope3_id = _scope_id();
-					_patch_fill($scope3_id, "va0", part);
 					const have = withDrops(bankCount(p, part), drops, part);
 					const live = have + now * proj;
 					_html(`<span${live < 2 ? " class=short" : ""}>${_text_resume($scope3_id, "b", part, 1, 0, 0)} ${_text_resume($scope3_id, "c", have, 2)}</span>${_el_resume($scope3_id, "a")}`);
+					_patch_write($scope3_id, "we", part, 1);
 					_subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
 						e: part,
 						g: have,
 						_: _scope_with_id($scope2_id)
-					}), "a1"), "a2");
-				}, 0, $scope2_id, "a", 1, 1, 1, 0, 0, "a3", 0, 0);
+					}), "a0"), "a1");
+				}, 0, $scope2_id, "a", 1, 1, 1, 0, 0, "a2", 0, 0);
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $scope0_page, 1, 0, 0, ["a5"]);
+		}, $scope1_id, "a", 1, $scope0_page, 1, 0, 0, ["a4"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a4", 0, 0);
-	_fill_global_subscribe("a6", $scope0_id);
-	_script($scope0_id, "a7");
-	_patch_fill($scope0_id, "va10", now, 1);
-	_patch_fill($scope0_id, "va11", drops, 1);
+	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a3", 0, 0);
+	_fill_global_subscribe("a5", $scope0_id);
+	_script($scope0_id, "a6");
+	_patch_fill($scope0_id, "va9", now, 1);
+	_patch_fill($scope0_id, "va10", drops, 1);
 	_scope($scope0_id, {
 		e: p,
 		h: proj,
@@ -67,7 +67,7 @@ var shop_default = _template("a", (input) => {
 		j: drops,
 		n: $now__closures,
 		o: $drops__closures
-	}) || (_patch_fill($scope0_id, "va8", p), _patch_fill($scope0_id, "va9", proj));
+	}) || (_patch_fill($scope0_id, "va7", p), _patch_fill($scope0_id, "va8", proj));
 });
 
 // template.marko

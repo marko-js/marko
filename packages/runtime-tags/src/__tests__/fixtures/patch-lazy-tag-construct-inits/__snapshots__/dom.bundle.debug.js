@@ -6,8 +6,8 @@ const $for_content__setup = ($scope) => {
 	$for_content__input_label._($scope);
 	$for_content__count._($scope);
 };
-const $for_content__count__OR__i = /*@__PURE__*/ _fill_join("__tests__/child.marko_fill1", "i", /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/1"], $scope._.count + $scope.i)));
-const $for_content__count = /*@__PURE__*/ _init_resume("__tests__/child.marko_1_count#0:5/init", /*@__PURE__*/ _for_closure("#text/1", $for_content__count__OR__i));
+const $for_content__count__OR__i = /*@__PURE__*/ _or_resume("__tests__/child.marko_1_count#0:5_i#3/init", 4, ($scope) => _text($scope["#text/1"], $scope._.count + $scope.i));
+const $for_content__count = /*@__PURE__*/ _for_closure("#text/1", $for_content__count__OR__i);
 const $for_content__i = /*@__PURE__*/ _const("i", $for_content__count__OR__i);
 const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $params2[0]);
 const $count = /*@__PURE__*/ _fill_let("__tests__/child.marko_fill0", "count/5", $for_content__count);
