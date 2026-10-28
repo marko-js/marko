@@ -26,5 +26,11 @@ INSERT: em
 ```
 ## Change
 ```
-UPDATE: em::text "s1" => "s2"
+INSERT: p
+REMOVE: em
+INSERT: p
+REMOVE: p + p
+UPDATE: p::text " " => "boom b"
+INSERT: em
+REMOVE: em + p
 ```

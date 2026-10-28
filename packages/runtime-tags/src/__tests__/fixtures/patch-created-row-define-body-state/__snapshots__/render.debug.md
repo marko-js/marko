@@ -47,9 +47,15 @@ UPDATE: p::text@4 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: p:nth-of-type(1)::text@2 "x" => "y"
+INSERT: ::text("loading "), ::text("a")
+REMOVE: ::text + p
+INSERT: p:nth-of-type(1) + :is(::text("loading "), ::text("b"))
+INSERT: p
+REMOVE: p:nth-of-type(1) + ::text("loading ")
+REMOVE: p:nth-of-type(1) + ::text("a")
 INSERT: p:nth-of-type(1) + p
-UPDATE: p:nth-of-type(2)::text@4 "" => "1"
+REMOVE: p:nth-of-type(2) + ::text("loading ")
+REMOVE: p:nth-of-type(2) + ::text("b")
 ```
 
 # Update

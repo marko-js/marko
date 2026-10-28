@@ -38,6 +38,20 @@ UPDATE: p:nth-of-type(2)::text " " => "2"
 >
   Fields
 </h1>
+```
+## Change
+```
+REMOVE: #cM_0 + p
+REMOVE: #cM_0 + p
+```
+
+# Update
+```html
+<h1
+  id="cM_0"
+>
+  Fields
+</h1>
 <label
   for="cM_1"
 >
@@ -60,9 +74,7 @@ UPDATE: p:nth-of-type(2)::text " " => "2"
 ## Change
 ```
 INSERT: #cM_0 + :is(label, #cM_1)
-REMOVE: #cM_1 + p
 INSERT: #cM_1 + :is(label, #cM_2)
-REMOVE: #cM_2 + p
 UPDATE: label:nth-of-type(1)[for] null => "cM_1"
 UPDATE: #cM_1[id] null => "cM_1"
 UPDATE: label:nth-of-type(1)::text " " => "x"

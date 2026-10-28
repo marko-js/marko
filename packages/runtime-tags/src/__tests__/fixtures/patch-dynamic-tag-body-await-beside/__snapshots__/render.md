@@ -55,13 +55,10 @@ INSERT: main > div:nth-of-type(2) > b::text("a")
 ```
 INSERT: main > button
 REMOVE: main > b + div
-INSERT: main > button
-REMOVE: main > em + div
 INSERT: main > button:nth-of-type(2) + b
-INSERT: main > button:nth-of-type(1) + em
 UPDATE: main > b::text " " => "b"
-UPDATE: main > em::text@2 "" => "y"
-UPDATE: main > em::text@0 "" => "b"
+REMOVE: main > div
+INSERT: main > :is(button, em)
 ```
 
 # Update
@@ -144,9 +141,7 @@ INSERT: main > div:nth-of-type(1) + div
 REMOVE: main > div:nth-of-type(2) + button
 REMOVE: main > div:nth-of-type(2) + b
 UPDATE: main > div:nth-of-type(2) > b::text " " => "c"
+REMOVE: main > button
+REMOVE: main > em
 INSERT: main > div
-REMOVE: main > div:nth-of-type(1) + button
-REMOVE: main > div:nth-of-type(1) + em
-UPDATE: main > div:nth-of-type(1) > em::text@0 "" => "c"
-UPDATE: main > div:nth-of-type(1) > em::text@2 "" => "z"
 ```

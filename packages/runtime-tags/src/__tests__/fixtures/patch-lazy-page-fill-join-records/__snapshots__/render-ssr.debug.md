@@ -73,7 +73,8 @@ REMOVE: main > button + h1
 REMOVE: main > button + section
 REMOVE: main > button + section
 REMOVE: main > button + button
-UPDATE: nav > a::text "x" => "y"
+REMOVE: nav > a
+INSERT: nav > a
 ```
 
 # Update `{"page":2,"note":"b2","list":{"value":["z"]}}`
@@ -115,7 +116,8 @@ REMOVE: main > button + h1
 REMOVE: main > button + p
 REMOVE: main > button + p
 REMOVE: main > button + button
-UPDATE: nav > a::text "y" => "z"
 UPDATE: main > section:nth-of-type(1) > span::text@3 "" => "0"
 UPDATE: main > section:nth-of-type(2) > span::text@3 "" => "0"
+REMOVE: nav > a
+INSERT: nav > a
 ```

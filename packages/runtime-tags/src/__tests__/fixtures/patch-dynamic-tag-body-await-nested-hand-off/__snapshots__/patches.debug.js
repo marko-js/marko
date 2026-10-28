@@ -1,8 +1,13 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/template.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/keeper.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/keeper.marko_0; b%;<button class=toggle>toggle</button><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/template.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko_1*content;b%;<!><!><!>`, {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko_1*content",
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko_1*content"
+  },
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/template.marko_fill2": "b"
+}]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko_2*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/keeper.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/keeper.marko_0; b%;<button class=toggle>toggle</button><!><!>`, {
+  "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko_2*content",
       "PatchChild:BranchScopes:#text/0": {
@@ -15,8 +20,7 @@
         }
       }
     }
-  },
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/template.marko_fill2": "b"
+  }
 }]
 ;EbU
 
@@ -24,7 +28,12 @@
 {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko_1*content",
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko_1*content"
+  },
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/template.marko_fill2": "c"
+}
+{
+  "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/tags/card.marko_2*content",
       "PatchChild:BranchScopes:#text/0": {
@@ -37,6 +46,5 @@
         }
       }
     }
-  },
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-nested-hand-off/template.marko_fill2": "c"
+  }
 }

@@ -1,7 +1,11 @@
 // PATCH
+[`a5,loading`, {
+  cAa: {
+    pa: 1
+  }
+}]
 {
   cAa: {
-    pa: 1,
     cAa: {
       cAa: [{
         ta: "b"
@@ -9,3 +13,4 @@
     }
   }
 }
+;DgQ

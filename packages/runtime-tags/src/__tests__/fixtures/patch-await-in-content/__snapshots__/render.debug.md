@@ -46,5 +46,8 @@ INSERT: section > #done
 ```
 ## Change
 ```
-UPDATE: #done::text@0 "a" => "b"
+INSERT: section > em
+REMOVE: em + #done
+INSERT: section > #done
+REMOVE: #done + em
 ```

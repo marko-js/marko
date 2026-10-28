@@ -39,7 +39,9 @@ INSERT: main > em::text("a")
 ```
 ## Change
 ```
-UPDATE: main > em::text "a" => "b"
+REMOVE: main > .toggle
+REMOVE: main > em
+INSERT: main > :is(.toggle, em)
 ```
 
 # Update
@@ -99,7 +101,9 @@ UPDATE: main > em::text " " => "b"
 ```
 ## Change
 ```
-UPDATE: main > em::text "b" => "c"
+REMOVE: main > .toggle
+REMOVE: main > em
+INSERT: main > :is(.toggle, em)
 ```
 
 # Update

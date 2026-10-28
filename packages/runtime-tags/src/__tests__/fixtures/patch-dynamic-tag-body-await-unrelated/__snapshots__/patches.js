@@ -6,11 +6,13 @@
       ta: "b"
     }
   },
-  pb: 1,
+  pb: 1
+}]
+{
   cAb: {
     ta: "y"
   }
-}]
+}
 ;CgE
 
 // PATCH holding CgE

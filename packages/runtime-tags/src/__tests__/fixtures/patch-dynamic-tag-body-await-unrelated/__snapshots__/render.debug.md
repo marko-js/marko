@@ -44,7 +44,8 @@ INSERT: main > i::text("x")
 ## Change
 ```
 UPDATE: main > div > em::text "a" => "b"
-UPDATE: main > i::text "x" => "y"
+REMOVE: main > i
+INSERT: main > div + i
 ```
 
 # Update `{"on":false,"note":"c","p":"z"}`

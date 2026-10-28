@@ -87,7 +87,8 @@ UPDATE: main > em::text " " => "b"
 ```
 ## Change
 ```
-UPDATE: main > em::text "b" => "c"
+REMOVE: main > em
+INSERT: .toggle + em
 ```
 
 # Update

@@ -60,7 +60,9 @@ REMOVE: main > p + h1
 REMOVE: main > p + p
 REMOVE: main > p + p
 REMOVE: main > p + button
-REMOVE: nav > a + a
+REMOVE: nav > a
+REMOVE: nav > a
+INSERT: nav > a
 ```
 
 # Update `{"page":1,"wide":false,"note":"a2","list":{"value":["z"]}}`
@@ -87,7 +89,8 @@ REMOVE: nav > a + a
 INSERT: main > :is(h1, p, button)
 REMOVE: main > button + h1
 REMOVE: main > button + p
-UPDATE: nav > a::text "x" => "z"
+REMOVE: nav > a
+INSERT: nav > a
 ```
 
 # Update `{"page":0}`

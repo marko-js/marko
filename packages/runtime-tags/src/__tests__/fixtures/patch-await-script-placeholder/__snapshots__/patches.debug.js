@@ -1,7 +1,11 @@
 // PATCH
+[`packages/runtime-tags/src/__tests__/fixtures/patch-await-script-placeholder/template.marko_2*content`, {
+  "PatchChild:BranchScopes:#text/0": {
+    "PatchPending:#text/0": 1
+  }
+}]
 {
   "PatchChild:BranchScopes:#text/0": {
-    "PatchPending:#text/0": 1,
     "PatchChild:BranchScopes:#text/0": {
       "PatchMarkedWrite:value": "b",
       "PatchText:#text/0": "b",
@@ -9,3 +13,4 @@
     }
   }
 }
+;CgM

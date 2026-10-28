@@ -1,5 +1,5 @@
 // PATCH
-[`b !b0; b%;<button class=toggle>toggle</button><!><!>`, `a9`, `a0`, {
+[`b !b0; b%;<button class=toggle>toggle</button><!><!>`, `a9`, {
   pa: 1,
   fb: ["b", "a9"],
   cAb: {
@@ -8,7 +8,9 @@
     },
     ub1: "^a9"
   },
-  va6: "b",
+  va6: "b"
+}]
+[`a0`, {
   cAa: {
     fa: ["b", "a0"],
     cAa: {
@@ -18,7 +20,8 @@
       ub1: "^a0"
     },
     va5: "y"
-  }
+  },
+  va6: "b"
 }]
 ;DTI
 
@@ -31,7 +34,9 @@
       ta: "c"
     }
   },
-  va6: "c",
+  va6: "c"
+}
+{
   cAa: {
     fa: [">div", "a0"],
     cAa: {

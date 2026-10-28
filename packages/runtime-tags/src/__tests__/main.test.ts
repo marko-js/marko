@@ -26,6 +26,7 @@ import {
   waitForPendingModules,
 } from "./utils/import-with-context";
 import {
+  buildSteps,
   type Destroy,
   type Flush,
   type FlushType,
@@ -38,6 +39,7 @@ import {
   type Navigate,
   resetResolveState,
   resolveAfter,
+  startStep,
   type Throws,
   type Wait,
 } from "./utils/resolve";
@@ -437,6 +439,7 @@ function testFixtures(interop?: true) {
 
             await runSteps(steps, tracker, browser, run, {
               onInput(input) {
+                startStep();
                 instance.update(input);
                 tracker.logUpdate(input);
               },
@@ -758,6 +761,7 @@ function testFixtures(interop?: true) {
                     // The token follows the build.
                     patchHeaders.push(headers["x-marko-patch"].split(";")[1]);
                     try {
+                      startStep();
                       for await (const flush of template.patch(
                         input,
                         headers,
@@ -1212,10 +1216,11 @@ async function runSteps(
 }
 
 async function getSteps(config: TestConfig, signal?: AbortSignal) {
+  const { steps: build } = config;
   const [input = {} as Input, ...steps] =
-    typeof config.steps === "function"
-      ? await config.steps(signal)
-      : (config.steps ?? []);
+    typeof build === "function"
+      ? await buildSteps(() => build(signal))
+      : (build ?? []);
   return { input, steps };
 }
 

@@ -62,12 +62,10 @@ INSERT: main > div > em::text("a")
 ```
 INSERT: main > section > button
 REMOVE: main > section > em + div
-INSERT: main > section + button
-REMOVE: main > em + div
 INSERT: main > section > button + em
-INSERT: main > button + em
 UPDATE: main > section > em::text " " => "b"
-UPDATE: main > em::text " " => "b"
+REMOVE: main > div
+INSERT: main > section + :is(button, em)
 ```
 
 # Update
@@ -158,7 +156,9 @@ UPDATE: main > em::text " " => "b"
 ## Change
 ```
 UPDATE: main > section > em::text "b" => "c"
-UPDATE: main > em::text "b" => "c"
+REMOVE: main > button
+REMOVE: main > em
+INSERT: main > section + :is(button, em)
 ```
 
 # Update

@@ -42,8 +42,8 @@ INSERT: main > div > section > em::text@1 + ::text("x")
 ```
 ## Change
 ```
+REMOVE: main > div
 INSERT: main > .toggle
-REMOVE: main > section + div
 INSERT: .toggle + section
 UPDATE: main > section > em::text@0 "" => "b"
 UPDATE: main > section > em::text@2 "" => "y"
@@ -111,9 +111,9 @@ UPDATE: main > section > em::text@2 "" => "y"
 ```
 ## Change
 ```
+REMOVE: main > .toggle
+REMOVE: main > section
 INSERT: main > div
-REMOVE: main > div + .toggle
-REMOVE: main > div + section
 INSERT: main > div > .toggle
 INSERT: .toggle + em
 UPDATE: main > div > em::text@0 "" => "c"
@@ -187,8 +187,8 @@ UPDATE: main > div > em::text@2 "" => "z"
 ```
 ## Change
 ```
+REMOVE: main > div
 INSERT: main > button
-REMOVE: main > em + div
 INSERT: main > button:nth-of-type(1) + button
 INSERT: main > button:nth-of-type(2) + em
 UPDATE: main > em::text@0 "" => "d"

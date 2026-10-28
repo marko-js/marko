@@ -44,7 +44,8 @@ INSERT: main > div > em::text("a")
 ```
 ## Change
 ```
-UPDATE: main > div > em::text "a" => "b"
+REMOVE: main > div
+INSERT: main > div
 ```
 
 # Update
@@ -110,7 +111,8 @@ UPDATE: main > div > em::text " " => "b"
 ```
 ## Change
 ```
-UPDATE: main > div > em::text "b" => "c"
+REMOVE: main > div
+INSERT: main > div
 ```
 
 # Update

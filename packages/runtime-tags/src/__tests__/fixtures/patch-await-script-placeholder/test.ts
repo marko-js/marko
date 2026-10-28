@@ -6,5 +6,5 @@ import { resolveAfter } from "../../utils/resolve";
 export const config: TestConfig = {
   patches: true,
   skip_fresh_render: true,
-  steps: [{ promise: resolveAfter("a") }, { promise: resolveAfter("b") }],
+  steps: () => [{ promise: resolveAfter("a") }, { promise: resolveAfter("b") }],
 };

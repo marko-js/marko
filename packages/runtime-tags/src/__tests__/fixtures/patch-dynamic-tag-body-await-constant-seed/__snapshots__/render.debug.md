@@ -82,7 +82,9 @@ UPDATE: main > em::text@2 "" => "y"
 ```
 ## Change
 ```
-UPDATE: main > em::text@2 "y" => "z"
+REMOVE: main > .toggle
+REMOVE: main > em
+INSERT: main > :is(.toggle, em)
 ```
 
 # Update

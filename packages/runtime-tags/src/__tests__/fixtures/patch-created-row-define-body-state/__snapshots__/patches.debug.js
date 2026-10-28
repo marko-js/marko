@@ -3,27 +3,40 @@
   "PatchLoop:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/0": [{
-        "PatchPending:#text/0": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_4*content",
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchText:#text/0": "a",
-          "PatchText:#text/1": "y"
-        }
+        "PatchPending:#text/0": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_4*content"
       }, $, _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_3*content", _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_5*content"],
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_fill1": "a"
     }
   }, {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/0": [{
-        "PatchPending:#text/0": _.a,
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchText:#text/0": "b",
-          "PatchText:#text/1": "y"
-        }
+        "PatchPending:#text/0": _.a
       }, $, _.b, _.c],
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_fill1": "b"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-body-state/template.marko_1*shell"]
 }]
+{
+  "PatchLoopItem:#text/0": [0, {
+    "PatchChild:#childScope/0": {
+      "PatchChild:BranchScopes:#text/0": [{
+        "PatchChild:BranchScopes:#text/0": {
+          "PatchText:#text/0": "a",
+          "PatchText:#text/1": "y"
+        }
+      }, $, _.b, _.c]
+    }
+  }, 1, {
+    "PatchChild:#childScope/0": {
+      "PatchChild:BranchScopes:#text/0": [{
+        "PatchChild:BranchScopes:#text/0": {
+          "PatchText:#text/0": "b",
+          "PatchText:#text/1": "y"
+        }
+      }, $, _.b, _.c]
+    }
+  }]
+}
 ;CxY
 
 // PATCH holding CxY

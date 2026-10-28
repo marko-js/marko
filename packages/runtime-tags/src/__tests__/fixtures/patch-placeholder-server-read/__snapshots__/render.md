@@ -27,3 +27,21 @@ INSERT: button + #done
 ```
 
 # Update `{"msg":"b","promise":{"value":2}}`
+```html
+<button>
+  0
+</button>
+<div
+  id="done"
+>
+  done
+</div>
+```
+## Change
+```
+INSERT: button + em
+REMOVE: em + #done
+UPDATE: em::text@8 "" => "b"
+INSERT: button + #done
+REMOVE: #done + em
+```

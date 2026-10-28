@@ -45,8 +45,8 @@ INSERT: main > em::text@1 + ::text("x")
 ```
 ## Change
 ```
-UPDATE: main > em::text@2 "x" => "y"
-UPDATE: main > em::text@0 "a" => "b"
+REMOVE: main > em
+INSERT: .toggle + em
 ```
 
 # Update
@@ -107,6 +107,6 @@ UPDATE: main > em::text@0 "" => "b"
 ```
 ## Change
 ```
-UPDATE: main > em::text@2 "y" => "z"
-UPDATE: main > em::text@0 "b" => "c"
+REMOVE: main > em
+INSERT: .toggle + em
 ```

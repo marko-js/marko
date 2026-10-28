@@ -103,6 +103,6 @@ UPDATE: main > em::text@0 "" => "b"
 ```
 ## Change
 ```
-UPDATE: main > em::text@2 "y" => "z"
-UPDATE: main > em::text@0 "b" => "c"
+REMOVE: main > em
+INSERT: .toggle + em
 ```

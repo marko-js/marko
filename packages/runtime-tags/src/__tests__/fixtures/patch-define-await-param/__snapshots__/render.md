@@ -44,8 +44,11 @@ UPDATE: p::text@4 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: p::text@0 "a" => "b"
-UPDATE: p::text@2 "x" => "y"
+INSERT: ::text("loading "), ::text("b")
+REMOVE: ::text + p
+INSERT: p
+REMOVE: p + ::text("loading ")
+REMOVE: p + ::text("b")
 ```
 
 # Update

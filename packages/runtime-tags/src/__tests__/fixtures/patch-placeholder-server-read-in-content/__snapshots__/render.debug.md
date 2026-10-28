@@ -31,3 +31,23 @@ INSERT: section > #done
 ```
 
 # Update `{"msg":"b","promise":{"value":2}}`
+```html
+<button>
+  0
+</button>
+<section>
+  <div
+    id="done"
+  >
+    done
+  </div>
+</section>
+```
+## Change
+```
+INSERT: section > em
+REMOVE: em + #done
+UPDATE: em::text@8 "" => "b"
+INSERT: section > #done
+REMOVE: #done + em
+```

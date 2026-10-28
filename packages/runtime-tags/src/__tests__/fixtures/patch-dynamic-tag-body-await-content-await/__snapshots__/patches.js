@@ -1,6 +1,8 @@
 // PATCH
+{
+  pa: 1
+}
 [`b !b0; b%;<button class=toggle>toggle</button><!><!>`, `a6`, {
-  pa: 1,
   cAa: {
     fa: ["b", "a6"],
     cAa: {
@@ -24,23 +26,15 @@
 ;EcA
 
 // PATCH holding EcA
-[`a10 !;b%;<!><!><!>`, `a0`, {
-  pa: 1,
+{
+  pa: 1
+}
+[`a10 !;b%;<!><!><!>`, {
   cAa: {
     fa: [">div", "a6"],
     cAa: {
       cAa: {
-        pa: "a10",
-        cAa: {
-          fa: ["b", "a0"],
-          cAa: {
-            o: {
-              vb2: !0
-            },
-            ub1: "^a0"
-          },
-          va5: "z"
-        }
+        pa: "a10"
       }
     }
   },
@@ -54,12 +48,32 @@
   va17: !0,
   va7: "c"
 }]
-(_.a.f("z"), 0)
+[`a0`, [{
+  cAa: {
+    cAa: {
+      cAa: {
+        cAa: {
+          fa: ["b", "a0"],
+          cAa: {
+            o: {
+              vb2: !0
+            },
+            ub1: "^a0"
+          },
+          va5: "z"
+        }
+      }
+    }
+  },
+  va7: "c"
+}, _.a.f("z")][0]]
 ;EcY
 
 // PATCH holding EcY
 {
-  pa: 1,
+  pa: 1
+}
+{
   cAa: {
     fa: ["b", "a6"],
     cAa: {

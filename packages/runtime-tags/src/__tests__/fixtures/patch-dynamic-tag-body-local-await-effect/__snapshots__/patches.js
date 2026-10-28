@@ -1,9 +1,13 @@
 // PATCH
-[`a9 !;b%;<!><!><!>`, `a11 !; b%;<div></div><!><!>`, `a0`, {
+[`a9 !;b%;<!><!><!>`, `a11 !; b%;<div></div><!><!>`, {
   ba: [{
     pb: "a9",
     ea12: "c",
-    xc: "b!",
+    xc: "b!"
+  }, "a11"]
+}]
+[`a0`, {
+  cAa: {
     cAb: {
       fa: [">div", "a0"],
       cAa: {
@@ -13,16 +17,20 @@
         }
       }
     }
-  }, "a11"]
+  }
 }]
 ;DRo
 
 // PATCH holding DRo
-[`b !b0; b%;<button class=toggle>toggle</button><!><!>`, {
+{
   ba: [{
     pb: "a9",
     ea12: "c",
-    xc: "c!",
+    xc: "c!"
+  }, "a11"]
+}
+[`b !b0; b%;<button class=toggle>toggle</button><!><!>`, {
+  cAa: {
     cAb: {
       fa: ["b", "a0"],
       cAa: {
@@ -34,7 +42,7 @@
       va5: "z"
     },
     va6: "c!"
-  }, "a11"]
+  }
 }]
 ;DTo
 
@@ -43,7 +51,11 @@
   ba: [{
     pb: "a9",
     ea12: "c",
-    xc: "d!",
+    xc: "d!"
+  }, "a11"]
+}
+{
+  cAa: {
     cAb: {
       fa: [">div", "a0"],
       cAa: {
@@ -53,5 +65,5 @@
         }
       }
     }
-  }, "a11"]
+  }
 }

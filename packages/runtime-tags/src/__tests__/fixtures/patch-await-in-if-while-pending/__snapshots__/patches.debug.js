@@ -1,12 +1,18 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_3*content;D%;<div id=done><!> done</div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_2*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_3*content;D%;<div id=done><!> done</div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_2*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_4*content`, {
   "PatchChild:BranchScopes:#text/2": {
     "PatchBranch:#section/0": [{
-      "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_3*content",
-      "PatchChild:BranchScopes:#text/0": {
-        "PatchText:#text/0": "b"
-      }
+      "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_3*content"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_2*shell"]
   }
 }]
-;DRQ
+{
+  "PatchChild:BranchScopes:#text/2": {
+    "PatchChild:BranchScopes:#section/0": {
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchText:#text/0": "b"
+      }
+    }
+  }
+}
+;DTQ

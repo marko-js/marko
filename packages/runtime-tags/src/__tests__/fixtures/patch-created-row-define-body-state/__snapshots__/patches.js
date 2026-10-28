@@ -3,27 +3,40 @@
   la: [{
     ca: {
       cAa: [{
-        pa: "a4",
-        cAa: {
-          ta: "a",
-          tb: "y"
-        }
+        pa: "a4"
       }, $, "a6", "a10"],
       va12: "a"
     }
   }, {
     ca: {
       cAa: [{
-        pa: "a4",
-        cAa: {
-          ta: "b",
-          tb: "y"
-        }
+        pa: "a4"
       }, $, "a6", "a10"],
       va12: "b"
     }
   }, "a7"]
 }]
+{
+  ra: [0, {
+    ca: {
+      cAa: [{
+        cAa: {
+          ta: "a",
+          tb: "y"
+        }
+      }, $, "a6", "a10"]
+    }
+  }, 1, {
+    ca: {
+      cAa: [{
+        cAa: {
+          ta: "b",
+          tb: "y"
+        }
+      }, $, "a6", "a10"]
+    }
+  }]
+}
 ;Cxo
 
 // PATCH holding Cxo

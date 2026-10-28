@@ -41,5 +41,9 @@ INSERT: main > em
 ```
 ## Change
 ```
-UPDATE: main > em::text "hi" => "ho"
+INSERT: main > p
+REMOVE: p + em
+UPDATE: p::text " " => "0b"
+INSERT: main > em
+REMOVE: main > em + p
 ```

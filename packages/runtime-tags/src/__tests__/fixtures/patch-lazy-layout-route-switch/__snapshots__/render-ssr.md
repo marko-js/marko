@@ -45,7 +45,9 @@ INSERT: nav > :is(a, a)
 ```
 INSERT: main > h1
 REMOVE: main > h1 + h1
-REMOVE: nav > a + a
+REMOVE: nav > a
+REMOVE: nav > a
+INSERT: nav > a
 ```
 
 # Update `{"page":0}`

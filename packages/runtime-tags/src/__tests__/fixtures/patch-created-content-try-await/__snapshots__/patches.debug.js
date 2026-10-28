@@ -62,14 +62,24 @@
       "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_1*content",
       "PatchChild:BranchScopes:#text/0": {
         "PatchChild:BranchScopes:#text/0": [{
-          "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_4*content",
-          "PatchChild:BranchScopes:#text/0": {
-            "PatchText:#text/0": "e",
-            "PatchText:#text/1": "v"
-          }
+          "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_4*content"
         }, $, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_2*content"]
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/tags/wrap.marko_1*shell"]
   },
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_fill0": "e"
+}
+{
+  "PatchChild:#childScope/0": {
+    "PatchChild:BranchScopes:#text/0": {
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchChild:BranchScopes:#text/0": [{
+          "PatchChild:BranchScopes:#text/0": {
+            "PatchText:#text/0": "e",
+            "PatchText:#text/1": "v"
+          }
+        }, $, _(0)["PatchChild:#childScope/0"]["PatchBranch:#text/0"][0]["PatchChild:BranchScopes:#text/0"]["PatchChild:BranchScopes:#text/0"][2], _(0)["PatchChild:#childScope/0"]["PatchBranch:#text/0"][0]["PatchChild:BranchScopes:#text/0"]["PatchChild:BranchScopes:#text/0"][3]]
+      }
+    }
+  }
 }

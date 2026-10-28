@@ -54,8 +54,8 @@ LOG "w" "x"
 ```
 ## Change
 ```
+REMOVE: main > div
 INSERT: main > .toggle
-REMOVE: main > section + div
 INSERT: .toggle + b
 UPDATE: main > b::text " " => "y"
 INSERT: main > b + section
@@ -142,10 +142,10 @@ LOG "w" "y"
 ```
 ## Change
 ```
+REMOVE: main > .toggle
+REMOVE: main > b
+REMOVE: main > section
 INSERT: main > div
-REMOVE: main > div + .toggle
-REMOVE: main > div + b
-REMOVE: main > div + section
 INSERT: main > div > :is(b, .toggle)
 INSERT: .toggle + em
 UPDATE: main > div > em::text@0 "" => "c"
@@ -232,8 +232,8 @@ UPDATE: main > div > em::text@2 "" => "z"
 ```
 ## Change
 ```
+REMOVE: main > div
 INSERT: main > button
-REMOVE: main > em + div
 INSERT: main > button:nth-of-type(1) + b
 UPDATE: main > b::text " " => "w"
 INSERT: main > b + button

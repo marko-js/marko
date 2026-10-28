@@ -41,14 +41,14 @@
 ```
 ## Change
 ```
+REMOVE: p
+REMOVE: p
 INSERT: #sM_.heading + :is(label, #sM_["a"].#childScope/0@0.uid)
-REMOVE: #sM_["a"].#childScope/0@0.uid + p
 UPDATE: label:nth-of-type(1)[for] null => "sM_[\"a\"].#childScope/0@0.uid"
 UPDATE: #sM_["a"].#childScope/0@0.uid[id] null => "sM_[\"a\"].#childScope/0@0.uid"
 UPDATE: #sM_["a"].#childScope/0@0.uid[aria-describedby] null => "sM_.heading"
 UPDATE: label:nth-of-type(1)::text " " => "x"
 INSERT: #sM_["a"].#childScope/0@0.uid + :is(label, #sM_["b"].#childScope/0@0.uid)
-REMOVE: #sM_["b"].#childScope/0@0.uid + p
 UPDATE: label:nth-of-type(2)[for] null => "sM_[\"b\"].#childScope/0@0.uid"
 UPDATE: #sM_["b"].#childScope/0@0.uid[id] null => "sM_[\"b\"].#childScope/0@0.uid"
 UPDATE: #sM_["b"].#childScope/0@0.uid[aria-describedby] null => "sM_.heading"

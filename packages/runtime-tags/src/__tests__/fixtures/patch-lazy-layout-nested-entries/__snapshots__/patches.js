@@ -46,15 +46,21 @@ a, c, [`d7;b%b/bD l%c&b;<!><!><h1>B</h1><p> </p><!><!><!>`, {
             bb: 0
           }
         }, "d7"]
-      },
+      }
+    }
+  }, "d6"]
+}]
+{
+  cAa: {
+    cb: {
       cAa: {
         la: [{
           ta: "x"
         }, "a0"]
       }
     }
-  }, "d6"]
-}]
+  }
+}
 ;HSYe
 
 // PATCH holding HSYe
@@ -73,14 +79,20 @@ a, b, {
             }
           }
         }, "d4"]
-      },
+      }
+    }
+  }, "d6"]
+}
+{
+  cAa: {
+    cb: {
       cAa: {
         la: [{
           ta: "z"
         }, "a0"]
       }
     }
-  }, "d6"]
+  }
 }
 
 // PATCH holding HSYe

@@ -48,5 +48,8 @@ REMOVE: section
 ## Change
 ```
 INSERT: section
+INSERT: section > :is(::text("loading "), ::text("e"))
 INSERT: section > p
+REMOVE: section > p + ::text("loading ")
+REMOVE: section > p + ::text("e")
 ```
