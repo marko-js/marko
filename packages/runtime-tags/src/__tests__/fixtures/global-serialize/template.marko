@@ -1,0 +1,6 @@
+<let/count=0/>
+<button onClick() { count++ }>${count + $global.brand}</button>
+<pre/out/>
+<script>
+  out().textContent = JSON.stringify($global);
+</script>

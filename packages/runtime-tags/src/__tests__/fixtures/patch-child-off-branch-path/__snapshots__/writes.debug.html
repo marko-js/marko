@@ -1,0 +1,89 @@
+<button>0<!--M_$1 #text/1--></button><!--M_$1 #button/0--><!--M_[--><!--M_!^3--><!--M_[-->
+<p>acme!<!--M_$9 #text/0--></p>
+<p>0 a<!--M_$10 #text/0--></p>
+<!--M_]11 #text/0--><!--M_]1 #PlaceholderBranch3 2--><!--M_!3--><!--M_]1 #text/2 3--><!--M_[--><!--M_!^6-->
+<p>fixed</p><!--M_!6--><!--M_]4 #text/0 6--><!--M_[--><!--M_!^b-->
+<t hidden M_=3><!--M_#c--></t>
+<t hidden M_=6><!--M_#d--></t>
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [0, {
+    brand: "acme"
+  }, {
+    input_label: "a",
+    brand: "acme!",
+    n: 0,
+    "ClosureScopes:input_label/12": new Set,
+    "ClosureScopes:n/15": new Set,
+    "#childScope/3": _(4)
+  }, 1, {
+    _: _(1),
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/template.marko_1*content"
+      ]
+  }, {
+    input_label: "fixed",
+    input_other: (p => p = new Promise((f, r) => _.a = {
+      f,
+      r(e) {
+        p.catch(_ => 0);
+        r(e)
+      }
+    }))(),
+    "ClosureScopes:input_other/10": new Set
+  }, 1, {
+    _: _(4),
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/tags/card.marko_1*content"
+      ]
+  }, {
+    _: _(4),
+    "#CatchContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/tags/card.marko_3*content"
+      ]
+  }], _ => (_.a.f("o1"), 0), _ => (_([3, {
+    "#PlaceholderBranch": _(2)
+  }, 4, {
+    _: _(1),
+    "#childScope/0": _(9),
+    "#childScope/1": _(10),
+    "#childScope/2": _(11)
+  }, 3, {
+    _: _(4),
+    "#ClosestBranchId": 5
+  }]), (_.b = _(1)["ClosureScopes:input_label/12"]).add(_(8)), 0)];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_*--><!--M_!b--><!--M_]4 #text/1 7-->
+<t hidden M_=b><!--M_*7-->
+  <p>fixed</p><!--M_[--><b>o1<!--M_$16 #text/0--></b><!--M_]14 #text/1 16-->
+</t>
+<script>
+  M._.r.push(_ => [7, {
+      "#CatchContent": 0
+    }, 6, {
+      _: _(4)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/template.marko_1_n#0:11/subscribe 8 _placeholderDismiss 3 packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/template.marko_0 1"
+    );
+  M._.j.b = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/patch-child-off-branch-path/tags/card.marko_3_input_other#0:6/subscribe 14"
+      )
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[--><em>s1<!--M_$17 #text/0--></em><!--M_]3 #text/0 17-->
+</t>
+<t hidden M_=d><!--M_[--><em>s1<!--M_$18 #text/0--></em><!--M_]6 #text/0 18-->
+</t>
+<script>
+  M._.w()
+</script>

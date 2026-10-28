@@ -1,0 +1,11 @@
+import List from "./tags/list.marko";
+import List2 from "./tags/list2.marko";
+<let/n=0/>
+<button class="inc" onClick() { n++ }>${n}</button>
+<for|a| of=input.as>
+  <${input.on ? List : List2}>
+    <for|b| of=input.bs>
+      <@item>${a}:${b}:${input.note}</@item>
+    </for>
+  </>
+</for>

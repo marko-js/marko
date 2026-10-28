@@ -1,0 +1,197 @@
+# Render `{"items":[{"key":"a"},{"key":"b"}],"record":{"a":1,"b":2},"start":0,"end":3}`
+```html
+<h1
+  id="sM_1"
+>
+  Fields
+</h1>
+<label
+  for="sM_2"
+>
+  a
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_2"
+/>
+<label
+  for="sM_3"
+>
+  b
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_3"
+/>
+<label
+  for="sM_4"
+>
+  a
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_4"
+/>
+<label
+  for="sM_5"
+>
+  b
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_5"
+/>
+<label
+  for="sM_6"
+>
+  a
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_6"
+/>
+<label
+  for="sM_7"
+>
+  b
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_7"
+/>
+<label
+  for="sM_8"
+>
+  1
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_8"
+/>
+<label
+  for="sM_9"
+>
+  2
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_9"
+/>
+<label
+  for="sM_a"
+>
+  0
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_a"
+/>
+<label
+  for="sM_b"
+>
+  1
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_b"
+/>
+<label
+  for="sM_c"
+>
+  2
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_c"
+/>
+<label
+  for="sM_d"
+>
+  3
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_d"
+/>
+<label
+  for="sM_e"
+>
+  0
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_e"
+/>
+<label
+  for="sM_f"
+>
+  1
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_f"
+/>
+<label
+  for="sM_g"
+>
+  2
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_g"
+/>
+<label
+  for="sM_h"
+>
+  3
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_h"
+/>
+<label
+  for="sM_i"
+>
+  0
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_i"
+/>
+<label
+  for="sM_j"
+>
+  2
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_j"
+/>
+<label
+  for="sM_k"
+>
+  0
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_k"
+/>
+<label
+  for="sM_l"
+>
+  2
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_l"
+/>
+```
+
+# Update
+```js
+checkIds(document);
+assert.equal(
+  document.querySelectorAll("input[id]").length,
+  count,
+);
+```

@@ -1,0 +1,11 @@
+export interface Input { pct: number; variant?: string; class?: any }
+<const/pct=Math.round(Math.max(0, Math.min(100, input.pct)))>
+<style/s>
+  .track { height: 4px; }
+  .fill { width: ${pct + "px"}; height: 4px; background: red; }
+  .hp { background: green; }
+</style>
+<const/fillClass=s[input.variant || "hp"]>
+<div class=[s.track, input.class]>
+  <div class=[s.fill, fillClass] id=`fill${input.variant || ""}`/>
+</div>

@@ -1,0 +1,89 @@
+// tags/store.marko
+const $template$2 = "";
+const $walks$2 = "";
+const $setup$2 = [[], []];
+_shells({ "__tests__/tags/store.marko": "^__tests__/tags/store.marko !," });
+_stateful_return("__tests__/tags/store.marko");
+var store_default = _template("__tests__/tags/store.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let last = 0;
+	const $return = {
+		last,
+		set: _resume(function(next) {
+			last = next;
+		}, "__tests__/tags/store.marko_0/_return", $scope0_id)
+	};
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/store.marko_fill0", last, 1);
+	return $return;
+});
+
+// tags/frame.marko
+const $template$1 = "<section><!></section>";
+const $walks$1 = "D%l";
+const $setup$1 = [[], []];
+_shells({ "__tests__/tags/frame.marko": "__tests__/tags/frame.marko;D%;<section><!></section>" });
+var frame_default = _template("__tests__/tags/frame.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	_html("<section>");
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
+	_html("</section>");
+	_scope($scope0_id, {}, "__tests__/tags/frame.marko", 0);
+});
+
+// template.marko
+const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}<p> </p>${_w1}`)("", $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&D l/${_w1}&`)("", "D%l");
+const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$2], ["#childScope/3>", $setup$1]);
+_shells({
+	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `0${_w0}&D l/${_w1}&`)("", "D%l")};${((_w0, _w1) => `${_w0}<p> </p>${_w1}`)("", $template$1)}`)(),
+	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_store_set#0:9/init!__tests__/template.marko_2;Db%l ;<span>Seen <!></span><button>+</button>"
+});
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	const $store_set__closures = new Set();
+	const $input_show__closures = new Set();
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, 1);
+	let store = store_default({});
+	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_store#7/var");
+	_patch_child_end();
+	_html(`<p>${_text_resume($scope0_id, "#text/2", store.last)}</p>`);
+	_set_scope_reason(0);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/3", 1);
+	frame_default({ content: _content("__tests__/template.marko_1*content", () => {
+		const $scope1_reason = _scope_reason();
+		const $scope1_id = _scope_id();
+		_if(() => {
+			if (input.show) {
+				const $scope2_id = _scope_id();
+				let count = 0;
+				_html(`<span>Seen ${_text_resume($scope2_id, "#text/0", count, 2)}</span><button>+</button>${_el_resume($scope2_id, "#button/1")}`);
+				_script($scope2_id, "__tests__/template.marko_2");
+				const $countChange = store.set || void 0;
+				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", count, 1);
+				_patch_bind($scope2_id, "PatchWrite:TagVariableChange:count", $countChange);
+				_subscribe($store_set__closures, _scope($scope2_id, {
+					count,
+					_: _scope_with_id($scope1_id),
+					"TagVariableChange:count": $countChange
+				}, "__tests__/template.marko", "4:4", {
+					count: "5:10",
+					"TagVariableChange:count": ["countChange", "5:10"]
+				}));
+				return 0;
+			}
+		}, $scope1_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_show#0:6/subscribe", $wg__input_show);
+		$wg__input_show || _resume_branch($scope1_id);
+	}, $scope0_id) });
+	_patch_child_end();
+	_scope($scope0_id, {
+		store_set: $wi__input_show && store?.set,
+		"#childScope/0": _existing_scope($childScope),
+		"ClosureScopes:store_set/11": $store_set__closures,
+		"ClosureScopes:input_show/10": $wi__input_show && _unfilled_if($scope0_reason, 0) && $input_show__closures,
+		"#childScope/3": _existing_scope($childScope2)
+	}, "__tests__/template.marko", 0, { store_set: ["store.set", "1:8"] });
+}, 1);

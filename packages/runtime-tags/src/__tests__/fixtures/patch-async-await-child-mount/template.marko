@@ -1,0 +1,9 @@
+<let/count=0/>
+<main>
+  <if=input.show>
+    <await|v|=input.promise>
+      <counter label=v start=1/>
+    </await>
+  </if>
+  <button id="c" onClick() { count++ }>${count}</button>
+</main>

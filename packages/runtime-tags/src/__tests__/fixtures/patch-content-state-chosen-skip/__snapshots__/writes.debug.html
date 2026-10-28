@@ -1,0 +1,45 @@
+<button>toggle</button><!--M_$1 #button/0-->
+<section><strong>two <!>b1<!--M_$2 #text/0--></strong></section>
+<!--M_$1 #section/1-->
+<section class=b1><strong>two <!>b1<!--M_$3 #text/0--></strong></section>
+<!--M_$1 #section/2-->
+<section id=partial class=b1><strong>two <!>b1<!--M_$4 #text/0--></strong>
+</section><!--M_$1 #section/3-->
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  M._.r = [_ => [1, {
+      "BranchScopes:#section/1": _(2),
+      "ConditionalRenderer:#section/1": _.a =
+        "packages/runtime-tags/src/__tests__/fixtures/patch-content-state-chosen-skip/template.marko_2*content 1",
+      "BranchScopes:#section/2": _(3),
+      "ConditionalRenderer:#section/2": _.a,
+      "BranchScopes:#section/3": _(4),
+      "ConditionalRenderer:#section/3": _.a,
+      input_b: "b1",
+      mode: !1,
+      one: {
+        content: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/patch-content-state-chosen-skip/template.marko_1*content"
+          )
+      },
+      two: {
+        content: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/patch-content-state-chosen-skip/template.marko_2*content"
+          )
+      },
+      status: "b1: 3 content renders",
+      "ClosureScopes:input_b/13": new Set([_(2), _(3), _(4)])
+    }, {
+      _: _(1),
+      "ClosureSignalIndex:input_b/13": 1
+    }, {
+      _: _(1),
+      "ClosureSignalIndex:input_b/13": 1
+    }, {
+      _: _(1),
+      "ClosureSignalIndex:input_b/13": 1
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-content-state-chosen-skip/template.marko_0_status#12 1 packages/runtime-tags/src/__tests__/fixtures/patch-content-state-chosen-skip/template.marko_0_input_b#6_mode#7_one#8_two#9 1 packages/runtime-tags/src/__tests__/fixtures/patch-content-state-chosen-skip/template.marko_0 1"
+  ];
+  M._.w()
+</script>

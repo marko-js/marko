@@ -22,9 +22,21 @@ import {
 } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
-import { addReasonExprs, type Reasons } from "../util/reasons";
-import { mergeReferences } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import { enterBranchIdSites, exitBranchIdSites } from "../util/known-tag";
+import { isPatch } from "../util/marko-config";
+import { onReasonsSettled } from "../util/patch/decisions";
+import {
+  patchesBranchesAt,
+  recordStructuralParams,
+} from "../util/patch/structure";
+import { getExprRootGroupArgs } from "../util/patch/writers";
+import {
+  addReasonExprs,
+  getSourcesForExpr,
+  type Reasons,
+} from "../util/reasons";
+import { mergeReferences, onFinalizeReferences } from "../util/references";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
@@ -34,6 +46,7 @@ import {
   getSectionForBody,
   type Section,
 } from "../util/sections";
+import { getShellIdArg } from "../util/shell";
 import {
   addValue,
   getSignal,
@@ -96,16 +109,28 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), ifTagExtra);
+      if (isPatch()) {
+        onFinalizeReferences(() => {
+          recordStructuralParams(getSourcesForExpr(ifTagExtra));
+        });
+        onReasonsSettled(() => {
+          if (patchesBranchesAt(nodeBinding)) {
+            linkRuntimeFeature("patches/branch");
+          }
+        });
+      }
     }
   },
   translate: translateByTarget({
     html: {
       enter(tag) {
         if (tag.node.body.attributeTags) return;
+        enterBranchIdSites(getBranches(tag));
         writer.flushBefore(tag);
       },
       exit(tag) {
         if (tag.node.body.attributeTags) return;
+        exitBranchIdSites(getBranches(tag));
 
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
@@ -123,9 +148,16 @@ export const IfTag = {
         if (isLastBranch(tag)) {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
+          const ifTagSection = getSection(ifTag);
+          const ifTagExtra = ifTag.node.extra!;
+          const nodeBinding = ifTagExtra.nodeBinding!;
           const nextTag = tag.getNextSibling();
           let branchReasons: Reasons | undefined;
           let statement: t.Statement | undefined;
+
+          // A patchable conditional keeps its markers: the shipped-branch
+          // swap inserts at the marker node, which elision would remove.
+          const patchesBranches = patchesBranchesAt(nodeBinding);
 
           for (let i = branches.length; i--;) {
             const [branchTag, branchBodySection] = branches[i];
@@ -170,7 +202,17 @@ export const IfTag = {
                   branches.every(([, branchBody]) =>
                     isSingleNodeBranch(branchBody),
                   ),
+                  patchesBranches,
                 ),
+                // Shell ids per branch index (an absent body ships `0`): the
+                // client creates diverged branches without bundling them.
+                patchesBranches &&
+                  t.arrayExpression(branches.map(getBranchShellIdArg)),
+                // A chain whose conditions derive from params yields to the
+                // client when the call site passes state for them.
+                ...(patchesBranches
+                  ? getExprRootGroupArgs(ifTagSection, ifTagExtra)
+                  : []),
               ),
             );
           }
@@ -416,6 +458,10 @@ function getBranches(tag: t.NodePath<t.MarkoTag>) {
   }
 
   return branches;
+}
+
+function getBranchShellIdArg([, bodySection]: [unknown, Section | undefined]) {
+  return getShellIdArg(bodySection);
 }
 
 // The `<else-if>` or `<else>` continuing the chain after `tag`, past comments.

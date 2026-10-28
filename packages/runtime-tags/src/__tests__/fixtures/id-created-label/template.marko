@@ -1,0 +1,19 @@
+<for|item| of=input.items by="key">
+  <id/uid/>
+  <input id=uid/>
+  <if=input.show><label for=uid>${item.key}</label></if>
+</for>
+<define/Field|{ show }|>
+  <id/uid/>
+  <input id=uid/>
+  <if=show><label for=uid>field</label></if>
+</define>
+<${input.on ? Field : null} show=input.show/>
+<${input.on ? Field : null} show=input.show/>
+<for|row| of=input.rows by="id">
+  <card>
+    <id/uid/>
+    <input id=uid/>
+    <label for=uid>${row.id}</label>
+  </card>
+</for>
