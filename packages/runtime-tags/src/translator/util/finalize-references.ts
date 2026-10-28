@@ -622,6 +622,12 @@ function resolveInitialValue(binding: Binding) {
   binding.initReadsFirstValues = every(sources?.state, (state) =>
     holdsFirstValue(state, binding.section),
   );
+  binding.initStates = reduce(
+    sources?.state,
+    (states: ReferencedBindings, state) =>
+      bindingUtil.union(bindingUtil.add(states, state), state.initStates),
+    undefined,
+  );
   return !!sources;
 }
 

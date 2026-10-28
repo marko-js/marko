@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"), $cg__input_a && "__tests__/template.marko_2_input_a#0:4/subscribe");
 					return 0;
 				}
-			}, $scope1_id, "#text/0", 1, 1, 1, 0, 0, ["__tests__/template.marko_2*shell"], 0, 0);
+			}, $scope1_id, "#text/0", 1, 1, 1, 0, 0, ["__tests__/template.marko_2*shell"]);
 			_html(`<button>${_text_resume($scope1_id, "#text/2", x + input.b)}</button>${_el_resume($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill2", x, 1);

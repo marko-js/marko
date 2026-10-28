@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_a && "a1");
 					return 0;
 				}
-			}, $scope1_id, "a", 1, 1, 1, 0, 0, ["a2"], 0, 0);
+			}, $scope1_id, "a", 1, 1, 1, 0, 0, ["a2"]);
 			_html(`<button>${_text_resume($scope1_id, "c", x + input.b)}</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a4");
 			_patch_fill($scope1_id, "va5", x, 1);

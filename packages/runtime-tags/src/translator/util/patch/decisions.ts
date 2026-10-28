@@ -65,20 +65,29 @@ export function writesPatchHole(
   );
 }
 
-// Read only from `<let>`s at their first value where the scope is created, none
-// a patch fills: the hole seeds a created scope alone.
+// Read only from `<let>`s whose first value the server renders where the scope is
+// created: the hole seeds a created scope alone.
 export function seedsOnly(section: Section, sources: Sources | undefined) {
   return (
     patchCreatesOrComposes(section) &&
     !!sources?.state &&
     !sources.param &&
     !sources.global &&
-    every(
-      sources.state,
-      (state) => holdsFirstValue(state, section) && !canPatchFill(state),
-    )
+    every(sources.state, (state) => serverRendersFirstValue(state, section))
   );
 }
+
+// A `<let>` at its first value as the section's scope is created, which the server
+// renders there: unless a patch fills it or state its init reads, so the client runs it.
+export function serverRendersFirstValue(state: Binding, section: Section) {
+  return holdsFirstValue(state, section) && !fillsFirstValue(state);
+}
+
+const fillsFirstValue = createPassMemo(
+  (state: Binding) =>
+    canPatchFill(state) || some(state.initStates, canPatchFill),
+  false,
+);
 
 // A seed-only hole a `<let>` the client assigns sources: that `<let>`'s signal
 // rewrites the node, so the page keeps its marker whatever the group.

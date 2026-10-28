@@ -45,6 +45,8 @@ export interface Binding {
   /** For an uncontrolled `<let>`: its init reads no state but `<let>`s created
    * with it or that nothing assigns, whose inits read the same way. */
   initReadsFirstValues: boolean;
+  /** For an uncontrolled `<let>`: the state its init reads, and theirs. */
+  initStates: ReferencedBindings;
   /** The intersection whose work computes it, or the nearest one it derives
    * from. Set on alias roots only. */
   intersection: Intersection | undefined;
@@ -160,6 +162,7 @@ export function createBinding(
     assignedProperties: undefined,
     sources: undefined,
     initReadsFirstValues: false,
+    initStates: undefined,
     intersection: undefined,
     derivedFrom: undefined,
     reads: new Map(),

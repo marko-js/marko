@@ -2,7 +2,6 @@
 // and wire channels belong to ./decisions, ./refresh, ./writers.
 import { type Binding, bindingUtil } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
-import { holdsFirstValue } from "../finalize-references";
 import { everyCallPasses } from "../known-tag";
 import { isPatch } from "../marko-config";
 import { every, first, some } from "../optional";
@@ -21,7 +20,7 @@ import {
 } from "../sections";
 import { getDerivedReaders, someLandingRead } from "../solve-reasons";
 import { hasParamOrGlobalSource, type Sources } from "../sources";
-import { hasClientState } from "./decisions";
+import { hasClientState, serverRendersFirstValue } from "./decisions";
 
 // Every render of the section is patch-written: on the branch path, outside
 // stateful structure.
@@ -67,7 +66,7 @@ function isPatchedLeaf(read: ReferencedExtra) {
     (!isStatefulLeaf(read) ||
       (!!read.nameOnly &&
         every(getSourcesForExpr(read)?.state, (state) =>
-          holdsFirstValue(state, read.section),
+          serverRendersFirstValue(state, read.section),
         )))
   );
 }
