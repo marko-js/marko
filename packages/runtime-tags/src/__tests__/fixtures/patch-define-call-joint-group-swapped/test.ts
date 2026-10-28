@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
 
-const click = (document: Document) => {
+function click(document: Document) {
   document.querySelector<HTMLButtonElement>("button")!.click();
-};
+}
 
 // Each call passes client state in a different param of the group the
 // `<if>` reads: the group is the client's at every call.

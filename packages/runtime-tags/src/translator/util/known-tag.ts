@@ -883,7 +883,7 @@ export function getClientCalls(body: Section, params: ParamReasonGroup) {
 
 // Some group of the params (each body's) gets the client's bit at every call.
 export function isClientAtEveryCall(params: Sources["param"]) {
-  return reduceParamGroups(params, addEveryCallGroup, false);
+  return reduceParamGroups(params, orClientAtEveryCall, false);
 }
 
 // Equal groups of a body's params share one array, the memo's key.
@@ -909,7 +909,7 @@ const getGroupClientCalls = createPassMemo(
           );
           const calls = passed?.state
             ? "every"
-            : reduceParamGroups(passed?.param, addClientCalls, undefined);
+            : reduceParamGroups(passed?.param, orClientCalls, undefined);
           someCall ||= !!calls;
           everyCall &&= calls === "every";
         }
@@ -921,7 +921,7 @@ const getGroupClientCalls = createPassMemo(
 );
 
 // A call composes its caller groups' bits: the client's where any's is.
-function addClientCalls(
+function orClientCalls(
   calls: "some" | "every" | undefined,
   body: Section,
   params: ParamReasonGroup,
@@ -929,7 +929,8 @@ function addClientCalls(
   return calls === "every" ? calls : getClientCalls(body, params) || calls;
 }
 
-function addEveryCallGroup(
+// The groups' bits are or'd, so one the client's at every call is enough.
+function orClientAtEveryCall(
   every: boolean,
   body: Section,
   params: ParamReasonGroup,
