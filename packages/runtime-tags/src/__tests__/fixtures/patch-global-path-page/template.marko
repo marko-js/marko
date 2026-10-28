@@ -1,0 +1,32 @@
+<let/open=true/>
+<button onClick() { open = !open }>t</button>
+<if=open>
+  <b>${$global.a + $global.c}</b>
+</if>
+<ul>
+  <for|i| until=open ? 1 : 0>
+    <li>${$global.a + $global.c}</li>
+  </for>
+</ul>
+<div/keys/>
+<div/path/>
+<div/nonce/>
+<div/whole/>
+<div/both/>
+<script>
+  path().textContent = $global.o.x;
+  path().dataset.runs = String(+(path().dataset.runs || 0) + 1);
+</script>
+<script>
+  nonce().textContent = $global.cspNonce;
+  nonce().dataset.runs = String(+(nonce().dataset.runs || 0) + 1);
+</script>
+<script>
+  const g = $global;
+  whole().dataset.runs = String(+(whole().dataset.runs || 0) + 1);
+</script>
+<script>keys().textContent = $global.a + $global.c</script>
+<script>
+  both().textContent = $global.cspNonce + $global.o.x;
+  both().dataset.runs = String(+(both().dataset.runs || 0) + 1);
+</script>

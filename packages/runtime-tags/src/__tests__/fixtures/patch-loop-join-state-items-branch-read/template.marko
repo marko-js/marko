@@ -1,0 +1,6 @@
+<let/list=["p", "q"]/>
+<let/show=true/>
+<child b=input.b items=list show=show/>
+<child b=input.b items=input.items show=input.show/>
+<button.l onClick() { list = list.concat("r") }>l</button>
+<button.s onClick() { show = !show }>s</button>

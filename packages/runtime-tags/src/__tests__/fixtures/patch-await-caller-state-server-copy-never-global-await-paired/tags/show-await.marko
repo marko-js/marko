@@ -1,0 +1,5 @@
+<await|x|=input.promise>
+  <await|y|=Promise.resolve(x + ":" + $global.flag)>
+    <p>${y}</p>
+  </await>
+</await>

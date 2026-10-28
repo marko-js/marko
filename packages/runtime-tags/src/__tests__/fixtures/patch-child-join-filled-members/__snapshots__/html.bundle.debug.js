@@ -1,0 +1,70 @@
+// tags/child.marko
+const $template$1 = "<p> </p><!><!>";
+const $walks$1 = "D l%c";
+const $setup$1 = [[], []];
+_shells({
+	"__tests__/tags/child.marko": "__tests__/tags/child.marko !;D l%;<p> </p><!><!>",
+	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell;D%c%;<em><!>|<!></em>"
+});
+var child_default = _template("__tests__/tags/child.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 4), $cg__input_a = _client_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 5);
+	const $scope0_id = _scope_id();
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.a + input.b, 1, $scope0_reason, 0)}</p>`);
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_html(`<em>${_text_resume($scope1_id, "#text/0", input.a, 1, $scope0_reason, 3)}|${_text_resume($scope1_id, "#text/1", input.b, 2, $scope0_reason, 4)}</em>`);
+			$cg__input_a && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:4/init");
+			$cg__input_b && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_b#0:5/init");
+			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2");
+			return 0;
+		}
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 5), 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 5);
+	_patch_join_init($scope0_id, "__tests__/tags/child.marko_0_input_a#4_input_b#5/init", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && "input_a", _filled_guard($scope0_reason, 4) && "input_b");
+	_scope($scope0_id, {
+		input_a: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5)) && input.a,
+		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && input.b
+	}, "__tests__/tags/child.marko", 0, {
+		input_a: ["input.a"],
+		input_b: ["input.b"]
+	}) || (_filled_guard($scope0_reason, 3) && ($cg__input_b || $cg__input_show) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0", input.a, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && ($cg__input_a || $cg__input_show) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill1", input.b, !_server_guard($scope0_reason, 4)));
+});
+
+// template.marko
+const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<button class=n>+</button><button class=s>s</button>`)($template$1, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}& b b`)($walks$1, $walks$1);
+const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1]);
+_shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `/${_w0}&/${_w1}& b b`)($walks$1, $walks$1)};${((_w0, _w1) => `${_w0}${_w1}<button class=n>+</button><button class=s>s</button>`)($template$1, $template$1)}`)() });
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let n = 0;
+	let s = true;
+	_set_scope_reason(2286 | _mask_group($scope0_reason, 1) << 9);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
+	child_default({
+		a: n,
+		b: input.x,
+		show: s
+	});
+	_patch_child_end();
+	_set_scope_reason(158 | (_mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 1) << 9 | _mask_group($scope0_reason, 2) << 11));
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
+	child_default({
+		a: n,
+		b: input.x,
+		show: input.show
+	});
+	_patch_child_end();
+	_html(`<button class=n>+</button>${_el_resume($scope0_id, "#button/2")}<button class=s>s</button>${_el_resume($scope0_id, "#button/3")}`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	_scope($scope0_id, {
+		n,
+		s,
+		"#childScope/0": _existing_scope($childScope),
+		"#childScope/1": _existing_scope($childScope2)
+	}, "__tests__/template.marko", 0, {
+		n: "1:6",
+		s: "2:6"
+	});
+}, 1);

@@ -1,0 +1,24 @@
+static let contentRenders = 0;
+static function rendering() {
+  contentRenders++;
+  return "";
+}
+static function takeRenders() {
+  const renders = contentRenders;
+  contentRenders = 0;
+  return renders;
+}
+
+<let/mode=false/>
+<button onClick() { mode = !mode }>toggle</button>
+<define/one>
+  <em>one ${input.b}${rendering()}</em>
+</define>
+<define/two>
+  <strong>two ${input.b}${rendering()}</strong>
+</define>
+<section content=(mode ? one : two)/>
+<section ...{ class: input.b, content: mode ? one : two }/>
+<section ...{ class: input.b, content: mode ? one : two } id="partial"/>
+<const/status=`${input.b}: ${takeRenders()} content renders`/>
+<script>console.log(status)</script>

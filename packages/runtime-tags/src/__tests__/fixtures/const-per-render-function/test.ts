@@ -1,0 +1,10 @@
+import type { TestConfig } from "../../main.test";
+
+// A `<const>` whose value differs per render, joined with input and read only
+// inside a function the child's handler calls.
+const click = (document: Document) => {
+  document.querySelector("button")!.click();
+};
+export const config: TestConfig = {
+  steps: [{ name: "a", label: "A", value: "1" }, click],
+};

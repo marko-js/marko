@@ -1,0 +1,10 @@
+import Child from "./child.marko" with { load: "render" }
+
+<main>
+  <if=input.show>
+    <let/n=0/>
+    <button onClick() { n++ }>${n}</button>
+    <const/X=Child/>
+    <X label=n/>
+  </if>
+</main>

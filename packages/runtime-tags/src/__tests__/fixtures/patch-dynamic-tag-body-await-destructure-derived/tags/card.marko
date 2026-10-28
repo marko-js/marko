@@ -1,0 +1,5 @@
+import Keeper from "./keeper.marko";
+<await|x|=input.p>
+  <const/{ content: c }=(x ? input : {})/>
+  <${x ? Keeper : "div"} content=c/>
+</await>

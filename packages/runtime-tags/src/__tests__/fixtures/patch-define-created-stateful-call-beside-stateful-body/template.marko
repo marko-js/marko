@@ -1,0 +1,18 @@
+<let/open=false/>
+<define/Inner|{ isOpen, text }|>
+  <let/n=1/>
+  <if=isOpen><em>${text}${n}</em><button class="inc" onClick() { n++ }>+</button></if>
+  <script>console.log("inner effect", text)</script>
+</define>
+<define/Outer|{ on, label }|>
+  <Inner isOpen=true text="const"/>
+  <if=on><i>${label}</i></if>
+</define>
+<if=input.show>
+  <Outer on=true label=input.label/>
+</if>
+<const/T=open ? "div" : Outer/>
+<${T} on=!open label="dyn"/>
+<const/U=open ? "div" : Inner/>
+<${U} isOpen=true text="u"/>
+<button id="t" onClick() { open = !open }>toggle</button>

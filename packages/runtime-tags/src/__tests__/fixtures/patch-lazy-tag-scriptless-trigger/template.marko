@@ -1,0 +1,7 @@
+import Child from "./child.marko" with { load: "on-click body" }
+
+<main>
+  <if=input.show>
+    <Child label=input.label/>
+  </if>
+</main>

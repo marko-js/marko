@@ -1,0 +1,32 @@
+<button>toggle</button><!--M_$1 #button/0-->
+<section><strong>b1<!--M_$3 #text/0--></strong></section><!--M_$2 #section/0-->
+<div id=partial><em>one</em></div><!--M_$2 #div/1-->
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  M._.r = [_ => [1, {
+      mode: !1,
+      "#childScope/1": _(2)
+    }, {
+      "BranchScopes:#section/0": _(3),
+      "ConditionalRenderer:#section/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-spread-client-owned/tags/frag-host.marko_1*content 2",
+      "BranchScopes:#div/1": _(4),
+      "ConditionalRenderer:#div/1": "packages/runtime-tags/src/__tests__/fixtures/patch-content-spread-client-owned/tags/frag-host.marko_2*content 2",
+      input_b: "b1",
+      one: {
+        content: _(2,
+          "packages/runtime-tags/src/__tests__/fixtures/patch-content-spread-client-owned/tags/frag-host.marko_2*content"
+          )
+      },
+      two: {
+        content: _(2,
+          "packages/runtime-tags/src/__tests__/fixtures/patch-content-spread-client-owned/tags/frag-host.marko_1*content"
+          )
+      },
+      "ClosureScopes:input_b/9": new Set([_(3)])
+    }, {
+      _: _(2)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-content-spread-client-owned/tags/frag-host.marko_0_input_mode#5_one#6_two#7 2 packages/runtime-tags/src/__tests__/fixtures/patch-content-spread-client-owned/template.marko_0 1"
+  ];
+  M._.w()
+</script>
