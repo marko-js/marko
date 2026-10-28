@@ -626,7 +626,7 @@ function resolveInitialValue(binding: Binding) {
   return !!sources;
 }
 
-function mergeInitSources(sources: Sources | undefined, state: Binding) {
+export function mergeInitSources(sources: Sources | undefined, state: Binding) {
   return mergeSources(sources, state.initSources);
 }
 

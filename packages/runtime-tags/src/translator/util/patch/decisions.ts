@@ -11,8 +11,8 @@ import {
   getCanonicalBinding,
   isStateSourced,
 } from "../bindings";
-import { createAnalysisMemo, createPassMemo } from "../cyclic-memo";
-import { holdsFirstValue } from "../finalize-references";
+import { createPassMemo } from "../cyclic-memo";
+import { holdsFirstValue, mergeInitSources } from "../finalize-references";
 import { isPatch } from "../marko-config";
 import { every, forEach, type Opt, push, reduce, some } from "../optional";
 import {
@@ -315,36 +315,11 @@ export function getEffectWrites(section: Section, signal: Signal) {
   }
 }
 
-// The sources each state's first value reads: its init's, through the inits of the
-// states it reads.
+// The params and `$global` each state's first value reads, through other states.
 export function getStateInitSources(states: Sources["state"]) {
-  return reduce(states, mergeInitSources);
+  const inits = reduce(states, mergeInitSources);
+  return inits && withSources(inits, undefined, inits.param);
 }
-
-function mergeInitSources(
-  sources: Sources | undefined,
-  state: Binding,
-): Sources | undefined {
-  return mergeSources(sources, getInitSources(state));
-}
-
-// A callback in a state's init can read the state back: the cyclic memo answers that
-// read with none, and caches nothing that consumed the answer.
-const [getInitSources] = createAnalysisMemo(
-  (state: Binding): Sources | undefined => {
-    if (!state.derivedFrom) return;
-    const init = getSourcesForExpr(state.derivedFrom as t.NodeExtra);
-    return (
-      init &&
-      reduce(
-        init.state,
-        mergeInitSources,
-        withSources(init, undefined, init.param),
-      )
-    );
-  },
-  undefined,
-);
 
 // Whether a mask composing `writeGroups` holds the bits of each of `groups`.
 function holdsGroups(
