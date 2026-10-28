@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<input${_attr_input_value($scope1_id, "#input/0", input.value, void 0, 1, $scope0_reason, 2)}>${_el_resume($scope1_id, "#input/0", _mask_group($scope0_reason, 2))}`);
+			_html(`<input${_attr_input_value($scope1_id, "#input/0", input.value, void 0, "PatchControl:2#input/0", $scope0_reason, 2)}>${_el_resume($scope1_id, "#input/0", _mask_group($scope0_reason, 2))}`);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_value#0:6/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;

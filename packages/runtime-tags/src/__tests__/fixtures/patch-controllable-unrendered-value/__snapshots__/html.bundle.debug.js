@@ -16,9 +16,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<input${_attr_input_value($scope1_id, "#input/0", input.value, _resume(function(next) {
 				console.log(next);
-			}, "__tests__/template.marko_1/valueChange"), 1, $scope0_reason, 2, 1, $scope0_reason, 2)} class=b>${_el_resume($scope1_id, "#input/0")}<input${_attr_input_checked($scope1_id, "#input/1", input.flag, _resume(function(next) {
+			}, "__tests__/template.marko_1/valueChange"), "PatchControl:2#input/0", $scope0_reason, 2, "PatchWrite:ControlledHandler:#input/0", $scope0_reason, 2)} class=b>${_el_resume($scope1_id, "#input/0")}<input${_attr_input_checked($scope1_id, "#input/1", input.flag, _resume(function(next) {
 				console.log(next);
-			}, "__tests__/template.marko_1/checkedChange"), 1, $scope0_reason, 3, 1, $scope0_reason, 3)} type=checkbox class=c>${_el_resume($scope1_id, "#input/1")}`);
+			}, "__tests__/template.marko_1/checkedChange"), "PatchControl:0#input/1", $scope0_reason, 3, "PatchWrite:ControlledHandler:#input/1", $scope0_reason, 3)} type=checkbox class=c>${_el_resume($scope1_id, "#input/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_value#0:6/init");
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_flag#0:7/init");

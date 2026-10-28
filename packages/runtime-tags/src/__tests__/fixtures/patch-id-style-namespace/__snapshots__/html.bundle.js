@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = _id("A");
-	_html(`<label${_attr("for", uid, $scope0_id, "a", 0, 0)}>field</label>${_el_resume($scope0_id, "a", 0)}<input${_attr("id", uid, $scope0_id, "b", 0, 0)}${_attr_class(uid, $scope0_id, "b", 0, 0)}>${_el_resume($scope0_id, "b", 0)}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "aa$for", 0, 0)}>field</label>${_el_resume($scope0_id, "a", 0)}<input${_attr("id", uid, $scope0_id, "ab$id", 0, 0)}${_attr_class(uid, $scope0_id, "ab$class", 0, 0)}>${_el_resume($scope0_id, "b", 0)}`);
 	_for_to(360, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`${_style_html(`--idsa0:${_patch_style($scope1_id, "ya$--idsa0", input.color, $scope0_reason, 0)};`)}${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);

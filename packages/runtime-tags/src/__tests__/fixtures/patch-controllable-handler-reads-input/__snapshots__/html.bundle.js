@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<p>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</p><input${_attr_input_value($scope0_id, "b", input.label, _bind_resume(function(v) {
 		console.log(v + ":" + input.label);
-	}, "a0", $scope0_id), 1, $scope0_reason, 0, 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "b")}`);
+	}, "a0", $scope0_id), "n2b", $scope0_reason, 0, "wEb", $scope0_reason, 0)}>${_el_resume($scope0_id, "b")}`);
 	_if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
 	_html(`<button>${_text_resume($scope0_id, "e", count)}</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a1");

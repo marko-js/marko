@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $cg__valueChange = _client_guard($scope1_reason, 2);
 		const { value, valueChange, ...attrs } = input;
-		_html(`<input${_attr_input_value($scope1_id, "a", value, valueChange, 1, $scope1_reason, 0, 1, $scope1_reason, 0)}${_attrs_partial(attrs, {
+		_html(`<input${_attr_input_value($scope1_id, "a", value, valueChange, "n2a", $scope1_reason, 0, "wEa", $scope1_reason, 0)}${_attrs_partial(attrs, {
 			value: 1,
 			valueChange: 1
 		}, "a", $scope1_id, "input", void 0, $scope1_reason, 3)}>${_el_resume($scope1_id, "a")}`);

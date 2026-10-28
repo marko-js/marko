@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 			value: "c",
 			...input.c
 		}, "d", $scope0_id, "option", void 0, $scope0_reason, 2)}>c</option>${_el_resume($scope0_id, "d")}</select>`);
-	}, void 0, void 0, void 0, 1);
+	}, void 0, void 0, void 0, "wEa");
 	_html(`${_el_resume($scope0_id, "a")}<span>${_text_resume($scope0_id, "e", v)}</span><button>t</button>${_el_resume($scope0_id, "f")}`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");

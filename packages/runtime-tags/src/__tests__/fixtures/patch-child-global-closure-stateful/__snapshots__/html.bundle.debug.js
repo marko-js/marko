@@ -11,11 +11,11 @@ var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const z = input.v + $global$1.flag;
-	_html(`<p${_attr("data-w", input.w, $scope0_id, "#p/0", $scope0_reason, 1)}></p>${_el_resume($scope0_id, "#p/0", _mask_group($scope0_reason, 1))}`);
+	_html(`<p${_attr("data-w", input.w, $scope0_id, "PatchAttr:#p/0 data-w", $scope0_reason, 1)}></p>${_el_resume($scope0_id, "#p/0", _mask_group($scope0_reason, 1))}`);
 	_if(() => {
 		if (input.v) {
 			const $scope1_id = _scope_id();
-			_html(`<i${_attr("data-z", z + $global$1.mark, $scope1_id, "#i/0", (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></i>${_el_resume($scope1_id, "#i/0")}`);
+			_html(`<i${_attr("data-z", z + $global$1.mark, $scope1_id, "PatchAttr:#i/0 data-z", (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></i>${_el_resume($scope1_id, "#i/0")}`);
 			_fill_global_subscribe("__tests__/tags/gm/index.marko_1_z#0:6_$global_mark#0:10", $scope1_id);
 			_client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_init($scope1_id, "__tests__/tags/gm/index.marko_1_z#0:6/init");
 			_scope($scope1_id, { _: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id) }, "__tests__/tags/gm/index.marko", "3:2");

@@ -3,7 +3,7 @@ _shells({ b: "b !b0; ;<input>" });
 var field_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<input${_attr_input_value($scope0_id, "a", input.value, input.valueChange, 1, $scope0_reason, 0, 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}`);
+	_html(`<input${_attr_input_value($scope0_id, "a", input.value, input.valueChange, "n2a", $scope0_reason, 0, "wEa", $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b3");
 	_scope($scope0_id, {

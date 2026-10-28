@@ -6,7 +6,7 @@ _shells({ "__tests__/child.marko": "__tests__/child.marko; ;<div></div>" });
 var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_class(input.name, $scope0_id, "#div/0", $scope0_reason, 1)}></div>${_el_resume($scope0_id, "#div/0", _mask_group($scope0_reason, 1))}`);
+	_html(`<div${_attr_class(input.name, $scope0_id, "PatchAttr:#div/0 class", $scope0_reason, 1)}></div>${_el_resume($scope0_id, "#div/0", _mask_group($scope0_reason, 1))}`);
 	_script($scope0_id, "__tests__/child.marko_0_input_name#3_input_item#4", 1, (_filled_guard($scope0_reason, 1) || _filled_guard($scope0_reason, 2)) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), _filled_guard($scope0_reason, 1) && "input_name", _filled_guard($scope0_reason, 2) && "input_item");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/child.marko_0_input_name#3_input_item#4/init");
 	_scope($scope0_id, {

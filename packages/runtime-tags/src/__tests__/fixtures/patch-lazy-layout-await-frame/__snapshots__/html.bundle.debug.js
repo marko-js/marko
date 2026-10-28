@@ -23,11 +23,11 @@ _shells({
 var icon_default = _template("__tests__/tags/icon.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<svg${_attr("viewBox", input.name, $scope0_id, "#svg/0", $scope0_reason, 0)}>`);
+	_html(`<svg${_attr("viewBox", input.name, $scope0_id, "PatchAttr:#svg/0 viewBox", $scope0_reason, 0)}>`);
 	_if(() => {
 		if (input.name) {
 			const $scope1_id = _scope_id();
-			_html(`<path${_attr("d", input.name, $scope1_id, "#path/0", $scope0_reason, 0)}></path>${_el_resume($scope1_id, "#path/0", _mask_group($scope0_reason, 0))}`);
+			_html(`<path${_attr("d", input.name, $scope1_id, "PatchAttr:#path/0 d", $scope0_reason, 0)}></path>${_el_resume($scope1_id, "#path/0", _mask_group($scope0_reason, 0))}`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/icon.marko_1_input_name#0:3/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/icon.marko", "2:4");
 			return 0;

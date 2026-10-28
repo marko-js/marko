@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	thing.content({ x: input.n });
 	_patch_child_end();
-	_html(`<div${_attr_class([input.cls, { on: input.on }], $scope0_id, "b", $scope0_reason, 0)}${_attr_style({ color: input.color }, $scope0_id, "b", $scope0_reason, 5)}>x</div>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 5))}`);
+	_html(`<div${_attr_class([input.cls, { on: input.on }], $scope0_id, "ab$class", $scope0_reason, 0)}${_attr_style({ color: input.color }, $scope0_id, "ab$style", $scope0_reason, 5)}>x</div>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 5))}`);
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.cls,
 		h: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.on,

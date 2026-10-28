@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xf", item?.href, !_server_guard($scope0_reason, 1));
 		const active = item.href === input.path;
-		_html(`<a${_attr_class(["link", { active }], $scope1_id, "a", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "a", $scope0_reason, 1)}>`);
+		_html(`<a${_attr_class(["link", { active }], $scope1_id, "aa$class", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "aa$href", $scope0_reason, 1)}>`);
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		icon_default({ name: item.icon });

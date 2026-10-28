@@ -16,7 +16,7 @@ var feed_list_default = _template("b", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "vb1", item?.id);
-		_html(`<li${hovered === item.id ? " class=hovered" : ""}><a${_attr("href", link(input.data, item.id), $scope1_id, "b", $scope0_reason, 0)}>${_text_resume($scope1_id, "c", item.id, void 0, $scope0_reason, 1)}</a>${_el_resume($scope1_id, "b", _mask_group($scope0_reason, 0))}</li>${_el_resume($scope1_id, "a")}`);
+		_html(`<li${hovered === item.id ? " class=hovered" : ""}><a${_attr("href", link(input.data, item.id), $scope1_id, "ab$href", $scope0_reason, 0)}>${_text_resume($scope1_id, "c", item.id, void 0, $scope0_reason, 1)}</a>${_el_resume($scope1_id, "b", _mask_group($scope0_reason, 0))}</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "b2", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "f");
 		_scope($scope1_id, {

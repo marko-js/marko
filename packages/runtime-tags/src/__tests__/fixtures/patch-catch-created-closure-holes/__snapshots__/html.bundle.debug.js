@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		const upper = input.msg.toUpperCase();
-		_html(`<b${_attr("title", input.msg, $scope1_id, "#b/0", $scope0_reason, 1)}>${_text_resume($scope1_id, "#text/1", err.message, void 0, 4, 0)} ${_text_resume($scope1_id, "#text/2", input.msg, 2, $scope0_reason, 1)} ${_text_resume($scope1_id, "#text/3", upper, 2, $scope0_reason, 1)} ${_text_resume($scope1_id, "#text/4", err.message + upper, 2, $scope0_reason, 1)}</b>${_el_resume($scope1_id, "#b/0", _mask_group($scope0_reason, 1))}`);
+		_html(`<b${_attr("title", input.msg, $scope1_id, "PatchAttr:#b/0 title", $scope0_reason, 1)}>${_text_resume($scope1_id, "#text/1", err.message, void 0, 4, 0)} ${_text_resume($scope1_id, "#text/2", input.msg, 2, $scope0_reason, 1)} ${_text_resume($scope1_id, "#text/3", upper, 2, $scope0_reason, 1)} ${_text_resume($scope1_id, "#text/4", err.message + upper, 2, $scope0_reason, 1)}</b>${_el_resume($scope1_id, "#b/0", _mask_group($scope0_reason, 1))}`);
 		$cg__input_msg && _patch_write($scope1_id, "PatchWrite:err_message", err?.message, 1);
 		_patch_write($scope1_id, "PatchWrite:upper", upper, 1);
 		$cg__input_msg && _patch_init($scope1_id, "__tests__/template.marko_1_input_msg#0:3/init");

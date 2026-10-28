@@ -22,7 +22,7 @@ import {
   stringifyStyleEntry,
   toDelimitedString,
 } from "../../../common/helpers";
-import type { Falsy } from "../../../common/types";
+import { ControlledType, type Falsy } from "../../../common/types";
 import {
   _attr,
   _attr_class,
@@ -43,6 +43,7 @@ import {
 import {
   getAccessorPrefix,
   getAccessorProp,
+  getPatchKey,
 } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
@@ -66,6 +67,7 @@ import {
 import {
   buildPatchTextContent,
   getExprRootGroupArgs,
+  getNamedPatchKey,
   getPatchHoleGroupArgs,
 } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
@@ -84,6 +86,7 @@ import {
 } from "../../util/runtime";
 import {
   getPrefixedScopeAccessor,
+  getScopeAccessor,
   getScopeAccessorLiteral,
 } from "../../util/scope-accessor";
 import {
@@ -479,9 +482,8 @@ export default {
           linkHolePatcher(
             tagSection,
             controlExtra,
-            patchControlFeatures[
-              getControllableHelper(tagName, controllable.state)
-            ],
+            patchControls[getControllableHelper(tagName, controllable.state)]
+              .feature,
           );
         }
 
@@ -714,10 +716,22 @@ export default {
               ? getExprRootGroupArgs(tagSection, changeAttr!.value.extra!)
               : [];
             patchArgs = [
-              writesControl && t.numericLiteral(1),
+              writesControl &&
+                t.stringLiteral(
+                  getPatchKey().Control +
+                    patchControls[controlHelper!].kind +
+                    getScopeAccessor(nodeBinding!),
+                ),
               mask,
               group,
-              bindsHandler && t.numericLiteral(1),
+              bindsHandler &&
+                t.stringLiteral(
+                  getPatchKey().Write +
+                    getPrefixedScopeAccessor(
+                      nodeBinding!,
+                      getAccessorPrefix().ControlledHandler,
+                    ),
+                ),
               bindMask,
               bindGroup,
             ];
@@ -830,7 +844,9 @@ export default {
                 ...(helper === "_attr" ? [t.stringLiteral(name)] : []),
                 value,
                 getScopeIdIdentifier(tagSection),
-                nodeAccessor,
+                t.stringLiteral(
+                  getNamedPatchKey(getPatchKey().Attr, nodeBinding!, name),
+                ),
                 ...getExprRootGroupArgs(tagSection, value.extra!),
               )}`;
               continue;
@@ -1626,15 +1642,36 @@ function getControllableHelper(tagName: string, state: Controllable["state"]) {
   }
 }
 
-// By a control's server helper: the feature that applies its patch entries.
-const patchControlFeatures = {
-  _attr_input_checked: "patches/control-input",
-  _attr_input_checkedValue: "patches/control-checked-value",
-  _attr_details_open: "patches/control-open",
-  _attr_dialog_open: "patches/control-open",
-  _attr_select_value: "patches/control-select",
-  _attr_textarea_value: "patches/control-input",
-  _attr_input_value: "patches/control-input",
+// By a control's server helper: its wire kind and the feature applying its entries.
+const patchControls = {
+  _attr_input_checked: {
+    kind: ControlledType.InputChecked,
+    feature: "patches/control-input",
+  },
+  _attr_input_checkedValue: {
+    kind: ControlledType.InputCheckedValue,
+    feature: "patches/control-checked-value",
+  },
+  _attr_details_open: {
+    kind: ControlledType.DetailsOrDialogOpen,
+    feature: "patches/control-open",
+  },
+  _attr_dialog_open: {
+    kind: ControlledType.DetailsOrDialogOpen,
+    feature: "patches/control-open",
+  },
+  _attr_select_value: {
+    kind: ControlledType.SelectValue,
+    feature: "patches/control-select",
+  },
+  _attr_textarea_value: {
+    kind: ControlledType.InputValue,
+    feature: "patches/control-input",
+  },
+  _attr_input_value: {
+    kind: ControlledType.InputValue,
+    feature: "patches/control-input",
+  },
 } as const;
 
 function assertValidNativeAttrName(

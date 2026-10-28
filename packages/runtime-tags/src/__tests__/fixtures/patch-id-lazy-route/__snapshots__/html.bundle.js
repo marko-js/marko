@@ -19,7 +19,7 @@ var sub_default = _template("c", (input) => {
 			if (t.on) {
 				const $scope2_id = _scope_id();
 				const uid = _id("A");
-				_html(`<label${_attr("for", uid, $scope2_id, "a", 0, 0)}>field</label>${_el_resume($scope2_id, "a", 0)}<input${_attr("id", uid, $scope2_id, "b", 0, 0)}>${_el_resume($scope2_id, "b", 0)}<span class=v>${_text_resume($scope2_id, "c", g - input.n)}</span>`);
+				_html(`<label${_attr("for", uid, $scope2_id, "aa$for", 0, 0)}>field</label>${_el_resume($scope2_id, "a", 0)}<input${_attr("id", uid, $scope2_id, "ab$id", 0, 0)}>${_el_resume($scope2_id, "b", 0)}<span class=v>${_text_resume($scope2_id, "c", g - input.n)}</span>`);
 				_subscribe($g__closures, _subscribe($wi__input_n && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "c0"), "c1");
 				return 0;
 			}

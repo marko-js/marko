@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = "u" + ++n;
-	_html(`<label${_attr("for", `${uid}-${input.name}`)}>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "a")}<input${_attr_input_value($scope0_id, "c", input.value, void 0, 1, $scope0_reason, 2)}${_attr("id", `${uid}-${input.name}`)}${_attr("name", input.name, $scope0_id, "c", $scope0_reason, 0)}>${_el_resume($scope0_id, "c")}<button>show</button>${_el_resume($scope0_id, "d")}<output>${_text_resume($scope0_id, "e", "")}</output>`);
+	_html(`<label${_attr("for", `${uid}-${input.name}`)}>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "a")}<input${_attr_input_value($scope0_id, "c", input.value, void 0, "n2c", $scope0_reason, 2)}${_attr("id", `${uid}-${input.name}`)}${_attr("name", input.name, $scope0_id, "ac$name", $scope0_reason, 0)}>${_el_resume($scope0_id, "c")}<button>show</button>${_el_resume($scope0_id, "d")}<output>${_text_resume($scope0_id, "e", "")}</output>`);
 	_script($scope0_id, "a0");
 	_patch_fill($scope0_id, "va2", uid, 1);
 	_scope($scope0_id, {

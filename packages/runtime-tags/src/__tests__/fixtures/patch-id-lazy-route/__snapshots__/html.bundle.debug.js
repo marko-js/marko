@@ -19,7 +19,7 @@ var sub_default = _template("__tests__/tags/sub.marko", (input) => {
 			if (t.on) {
 				const $scope2_id = _scope_id();
 				const uid = _id("uid");
-				_html(`<label${_attr("for", uid, $scope2_id, "#label/0", 0, 0)}>field</label>${_el_resume($scope2_id, "#label/0", 0)}<input${_attr("id", uid, $scope2_id, "#input/1", 0, 0)}>${_el_resume($scope2_id, "#input/1", 0)}<span class=v>${_text_resume($scope2_id, "#text/2", g - input.n)}</span>`);
+				_html(`<label${_attr("for", uid, $scope2_id, "PatchAttr:#label/0 for", 0, 0)}>field</label>${_el_resume($scope2_id, "#label/0", 0)}<input${_attr("id", uid, $scope2_id, "PatchAttr:#input/1 id", 0, 0)}>${_el_resume($scope2_id, "#input/1", 0)}<span class=v>${_text_resume($scope2_id, "#text/2", g - input.n)}</span>`);
 				_subscribe($g__closures, _subscribe($wi__input_n && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/sub.marko", "4:4"), _client_guard($scope0_reason, 1) && "__tests__/tags/sub.marko_2_input_n#0:5/subscribe"), "__tests__/tags/sub.marko_2_g#0:6/subscribe");
 				return 0;
 			}

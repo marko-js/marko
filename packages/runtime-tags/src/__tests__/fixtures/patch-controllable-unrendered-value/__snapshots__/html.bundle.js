@@ -13,9 +13,9 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<input${_attr_input_value($scope1_id, "a", input.value, _resume(function(next) {
 				console.log(next);
-			}, "a0"), 1, $scope0_reason, 2, 1, $scope0_reason, 2)} class=b>${_el_resume($scope1_id, "a")}<input${_attr_input_checked($scope1_id, "b", input.flag, _resume(function(next) {
+			}, "a0"), "n2a", $scope0_reason, 2, "wEa", $scope0_reason, 2)} class=b>${_el_resume($scope1_id, "a")}<input${_attr_input_checked($scope1_id, "b", input.flag, _resume(function(next) {
 				console.log(next);
-			}, "a1"), 1, $scope0_reason, 3, 1, $scope0_reason, 3)} type=checkbox class=c>${_el_resume($scope1_id, "b")}`);
+			}, "a1"), "n0b", $scope0_reason, 3, "wEb", $scope0_reason, 3)} type=checkbox class=c>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a2");
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a3");
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "a4");

@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	let value = "a";
 	_html(`<input${_attr_input_value($scope0_id, "a", value, _resume(function(v) {
 		value = v;
-	}, "a0", $scope0_id), void 0, void 0, void 0, 1)}${_attrs_partial(input.attrs, {
+	}, "a0", $scope0_id), void 0, void 0, void 0, "wEa")}${_attrs_partial(input.attrs, {
 		value: 1,
 		valueChange: 1
 	}, "a", $scope0_id, "input", void 0, $scope0_reason, 0)}>${_el_resume($scope0_id, "a")}<p>${_text_resume($scope0_id, "b", value)}</p>`);

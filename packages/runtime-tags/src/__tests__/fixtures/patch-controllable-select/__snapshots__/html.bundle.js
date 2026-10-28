@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		document.querySelector("main").dataset.choice = next;
 	}, "a0"), () => {
 		_html(`<select><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
-	}, 1, $scope0_reason, 1, 1, $scope0_reason, 1);
+	}, "n3b", $scope0_reason, 1, "wEb", $scope0_reason, 1);
 	_html(`${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});

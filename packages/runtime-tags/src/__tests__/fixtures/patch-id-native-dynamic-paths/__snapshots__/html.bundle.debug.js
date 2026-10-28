@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		const uid = _id("uid");
-		_html(`<label${_attr("for", uid, $scope1_id, "#label/0", 0, 0)}>body</label>${_el_resume($scope1_id, "#label/0", 0)}<input${_attr("id", uid, $scope1_id, "#input/1", 0, 0)}>${_el_resume($scope1_id, "#input/1", 0)}`);
+		_html(`<label${_attr("for", uid, $scope1_id, "PatchAttr:#label/0 for", 0, 0)}>body</label>${_el_resume($scope1_id, "#label/0", 0)}<input${_attr("id", uid, $scope1_id, "PatchAttr:#input/1 id", 0, 0)}>${_el_resume($scope1_id, "#input/1", 0)}`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	const Wrap = { content: _content("__tests__/template.marko_3*content", ({ on, content }) => {
@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope4_reason = _scope_reason();
 			const $scope4_id = _scope_id();
 			const uid = _id("uid~1");
-			_html(`<label${_attr("for", uid, $scope4_id, "#label/0", 0, 0)}>attr</label>${_el_resume($scope4_id, "#label/0", 0)}<input${_attr("id", uid, $scope4_id, "#input/1", 0, 0)}>${_el_resume($scope4_id, "#input/1", 0)}`);
+			_html(`<label${_attr("for", uid, $scope4_id, "PatchAttr:#label/0 for", 0, 0)}>attr</label>${_el_resume($scope4_id, "#label/0", 0)}<input${_attr("id", uid, $scope4_id, "PatchAttr:#input/1 id", 0, 0)}>${_el_resume($scope4_id, "#input/1", 0)}`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "8:12");
 		}, $scope2_id, 1) }) }, 9, 0, 0, $wg__input_items, $scope0_reason, 0);
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);

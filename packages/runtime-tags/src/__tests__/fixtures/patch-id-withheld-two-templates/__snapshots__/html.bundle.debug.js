@@ -34,7 +34,7 @@ var relay_default = _template("__tests__/tags/relay.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			const rid = _id("rid");
-			_html(`<input${_attr("id", rid, $scope1_id, "#input/0", 0, 0)}>${_el_resume($scope1_id, "#input/0", 0)}<label${_attr("for", rid, $scope1_id, "#label/1", 0, 0)}>relay</label>${_el_resume($scope1_id, "#label/1", 0)}`);
+			_html(`<input${_attr("id", rid, $scope1_id, "PatchAttr:#input/0 id", 0, 0)}>${_el_resume($scope1_id, "#input/0", 0)}<label${_attr("for", rid, $scope1_id, "PatchAttr:#label/1 for", 0, 0)}>relay</label>${_el_resume($scope1_id, "#label/1", 0)}`);
 			_scope($scope1_id, {}, "__tests__/tags/relay.marko", "1:2");
 		}, $scope0_id, 2)
 	});
@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			const uid = _id("uid");
-			_html(`<input${_attr("id", uid, $scope2_id, "#input/0", 0, 0)}>${_el_resume($scope2_id, "#input/0", 0)}<label${_attr("for", uid, $scope2_id, "#label/1", 0, 0)}>p ${_text_resume($scope2_id, "#text/2", row.id, 2, $scope0_reason, 0)}</label>${_el_resume($scope2_id, "#label/1", 0)}`);
+			_html(`<input${_attr("id", uid, $scope2_id, "PatchAttr:#input/0 id", 0, 0)}>${_el_resume($scope2_id, "#input/0", 0)}<label${_attr("for", uid, $scope2_id, "PatchAttr:#label/1 for", 0, 0)}>p ${_text_resume($scope2_id, "#text/2", row.id, 2, $scope0_reason, 0)}</label>${_el_resume($scope2_id, "#label/1", 0)}`);
 			_scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "2:4");
 		}, $scope1_id, 2) });
 		_patch_child_end();

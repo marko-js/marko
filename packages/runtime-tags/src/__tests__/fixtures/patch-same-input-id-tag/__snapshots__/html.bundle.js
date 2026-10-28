@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const fieldId = _id("A");
-			_html(`<label${_attr("for", fieldId, $scope1_id, "a", 0, 0)}>Name</label>${_el_resume($scope1_id, "a", 0)}<input${_attr("id", fieldId, $scope1_id, "b", 0, 0)}>${_el_resume($scope1_id, "b", 0)}`);
+			_html(`<label${_attr("for", fieldId, $scope1_id, "aa$for", 0, 0)}>Name</label>${_el_resume($scope1_id, "a", 0)}<input${_attr("id", fieldId, $scope1_id, "ab$id", 0, 0)}>${_el_resume($scope1_id, "b", 0)}`);
 			_scope($scope1_id, {});
 			return 0;
 		}

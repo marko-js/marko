@@ -32,11 +32,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const uid = _id("uid");
-		_html(`<input${_attr("id", uid, $scope1_id, "#input/0", 0, 0)}>${_el_resume($scope1_id, "#input/0", 0)}`);
+		_html(`<input${_attr("id", uid, $scope1_id, "PatchAttr:#input/0 id", 0, 0)}>${_el_resume($scope1_id, "#input/0", 0)}`);
 		_if(() => {
 			if (input.show) {
 				const $scope2_id = _scope_id();
-				_html(`<label${_attr("for", uid, $scope2_id, "#label/0", 0, 0)}>${_text_resume($scope2_id, "#text/1", item.key, void 0, $scope0_reason, 2)}</label>${_el_resume($scope2_id, "#label/0", 0)}`);
+				_html(`<label${_attr("for", uid, $scope2_id, "PatchAttr:#label/0 for", 0, 0)}>${_text_resume($scope2_id, "#text/1", item.key, void 0, $scope0_reason, 2)}</label>${_el_resume($scope2_id, "#label/0", 0)}`);
 				_scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4");
 				return 0;
 			}
@@ -56,11 +56,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
 		const uid = _id("uid~1");
-		_html(`<input${_attr("id", uid, $scope3_id, "#input/0", 0, 0)}>${_el_resume($scope3_id, "#input/0", 0)}`);
+		_html(`<input${_attr("id", uid, $scope3_id, "PatchAttr:#input/0 id", 0, 0)}>${_el_resume($scope3_id, "#input/0", 0)}`);
 		_if(() => {
 			if (show) {
 				const $scope4_id = _scope_id();
-				_html(`<label${_attr("for", uid, $scope4_id, "#label/0", 0, 0)}>field</label>${_el_resume($scope4_id, "#label/0", 0)}`);
+				_html(`<label${_attr("for", uid, $scope4_id, "PatchAttr:#label/0 for", 0, 0)}>field</label>${_el_resume($scope4_id, "#label/0", 0)}`);
 				_scope($scope4_id, {}, "__tests__/template.marko", "9:4");
 				return 0;
 			}
@@ -78,7 +78,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope6_reason = _scope_reason();
 			const $scope6_id = _scope_id();
 			const uid = _id("uid~2");
-			_html(`<input${_attr("id", uid, $scope6_id, "#input/0", 0, 0)}>${_el_resume($scope6_id, "#input/0", 0)}<label${_attr("for", uid, $scope6_id, "#label/1", 0, 0)}>${_text_resume($scope6_id, "#text/2", row.id, void 0, $scope0_reason, 5)}</label>${_el_resume($scope6_id, "#label/1", 0)}`);
+			_html(`<input${_attr("id", uid, $scope6_id, "PatchAttr:#input/0 id", 0, 0)}>${_el_resume($scope6_id, "#input/0", 0)}<label${_attr("for", uid, $scope6_id, "PatchAttr:#label/1 for", 0, 0)}>${_text_resume($scope6_id, "#text/2", row.id, void 0, $scope0_reason, 5)}</label>${_el_resume($scope6_id, "#label/1", 0)}`);
 			_scope($scope6_id, { _: _write_if($scope0_reason, 5) && _scope_with_id($scope5_id) }, "__tests__/template.marko", "14:4");
 		}, $scope5_id, 2) });
 		_patch_child_end();

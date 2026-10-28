@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;D 
 var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2${_attr_class(input.title, $scope0_id, "#h2/0", $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", input.title, void 0, $scope0_reason, 0)}</h2>${_el_resume($scope0_id, "#h2/0", _mask_group($scope0_reason, 0))}</section>`);
+	_html(`<section><h2${_attr_class(input.title, $scope0_id, "PatchAttr:#h2/0 class", $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", input.title, void 0, $scope0_reason, 0)}</h2>${_el_resume($scope0_id, "#h2/0", _mask_group($scope0_reason, 0))}</section>`);
 	_scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
 });
 

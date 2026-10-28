@@ -8,11 +8,11 @@ var gm_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const z = input.v + $global$1.flag;
-	_html(`<p${_attr("data-w", input.w, $scope0_id, "a", $scope0_reason, 1)}></p>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 1))}`);
+	_html(`<p${_attr("data-w", input.w, $scope0_id, "aa$data-w", $scope0_reason, 1)}></p>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 1))}`);
 	_if(() => {
 		if (input.v) {
 			const $scope1_id = _scope_id();
-			_html(`<i${_attr("data-z", z + $global$1.mark, $scope1_id, "a", (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></i>${_el_resume($scope1_id, "a")}`);
+			_html(`<i${_attr("data-z", z + $global$1.mark, $scope1_id, "aa$data-z", (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></i>${_el_resume($scope1_id, "a")}`);
 			_fill_global_subscribe("b0", $scope1_id);
 			_client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_init($scope1_id, "b1");
 			_scope($scope1_id, { _: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id) });

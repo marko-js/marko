@@ -29,11 +29,11 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const uid = _id("A");
-		_html(`<input${_attr("id", uid, $scope1_id, "a", 0, 0)}>${_el_resume($scope1_id, "a", 0)}`);
+		_html(`<input${_attr("id", uid, $scope1_id, "aa$id", 0, 0)}>${_el_resume($scope1_id, "a", 0)}`);
 		_if(() => {
 			if (input.show) {
 				const $scope2_id = _scope_id();
-				_html(`<label${_attr("for", uid, $scope2_id, "a", 0, 0)}>${_text_resume($scope2_id, "b", item.key, void 0, $scope0_reason, 2)}</label>${_el_resume($scope2_id, "a", 0)}`);
+				_html(`<label${_attr("for", uid, $scope2_id, "aa$for", 0, 0)}>${_text_resume($scope2_id, "b", item.key, void 0, $scope0_reason, 2)}</label>${_el_resume($scope2_id, "a", 0)}`);
 				_scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) });
 				return 0;
 			}
@@ -50,11 +50,11 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
 		const uid = _id("B");
-		_html(`<input${_attr("id", uid, $scope3_id, "a", 0, 0)}>${_el_resume($scope3_id, "a", 0)}`);
+		_html(`<input${_attr("id", uid, $scope3_id, "aa$id", 0, 0)}>${_el_resume($scope3_id, "a", 0)}`);
 		_if(() => {
 			if (show) {
 				const $scope4_id = _scope_id();
-				_html(`<label${_attr("for", uid, $scope4_id, "a", 0, 0)}>field</label>${_el_resume($scope4_id, "a", 0)}`);
+				_html(`<label${_attr("for", uid, $scope4_id, "aa$for", 0, 0)}>field</label>${_el_resume($scope4_id, "a", 0)}`);
 				_scope($scope4_id, {});
 				return 0;
 			}
@@ -72,7 +72,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope6_id = _scope_id();
 			const uid = _id("C");
-			_html(`<input${_attr("id", uid, $scope6_id, "a", 0, 0)}>${_el_resume($scope6_id, "a", 0)}<label${_attr("for", uid, $scope6_id, "b", 0, 0)}>${_text_resume($scope6_id, "c", row.id, void 0, $scope0_reason, 5)}</label>${_el_resume($scope6_id, "b", 0)}`);
+			_html(`<input${_attr("id", uid, $scope6_id, "aa$id", 0, 0)}>${_el_resume($scope6_id, "a", 0)}<label${_attr("for", uid, $scope6_id, "ab$for", 0, 0)}>${_text_resume($scope6_id, "c", row.id, void 0, $scope0_reason, 5)}</label>${_el_resume($scope6_id, "b", 0)}`);
 			_scope($scope6_id, { _: _write_if($scope0_reason, 5) && _scope_with_id($scope5_id) });
 		}, $scope5_id, 2) });
 		_patch_child_end();

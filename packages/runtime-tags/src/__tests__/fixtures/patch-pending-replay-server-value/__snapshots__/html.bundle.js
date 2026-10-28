@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_for_of(items, (item) => {
 				const $scope3_id = _scope_id();
-				_html(`<a${_attr("href", `?q=${params.q.trim()}&i=${item}`, $scope3_id, "a")}>${_text_resume($scope3_id, "b", item, void 0, 4, 0)}</a>${_el_resume($scope3_id, "a")}`);
+				_html(`<a${_attr("href", `?q=${params.q.trim()}&i=${item}`, $scope3_id, "aa$href")}>${_text_resume($scope3_id, "b", item, void 0, 4, 0)}</a>${_el_resume($scope3_id, "a")}`);
 				_scope($scope3_id, {});
 			}, 0, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "a0");
 			_scope($scope2_id, {});

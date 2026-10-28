@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	wrap_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
 		const $scope1_id = _scope_id();
-		_html(`<p${_attr("data-z", z + $global$1.mark, $scope1_id, "#p/0", (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></p>${_el_resume($scope1_id, "#p/0")}`);
+		_html(`<p${_attr("data-z", z + $global$1.mark, $scope1_id, "PatchAttr:#p/0 data-z", (2 | _mask_group($scope0_reason, 0)) << 1, 0)}></p>${_el_resume($scope1_id, "#p/0")}`);
 		_fill_global_subscribe("__tests__/template.marko_1_z#0:7_$global_mark#0:9", $scope1_id);
 		_subscribe(_unfilled_if((2 | _mask_group($scope0_reason, 0)) << 1, 0) && $z__closures, _scope($scope1_id, { _: ($scope1_page || $wi__input_v) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && "__tests__/template.marko_1_z#0:7/subscribe");
 	}, $scope0_id) });

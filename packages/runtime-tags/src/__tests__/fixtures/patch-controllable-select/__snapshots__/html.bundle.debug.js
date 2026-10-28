@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		document.querySelector("main").dataset.choice = next;
 	}, "__tests__/template.marko_0/valueChange"), () => {
 		_html(`<select><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
-	}, 1, $scope0_reason, 1, 1, $scope0_reason, 1);
+	}, "PatchControl:3#select/1", $scope0_reason, 1, "PatchWrite:ControlledHandler:#select/1", $scope0_reason, 1);
 	_html(`${_el_resume($scope0_id, "#select/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#select/1": ["valueChange", "3:30"] });

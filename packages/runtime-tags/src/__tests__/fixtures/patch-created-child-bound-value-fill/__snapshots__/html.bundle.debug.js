@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/text-area.marko": "__tests__/tags/text-area.marko !__t
 var text_area_default = _template("__tests__/tags/text-area.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<textarea>${_attr_textarea_value($scope0_id, "#textarea/0", input.value, input.valueChange, 1, $scope0_reason, 0, 1, $scope0_reason, 0)}</textarea>${_el_resume($scope0_id, "#textarea/0")}`);
+	_html(`<textarea>${_attr_textarea_value($scope0_id, "#textarea/0", input.value, input.valueChange, "PatchControl:2#textarea/0", $scope0_reason, 0, "PatchWrite:ControlledHandler:#textarea/0", $scope0_reason, 0)}</textarea>${_el_resume($scope0_id, "#textarea/0")}`);
 	_script($scope0_id, "__tests__/tags/text-area.marko_0");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/text-area.marko_0_input_value#3_input_valueChange#4/init");
 	_scope($scope0_id, {

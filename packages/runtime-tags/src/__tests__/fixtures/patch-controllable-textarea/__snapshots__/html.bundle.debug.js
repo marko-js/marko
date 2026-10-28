@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1><textarea>${_attr_textarea_value($scope0_id, "#textarea/1", input.text, _resume(function(next) {
 		document.querySelector("main").dataset.text = next;
-	}, "__tests__/template.marko_0/valueChange"), 1, $scope0_reason, 1, 1, $scope0_reason, 1)}</textarea>${_el_resume($scope0_id, "#textarea/1")}</main>`);
+	}, "__tests__/template.marko_0/valueChange"), "PatchControl:2#textarea/1", $scope0_reason, 1, "PatchWrite:ControlledHandler:#textarea/1", $scope0_reason, 1)}</textarea>${_el_resume($scope0_id, "#textarea/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#textarea/1": ["valueChange", "3:30"] });
 }, 1);
