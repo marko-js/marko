@@ -12,6 +12,7 @@ import {
   isStateSourced,
 } from "../bindings";
 import { createAnalysisMemo, createPassMemo } from "../cyclic-memo";
+import { holdsFirstValue } from "../finalize-references";
 import { isPatch } from "../marko-config";
 import { every, forEach, type Opt, push, reduce, some } from "../optional";
 import {
@@ -64,15 +65,18 @@ export function writesPatchHole(
   );
 }
 
-// Read only from `<let>`s holding the first value their inputs give: the hole
-// seeds a created scope alone.
+// Read only from `<let>`s at their first value where the scope is created, none
+// a patch fills: the hole seeds a created scope alone.
 export function seedsOnly(section: Section, sources: Sources | undefined) {
   return (
     patchCreatesOrComposes(section) &&
     !!sources?.state &&
     !sources.param &&
     !sources.global &&
-    every(sources.state, (state) => holdsFirstValue(state, section))
+    every(
+      sources.state,
+      (state) => holdsFirstValue(state, section) && !canPatchFill(state),
+    )
   );
 }
 
@@ -93,28 +97,13 @@ function isAssigned(state: Binding) {
 // A `<let>` fixed at creation (`resolveRootSources`): client-held once created,
 // and the server renders its first value where it creates the scope.
 export function keepsFirstValue(state: Binding) {
-  return !state.assignments && holdsFirstValue(state, state.section);
+  return !state.assignments && state.initReadsFirstValues;
 }
 
 // The sources take client state: a `<let>` that keeps its first value renders
 // as the server does.
 export function hasClientState(sources: Sources | undefined) {
   return !every(sources?.state, keepsFirstValue);
-}
-
-// An uncontrolled `<let>` the server renders where a flush creates its scope
-// (or anywhere nothing assigns it), from inits that hold theirs too.
-export function holdsFirstValue(state: Binding, section: Section): boolean {
-  const init = state.derivedFrom as t.NodeExtra | undefined;
-  return (
-    state.type === BindingType.let &&
-    !!init?.initialValue &&
-    !canPatchFill(state) &&
-    (state.section === section || !state.assignments) &&
-    every(getSourcesForExpr(init)?.state, (initState) =>
-      holdsFirstValue(initState, section),
-    )
-  );
 }
 
 // A handler written inline merged its references with its control's, so

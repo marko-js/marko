@@ -42,6 +42,9 @@ export interface Binding {
   /** The identifier of each emitted assignment to it (set in finalize). */
   assignments: Opt<AssignedBindingExtra>;
   sources: undefined | Sources;
+  /** For an uncontrolled `<let>`: its init reads no state but `<let>`s created
+   * with it or that nothing assigns, whose inits read the same way. */
+  initReadsFirstValues: boolean;
   /** The intersection whose work computes it, or the nearest one it derives
    * from. Set on alias roots only. */
   intersection: Intersection | undefined;
@@ -156,6 +159,7 @@ export function createBinding(
     excludeProperties,
     assignedProperties: undefined,
     sources: undefined,
+    initReadsFirstValues: false,
     intersection: undefined,
     derivedFrom: undefined,
     reads: new Map(),

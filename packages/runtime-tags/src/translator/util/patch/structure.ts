@@ -2,6 +2,7 @@
 // and wire channels belong to ./decisions, ./refresh, ./writers.
 import { type Binding, bindingUtil } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
+import { holdsFirstValue } from "../finalize-references";
 import { everyCallPasses } from "../known-tag";
 import { isPatch } from "../marko-config";
 import { every, first, some } from "../optional";
@@ -20,7 +21,7 @@ import {
 } from "../sections";
 import { getDerivedReaders, someLandingRead } from "../solve-reasons";
 import { hasParamOrGlobalSource, type Sources } from "../sources";
-import { hasClientState, holdsFirstValue } from "./decisions";
+import { hasClientState } from "./decisions";
 
 // Every render of the section is patch-written: on the branch path, outside
 // stateful structure.

@@ -569,6 +569,7 @@ function resolveBindingSources(binding: Binding) {
         binding.sources = aliasRoot.sources;
       } else if (binding.assignments) {
         binding.sources = createSources(binding, undefined);
+        if (isPatch()) resolveInitialValue(binding);
       } else {
         resolveRootSources(binding);
       }
@@ -605,11 +606,32 @@ function resolveRootSources(binding: Binding) {
   if (
     isPatch() &&
     !binding.sources &&
-    (some(binding.derivedFrom || undefined, isSourcedInitialValue) ||
+    ((binding.type === BindingType.let && resolveInitialValue(binding)) ||
       holdsClientValue(binding))
   ) {
     binding.sources = createSources(binding, undefined);
   }
+}
+
+// An uncontrolled `<let>` takes its init once, as its scope is created: whether the
+// init reads any source, recording whether it reads only first values.
+function resolveInitialValue(binding: Binding) {
+  const init = binding.derivedFrom as t.NodeExtra;
+  if (!init.initialValue) return false;
+  const sources = resolveInitSources(init);
+  binding.initReadsFirstValues = every(sources?.state, (state) =>
+    holdsFirstValue(state, binding.section),
+  );
+  return !!sources;
+}
+
+// A `<let>` at its first value as the section's scope is created: created with
+// it, or nothing assigns it, from an init reading only first values.
+export function holdsFirstValue(state: Binding, section: Section) {
+  return (
+    state.initReadsFirstValues &&
+    (state.section === section || !state.assignments)
+  );
 }
 
 function resolveDerivedSources(binding: Binding) {
@@ -697,19 +719,16 @@ function hasSideEffects(expr: t.NodeExtra) {
   return expr.pure === false;
 }
 
-// A navigation keeps an unassigned `<let>`'s value, as a client render does:
-// one seeded from any source is client state to a patch, like an assigned one.
-function isSourcedInitialValue(expr: t.NodeExtra) {
-  return (
-    !!expr.initialValue &&
-    isReferencedExtra(getCanonicalExtra(expr)) &&
-    (!!getGlobalReads(expr) ||
-      !!reduce(
-        getReferencedBindings(expr),
-        mergeResolvedSources,
-        undefined as Sources | undefined,
-      ))
-  );
+// What an init reads, `$global` included, its bindings resolved first.
+function resolveInitSources(init: t.NodeExtra) {
+  if (isReferencedExtra(getCanonicalExtra(init))) {
+    const sources = reduce(
+      getReferencedBindings(init),
+      mergeResolvedSources,
+      undefined as Sources | undefined,
+    );
+    return getGlobalReads(init) ? mergeSources(sources, globalSources) : sources;
+  }
 }
 
 // A `<let>`'s init reads `$global` once, at creation, as `getValueReferences`

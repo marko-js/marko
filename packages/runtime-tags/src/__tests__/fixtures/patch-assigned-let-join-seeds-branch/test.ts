@@ -1,7 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
-// The `<let>` selecting the branch starts from one the client assigns, which a
-// render join with an input reads: the join's reason makes it filled, so stateful.
+// The `<let>` selecting the branch starts from one the client assigns in its
+// scope: it keeps that first value, so the patch writes the branch it selects.
 export const config: TestConfig = {
   patches: true,
   steps: [
