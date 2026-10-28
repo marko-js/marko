@@ -8,6 +8,7 @@ import { getUnusedParamIdentifier } from "../util/generate-uid";
 import { isOutputHTML } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
+  dropContent,
   dropNodes,
   getAllTagReferenceNodes,
   isReferenceHoisted,
@@ -51,6 +52,15 @@ export default {
     }
 
     assertNoTagVarMutation(tag);
+
+    if (
+      t.isIdentifier(tag.node.var) &&
+      !tag.scope.getBinding(tag.node.var.name)!.referencePaths.length
+    ) {
+      dropContent(tag.node.body);
+      dropNodes(getAllTagReferenceNodes(tag.node));
+      return;
+    }
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
     setTagContentDerives(tag, varBinding);
@@ -96,7 +106,8 @@ export default {
   },
   translate: {
     enter(tag) {
-      if (!tag.node.var) {
+      // An unreferenced `<define>`'s content was dropped in analyze.
+      if (!tag.node.var || tag.node.body.extra?.dropped) {
         tag.remove();
         return;
       }
@@ -161,7 +172,7 @@ export default {
           }
 
           // Matches the analysis, which drops the tag whenever every reference
-          // is direct — including a `<define>` with no references at all.
+          // is direct.
           if (bodySection && allDirectReferences) {
             tag.remove();
             return;
