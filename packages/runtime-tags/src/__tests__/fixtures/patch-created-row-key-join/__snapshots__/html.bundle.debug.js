@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:8");
 				return 0;
 			}
-		}, $scope1_id, "#li/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
+		}, $scope1_id, "#li/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
 		_html(`</li>${_el_resume($scope1_id, "#li/0", $wg__input_show)}`);
 		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_show#0:4/init");
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", n, 1);
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			n: "4:12",
 			m: "5:12"
 		});
-	}, "id", $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, "id", $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	_scope($scope0_id, { input_show: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show }, "__tests__/template.marko", 0, { input_show: ["input.show"] }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.show, !_server_guard($scope0_reason, 1));
 }, 1);

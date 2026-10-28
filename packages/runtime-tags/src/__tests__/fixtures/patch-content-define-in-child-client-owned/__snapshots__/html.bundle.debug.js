@@ -24,7 +24,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, { _: ($wi__input_title || $wi__open) && _scope_with_id($scope1_id) }, "__tests__/tags/wrap.marko", "2:4"), $cg__input_title && "__tests__/tags/wrap.marko_2_input_title#0:3/subscribe");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__open, void 0, void 0, void 0, ["__tests__/tags/wrap.marko_2*shell"], $scope1_reason, 0);
+		}, $scope1_id, "#text/0", 1, $wg__open, 1, 0, 0, ["__tests__/tags/wrap.marko_2*shell"], $scope1_reason, 0);
 		($wi__input_title || $wi__open) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/wrap.marko", "1:2");
 	}, $scope0_id, 1) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);

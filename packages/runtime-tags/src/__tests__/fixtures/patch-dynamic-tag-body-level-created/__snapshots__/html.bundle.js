@@ -77,7 +77,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a5"], $scope0_reason, 2);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a5"], $scope0_reason, 2);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.on,

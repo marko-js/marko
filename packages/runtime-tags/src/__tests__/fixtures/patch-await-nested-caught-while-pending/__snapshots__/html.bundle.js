@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("<em>inner failed</em>");
-			}, "a3", "a2", "a8", 1, void 0, 3);
+			}, "a3", "a2", "a8", 1, 0, 3);
 			_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_msg ? "a15" : "a16");
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope2_id, {}), $cg__input_msg && "a16");
 		}, 1, "a9", 1);
@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>outer loading</em>");
-	}, void 0, "a4", void 0, "a11", 1, void 0, 2);
+	}, void 0, "a4", void 0, "a11", 1, 0, 2);
 	_await($scope0_id, "d", input.last, (c) => {
 		const $scope5_id = _scope_id();
 		_html(`<span id=last>${_text_resume($scope5_id, "a", input.msg, 1, $scope0_reason, 3)} ${_text_resume($scope5_id, "b", c, 2, $scope0_reason, 5)}</span>`);

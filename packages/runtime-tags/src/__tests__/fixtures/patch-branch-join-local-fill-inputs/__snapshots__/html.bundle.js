@@ -29,7 +29,7 @@ var child_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["b7"], $scope0_reason, 2);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["b7"], $scope0_reason, 2);
 	_html(`<div></div>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b8", 1, _filled_guard($scope0_reason, 3), "f");
 	_scope($scope0_id, {

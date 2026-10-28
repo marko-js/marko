@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("caught-a");
-	}, "a2", "a1", "a4", 1, void 0, 3);
+	}, "a2", "a1", "a4", 1, 0, 3);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {
 		g: n,

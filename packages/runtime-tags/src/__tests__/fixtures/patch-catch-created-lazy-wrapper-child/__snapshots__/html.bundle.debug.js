@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/1": _existing_scope($childScope)
 		}, "__tests__/template.marko", "6:4"), "__tests__/template.marko_1_input_label#0:3/subscribe");
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		"ClosureScopes:input_label/5": _write_if($scope0_reason, 0) && $input_label__closures,

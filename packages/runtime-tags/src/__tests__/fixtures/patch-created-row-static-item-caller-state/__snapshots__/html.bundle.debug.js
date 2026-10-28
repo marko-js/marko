@@ -18,7 +18,7 @@ var rows_default = _template("__tests__/tags/rows.marko", (input) => {
 			x: _unfilled_if($scope0_reason, 0) && x,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		}, "__tests__/tags/rows.marko", "1:2", { x: "1:6" });
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/rows.marko_1*shell", 0, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/rows.marko_1*shell", 0, 0);
 	_scope($scope0_id, {}, "__tests__/tags/rows.marko", 0);
 });
 
@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`<button class=l>l</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { l }, "__tests__/template.marko", 0, { l: "1:6" });

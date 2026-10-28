@@ -28,7 +28,7 @@ var panel_default = _template("b", (input) => {
 					_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $wg__input_y, void 0, void 0, void 0, ["b3"], $scope0_reason, 2);
+			}, $scope1_id, "a", 1, $wg__input_y, 1, 0, 0, ["b3"], $scope0_reason, 2);
 			_filled_guard($scope0_reason, 1) && ($cg__input_x || $cg__input_y) && _patch_init_entry($scope1_id, "b2", "b");
 			$cg__input_a && _patch_init($scope1_id, "b5");
 			$cg__input_y && _patch_init($scope1_id, "b6");
@@ -38,7 +38,7 @@ var panel_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b4"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b4"], $scope0_reason, 0);
 	_html(`<output>${_text_resume($scope0_id, "b", out, 1, 0, 0, 1)}</output>`);
 	_scope($scope0_id, {
 		f: input.a,

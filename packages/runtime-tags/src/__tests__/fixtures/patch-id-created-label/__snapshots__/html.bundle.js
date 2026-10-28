@@ -8,7 +8,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let c = input.content;
 	_html(`<button>clear</button>${_el_resume($scope0_id, "a")}`);
-	_dynamic_tag($scope0_id, "b", c, {}, 2, void 0, void 0, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
+	_dynamic_tag($scope0_id, "b", c, {}, 2, 0, 0, 1, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {}) || _content_withhold(input.content);
 });
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 3), void 0, void 0, void 0, ["a0"], $scope0_reason, 3);
+		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["a0"], $scope0_reason, 3);
 		$cg__input_show && _patch_write($scope1_id, "wd", uid, 1);
 		$cg__input_show && _patch_init($scope1_id, "a6");
 		_scope($scope1_id, {
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 			d: _unfilled_if($scope0_reason, 3) && uid,
 			_: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id)
 		});
-	}, "key", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a3", $scope0_reason, 2);
+	}, "key", $scope0_id, "a", 1, 1, 1, 0, 0, "a3", $scope0_reason, 2);
 	const Field = { content: _content_resume("a2", ({ show }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope4_id, {});
 				return 0;
 			}
-		}, $scope3_id, "b", 1, _write_guard($scope3_reason, 0), void 0, void 0, void 0, ["a4"]);
+		}, $scope3_id, "b", 1, _write_guard($scope3_reason, 0), 1, 0, 0, ["a4"]);
 		_patch_write($scope3_id, "wf", uid, 1);
 		_scope($scope3_id, { f: _unfilled_if($scope3_reason, 0) && uid });
 	}, $scope0_id) };
@@ -77,7 +77,7 @@ var template_default = _template("a", (input) => {
 		}, $scope5_id, 2) });
 		_patch_child_end();
 		_scope($scope5_id, { a: _existing_scope($childScope) });
-	}, "id", $scope0_id, "d", 1, void 0, void 0, void 0, void 0, "a5", $scope0_reason, 5);
+	}, "id", $scope0_id, "d", 1, 1, 1, 0, 0, "a5", $scope0_reason, 5);
 	_filled_guard($scope0_reason, 4) && $cg__input_show && _patch_write($scope0_id, "xi", input.on);
 	_patch_join_init($scope0_id, "a8", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && "h", _filled_guard($scope0_reason, 4) && "i");
 	_scope($scope0_id, {

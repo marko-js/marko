@@ -36,7 +36,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			}, "__tests__/tags/panel.marko", "5:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["__tests__/tags/panel.marko_3*shell"], $scope0_reason, 5);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 5), 1, 0, 0, ["__tests__/tags/panel.marko_3*shell"], $scope0_reason, 5);
 	_if(() => {
 		if (open) {
 			const $scope2_id = _scope_id();

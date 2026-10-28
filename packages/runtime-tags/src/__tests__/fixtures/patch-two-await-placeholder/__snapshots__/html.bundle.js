@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "a2", void 0, "a5", 1, void 0, 2);
+	}, void 0, "a2", void 0, "a5", 1, 0, 2);
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_a__closures,
 		g: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_b__closures

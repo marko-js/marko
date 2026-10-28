@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 				});
 				return 0;
 			}
-		}, $scope1_id, "a", 1, _write_guard($scope1_reason, 0), void 0, void 0, void 0, ["a5"], $scope1_reason, 0);
+		}, $scope1_id, "a", 1, _write_guard($scope1_reason, 0), 1, 0, 0, ["a5"], $scope1_reason, 0);
 		_set_scope_reason(_mask_group($scope1_reason, 2) << 1);
 		const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 		keeper_default({ content });

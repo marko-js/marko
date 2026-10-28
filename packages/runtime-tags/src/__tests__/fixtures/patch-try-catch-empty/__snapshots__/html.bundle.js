@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "a3" : "a4");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a4", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
-	}, void 0, () => {}, void 0, "a5", "a2", 1);
+	}, void 0, () => {}, 0, "a5", "a2", 1);
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a6");
 	_scope($scope0_id, {

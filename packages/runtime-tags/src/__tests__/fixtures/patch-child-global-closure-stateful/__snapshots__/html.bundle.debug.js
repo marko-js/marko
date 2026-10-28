@@ -21,7 +21,7 @@ var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
 			_scope($scope1_id, { _: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id) }, "__tests__/tags/gm/index.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/tags/gm/index.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/gm/index.marko_1*shell"], $scope0_reason, 0);
 	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_input_v#4_$global_flag#6", $scope0_id, $cg__input_v);
 	$cg__input_v && _patch_write($scope0_id, "PatchWrite:input_v", input.v, 1);
 	_scope($scope0_id, {

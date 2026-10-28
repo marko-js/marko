@@ -18,7 +18,7 @@ var gm_default = _template("b", (input) => {
 			_scope($scope1_id, { _: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b2"], $scope0_reason, 0);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b2"], $scope0_reason, 0);
 	_fill_global_subscribe("b3", $scope0_id, $cg__input_v);
 	$cg__input_v && _patch_write($scope0_id, "we", input.v, 1);
 	_scope($scope0_id, {

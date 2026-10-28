@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<p>${_text_resume($scope1_id, "#text/0", input.title, 1, $scope0_reason, 0)} ${_text_resume($scope1_id, "#text/1", err.message, 2, 4, 0)}</p>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "__tests__/template.marko_1_input_title#0:5/init" : "__tests__/template.marko_1_input_title#0:5/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_1_input_title#0:5/subscribe");
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

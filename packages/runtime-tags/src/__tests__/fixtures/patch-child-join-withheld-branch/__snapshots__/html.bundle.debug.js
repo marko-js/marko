@@ -35,7 +35,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			}, "__tests__/tags/child.marko", "1:2", { frag_content: ["frag.content", "2:11"] });
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 4);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 4);
 	_filled_guard($scope0_reason, 5) && (_content_withheld("__tests__/tags/child.marko_2*content", $scope0_id) || $cg__input_mode) ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0/unpatched", input.a) : _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 6)));
 	_filled_guard($scope0_reason, 6) && (_content_withheld("__tests__/tags/child.marko_2*content", $scope0_id) || $cg__input_mode) ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill1/unpatched", input.b) : _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5)));
 	_scope($scope0_id, {

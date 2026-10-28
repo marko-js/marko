@@ -70,7 +70,7 @@ var template_default = _template("a", (input) => {
 					d: w,
 					m: $wi__input_w && $await_content2__w__closures
 				}));
-			}, 1, "a11", void 0, 1);
+			}, 1, "a11", 0, 1);
 			_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, $cg__input_w ? "a15" : "a16");
 			$wi__input_outer__OR__input_w__OR__input_inner__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 4) && $input_w__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 			$wi__input_outer__OR__input_w__OR__input_inner__OR__input_note && _resume_branch($scope2_id);

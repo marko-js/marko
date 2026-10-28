@@ -8,7 +8,7 @@ var keep_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let c = input.content;
 	_html(`<button class=reset>reset</button>${_el_resume($scope0_id, "a")}<div>`);
-	_dynamic_tag($scope0_id, "b", c, {}, 2, void 0, void 0, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
+	_dynamic_tag($scope0_id, "b", c, {}, 2, 0, 0, 1, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
 	_html("</div>");
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { e: input.content }) || (_content_withhold(input.content), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.content, !_server_guard($scope0_reason, 0)));
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 			g: _write_if($scope0_reason, 0) && $for_content__b__closures,
 			a: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a6", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a6", $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: input.note,
 		f: _write_if($scope0_reason, 1) && $input_note__closures

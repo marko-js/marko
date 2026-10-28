@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope1_id, "a", item.on ? labeled_default : plain_default, { name: item.key }, 1, 0, 0, $wg__input_items, $scope0_reason, 0);
 		$cg__input_items && _patch_init($scope1_id, "a0");
 		$wi__input_items && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		const $for_content2__item_key__closures = /* @__PURE__ */ new Set();
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_key__closures, _scope($scope3_id, { _: $wi__input_items && _scope_with_id($scope2_id) }));
 		}, $scope2_id, 1), 0, $wg__input_items, $scope0_reason, 0);
 		$wi__input_items && _scope($scope2_id, { f: $for_content2__item_key__closures });
-	}, 0, $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "a4", $scope0_reason, 0);
+	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);
 	_for_of(input.items, (item) => {
 		const $scope4_id = _scope_id();
 		const $for_content3__item_key__closures = /* @__PURE__ */ new Set();
@@ -61,6 +61,6 @@ var template_default = _template("a", (input) => {
 		}, $scope4_id, 1), 0, $wg__input_items, $scope0_reason, 0);
 		$cg__input_items && _patch_init($scope4_id, "a9");
 		$wi__input_items && _scope($scope4_id, { g: $for_content3__item_key__closures });
-	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "a5", $scope0_reason, 0);
+	}, 0, $scope0_id, "c", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);

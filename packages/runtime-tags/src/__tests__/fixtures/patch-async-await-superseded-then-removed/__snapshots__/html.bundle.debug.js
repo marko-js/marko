@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), $cg__input_a && "__tests__/template.marko_2_input_a#0:4/subscribe", 0);
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
+		}, $scope1_id, "#text/0", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
 		_html(`<span>${_text_resume($scope1_id, "#text/1", input.label, 1, $scope0_reason, 4)}</span>`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_show ? "__tests__/template.marko_1_input_show#0:3/init" : "__tests__/template.marko_1_input_show#0:3/subscribe");
 		_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, $cg__input_label ? "__tests__/template.marko_1_input_label#0:5/init" : "__tests__/template.marko_1_input_label#0:5/subscribe");
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1, void 0, 2);
+	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
 	_html("</main>");
 	_scope($scope0_id, {
 		input_a: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.a,

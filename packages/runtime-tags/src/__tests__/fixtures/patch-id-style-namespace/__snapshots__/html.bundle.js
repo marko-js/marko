@@ -13,6 +13,6 @@ var template_default = _template("a", (input) => {
 		_html(`${_style_html(`--idsa0:${_patch_style($scope1_id, "ya$--idsa0", input.color, $scope0_reason, 0)};`)}${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a1");
 		_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
-	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "a2", 0, 0);
+	}, 0, $scope0_id, "c", 1, 1, 1, 0, 0, "a2", 0, 0);
 	_scope($scope0_id, {});
 }, 1);

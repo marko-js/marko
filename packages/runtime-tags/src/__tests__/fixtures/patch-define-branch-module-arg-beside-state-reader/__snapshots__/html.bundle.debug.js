@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) }, "__tests__/template.marko", "4:4");
 				return 0;
 			}
-		}, $scope3_id, "#text/0", 1, $wg__isOpen, void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope3_reason, 4);
+		}, $scope3_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope3_reason, 4);
 		_filled_guard($scope3_reason, 5) && $cg__isOpen ? _patch_fill($scope3_id, "PatchFill:__tests__/template.marko_fill2/unpatched", fmt) : _filled_guard($scope3_reason, 5) && _client_guard($scope3_reason, 6) && _patch_write($scope3_id, "PatchMarkedWrite:fmt", fmt);
 		_filled_guard($scope3_reason, 6) && $cg__isOpen ? _patch_fill($scope3_id, "PatchFill:__tests__/template.marko_fill3/unpatched", label) : _client_guard($scope3_reason, 0) && _patch_write($scope3_id, "PatchMarkedWrite:label", label, !(_filled_guard($scope3_reason, 6) && _client_guard($scope3_reason, 5)));
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
@@ -64,7 +64,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "8:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (open) {
 			const $scope2_id = _scope_id();

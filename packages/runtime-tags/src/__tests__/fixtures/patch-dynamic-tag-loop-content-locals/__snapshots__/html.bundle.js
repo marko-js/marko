@@ -19,14 +19,14 @@ var tabs_default = _template("b", (input) => {
 				$wi__input_tab__OR__input_selected && _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_selected, void 0, void 0, void 0, ["b1"], $scope0_reason, 0);
+		}, $scope1_id, "a", 1, $wg__input_selected, 1, 0, 0, ["b1"], $scope0_reason, 0);
 		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "b3");
 		$wi__input_tab__OR__input_selected && _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && tab?.content,
 			M: _unfilled_if($scope0_reason, 2) && i,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b2", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b2", $scope0_reason, 1);
 	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.selected }) || _filled_guard($scope0_reason, 2) && $cg__input_tab && _patch_fill($scope0_id, "vb4", input.selected, !_server_guard($scope0_reason, 2));
 });
 

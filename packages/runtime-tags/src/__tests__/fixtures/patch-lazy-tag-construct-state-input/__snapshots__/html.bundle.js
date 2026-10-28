@@ -33,7 +33,7 @@ var template_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "c", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
+	}, $scope0_id, "c", 1, $wg__input_show, 1, 0, 0, ["b0"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "c", $wg__input_show)}`);
 	_script($scope0_id, "b1");
 	_scope($scope0_id, {

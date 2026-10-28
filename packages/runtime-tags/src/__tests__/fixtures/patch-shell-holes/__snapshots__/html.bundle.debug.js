@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
 	_html("</main>");
 	_scope($scope0_id, {
 		input_href: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.href,

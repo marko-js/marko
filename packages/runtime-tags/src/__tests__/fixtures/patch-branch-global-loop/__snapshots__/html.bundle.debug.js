@@ -56,12 +56,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				row_default(item);
 				_patch_child_end();
 				_scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "10:6");
-			}, "id", $scope1_id, "#div/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell");
+			}, "id", $scope1_id, "#div/0", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell");
 			_html(`</div>${_el_resume($scope1_id, "#div/0")}`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "7:2");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_1*shell"]);
+	}, $scope0_id, "#text/0", 1, $scope0_page, 1, 0, 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_1*shell"]);
 	_fill_global_subscribe("__tests__/template.marko_0_$global_search#7", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

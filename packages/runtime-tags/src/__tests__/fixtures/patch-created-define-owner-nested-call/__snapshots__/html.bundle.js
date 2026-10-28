@@ -41,7 +41,7 @@ var card_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_w, void 0, void 0, void 0, ["b2"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_w, 1, 0, 0, ["b2"], $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "a", $wg__input_w)}<button>x</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b3");
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb5", k, 1);
@@ -78,7 +78,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_on, void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_on, 1, 0, 0, ["a2"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.n,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.w

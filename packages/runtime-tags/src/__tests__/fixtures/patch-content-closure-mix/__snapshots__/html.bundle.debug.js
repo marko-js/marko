@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:item/6": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $for_content__item__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "2:4");
-	}, 0, $scope0_id, "#main/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
+	}, 0, $scope0_id, "#main/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "#main/0")}`);
 	_scope($scope0_id, {
 		input_prefix: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.prefix,

@@ -38,7 +38,7 @@ var navx_default = _template("c", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c1", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "c1", $scope0_reason, 1);
 	_html(`</nav>${_el_resume($scope0_id, "a")}<main>`);
 	_if(() => {
 		if (input.page) {
@@ -48,7 +48,7 @@ var navx_default = _template("c", (input) => {
 			_scope($scope2_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $wg__input_page, void 0, void 0, void 0, ["c2"], $scope0_reason, 3);
+	}, $scope0_id, "b", 1, $wg__input_page, 1, 0, 0, ["c2"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "b", $wg__input_page)}`);
 	_filled_guard($scope0_reason, 2) && $cg__input_items ? _patch_fill($scope0_id, "vc4", input.path) : $cg__input_items && _patch_write($scope0_id, "xf", input.path, 1);
 	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.path });
@@ -82,7 +82,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a2"], $scope0_reason, 0);
 	_html(`<button class=p>p</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {

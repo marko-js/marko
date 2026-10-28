@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			i: _unfilled_if($scope1_reason, 0) && upper,
 			_: _scope_with_id($scope0_id)
 		}), "a2");
-	}, void 0, "a6", "a7", 1, 1, 1);
+	}, 0, "a6", "a7", 1, 1, 1);
 	_filled_guard($scope0_reason, 2) && $cg__input_msg && _patch_write($scope0_id, "xe", input.fail);
 	_scope($scope0_id, {
 		d: input.msg,

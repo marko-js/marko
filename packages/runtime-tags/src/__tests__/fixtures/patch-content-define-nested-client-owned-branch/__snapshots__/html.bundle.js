@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 				_write_if($scope2_reason, 0) && _scope($scope4_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) });
 				return 0;
 			}
-		}, $scope2_id, "a", 1, $wg__open, void 0, void 0, void 0, ["a0"], $scope2_reason, 1);
+		}, $scope2_id, "a", 1, $wg__open, 1, 0, 0, ["a0"], $scope2_reason, 1);
 		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 1) && body }) || (_filled_guard($scope2_reason, 2) && $cg__open && _patch_fill($scope2_id, "va3", body, !_server_guard($scope2_reason, 2)), $cg__open && _content_withhold(body));
 	}, $scope0_id) };
 	const Outer = { content: _content("a4", ({ open, body }) => {

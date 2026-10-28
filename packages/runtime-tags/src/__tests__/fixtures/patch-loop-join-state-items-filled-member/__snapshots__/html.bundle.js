@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 			c: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item,
 			_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b1", $scope0_reason, 1);
 	_if(() => {
 		{
 			const $scope2_id = _scope_id();

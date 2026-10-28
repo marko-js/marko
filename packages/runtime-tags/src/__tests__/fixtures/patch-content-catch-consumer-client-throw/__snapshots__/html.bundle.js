@@ -25,7 +25,7 @@ var wrapper_default = _template("c", (input) => {
 		_dynamic_tag($scope1_id, "a", input.fallback, {}, 0, 0, 0, $wg__input_fallback);
 		_subscribe($wi__input_fallback && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c0", $wg__input_fallback);
 		$wg__input_fallback || _resume_branch($scope1_id);
-	}, void 0, "c3", "c4", 1);
+	}, 0, "c3", "c4", 1);
 	_scope($scope0_id, {
 		d: input.fallback,
 		f: $wi__input_fallback && $input_fallback__closures,
@@ -62,7 +62,7 @@ var error_wrapper_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "b", input.fallback, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "b0" : "b1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");
-	}, void 0, "b4", "b5", 1, 1, 1);
+	}, 0, "b4", "b5", 1, 1, 1);
 	_scope($scope0_id, {
 		d: input.fallback,
 		f: _write_if($scope0_reason, 0) && $input_fallback__closures,

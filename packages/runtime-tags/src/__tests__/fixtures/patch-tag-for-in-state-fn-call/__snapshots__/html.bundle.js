@@ -27,14 +27,14 @@ var card_default = _template("b", (input) => {
 				_subscribe($wi__input_prefix && $fmt2__closures, _subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b3"), _client_guard($scope0_reason, 1) && "b1");
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_sel, void 0, void 0, void 0, ["b4"], $scope0_reason, 0);
+		}, $scope1_id, "a", 1, $wg__input_sel, 1, 0, 0, ["b4"], $scope0_reason, 0);
 		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "b7");
 		_scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 3) && k,
 			e: v,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b5", $scope0_reason, 2);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b5", $scope0_reason, 2);
 	_html(`<button class=s>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b8");
 	_patch_fill($scope0_id, "vb10", s, 1);

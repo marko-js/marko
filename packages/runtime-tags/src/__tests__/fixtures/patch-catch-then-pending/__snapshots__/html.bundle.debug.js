@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", $wg__input_detail, $wg__input_detail, 0, 0, 1);
 		_subscribe($wi__input_detail && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_1_input_detail#0:5/subscribe", $wg__input_detail);
 		$wg__input_detail || _resume_branch($scope1_id);
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_3*content", 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_3*content", 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

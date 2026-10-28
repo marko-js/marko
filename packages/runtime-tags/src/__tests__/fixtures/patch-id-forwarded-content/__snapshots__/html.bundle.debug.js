@@ -299,7 +299,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope12_id, { "#childScope/0": _existing_scope($childScope19) }, "__tests__/template.marko", "13:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/11", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_12*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/11", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_12*shell"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		"#childScope/0": _existing_scope($childScope3),
 		"#childScope/1": _existing_scope($childScope4),

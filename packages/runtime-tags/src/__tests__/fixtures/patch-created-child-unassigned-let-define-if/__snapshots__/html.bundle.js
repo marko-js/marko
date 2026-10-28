@@ -20,7 +20,7 @@ var card_default = _template("b", (input) => {
 				$wi__open && _scope($scope2_id, {});
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__open, void 0, void 0, void 0, ["b0"], $scope1_reason, 0);
+		}, $scope1_id, "a", 1, $wg__open, 1, 0, 0, ["b0"], $scope1_reason, 0);
 		$wi__open && _scope($scope1_id, {});
 	}, $scope0_id, 1) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

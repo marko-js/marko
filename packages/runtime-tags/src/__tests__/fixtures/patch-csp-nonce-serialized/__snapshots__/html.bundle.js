@@ -22,6 +22,6 @@ var template_default = _template("a", (input) => {
 			_scope($scope2_id, {});
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["a2", "a3"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_page, 1, 0, 0, ["a2", "a3"], $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);

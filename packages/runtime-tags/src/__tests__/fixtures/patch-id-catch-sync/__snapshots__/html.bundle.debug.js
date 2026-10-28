@@ -67,7 +67,7 @@ var a_tag_default = _template("__tests__/tags/a-tag.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("caught");
-	}, void 0, "__tests__/tags/a-tag.marko_2*content", "__tests__/tags/a-tag.marko_1*content", 1, void 0, 1);
+	}, 0, "__tests__/tags/a-tag.marko_2*content", "__tests__/tags/a-tag.marko_1*content", 1, 0, 1);
 	_scope($scope0_id, {
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2)
@@ -99,6 +99,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#childScope/0": _existing_scope($childScope),
 			"#childScope/1": _existing_scope($childScope2)
 		}, "__tests__/template.marko", "1:2");
-	}, "id", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});
-	}, "id", $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 0);
+	}, "id", $scope0_id, "b", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "b")}`);
 	_scope($scope0_id, { f: selected });
 }, 1);

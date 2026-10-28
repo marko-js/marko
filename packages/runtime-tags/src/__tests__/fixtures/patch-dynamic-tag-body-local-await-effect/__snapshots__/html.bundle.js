@@ -59,7 +59,7 @@ var template_default = _template("a", (input) => {
 					l: _write_if($scope0_reason, 6) && $await_content__v__closures
 				}), $cg__input_on && "a8", $wg__input_on);
 				$wg__input_on || $wi__input_show__OR__input_note__OR__input_v__OR__input_on && _resume_branch($scope2_id);
-			}, 1, "a9", void 0, 1);
+			}, 1, "a9", 0, 1);
 			_script($scope1_id, "a12", 1, _filled_guard($scope0_reason, 5), "c");
 			_filled_guard($scope0_reason, 5) ? _patch_write($scope1_id, "xc", x, !$sg__input_note) : _patch_init($scope1_id, "a13");
 			$cg__input_v && _patch_init($scope1_id, "a14");
@@ -70,7 +70,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a11"], $scope0_reason, 4);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a11"], $scope0_reason, 4);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && input.note,

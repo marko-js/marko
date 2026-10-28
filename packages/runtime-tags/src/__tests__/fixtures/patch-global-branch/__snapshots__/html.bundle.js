@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $scope0_page, void 0, void 0, void 0, ["a0"]);
+	}, $scope0_id, "a", 1, $scope0_page, 1, 0, 0, ["a0"]);
 	_html(`<main>${_text_resume($scope0_id, "b", input.msg, 1, $scope0_reason, 0)}</main>`);
 	_if(() => {
 		if (!$global$1.meta.hideFooter) {
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope2_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, $scope0_page, void 0, void 0, void 0, ["a1"]);
+	}, $scope0_id, "c", 1, $scope0_page, 1, 0, 0, ["a1"]);
 	_trailers("</body></html>");
 	_fill_global_subscribe("a2", $scope0_id);
 	_scope($scope0_id, {});

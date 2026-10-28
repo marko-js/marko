@@ -41,6 +41,6 @@ var template_default = _template("a", (input) => {
 			$wi__input_items && _resume_branch($scope2_id);
 		}, 1, "a2");
 		$wi__input_items && _scope($scope1_id, { f: _unfilled_if($scope0_reason, 0) && $for_content__item_inner__closures });
-	}, "key", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a4", $scope0_reason, 0);
+	}, "key", $scope0_id, "a", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);

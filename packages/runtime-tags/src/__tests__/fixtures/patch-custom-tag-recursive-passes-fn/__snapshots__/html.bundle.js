@@ -27,7 +27,7 @@ const $content = (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["b2"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["b2"], $scope0_reason, 1);
 	_html(`<span>${_text_resume($scope0_id, "b", input.depth, 1, $scope0_reason, 1)}</span>`);
 	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.get }) || _filled_guard($scope0_reason, 2) && $cg__input_depth && _patch_fill($scope0_id, "vb3", input.get, !_server_guard($scope0_reason, 2));
 };

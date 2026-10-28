@@ -15,12 +15,12 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "a", row.id + "@0")}</p>`);
 			_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0");
-		}, (cell) => cell, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 0);
+		}, (cell) => cell, $scope1_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);
 		_scope($scope1_id, {
 			M: row?.id,
 			_: _scope_with_id($scope0_id)
 		});
-	}, (row) => row.id, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a2", $scope0_reason, 0);
+	}, (row) => row.id, $scope0_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {

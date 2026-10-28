@@ -25,7 +25,7 @@ var struct_default = _template("__tests__/tags/struct/index.marko", (input) => {
 			$wi__input_mode && _scope($scope2_id, {}, "__tests__/tags/struct/index.marko", "4:2");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_mode, void 0, void 0, void 0, ["__tests__/tags/struct/index.marko_1*shell", "__tests__/tags/struct/index.marko_2*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_mode, 1, 0, 0, ["__tests__/tags/struct/index.marko_1*shell", "__tests__/tags/struct/index.marko_2*shell"], $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/tags/struct/index.marko", 0);
 });
 

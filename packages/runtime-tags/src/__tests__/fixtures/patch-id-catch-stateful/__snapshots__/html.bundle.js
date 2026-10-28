@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 				_patch_child_end();
 				_html(`<p>${_text_resume($scope3_id, "c", count)}</p>`);
 				_scope($scope3_id, { a: _existing_scope($childScope) });
-			}, void 0, "a1", "a2");
+			}, 0, "a1", "a2");
 			_scope($scope1_id, {});
 			return 0;
 		}

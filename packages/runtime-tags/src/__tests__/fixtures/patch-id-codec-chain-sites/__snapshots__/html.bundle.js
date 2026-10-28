@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 					});
 					return 0;
 				}
-			}, $scope1_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a0"], $scope0_reason, 1);
+			}, $scope1_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a0"], $scope0_reason, 1);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a5");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
@@ -81,7 +81,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, { a: _existing_scope($childScope8) });
 			return 2;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, [
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, [
 		"a1",
 		"a2",
 		"a3"
@@ -101,7 +101,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope5_id, { a: _existing_scope($childScope11) });
 			return 0;
 		}
-	}, $scope0_id, "d", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["a4"], $scope0_reason, 2);
+	}, $scope0_id, "d", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a4"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.nested,
 		b: _existing_scope($childScope9),

@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2", { "EventAttributes:#a/0": ["...input.link", "4:22"] });
 			return 0;
 		}
-	}, $scope0_id, "#text/3", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/3", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`<input${_attrs(input.field, "#input/4", $scope0_id, "input", 1, $scope0_reason, 3)}>${_el_resume($scope0_id, "#input/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0_input_field#10");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#7");

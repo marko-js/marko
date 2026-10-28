@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			err_message: err?.message,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "11:4", { err_message: ["err.message", "11:11"] }), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_large#0:5/subscribe"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_label#0:6/subscribe"), "__tests__/template.marko_1_count#0:8/subscribe");
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_large: input.large,

@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("<em>loading</em>");
-		}, void 0, "a2", void 0, "a5", void 0, void 0, 2);
+		}, void 0, "a2", void 0, "a5", 0, 0, 2);
 		$wi__input_promise__OR__input_msg && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) });
 	_patch_child_end();

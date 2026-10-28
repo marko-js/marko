@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_text_resume($scope1_id, "a", input.title, $wg__input_title)}</em>`);
 		_subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0", $wg__input_title);
 		$wg__input_title || _resume_branch($scope1_id);
-	}, void 0, "a6", "a3", 1);
+	}, 0, "a6", "a3", 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		d: input.title,

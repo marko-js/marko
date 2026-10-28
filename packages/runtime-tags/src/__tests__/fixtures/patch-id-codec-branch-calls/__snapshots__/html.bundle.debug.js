@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
 	_if(() => {
 		if (input.right) {
 			const $scope3_id = _scope_id();
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope3_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $wg__input_right, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/1", 1, $wg__input_right, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 1);
 	const Repeat = { content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope4_id, { "#childScope/0": _existing_scope($childScope3) }, "__tests__/template.marko", "3:17");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_right, void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
+		}, $scope1_id, "#text/0", 1, $wg__input_right, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
 		$wi__input_right && _subscribe(_unfilled_if($scope0_reason, 1) && $input_right__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_right#0:7/subscribe", $wg__input_right);
 		$wg__input_right || $wi__input_right && _resume_branch($scope1_id);
 	}, $scope0_id) };

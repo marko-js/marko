@@ -36,7 +36,7 @@ var panel_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["b4"], $scope0_reason, 5);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 5), 1, 0, 0, ["b4"], $scope0_reason, 5);
 	_if(() => {
 		{
 			const $scope2_id = _scope_id();

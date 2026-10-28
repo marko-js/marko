@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_child_end();
 		_html("</li>");
 		_scope($scope1_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "6:4");
-	}, (n) => n, $scope0_id, "#ul/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, (n) => n, $scope0_id, "#ul/2", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { open }, "__tests__/template.marko", 0, { open: "3:6" });

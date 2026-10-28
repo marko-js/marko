@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope6_reason = _scope_reason();
 				const $scope6_id = _scope_id();
 				_html("<em>inner loading</em>");
-			}, void 0, "__tests__/template.marko_6*content", void 0, "__tests__/template.marko_3*content", 1, void 0, 2);
+			}, void 0, "__tests__/template.marko_6*content", void 0, "__tests__/template.marko_3*content", 1, 0, 2);
 			_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_msg ? "__tests__/template.marko_2_input_msg#0:6/init" : "__tests__/template.marko_2_input_msg#0:6/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope2_id, {}, "__tests__/template.marko", "4:4"), $cg__input_msg && "__tests__/template.marko_2_input_msg#0:6/subscribe");
 		}, 1, "__tests__/template.marko_2*content", 1);
@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope5_reason = _scope_reason();
 		const $scope5_id = _scope_id();
 		_html("<em>outer loading</em>");
-	}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_1*content", 1, void 0, 2);
+	}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,

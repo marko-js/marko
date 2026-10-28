@@ -39,10 +39,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_write_if($scope0_reason, 1) && _scope($scope4_id, {}, "__tests__/template.marko", "6:10");
 				return 0;
 			}
-		}, $scope3_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
+		}, $scope3_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
 		_html("</li>");
 		_scope($scope3_id, {}, "__tests__/template.marko", "3:6");
-	}, "id", $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 1);
+	}, "id", $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 1);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	_if(() => {
 		if (input.summary) {
@@ -56,14 +56,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_detail__closures, _scope($scope2_id, { _: $wi__input_summary__OR__input_detail && _scope_with_id($scope1_id) }, "__tests__/template.marko", "15:8"), $cg__input_detail && "__tests__/template.marko_2_input_detail#0:7/subscribe");
 					return 0;
 				}
-			}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 3), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
+			}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
 			_html("</section>");
 			$cg__input_summary && _patch_init($scope1_id, "__tests__/template.marko_1_input_summary#0:6/init");
 			$cg__input_detail && _patch_init($scope1_id, "__tests__/template.marko_1_input_detail#0:7/init");
 			_scope($scope1_id, { _: $wi__input_summary__OR__input_detail && _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
 	_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	badge_default({ label: input.badge });

@@ -46,12 +46,12 @@ var template_default = _template("a", (input) => {
 					a: _existing_scope($childScope),
 					b: _existing_scope($childScope2)
 				});
-			}, "key", $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 2);
+			}, "key", $scope1_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 2);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a2");
 			_scope($scope1_id, { _: $wi__input_visible__OR__input_items && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a1"], $scope0_reason, 1);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a1"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.items,
 		g: _unfilled_if($scope0_reason, 0) && headingId

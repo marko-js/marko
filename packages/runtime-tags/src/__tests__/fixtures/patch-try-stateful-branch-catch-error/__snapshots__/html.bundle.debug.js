@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<p>${_text_resume($scope2_id, "#text/0", input.title, $wg__input_title)} ${_text_resume($scope2_id, "#text/1", err.message, $wg__err_message * 2)}</p>`);
 				_subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "8:6"), "__tests__/template.marko_2_input_title#0:4/subscribe", $wg__input_title || $wg__err_message);
 				$wg__input_title || $wg__err_message || _resume_branch($scope2_id);
-			}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content");
+			}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content");
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}

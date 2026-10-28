@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope3_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__show, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
+		}, $scope1_id, "#text/0", 1, $wg__show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
 		_write_if($scope1_reason, 1) && _scope($scope1_id, { v: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 0)) && v }, "__tests__/template.marko", "2:2", { v: "2:17" }) || _filled_guard($scope1_reason, 0) && _client_guard($scope1_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", v, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	const Outer = { content: _content("__tests__/template.marko_2*content", ({ v, show }) => {

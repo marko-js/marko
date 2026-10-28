@@ -33,7 +33,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			}, "__tests__/tags/panel.marko", "4:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/panel.marko_2*shell"], $scope0_reason, 2);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel.marko_2*shell"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_n: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.n,
 		"ClosureScopes:input_n/5": _write_if($scope0_reason, 1) && $input_n__closures

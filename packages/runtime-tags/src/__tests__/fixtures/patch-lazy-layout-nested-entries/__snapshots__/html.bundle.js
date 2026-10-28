@@ -18,7 +18,7 @@ var layout_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<a>${_text_resume($scope2_id, "a", item, 1, $scope0_reason, 0)}</a>`);
 			_scope($scope2_id, {});
-		}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
+		}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 0);
 		_scope($scope1_id, {});
 	}, 1, "a1", 1);
 	_html("</nav><main>");
@@ -47,7 +47,7 @@ var page_a_default = _template("b", (input) => {
 			_write_if($scope0_reason, 1) && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["b0"], $scope0_reason, 1);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["b0"], $scope0_reason, 1);
 	_html(`<button>${_text_resume($scope0_id, "d", n)}</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b1");
 	_patch_fill($scope0_id, "vb2", n, 1);
@@ -73,7 +73,7 @@ var page_b_default = _template("c", (input) => {
 			_write_if($scope0_reason, 1) && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["c0"], $scope0_reason, 1);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["c0"], $scope0_reason, 1);
 	_scope($scope0_id, {});
 });
 
@@ -147,7 +147,7 @@ var template_default = _template("d", (input) => {
 							})));
 							return 1;
 						}
-					}, $scope2_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["d4", "d7"], $scope0_reason, 2);
+					}, $scope2_id, "a", 1, $wg__input_page, 1, 0, 0, ["d4", "d7"], $scope0_reason, 2);
 					$cg__input_page && _patch_init($scope2_id, "d9");
 					$wi__input_page__OR__input_wide__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 2) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					$wg__input_page || $wi__input_page__OR__input_wide__OR__input_note && _resume_branch($scope2_id);
@@ -161,7 +161,7 @@ var template_default = _template("d", (input) => {
 			});
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["d8", "d6"], $scope0_reason, 2);
+	}, $scope0_id, "a", 1, $wg__input_page, 1, 0, 0, ["d8", "d6"], $scope0_reason, 2);
 	_trailers("</body></html>");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.list,

@@ -29,7 +29,7 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) }, "__tests__/tags/code-block.marko", "7:2");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_text_length, void 0, void 0, void 0, ["__tests__/tags/code-block.marko_1*shell", "__tests__/tags/code-block.marko_2*shell"], $scope0_reason, 3);
+	}, $scope0_id, "#text/0", 1, $wg__input_text_length, 1, 0, 0, ["__tests__/tags/code-block.marko_1*shell", "__tests__/tags/code-block.marko_2*shell"], $scope0_reason, 3);
 	_fill_global_subscribe("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", $scope0_id);
 	_filled_guard($scope0_reason, 2) && $cg__input_text_length ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/code-block.marko_fill0/unpatched", input.text) : _client_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !(_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1)));
 	_filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && $cg__input_text_length ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/code-block.marko_fill1/unpatched", highlight) : $cg__input_text && _patch_write($scope0_id, "PatchMarkedWrite:highlight", highlight, !(_filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && $cg__input_text));

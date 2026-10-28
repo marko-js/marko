@@ -101,6 +101,7 @@ import {
   getReferencedBindingsInFunction,
 } from "./references";
 import {
+  absentArg,
   linkRuntimeFeature,
   callRuntime,
   importRuntimeFeature,
@@ -432,16 +433,6 @@ export function knownTagTranslateHTML(
       isPatchKeyedSlot(childScopeSlot)
         ? andGuard(getClientGuard(section, childScopeReason!), expr)
         : getExprIfWritten(section, childScopeReason!, expr);
-    // Only a patch render of a section patches write reads these two; `0` reads
-    // as no wiring where an owner follows.
-    const wiresVar =
-      isPatch() && patchWrites(section) && varId && guardVar(t.numericLiteral(1));
-    const ownerScopeId =
-      isPatch() &&
-      patchWrites(section) &&
-      childSection.parent !== section &&
-      namesBodyOwner(section, childSection) &&
-      getScopeIdIdentifier(childSection.parent!);
     // After the attr statements: building attribute tags can consume scope
     // ids (eg `_resume_locals`), and the peek must see the child's root id.
     statements.push(
@@ -455,8 +446,15 @@ export function knownTagTranslateHTML(
                   getScopeIdIdentifier(section),
                   getScopeAccessorLiteral(childScopeBinding),
                   t.numericLiteral(nextIdSite()),
-                  wiresVar || (ownerScopeId && t.numericLiteral(0)),
-                  ownerScopeId,
+                  // Only a patch render of a section patches write reads these two.
+                  (patchWrites(section) &&
+                    varId &&
+                    guardVar(t.numericLiteral(1))) ||
+                    absentArg(0),
+                  patchWrites(section) &&
+                    childSection.parent !== section &&
+                    namesBodyOwner(section, childSection) &&
+                    getScopeIdIdentifier(childSection.parent!),
                 ]
               : []),
           ),

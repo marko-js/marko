@@ -14,13 +14,13 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			const $scope1_id = _scope_id();
 			let c = input.content;
 			_html(`<button>clear</button>${_el_resume($scope1_id, "#button/0")}`);
-			_dynamic_tag($scope1_id, "#text/1", c, {}, 2, void 0, void 0, void 0, (_mask_group($scope0_reason, 1) & 1) << 1, 0, 1);
+			_dynamic_tag($scope1_id, "#text/1", c, {}, 2, 0, 0, 1, (_mask_group($scope0_reason, 1) & 1) << 1, 0, 1);
 			_script($scope1_id, "__tests__/tags/card.marko_1");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/card.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/card.marko_1*shell"], $scope0_reason, 0);
 	_scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.content }, "__tests__/tags/card.marko", 0, { input_content: ["input.content"] }) || (_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", input.content, !_server_guard($scope0_reason, 1)), _content_withhold(input.content));
 });
 

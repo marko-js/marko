@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 			f: $wi__input_items && _unfilled_if($scope0_reason, 0) && $for_content__item_n__closures,
 			a: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a2", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_scope($scope0_id, {});
 }, 1);

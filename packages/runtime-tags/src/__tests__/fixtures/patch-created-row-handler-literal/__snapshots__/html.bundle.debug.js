@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "4:4", { i: "4:14" });
-	}, "id", $scope0_id, "#ul/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, "id", $scope0_id, "#ul/1", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/1")}`);
 	_scope($scope0_id, { selected }, "__tests__/template.marko", 0, { selected: "1:6" });
 }, 1);

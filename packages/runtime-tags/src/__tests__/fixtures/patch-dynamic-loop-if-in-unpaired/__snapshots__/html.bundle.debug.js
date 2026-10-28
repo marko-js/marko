@@ -44,13 +44,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						_html(`<li>${_text_resume($scope3_id, "#text/0", x, 1, $scope0_reason, 3)}:${_text_resume($scope3_id, "#text/1", input.label, 2, $scope0_reason, 4)}</li>`);
 						$cg__input_label && _patch_init($scope3_id, "__tests__/template.marko_3_input_label#0:6/init");
 						_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope3_id, { _: $wi__input_on__OR__input_items__OR__input_label && _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:21"), $cg__input_label && "__tests__/template.marko_3_input_label#0:6/subscribe");
-					}, 0, $scope2_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
+					}, 0, $scope2_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
 					_html(`</ul>${_el_resume($scope2_id, "#ul/0")}`);
 					$cg__input_items && _patch_init($scope2_id, "__tests__/template.marko_2_input_items#0:5/init");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: $wi__input_on__OR__input_items__OR__input_label && _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:4"), $cg__input_items && "__tests__/template.marko_2_input_items#0:5/subscribe");
 					return 0;
 				}
-			}, $scope1_id, "#text/0", 1, $wg__input_on, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
+			}, $scope1_id, "#text/0", 1, $wg__input_on, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
 			$wi__input_on__OR__input_items__OR__input_label && _subscribe(_unfilled_if($scope0_reason, 2) && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), $cg__input_on && "__tests__/template.marko_1_input_on#0:4/subscribe", $wg__input_on);
 			$wg__input_on || $wi__input_on__OR__input_items__OR__input_label && _resume_branch($scope1_id);
 		}, $scope0_id)

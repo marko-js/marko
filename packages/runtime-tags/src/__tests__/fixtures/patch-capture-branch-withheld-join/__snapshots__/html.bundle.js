@@ -59,7 +59,7 @@ var child_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b10"], $scope0_reason, 3);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b10"], $scope0_reason, 3);
 	_filled_guard($scope0_reason, 5) && (_content_withheld("b4", $scope0_id) || $cg__input_mode) ? _patch_fill($scope0_id, "vb13", input.a) : _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.a, !(_filled_guard($scope0_reason, 5) && $cg__input_b));
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.b,

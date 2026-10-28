@@ -18,7 +18,7 @@ var badge_default = _template("__tests__/tags/badge/index.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/badge/index.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#div/0", 1, $wg__input_label, void 0, void 0, void 0, ["__tests__/tags/badge/index.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#div/0", 1, $wg__input_label, 1, 0, 0, ["__tests__/tags/badge/index.marko_1*shell"], $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $wg__input_label)}`);
 	_scope($scope0_id, { input_note: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.note }, "__tests__/tags/badge/index.marko", 0, { input_note: ["input.note"] }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/badge/index.marko_fill0", input.note, !_server_guard($scope0_reason, 1));
 });

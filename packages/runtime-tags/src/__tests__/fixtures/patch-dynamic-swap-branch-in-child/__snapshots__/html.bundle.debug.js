@@ -33,7 +33,7 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 				$wi__input_show && _scope($scope4_id, {}, "__tests__/tags/w.marko", "6:4");
 				return 1;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/w.marko_3*shell", "__tests__/tags/w.marko_4*shell"], $scope0_reason, 2);
+		}, $scope1_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/w.marko_3*shell", "__tests__/tags/w.marko_4*shell"], $scope0_reason, 2);
 		$cg__input_show && _patch_init($scope1_id, "__tests__/tags/w.marko_1_input_show#0:3/init");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, {
 			x,
@@ -59,7 +59,7 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 				$wi__input_show && _scope($scope6_id, {}, "__tests__/tags/w.marko", "13:4");
 				return 1;
 			}
-		}, $scope2_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/w.marko_5*shell", "__tests__/tags/w.marko_6*shell"], $scope0_reason, 2);
+		}, $scope2_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/w.marko_5*shell", "__tests__/tags/w.marko_6*shell"], $scope0_reason, 2);
 		$cg__input_show && _patch_init($scope2_id, "__tests__/tags/w.marko_2_input_show#0:3/init");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope2_id, {
 			x,

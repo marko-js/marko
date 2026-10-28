@@ -146,7 +146,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#childScope/3": _existing_scope($childScope7),
 			"#childScope/4": _existing_scope($childScope8)
 		}, "__tests__/template.marko", "24:4");
-	}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_4*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_5*content", "__tests__/template.marko_4*content", 1, 1, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		"ClosureScopes:input_label/5": $wi__input_label && $input_label__closures,

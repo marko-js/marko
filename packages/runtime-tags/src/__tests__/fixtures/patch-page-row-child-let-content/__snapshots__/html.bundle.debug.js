@@ -8,7 +8,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let c = input.content;
 	_html(`<section><button>clear</button>${_el_resume($scope0_id, "#button/0")}`);
-	_dynamic_tag($scope0_id, "#text/1", c, {}, 2, void 0, void 0, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
+	_dynamic_tag($scope0_id, "#text/1", c, {}, 2, 0, 0, 1, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
 	_html(`<p>${_text_resume($scope0_id, "#text/2", input.user.name, 1, $scope0_reason, 1)}</p></section>`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0) || _content_withhold(input.content);
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:row_id/6": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $for_content__row_id__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
 		"ClosureScopes:input_label/5": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_label__closures

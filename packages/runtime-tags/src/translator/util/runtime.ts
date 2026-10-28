@@ -243,12 +243,24 @@ function assertTranslate(helper: string, name: string) {
   }
 }
 
-function trimFalsyArgs<A>(args: (A | Falsy)[]) {
+// An argument the helper reads as left off: its literal (`1` for a guard tested
+// `=== 0`, else `0`) where another follows, in place of `void 0`; dropped where none does.
+export function absentArg(value: 0 | 1) {
+  const arg = t.numericLiteral(value);
+  absentArgs.add(arg);
+  return arg;
+}
+
+const absentArgs = new WeakSet<t.Node>();
+
+function trimFalsyArgs<A extends t.Node>(args: (A | Falsy)[]) {
   const filteredArgs = [];
   for (let i = args.length; i--;) {
     const arg = args[i];
-    if (arg || filteredArgs.length) {
+    if (filteredArgs.length) {
       filteredArgs[i] = arg || t.buildUndefinedNode();
+    } else if (arg && !absentArgs.has(arg)) {
+      filteredArgs[i] = arg;
     }
   }
   return filteredArgs as A[];

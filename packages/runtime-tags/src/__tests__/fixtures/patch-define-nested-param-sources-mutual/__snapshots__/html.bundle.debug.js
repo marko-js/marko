@@ -92,7 +92,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, "__tests__/template.marko", "13:4");
 				return 0;
 			}
-		}, $scope3_id, "#text/1", 1, _write_guard($scope3_reason, 3), void 0, void 0, void 0, ["__tests__/template.marko_5*shell"], $scope3_reason, 3);
+		}, $scope3_id, "#text/1", 1, _write_guard($scope3_reason, 3), 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope3_reason, 3);
 		$cg__depth && _patch_write($scope3_id, "PatchWrite:a", a, 1);
 		$cg__depth && _patch_write($scope3_id, "PatchWrite:b", b, 1);
 		_scope($scope3_id, {

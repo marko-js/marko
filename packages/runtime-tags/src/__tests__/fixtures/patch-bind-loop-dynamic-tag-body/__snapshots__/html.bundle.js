@@ -59,6 +59,6 @@ var template_default = _template("a", (input) => {
 			_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),
 			g: _write_if($scope0_reason, 1) && $for_content__row_label__closures
 		});
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a5", $scope0_reason, 1);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 1);
 	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.wrap }) || (_filled_guard($scope0_reason, 2) && $cg__input_rows && _patch_fill($scope0_id, "va6", input.wrap, !_server_guard($scope0_reason, 2)), $cg__input_rows && _content_withhold(input.wrap));
 }, 1);

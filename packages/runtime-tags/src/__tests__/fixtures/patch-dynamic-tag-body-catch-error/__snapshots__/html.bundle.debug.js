@@ -42,9 +42,9 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/card.marko", "9:6"), "__tests__/tags/card.marko_2_input_content#0:4/subscribe", $wg__input_content);
 				return 0;
 			}
-		}, $scope1_id, "#text/1", 1, _write_guard($scope1_reason, 0), void 0, void 0, void 0, ["__tests__/tags/card.marko_2*shell"]);
+		}, $scope1_id, "#text/1", 1, _write_guard($scope1_reason, 0), 1, 0, 0, ["__tests__/tags/card.marko_2*shell"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "7:4");
-	}, void 0, "__tests__/tags/card.marko_1*content", "__tests__/tags/card.marko_3*content", 1, 1, 1);
+	}, 0, "__tests__/tags/card.marko_1*content", "__tests__/tags/card.marko_3*content", 1, 1, 1);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill1", fail, 1);
 	_scope($scope0_id, {

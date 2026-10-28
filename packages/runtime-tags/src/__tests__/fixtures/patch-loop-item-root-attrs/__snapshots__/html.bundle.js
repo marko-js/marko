@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 1);
 	_html(`</nav>${_el_resume($scope0_id, "a")}<main>`);
 	_if(() => {
 		if (input.page) {
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope2_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $wg__input_page, void 0, void 0, void 0, ["a2"], $scope0_reason, 3);
+	}, $scope0_id, "b", 1, $wg__input_page, 1, 0, 0, ["a2"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "b", $wg__input_page)}`);
 	_filled_guard($scope0_reason, 2) && $cg__input_items && _patch_fill($scope0_id, "va4", input.path);
 	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.path });

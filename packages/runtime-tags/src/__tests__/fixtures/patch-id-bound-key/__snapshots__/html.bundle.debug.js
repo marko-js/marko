@@ -62,13 +62,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					}));
 					return 0;
 				}
-			}, $scope2_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 0);
+			}, $scope2_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_show ? "__tests__/template.marko_2_input_show#0:4/init" : "__tests__/template.marko_2_input_show#0:4/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope2_id, {
 				"#LoopKey": _unfilled_if($scope0_reason, 2) && other,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "5:4", { "#LoopKey": "5:8" }), $cg__input_show && "__tests__/template.marko_2_input_show#0:4/subscribe", $wg__input_show);
-		}, (n) => n, $scope1_id, "#text/7", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 1);
+		}, (n) => n, $scope1_id, "#text/7", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 1);
 		$cg__input_keys && _patch_init($scope1_id, "__tests__/template.marko_1_input_keys#0:3/init");
 		_scope($scope1_id, {
 			"#LoopKey": _unfilled_if($scope0_reason, 2) && name,
@@ -80,7 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#LoopKey": "1:6",
 			store_set: ["store.set", "2:10"]
 		});
-	}, (n) => n, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
+	}, (n) => n, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_show: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.show,
 		"ClosureScopes:input_show/6": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_show__closures

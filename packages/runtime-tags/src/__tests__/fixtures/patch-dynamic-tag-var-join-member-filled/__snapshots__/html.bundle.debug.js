@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_id__closures = new Set();
 	const $inputwhichOneTwo_scope = _peek_scope_id();
-	let v = _dynamic_tag($scope0_id, "#text/0", input.which ? one_default : two_default, { id: input.id }, 1, void 0, void 0, void 0, $scope0_reason, 0, void 0, void 0, void 0, "__tests__/template.marko_0_v#9/var");
+	let v = _dynamic_tag($scope0_id, "#text/0", input.which ? one_default : two_default, { id: input.id }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, void 0, "__tests__/template.marko_0_v#9/var");
 	_var($scope0_id, "#scopeOffset/1", $inputwhichOneTwo_scope, "__tests__/template.marko_0_v#9/var");
 	_html(`<span>${_text_resume($scope0_id, "#text/2", v)}</span>`);
 	_try($scope0_id, "#text/3", () => {

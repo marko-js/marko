@@ -33,7 +33,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 				_scope($scope2_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/tags/rowsx.marko", "3:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__isOpen, void 0, void 0, void 0, ["__tests__/tags/rowsx.marko_2*shell"], $scope1_reason, 4);
+		}, $scope1_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/tags/rowsx.marko_2*shell"], $scope1_reason, 4);
 		_filled_guard($scope1_reason, 5) && $cg__isOpen ? _patch_fill($scope1_id, "PatchFill:__tests__/tags/rowsx.marko_fill0/unpatched", fmt) : _client_guard($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:fmt", fmt, !(_filled_guard($scope1_reason, 5) && _client_guard($scope1_reason, 6)));
 		_filled_guard($scope1_reason, 6) && $cg__isOpen ? _patch_fill($scope1_id, "PatchFill:__tests__/tags/rowsx.marko_fill1/unpatched", label) : _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !(_filled_guard($scope1_reason, 6) && _client_guard($scope1_reason, 5)));
 		_write_if($scope1_reason, 3) && _scope($scope1_id, {
@@ -84,7 +84,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`<button class=l>l</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

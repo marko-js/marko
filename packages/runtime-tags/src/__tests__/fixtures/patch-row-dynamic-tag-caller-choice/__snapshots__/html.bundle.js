@@ -25,7 +25,7 @@ var rowsy_default = _template("b", (input) => {
 				_write_if($scope3_reason, 0) && _scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) });
 				return 0;
 			}
-		}, $scope3_id, "b", 1, _write_guard($scope3_reason, 1), void 0, void 0, void 0, ["b0"]);
+		}, $scope3_id, "b", 1, _write_guard($scope3_reason, 1), 1, 0, 0, ["b0"]);
 		_html("</p>");
 		_scope($scope3_id, { f: _unfilled_if($scope3_reason, 1) && content });
 	}, $scope0_id) };
@@ -50,7 +50,7 @@ var rowsy_default = _template("b", (input) => {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && tag,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "b3", $scope0_reason, 2);
+	}, 0, $scope0_id, "c", 1, 1, 1, 0, 0, "b3", $scope0_reason, 2);
 	_script($scope0_id, "b7");
 	_filled_guard($scope0_reason, 3) && $cg__input_tags ? _patch_fill($scope0_id, "vb9", input.card) : $cg__input_tags && _patch_write($scope0_id, "xh", input.card, 1);
 	$cg__input_tags ? _patch_fill($scope0_id, "vb10", Card) : $cg__input_tags__OR__input_card && _patch_write($scope0_id, "wi", Card, 1);

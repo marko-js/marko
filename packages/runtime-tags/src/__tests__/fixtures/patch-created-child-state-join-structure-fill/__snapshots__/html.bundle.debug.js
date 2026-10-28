@@ -18,7 +18,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/child/index.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/tags/child/index.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/child/index.marko_1*shell"], $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/child/index.marko_0");
 	_script($scope0_id, "__tests__/tags/child/index.marko_0_input_x#5_n#6", 1, $sg__input_x && 2, "input_x");
@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_x: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.x,
 		input_more: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.more

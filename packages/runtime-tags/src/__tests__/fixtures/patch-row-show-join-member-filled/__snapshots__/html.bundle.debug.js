@@ -18,13 +18,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $show = item.on ? input.id : "";
 		_show_start($show, 1, $wg__input_items__OR__input_id, "</div>");
 		_html("shown");
-		_show_end($scope1_id, "#div/0", $show, 1, $wg__input_items__OR__input_id, "</div>", void 0, "#div/0", void 0, void 0, $scope0_reason, 0);
+		_show_end($scope1_id, "#div/0", $show, 1, $wg__input_items__OR__input_id, "</div>", 0, "#div/0", void 0, void 0, $scope0_reason, 0);
 		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "__tests__/template.marko_1_input_id#0:5_item_on#3/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_id", _filled_guard($scope0_reason, 1) && "item_on");
 		_scope($scope1_id, {
 			item_on: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item?.on,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "1:2", { item_on: ["item.on", "1:6"] });
-	}, "k", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
+	}, "k", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_try($scope0_id, "#text/1", () => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();

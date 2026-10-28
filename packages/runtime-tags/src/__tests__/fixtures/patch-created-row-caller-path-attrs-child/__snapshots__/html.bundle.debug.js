@@ -39,7 +39,7 @@ var navx_default = _template("__tests__/tags/navx.marko", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"#childScope/1": _existing_scope($childScope)
 		}, "__tests__/tags/navx.marko", "2:4", { item_href: ["item.href", "2:8"] });
-	}, 0, $scope0_id, "#nav/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/navx.marko_1*shell", $scope0_reason, 1);
+	}, 0, $scope0_id, "#nav/0", 1, 1, 1, 0, 0, "__tests__/tags/navx.marko_1*shell", $scope0_reason, 1);
 	_html(`</nav>${_el_resume($scope0_id, "#nav/0")}<main>`);
 	_if(() => {
 		if (input.page) {
@@ -49,7 +49,7 @@ var navx_default = _template("__tests__/tags/navx.marko", (input) => {
 			_scope($scope2_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }, "__tests__/tags/navx.marko", "10:8");
 			return 0;
 		}
-	}, $scope0_id, "#main/1", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/tags/navx.marko_2*shell"], $scope0_reason, 3);
+	}, $scope0_id, "#main/1", 1, $wg__input_page, 1, 0, 0, ["__tests__/tags/navx.marko_2*shell"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "#main/1", $wg__input_page)}`);
 	_filled_guard($scope0_reason, 2) && $cg__input_items ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/navx.marko_fill0/unpatched", input.path) : $cg__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_path", input.path, 1);
 	_scope($scope0_id, { input_path: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.path }, "__tests__/tags/navx.marko", 0, { input_path: ["input.path"] });
@@ -86,7 +86,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`<button class=p>p</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

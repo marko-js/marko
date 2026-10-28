@@ -18,7 +18,7 @@ var wrap_default = _template("d", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["d1"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["d1"], $scope0_reason, 1);
 	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || (_filled_guard($scope0_reason, 2) && $cg__input_show && _patch_fill($scope0_id, "vd2", input.content, !_server_guard($scope0_reason, 2)), $cg__input_show && _content_withhold(input.content));
 });
 

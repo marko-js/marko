@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<p>${_text_resume($scope4_id, "a", err.message, $wg__err_message)}</p>`);
 			_write_if($scope4_reason, 0) && _scope($scope4_id, {});
-		}, void 0, "a2", "a3");
+		}, 0, "a2", "a3");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, void 0, "a9", void 0, "a6", 1);
 	_scope($scope0_id, {

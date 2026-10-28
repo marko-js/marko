@@ -9,7 +9,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const own = _id("own");
 	let c = input.content;
 	_html(`<input${_attr("id", own, $scope0_id, "PatchAttr:#input/0 id", 0, 0)}>${_el_resume($scope0_id, "#input/0", 0)}<label${_attr("for", own, $scope0_id, "PatchAttr:#label/1 for", 0, 0)}>own</label>${_el_resume($scope0_id, "#label/1", 0)}<button>clear</button>${_el_resume($scope0_id, "#button/2")}`);
-	_dynamic_tag($scope0_id, "#text/3", c, {}, 2, void 0, void 0, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
+	_dynamic_tag($scope0_id, "#text/3", c, {}, 2, 0, 0, 1, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0) || _content_withhold(input.content);
 });
@@ -39,6 +39,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, 2) });
 		_patch_child_end();
 		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "1:2");
-	}, "id", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

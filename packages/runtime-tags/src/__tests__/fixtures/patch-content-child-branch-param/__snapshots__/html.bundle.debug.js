@@ -18,7 +18,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 			_write_if($scope0_reason, 3) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#section/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/card/index.marko_1*shell"], $scope0_reason, 4);
+	}, $scope0_id, "#section/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/card/index.marko_1*shell"], $scope0_reason, 4);
 	_html(`</section>${_el_resume($scope0_id, "#section/0", $wg__input_show)}`);
 	_scope($scope0_id, {
 		input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content,

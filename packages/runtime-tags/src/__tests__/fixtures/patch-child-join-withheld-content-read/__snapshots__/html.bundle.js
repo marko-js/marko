@@ -29,7 +29,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["b4"], $scope0_reason, 5);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 5), 1, 0, 0, ["b4"], $scope0_reason, 5);
 	$cg__input_a && _patch_write($scope0_id, "xg", input.b, !(_filled_guard($scope0_reason, 5) && $cg__input_a));
 	$cg__input_mode && _patch_write($scope0_id, "wi", frag?.content, 1);
 	$cg__input_mode && _patch_init($scope0_id, "b7");

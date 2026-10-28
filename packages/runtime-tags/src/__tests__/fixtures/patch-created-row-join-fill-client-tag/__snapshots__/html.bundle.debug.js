@@ -48,13 +48,13 @@ var row_list_default = _template("__tests__/tags/row-list.marko", (input) => {
 				_subscribe($bounty__closures, _subscribe($wi__input_settled && $input_settled__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/row-list.marko", "3:4"), _client_guard($scope0_reason, 2) && "__tests__/tags/row-list.marko_2_input_settled#0:8/subscribe"), "__tests__/tags/row-list.marko_2_bounty#0:9/subscribe");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_type, void 0, void 0, void 0, ["__tests__/tags/row-list.marko_2*shell"], $scope0_reason, 1);
+		}, $scope1_id, "#text/0", 1, $wg__input_type, 1, 0, 0, ["__tests__/tags/row-list.marko_2*shell"], $scope0_reason, 1);
 		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/row-list.marko_1_input_type#0:7/init");
 		_scope($scope1_id, {
 			t,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/row-list.marko", "2:2", { t: "2:6" });
-	}, 0, $scope0_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/tags/row-list.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/tags/row-list.marko_1*shell", $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/tags/row-list.marko_0");
 	_scope($scope0_id, {

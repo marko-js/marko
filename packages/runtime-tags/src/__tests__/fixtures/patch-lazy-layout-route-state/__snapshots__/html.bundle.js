@@ -30,7 +30,7 @@ var layout_default = _template("a", (input) => {
 			_scope($scope1_id, { b: _existing_scope($childScope) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_open, void 0, void 0, void 0, ["a0"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_open, 1, 0, 0, ["a0"], $scope0_reason, 1);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 10, 0, 0, $wg__input_content, $scope0_reason, 2);
 	_trailers("</body></html>");
 	_scope($scope0_id, {});

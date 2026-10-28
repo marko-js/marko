@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 5);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 5);
 	_scope($scope0_id, {
 		input_decor: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.decor,
 		input_text: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.text,

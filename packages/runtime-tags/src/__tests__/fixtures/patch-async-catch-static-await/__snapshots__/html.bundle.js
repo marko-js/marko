@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<p>oops</p>");
-	}, void 0, "a1", "a3", void 0, void 0, 1);
+	}, 0, "a1", "a3", 0, 0, 1);
 	_html("</main>");
 	_scope($scope0_id, {});
 }, 1);

@@ -13,7 +13,7 @@ var list_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "a", it, {}, 2, 0, 0, $wg__input_item, $scope0_reason, 0);
 		_html("</li>");
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b0", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b0", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_scope($scope0_id, {});
 });
@@ -33,7 +33,7 @@ var list2_default = _template("c", (input) => {
 		_dynamic_tag($scope1_id, "a", it, {}, 2, 0, 0, $wg__input_item, $scope0_reason, 0);
 		_html("</li>");
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c0", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "c0", $scope0_reason, 0);
 	_html(`</ol>${_el_resume($scope0_id, "a")}`);
 	_scope($scope0_id, {});
 });
@@ -72,7 +72,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			n: _write_if($scope0_reason, 5) && $for_content__a__closures
 		});
-	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "a7", $scope0_reason, 5);
+	}, 0, $scope0_id, "c", 1, 1, 1, 0, 0, "a7", $scope0_reason, 5);
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.on,

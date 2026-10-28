@@ -16,6 +16,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const uid = _id("uid");
 		_html(`<label${_attr("for", uid, $scope1_id, "PatchAttr:#label/0 for", 0, 0)}>Key</label>${_el_resume($scope1_id, "#label/0", 0)}<input${_attr("id", uid, $scope1_id, "PatchAttr:#input/1 id", 0, 0)}${_attr("aria-labelledby", heading, $scope1_id, "PatchAttr:#input/1 aria-labelledby", 0, 0)}>${_el_resume($scope1_id, "#input/1", 0)}`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "1:39");
-	}, (key) => key, $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, (key) => key, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, { heading: _unfilled_if($scope0_reason, 0) && heading }, "__tests__/template.marko", 0, { heading: "1:5" });
 }, 1);

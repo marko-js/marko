@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope4_id, { _: _write_if($scope1_reason, 1) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__isOpen, void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope1_reason, 0);
+		}, $scope1_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope1_reason, 0);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, { label: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 1)) && label }, "__tests__/template.marko", "2:2", { label: "2:25" }) || _filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill2", label, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	const Outer = { content: _content("__tests__/template.marko_2*content", ({ isOpen, label, show }) => {
@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, "__tests__/template.marko", "8:4");
 				return 0;
 			}
-		}, $scope2_id, "#text/0", 1, $wg__show, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 3);
+		}, $scope2_id, "#text/0", 1, $wg__show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 3);
 		_write_if($scope2_reason, 3) && _scope($scope2_id, {
 			isOpen: (_unfilled_if($scope2_reason, 3) || _unfilled_if($scope2_reason, 1)) && isOpen,
 			label: (_unfilled_if($scope2_reason, 3) || _unfilled_if($scope2_reason, 2)) && label

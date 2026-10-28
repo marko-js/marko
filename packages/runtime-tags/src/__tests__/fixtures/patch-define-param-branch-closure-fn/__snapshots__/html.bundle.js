@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 0) && $f2__closures, _scope($scope2_id, { _: ($wi__input_a || $wi__on) && _scope_with_id($scope1_id) }), $cg__input_a && "a2");
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__on, void 0, void 0, void 0, ["a3"], $scope1_reason, 0);
+		}, $scope1_id, "a", 1, $wg__on, 1, 0, 0, ["a3"], $scope1_reason, 0);
 		($wi__input_a || $wi__on) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);

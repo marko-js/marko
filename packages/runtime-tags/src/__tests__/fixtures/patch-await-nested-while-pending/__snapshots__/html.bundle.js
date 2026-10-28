@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("<em>inner loading</em>");
-			}, void 0, "a2", void 0, "a6", 1, void 0, 2);
+			}, void 0, "a2", void 0, "a6", 1, 0, 2);
 			_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_msg ? "a12" : "a13");
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope2_id, {}), $cg__input_msg && "a13");
 		}, 1, "a7", 1);
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>outer loading</em>");
-	}, void 0, "a3", void 0, "a9", 1, void 0, 2);
+	}, void 0, "a3", void 0, "a9", 1, 0, 2);
 	_script($scope0_id, "a16");
 	_scope($scope0_id, {
 		i: count,

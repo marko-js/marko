@@ -49,12 +49,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					"#childScope/0": _existing_scope($childScope),
 					"#childScope/1": _existing_scope($childScope2)
 				}, "__tests__/template.marko", "4:4");
-			}, "key", $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
+			}, "key", $scope1_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_items#0:5/init");
 			_scope($scope1_id, { _: $wi__input_visible__OR__input_items && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_items: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.items,
 		headingId: _unfilled_if($scope0_reason, 0) && headingId

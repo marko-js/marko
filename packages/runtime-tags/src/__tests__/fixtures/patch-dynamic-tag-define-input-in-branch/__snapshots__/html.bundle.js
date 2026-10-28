@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 			_write_if($scope0_reason, 3) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a3"], $scope0_reason, 4);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a3"], $scope0_reason, 4);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	$cg__input_show && _patch_fill($scope0_id, "va8", Card);
 	$cg__input_show && _patch_fill($scope0_id, "va9", Other);

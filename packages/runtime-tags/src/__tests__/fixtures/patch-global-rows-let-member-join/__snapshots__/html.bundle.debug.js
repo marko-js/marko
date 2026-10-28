@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			item_value: ["item.value", "3:10"],
 			qty: "7:12"
 		});
-	}, (row) => row.item.id, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell");
+	}, (row) => row.item.id, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell");
 	_fill_global_subscribe("__tests__/template.marko_0_$global_data#5", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

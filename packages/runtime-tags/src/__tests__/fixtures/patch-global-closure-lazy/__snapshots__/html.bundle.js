@@ -21,11 +21,11 @@ var child_default = _template("a", (input) => {
 				_html(`<i>${_text_resume($scope2_id, "a", x, 1, 0, 0)}${_text_resume($scope2_id, "b", $global$1.brand, 2, 4, 0)}</i>`);
 				_fill_global_subscribe("a0", $scope1_id);
 				_scope($scope2_id, {});
-			}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a1", 0, 0);
+			}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "a1", 0, 0);
 			_scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "c", 1, 0, void 0, void 0, void 0, ["a2"], 0, 0);
+	}, $scope0_id, "c", 1, 0, 1, 0, 0, ["a2"], 0, 0);
 	_script($scope0_id, "a3");
 	_patch_fill($scope0_id, "va4", count, 1);
 	_scope($scope0_id, { e: count });

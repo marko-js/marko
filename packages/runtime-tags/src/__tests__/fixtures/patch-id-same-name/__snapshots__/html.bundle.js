@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		const y = _id("C");
 		_html(`<input${_attr("id", y, $scope1_id, "aa$id", 0, 0)}>${_el_resume($scope1_id, "a", 0)}`);
 		_scope($scope1_id, {});
-	}, "k", $scope0_id, "g", 1, void 0, void 0, void 0, void 0, "a0", 0, 0);
+	}, "k", $scope0_id, "g", 1, 1, 1, 0, 0, "a0", 0, 0);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { h: n });
 }, 1);

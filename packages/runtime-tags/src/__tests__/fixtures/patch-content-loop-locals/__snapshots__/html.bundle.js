@@ -12,7 +12,7 @@ var list_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", item.content, {}, 2, 0, 0, $wg__input_item, $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b0", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b0", $scope0_reason, 0);
 	_scope($scope0_id, {});
 });
 
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 					_scope($scope2_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) });
 					return 0;
 				}
-			}, $scope1_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a0"], $scope0_reason, 1);
+			}, $scope1_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a0"], $scope0_reason, 1);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a3");
 			_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_show__closures, _scope($scope1_id, {
 				c: label,

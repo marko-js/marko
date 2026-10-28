@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a7", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a7", $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a14");
 	_scope($scope0_id, {

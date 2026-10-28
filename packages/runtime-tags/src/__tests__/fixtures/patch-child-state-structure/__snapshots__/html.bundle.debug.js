@@ -17,7 +17,7 @@ var toggle_panel_default = _template("__tests__/tags/toggle-panel/index.marko", 
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/tags/toggle-panel/index.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#div/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/toggle-panel/index.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#div/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/toggle-panel/index.marko_1*shell"], $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $wg__input_show)}`);
 	_scope($scope0_id, {}, "__tests__/tags/toggle-panel/index.marko", 0);
 });

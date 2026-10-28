@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 			const $scope7_id = _scope_id();
 			_dynamic_tag($scope7_id, "a", it, {}, 10, 0, 0, $wg__item2);
 			_write_if($scope6_reason, 0) && _scope($scope7_id, {});
-		}, 0, $scope6_id, "a", 1, void 0, void 0, void 0, void 0, "a4");
+		}, 0, $scope6_id, "a", 1, 1, 1, 0, 0, "a4");
 		_scope($scope6_id, {});
 	}, $scope0_id) };
 	_html("<main>");

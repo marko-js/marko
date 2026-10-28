@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 			b: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 1)) && d,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b2", $scope0_reason, 2);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b2", $scope0_reason, 2);
 	_filled_guard($scope0_reason, 4) && $cg__input_items ? _patch_fill($scope0_id, "vb4", input.a) : _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.a, !(_filled_guard($scope0_reason, 4) && $cg__input_b));
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.b,

@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_write_if($scope1_reason, 0) && _scope($scope4_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "2:15");
 				return 0;
 			}
-		}, $scope1_id, "#text/1", 1, _write_guard($scope1_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope1_reason, 1);
+		}, $scope1_id, "#text/1", 1, _write_guard($scope1_reason, 1), 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope1_reason, 1);
 		_html("</p>");
 		_client_guard($scope1_reason, 1) && _patch_write($scope1_id, "PatchWrite:content", content, 1);
 		_scope($scope1_id, { content: _unfilled_if($scope1_reason, 1) && content }, "__tests__/template.marko", "1:2", { content: "1:23" });
@@ -82,7 +82,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, 25, 0, 0, $wg__input_rows, $scope0_reason, 0);
 			$cg__input_rows && _patch_init($scope3_id, "__tests__/template.marko_3_Card#0:4_row_card#2:8_Label#2:12_tag#2/init");
 			$wi__input_rows && _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "11:6");
-		}, 0, $scope2_id, "#text/4", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 0);
+		}, 0, $scope2_id, "#text/4", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 0);
 		_html("</section>");
 		_script($scope2_id, "__tests__/template.marko_2");
 		_filled_guard($scope0_reason, 0) && (_content_withheld("__tests__/template.marko_5*content", $scope2_id) || $cg__input_rows || _content_withheld("__tests__/template.marko_7*content", $scope2_id)) && _patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", row?.label);
@@ -100,6 +100,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			n: "5:8",
 			Label: "6:11"
 		});
-	}, "id", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
+	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
 	_scope($scope0_id, { Card: _unfilled_if($scope0_reason, 0) && Card }, "__tests__/template.marko", 0, { Card: "1:9" });
 }, 1);

@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<b>${_text_resume($scope3_id, "#text/0", err, 1, 4, 0)}</b>`);
 		_scope($scope3_id, {}, "__tests__/template.marko", "8:6");
-	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1, 1);
 	_try($scope0_id, "#text/1", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope4_id = _scope_id();
 		_html(`<i>${_text_resume($scope4_id, "#text/0", err.message, 1, 4, 0)}</i>`);
 		_scope($scope4_id, {}, "__tests__/template.marko", "12:6");
-	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content", 1, 1, 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/3", count)}</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

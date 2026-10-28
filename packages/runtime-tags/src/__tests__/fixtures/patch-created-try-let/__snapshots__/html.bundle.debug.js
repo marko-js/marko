@@ -26,10 +26,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
 				_html("caught");
-			}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", void 0, void 0, 1);
+			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", 0, 0, 1);
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

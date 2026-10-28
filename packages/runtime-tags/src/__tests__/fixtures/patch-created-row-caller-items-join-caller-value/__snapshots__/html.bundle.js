@@ -28,7 +28,7 @@ var child_default = _template("b", (input) => {
 			c: _write_if($scope0_reason, 1) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 2);
+	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "b1", $scope0_reason, 2);
 	_html(`<button class=t>t</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b2");
 	_patch_fill($scope0_id, "vb5", open, 1);
@@ -64,7 +64,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a0"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a0"], $scope0_reason, 0);
 	_html(`<button class=l>l</button>${_el_resume($scope0_id, "b")}<button class=bb>b</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {

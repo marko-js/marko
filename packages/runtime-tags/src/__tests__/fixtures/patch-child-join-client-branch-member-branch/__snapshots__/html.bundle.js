@@ -18,7 +18,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b1"], $scope0_reason, 4);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b1"], $scope0_reason, 4);
 	_if(() => {
 		if (input.other) {
 			const $scope2_id = _scope_id();
@@ -27,7 +27,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope2_id, { _: _write_if($scope0_reason, 5) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $wg__input_other, void 0, void 0, void 0, ["b2"], $scope0_reason, 7);
+	}, $scope0_id, "b", 1, $wg__input_other, 1, 0, 0, ["b2"], $scope0_reason, 7);
 	_filled_guard($scope0_reason, 6) && $cg__input_show ? _patch_fill($scope0_id, "vb6", input.b) : _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.b, !(_filled_guard($scope0_reason, 6) && $cg__input_a));
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 5)) && input.a,

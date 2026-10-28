@@ -22,11 +22,11 @@ var child_default = _template("__tests__/child.marko", (input) => {
 				_html(`<i>${_text_resume($scope2_id, "#text/0", x, 1, 0, 0)}${_text_resume($scope2_id, "#text/1", $global$1.brand, 2, 4, 0)}</i>`);
 				_fill_global_subscribe("__tests__/child.marko_2_$global_brand#0:13", $scope1_id);
 				_scope($scope2_id, {}, "__tests__/child.marko", "5:4");
-			}, 0, $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/child.marko_2*shell", 0, 0);
+			}, 0, $scope1_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/child.marko_2*shell", 0, 0);
 			_scope($scope1_id, {}, "__tests__/child.marko", "4:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, 0, void 0, void 0, void 0, ["__tests__/child.marko_1*shell"], 0, 0);
+	}, $scope0_id, "#text/2", 1, 0, 1, 0, 0, ["__tests__/child.marko_1*shell"], 0, 0);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill0", count, 1);
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "2:6" });

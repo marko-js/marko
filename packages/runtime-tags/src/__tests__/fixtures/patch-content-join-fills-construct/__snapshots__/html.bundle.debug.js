@@ -102,7 +102,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 			"ClosureScopes:item_n/12": $wi__input_items && $for_content__item_n__closures,
 			"#childScope/0": _existing_scope($childScope3)
 		}, "__tests__/page.marko", "4:2", { item_n: ["item.n", "4:6"] });
-	}, 0, $scope0_id, "#text/3", 1, void 0, void 0, void 0, void 0, "__tests__/page.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/page.marko_1*shell", $scope0_reason, 0);
 	_fill_global_subscribe("__tests__/page.marko_0_$global_data#8", $scope0_id);
 	_script($scope0_id, "__tests__/page.marko_0");
 	_scope($scope0_id, {
@@ -141,6 +141,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_scope($scope0_id, { input_items: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.items }, "__tests__/template.marko", 0, { input_items: ["input.items"] }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.items, !_server_guard($scope0_reason, 1));
 }, 1);

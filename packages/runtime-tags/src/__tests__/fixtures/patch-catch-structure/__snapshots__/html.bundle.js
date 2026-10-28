@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", $wg__input_detail, $wg__input_detail, 0, 0, 1);
 		_subscribe($wi__input_detail && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1", $wg__input_detail);
 		$wg__input_detail || _resume_branch($scope1_id);
-	}, void 0, "a7", "a4", 1);
+	}, 0, "a7", "a4", 1);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {

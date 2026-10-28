@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			i: _write_if($scope0_reason, 2) && $for_content__row_label__closures
 		});
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a7", $scope0_reason, 2);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a7", $scope0_reason, 2);
 	_html(`</main>${_el_resume($scope0_id, "a")}`);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.on,

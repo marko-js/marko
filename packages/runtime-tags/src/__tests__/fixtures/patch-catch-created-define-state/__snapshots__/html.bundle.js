@@ -143,7 +143,7 @@ var template_default = _template("c", (input) => {
 			d: _existing_scope($childScope7),
 			e: _existing_scope($childScope8)
 		});
-	}, void 0, "c15", "c16", 1, 1, 1);
+	}, 0, "c15", "c16", 1, 1, 1);
 	_scope($scope0_id, {
 		d: input.label,
 		f: $wi__input_label && $input_label__closures,

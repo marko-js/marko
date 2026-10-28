@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<i>${_text_resume($scope2_id, "#text/0", name, 1, 0, 0)}</i>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "7:4");
-	}, 0, $scope0_id, "#text/3", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", 0, 0);
+	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", 0, 0);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
@@ -28,11 +28,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_text_resume($scope3_id, "#text/0", name, 1, 0, 0)}</b>`);
 				_scope($scope3_id, {}, "__tests__/template.marko", "10:6");
-			}, 0, $scope1_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", 0, 0);
+			}, 0, $scope1_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", 0, 0);
 			_scope($scope1_id, {}, "__tests__/template.marko", "8:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/4", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/4", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html("</main>");
 	_scope($scope0_id, { label: _unfilled_if($scope0_reason, 1) && label }, "__tests__/template.marko", 0, { label: "3:8" }) || _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", label);
 }, 1);

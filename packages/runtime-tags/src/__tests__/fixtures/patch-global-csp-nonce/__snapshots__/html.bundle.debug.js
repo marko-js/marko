@@ -34,6 +34,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, {}, "__tests__/template.marko", "4:2");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_1*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_page, 1, 0, 0, ["__tests__/template.marko_1*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

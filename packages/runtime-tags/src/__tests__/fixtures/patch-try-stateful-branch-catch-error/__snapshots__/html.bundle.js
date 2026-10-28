@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 				_html(`<p>${_text_resume($scope2_id, "a", input.title, $wg__input_title)} ${_text_resume($scope2_id, "b", err.message, $wg__err_message * 2)}</p>`);
 				_subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0", $wg__input_title || $wg__err_message);
 				$wg__input_title || $wg__err_message || _resume_branch($scope2_id);
-			}, void 0, "a2", "a3");
+			}, 0, "a2", "a3");
 			_scope($scope1_id, {});
 			return 0;
 		}

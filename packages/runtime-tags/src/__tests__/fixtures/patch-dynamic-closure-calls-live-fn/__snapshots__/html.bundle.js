@@ -25,11 +25,11 @@ var panel_default = _template("b", (input) => {
 				_script($scope2_id, "b1");
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_a ? "b2" : "b3");
 				_subscribe($wi__input_a && $f2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_a && "b3");
-			}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "b4", 0, 0);
+			}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "b4", 0, 0);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["b5"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["b5"], $scope0_reason, 1);
 	_html(`<output>${_text_resume($scope0_id, "b", out, 1, 0, 0, 1)}</output>`);
 	_scope($scope0_id, {
 		e: input.a,

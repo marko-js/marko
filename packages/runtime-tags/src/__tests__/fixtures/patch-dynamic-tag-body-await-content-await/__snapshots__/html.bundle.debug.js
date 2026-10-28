@@ -80,7 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					"ClosureScopes:w/12": $wi__input_w && $await_content2__w__closures
 				}, "__tests__/template.marko", "5:8", { w: "5:14" }));
 				$wg__input_inner || $wi__input_outer__OR__input_w__OR__input_inner__OR__input_note && _resume_branch($scope3_id);
-			}, 1, "__tests__/template.marko_3*content", void 0, 1);
+			}, 1, "__tests__/template.marko_3*content", 0, 1);
 			_unfilled_if($scope0_reason, 4) && _patch_init($scope2_id, $cg__input_w ? "__tests__/template.marko_2_input_w#0:5/init" : "__tests__/template.marko_2_input_w#0:5/subscribe");
 			$wi__input_outer__OR__input_w__OR__input_inner__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 4) && $input_w__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:8"));
 			$wi__input_outer__OR__input_w__OR__input_inner__OR__input_note && _resume_branch($scope2_id);

@@ -44,7 +44,7 @@ var feed_list_default = _template("c", (input) => {
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c3", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "c3", $scope0_reason, 1);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_filled_guard($scope0_reason, 2) && $cg__input_items ? _patch_fill($scope0_id, "vc4", input.data) : $cg__input_items && _patch_write($scope0_id, "xe", input.data, 1);
 	_patch_fill($scope0_id, "vc5", hovered, 1);

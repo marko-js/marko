@@ -20,9 +20,9 @@ var template_default = _template("a", (input) => {
 				M: cell,
 				_: _scope_with_id($scope1_id)
 			}), _client_guard($scope0_reason, 2) && "a0"), "a1");
-		}, (cell) => cell, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a2", $scope0_reason, 1);
+		}, (cell) => cell, $scope1_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 1);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, (row) => row.id, $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "a3", $scope0_reason, 1);
+	}, (row) => row.id, $scope0_id, "b", 1, 1, 1, 0, 0, "a3", $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {

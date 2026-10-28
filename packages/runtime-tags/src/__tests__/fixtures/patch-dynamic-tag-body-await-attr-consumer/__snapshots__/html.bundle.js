@@ -43,12 +43,12 @@ var card_default = _template("b", (input) => {
 				_patch_join_init($scope2_id, "b1", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">>e", _filled_guard($scope0_reason, 1) && "c");
 				$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope2_id, { c: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && x }), $cg__input_content && "b0", $wg__input_p__OR__input_content);
 				$wg__input_p__OR__input_content || $wi__input_p__OR__input_content && _resume_branch($scope2_id);
-			}, 1, "b2", void 0, 1);
+			}, 1, "b2", 0, 1);
 			$cg__input_p && _patch_init($scope1_id, "b5");
 			$wi__input_p__OR__input_content && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_p, void 0, void 0, void 0, ["b4"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_p, 1, 0, 0, ["b4"], $scope0_reason, 1);
 	_filled_guard($scope0_reason, 2) && $cg__input_p ? _patch_fill($scope0_id, "vb6", input.content) : $cg__input_p && _patch_write($scope0_id, "xe", input.content, 1);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.content,

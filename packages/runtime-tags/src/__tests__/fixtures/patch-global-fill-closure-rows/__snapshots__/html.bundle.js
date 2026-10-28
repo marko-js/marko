@@ -69,13 +69,13 @@ var shop_default = _template("a", (input) => {
 						_: _scope_with_id($scope2_id),
 						d: _existing_scope($childScope)
 					}), "a1"), "a2");
-				}, 0, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "a3", 0, 0);
+				}, 0, $scope2_id, "a", 1, 1, 1, 0, 0, "a3", 0, 0);
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $scope0_page, void 0, void 0, void 0, ["a5"]);
+		}, $scope1_id, "a", 1, $scope0_page, 1, 0, 0, ["a5"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, 0, $scope0_id, "d", 1, void 0, void 0, void 0, void 0, "a4", 0, 0);
+	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a4", 0, 0);
 	_fill_global_subscribe("a6", $scope0_id);
 	_script($scope0_id, "a7");
 	_patch_fill($scope0_id, "va10", now, 1);

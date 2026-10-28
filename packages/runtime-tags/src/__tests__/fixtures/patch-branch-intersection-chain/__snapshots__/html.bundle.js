@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, { _: _scope_with_id($scope0_id) });
 			return 2;
 		}
-	}, $scope0_id, "a", 1, $wg__input_kind, void 0, void 0, void 0, [
+	}, $scope0_id, "a", 1, $wg__input_kind, 1, 0, 0, [
 		"a0",
 		"a1",
 		"a2"

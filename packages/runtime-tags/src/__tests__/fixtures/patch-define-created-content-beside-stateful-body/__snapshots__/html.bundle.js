@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 				_write_if($scope4_reason, 0) && _scope($scope5_id, { _: _write_if($scope4_reason, 2) && _scope_with_id($scope4_id) });
 				return 0;
 			}
-		}, $scope4_id, "a", 1, $wg__isOpen, void 0, void 0, void 0, ["a0"], $scope4_reason, 1);
+		}, $scope4_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a0"], $scope4_reason, 1);
 		_write_if($scope4_reason, 1) && _scope($scope4_id, { e: _unfilled_if($scope4_reason, 1) && content }) || (_filled_guard($scope4_reason, 2) && $cg__isOpen && _patch_fill($scope4_id, "va4", content, !_server_guard($scope4_reason, 2)), $cg__isOpen && _content_withhold(content));
 	}, $scope0_id) };
 	_if(() => {
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["a2"], $scope0_reason, 2);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a2"], $scope0_reason, 2);
 	const Tag = input.other ? "div" : Panel;
 	_dynamic_tag($scope0_id, "b", Tag, { isOpen: true }, 16, _content_resume("a8", () => {
 		const $scope3_id = _scope_id();

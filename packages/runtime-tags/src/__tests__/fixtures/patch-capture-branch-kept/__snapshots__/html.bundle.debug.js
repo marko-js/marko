@@ -13,7 +13,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", item.content, {}, 2, 0, 0, $wg__input_item, $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/tags/list.marko", "1:2");
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/tags/list.marko", 0);
 });
 
@@ -64,7 +64,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 							$wi__input_show && _scope($scope3_id, {}, "__tests__/tags/child.marko", "7:15");
 							return 0;
 						}
-					}, $scope2_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/child.marko_3*shell"], $scope0_reason, 1);
+					}, $scope2_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/child.marko_3*shell"], $scope0_reason, 1);
 					_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/child.marko_2_s#1:2/init");
 					_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "7:8"));
 					$wg__input_show || _resume_branch($scope2_id);
@@ -88,7 +88,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			}, "__tests__/tags/child.marko", "3:2", { s: "4:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 0);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill1", items, 1);
 	_scope($scope0_id, {

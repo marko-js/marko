@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "3:2");
-	}, "key", $scope0_id, "#text/3", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
+	}, "key", $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	let local = "given";
 	const localId = local || _id("localId");
 	_html(`<label${_attr("for", localId)}>local</label>${_el_resume($scope0_id, "#label/4")}<input${_attr("id", localId)}>${_el_resume($scope0_id, "#input/5")}<button>toggle</button>${_el_resume($scope0_id, "#button/6")}`);

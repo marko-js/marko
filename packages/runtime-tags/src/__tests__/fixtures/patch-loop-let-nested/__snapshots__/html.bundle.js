@@ -21,10 +21,10 @@ var template_default = _template("a", (input) => {
 				_scope($scope2_id, { c: notes });
 				return 0;
 			}
-		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
+		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a2"], $scope0_reason, 0);
 		_html("</li>");
 		_scope($scope1_id, {});
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a3", $scope0_reason, 0);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a3", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_scope($scope0_id, {});
 }, 1);

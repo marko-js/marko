@@ -51,6 +51,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, ($scope) => $scope0_page ? [{ row_label: row?.label }] : []), 0, $wg__input_rows, $scope0_reason, 0);
 		_filled_guard($scope0_reason, 0) && _content_withheld("__tests__/template.marko_2*content", $scope1_id) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", row?.label);
 		$wi__input_rows && _scope($scope1_id, { "ClosureScopes:row_label/5": $for_content__row_label__closures }, "__tests__/template.marko", "2:2");
-	}, "id", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

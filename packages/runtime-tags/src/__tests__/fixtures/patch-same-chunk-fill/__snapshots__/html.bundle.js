@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<span class=loading>...</span>");
-	}, void 0, "a1", void 0, "a3", 1, void 0, 2);
+	}, void 0, "a1", void 0, "a3", 1, 0, 2);
 	_script($scope0_id, "a6");
 	_scope($scope0_id, {
 		h: count,

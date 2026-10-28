@@ -8,7 +8,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let c = input.content;
 	_html(`<button>clear</button>${_el_resume($scope0_id, "#button/0")}`);
-	_dynamic_tag($scope0_id, "#text/1", c, {}, 2, void 0, void 0, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
+	_dynamic_tag($scope0_id, "#text/1", c, {}, 2, 0, 0, 1, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0) || _content_withhold(input.content);
 });
@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 3), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
+		}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
 		$cg__input_show && _patch_write($scope1_id, "PatchWrite:uid", uid, 1);
 		$cg__input_show && _patch_init($scope1_id, "__tests__/template.marko_1_input_show#0:7/init");
 		_scope($scope1_id, {
@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#LoopKey": ["item.key", "1:6"],
 			uid: "2:7"
 		});
-	}, "key", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 2);
+	}, "key", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 2);
 	const Field = { content: _content_resume("__tests__/template.marko_3*content", ({ show }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
@@ -64,7 +64,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope4_id, {}, "__tests__/template.marko", "9:4");
 				return 0;
 			}
-		}, $scope3_id, "#text/1", 1, _write_guard($scope3_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_4*shell"]);
+		}, $scope3_id, "#text/1", 1, _write_guard($scope3_reason, 0), 1, 0, 0, ["__tests__/template.marko_4*shell"]);
 		_patch_write($scope3_id, "PatchWrite:uid", uid, 1);
 		_scope($scope3_id, { uid: _unfilled_if($scope3_reason, 0) && uid }, "__tests__/template.marko", "6:2", { uid: "7:7" });
 	}, $scope0_id) };
@@ -83,7 +83,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope5_id, 2) });
 		_patch_child_end();
 		_scope($scope5_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "13:2");
-	}, "id", $scope0_id, "#text/3", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_5*shell", $scope0_reason, 5);
+	}, "id", $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 5);
 	_filled_guard($scope0_reason, 4) && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on);
 	_patch_join_init($scope0_id, "__tests__/template.marko_0_input_show#7_input_on#8_Field#10/init", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && "input_show", _filled_guard($scope0_reason, 4) && "input_on");
 	_scope($scope0_id, {

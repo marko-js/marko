@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		_html(`<p>${_text_resume($scope1_id, "a", input.title, 1, $scope0_reason, 0)} ${_text_resume($scope1_id, "b", err.message, 2, 4, 0)}</p>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "a0" : "a1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
-	}, void 0, "a5", "a4", 1, 1, 1);
+	}, 0, "a5", "a4", 1, 1, 1);
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {

@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:4");
 				return 0;
 			}
-		}, $scope2_id, "#text/0", 1, $wg__isOpen__OR__hidden, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 0);
+		}, $scope2_id, "#text/0", 1, $wg__isOpen__OR__hidden, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 0);
 		_client_guard($scope2_reason, 3) && _patch_write($scope2_id, "PatchWrite:isOpen", isOpen, 1);
 		$cg__isOpen__OR__hidden && _patch_init($scope2_id, "__tests__/template.marko_2_isOpen#3_hidden#5/init");
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "7:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	const Tag = input.other ? "div" : Panel;
 	_dynamic_tag($scope0_id, "#text/1", Tag, {
 		isOpen: !open,

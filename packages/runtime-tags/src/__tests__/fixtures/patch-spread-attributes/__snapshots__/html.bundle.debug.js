@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4", { "EventAttributes:#img/0": ["...input.img", "5:24"] });
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
+	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
 	_html(`<button>${_text_resume($scope0_id, "#text/4", count)}</button>${_el_resume($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#7");

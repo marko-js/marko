@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, "__tests__/template.marko", "5:6"), $cg__input_kind && "__tests__/template.marko_2_input_kind#0:5/subscribe");
 				return 1;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_kind, void 0, void 0, void 0, ["__tests__/template.marko_6*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 0);
+		}, $scope1_id, "#text/0", 1, $wg__input_kind, 1, 0, 0, ["__tests__/template.marko_6*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 0);
 		$wi__input_kind && _subscribe(_unfilled_if($scope0_reason, 0) && $input_kind__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), $cg__input_kind && "__tests__/template.marko_1_input_kind#0:5/subscribe", $wg__input_kind);
 		$wg__input_kind || $wi__input_kind && _resume_branch($scope1_id);
 	}, $scope0_id) });

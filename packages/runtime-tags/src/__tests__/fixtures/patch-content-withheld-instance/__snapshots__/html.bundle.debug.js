@@ -34,7 +34,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 			i: "1:6",
 			frag_content: ["frag.content", "2:11"]
 		});
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/frag-host.marko_1*shell", 0, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/frag-host.marko_1*shell", 0, 0);
 	_scope($scope0_id, {
 		input_note: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		"ClosureScopes:input_note/5": _write_if($scope0_reason, 1) && $input_note__closures

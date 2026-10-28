@@ -76,7 +76,7 @@ var template_default = _template("d", (input) => {
 				_scope($scope3_id, { b: _existing_scope($childScope2) });
 				return 1;
 			}
-		}, $scope1_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["d0", "d1"], $scope0_reason, 0);
+		}, $scope1_id, "a", 1, $wg__input_page, 1, 0, 0, ["d0", "d1"], $scope0_reason, 0);
 		$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "d2", $wg__input_page);
 		$wg__input_page || $wi__input_page && _resume_branch($scope1_id);
 	}, $scope0_id) });

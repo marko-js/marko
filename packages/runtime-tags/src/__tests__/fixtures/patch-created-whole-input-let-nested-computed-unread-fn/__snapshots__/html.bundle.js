@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a1"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a1"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 1) && input.label,
 		f: _write_if($scope0_reason, 0) && k

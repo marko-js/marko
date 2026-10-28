@@ -22,7 +22,7 @@ var layout_default = _template("b", (input) => {
 		_html("</li>");
 		_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "b0");
 		_scope($scope1_id, { _: _write_if($scope0_reason, 4) && _scope_with_id($scope0_id) });
-	}, 0, $scope0_id, "d", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 3);
+	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "b1", $scope0_reason, 3);
 	_html(`</ul>${_el_resume($scope0_id, "d")}<ol>`);
 	_for_of(input.rows, (n) => {
 		const $scope2_id = _scope_id();
@@ -31,7 +31,7 @@ var layout_default = _template("b", (input) => {
 		_html("</li>");
 		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "b3");
 		_scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
-	}, 0, $scope0_id, "e", 1, void 0, void 0, void 0, void 0, "b2", $scope0_reason, 3);
+	}, 0, $scope0_id, "e", 1, 1, 1, 0, 0, "b2", $scope0_reason, 3);
 	_html(`</ol>${_el_resume($scope0_id, "e")}</main>`);
 	_scope($scope0_id, {
 		i: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1)) && input.content,

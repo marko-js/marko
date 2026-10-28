@@ -23,13 +23,13 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 4) && $input_b__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_b && _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "3:6"), $cg__input_b && "__tests__/tags/panel.marko_2_input_b#0:5/subscribe");
 					return 0;
 				}
-			}, $scope1_id, "#div/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/panel.marko_2*shell"], $scope0_reason, 3);
+			}, $scope1_id, "#div/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel.marko_2*shell"], $scope0_reason, 3);
 			_html(`</div>${_el_resume($scope1_id, "#div/0", $wg__input_show)}`);
 			$cg__input_show && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_show#0:4/init");
 			$wi__input_show__OR__input_b && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 3);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 3);
 	_html(`<p>${_text_resume($scope0_id, "#text/1", input.a + ":" + input.b, 1, $scope0_reason, 2)}</p>`);
 	$cg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !(_filled_guard($scope0_reason, 5) && $cg__input_b));
 	_patch_join_init($scope0_id, "__tests__/tags/panel.marko_0_input_b#5_input_a#6/init", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && "input_b", _filled_guard($scope0_reason, 5) && "input_a");

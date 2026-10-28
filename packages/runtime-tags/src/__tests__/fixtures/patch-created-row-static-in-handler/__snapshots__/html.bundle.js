@@ -23,11 +23,11 @@ var template_default = _template("a", (input) => {
 					e: v,
 					_: _scope_with_id($scope1_id)
 				});
-			}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a1", 0, 0);
+			}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "a1", 0, 0);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a2"], $scope0_reason, 0);
 	_html(`<p>${_text_resume($scope0_id, "b", count)}</p>`);
 	_scope($scope0_id, { f: count });
 }, 1);

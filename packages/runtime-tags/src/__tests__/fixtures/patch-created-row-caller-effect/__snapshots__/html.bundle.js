@@ -17,7 +17,7 @@ var child_default = _template("b", (input) => {
 			c: item,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b2", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b2", $scope0_reason, 1);
 	_scope($scope0_id, { e: input.count }) || _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.count, !_server_guard($scope0_reason, 2));
 });
 

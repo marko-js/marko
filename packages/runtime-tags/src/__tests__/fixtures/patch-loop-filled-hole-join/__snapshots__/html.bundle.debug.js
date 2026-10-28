@@ -24,7 +24,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 			item_id: item?.id,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/feed-list.marko", "6:4", { item_id: ["item.id", "6:8"] });
-	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/feed-list.marko_1*shell", $scope0_reason, 1);
+	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/tags/feed-list.marko_1*shell", $scope0_reason, 1);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	_filled_guard($scope0_reason, 2) && $cg__input_items ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/feed-list.marko_fill0/unpatched", input.data) : $cg__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_data", input.data, 1);
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/feed-list.marko_fill1", hovered, 1);

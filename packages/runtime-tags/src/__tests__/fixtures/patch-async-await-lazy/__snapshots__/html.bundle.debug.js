@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("loading");
-	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, void 0, 2);
+	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
 	_html("</section><footer>");
 	_await($scope0_id, "#text/2", resolveAfter(input.note, input.slow ? 2 : 0), (note) => {
 		const $scope4_id = _scope_id();

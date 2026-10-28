@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					"ClosureScopes:v/11": _write_if($scope0_reason, 6) && $await_content__v__closures
 				}, "__tests__/template.marko", "7:6", { v: "7:12" }), $cg__input_on && "__tests__/template.marko_2_input_on#0:6/subscribe", $wg__input_on);
 				$wg__input_on || $wi__input_show__OR__input_note__OR__input_v__OR__input_on && _resume_branch($scope2_id);
-			}, 1, "__tests__/template.marko_2*content", void 0, 1);
+			}, 1, "__tests__/template.marko_2*content", 0, 1);
 			_script($scope1_id, "__tests__/template.marko_1_x#2", 1, _filled_guard($scope0_reason, 5), "x");
 			_filled_guard($scope0_reason, 5) ? _patch_write($scope1_id, "PatchMarkedWrite:x", x, !$sg__input_note) : _patch_init($scope1_id, "__tests__/template.marko_1_input_note#0:4/init");
 			$cg__input_v && _patch_init($scope1_id, "__tests__/template.marko_1_input_v#0:5/init");
@@ -79,7 +79,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "3:4", { x: "4:12" });
 			return 0;
 		}
-	}, $scope0_id, "#main/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 4);
+	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 4);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $wg__input_show)}`);
 	_scope($scope0_id, {
 		input_note: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && input.note,

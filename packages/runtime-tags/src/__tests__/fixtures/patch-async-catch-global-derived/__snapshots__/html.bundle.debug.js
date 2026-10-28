@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<p>${_text_resume($scope2_id, "#text/0", tag, $scope2_page)}</p>`);
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:6");
 		$scope2_page || _resume_branch($scope2_id);
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1);
+	}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#5", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");

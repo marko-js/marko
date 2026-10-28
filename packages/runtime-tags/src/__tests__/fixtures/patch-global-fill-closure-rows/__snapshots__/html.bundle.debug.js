@@ -73,13 +73,13 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 						part: "20:10",
 						have: "21:14"
 					}), "__tests__/shop.marko_3_now#0:8/subscribe"), "__tests__/shop.marko_3_drops#0:9/subscribe");
-				}, 0, $scope2_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/shop.marko_3*shell", 0, 0);
+				}, 0, $scope2_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/shop.marko_3*shell", 0, 0);
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/shop.marko", "19:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/shop.marko_2*shell"]);
+		}, $scope1_id, "#text/0", 1, $scope0_page, 1, 0, 0, ["__tests__/shop.marko_2*shell"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/shop.marko", "17:2");
-	}, 0, $scope0_id, "#text/3", 1, void 0, void 0, void 0, void 0, "__tests__/shop.marko_1*shell", 0, 0);
+	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/shop.marko_1*shell", 0, 0);
 	_fill_global_subscribe("__tests__/shop.marko_0_$global_data#6", $scope0_id);
 	_script($scope0_id, "__tests__/shop.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/shop.marko_fill2", now, 1);

@@ -97,7 +97,7 @@ var template_default = _template("e", (input) => {
 							_scope($scope6_id, { b: _existing_scope($childScope2) });
 							return 1;
 						}
-					}, $scope3_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["e0", "e4"], $scope0_reason, 0);
+					}, $scope3_id, "a", 1, $wg__input_page, 1, 0, 0, ["e0", "e4"], $scope0_reason, 0);
 					$cg__input_page && _patch_init($scope3_id, "e5");
 					$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope3_id, {
 						_: _scope_with_id($scope2_id),
@@ -112,7 +112,7 @@ var template_default = _template("e", (input) => {
 				});
 				return 1;
 			}
-		}, $scope1_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["e3", "e2"], $scope0_reason, 0);
+		}, $scope1_id, "a", 1, $wg__input_page, 1, 0, 0, ["e3", "e2"], $scope0_reason, 0);
 		$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_page && "e6", $wg__input_page);
 		$wg__input_page || $wi__input_page && _resume_branch($scope1_id);
 	}, $scope0_id) });

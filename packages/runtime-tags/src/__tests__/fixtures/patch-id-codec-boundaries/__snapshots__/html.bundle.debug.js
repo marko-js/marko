@@ -87,7 +87,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const keyId = _id("keyId");
 		_html(`<label${_attr("for", keyId, $scope1_id, "PatchAttr:#label/0 for", 0, 0)}>key</label>${_el_resume($scope1_id, "#label/0", 0)}<input${_attr("id", keyId, $scope1_id, "PatchAttr:#input/1 id", 0, 0)}>${_el_resume($scope1_id, "#input/1", 0)}`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "1:2");
-	}, (key) => key, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, (key) => key, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
@@ -96,7 +96,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, {}, "__tests__/template.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/1", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope3_id = _scope_id();
@@ -105,7 +105,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope3_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/2", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope4_id = _scope_id();
@@ -114,7 +114,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope4_id, {}, "__tests__/template.marko", "4:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/3", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/3", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope5_id = _scope_id();
@@ -123,7 +123,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope5_id, {}, "__tests__/template.marko", "5:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/4", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_5*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/4", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope6_id = _scope_id();
@@ -132,7 +132,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope6_id, {}, "__tests__/template.marko", "6:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/5", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_6*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/5", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_6*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope7_id = _scope_id();
@@ -141,7 +141,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope7_id, {}, "__tests__/template.marko", "7:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/6", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_7*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/6", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_7*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope8_id = _scope_id();
@@ -150,7 +150,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope8_id, {}, "__tests__/template.marko", "8:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/7", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_8*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/7", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_8*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope9_id = _scope_id();
@@ -159,7 +159,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope9_id, {}, "__tests__/template.marko", "9:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/8", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_9*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/8", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_9*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope10_id = _scope_id();
@@ -168,7 +168,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope10_id, {}, "__tests__/template.marko", "10:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/9", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_10*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/9", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_10*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope11_id = _scope_id();
@@ -177,7 +177,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope11_id, {}, "__tests__/template.marko", "11:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/10", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_11*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/10", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_11*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope12_id = _scope_id();
@@ -186,7 +186,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope12_id, {}, "__tests__/template.marko", "12:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/11", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_12*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/11", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_12*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope13_id = _scope_id();
@@ -195,7 +195,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope13_id, {}, "__tests__/template.marko", "13:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/12", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_13*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/12", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_13*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope14_id = _scope_id();
@@ -204,7 +204,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope14_id, {}, "__tests__/template.marko", "14:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/13", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_14*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/13", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_14*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope15_id = _scope_id();
@@ -213,7 +213,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope15_id, {}, "__tests__/template.marko", "15:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/14", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_15*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/14", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_15*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope16_id = _scope_id();
@@ -222,7 +222,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope16_id, {}, "__tests__/template.marko", "16:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/15", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_16*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/15", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_16*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope17_id = _scope_id();
@@ -231,7 +231,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope17_id, {}, "__tests__/template.marko", "17:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/16", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_17*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/16", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_17*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope18_id = _scope_id();
@@ -240,7 +240,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope18_id, {}, "__tests__/template.marko", "18:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/17", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_18*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/17", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_18*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope19_id = _scope_id();
@@ -249,7 +249,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope19_id, {}, "__tests__/template.marko", "19:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/18", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_19*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/18", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_19*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope20_id = _scope_id();
@@ -258,7 +258,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope20_id, {}, "__tests__/template.marko", "20:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/19", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_20*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/19", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_20*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope21_id = _scope_id();
@@ -267,7 +267,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope21_id, {}, "__tests__/template.marko", "21:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/20", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_21*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/20", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_21*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope22_id = _scope_id();
@@ -276,7 +276,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope22_id, {}, "__tests__/template.marko", "22:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/21", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_22*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/21", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_22*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope23_id = _scope_id();
@@ -285,7 +285,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope23_id, {}, "__tests__/template.marko", "23:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/22", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_23*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/22", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_23*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope24_id = _scope_id();
@@ -294,7 +294,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope24_id, {}, "__tests__/template.marko", "24:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/23", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_24*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/23", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_24*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope25_id = _scope_id();
@@ -303,7 +303,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope25_id, {}, "__tests__/template.marko", "25:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/24", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_25*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/24", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_25*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope26_id = _scope_id();
@@ -312,7 +312,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope26_id, {}, "__tests__/template.marko", "26:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/25", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_26*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/25", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_26*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope27_id = _scope_id();
@@ -321,7 +321,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope27_id, {}, "__tests__/template.marko", "27:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/26", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_27*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/26", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_27*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope28_id = _scope_id();
@@ -330,7 +330,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope28_id, {}, "__tests__/template.marko", "28:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/27", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_28*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/27", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_28*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope29_id = _scope_id();
@@ -339,7 +339,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope29_id, {}, "__tests__/template.marko", "29:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/28", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_29*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/28", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_29*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope30_id = _scope_id();
@@ -348,7 +348,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope30_id, {}, "__tests__/template.marko", "30:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/29", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_30*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/29", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_30*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope31_id = _scope_id();
@@ -357,7 +357,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope31_id, {}, "__tests__/template.marko", "31:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/30", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_31*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/30", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_31*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope32_id = _scope_id();
@@ -366,7 +366,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope32_id, {}, "__tests__/template.marko", "32:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/31", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_32*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/31", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_32*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope33_id = _scope_id();
@@ -375,7 +375,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope33_id, {}, "__tests__/template.marko", "33:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/32", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_33*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/32", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_33*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope34_id = _scope_id();
@@ -384,7 +384,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope34_id, {}, "__tests__/template.marko", "34:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/33", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_34*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/33", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_34*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope35_id = _scope_id();
@@ -393,7 +393,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope35_id, {}, "__tests__/template.marko", "35:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/34", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_35*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/34", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_35*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope36_id = _scope_id();
@@ -402,7 +402,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope36_id, {}, "__tests__/template.marko", "36:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/35", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_36*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/35", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_36*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope37_id = _scope_id();
@@ -411,7 +411,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope37_id, {}, "__tests__/template.marko", "37:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/36", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_37*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/36", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_37*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope38_id = _scope_id();
@@ -420,7 +420,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope38_id, {}, "__tests__/template.marko", "38:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/37", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_38*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/37", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_38*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope39_id = _scope_id();
@@ -429,7 +429,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope39_id, {}, "__tests__/template.marko", "39:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/38", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_39*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/38", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_39*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope40_id = _scope_id();
@@ -438,7 +438,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope40_id, {}, "__tests__/template.marko", "40:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/39", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_40*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/39", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_40*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope41_id = _scope_id();
@@ -447,7 +447,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope41_id, {}, "__tests__/template.marko", "41:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/40", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_41*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/40", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_41*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope42_id = _scope_id();
@@ -456,7 +456,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope42_id, {}, "__tests__/template.marko", "42:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/41", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_42*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/41", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_42*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope43_id = _scope_id();
@@ -465,7 +465,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope43_id, {}, "__tests__/template.marko", "43:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/42", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_43*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/42", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_43*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope44_id = _scope_id();
@@ -474,7 +474,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope44_id, {}, "__tests__/template.marko", "44:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/43", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_44*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/43", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_44*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope45_id = _scope_id();
@@ -483,7 +483,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope45_id, {}, "__tests__/template.marko", "45:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/44", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_45*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/44", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_45*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope46_id = _scope_id();
@@ -492,7 +492,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope46_id, {}, "__tests__/template.marko", "46:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/45", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_46*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/45", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_46*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope47_id = _scope_id();
@@ -501,7 +501,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope47_id, {}, "__tests__/template.marko", "47:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/46", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_47*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/46", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_47*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope48_id = _scope_id();
@@ -510,7 +510,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope48_id, {}, "__tests__/template.marko", "48:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/47", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_48*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/47", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_48*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope49_id = _scope_id();
@@ -519,7 +519,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope49_id, {}, "__tests__/template.marko", "49:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/48", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_49*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/48", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_49*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope50_id = _scope_id();
@@ -528,7 +528,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope50_id, {}, "__tests__/template.marko", "50:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/49", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_50*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/49", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_50*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope51_id = _scope_id();
@@ -537,7 +537,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope51_id, {}, "__tests__/template.marko", "51:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/50", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_51*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/50", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_51*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope52_id = _scope_id();
@@ -546,7 +546,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope52_id, {}, "__tests__/template.marko", "52:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/51", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_52*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/51", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_52*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope53_id = _scope_id();
@@ -555,7 +555,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope53_id, {}, "__tests__/template.marko", "53:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/52", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_53*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/52", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_53*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope54_id = _scope_id();
@@ -564,7 +564,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope54_id, {}, "__tests__/template.marko", "54:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/53", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_54*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/53", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_54*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope55_id = _scope_id();
@@ -573,7 +573,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope55_id, {}, "__tests__/template.marko", "55:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/54", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_55*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/54", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_55*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope56_id = _scope_id();
@@ -582,7 +582,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope56_id, {}, "__tests__/template.marko", "56:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/55", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_56*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/55", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_56*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope57_id = _scope_id();
@@ -591,7 +591,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope57_id, {}, "__tests__/template.marko", "57:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/56", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_57*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/56", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_57*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope58_id = _scope_id();
@@ -600,7 +600,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope58_id, {}, "__tests__/template.marko", "58:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/57", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_58*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/57", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_58*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope59_id = _scope_id();
@@ -609,7 +609,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope59_id, {}, "__tests__/template.marko", "59:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/58", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_59*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/58", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_59*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope60_id = _scope_id();
@@ -618,7 +618,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope60_id, {}, "__tests__/template.marko", "60:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/59", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_60*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/59", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_60*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.show) {
 			const $scope61_id = _scope_id();
@@ -627,7 +627,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope61_id, {}, "__tests__/template.marko", "61:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/60", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_61*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/60", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_61*shell"], $scope0_reason, 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/61", 0);
 	field_default({});
 	_patch_child_end();

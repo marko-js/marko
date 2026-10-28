@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $show = input.which ? input.id : "";
 	_show_start($show, 1, $wg__input_which__OR__input_id, "</div>");
 	_html("shown");
-	_show_end($scope0_id, "#div/0", $show, 1, $wg__input_which__OR__input_id, "</div>", void 0, "#div/0", void 0, void 0, $scope0_reason, 0);
+	_show_end($scope0_id, "#div/0", $show, 1, $wg__input_which__OR__input_id, "</div>", 0, "#div/0", void 0, void 0, $scope0_reason, 0);
 	_try($scope0_id, "#text/1", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();

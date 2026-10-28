@@ -26,7 +26,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", input.fallback, {}, 0, 0, 0, $wg__input_fallback);
 		_subscribe($wi__input_fallback && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/wrapper.marko", "6:4"), "__tests__/tags/wrapper.marko_1_input_fallback#0:3/subscribe", $wg__input_fallback);
 		$wg__input_fallback || _resume_branch($scope1_id);
-	}, void 0, "__tests__/tags/wrapper.marko_1*content", "__tests__/tags/wrapper.marko_2*content", 1);
+	}, 0, "__tests__/tags/wrapper.marko_1*content", "__tests__/tags/wrapper.marko_2*content", 1);
 	_scope($scope0_id, {
 		input_fallback: input.fallback,
 		"ClosureScopes:input_fallback/5": $wi__input_fallback && $input_fallback__closures,

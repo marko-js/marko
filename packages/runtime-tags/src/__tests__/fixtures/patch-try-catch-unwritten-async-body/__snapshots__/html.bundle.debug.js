@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<s>caught</s>");
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", void 0, void 0, 1);
+	}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 0, 0, 1);
 	_html("</main>");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

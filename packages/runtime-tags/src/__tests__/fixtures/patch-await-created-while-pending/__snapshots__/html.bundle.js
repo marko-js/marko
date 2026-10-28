@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_msg__closures, _scope($scope4_id, {}), $cg__input_items && "a1");
 			}, 1, "a2");
 			$wi__input_items && _scope($scope3_id, { i: _unfilled_if($scope0_reason, 0) && $for_content__item_msg__closures });
-		}, "id", $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a6", $scope0_reason, 0);
+		}, "id", $scope1_id, "a", 1, 1, 1, 0, 0, "a6", $scope0_reason, 0);
 		_html(`</section>${_el_resume($scope1_id, "a")}`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_items ? "a7" : "a8");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_items__closures, _scope($scope1_id, { _: $wi__input_items && _scope_with_id($scope0_id) }), $cg__input_items && "a8");
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "a3", void 0, "a4", 1, void 0, 2);
+	}, void 0, "a3", void 0, "a4", 1, 0, 2);
 	_script($scope0_id, "a9");
 	_scope($scope0_id, {
 		g: count,

@@ -38,14 +38,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope5_reason = _scope_reason();
 			const $scope5_id = _scope_id();
 			_html("<p>oops</p>");
-		}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", 1, void 0, 1);
+		}, 0, "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", 1, 0, 1);
 		_html("</section>");
 		$wi__input_promise__OR__input_msg && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 	}, () => {
 		const $scope4_reason = _scope_reason();
 		const $scope4_id = _scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_1*content", 1, void 0, 2);
+	}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,

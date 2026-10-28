@@ -8,7 +8,7 @@ var keep_default = _template("__tests__/tags/keep.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let c = input.content;
 	_html(`<button class=reset>reset</button>${_el_resume($scope0_id, "#button/0")}<div>`);
-	_dynamic_tag($scope0_id, "#text/1", c, {}, 2, void 0, void 0, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
+	_dynamic_tag($scope0_id, "#text/1", c, {}, 2, 0, 0, 1, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
 	_html("</div>");
 	_script($scope0_id, "__tests__/tags/keep.marko_0");
 	_scope($scope0_id, { input_content: input.content }, "__tests__/tags/keep.marko", 0, { input_content: ["input.content"] }) || (_content_withhold(input.content), _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_content", input.content, !_server_guard($scope0_reason, 0)));
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:b/6": _write_if($scope0_reason, 0) && $for_content__b__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "1:2", { b: "1:6" });
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_note: input.note,
 		"ClosureScopes:input_note/5": _write_if($scope0_reason, 1) && $input_note__closures

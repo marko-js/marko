@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a5"], $scope0_reason, 1);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a5"], $scope0_reason, 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		f: _unfilled_if($scope0_reason, 0) && input.start,

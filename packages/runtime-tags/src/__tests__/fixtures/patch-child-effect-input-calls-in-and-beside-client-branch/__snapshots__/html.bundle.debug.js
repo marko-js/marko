@@ -35,7 +35,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 				_scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) }, "__tests__/tags/card.marko", "3:4");
 				return 0;
 			}
-		}, $scope3_id, "#text/0", 1, $wg__isOpen, void 0, void 0, void 0, ["__tests__/tags/card.marko_4*shell"], $scope3_reason, 4);
+		}, $scope3_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/tags/card.marko_4*shell"], $scope3_reason, 4);
 		_filled_guard($scope3_reason, 5) && $cg__isOpen ? _patch_fill($scope3_id, "PatchFill:__tests__/tags/card.marko_fill4/unpatched", fmt) : _client_guard($scope3_reason, 1) && _patch_write($scope3_id, "PatchMarkedWrite:fmt", fmt, !(_filled_guard($scope3_reason, 5) && _client_guard($scope3_reason, 6)));
 		_filled_guard($scope3_reason, 6) && $cg__isOpen ? _patch_fill($scope3_id, "PatchFill:__tests__/tags/card.marko_fill5/unpatched", label) : _client_guard($scope3_reason, 0) && _patch_write($scope3_id, "PatchMarkedWrite:label", label, !(_filled_guard($scope3_reason, 6) && _client_guard($scope3_reason, 5)));
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
@@ -74,7 +74,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			}, "__tests__/tags/card.marko", "8:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 6), void 0, void 0, void 0, ["__tests__/tags/card.marko_1*shell"], $scope0_reason, 6);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 6), 1, 0, 0, ["__tests__/tags/card.marko_1*shell"], $scope0_reason, 6);
 	_if(() => {
 		if (open) {
 			const $scope2_id = _scope_id();

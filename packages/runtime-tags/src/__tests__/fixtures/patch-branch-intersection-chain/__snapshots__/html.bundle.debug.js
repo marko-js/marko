@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope3_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "10:6");
 			return 2;
 		}
-	}, $scope0_id, "#div/0", 1, $wg__input_kind, void 0, void 0, void 0, [
+	}, $scope0_id, "#div/0", 1, $wg__input_kind, 1, 0, 0, [
 		"__tests__/template.marko_1*shell",
 		"__tests__/template.marko_2*shell",
 		"__tests__/template.marko_3*shell"

@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		}), "a1"), "a2");
-	}, void 0, "a5", "a6", 1, 1, 1);
+	}, 0, "a5", "a6", 1, 1, 1);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {
 		f: input.label,

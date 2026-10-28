@@ -22,13 +22,13 @@ const $content = (input) => {
 				$content({ node: child });
 				_patch_child_end();
 				_scope($scope2_id, { a: _existing_scope($childScope) });
-			}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "b0", $scope0_reason, 1);
+			}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "b0", $scope0_reason, 1);
 			_html(`</ul>${_el_resume($scope1_id, "a")}`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b2");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["b1"], $scope0_reason, 1);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["b1"], $scope0_reason, 1);
 	_html("</li>");
 	_scope($scope0_id, {});
 };
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.tree }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", input.tree, !_server_guard($scope0_reason, 1));
 }, 1);

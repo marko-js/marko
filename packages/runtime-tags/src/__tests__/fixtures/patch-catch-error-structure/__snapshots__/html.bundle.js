@@ -37,15 +37,15 @@ var template_default = _template("a", (input) => {
 				_write_if($scope2_reason, 0) && _scope($scope4_id, {});
 				return 1;
 			}
-		}, $scope2_id, "a", 1, _write_guard($scope2_reason, 0), void 0, void 0, void 0, ["a0", "a3"]);
+		}, $scope2_id, "a", 1, _write_guard($scope2_reason, 0), 1, 0, 0, ["a0", "a3"]);
 		_for_of(err.items, (item) => {
 			const $scope5_id = _scope_id();
 			_html(`<span>${_text_resume($scope5_id, "a", item, 1, 4, 0)}</span>`);
 			_scope($scope5_id, {});
-		}, 0, $scope2_id, "b", 1, void 0, void 0, void 0, void 0, "a4");
+		}, 0, $scope2_id, "b", 1, 1, 1, 0, 0, "a4");
 		_script($scope2_id, "a5");
 		_scope($scope2_id, { f: _unfilled_if($scope2_reason, 0) && err?.message });
-	}, void 0, "a1", "a2", 1, 1, 1);
+	}, 0, "a1", "a2", 1, 1, 1);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {

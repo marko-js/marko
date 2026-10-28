@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		_html(`<b>${_text_resume($scope1_id, "a", err.message, 1, 4, 0)} ${_text_resume($scope1_id, "b", input.label, 2, $scope0_reason, 0)}</b>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "a0" : "a1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
-	}, void 0, "a4", "a5", 1, 1, 1);
+	}, 0, "a4", "a5", 1, 1, 1);
 	_scope($scope0_id, {
 		d: input.label,
 		f: _write_if($scope0_reason, 0) && $input_label__closures,

@@ -26,7 +26,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 			item_content: item?.content,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/list.marko", "3:2", { item_content: ["item.content", "3:6"] });
-	}, 0, $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
 	_script($scope0_id, "__tests__/tags/list.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/list.marko_fill0", open, 1);
 	_scope($scope0_id, { open }, "__tests__/tags/list.marko", 0, { open: "1:6" });

@@ -12,7 +12,7 @@ var list_default = _template("c", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", item.content, {}, 2, 0, 0, $wg__input_item, $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c0", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "c0", $scope0_reason, 0);
 	_scope($scope0_id, {});
 });
 
@@ -62,7 +62,7 @@ var child_default = _template("b", (input) => {
 							$wi__input_show && _scope($scope3_id, {});
 							return 0;
 						}
-					}, $scope2_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b3"], $scope0_reason, 1);
+					}, $scope2_id, "a", 1, $wg__input_show, 1, 0, 0, ["b3"], $scope0_reason, 1);
 					_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "b6");
 					_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					$wg__input_show || _resume_branch($scope2_id);
@@ -86,7 +86,7 @@ var child_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b5"], $scope0_reason, 0);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b5"], $scope0_reason, 0);
 	_script($scope0_id, "b7");
 	_patch_fill($scope0_id, "vb9", items, 1);
 	_scope($scope0_id, {

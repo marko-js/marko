@@ -38,10 +38,10 @@ var detail_view_default = _template("__tests__/tags/detail-view.marko", (input) 
 				}, "__tests__/tags/detail-view.marko", "8:6"), "__tests__/tags/detail-view.marko_2_input_detail#0:3/subscribe");
 				return 0;
 			}
-		}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/tags/detail-view.marko_2*shell"], $scope0_reason, 0);
+		}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/detail-view.marko_2*shell"], $scope0_reason, 0);
 		$cg__input_detail && _patch_init($scope1_id, "__tests__/tags/detail-view.marko_1_input_detail#0:3/init");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/detail-view.marko", "6:4"), "__tests__/tags/detail-view.marko_1_input_detail#0:3/subscribe");
-	}, void 0, "__tests__/tags/detail-view.marko_1*content", "__tests__/tags/detail-view.marko_3*content", 1, 1, 1);
+	}, 0, "__tests__/tags/detail-view.marko_1*content", "__tests__/tags/detail-view.marko_3*content", 1, 1, 1);
 	_scope($scope0_id, {
 		input_detail: input.detail,
 		"ClosureScopes:input_detail/5": $wi__input_detail && $input_detail__closures,

@@ -46,7 +46,7 @@ const $content = (input) => {
 			}, "__tests__/tags/tree.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_depth, void 0, void 0, void 0, ["__tests__/tags/tree.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, $wg__input_depth, 1, 0, 0, ["__tests__/tags/tree.marko_1*shell"], $scope0_reason, 1);
 	_scope($scope0_id, { input_fn: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.fn }, "__tests__/tags/tree.marko", 0, { input_fn: ["input.fn"] }) || _filled_guard($scope0_reason, 2) && $cg__input_depth && _patch_fill($scope0_id, "PatchFill:__tests__/tags/tree.marko_fill0", input.fn, !_server_guard($scope0_reason, 2));
 };
 var tree_default = _template("__tests__/tags/tree.marko", $content);
@@ -81,6 +81,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_scope($scope0_id, { input_label: _write_if($scope0_reason, 0) && input.label }, "__tests__/template.marko", 0, { input_label: ["input.label"] }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

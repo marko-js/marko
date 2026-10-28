@@ -25,7 +25,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "3:6"), $cg__input_b && "__tests__/tags/panel.marko_2_input_b#0:4/subscribe");
 					return 0;
 				}
-			}, $scope1_id, "#div/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/panel.marko_2*shell"], $scope0_reason, 4);
+			}, $scope1_id, "#div/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel.marko_2*shell"], $scope0_reason, 4);
 			_html(`</div>${_el_resume($scope1_id, "#div/0", $wg__input_show)}<span>`);
 			_if(() => {
 				if (input.show) {
@@ -40,13 +40,13 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 					}, "__tests__/tags/panel.marko", "8:6"), $cg__input_b && "__tests__/tags/panel.marko_3_input_b#0:4/subscribe"), $cg__input_a && "__tests__/tags/panel.marko_3_input_a#0:5/subscribe");
 					return 0;
 				}
-			}, $scope1_id, "#span/1", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/panel.marko_3*shell"], $scope0_reason, 4);
+			}, $scope1_id, "#span/1", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel.marko_3*shell"], $scope0_reason, 4);
 			_html(`</span>${_el_resume($scope1_id, "#span/1", $wg__input_show)}`);
 			$cg__input_show && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_show#0:3/init");
 			$wi__input_show__OR__input_b__OR__input_a && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 4);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 4);
 	_filled_guard($scope0_reason, 6) && $cg__input_show ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill1/unpatched", input.a) : _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !(_filled_guard($scope0_reason, 6) && $cg__input_b));
 	_scope($scope0_id, {
 		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 5)) && input.b,

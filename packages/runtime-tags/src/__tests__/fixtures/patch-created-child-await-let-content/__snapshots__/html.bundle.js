@@ -14,7 +14,7 @@ var card_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		let c = input.content;
 		_html(`<button>clear</button>${_el_resume($scope1_id, "a")}`);
-		_dynamic_tag($scope1_id, "b", c, {}, 2, void 0, void 0, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
+		_dynamic_tag($scope1_id, "b", c, {}, 2, 0, 0, 1, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
 		_script($scope1_id, "b0");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_content ? "b1" : "b2");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, {}), $cg__input_content && "b2");
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a2"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
 		f: _write_if($scope0_reason, 2) && $input_label__closures

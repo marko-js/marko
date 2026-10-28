@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_msg__closures, _scope($scope4_id, {}, "__tests__/template.marko", "6:8"), $cg__input_items && "__tests__/template.marko_4_item_msg#3:4/subscribe");
 			}, 1, "__tests__/template.marko_4*content");
 			$wi__input_items && _scope($scope3_id, { "ClosureScopes:item_msg/8": _unfilled_if($scope0_reason, 0) && $for_content__item_msg__closures }, "__tests__/template.marko", "5:6");
-		}, "id", $scope1_id, "#section/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 0);
+		}, "id", $scope1_id, "#section/0", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 0);
 		_html(`</section>${_el_resume($scope1_id, "#section/0")}`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_items ? "__tests__/template.marko_1_input_items#0:5/init" : "__tests__/template.marko_1_input_items#0:5/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_items__closures, _scope($scope1_id, { _: $wi__input_items && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), $cg__input_items && "__tests__/template.marko_1_input_items#0:5/subscribe");
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, void 0, 2);
+	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,

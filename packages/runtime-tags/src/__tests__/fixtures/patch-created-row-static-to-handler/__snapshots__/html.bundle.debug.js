@@ -22,11 +22,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					"#LoopKey": n,
 					_: _scope_with_id($scope1_id)
 				}, "__tests__/template.marko", "3:4", { "#LoopKey": "3:8" });
-			}, 0, $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", 0, 0);
+			}, 0, $scope1_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", 0, 0);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`<p>${_text_resume($scope0_id, "#text/1", count)}</p>`);
 	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

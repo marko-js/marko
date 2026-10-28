@@ -36,7 +36,7 @@ var list_default = _template("c", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c2", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "c2", $scope0_reason, 1);
 	_filled_guard($scope0_reason, 2) && $cg__input_items ? _patch_fill($scope0_id, "vc3", input.suffix) : $cg__input_items && _patch_write($scope0_id, "xe", input.suffix, 1);
 	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.suffix });
 });

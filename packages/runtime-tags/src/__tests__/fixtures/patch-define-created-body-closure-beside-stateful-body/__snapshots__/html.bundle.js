@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope3_id, { _: $wi__input_label && _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__isOpen, void 0, void 0, void 0, ["a1"], $scope1_reason, 0);
+		}, $scope1_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope1_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {
 			e: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 1)) && label,
 			_: _scope_with_id($scope0_id)
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["a2"], $scope0_reason, 2);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a2"], $scope0_reason, 2);
 	const Tag = input.other ? "div" : Panel;
 	_dynamic_tag($scope0_id, "b", Tag, { isOpen: true }, 8);
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "c")}`);

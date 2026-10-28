@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<li>${_text_resume($scope2_id, "a", item.label, 1, $scope0_reason, 0)}</li>`);
 		_scope($scope2_id, {});
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_if(() => {
 		if (input.promo) {
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a1"], $scope0_reason, 1);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a1"], $scope0_reason, 1);
 	_html(`<p>${_text_resume($scope0_id, "c", input.note, 1, $scope0_reason, 2)}</p><button>Count ${_text_resume($scope0_id, "e", count, 2)}</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, { k: count });

@@ -25,13 +25,13 @@ var panel_default = _template("b", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 6) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_a__OR__input_b && _scope_with_id($scope1_id) }), $cg__input_a && "b0"), $cg__input_b && "b1");
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b3"], $scope0_reason, 4);
+			}, $scope1_id, "a", 1, $wg__input_show, 1, 0, 0, ["b3"], $scope0_reason, 4);
 			_html(`</div>${_el_resume($scope1_id, "a", $wg__input_show)}`);
 			$cg__input_show && _patch_init($scope1_id, "b5");
 			$wi__input_show__OR__input_a__OR__input_b && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b4"], $scope0_reason, 4);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b4"], $scope0_reason, 4);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.a,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.b,

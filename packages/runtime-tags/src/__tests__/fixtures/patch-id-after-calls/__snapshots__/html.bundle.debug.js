@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	const afterChild = _id("afterChild");
 	_html(`<input${_attr("id", afterChild, $scope0_id, "PatchAttr:#input/1 id", 0, 0)}>${_el_resume($scope0_id, "#input/1", 0)}<label${_attr("for", afterChild, $scope0_id, "PatchAttr:#label/2 for", 0, 0)}>after child</label>${_el_resume($scope0_id, "#label/2", 0)}`);
 	_dynamic_tag($scope0_id, "#text/3", input.show ? field_default : null, { name: "dynamic" }, 9, 0, 0, $wg__input_show, $scope0_reason, 0);

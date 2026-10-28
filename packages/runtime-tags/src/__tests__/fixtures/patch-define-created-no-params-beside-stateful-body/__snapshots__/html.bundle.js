@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope2_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_dynamic_tag($scope0_id, "b", "div", {}, 8);
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a2");

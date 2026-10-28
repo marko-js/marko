@@ -22,13 +22,13 @@ const $content = (input) => {
 				$content({ node: child });
 				_patch_child_end();
 				_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/tree.marko", "5:8");
-			}, 0, $scope1_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/tree.marko_2*shell", $scope0_reason, 1);
+			}, 0, $scope1_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/tags/tree.marko_2*shell", $scope0_reason, 1);
 			_html(`</ul>${_el_resume($scope1_id, "#ul/0")}`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/tree.marko_1_input_node_children#0:6/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/tree.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/tags/tree.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/tags/tree.marko_1*shell"], $scope0_reason, 1);
 	_html("</li>");
 	_scope($scope0_id, {}, "__tests__/tags/tree.marko", 0);
 };
@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#main/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $wg__input_show)}`);
 	_scope($scope0_id, { input_tree: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.tree }, "__tests__/template.marko", 0, { input_tree: ["input.tree"] }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.tree, !_server_guard($scope0_reason, 1));
 }, 1);

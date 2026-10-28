@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("<span>inner</span>");
-		}, void 0, "a1", "a4", 1, void 0, 1);
+		}, 0, "a1", "a4", 1, 0, 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input ? "a8" : "a9");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input__closures, _scope($scope1_id, { _: $wi__input && _scope_with_id($scope0_id) }), $cg__input && "a9");
 	}, void 0, (err) => {
@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<span>${_text_resume($scope3_id, "a", err.message, 1, 4, 0)}</span>`);
 		_scope($scope3_id, {});
-	}, void 0, "a2", "a5", 1, 1, 1);
+	}, 0, "a2", "a5", 1, 1, 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		f: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures,

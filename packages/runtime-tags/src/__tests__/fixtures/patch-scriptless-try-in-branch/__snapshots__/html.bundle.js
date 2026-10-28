@@ -31,11 +31,11 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_text_resume($scope3_id, "a", err.message, 1, 4, 0)}</p>`);
 				_scope($scope3_id, {});
-			}, void 0, "a1", "a3", void 0, 1, 1);
+			}, 0, "a1", "a3", 0, 1, 1);
 			$wi__input_show__OR__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a4"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a4"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.promise,

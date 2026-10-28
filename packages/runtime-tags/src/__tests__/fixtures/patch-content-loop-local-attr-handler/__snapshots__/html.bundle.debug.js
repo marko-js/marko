@@ -15,7 +15,7 @@ var menu_default = _template("__tests__/tags/menu.marko", (input) => {
 		_html(`<button${_attr_class("b" + it.id, $scope1_id, "PatchAttr:#button/0 class", $scope0_reason, 0)}>${_text_resume($scope1_id, "#text/1", it.label, 1, $scope0_reason, 0)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/menu.marko_1_it_onPick#5", 1, _filled_guard($scope0_reason, 0), "it_onPick");
 		_scope($scope1_id, { it_onPick: it?.onPick }, "__tests__/tags/menu.marko", "1:2", { it_onPick: ["it.onPick", "1:6"] });
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/menu.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/menu.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/tags/menu.marko", 0);
 });
 

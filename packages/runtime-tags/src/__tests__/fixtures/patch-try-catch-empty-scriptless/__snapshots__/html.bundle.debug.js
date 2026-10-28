@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "__tests__/template.marko_1_input_promise#0:3/init" : "__tests__/template.marko_1_input_promise#0:3/subscribe");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), $cg__input_promise && "__tests__/template.marko_1_input_promise#0:3/subscribe", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
-	}, void 0, () => {}, void 0, "__tests__/template.marko_0_#text#0/catch", "__tests__/template.marko_1*content", 1);
+	}, void 0, () => {}, 0, "__tests__/template.marko_0_#text#0/catch", "__tests__/template.marko_1*content", 1);
 	_html("</main>");
 	_scope($scope0_id, { "ClosureScopes:input_promise/4": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/template.marko", 0);
 }, 1);

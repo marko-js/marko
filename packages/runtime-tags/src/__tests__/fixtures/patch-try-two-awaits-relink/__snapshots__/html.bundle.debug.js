@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 3) && $input_fast__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:8"), $cg__input_fast && "__tests__/template.marko_2_input_fast#0:5/subscribe", 0);
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
+		}, $scope1_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
 		_await($scope1_id, "#text/1", input.slow, (b) => {
 			const $scope5_id = _scope_id();
 			_html(`<em>${_text_resume($scope5_id, "#text/0", b, 1, $scope0_reason, 4)}</em>`);
@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1, void 0, 2);
+	}, void 0, "__tests__/template.marko_3*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
 	_html(`<button>x</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

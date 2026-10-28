@@ -23,10 +23,10 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("caught");
-			}, void 0, "a2", "a3", void 0, void 0, 1);
+			}, 0, "a2", "a3", 0, 0, 1);
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a4"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a4"], $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);

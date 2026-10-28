@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					}, "__tests__/template.marko", "1:29");
 					return 0;
 				}
-			}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
+			}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 1);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_nested#0:7/init");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
@@ -83,7 +83,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope3_id, { "#childScope/0": _existing_scope($childScope8) }, "__tests__/template.marko", "3:2");
 			return 2;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, [
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, [
 		"__tests__/template.marko_1*shell",
 		"__tests__/template.marko_2*shell",
 		"__tests__/template.marko_3*shell"
@@ -103,7 +103,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope5_id, { "#childScope/0": _existing_scope($childScope11) }, "__tests__/template.marko", "5:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/3", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_5*shell"], $scope0_reason, 2);
+	}, $scope0_id, "#text/3", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_nested: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.nested,
 		"#childScope/1": _existing_scope($childScope9),

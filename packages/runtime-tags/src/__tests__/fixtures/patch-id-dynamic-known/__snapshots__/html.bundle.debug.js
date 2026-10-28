@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", item.on ? labeled_default : plain_default, { name: item.key }, 1, 0, 0, $wg__input_items, $scope0_reason, 0);
 		$cg__input_items && _patch_init($scope1_id, "__tests__/template.marko_1_item_on#3_item_key#4/init");
 		$wi__input_items && _scope($scope1_id, {}, "__tests__/template.marko", "3:2");
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		const $for_content2__item_key__closures = new Set();
@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_key__closures, _scope($scope3_id, { _: $wi__input_items && _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:6"));
 		}, $scope2_id, 1), 0, $wg__input_items, $scope0_reason, 0);
 		$wi__input_items && _scope($scope2_id, { "ClosureScopes:item_key/5": $for_content2__item_key__closures }, "__tests__/template.marko", "4:2");
-	}, 0, $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
 	_for_of(input.items, (item) => {
 		const $scope4_id = _scope_id();
 		const $for_content3__item_key__closures = new Set();
@@ -70,6 +70,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope4_id, 1), 0, $wg__input_items, $scope0_reason, 0);
 		$cg__input_items && _patch_init($scope4_id, "__tests__/template.marko_4_item_on#3_item_key#4/init");
 		$wi__input_items && _scope($scope4_id, { "ClosureScopes:item_key/6": $for_content3__item_key__closures }, "__tests__/template.marko", "7:2");
-	}, 0, $scope0_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_4*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_4*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

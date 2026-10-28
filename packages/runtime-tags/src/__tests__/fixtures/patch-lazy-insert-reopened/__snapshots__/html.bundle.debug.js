@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "4:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();

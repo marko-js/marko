@@ -34,7 +34,7 @@ var child_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b5"], $scope0_reason, 4);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b5"], $scope0_reason, 4);
 	_filled_guard($scope0_reason, 5) && (_content_withheld("b0", $scope0_id) || $cg__input_mode) ? _patch_fill($scope0_id, "vb7", input.a) : _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.a, !(_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 6)));
 	_filled_guard($scope0_reason, 6) && (_content_withheld("b0", $scope0_id) || $cg__input_mode) ? _patch_fill($scope0_id, "vb8", input.b) : _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.b, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 5)));
 	_scope($scope0_id, {

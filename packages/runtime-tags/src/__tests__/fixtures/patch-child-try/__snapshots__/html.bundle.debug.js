@@ -18,7 +18,7 @@ var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<em>bad</em>");
-	}, void 0, "__tests__/tags/widget/index.marko_2*content", "__tests__/tags/widget/index.marko_1*content", void 0, void 0, 1);
+	}, 0, "__tests__/tags/widget/index.marko_2*content", "__tests__/tags/widget/index.marko_1*content", 0, 0, 1);
 });
 
 // template.marko

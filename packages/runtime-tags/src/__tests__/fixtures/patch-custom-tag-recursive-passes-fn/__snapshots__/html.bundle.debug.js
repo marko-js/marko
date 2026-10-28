@@ -27,7 +27,7 @@ const $content = (input) => {
 			}, "__tests__/tags/tree.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/tags/tree.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/tags/tree.marko_1*shell"], $scope0_reason, 1);
 	_html(`<span>${_text_resume($scope0_id, "#text/1", input.depth, 1, $scope0_reason, 1)}</span>`);
 	_scope($scope0_id, { input_get: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.get }, "__tests__/tags/tree.marko", 0, { input_get: ["input.get"] }) || _filled_guard($scope0_reason, 2) && $cg__input_depth && _patch_fill($scope0_id, "PatchFill:__tests__/tags/tree.marko_fill0", input.get, !_server_guard($scope0_reason, 2));
 };

@@ -15,7 +15,7 @@ var inner_default = _template("c", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_open, void 0, void 0, void 0, ["c0"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_open, 1, 0, 0, ["c0"], $scope0_reason, 0);
 	_scope($scope0_id, {});
 });
 

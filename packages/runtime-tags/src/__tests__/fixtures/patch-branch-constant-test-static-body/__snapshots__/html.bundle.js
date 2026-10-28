@@ -19,9 +19,9 @@ var page_default = _template("a", (input) => {
 				_html("<p>last</p>");
 				return 0;
 			}
-		}, $scope1_id, "b", 1, 0, void 0, void 0, void 0, ["a0"], 0, 0);
+		}, $scope1_id, "b", 1, 0, 1, 0, 0, ["a0"], 0, 0);
 		_scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", 0, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a1", 0, 0);
 	_scope($scope0_id, {});
 });
 
@@ -42,6 +42,6 @@ var template_default = _template("b", (input) => {
 			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b0"], $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);

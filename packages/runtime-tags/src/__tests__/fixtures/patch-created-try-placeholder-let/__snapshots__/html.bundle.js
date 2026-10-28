@@ -24,11 +24,11 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("loading");
-			}, void 0, "a2", void 0, "a3", void 0, void 0, 2);
+			}, void 0, "a2", void 0, "a3", 0, 0, 2);
 			_write_if($scope0_reason, 1) && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a4"], $scope0_reason, 1);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a4"], $scope0_reason, 1);
 	_html("</main>");
 	_scope($scope0_id, {});
 }, 1);

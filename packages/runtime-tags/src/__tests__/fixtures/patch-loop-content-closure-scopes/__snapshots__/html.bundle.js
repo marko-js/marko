@@ -41,6 +41,6 @@ var template_default = _template("a", (input) => {
 			f: $wi__input_panels && _unfilled_if($scope0_reason, 0) && $for_content__p_text__closures,
 			a: _existing_scope($childScope)
 		});
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a2", $scope0_reason, 0);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);

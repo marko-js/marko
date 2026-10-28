@@ -56,11 +56,11 @@ var template_default = _template("a", (input) => {
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_rows ? "a7" : "a8");
 			$wi__input_rows && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_card__closures, _scope($scope2_id, { i: $await_content__v__closures }), $cg__input_rows && "a8", $wg__input_rows);
 			$wg__input_rows || $wi__input_rows && _resume_branch($scope2_id);
-		}, 1, "a9", void 0, 1);
+		}, 1, "a9", 0, 1);
 		$wi__input_rows && _scope($scope1_id, {
 			h: $for_content__row_label__closures,
 			g: _unfilled_if($scope0_reason, 0) && $for_content__row_card__closures
 		});
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a11", $scope0_reason, 0);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a11", $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);

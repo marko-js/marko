@@ -25,7 +25,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 					_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "4:4");
 					return 0;
 				}
-			}, $scope1_id, "#text/0", 1, $wg__input_y, void 0, void 0, void 0, ["__tests__/tags/panel.marko_2*shell"], $scope0_reason, 2);
+			}, $scope1_id, "#text/0", 1, $wg__input_y, 1, 0, 0, ["__tests__/tags/panel.marko_2*shell"], $scope0_reason, 2);
 			_filled_guard($scope0_reason, 1) && ($cg__input_x || $cg__input_y) && _patch_init_entry($scope1_id, "__tests__/tags/panel.marko_2_v#1:1/init", "v");
 			$cg__input_a && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:5/init");
 			$cg__input_y && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_y#0:6/init");
@@ -35,7 +35,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			}, "__tests__/tags/panel.marko", "2:2", { v: "3:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 0);
 	_html(`<output>${_text_resume($scope0_id, "#text/1", out, 1, 0, 0, 1)}</output>`);
 	_scope($scope0_id, {
 		input_a: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.a,

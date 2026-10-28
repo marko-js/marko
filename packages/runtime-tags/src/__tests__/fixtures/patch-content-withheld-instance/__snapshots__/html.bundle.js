@@ -30,7 +30,7 @@ var frag_host_default = _template("b", (input) => {
 			e: _unfilled_if($scope0_reason, 2) && frag?.content,
 			_: $wi__input_note__OR__input_mode && _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b4", 0, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b4", 0, 0);
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		f: _write_if($scope0_reason, 1) && $input_note__closures

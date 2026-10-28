@@ -69,7 +69,7 @@ var view_default = _template("__tests__/tags/view.marko", (input) => {
 				$wi__input_tabs__OR__input_selected && _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope1_id) }, "__tests__/tags/view.marko", "2:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_selected, void 0, void 0, void 0, ["__tests__/tags/view.marko_2*shell"], $scope0_reason, 0);
+		}, $scope1_id, "#text/0", 1, $wg__input_selected, 1, 0, 0, ["__tests__/tags/view.marko_2*shell"], $scope0_reason, 0);
 		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/view.marko_1_input_selected#0:4/init");
 		$wi__input_tabs__OR__input_selected && _scope($scope1_id, {
 			tab_content: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && tab?.content,
@@ -79,7 +79,7 @@ var view_default = _template("__tests__/tags/view.marko", (input) => {
 			tab_content: ["tab.content", "1:6"],
 			"#LoopKey": "1:11"
 		});
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/view.marko_1*shell", $scope0_reason, 1);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/view.marko_1*shell", $scope0_reason, 1);
 	_scope($scope0_id, { input_selected: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.selected }, "__tests__/tags/view.marko", 0, { input_selected: ["input.selected"] }) || _filled_guard($scope0_reason, 2) && $cg__input_tabs && _patch_fill($scope0_id, "PatchFill:__tests__/tags/view.marko_fill0", input.selected, !_server_guard($scope0_reason, 2));
 });
 
@@ -138,7 +138,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			}, "__tests__/tags/wrap.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/wrap.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/wrap.marko_1*shell"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_items: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.items,
 		input_selected: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.selected

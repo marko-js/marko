@@ -28,7 +28,7 @@ var toggle_default = _template("__tests__/tags/toggle.marko", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/tags/toggle.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_on, void 0, void 0, void 0, ["__tests__/tags/toggle.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_on, 1, 0, 0, ["__tests__/tags/toggle.marko_1*shell"], $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/tags/toggle.marko", 0);
 });
 
@@ -106,7 +106,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			"ClosureSignalIndex:input_label/8": $wi__input_label && 1
 		}, "__tests__/tags/card.marko", "13:4"), "__tests__/tags/card.marko_3_input_label#0:4/subscribe", $wg__input_label), "__tests__/tags/card.marko_3_input_other#0:6/subscribe", $wg__input_label);
 		$wg__input_label || _resume_branch($scope3_id);
-	}, void 0, "__tests__/tags/card.marko_3*content", "__tests__/tags/card.marko_4*content", 1);
+	}, 0, "__tests__/tags/card.marko_3*content", "__tests__/tags/card.marko_4*content", 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		input_other: input.other,

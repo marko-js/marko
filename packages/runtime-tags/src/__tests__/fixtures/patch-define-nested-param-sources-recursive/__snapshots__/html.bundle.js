@@ -71,7 +71,7 @@ var template_default = _template("a", (input) => {
 				});
 				return 0;
 			}
-		}, $scope3_id, "b", 1, _write_guard($scope3_reason, 4), void 0, void 0, void 0, ["a8"], $scope3_reason, 4);
+		}, $scope3_id, "b", 1, _write_guard($scope3_reason, 4), 1, 0, 0, ["a8"], $scope3_reason, 4);
 		$cg__depth && _patch_write($scope3_id, "we", a, 1);
 		$cg__depth && _patch_write($scope3_id, "wf", b, 1);
 		_scope($scope3_id, {

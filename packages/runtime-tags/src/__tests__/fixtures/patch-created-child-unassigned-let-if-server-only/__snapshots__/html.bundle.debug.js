@@ -18,7 +18,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, ["__tests__/tags/card.marko_1*shell"], (_mask_group($scope0_reason, 0) & 1) << 1, 0);
+	}, $scope0_id, "#text/0", 1, 1, 1, 0, 0, ["__tests__/tags/card.marko_1*shell"], (_mask_group($scope0_reason, 0) & 1) << 1, 0);
 	_patch_write($scope0_id, "PatchWrite:input_n", input.n, 1);
 	_scope($scope0_id, { input_n: input.n }, "__tests__/tags/card.marko", 0, { input_n: ["input.n"] });
 });

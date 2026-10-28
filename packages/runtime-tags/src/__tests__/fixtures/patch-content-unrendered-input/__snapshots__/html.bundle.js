@@ -12,7 +12,7 @@ var panel_default = _template("c", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "a", row.name, 1, $scope0_reason, 0)}</li>`);
 		_scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c0", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "c0", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_scope($scope0_id, {});
 });
@@ -42,7 +42,7 @@ var gate_default = _template("b", (input) => {
 			_write_if($scope0_reason, 1) && _scope($scope2_id, { _: _write_if($scope0_reason, 4) && _scope_with_id($scope0_id) });
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b2", "b3"], $scope0_reason, 2);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2", "b3"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.admin,
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.guest
@@ -68,7 +68,7 @@ var wrapper_default = _template("d", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["d1"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["d1"], $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || (_filled_guard($scope0_reason, 2) && $cg__input_show && _patch_fill($scope0_id, "vd2", input.content, !_server_guard($scope0_reason, 2)), $cg__input_show && _content_withhold(input.content));
 });

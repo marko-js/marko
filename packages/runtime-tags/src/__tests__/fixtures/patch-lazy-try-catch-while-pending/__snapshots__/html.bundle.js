@@ -31,7 +31,7 @@ var child_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<s>caught</s>");
-	}, "a3", "a2", "a5", void 0, void 0, 3);
+	}, "a3", "a2", "a5", 0, 0, 3);
 });
 
 // template.marko

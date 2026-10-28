@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`<em>${_text_resume($scope5_id, "a", err.message, 1, 4, 0)}</em>`);
 				_scope($scope5_id, {});
-			}, void 0, "a2", "a3", 1, 1, 1);
+			}, 0, "a2", "a3", 1, 1, 1);
 			$wi__input_promise && _scope($scope3_id, { f: _unfilled_if($scope0_reason, 0) && $await_content__value__closures });
 		}, 1, "a4", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "a8" : "a9");
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "a5", void 0, "a7", 1, void 0, 2);
+	}, void 0, "a5", void 0, "a7", 1, 0, 2);
 	_html("</main>");
 	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 1);

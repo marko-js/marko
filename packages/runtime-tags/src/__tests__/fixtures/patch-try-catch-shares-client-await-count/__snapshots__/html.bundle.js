@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 			const $scope5_id = _scope_id();
 			_html(`<s>${_text_resume($scope5_id, "a", e.message, 1, 4, 0)}</s>`);
 			_scope($scope5_id, {});
-		}, void 0, "a1", "a4", 1, 1, 1);
+		}, 0, "a1", "a4", 1, 1, 1);
 		_if(() => {}, $scope1_id, "b");
 		_html("</div>");
 		_subscribe($pending__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a9");
@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "a2", void 0, "a5", 1, void 0, 2);
+	}, void 0, "a2", void 0, "a5", 1, 0, 2);
 	_html(`<button>x</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a10");
 	_scope($scope0_id, {

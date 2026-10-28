@@ -41,7 +41,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			}, "__tests__/tags/card.marko", "3:7");
 			return 0;
 		}
-	}, $scope0_id, "#div/0", 1, $wg__input_w, void 0, void 0, void 0, ["__tests__/tags/card.marko_3*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#div/0", 1, $wg__input_w, 1, 0, 0, ["__tests__/tags/card.marko_3*shell"], $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $wg__input_w)}<button>x</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill1", k, 1);
@@ -84,7 +84,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_on, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, $wg__input_on, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_n: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.n,
 		input_w: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.w

@@ -24,7 +24,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			}, "__tests__/tags/child.marko", "1:2", { c: "2:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 2);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 2);
 	_filled_guard($scope0_reason, 4) && $cg__input_show ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill1/unpatched", input.a) : _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !(_filled_guard($scope0_reason, 4) && $cg__input_b));
 	_scope($scope0_id, {
 		input_b: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.b,

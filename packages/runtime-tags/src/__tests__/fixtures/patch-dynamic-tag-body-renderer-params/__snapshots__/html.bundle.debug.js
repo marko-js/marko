@@ -35,7 +35,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 			$wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/host.marko", "4:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["__tests__/tags/host.marko_2*shell"], $scope0_reason, 5);
+	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 5), 1, 0, 0, ["__tests__/tags/host.marko_2*shell"], $scope0_reason, 5);
 	_script($scope0_id, "__tests__/tags/host.marko_0");
 	_filled_guard($scope0_reason, 6) && $cg__input_show ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_fill1/unpatched", input.native) : _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_native", input.native, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4)));
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_fill3", flag, 1);

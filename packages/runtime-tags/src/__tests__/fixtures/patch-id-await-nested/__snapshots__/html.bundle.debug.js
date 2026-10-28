@@ -44,6 +44,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$wi__input_items && _resume_branch($scope2_id);
 		}, 1, "__tests__/template.marko_2*content");
 		$wi__input_items && _scope($scope1_id, { "ClosureScopes:item_inner/5": _unfilled_if($scope0_reason, 0) && $for_content__item_inner__closures }, "__tests__/template.marko", "1:2");
-	}, "key", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, "key", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 				_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_a && "a6", 0);
 				return 0;
 			}
-		}, $scope1_id, "a", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["a4"], $scope0_reason, 2);
+		}, $scope1_id, "a", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a4"], $scope0_reason, 2);
 		_html(`<span>${_text_resume($scope1_id, "b", input.label, 1, $scope0_reason, 4)}</span>`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_show ? "a7" : "a8");
 		_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, $cg__input_label ? "a9" : "a10");
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "a1", void 0, "a2", 1, void 0, 2);
+	}, void 0, "a1", void 0, "a2", 1, 0, 2);
 	_html("</main>");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.a,

@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<i>${_text_resume($scope2_id, "a", name, 1, 0, 0)}</i>`);
 		_scope($scope2_id, {});
-	}, 0, $scope0_id, "d", 1, void 0, void 0, void 0, void 0, "a0", 0, 0);
+	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a0", 0, 0);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
@@ -25,11 +25,11 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_text_resume($scope3_id, "a", name, 1, 0, 0)}</b>`);
 				_scope($scope3_id, {});
-			}, 0, $scope1_id, "c", 1, void 0, void 0, void 0, void 0, "a2", 0, 0);
+			}, 0, $scope1_id, "c", 1, 1, 1, 0, 0, "a2", 0, 0);
 			_scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "e", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a1"], $scope0_reason, 1);
+	}, $scope0_id, "e", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a1"], $scope0_reason, 1);
 	_html("</main>");
 	_scope($scope0_id, { j: _unfilled_if($scope0_reason, 1) && label }) || _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va3", label);
 }, 1);

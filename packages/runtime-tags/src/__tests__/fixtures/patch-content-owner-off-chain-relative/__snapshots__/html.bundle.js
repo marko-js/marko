@@ -65,14 +65,14 @@ var view_default = _template("e", (input) => {
 				$wi__input_tabs__OR__input_selected && _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_selected, void 0, void 0, void 0, ["e1"], $scope0_reason, 0);
+		}, $scope1_id, "a", 1, $wg__input_selected, 1, 0, 0, ["e1"], $scope0_reason, 0);
 		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "e3");
 		$wi__input_tabs__OR__input_selected && _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && tab?.content,
 			M: _unfilled_if($scope0_reason, 2) && i,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "e2", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "e2", $scope0_reason, 1);
 	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.selected }) || _filled_guard($scope0_reason, 2) && $cg__input_tabs && _patch_fill($scope0_id, "ve4", input.selected, !_server_guard($scope0_reason, 2));
 });
 
@@ -130,7 +130,7 @@ var wrap_default = _template("f", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["f2"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["f2"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.items,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.selected

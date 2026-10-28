@@ -18,7 +18,7 @@ var layout_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<a>${_text_resume($scope2_id, "a", item, 1, $scope0_reason, 0)}</a>`);
 			_scope($scope2_id, {});
-		}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
+		}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 0);
 		_scope($scope1_id, {});
 	}, 1, "a1", 1);
 	_html("</nav><main>");
@@ -95,7 +95,7 @@ var template_default = _template("d", (input) => {
 							_scope($scope5_id, { b: _existing_scope($childScope2) });
 							return 1;
 						}
-					}, $scope2_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["d0", "d4"], $scope0_reason, 1);
+					}, $scope2_id, "a", 1, $wg__input_page, 1, 0, 0, ["d0", "d4"], $scope0_reason, 1);
 					$cg__input_page && _patch_init($scope2_id, "d5");
 					$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					$wg__input_page || $wi__input_page && _resume_branch($scope2_id);
@@ -109,7 +109,7 @@ var template_default = _template("d", (input) => {
 			});
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["d3", "d2"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_page, 1, 0, 0, ["d3", "d2"], $scope0_reason, 1);
 	_trailers("</body></html>");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.list,

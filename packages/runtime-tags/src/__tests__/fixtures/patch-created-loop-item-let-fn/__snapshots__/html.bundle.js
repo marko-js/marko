@@ -31,11 +31,11 @@ var template_default = _template("a", (input) => {
 				card_default({ opts: item });
 				_patch_child_end();
 				_scope($scope2_id, { a: _existing_scope($childScope) });
-			}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 1);
+			}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 1);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a2");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_scope($scope0_id, { e: _write_if($scope0_reason, 0) && input.label }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va3", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

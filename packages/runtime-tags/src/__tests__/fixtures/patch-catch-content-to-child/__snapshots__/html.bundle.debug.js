@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:err_message/11": $wi__err_message && _unfilled_if($scope1_reason, 0) && $catch_content__err_message__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "8:4");
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_3*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_3*content", 1, 1, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_label: input.label,

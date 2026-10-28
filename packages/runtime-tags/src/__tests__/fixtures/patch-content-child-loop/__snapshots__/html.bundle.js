@@ -16,7 +16,7 @@ var card_default = _template("b", (input) => {
 		_html("</li>");
 		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b0");
 		_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b1", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.content }) || (_filled_guard($scope0_reason, 1) && $cg__input_count && _patch_fill($scope0_id, "vb2", input.content, !_server_guard($scope0_reason, 1)), $cg__input_count && _content_withhold(input.content));
 });

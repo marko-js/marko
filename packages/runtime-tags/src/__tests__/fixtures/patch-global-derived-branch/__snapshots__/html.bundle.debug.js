@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<p>${_text_resume($scope1_id, "#text/0", collect($global$1, item), 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
 		_fill_global_subscribe("__tests__/template.marko_1_$global#0:7_item#2", $scope0_id);
 		_scope($scope1_id, { item: _unfilled_if($scope0_reason, 0) && item }, "__tests__/template.marko", "3:4", { item: "3:8" });
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	const summary = collected($global$1);
 	_if(() => {
 		if (summary) {
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, {}, "__tests__/template.marko", "7:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"]);
+	}, $scope0_id, "#text/1", 1, $scope0_page, 1, 0, 0, ["__tests__/template.marko_2*shell"]);
 	_html("</main>");
 	_fill_global_subscribe("__tests__/template.marko_0_$global#7", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);

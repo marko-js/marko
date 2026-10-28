@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<p>${_text_resume($scope1_id, "#text/0", name, 1, 0, 0)} ${_text_resume($scope1_id, "#text/1", input.note, 2, $scope0_reason, 1)}</p>`);
 		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_note#0:5/init");
 		_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
-	}, 0, $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", 0, 0);
+	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", 0, 0);
 	_html("</main>");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

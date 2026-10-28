@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_write_if($scope2_reason, 0) && _scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:6");
 				return 0;
 			}
-		}, $scope2_id, "#section/0", 1, $wg__show, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 1);
+		}, $scope2_id, "#section/0", 1, $wg__show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 1);
 		_html(`</section>${_el_resume($scope2_id, "#section/0", $wg__show)}`);
 		_write_if($scope2_reason, 1) && _scope($scope2_id, { content: _unfilled_if($scope2_reason, 1) && content }, "__tests__/template.marko", "1:2", { content: "1:22" }) || (_filled_guard($scope2_reason, 2) && $cg__show && _patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill1", content, !_server_guard($scope2_reason, 2)), $cg__show && _content_withhold(content));
 	}, $scope0_id) };

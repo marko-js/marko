@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "3:2", { item_upper: ["item.upper", "3:6"] });
-	}, "id", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 2);
+	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 2);
 	_html("<button>noop</button>");
 	_scope($scope0_id, {
 		input_title: input.title,

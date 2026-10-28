@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:6");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"]);
+	}, $scope0_id, "#text/0", 1, $scope0_page, 1, 0, 0, ["__tests__/template.marko_1*shell"]);
 	_html(`<main>${_text_resume($scope0_id, "#text/1", input.msg, 1, $scope0_reason, 0)}</main>`);
 	_if(() => {
 		if (!$global$1.meta.hideFooter) {
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "7:6");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"]);
+	}, $scope0_id, "#text/2", 1, $scope0_page, 1, 0, 0, ["__tests__/template.marko_2*shell"]);
 	_trailers("</body></html>");
 	_fill_global_subscribe("__tests__/template.marko_0_$global_meta#5", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);

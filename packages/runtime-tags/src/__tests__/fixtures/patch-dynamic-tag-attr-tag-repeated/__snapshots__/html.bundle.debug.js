@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope7_id = _scope_id();
 			_dynamic_tag($scope7_id, "#text/0", it, {}, 10, 0, 0, $wg__item2);
 			_write_if($scope6_reason, 0) && _scope($scope7_id, {}, "__tests__/template.marko", "7:4");
-		}, 0, $scope6_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_7*shell");
+		}, 0, $scope6_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_7*shell");
 		_scope($scope6_id, {}, "__tests__/template.marko", "6:2");
 	}, $scope0_id) };
 	_html("<main>");

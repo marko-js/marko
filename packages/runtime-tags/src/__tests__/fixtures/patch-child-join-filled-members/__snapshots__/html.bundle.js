@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["b2"], $scope0_reason, 5);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 5), 1, 0, 0, ["b2"], $scope0_reason, 5);
 	_patch_join_init($scope0_id, "b5", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && "e", _filled_guard($scope0_reason, 4) && "f");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5)) && input.a,

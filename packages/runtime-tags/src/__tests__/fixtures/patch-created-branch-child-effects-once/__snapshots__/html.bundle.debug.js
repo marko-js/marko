@@ -82,7 +82,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<i>${_text_resume($scope5_id, "#text/0", item, 1, $scope0_reason, 4)}</i>`);
 				_script($scope5_id, "__tests__/template.marko_5_item#2", 1, _filled_guard($scope0_reason, 4), "item");
 				_scope($scope5_id, { item }, "__tests__/template.marko", "11:4", { item: "11:8" });
-			}, 0, $scope1_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_5*shell", $scope0_reason, 4);
+			}, 0, $scope1_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 4);
 			_if(() => {
 				if (input.nested) {
 					const $scope6_id = _scope_id();
@@ -91,7 +91,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_write_if($scope0_reason, 5) && _scope($scope6_id, {}, "__tests__/template.marko", "15:4");
 					return 0;
 				}
-			}, $scope1_id, "#text/3", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["__tests__/template.marko_6*shell"], $scope0_reason, 5);
+			}, $scope1_id, "#text/3", 1, _write_guard($scope0_reason, 5), 1, 0, 0, ["__tests__/template.marko_6*shell"], $scope0_reason, 5);
 			_set_scope_reason(0);
 			const $childScope3 = _peek_scope_id($scope1_id, "#childScope/4", 2);
 			wrap_default({ body: attrTag({ content: _content("__tests__/template.marko_2*content", () => {
@@ -103,7 +103,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_filled_guard($scope0_reason, 4) && _patch_write($scope7_id, "PatchMarkedWrite:item", item, !$sg__input_items);
 					_script($scope7_id, "__tests__/template.marko_7_item#1", 0, _filled_guard($scope0_reason, 4), "item");
 					_scope($scope7_id, { item }, "__tests__/template.marko", "23:8", { item: "23:12" });
-				}, 0, $scope2_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_7*shell", $scope0_reason, 4);
+				}, 0, $scope2_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_7*shell", $scope0_reason, 4);
 				_script($scope2_id, "__tests__/template.marko_2");
 				$cg__input_items && _patch_init($scope2_id, "__tests__/template.marko_2_input_items#0:6/init");
 				_subscribe(_unfilled_if($scope0_reason, 4) && $input_items__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "20:6"));
@@ -120,7 +120,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_filled_guard($scope0_reason, 4) && _patch_write($scope8_id, "PatchMarkedWrite:item", item, !$sg__input_items);
 					_script($scope8_id, "__tests__/template.marko_8_item#1", 0, _filled_guard($scope0_reason, 4), "item");
 					_scope($scope8_id, { item }, "__tests__/template.marko", "31:6", { item: "31:10" });
-				}, 0, $scope3_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_8*shell", $scope0_reason, 4);
+				}, 0, $scope3_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_8*shell", $scope0_reason, 4);
 				_script($scope3_id, "__tests__/template.marko_3");
 				_unfilled_if($scope0_reason, 4) && _patch_init($scope3_id, $cg__input_items ? "__tests__/template.marko_3_input_items#0:6/init" : "__tests__/template.marko_3_input_items#0:6/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 4) && $input_items__closures, _scope($scope3_id, {
@@ -142,7 +142,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "7:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 3), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 3);
+	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 3);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_items: _write_if($scope0_reason, 1) && input.items,

@@ -64,7 +64,7 @@ const $content = (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["c7"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["c7"], $scope0_reason, 0);
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	keeper_default({ content: input.content });

@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope2_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a0"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a0"], $scope0_reason, 0);
 	_if(() => {
 		if (input.right) {
 			const $scope3_id = _scope_id();
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, { a: _existing_scope($childScope2) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $wg__input_right, void 0, void 0, void 0, ["a1"], $scope0_reason, 1);
+	}, $scope0_id, "b", 1, $wg__input_right, 1, 0, 0, ["a1"], $scope0_reason, 1);
 	const Repeat = { content: _content("a3", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
@@ -59,7 +59,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope4_id, { a: _existing_scope($childScope3) });
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_right, void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
+		}, $scope1_id, "a", 1, $wg__input_right, 1, 0, 0, ["a2"], $scope0_reason, 1);
 		$wi__input_right && _subscribe(_unfilled_if($scope0_reason, 1) && $input_right__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a4", $wg__input_right);
 		$wg__input_right || $wi__input_right && _resume_branch($scope1_id);
 	}, $scope0_id) };

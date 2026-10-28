@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 			l: $wi__err_message && _unfilled_if($scope1_reason, 0) && $catch_content__err_message__closures,
 			a: _existing_scope($childScope)
 		});
-	}, void 0, "a5", "a6", 1, 1, 1);
+	}, 0, "a5", "a6", 1, 1, 1);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {
 		f: input.label,

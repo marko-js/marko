@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a1");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "a2" : "a3");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3");
-	}, void 0, "a6", "a7", 1, 1, 1);
+	}, 0, "a6", "a7", 1, 1, 1);
 	_scope($scope0_id, {
 		d: input.label,
 		f: _write_if($scope0_reason, 0) && $input_label__closures,

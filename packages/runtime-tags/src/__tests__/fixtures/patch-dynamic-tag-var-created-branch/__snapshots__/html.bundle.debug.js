@@ -40,14 +40,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const $inputwhichonetwo_scope = _peek_scope_id();
-			let x = _dynamic_tag($scope1_id, "#text/0", input.which ? one_default : two_default, { a: input.a }, 1, void 0, void 0, void 0, $scope0_reason, 2, void 0, void 0, void 0, "__tests__/template.marko_1_x#4/var");
+			let x = _dynamic_tag($scope1_id, "#text/0", input.which ? one_default : two_default, { a: input.a }, 1, 0, 0, 1, $scope0_reason, 2, 0, void 0, void 0, "__tests__/template.marko_1_x#4/var");
 			_var($scope1_id, "#scopeOffset/1", $inputwhichonetwo_scope, "__tests__/template.marko_1_x#4/var");
 			_html(`<p>${_text_resume($scope1_id, "#text/2", x)}</p>`);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_which#0:4_input_a#0:5/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
 			return 0;
 		}
-	}, $scope0_id, "#main/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 4);
+	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 4);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $wg__input_show)}`);
 	_scope($scope0_id, {
 		input_which: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.which,

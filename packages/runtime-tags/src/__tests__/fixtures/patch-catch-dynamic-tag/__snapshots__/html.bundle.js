@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 			d: err?.message,
 			_: _scope_with_id($scope0_id)
 		}), _client_guard($scope0_reason, 0) && "a1"), _client_guard($scope0_reason, 1) && "a2"), "a3");
-	}, void 0, "a6", "a7", 1, 1, 1);
+	}, 0, "a6", "a7", 1, 1, 1);
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {
 		f: input.large,

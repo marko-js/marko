@@ -35,14 +35,14 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("<p>oops</p>");
-		}, void 0, "a2", "a6", 1, void 0, 1);
+		}, 0, "a2", "a6", 1, 0, 1);
 		_html("</section>");
 		$wi__input_promise__OR__input_msg && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "a3", void 0, "a7", 1, void 0, 2);
+	}, void 0, "a3", void 0, "a7", 1, 0, 2);
 	_script($scope0_id, "a10");
 	_scope($scope0_id, {
 		h: count,

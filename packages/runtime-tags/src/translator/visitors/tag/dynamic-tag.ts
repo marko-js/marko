@@ -57,6 +57,7 @@ import {
   getReferencedBindings,
 } from "../../util/references";
 import {
+  absentArg,
   callRuntime,
   getCompatRuntimeFile,
   importRuntimeFeature,
@@ -527,8 +528,7 @@ export default {
           patchArgs = [
             groupArgs[0],
             groupArgs[1],
-            (createdOnly || rendererArgs.length > 0) &&
-              t.numericLiteral(createdOnly ? 1 : 0),
+            createdOnly ? t.numericLiteral(1) : absentArg(0),
             rendererArgs[0],
             rendererArgs[1],
           ];
@@ -561,22 +561,22 @@ export default {
           // `patched` (its flags, with the call site an `<id>` names above
           // them) follows the input: the order a patch build's calls are smallest in.
           patched |= nextIdSite() << 3;
+          const [content, inputIsArgs, markerGuard] = callArgs.slice(4);
           const [mask, group, createdOnly, rendererGroup, rendererMask] =
             patchArgs;
-          const rest = [
-            ...callArgs.slice(4),
+          dynamicTagExpr = callRuntime(
+            "_dynamic_tag",
+            ...callArgs.slice(0, 4),
+            patched ? t.numericLiteral(patched) : absentArg(0),
+            content || absentArg(0),
+            inputIsArgs || absentArg(0),
+            markerGuard || absentArg(1),
             mask,
             group,
             createdOnly,
             rendererGroup,
             rendererMask,
             tagVarArg,
-          ];
-          dynamicTagExpr = callRuntime(
-            "_dynamic_tag",
-            ...callArgs.slice(0, 4),
-            (patched || rest.some(Boolean)) && t.numericLiteral(patched),
-            ...rest,
           );
         } else {
           dynamicTagExpr = callRuntime("_dynamic_tag", ...callArgs, tagVarArg);

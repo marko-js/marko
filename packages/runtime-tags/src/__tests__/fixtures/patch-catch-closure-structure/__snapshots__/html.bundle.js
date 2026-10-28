@@ -37,10 +37,10 @@ var template_default = _template("a", (input) => {
 				}), "a2");
 				return 0;
 			}
-		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a3"], $scope0_reason, 0);
+		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a3"], $scope0_reason, 0);
 		$cg__input_detail && _patch_init($scope1_id, "a6");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a7");
-	}, void 0, "a5", "a4", 1, 1, 1);
+	}, 0, "a5", "a4", 1, 1, 1);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a10");
 	_scope($scope0_id, {

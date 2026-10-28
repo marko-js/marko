@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "9:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html("</main>");
 	_scope($scope0_id, { onCount: _unfilled_if($scope0_reason, 1) && onCount }, "__tests__/template.marko", 0, { onCount: "2:8" });
 }, 1);

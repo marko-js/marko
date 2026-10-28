@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>bad</em>");
-	}, void 0, "a2", "a3", 1, void 0, 1);
+	}, 0, "a2", "a3", 1, 0, 1);
 	_html("</main>");
 	_scope($scope0_id, { e: $wi__input_message && _unfilled_if($scope0_reason, 0) && $input_message__closures });
 }, 1);

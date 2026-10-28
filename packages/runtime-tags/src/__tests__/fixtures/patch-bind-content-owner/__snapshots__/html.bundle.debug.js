@@ -74,7 +74,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}));
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
+		}, $scope1_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_show#0:6/subscribe", $wg__input_show);
 		$wg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id) });

@@ -31,7 +31,7 @@ var child_default = _template("b", (input) => {
 			c: $wi__input_b && item,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "b4", $scope0_reason, 5);
+	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "b4", $scope0_reason, 5);
 	$cg__input_mode && _patch_write($scope0_id, "wi", frag?.content, 1);
 	$cg__input_mode && _patch_init($scope0_id, "b7");
 	_scope($scope0_id, {

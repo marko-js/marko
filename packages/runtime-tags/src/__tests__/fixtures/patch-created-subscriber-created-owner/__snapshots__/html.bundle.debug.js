@@ -55,7 +55,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			"ClosureScopes:err_message/7": $wi__err_message && _unfilled_if($scope1_reason, 0) && $catch_content__err_message__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/tags/child.marko", "6:4");
-	}, void 0, "__tests__/tags/child.marko_1*content", "__tests__/tags/child.marko_3*content", 1, 1, 1);
+	}, 0, "__tests__/tags/child.marko_1*content", "__tests__/tags/child.marko_3*content", 1, 1, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		"ClosureScopes:input_label/5": _write_if($scope0_reason, 0) && $input_label__closures,
@@ -92,7 +92,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
 		input_error: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.error

@@ -27,7 +27,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 				_subscribe($wi__input_prefix && $fmt2__closures, _subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/card.marko", "3:26"), "__tests__/tags/card.marko_2_s#0:7/subscribe"), _client_guard($scope0_reason, 1) && "__tests__/tags/card.marko_2_fmt#0:8/subscribe");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_sel, void 0, void 0, void 0, ["__tests__/tags/card.marko_2*shell"], $scope0_reason, 0);
+		}, $scope1_id, "#text/0", 1, $wg__input_sel, 1, 0, 0, ["__tests__/tags/card.marko_2*shell"], $scope0_reason, 0);
 		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/tags/card.marko_1_input_sel#0:6/init");
 		_scope($scope1_id, {
 			"#LoopKey": _unfilled_if($scope0_reason, 3) && k,
@@ -37,7 +37,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			"#LoopKey": "3:6",
 			v: "3:9"
 		});
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/card.marko_1*shell", $scope0_reason, 2);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/card.marko_1*shell", $scope0_reason, 2);
 	_html(`<button class=s>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill1", s, 1);

@@ -22,7 +22,7 @@ var toggle_default = _template("d", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_on, void 0, void 0, void 0, ["d0"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_on, 1, 0, 0, ["d0"], $scope0_reason, 0);
 	_scope($scope0_id, {});
 });
 
@@ -100,7 +100,7 @@ var card_default = _template("b", (input) => {
 			Ci: $wi__input_label && 1
 		}), "b11", $wg__input_label), "b12", $wg__input_label);
 		$wg__input_label || _resume_branch($scope3_id);
-	}, void 0, "b15", "b5", 1);
+	}, 0, "b15", "b5", 1);
 	_scope($scope0_id, {
 		e: input.label,
 		g: input.other,

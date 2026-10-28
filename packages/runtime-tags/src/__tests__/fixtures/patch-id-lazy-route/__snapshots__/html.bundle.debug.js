@@ -23,9 +23,9 @@ var sub_default = _template("__tests__/tags/sub.marko", (input) => {
 				_subscribe($g__closures, _subscribe($wi__input_n && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/sub.marko", "4:4"), _client_guard($scope0_reason, 1) && "__tests__/tags/sub.marko_2_input_n#0:5/subscribe"), "__tests__/tags/sub.marko_2_g#0:6/subscribe");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_items, void 0, void 0, void 0, ["__tests__/tags/sub.marko_2*shell"], $scope0_reason, 0);
+		}, $scope1_id, "#text/0", 1, $wg__input_items, 1, 0, 0, ["__tests__/tags/sub.marko_2*shell"], $scope0_reason, 0);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/sub.marko", "3:2");
-	}, "k", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/sub.marko_1*shell", $scope0_reason, 0);
+	}, "k", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/sub.marko_1*shell", $scope0_reason, 0);
 	_html(`<button class=inc>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/sub.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/sub.marko_fill1", g, 1);

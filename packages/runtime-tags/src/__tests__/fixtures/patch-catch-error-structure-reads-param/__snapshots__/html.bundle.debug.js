@@ -43,9 +43,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, "__tests__/template.marko", "8:6"), "__tests__/template.marko_3_input_label#0:3/subscribe");
 				return 1;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__err_status, void 0, void 0, void 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_3*shell"]);
+		}, $scope1_id, "#text/0", 1, $wg__err_status, 1, 0, 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_3*shell"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_4*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_4*content", 1, 1, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		"ClosureScopes:input_label/5": $wi__input_label && $input_label__closures,

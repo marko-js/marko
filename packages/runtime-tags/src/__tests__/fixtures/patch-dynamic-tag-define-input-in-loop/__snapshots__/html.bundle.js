@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope2_id, "a", row.useA ? Card : Other, { record: row.record }, 1, 0, 0, $wg__input_rows, $scope0_reason, 0);
 		_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a2");
 		_write_if($scope0_reason, 0) && _scope($scope2_id, { _: _scope_with_id($scope0_id) });
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a3", $scope0_reason, 0);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a3", $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "a")}`);
 	_scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 0) && Card,

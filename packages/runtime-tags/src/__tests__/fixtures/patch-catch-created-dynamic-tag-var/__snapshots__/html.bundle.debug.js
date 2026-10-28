@@ -55,14 +55,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_resume($scope1_id, "#text/0", err.message, 1, 4, 0)}</b>`);
 		const $inputbigBigSmall_scope = _peek_scope_id();
-		let v = _dynamic_tag($scope1_id, "#text/1", input.big ? huge_label_default : tiny_label_default, { label: input.label }, 5, void 0, void 0, void 0, $scope0_reason, 0, void 0, void 0, void 0, "__tests__/template.marko_1_v#8/var");
+		let v = _dynamic_tag($scope1_id, "#text/1", input.big ? huge_label_default : tiny_label_default, { label: input.label }, 5, 0, 0, 1, $scope0_reason, 0, 0, void 0, void 0, "__tests__/template.marko_1_v#8/var");
 		_var($scope1_id, "#scopeOffset/2", $inputbigBigSmall_scope, "__tests__/template.marko_1_v#8/var");
 		_html(`<i>${_text_resume($scope1_id, "#text/3", v)}</i>`);
 		(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/template.marko_1_input_big#0:3/subscribe");
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:4/subscribe");
 		_patch_join_init($scope1_id, "__tests__/template.marko_1_input_big#0:3_input_label#0:4/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">input_big", _filled_guard($scope0_reason, 2) && ">input_label");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_big__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_big#0:3/subscribe"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_label#0:4/subscribe");
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
 	_filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0/unpatched", input.big);
 	_filled_guard($scope0_reason, 2) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1/unpatched", input.label);
 	_scope($scope0_id, {

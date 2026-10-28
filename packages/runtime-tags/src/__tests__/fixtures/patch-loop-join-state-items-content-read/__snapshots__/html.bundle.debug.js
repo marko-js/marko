@@ -31,7 +31,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			item: $wi__input_b && item,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)
 		}, "__tests__/tags/child.marko", "3:2", { item: "3:6" });
-	}, 0, $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/tags/child.marko_2*shell", $scope0_reason, 5);
+	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/tags/child.marko_2*shell", $scope0_reason, 5);
 	$cg__input_mode && _patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
 	$cg__input_mode && _patch_init($scope0_id, "__tests__/tags/child.marko_0_input_mode#5_frag_content#8/init");
 	_scope($scope0_id, {

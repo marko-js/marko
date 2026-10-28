@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 		_attr_content("a", $scope2_id, Body, 0, 1, 0, 0);
 		_html(`</div>${_el_resume($scope2_id, "a", 0)}`);
 		_scope($scope2_id, {});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);
 	_for_of(input.items, (item) => {
 		const $scope3_id = _scope_id();
 		_html("<section");
@@ -29,6 +29,6 @@ var template_default = _template("a", (input) => {
 		_html(`</section>${_el_resume($scope3_id, "a")}`);
 		_script($scope3_id, "a3");
 		_scope($scope3_id, {});
-	}, 0, $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "a2", $scope0_reason, 0);
+	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
 	_scope($scope0_id, { f: _unfilled_if($scope0_reason, 0) && Body });
 }, 1);

@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<a${_attr("href", `?q=${params.q.trim()}&i=${item}`, $scope3_id, "aa$href")}>${_text_resume($scope3_id, "b", item, 1, 4, 0)}</a>${_el_resume($scope3_id, "a")}`);
 				_scope($scope3_id, {});
-			}, 0, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "a0");
+			}, 0, $scope2_id, "a", 1, 1, 1, 0, 0, "a0");
 			_scope($scope2_id, {});
 		}, 1, "a2", 1);
 		_fill_global_subscribe("a5", $scope1_id);
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("Loading");
-	}, void 0, "a1", void 0, "a4", void 0, void 0, 2);
+	}, void 0, "a1", void 0, "a4", 0, 0, 2);
 	_fill_global_subscribe("a6", $scope0_id);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {});

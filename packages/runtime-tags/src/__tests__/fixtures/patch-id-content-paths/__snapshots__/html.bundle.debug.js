@@ -49,7 +49,7 @@ var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/leaf.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, 0, void 0, void 0, void 0, ["__tests__/tags/leaf.marko_1*shell"], 0, 0);
+	}, $scope0_id, "#text/0", 1, 0, 1, 0, 0, ["__tests__/tags/leaf.marko_1*shell"], 0, 0);
 });
 
 // tags/nested.marko
@@ -101,7 +101,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope5_id = _scope_id();
 			_dynamic_tag($scope5_id, "#text/0", item, {}, 10, 0, 0, $wg__items, $scope4_reason, 0);
 			_write_if($scope4_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "3:35");
-		}, 0, $scope4_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_5*shell", $scope4_reason, 0);
+		}, 0, $scope4_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope4_reason, 0);
 		_scope($scope4_id, {}, "__tests__/template.marko", "3:2");
 	}, $scope0_id) };
 	_if(() => {
@@ -122,7 +122,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope3_id, { "#childScope/0": _existing_scope($childScope3) }, "__tests__/template.marko", "4:42");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_flip, void 0, void 0, void 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_3*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_flip, 1, 0, 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_3*shell"], $scope0_reason, 0);
 	_dynamic_tag($scope0_id, "#text/1", input.flip ? field_default : "section", { name: "dynamic" }, 33, _content_resume("__tests__/template.marko_6*content", () => {
 		const $scope6_id = _scope_id();
 		const $scope6_reason = _scope_reason();

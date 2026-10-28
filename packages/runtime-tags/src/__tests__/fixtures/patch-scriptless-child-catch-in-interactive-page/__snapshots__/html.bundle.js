@@ -28,7 +28,7 @@ var card_default = _template("b", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_resume($scope2_id, "a", err.message, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {});
-	}, void 0, "b1", "b3", 1, 1, 1);
+	}, 0, "b1", "b3", 1, 1, 1);
 	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 });
 

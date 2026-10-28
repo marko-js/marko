@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", void 0, void 0, 2);
+	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 0, 0, 2);
 	_try($scope0_id, "#text/2", () => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope4_id = _scope_id();
 		_html(`<s>${_text_resume($scope4_id, "#text/0", e.message, 1, 4, 0)}</s>`);
 		_scope($scope4_id, {}, "__tests__/template.marko", "9:6");
-	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_3*content", void 0, 1, 1);
+	}, 0, "__tests__/template.marko_4*content", "__tests__/template.marko_3*content", 0, 1, 1);
 	_html("</main>");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

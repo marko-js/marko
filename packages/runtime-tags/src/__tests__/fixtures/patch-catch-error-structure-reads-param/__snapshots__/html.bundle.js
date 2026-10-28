@@ -40,9 +40,9 @@ var template_default = _template("a", (input) => {
 				}), "a3");
 				return 1;
 			}
-		}, $scope1_id, "a", 1, $wg__err_status, void 0, void 0, void 0, ["a4", "a7"]);
+		}, $scope1_id, "a", 1, $wg__err_status, 1, 0, 0, ["a4", "a7"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, void 0, "a6", "a5", 1, 1, 1);
+	}, 0, "a6", "a5", 1, 1, 1);
 	_scope($scope0_id, {
 		d: input.label,
 		f: $wi__input_label && $input_label__closures,

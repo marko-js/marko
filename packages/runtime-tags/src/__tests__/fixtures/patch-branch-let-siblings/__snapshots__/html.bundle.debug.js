@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, { x }, "__tests__/template.marko", "3:4", { x: "4:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_if(() => {
 		if (input.b) {
 			const $scope2_id = _scope_id();
@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, { y }, "__tests__/template.marko", "8:4", { y: "9:10" });
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
+	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
 	_html("</main>");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

@@ -92,6 +92,6 @@ var template_default = _template("a", (input) => {
 				_patch_child_end();
 			}
 		});
-	}, void 0, "a5", "a2", 1);
+	}, 0, "a5", "a2", 1);
 	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 1);

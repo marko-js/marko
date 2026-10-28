@@ -61,7 +61,7 @@ var template_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "b2", void 0, "b5", 1, void 0, 2);
+	}, void 0, "b2", void 0, "b5", 1, 0, 2);
 	_html("</main>");
 	_scope($scope0_id, {
 		b: _existing_scope($childScope),

@@ -63,7 +63,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, void 0, 2);
+	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
 	_scope($scope0_id, {
 		"#childScope/1": _existing_scope($childScope),
 		"ClosureScopes:input_a/8": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_a__closures,

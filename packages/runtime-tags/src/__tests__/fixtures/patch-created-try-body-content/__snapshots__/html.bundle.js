@@ -30,7 +30,7 @@ var wrapper_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, 0, $wg__input_content);
 		_subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0", $wg__input_content);
 		$wg__input_content || _resume_branch($scope1_id);
-	}, void 0, "b5", "b6", 1);
+	}, 0, "b5", "b6", 1);
 	_scope($scope0_id, {
 		d: input.content,
 		f: $wi__input_content && $input_content__closures,
@@ -85,7 +85,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["a7"], $scope0_reason, 2);
+	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a7"], $scope0_reason, 2);
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {
 		f: input.label,

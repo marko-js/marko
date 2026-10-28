@@ -26,7 +26,7 @@ var list_default = _template("b", (input) => {
 			d: item?.content,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 0);
+	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "b1", $scope0_reason, 0);
 	_script($scope0_id, "b2");
 	_patch_fill($scope0_id, "vb3", open, 1);
 	_scope($scope0_id, { f: open });

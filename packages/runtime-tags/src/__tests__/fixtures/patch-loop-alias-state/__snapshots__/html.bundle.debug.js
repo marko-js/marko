@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			name: "4:14",
 			item_id: ["item.id", "3:8"]
 		});
-	}, (item) => item.id, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, (item) => item.id, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });

@@ -15,13 +15,13 @@ var template_default = _template("a", (input) => {
 		const $show = item.on ? input.id : "";
 		_show_start($show, 1, $wg__input_items__OR__input_id, "</div>");
 		_html("shown");
-		_show_end($scope1_id, "a", $show, 1, $wg__input_items__OR__input_id, "</div>", void 0, 0, void 0, void 0, $scope0_reason, 0);
+		_show_end($scope1_id, "a", $show, 1, $wg__input_items__OR__input_id, "</div>", 0, 0, void 0, void 0, $scope0_reason, 0);
 		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "a0", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">f", _filled_guard($scope0_reason, 1) && "d");
 		_scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item?.on,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		});
-	}, "k", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 1);
+	}, "k", $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 1);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();

@@ -22,9 +22,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				$wi__input_button && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "4:8");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_button, void 0, void 0, void 0, ["__tests__/tags/child.marko_2*shell"], $scope0_reason, 0);
+		}, $scope1_id, "#text/0", 1, $wg__input_button, 1, 0, 0, ["__tests__/tags/child.marko_2*shell"], $scope0_reason, 0);
 		$wi__input_button && _scope($scope1_id, {}, "__tests__/tags/child.marko", "3:4");
-	}, 0, $scope0_id, "#div/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/child.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#div/0", 1, 1, 1, 0, 0, "__tests__/tags/child.marko_1*shell", $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_htmlInput#4");
 	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0, { "EventAttributes:#div/0": ["...htmlInput", "2:9"] });

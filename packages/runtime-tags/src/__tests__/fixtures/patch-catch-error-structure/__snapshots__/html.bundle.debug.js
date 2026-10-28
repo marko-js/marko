@@ -40,15 +40,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_write_if($scope2_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "15:8");
 				return 1;
 			}
-		}, $scope2_id, "#text/0", 1, _write_guard($scope2_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_4*shell"]);
+		}, $scope2_id, "#text/0", 1, _write_guard($scope2_reason, 0), 1, 0, 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_4*shell"]);
 		_for_of(err.items, (item) => {
 			const $scope5_id = _scope_id();
 			_html(`<span>${_text_resume($scope5_id, "#text/0", item, 1, 4, 0)}</span>`);
 			_scope($scope5_id, {}, "__tests__/template.marko", "18:8");
-		}, 0, $scope2_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_5*shell");
+		}, 0, $scope2_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell");
 		_script($scope2_id, "__tests__/template.marko_2");
 		_scope($scope2_id, { err_message: _unfilled_if($scope2_reason, 0) && err?.message }, "__tests__/template.marko", "8:6", { err_message: ["err.message", "8:13"] });
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, 1, 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 4), void 0, void 0, void 0, ["b1"], $scope0_reason, 4);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 4), 1, 0, 0, ["b1"], $scope0_reason, 4);
 	const frag = { content: _content_resume("b2", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();

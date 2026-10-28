@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 				_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 3) && $input_fast__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_fast && "a8", 0);
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a6"], $scope0_reason, 2);
+		}, $scope1_id, "a", 1, $wg__input_show, 1, 0, 0, ["a6"], $scope0_reason, 2);
 		_await($scope1_id, "b", input.slow, (b) => {
 			const $scope5_id = _scope_id();
 			_html(`<em>${_text_resume($scope5_id, "a", b, 1, $scope0_reason, 4)}</em>`);
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "a2", void 0, "a4", 1, void 0, 2);
+	}, void 0, "a2", void 0, "a4", 1, 0, 2);
 	_html(`<button>x</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a13");
 	_scope($scope0_id, {

@@ -29,7 +29,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/panel.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill2", count, 1);

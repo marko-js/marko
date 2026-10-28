@@ -42,6 +42,6 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, ($scope) => $scope0_page ? [{ e: row?.label }] : []), 0, $wg__input_rows, $scope0_reason, 0);
 		_filled_guard($scope0_reason, 0) && _content_withheld("a0", $scope1_id) && _patch_fill($scope1_id, "va3", row?.label);
 		$wi__input_rows && _scope($scope1_id, { f: $for_content__row_label__closures });
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a4", $scope0_reason, 0);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);

@@ -21,11 +21,11 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_text_resume($scope3_id, "a", err.message, 1, 4, 0)}</b>`);
 				_scope($scope3_id, {});
-			}, void 0, "a0", "a1", void 0, 1, 1);
+			}, 0, "a0", "a1", 0, 1, 1);
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a2"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	_scope($scope0_id, {});
 }, 1);

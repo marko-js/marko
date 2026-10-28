@@ -28,7 +28,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			item: _write_if($scope0_reason, 1) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		}, "__tests__/tags/child.marko", "5:2", { item: "5:6" });
-	}, 0, $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/tags/child.marko_2*shell", $scope0_reason, 2);
+	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/tags/child.marko_2*shell", $scope0_reason, 2);
 	_html(`<button class=t>t</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill1", open, 1);
@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`<button class=l>l</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

@@ -37,10 +37,10 @@ var template_default = _template("a", (input) => {
 				_write_if($scope0_reason, 1) && _scope($scope4_id, {});
 				return 0;
 			}
-		}, $scope3_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a0"], $scope0_reason, 1);
+		}, $scope3_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a0"], $scope0_reason, 1);
 		_html("</li>");
 		_scope($scope3_id, {});
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a3", $scope0_reason, 1);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a3", $scope0_reason, 1);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_if(() => {
 		if (input.summary) {
@@ -54,14 +54,14 @@ var template_default = _template("a", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_detail__closures, _scope($scope2_id, { _: $wi__input_summary__OR__input_detail && _scope_with_id($scope1_id) }), $cg__input_detail && "a5");
 					return 0;
 				}
-			}, $scope1_id, "b", 1, _write_guard($scope0_reason, 3), void 0, void 0, void 0, ["a2"], $scope0_reason, 3);
+			}, $scope1_id, "b", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["a2"], $scope0_reason, 3);
 			_html("</section>");
 			$cg__input_summary && _patch_init($scope1_id, "a6");
 			$cg__input_detail && _patch_init($scope1_id, "a7");
 			_scope($scope1_id, { _: $wi__input_summary__OR__input_detail && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["a1"], $scope0_reason, 2);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a1"], $scope0_reason, 2);
 	_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	badge_default({ label: input.badge });

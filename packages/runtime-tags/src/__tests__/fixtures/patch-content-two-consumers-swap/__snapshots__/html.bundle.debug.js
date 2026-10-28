@@ -64,7 +64,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "5:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 4), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 4);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 4), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 4);
 	_html("</main>");
 	_scope($scope0_id, {
 		input_note: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 3)) && input.note,

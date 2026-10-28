@@ -16,7 +16,7 @@ var toggle_panel_default = _template("b", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b0"], $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	_scope($scope0_id, {});
 });

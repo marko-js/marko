@@ -19,7 +19,7 @@ var navlist_default = _template("b", (input) => {
 			e: item?.href,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b2", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b2", $scope0_reason, 1);
 	_filled_guard($scope0_reason, 2) && $cg__input_items ? _patch_fill($scope0_id, "vb3", input.path) : $cg__input_items && _patch_write($scope0_id, "xe", input.path, 1);
 	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.path });
 });
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_html(`<button class=add>add</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {

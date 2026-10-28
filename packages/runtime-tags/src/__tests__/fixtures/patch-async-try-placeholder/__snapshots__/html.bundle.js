@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "a1", void 0, "a3", 1, void 0, 2);
+	}, void 0, "a1", void 0, "a3", 1, 0, 2);
 	_html("</main>");
 	_scope($scope0_id, { g: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures });
 }, 1);

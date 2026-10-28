@@ -29,7 +29,7 @@ var child_default = _template("c", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 6), void 0, void 0, void 0, ["c1"], $scope0_reason, 6);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 6), 1, 0, 0, ["c1"], $scope0_reason, 6);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	cell_default({ v: c });

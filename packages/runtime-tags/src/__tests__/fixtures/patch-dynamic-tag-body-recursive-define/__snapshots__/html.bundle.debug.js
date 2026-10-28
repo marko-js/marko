@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				($wi__input_on || $wi__depth) && _subscribe(_unfilled_if($scope0_reason, 2) && $input_on__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"), "__tests__/template.marko_2_input_on#0:4/subscribe", $wg__input_on);
 				return 0;
 			}
-		}, $scope1_id, "#text/1", 1, _write_guard($scope1_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope1_reason, 0);
+		}, $scope1_id, "#text/1", 1, _write_guard($scope1_reason, 0), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope1_reason, 0);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_note ? "__tests__/template.marko_1_input_note#0:3/init" : "__tests__/template.marko_1_input_note#0:3/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, {
 			depth: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope1_reason, 0)) && depth,

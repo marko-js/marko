@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_html(`<p>${_text_resume($scope0_id, "b", text)}</p>`);
 	_scope($scope0_id, { f: _write_if($scope0_reason, 0) && text });
 }, 1);

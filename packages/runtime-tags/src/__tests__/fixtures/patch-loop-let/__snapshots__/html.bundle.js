@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a0");
 		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "va1", votes, 1);
 		_scope($scope1_id, { h: votes });
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a2", $scope0_reason, 0);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_scope($scope0_id, {});
 }, 1);

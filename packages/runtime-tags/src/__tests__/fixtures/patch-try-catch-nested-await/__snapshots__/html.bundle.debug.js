@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<span>${_text_resume($scope3_id, "#text/0", err.message, 1, 4, 0)}</span>`);
 		_scope($scope3_id, {}, "__tests__/template.marko", "9:6");
-	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1, 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		"ClosureScopes:input_b/6": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_b__closures,

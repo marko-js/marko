@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<option${_attr_option_value(o.value, $scope1_id, "aa$value", $scope0_reason, 1)}>${_text_resume($scope1_id, "b", o.label, 1, $scope0_reason, 1)}</option>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 1))}`);
 			_scope($scope1_id, {});
-		}, (o) => o.id, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 1);
+		}, (o) => o.id, $scope0_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 1);
 		_html("</select>");
 	}, "n3a", $scope0_reason, 0);
 	_html(`${_el_resume($scope0_id, "a")}<select id=plain><option${_attr_option_value("a")}${_attr("selected", input.pick === "a", $scope0_id, "ab$selected", $scope0_reason, 2)}>A</option>${_el_resume($scope0_id, "b", _mask_group($scope0_reason, 2))}<option${_attr_option_value("b")}${_attr("selected", input.pick === "b", $scope0_id, "ac$selected", $scope0_reason, 2)}>B</option>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 2))}</select><em>${_text_resume($scope0_id, "d", count)}</em><button>+</button>${_el_resume($scope0_id, "e")}</main>`);

@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 		_patch_child_end();
 		_html("</p>");
 		_scope($scope1_id, { b: _existing_scope($childScope5) });
-	}, "id", $scope0_id, "e", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 1);
+	}, "id", $scope0_id, "e", 1, 1, 1, 0, 0, "a0", $scope0_reason, 1);
 	_html(`<button>${_text_resume($scope0_id, "g", count)}</button>${_el_resume($scope0_id, "f")}</main>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {

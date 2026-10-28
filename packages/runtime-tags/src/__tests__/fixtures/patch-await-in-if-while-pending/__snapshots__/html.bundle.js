@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 				$wi__input_show__OR__input_promise__OR__input_msg && _subscribe(_unfilled_if($scope0_reason, 3) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_promise && "a8", 0);
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a6"], $scope0_reason, 2);
+		}, $scope1_id, "a", 1, $wg__input_show, 1, 0, 0, ["a6"], $scope0_reason, 2);
 		_html(`</section>${_el_resume($scope1_id, "a", $wg__input_show)}`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_show ? "a9" : "a10");
 		$wi__input_show__OR__input_promise__OR__input_msg && _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_show && "a10", $wg__input_show);
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "a2", void 0, "a4", 1, void 0, 2);
+	}, void 0, "a2", void 0, "a4", 1, 0, 2);
 	_script($scope0_id, "a11");
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.promise,

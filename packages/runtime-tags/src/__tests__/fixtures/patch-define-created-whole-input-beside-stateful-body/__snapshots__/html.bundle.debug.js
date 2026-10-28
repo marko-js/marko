@@ -24,12 +24,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope4_id = _scope_id();
 					_html(`<em>${_text_resume($scope4_id, "#text/0", it.label, 1, $scope1_reason, 2)}</em>`);
 					_scope($scope4_id, {}, "__tests__/template.marko", "4:6");
-				}, 0, $scope3_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_4*shell", $scope1_reason, 2);
+				}, 0, $scope3_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_4*shell", $scope1_reason, 2);
 				_html(`<span>${_text_resume($scope3_id, "#text/1", Object.keys(attrs).length, 1, $scope1_reason, 0)}</span>`);
 				_scope($scope3_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__attrs_isOpen, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
+		}, $scope1_id, "#text/0", 1, $wg__attrs_isOpen, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
 		_client_guard($scope1_reason, 1) && _patch_write($scope1_id, "PatchWrite:attrs_item", attrs?.item, 1);
 		_write_if($scope1_reason, 1) && _scope($scope1_id, { attrs_item: _unfilled_if($scope1_reason, 1) && attrs?.item }, "__tests__/template.marko", "2:2", { attrs_item: ["attrs.item", "2:15"] });
 	}, $scope0_id) };
@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "10:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
 	const Tag = input.other ? "div" : Panel;
 	_dynamic_tag($scope0_id, "#text/1", Tag, {
 		isOpen: !open,

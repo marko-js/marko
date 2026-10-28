@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						}, "__tests__/template.marko", "7:8"));
 						return 1;
 					}
-				}, $scope2_id, "#text/0", 1, $wg__input_items, void 0, void 0, void 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_4*shell"], $scope0_reason, 0);
+				}, $scope2_id, "#text/0", 1, $wg__input_items, 1, 0, 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_4*shell"], $scope0_reason, 0);
 				$cg__input_items && _patch_init($scope2_id, "__tests__/template.marko_2_item_alt#1:4/init");
 				$wi__input_items && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
 				$wg__input_items || $wi__input_items && _resume_branch($scope2_id);
@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:item_alt/6": $wi__input_items && _unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "2:4");
-	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

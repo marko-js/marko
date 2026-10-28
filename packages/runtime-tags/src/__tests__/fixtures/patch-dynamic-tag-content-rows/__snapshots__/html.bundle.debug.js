@@ -22,7 +22,7 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 		_html("</li>");
 		_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/tags/layout.marko_1_input_row#0:11/init");
 		_scope($scope1_id, { _: _write_if($scope0_reason, 4) && _scope_with_id($scope0_id) }, "__tests__/tags/layout.marko", "6:6");
-	}, 0, $scope0_id, "#ul/3", 1, void 0, void 0, void 0, void 0, "__tests__/tags/layout.marko_1*shell", $scope0_reason, 3);
+	}, 0, $scope0_id, "#ul/3", 1, 1, 1, 0, 0, "__tests__/tags/layout.marko_1*shell", $scope0_reason, 3);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/3")}<ol>`);
 	_for_of(input.rows, (n) => {
 		const $scope2_id = _scope_id();
@@ -31,7 +31,7 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 		_html("</li>");
 		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/layout.marko_2_input_content#0:8/init");
 		_scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/layout.marko", "11:6");
-	}, 0, $scope0_id, "#ol/4", 1, void 0, void 0, void 0, void 0, "__tests__/tags/layout.marko_2*shell", $scope0_reason, 3);
+	}, 0, $scope0_id, "#ol/4", 1, 1, 1, 0, 0, "__tests__/tags/layout.marko_2*shell", $scope0_reason, 3);
 	_html(`</ol>${_el_resume($scope0_id, "#ol/4")}</main>`);
 	_scope($scope0_id, {
 		input_content: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1)) && input.content,

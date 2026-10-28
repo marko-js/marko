@@ -34,7 +34,7 @@ var b_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("Loading");
-	}, void 0, "b1", void 0, "b3", 1, void 0, 2);
+	}, void 0, "b1", void 0, "b3", 1, 0, 2);
 	_script($scope0_id, "b6");
 	_scope($scope0_id, { f: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 });

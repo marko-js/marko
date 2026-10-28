@@ -23,6 +23,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope2_id, "#text/0", Tag, { content: Body }, 1, 0, 0, $wg__input_items, $scope0_reason, 0);
 		_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_Body#0:4_Tag#4/init");
 		_write_if($scope0_reason, 0) && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2");
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
 	_scope($scope0_id, { Body: _unfilled_if($scope0_reason, 0) && Body }, "__tests__/template.marko", 0, { Body: "1:9" });
 }, 1);

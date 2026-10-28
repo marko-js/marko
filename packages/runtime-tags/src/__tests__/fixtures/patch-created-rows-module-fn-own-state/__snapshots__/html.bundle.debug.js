@@ -35,7 +35,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 				_scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) }, "__tests__/tags/rowsx.marko", "4:4");
 				return 0;
 			}
-		}, $scope2_id, "#text/0", 1, $wg__isOpen, void 0, void 0, void 0, ["__tests__/tags/rowsx.marko_3*shell"], $scope2_reason, 4);
+		}, $scope2_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/tags/rowsx.marko_3*shell"], $scope2_reason, 4);
 		_write_if($scope2_reason, 3) && _scope($scope2_id, {
 			fmt: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 4)) && fmt,
 			label: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 4) || _unfilled_if($scope2_reason, 6)) && label
@@ -61,7 +61,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/tags/rowsx.marko", "8:2", { x: "8:6" });
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/rowsx.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/rowsx.marko_1*shell", $scope0_reason, 0);
 	_html(`<button class=l>l</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/rowsx.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/rowsx.marko_fill1", suffix, 1);
@@ -103,7 +103,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_open: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.open,
 		input_items: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.items

@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope4_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "b", 1, $wg__input_x, void 0, void 0, void 0, ["a4"], $scope0_reason, 4);
+		}, $scope1_id, "b", 1, $wg__input_x, 1, 0, 0, ["a4"], $scope0_reason, 4);
 		$cg__input_x && _patch_write($scope1_id, "wg", g, 1);
 		$cg__input_x && _patch_init($scope1_id, "a9");
 		$cg__input_a && _patch_init($scope1_id, "a10");
@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 			g: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && g,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a7", $scope0_reason, 3);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a7", $scope0_reason, 3);
 	_await($scope0_id, "b", input.value, (v) => {
 		const $scope3_id = _scope_id();
 		_html(`<b>${_text_resume($scope3_id, "a", v, 1, $scope0_reason, 5)}${_text_resume($scope3_id, "b", f(), 2, $scope0_reason, 2)}</b>`);
@@ -84,7 +84,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope5_id, { _: _write_if($scope2_reason, 0) && _scope_with_id($scope2_id) });
 				return 0;
 			}
-		}, $scope2_id, "a", 1, $wg__input_x, void 0, void 0, void 0, ["a8"], $scope0_reason, 4);
+		}, $scope2_id, "a", 1, $wg__input_x, 1, 0, 0, ["a8"], $scope0_reason, 4);
 		$wi__input_x && _subscribe(_unfilled_if($scope0_reason, 4) && $input_x__closures, _scope($scope2_id, {
 			d: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope2_reason, 0)) && v,
 			e: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope2_reason, 0)) && h,

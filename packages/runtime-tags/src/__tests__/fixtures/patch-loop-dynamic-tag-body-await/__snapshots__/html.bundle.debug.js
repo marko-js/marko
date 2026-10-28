@@ -64,11 +64,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_rows ? "__tests__/template.marko_2_row_card#1:4/init" : "__tests__/template.marko_2_row_card#1:4/subscribe");
 			$wi__input_rows && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_card__closures, _scope($scope2_id, { "ClosureScopes:v/8": $await_content__v__closures }, "__tests__/template.marko", "3:4"), $cg__input_rows && "__tests__/template.marko_2_row_card#1:4/subscribe", $wg__input_rows);
 			$wg__input_rows || $wi__input_rows && _resume_branch($scope2_id);
-		}, 1, "__tests__/template.marko_2*content", void 0, 1);
+		}, 1, "__tests__/template.marko_2*content", 0, 1);
 		$wi__input_rows && _scope($scope1_id, {
 			"ClosureScopes:row_label/7": $for_content__row_label__closures,
 			"ClosureScopes:row_card/6": _unfilled_if($scope0_reason, 0) && $for_content__row_card__closures
 		}, "__tests__/template.marko", "2:2");
-	}, "id", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

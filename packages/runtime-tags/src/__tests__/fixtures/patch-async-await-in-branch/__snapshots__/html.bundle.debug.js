@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_write_if($scope0_reason, 2) && _scope($scope2_id, {}, "__tests__/template.marko", "9:4");
 			return 1;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_1*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 2);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/template.marko_1*shell", "__tests__/template.marko_2*shell"], $scope0_reason, 2);
 	_html(`<button>Count ${_text_resume($scope0_id, "#text/3", count, 2)}</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

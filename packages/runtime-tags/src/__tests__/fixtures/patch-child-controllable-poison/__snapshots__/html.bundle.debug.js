@@ -28,7 +28,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 			});
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/counter/index.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/counter/index.marko_1*shell"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_onCount: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.onCount,
 		input_step: input.step
@@ -69,7 +69,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "6:4");
-	}, 0, $scope0_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", 0, 0);
+	}, 0, $scope0_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", 0, 0);
 	_html("</main>");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

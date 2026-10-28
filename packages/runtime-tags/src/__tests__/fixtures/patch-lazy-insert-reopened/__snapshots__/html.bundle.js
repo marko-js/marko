@@ -34,7 +34,7 @@ var template_default = _template("b", (input) => {
 			_scope($scope2_id, { b: _existing_scope($childScope) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b0"], $scope0_reason, 0);
 	_if(() => {}, $scope0_id, "c");
 	_script($scope0_id, "b1");
 	_scope($scope0_id, {

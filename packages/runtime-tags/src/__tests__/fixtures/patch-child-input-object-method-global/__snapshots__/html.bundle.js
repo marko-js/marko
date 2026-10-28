@@ -28,7 +28,7 @@ var code_block_default = _template("b", (input) => {
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $wg__input_text_length, void 0, void 0, void 0, ["b3", "b4"], $scope0_reason, 3);
+	}, $scope0_id, "a", 1, $wg__input_text_length, 1, 0, 0, ["b3", "b4"], $scope0_reason, 3);
 	_fill_global_subscribe("b5", $scope0_id);
 	_filled_guard($scope0_reason, 2) && $cg__input_text_length ? _patch_fill($scope0_id, "vb6", input.text) : _client_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && _patch_write($scope0_id, "xe", input.text, !(_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1)));
 	_filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && $cg__input_text_length ? _patch_fill($scope0_id, "vb7", highlight) : $cg__input_text && _patch_write($scope0_id, "xg", highlight, !(_filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && $cg__input_text));

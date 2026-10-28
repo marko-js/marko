@@ -51,13 +51,13 @@ var template_default = _template("a", (input) => {
 					}), $cg__input_label && "a3");
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $wg__input_b, void 0, void 0, void 0, ["a4"], $scope0_reason, 4);
+			}, $scope1_id, "a", 1, $wg__input_b, 1, 0, 0, ["a4"], $scope0_reason, 4);
 			_html(`</div>${_el_resume($scope1_id, "a", $wg__input_b)}`);
 			_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "a6");
 			$wi__input_a__OR__input_b__OR__input_label__OR__input_text && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_a, void 0, void 0, void 0, ["a5"], $scope0_reason, 3);
+	}, $scope0_id, "a", 1, $wg__input_a, 1, 0, 0, ["a5"], $scope0_reason, 3);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_a)}`);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.b,

@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:row_label/8": _write_if($scope0_reason, 2) && $for_content__row_label__closures
 		}, "__tests__/template.marko", "3:2", { row_label: ["row.label", "3:6"] });
-	}, "id", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 2);
+	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_wrap: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.wrap,
 		input_suffix: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.suffix,

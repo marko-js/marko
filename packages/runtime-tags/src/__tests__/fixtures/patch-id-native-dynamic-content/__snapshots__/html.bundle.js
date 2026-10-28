@@ -20,6 +20,6 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope2_id, "a", Tag, { content: Body }, 1, 0, 0, $wg__input_items, $scope0_reason, 0);
 		_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a1");
 		_write_if($scope0_reason, 0) && _scope($scope2_id, { _: _scope_with_id($scope0_id) });
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a2", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
 	_scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && Body });
 }, 1);

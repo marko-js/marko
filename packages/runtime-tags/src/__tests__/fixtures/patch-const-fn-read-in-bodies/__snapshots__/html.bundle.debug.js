@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope4_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/1", 1, $wg__input_x, void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 4);
+		}, $scope1_id, "#text/1", 1, $wg__input_x, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 4);
 		$cg__input_x && _patch_write($scope1_id, "PatchWrite:g", g, 1);
 		$cg__input_x && _patch_init($scope1_id, "__tests__/template.marko_1_input_x#0:8/init");
 		$cg__input_a && _patch_init($scope1_id, "__tests__/template.marko_1_f#0:10/init");
@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			v: "3:10",
 			g: "4:10"
 		});
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 3);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 3);
 	_await($scope0_id, "#text/1", input.value, (v) => {
 		const $scope3_id = _scope_id();
 		_html(`<b>${_text_resume($scope3_id, "#text/0", v, 1, $scope0_reason, 5)}${_text_resume($scope3_id, "#text/1", f(), 2, $scope0_reason, 2)}</b>`);
@@ -90,7 +90,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope5_id, { _: _write_if($scope2_reason, 0) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "11:4");
 				return 0;
 			}
-		}, $scope2_id, "#text/0", 1, $wg__input_x, void 0, void 0, void 0, ["__tests__/template.marko_5*shell"], $scope0_reason, 4);
+		}, $scope2_id, "#text/0", 1, $wg__input_x, 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope0_reason, 4);
 		$wi__input_x && _subscribe(_unfilled_if($scope0_reason, 4) && $input_x__closures, _scope($scope2_id, {
 			v: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope2_reason, 0)) && v,
 			h: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope2_reason, 0)) && h,

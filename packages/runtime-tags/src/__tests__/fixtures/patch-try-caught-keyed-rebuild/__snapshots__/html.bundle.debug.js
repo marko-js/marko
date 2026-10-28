@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_scope($scope4_id, {}, "__tests__/template.marko", "10:8");
 					return 0;
 				}
-			}, $scope2_id, "#text/3", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 0);
+			}, $scope2_id, "#text/3", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_pages ? "__tests__/template.marko_2_page_title#1:3/init" : "__tests__/template.marko_2_page_title#1:3/subscribe");
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_pages ? "__tests__/template.marko_2_page_fail#1:4/init" : "__tests__/template.marko_2_page_fail#1:4/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__page_fail__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__page_title__closures, _scope($scope2_id, {
@@ -61,12 +61,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_html("caught");
-		}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", void 0, void 0, 1);
+		}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content", 0, 0, 1);
 		$wi__input_pages && _scope($scope1_id, {
 			"ClosureScopes:page_title/5": _unfilled_if($scope0_reason, 0) && $for_content__page_title__closures,
 			"ClosureScopes:page_fail/6": _unfilled_if($scope0_reason, 0) && $for_content__page_fail__closures
 		}, "__tests__/template.marko", "6:4");
-	}, "key", $scope0_id, "#main/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, "key", $scope0_id, "#main/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "#main/0")}`);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

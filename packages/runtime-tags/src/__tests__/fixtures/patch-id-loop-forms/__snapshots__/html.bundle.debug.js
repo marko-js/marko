@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "2:2");
-	}, 0, $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 2);
+	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 2);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		_set_scope_reason(0);
@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "3:2");
-	}, "key", $scope0_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
+	}, "key", $scope0_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
 	_for_in(input.record, (key, value) => {
 		const $scope3_id = _scope_id();
 		_set_scope_reason(0);
@@ -63,7 +63,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_scope($scope3_id, { "#childScope/0": _existing_scope($childScope3) }, "__tests__/template.marko", "4:2");
-	}, 0, $scope0_id, "#text/3", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
+	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
 	_for_in(input.record, (key, value) => {
 		const $scope4_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 3) << 3);
@@ -74,7 +74,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_scope($scope4_id, { "#childScope/0": _existing_scope($childScope4) }, "__tests__/template.marko", "5:2");
-	}, (key) => "key-" + key, $scope0_id, "#text/4", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_4*shell", $scope0_reason, 3);
+	}, (key) => "key-" + key, $scope0_id, "#text/4", 1, 1, 1, 0, 0, "__tests__/template.marko_4*shell", $scope0_reason, 3);
 	_for_to(input.end, input.start, 1, (i) => {
 		const $scope5_id = _scope_id();
 		_set_scope_reason(0);
@@ -85,7 +85,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_scope($scope5_id, { "#childScope/0": _existing_scope($childScope5) }, "__tests__/template.marko", "6:2");
-	}, 0, $scope0_id, "#text/5", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_5*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/5", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 0);
 	_for_to(input.end, input.start, 1, (i) => {
 		const $scope6_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
@@ -96,7 +96,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_scope($scope6_id, { "#childScope/0": _existing_scope($childScope6) }, "__tests__/template.marko", "7:2");
-	}, (i) => "to-" + i, $scope0_id, "#text/6", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_6*shell", $scope0_reason, 0);
+	}, (i) => "to-" + i, $scope0_id, "#text/6", 1, 1, 1, 0, 0, "__tests__/template.marko_6*shell", $scope0_reason, 0);
 	_for_until(input.end, input.start, 2, (i) => {
 		const $scope7_id = _scope_id();
 		_set_scope_reason(0);
@@ -107,7 +107,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_scope($scope7_id, { "#childScope/0": _existing_scope($childScope7) }, "__tests__/template.marko", "8:2");
-	}, 0, $scope0_id, "#text/7", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_7*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/7", 1, 1, 1, 0, 0, "__tests__/template.marko_7*shell", $scope0_reason, 0);
 	_for_until(input.end, input.start, 2, (i) => {
 		const $scope8_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
@@ -118,7 +118,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_scope($scope8_id, { "#childScope/0": _existing_scope($childScope8) }, "__tests__/template.marko", "9:2");
-	}, (i) => "until-" + i, $scope0_id, "#text/8", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_8*shell", $scope0_reason, 0);
+	}, (i) => "until-" + i, $scope0_id, "#text/8", 1, 1, 1, 0, 0, "__tests__/template.marko_8*shell", $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_end: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.end,
 		input_start: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 5)) && input.start,

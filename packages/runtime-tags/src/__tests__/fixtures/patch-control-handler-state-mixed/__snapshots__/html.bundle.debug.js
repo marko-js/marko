@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			it_v: ["it.v", "4:6"],
 			"ControlledHandler:#input/0": ["valueChange", "6:28"]
 		});
-	}, "id", $scope0_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
+	}, "id", $scope0_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_a: input.a,

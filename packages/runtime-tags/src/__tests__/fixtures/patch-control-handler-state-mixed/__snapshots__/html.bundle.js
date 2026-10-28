@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			e: it?.v,
 			_: _scope_with_id($scope0_id)
 		});
-	}, "id", $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "a4", $scope0_reason, 1);
+	}, "id", $scope0_id, "c", 1, 1, 1, 0, 0, "a4", $scope0_reason, 1);
 	_script($scope0_id, "a5");
 	_scope($scope0_id, {
 		f: input.a,

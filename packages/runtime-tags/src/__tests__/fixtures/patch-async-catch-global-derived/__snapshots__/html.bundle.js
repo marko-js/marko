@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		_html(`<p>${_text_resume($scope2_id, "a", tag, $scope2_page)}</p>`);
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 		$scope2_page || _resume_branch($scope2_id);
-	}, void 0, "a5", "a2", 1);
+	}, 0, "a5", "a2", 1);
 	_html(`<button>${_text_resume($scope0_id, "c", n)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_fill_global_subscribe("a6", $scope0_id);
 	_script($scope0_id, "a7");

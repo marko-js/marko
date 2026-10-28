@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		row_default({ item });
 		_patch_child_end();
 		_scope($scope1_id, { a: _existing_scope($childScope) });
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 0);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});

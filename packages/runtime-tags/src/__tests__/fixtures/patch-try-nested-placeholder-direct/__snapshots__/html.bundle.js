@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("outer");
-	}, void 0, "a3", void 0, "a6", 1, void 0, 2);
+	}, void 0, "a3", void 0, "a6", 1, 0, 2);
 	_html("</main>");
 	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 1);

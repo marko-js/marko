@@ -19,7 +19,7 @@ var tabs2_default = _template("b", (input) => {
 			$wi__input_tab_on && _scope($scope2_id, {});
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $wg__input_tab_on, void 0, void 0, void 0, ["b0", "b1"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_tab_on, 1, 0, 0, ["b0", "b1"], $scope0_reason, 0);
 	_scope($scope0_id, {});
 });
 

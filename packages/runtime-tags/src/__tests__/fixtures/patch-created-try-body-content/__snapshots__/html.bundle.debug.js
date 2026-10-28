@@ -31,7 +31,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, 0, $wg__input_content);
 		_subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/wrapper.marko", "7:4"), "__tests__/tags/wrapper.marko_1_input_content#0:3/subscribe", $wg__input_content);
 		$wg__input_content || _resume_branch($scope1_id);
-	}, void 0, "__tests__/tags/wrapper.marko_1*content", "__tests__/tags/wrapper.marko_2*content", 1);
+	}, 0, "__tests__/tags/wrapper.marko_1*content", "__tests__/tags/wrapper.marko_2*content", 1);
 	_scope($scope0_id, {
 		input_content: input.content,
 		"ClosureScopes:input_content/5": $wi__input_content && $input_content__closures,
@@ -89,7 +89,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "5:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 2);
+	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 2);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_label: input.label,

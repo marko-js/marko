@@ -14,7 +14,7 @@ var menu_default = _template("b", (input) => {
 		_html(`<button${_attr_class("b" + it.id, $scope1_id, "aa$class", $scope0_reason, 0)}>${_text_resume($scope1_id, "b", it.label, 1, $scope0_reason, 0)}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 0), "f");
 		_scope($scope1_id, { f: it?.onPick });
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b1", $scope0_reason, 0);
 	_scope($scope0_id, {});
 });
 

@@ -30,7 +30,7 @@ var view_default = _template("__tests__/tags/view.marko", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/view.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/view.marko_1*shell"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_x: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.x,
 		input_y: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.y

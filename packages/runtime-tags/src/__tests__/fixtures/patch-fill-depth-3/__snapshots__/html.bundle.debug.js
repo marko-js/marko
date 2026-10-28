@@ -29,17 +29,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							"#LoopKey": item,
 							_: _scope_with_id($scope2_id)
 						}, "__tests__/template.marko", "5:8", { "#LoopKey": "5:12" }), _client_guard($scope0_reason, 4) && "__tests__/template.marko_3_input_suffix#0:7/subscribe"), "__tests__/template.marko_3_count#0:8/subscribe");
-					}, (item) => item, $scope2_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
+					}, (item) => item, $scope2_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
 					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_items ? "__tests__/template.marko_2_input_items#0:6/init" : "__tests__/template.marko_2_input_items#0:6/subscribe");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), $cg__input_items && "__tests__/template.marko_2_input_items#0:6/subscribe");
 					return 0;
 				}
-			}, $scope1_id, "#text/0", 1, $wg__input_inner, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
+			}, $scope1_id, "#text/0", 1, $wg__input_inner, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_inner#0:5/init");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

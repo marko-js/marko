@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a3", $scope0_reason, 2);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a3", $scope0_reason, 2);
 	_html("<button>noop</button>");
 	_scope($scope0_id, {
 		d: input.title,

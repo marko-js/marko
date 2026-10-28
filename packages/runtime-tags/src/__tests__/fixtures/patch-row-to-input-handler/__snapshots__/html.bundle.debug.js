@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#LoopKey": i,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", { "#LoopKey": "2:6" });
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`<p>${_text_resume($scope0_id, "#text/1", count)}</p>`);
 	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

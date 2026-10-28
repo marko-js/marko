@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_patch_child_end();
 				_html(`<p>${_text_resume($scope3_id, "#text/2", count)}</p>`);
 				_scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:25");
-			}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content");
+			}, 0, "__tests__/template.marko_3*content", "__tests__/template.marko_2*content");
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}

@@ -12,7 +12,7 @@ var menu_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", it, {}, 2, 0, 0, $wg__input_item, $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b0", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b0", $scope0_reason, 0);
 	_scope($scope0_id, {});
 });
 

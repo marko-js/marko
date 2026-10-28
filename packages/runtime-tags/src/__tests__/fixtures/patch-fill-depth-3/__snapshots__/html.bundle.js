@@ -26,17 +26,17 @@ var template_default = _template("a", (input) => {
 							M: item,
 							_: _scope_with_id($scope2_id)
 						}), _client_guard($scope0_reason, 4) && "a0"), "a1");
-					}, (item) => item, $scope2_id, "a", 1, void 0, void 0, void 0, void 0, "a2", $scope0_reason, 3);
+					}, (item) => item, $scope2_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 3);
 					_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_items ? "a5" : "a6");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_items && "a6");
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $wg__input_inner, void 0, void 0, void 0, ["a4"], $scope0_reason, 2);
+			}, $scope1_id, "a", 1, $wg__input_inner, 1, 0, 0, ["a4"], $scope0_reason, 2);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a7");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a3"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a3"], $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {

@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 							}), $cg__input_html && "a1");
 							return 0;
 						}
-					}, $scope2_id, "a", 1, $wg__input_html, void 0, void 0, void 0, ["a2"], $scope0_reason, 2);
+					}, $scope2_id, "a", 1, $wg__input_html, 1, 0, 0, ["a2"], $scope0_reason, 2);
 					_if(() => {
 						if (input.html) {
 							const $scope4_id = _scope_id();
@@ -41,18 +41,18 @@ var template_default = _template("a", (input) => {
 							}), $cg__input_html && "a7");
 							return 0;
 						}
-					}, $scope2_id, "b", 1, $wg__input_html, void 0, void 0, void 0, ["a5"], $scope0_reason, 2);
+					}, $scope2_id, "b", 1, $wg__input_html, 1, 0, 0, ["a5"], $scope0_reason, 2);
 					_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_html ? "a8" : "a9");
 					$wi__input_show__OR__input_html && _subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_html && "a9", $wg__input_html);
 					return 0;
 				}
-			}, $scope1_id, "c", 1, $wg__input_show, void 0, void 0, void 0, ["a4"], $scope0_reason, 1);
+			}, $scope1_id, "c", 1, $wg__input_show, 1, 0, 0, ["a4"], $scope0_reason, 1);
 			$cg__input_show && _patch_init($scope1_id, "a10");
 			$cg__input_html && _patch_init($scope1_id, "a11");
 			_scope($scope1_id, { _: $wi__input_show__OR__input_html && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a3"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a3"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.html,

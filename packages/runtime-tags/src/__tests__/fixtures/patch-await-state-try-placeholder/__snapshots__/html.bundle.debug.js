@@ -33,11 +33,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope4_reason = _scope_reason();
 				const $scope4_id = _scope_id();
 				_html("loading");
-			}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_2*content", void 0, void 0, 2);
+			}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_2*content", 0, 0, 2);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_label: _write_if($scope0_reason, 1) && input.label,

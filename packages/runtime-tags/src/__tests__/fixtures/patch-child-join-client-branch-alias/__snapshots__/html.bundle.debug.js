@@ -18,7 +18,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 4), void 0, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 4);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 4), 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 4);
 	_scope($scope0_id, {
 		input_a: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.a,
 		input_b: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.b

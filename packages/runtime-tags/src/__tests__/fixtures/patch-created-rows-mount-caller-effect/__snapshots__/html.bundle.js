@@ -14,7 +14,7 @@ var list_default = _template("b", (input) => {
 		_html(`<i>${_text_resume($scope1_id, "a", it.label, 1, $scope0_reason, 0)}</i>`);
 		_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 0), "d");
 		_scope($scope1_id, { d: it?.label });
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b1", $scope0_reason, 0);
 	_scope($scope0_id, {});
 });
 

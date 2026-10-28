@@ -19,7 +19,7 @@ var frame_default = _template("__tests__/tags/frame.marko", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frame.marko", "2:11");
 			return 0;
 		}
-	}, $scope0_id, "#section/0", 1, 0, void 0, void 0, void 0, ["__tests__/tags/frame.marko_1*shell"], 0, 0);
+	}, $scope0_id, "#section/0", 1, 0, 1, 0, 0, ["__tests__/tags/frame.marko_1*shell"], 0, 0);
 	_html("</section>");
 });
 

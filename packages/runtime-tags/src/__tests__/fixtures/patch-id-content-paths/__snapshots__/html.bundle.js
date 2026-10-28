@@ -48,7 +48,7 @@ var leaf_default = _template("d", (input) => {
 			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, 0, void 0, void 0, void 0, ["d0"], 0, 0);
+	}, $scope0_id, "a", 1, 0, 1, 0, 0, ["d0"], 0, 0);
 });
 
 // tags/nested.marko
@@ -98,7 +98,7 @@ var template_default = _template("a", (input) => {
 			const $scope5_id = _scope_id();
 			_dynamic_tag($scope5_id, "a", item, {}, 10, 0, 0, $wg__items, $scope4_reason, 0);
 			_write_if($scope4_reason, 0) && _scope($scope5_id, {});
-		}, 0, $scope4_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope4_reason, 0);
+		}, 0, $scope4_id, "a", 1, 1, 1, 0, 0, "a1", $scope4_reason, 0);
 		_scope($scope4_id, {});
 	}, $scope0_id) };
 	_if(() => {
@@ -119,7 +119,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, { a: _existing_scope($childScope3) });
 			return 1;
 		}
-	}, $scope0_id, "a", 1, $wg__input_flip, void 0, void 0, void 0, ["a4", "a5"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_flip, 1, 0, 0, ["a4", "a5"], $scope0_reason, 0);
 	_dynamic_tag($scope0_id, "b", input.flip ? field_default : "section", { name: "dynamic" }, 33, _content_resume("a3", () => {
 		const $scope6_id = _scope_id();
 		_scope_reason();

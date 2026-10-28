@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
+	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a2"], $scope0_reason, 0);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, { g: n });
 }, 1);

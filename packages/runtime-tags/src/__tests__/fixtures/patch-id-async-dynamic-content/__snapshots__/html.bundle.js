@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 				_patch_join_init($scope3_id, "a2", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">>>e", _filled_guard($scope0_reason, 1) && "c");
 				$wi__input_items__OR__input_loaded && _subscribe(_unfilled_if($scope0_reason, 2) && $input_loaded__closures, _scope($scope3_id, { c: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && ready }), $cg__input_loaded && "a1", $wg__input_items__OR__input_loaded);
 				$wg__input_items__OR__input_loaded || $wi__input_items__OR__input_loaded && _resume_branch($scope3_id);
-			}, 1, "a3", void 0, 1);
+			}, 1, "a3", 0, 1);
 			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_items ? "a7" : "a8");
 			$wi__input_items__OR__input_loaded && _subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_items && "a8", 0);
 			$wi__input_items__OR__input_loaded && _resume_branch($scope2_id);
@@ -84,7 +84,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			g: _write_if($scope0_reason, 1) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && $for_content__item_promise__closures
 		});
-	}, "key", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a6", $scope0_reason, 1);
+	}, "key", $scope0_id, "a", 1, 1, 1, 0, 0, "a6", $scope0_reason, 1);
 	_filled_guard($scope0_reason, 2) && $cg__input_items && _patch_fill($scope0_id, "va10", input.loaded);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.loaded,

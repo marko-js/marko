@@ -20,7 +20,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 			i,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/child.marko", "3:2", { i: "3:6" });
-	}, 0, $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/child.marko_1*shell", 0, 0);
+	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/child.marko_1*shell", 0, 0);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill0", count, 1);
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "6:4");
 			return 0;
 		}
-	}, $scope0_id, "#main/2", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#main/2", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "#main/2", $wg__input_show)}<p>${_text_resume($scope0_id, "#text/3", input.label, 1, $scope0_reason, 1)}</p>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

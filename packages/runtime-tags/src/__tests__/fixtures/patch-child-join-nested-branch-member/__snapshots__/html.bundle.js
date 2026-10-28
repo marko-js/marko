@@ -23,13 +23,13 @@ var panel_default = _template("b", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 4) && $input_b__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_b && _scope_with_id($scope1_id) }), $cg__input_b && "b1");
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b2"], $scope0_reason, 3);
+			}, $scope1_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2"], $scope0_reason, 3);
 			_html(`</div>${_el_resume($scope1_id, "a", $wg__input_show)}`);
 			$cg__input_show && _patch_init($scope1_id, "b4");
 			$wi__input_show__OR__input_b && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b3"], $scope0_reason, 3);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b3"], $scope0_reason, 3);
 	_html(`<p>${_text_resume($scope0_id, "b", input.a + ":" + input.b, 1, $scope0_reason, 2)}</p>`);
 	$cg__input_b && _patch_write($scope0_id, "xg", input.a, !(_filled_guard($scope0_reason, 5) && $cg__input_b));
 	_patch_join_init($scope0_id, "b6", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && "f", _filled_guard($scope0_reason, 5) && "g");

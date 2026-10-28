@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope4_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:4");
 				return 0;
 			}
-		}, $scope2_id, "#text/0", 1, $wg__isOpen, void 0, void 0, void 0, ["__tests__/template.marko_4*shell"], $scope2_reason, 0);
+		}, $scope2_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope2_reason, 0);
 		_script($scope2_id, "__tests__/template.marko_2_text#4", $wg__isOpen, _filled_guard($scope2_reason, 1), "text");
 		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill1", n, 1);
 		_scope($scope2_id, {
@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope5_id, { _: _write_if($scope3_reason, 1) && _scope_with_id($scope3_id) }, "__tests__/template.marko", "9:4");
 				return 0;
 			}
-		}, $scope3_id, "#text/1", 1, _write_guard($scope3_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_5*shell"], $scope3_reason, 0);
+		}, $scope3_id, "#text/1", 1, _write_guard($scope3_reason, 0), 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope3_reason, 0);
 		_client_guard($scope3_reason, 0) && _patch_write($scope3_id, "PatchWrite:label", label, 1);
 		_scope($scope3_id, {
 			label: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 1)) && label,
@@ -82,7 +82,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "11:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	const T = open ? "div" : Outer;
 	_dynamic_tag($scope0_id, "#text/1", T, {
 		on: !open,

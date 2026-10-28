@@ -16,7 +16,7 @@ var b_tag_default = _template("c", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_n, void 0, void 0, void 0, ["c1"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_n, 1, 0, 0, ["c1"], $scope0_reason, 0);
 	_scope($scope0_id, {});
 });
 

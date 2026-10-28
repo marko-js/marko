@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_resume($scope2_id, "a", err.message, 1, 4, 0)}</b>`);
 		_scope($scope2_id, {});
-	}, void 0, "a4", "a5", 1, 1, 1);
+	}, 0, "a4", "a5", 1, 1, 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_message__closures,

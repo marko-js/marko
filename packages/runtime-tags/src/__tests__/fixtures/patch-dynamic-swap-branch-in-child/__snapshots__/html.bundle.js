@@ -32,7 +32,7 @@ var w_default = _template("b", (input) => {
 				$wi__input_show && _scope($scope4_id, {});
 				return 1;
 			}
-		}, $scope1_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b1", "b4"], $scope0_reason, 2);
+		}, $scope1_id, "a", 1, $wg__input_show, 1, 0, 0, ["b1", "b4"], $scope0_reason, 2);
 		$cg__input_show && _patch_init($scope1_id, "b7");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, {
 			d: x,
@@ -58,7 +58,7 @@ var w_default = _template("b", (input) => {
 				$wi__input_show && _scope($scope6_id, {});
 				return 1;
 			}
-		}, $scope2_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["b5", "b6"], $scope0_reason, 2);
+		}, $scope2_id, "a", 1, $wg__input_show, 1, 0, 0, ["b5", "b6"], $scope0_reason, 2);
 		$cg__input_show && _patch_init($scope2_id, "b9");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope2_id, {
 			d: x,

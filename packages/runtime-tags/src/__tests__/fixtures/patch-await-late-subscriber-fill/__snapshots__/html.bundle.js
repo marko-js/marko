@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "a2", void 0, "a5", 1, void 0, 2);
+	}, void 0, "a2", void 0, "a5", 1, 0, 2);
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {
 		g: input.label,

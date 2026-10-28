@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 			e: rest,
 			_: _scope_with_id($scope0_id)
 		});
-	}, (item) => item.id, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 0);
+	}, (item) => item.id, $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, { f: count });

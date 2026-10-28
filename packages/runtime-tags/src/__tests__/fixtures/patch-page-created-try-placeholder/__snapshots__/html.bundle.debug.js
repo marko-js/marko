@@ -40,7 +40,7 @@ var b_default = _template("__tests__/b.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("Loading");
-	}, void 0, "__tests__/b.marko_2*content", void 0, "__tests__/b.marko_1*content", 1, void 0, 2);
+	}, void 0, "__tests__/b.marko_2*content", void 0, "__tests__/b.marko_1*content", 1, 0, 2);
 	_script($scope0_id, "__tests__/b.marko_0");
 	_scope($scope0_id, { "ClosureScopes:input_promise/5": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures }, "__tests__/b.marko", 0);
 });

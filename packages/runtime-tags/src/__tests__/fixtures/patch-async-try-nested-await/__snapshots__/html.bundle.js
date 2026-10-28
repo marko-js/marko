@@ -31,13 +31,13 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("<em>inner</em>");
-		}, void 0, "a1", "a4", 1, void 0, 1);
+		}, 0, "a1", "a4", 1, 0, 1);
 		$wi__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, void 0, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>outer</em>");
-	}, void 0, "a2", "a5", 1, void 0, 1);
+	}, 0, "a2", "a5", 1, 0, 1);
 	_html("</main>");
 	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
 }, 1);

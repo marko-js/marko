@@ -21,9 +21,9 @@ var child_default = _template("b", (input) => {
 				$wi__input_button && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_button, void 0, void 0, void 0, ["b1"], $scope0_reason, 0);
+		}, $scope1_id, "a", 1, $wg__input_button, 1, 0, 0, ["b1"], $scope0_reason, 0);
 		$wi__input_button && _scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b2", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b2", $scope0_reason, 0);
 	_html(`</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b3");
 	_scope($scope0_id, {});

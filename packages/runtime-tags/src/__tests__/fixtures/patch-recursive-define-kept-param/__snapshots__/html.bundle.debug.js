@@ -71,7 +71,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, "__tests__/template.marko", "2:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, _write_guard($scope1_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope1_reason, 0);
+		}, $scope1_id, "#text/0", 1, _write_guard($scope1_reason, 0), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope1_reason, 0);
 		_set_scope_reason(_mask_group($scope1_reason, 2) << 1);
 		const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 		keeper_default({ content });

@@ -56,11 +56,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope1_id),
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/template.marko", "5:4");
-		}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", void 0, 1, 1);
+		}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content", 0, 1, 1);
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:row_promise/7": $wi__input_rows && _unfilled_if($scope0_reason, 0) && $for_content__row_promise__closures
 		}, "__tests__/template.marko", "2:2");
-	}, "key", $scope0_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, "key", $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, { heading }, "__tests__/template.marko", 0, { heading: "1:5" });
 }, 1);

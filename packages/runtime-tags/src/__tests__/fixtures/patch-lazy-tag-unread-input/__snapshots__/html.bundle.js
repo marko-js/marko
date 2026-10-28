@@ -43,7 +43,7 @@ var template_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "e", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["b1"], $scope0_reason, 1);
+	}, $scope0_id, "e", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["b1"], $scope0_reason, 1);
 	_script($scope0_id, "b2");
 	_scope($scope0_id, {
 		j: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.user2,

@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 				_write_if($scope1_reason, 0) && _scope($scope4_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "b", 1, _write_guard($scope1_reason, 1), void 0, void 0, void 0, ["a0"], $scope1_reason, 1);
+		}, $scope1_id, "b", 1, _write_guard($scope1_reason, 1), 1, 0, 0, ["a0"], $scope1_reason, 1);
 		_html("</p>");
 		_client_guard($scope1_reason, 1) && _patch_write($scope1_id, "wf", content, 1);
 		_scope($scope1_id, { f: _unfilled_if($scope1_reason, 1) && content });
@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 			}, 25, 0, 0, $wg__input_rows, $scope0_reason, 0);
 			$cg__input_rows && _patch_init($scope3_id, "a12");
 			$wi__input_rows && _scope($scope3_id, { _: _scope_with_id($scope2_id) });
-		}, 0, $scope2_id, "e", 1, void 0, void 0, void 0, void 0, "a6", $scope0_reason, 0);
+		}, 0, $scope2_id, "e", 1, 1, 1, 0, 0, "a6", $scope0_reason, 0);
 		_html("</section>");
 		_script($scope2_id, "a13");
 		_filled_guard($scope0_reason, 0) && (_content_withheld("a3", $scope2_id) || $cg__input_rows || _content_withheld("a1", $scope2_id)) && _patch_fill($scope2_id, "va14", row?.label);
@@ -94,6 +94,6 @@ var template_default = _template("a", (input) => {
 			p: $for_content__n__closures,
 			c: _existing_scope($childScope)
 		});
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a5", $scope0_reason, 0);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
 	_scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && Card });
 }, 1);

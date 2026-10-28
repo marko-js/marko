@@ -46,13 +46,13 @@ var row_list_default = _template("c", (input) => {
 				_subscribe($bounty__closures, _subscribe($wi__input_settled && $input_settled__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "c2"), "c3");
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_type, void 0, void 0, void 0, ["c4"], $scope0_reason, 1);
+		}, $scope1_id, "a", 1, $wg__input_type, 1, 0, 0, ["c4"], $scope0_reason, 1);
 		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "c7");
 		_scope($scope1_id, {
 			c: t,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "c", 1, void 0, void 0, void 0, void 0, "c5", $scope0_reason, 0);
+	}, 0, $scope0_id, "c", 1, 1, 1, 0, 0, "c5", $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "c8");
 	_scope($scope0_id, {

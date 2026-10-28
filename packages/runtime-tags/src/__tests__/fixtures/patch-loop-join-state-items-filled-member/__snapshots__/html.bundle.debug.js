@@ -19,7 +19,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			item: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item,
 			_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id)
 		}, "__tests__/tags/child.marko", "2:2", { item: "2:6" });
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/child.marko_1*shell", $scope0_reason, 1);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/child.marko_1*shell", $scope0_reason, 1);
 	_if(() => {
 		if (open) {
 			const $scope2_id = _scope_id();

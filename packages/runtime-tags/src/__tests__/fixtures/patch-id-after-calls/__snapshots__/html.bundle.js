@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a0"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a0"], $scope0_reason, 0);
 	const afterChild = _id("A");
 	_html(`<input${_attr("id", afterChild, $scope0_id, "ab$id", 0, 0)}>${_el_resume($scope0_id, "b", 0)}<label${_attr("for", afterChild, $scope0_id, "ac$for", 0, 0)}>after child</label>${_el_resume($scope0_id, "c", 0)}`);
 	_dynamic_tag($scope0_id, "d", input.show ? field_default : null, { name: "dynamic" }, 9, 0, 0, $wg__input_show, $scope0_reason, 0);

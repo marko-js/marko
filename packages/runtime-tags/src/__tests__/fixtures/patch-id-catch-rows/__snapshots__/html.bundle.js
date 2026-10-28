@@ -53,11 +53,11 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope1_id),
 				a: _existing_scope($childScope)
 			});
-		}, void 0, "a3", "a2", void 0, 1, 1);
+		}, 0, "a3", "a2", 0, 1, 1);
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			h: $wi__input_rows && _unfilled_if($scope0_reason, 0) && $for_content__row_promise__closures
 		});
-	}, "key", $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "a4", $scope0_reason, 0);
+	}, "key", $scope0_id, "b", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);
 	_scope($scope0_id, { f: heading });
 }, 1);

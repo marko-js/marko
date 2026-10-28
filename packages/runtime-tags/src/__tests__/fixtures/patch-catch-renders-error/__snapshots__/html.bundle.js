@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`<b>${_text_resume($scope3_id, "a", err, 1, 4, 0)}</b>`);
 		_scope($scope3_id, {});
-	}, void 0, "a2", "a3", 1, 1, 1);
+	}, 0, "a2", "a3", 1, 1, 1);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 		const $scope4_id = _scope_id();
 		_html(`<i>${_text_resume($scope4_id, "a", err.message, 1, 4, 0)}</i>`);
 		_scope($scope4_id, {});
-	}, void 0, "a6", "a7", 1, 1, 1);
+	}, 0, "a6", "a7", 1, 1, 1);
 	_html(`<button>${_text_resume($scope0_id, "d", count)}</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {

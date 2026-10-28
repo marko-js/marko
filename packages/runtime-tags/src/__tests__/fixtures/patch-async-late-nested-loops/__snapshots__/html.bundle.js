@@ -34,15 +34,15 @@ var template_default = _template("a", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`<b>${_text_resume($scope5_id, "a", err.message, 1, 4, 0)}</b>`);
 				_scope($scope5_id, {});
-			}, void 0, "a0", "a3", void 0, 1, 1);
+			}, 0, "a0", "a3", 0, 1, 1);
 			$wi__input_groups && _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				g: _unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures
 			});
-		}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a5", $scope0_reason, 0);
+		}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
 		_html(`</section>${_el_resume($scope1_id, "a")}`);
 		_scope($scope1_id, {});
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a4", $scope0_reason, 0);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {});

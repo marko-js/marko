@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 				_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a3");
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_label, void 0, void 0, void 0, ["a4"], $scope0_reason, 0);
+		}, $scope1_id, "a", 1, $wg__input_label, 1, 0, 0, ["a4"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id),

@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				$wi__input_show__OR__input_promise__OR__input_msg && _subscribe(_unfilled_if($scope0_reason, 3) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), $cg__input_promise && "__tests__/template.marko_2_input_promise#0:6/subscribe", 0);
 				return 0;
 			}
-		}, $scope1_id, "#section/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
+		}, $scope1_id, "#section/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
 		_html(`</section>${_el_resume($scope1_id, "#section/0", $wg__input_show)}`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_show ? "__tests__/template.marko_1_input_show#0:5/init" : "__tests__/template.marko_1_input_show#0:5/subscribe");
 		$wi__input_show__OR__input_promise__OR__input_msg && _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), $cg__input_show && "__tests__/template.marko_1_input_show#0:5/subscribe", $wg__input_show);
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope4_reason = _scope_reason();
 		const $scope4_id = _scope_id();
 		_html("<em>loading</em>");
-	}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_1*content", 1, void 0, 2);
+	}, void 0, "__tests__/template.marko_4*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_promise: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.promise,

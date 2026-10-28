@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a2"], $scope0_reason, 0);
 	_html(`<em>${_text_resume($scope0_id, "b", v)}</em><button>s</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {

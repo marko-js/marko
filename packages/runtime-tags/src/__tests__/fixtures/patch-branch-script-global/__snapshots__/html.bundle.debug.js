@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html("</main>");
 	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#5", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);

@@ -15,7 +15,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 		_html(`<i>${_text_resume($scope1_id, "#text/0", it.label, 1, $scope0_reason, 0)}</i>`);
 		_script($scope1_id, "__tests__/tags/list.marko_1_it_label#3", 1, _filled_guard($scope0_reason, 0), "it_label");
 		_scope($scope1_id, { it_label: it?.label }, "__tests__/tags/list.marko", "1:2", { it_label: ["it.label", "1:6"] });
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/tags/list.marko", 0);
 });
 

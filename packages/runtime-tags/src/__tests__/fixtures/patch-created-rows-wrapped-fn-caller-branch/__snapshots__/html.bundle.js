@@ -35,7 +35,7 @@ var rowsx_default = _template("b", (input) => {
 				_scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) });
 				return 0;
 			}
-		}, $scope3_id, "a", 1, $wg__isOpen, void 0, void 0, void 0, ["b2"], $scope3_reason, 4);
+		}, $scope3_id, "a", 1, $wg__isOpen, 1, 0, 0, ["b2"], $scope3_reason, 4);
 		_filled_guard($scope3_reason, 5) && $cg__isOpen ? _patch_fill($scope3_id, "vb5", fmt) : _client_guard($scope3_reason, 1) && _patch_write($scope3_id, "xe", fmt, !(_filled_guard($scope3_reason, 5) && _client_guard($scope3_reason, 6)));
 		_filled_guard($scope3_reason, 6) && $cg__isOpen ? _patch_fill($scope3_id, "vb6", label) : _filled_guard($scope3_reason, 6) && _client_guard($scope3_reason, 5) && _patch_write($scope3_id, "xf", label);
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
@@ -61,7 +61,7 @@ var rowsx_default = _template("b", (input) => {
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b4", $scope0_reason, 2);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b4", $scope0_reason, 2);
 	_if(() => {
 		{
 			const $scope2_id = _scope_id();
@@ -108,7 +108,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_html(`<button class=l>l</button>${_el_resume($scope0_id, "b")}<button class=o>o</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {

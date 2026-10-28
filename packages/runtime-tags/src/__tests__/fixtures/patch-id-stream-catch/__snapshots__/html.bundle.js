@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 					_: $wi__input_promise && _scope_with_id($scope4_id),
 					a: _existing_scope($childScope3)
 				});
-			}, "key", $scope4_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
+			}, "key", $scope4_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 0);
 			_scope($scope4_id, {});
 		}, 1, "a1", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "a5" : "a6");

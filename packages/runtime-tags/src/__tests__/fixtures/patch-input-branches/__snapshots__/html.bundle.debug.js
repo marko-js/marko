@@ -18,12 +18,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_write_if($scope0_reason, 1) && _scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		_html(`<li>${_text_resume($scope2_id, "#text/0", item, 1, $scope0_reason, 2)}</li>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "6:4");
-	}, 0, $scope0_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
+	}, 0, $scope0_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
 	_html("</div>");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

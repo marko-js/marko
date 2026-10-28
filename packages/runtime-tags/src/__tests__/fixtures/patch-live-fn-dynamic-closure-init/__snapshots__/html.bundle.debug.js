@@ -25,11 +25,11 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 				_script($scope2_id, "__tests__/tags/panel.marko_2");
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_a ? "__tests__/tags/panel.marko_2_f#0:6/init" : "__tests__/tags/panel.marko_2_f#0:6/subscribe");
 				_subscribe($wi__input_a && $f2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "4:4"), $cg__input_a && "__tests__/tags/panel.marko_2_f#0:6/subscribe");
-			}, 0, $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/panel.marko_2*shell", 0, 0);
+			}, 0, $scope1_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/panel.marko_2*shell", 0, 0);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 1);
 	_html(`<output>${_text_resume($scope0_id, "#text/1", out, 1, 0, 0, 1)}</output>`);
 	_scope($scope0_id, {
 		input_a: input.a,

@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "a2", void 0, "a5", 1, void 0, 2);
+	}, void 0, "a2", void 0, "a5", 1, 0, 2);
 	_html(`<button>x</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a10");
 	_scope($scope0_id, {

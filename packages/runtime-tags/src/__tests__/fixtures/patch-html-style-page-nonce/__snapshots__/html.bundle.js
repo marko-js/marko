@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 1;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a2", "a3"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a2", "a3"], $scope0_reason, 0);
 	_html(`<style${_attrs({
 		nonce: _patch_nonce(),
 		...input.attrs

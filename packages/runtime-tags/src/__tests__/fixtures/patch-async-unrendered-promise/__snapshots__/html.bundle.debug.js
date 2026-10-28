@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 4) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/2", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 3);
+	}, $scope0_id, "#text/2", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 3);
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
@@ -69,11 +69,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope6_reason = _scope_reason();
 				const $scope6_id = _scope_id();
 				_html("<b>failed</b>");
-			}, void 0, "__tests__/template.marko_6*content", "__tests__/template.marko_3*content", void 0, void 0, 1);
+			}, 0, "__tests__/template.marko_6*content", "__tests__/template.marko_3*content", 0, 0, 1);
 			$wi__input_show__OR__input_card && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/3", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
+	}, $scope0_id, "#text/3", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
 	_dynamic_tag($scope0_id, "#text/4", input.tag, { class: "box" }, 9, _content_resume("__tests__/template.marko_4*content", () => {
 		const $scope4_id = _scope_id();
 		const $scope4_reason = _scope_reason();

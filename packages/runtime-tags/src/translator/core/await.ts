@@ -24,6 +24,7 @@ import {
 import { alwaysPairs } from "../util/patch/writers";
 import { setDerivedFrom, trackParamsReferences } from "../util/references";
 import {
+  absentArg,
   callRuntime,
   importRuntimeFeature,
   linkRuntimeFeature,
@@ -161,7 +162,8 @@ export default {
                 isPatch() && getPendingShellArg(bodySection),
                 // An always-pairing body's Pending entry drops its
                 // creation id outside divergent contexts.
-                isPatch() && alwaysPairs(bodySection) && t.numericLiteral(1),
+                isPatch() &&
+                  (alwaysPairs(bodySection) ? t.numericLiteral(1) : absentArg(0)),
                 // Pending, its body may yet keep content made before it.
                 isPatch() &&
                   awaitMayWithhold(bodySection) &&

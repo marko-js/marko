@@ -27,7 +27,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope2_id, { _: ($wi__input_a__OR__input_b || $wi__show) && _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/tags/panel.marko_2_input_a#0:5/subscribe"), _client_guard($scope0_reason, 2) && "__tests__/tags/panel.marko_2_input_b#0:6/subscribe");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__show, void 0, void 0, void 0, ["__tests__/tags/panel.marko_2*shell"], $scope1_reason, 0);
+		}, $scope1_id, "#text/0", 1, $wg__show, 1, 0, 0, ["__tests__/tags/panel.marko_2*shell"], $scope1_reason, 0);
 		($wi__input_a__OR__input_b || $wi__show) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "1:2");
 	}, $scope0_id, 1) };
 	let t = true;

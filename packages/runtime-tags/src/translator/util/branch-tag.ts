@@ -5,7 +5,7 @@ import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { push, some } from "./optional";
 import { isStateReason, isUnconditionalReason, type Reasons } from "./reasons";
 import { hasResumableAssignment } from "./references";
-import { callRuntime } from "./runtime";
+import { absentArg, callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
 import {
   ContentType,
@@ -84,7 +84,22 @@ export function getBranchResumeArgs(
       branchReasons,
       !patchesBranches && !markerGuard,
     ),
-    ...endArgs,
+    ...(patchesBranches ? getPatchEndArgs(endArgs) : endArgs),
+  ];
+}
+
+// Before a patch's arguments, end args main reads as left off.
+export function getPatchEndArgs([
+  markerGuard,
+  branchExprGuard,
+  parentEndTag,
+  singleNode,
+]: ReturnType<typeof buildBranchEndArgs>) {
+  return [
+    markerGuard || absentArg(1),
+    branchExprGuard || absentArg(1),
+    parentEndTag || absentArg(0),
+    singleNode || absentArg(0),
   ];
 }
 

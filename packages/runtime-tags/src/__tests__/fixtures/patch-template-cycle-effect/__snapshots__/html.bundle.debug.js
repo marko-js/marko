@@ -17,7 +17,7 @@ var b_tag_default = _template("__tests__/tags/b-tag.marko", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/b-tag.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_n, void 0, void 0, void 0, ["__tests__/tags/b-tag.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_n, 1, 0, 0, ["__tests__/tags/b-tag.marko_1*shell"], $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/tags/b-tag.marko", 0);
 });
 

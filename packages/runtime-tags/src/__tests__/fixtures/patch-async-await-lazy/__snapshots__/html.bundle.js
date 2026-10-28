@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("loading");
-	}, void 0, "a2", void 0, "a4", 1, void 0, 2);
+	}, void 0, "a2", void 0, "a4", 1, 0, 2);
 	_html("</section><footer>");
 	_await($scope0_id, "c", resolveAfter(input.note, input.slow ? 2 : 0), (note) => {
 		const $scope4_id = _scope_id();

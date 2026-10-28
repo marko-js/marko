@@ -30,7 +30,7 @@ var host_default = _template("b", (input) => {
 			$wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope($scope2_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["b4"], $scope0_reason, 5);
+	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 5), 1, 0, 0, ["b4"], $scope0_reason, 5);
 	_script($scope0_id, "b5");
 	_filled_guard($scope0_reason, 6) && $cg__input_show ? _patch_fill($scope0_id, "vb9", input.native) : _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.native, !(_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 4)));
 	_patch_fill($scope0_id, "vb10", flag, 1);

@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_dynamic_tag($scope2_id, "#text/0", item, {}, 2, 0, 0, $wg__items, $scope1_reason, 0);
 			_write_if($scope1_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "1:35");
-		}, 0, $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope1_reason, 0);
+		}, 0, $scope1_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope1_reason, 0);
 		_scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 3) << 1);

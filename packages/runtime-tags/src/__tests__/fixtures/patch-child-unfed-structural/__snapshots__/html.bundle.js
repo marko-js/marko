@@ -13,7 +13,7 @@ var badge_default = _template("b", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b0"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b0"], $scope0_reason, 0);
 	_html(`<p>${_text_resume($scope0_id, "b", input.text, 1, $scope0_reason, 1)}</p>`);
 	_scope($scope0_id, {});
 });

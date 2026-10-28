@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 2), $cg__input_which = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $inputwhichonetwo_scope = _peek_scope_id();
-	let x = _dynamic_tag($scope0_id, "a", input.which ? one_default : two_default, { a: input.a }, 1, void 0, void 0, void 0, $scope0_reason, 0, void 0, void 0, void 0, "a0");
+	let x = _dynamic_tag($scope0_id, "a", input.which ? one_default : two_default, { a: input.a }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, void 0, "a0");
 	_var($scope0_id, "b", $inputwhichonetwo_scope, "a0");
 	_html(`<p>${_text_resume($scope0_id, "c", x)}</p>`);
 	_scope($scope0_id, {

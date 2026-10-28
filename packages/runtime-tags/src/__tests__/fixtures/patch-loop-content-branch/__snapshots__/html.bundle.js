@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 						}));
 						return 1;
 					}
-				}, $scope2_id, "a", 1, $wg__input_items, void 0, void 0, void 0, ["a2", "a5"], $scope0_reason, 0);
+				}, $scope2_id, "a", 1, $wg__input_items, 1, 0, 0, ["a2", "a5"], $scope0_reason, 0);
 				$cg__input_items && _patch_init($scope2_id, "a6");
 				$wi__input_items && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				$wg__input_items || $wi__input_items && _resume_branch($scope2_id);
@@ -64,7 +64,7 @@ var template_default = _template("a", (input) => {
 			g: $wi__input_items && _unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures,
 			a: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a4", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "a")}`);
 	_scope($scope0_id, {});
 }, 1);

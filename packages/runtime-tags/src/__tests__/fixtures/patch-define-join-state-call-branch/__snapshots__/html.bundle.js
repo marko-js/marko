@@ -27,7 +27,7 @@ var panel_default = _template("b", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope2_id, { _: ($wi__input_a__OR__input_b || $wi__show) && _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "b0"), _client_guard($scope0_reason, 2) && "b1");
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__show, void 0, void 0, void 0, ["b3"], $scope1_reason, 0);
+		}, $scope1_id, "a", 1, $wg__show, 1, 0, 0, ["b3"], $scope1_reason, 0);
 		($wi__input_a__OR__input_b || $wi__show) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id, 1) };
 	let t = true;

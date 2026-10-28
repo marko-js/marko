@@ -21,6 +21,7 @@ import { patchMayWrite } from "../util/patch/structure";
 import { alwaysPairs } from "../util/patch/writers";
 import { mergeTagReferences } from "../util/references";
 import {
+  absentArg,
   callRuntime,
   importRuntimeFeature,
   linkRuntimeFeature,
@@ -163,8 +164,9 @@ export default {
             (catchSection
               ? buildContent(catchTag.get("body"))
               : t.arrowFunctionExpression([], t.blockStatement([]))),
-          placeholderSection &&
-            t.stringLiteral(getResumeRegisterId(placeholderSection, "content")),
+          placeholderSection
+            ? t.stringLiteral(getResumeRegisterId(placeholderSection, "content"))
+            : isPatch() && absentArg(0),
           catchTag &&
             t.stringLiteral(
               catchSection
@@ -177,9 +179,11 @@ export default {
           // drops it outside divergent contexts.
           tryArgs.push(
             t.stringLiteral(getResumeRegisterId(bodySection, "content")),
-            alwaysPairs(bodySection) && t.numericLiteral(1),
+            alwaysPairs(bodySection) ? t.numericLiteral(1) : absentArg(0),
             // A flush creates a catch whose effects its entries mount.
-            !!catchSection && patchCreates(catchSection) && t.numericLiteral(1),
+            catchSection && patchCreates(catchSection)
+              ? t.numericLiteral(1)
+              : absentArg(0),
             getShellContentArg(catchSection, placeholderSection),
           );
         }

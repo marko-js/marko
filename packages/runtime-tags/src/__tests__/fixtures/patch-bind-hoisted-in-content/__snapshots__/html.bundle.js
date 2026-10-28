@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a4"], $scope0_reason, 0);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a4"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		B1: $frame_content__subscribers,
 		a: _existing_scope($childScope2)

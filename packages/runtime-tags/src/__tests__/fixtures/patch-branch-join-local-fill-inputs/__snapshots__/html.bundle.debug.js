@@ -33,7 +33,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 2);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 2);
 	_html(`<div></div>${_el_resume($scope0_id, "#div/1")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_input_a#5", 1, _filled_guard($scope0_reason, 3), "input_a");
 	_scope($scope0_id, {

@@ -18,7 +18,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<a>${_text_resume($scope2_id, "#text/0", item, 1, $scope0_reason, 0)}</a>`);
 			_scope($scope2_id, {}, "__tests__/layout.marko", "3:6");
-		}, 0, $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/layout.marko_2*shell", $scope0_reason, 0);
+		}, 0, $scope1_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/layout.marko_2*shell", $scope0_reason, 0);
 		_scope($scope1_id, {}, "__tests__/layout.marko", "2:4");
 	}, 1, "__tests__/layout.marko_1*content", 1);
 	_html("</nav><main>");
@@ -100,7 +100,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							_scope($scope5_id, { "#childScope/1": _existing_scope($childScope2) }, "__tests__/template.marko", "15:10");
 							return 1;
 						}
-					}, $scope2_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_4*shell", "__tests__/template.marko_5*shell"], $scope0_reason, 1);
+					}, $scope2_id, "#text/0", 1, $wg__input_page, 1, 0, 0, ["__tests__/template.marko_4*shell", "__tests__/template.marko_5*shell"], $scope0_reason, 1);
 					$cg__input_page && _patch_init($scope2_id, "__tests__/template.marko_2_input_page#0:3/init");
 					$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "11:8"));
 					$wg__input_page || $wi__input_page && _resume_branch($scope2_id);
@@ -114,7 +114,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "10:6");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/0", 1, $wg__input_page, 1, 0, 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_trailers("</body></html>");
 	_scope($scope0_id, {
 		input_list: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.list,

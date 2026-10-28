@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) });
 				return 0;
 			}
-		}, $scope2_id, "a", 1, $wg__isOpen__OR__hidden, void 0, void 0, void 0, ["a1"], $scope2_reason, 0);
+		}, $scope2_id, "a", 1, $wg__isOpen__OR__hidden, 1, 0, 0, ["a1"], $scope2_reason, 0);
 		_client_guard($scope2_reason, 3) && _patch_write($scope2_id, "wd", isOpen, 1);
 		$cg__isOpen__OR__hidden && _patch_init($scope2_id, "a6");
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a2"], $scope0_reason, 1);
 	const Tag = input.other ? "div" : Panel;
 	_dynamic_tag($scope0_id, "b", Tag, {
 		isOpen: true,

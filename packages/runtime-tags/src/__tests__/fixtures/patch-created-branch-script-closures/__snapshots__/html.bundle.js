@@ -18,7 +18,7 @@ var level_watch_default = _template("b", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b1"], $scope0_reason, 0);
+	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b1"], $scope0_reason, 0);
 	_script($scope0_id, "b2");
 	_patch_fill($scope0_id, "vb3", shown, 1);
 	_scope($scope0_id, {

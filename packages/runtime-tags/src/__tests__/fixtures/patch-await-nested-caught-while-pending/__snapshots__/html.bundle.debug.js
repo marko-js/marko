@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope8_reason = _scope_reason();
 				const $scope8_id = _scope_id();
 				_html("<em>inner failed</em>");
-			}, "__tests__/template.marko_7*content", "__tests__/template.marko_8*content", "__tests__/template.marko_3*content", 1, void 0, 3);
+			}, "__tests__/template.marko_7*content", "__tests__/template.marko_8*content", "__tests__/template.marko_3*content", 1, 0, 3);
 			_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_msg ? "__tests__/template.marko_2_input_msg#0:7/init" : "__tests__/template.marko_2_input_msg#0:7/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope2_id, {}, "__tests__/template.marko", "4:4"), $cg__input_msg && "__tests__/template.marko_2_input_msg#0:7/subscribe");
 		}, 1, "__tests__/template.marko_2*content", 1);
@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope6_reason = _scope_reason();
 		const $scope6_id = _scope_id();
 		_html("<em>outer loading</em>");
-	}, void 0, "__tests__/template.marko_6*content", void 0, "__tests__/template.marko_1*content", 1, void 0, 2);
+	}, void 0, "__tests__/template.marko_6*content", void 0, "__tests__/template.marko_1*content", 1, 0, 2);
 	_await($scope0_id, "#text/3", input.last, (c) => {
 		const $scope5_id = _scope_id();
 		_html(`<span id=last>${_text_resume($scope5_id, "#text/0", input.msg, 1, $scope0_reason, 3)} ${_text_resume($scope5_id, "#text/1", c, 2, $scope0_reason, 5)}</span>`);

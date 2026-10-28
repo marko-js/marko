@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<em>${_text_resume($scope1_id, "#text/0", input.title, $wg__input_title)}</em>`);
 		_subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:6"), "__tests__/template.marko_1_input_title#0:3/subscribe", $wg__input_title);
 		$wg__input_title || _resume_branch($scope1_id);
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		input_title: input.title,

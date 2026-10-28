@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 					_scope_reason();
 					_scope_id();
 					_html("loading");
-				}, void 0, "a1", void 0, "a4", void 0, void 0, 2);
+				}, void 0, "a1", void 0, "a4", 0, 0, 2);
 				$wi__input_show__OR__input_value && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			}, $scope1_id, 1) });
 			_patch_child_end();
@@ -60,7 +60,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["a6"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a6"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "a", $wg__input_show)}`);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.value,

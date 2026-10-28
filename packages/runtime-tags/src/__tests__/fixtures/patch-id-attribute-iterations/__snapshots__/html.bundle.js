@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_dynamic_tag($scope2_id, "a", item, {}, 2, 0, 0, $wg__items, $scope1_reason, 0);
 			_write_if($scope1_reason, 0) && _scope($scope2_id, {});
-		}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope1_reason, 0);
+		}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "a0", $scope1_reason, 0);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 3) << 1);

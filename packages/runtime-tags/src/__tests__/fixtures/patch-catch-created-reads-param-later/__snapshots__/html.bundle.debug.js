@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<b>${_text_resume($scope1_id, "#text/0", err.message, 1, 4, 0)} ${_text_resume($scope1_id, "#text/1", input.msg, 2, $scope0_reason, 1)}</b>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_msg ? "__tests__/template.marko_1_input_msg#0:3/init" : "__tests__/template.marko_1_input_msg#0:3/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), "__tests__/template.marko_1_input_msg#0:3/subscribe");
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
 	_filled_guard($scope0_reason, 2) && $cg__input_msg && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail);
 	_scope($scope0_id, {
 		input_msg: input.msg,

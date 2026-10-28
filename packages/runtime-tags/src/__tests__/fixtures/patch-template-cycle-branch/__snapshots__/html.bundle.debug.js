@@ -20,7 +20,7 @@ var tree_b_default = _template("__tests__/tags/tree-b.marko", (input) => {
 			_write_if($scope0_reason, 1) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/tree-b.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, $wg__input_node_kid, void 0, void 0, void 0, ["__tests__/tags/tree-b.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/1", 1, $wg__input_node_kid, 1, 0, 0, ["__tests__/tags/tree-b.marko_1*shell"], $scope0_reason, 1);
 	_html("</div>");
 	_scope($scope0_id, {}, "__tests__/tags/tree-b.marko", 0);
 });
@@ -53,7 +53,7 @@ var tree_a_default = _template("__tests__/tags/tree-a.marko", (input) => {
 			}, "__tests__/tags/tree-a.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/tags/tree-a.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/tags/tree-a.marko_1*shell"], $scope0_reason, 1);
 	_html("</li>");
 	_scope($scope0_id, {}, "__tests__/tags/tree-a.marko", 0);
 });
@@ -84,7 +84,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "1:6");
 			return 0;
 		}
-	}, $scope0_id, "#ul/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#ul/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0", $wg__input_show)}`);
 	_scope($scope0_id, { input_node: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.node }, "__tests__/template.marko", 0, { input_node: ["input.node"] }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.node, !_server_guard($scope0_reason, 1));
 }, 1);

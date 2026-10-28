@@ -18,7 +18,7 @@ var my_for_default = _template("__tests__/tags/my-for.marko", (input) => {
 			args: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && args,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/my-for.marko", "1:2", { args: "1:6" });
-	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/my-for.marko_1*shell", $scope0_reason, 1);
+	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/my-for.marko_1*shell", $scope0_reason, 1);
 	_filled_guard($scope0_reason, 2) && $cg__input_to ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/my-for.marko_fill0/unpatched", input.content) : $cg__input_to && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, 1);
 	_scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.content }, "__tests__/tags/my-for.marko", 0, { input_content: ["input.content"] });
 });
@@ -63,7 +63,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		count,
 		"ClosureScopes:count/5": $count__closures

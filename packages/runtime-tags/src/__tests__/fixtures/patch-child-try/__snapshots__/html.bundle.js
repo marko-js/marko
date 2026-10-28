@@ -15,7 +15,7 @@ var widget_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>bad</em>");
-	}, void 0, "b0", "b1", void 0, void 0, 1);
+	}, 0, "b0", "b1", 0, 0, 1);
 });
 
 // template.marko

@@ -28,7 +28,7 @@ var panel_default = _template("b", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`<p>${_text_resume($scope2_id, "a", row.name, 1, 4, 0)}/${_text_resume($scope2_id, "b", count, 2)}</p>`);
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
-	}, "id", $scope0_id, "e", 1, void 0, void 0, void 0, void 0, "b0");
+	}, "id", $scope0_id, "e", 1, 1, 1, 0, 0, "b0");
 	_fill_global_subscribe("b1", $scope0_id);
 	_script($scope0_id, "b2");
 	_patch_fill($scope0_id, "vb5", count, 1);

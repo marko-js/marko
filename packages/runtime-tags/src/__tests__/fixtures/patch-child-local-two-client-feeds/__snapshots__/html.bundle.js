@@ -23,7 +23,7 @@ var child_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 3), void 0, void 0, void 0, ["b3"], $scope0_reason, 3);
+	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["b3"], $scope0_reason, 3);
 	_html(`<button id=c>c</button>${_el_resume($scope0_id, "b")}</div>`);
 	_script($scope0_id, "b4");
 	_patch_fill($scope0_id, "vb7", c, 1);

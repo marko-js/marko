@@ -12,7 +12,7 @@ import {
   assertOnlyValueAttr,
 } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
-import { buildBranchEndArgs } from "../util/branch-tag";
+import { buildBranchEndArgs, getPatchEndArgs } from "../util/branch-tag";
 import evaluate from "../util/evaluate";
 import { declareConstBefore } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
@@ -235,7 +235,7 @@ export default {
               getScopeIdIdentifier(tagSection),
               getScopeAccessorLiteral(nodeBinding),
               display,
-              ...endArgs,
+              ...(patchArgs.length ? getPatchEndArgs(endArgs) : endArgs),
               ...patchArgs,
             ),
           ),

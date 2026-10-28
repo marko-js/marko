@@ -39,7 +39,7 @@ var w_default = _template("c", (input) => {
 				_scope($scope3_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["c2"], $scope0_reason, 2);
+		}, $scope1_id, "a", 1, $wg__input_show, 1, 0, 0, ["c2"], $scope0_reason, 2);
 		$cg__input_show && _patch_init($scope1_id, "c6");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, {
 			d: x,
@@ -60,7 +60,7 @@ var w_default = _template("c", (input) => {
 				_scope($scope4_id, { _: _scope_with_id($scope2_id) });
 				return 0;
 			}
-		}, $scope2_id, "a", 1, $wg__input_show, void 0, void 0, void 0, ["c5"], $scope0_reason, 2);
+		}, $scope2_id, "a", 1, $wg__input_show, 1, 0, 0, ["c5"], $scope0_reason, 2);
 		$cg__input_show && _patch_init($scope2_id, "c8");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope2_id, {
 			d: x,

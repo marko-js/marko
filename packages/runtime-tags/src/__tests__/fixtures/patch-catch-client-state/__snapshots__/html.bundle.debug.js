@@ -39,7 +39,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			err_message: ["err.message", "6:11"],
 			n: "7:10"
 		}), $cg__input_label && "__tests__/tags/panel.marko_1_input_label#0:3/subscribe");
-	}, void 0, "__tests__/tags/panel.marko_1*content", "__tests__/tags/panel.marko_2*content", 1, 1, 1);
+	}, 0, "__tests__/tags/panel.marko_1*content", "__tests__/tags/panel.marko_2*content", 1, 1, 1);
 	_filled_guard($scope0_reason, 0) ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill0/unpatched", input.label) : _patch_write($scope0_id, "PatchWrite:input_label", input.label, 1);
 	_scope($scope0_id, {
 		input_label: input.label,

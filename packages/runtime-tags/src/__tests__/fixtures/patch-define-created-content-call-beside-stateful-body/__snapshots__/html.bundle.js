@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope3_id, { _: _write_if($scope2_reason, 1) && _scope_with_id($scope2_id) });
 				return 0;
 			}
-		}, $scope2_id, "a", 1, $wg__isOpen, void 0, void 0, void 0, ["a1"], $scope2_reason, 0);
+		}, $scope2_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope2_reason, 0);
 		_client_guard($scope2_reason, 0) && _patch_write($scope2_id, "we", label, 1);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, { e: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && label });
 	}, $scope0_id) };
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 				_write_if($scope4_reason, 0) && _scope($scope5_id, { _: _write_if($scope4_reason, 2) && _scope_with_id($scope4_id) });
 				return 0;
 			}
-		}, $scope4_id, "a", 1, $wg__show, void 0, void 0, void 0, ["a3"], $scope4_reason, 1);
+		}, $scope4_id, "a", 1, $wg__show, 1, 0, 0, ["a3"], $scope4_reason, 1);
 		_write_if($scope4_reason, 1) && _scope($scope4_id, { e: _unfilled_if($scope4_reason, 1) && content }) || (_filled_guard($scope4_reason, 2) && $cg__show && _patch_fill($scope4_id, "va6", content, !_server_guard($scope4_reason, 2)), $cg__show && _content_withhold(content));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);

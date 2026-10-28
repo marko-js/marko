@@ -25,6 +25,6 @@ var template_default = _template("a", (input) => {
 		probe_default({ label: item.name });
 		_patch_child_end();
 		_scope($scope1_id, { a: _existing_scope($childScope) });
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);

@@ -21,7 +21,7 @@ var rows_default = _template("b", (input) => {
 		_html("</div>");
 		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "b3");
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
-	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b2", $scope0_reason, 1);
+	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "b2", $scope0_reason, 1);
 	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.promise }) || _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb4", input.promise, !_server_guard($scope0_reason, 2));
 });
 
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "a3", void 0, "a4", 1, void 0, 2);
+	}, void 0, "a3", void 0, "a4", 1, 0, 2);
 	_script($scope0_id, "a5");
 	_scope($scope0_id, {
 		f: items,

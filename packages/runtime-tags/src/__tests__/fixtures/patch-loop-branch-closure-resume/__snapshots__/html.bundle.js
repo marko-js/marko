@@ -22,9 +22,9 @@ var sub_default = _template("c", (input) => {
 				_subscribe($g__closures, _subscribe($wi__input_n && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "c0"), "c1");
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_items, void 0, void 0, void 0, ["c2"], $scope0_reason, 0);
+		}, $scope1_id, "a", 1, $wg__input_items, 1, 0, 0, ["c2"], $scope0_reason, 0);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, "k", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c3", $scope0_reason, 0);
+	}, "k", $scope0_id, "a", 1, 1, 1, 0, 0, "c3", $scope0_reason, 0);
 	_html(`<button class=inc>+</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "c4");
 	_patch_fill($scope0_id, "vc6", g, 1);

@@ -23,13 +23,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_subscribe($count__closures, _subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_2_input_suffix#0:6/subscribe"), "__tests__/template.marko_2_count#0:7/subscribe");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_flag, void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
+		}, $scope1_id, "#text/0", 1, $wg__input_flag, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
 		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_flag#0:5/init");
 		_scope($scope1_id, {
 			"#LoopKey": item,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "3:4", { "#LoopKey": "3:8" });
-	}, (item) => item, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, (item) => item, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

@@ -29,9 +29,9 @@ var card_default = _template("b", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b1", $wg__input_content);
 				return 0;
 			}
-		}, $scope1_id, "b", 1, _write_guard($scope1_reason, 0), void 0, void 0, void 0, ["b2"]);
+		}, $scope1_id, "b", 1, _write_guard($scope1_reason, 0), 1, 0, 0, ["b2"]);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, void 0, "b4", "b3", 1, 1, 1);
+	}, 0, "b4", "b3", 1, 1, 1);
 	_script($scope0_id, "b6");
 	_patch_fill($scope0_id, "vb8", fail, 1);
 	_scope($scope0_id, {

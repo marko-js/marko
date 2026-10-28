@@ -18,7 +18,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/layout.marko", "4:8");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/layout.marko_1*shell"], $scope0_reason, 4);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/layout.marko_1*shell"], $scope0_reason, 4);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 7);
 	_html("</main>"), _trailers("</body></html>");
 	_scope($scope0_id, {

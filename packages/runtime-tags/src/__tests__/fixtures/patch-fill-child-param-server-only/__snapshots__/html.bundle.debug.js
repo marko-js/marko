@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/1": _existing_scope($childScope)
 		}, "__tests__/template.marko", "7:4", { item_id: ["item.id", "7:8"] });
-	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell");
+	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell");
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	_fill_global_subscribe("__tests__/template.marko_0_$global_data#5", $scope0_id);
 	_scope($scope0_id, { hovered }, "__tests__/template.marko", 0, { hovered: "5:6" });

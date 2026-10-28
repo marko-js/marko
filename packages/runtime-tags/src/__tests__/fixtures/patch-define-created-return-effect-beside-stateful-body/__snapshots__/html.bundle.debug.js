@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope3_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__isOpen, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
+		}, $scope1_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
 		const $return = label + "!";
 		_script($scope1_id, "__tests__/template.marko_1_isOpen#3_label#4", $wg__isOpen, _filled_guard($scope1_reason, 1) || _filled_guard($scope1_reason, 2), _filled_guard($scope1_reason, 1) && "isOpen", _filled_guard($scope1_reason, 2) && "label");
 		_scope($scope1_id, {
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "7:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
 	const Tag = input.other ? "div" : Panel;
 	_dynamic_tag($scope0_id, "#text/1", Tag, {
 		isOpen: !open,

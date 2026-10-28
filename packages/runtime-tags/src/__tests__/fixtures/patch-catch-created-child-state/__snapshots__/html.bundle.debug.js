@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "8:4"), "__tests__/template.marko_2_count#0:7/subscribe");
-	}, void 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 1, 1, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_filled_guard($scope0_reason, 1) && $cg__input_msg && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail);
 	_filled_guard($scope0_reason, 2) && $cg__input_fail && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg);

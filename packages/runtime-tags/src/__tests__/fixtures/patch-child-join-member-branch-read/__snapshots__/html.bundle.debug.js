@@ -18,7 +18,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 4), void 0, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 4);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 4), 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 4);
 	$cg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !(_filled_guard($scope0_reason, 3) && $cg__input_a));
 	_patch_join_init($scope0_id, "__tests__/tags/child.marko_0_input_a#4_input_b#5/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && "input_a", _filled_guard($scope0_reason, 3) && "input_b");
 	_scope($scope0_id, {

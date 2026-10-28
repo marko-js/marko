@@ -16,7 +16,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", it, {}, 2, 0, 0, $wg__input_item, $scope0_reason, 0);
 		_html("</li>");
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/tags/list.marko", "1:6");
-	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	_scope($scope0_id, {}, "__tests__/tags/list.marko", 0);
 });
@@ -39,7 +39,7 @@ var list2_default = _template("__tests__/tags/list2.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", it, {}, 2, 0, 0, $wg__input_item, $scope0_reason, 0);
 		_html("</li>");
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/tags/list2.marko", "1:6");
-	}, 0, $scope0_id, "#ol/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/list2.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#ol/0", 1, 1, 1, 0, 0, "__tests__/tags/list2.marko_1*shell", $scope0_reason, 0);
 	_html(`</ol>${_el_resume($scope0_id, "#ol/0")}`);
 	_scope($scope0_id, {}, "__tests__/tags/list2.marko", 0);
 });
@@ -81,7 +81,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:a/13": _write_if($scope0_reason, 5) && $for_content__a__closures
 		}, "__tests__/template.marko", "5:2", { a: "5:6" });
-	}, 0, $scope0_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 5);
+	}, 0, $scope0_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 5);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_on: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.on,

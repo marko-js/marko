@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a6"], $scope0_reason, 0);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a6"], $scope0_reason, 0);
 	_script($scope0_id, "a8");
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 0) && input.label,

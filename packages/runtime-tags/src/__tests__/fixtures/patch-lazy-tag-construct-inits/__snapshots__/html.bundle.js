@@ -20,7 +20,7 @@ var child_default = _template("a", (input) => {
 			d: i,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "b", 1, void 0, void 0, void 0, void 0, "a2", 0, 0);
+	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "a2", 0, 0);
 	_script($scope0_id, "a3");
 	_patch_fill($scope0_id, "va4", count, 1);
 	_scope($scope0_id, { f: count });
@@ -51,7 +51,7 @@ var template_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "c", 1, $wg__input_show, void 0, void 0, void 0, ["b1"], $scope0_reason, 0);
+	}, $scope0_id, "c", 1, $wg__input_show, 1, 0, 0, ["b1"], $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "c", $wg__input_show)}<p>${_text_resume($scope0_id, "d", input.label, 1, $scope0_reason, 1)}</p>`);
 	_script($scope0_id, "b2");
 	_scope($scope0_id, {

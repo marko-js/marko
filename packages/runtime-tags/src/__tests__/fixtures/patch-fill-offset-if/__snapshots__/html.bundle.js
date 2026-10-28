@@ -21,12 +21,12 @@ var template_default = _template("a", (input) => {
 					_subscribe($count__closures, _subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a0"), "a1");
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $wg__input_inner, void 0, void 0, void 0, ["a2"], $scope0_reason, 2);
+			}, $scope1_id, "a", 1, $wg__input_inner, 1, 0, 0, ["a2"], $scope0_reason, 2);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a4");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a3"], $scope0_reason, 1);
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a3"], $scope0_reason, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a5");
 	_scope($scope0_id, {

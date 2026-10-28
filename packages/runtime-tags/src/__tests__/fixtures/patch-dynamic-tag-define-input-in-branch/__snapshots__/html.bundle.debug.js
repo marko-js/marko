@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_write_if($scope0_reason, 3) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4");
 			return 0;
 		}
-	}, $scope0_id, "#main/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 4);
+	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 4);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $wg__input_show)}`);
 	$cg__input_show && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill2/unpatched", Card);
 	$cg__input_show && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill3/unpatched", Other);

@@ -18,7 +18,7 @@ var badge_default = _template("__tests__/tags/badge/index.marko", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/badge/index.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/tags/badge/index.marko_1*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/badge/index.marko_1*shell"], $scope0_reason, 0);
 	_html(`<i>${_text_resume($scope0_id, "#text/1", input.note, 1, $scope0_reason, 1)}</i></div>`);
 	_scope($scope0_id, {}, "__tests__/tags/badge/index.marko", 0);
 });

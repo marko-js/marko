@@ -29,7 +29,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["__tests__/tags/child.marko_2*shell"], $scope0_reason, 5);
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 5), 1, 0, 0, ["__tests__/tags/child.marko_2*shell"], $scope0_reason, 5);
 	$cg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !(_filled_guard($scope0_reason, 5) && $cg__input_a));
 	$cg__input_mode && _patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
 	$cg__input_mode && _patch_init($scope0_id, "__tests__/tags/child.marko_0_input_mode#5_frag_content#8/init");

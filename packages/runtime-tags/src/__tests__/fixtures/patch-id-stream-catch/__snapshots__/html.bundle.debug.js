@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_: $wi__input_promise && _scope_with_id($scope4_id),
 					"#childScope/0": _existing_scope($childScope3)
 				}, "__tests__/template.marko", "5:4");
-			}, "key", $scope4_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_5*shell", $scope0_reason, 0);
+			}, "key", $scope4_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 0);
 			_scope($scope4_id, {}, "__tests__/template.marko", "4:3");
 		}, 1, "__tests__/template.marko_4*content", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "__tests__/template.marko_1_input_promise#0:4/init" : "__tests__/template.marko_1_input_promise#0:4/subscribe");

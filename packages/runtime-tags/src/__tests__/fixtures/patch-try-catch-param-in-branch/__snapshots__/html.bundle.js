@@ -33,11 +33,11 @@ var template_default = _template("a", (input) => {
 				_html(`<em>${_text_resume($scope2_id, "a", err.message, 1, 4, 0)} ${_text_resume($scope2_id, "b", input.title, 2, $scope0_reason, 2)}</em>`);
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, _client_guard($scope0_reason, 2) ? "a0" : "a1");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1");
-			}, void 0, "a5", "a4", void 0, 1, 1);
+			}, 0, "a5", "a4", 0, 1, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a6"], $scope0_reason, 1);
+	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a6"], $scope0_reason, 1);
 	_script($scope0_id, "a9");
 	_scope($scope0_id, {
 		g: input.title,

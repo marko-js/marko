@@ -25,11 +25,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope4_id = _scope_id();
 					_html(`<em>${_text_resume($scope4_id, "#text/0", it.label, 1, $scope1_reason, 0)}</em>`);
 					_scope($scope4_id, {}, "__tests__/template.marko", "5:6");
-				}, 0, $scope3_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_4*shell", $scope1_reason, 0);
+				}, 0, $scope3_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_4*shell", $scope1_reason, 0);
 				_scope($scope3_id, { _: $wi__all && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__all, void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 0);
+		}, $scope1_id, "#text/0", 1, $wg__all, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 0);
 		$wi__all && _scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	_if(() => {
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "10:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
+	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
 	const Tag = input.other ? "div" : Panel;
 	_dynamic_tag($scope0_id, "#text/1", Tag, {
 		isOpen: !open,

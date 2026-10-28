@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope2_id, "#text/0", row.useA ? Card : Other, { record: row.record }, 1, 0, 0, $wg__input_rows, $scope0_reason, 0);
 		_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_Card#0:4_Other#0:5_row_useA#3_row_record#4/init");
 		_write_if($scope0_reason, 0) && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4");
-	}, "id", $scope0_id, "#main/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
+	}, "id", $scope0_id, "#main/0", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
 	_html(`</main>${_el_resume($scope0_id, "#main/0")}`);
 	_scope($scope0_id, {
 		Card: _unfilled_if($scope0_reason, 0) && Card,

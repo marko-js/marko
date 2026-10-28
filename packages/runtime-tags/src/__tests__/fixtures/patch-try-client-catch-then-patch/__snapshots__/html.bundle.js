@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		_html(`<b>${_text_resume($scope1_id, "a", err.message, 1, 4, 0)} ${_text_resume($scope1_id, "b", input.message, 2, $scope0_reason, 0)}</b>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_message ? "a0" : "a1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_message__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
-	}, void 0, "a5", "a6", 1, 1, 1);
+	}, 0, "a5", "a6", 1, 1, 1);
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {

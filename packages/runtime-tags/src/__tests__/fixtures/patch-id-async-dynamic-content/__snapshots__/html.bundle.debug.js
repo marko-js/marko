@@ -72,7 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_patch_join_init($scope3_id, "__tests__/template.marko_3_input_loaded#0:4_ready#2/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">>>input_loaded", _filled_guard($scope0_reason, 1) && "ready");
 				$wi__input_items__OR__input_loaded && _subscribe(_unfilled_if($scope0_reason, 2) && $input_loaded__closures, _scope($scope3_id, { ready: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && ready }, "__tests__/template.marko", "5:4", { ready: "5:10" }), $cg__input_loaded && "__tests__/template.marko_3_input_loaded#0:4/subscribe", $wg__input_items__OR__input_loaded);
 				$wg__input_items__OR__input_loaded || $wi__input_items__OR__input_loaded && _resume_branch($scope3_id);
-			}, 1, "__tests__/template.marko_3*content", void 0, 1);
+			}, 1, "__tests__/template.marko_3*content", 0, 1);
 			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_items ? "__tests__/template.marko_2_item_promise#1:3/init" : "__tests__/template.marko_2_item_promise#1:3/subscribe");
 			$wi__input_items__OR__input_loaded && _subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:3"), $cg__input_items && "__tests__/template.marko_2_item_promise#1:3/subscribe", 0);
 			$wi__input_items__OR__input_loaded && _resume_branch($scope2_id);
@@ -89,7 +89,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:item_promise/6": _write_if($scope0_reason, 1) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && $for_content__item_promise__closures
 		}, "__tests__/template.marko", "2:2", { "#LoopKey": ["item.key", "2:6"] });
-	}, "key", $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
+	}, "key", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_filled_guard($scope0_reason, 2) && $cg__input_items && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0/unpatched", input.loaded);
 	_scope($scope0_id, {
 		input_loaded: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.loaded,

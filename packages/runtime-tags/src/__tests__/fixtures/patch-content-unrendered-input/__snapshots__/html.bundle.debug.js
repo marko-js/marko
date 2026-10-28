@@ -14,7 +14,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_resume($scope1_id, "#text/0", row.name, 1, $scope0_reason, 0)}</li>`);
 		_scope($scope1_id, {}, "__tests__/tags/panel.marko", "1:6");
-	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/tags/panel.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/tags/panel.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	_scope($scope0_id, {}, "__tests__/tags/panel.marko", 0);
 });
@@ -45,7 +45,7 @@ var gate_default = _template("__tests__/tags/gate.marko", (input) => {
 			_write_if($scope0_reason, 1) && _scope($scope2_id, { _: _write_if($scope0_reason, 4) && _scope_with_id($scope0_id) }, "__tests__/tags/gate.marko", "2:2");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/gate.marko_1*shell", "__tests__/tags/gate.marko_2*shell"], $scope0_reason, 2);
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/gate.marko_1*shell", "__tests__/tags/gate.marko_2*shell"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_admin: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.admin,
 		input_guest: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.guest
@@ -75,7 +75,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/wrapper.marko", "1:7");
 			return 0;
 		}
-	}, $scope0_id, "#div/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/wrapper.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#div/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/wrapper.marko_1*shell"], $scope0_reason, 1);
 	_html(`</div>${_el_resume($scope0_id, "#div/0", $wg__input_show)}`);
 	_scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/wrapper.marko", 0, { input_content: ["input.content"] }) || (_filled_guard($scope0_reason, 2) && $cg__input_show && _patch_fill($scope0_id, "PatchFill:__tests__/tags/wrapper.marko_fill0", input.content, !_server_guard($scope0_reason, 2)), $cg__input_show && _content_withhold(input.content));
 });

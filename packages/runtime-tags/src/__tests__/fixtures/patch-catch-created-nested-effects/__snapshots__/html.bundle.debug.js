@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, "__tests__/template.marko", "10:6"), "__tests__/template.marko_2_input_v#0:3/subscribe");
 				return 0;
 			}
-		}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 3), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
+		}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
 		_for_of(input.items, (x) => {
 			const $scope3_id = _scope_id();
 			_filled_guard($scope0_reason, 4) && _patch_write($scope3_id, "PatchMarkedWrite:x", x, !$sg__input_items);
@@ -78,7 +78,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:input_v/8": $wi__input_v && 2
 			}, "__tests__/template.marko", "14:6", { x: "14:10" }), $cg__input_v && "__tests__/template.marko_3_input_v#0:3/subscribe");
-		}, 0, $scope1_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 4);
+		}, 0, $scope1_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 4);
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/3", 0);
 		wrap_default({ content: _content("__tests__/template.marko_4*content", () => {
@@ -105,7 +105,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:w/13": $wi__input_v && _unfilled_if($scope0_reason, 2) && $catch_content__w__closures,
 			"#childScope/3": _existing_scope($childScope)
 		}, "__tests__/template.marko", "6:4", { w: "7:12" }), "__tests__/template.marko_1_input_v#0:3/subscribe"), "__tests__/template.marko_1_input_show#0:4/subscribe"), "__tests__/template.marko_1_input_items#0:5/subscribe");
-	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_5*content", 1, 1, 1);
+	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_5*content", 1, 1, 1);
 	_filled_guard($scope0_reason, 5) && $cg__input_msg && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail);
 	_filled_guard($scope0_reason, 6) && $cg__input_fail && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg);
 	_scope($scope0_id, {

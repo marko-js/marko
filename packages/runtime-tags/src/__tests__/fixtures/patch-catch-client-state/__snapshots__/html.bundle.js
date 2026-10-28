@@ -35,7 +35,7 @@ var panel_default = _template("b", (input) => {
 			h: n,
 			_: _scope_with_id($scope0_id)
 		}), $cg__input_label && "b3");
-	}, void 0, "b6", "b7", 1, 1, 1);
+	}, 0, "b6", "b7", 1, 1, 1);
 	_filled_guard($scope0_reason, 0) ? _patch_fill($scope0_id, "vb8", input.label) : _patch_write($scope0_id, "wd", input.label, 1);
 	_scope($scope0_id, {
 		d: input.label,

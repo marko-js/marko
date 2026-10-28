@@ -31,7 +31,7 @@ var icon_default = _template("f", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, ["f1"], $scope0_reason, 0);
+	}, $scope0_id, "a", 1, 1, 1, 0, 0, ["f1"], $scope0_reason, 0);
 	_html(`</svg>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
 	_scope($scope0_id, {});
 });
@@ -57,7 +57,7 @@ var docs_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<a>${_text_resume($scope3_id, "a", item, 1, $scope0_reason, 0)}</a>`);
 			_scope($scope3_id, {});
-		}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
+		}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 0);
 		_if(() => {
 			if (list[0]) {
 				const $scope2_id = _scope_id();
@@ -72,7 +72,7 @@ var docs_default = _template("a", (input) => {
 				});
 				return 0;
 			}
-		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a3"], $scope0_reason, 0);
+		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a3"], $scope0_reason, 0);
 		_scope($scope1_id, {});
 	}, 1, "a1", 1);
 	_html("</nav><article>");
@@ -155,7 +155,7 @@ var template_default = _template("e", (input) => {
 								_scope($scope6_id, { b: _existing_scope($childScope2) });
 								return 1;
 							}
-						}, $scope3_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["e0", "e4"], $scope0_reason, 1);
+						}, $scope3_id, "a", 1, $wg__input_page, 1, 0, 0, ["e0", "e4"], $scope0_reason, 1);
 						$cg__input_page && _patch_init($scope3_id, "e5");
 						$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope3_id, {
 							_: _scope_with_id($scope2_id),
@@ -172,7 +172,7 @@ var template_default = _template("e", (input) => {
 				}), $cg__input_list && "e7");
 				return 1;
 			}
-		}, $scope1_id, "a", 1, $wg__input_page, void 0, void 0, void 0, ["e3", "e2"], $scope0_reason, 1);
+		}, $scope1_id, "a", 1, $wg__input_page, 1, 0, 0, ["e3", "e2"], $scope0_reason, 1);
 		$wi__input_page__OR__input_list && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_page && "e8", $wg__input_page);
 		$wg__input_page || $wi__input_page__OR__input_list && _resume_branch($scope1_id);
 	}, $scope0_id) });

@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1");
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", picks, 1);
 		_scope($scope1_id, { picks }, "__tests__/template.marko", "2:4", { picks: "5:12" });
-	}, 0, $scope0_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
+	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

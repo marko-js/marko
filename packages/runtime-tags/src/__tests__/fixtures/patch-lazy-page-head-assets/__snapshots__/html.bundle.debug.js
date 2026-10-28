@@ -81,7 +81,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope($scope3_id, { "#childScope/1": _existing_scope($childScope2) }, "__tests__/template.marko", "9:4");
 				return 1;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__input_page, void 0, void 0, void 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_3*shell"], $scope0_reason, 0);
+		}, $scope1_id, "#text/0", 1, $wg__input_page, 1, 0, 0, ["__tests__/template.marko_2*shell", "__tests__/template.marko_3*shell"], $scope0_reason, 0);
 		$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_page#0:3/subscribe", $wg__input_page);
 		$wg__input_page || $wi__input_page && _resume_branch($scope1_id);
 	}, $scope0_id) });

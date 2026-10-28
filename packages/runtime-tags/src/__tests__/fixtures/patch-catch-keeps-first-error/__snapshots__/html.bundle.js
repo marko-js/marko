@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		}), "a1"), "a2");
-	}, void 0, "a6", "a7", 1, 1, 1);
+	}, 0, "a6", "a7", 1, 1, 1);
 	_script($scope0_id, "a8");
 	_filled_guard($scope0_reason, 2) && $cg__input_msg && _patch_write($scope0_id, "xg", input.fail);
 	_filled_guard($scope0_reason, 3) && $cg__input_fail && _patch_write($scope0_id, "xh", input.msg);

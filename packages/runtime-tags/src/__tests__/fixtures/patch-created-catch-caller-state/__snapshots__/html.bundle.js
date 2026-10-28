@@ -37,10 +37,10 @@ var detail_view_default = _template("b", (input) => {
 				}), "b2");
 				return 0;
 			}
-		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b3"], $scope0_reason, 0);
+		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b3"], $scope0_reason, 0);
 		$cg__input_detail && _patch_init($scope1_id, "b6");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_detail__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b7");
-	}, void 0, "b5", "b4", 1, 1, 1);
+	}, 0, "b5", "b4", 1, 1, 1);
 	_scope($scope0_id, {
 		d: input.detail,
 		f: $wi__input_detail && $input_detail__closures,

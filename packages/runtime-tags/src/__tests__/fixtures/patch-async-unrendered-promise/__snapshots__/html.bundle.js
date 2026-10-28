@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 4) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, $wg__input_show, void 0, void 0, void 0, ["a9"], $scope0_reason, 3);
+	}, $scope0_id, "c", 1, $wg__input_show, 1, 0, 0, ["a9"], $scope0_reason, 3);
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
@@ -65,11 +65,11 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("<b>failed</b>");
-			}, void 0, "a2", "a7", void 0, void 0, 1);
+			}, 0, "a2", "a7", 0, 0, 1);
 			$wi__input_show__OR__input_card && _scope($scope2_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "d", 1, $wg__input_show, void 0, void 0, void 0, ["a10"], $scope0_reason, 3);
+	}, $scope0_id, "d", 1, $wg__input_show, 1, 0, 0, ["a10"], $scope0_reason, 3);
 	_dynamic_tag($scope0_id, "e", input.tag, { class: "box" }, 9, _content_resume("a5", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();

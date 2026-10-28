@@ -51,11 +51,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_: $wi__input_show__OR__input_promise && _scope_with_id($scope1_id),
 					"#childScope/1": _existing_scope($childScope)
 				}, "__tests__/template.marko", "3:6"), $cg__input_promise && "__tests__/template.marko_2_input_promise#0:4/subscribe");
-			}, void 0, () => {}, void 0, "__tests__/template.marko_1_#text#0/catch", "__tests__/template.marko_2*content");
+			}, void 0, () => {}, 0, "__tests__/template.marko_1_#text#0/catch", "__tests__/template.marko_2*content");
 			$wi__input_show__OR__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 			return 0;
 		}
-	}, $scope0_id, "#main/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
+	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_resume($scope0_id, "#main/0", $wg__input_show)}`);
 	_scope($scope0_id, {
 		input_promise: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.promise,

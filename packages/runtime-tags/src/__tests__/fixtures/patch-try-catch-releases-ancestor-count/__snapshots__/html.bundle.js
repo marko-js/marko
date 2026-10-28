@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<s>${_text_resume($scope4_id, "a", err.message, 1, 4, 0)}</s>`);
 			_scope($scope4_id, {});
-		}, void 0, "a2", "a5", 1, 1, 1);
+		}, 0, "a2", "a5", 1, 1, 1);
 		_await($scope1_id, "b", input.b, (b) => {
 			const $scope6_id = _scope_id();
 			_html(`<em>${_text_resume($scope6_id, "a", b, 1, $scope0_reason, 2)}</em>`);
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<i>loading</i>");
-	}, void 0, "a3", void 0, "a7", 1, void 0, 2);
+	}, void 0, "a3", void 0, "a7", 1, 0, 2);
 	_html("</main>");
 	_scope($scope0_id, {
 		f: $wi__input_a && _unfilled_if($scope0_reason, 1) && $input_a__closures,

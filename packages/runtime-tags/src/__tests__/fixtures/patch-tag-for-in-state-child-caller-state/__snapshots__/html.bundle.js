@@ -45,14 +45,14 @@ var shape_default = _template("c", (input) => {
 				}), _client_guard($scope0_reason, 3) && "c1"), "c2");
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_sel, void 0, void 0, void 0, ["c3"], $scope0_reason, 0);
+		}, $scope1_id, "a", 1, $wg__input_sel, 1, 0, 0, ["c3"], $scope0_reason, 0);
 		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "c6");
 		_scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 2) && k,
 			e: v,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "c4", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "c4", $scope0_reason, 1);
 	_html(`<button></button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "c7");
 	_patch_fill($scope0_id, "vc10", s, 1);

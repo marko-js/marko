@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 			k: qty,
 			b: _existing_scope($childScope)
 		});
-	}, (row) => row.item.id, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a3");
+	}, (row) => row.item.id, $scope0_id, "a", 1, 1, 1, 0, 0, "a3");
 	_fill_global_subscribe("a4", $scope0_id);
 	_scope($scope0_id, {});
 }, 1);

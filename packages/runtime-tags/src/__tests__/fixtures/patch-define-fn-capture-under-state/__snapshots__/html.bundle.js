@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope3_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__input_x, void 0, void 0, void 0, ["a2"], $scope0_reason, 0);
+		}, $scope1_id, "a", 1, $wg__input_x, 1, 0, 0, ["a2"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && v,
 			e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && f,

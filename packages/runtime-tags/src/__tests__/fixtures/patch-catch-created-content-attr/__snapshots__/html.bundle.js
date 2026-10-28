@@ -28,7 +28,7 @@ var error_wrapper_default = _template("b", (input) => {
 		_html(`</div>${_el_resume($scope1_id, "b", _mask_group($scope0_reason, 0))}`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "b0" : "b1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");
-	}, void 0, "b4", "b5", 1, 1, 1);
+	}, 0, "b4", "b5", 1, 1, 1);
 	_scope($scope0_id, {
 		d: input.fallback,
 		f: _write_if($scope0_reason, 0) && $input_fallback__closures,

@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 				}), "a3");
 				return 0;
 			}
-		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 3), void 0, void 0, void 0, ["a4"], $scope0_reason, 3);
+		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["a4"], $scope0_reason, 3);
 		_for_of(input.items, (x) => {
 			const $scope3_id = _scope_id();
 			_filled_guard($scope0_reason, 4) && _patch_write($scope3_id, "xc", x, !$sg__input_items);
@@ -73,7 +73,7 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope1_id),
 				Ci: $wi__input_v && 2
 			}), $cg__input_v && "a11");
-		}, 0, $scope1_id, "c", 1, void 0, void 0, void 0, void 0, "a8", $scope0_reason, 4);
+		}, 0, $scope1_id, "c", 1, 1, 1, 0, 0, "a8", $scope0_reason, 4);
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "d", 0);
 		wrap_default({ content: _content("a6", () => {
@@ -100,7 +100,7 @@ var template_default = _template("a", (input) => {
 			n: $wi__input_v && _unfilled_if($scope0_reason, 2) && $catch_content__w__closures,
 			d: _existing_scope($childScope)
 		}), "a20"), "a21"), "a22");
-	}, void 0, "a7", "a5", 1, 1, 1);
+	}, 0, "a7", "a5", 1, 1, 1);
 	_filled_guard($scope0_reason, 5) && $cg__input_msg && _patch_write($scope0_id, "xg", input.fail);
 	_filled_guard($scope0_reason, 6) && $cg__input_fail && _patch_write($scope0_id, "xh", input.msg);
 	_scope($scope0_id, {

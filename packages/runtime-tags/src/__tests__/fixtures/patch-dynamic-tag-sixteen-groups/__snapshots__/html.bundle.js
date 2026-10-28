@@ -29,7 +29,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_p, void 0, void 0, void 0, ["b1"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_p, 1, 0, 0, ["b1"], $scope0_reason, 1);
 	_if(() => {
 		if (input.p1) {
 			const $scope2_id = _scope_id();
@@ -38,7 +38,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, $wg__input_p2, void 0, void 0, void 0, ["b2"], $scope0_reason, 2);
+	}, $scope0_id, "b", 1, $wg__input_p2, 1, 0, 0, ["b2"], $scope0_reason, 2);
 	_if(() => {
 		if (input.p2) {
 			const $scope3_id = _scope_id();
@@ -47,7 +47,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope3_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, $wg__input_p3, void 0, void 0, void 0, ["b3"], $scope0_reason, 3);
+	}, $scope0_id, "c", 1, $wg__input_p3, 1, 0, 0, ["b3"], $scope0_reason, 3);
 	_if(() => {
 		if (input.p3) {
 			const $scope4_id = _scope_id();
@@ -56,7 +56,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope4_id, { _: _write_if($scope0_reason, 4) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "d", 1, $wg__input_p4, void 0, void 0, void 0, ["b4"], $scope0_reason, 4);
+	}, $scope0_id, "d", 1, $wg__input_p4, 1, 0, 0, ["b4"], $scope0_reason, 4);
 	_if(() => {
 		if (input.p4) {
 			const $scope5_id = _scope_id();
@@ -65,7 +65,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope5_id, { _: _write_if($scope0_reason, 5) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "e", 1, $wg__input_p5, void 0, void 0, void 0, ["b5"], $scope0_reason, 5);
+	}, $scope0_id, "e", 1, $wg__input_p5, 1, 0, 0, ["b5"], $scope0_reason, 5);
 	_if(() => {
 		if (input.p5) {
 			const $scope6_id = _scope_id();
@@ -74,7 +74,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope6_id, { _: _write_if($scope0_reason, 6) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "f", 1, $wg__input_p6, void 0, void 0, void 0, ["b6"], $scope0_reason, 6);
+	}, $scope0_id, "f", 1, $wg__input_p6, 1, 0, 0, ["b6"], $scope0_reason, 6);
 	_if(() => {
 		if (input.p6) {
 			const $scope7_id = _scope_id();
@@ -83,7 +83,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope7_id, { _: _write_if($scope0_reason, 7) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "g", 1, $wg__input_p7, void 0, void 0, void 0, ["b7"], $scope0_reason, 7);
+	}, $scope0_id, "g", 1, $wg__input_p7, 1, 0, 0, ["b7"], $scope0_reason, 7);
 	_if(() => {
 		if (input.p7) {
 			const $scope8_id = _scope_id();
@@ -92,7 +92,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope8_id, { _: _write_if($scope0_reason, 8) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "h", 1, $wg__input_p8, void 0, void 0, void 0, ["b8"], $scope0_reason, 8);
+	}, $scope0_id, "h", 1, $wg__input_p8, 1, 0, 0, ["b8"], $scope0_reason, 8);
 	_if(() => {
 		if (input.p8) {
 			const $scope9_id = _scope_id();
@@ -101,7 +101,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope9_id, { _: _write_if($scope0_reason, 9) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "i", 1, $wg__input_p9, void 0, void 0, void 0, ["b9"], $scope0_reason, 9);
+	}, $scope0_id, "i", 1, $wg__input_p9, 1, 0, 0, ["b9"], $scope0_reason, 9);
 	_if(() => {
 		if (input.p9) {
 			const $scope10_id = _scope_id();
@@ -110,7 +110,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope10_id, { _: _write_if($scope0_reason, 10) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "j", 1, $wg__input_p10, void 0, void 0, void 0, ["b10"], $scope0_reason, 10);
+	}, $scope0_id, "j", 1, $wg__input_p10, 1, 0, 0, ["b10"], $scope0_reason, 10);
 	_if(() => {
 		if (input.p10) {
 			const $scope11_id = _scope_id();
@@ -119,7 +119,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope11_id, { _: _write_if($scope0_reason, 11) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "k", 1, $wg__input_p11, void 0, void 0, void 0, ["b11"], $scope0_reason, 11);
+	}, $scope0_id, "k", 1, $wg__input_p11, 1, 0, 0, ["b11"], $scope0_reason, 11);
 	_if(() => {
 		if (input.p11) {
 			const $scope12_id = _scope_id();
@@ -128,7 +128,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope12_id, { _: _write_if($scope0_reason, 12) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "l", 1, $wg__input_p12, void 0, void 0, void 0, ["b12"], $scope0_reason, 12);
+	}, $scope0_id, "l", 1, $wg__input_p12, 1, 0, 0, ["b12"], $scope0_reason, 12);
 	_if(() => {
 		if (input.p12) {
 			const $scope13_id = _scope_id();
@@ -137,7 +137,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope13_id, { _: _write_if($scope0_reason, 13) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "m", 1, $wg__input_p13, void 0, void 0, void 0, ["b13"], $scope0_reason, 13);
+	}, $scope0_id, "m", 1, $wg__input_p13, 1, 0, 0, ["b13"], $scope0_reason, 13);
 	_if(() => {
 		if (input.p13) {
 			const $scope14_id = _scope_id();
@@ -146,7 +146,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope14_id, { _: _write_if($scope0_reason, 14) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "n", 1, $wg__input_p14, void 0, void 0, void 0, ["b14"], $scope0_reason, 14);
+	}, $scope0_id, "n", 1, $wg__input_p14, 1, 0, 0, ["b14"], $scope0_reason, 14);
 	_if(() => {
 		if (input.p14) {
 			const $scope15_id = _scope_id();
@@ -155,7 +155,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope15_id, { _: _write_if($scope0_reason, 15) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "o", 1, $wg__input_p15, void 0, void 0, void 0, ["b15"], $scope0_reason, 15);
+	}, $scope0_id, "o", 1, $wg__input_p15, 1, 0, 0, ["b15"], $scope0_reason, 15);
 	_if(() => {
 		if (input.p15) {
 			const $scope16_id = _scope_id();
@@ -164,7 +164,7 @@ var child_default = _template("b", (input) => {
 			_scope($scope16_id, { _: _write_if($scope0_reason, 16) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "p", 1, $wg__input_p16, void 0, void 0, void 0, ["b16"], $scope0_reason, 16);
+	}, $scope0_id, "p", 1, $wg__input_p16, 1, 0, 0, ["b16"], $scope0_reason, 16);
 	_scope($scope0_id, {});
 });
 

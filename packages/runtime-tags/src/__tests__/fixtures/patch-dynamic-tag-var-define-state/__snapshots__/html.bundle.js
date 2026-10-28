@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		return $return2;
 	}, $scope0_id) };
 	const $inputwhichCounterOther_scope = _peek_scope_id();
-	let count = _dynamic_tag($scope0_id, "a", input.which ? Counter : Other, { label: input.label }, 1, void 0, void 0, void 0, $scope0_reason, 0, void 0, void 0, void 0, "a8");
+	let count = _dynamic_tag($scope0_id, "a", input.which ? Counter : Other, { label: input.label }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, void 0, "a8");
 	_var($scope0_id, "b", $inputwhichCounterOther_scope, "a8");
 	_html(`<p>${_text_resume($scope0_id, "c", count)}</p>`);
 	_filled_guard($scope0_reason, 2) && $cg__input_label && _patch_write($scope0_id, "xg", input.which);

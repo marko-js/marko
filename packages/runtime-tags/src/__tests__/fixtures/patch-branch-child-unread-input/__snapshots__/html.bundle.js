@@ -77,7 +77,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 1;
 		}
-	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a2", "a3"], $scope0_reason, 1);
+	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a2", "a3"], $scope0_reason, 1);
 	_if(() => {
 		if (input.more) {
 			const $scope3_id = _scope_id();
@@ -98,7 +98,7 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "d", 1, _write_guard($scope0_reason, 4), void 0, void 0, void 0, ["a4"], $scope0_reason, 4);
+	}, $scope0_id, "d", 1, _write_guard($scope0_reason, 4), 1, 0, 0, ["a4"], $scope0_reason, 4);
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {
 		h: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.adminData,
