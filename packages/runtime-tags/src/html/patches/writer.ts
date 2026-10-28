@@ -53,6 +53,9 @@ import { encodeHeld } from "./token";
 // its requests' header (`patchRequestKind`) and the mark of a patch it answers.
 export let patchBuild: string | undefined;
 
+// The branch an owner's record renders in (-1: none): instances pair its own scope.
+const kRecordBranch = Symbol();
+
 // A generated id names its declaration under the hops its render passed
 // through: each row key and call site, the root's address first.
 export function _id(declaration: string) {
@@ -63,6 +66,20 @@ export function _id(declaration: string) {
       encodeHop(ids.path[hop * 2] as IdHop, ids.path[hop * 2 + 1]);
   }
   ids.built = ids.depth + 1;
+  const context = getChunk()!.context;
+  // In structure the owner's record creates, each instance creating it takes
+  // this id: a mark in its setup has the client reject at the second.
+  if (
+    context?.[kRecordBranch] !== undefined &&
+    context[kRecordBranch] !== context[kBranchId] &&
+    inCreatable()
+  ) {
+    const state = getState() as PatchRenderState;
+    ensurePatchSetup(
+      state,
+      ensureScopePatch(state, context[kBranchId] as number),
+    )[PatchKey.Withheld] = patchTreeNode(state, {});
+  }
   return ids.addresses[ids.depth] + (MARKO_DEBUG ? "." : "") + declaration;
 }
 
@@ -263,7 +280,12 @@ function renderWithheld(
     key,
   };
   pushIdHop(IdHop.Withheld, id);
-  renderer({});
+  withContext(
+    kRecordBranch,
+    getChunk()!.context?.[kBranchId] ?? -1,
+    renderer,
+    {},
+  );
   popIdHop();
 }
 

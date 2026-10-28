@@ -8,7 +8,13 @@ import {
 } from "../../common/types";
 import { runId } from "../queue";
 import { _resumed } from "../resume";
-import { creating, installPatchShells, patchers, patchScope } from "./apply";
+import {
+  creating,
+  installPatchShells,
+  patchers,
+  patchScope,
+  setupPatchers,
+} from "./apply";
 import "./dynamic-tag.feat";
 import { registerShell, shells } from "./shells";
 
@@ -66,6 +72,19 @@ patchers[PatchKey.Withheld] = (scope, accessor, value) => {
       }
     }
   }
+};
+
+// The owner's record gives an `<id>` in structure it creates one value; one per
+// instance takes code main never ships, so a second instance creating it rejects.
+setupPatchers[PatchKey.Withheld] = (_scope, _accessor, mark) => {
+  if ((mark as Scope)[0]) {
+    throw MARKO_DEBUG
+      ? new Error(
+          "A patch gave kept content's `<id>` to more than one instance it creates: the page loads the URL as a document instead.",
+        )
+      : 0;
+  }
+  (mark as Scope)[0] = 1;
 };
 
 // Kept content creates from its shell (its registration): an instance takes the
