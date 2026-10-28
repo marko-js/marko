@@ -1,0 +1,6 @@
+<let/o=input.content/>
+<button onClick() { o = undefined }>clear</button>
+<try>
+  <if=o><card content=o/></if>
+  <@catch|err|><p>caught ${err.message}</p></@catch>
+</try>

@@ -1,11 +1,13 @@
 // PATCH
-[`a2 !a>c0;/ b/D%l&&;<button>x</button><section><!></section>`, `~a1;Db%;<em>static <!></em>`]
+[`~a1;Db%;<em>static <!></em>`, `a2 !a>c0;/ b/D%l&&;<button>x</button><section><!></section>`]
 {
   ba: [{
-    Wa1: {
-      ta: "b"
-    },
     ca: {
+      cb: {
+        Wa: [{
+          ta: "b"
+        }, "a1", "^^^"]
+      },
       o: {
         vc1: {
           content: _(["Aa"], "~a1", 1)
@@ -27,10 +29,12 @@
 // PATCH holding EyQB
 {
   ba: [{
-    Wa1: {
-      ta: "c"
-    },
     ca: {
+      cb: {
+        Wa: [{
+          ta: "c"
+        }, "a1", "^^^"]
+      },
       o: {
         vc1: {
           content: _(["Aa"], "~a1", 1)
@@ -51,10 +55,12 @@
 // PATCH holding EyQB
 {
   ba: [{
-    Wa1: {
-      ta: "d"
-    },
     ca: {
+      cb: {
+        Wa: [{
+          ta: "d"
+        }, "a1", "^^^"]
+      },
       o: {
         vc1: {
           content: _(["Aa"], "~a1", 1)

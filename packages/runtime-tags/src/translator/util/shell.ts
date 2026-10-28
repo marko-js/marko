@@ -28,6 +28,7 @@ import {
   getPatchWrite,
   keepsContent,
   keepsHoles,
+  keepsOwnerRecord,
   readsKeptInputOnClient,
   writesSeed,
 } from "./patch/refresh";
@@ -133,6 +134,8 @@ export function linkPatchSends() {
     if (keepsContent(section)) {
       linkRuntimeFeature("patches/withheld");
       linkRuntimeFeature("patches/bind");
+      // A created scope's client rows may render it: their entries wait for them.
+      if (keepsOwnerRecord(section)) linkRuntimeFeature("patches/loop-item");
     }
     if (
       // Boundary content no shell creates renders by the renderer its
@@ -431,12 +434,15 @@ function composesLazyMarkup(op: StructureOp) {
 }
 
 // Content no registration names (`_content`'s `elide`), under its kept shell id:
-// `2` keeps its instances' holes as data, `1` ships its shell alone.
+// `2` keeps its instances' holes as data (`3` with its owner's record), `1`
+// ships its shell alone.
 export function elidesContent(section: Section) {
   return getRendererReason(section)
     ? 0
     : keepsHoles(section)
-      ? 2
+      ? keepsOwnerRecord(section)
+        ? 3
+        : 2
       : shipsContentShell(section)
         ? 1
         : 0;

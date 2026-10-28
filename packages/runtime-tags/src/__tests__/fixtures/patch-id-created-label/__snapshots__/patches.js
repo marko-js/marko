@@ -1,5 +1,5 @@
 // PATCH
-[`a0; D ;<label> </label>`, `a3; b%;<input><!><!>`, `a2`, `a4; ;<label>field</label>`, `a1; b D ;<input><label> </label>`, `a5 !a>b0;/ b%c&b;<button>clear</button><!><!><!>`, {
+[`a0; D ;<label> </label>`, `a3; b%;<input><!><!>`, `a2`, `a4; ;<label>field</label>`, `~a1; b D ;<input><label> </label>`, `a5 !a>b0;/ b%c&b;<button>clear</button><!><!><!>`, {
   la: ["b", {
     s: {
       aa$id: "sM_gbA"
@@ -47,30 +47,24 @@
   },
   ld: [1, {
     ca: {
-      s: {
-        fb: "^^a1"
-      }
-    },
-    Wa1: {
-      s: {
-        aa$id: "sM_1WTha1C",
-        ab$for: "sM_1WTha1C"
-      },
-      tc: 1
+      Wb: [{
+        s: {
+          aa$id: "sM_1WUC",
+          ab$for: "sM_1WUC"
+        },
+        tc: 1
+      }, "a1", "^^"]
     }
   }, 2, {
     ca: {
-      s: {
-        fb: "^^a1"
-      }
-    },
-    Wa1: {
-      s: {
-        aa$id: "sM_2WTha1C",
-        ab$for: "sM_2WTha1C"
-      },
-      tc: 2
+      Wb: [{
+        s: {
+          aa$id: "sM_2WUC",
+          ab$for: "sM_2WUC"
+        },
+        tc: 2
+      }, "a1", "^^"]
     }
   }, "a5"]
 }]
-;E34
+;E3oB

@@ -1,42 +1,33 @@
 // PATCH
-[`a1;Db%;<em>static <!></em>`, `a2 !a>b0;/D b%l&;<section><button>clear</button><!></section>`, {
+[`~a1;Db%;<em>static <!></em>`, `a2 !a>b0;/D b%l&;<section><button>clear</button><!></section>`, {
   ba: [{
     ca: {
-      s: {
-        fb: "^^a1"
-      }
-    },
-    Wa1: {
-      ta: "b"
+      Wb: [{
+        ta: "b"
+      }, "a1", "^^"]
     }
   }, "a2"]
 }]
-;CwY
+;CxQ
 
-// PATCH holding CwY
+// PATCH holding CxQ
 {
   ba: [{
     ca: {
-      s: {
-        fb: "^^a1"
-      }
-    },
-    Wa1: {
-      ta: "c"
+      Wb: [{
+        ta: "c"
+      }, "a1", "^^"]
     }
   }, "a2"]
 }
 
-// PATCH holding CwY
+// PATCH holding CxQ
 {
   ba: [{
     ca: {
-      s: {
-        fb: "^^a1"
-      }
-    },
-    Wa1: {
-      ta: "d"
+      Wb: [{
+        ta: "d"
+      }, "a1", "^^"]
     }
   }, "a2"]
 }

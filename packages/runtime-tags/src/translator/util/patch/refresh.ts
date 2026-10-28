@@ -103,6 +103,7 @@ import {
   calleeKeepsInput,
   getStatefulConsumers,
   isPassedStateByEveryCall,
+  isPatchedLeaf,
   isStatefulLeaf,
   usesApart,
 } from "./structure";
@@ -1613,6 +1614,19 @@ export function hasRenderRead(binding: Binding) {
 // Kept content with nodes of its own: its instances take their holes as data.
 export function keepsHoles(section: Section) {
   return !!section.bindings && keepsContent(section);
+}
+
+// Kept content an instance of which no site reaches: rendered where no patch
+// renders, or used apart.
+export function keepsOwnerRecord(section: Section) {
+  return (
+    keepsHoles(section) &&
+    someRead(getDerivedReaders(section.derives!), rendersUnreached)
+  );
+}
+
+function rendersUnreached(read: ReferencedExtra) {
+  return isContentRender(read) ? !isPatchedLeaf(read) : usesApart(read);
 }
 
 // Content a known child renders from its state, where plain renders it nowhere

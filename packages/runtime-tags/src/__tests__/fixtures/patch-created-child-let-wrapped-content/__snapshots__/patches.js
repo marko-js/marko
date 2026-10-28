@@ -1,56 +1,47 @@
 // PATCH
-[`c1;D%;<b><!></b>`, `a1;Db%;<em>static <!></em>`, `a2 !a>a>b0;//D b%l&&;<section><button>clear</button><!></section>`, {
+[`a1;Db%;<em>static <!></em>`, `~c1;D%;<b><!></b>`, `a2 !a>a>b0;//D b%l&&;<section><button>clear</button><!></section>`, {
   ba: [{
     ca: {
       ca: {
-        s: {
-          fb: "^^c1"
-        }
-      },
-      Wc1: {
-        fa: "^^^a1",
-        cAa: {
-          ta: "b"
-        }
+        Wb: [{
+          fa: "^^^a1",
+          cAa: {
+            ta: "b"
+          }
+        }, "c1", "^^"]
       }
     }
   }, "a2"]
 }]
-;ESY
+;EYY
 
-// PATCH holding ESY
+// PATCH holding EYY
 {
   ba: [{
     ca: {
       ca: {
-        s: {
-          fb: "^^c1"
-        }
-      },
-      Wc1: {
-        fa: "^^^a1",
-        cAa: {
-          ta: "c"
-        }
+        Wb: [{
+          fa: "^^^a1",
+          cAa: {
+            ta: "c"
+          }
+        }, "c1", "^^"]
       }
     }
   }, "a2"]
 }
 
-// PATCH holding ESY
+// PATCH holding EYY
 {
   ba: [{
     ca: {
       ca: {
-        s: {
-          fb: "^^c1"
-        }
-      },
-      Wc1: {
-        fa: "^^^a1",
-        cAa: {
-          ta: "d"
-        }
+        Wb: [{
+          fa: "^^^a1",
+          cAa: {
+            ta: "d"
+          }
+        }, "c1", "^^"]
       }
     }
   }, "a2"]

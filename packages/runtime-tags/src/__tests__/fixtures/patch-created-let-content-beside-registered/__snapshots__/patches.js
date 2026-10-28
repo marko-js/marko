@@ -1,10 +1,12 @@
 // PATCH
 [`~a1;Db%;<em>static <!></em>`, `a2 !a>b>b0 a>c0;/ b/D b%l&&;<button>x</button><section><button>clear</button><!></section>`, `d !d0; b%;<button id=toggle>toggle</button><!><!>`, `a3`, {
   ba: [{
-    Wa1: {
-      ta: "b"
-    },
     ca: {
+      cb: {
+        Wb: [{
+          ta: "b"
+        }, "a1", "^^^"]
+      },
       o: {
         uc1: "^~a1"
       }
@@ -24,10 +26,12 @@
 // PATCH holding Ecw
 {
   ba: [{
-    Wa1: {
-      ta: "c"
-    },
     ca: {
+      cb: {
+        Wb: [{
+          ta: "c"
+        }, "a1", "^^^"]
+      },
       o: {
         uc1: "^~a1"
       }

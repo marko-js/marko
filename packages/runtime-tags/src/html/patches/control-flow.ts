@@ -392,7 +392,8 @@ function patchLoop<A, B>(
   const chunk = getChunk()!;
   const { state } = chunk.boundary;
   if (state instanceof PatchRenderState) {
-    // A loop with no shell slot is the resumed page's (unpatched): a patch skips it.
+    // A loop with no shell slot is the resumed page's (unpatched): a patch skips it,
+    // but renders the rows a scope it creates starts with, as a document does.
     if (shellId !== undefined) {
       writeLoop(
         state,
@@ -405,6 +406,8 @@ function patchLoop<A, B>(
         mask,
         group,
       );
+    } else if (inCreatable()) {
+      writeCreatedRows(state, cb, iterate, scopeId, accessor);
     }
     return;
   }
@@ -497,6 +500,42 @@ export function writeLoop<A, B>(
   if (sentShellId) entry.push(sentShellId);
   writePatchEntry(state, scopeId, PatchKey.Loop + accessor, entry);
   return 1 as const;
+}
+
+// The client renders these rows from the state it starts with, and the server
+// renders the same: their entries apply where the scope was created (setup).
+function writeCreatedRows<A, B>(
+  state: PatchRenderState,
+  cb: (a: A, b: B) => void,
+  iterate: LoopIterate<A, B>,
+  scopeId: number,
+  accessor: string,
+) {
+  const items: unknown[] = patchTreeNode(state, []);
+  const row = keptBranch(cb);
+  const keptSites = state.keptSites;
+  let index = 0;
+  iterate((itemKey, sameAsIndex, a, b) => {
+    const branchId = _peek_scope_id();
+    const at: number | [number, string | number] = sameAsIndex
+      ? index
+      : [index, itemKey];
+    index++;
+    state.patchLinks[branchId] = { parent: scopeId, hop: [accessor, at] };
+    const patch = openScopePatch(state, branchId);
+    pushIdHop(IdHop.Row, itemKey);
+    withBranchId(branchId, row, a, b);
+    popIdHop();
+    if (hasKeys(patch)) {
+      items.push(typeof at === "number" ? at : patchTreeNode(state, at), patch);
+    }
+  });
+  // Only kept content needs them: the client renders the rest itself.
+  if (items.length && state.keptSites !== keptSites) {
+    ensurePatchSetup(state, ensureScopePatch(state, scopeId))[
+      PatchKey.LoopItem + accessor
+    ] = items;
+  }
 }
 
 // The value an `<await>`'s rejected server copy settles to: it renders nothing.

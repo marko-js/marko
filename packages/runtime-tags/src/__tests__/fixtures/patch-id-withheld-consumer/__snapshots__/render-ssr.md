@@ -67,17 +67,17 @@ assert.equal(ids.size, document.querySelectorAll("input").length);
   clear
 </button>
 <input
-  id="sM_2UTha0A"
+  id="sM_2UUA"
 />
 <label
-  for="sM_2UTha0A"
+  for="sM_2UUA"
 >
   2
 </label>
 ```
 ## Change
 ```
-INSERT: label:nth-of-type(2) + :is(#sM_2UA, label, button, #sM_2UTha0A, label)
+INSERT: label:nth-of-type(2) + :is(#sM_2UA, label, button, #sM_2UUA, label)
 ```
 
 # Update

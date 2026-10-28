@@ -3,36 +3,27 @@
   ba: [{
     ca: {
       pa: "b3"
-    },
-    Wa1: {
-      ta: "b"
     }
   }, "a2"]
 }]
-[`a1;Db%;<em>static <!></em>`, {
+[`~a1;Db%;<em>static <!></em>`, {
   cAa: {
     ca: {
       cAa: {
-        s: {
-          fb: "^^^a1",
-          cAb: {
-            ta: "b"
-          }
-        }
+        Wb: [{
+          ta: "b"
+        }, "a1", "^^^"]
       }
     }
   }
 }]
-;DxY
+;D1Q
 
-// PATCH holding DxY
+// PATCH holding D1Q
 {
   ba: [{
     ca: {
       pa: "b3"
-    },
-    Wa1: {
-      ta: "c"
     }
   }, "a2"]
 }
@@ -40,25 +31,19 @@
   cAa: {
     ca: {
       cAa: {
-        s: {
-          fb: "^^^a1",
-          cAb: {
-            ta: "c"
-          }
-        }
+        Wb: [{
+          ta: "c"
+        }, "a1", "^^^"]
       }
     }
   }
 }
 
-// PATCH holding DxY
+// PATCH holding D1Q
 {
   ba: [{
     ca: {
       pa: "b3"
-    },
-    Wa1: {
-      ta: "d"
     }
   }, "a2"]
 }
@@ -66,12 +51,9 @@
   cAa: {
     ca: {
       cAa: {
-        s: {
-          fb: "^^^a1",
-          cAb: {
-            ta: "d"
-          }
-        }
+        Wb: [{
+          ta: "d"
+        }, "a1", "^^^"]
       }
     }
   }

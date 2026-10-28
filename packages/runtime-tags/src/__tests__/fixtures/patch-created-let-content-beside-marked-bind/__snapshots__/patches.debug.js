@@ -8,10 +8,12 @@
     }
   },
   "PatchBranch:#text/1": [{
-    "PatchWithheld:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/template.marko_2*content": {
-      "PatchText:#text/0": "b"
-    },
     "PatchChild:#childScope/0": {
+      "PatchChild:#childScope/1": {
+        "PatchWithheld:#text/1": [{
+          "PatchText:#text/0": "b"
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/template.marko_2*content", "^^^"]
+      },
       "PatchSetupValues:": {
         "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/tags/outer.marko_fill0": "^~packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/template.marko_2*content"
       }
@@ -31,10 +33,12 @@
     }
   },
   "PatchBranch:#text/1": [{
-    "PatchWithheld:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/template.marko_2*content": {
-      "PatchText:#text/0": "c"
-    },
     "PatchChild:#childScope/0": {
+      "PatchChild:#childScope/1": {
+        "PatchWithheld:#text/1": [{
+          "PatchText:#text/0": "c"
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/template.marko_2*content", "^^^"]
+      },
       "PatchSetupValues:": {
         "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/tags/outer.marko_fill0": "^~packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/template.marko_2*content"
       }
@@ -53,10 +57,12 @@
     }
   },
   "PatchBranch:#text/1": [{
-    "PatchWithheld:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/template.marko_2*content": {
-      "PatchText:#text/0": "d"
-    },
     "PatchChild:#childScope/0": {
+      "PatchChild:#childScope/1": {
+        "PatchWithheld:#text/1": [{
+          "PatchText:#text/0": "d"
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/template.marko_2*content", "^^^"]
+      },
       "PatchSetupValues:": {
         "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/tags/outer.marko_fill0": "^~packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-marked-bind/template.marko_2*content"
       }

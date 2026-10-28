@@ -234,14 +234,16 @@ function withhold(state: PatchRenderState, value: unknown) {
     if (id && owner! > ((state.withheldContents ??= new Map()).get(id) ?? -1)) {
       state.withheldContents.set(id, owner!);
     }
-    if (withheldRenderers.has(content as ServerRenderer)) {
+    if (recordedRenderers.has(content as ServerRenderer)) {
       renderWithheld(state, content as ServerRenderer, id!, owner!);
     }
   }
 }
 
-// Content whose kept instances take their holes as data (`_content`'s `elide` 2).
+// Content whose kept instances take their holes as data (`_content`'s `elide` 2),
+// and of those, content some instance of which takes its owner's record (`3`).
 export const withheldRenderers = new WeakSet<ServerRenderer>();
+export const recordedRenderers = new WeakSet<ServerRenderer>();
 
 // A flush that leaves content to the consumers keeping it renders its holes
 // once for its owner, under the entry every instance there takes.
@@ -251,12 +253,11 @@ function renderWithheld(
   id: string,
   ownerId: number,
 ) {
-  const rendered = (state.withheldRendered ??= new Map());
+  const rendered = (state.withheldRendered ??= new Set());
   const key = PatchKey.Withheld + id;
   if (rendered.has(key + " " + ownerId)) return;
-  const scopeId = _base_peek_scope_id();
-  rendered.set(key + " " + ownerId, scopeId);
-  state.patchLinks[scopeId] = {
+  rendered.add(key + " " + ownerId);
+  state.patchLinks[_base_peek_scope_id()] = {
     parent: ownerId,
     hop: "",
     key,
@@ -572,8 +573,10 @@ export class PatchRenderState extends PatchPageState {
   pendingAwaits = new Set<number>();
   // Each setup envelope's ids.
   setupIds?: Map<object, Set<string>>;
-  // Each owner's withheld entry the response renders, with the scope it is in.
-  withheldRendered?: Map<string, number>;
+  // Each owner's withheld entry the response renders.
+  withheldRendered?: Set<string>;
+  // How many sites of kept content the response has rendered.
+  keptSites?: number;
   // What each scope's slots holding built objects depend on, by accessor.
   liveDeps?: Record<number, Record<string, string>>;
   // The writes each entry re-runs on, and its scope, resolved as the flush
@@ -687,6 +690,7 @@ export function linkBranch(
   slotIds?: (string | undefined)[],
   ownerScopeId?: number,
   setup?: boolean,
+  key?: string,
 ) {
   // The id a pairing peeks is its own: no other branch has linked or opened it.
   state.patchLinks[branchId] = {
@@ -696,6 +700,7 @@ export function linkBranch(
     slotIds,
     owner: ownerScopeId,
     setup,
+    key,
   };
 }
 

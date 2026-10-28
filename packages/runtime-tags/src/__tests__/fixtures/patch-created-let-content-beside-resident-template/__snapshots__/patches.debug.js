@@ -9,10 +9,12 @@
     "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-resident-template/tags/chooser.marko_fill1": "b"
   },
   "PatchBranch:#text/2": [{
-    "PatchWithheld:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-resident-template/template.marko_2*content": {
-      "PatchText:#text/0": "b"
-    },
     "PatchChild:#childScope/0": {
+      "PatchChild:#childScope/1": {
+        "PatchWithheld:#text/1": [{
+          "PatchText:#text/0": "b"
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-resident-template/template.marko_2*content", "^^^"]
+      },
       "PatchSetupValues:": {
         "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-resident-template/tags/outer.marko_fill0": "^~packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-resident-template/template.marko_2*content"
       }
@@ -32,10 +34,12 @@
     "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-resident-template/tags/chooser.marko_fill1": "c"
   },
   "PatchBranch:#text/2": [{
-    "PatchWithheld:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-resident-template/template.marko_2*content": {
-      "PatchText:#text/0": "c"
-    },
     "PatchChild:#childScope/0": {
+      "PatchChild:#childScope/1": {
+        "PatchWithheld:#text/1": [{
+          "PatchText:#text/0": "c"
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-resident-template/template.marko_2*content", "^^^"]
+      },
       "PatchSetupValues:": {
         "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-resident-template/tags/outer.marko_fill0": "^~packages/runtime-tags/src/__tests__/fixtures/patch-created-let-content-beside-resident-template/template.marko_2*content"
       }

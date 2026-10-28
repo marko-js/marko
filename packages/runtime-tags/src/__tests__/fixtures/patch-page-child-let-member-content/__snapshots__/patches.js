@@ -1,13 +1,17 @@
 // PATCH
 {
-  Wa1: {
-    ta: "b"
+  ca: {
+    Wb: [{
+      ta: "b"
+    }, "a1"]
   }
 }
 
 // PATCH
 {
-  Wa1: {
-    ta: "c"
+  ca: {
+    Wb: [{
+      ta: "c"
+    }, "a1"]
   }
 }

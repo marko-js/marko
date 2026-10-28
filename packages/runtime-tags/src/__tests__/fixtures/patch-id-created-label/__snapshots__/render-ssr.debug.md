@@ -86,10 +86,10 @@ for (const label of document.querySelectorAll("label")) {
   clear
 </button>
 <input
-  id="sM_[2].#childScope/0@2^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content\"].uid~2"
+  id="sM_[2].#childScope/0@2.#text/1@0.uid~2"
 />
 <label
-  for="sM_[2].#childScope/0@2^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content\"].uid~2"
+  for="sM_[2].#childScope/0@2.#text/1@0.uid~2"
 >
   2
 </label>
@@ -103,7 +103,7 @@ REMOVE: label:nth-of-type(2) + label
 INSERT: #sM_["b"].uid, label
 INSERT: #sM_.#text/1@0.uid~1 + label
 INSERT: #sM_.#text/2@1.uid~1 + label
-INSERT: label:nth-of-type(5) + :is(button, #sM_[2].#childScope/0@2^["packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content"].uid~2, label)
+INSERT: label:nth-of-type(5) + :is(button, #sM_[2].#childScope/0@2.#text/1@0.uid~2, label)
 ```
 
 # Update

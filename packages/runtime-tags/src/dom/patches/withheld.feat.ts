@@ -1,4 +1,4 @@
-import { isKeptShellId } from "../../common/helpers";
+import { isKeptShellId, keptShellId } from "../../common/helpers";
 import {
   AccessorPrefix,
   AccessorProp,
@@ -6,58 +6,65 @@ import {
   RendererProp,
   type Scope,
 } from "../../common/types";
+import { runId } from "../queue";
 import { _resumed } from "../resume";
-import { subscribeToScopeSet } from "../signals";
-import {
-  installPatchShells,
-  patchers,
-  patchScope,
-  setupPatchers,
-} from "./apply";
+import { creating, installPatchShells, patchers, patchScope } from "./apply";
 import "./dynamic-tag.feat";
 import { registerShell, shells } from "./shells";
 
 declare module "./apply" {
   interface PatchValues {
-    [PatchKey.Withheld]: Scope;
+    [PatchKey.Withheld]:
+      | Scope
+      | [patch: Scope, contentId: string, ownerHops?: string];
   }
 }
 
-// The kept instances of content its owner holds, and the withheld entry it last
-// took, which an instance the client creates later takes too.
+// The kept instances of content its owner holds no site reaches, and the record
+// it last took, which an instance the client creates takes too.
 export type WithheldScopes = Set<Scope> & { [PatchKey.Withheld]?: Scope };
 
-// The holes of content a client consumer keeps, for each live instance its
-// owner holds.
-patchers[PatchKey.Withheld] = (scope, contentId, value) => {
-  const instances = (scope[AccessorPrefix.WithheldScopes + contentId] ||=
-    new Set()) as WithheldScopes;
-  instances[PatchKey.Withheld] = value;
-  for (const instance of instances) {
-    if (instance[AccessorProp.Gen] > 0) patchScope(value, instance);
-  }
-};
-
-// Content an entry creates joins its owner's set, as a page's instances do, and
-// leaves it when destroyed.
-const applyDynamicTag = patchers[PatchKey.DynamicTag]!;
-patchers[PatchKey.DynamicTag] = setupPatchers[PatchKey.DynamicTag] = (
-  scope,
-  accessor,
-  entry,
-) => {
-  applyDynamicTag(scope, accessor, entry);
-  const renderer = Array.isArray(entry) ? entry[0] : entry;
-  const branch = scope[AccessorPrefix.BranchScopes + accessor] as
-    | Scope
-    | undefined;
-  if (typeof renderer === "string" && renderer[0] !== ">" && branch) {
-    subscribeToScopeSet(
-      branch[AccessorProp.Owner]!,
-      AccessorPrefix.WithheldScopes +
-        renderer.slice(renderer.lastIndexOf(" ") + 1).replace(/^\^+/, ""),
-      branch,
-    );
+// Kept content's holes: at a site, for the instance there, as a document renders
+// it; at its owner, for each instance no site reaches.
+patchers[PatchKey.Withheld] = (scope, accessor, value) => {
+  if (Array.isArray(value)) {
+    const [patch, id, hops] = value;
+    let branch = scope[AccessorPrefix.BranchScopes + accessor] as
+      | Scope
+      | undefined;
+    if (branch) {
+      const key = scope[AccessorPrefix.ConditionalRenderer + accessor];
+      const owner = " " + branch[AccessorProp.Owner]![AccessorProp.Id];
+      // A live branch holds it (`rendererKey`): in a `<for>` row the page rendered, by
+      // its id; in one a patch created, by its shell's.
+      if (key !== id + owner && key !== keptShellId(id) + owner)
+        branch = undefined;
+    }
+    // Else a consumer this flush created renders it, from its shell, not its
+    // registration: it joins no owner's set, so only its site reaches it.
+    if (
+      !branch &&
+      hops !== undefined &&
+      creating &&
+      scope[AccessorProp.Gen] === runId
+    ) {
+      patchers[PatchKey.DynamicTag]!(scope, accessor, hops + keptShellId(id));
+      branch = scope[AccessorPrefix.BranchScopes + accessor] as Scope;
+    }
+    if (branch) patchScope(patch, branch);
+  } else {
+    const instances = (scope[AccessorPrefix.WithheldScopes + accessor] ||=
+      new Set()) as WithheldScopes;
+    instances[PatchKey.Withheld] = value;
+    // One this flush created took its holes at its site.
+    for (const instance of instances) {
+      if (
+        instance[AccessorProp.Gen] > 0 &&
+        instance[AccessorProp.Gen] < runId
+      ) {
+        patchScope(value, instance);
+      }
+    }
   }
 };
 

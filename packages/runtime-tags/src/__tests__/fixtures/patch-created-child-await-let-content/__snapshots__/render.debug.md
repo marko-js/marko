@@ -25,7 +25,6 @@ INSERT: button, em
 ```
 ## Change
 ```
-UPDATE: em::text@7 "b" => "c"
 REMOVE: button
 REMOVE: em
 INSERT: button, em

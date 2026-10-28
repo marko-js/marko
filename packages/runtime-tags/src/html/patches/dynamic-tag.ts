@@ -26,7 +26,6 @@ import {
   getState,
   scopeWithId,
 } from "../writer";
-import { kKeptInstance } from "./serializer";
 import {
   PatchRenderState,
   popIdHop,
@@ -39,10 +38,12 @@ import {
   findOwnerDepth,
   getUpdatesFrom,
   inCreatable,
+  inUnpatched,
   linkBranch,
   patchWait,
   shipShell,
   walkMarkers,
+  recordedRenderers,
   withheldRenderers,
   withOwnerHops,
   withUnpatched,
@@ -129,9 +130,7 @@ function renderDynamicTag(
 ) {
   const state = getState();
   const isPatchRender = state instanceof PatchRenderState;
-  const renderer = isPatchRender
-    ? normalizeDynamicRenderer<ServerRenderer>(tag)
-    : undefined;
+  const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const pairs = pairsContent(
     state,
     scopeId,
@@ -207,32 +206,52 @@ export function pairsContent(
     pairing === PatchPairing.Render ||
     pairing === PatchPairing.Keep ||
     pairing === PatchPairing.Setup;
+  // Kept content renders where it appears, as a document's instance does: an
+  // entry its branch takes while it holds that content.
+  const kept = !pairs && withheldRenderers.has(renderer as ServerRenderer);
   if (state instanceof PatchRenderState) {
     if (!pairs) {
       const readyId = (renderer as ServerRenderer)?.[RendererProp.ReadyId];
       if (readyId) patchWait(state, readyId);
       // The resumed page renders the tag, and so the content passed to it.
-      _content_withhold(renderer);
+      if (!kept) _content_withhold(renderer);
       _content_withhold(content);
-    } else {
+    }
+    if (kept) {
+      const { [RendererProp.Id]: id, [RendererProp.Owner]: owner } =
+        renderer as ServerRenderer;
+      // A consumer the flush may create takes it by the owner hops its tag's
+      // entry would, from the shell the entry ships.
+      const creatable = inCreatable();
+      state.keptSites = (state.keptSites || 0) + 1;
+      linkBranch(
+        state,
+        scopeId,
+        accessor,
+        _peek_scope_id(),
+        creatable ? keptShellId(id!) : undefined,
+        creatable ? [id, ownerPrefix(state, scopeId, owner!)] : [id],
+        owner,
+        false,
+        PatchKey.Withheld + accessor,
+      );
+    } else if (pairs && (renderer || content)) {
       // A null renderer still renders the body: its writes pair too.
-      if (renderer || content) {
-        linkBranch(
-          state,
-          scopeId,
-          accessor,
-          _peek_scope_id(),
-          undefined,
-          undefined,
-          typeof renderer === "function"
-            ? renderer[RendererProp.Owner]
-            : undefined,
-          pairing === PatchPairing.Setup,
-        );
-      }
+      linkBranch(
+        state,
+        scopeId,
+        accessor,
+        _peek_scope_id(),
+        undefined,
+        undefined,
+        typeof renderer === "function"
+          ? renderer[RendererProp.Owner]
+          : undefined,
+        pairing === PatchPairing.Setup,
+      );
     }
   }
-  return pairs;
+  return pairs || kept;
 }
 
 // Content with no client renderer (`elide`) registers under its kept shell's id:
@@ -241,41 +260,37 @@ export function _content(
   id: string,
   fn: ServerRenderer,
   scopeId?: number,
-  elide?: 1 | 2,
+  elide?: 1 | 2 | 3,
 ) {
   if (!elide) return _base_content(id, fn, scopeId);
   const state = getState();
   return register(
     keptShellId(id),
-    _base_content(id, elide > 1 ? keepHoles(id, fn, scopeId!) : fn, scopeId),
+    _base_content(
+      id,
+      elide > 1 ? keepHoles(id, fn, scopeId!, elide > 2) : fn,
+      scopeId,
+    ),
     state instanceof PatchRenderState && scopeWithId(state, scopeId!),
     undefined,
     1,
   );
 }
 
-// Kept content (`elide` 2) takes its instances' holes as data: each one a page
-// renders joins its owner's set, and the client adds those it creates.
-function keepHoles(id: string, fn: ServerRenderer, scopeId: number) {
+// Kept content (`elide` 2) takes its instances' holes as data at their sites; with
+// an owner's record (`3`), each instance a page renders where no site reaches
+// joins the owner's set, and the client adds those it creates.
+function keepHoles(
+  id: string,
+  fn: ServerRenderer,
+  scopeId: number,
+  record: boolean,
+) {
   const renderer = (...args: Parameters<ServerRenderer>) => {
     const state = getState();
     const instanceId = _peek_scope_id();
     const result = fn(...args);
-    // An instance a patch may create takes its holes from the owner's withheld
-    // entry, where the flush renders one (`kKeptInstance`).
-    if (
-      state instanceof PatchRenderState &&
-      inCreatable() &&
-      // Not the withheld entry's own render, which links under its key.
-      !state.patchLinks[instanceId].key
-    ) {
-      const patch = state.patchTree![instanceId];
-      if (patch) {
-        (patch as { [kKeptInstance]?: string })[kKeptInstance] =
-          PatchKey.Withheld + id + " " + scopeId;
-      }
-    }
-    if (!(state instanceof PatchRenderState)) {
+    if (record && !(state instanceof PatchRenderState) && inUnpatched()) {
       const key = AccessorPrefix.WithheldScopes + id;
       (
         (scopeWithId(state, scopeId)[key] ||
@@ -285,6 +300,7 @@ function keepHoles(id: string, fn: ServerRenderer, scopeId: number) {
     return result;
   };
   withheldRenderers.add(renderer);
+  if (record) recordedRenderers.add(renderer);
   return renderer;
 }
 
@@ -310,6 +326,11 @@ export function writeDynamicTagEntry(
     walkMarkers(state);
   } else {
     const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
+    // Kept content's site entry creates it where the flush created the scope,
+    // and reaches a live instance too (`pairsContent`).
+    if (createdOnly && withheldRenderers.has(renderer as ServerRenderer)) {
+      return PatchPairing.Skip;
+    }
     const fixed =
       rendererGroup !== undefined &&
       !writesEntry(getUpdatesFrom(rendererMask, rendererGroup));

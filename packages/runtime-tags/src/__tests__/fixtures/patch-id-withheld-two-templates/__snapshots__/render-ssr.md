@@ -56,25 +56,25 @@ for (const input of document.querySelectorAll("input")) {
   clear
 </button>
 <input
-  id="sM_2UUThc0A"
+  id="sM_2UUUA"
 />
 <label
-  for="sM_2UUThc0A"
+  for="sM_2UUUA"
 >
   relay
 </label>
 <input
-  id="sM_2UUTha0A"
+  id="sM_2UUVA"
 />
 <label
-  for="sM_2UUTha0A"
+  for="sM_2UUVA"
 >
   p 2
 </label>
 ```
 ## Change
 ```
-INSERT: label:nth-of-type(2) + :is(button, #sM_2UUThc0A, label, #sM_2UUTha0A, label)
+INSERT: label:nth-of-type(2) + :is(button, #sM_2UUUA, label, #sM_2UUVA, label)
 ```
 
 # Update

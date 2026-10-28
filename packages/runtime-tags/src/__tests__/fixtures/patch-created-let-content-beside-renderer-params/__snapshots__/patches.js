@@ -1,10 +1,12 @@
 // PATCH
 [`~a1;Db%;<em>static <!></em>`, `a2 !a>b>b0 a>d0;/ b/D b%l&&;<button>x</button><section><button>clear</button><!></section>`, `a3 !a4`, `c0`, `c4;b%;<!><!><!>`, {
   ba: [{
-    Wa1: {
-      ta: "b"
-    },
     ca: {
+      cb: {
+        Wb: [{
+          ta: "b"
+        }, "a1", "^^^"]
+      },
       o: {
         ud1: "^~a1"
       }
@@ -28,10 +30,12 @@
 // PATCH holding FcwC
 {
   ba: [{
-    Wa1: {
-      ta: "c"
-    },
     ca: {
+      cb: {
+        Wb: [{
+          ta: "c"
+        }, "a1", "^^^"]
+      },
       o: {
         ud1: "^~a1"
       }
@@ -54,10 +58,12 @@
 // PATCH holding FcwC
 {
   ba: [{
-    Wa1: {
-      ta: "d"
-    },
     ca: {
+      cb: {
+        Wb: [{
+          ta: "d"
+        }, "a1", "^^^"]
+      },
       o: {
         ud1: "^~a1"
       }
@@ -78,10 +84,12 @@
 // PATCH holding FcwC
 {
   ba: [{
-    Wa1: {
-      ta: "e"
-    },
     ca: {
+      cb: {
+        Wb: [{
+          ta: "e"
+        }, "a1", "^^^"]
+      },
       o: {
         ud1: "^~a1"
       }

@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	_scope($scope0_id, {
 		input_note: input.note,
-		"ClosureScopes:input_note/5": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_note__closures,
+		"ClosureScopes:input_note/5": _write_if($scope0_reason, 1) && $input_note__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

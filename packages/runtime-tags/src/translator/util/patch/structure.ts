@@ -71,7 +71,7 @@ function holdsClientState(binding: Binding) {
 }
 // A read rendering the content where a patch may too: outside stateful structure,
 // or naming a created scope's `<let>` alone, which the patch creates first.
-function isPatchedLeaf(read: ReferencedExtra) {
+export function isPatchedLeaf(read: ReferencedExtra) {
   return (
     isContentRender(read) &&
     (!isStatefulLeaf(read) ||
