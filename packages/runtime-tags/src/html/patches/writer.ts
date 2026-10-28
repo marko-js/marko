@@ -30,7 +30,6 @@ import {
   _var as _base_var,
   _html,
   _peek_scope_id as _base_peek_scope_id,
-  _existing_scope as _base_existing_scope,
   _resume,
   _scope as _base_scope,
   _script as _base_script,
