@@ -727,7 +727,9 @@ function resolveInitSources(init: t.NodeExtra) {
       mergeResolvedSources,
       undefined as Sources | undefined,
     );
-    return getGlobalReads(init) ? mergeSources(sources, globalSources) : sources;
+    return getGlobalReads(init)
+      ? mergeSources(sources, globalSources)
+      : sources;
   }
 }
 
