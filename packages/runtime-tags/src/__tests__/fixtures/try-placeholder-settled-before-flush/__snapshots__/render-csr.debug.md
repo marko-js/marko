@@ -1,0 +1,4 @@
+# Render `{"promise":{}}`
+```html
+<main />
+```

@@ -1,0 +1,4 @@
+import Counter from "./counter.marko";
+import Other from "./other.marko";
+<${input.which ? Counter : Other} label=input.label/>
+<chooser Tag=(input.which ? Counter : Other) label=input.label/>

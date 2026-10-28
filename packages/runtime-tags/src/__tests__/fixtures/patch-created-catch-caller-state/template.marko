@@ -1,0 +1,6 @@
+<let/count=0/>
+<main>
+  <detail-view error=input.error detail=input.detail/>
+  <detail-view error=input.error detail=(count ? "n" + count : "")/>
+  <button onClick() { count++ }>${count}</button>
+</main>

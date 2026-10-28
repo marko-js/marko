@@ -1,0 +1,7 @@
+<let/items=[{ id: 1 }]/>
+<main>
+  <for|item| of=items by=input.key.bind(null)>
+    <li>${item.id}</li>
+  </for>
+  <button onClick() { items = [...items, { id: 2 }] }>+</button>
+</main>

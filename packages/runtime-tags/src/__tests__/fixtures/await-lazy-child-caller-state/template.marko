@@ -1,0 +1,6 @@
+import ShowAwait from "./show-await.marko" with { load: "render" }
+<let/n=0/>
+<button.open onClick() { n++ }>inc</button>
+<if=input.show>
+  <ShowAwait promise=Promise.resolve(n) label=input.label/>
+</if>

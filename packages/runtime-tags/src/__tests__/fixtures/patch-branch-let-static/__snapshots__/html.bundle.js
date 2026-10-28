@@ -1,0 +1,20 @@
+// template.marko
+_shells({
+	a: "a;E l%;<main><h1> </h1><!></main>",
+	a0: "a0;Db%;<p>Value <!></p>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h1>`);
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_html(`<p>Value ${_text_resume($scope1_id, "a", 1, 2, 0, 0)}</p>`);
+			_scope($scope1_id, {});
+			return 0;
+		}
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a0"], $scope0_reason, 1);
+	_html("</main>");
+	_scope($scope0_id, {});
+}, 1);
