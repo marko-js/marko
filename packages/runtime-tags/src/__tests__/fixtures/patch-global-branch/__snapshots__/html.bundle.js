@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		if ($global$1.meta.headings) {
 			const $scope1_id = _scope_id();
 			_html("<a href=#main>Skip to content</a>");
-			$scope0_page && _scope($scope1_id, {});
+			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $scope0_page, void 0, void 0, void 0, ["a0"]);

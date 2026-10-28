@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<i>${_escape(x)}${_text_resume($scope2_id, "#text/1", $global$1.brand, $scope0_page * 2)}</i>`);
 				_fill_global_subscribe("__tests__/template.marko_2_$global_brand#0:7", $scope2_id, 1);
-				$scope0_page && _scope($scope2_id, {}, "__tests__/template.marko", "5:4");
+				_scope($scope2_id, {}, "__tests__/template.marko", "5:4");
 			});
 			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:7", $scope1_id, 1);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");

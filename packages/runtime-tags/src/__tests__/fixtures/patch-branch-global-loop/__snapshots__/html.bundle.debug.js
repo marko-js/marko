@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (issues) {
 			const $scope2_id = _scope_id();
 			_html("<p>invalid</p>");
-			$scope0_page && _scope($scope2_id, {}, "__tests__/template.marko", "4:2");
+			_scope($scope2_id, {}, "__tests__/template.marko", "4:2");
 			return 0;
 		} else {
 			const $scope1_id = _scope_id();

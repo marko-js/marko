@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 		if (issues) {
 			const $scope2_id = _scope_id();
 			_html("<p>invalid</p>");
-			$scope0_page && _scope($scope2_id, {});
+			_scope($scope2_id, {});
 			return 0;
 		} else {
 			const $scope1_id = _scope_id();

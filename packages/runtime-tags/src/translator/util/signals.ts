@@ -2563,11 +2563,13 @@ export function writeHTMLResumeStatements(
     const writeCall = writeScopeBuilder
       ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
       : callRuntime("_scope", ...writeScopeArgs);
-    // Child sections gate through their cross-section guards (derived
-    // from the root reason, so still binary under patches).
-    const write = scopeGuardsReason
-      ? getExprIfWritten(section, sectionReason, writeCall)
-      : writeCall;
+    // Child sections gate through their cross-section guards, but for a global
+    // reason: it holds on every page, and a patch render's `_scope` writes nothing.
+    const write =
+      scopeGuardsReason &&
+      !(isConditionalReason(sectionReason) && sectionReason.global)
+        ? getExprIfWritten(section, sectionReason, writeCall)
+        : writeCall;
     // A known child's fills take its write's place in a patch render, where
     // `_scope` writes nothing.
     body.push(
