@@ -1,0 +1,10 @@
+<let/n=0/>
+<define/Row|{ value }|>
+  <if=input.show>
+    <const/doubled=value * 2/>
+    <p>${input.label}</p>
+    <if=(n > 1)><span>${doubled}</span></if>
+  </if>
+</define>
+<Row value=n/>
+<button onClick() { n++ }>+</button>

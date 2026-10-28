@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "id", $scope1_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 		_html(`<button class=add>+</button>${_el_resume($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill2", rows, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", rows, 1);
 		_scope($scope1_id, {
 			selected,
 			flag,
@@ -35,9 +35,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			selected: "2:16",
 			flag: "2:26",
 			rows: "3:8"
-		}) || (_filled_guard($scope1_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", selected, !_server_guard($scope1_reason, 1)), _filled_guard($scope1_reason, 2) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", flag, !_server_guard($scope1_reason, 2)));
+		}) || _filled_guard($scope1_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", selected, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
-	_set_scope_reason(38 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(6 | _mask_group($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	List.content({
 		selected: input.sel,

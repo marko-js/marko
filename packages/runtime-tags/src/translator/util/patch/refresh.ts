@@ -25,8 +25,9 @@ import {
   ensureKnownTagPatchGroups,
   getCallSiteSources,
   getParamGroupSources,
+  getClientCalls,
+  isClientAtEveryCall,
   isKnownTagExtra,
-  someCallPasses,
 } from "../known-tag";
 import { isPatch } from "../marko-config";
 import { isTrackedFunction } from "../module-registrations";
@@ -91,6 +92,7 @@ import { getWriteReason } from "../write-guard";
 import {
   getStateInitSources,
   getWriteSources,
+  hasClientState,
   isFilledHole,
 } from "./decisions";
 import {
@@ -102,7 +104,6 @@ import {
   getParamSelectedStructure,
   calleeKeepsInput,
   getStatefulConsumers,
-  isPassedStateByEveryCall,
   isStatefulLeaf,
 } from "./structure";
 
@@ -143,7 +144,7 @@ function isPatchSent(binding: Binding) {
     isPatch() &&
     getCanonicalBinding(binding) === binding &&
     ((hasParamOrGlobalSource(binding.sources) &&
-      !binding.sources!.state &&
+      !hasClientState(binding.sources) &&
       (binding.type === BindingType.param ||
         binding.type === BindingType.derived ||
         (binding.type === BindingType.let && !binding.assignments))) ||
@@ -543,6 +544,8 @@ function mayTakeSeed(binding: Binding) {
     binding.type !== BindingType.dom &&
     binding.type !== BindingType.constant &&
     every(binding.sources?.state, (state) => isFirstState(state, section)) &&
+    // A value of a param every call passes client state comes with the call.
+    !some(binding.sources?.param, isClientAtEveryCall) &&
     // A branch's own params arrive with its structure.
     !(isSectionParam(binding) && !binding.localOf && !seedsParam(binding)) &&
     // No fill (it ships wherever client code reads the value) and no write.
@@ -1877,21 +1880,8 @@ export function hasTagCallerParamAt(
 ) {
   return some(
     sources?.param,
-    (param) => isCallerParamAt(param, section) && mayPassClientState(param),
+    (param) => isCallerParamAt(param, section) && !!getClientCalls(param),
   );
-}
-
-// A `<define>` body's calls are known: one passes a param client state where
-// it passes state or such a param of its own (sources settle before solve).
-const [mayPassClientState] = createAnalysisMemo(
-  (param: ParamBinding): boolean =>
-    !param.section.parent ||
-    someCallPasses(param.section, param, passesClientState),
-  false,
-);
-
-function passesClientState(passed: Sources | undefined) {
-  return !!passed?.state || some(passed?.param, mayPassClientState);
 }
 
 // A created subscriber of the closure is reached only by subscribing: a read
@@ -1940,7 +1930,7 @@ export const isPatchWrittenJoin = createPassMemo((join: Intersection) => {
     Array.isArray(sources?.param) &&
     hasTagCallerParamAt(sources, section!) &&
     !(
-      isPassedStateByEveryCall(sources, true) &&
+      some(sources.param, isClientAtEveryCall) &&
       // A member another join reads keeps it written: its key would ship for both.
       every(join, (member) => !readsOtherJoin(member, join))
     )
@@ -2041,7 +2031,7 @@ export function registersJoinFill(member: Binding) {
 function isSeedableLocal(binding: Binding) {
   return (
     binding.type !== BindingType.constant &&
-    !binding.sources?.state &&
+    !hasClientState(binding.sources) &&
     hasParamOrGlobalSource(binding.sources) &&
     (isSectionParam(binding) ||
       !!binding.localOf ||

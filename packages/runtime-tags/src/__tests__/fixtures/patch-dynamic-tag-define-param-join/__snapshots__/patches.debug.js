@@ -5,7 +5,6 @@
     "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-define-param-join/template.marko_fill2": 5,
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchWrite:y": 0,
         "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-define-param-join/template.marko_2_value#1:4_y#3/init"
       }
     },
@@ -28,7 +27,6 @@
     "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-define-param-join/template.marko_fill2": 1,
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchWrite:y": 0,
         "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-define-param-join/template.marko_2_value#1:4_y#3/init"
       }
     },
@@ -45,7 +43,6 @@
     "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-define-param-join/template.marko_fill2": 5,
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchWrite:y": 0,
         "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-define-param-join/template.marko_2_value#1:4_y#3/init"
       }
     },

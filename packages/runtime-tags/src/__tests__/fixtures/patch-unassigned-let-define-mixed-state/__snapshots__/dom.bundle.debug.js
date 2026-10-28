@@ -3,10 +3,10 @@ const $Body_content__walks = "b%c";
 const $Body_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}<!>`)($Body_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&b`)($Body_content__walks);
-const $if_content__a = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.a)));
+const $if_content__a = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.a));
 const $if_content__setup = $if_content__a;
 const $Body_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
-const $Body_content__a = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "a", ($scope) => {
+const $Body_content__a = /*@__PURE__*/ _const("a", ($scope) => {
 	$Body_content__if($scope, $scope.a ? 0 : 1);
 	$if_content__a($scope);
 });

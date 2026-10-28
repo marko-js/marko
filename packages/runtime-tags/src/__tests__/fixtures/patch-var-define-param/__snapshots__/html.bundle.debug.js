@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			value: $wi__input_suffix && value,
 			_: ($wi__input_suffix || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
-		}, "__tests__/template.marko", "2:2", { value: "2:15" }), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "__tests__/template.marko_1_input_suffix#0:4/subscribe") || _filled_guard($scope1_reason, 0) && $cg__input_suffix && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", value, !_server_guard($scope1_reason, 0));
+		}, "__tests__/template.marko", "2:2", { value: "2:15" }), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "__tests__/template.marko_1_input_suffix#0:4/subscribe");
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 1);

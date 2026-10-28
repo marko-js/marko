@@ -12,17 +12,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	const Row = { content: _content("__tests__/template.marko_1*content", ({ a, b, c }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $cg__b__OR__c = _client_guard($scope1_reason, 2), $cg__a__OR__b = _client_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $cg__a__OR__b = _client_guard($scope1_reason, 0);
 		_html(`<p>${_text_resume($scope1_id, "#text/0", a + b + c, 1, $scope1_reason, 3)}</p><em>${_text_resume($scope1_id, "#text/1", input.y + b, 1, (_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 5)) << 1, 0)}</em>`);
-		$cg__b__OR__c && _patch_write($scope1_id, "PatchMarkedWrite:a", a, !(_filled_guard($scope1_reason, 4) && $cg__b__OR__c));
 		_client_guard((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 1)) << 1, 0) && _patch_write($scope1_id, "PatchMarkedWrite:b", b, !(_filled_guard($scope1_reason, 5) && (_client_guard($scope1_reason, 1) || _client_guard($scope0_reason, 1))));
 		$cg__a__OR__b && _patch_write($scope1_id, "PatchMarkedWrite:c", c, !(_filled_guard($scope1_reason, 6) && $cg__a__OR__b));
 		_patch_join_init($scope1_id, "__tests__/template.marko_1_input_y#0:4_b#5/init", (_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 5)) << 1, 0, _filled_guard($scope0_reason, 1) && ">input_y", _filled_guard($scope1_reason, 5) && "b");
 		_patch_join_init($scope1_id, "__tests__/template.marko_1_a#4_b#5_c#7/init", $scope1_reason, 3, _filled_guard($scope1_reason, 4) && "a", _filled_guard($scope1_reason, 5) && "b", _filled_guard($scope1_reason, 6) && "c");
 		_subscribe(_unfilled_if((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 5)) << 1, 0) && $wi__input_y && $input_y__closures, _scope($scope1_id, {
 			a: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 3)) && a,
-			b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 5) || _unfilled_if($scope1_reason, 3) || _unfilled_if($scope0_reason, 2)) && b,
-			c: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 3)) && c,
+			b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 5) || _unfilled_if($scope1_reason, 3) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope1_reason, 4)) && b,
+			c: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 3) || _unfilled_if($scope1_reason, 4)) && c,
 			_: ($wi__input_y || _write_if($scope1_reason, 5)) && _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", {
 			a: "2:15",
