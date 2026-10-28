@@ -164,15 +164,11 @@ export function _for_closure(
 export function _for_selector(
   ownerLoopNodeAccessor: EncodedAccessor,
   ownerValueAccessor: EncodedAccessor,
-  keyValueAccessor: EncodedAccessor,
   fn: SignalFn,
 ): SignalFn {
   if (!MARKO_DEBUG) {
     ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor as number);
     ownerValueAccessor = decodeAccessor(ownerValueAccessor as number);
-    if (keyValueAccessor !== AccessorProp.LoopKey) {
-      keyValueAccessor = decodeAccessor(keyValueAccessor as number);
-    }
   }
   const scopeAccessor = AccessorPrefix.BranchScopes + ownerLoopNodeAccessor;
   const mapAccessor = AccessorPrefix.KeyedScopes + ownerLoopNodeAccessor;
@@ -183,12 +179,7 @@ export function _for_selector(
       queueRender(
         ownerScope,
         (_) => {
-          const map = keyedScopes(
-            ownerScope,
-            scopeAccessor,
-            mapAccessor,
-            keyValueAccessor,
-          );
+          const map = keyedScopes(ownerScope, scopeAccessor, mapAccessor);
           if (map && prevKeyProp in map) {
             const prevScope = map.get(map[prevKeyProp]);
             const nextScope = map.get(nextKey);
@@ -217,16 +208,14 @@ function keyedScopes(
   ownerScope: Scope,
   scopeAccessor: string,
   mapAccessor: string,
-  keyValueAccessor: EncodedAccessor,
 ): KeyedScopes | null {
   const map = (ownerScope[mapAccessor] ||= new Map()) as KeyedScopes;
   if (!map.size) {
     for (const scope of toArray(ownerScope[scopeAccessor] as BranchScope)) {
-      const key = scope[AccessorProp.LoopKey] ?? scope[keyValueAccessor];
+      const key = scope[AccessorProp.LoopKey];
       if (key === undefined) {
         return (ownerScope[mapAccessor] = null);
       }
-      scope[AccessorProp.LoopKey] = key;
       map.set(key, scope);
     }
   }

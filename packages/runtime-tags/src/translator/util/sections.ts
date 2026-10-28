@@ -125,7 +125,7 @@ export interface Section {
   hoisted: ReferencedBindings;
   /** The closures its `<for>` rows read only by comparing them to the row's
    * key, which a row selector updates. */
-  selector: { key: Binding; closures: Set<Binding> } | undefined;
+  selector: Set<Binding> | undefined;
   /** The canonical intersections its work waits on, once ids allocate. */
   intersections: Map<Intersection, IntersectionMeta> | undefined;
   /** The slots of its scope, its own and its bindings'. */

@@ -1,6 +1,6 @@
 // template.marko
 const $for_content__selected__OR__row_label = /*@__PURE__*/ _or(8, ($scope) => _text($scope.b, $scope._.c === $scope.M && $scope.h));
-const $for_content__selected = /*@__PURE__*/ _for_selector(0, 2, "M", ($scope) => {
+const $for_content__selected = /*@__PURE__*/ _for_selector(0, 2, ($scope) => {
 	_attr_class_item($scope.a, "danger", $scope._.c === $scope.M);
 	$for_content__selected__OR__row_label($scope);
 });

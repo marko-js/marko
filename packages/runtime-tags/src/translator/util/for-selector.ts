@@ -10,20 +10,17 @@ import { forEach, some } from "./optional";
 import { getReferencedBindings } from "./references";
 import { isDirectClosure, type Section } from "./sections";
 
-export function getForSelectorKey(
+export function isForSelectorClosure(
   bodySection: Section,
   closure: Binding,
-): Binding | undefined {
-  const { selector } = bodySection;
-  if (selector?.closures.has(getCanonicalBinding(closure))) {
-    return selector.key;
-  }
+): boolean {
+  return !!bodySection.selector?.has(getCanonicalBinding(closure));
 }
 
 export function isForSelectorValue(binding: Binding): boolean {
   return some(
     binding.closureSections,
-    (section) => !!section.selector?.closures.has(binding),
+    (section) => !!section.selector?.has(binding),
   );
 }
 
@@ -47,7 +44,7 @@ export function detectForSelector(
     });
   }
   if (closures) {
-    bodySection.selector = { key: keyBinding, closures };
+    bodySection.selector = closures;
   }
 }
 

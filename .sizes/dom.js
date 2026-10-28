@@ -1,4 +1,4 @@
-// size: 27461 (min) 10238 (brotli)
+// size: 27425 (min) 10223 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -697,10 +697,9 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
     };
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
-function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccessor, fn) {
+function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn) {
   ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
-    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)),
-    keyValueAccessor !== "M" && (keyValueAccessor = decodeAccessor(keyValueAccessor)));
+    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)));
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
     mapAccessor = "O" + ownerLoopNodeAccessor,
     prevKeyProp = `_${ownerValueAccessor}`,
@@ -710,7 +709,7 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
         queueRender(
           ownerScope,
           (_) => {
-            let map = keyedScopes(ownerScope, scopeAccessor, mapAccessor, keyValueAccessor);
+            let map = keyedScopes(ownerScope, scopeAccessor, mapAccessor);
             if (map && prevKeyProp in map) {
               let prevScope = map.get(map[prevKeyProp]),
                 nextScope = map.get(nextKey);
@@ -725,13 +724,13 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
     };
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
-function keyedScopes(ownerScope, scopeAccessor, mapAccessor, keyValueAccessor) {
+function keyedScopes(ownerScope, scopeAccessor, mapAccessor) {
   let map = (ownerScope[mapAccessor] ||= /* @__PURE__ */ new Map());
   if (!map.size)
     for (let scope of toArray(ownerScope[scopeAccessor])) {
-      let key = scope.M ?? scope[keyValueAccessor];
+      let key = scope.M;
       if (key === void 0) return (ownerScope[mapAccessor] = null);
-      ((scope.M = key), map.set(key, scope));
+      map.set(key, scope);
     }
   return map;
 }
