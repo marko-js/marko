@@ -1940,10 +1940,19 @@ function patchRefreshes(binding: Binding): boolean {
   const root = getCanonicalBinding(binding);
   if (getPatchFill(root).fill || isPatchWritten(root)) return true;
   if (isKnownChild(root.section)) return false;
-  // A branch's own param (a loop item) arrives with the structure.
-  if (isSectionParam(root)) return true;
+  // A param arrives with its section, unless a branch derives it from its
+  // expression (a loop item, an `<await>` value): then its sources decide.
+  if (isSectionParam(root) && !derivesFromBranch(root)) return true;
   // Sources are params, which the checks above decide without recursing.
   return every(root.sources?.param, patchRefreshes);
+}
+
+// A branch's param its expression gives; one passed to its body (an attribute
+// tag loop's item) is its own source.
+function derivesFromBranch(param: Binding) {
+  return (
+    !!param.section.branchExpr && !bindingUtil.has(param.sources?.param, param)
+  );
 }
 
 // Whether a patch may create this content: its tag can diverge, a consumer

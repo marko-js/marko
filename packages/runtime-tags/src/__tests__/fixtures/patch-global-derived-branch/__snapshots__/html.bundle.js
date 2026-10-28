@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_text_resume($scope1_id, "a", collect($global$1, item), 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
-		_fill_global_subscribe("a0", $scope0_id);
+		_fill_global_subscribe("a0", $scope0_id, _client_guard($scope0_reason, 0));
 		_scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && item });
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);
 	const summary = collected($global$1);

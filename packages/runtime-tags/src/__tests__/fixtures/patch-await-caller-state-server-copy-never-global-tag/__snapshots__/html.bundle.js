@@ -23,7 +23,7 @@ var show_await_default = _template("c", (input) => {
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", x && $global$1.flag ? tags[0] : null, { label: x }, 1, 0, 0, $scope0_page || $wg__input_promise, (2 | _mask_group($scope0_reason, 0)) << 1, 0);
-		_fill_global_subscribe("c0", $scope1_id);
+		_fill_global_subscribe("c0", $scope1_id, _client_guard($scope0_reason, 0));
 		_scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && x });
 	}, 1, "c1", _unfilled_if($scope0_reason, 0) && 2, 1);
 });

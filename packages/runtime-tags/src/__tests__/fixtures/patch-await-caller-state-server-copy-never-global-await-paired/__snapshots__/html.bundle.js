@@ -19,7 +19,7 @@ var show_await_default = _template("b", (input) => {
 			_html(`<p>${_text_resume($scope2_id, "a", y, 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
 			_scope($scope2_id, {});
 		}, 1, "b0", _unfilled_if((2 | _mask_group($scope0_reason, 0)) << 1, 0) && 2, 1);
-		_fill_global_subscribe("b4", $scope1_id);
+		_fill_global_subscribe("b4", $scope1_id, _client_guard($scope0_reason, 0));
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && x });
 	}, 1, "b2", _unfilled_if($scope0_reason, 0) && 3, 1);
 });
