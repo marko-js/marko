@@ -1,0 +1,9 @@
+<const/highlight(text: string) {
+  return text.replace(input.cursor.test, (m) => `<b class=${$global.theme}>${input.cursor.content((s) => s)}</b>`);
+}/>
+<if=(input.text.length > 2)>
+  <div>$!{highlight(input.text)}</div>
+</if>
+<else>
+  <span>$!{highlight(input.text)}</span>
+</else>

@@ -1,0 +1,10 @@
+<define/Outer|{ value }|>
+  <let/count=0/>
+  <define/Inner|{ y }|>
+    <const/b=value + y/>
+    <p>${b}</p>
+  </define>
+  <Inner y=count/>
+  <button onClick() { count++ }>inc</button>
+</define>
+<${input.show && Outer} value=input.n/>

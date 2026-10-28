@@ -1,0 +1,11 @@
+<let/count=0/>
+<button onClick() { count++ }>Count ${count}</button>
+<probe promise=input.promise/>
+<try>
+  <@placeholder>
+    <span.loading>...</span>
+  </@placeholder>
+  <await|v|=input.promise>
+    <em>${v.name}</em>
+  </await>
+</try>

@@ -1,0 +1,8 @@
+<let/n=0/>
+<const/label=`${input.prefix}${n}`/>
+<button class="n" onClick() { n++ }>${label}</button>
+<ul>
+  <for|item| of=input.items>
+    <li>${item}:${label}</li>
+  </for>
+</ul>

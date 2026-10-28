@@ -1,0 +1,10 @@
+static function fail() {
+  return Promise.reject(new Error("down"));
+}
+<main>
+  <p>${input.label}</p>
+  <try>
+    <await|v|=fail()><em>${v}</em></await>
+    <@catch><p>oops</p></@catch>
+  </try>
+</main>

@@ -1,0 +1,8 @@
+<define/Badge|input|>
+  <p>${input.value + $global.flag}</p>
+</define>
+<let/count=0/>
+<main>
+  <Badge value=count/>
+  <button onClick() { count++ }>+</button>
+</main>

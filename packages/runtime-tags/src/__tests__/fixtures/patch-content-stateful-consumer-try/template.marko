@@ -1,0 +1,10 @@
+static function check(fail: boolean, x: string) {
+  if (fail) throw new Error("boom " + x);
+  return x;
+}
+<wrap>
+  <try>
+    <p>${check(input.fail, input.x)}</p>
+    <@catch|err|><b>${err.message}</b></@catch>
+  </try>
+</wrap>

@@ -1,0 +1,8 @@
+<const/fmt=() => input.a + ":" + input.b/>
+<let/open=false/>
+<main>
+  <if=open>
+    <p>${fmt()}</p>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

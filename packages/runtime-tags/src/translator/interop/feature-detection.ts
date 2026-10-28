@@ -46,6 +46,16 @@ export function isTagsAPI(file = getFile()) {
         (lookup.exclusiveTagDiscoveryDirs === "tags"
           ? FeatureType.Tags
           : FeatureType.Class);
+    // A patch build is tags API only, so no class API template meets one.
+    if (featureType === FeatureType.Class && file.markoOpts.patches) {
+      throw (state.feature?.path || program).buildCodeFrameError(
+        `A Marko 5 (class API) template cannot compile with the experimental \`patches\` option, which compiles the tags API only. ${
+          state.feature
+            ? `This one uses a class API feature (${state.feature.name}). Migrate it to the tags API`
+            : "This one reads as class API since it has no tags API feature and is outside a `tags/` directory. Mark a tags API template with `// use tags`; otherwise migrate it to the tags API"
+        }, stop rendering it, or turn \`patches\` off.`,
+      );
+    }
   }
 
   return featureType === FeatureType.Tags;

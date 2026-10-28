@@ -1,0 +1,7 @@
+static function boom(e: unknown): never { throw e; }
+<let/n=0/>
+<button onClick() { n++ }>${n}</button>
+<try>
+  <p>${input.fail ? boom(new Error(input.msg)) : "ok"}</p>
+  <@catch|err|><child msg=(err as Error).message count=n label=input.label/></@catch>
+</try>

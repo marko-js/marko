@@ -1,0 +1,56 @@
+// tags/card.marko
+var card_default = _template("__tests__/tags/card.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 0), $wi__input_w = _write_if($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	const $input_w__closures = new Set();
+	let k = [input.n];
+	const List = { content: _content("__tests__/tags/card.marko_1*content", ({ items }) => {
+		const $scope1_id = _scope_id();
+		const $scope1_reason = _scope_reason(), $wg__items = _write_guard($scope1_reason, 0), $wi__items = _write_if($scope1_reason, 0);
+		_for_of(items, (x) => {
+			const $scope2_id = _scope_id();
+			_html(`<li>${_text_resume($scope2_id, "#text/0", x, $wg__items)} ${_text_resume($scope2_id, "#text/1", input.w, $wg__input_w * 2)}</li>`);
+			($wi__input_w || $wi__items) && _subscribe($wi__input_w && $input_w__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/card.marko", "2:26"), "__tests__/tags/card.marko_2_input_w#0:5/subscribe", $wg__input_w || $wg__items);
+		}, 0, $scope1_id, "#text/0", $wg__items, $wg__items, 0, 0, 1);
+		($wi__input_w || $wi__items) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2");
+	}, $scope0_id) };
+	_set_scope_reason(2);
+	const $childScope = _peek_scope_id();
+	List.content({ items: k });
+	_html(`<button>x</button>${_el_resume($scope0_id, "#button/1")}`);
+	_script($scope0_id, "__tests__/tags/card.marko_0");
+	_scope($scope0_id, {
+		input_w: input.w,
+		"ClosureScopes:input_w/7": $wi__input_w && $input_w__closures,
+		"#childScope/0": _existing_scope($childScope)
+	}, "__tests__/tags/card.marko", 0, { input_w: ["input.w"] });
+});
+
+// template.marko
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wi__input_n__OR__input_w = _write_if($scope0_reason, 0), $wg__input_on = _write_guard($scope0_reason, 2);
+	const $scope0_id = _scope_id();
+	_if(() => {
+		if (input.on) {
+			const $scope1_id = _scope_id();
+			_set_scope_reason(_write_guard($scope0_reason, 3) << 1);
+			const $childScope = _peek_scope_id();
+			card_default({
+				n: input.n,
+				w: input.w
+			});
+			_write_if($scope0_reason, 1) && _scope($scope1_id, {
+				_: $wi__input_n__OR__input_w && _scope_with_id($scope0_id),
+				"#childScope/0": $wi__input_n__OR__input_w && _existing_scope($childScope)
+			}, "__tests__/template.marko", "1:2");
+			return 0;
+		}
+	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 1), $wg__input_on);
+	_write_if($scope0_reason, 2) && _scope($scope0_id, {
+		input_n: input.n,
+		input_w: input.w
+	}, "__tests__/template.marko", 0, {
+		input_n: ["input.n"],
+		input_w: ["input.w"]
+	});
+}, 1);

@@ -1,0 +1,9 @@
+<const/tag=(s: string) => s + "#" + input.title/>
+<let/show=true/>
+<main>
+  <if=show>
+    <card fn=((s: string) => s + ":" + input.title)/>
+    <card fn=tag/>
+  </if>
+  <button onClick() { show = !show }>t</button>
+</main>

@@ -1,0 +1,11 @@
+<main>
+  <if=input.show>
+    <html-script nonce=input.nonce>
+      { const main = document.querySelector("main");
+      main.dataset.ran = (+main.dataset.ran || 0) + 1;
+      main.dataset.nonce = document.currentScript.getAttribute("nonce");
+      main.dataset.connected = document.currentScript.isConnected; }
+    </html-script>
+  </if>
+  <p>${input.note}</p>
+</main>

@@ -1,0 +1,14 @@
+// template.marko
+const $template = "<main><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><h1> </h1></main>";
+const $walks = "E lD lD lD lD lD lD lD lD lD lD lD lD lD m";
+const $setup = [[], ["__tests__/template.marko_0_$global_brand#30"]];
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0_$global_brand#30;E lD lD lD lD lD lD lD lD lD lD lD lD lD ;<main><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><h1> </h1></main>" });
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	const $global$1 = $global();
+	_html(`<main><p>${_text_resume($scope0_id, "#text/0", input.v1, 1, $scope0_reason, 0)}</p><p>${_text_resume($scope0_id, "#text/1", input.v2, 1, $scope0_reason, 1)}</p><p>${_text_resume($scope0_id, "#text/2", input.v3, 1, $scope0_reason, 2)}</p><p>${_text_resume($scope0_id, "#text/3", input.v4, 1, $scope0_reason, 3)}</p><p>${_text_resume($scope0_id, "#text/4", input.v5, 1, $scope0_reason, 4)}</p><p>${_text_resume($scope0_id, "#text/5", input.v6, 1, $scope0_reason, 5)}</p><p>${_text_resume($scope0_id, "#text/6", input.v7, 1, $scope0_reason, 6)}</p><p>${_text_resume($scope0_id, "#text/7", input.v8, 1, $scope0_reason, 7)}</p><p>${_text_resume($scope0_id, "#text/8", input.v9, 1, $scope0_reason, 8)}</p><p>${_text_resume($scope0_id, "#text/9", input.v10, 1, $scope0_reason, 9)}</p><p>${_text_resume($scope0_id, "#text/10", input.v11, 1, $scope0_reason, 10)}</p><p>${_text_resume($scope0_id, "#text/11", input.v12, 1, $scope0_reason, 11)}</p><p>${_text_resume($scope0_id, "#text/12", input.v1, 1, $scope0_reason, 0)}</p><h1>${_text_resume($scope0_id, "#text/13", $global$1.brand, 1, 4, 0)}</h1></main>`);
+	_script($scope0_id, "__tests__/template.marko_0_input_label#28", 1, _filled_guard($scope0_reason, 12), "input_label");
+	_script($scope0_id, "__tests__/template.marko_0_$global_brand#30");
+	_scope($scope0_id, { input_label: input.label }, "__tests__/template.marko", 0, { input_label: ["input.label"] }) || _filled_guard($scope0_reason, 12) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 12));
+}, 1);

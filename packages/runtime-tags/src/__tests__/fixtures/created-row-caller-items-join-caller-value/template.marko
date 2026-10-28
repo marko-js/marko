@@ -1,0 +1,7 @@
+<let/list=["p", "q"]/>
+<let/b="m"/>
+<if=input.show>
+  <child b=b items=list/>
+</if>
+<button.l onClick() { list = list.concat("r") }>l</button>
+<button.bb onClick() { b += "!" }>b</button>

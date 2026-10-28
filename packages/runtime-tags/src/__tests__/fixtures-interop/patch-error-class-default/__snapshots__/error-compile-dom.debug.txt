@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures-interop/patch-error-class-default/template.marko:1:1
+    > 1 | <hello-tags/>
+        | ^ A Marko 5 (class API) template cannot compile with the experimental `patches` option, which compiles the tags API only. This one reads as class API since it has no tags API feature and is outside a `tags/` directory. Mark a tags API template with `// use tags`; otherwise migrate it to the tags API, stop rendering it, or turn `patches` off.
+      2 | <hello-components/>
+      3 |
