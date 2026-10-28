@@ -40,14 +40,14 @@ var child_default = _template("b", (input) => {
 });
 
 // template.marko
-const $setup = _shell_setup([[], ["a0"]], ["a>", $setup$1], ["b>", $setup$1]);
-_shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks, $walks)};${((_w0, _w1) => `<!>${_w0}${_w1}<button class=n>+</button>`)($template, $template)}`)() });
+const $setup = _shell_setup([[], ["a0"]], ["a>", $setup$1], ["b>", $setup$1], ["c>", $setup$1]);
+_shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}& b b`)($walks, $walks, $walks)};${((_w0, _w1, _w2) => `<!>${_w0}${_w1}${_w2}<button class=n>+</button><button class=s>s</button>`)($template, $template, $template)}`)() });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = "k";
 	let s = true;
-	_set_scope_reason(536 | (_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 2) << 7));
+	_set_scope_reason(574 | _mask_group($scope0_reason, 2) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		a: input.a,
@@ -63,11 +63,21 @@ var template_default = _template("a", (input) => {
 		show: input.show
 	});
 	_patch_child_end();
-	_html(`<button class=n>+</button>${_el_resume($scope0_id, "c")}`);
+	_set_scope_reason(38 | (_mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 2) << 7 | _mask_group($scope0_reason, 3) << 9));
+	const $childScope3 = _peek_scope_id($scope0_id, "c", 2);
+	child_default({
+		a: input.a,
+		b: input.b,
+		show: s
+	});
+	_patch_child_end();
+	_html(`<button class=n>+</button>${_el_resume($scope0_id, "d")}<button class=s>s</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
-		i: n,
+		k: n,
+		l: s,
 		a: _existing_scope($childScope),
-		b: _existing_scope($childScope2)
+		b: _existing_scope($childScope2),
+		c: _existing_scope($childScope3)
 	});
 }, 1);
