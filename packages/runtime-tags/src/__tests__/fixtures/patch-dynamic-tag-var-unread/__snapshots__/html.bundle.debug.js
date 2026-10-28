@@ -32,7 +32,7 @@ _shells({ "__tests__/template.marko": "__tests__/template.marko !;b1;<!><!><!>" 
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_which__OR__input_a = _write_guard($scope0_reason, 0), $cg__input_a = _client_guard($scope0_reason, 2), $cg__input_which = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	let x = _dynamic_tag($scope0_id, "#text/0", input.which ? one_default : two_default, { a: input.a }, 1, 0, 0, $wg__input_which__OR__input_a, $scope0_reason, 0, 0, void 0, void 0, 1);
+	let x = _dynamic_tag($scope0_id, "#text/0", input.which ? one_default : two_default, { a: input.a }, 1, 0, 0, $wg__input_which__OR__input_a, $scope0_reason, 0, 0, void 0, 0, 1);
 	_scope($scope0_id, {
 		input_which: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.which,
 		input_a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.a

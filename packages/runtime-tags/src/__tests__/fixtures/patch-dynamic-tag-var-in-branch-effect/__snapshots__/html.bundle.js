@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 				_scope_id();
 				_scope_reason();
 				_html("body");
-			}, $scope1_id), 0, 1, $scope0_reason, 1, 0, void 0, void 0, "a1");
+			}, $scope1_id), 0, 1, $scope0_reason, 1, 0, void 0, 0, "a1");
 			_var($scope1_id, "b", $inputtype_scope, "a1");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a2");
 			_scope($scope1_id, {

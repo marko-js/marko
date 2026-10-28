@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $cg__input_which = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $inputwhichcounterother_scope = _peek_scope_id();
-	let count = _dynamic_tag($scope0_id, "#text/0", input.which ? counter_default : other_default, { label: input.label }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, void 0, "__tests__/template.marko_0_count#9/var");
+	let count = _dynamic_tag($scope0_id, "#text/0", input.which ? counter_default : other_default, { label: input.label }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, 0, "__tests__/template.marko_0_count#9/var");
 	_var($scope0_id, "#scopeOffset/1", $inputwhichcounterother_scope, "__tests__/template.marko_0_count#9/var");
 	_html(`<p>${_text_resume($scope0_id, "#text/3", count)}</p>${_el_resume($scope0_id, "#p/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0_count#9");

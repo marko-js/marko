@@ -575,7 +575,7 @@ export default {
             group,
             createdOnly,
             rendererGroup,
-            rendererMask,
+            rendererMask || (!rendererGroup && absentArg(0)),
             tagVarArg,
           );
         } else {

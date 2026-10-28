@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let value = "a";
 	_html(`<input${_attr_input_value($scope0_id, "#input/0", value, _resume(function(v) {
 		value = v;
-	}, "__tests__/template.marko_0/valueChange", $scope0_id), void 0, void 0, void 0, "PatchWrite:ControlledHandler:#input/0")}${_attrs_partial(input.attrs, {
+	}, "__tests__/template.marko_0/valueChange", $scope0_id), 0, 0, 0, "PatchWrite:ControlledHandler:#input/0")}${_attrs_partial(input.attrs, {
 		value: 1,
 		valueChange: 1
 	}, "#input/0", $scope0_id, "input", 0, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<p>${_text_resume($scope0_id, "#text/1", value)}</p>`);

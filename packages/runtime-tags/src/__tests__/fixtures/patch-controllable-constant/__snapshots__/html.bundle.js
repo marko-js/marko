@@ -4,8 +4,8 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><textarea>${_attr_textarea_value($scope0_id, "a", "hello", void 0, "n2a", 0, 0)}</textarea>`);
-	_attr_select_value($scope0_id, "b", "b", void 0, () => {
+	_html(`<main><textarea>${_attr_textarea_value($scope0_id, "a", "hello", 0, "n2a", 0, 0)}</textarea>`);
+	_attr_select_value($scope0_id, "b", "b", 0, () => {
 		_html(`<select><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
 	}, "n3b", 0, 0);
 	_html(`<p>${_text_resume($scope0_id, "c", input.note, 1, $scope0_reason, 0)}</p><button>${_text_resume($scope0_id, "e", count)}</button>${_el_resume($scope0_id, "d")}</main>`);

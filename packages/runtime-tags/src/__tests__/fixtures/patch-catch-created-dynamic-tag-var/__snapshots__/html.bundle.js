@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_resume($scope1_id, "a", err.message, 1, 4, 0)}</b>`);
 		const $inputbigBigSmall_scope = _peek_scope_id();
-		let v = _dynamic_tag($scope1_id, "b", input.big ? huge_label_default : tiny_label_default, { label: input.label }, 5, 0, 0, 1, $scope0_reason, 0, 0, void 0, void 0, "a0");
+		let v = _dynamic_tag($scope1_id, "b", input.big ? huge_label_default : tiny_label_default, { label: input.label }, 5, 0, 0, 1, $scope0_reason, 0, 0, void 0, 0, "a0");
 		_var($scope1_id, "c", $inputbigBigSmall_scope, "a0");
 		_html(`<i>${_text_resume($scope1_id, "d", v)}</i>`);
 		(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "a1");

@@ -12,7 +12,7 @@ var b_tag_default = _template("c", (input) => {
 		if (input.n > 0) {
 			const $scope1_id = _scope_id();
 			const $atag_scope = _peek_scope_id();
-			let x = _dynamic_tag($scope1_id, "a", a_tag_default, { n: input.n - 1 }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, void 0, "c0");
+			let x = _dynamic_tag($scope1_id, "a", a_tag_default, { n: input.n - 1 }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, 0, "c0");
 			_var($scope1_id, "b", $atag_scope, "c0");
 			_html(`<em>${_text_resume($scope1_id, "c", x)}</em>`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "c1");

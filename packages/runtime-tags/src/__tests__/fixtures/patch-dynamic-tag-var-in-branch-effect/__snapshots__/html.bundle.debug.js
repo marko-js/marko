@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
 				_html("body");
-			}, $scope1_id), 0, 1, $scope0_reason, 1, 0, void 0, void 0, "__tests__/template.marko_1_el#2/var");
+			}, $scope1_id), 0, 1, $scope0_reason, 1, 0, void 0, 0, "__tests__/template.marko_1_el#2/var");
 			_var($scope1_id, "#scopeOffset/1", $inputtype_scope, "__tests__/template.marko_1_el#2/var");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_type#0:4/init");
 			_scope($scope1_id, {

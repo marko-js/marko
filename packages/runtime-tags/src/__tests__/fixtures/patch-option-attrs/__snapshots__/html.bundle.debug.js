@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	_attr_select_value($scope0_id, "#select/0", input.picked, void 0, () => {
+	_attr_select_value($scope0_id, "#select/0", input.picked, 0, () => {
 		_html("<select>");
 		_for_of(input.options, (o) => {
 			const $scope1_id = _scope_id();

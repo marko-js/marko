@@ -717,14 +717,15 @@ export default {
               ? getExprRootGroupArgs(tagSection, changeAttr!.value.extra!)
               : [];
             patchArgs = [
-              writesControl &&
-                t.stringLiteral(
-                  getPatchKey().Control +
-                    patchControls[controlHelper!].kind +
-                    getScopeAccessor(nodeBinding!),
-                ),
-              mask,
-              group,
+              writesControl
+                ? t.stringLiteral(
+                    getPatchKey().Control +
+                      patchControls[controlHelper!].kind +
+                      getScopeAccessor(nodeBinding!),
+                  )
+                : absentArg(0),
+              writesControl ? mask : absentArg(0),
+              writesControl ? group : absentArg(0),
               bindsHandler &&
                 t.stringLiteral(
                   getPatchKey().Write +
@@ -744,7 +745,9 @@ export default {
               getScopeIdIdentifier(tagSection),
               nodeAccessor,
               ...controllable.attrs.map(
-                (index) => attrAt(attributes, index)?.value,
+                (index, i) =>
+                  attrAt(attributes, index)?.value ||
+                  (isPatch() && i === 1 && absentArg(0)),
               ),
               ...patchArgs,
             )}`;
@@ -780,7 +783,7 @@ export default {
                 attrAt(attributes, controllable.attrs[0])?.value ||
                   t.buildUndefinedNode(),
                 attrAt(attributes, controllable.attrs[1])?.value ||
-                  t.buildUndefinedNode(),
+                  (isPatch() ? absentArg(0) : t.buildUndefinedNode()),
               ],
               patchArgs,
             });
@@ -808,7 +811,7 @@ export default {
                     getScopeIdIdentifier(tagSection),
                     nodeAccessor,
                     value?.value,
-                    valueChange?.value,
+                    valueChange?.value || (isPatch() && absentArg(0)),
                     ...patchArgs,
                   )
                 : callRuntime("_textarea_value", value!.value);
