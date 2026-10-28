@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_4*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_3*content;D%;<div id=done><!> done</div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_2*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_3*content;D%;<div id=done><!> done</div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_2*shell;b%;<!><!><!>`, {
   "PatchChild:BranchScopes:#text/2": {
     "PatchBranch:#section/0": [{
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_3*content",
@@ -9,4 +9,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-in-if-while-pending/template.marko_2*shell"]
   }
 }]
-;DTQ
+;DRQ

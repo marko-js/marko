@@ -1,5 +1,5 @@
 // PATCH
-a, [`b1`, {
+a, {
   cb: {
     ea0: "d",
     xd: (p => p = new Promise((f, r) => _.a = {
@@ -16,8 +16,7 @@ a, [`b1`, {
       ta: "v"
     }
   }
-}]
+}
 (_.a.f(_.a = {
   name: "v"
 }), 0)
-;DAM

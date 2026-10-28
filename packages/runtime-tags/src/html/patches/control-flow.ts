@@ -21,6 +21,7 @@ import {
   iterateForTo,
   iterateForUntil,
   tryBoundary,
+  tryPlaceholder,
   writeTryRenderers,
 } from "../control-flow";
 import type { ServerRenderer } from "../template";
@@ -52,11 +53,9 @@ import {
   ensureScopePatch,
   popIdHop,
   pushIdHop,
-  shipPlaceholder,
   shipShell,
   walkMarkers,
   withKeptBranchId,
-  withPlaceholder,
   withUnpatched,
   writePatchEntry,
 } from "./writer";
@@ -547,7 +546,6 @@ export function _await<T>(
     // `2`: no render of the body writes what the client lacks; `3`: only a
     // created one's (setup work).
     if (unfilled > 2 ? !creatable : unfilled > 1) return;
-    if (isPromise(promise)) shipPlaceholder(state);
     const settle = (value: T | typeof skipped) => {
       if (value !== skipped) {
         linkBranch(state, scopeId, accessor, _peek_scope_id());
@@ -564,7 +562,6 @@ export function _await<T>(
   // A created scope builds the body from this shell, even when settled; an
   // always-pairing body outside creatable structure only pairs, rendered kept.
   const elide = alwaysPairs && !inCreatable();
-  if (isPromise(promise)) shipPlaceholder(state);
   if (!elide) shipShell(state, shellId);
   writePatchEntry(
     state,
@@ -630,7 +627,7 @@ export function _try(
     );
   }
   // The placeholder's branch id precedes the body's, as in a document.
-  if (placeholderContent) _scope_id();
+  const placeholderBranchId = placeholderContent ? _scope_id() : 0;
   const branchId = _peek_scope_id();
   // The entry carries the creation payload (body shell, slot ids) unless the try
   // always pairs here; one that only pairs still names its catch, so a caught try rejects its body.
@@ -657,8 +654,17 @@ export function _try(
   const branchContent = inCreatable()
     ? content
     : () => withKeptBranchId(branchId, content);
+  // A flush that leaves the body pending ships the placeholder's shell, as a
+  // document renders the placeholder.
   const bodyContent = placeholderContent
-    ? () => withPlaceholder(placeholderId!, branchContent)
+    ? () =>
+        tryPlaceholder(
+          branchContent,
+          () => shipShell(state, placeholderId),
+          branchId,
+          scopeId,
+          placeholderBranchId,
+        )
     : branchContent;
   const renderers = (): void =>
     writeTryRenderers(

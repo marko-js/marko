@@ -673,6 +673,9 @@ export class State implements Channel {
   public hasReorderRuntime = false;
   public hasWrittenResume = false;
   public walkOnNextFlush = false;
+  // A pending `<try>` body stays in order, its `@placeholder` rendered aside,
+  // rather than streaming later in the placeholder's place.
+  public keepsPendingBodies = false;
   public trailerHTML = "";
   public resumes = "";
   public nonceAttr = "";
@@ -1058,7 +1061,11 @@ export class Chunk {
     const { state } = boundary;
     restart: for (;;) {
       let reorders: Chunk[] | null | false = null;
-      for (let cur: Chunk = this; cur.next && !cur.async; cur = cur.next) {
+      for (
+        let cur: Chunk = this;
+        cur.next && (!cur.async || state.keepsPendingBodies);
+        cur = cur.next
+      ) {
         if (cur.renderPlaceholder(state)) {
           if (boundary.aborted) return;
           continue restart;
@@ -1103,6 +1110,12 @@ export class Chunk {
     const { body } = placeholder;
     let end = body;
     while (end.next && !end.async) end = end.next;
+
+    if (end.async && state.keepsPendingBodies) {
+      // The whole body stays in order: past each `<await>` is the rest it forked.
+      placeholder.render();
+      while (end.next) end = end.next;
+    }
 
     if (!end.async) {
       end.next = this.next;

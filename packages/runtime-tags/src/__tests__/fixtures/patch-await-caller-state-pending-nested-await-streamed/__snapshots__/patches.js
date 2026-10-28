@@ -1,5 +1,5 @@
 // PATCH
-[`b1,<i>inner loading</i>`, {
+{
   cc: {
     cAa: {
       ta: "b",
@@ -11,11 +11,10 @@
       }
     }
   }
-}]
-;EAM
+}
 
-// PATCH holding EAM
-{
+// PATCH
+[`b1,<i>inner loading</i>`, {
   cc: {
     cAa: {
       ta: "c",
@@ -24,7 +23,7 @@
       }
     }
   }
-}
+}]
 {
   cc: {
     cAa: {
@@ -36,3 +35,4 @@
     }
   }
 }
+;EAM

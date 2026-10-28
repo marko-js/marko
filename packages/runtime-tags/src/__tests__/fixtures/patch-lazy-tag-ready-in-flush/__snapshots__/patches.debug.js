@@ -1,5 +1,5 @@
 // PATCH
-"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-ready-in-flush/child.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-ready-in-flush/template.marko_2*content`, {
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-ready-in-flush/child.marko", {
   "PatchChild:#childScope/1": {
     "PatchText:#text/1": "top2"
   },
@@ -13,5 +13,4 @@
       "PatchText:#text/0": "b1"
     }
   }
-}]
-;EAU
+}

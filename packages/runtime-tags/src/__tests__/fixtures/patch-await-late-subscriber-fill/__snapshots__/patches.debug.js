@@ -1,9 +1,8 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-await-late-subscriber-fill/template.marko_3*content`, {
+{
   "PatchChild:BranchScopes:#text/2": {
     "PatchPending:#text/0": 1,
     "PatchChild:BranchScopes:#text/0": {}
   },
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-await-late-subscriber-fill/template.marko_fill0": "b"
-}]
-;CgQ
+}

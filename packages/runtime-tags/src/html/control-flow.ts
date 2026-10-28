@@ -605,7 +605,7 @@ export function _try(
   );
 }
 
-function tryPlaceholder(
+export function tryPlaceholder(
   content: () => void,
   placeholder: () => void,
   branchId: number,

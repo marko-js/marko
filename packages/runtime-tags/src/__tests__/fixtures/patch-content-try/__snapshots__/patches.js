@@ -1,5 +1,5 @@
 // PATCH
-[`a5;b%;<!><!><!>`, `a4;b%;<!><!><!>`, `a1,loading`, `a2;D ;<em> </em>`, `a6;/D%l&;<section><!></section>`, {
+[`a5;b%;<!><!><!>`, `a4;b%;<!><!><!>`, `a2;D ;<em> </em>`, `a6;/D%l&;<section><!></section>`, {
   ba: [{
     ca: {
       fa: "^^a5",
@@ -14,4 +14,4 @@
     }
   }, "a6"]
 }]
-;EXY
+;EXQ

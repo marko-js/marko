@@ -188,20 +188,6 @@ export function inCreatable() {
   );
 }
 
-// The `@placeholder` a pending `<await>` here shows: the nearest try's, as the
-// client finds it.
-const kPlaceholder = Symbol("Placeholder");
-
-export function withPlaceholder<T>(placeholderId: string, cb: () => T): T {
-  return withContext(kPlaceholder, placeholderId, cb);
-}
-
-// A pending `<await>` shows its placeholder: the flush ships the placeholder's
-// shell where its try creates it from one.
-export function shipPlaceholder(state: PatchRenderState) {
-  shipShell(state, getChunk()!.context?.[kPlaceholder] as string | undefined);
-}
-
 // Renders a branch a flush pairs but never creates.
 export function withKeptBranchId<T>(branchId: number, cb: () => T): T {
   return withBranchId(branchId, keepBranch<T, void, void>, cb);
@@ -558,6 +544,9 @@ export class PatchRenderState extends PatchPageState {
   public heldCount = 0;
   public pendingShells = "";
   override serializer = new PatchSerializerState(this);
+  // A flush carries every entry rendered so far, and the client creates a
+  // shown `@placeholder` from the shell its render ships.
+  override keepsPendingBodies = true;
   // The flush's merge tree of patches by scope; `joinFlush` drops it.
   patchTree?: Record<number, Record<string, unknown>>;
   // Every object and array the patch writers built for the flush's tree.

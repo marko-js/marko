@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-loop-removed-try/template.marko_2*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-loop-removed-try/tags/rows.marko_2*content;D%c%;<em><!>:<!></em>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-loop-removed-try/tags/rows.marko_2*content;D%c%;<em><!>:<!></em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-loop-removed-try/template.marko_2*content`, {
   "PatchChild:BranchScopes:#text/1": {
     "PatchChild:#childScope/0": {
       "PatchLoopItem:#text/0": [

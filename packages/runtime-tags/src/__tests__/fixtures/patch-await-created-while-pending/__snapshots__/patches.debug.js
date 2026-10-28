@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-await-created-while-pending/template.marko_2*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-created-while-pending/template.marko_4*content;D%;<div><!> done</div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-created-while-pending/template.marko_3*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-await-created-while-pending/template.marko_4*content;D%;<div><!> done</div>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-created-while-pending/template.marko_3*shell;b%;<!><!><!>`, {
   "PatchChild:BranchScopes:#text/2": {
     "PatchLoop:#section/0": ["a", {
       "PatchPending:#text/0": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-while-pending/template.marko_4*content",
@@ -14,4 +14,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-while-pending/template.marko_3*shell"]
   }
 }]
-;DSw
+;DSg

@@ -1,5 +1,5 @@
 // PATCH
-[`a1`, {
+{
   cc: {
     eb0: "e",
     xe: (p => p = new Promise((f, r) => _.a = {
@@ -16,13 +16,12 @@
       ta: "a-string-long-enough-to-dedup-across-the-tree-and-the-fill-1"
     }
   }
-}]
+}
 (_.a.f(_.a = {
   name: _(0).cAd.cAa.ta
 }), 0)
-;DAI
 
-// PATCH holding DAI
+// PATCH
 {
   cc: {
     eb0: "e",
@@ -45,7 +44,7 @@
   name: _(0).cAd.cAa.ta
 }), 0)
 
-// PATCH holding DAI
+// PATCH
 {
   cc: {
     eb0: "e",
@@ -68,7 +67,7 @@
   name: _(0).cAd.cAa.ta
 }), 0)
 
-// PATCH holding DAI
+// PATCH
 {
   cc: {
     eb0: "e",

@@ -1,5 +1,5 @@
 // PATCH
-a, [`a4;b%;<!><!><!>`, `a2,<i>loading</i>`, `a0;D ;<em> </em>`, `b1;b%b/b%c&b;<!><!><!><!><!><!>`, {
+a, [`a4;b%;<!><!><!>`, `a0;D ;<em> </em>`, `b1;b%b/b%c&b;<!><!><!><!><!><!>`, {
   ba: [{
     cb: {
       cAa: [{
@@ -11,10 +11,10 @@ a, [`a4;b%;<!><!><!>`, `a2,<i>loading</i>`, `a0;D ;<em> </em>`, `b1;b%b/b%c&b;<!
     }
   }, "b1"]
 }]
-;Eao
+;EaI
 
-// PATCH holding Eao
-a, {
+// PATCH holding EaI
+a, [`a2,<i>loading</i>`, {
   ba: [{
     cb: {
       cAa: [{
@@ -22,7 +22,7 @@ a, {
       }, "a1", "a4", "a2"]
     }
   }, "b1"]
-}
+}]
 [`a1;D ;<b> </b>`, {
   cAa: {
     cb: {

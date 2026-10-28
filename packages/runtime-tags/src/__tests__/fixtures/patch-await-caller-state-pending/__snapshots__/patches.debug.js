@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-pending/tags/show-await.marko_3*content,<p>waiting</p>`, {
+{
   "PatchChild:#childScope/2": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:BranchScopes:#text/0": {
@@ -7,10 +7,9 @@
       }
     }
   }
-}]
-;DAQ
+}
 
-// PATCH holding DAQ
+// PATCH
 {
   "PatchChild:#childScope/2": {
     "PatchChild:BranchScopes:#text/0": {

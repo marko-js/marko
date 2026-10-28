@@ -1,5 +1,5 @@
 // PATCH
-[`b2,<p>waiting</p>`, {
+{
   cc: {
     cAa: {
       cAa: {
@@ -7,10 +7,9 @@
       }
     }
   }
-}]
-;DAI
+}
 
-// PATCH holding DAI
+// PATCH
 {
   cc: {
     cAa: {
