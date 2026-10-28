@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/icon.marko": "__tests__/tags/icon.marko;D ;<svg viewBo
 var icon_default = _template("__tests__/tags/icon.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<svg viewBox="0 0 1 1"><title>${_patch_text_content($scope0_id, "PatchTextContent:#title/0", input.name, _escape, $scope0_reason, 0)}</title>${_el_resume($scope0_id, "#title/0", _mask_group($scope0_reason, 0))}</svg>`);
+	_html(`<svg viewBox="0 0 1 1"><title>${_escape(input.name, $scope0_id, "PatchTextContent:#title/0", $scope0_reason, 0)}</title>${_el_resume($scope0_id, "#title/0", _mask_group($scope0_reason, 0))}</svg>`);
 	_scope($scope0_id, {}, "__tests__/tags/icon.marko", 0);
 });
 

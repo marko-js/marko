@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19loop-19item-1btemplate-1amarko_0:${_patch_style($scope1_id, "PatchStyle:#style/0 --M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19loop-19item-1btemplate-1amarko_0", item.color, $scope0_reason, 0)};`)}${_el_resume($scope1_id, "#style/0", _mask_group($scope0_reason, 0))}<b class=k>item</b>`);
+		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19loop-19item-1btemplate-1amarko_0:${_escape_style_value(item.color, $scope1_id, "PatchStyle:#style/0 --M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19loop-19item-1btemplate-1amarko_0", $scope0_reason, 0)};`)}${_el_resume($scope1_id, "#style/0", _mask_group($scope0_reason, 0))}<b class=k>item</b>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);

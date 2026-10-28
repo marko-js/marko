@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (summary) {
 			const $scope2_id = _scope_id();
-			_html(`<style${_attr_nonce()}>${_patch_text_content($scope2_id, "PatchTextContent:#style/0", summary, _escape_style)}</style>${_el_resume($scope2_id, "#style/0")}`);
+			_html(`<style${_attr_nonce()}>${_escape_style(summary, $scope2_id, "PatchTextContent:#style/0", 4, 0)}</style>${_el_resume($scope2_id, "#style/0")}`);
 			_scope($scope2_id, {}, "__tests__/template.marko", "7:4");
 			return 0;
 		}

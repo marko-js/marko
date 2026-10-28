@@ -50,11 +50,7 @@ import {
   type Read,
   type ReferencedExtra,
 } from "../references";
-import {
-  callRuntime,
-  type HTMLRuntimeHelpers,
-  importRuntime,
-} from "../runtime";
+import { callRuntime, type HTMLRuntimeHelpers } from "../runtime";
 import { getPrefixedScopeAccessor, getScopeAccessor } from "../scope-accessor";
 import {
   findParamReasonGroupIndex,
@@ -1045,7 +1041,8 @@ export function getNamedPatchKey(
   );
 }
 
-// A text-only body's patch write renders the text itself, escaped on the way.
+// A text-only body's patch write is its escape call, with the patch's arguments
+// after main's: it renders the whole text, so the entry carries it once.
 export function buildPatchTextContent(
   section: Section,
   nodeBinding: Binding,
@@ -1053,13 +1050,12 @@ export function buildPatchTextContent(
   escape: HTMLRuntimeHelpers,
   extra: t.NodeExtra,
 ) {
-  return callPatchRuntime(
-    "_patch_text_content",
-    section,
-    getPatchKey().TextContent + getScopeAccessor(nodeBinding),
+  return callRuntime(
+    escape,
     text,
-    importRuntime(escape),
-    ...getExprRootGroupArgs(section, extra),
+    getScopeIdIdentifier(section),
+    t.stringLiteral(getPatchKey().TextContent + getScopeAccessor(nodeBinding)),
+    ...getPatchHoleGroupArgs(section, extra),
   );
 }
 

@@ -1,5 +1,13 @@
 import { type Accessor, PatchKey } from "../../common/types";
-import { _escape_style_value, _to_text, _unescaped } from "../content";
+import {
+  _escape as _base_escape,
+  _escape_comment as _base_escape_comment,
+  _escape_script as _base_escape_script,
+  _escape_style as _base_escape_style,
+  _escape_style_value as _base_escape_style_value,
+  _to_text,
+  _unescaped,
+} from "../content";
 import {
   type GroupMask,
   _html_resume as _base_html_resume,
@@ -74,30 +82,41 @@ function keepsMarker(
   return rewritten || getUpdatesFrom(mask, group!) ? markerGuard : 0;
 }
 
-// A `<style>` interpolation's write doubles as the escaped output; its entry
+// A `<style>` value a patch writes passes its scope, key and group; its entry
 // also writes a created scope's style shell, so it seeds even a client value.
-export function _patch_style(
-  scopeId: number,
-  key: string,
+export function _escape_style_value(
   value: unknown,
+  scopeId?: number,
+  key?: string,
   mask?: GroupMask,
   group?: number,
 ) {
-  const fills = ensureFills(scopeId, mask, group!, 1);
+  const fills =
+    group === undefined ? undefined : ensureFills(scopeId!, mask, group, 1);
   return fills === undefined
-    ? _escape_style_value(value)
-    : writeFill(fills, key, normalizePatchValue(value));
+    ? _base_escape_style_value(value)
+    : writeFill(fills, key!, normalizePatchValue(value));
 }
 
-// A text-only body carries plain text (html output escapes per namespace).
-export function _patch_text_content(
-  scopeId: number,
-  key: string,
-  value: string,
-  escape: (value: unknown) => string,
-  mask?: GroupMask,
-  group?: number,
-) {
-  const fills = ensureFills(scopeId, mask, group!);
-  return fills === undefined ? escape(value) : writeFill(fills, key, value);
+// A text-only body a patch writes passes its scope, key and group: its entry
+// carries the plain text, which a page escapes per namespace.
+export const _escape = /*@__PURE__*/ withTextFill(_base_escape);
+export const _escape_comment = /*@__PURE__*/ withTextFill(
+  _base_escape_comment,
+);
+export const _escape_script = /*@__PURE__*/ withTextFill(_base_escape_script);
+export const _escape_style = /*@__PURE__*/ withTextFill(_base_escape_style);
+
+function withTextFill(escape: (value: unknown) => string) {
+  return (
+    value: unknown,
+    scopeId?: number,
+    key?: string,
+    mask?: GroupMask,
+    group?: number,
+  ) => {
+    const fills =
+      group === undefined ? undefined : ensureFills(scopeId!, mask, group);
+    return fills === undefined ? escape(value) : writeFill(fills, key!, value);
+  };
 }

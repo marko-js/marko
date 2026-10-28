@@ -26,7 +26,6 @@ import { type Opt, push } from "../util/optional";
 import { onReasonsSettled, writesPatchHole } from "../util/patch/decisions";
 import { patchWrites } from "../util/patch/structure";
 import {
-  callPatchRuntime,
   getExprRootGroupArgs,
   getNamedPatchKey,
 } from "../util/patch/writers";
@@ -38,6 +37,7 @@ import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
 import {
   getNodeContentType,
   ensureSection,
+  getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
@@ -241,17 +241,21 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     writer.writeTo(tag)`${callRuntime(
       "_style_html",
       buildStyleDecls(node, (value, i) =>
-        patchWrites(section)
-          ? callPatchRuntime(
-              "_patch_style",
-              section,
-              getNamedPatchKey(getPatchKey().Style, binding, names[i]),
-              value,
-              ...(writesPatchHole(section, value.extra)
-                ? getExprRootGroupArgs(section, value.extra!)
-                : [t.numericLiteral(0), t.numericLiteral(0)]),
-            )
-          : callRuntime("_escape_style_value", value),
+        callRuntime(
+          "_escape_style_value",
+          value,
+          ...(patchWrites(section)
+            ? [
+                getScopeIdIdentifier(section),
+                t.stringLiteral(
+                  getNamedPatchKey(getPatchKey().Style, binding, names[i]),
+                ),
+                ...(writesPatchHole(section, value.extra)
+                  ? getExprRootGroupArgs(section, value.extra!)
+                  : [t.numericLiteral(0), t.numericLiteral(0)]),
+              ]
+            : []),
+        ),
       ),
     )}`;
     writer.markNode(tag, binding, getWriteReason(binding));

@@ -5,7 +5,7 @@ _shells({ b: "b;D ;<svg viewBox=\"0 0 1 1\"><title></title></svg>" });
 var icon_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<svg viewBox="0 0 1 1"><title>${_patch_text_content($scope0_id, "ma", input.name, _escape, $scope0_reason, 0)}</title>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}</svg>`);
+	_html(`<svg viewBox="0 0 1 1"><title>${_escape(input.name, $scope0_id, "ma", $scope0_reason, 0)}</title>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}</svg>`);
 	_scope($scope0_id, {});
 });
 

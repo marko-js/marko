@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	_html(`<style${_attrs({
 		nonce: _patch_nonce(),
 		...input.attrs
-	}, "b", $scope0_id, "style", 2, $scope0_reason, 1)}>${_patch_text_content($scope0_id, "mb", `p.u { --page: ${_to_text(input.page)} }`, _escape_style, $scope0_reason, 0)}</style>${_el_resume($scope0_id, "b")}`);
+	}, "b", $scope0_id, "style", 2, $scope0_reason, 1)}>${_escape_style(`p.u { --page: ${_to_text(input.page)} }`, $scope0_id, "mb", $scope0_reason, 0)}</style>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a4");
 	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.attrs }) || (_filled_guard($scope0_reason, 1) && $cg__input_page && _patch_fill($scope0_id, "va5", input.attrs, !_server_guard($scope0_reason, 1)), $cg__input_page && _content_withhold(input.attrs));
 }, 1);

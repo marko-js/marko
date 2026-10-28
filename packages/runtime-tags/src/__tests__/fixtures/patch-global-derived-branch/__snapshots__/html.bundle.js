@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (summary) {
 			const $scope2_id = _scope_id();
-			_html(`<style${_attr_nonce()}>${_patch_text_content($scope2_id, "ma", summary, _escape_style)}</style>${_el_resume($scope2_id, "a")}`);
+			_html(`<style${_attr_nonce()}>${_escape_style(summary, $scope2_id, "ma", 4, 0)}</style>${_el_resume($scope2_id, "a")}`);
 			_scope($scope2_id, {});
 			return 0;
 		}
