@@ -622,13 +622,12 @@ function resolveInitialValue(binding: Binding) {
   binding.initReadsFirstValues = every(sources?.state, (state) =>
     holdsFirstValue(state, binding.section),
   );
-  binding.initStates = reduce(
-    sources?.state,
-    (states: ReferencedBindings, state) =>
-      bindingUtil.union(bindingUtil.add(states, state), state.initStates),
-    undefined,
-  );
+  binding.initStates = reduce(sources?.state, addInitStates, undefined);
   return !!sources;
+}
+
+function addInitStates(states: ReferencedBindings, state: Binding) {
+  return bindingUtil.union(bindingUtil.add(states, state), state.initStates);
 }
 
 // A `<let>` at its first value as the section's scope is created: created with
