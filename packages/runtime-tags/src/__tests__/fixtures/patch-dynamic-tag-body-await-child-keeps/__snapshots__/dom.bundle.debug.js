@@ -10,8 +10,8 @@ const $setup__script = _script("__tests__/tags/show-body.marko_0", ($scope) => _
 	$open($scope, !$scope.open);
 }));
 function $setup$2($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input$2 = ($scope, input) => $input_body($scope, input.body);
 const $input_body = /*@__PURE__*/ _fill_const("__tests__/tags/show-body.marko_fill0", "input_body", $if_content__input_body);

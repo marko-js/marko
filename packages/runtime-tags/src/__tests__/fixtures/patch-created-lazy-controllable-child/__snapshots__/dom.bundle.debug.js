@@ -32,8 +32,8 @@ const $setup__script = _script("__tests__/tags/route-pg.marko_0", ($scope) => _o
 }));
 function $setup($scope) {
 	$input_tabChange($scope["#childScope/0"], $tabChange($scope));
-	$setup__script($scope);
 	$tab($scope, 0);
+	$setup__script($scope);
 }
 const $tabChange = ($scope) => (_new_tab) => {
 	$tab($scope, _new_tab);

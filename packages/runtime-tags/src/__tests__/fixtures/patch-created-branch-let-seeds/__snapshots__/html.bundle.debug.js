@@ -4,10 +4,10 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
 	"__tests__/tags/view.marko": "__tests__/tags/view.marko !;b%;<!><!><!>",
-	"__tests__/tags/view.marko_1*shell": "__tests__/tags/view.marko_1*shell __tests__/tags/view.marko_1_a#2_b#3/init!__tests__/tags/view.marko_1;D l ;<span> </span><button>+</button>"
+	"__tests__/tags/view.marko_1*shell": "__tests__/tags/view.marko_1*shell !__tests__/tags/view.marko_1;D l ;<span> </span><button>+</button>"
 });
 var view_default = _template("__tests__/tags/view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -16,10 +16,10 @@ var view_default = _template("__tests__/tags/view.marko", (input) => {
 			let b = input.y;
 			_html(`<span>${_text_resume($scope1_id, "#text/0", a + b)}</span><button>+</button>${_el_resume($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/tags/view.marko_1");
-			_filled_guard($scope0_reason, 3) && _patch_write($scope1_id, "PatchWrite:b", b, 1);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/tags/view.marko_1_input_x#0:4/init");
-			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/tags/view.marko_1_input_y#0:5/init");
+			$cg__input_y && _patch_init($scope1_id, "__tests__/tags/view.marko_1_input_y#0:5/init");
 			_filled_guard($scope0_reason, 2) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/view.marko_fill2", a, 1);
+			!$cg__input_y && _patch_fill($scope1_id, "PatchFill:__tests__/tags/view.marko_fill3", b, 1);
 			_scope($scope1_id, {
 				a,
 				b,

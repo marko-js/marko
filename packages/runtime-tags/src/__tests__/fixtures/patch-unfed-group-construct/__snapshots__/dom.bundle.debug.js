@@ -28,8 +28,8 @@ const $setup__script = _script("__tests__/tags/kid.marko_0", ($scope) => _on($sc
 	$on($scope, !$scope.on);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$on($scope, false);
+	$setup__script($scope);
 }
 const $input_a = ($scope, input_a) => _text($scope["#text/0"], input_a);
 const $input = ($scope, input) => {

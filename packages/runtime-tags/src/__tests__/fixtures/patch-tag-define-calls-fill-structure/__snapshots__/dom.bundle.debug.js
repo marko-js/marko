@@ -32,8 +32,8 @@ const $setup__script = _script("__tests__/tags/shape.marko_0", ($scope) => _on($
 function $setup($scope) {
 	$scope["#childScope/0"]._ = $scope;
 	$scope["#childScope/1"]._ = $scope;
-	$setup__script($scope);
 	$n($scope, 0);
+	$setup__script($scope);
 }
 const $f2__closure = /*@__PURE__*/ _closure($if_content__f);
 const $f2 = /*@__PURE__*/ _fill_const("__tests__/tags/shape.marko_fill1", "f", $f2__closure);

@@ -15,8 +15,8 @@ const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($s
 }));
 function $setup$1($scope) {
 	$await_content($scope);
-	$setup__script($scope);
 	$n($scope, 1);
+	$setup__script($scope);
 }
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
 const $input_content__closure = /*@__PURE__*/ _closure($if_content__input_content);

@@ -1,11 +1,10 @@
 // tags/card.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = [[], []];
+const $setup$1 = [["__tests__/tags/card.marko_0_#text#0/init"], []];
 _shells({
-	"__tests__/tags/card.marko_1*content": "__tests__/tags/card.marko_1*content;D ;<p> </p>",
 	"__tests__/tags/card.marko_0_#text#0/await": "__tests__/tags/card.marko_0_#text#0/await;D ;<p> </p>",
-	"__tests__/tags/card.marko": "__tests__/tags/card.marko;b%;<!><!><!>"
+	"__tests__/tags/card.marko": "__tests__/tags/card.marko __tests__/tags/card.marko_0_#text#0/init;b%;<!><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -13,9 +12,10 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	let n = input.n;
 	_await($scope0_id, "#text/0", Promise.resolve(n), (x) => {
 		const $scope1_id = _scope_id();
-		_html(`<p>${_text_resume($scope1_id, "#text/0", x, 1, _client_guard($scope0_reason, 0) << 1, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", x)}</p>`);
 		_scope($scope1_id, {}, "__tests__/tags/card.marko", "2:2");
-	}, 1, "__tests__/tags/card.marko_1*content", void 0, 1);
+	}, 1, 0);
+	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", n, 1);
 });
 
 // template.marko

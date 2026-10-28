@@ -6,8 +6,8 @@ const $setup__script = _script("__tests__/tags/shower.marko_0", ($scope) => _on(
 	$shown($scope, $scope.input.getId());
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$shown($scope, "");
+	$setup__script($scope);
 }
 const $input$1 = /*@__PURE__*/ _const("input");
 var shower_default = /*@__PURE__*/ _template("__tests__/tags/shower.marko", $template$1, $walks$1, $setup$1, $input$1);

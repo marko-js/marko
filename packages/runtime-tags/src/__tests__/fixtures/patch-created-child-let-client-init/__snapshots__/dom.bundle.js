@@ -1,9 +1,9 @@
 // tags/child.marko
 const $n__script = _script("b0", ($scope) => console.log("n", $scope.e));
-const $n = /*@__PURE__*/ _let(4, ($scope) => {
-	$n__script($scope);
+const $n = fill("b1", /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.a, $scope.e);
-});
+	$n__script($scope);
+}));
 const $input_count = ($scope, input_count) => $n($scope, input_count + 10);
 
 // template.marko

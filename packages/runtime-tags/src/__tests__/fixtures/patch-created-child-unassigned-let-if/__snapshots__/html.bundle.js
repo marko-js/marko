@@ -1,23 +1,19 @@
 // tags/card.marko
-_shells({
-	b: "b;b%;<!><!><!>",
-	b1: "b1;Dc%;<p><b>yes</b> <!></p>"
-});
+_shells({ b: "b !;b%;<!><!><!>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_n = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = input.n;
 	_if(() => {
 		if (n) {
 			const $scope1_id = _scope_id();
-			_html(`<p><b>yes</b> ${_text_resume($scope1_id, "a", input.n, 2, $scope0_reason, 0)}</p>`);
-			$cg__input_n && _patch_init($scope1_id, "b0");
+			_html(`<p><b>yes</b> ${_text_resume($scope1_id, "a", input.n, $wg__input_n * 2)}</p>`);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, 1, 1, 0, 0, ["b1"], $cg__input_n << 1, 0);
-	_patch_write($scope0_id, "wd", input.n, 1);
-	_scope($scope0_id, { d: input.n });
+	}, $scope0_id, "a", 1, 1, 0, 0, 1);
+	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", n, 1);
+	_scope($scope0_id, { d: input.n }) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb0", input.n, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

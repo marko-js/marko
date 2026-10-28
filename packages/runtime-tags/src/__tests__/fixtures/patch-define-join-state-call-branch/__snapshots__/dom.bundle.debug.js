@@ -21,8 +21,8 @@ const $setup__script$1 = _script("__tests__/tags/panel.marko_0", ($scope) => _on
 function $setup$1($scope) {
 	$scope["#childScope/0"]._ = $scope;
 	$scope["#childScope/1"]._ = $scope;
-	$setup__script$1($scope);
 	$t($scope, true);
+	$setup__script$1($scope);
 }
 const $input_show$1 = ($scope, input_show) => $Row_content__show($scope["#childScope/1"], input_show);
 const $input$1 = ($scope, input) => {

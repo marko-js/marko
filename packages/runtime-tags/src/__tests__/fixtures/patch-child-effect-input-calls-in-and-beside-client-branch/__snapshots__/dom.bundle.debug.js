@@ -47,18 +47,18 @@ const $setup__script$1 = _script("__tests__/tags/card.marko_0", ($scope) => _on(
 }));
 function $setup$1($scope) {
 	$Panel_content__isOpen($scope["#childScope/0"], true);
-	$setup__script$1($scope);
 	$open($scope, true);
+	$setup__script$1($scope);
 }
 const $input_fmt = /*@__PURE__*/ _fill_const("__tests__/tags/card.marko_fill0", "input_fmt", ($scope) => {
 	$if_content__input_fmt($scope);
 	$Panel_content__tag_input_fmt($scope["#childScope/0"], $scope.input_fmt);
 }, $if_content__input_fmt);
+const $input_label__script = _script("__tests__/tags/card.marko_0_input_label#7", ($scope) => console.log("label", $scope.input_label));
 _fill_run("__tests__/tags/card.marko_fill1", "input_label", ($scope) => {
 	$if_content2__input_label($scope);
 	$input_label__script($scope);
 }, "__tests__/tags/card.marko_fill1/unpatched");
-const $input_label__script = _script("__tests__/tags/card.marko_0_input_label#7", ($scope) => console.log("label", $scope.input_label));
 const $input_label$1 = /*@__PURE__*/ _const("input_label", ($scope) => {
 	$if_content2__input_label($scope);
 	$input_label__script($scope);

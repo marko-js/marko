@@ -10,8 +10,8 @@ const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($s
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
 const $input_content = /*@__PURE__*/ _fill_const("__tests__/tags/card.marko_fill0", "input_content", $if_content__input_content);
@@ -35,8 +35,8 @@ const $await_content__$params = ($scope, $params2) => $await_content__v($scope, 
 const $await_content__v__closure = /*@__PURE__*/ _closure($inputonCarddiv_content__v);
 const $await_content__v = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "v", $await_content__v__closure);
 const $input_note__closure = /*@__PURE__*/ _closure($inputonCarddiv_content__input_note);
-_fill_run("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _fill_mark("input_note", $input_note__closure));
 const $input_note__script = _script("__tests__/template.marko_0_input_note#4", ($scope) => _el_read($scope["#div/0"]).textContent = $scope.input_note);
+_fill_run("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _fill_mark("input_note", $input_note__closure));
 const $input_note = /*@__PURE__*/ _const("input_note", ($scope) => {
 	$input_note__closure($scope);
 	$input_note__script($scope);

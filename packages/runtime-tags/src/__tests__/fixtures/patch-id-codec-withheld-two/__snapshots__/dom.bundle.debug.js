@@ -13,8 +13,8 @@ const $setup__script = _script("__tests__/tags/keeper.marko_0", ($scope) => _on(
 	$show($scope, !$scope.show);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$show($scope, true);
+	$setup__script($scope);
 }
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
 var keeper_default = /*@__PURE__*/ _template("__tests__/tags/keeper.marko", $template$1, $walks$1, $setup$1, $input$1);

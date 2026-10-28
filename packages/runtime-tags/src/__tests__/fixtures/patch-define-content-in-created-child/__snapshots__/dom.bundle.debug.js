@@ -15,8 +15,8 @@ const $setup__script = _script("__tests__/tags/wrap.marko_0", ($scope) => _on($s
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$open($scope, false);
+	$setup__script($scope);
 }
 const $input$1 = ($scope, input) => {
 	$input_row($scope, input.row);

@@ -1,24 +1,20 @@
 // PATCH
-[`a3 a6!a0;D l ;<span> </span><button class=b>b</button>`, {
+[`a4 !a0;D l ;<span> </span><button class=b>b</button>`, {
   ba: [{
-    s: {
-      wc: "x"
-    },
     o: {
-      va2: 1
+      va2: "x",
+      va3: 1
     }
-  }, "a3"]
+  }, "a4"]
 }]
 ;BAE
 
 // PATCH holding BAE
 {
   ba: [{
-    s: {
-      wc: "y"
-    },
     o: {
-      va2: 1
+      va2: "y",
+      va3: 1
     }
-  }, "a3"]
+  }, "a4"]
 }

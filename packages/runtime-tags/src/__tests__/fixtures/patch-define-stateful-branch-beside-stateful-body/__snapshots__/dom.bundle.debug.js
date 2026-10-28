@@ -41,8 +41,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 function $setup($scope) {
 	$open($scope, false);
 	$shown($scope, true);
-	$setup__script($scope);
 	$Panel($scope, { content: $Panel_content($scope) });
+	$setup__script($scope);
 }
 const $input_other = /*@__PURE__*/ _const("input_other", $input_other__OR__Panel);
 const $input_label = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _const("input_label", ($scope) => {

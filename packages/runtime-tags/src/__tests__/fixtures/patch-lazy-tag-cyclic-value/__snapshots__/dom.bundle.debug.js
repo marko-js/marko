@@ -29,8 +29,8 @@ const $setup__script = _script("__tests__/tagged.marko_0", ($scope) => _on($scop
 	$label($scope, describe($scope.input_node));
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$label($scope, "");
+	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_node($scope, input.node);
 const $input_node = /*@__PURE__*/ _const("input_node");

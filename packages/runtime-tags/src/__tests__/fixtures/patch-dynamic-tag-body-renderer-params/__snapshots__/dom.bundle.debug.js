@@ -22,8 +22,8 @@ const $setup__script = _script("__tests__/tags/host.marko_0", ($scope) => _on($s
 	$flag($scope, !$scope.flag);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$flag($scope, false);
+	$setup__script($scope);
 }
 const $if2 = /*@__PURE__*/ _if("#text/2", "<!><!><!>", "b%", $if_content2__setup);
 const $input_show$1 = ($scope, input_show) => $if2($scope, input_show ? 0 : 1);
@@ -54,8 +54,8 @@ const $wrap_content__setup__script = _script("__tests__/template.marko_1", ($sco
 	$wrap_content__open($scope, !$scope.open);
 }));
 const $wrap_content__setup = ($scope) => {
-	$wrap_content__setup__script($scope);
 	$wrap_content__open($scope, true);
+	$wrap_content__setup__script($scope);
 };
 const $wrap_content__$params = ($scope, $params2) => $wrap_content__content($scope, $params2[0].content);
 const $wrap_content__content = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "content", $if_content__content);

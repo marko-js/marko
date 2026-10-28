@@ -8,8 +8,8 @@ const $try_content__setup__script = _script("__tests__/template.marko_2", ($scop
 	$try_content__open($scope, !$scope.open);
 }));
 const $try_content__setup = ($scope) => {
-	$try_content__setup__script($scope);
 	$try_content__open($scope, false);
+	$try_content__setup__script($scope);
 };
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<button> </button>", " D ", $try_content__setup, 0, $catch_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);

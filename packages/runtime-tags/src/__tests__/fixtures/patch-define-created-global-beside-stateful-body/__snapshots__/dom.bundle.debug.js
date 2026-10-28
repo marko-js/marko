@@ -46,8 +46,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$open($scope, false);
-	$setup__script($scope);
 	$Panel($scope, { content: $Panel_content($scope) });
+	$setup__script($scope);
 }
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<span> </span>`)($Panel_content__template, $Panel_content__template), /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&D l`)($Panel_content__walks, $Panel_content__walks), $if_content__setup);
 const $input_show = /*@__PURE__*/ _const("input_show", ($scope) => {

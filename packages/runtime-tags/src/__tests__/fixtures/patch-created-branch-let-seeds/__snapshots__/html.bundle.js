@@ -3,10 +3,10 @@ const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
 	b: "b !;b%;<!><!><!>",
-	b4: "b4 b8!b0;D l ;<span> </span><button>+</button>"
+	b5: "b5 !b0;D l ;<span> </span><button>+</button>"
 });
 var view_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -15,10 +15,10 @@ var view_default = _template("b", (input) => {
 			let b = input.y;
 			_html(`<span>${_text_resume($scope1_id, "a", a + b)}</span><button>+</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "b0");
-			_filled_guard($scope0_reason, 3) && _patch_write($scope1_id, "wd", b, 1);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "b1");
-			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "b2");
+			$cg__input_y && _patch_init($scope1_id, "b2");
 			_filled_guard($scope0_reason, 2) && _patch_fill($scope1_id, "vb3", a, 1);
+			!$cg__input_y && _patch_fill($scope1_id, "vb4", b, 1);
 			_scope($scope1_id, {
 				c: a,
 				d: b,
@@ -26,11 +26,11 @@ var view_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b4"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b5"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.x,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.y
-	}) || (_filled_guard($scope0_reason, 2) && $cg__input_show && _patch_fill($scope0_id, "vb5", input.x, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && $cg__input_show && _patch_fill($scope0_id, "vb6", input.y, !_server_guard($scope0_reason, 3)));
+	}) || (_filled_guard($scope0_reason, 2) && $cg__input_show && _patch_fill($scope0_id, "vb6", input.x, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && $cg__input_show && _patch_fill($scope0_id, "vb7", input.y, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

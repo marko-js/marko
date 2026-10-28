@@ -7,8 +7,8 @@ const $Wrap_content__setup__script = _script("a1", ($scope) => _on($scope.a, "cl
 	$Wrap_content__open($scope, !$scope.g);
 }));
 const $Wrap_content__setup = ($scope) => {
-	$Wrap_content__setup__script($scope);
 	$Wrap_content__open($scope, false);
+	$Wrap_content__setup__script($scope);
 };
 const $Wrap_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $Wrap_content__content = /*@__PURE__*/ _fill_const("a2", 5, ($scope) => {

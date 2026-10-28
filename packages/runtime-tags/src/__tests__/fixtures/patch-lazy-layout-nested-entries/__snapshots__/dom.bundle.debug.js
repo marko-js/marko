@@ -83,8 +83,8 @@ const $setup__script = _script("__tests__/page-a.marko_0", ($scope) => _on($scop
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$n($scope, 0);
+	$setup__script($scope);
 }
 const $input_note = ($scope, input_note) => _text($scope["#text/0"], input_note);
 const $if = /*@__PURE__*/ _if("#text/1", "<p>wide</p>");

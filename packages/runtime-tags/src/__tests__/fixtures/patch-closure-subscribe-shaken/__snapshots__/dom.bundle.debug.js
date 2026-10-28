@@ -57,8 +57,8 @@ const $for_content__setup = $for_content__p_owned;
 const $for_content__u_id = /*@__PURE__*/ _const("u_id", $for_content__p_owned__OR__u_id);
 const $for_content__u_parts = /*@__PURE__*/ _const("u_parts", $for_content__u_parts__OR__owned);
 const $for_content__$params = ($scope, $params2) => {
-	$for_content__u_id($scope, $params2[0]?.id);
 	$for_content__u_parts($scope, $params2[0]?.parts);
+	$for_content__u_id($scope, $params2[0]?.id);
 };
 const $proj__closure = /*@__PURE__*/ _closure($for_content2__proj);
 const $proj = /*@__PURE__*/ _fill_const("__tests__/shop.marko_fill1", "proj", $proj__closure);
@@ -88,9 +88,9 @@ const $setup__script = _script("__tests__/shop.marko_0", ($scope) => {
 	});
 });
 function $setup($scope) {
-	$setup__script($scope);
 	$now($scope, 0);
 	$drops($scope, {});
+	$setup__script($scope);
 	$for($scope, [UPGRADES]);
 	$setup__$global_data($scope);
 }

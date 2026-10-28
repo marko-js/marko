@@ -6,8 +6,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks);
 const $setup$1 = [[], []];
 _shells({
 	"__tests__/tags/card.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/card.marko_1*content;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
-	"__tests__/tags/card.marko": /*@__PURE__*/ (() => `__tests__/tags/card.marko;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)(),
-	"__tests__/tags/card.marko_2*shell": "__tests__/tags/card.marko_2*shell,<p><b>yes</b></p>"
+	"__tests__/tags/card.marko": /*@__PURE__*/ (() => `__tests__/tags/card.marko !;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)()
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -23,12 +22,14 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 				$wi__open && _scope($scope2_id, {}, "__tests__/tags/card.marko", "2:26");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", 1, $wg__open, 1, 0, 0, ["__tests__/tags/card.marko_2*shell"], $scope1_reason, 0);
+		}, $scope1_id, "#text/0", $wg__open, $wg__open, 0, 0, 1);
 		$wi__open && _scope($scope1_id, {}, "__tests__/tags/card.marko", "2:2");
 	}, $scope0_id, 1) };
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({ open: n });
 	_patch_child_end();
+	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", n, 1);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/card.marko", 0);
 });
 

@@ -41,8 +41,8 @@ const $setup__script = _script("__tests__/tags/level-watch.marko_0", ($scope) =>
 	$shown($scope, +$scope.shown + 1);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$shown($scope, 0);
+	$setup__script($scope);
 }
 const $if = /*@__PURE__*/ _if("#text/2", 0, 0, $if_content__setup);
 const $input_projection$1 = ($scope, input_projection) => {

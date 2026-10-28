@@ -18,7 +18,7 @@ const $setup__script = _script("__tests__/tags/probe.marko_0", ($scope) => _on($
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 5);
+	$setup__script($scope);
 }
 var probe_default = /*@__PURE__*/ _template("__tests__/tags/probe.marko", $template, " b", $setup);

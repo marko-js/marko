@@ -6,8 +6,8 @@ const $Content_content__setup__script = _script("a1", ($scope) => _on($scope.a, 
 }));
 const $Content_content__setup = ($scope) => {
 	$Content_content__n($scope);
-	$Content_content__setup__script($scope);
 	$Content_content__count($scope, 0);
+	$Content_content__setup__script($scope);
 };
 const $Content_content__label = ($scope, label) => _text($scope.b, label);
 const $Content_content__$params = ($scope, $params2) => $Content_content__label($scope, $params2[0].label);

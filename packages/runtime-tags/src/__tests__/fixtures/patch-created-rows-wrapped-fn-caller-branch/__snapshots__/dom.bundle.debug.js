@@ -48,8 +48,8 @@ const $setup__script$1 = _script("__tests__/tags/rowsx.marko_0", ($scope) => _on
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$open($scope, true);
+	$setup__script$1($scope);
 }
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $for_content__setup, $for_content__$params);
 const $input_items$1 = ($scope, input_items) => $for($scope, [input_items]);

@@ -6,8 +6,8 @@ const $setup__script = _script("__tests__/page-a.marko_0", ($scope) => _on($scop
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 var page_a_default = /*@__PURE__*/ _template("__tests__/page-a.marko", $template, $walks, $setup);
 
@@ -19,8 +19,8 @@ const $setup__script = _script("__tests__/page-b.marko_0", ($scope) => _on($scop
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 var page_b_default = /*@__PURE__*/ _template("__tests__/page-b.marko", $template, $walks, $setup);
 
@@ -33,8 +33,8 @@ const $setup__script = _script("__tests__/layout.marko_0", ($scope) => _on($scop
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$open($scope, false);
+	$setup__script($scope);
 }
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $input_content = $dynamicTag;

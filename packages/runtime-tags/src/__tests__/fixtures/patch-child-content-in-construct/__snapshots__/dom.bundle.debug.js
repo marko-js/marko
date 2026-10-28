@@ -38,8 +38,8 @@ const $setup__script = _script("__tests__/tags/card/index.marko_0", ($scope) => 
 }));
 function $setup($scope) {
 	$input_content_direct($scope["#childScope/2"], $wrap_content($scope));
-	$setup__script($scope);
 	$n($scope, 0);
+	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_note($scope, input.note);
 const $input_note__closure = /*@__PURE__*/ _closure($wrap_content__input_note);

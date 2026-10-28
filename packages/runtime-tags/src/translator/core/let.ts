@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   assertNoParams,
   computeNode,
+  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -18,7 +19,9 @@ import {
 import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { hasEmittedAssignment } from "../util/finalize-references";
-import { isOptimize, isOutputDOM } from "../util/marko-config";
+import { isOptimize, isOutputDOM, isPatch } from "../util/marko-config";
+import { onReasonsSettled } from "../util/patch/decisions";
+import { getPatchFill } from "../util/patch/refresh";
 import { addReason } from "../util/reasons";
 import {
   mergeReferences,
@@ -93,6 +96,13 @@ export default {
 
     const tagSection = ensureSection(tag);
     const binding = trackVarReferences(tag, BindingType.let)!;
+    // A `<let>` a patch fills registers its fill, which only the page's module holds.
+    if (isPatch()) {
+      onReasonsSettled(() => {
+        if (getPatchFill(binding).fill)
+          getProgram().node.extra.isInteractive = true;
+      });
+    }
     const tagExtra = mergeReferences(tagSection, tag.node, [
       valueAttr?.value,
       valueChangeAttr?.value,

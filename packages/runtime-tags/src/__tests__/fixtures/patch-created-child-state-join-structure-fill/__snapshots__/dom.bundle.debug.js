@@ -32,8 +32,8 @@ const $setup__script = _script("__tests__/tags/child/index.marko_0", ($scope) =>
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$n($scope, 0);
+	$setup__script($scope);
 }
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $input_more = ($scope, input_more) => $if($scope, input_more ? 0 : 1);

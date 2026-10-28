@@ -29,8 +29,8 @@ const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$n($scope, 0);
+	$setup__script($scope);
 }
 const $input_x = /*@__PURE__*/ _const("input_x", $input_x__OR__n);
 const $input = ($scope, input) => $input_x($scope, input.x);

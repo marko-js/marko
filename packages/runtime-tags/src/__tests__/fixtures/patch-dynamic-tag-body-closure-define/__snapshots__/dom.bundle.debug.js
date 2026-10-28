@@ -14,8 +14,8 @@ const $Foo_content__setup__script = _script("__tests__/template.marko_1", ($scop
 	$Foo_content__open($scope, true);
 }));
 const $Foo_content__setup = ($scope) => {
-	$Foo_content__setup__script($scope);
 	$Foo_content__open($scope, false);
+	$Foo_content__setup__script($scope);
 };
 const $Foo_content__$params = ($scope, $params2) => $Foo_content__input_content($scope, $params2[0]?.content);
 const $Foo_content__input_content = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_content", $if_content__input_content);
@@ -26,8 +26,8 @@ const $show = /*@__PURE__*/ _let("show/1", $show__OR__Foo);
 const $Foo = /*@__PURE__*/ _const("Foo", $show__OR__Foo);
 const $count = /*@__PURE__*/ _let("count/4");
 function $setup($scope) {
-	$show($scope, true);
 	$Foo($scope, { content: $Foo_content($scope) });
+	$show($scope, true);
 	$count($scope, 1);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

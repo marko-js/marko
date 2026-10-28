@@ -29,11 +29,11 @@ const $setup__script$1 = _script("b9", ($scope) => _on($scope.c, "click", functi
 }));
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
+const $input_label__script = _script("b10", ($scope) => console.log("label", $scope.i));
 _fill_run("b13", 8, ($scope) => {
 	$if_content2__input_label($scope);
 	$input_label__script($scope);
 }, "b14");
-const $input_label__script = _script("b10", ($scope) => console.log("label", $scope.i));
 
 // template.marko
 const $shown = /*@__PURE__*/ _let(6, ($scope) => $input_show($scope.a, $scope.g));

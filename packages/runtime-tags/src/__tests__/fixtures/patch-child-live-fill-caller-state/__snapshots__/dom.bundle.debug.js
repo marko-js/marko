@@ -24,8 +24,8 @@ const $setup__script$1 = _script("__tests__/tags/mid.marko_0", ($scope) => _on($
 	$s($scope, $scope.s + "!");
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$s($scope, "!");
+	$setup__script$1($scope);
 }
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/0"], input_show);
 const $input = ($scope, input) => $input_show($scope, input.show);

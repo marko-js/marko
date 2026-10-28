@@ -7,8 +7,8 @@ const $await_content__setup__script = _script("__tests__/template.marko_2", ($sc
 	$await_content__open($scope, !$scope.open);
 }));
 const $await_content__setup = ($scope) => {
-	$await_content__setup__script($scope);
 	$await_content__open($scope, false);
+	$await_content__setup__script($scope);
 };
 const $await_content__v = ($scope, v) => _text($scope["#text/2"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);

@@ -5,7 +5,7 @@ const WORD = "w";
 _shells({
 	a0: "a0 !;D ;<span> </span>",
 	a: "a !;b%;<!><!><!>",
-	a6: /*@__PURE__*/ (() => `a6 a10!a3;${/*@__PURE__*/ ((_w0) => `b/${_w0}&D l D l`)($Body_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<p> </p><button> </button>`)($Body_content__template)}`)()
+	a7: /*@__PURE__*/ (() => `a7 a11!a3;${/*@__PURE__*/ ((_w0) => `b/${_w0}&D l D l`)($Body_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<p> </p><button> </button>`)($Body_content__template)}`)()
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
@@ -37,6 +37,7 @@ var template_default = _template("a", (input) => {
 			_script($scope1_id, "a3");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a4");
 			_patch_fill($scope1_id, "va5", x, 1);
+			_patch_fill($scope1_id, "va6", y, 1);
 			_scope($scope1_id, {
 				e: _write_if($scope0_reason, 1) && x,
 				_: _scope_with_id($scope0_id),
@@ -44,6 +45,6 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a6"], $scope0_reason, 0);
-	_scope($scope0_id, { e: input.a }) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va7", input.a, !_server_guard($scope0_reason, 1));
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a7"], $scope0_reason, 0);
+	_scope($scope0_id, { e: input.a }) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va8", input.a, !_server_guard($scope0_reason, 1));
 }, 1);

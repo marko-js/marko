@@ -36,8 +36,8 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 	$count($scope, +$scope.g + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input_label = ($scope, input_label) => _text($scope.b, input_label);
 

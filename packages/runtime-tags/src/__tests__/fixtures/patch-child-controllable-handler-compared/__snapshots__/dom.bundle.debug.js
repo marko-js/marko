@@ -26,8 +26,8 @@ const $setup__script = _script("__tests__/tags/counter/index.marko_0", ($scope) 
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input$1 = ($scope, input) => $input_onCount($scope, input.onCount);
 const $input_onCount = /*@__PURE__*/ _fill_const("__tests__/tags/counter/index.marko_fill0", "input_onCount", $if_content__input_onCount);

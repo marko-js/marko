@@ -14,8 +14,8 @@ const $setup__script = _script("__tests__/tags/box.marko_0", ($scope) => _on($sc
 	$count($scope, +$scope.count + 1);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input$1 = /*@__PURE__*/ _const("input", $input__OR__count);
 var box_default = /*@__PURE__*/ _template("__tests__/tags/box.marko", $template$1, $walks$1, $setup$1, $input$1);

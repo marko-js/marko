@@ -1,14 +1,14 @@
 // tags/child.marko
 const $template = "<span> </span>";
 const $setup = [[], []];
-_shells({ b: "b;D ;<span> </span>" });
+_shells({ b: "b !;D ;<span> </span>" });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = input.count + 10;
-	_html(`<span>${_text_resume($scope0_id, "a", n, 1, _client_guard($scope0_reason, 0) << 1, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", n)}</span>`);
 	_script($scope0_id, "b0");
-	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", n, 1);
+	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", n, 1);
 	_scope($scope0_id, { e: n });
 });
 

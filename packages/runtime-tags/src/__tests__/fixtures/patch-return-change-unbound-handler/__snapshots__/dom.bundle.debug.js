@@ -14,8 +14,8 @@ const $setup__script = _script("__tests__/tags/counter-box/index.marko_0", ($sco
 	$mode($scope, "b");
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$mode($scope, "a");
+	$setup__script($scope);
 }
 const $input_onA = /*@__PURE__*/ _const("input_onA", $input_onA__OR__input_onB__OR__mode);
 const $input_onB = /*@__PURE__*/ _const("input_onB", $input_onA__OR__input_onB__OR__mode);

@@ -198,6 +198,8 @@ export interface Signal {
   patchRendered?: boolean;
   /** A fill's run when it differs from the render (`render` without `patch`). */
   fillFn: t.Expression | undefined;
+  /** Registers the fill's run apart from the value, after the effect it may call. */
+  fillRun: t.Statement | undefined;
   effect: t.Statement[];
   hasHTMLEffect: boolean;
   storesValue: boolean;
@@ -471,6 +473,7 @@ export function getSignal(
         patch: [],
         unpatched: [],
         fillFn: undefined,
+        fillRun: undefined,
         effect: [],
         hasHTMLEffect: false,
         build: undefined,
@@ -800,16 +803,14 @@ export function initValue(binding: Binding, isLet = false) {
       if (!signal.fillFn) return callRuntime("_fill_resume", key, value);
       // The registration keeps the fill's run alone, and as a join under its
       // unpatched key, for closures below its own param-selected structure.
-      (signal.prependStatements ||= []).push(
-        t.expressionStatement(
-          callRuntime(
-            "_fill_run",
-            key,
-            getScopeAccessorLiteral(binding, true),
-            fillFn!,
-            unpatchedSections &&
-              t.stringLiteral(getPatchFillKey(binding, "unpatched")),
-          ),
+      signal.fillRun = t.expressionStatement(
+        callRuntime(
+          "_fill_run",
+          key,
+          getScopeAccessorLiteral(binding, true),
+          fillFn!,
+          unpatchedSections &&
+            t.stringLiteral(getPatchFillKey(binding, "unpatched")),
         ),
       );
       return value;
@@ -925,7 +926,10 @@ function pushCanonicalSources(list: Opt<Sources>, binding: Binding) {
   return sources ? push(list, sources) : list;
 }
 
-function setsInitialValue({ referencedBindings }: Signal) {
+function setsInitialValue(
+  signal: Signal,
+): signal is Signal & { referencedBindings: Binding } {
+  const { referencedBindings } = signal;
   return (
     !!referencedBindings &&
     !Array.isArray(referencedBindings) &&
@@ -1053,7 +1057,9 @@ function hasClientRender(signal: Signal): boolean {
               !patchRenders(getSignal(closureSection, binding)),
           ) ||
             !!binding.hoists ||
-            hasClientRenderedAlias(binding))))
+            hasClientRenderedAlias(binding) ||
+            // The client derives a value no patch fills where its readers need it.
+            (isPatch() && !!getPatchFill(binding).derivedNeeds))))
     );
   }
   return !!signal.section.referencedClosures;
@@ -1204,8 +1210,10 @@ export function buildSignalFn(signal: Signal): t.Expression {
     }
     // A `<let>`'s initial value takes it only as a created scope first renders,
     // from this value's seed, which no patch renders the `<let>` for.
-    (isValue && setsInitialValue(value.signal)
-      ? signal.render
+    (setsInitialValue(value.signal)
+      ? isPatch() && !hasResumableAssignment(value.signal.referencedBindings)
+        ? signal.patch
+        : signal.render
       : getForwardStatements(signal, value.signal)
     ).push(
       t.expressionStatement(
@@ -1787,6 +1795,7 @@ export function writeSignals(section: Section) {
     if (effectDeclarator) {
       signalStatements.push(t.variableDeclaration("const", [effectDeclarator]));
     }
+    if (signal.fillRun) signalStatements.push(signal.fillRun);
 
     if (signalDeclaration) {
       signalStatements.push(signalDeclaration);

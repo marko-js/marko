@@ -41,9 +41,9 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$open($scope, false);
+	$Panel($scope, { content: $Panel_content($scope) });
 	$try($scope);
 	$setup__script($scope);
-	$Panel($scope, { content: $Panel_content($scope) });
 }
 const $input_other = /*@__PURE__*/ _const("input_other", $input_other__OR__Panel);
 const $input_label__closure = /*@__PURE__*/ _closure($catch_content__input_label);

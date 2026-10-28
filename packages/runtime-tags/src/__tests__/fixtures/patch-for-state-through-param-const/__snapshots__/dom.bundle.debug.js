@@ -11,8 +11,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$sessions($scope, [{ id: "c" }]);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$sessions($scope, null);
+	$setup__script($scope);
 }
 const $ws = /*@__PURE__*/ _const("ws", $sessions__OR__ws);
 const $input_workspace = $ws;

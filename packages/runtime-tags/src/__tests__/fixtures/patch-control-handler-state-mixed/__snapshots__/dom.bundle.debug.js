@@ -7,8 +7,8 @@ const $for_content__cv = /*@__PURE__*/ _let("cv/6", ($scope) => _text($scope["#t
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _attr_input_value_script($scope, "#input/0"));
 const $for_content__setup = ($scope) => {
 	$for_content__cm._($scope);
-	$for_content__setup__script($scope);
 	$for_content__cv($scope, "");
+	$for_content__setup__script($scope);
 };
 const $for_content__it_v = /*@__PURE__*/ _const("it_v", $for_content__cm__OR__it_v);
 const $for_content__$params = ($scope, $params2) => $for_content__it_v($scope, $params2[0]?.v);

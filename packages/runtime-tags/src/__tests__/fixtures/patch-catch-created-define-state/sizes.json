@@ -7,7 +7,7 @@
     "template.marko.page.mjs": {
       "total": {
         "min": 6169,
-        "brotli": 2787
+        "brotli": 2785
       },
       "files": {
         "child.marko": 465,
@@ -16,7 +16,7 @@
     },
     "lazy-child.mjs": {
       "min": 317,
-      "brotli": 210
+      "brotli": 208
     },
     "v:lazy-child.marko.setup.mjs": {
       "min": 100,

@@ -22,8 +22,8 @@ const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	_var($scope, "#childScope/0", $if_content__r);
-	$if_content__setup__script($scope);
 	$if_content__shown($scope, "-");
+	$if_content__setup__script($scope);
 };
 const $if_content__r = _var_resume("__tests__/template.marko_1_r#5/var", /*@__PURE__*/ _const("r", ($scope) => _text($scope["#text/2"], $scope.r.fn())));
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<p><!> <!></p><button>show</button>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D%c%l b`)(""), $if_content__setup);

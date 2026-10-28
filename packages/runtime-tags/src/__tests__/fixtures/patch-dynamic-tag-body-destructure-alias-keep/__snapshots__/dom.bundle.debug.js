@@ -11,8 +11,8 @@ const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($s
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $content = /*@__PURE__*/ _fill_const("__tests__/tags/card.marko_fill0", "content", ($scope) => {

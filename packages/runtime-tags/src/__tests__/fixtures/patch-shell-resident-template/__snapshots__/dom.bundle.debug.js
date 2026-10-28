@@ -31,8 +31,8 @@ const $setup__script = _script("__tests__/tags/chooser.marko_0", ($scope) => _on
 	$show($scope, !$scope.show);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$show($scope, false);
+	$setup__script($scope);
 }
 const $input$1 = ($scope, input) => {
 	$input_Tag($scope, input.Tag);

@@ -6,8 +6,8 @@ const $Content_content__setup__script = _script("__tests__/template.marko_1", ($
 	$Content_content__count($scope, +$scope.count + 1);
 }));
 const $Content_content__setup = ($scope) => {
-	$Content_content__setup__script($scope);
 	$Content_content__count($scope, 0);
+	$Content_content__setup__script($scope);
 };
 const $Content_content__label = ($scope, label) => _text($scope["#text/1"], label);
 const $Content_content__$params = ($scope, $params2) => $Content_content__label($scope, $params2[0].label);

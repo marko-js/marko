@@ -1,8 +1,7 @@
 // tags/card.marko
 _shells({
-	b0: "b0;D ;<p> </p>",
 	b1: "b1;D ;<p> </p>",
-	b: "b;b%;<!><!><!>"
+	b: "b b2;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -10,9 +9,10 @@ var card_default = _template("b", (input) => {
 	let n = input.n;
 	_await($scope0_id, "a", Promise.resolve(n), (x) => {
 		const $scope1_id = _scope_id();
-		_html(`<p>${_text_resume($scope1_id, "a", x, 1, _client_guard($scope0_reason, 0) << 1, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", x)}</p>`);
 		_scope($scope1_id, {});
-	}, 1, "b0", void 0, 1);
+	}, 1, 0);
+	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb0", n, 1);
 });
 
 // template.marko

@@ -24,8 +24,8 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$if_content__input_open._($scope);
 	$Panel_content__isOpen($scope["#childScope/1"], true);
-	$if_content__setup__script($scope);
 	$if_content__n($scope, 1);
+	$if_content__setup__script($scope);
 };
 const $if_content__input_open = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_open#0:7/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_open", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Panel_content__isOpen($scope["#childScope/0"], $scope._.input_open))));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
@@ -42,8 +42,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$open($scope, false);
-	$setup__script($scope);
 	$Panel($scope, { content: $Panel_content($scope) });
+	$setup__script($scope);
 }
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<button>inc</button>`)($Panel_content__template, $Panel_content__template), /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($Panel_content__walks, $Panel_content__walks), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

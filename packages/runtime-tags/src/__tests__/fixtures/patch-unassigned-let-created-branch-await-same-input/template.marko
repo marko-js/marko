@@ -1,0 +1,6 @@
+<let/x=input.v/>
+<if=input.show>
+  <await|r|=Promise.resolve(x)>
+    <p>${r}</p>
+  </await>
+</if>

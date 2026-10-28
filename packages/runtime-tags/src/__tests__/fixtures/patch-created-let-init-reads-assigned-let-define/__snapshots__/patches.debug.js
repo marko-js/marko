@@ -6,12 +6,13 @@
         "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_2_v#3_w#4/init"
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill2": "w"
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill3": "w"
       }
     },
     "PatchText:#text/1": "b",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill1": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill1": 1,
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill2": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_1*shell"],
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill0": "b"
@@ -26,12 +27,13 @@
         "PatchInit:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_2_v#3_w#4/init"
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill2": "w"
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill3": "w"
       }
     },
     "PatchText:#text/1": "c",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill1": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill1": 1,
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill2": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_1*shell"],
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill0": "c"

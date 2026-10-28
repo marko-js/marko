@@ -28,8 +28,8 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<p><!> <!></p><button>show</button>";
 const $walks = "D%c%l b";
 const $o = /*@__PURE__*/ _let("o/6", ($scope) => {
-	$o_label($scope, $scope.o?.label);
 	$o_n($scope, $scope.o?.n);
+	$o_label($scope, $scope.o?.label);
 });
 const $o_n = /*@__PURE__*/ _const("o_n", ($scope) => _text($scope["#text/0"], $scope.o_n));
 const $o_label__script = _script("__tests__/tags/card.marko_0_o_label#8", ($scope) => _on($scope["#button/2"], "click", function() {

@@ -34,8 +34,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 function $setup($scope) {
 	$setup$1($scope["#childScope/1"]);
 	$input_content($scope["#childScope/1"], $one_content($scope));
-	$setup__script($scope);
 	$z($scope, 0);
+	$setup__script($scope);
 }
 const $input_y = ($scope, input_y) => $input_t($scope["#childScope/1"], input_y);
 const $input = ($scope, input) => $input_y($scope, input.y);

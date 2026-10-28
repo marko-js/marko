@@ -1,0 +1,56 @@
+# Render `{"on":true,"n":1,"w":"b"}`
+```html
+<main>
+  <section>
+    <h3>
+      Branch heading
+    </h3>
+    <p>
+      Static paragraph text that only the branch renders.
+    </p>
+  </section>
+  <div>
+    <header>
+      <h2>
+        Section title
+      </h2>
+      <p>
+        Some static introduction text for this wrapper.
+      </p>
+    </header>
+    <b>
+      1
+    </b>
+     
+    <i>
+      b
+    </i>
+    <footer>
+      <a
+        href="/more"
+      >
+        Read more
+      </a>
+    </footer>
+    <aside>
+      <h3>
+        Related
+      </h3>
+      <ul>
+        <li>
+          First related item
+        </li>
+        <li>
+          Second related item
+        </li>
+        <li>
+          Third related item
+        </li>
+      </ul>
+    </aside>
+  </div>
+  <em>
+    b
+  </em>
+</main>
+```

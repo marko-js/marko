@@ -14,9 +14,9 @@ const $await_content__setup__script = _script("__tests__/tags/show-await.marko_1
 }));
 const $await_content__setup = ($scope) => {
 	$await_content2($scope);
-	$await_content__setup__script($scope);
 	$await_content__n($scope, 0);
 	$await_content__q($scope, Promise.resolve("k"));
+	$await_content__setup__script($scope);
 };
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p> </p><button class=q> </button><!><!>", "D l D l%", $await_content__setup);

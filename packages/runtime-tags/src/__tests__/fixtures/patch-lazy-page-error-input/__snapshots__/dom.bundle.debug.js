@@ -28,8 +28,8 @@ const $setup__script = _script("__tests__/page1.marko_0", ($scope) => _on($scope
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$n($scope, 0);
+	$setup__script($scope);
 }
 var page1_default = /*@__PURE__*/ _template("__tests__/page1.marko", $template, $walks, $setup);
 

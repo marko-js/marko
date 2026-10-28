@@ -41,9 +41,9 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	});
 });
 function $setup($scope) {
+	$p($scope, Promise.resolve(0));
 	$resolve($scope, undefined);
 	$setup__script($scope);
-	$p($scope, Promise.resolve(0));
 }
 const $input_label = ($scope, input_label) => $input_label$1($scope["#childScope/2"], input_label);
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/2"], input_show);

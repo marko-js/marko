@@ -6,8 +6,8 @@ const $setup__script = _script("__tests__/lazy-child.marko_0", ($scope) => _on($
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);
@@ -21,8 +21,8 @@ const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope
 	$count($scope, +$scope.count + 1);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input_label$1 = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input$1 = ($scope, input) => $input_label$1($scope, input.label);
@@ -55,8 +55,8 @@ const $OwnBody_content__setup__script = _script("__tests__/template.marko_6", ($
 	$OwnBody_content__count($scope, +$scope.count + 1);
 }));
 const $OwnBody_content__setup = ($scope) => {
-	$OwnBody_content__setup__script($scope);
 	$OwnBody_content__count($scope, 0);
+	$OwnBody_content__setup__script($scope);
 };
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__setup = ($scope) => {

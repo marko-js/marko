@@ -21,8 +21,8 @@ const $setup__script$1 = _script("__tests__/tags/card.marko_0", ($scope) => _on(
 	$s($scope, +$scope.s + 1);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$s($scope, 0);
+	$setup__script$1($scope);
 }
 const $fmt2__closure = /*@__PURE__*/ _closure($if_content__fmt);
 const $fmt2 = /*@__PURE__*/ _const("fmt", $fmt2__closure);

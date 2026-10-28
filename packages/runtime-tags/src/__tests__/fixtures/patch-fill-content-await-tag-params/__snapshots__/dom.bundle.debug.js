@@ -47,8 +47,8 @@ const $setup__script = _script("__tests__/tags/inner.marko_0", ($scope) => _on($
 }));
 function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $frame_content($scope));
-	$setup__script($scope);
 	$showSecond($scope, false);
+	$setup__script($scope);
 }
 const $input = ($scope, input) => {
 	$input_second($scope, input.second);

@@ -9,8 +9,8 @@ const $setup__script$1 = _script("__tests__/tags/badge.marko_0", ($scope) => _on
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$open($scope, false);
+	$setup__script$1($scope);
 }
 var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template$1, $walks$1, $setup$1);
 

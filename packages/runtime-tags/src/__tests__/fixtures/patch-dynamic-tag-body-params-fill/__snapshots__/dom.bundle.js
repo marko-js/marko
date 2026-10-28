@@ -7,8 +7,8 @@ const $Card_content__setup__script = _script("a1", ($scope) => _on($scope.a, "cl
 	$Card_content__open($scope, !$scope.h);
 }));
 const $Card_content__setup = ($scope) => {
-	$Card_content__setup__script($scope);
 	$Card_content__open($scope, true);
+	$Card_content__setup__script($scope);
 };
 const $Card_content__label = ($scope, label) => _text($scope.b, label);
 const $Card_content__$params = ($scope, $params2) => {

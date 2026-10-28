@@ -10,8 +10,8 @@ const $setup__script$1 = _script("__tests__/tags/child.marko_0", ($scope) => _on
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$open($scope, true);
+	$setup__script$1($scope);
 }
 const $input_a__OR__input_b = /*@__PURE__*/ _fill_join("| __tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_0_input_a#5_input_b#6/init", 7, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b)));
 const $input_a$1 = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill0", "input_a", ($scope) => {

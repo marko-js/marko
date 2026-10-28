@@ -9,8 +9,8 @@ const $setup__script = _script("c0", ($scope) => _on($scope.a, "click", function
 	$open($scope, !$scope.f);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_content($scope, input.content);
 const $input_content = /*@__PURE__*/ _fill_const("c1", 4, $if_content__input_content);

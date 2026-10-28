@@ -10,8 +10,8 @@ const $setup__script$1 = _script("__tests__/tags/card.marko_0", ($scope) => _on(
 	$open$1($scope, !$scope.open);
 }));
 function $setup$2($scope) {
-	$setup__script$1($scope);
 	$open$1($scope, true);
+	$setup__script$1($scope);
 }
 const $input_content$1 = /*@__PURE__*/ _const("input_content", $input_content__OR__open$1);
 const $input$2 = ($scope, input) => $input_content$1($scope, input.content);
@@ -29,8 +29,8 @@ const $setup__script = _script("__tests__/tags/relay.marko_0", ($scope) => _on($
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input_content = /*@__PURE__*/ _const("input_content", $input_content__OR__open);
 const $input$1 = ($scope, input) => $input_content($scope, input.content);

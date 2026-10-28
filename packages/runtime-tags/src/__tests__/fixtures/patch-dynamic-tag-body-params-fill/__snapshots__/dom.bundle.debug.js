@@ -10,8 +10,8 @@ const $Card_content__setup__script = _script("__tests__/template.marko_2", ($sco
 	$Card_content__open($scope, !$scope.open);
 }));
 const $Card_content__setup = ($scope) => {
-	$Card_content__setup__script($scope);
 	$Card_content__open($scope, true);
+	$Card_content__setup__script($scope);
 };
 const $Card_content__label = ($scope, label) => _text($scope["#text/1"], label);
 const $Card_content__$params = ($scope, $params2) => {

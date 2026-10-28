@@ -14,8 +14,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$other($scope, $scope.other + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$other($scope, 0);
+	$setup__script($scope);
 }
 const $input_label = ($scope, input_label) => $input_label$1($scope["#childScope/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);

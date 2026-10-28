@@ -1,44 +1,44 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-define-if/tags/card.marko;b/b%c&b;<!><!><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-define-if/tags/card.marko_2*shell,<p><b>yes</b></p>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-define-if/tags/card.marko !;b/b%c&b;<!><!><!><!><!>`, {
   "PatchDynamicTag:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-define-if/tags/card.marko",
   "PatchChild:BranchScopes:#text/2": {
-    "PatchChild:#childScope/0": {
-      "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-define-if/tags/card.marko_2*shell"
+    "PatchSetupValues:": {
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-define-if/tags/card.marko_fill0": 1
     }
   }
 }]
-;CQU
+;BgA
 
-// PATCH holding CQU
+// PATCH holding BgA
 {
   "PatchDynamicTag:#text/2": [">div", 0, {
     n: 1
   }]
 }
 
-// PATCH holding CQU
+// PATCH holding BgA
 {
   "PatchDynamicTag:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-define-if/tags/card.marko",
   "PatchChild:BranchScopes:#text/2": {
-    "PatchChild:#childScope/0": {
-      "PatchBranch:#text/0": 0
+    "PatchSetupValues:": {
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-define-if/tags/card.marko_fill0": 0
     }
   }
 }
 
-// PATCH holding CQU
+// PATCH holding BgA
 {
   "PatchDynamicTag:#text/2": [">div", 0, {
     n: 0
   }]
 }
 
-// PATCH holding CQU
+// PATCH holding BgA
 {
   "PatchDynamicTag:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-define-if/tags/card.marko",
   "PatchChild:BranchScopes:#text/2": {
-    "PatchChild:#childScope/0": {
-      "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-define-if/tags/card.marko_2*shell"
+    "PatchSetupValues:": {
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-define-if/tags/card.marko_fill0": 2
     }
   }
 }

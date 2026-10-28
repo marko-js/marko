@@ -48,9 +48,9 @@ const $setup__script$1 = _script("__tests__/tags/rowsy.marko_0", ($scope) => _on
 	$n($scope, +$scope.n + 1);
 }));
 function $setup$1($scope) {
+	$n($scope, 0);
 	$setup__script$1($scope);
 	$Card($scope, { content: $Card_content($scope) });
-	$n($scope, 0);
 	$Label($scope, { content: $Label_content($scope) });
 }
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);

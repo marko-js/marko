@@ -17,8 +17,8 @@ const $setup__script$1 = _script("__tests__/tags/child.marko_0", ($scope) => _on
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$open($scope, true);
+	$setup__script$1($scope);
 }
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
@@ -46,8 +46,8 @@ function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$setup$1($scope["#childScope/1"]);
 	$n($scope, "k");
-	$s($scope, true);
 	$setup__script($scope);
+	$s($scope, true);
 }
 const $input_a = ($scope, input_a) => {
 	$input_a$1($scope["#childScope/0"], input_a);

@@ -1,0 +1,11 @@
+<let/x=input.v/>
+<try>
+  <if=input.show>
+    <await|r|=input.p>
+      <b>${r}</b>
+    </await>
+  </if>
+  <@placeholder>
+    <i>${x}</i>
+  </@placeholder>
+</try>

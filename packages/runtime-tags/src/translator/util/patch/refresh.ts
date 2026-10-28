@@ -44,6 +44,7 @@ import {
   getReferencedBindingsInFunction,
   getReferencedBindings,
   getValueReferences,
+  hasResumableAssignment,
   isReferencedExtra,
   type Read,
   type ReferencedExtra,
@@ -328,7 +329,8 @@ function computePatchFill(binding: Binding): PatchFill {
   const ownRegistration =
     !!fill &&
     (binding.sources?.state
-      ? !binding.assignments && bindingUtil.has(binding.sources.state, binding)
+      ? !hasResumableAssignment(binding) &&
+        bindingUtil.has(binding.sources.state, binding)
       : (!binding.section.parent && hasDeclarationOnlyReads(binding)) ||
         (fill === true && someAlias(binding, readsOwnEffect, undefined, true)));
   // A client join and withheld content both call for it: it refreshes the
@@ -409,16 +411,13 @@ export function canPatchFill(binding: Binding) {
         patchWritesScope(binding.section) &&
         (!!findSlot(binding, SlotKind.ChangeHandler) ||
           differsPerRender(binding) ||
-          // The seed runs a `<let>`'s signal where plain keeps it and client code holds
-          // the value, or takes it past the scope's renders and effects (a child, a join).
+          // The seed runs a `<let>`'s signal where a created scope renders or reads it,
+          // and roots one no resumed assignment reaches wherever a created scope reads it.
           (binding.type === BindingType.let &&
-            mayBeCreated(binding.section) &&
-            ((!!binding.assignments && !!getWriteReason(binding)) ||
-              readsPastRenders(
-                binding,
-                binding.section,
-                !!binding.assignments,
-              )))) &&
+            ((mayBeCreated(binding.section) && !!getWriteReason(binding)) ||
+              (readsPastRenders(binding, binding.section) &&
+                (mayBeCreated(binding.section) ||
+                  !hasResumableAssignment(binding)))))) &&
         bindingUtil.has(binding.sources.state, binding)
       );
     }
@@ -498,24 +497,23 @@ function seedsCreatedScope(binding: Binding) {
   );
 }
 
-// Read in `section` past renders, effects, inits, name-only dynamic tags and (never
-// assigned) control flow and call arguments: by a child, join or return.
+// Read in `section` past renders, effects, inits and name-only dynamic tags:
+// by control flow, a call, a child, join or return.
 function readsPastRenders(
   binding: Binding,
   section: Section,
-  assigned: boolean,
   seen = new Set<Binding>(),
 ): boolean {
   if (seen.has(binding)) return false;
   seen.add(binding);
   for (const read of binding.reads.keys()) {
     if (read.section !== section) return true;
+    // A hole joining what a patch changes re-runs after the scope's renders.
     if (
-      read.rendersValue ||
+      (read.rendersValue && !hasParamOrGlobalSource(getSourcesForExpr(read))) ||
       read.isEffect ||
       read.initialValue ||
-      read.nameOnly ||
-      (!assigned && (!!getExprBranch(read) || !!read.callSiteExprs))
+      read.nameOnly
     ) {
       continue;
     }
@@ -525,14 +523,14 @@ function readsPastRenders(
         read.derives,
         (derived) =>
           derived.section !== section ||
-          readsPastRenders(derived, section, assigned, seen),
+          readsPastRenders(derived, section, seen),
       )
     ) {
       return true;
     }
   }
   for (const alias of binding.propertyAliases.values()) {
-    if (readsPastRenders(alias, section, assigned, seen)) return true;
+    if (readsPastRenders(alias, section, seen)) return true;
   }
   return false;
 }
@@ -984,6 +982,7 @@ function hasDeclarationOnlyReads(binding: Binding) {
   for (const read of binding.reads.keys()) {
     if (
       keepsClosureFills(read.section) ||
+      some(getSourcesForExpr(read)?.state, isLetWithoutResumableAssignment) ||
       (readsValuesOnResume(read)
         ? !read.invokeOnly && read.section === binding.section
         : some(read.derives, (derived) =>
@@ -1001,6 +1000,11 @@ function hasDeclarationOnlyReads(binding: Binding) {
     }
   }
   return false;
+}
+
+// A `<let>` no resumed assignment reaches: only a patch's key reaches its signal.
+function isLetWithoutResumableAssignment(state: Binding) {
+  return state.type === BindingType.let && !hasResumableAssignment(state);
 }
 
 // A known child's param the client may derive from what its calls pass: a consumer

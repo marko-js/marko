@@ -8,7 +8,7 @@ const $Counter_content__setup__script = _script("a1", ($scope) => _on($scope.a, 
 }));
 const $Counter_content__setup = ($scope) => {
 	$Counter_content__input_label($scope);
-	$Counter_content__setup__script($scope);
 	$Counter_content__n($scope, 0);
+	$Counter_content__setup__script($scope);
 };
 const $Counter_content = _content$1("a0", "<button class=inc><!> <!></button>", " D%c%", $Counter_content__setup);

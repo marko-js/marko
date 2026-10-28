@@ -32,7 +32,7 @@ const $setup__script = _script("__tests__/tags/page-b.marko_0", ($scope) => _on(
 }));
 function $setup($scope) {
 	$input_name($scope["#childScope/2"], "Switch");
-	$setup__script($scope);
 	$progress($scope, 0);
+	$setup__script($scope);
 }
 var page_b_default = /*@__PURE__*/ _template("__tests__/tags/page-b.marko", $template, $walks, $setup);

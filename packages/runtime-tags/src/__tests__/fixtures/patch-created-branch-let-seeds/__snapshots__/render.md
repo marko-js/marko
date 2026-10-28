@@ -12,7 +12,6 @@
 ## Change
 ```
 INSERT: span, button
-UPDATE: span::text " " => "7"
 ```
 
 # Update

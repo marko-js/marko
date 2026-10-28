@@ -11,8 +11,8 @@ const $Counter_content__setup__script = _script("__tests__/template.marko_1", ($
 }));
 const $Counter_content__setup = ($scope) => {
 	$Counter_content__input_label($scope);
-	$Counter_content__setup__script($scope);
 	$Counter_content__n($scope, 0);
+	$Counter_content__setup__script($scope);
 };
 const $Counter_content = _content("__tests__/template.marko_1*content", "<button class=inc><!> <!></button>", " D%c%", $Counter_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");

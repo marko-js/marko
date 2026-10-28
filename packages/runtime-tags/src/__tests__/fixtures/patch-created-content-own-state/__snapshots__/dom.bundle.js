@@ -6,7 +6,7 @@ const $wrap_content__setup__script = _script("a0", ($scope) => _on($scope.a, "cl
 }));
 const $wrap_content__setup = ($scope) => {
 	$wrap_content__input_id($scope);
-	$wrap_content__setup__script($scope);
 	$wrap_content__c($scope, 0);
+	$wrap_content__setup__script($scope);
 };
 const $wrap_content = _content$1("a4", "<button><!> <!></button>", " D%c%", $wrap_content__setup);

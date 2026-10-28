@@ -6,8 +6,8 @@ const $setup__script$1 = _script("__tests__/tags/widget/tags/inner/index.marko_0
 	$n($scope, +$scope.n + 1);
 }));
 function $setup$2($scope) {
-	$setup__script$1($scope);
 	$n($scope, 1);
+	$setup__script$1($scope);
 }
 var inner_default = /*@__PURE__*/ _template("__tests__/tags/widget/tags/inner/index.marko", $template$2, " b", /*@__PURE__*/ _return_setup($setup$2));
 

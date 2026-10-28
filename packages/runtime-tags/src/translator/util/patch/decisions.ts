@@ -101,16 +101,10 @@ function isAssigned(state: Binding) {
   return !!state.assignments;
 }
 
-// A `<let>` the client never changes: nothing assigns it, and it holds the
-// initial value the server renders.
-export function keepsInitialValue(state: Binding) {
-  return !state.assignments && holdsInitialValue(state, state.section);
-}
-
-// The sources take client state: a `<let>` that keeps its initial value renders
-// as the server does.
+// The sources take client state: a patch build bundles every `<let>`, as plain
+// bundles an assigned one.
 export function hasClientState(sources: Sources | undefined) {
-  return !every(sources?.state, keepsInitialValue);
+  return !!sources?.state;
 }
 
 // A handler written inline merged its references with its control's, so

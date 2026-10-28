@@ -8,7 +8,7 @@ const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<p><b>yes</b></p>");
 const $Panel_content__open = ($scope, open) => $Panel_content__if($scope, open ? 0 : 1);
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => $Panel_content__open($scope, $temp.open);
-const $n = /*@__PURE__*/ _let("n/4", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.n));
+const $n = _fill_resume("__tests__/tags/card.marko_fill0", /*@__PURE__*/ _let("n/4", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.n)));
 const $input_n$1 = $n;
 const $input$1 = ($scope, input) => $input_n$1($scope, input.n);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, 0, $input$1);

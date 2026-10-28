@@ -28,8 +28,8 @@ const $setup__script = _script("__tests__/tags/child/index.marko_0", ($scope) =>
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_label($scope, input.label);
 const $input_label__closure = /*@__PURE__*/ _closure($countbi_content__input_label);

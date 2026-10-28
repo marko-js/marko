@@ -6,8 +6,8 @@ const $setup__script$2 = _script("c1", ($scope) => _on($scope.a, "click", functi
 }));
 function $setup$1($scope) {
 	_return_change($scope, $valueChange($scope));
-	$setup__script$2($scope);
 	$n($scope, 1);
+	$setup__script$2($scope);
 }
 const $valueChange = ($scope) => function(v) {
 	$n($scope, v);

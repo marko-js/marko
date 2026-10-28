@@ -19,8 +19,8 @@ const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);

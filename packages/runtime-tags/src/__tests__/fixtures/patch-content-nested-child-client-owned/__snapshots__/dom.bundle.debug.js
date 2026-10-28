@@ -10,8 +10,8 @@ const $setup__script = _script("__tests__/tags/grand/index.marko_0", ($scope) =>
 	$open($scope, !$scope.open);
 }));
 function $setup$2($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input$2 = ($scope, input) => $input_content$1($scope, input.content);
 const $input_content$1 = /*@__PURE__*/ _fill_const("__tests__/tags/grand/index.marko_fill0", "input_content", $if_content__input_content);

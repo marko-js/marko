@@ -50,9 +50,9 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	});
 });
 function $setup($scope) {
+	$p($scope, Promise.resolve(0));
 	$resolve($scope, undefined);
 	$setup__script($scope);
-	$p($scope, Promise.resolve(0));
 }
 const $if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

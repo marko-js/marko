@@ -23,10 +23,10 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$open($scope, !$scope.open);
 }));
 function $setup($scope) {
-	$open($scope, false);
-	$setup__script($scope);
 	$fa2($scope, $fa($scope));
 	$fb2($scope, $fb($scope));
+	$open($scope, false);
+	$setup__script($scope);
 }
 const $input_upper = /*@__PURE__*/ _const("input_upper", $input_upper__OR__fa__OR__fb);
 const $input = ($scope, input) => $input_upper($scope, input.upper);

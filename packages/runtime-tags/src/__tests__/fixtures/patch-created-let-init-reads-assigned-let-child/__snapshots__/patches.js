@@ -1,14 +1,15 @@
 // PATCH
-[`a3 a6!a0;/D l%c& D l;<span> </span><!><!><button> </button>`, {
+[`a4 a7!a0;/D l%c& D l;<span> </span><!><!><button> </button>`, {
   ba: [{
     ca: {
       vb2: "b"
     },
     o: {
-      va2: 1
+      va2: 1,
+      va3: 1
     }
-  }, "a3"],
-  va4: "b"
+  }, "a4"],
+  va5: "b"
 }]
 ;CAE
 
@@ -19,8 +20,9 @@
       vb2: "c"
     },
     o: {
-      va2: 1
+      va2: 1,
+      va3: 1
     }
-  }, "a3"],
-  va4: "c"
+  }, "a4"],
+  va5: "c"
 }

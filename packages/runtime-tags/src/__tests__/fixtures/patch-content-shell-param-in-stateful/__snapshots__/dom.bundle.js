@@ -9,8 +9,8 @@ const $content_content__setup__script = _script("a0", ($scope) => _on($scope.b, 
 	$content_content__open($scope, !$scope.g);
 }));
 const $content_content__setup = ($scope) => {
-	$content_content__setup__script($scope);
 	$content_content__open($scope, true);
+	$content_content__setup__script($scope);
 };
 const $content_content__$params = ($scope, $params2) => $content_content__label($scope, $params2[0].label);
 const $content_content__label = /*@__PURE__*/ _fill_const("a1", 5, $if_content2__label);

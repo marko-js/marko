@@ -10,8 +10,8 @@ const $if_content__m = /*@__PURE__*/ _fill_let("b6", 4, $if_content__m__OR__x__O
 const $if_content__setup__script = _script("b4", ($scope) => _on($scope.c, "click", function() {
 	$if_content__m($scope, +$scope.e + 1);
 }));
-_fill_run("b9", 5, /*@__PURE__*/ _fill_mark(5, $if_content__input_a));
 const $input_a__script = _script("b8", ($scope) => $scope.b.textContent = "s:" + $scope.f);
+_fill_run("b9", 5, /*@__PURE__*/ _fill_mark(5, $if_content__input_a));
 const $input_a = /*@__PURE__*/ _const(5, ($scope) => {
 	$if_content__input_a($scope);
 	$input_a__script($scope);

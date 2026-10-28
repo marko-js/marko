@@ -15,8 +15,8 @@ const $try_content__setup__script = _script("__tests__/template.marko_2", ($scop
 }));
 const $try_content__setup = ($scope) => {
 	$try_content__item_fail($scope);
-	$try_content__setup__script($scope);
 	$try_content__n($scope, 0);
+	$try_content__setup__script($scope);
 };
 const $for_content__try = /*@__PURE__*/ _try("#text/0", "<button><!><!></button>", " D%b%", $try_content__setup, 0, $catch_content);
 const $for_content__setup = ($scope) => $for_content__try($scope);

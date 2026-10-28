@@ -23,7 +23,7 @@ const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($
 function $setup($scope) {
 	$scope["#childScope/0"]._ = $scope;
 	$Count_content__setup($scope["#childScope/0"]);
-	$setup__script($scope);
 	$n($scope, 0);
+	$setup__script($scope);
 }
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template, $walks, $setup);

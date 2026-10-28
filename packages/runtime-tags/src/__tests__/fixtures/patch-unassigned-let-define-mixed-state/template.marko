@@ -1,0 +1,9 @@
+<let/k=input.v/>
+<let/c=0/>
+<button onClick() { c++ }>${c}</button>
+<define/Body|{ a }|>
+  <if=a>
+    <p>${a}</p>
+  </if>
+</define>
+<Body a=(c ? k + c : "")/>

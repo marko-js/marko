@@ -43,11 +43,11 @@ const $setup__script = _script("__tests__/tags/list.marko_0", ($scope) => {
 	});
 });
 function $setup$1($scope) {
-	$setup__script($scope);
 	$items($scope, [{
 		id: "1",
 		label: "one"
 	}]);
+	$setup__script($scope);
 }
 const $input$1 = ($scope, input) => $input_row($scope, input.row);
 const $input_row = /*@__PURE__*/ _fill_const("__tests__/tags/list.marko_fill0", "input_row", $for_content__input_row);

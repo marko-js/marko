@@ -32,9 +32,9 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$open($scope, false);
-	$setup__script($scope);
 	$Panel($scope, { content: $Panel_content($scope) });
 	$Other($scope, { content: $Other_content($scope) });
+	$setup__script($scope);
 }
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
 	$Panel_content__tag_input_label($scope["#childScope/0"], $scope.input_label);

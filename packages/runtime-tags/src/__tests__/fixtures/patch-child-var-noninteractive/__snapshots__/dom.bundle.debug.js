@@ -9,8 +9,8 @@ const $setup__script = _script("__tests__/tags/kid.marko_0", ($scope) => _on($sc
 	$c($scope, +$scope.c + 1);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$c($scope, 1);
+	$setup__script($scope);
 }
 var kid_default = /*@__PURE__*/ _template("__tests__/tags/kid.marko", $template$1, $walks$1, /*@__PURE__*/ _return_setup($setup$1));
 

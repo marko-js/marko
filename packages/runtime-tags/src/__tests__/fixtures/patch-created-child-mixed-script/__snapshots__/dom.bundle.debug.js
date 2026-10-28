@@ -26,8 +26,8 @@ const $setup__script = _script("__tests__/tags/child/index.marko_0", ($scope) =>
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$n($scope, 0);
+	$setup__script($scope);
 }
 const $input_x = /*@__PURE__*/ _const("input_x", ($scope) => {
 	$input_x__OR__n($scope);

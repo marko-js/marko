@@ -14,8 +14,8 @@ const $setup__script = _script("__tests__/tags/list.marko_0", ($scope) => _on($s
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input_onPick__script = _script("__tests__/tags/list.marko_0_input_onPick#5", ($scope) => _on($scope["#button/1"], "click", $scope.input_onPick));
 const $input_onPick = /*@__PURE__*/ _const("input_onPick", $input_onPick__script);

@@ -2,15 +2,14 @@
 const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 _shells({
-	b1: /*@__PURE__*/ ((_w0, _w1) => `b1;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
-	b: /*@__PURE__*/ (() => `b;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)(),
-	b0: "b0,<p><b>yes</b></p>"
+	b0: /*@__PURE__*/ ((_w0, _w1) => `b0;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
+	b: /*@__PURE__*/ (() => `b !;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)()
 });
 var card_default = _template("b", (input) => {
-	_scope_reason();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = input.n;
-	const Panel = { content: _content("b1", ({ open }) => {
+	const Panel = { content: _content("b0", ({ open }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__open = _write_guard($scope1_reason, 0), $wi__open = _write_if($scope1_reason, 0);
 		_if(() => {
@@ -20,12 +19,14 @@ var card_default = _template("b", (input) => {
 				$wi__open && _scope($scope2_id, {});
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $wg__open, 1, 0, 0, ["b0"], $scope1_reason, 0);
+		}, $scope1_id, "a", $wg__open, $wg__open, 0, 0, 1);
 		$wi__open && _scope($scope1_id, {});
 	}, $scope0_id, 1) };
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({ open: n });
 	_patch_child_end();
+	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", n, 1);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 });
 

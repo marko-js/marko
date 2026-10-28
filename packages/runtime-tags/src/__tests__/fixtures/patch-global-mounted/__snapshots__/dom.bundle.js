@@ -7,9 +7,9 @@ const $setup__script$1 = _script("b2", ($scope) => _on($scope.a, "click", functi
 	$count($scope, +$scope.c + 1);
 }));
 function $setup($scope) {
+	$count($scope, 0);
 	$setup__$global($scope);
 	$setup__script$1($scope);
-	$count($scope, 0);
 }
 var badge_default = /*@__PURE__*/ _template("b", $template, $walks, $setup);
 

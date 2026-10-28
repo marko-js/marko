@@ -6,8 +6,8 @@ const $setup__script = _script("__tests__/card.marko_0", ($scope) => _on($scope[
 	$c($scope, +$scope.c + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$c($scope, 0);
+	$setup__script($scope);
 }
 const $input_user_name = ($scope, input_user_name) => _text($scope["#text/1"], input_user_name);
 const $input = ($scope, input) => $input_user($scope, input.user);

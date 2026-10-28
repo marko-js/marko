@@ -16,7 +16,7 @@
     },
     "child.mjs": {
       "min": 727,
-      "brotli": 423
+      "brotli": 421
     },
     "v:child.marko.setup.mjs": {
       "min": 77,

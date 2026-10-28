@@ -9,8 +9,8 @@ const $setup__script = _script("__tests__/tags/tagged/index.marko_0", ($scope) =
 	else window.shared = $scope.input_tag;
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input_id = ($scope, input_id) => _attr($scope["#button/0"], "id", input_id);
 const $input_tag_name = ($scope, input_tag_name) => _text($scope["#text/1"], input_tag_name);

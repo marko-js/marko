@@ -9,21 +9,21 @@ const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.mark
 })));
 const $if_content__k = /*@__PURE__*/ _const("k");
 const $if_content__y__script = _script("__tests__/template.marko_1_y#6", ($scope) => _el_read($scope["#span/0"]).dataset.y = String($scope.y));
-const $if_content__y = /*@__PURE__*/ _let("y/6", ($scope) => {
-	$if_content__y__script($scope);
+const $if_content__y = _fill_resume("__tests__/template.marko_fill2", /*@__PURE__*/ _let("y/6", ($scope) => {
 	$if_content__k($scope, $scope.y + 1);
-});
+	$if_content__y__script($scope);
+}));
 const $if_content__x = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "x/4", ($scope) => {
-	$if_content__y($scope, $scope.x);
 	$if_content__input_a__OR__x($scope);
-});
+	$if_content__y($scope, $scope.x);
+}, $if_content__input_a__OR__x);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
 	$if_content__x($scope, $scope.k + 1);
 }));
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);
-	$if_content__setup__script($scope);
 	$if_content__x($scope, 1);
+	$if_content__setup__script($scope);
 };
 const $if = /*@__PURE__*/ _if("#text/0", "<span> </span><button> </button>", " D l D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

@@ -1,0 +1,7 @@
+<let/show=input.show/>
+<label onHide() { show = false }/>
+<if=show>
+  <await|value|=input.promise>
+    <em>${value}</em>
+  </await>
+</if>

@@ -23,8 +23,8 @@ const $await_content__b = /*@__PURE__*/ _let(8, ($scope) => {
 });
 const $await_content__a = /*@__PURE__*/ _let(7, ($scope) => $await_content__b($scope, $scope.h));
 const $await_content__x = ($scope, x) => {
-	$await_content__a($scope, x);
 	$input_label($scope.e, x);
+	$await_content__a($scope, x);
 };
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);

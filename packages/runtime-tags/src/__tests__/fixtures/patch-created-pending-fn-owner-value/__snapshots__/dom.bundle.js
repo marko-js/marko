@@ -8,8 +8,8 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 	$open($scope, !$scope.f);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input_fn = /*@__PURE__*/ _const(4, $input_fn__OR__open);
 

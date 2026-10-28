@@ -9,8 +9,8 @@ const $setup__script$1 = _script("__tests__/tags/label-view.marko_0", ($scope) =
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$open($scope, true);
+	$setup__script$1($scope);
 }
 const $get = /*@__PURE__*/ _fill_const("__tests__/tags/label-view.marko_fill4", "get", $if_content__get);
 const $input_flag__OR__input_a__OR__input_b = /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill2", "input_b", /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill1", "input_a", /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill0", "input_flag", /*@__PURE__*/ _or_resume("__tests__/tags/label-view.marko_0_input_flag#4_input_a#5_input_b#6/init", 7, ($scope) => $get($scope, $scope.input_flag ? $scope.input_a : $scope.input_b), 2))));

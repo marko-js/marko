@@ -6,8 +6,8 @@ const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($
 	$shown($scope, $scope.input.fn());
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$shown($scope, "none");
+	$setup__script($scope);
 }
 const $input_label$1 = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input$1 = /*@__PURE__*/ _const("input", ($scope) => $input_label$1($scope, $scope.input.label));

@@ -9,8 +9,8 @@ const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($s
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input$1 = /*@__PURE__*/ _fill_const("__tests__/tags/card.marko_fill0", "input", $if_content__input);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, $setup$1, $input$1);

@@ -18,8 +18,8 @@ const $Outer_content__setup__script = _script("__tests__/template.marko_1", ($sc
 const $Outer_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope;
 	$Inner_content__setup($scope["#childScope/0"]);
-	$Outer_content__setup__script($scope);
 	$Outer_content__count($scope, 0);
+	$Outer_content__setup__script($scope);
 };
 const $Outer_content__$params = ($scope, $params2) => $Outer_content__value($scope, $params2[0].value);
 const $Outer_content__value__closure = /*@__PURE__*/ _closure($Inner_content__value);

@@ -45,8 +45,8 @@ function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_variant($scope["#childScope/0"]);
 	$input_class($scope["#childScope/0"]);
-	$setup__script($scope);
 	$w($scope, 40);
+	$setup__script($scope);
 }
 var route_bar_default = /*@__PURE__*/ _template("__tests__/tags/route-bar.marko", $template, $walks, $setup);
 

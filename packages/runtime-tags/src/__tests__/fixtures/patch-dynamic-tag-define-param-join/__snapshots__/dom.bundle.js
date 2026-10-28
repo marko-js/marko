@@ -13,8 +13,8 @@ const $Outer_content__setup__script = _script("a3", ($scope) => _on($scope.b, "c
 const $Outer_content__setup = ($scope) => {
 	$scope.a._ = $scope;
 	$Inner_content__setup($scope.a);
-	$Outer_content__setup__script($scope);
 	$Outer_content__count($scope, 0);
+	$Outer_content__setup__script($scope);
 };
 const $Outer_content__$params = ($scope, $params2) => $Outer_content__value($scope, $params2[0].value);
 const $Outer_content__value = /*@__PURE__*/ _fill_const("a4", 4, /* @__PURE__ */ _closure($Inner_content__value));

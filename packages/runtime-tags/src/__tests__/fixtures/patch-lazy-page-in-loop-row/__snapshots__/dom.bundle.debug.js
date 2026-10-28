@@ -6,8 +6,8 @@ const $setup__script = _script("__tests__/page.marko_0", ($scope) => _on($scope[
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input_n = ($scope, input_n) => _text($scope["#text/1"], input_n);
 const $input = ($scope, input) => $input_n($scope, input.n);

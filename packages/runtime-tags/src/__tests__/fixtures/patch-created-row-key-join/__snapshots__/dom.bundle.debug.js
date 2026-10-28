@@ -19,8 +19,8 @@ const $for_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1"
 const $for_content__m = /*@__PURE__*/ _let("m/3");
 const $for_content__setup = ($scope) => {
 	$for_content__input_show._($scope);
-	$for_content__m($scope, 1);
 	$for_content__n($scope, 0);
+	$for_content__m($scope, 1);
 };
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li></li>", " ", $for_content__setup);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, "id"]);

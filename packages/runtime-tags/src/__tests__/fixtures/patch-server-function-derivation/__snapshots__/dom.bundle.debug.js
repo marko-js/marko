@@ -51,9 +51,9 @@ const $setup__script = _script("__tests__/tags/panel.marko_0", ($scope) => {
 	});
 });
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
 	$open($scope, false);
+	$setup__script($scope);
 	$setup__$global_data($scope);
 }
 const $pending_length = /*@__PURE__*/ _fill_const("__tests__/tags/panel.marko_fill1", "pending_length", $if_content__pending_length);

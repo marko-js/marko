@@ -25,8 +25,8 @@ const $setup__script$1 = _script("__tests__/tags/toggle.marko_0", ($scope) => _o
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$open($scope, false);
+	$setup__script$1($scope);
 }
 const $input_user_bio = /*@__PURE__*/ _const("input_user_bio", $input_user_bio__OR__input_user_name__OR__open);
 const $input_user_name = /*@__PURE__*/ _const("input_user_name", $input_user_bio__OR__input_user_name__OR__open);

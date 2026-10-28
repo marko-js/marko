@@ -3,17 +3,19 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $await_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_1_input_label#0:4/init", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe"));
 const $await_content__setup = $await_content__input_label;
+_fill_run("__tests__/tags/show-await.marko_fill1", "a", ($scope) => $await_content__a_v($scope, $scope.a?.v));
 const $await_content__a = /*@__PURE__*/ _let("a/6", ($scope) => {
 	$await_content__a_v($scope, $scope.a?.v);
 	$await_content__b__OR__a($scope);
 });
-const $await_content__b__OR__a = /*@__PURE__*/ _or_resume("__tests__/tags/show-await.marko_1_b#5_a#6/init", 7, ($scope) => $await_content__a($scope, {
+const $await_content__b__OR__a = /*@__PURE__*/ _or(7, ($scope) => $await_content__a($scope, {
 	v: $scope.b,
 	self: $a($scope)
 }));
+_fill_run("__tests__/tags/show-await.marko_fill0", "b", ($scope) => _text($scope["#text/0"], $scope.b));
 const $await_content__b = /*@__PURE__*/ _let("b/5", ($scope) => {
-	$await_content__b__OR__a($scope);
 	_text($scope["#text/0"], $scope.b);
+	$await_content__b__OR__a($scope);
 });
 const $await_content__x = $await_content__b;
 const $await_content__a_v__script = _script("__tests__/tags/show-await.marko_1_a_v#8", ($scope) => _on($scope["#button/2"], "click", function() {

@@ -53,8 +53,8 @@ const $setup__script = _script("__tests__/tags/shape.marko_0", ($scope) => _on($
 	$s($scope, +$scope.s + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$s($scope, 0);
+	$setup__script($scope);
 }
 const $for = /*@__PURE__*/ _for_in("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_obj = ($scope, input_obj) => $for($scope, [input_obj]);

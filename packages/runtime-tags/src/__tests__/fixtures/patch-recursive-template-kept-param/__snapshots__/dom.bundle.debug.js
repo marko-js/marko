@@ -22,8 +22,8 @@ const $setup__script = _script("__tests__/tags/keeper.marko_0", ($scope) => _on(
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input$1 = ($scope, input) => $input_content$1($scope, input.content);
 const $input_content$1 = /*@__PURE__*/ _fill_const("__tests__/tags/keeper.marko_fill0", "input_content", $if_content__input_content);

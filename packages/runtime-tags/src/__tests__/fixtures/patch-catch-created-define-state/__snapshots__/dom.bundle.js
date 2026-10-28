@@ -6,8 +6,8 @@ const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function
 	$count($scope, +$scope.g + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input_label = ($scope, input_label) => _text($scope.b, input_label);
 
@@ -33,8 +33,8 @@ const $OwnBody_content__setup__script = _script("c7", ($scope) => _on($scope.a, 
 	$OwnBody_content__count($scope, +$scope.c + 1);
 }));
 const $OwnBody_content__setup = ($scope) => {
-	$OwnBody_content__setup__script($scope);
 	$OwnBody_content__count($scope, 0);
+	$OwnBody_content__setup__script($scope);
 };
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
 const $catch_content__setup = ($scope) => {
@@ -72,8 +72,8 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 	$count($scope, +$scope.g + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input_label = ($scope, input_label) => _text($scope.b, input_label);
 

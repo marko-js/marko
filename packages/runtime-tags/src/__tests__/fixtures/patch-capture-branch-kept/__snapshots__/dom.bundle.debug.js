@@ -65,8 +65,8 @@ const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($
 	$items($scope, [...$scope.items, $scope.items.length + 1]);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$items($scope, [1, 2]);
+	$setup__script($scope);
 }
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}`)($template$2, $template$1), /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&`)("b%c", " b"), $if_content__setup);
 const $input_on = ($scope, input_on) => $if($scope, input_on ? 0 : 1);

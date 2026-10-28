@@ -1,0 +1,10 @@
+<let/show=input.show/>
+<label onHide() { show = false }/>
+<if=show>
+  <try>
+    <await|value|=input.promise>
+      <em>${value}</em>
+    </await>
+    <@placeholder><p>loading</p></@placeholder>
+  </try>
+</if>

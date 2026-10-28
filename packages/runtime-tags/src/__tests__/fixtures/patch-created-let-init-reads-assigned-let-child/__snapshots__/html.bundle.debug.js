@@ -49,6 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope1_id, "__tests__/template.marko_1");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_a#0:4/init");
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", x, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill2", y, 1);
 			_scope($scope1_id, {
 				x: _write_if($scope0_reason, 1) && x,
 				_: _scope_with_id($scope0_id),

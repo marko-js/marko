@@ -25,7 +25,7 @@ var child_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a: "a !;b%;<!><!><!>",
-	a3: /*@__PURE__*/ (() => `a3${_shell_marker(_shell_setup([["a6"], ["a0"]], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}& D l`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<button> </button>`)($template)}`)()
+	a4: /*@__PURE__*/ (() => `a4${_shell_marker(_shell_setup([["a7"], ["a0"]], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}& D l`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<button> </button>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
@@ -46,6 +46,7 @@ var template_default = _template("a", (input) => {
 			_script($scope1_id, "a0");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a1");
 			_patch_fill($scope1_id, "va2", x, 1);
+			_patch_fill($scope1_id, "va3", y, 1);
 			_scope($scope1_id, {
 				d: _write_if($scope0_reason, 1) && x,
 				_: _scope_with_id($scope0_id),
@@ -53,6 +54,6 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a3"], $scope0_reason, 0);
-	_scope($scope0_id, { e: input.a }) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va4", input.a, !_server_guard($scope0_reason, 1));
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a4"], $scope0_reason, 0);
+	_scope($scope0_id, { e: input.a }) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va5", input.a, !_server_guard($scope0_reason, 1));
 }, 1);

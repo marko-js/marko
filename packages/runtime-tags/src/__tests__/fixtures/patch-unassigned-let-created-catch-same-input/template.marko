@@ -1,0 +1,10 @@
+static function boom(): never {
+  throw new Error("boom");
+}
+<let/x=input.v/>
+<try>
+  <p>${input.show ? boom() : "ok"}</p>
+  <@catch|err|>
+    <b>${x}</b>
+  </@catch>
+</try>

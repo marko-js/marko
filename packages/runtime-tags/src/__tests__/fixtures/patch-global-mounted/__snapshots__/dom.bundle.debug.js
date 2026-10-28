@@ -9,9 +9,9 @@ const $setup__script$1 = _script("__tests__/tags/badge.marko_0", ($scope) => _on
 	$count($scope, +$scope.count + 1);
 }));
 function $setup$1($scope) {
+	$count($scope, 0);
 	$setup__$global($scope);
 	$setup__script$1($scope);
-	$count($scope, 0);
 }
 var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template$1, $walks$1, $setup$1);
 

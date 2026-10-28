@@ -19,8 +19,8 @@ const $wrap_content__setup__script = _script("__tests__/template.marko_2", ($sco
 }));
 const $wrap_content__setup = ($scope) => {
 	$wrap_content__input_label($scope);
-	$wrap_content__setup__script($scope);
 	$wrap_content__n($scope, 0);
+	$wrap_content__setup__script($scope);
 };
 const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<button><!> <!></button>", " D%c%", $wrap_content__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $wrap_content($scope));

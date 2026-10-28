@@ -14,8 +14,8 @@ const $setup__script = _script("__tests__/tags/list.marko_0", ($scope) => _on($s
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);

@@ -18,12 +18,12 @@ const $List_content__setup__script = _script("__tests__/template.marko_1", ($sco
 	$List_content__rows($scope, [...$scope.rows, { id: $scope.rows.length + 1 }]);
 }));
 const $List_content__setup = ($scope) => {
-	$List_content__setup__script($scope);
 	$List_content__rows($scope, [
 		{ id: 1 },
 		{ id: 2 },
 		{ id: 3 }
 	]);
+	$List_content__setup__script($scope);
 };
 const $List_content__tag_input_selected = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "selected", $for_content__selected);
 const $List_content__tag_input_flag = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "flag", $for_content__flag);

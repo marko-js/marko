@@ -32,8 +32,8 @@ const $setup__script = _script("__tests__/tags/sub.marko_0", ($scope) => {
 	document.body.dataset.ok = "1";
 });
 function $setup$1($scope) {
-	$setup__script($scope);
 	$g($scope, 10);
+	$setup__script($scope);
 }
 const $for = /*@__PURE__*/ _for_of("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, "k"]);

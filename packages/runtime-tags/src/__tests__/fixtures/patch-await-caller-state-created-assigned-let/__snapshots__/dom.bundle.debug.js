@@ -1,9 +1,9 @@
 // tags/show-await.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $await_content__f = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill1", "f/9", ($scope) => _text($scope["#text/1"], $scope.f));
-const $await_content__a__OR__l = /*@__PURE__*/ _or_resume("__tests__/tags/show-await.marko_1_a#5_l#6/init", 7, ($scope) => $await_content__f($scope, $scope.a + ":" + $scope.l));
-const $await_content__l = /*@__PURE__*/ _let("l/6", $await_content__a__OR__l);
+const $await_content__f = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill3", "f/9", ($scope) => _text($scope["#text/1"], $scope.f));
+const $await_content__a__OR__l = /*@__PURE__*/ _or(7, ($scope) => $await_content__f($scope, $scope.a + ":" + $scope.l));
+const $await_content__l = _fill_resume("__tests__/tags/show-await.marko_fill1", /*@__PURE__*/ _let("l/6", $await_content__a__OR__l));
 const $await_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_1_input_label#0:4/init", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $await_content__l($scope, $scope._.input_label), 0, "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe"));
 const $await_content__setup__script = _script("__tests__/tags/show-await.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
 	$await_content__e($scope, $scope.e + "?");
@@ -13,11 +13,11 @@ const $await_content__setup = ($scope) => {
 	$await_content__input_label($scope);
 	$await_content__setup__script($scope);
 };
-const $await_content__e = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill0", "e/8", ($scope) => _text($scope["#text/0"], $scope.e));
-const $await_content__a = /*@__PURE__*/ _let("a/5", ($scope) => {
+const $await_content__e = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill2", "e/8", ($scope) => _text($scope["#text/0"], $scope.e));
+const $await_content__a = _fill_resume("__tests__/tags/show-await.marko_fill0", /*@__PURE__*/ _let("a/5", ($scope) => {
 	$await_content__e($scope, $scope.a);
 	$await_content__a__OR__l($scope);
-});
+}));
 const $await_content__x = $await_content__a;
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p class=v><!>|<!></p><button class=e>e</button>", "D%c%l ", $await_content__setup);

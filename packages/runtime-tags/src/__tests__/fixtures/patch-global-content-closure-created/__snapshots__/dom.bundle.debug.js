@@ -26,8 +26,8 @@ const $setup__script$1 = _script("__tests__/tags/card.marko_0", ($scope) => _on(
 }));
 function $setup$1($scope) {
 	$input_body($scope["#childScope/0"], attrTag({ content: $body_content($scope) }));
-	$setup__script$1($scope);
 	$count($scope, 0);
+	$setup__script$1($scope);
 }
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, $setup$1);
 

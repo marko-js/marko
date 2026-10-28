@@ -10,8 +10,8 @@ const $setup__script$1 = _script("__tests__/tags/toggle.marko_0", ($scope) => _o
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$open($scope, false);
+	$setup__script$1($scope);
 }
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
 const $input_content = /*@__PURE__*/ _fill_const("__tests__/tags/toggle.marko_fill0", "input_content", $if_content__input_content);

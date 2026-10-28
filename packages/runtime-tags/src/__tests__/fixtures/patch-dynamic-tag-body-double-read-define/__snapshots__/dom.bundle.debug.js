@@ -10,8 +10,8 @@ const $Wrap_content__setup__script = _script("__tests__/template.marko_2", ($sco
 	$Wrap_content__open($scope, !$scope.open);
 }));
 const $Wrap_content__setup = ($scope) => {
-	$Wrap_content__setup__script($scope);
 	$Wrap_content__open($scope, false);
+	$Wrap_content__setup__script($scope);
 };
 const $Wrap_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $Wrap_content__content = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "content", ($scope) => {

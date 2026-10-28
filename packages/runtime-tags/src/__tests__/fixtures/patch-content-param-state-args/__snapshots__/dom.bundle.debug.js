@@ -8,8 +8,8 @@ const $setup__script = _script("__tests__/tags/wrapper.marko_0", ($scope) => _on
 	$n($scope, +$scope.n + 1);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$n($scope, 0);
+	$setup__script($scope);
 }
 const $input_content = /*@__PURE__*/ _const("input_content", $input_content__OR__n);
 const $input$1 = ($scope, input) => $input_content($scope, input.content);

@@ -16,8 +16,8 @@ const $setup__script$1 = _script("b2", ($scope) => _on($scope.b, "click", functi
 }));
 function $setup($scope) {
 	$input_body($scope.a, attrTag({ content: $body_content($scope) }));
-	$setup__script$1($scope);
 	$count($scope, 0);
+	$setup__script$1($scope);
 }
 
 // template.marko

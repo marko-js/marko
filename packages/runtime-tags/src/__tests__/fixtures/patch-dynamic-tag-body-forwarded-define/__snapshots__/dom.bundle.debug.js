@@ -10,8 +10,8 @@ const $Wrap_content__setup__script = _script("__tests__/tags/fwd.marko_2", ($sco
 	$Wrap_content__open($scope, !$scope.open);
 }));
 const $Wrap_content__setup = ($scope) => {
-	$Wrap_content__setup__script($scope);
 	$Wrap_content__open($scope, true);
+	$Wrap_content__setup__script($scope);
 };
 const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__content($scope, $params2[0].content);
 const $Wrap_content__content = /*@__PURE__*/ _fill_const("__tests__/tags/fwd.marko_fill1", "content", $if_content__content);

@@ -27,8 +27,8 @@ const $await_content__setup__script = _script("__tests__/tags/page.marko_1", ($s
 }));
 const $await_content__setup = ($scope) => {
 	$await_content__likes($scope);
-	$await_content__setup__script($scope);
 	$await_content__open($scope, false);
+	$await_content__setup__script($scope);
 };
 const $await_content__v = ($scope, v) => _text($scope["#text/1"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);

@@ -25,18 +25,18 @@ const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.mark
 	$if_content__input_a__OR__x($scope);
 	$input_a$1($scope["#childScope/0"], $scope._.input_a);
 })));
-const $if_content__y = /*@__PURE__*/ _let("y/5", ($scope) => $input_v($scope["#childScope/0"], $scope.y));
+const $if_content__y = _fill_resume("__tests__/template.marko_fill2", /*@__PURE__*/ _let("y/5", ($scope) => $input_v($scope["#childScope/0"], $scope.y)));
 const $if_content__x = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "x/3", ($scope) => {
-	$if_content__y($scope, $scope.x);
 	$if_content__input_a__OR__x($scope);
-});
+	$if_content__y($scope, $scope.x);
+}, $if_content__input_a__OR__x);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__x($scope, 2);
 }));
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);
-	$if_content__setup__script($scope);
 	$if_content__x($scope, 1);
+	$if_content__setup__script($scope);
 };
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<button> </button>`)($template$1), /*@__PURE__*/ ((_w0) => `/${_w0}& D l`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

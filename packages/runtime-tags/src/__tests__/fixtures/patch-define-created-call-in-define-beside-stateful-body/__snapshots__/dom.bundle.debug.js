@@ -46,8 +46,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$open($scope, false);
-	$setup__script($scope);
 	$Inner($scope, { content: $Inner_content($scope) });
+	$setup__script($scope);
 }
 const $input_open = ($scope, input_open) => $Outer_content__tag_input_isOpen($scope["#childScope/0"], input_open);
 const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", ($scope) => {

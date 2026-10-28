@@ -48,8 +48,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 function $setup($scope) {
 	$Wrap_content2__tag_input_content($scope["#childScope/0"], $Wrap_content($scope));
 	$open($scope, false);
-	$setup__script($scope);
 	$Panel($scope, { content: $Panel_content($scope) });
+	$setup__script($scope);
 }
 const $input_show = ($scope, input_show) => $Wrap_content2__show($scope["#childScope/0"], input_show);
 const $input_other = /*@__PURE__*/ _const("input_other", $input_other__OR__Panel);

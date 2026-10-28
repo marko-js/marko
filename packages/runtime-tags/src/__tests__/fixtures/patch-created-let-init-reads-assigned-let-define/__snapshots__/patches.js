@@ -1,5 +1,5 @@
 // PATCH
-[`a6 a10!a3;b/D l&D l D l;<!><span> </span><p> </p><button> </button>`, {
+[`a7 a11!a3;b/D l&D l D l;<!><span> </span><p> </p><button> </button>`, {
   ba: [{
     ca: {
       s: {
@@ -11,10 +11,11 @@
     },
     tb: "b",
     o: {
-      va5: 1
+      va5: 1,
+      va6: 1
     }
-  }, "a6"],
-  va7: "b"
+  }, "a7"],
+  va8: "b"
 }]
 ;BgI
 
@@ -31,8 +32,9 @@
     },
     tb: "c",
     o: {
-      va5: 1
+      va5: 1,
+      va6: 1
     }
-  }, "a6"],
-  va7: "c"
+  }, "a7"],
+  va8: "c"
 }

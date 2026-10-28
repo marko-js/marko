@@ -22,8 +22,8 @@ const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope
 }));
 const $if_content__setup = ($scope) => {
 	$load_X_setup($scope, $scope["#childScope/3"], $scope["#text/2"]);
-	$if_content__setup__script($scope);
 	$if_content__n($scope, 0);
+	$if_content__setup__script($scope);
 };
 const $if = /*@__PURE__*/ _if("#main/0", "<button> </button><!><!>", " D l%/&", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

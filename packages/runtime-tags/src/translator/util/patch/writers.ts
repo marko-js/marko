@@ -45,6 +45,7 @@ import {
 import {
   getReferencedBindings,
   getReferencedBindingsInFunction,
+  hasResumableAssignment,
   isReferencedExtra,
   type Read,
   type ReferencedExtra,
@@ -643,11 +644,15 @@ function buildLetChangeWrites(
 // read, whole or by member: one value its signals derive where they render it.
 function buildLetSeeds(section: Section, binding: Binding) {
   const setup = t.numericLiteral(1);
-  const guard = getCallerGroupGuard(
-    section,
-    "_filled_guard",
-    getStateInitSources(binding),
-  );
+  const sources = getStateInitSources(binding);
+  // One no resumed assignment reaches seeds unless the client sets its init: a
+  // call-site constant reaches it by no other channel.
+  const clientGuard =
+    !hasResumableAssignment(binding) &&
+    getCallerGroupGuard(section, "_client_guard", sources);
+  const guard = clientGuard
+    ? t.unaryExpression("!", clientGuard)
+    : getCallerGroupGuard(section, "_filled_guard", sources);
   if (seedsLetWhole(binding)) {
     return [
       andGuard(guard, buildPatchFill(section, binding, undefined, setup)),

@@ -1,0 +1,6 @@
+<let/x=input.v/>
+<let/seen=""/>
+<for|i| of=input.items>
+  <button onClick() { seen = x + i }>${i}</button>
+</for>
+<p>${seen}</p>

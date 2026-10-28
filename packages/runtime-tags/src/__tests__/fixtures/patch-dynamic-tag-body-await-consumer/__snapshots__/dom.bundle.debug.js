@@ -22,8 +22,8 @@ const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($s
 }));
 function $setup$1($scope) {
 	$await_content($scope);
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<!><!><!>", "b%", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);

@@ -23,8 +23,8 @@ const $setup__script$1 = _script("__tests__/tags/panel.marko_0", ($scope) => _on
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$open($scope, true);
+	$setup__script$1($scope);
 }
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Info_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Info_content__walks), $if_content2__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

@@ -25,8 +25,8 @@ const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($
 	$open($scope, !$scope.open);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_v($scope, input.v);
 const $input_v = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill0", "input_v", $if_content__input_v);

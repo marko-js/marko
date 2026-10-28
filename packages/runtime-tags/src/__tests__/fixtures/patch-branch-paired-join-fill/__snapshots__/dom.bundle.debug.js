@@ -28,8 +28,8 @@ const $setup__script$1 = _script("__tests__/tags/panel.marko_0", ($scope) => _on
 	$count($scope, +$scope.count + 1);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$count($scope, 0);
+	$setup__script$1($scope);
 }
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p><p> </p><em> </em>", "D lD lD ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

@@ -38,8 +38,8 @@ const $setup__script = _script("__tests__/page-a.marko_0", ($scope) => _on($scop
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 var page_a_default = /*@__PURE__*/ _template("__tests__/page-a.marko", $template, $walks, $setup);
 
@@ -51,8 +51,8 @@ const $setup__script = _script("__tests__/page-b.marko_0", ($scope) => _on($scop
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 var page_b_default = /*@__PURE__*/ _template("__tests__/page-b.marko", $template, $walks, $setup);
 

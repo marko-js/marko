@@ -1,33 +1,27 @@
 // PATCH
-[`b;b%;<!><!><!>`, `b0;D ;<p> </p>`, {
+[`b b2;b%;<!><!><!>`, {
   fc: "b",
   cAc: {
-    pa: "b0",
-    cAa: {
-      s: {
-        ta: 2
-      }
+    o: {
+      vb0: 2
     }
   }
 }]
-;CQY
+;BgE
 
-// PATCH holding CQY
+// PATCH holding BgE
 {
   fc: [">div", 0, {
     n: 2
   }]
 }
 
-// PATCH holding CQY
+// PATCH holding BgE
 {
   fc: "b",
   cAc: {
-    pa: "b0",
-    cAa: {
-      s: {
-        ta: 3
-      }
+    o: {
+      vb0: 3
     }
   }
 }

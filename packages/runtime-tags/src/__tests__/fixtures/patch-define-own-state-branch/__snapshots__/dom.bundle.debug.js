@@ -11,8 +11,8 @@ const $Panel_content__setup__script = _script("__tests__/template.marko_1", ($sc
 	$Panel_content__open($scope, !$scope.open);
 }));
 const $Panel_content__setup = ($scope) => {
-	$Panel_content__setup__script($scope);
 	$Panel_content__open($scope, false);
+	$Panel_content__setup__script($scope);
 };
 const $Panel_content__tag_input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "label", $if_content__label);
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);

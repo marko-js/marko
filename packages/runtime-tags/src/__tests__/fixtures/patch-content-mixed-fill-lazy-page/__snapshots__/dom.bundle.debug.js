@@ -41,8 +41,8 @@ const $setup__script$1 = _script("__tests__/tags/counter.marko_0", ($scope) => _
 	$tick($scope, +$scope.tick + 1);
 }));
 function $setup$2($scope) {
-	$setup__script$1($scope);
 	$tick($scope, 0);
+	$setup__script$1($scope);
 }
 const $input_base$1 = /*@__PURE__*/ _const("input_base", $input_base__OR__tick);
 const $input$2 = ($scope, input) => $input_base$1($scope, input.base);

@@ -30,8 +30,8 @@ const $content_content__setup__script = _script("__tests__/template.marko_2", ($
 	$content_content__open($scope, !$scope.open);
 }));
 const $content_content__setup = ($scope) => {
-	$content_content__setup__script($scope);
 	$content_content__open($scope, true);
+	$content_content__setup__script($scope);
 };
 const $content_content__$params = ($scope, $params2) => $content_content__label($scope, $params2[0].label);
 const $content_content__label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "label", $if_content2__label);

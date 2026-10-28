@@ -19,8 +19,8 @@ const $wrap_content__setup__script = _script("a0", ($scope) => _on($scope.a, "cl
 	$wrap_content__open($scope, !$scope.f);
 }));
 const $wrap_content__setup = ($scope) => {
-	$wrap_content__setup__script($scope);
 	$wrap_content__open($scope, true);
+	$wrap_content__setup__script($scope);
 };
 const $wrap_content__$params = ($scope, $params2) => $wrap_content__content($scope, $params2[0].content);
 const $wrap_content__content = /*@__PURE__*/ _fill_const("a1", 4, $if_content__content);

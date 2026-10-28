@@ -49,8 +49,8 @@ const $setup__script = _script("__tests__/tags/badge.marko_0", ($scope) => _on($
 	$seen($scope, +$scope.seen + 1);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$seen($scope, 0);
+	$setup__script($scope);
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);

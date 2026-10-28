@@ -38,8 +38,8 @@ const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($
 	$items($scope, [...$scope.items, $scope.items.length + 1]);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$items($scope, [1, 2]);
+	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_show($scope, input.show);
 const $input_show__closure = /*@__PURE__*/ _closure($item_content__input_show);

@@ -7,8 +7,8 @@ const $setup__script$1 = _script("b1", ($scope) => _on($scope.a, "click", functi
 	$open($scope, !$scope.c);
 }));
 function $setup($scope) {
-	$setup__script$1($scope);
 	$open($scope, false);
+	$setup__script$1($scope);
 }
 
 // template.marko

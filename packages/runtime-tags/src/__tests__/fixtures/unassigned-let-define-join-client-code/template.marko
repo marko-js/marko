@@ -1,0 +1,4 @@
+<let/uid=input.id/>
+<define/Row|{ n }|><p>${uid + "-" + n}</p></define>
+<Row n=input.name/>
+<let/n=0/><button onClick() { n++ }>${n}</button>

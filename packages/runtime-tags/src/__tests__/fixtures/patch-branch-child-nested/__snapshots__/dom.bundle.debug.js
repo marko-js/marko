@@ -35,8 +35,8 @@ const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($s
 	$open($scope, !$scope.open);
 }));
 function $setup($scope) {
-	$setup__script($scope);
 	$open($scope, false);
+	$setup__script($scope);
 }
 const $input_title = /*@__PURE__*/ _fill_const("__tests__/tags/card.marko_fill0", "input_title", ($scope) => {
 	$if_content__input_title($scope);

@@ -19,7 +19,7 @@
     },
     "lazy.mjs": {
       "min": 312,
-      "brotli": 204
+      "brotli": 207
     },
     "v:lazy.marko.setup.mjs": {
       "min": 94,

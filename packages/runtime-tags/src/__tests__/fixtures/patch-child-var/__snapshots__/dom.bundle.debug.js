@@ -10,8 +10,8 @@ const $setup__script$1 = _script("__tests__/tags/price-card.marko_0", ($scope) =
 	$qty($scope, +$scope.qty + 1);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$qty($scope, 1);
+	$setup__script$1($scope);
 }
 const $input_label$1 = /*@__PURE__*/ _const("input_label", $input_label__OR__qty);
 const $input$1 = ($scope, input) => $input_label$1($scope, input.label);

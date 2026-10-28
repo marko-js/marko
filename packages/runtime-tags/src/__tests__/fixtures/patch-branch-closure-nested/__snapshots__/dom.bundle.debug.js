@@ -12,8 +12,8 @@ const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope
 }));
 const $if_content__setup = ($scope) => {
 	$if_content__input_inner._($scope);
-	$if_content__setup__script($scope);
 	$if_content__count($scope, 0);
+	$if_content__setup__script($scope);
 };
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $if = /*@__PURE__*/ _if("#text/1", "<button>+</button><!><!>", " b%", $if_content__setup);

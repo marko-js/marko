@@ -37,7 +37,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let c = input.content;
 	_dynamic_tag($scope0_id, "#text/0", input.p ? keeper_default : "div", { content: c });
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill1", c, 1);
+	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill1", c, 1);
 	_scope($scope0_id, {
 		input_p: input.p,
 		c: _write_if($scope0_reason, 1) && c

@@ -12,8 +12,8 @@ const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($s
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$open($scope, true);
+	$setup__script($scope);
 }
 const $input_fn = /*@__PURE__*/ _const("input_fn", $input_fn__OR__open);
 const $input$1 = ($scope, input) => $input_fn($scope, input.fn);

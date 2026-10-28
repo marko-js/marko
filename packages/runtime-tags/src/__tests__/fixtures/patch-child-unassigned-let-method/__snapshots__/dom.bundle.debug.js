@@ -3,8 +3,8 @@ const $template$1 = "<p><!> (<!>)</p>";
 const $walks$1 = "D%c%l";
 const $setup$1 = ($_) => {};
 const $items = /*@__PURE__*/ _let("items/5", ($scope) => {
-	_text($scope["#text/0"], $scope.items.join(","));
 	$items_length($scope, $scope.items?.length);
+	_text($scope["#text/0"], $scope.items.join(","));
 });
 const $items_length = /*@__PURE__*/ _const("items_length", ($scope) => _text($scope["#text/1"], $scope.items_length));
 const $input_items = $items;

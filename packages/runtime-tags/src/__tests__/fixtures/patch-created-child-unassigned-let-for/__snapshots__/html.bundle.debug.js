@@ -2,19 +2,17 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = [[], []];
-_shells({
-	"__tests__/tags/card.marko": "__tests__/tags/card.marko;b%;<!><!><!>",
-	"__tests__/tags/card.marko_1*shell": "__tests__/tags/card.marko_1*shell;D ;<li> </li>"
-});
+_shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko !;b%;<!><!><!>" });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let items = input.items;
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "#text/0", item, 1, $cg__input_items << 1, 0)}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "#text/0", item)}</li>`);
 		_scope($scope1_id, {}, "__tests__/tags/card.marko", "2:2");
-	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/card.marko_1*shell", $cg__input_items << 1, 0);
+	}, 0, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
+	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", items, 1);
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 });
 

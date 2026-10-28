@@ -8,8 +8,8 @@ const $catch_content__setup__script = _script("b0", ($scope) => _on($scope.a, "c
 }));
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_label($scope);
-	$catch_content__setup__script($scope);
 	$catch_content__n($scope, 0);
+	$catch_content__setup__script($scope);
 };
 const $catch_content__err_message = /*@__PURE__*/ _const(5, $catch_content__input_label__OR__err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);

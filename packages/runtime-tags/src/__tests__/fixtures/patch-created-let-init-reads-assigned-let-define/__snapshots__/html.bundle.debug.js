@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, "__tests__/template.marko", "5:4", {
 					v: "5:18",
 					w: "5:21"
-				}) || _filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill2", w, !_server_guard($scope2_reason, 2));
+				}) || _filled_guard($scope2_reason, 2) && _client_guard($scope2_reason, 1) && _patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill3", w, !_server_guard($scope2_reason, 2));
 			}, $scope1_id, 1) };
 			_set_scope_reason(10);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
@@ -43,6 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope1_id, "__tests__/template.marko_1");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_a#0:4/init");
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", x, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill2", y, 1);
 			_scope($scope1_id, {
 				x: _write_if($scope0_reason, 1) && x,
 				_: _scope_with_id($scope0_id),

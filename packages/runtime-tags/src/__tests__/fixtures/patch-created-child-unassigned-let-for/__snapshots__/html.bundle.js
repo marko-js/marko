@@ -1,17 +1,15 @@
 // tags/card.marko
-_shells({
-	b: "b;b%;<!><!><!>",
-	b0: "b0;D ;<li> </li>"
-});
+_shells({ b: "b !;b%;<!><!><!>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let items = input.items;
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "a", item, 1, $cg__input_items << 1, 0)}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "a", item)}</li>`);
 		_scope($scope1_id, {});
-	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b0", $cg__input_items << 1, 0);
+	}, 0, $scope0_id, "a", 1, 1, 0, 0, 1);
+	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb0", items, 1);
 	_scope($scope0_id, {});
 });
 

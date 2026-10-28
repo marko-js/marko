@@ -10,8 +10,8 @@ const $setup__script$1 = _script("__tests__/tags/field.marko_0", ($scope) => _on
 	$count($scope, +$scope.count + 1);
 }));
 function $setup$1($scope) {
-	$setup__script$1($scope);
 	$count($scope, 0);
+	$setup__script$1($scope);
 	$uid($scope, _id($scope));
 }
 const $input_name = ($scope, input_name) => _text($scope["#text/1"], input_name);

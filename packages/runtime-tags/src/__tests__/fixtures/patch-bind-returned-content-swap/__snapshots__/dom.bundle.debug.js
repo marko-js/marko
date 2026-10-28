@@ -16,8 +16,8 @@ const $count__closure = /*@__PURE__*/ _closure($Content_content__count);
 const $count = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill1", "count/3", $count__closure);
 const $Content = /*@__PURE__*/ _const("Content", ($scope) => _return($scope, $scope.Content));
 function $setup$1($scope) {
-	$Content($scope, { content: $Content_content($scope) });
 	$count($scope, 0);
+	$Content($scope, { content: $Content_content($scope) });
 }
 const $input$1 = ($scope, input) => $input_label($scope, input.label);
 const $input_label__closure = /*@__PURE__*/ _closure($Content_content__input_label);

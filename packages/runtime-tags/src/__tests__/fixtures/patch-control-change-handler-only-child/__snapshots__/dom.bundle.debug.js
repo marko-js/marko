@@ -17,8 +17,8 @@ const $count = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill0", "coun
 });
 const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _attr_input_value_script($scope, "#input/1"));
 function $setup($scope) {
-	$setup__script($scope);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $input = ($scope, input) => $input_label($scope, input.label);

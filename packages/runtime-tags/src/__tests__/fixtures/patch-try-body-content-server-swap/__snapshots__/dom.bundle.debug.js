@@ -51,9 +51,9 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 function $setup($scope) {
 	$setup$1($scope["#childScope/2"]);
 	$count($scope, 0);
-	$setup__script($scope);
 	$A($scope, { content: $A_content($scope) });
 	$B($scope, { content: $B_content($scope) });
+	$setup__script($scope);
 }
 const $input_alt = /*@__PURE__*/ _const("input_alt", $input_alt__OR__A__OR__B);
 const $input = ($scope, input) => {

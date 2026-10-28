@@ -59,9 +59,9 @@ const $for_content__setup = ($scope) => {
 	$for_content__Card._($scope);
 	$Card_content__tag_input_content($scope["#childScope/2"], $Card_content2($scope));
 	$Card_content__label($scope["#childScope/2"], "direct");
+	$for_content__n($scope, 0);
 	$for_content__Label($scope, { content: $Label_content($scope) });
 	$for_content__setup__script($scope);
-	$for_content__n($scope, 0);
 };
 const $for_content__row_card = /*@__PURE__*/ _const("row_card", ($scope) => {
 	$for_content__Card__OR__row_card($scope);

@@ -27,11 +27,11 @@ const $open = /*@__PURE__*/ _fill_let("b15", 10, ($scope) => $if2($scope, $scope
 const $setup__script$1 = _script("b9", ($scope) => _on($scope.d, "click", function() {
 	$open($scope, !$scope.k);
 }));
+const $input_label__script = _script("b10", ($scope) => console.log("label", $scope.h));
 _fill_run("b12", 7, ($scope) => {
 	$if_content2__input_label($scope);
 	$input_label__script($scope);
 }, "b13");
-const $input_label__script = _script("b10", ($scope) => console.log("label", $scope.h));
 const $if = /*@__PURE__*/ _if(1, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 

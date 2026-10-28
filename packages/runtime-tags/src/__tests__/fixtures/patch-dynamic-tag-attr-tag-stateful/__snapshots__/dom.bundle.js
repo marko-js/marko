@@ -10,8 +10,8 @@ const $Wrap_content__setup__script = _script("a1", ($scope) => _on($scope.a, "cl
 	$Wrap_content__open($scope, !$scope.f);
 }));
 const $Wrap_content__setup = ($scope) => {
-	$Wrap_content__setup__script($scope);
 	$Wrap_content__open($scope, true);
+	$Wrap_content__setup__script($scope);
 };
 const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__item($scope, $params2[0].item);
 const $Wrap_content__item = /*@__PURE__*/ _fill_const("a2", 4, $if_content__item);

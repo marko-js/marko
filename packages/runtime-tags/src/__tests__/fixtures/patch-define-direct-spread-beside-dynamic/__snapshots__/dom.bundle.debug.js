@@ -28,8 +28,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$open($scope, false);
-	$setup__script($scope);
 	$Panel($scope, { content: $Panel_content($scope) });
+	$setup__script($scope);
 }
 const $input_show__OR__input_rest = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_rest", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(7, ($scope) => {
 	const $tag_input_spread = {

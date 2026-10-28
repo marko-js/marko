@@ -28,7 +28,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let c = input.content;
 	_dynamic_tag($scope0_id, "a", input.p ? keeper_default : "div", { content: c });
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", c, 1);
+	!_client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", c, 1);
 	_scope($scope0_id, {
 		e: input.p,
 		f: _write_if($scope0_reason, 1) && c

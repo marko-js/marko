@@ -10,8 +10,8 @@ const $setup__script$1 = _script("b0", ($scope) => _on($scope.d, "click", functi
 	$count($scope, +$scope.h + 1);
 }));
 function $setup($scope) {
-	$setup__script$1($scope);
 	$count($scope, 0);
+	$setup__script$1($scope);
 	$uid($scope, _id($scope));
 }
 const $input_name = ($scope, input_name) => _text($scope.b, input_name);

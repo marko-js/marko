@@ -6,8 +6,8 @@ const $setup__script = _script("__tests__/tags/counter.marko_0", ($scope) => _on
 	$c($scope, +$scope.c + 1);
 }));
 function $setup$1($scope) {
-	$setup__script($scope);
 	$c($scope, 0);
+	$setup__script($scope);
 }
 const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input$1 = ($scope, input) => $input_label($scope, input.label);

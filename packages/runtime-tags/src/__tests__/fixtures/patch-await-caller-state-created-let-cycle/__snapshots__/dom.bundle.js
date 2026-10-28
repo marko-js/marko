@@ -1,15 +1,17 @@
 // tags/show-await.marko
+_fill_run("b5", 6, ($scope) => $await_content__a_v($scope, $scope.g?.v));
 const $await_content__a = /*@__PURE__*/ _let(6, ($scope) => {
 	$await_content__a_v($scope, $scope.g?.v);
 	$await_content__b__OR__a($scope);
 });
-const $await_content__b__OR__a = /*@__PURE__*/ _or_resume("b7", 7, ($scope) => $await_content__a($scope, {
+const $await_content__b__OR__a = /*@__PURE__*/ _or(7, ($scope) => $await_content__a($scope, {
 	v: $scope.f,
 	self: $a($scope)
 }));
+_fill_run("b4", 5, ($scope) => _text($scope.a, $scope.f));
 const $await_content__x = /* @__PURE__ */ _let(5, ($scope) => {
-	$await_content__b__OR__a($scope);
 	_text($scope.a, $scope.f);
+	$await_content__b__OR__a($scope);
 });
 const $await_content__a_v__script = _script("b1", ($scope) => _on($scope.c, "click", function() {
 	console.log($scope.i);
