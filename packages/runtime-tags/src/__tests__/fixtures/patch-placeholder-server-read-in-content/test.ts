@@ -1,5 +1,5 @@
 import type { TestConfig } from "../../main.test";
-import { resolveAfter } from "../../utils/resolve";
+import { navigate, resolveAfter } from "../../utils/resolve";
 
 // A server value read inside `@placeholder` content under a content section
 // must re-render with the patched value when a construct re-shows the
@@ -8,6 +8,6 @@ export const config: TestConfig = {
   patches: true,
   steps: () => [
     { msg: "a", promise: resolveAfter(2) },
-    { msg: "b", promise: resolveAfter(2) },
+    navigate(() => ({ msg: "b", promise: resolveAfter(2) })),
   ],
 };

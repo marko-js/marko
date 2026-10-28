@@ -1,5 +1,5 @@
 import type { TestConfig } from "../../main.test";
-import { resolveAfter } from "../../utils/resolve";
+import { navigate, resolveAfter } from "../../utils/resolve";
 
 // A server value rendered inside an `<await>` body whose chain to the owner
 // crosses a non-branch content section: the boundary's marker always
@@ -9,6 +9,6 @@ export const config: TestConfig = {
   patches: true,
   steps: () => [
     { msg: "a", promise: resolveAfter(2) },
-    { msg: "b", promise: resolveAfter(2) },
+    navigate(() => ({ msg: "b", promise: resolveAfter(2) })),
   ],
 };

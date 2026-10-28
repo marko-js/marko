@@ -26,7 +26,6 @@ import {
   waitForPendingModules,
 } from "./utils/import-with-context";
 import {
-  buildSteps,
   type Destroy,
   type Flush,
   type FlushType,
@@ -438,8 +437,8 @@ function testFixtures(interop?: true) {
             tracker.logRender(input);
 
             await runSteps(steps, tracker, browser, run, {
-              onInput(input) {
-                startStep();
+              onInput(buildInput) {
+                const input = buildInput();
                 instance.update(input);
                 tracker.logUpdate(input);
               },
@@ -730,7 +729,7 @@ function testFixtures(interop?: true) {
                   }
                 : undefined,
               onInput: usesPatches
-                ? async (input, betweenFlushes, throwsError) => {
+                ? async (buildInput, betweenFlushes, throwsError) => {
                     // A navigation follows the delivered document unless the
                     // fixture wants the race with a still-streaming one.
                     if (hasFlush && !config.patch_while_streaming) {
@@ -760,8 +759,8 @@ function testFixtures(interop?: true) {
                     const { headers } = response;
                     // The token follows the build.
                     patchHeaders.push(headers["x-marko-patch"].split(";")[1]);
+                    const input = buildInput();
                     try {
-                      startStep();
                       for await (const flush of template.patch(
                         input,
                         headers,
@@ -1142,7 +1141,8 @@ async function runSteps(
       update: Wait | Flush | ((document: Document) => unknown),
     ) => Promise<void>;
     onInput?: (
-      input: Input,
+      // Called as the step's render starts.
+      buildInput: () => Input,
       betweenFlushes?: (document: Document) => unknown,
       throwsError?: boolean,
     ) => void | boolean | Promise<void | boolean>;
@@ -1198,13 +1198,20 @@ async function runSteps(
       }
       if (opts.afterStep) await opts.afterStep(update);
     } else if (opts.onInput) {
-      const input = isNavigate(update)
-        ? typeof update.navigateInput === "function"
-          ? update.navigateInput()
-          : update.navigateInput
-        : update;
       const between = isNavigate(update) ? update.betweenFlushes : undefined;
-      if ((await opts.onInput(input, between, isThrows(update))) === false) {
+      const buildInput = () => {
+        // The promises a step builds, in its `navigate` function or as it
+        // renders, count their ticks from here.
+        startStep();
+        return isNavigate(update)
+          ? typeof update.navigateInput === "function"
+            ? update.navigateInput()
+            : update.navigateInput
+          : update;
+      };
+      if (
+        (await opts.onInput(buildInput, between, isThrows(update))) === false
+      ) {
         break;
       }
     } else {
@@ -1216,11 +1223,10 @@ async function runSteps(
 }
 
 async function getSteps(config: TestConfig, signal?: AbortSignal) {
-  const { steps: build } = config;
   const [input = {} as Input, ...steps] =
-    typeof build === "function"
-      ? await buildSteps(() => build(signal))
-      : (build ?? []);
+    typeof config.steps === "function"
+      ? await config.steps(signal)
+      : (config.steps ?? []);
   return { input, steps };
 }
 

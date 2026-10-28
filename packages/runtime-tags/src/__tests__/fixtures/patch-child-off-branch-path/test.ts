@@ -22,8 +22,10 @@ export const config: TestConfig = {
     click,
     navigate(() => ({
       label: "b",
-      slow: resolveAfter("s2"),
-      failing: reject(),
+      // Settled and rejected as the patch renders: its tries show the body and
+      // catch as the page's did.
+      slow: resolveAfter("s2", 0),
+      failing: Promise.reject(new Error("x")),
       other: Promise.resolve("o2"),
       $global: { brand: "bmce", serializedGlobals: ["brand"] },
     })),

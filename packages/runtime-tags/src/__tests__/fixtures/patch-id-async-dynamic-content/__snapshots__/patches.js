@@ -39,7 +39,11 @@
           }
         }
       }, $, "a5", "a9"]
-    },
+    }
+  ]
+}]
+{
+  ra: [
     [1, "c"], {
       cAa: [{
         cAa: {
@@ -69,7 +73,7 @@
       }, $, "a5", "a9"]
     }
   ]
-}]
+}
 ;EbY
 
 // PATCH holding EbY
@@ -80,24 +84,7 @@
     }, $, "a5", "a9"]
   }, "a", {
     cAa: [{
-      pa: "a3",
-      cAa: {
-        fa: [">section", "a0", {
-          name: "a"
-        }],
-        cAa: {
-          cAa: {
-            ca: {
-              s: {
-                aa$for: "sM_gaWVA",
-                tb: "a",
-                ac$id: "sM_gaWVA",
-                "ac$aria-describedby": $
-              }
-            }
-          }
-        }
-      }
+      pa: "a3"
     }, $, "a5", "a9"]
   }, "a6"]
 }
@@ -116,6 +103,31 @@
                   aa$for: "sM_gcWVA",
                   tb: "c",
                   ac$id: "sM_gcWVA",
+                  "ac$aria-describedby": $
+                }
+              }
+            }
+          }
+        }
+      }, $, "a5", "a9"]
+    }
+  ]
+}
+{
+  ra: [
+    [1, "a"], {
+      cAa: [{
+        cAa: {
+          fa: [">section", "a0", {
+            name: "a"
+          }],
+          cAa: {
+            cAa: {
+              ca: {
+                s: {
+                  aa$for: "sM_gaWVA",
+                  tb: "a",
+                  ac$id: "sM_gaWVA",
                   "ac$aria-describedby": $
                 }
               }

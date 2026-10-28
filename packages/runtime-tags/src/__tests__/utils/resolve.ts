@@ -2,9 +2,8 @@ declare global {
   var __RESOLVE_STATE__: {
     generation: number;
     lastId: number;
-    // The tick a step's promise ids count from; unset until a run starts.
-    stepStart: number | undefined;
-    buildingSteps: boolean;
+    // The tick a step's promise ids count from.
+    stepStart: number;
     promises: Map<number, Promise<number>>;
   };
 }
@@ -12,8 +11,7 @@ declare global {
 const state = (globalThis.__RESOLVE_STATE__ ||= {
   generation: 0,
   lastId: 0,
-  stepStart: undefined,
-  buildingSteps: false,
+  stepStart: 0,
   promises: new Map(),
 });
 
@@ -25,20 +23,9 @@ export function resetResolveState() {
   state.promises = new Map();
 }
 
-// A step's render starts here: the ids of the promises it starts count from now.
+// A step starts here: the ids of the promises it builds count from now.
 export function startStep() {
   state.stepStart = state.lastId;
-}
-
-// A promise the step list builds starts when a render first waits on it, so a
-// later step's still starts pending when that step runs.
-export function buildSteps<T>(build: () => T) {
-  state.buildingSteps = true;
-  try {
-    return build();
-  } finally {
-    state.buildingSteps = false;
-  }
 }
 
 export type Wait = typeof wait;
@@ -151,51 +138,29 @@ export function isNavigate(value: any): value is Navigate {
 }
 
 export function resolveAfter<T>(value: T, id?: number) {
-  return startAfter(value, id, () => value);
+  const promise = startClock(id);
+  return Object.assign(
+    promise.then(() => {
+      return value;
+    }),
+    { value },
+  );
 }
 export function rejectAfter<T extends Error>(value: T, id?: number) {
-  return startAfter(value, id, () => {
-    throw value;
-  });
+  const promise = startClock(id);
+  return Object.assign(
+    promise.then(() => {
+      throw value;
+    }),
+    { value },
+  );
 }
 
 // `id` counts ticks from its step's start; without one it settles a tick after
-// it starts.
-function startAfter<T>(
-  value: unknown,
-  id: number | undefined,
-  settle: () => T,
-) {
-  if (state.buildingSteps)
-    return startOnThen(value, () => startClock(id).then(settle));
-  if (state.stepStart === undefined) {
-    throw new Error(
-      "A promise built outside a run is shared by every run: build it in a `steps` function.",
-    );
-  }
-  return Object.assign(startClock(id).then(settle), { value });
-}
-
-// A native promise, as the serializer requires, whose clock starts at its first
-// `then` (a native `await` skips it, so only a render may wait on it).
-function startOnThen<T>(value: unknown, started: () => Promise<T>) {
-  let start!: () => void;
-  const promise = new Promise<T>((resolve) => {
-    start = () => resolve(started());
-  });
-  return Object.assign(promise, {
-    value,
-    then(...args: Parameters<Promise<T>["then"]>) {
-      start();
-      start = () => {};
-      return Promise.prototype.then.apply(promise, args);
-    },
-  });
-}
-
+// it is built.
 function startClock(id: number | undefined) {
   return getSharedPromise(
-    id === undefined ? state.lastId + 1 : state.stepStart! + id,
+    id === undefined ? state.lastId + 1 : state.stepStart + id,
   );
 }
 

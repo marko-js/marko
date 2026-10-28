@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 
 import type { TestConfig } from "../../main.test";
-import { rejectAfter, wait } from "../../utils/resolve";
+import { navigate, rejectAfter, wait } from "../../utils/resolve";
 export const config: TestConfig = {
   patches: true,
   skip_fresh_render: true,
@@ -15,12 +15,12 @@ export const config: TestConfig = {
     },
     wait,
     // Each row's catch a patch creates once its body rejects.
-    {
+    navigate(() => ({
       rows: [
         { key: "a", promise: rejectAfter(new Error("x")) },
         { key: "b", promise: rejectAfter(new Error("y")) },
       ],
-    },
+    })),
     wait,
     checkIds,
   ],

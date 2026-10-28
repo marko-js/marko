@@ -1,5 +1,5 @@
 import type { TestConfig } from "../../main.test";
-import { resolveAfter } from "../../utils/resolve";
+import { navigate, resolveAfter } from "../../utils/resolve";
 
 const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
@@ -13,7 +13,7 @@ export const config: TestConfig = {
   steps: () => [
     { id: "a", value: resolveAfter("x", 1) },
     click,
-    { id: "b", value: resolveAfter("y", 2) },
+    navigate(() => ({ id: "b", value: resolveAfter("y", 2) })),
     click,
     { id: "c", value: Promise.resolve("z") },
   ],

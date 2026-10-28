@@ -1,5 +1,5 @@
 import type { TestConfig } from "../../main.test";
-import { flush, resolveAfter, wait } from "../../utils/resolve";
+import { flush, navigate, resolveAfter, wait } from "../../utils/resolve";
 
 // A lazy child's `<try>` pending behind its `@placeholder`, its sync part
 // writing nothing: its module's ready data names the `@catch` up front, so
@@ -10,7 +10,7 @@ export const config: TestConfig = {
   equivalent: false,
   steps: () => [
     { $global: { name: "a", promise: resolveAfter("x", 2) } },
-    { $global: { name: "b", promise: resolveAfter("x", 2) } },
+    navigate(() => ({ $global: { name: "b", promise: resolveAfter("x", 2) } })),
     wait,
     flush,
   ],

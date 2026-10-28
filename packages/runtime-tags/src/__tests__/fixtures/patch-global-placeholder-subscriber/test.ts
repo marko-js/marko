@@ -1,5 +1,5 @@
 import type { TestConfig } from "../../main.test";
-import { resolveAfter } from "../../utils/resolve";
+import { navigate, resolveAfter } from "../../utils/resolve";
 
 const page = (brand: string, promise: Promise<string>) => ({
   promise,
@@ -10,5 +10,8 @@ const page = (brand: string, promise: Promise<string>) => ({
 // resume, as main's does: a branch, live while its body streams.
 export const config: TestConfig = {
   patches: true,
-  steps: () => [page("a", resolveAfter("hi")), page("b", resolveAfter("ho"))],
+  steps: () => [
+    page("a", resolveAfter("hi")),
+    navigate(() => page("b", resolveAfter("ho"))),
+  ],
 };

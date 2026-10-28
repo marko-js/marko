@@ -1,10 +1,13 @@
 import type { TestConfig } from "../../main.test";
-import { resolveAfter } from "../../utils/resolve";
+import { navigate, resolveAfter } from "../../utils/resolve";
 
 // A script inside an await under a placeholder try patches (the effect
 // re-runs with the settled value) instead of rejecting.
 export const config: TestConfig = {
   patches: true,
   skip_fresh_render: true,
-  steps: () => [{ promise: resolveAfter("a") }, { promise: resolveAfter("b") }],
+  steps: () => [
+    { promise: resolveAfter("a") },
+    navigate(() => ({ promise: resolveAfter("b") })),
+  ],
 };

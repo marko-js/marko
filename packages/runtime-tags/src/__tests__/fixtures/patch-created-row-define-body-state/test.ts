@@ -12,7 +12,7 @@ export const config: TestConfig = {
   steps: () => [
     { items: ["a"], value: resolveAfter("x", 1) },
     click,
-    { items: ["a", "b"], value: resolveAfter("y", 2) },
+    navigate(() => ({ items: ["a", "b"], value: resolveAfter("y", 2) })),
     click,
     navigate(() => ({ items: ["c"], value: resolveAfter("z") })),
   ],

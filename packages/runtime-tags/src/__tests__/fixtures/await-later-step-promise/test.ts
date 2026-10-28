@@ -8,7 +8,7 @@ export const config: TestConfig = {
   steps: () => [
     { promise: Promise.resolve("a") },
     wait,
-    navigate({ promise: resolveAfter("b") }, betweenFlushes),
+    navigate(() => ({ promise: resolveAfter("b") }), betweenFlushes),
     wait,
   ],
 };

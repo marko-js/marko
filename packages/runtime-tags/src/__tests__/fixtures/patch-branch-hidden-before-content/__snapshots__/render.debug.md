@@ -42,7 +42,8 @@ INSERT: main > button::text@0 + ::text("0")
 ```
 ## Change
 ```
-UPDATE: main > section > em::text "one" => "two"
+REMOVE: main > section > em
+INSERT: main > section > em
 ```
 
 # Update `{"error":"bad","promise":{"value":"three"}}`

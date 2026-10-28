@@ -3,13 +3,19 @@
   ba: 0,
   cb: {
     cAa: {
-      pa: "a2",
+      pa: "a2"
+    }
+  }
+}]
+{
+  cb: {
+    cAa: {
       cAa: {
         ta: "two"
       }
     }
   }
-}]
+}
 ;CAI
 
 // PATCH holding CAI
