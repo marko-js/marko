@@ -55,6 +55,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
+			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			card_default({ content: _content_resume("a1", () => {
 				_scope_reason();
@@ -64,6 +65,7 @@ var template_default = _template("a", (input) => {
 				$wg__input_label || _resume_branch($scope2_id);
 			}, $scope1_id) });
 			_patch_child_end();
+			_set_scope_reason(0);
 			const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 			relay_default({ content: _content_resume("a3", () => {
 				_scope_reason();

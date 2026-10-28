@@ -5,7 +5,7 @@ _shells({
 	a2: "a2;D ;<span> </span>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $cg__input_open = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -20,8 +20,8 @@ var template_default = _template("a", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_label && "a1");
 					return 0;
 				}
-			}, $scope1_id, "a", 1, 1, 1, 0, 0, ["a2"], (_mask_group($scope0_reason, 1) & 1) << 1, 0);
-			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a4");
+			}, $scope1_id, "a", 1, 1, 1, 0, 0, ["a2"], $cg__input_open << 1, 0);
+			$cg__input_open && _patch_init($scope1_id, "a4");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
