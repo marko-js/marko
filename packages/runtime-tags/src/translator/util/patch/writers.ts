@@ -654,7 +654,7 @@ function buildLetSeeds(section: Section, binding: Binding) {
     ];
   }
   // A client source's init sets the members.
-  if (getSourcesForExpr(binding.derivedFrom as t.NodeExtra)?.state) return [];
+  if (binding.initSources?.state) return [];
   const writes: t.Expression[] = [];
   const addMemberSeeds = (member: Binding) => {
     for (const alias of member.propertyAliases.values()) {
