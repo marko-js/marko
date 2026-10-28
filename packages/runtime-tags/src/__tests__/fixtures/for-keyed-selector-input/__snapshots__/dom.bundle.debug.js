@@ -2,7 +2,7 @@
 const $template = "<button class=flip>flip</button><ul></ul>";
 const $walks = " b b";
 const $for_content__input_selected__OR__enabled = /*@__PURE__*/ _or(2, ($scope) => _attr_class_item($scope["#li/0"], "sel", $scope._.enabled && $scope._.input_selected === $scope["#LoopKey"]));
-const $for_content__input_selected = /*@__PURE__*/ _for_selector("#ul/1", "input_selected", "#LoopKey", $for_content__input_selected__OR__enabled);
+const $for_content__input_selected = /*@__PURE__*/ _for_selector("#ul/1", "input_selected", $for_content__input_selected__OR__enabled);
 const $for_content__setup = ($scope) => {
 	$for_content__input_selected._($scope);
 	$for_content__enabled._($scope);

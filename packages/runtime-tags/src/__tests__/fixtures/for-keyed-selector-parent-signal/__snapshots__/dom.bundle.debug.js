@@ -2,7 +2,7 @@
 const $template = "<table><tbody></tbody></table><button class=toggle>toggle</button>";
 const $walks = "D l b";
 const $for_content__selected__OR__enabled = /*@__PURE__*/ _or(3, ($scope) => _attr_class_item($scope["#tr/0"], "danger", $scope._.enabled && $scope._.selected === $scope["#LoopKey"]));
-const $for_content__selected = /*@__PURE__*/ _for_selector("#tbody/0", "selected", "#LoopKey", $for_content__selected__OR__enabled);
+const $for_content__selected = /*@__PURE__*/ _for_selector("#tbody/0", "selected", $for_content__selected__OR__enabled);
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$selected($scope._, $scope["#LoopKey"]);
 }));

@@ -25,7 +25,7 @@ import {
   isSingleNodeBranch,
   resumeOwnerByMarkerWhenUnconditional,
 } from "../util/branch-tag";
-import { detectForSelector, getForSelectorKey } from "../util/for-selector";
+import { detectForSelector, isForSelectorClosure } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { fromIter } from "../util/optional";
@@ -252,15 +252,13 @@ export default {
         const nodeBinding = tagExtra.nodeBinding!;
         const hop = { kind: "for", nodeBinding } as const;
         setClosureSignalBuilder(tag, hop, (closure, render) => {
-          const selectorKeyBinding = getForSelectorKey(bodySection, closure);
-          if (!selectorKeyBinding) {
+          if (!isForSelectorClosure(bodySection, closure)) {
             return buildClosureHop(hop, render);
           }
           return callRuntime(
             "_for_selector",
             getScopeAccessorLiteral(nodeBinding, true),
             getScopeAccessorLiteral(closure, true),
-            getScopeAccessorLiteral(selectorKeyBinding, true),
             render,
           );
         });

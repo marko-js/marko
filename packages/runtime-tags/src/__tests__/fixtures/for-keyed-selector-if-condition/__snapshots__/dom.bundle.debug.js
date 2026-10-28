@@ -2,7 +2,7 @@
 const $template = "<ul></ul>";
 const $walks = " b";
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<strong>*</strong>");
-const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/0", "selected", "#LoopKey", ($scope) => $for_content__if($scope, $scope._.selected === $scope["#LoopKey"] ? 0 : 1));
+const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/0", "selected", ($scope) => $for_content__if($scope, $scope._.selected === $scope["#LoopKey"] ? 0 : 1));
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$selected($scope._, $scope["#LoopKey"]);
 }));
