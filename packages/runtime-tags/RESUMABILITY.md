@@ -86,14 +86,15 @@ patch, fill, structural param, shell).
   writes into a lazy tag's render waits for its module, like the document's
   ready channels (`dom/patches/ready.feat.ts`); a module that fails settles
   pending flushes as not applied.
-- **Caught tries.** A `<try>` whose `@catch` shows keeps it, as a client
-  render does (`patches/try` and the catch patchers): a patch never replaces its
-  catch, whose closures subscribe as unpatched structure's do. A patch whose
-  body throws again sends no body and the catch stays; one rendering the body
-  rejects, so the caller loads the URL as a document. Only a try a flush creates
-  anew renders its body, or its catch if that throws.
-  A body is told from a catch by its catch renderer, which a patch page's
-  document writes with the try's marks, before the body settles.
+- **Caught tries.** A `<try>` whose `@catch` shows keeps it, as a client render
+  does (`patches/try` and the catch patchers): a patch never replaces its catch,
+  whose closures subscribe as unpatched structure's do. A body that throws again
+  before its entry flushes sends none, and the catch stays; a patch carrying one
+  that renders, or one still pending when a flush goes out, rejects, so the
+  caller loads the URL as a document. Only a try a flush creates anew renders
+  its body, or its catch if that throws. A body is told from a catch by its
+  catch renderer, which a patch page's document writes with the try's marks,
+  before the body settles.
 - **Timing.** Like a reorder, a flush arrives after effects ran and may find
   its owners changed; the group bits decide what it writes. A caller
   installed from an effect, as `@marko/run`'s router is, never applies one

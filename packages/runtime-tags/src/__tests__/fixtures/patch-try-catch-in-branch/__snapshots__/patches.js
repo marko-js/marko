@@ -12,7 +12,7 @@
 // PATCH holding CQw
 [`a4;D ;<b> </b>`, {
   ba: [{
-    cAa: [$, "a4", "a5"],
+    cAa: [0, "a4", "a5"],
     ka: [{
       ta: "boom"
     }, "a4"]
@@ -38,7 +38,7 @@
 // PATCH holding CQ4
 {
   ba: [{
-    cAa: [$, "a4", "a5"],
+    cAa: [0, "a4", "a5"],
     ka: [{
       ta: "boom"
     }, "a4"]

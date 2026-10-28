@@ -42,8 +42,8 @@ export const patchers: { [K in PatchKind]?: Patcher<K> } = {};
 export const setupPatchers: typeof patchers = {};
 // Structural patchers recurse back through here, so no scope is addressed by
 // id. Debug entry keys are `PatchKind:…`, optimized ones a single character.
-export const patchScope = (
-  patch: Scope | undefined,
+export const patchScope = <P extends Scope | 0>(
+  patch: P,
   live: Scope,
   kinds = patchers,
 ) => {
@@ -58,14 +58,10 @@ export const patchScope = (
       kinds[kind as PatchKind]!(
         live,
         key.slice(kind.length),
-        patch[key as keyof Scope],
+        (patch as Scope)[key],
       );
     } else {
-      kinds[key[0] as PatchKind]!(
-        live,
-        key.slice(1),
-        patch[key as keyof Scope],
-      );
+      kinds[key[0] as PatchKind]!(live, key.slice(1), (patch as Scope)[key]);
     }
   }
 };

@@ -14,7 +14,7 @@
 // PATCH holding DTI
 [`a1,<p>oops</p>`, {
   ba: [{
-    cAa: [$, "a1", "a3"],
+    cAa: [0, "a1", "a3"],
     ka: []
   }, "a4"]
 }]

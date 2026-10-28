@@ -2,7 +2,7 @@
 [`a4;D ;<p> </p>`, `a3`, {
   ca: {
     cAb: {
-      cAa: [$, "a3", "a4"],
+      cAa: [0, "a3", "a4"],
       ka: [{
         ta: "boom two"
       }, "a3"]

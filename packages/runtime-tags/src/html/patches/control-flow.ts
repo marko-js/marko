@@ -687,11 +687,11 @@ export function _try(
         // A body that threw before claiming its id keeps it paired.
         if (_peek_scope_id() === branchId) _scope_id();
         if (!entry) {
-          if (create) linkScopePatch(state, branchId, body)![0] = undefined;
+          if (create) linkScopePatch(state, branchId, body)![0] = 0;
         } else if (peekScopePatch(state, branchId) === body) {
           // Still in the flush to go out (a flush sent it pending otherwise).
           if (create) {
-            entry[0] = undefined;
+            entry[0] = 0;
           } else {
             writePatchEntry(
               state,

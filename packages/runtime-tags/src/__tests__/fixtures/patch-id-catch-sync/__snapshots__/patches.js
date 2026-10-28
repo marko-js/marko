@@ -10,7 +10,7 @@
           "ac$aria-describedby": $
         }
       },
-      cAc: [$, "b0", "b1"],
+      cAc: [0, "b0", "b1"],
       kc: []
     },
     cb: {
@@ -31,7 +31,7 @@
           "ac$aria-describedby": $
         }
       },
-      cAc: [$, "b0", "b1"],
+      cAc: [0, "b0", "b1"],
       kc: []
     },
     cb: {

@@ -13,7 +13,7 @@
 // PATCH holding DSo
 [`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_2*content`, {
   "PatchBranch:#text/2": [{
-    "PatchChild:BranchScopes:#text/0": [$, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_2*content", "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_3*content"],
+    "PatchChild:BranchScopes:#text/0": [0, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_2*content", "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-param-in-branch/template.marko_3*content"],
     "PatchCatch:#text/0": [{
       "PatchText:#text/0": "boom",
       "PatchText:#text/1": "c",

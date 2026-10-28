@@ -10,7 +10,7 @@
           "PatchAttr:#input/2 aria-describedby": $
         }
       },
-      "PatchChild:BranchScopes:#text/2": [$, _.d = "packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-sync/tags/a-tag.marko_2*content", _.e = "packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-sync/tags/a-tag.marko_1*content"],
+      "PatchChild:BranchScopes:#text/2": [0, _.d = "packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-sync/tags/a-tag.marko_2*content", _.e = "packages/runtime-tags/src/__tests__/fixtures/patch-id-catch-sync/tags/a-tag.marko_1*content"],
       "PatchCatch:#text/2": []
     },
     "PatchChild:#childScope/1": {
@@ -31,7 +31,7 @@
           "PatchAttr:#input/2 aria-describedby": $
         }
       },
-      "PatchChild:BranchScopes:#text/2": [$, _.d, _.e],
+      "PatchChild:BranchScopes:#text/2": [0, _.d, _.e],
       "PatchCatch:#text/2": []
     },
     "PatchChild:#childScope/1": {

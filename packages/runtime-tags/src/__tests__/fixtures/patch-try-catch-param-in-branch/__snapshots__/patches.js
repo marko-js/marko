@@ -13,7 +13,7 @@
 // PATCH holding DSo
 [`a5`, {
   bc: [{
-    cAa: [$, "a5", "a4"],
+    cAa: [0, "a5", "a4"],
     ka: [{
       ta: "boom",
       tb: "c",
