@@ -22,7 +22,7 @@ _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `0${_w0
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	let x = kid_default({});
 	_var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();

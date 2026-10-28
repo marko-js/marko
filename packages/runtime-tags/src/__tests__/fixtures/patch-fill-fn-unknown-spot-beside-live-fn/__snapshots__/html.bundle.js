@@ -26,15 +26,15 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			card_default({ fn: o[key] });
 			_patch_child_end();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope2 = _patch_child($scope1_id, "b", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 			card_default({ fn: first });
 			_patch_child_end();
 			_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
-			const $childScope3 = _patch_child($scope1_id, "c", 2);
+			const $childScope3 = _peek_scope_id($scope1_id, "c", 2);
 			card_default({ fn: tag });
 			_patch_child_end();
 			_html(`<p>${_text_resume($scope1_id, "d", o.key, $wg__input_key__OR__input_title)}</p>`);

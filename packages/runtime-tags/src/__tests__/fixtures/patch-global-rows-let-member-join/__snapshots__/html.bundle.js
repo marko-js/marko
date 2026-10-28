@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		let qty = row.qty;
 		_html(`<article><strong>${_text_resume($scope1_id, "a", item.name, void 0, 4, 0)}</strong><form>`);
 		_set_scope_reason(72);
-		const $childScope = _patch_child($scope1_id, "b", 0);
+		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		number_stepper_default({
 			value: qty,
 			valueChange: _resume((_new_qty) => {

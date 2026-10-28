@@ -40,14 +40,14 @@ _shells({
 var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	opener_default({});
 	_patch_child_end();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope2 = _patch_child($scope1_id, "b", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 			$Lazy_withLoadAssets({ label: "s" });
 			_patch_child_end();
 			_scope($scope1_id, { b: _existing_scope($childScope2) });

@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({ open: count % 2 === 0 });
 	_patch_child_end();
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}</main>`);

@@ -51,13 +51,13 @@ var template_default = _template("a", (input) => {
 		$wg__input_on || $wi__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, $scope0_id) };
 	_html("<main><section>");
-	const $childScope = _patch_child($scope0_id, "a", 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Body.content({});
 	_patch_child_end();
 	_html("</section>");
 	_await($scope0_id, "b", input.v, (v) => {
 		const $scope3_id = _scope_id();
-		const $childScope2 = _patch_child($scope3_id, "a", 2, void 0, $scope0_id);
+		const $childScope2 = _peek_scope_id($scope3_id, "a", 2, void 0, $scope0_id);
 		Body.content({});
 		_patch_child_end();
 		_filled_guard($scope0_reason, 2) && _content_withheld("a0", $scope3_id) && _patch_fill($scope0_id, "va6", input.note);

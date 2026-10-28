@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "a", 0, 1);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0, 1);
 			let store = store_default({});
 			_var($scope1_id, "b", $childScope, "a0");
 			_patch_child_end();

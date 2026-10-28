@@ -26,7 +26,7 @@ var template_default = _template("b", (input) => {
 			let n = 0;
 			_html(`<button>${_text_resume($scope1_id, "b", n)}</button>${_el_resume($scope1_id, "a")}`);
 			_set_scope_reason(2);
-			const $childScope = _patch_child($scope1_id, "d", 0);
+			const $childScope = _peek_scope_id($scope1_id, "d", 0);
 			$Child_withLoadAssets({ label: n });
 			_patch_child_end();
 			_script($scope1_id, "b0");

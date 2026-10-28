@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			my_for_default({
 				to: 2,
 				content: _content_elide("a1", (i) => {

@@ -21,7 +21,7 @@ var page_b_default = _template("c", (input) => {
 	let progress = 0;
 	_html(`<button>${_text_resume($scope0_id, "b", progress)}</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(8);
-	const $childScope = _patch_child($scope0_id, "c", 0);
+	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	demo_card_default({
 		name: "Switch",
 		progress
@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			page_b_default({});
 			_patch_child_end();
 			_scope($scope1_id, { a: _existing_scope($childScope) });

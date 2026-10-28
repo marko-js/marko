@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		const $for_content__b__closures = /* @__PURE__ */ new Set();
 		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "va5", b);
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		keep_default({ content: _content_resume("a4", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();

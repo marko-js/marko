@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	let uid = "u" + ++n;
 	_html(`<label${_attr("for", `${uid}-${input.name}`, $scope0_id, "a", $scope0_reason, 0)}>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<input${_attr_input_value($scope0_id, "c", input.value, void 0, 1, $scope0_reason, 2)}${_attr("id", `${uid}-${input.name}`, $scope0_id, "c", $scope0_reason, 0)}${_attr("name", input.name, $scope0_id, "c", $scope0_reason, 0)}>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 2) || _mask_group($scope0_reason, 0))}`);
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "d", 0);
+	const $childScope = _peek_scope_id($scope0_id, "d", 0);
 	shower_default(_patch_live($childScope, { getId: _resume(function() {
 		return uid;
 	}, "a0", $scope0_id) }, $scope0_id, ""));

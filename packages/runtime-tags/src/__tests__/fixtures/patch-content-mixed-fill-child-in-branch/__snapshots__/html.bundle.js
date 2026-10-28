@@ -60,19 +60,19 @@ var page_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $live__closures = /* @__PURE__ */ new Set();
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	let bonus = box_default({});
 	_var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
 	const live = bonus ?? input.base;
 	_html(`<button class=bonus>bonus</button>${_el_resume($scope0_id, "c")}`);
 	_set_scope_reason(0);
-	const $childScope3 = _patch_child($scope0_id, "d", 2);
+	const $childScope3 = _peek_scope_id($scope0_id, "d", 2);
 	panel_default({ aside: attrTag({ content: _content_elide("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(6);
-		const $childScope2 = _patch_child($scope1_id, "a", 1);
+		const $childScope2 = _peek_scope_id($scope1_id, "a", 1);
 		counter_default({ base: live });
 		_patch_child_end();
 		_subscribe($live__closures, _scope($scope1_id, {
@@ -103,7 +103,7 @@ var template_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			page_default({ base: input.base });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b0");

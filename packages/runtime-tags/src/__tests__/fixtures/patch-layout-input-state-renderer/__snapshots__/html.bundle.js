@@ -42,7 +42,7 @@ var template_default = _template("d", (input) => {
 	const $scope0_id = _scope_id();
 	let alt = false;
 	_set_scope_reason(62 | _mask_group($scope0_reason, 0) << 7);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	layout_default({
 		nav: nav_a_default,
 		label: input.label,

@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	_html("<main>");
 	_set_scope_reason(2622 | _mask_group($scope0_reason, 0) << 7);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		show: input.show,
 		label: n ? "X" : "Y",

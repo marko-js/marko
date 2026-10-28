@@ -24,7 +24,7 @@ var one_default = _template("b", (input) => {
 		});
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-	const $childScope = _patch_child($scope0_id, "a", 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Wrap.content({
 		content: input.content,
 		t: input.t
@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	let z = 0;
 	_html(`<button class=z>z</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	one_default({
 		t: input.y,
 		content: _content_resume("a0", () => {

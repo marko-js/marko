@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(42);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			child_default({
 				b,
 				items: list

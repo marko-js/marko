@@ -21,7 +21,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<section><h2>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2>`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	grand_default({ content: input.content });
 	_patch_child_end();
 	_html("</section>");
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		title: input.title,
 		content: _content("a1", () => {

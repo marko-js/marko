@@ -20,7 +20,7 @@ var pass_default = _template("__tests__/tags/pass.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_set_scope_reason((2 | _mask_group($scope0_reason, 0)) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_text_default({ v: input.x + $global$1.suffix });
 	_patch_child_end();
 	_fill_global_subscribe("__tests__/tags/pass.marko_0_input_x#3_$global_suffix#5", $scope0_id, $cg__input_x);
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	pass_default({ x: "a" });
 	_patch_child_end();
 	_html(`<button>${_text_resume($scope0_id, "#text/2", count)}</button>${_el_resume($scope0_id, "#button/1")}`);

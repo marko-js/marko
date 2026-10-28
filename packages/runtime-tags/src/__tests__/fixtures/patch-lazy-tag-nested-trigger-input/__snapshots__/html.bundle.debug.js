@@ -27,7 +27,7 @@ var outer_default = _template("__tests__/outer.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	$Inner_withLoadAssets({ label: input.label });
 	_patch_child_end();
 	_html("</section>");
@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	$Outer_withLoadAssets({ label: input.label });
 	_patch_child_end();
 	_html("</main>");

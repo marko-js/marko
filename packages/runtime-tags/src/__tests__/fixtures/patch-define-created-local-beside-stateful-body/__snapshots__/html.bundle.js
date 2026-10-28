@@ -31,14 +31,14 @@ var template_default = _template("a", (input) => {
 			const x = input.label + "?";
 			let n = 1;
 			_set_scope_reason(_mask_group($scope0_reason, 3) << 1 | _mask_group($scope0_reason, 2) << 3);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			Panel.content({
 				isOpen: input.open,
 				label: x
 			});
 			_patch_child_end();
 			_set_scope_reason(8);
-			const $childScope2 = _patch_child($scope1_id, "b", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 			Panel.content({
 				isOpen: true,
 				label: n

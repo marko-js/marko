@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.page === 1) {
 			const $scope2_id = _scope_id();
-			const $childScope = _patch_child($scope2_id, "#childScope/1", 0);
+			const $childScope = _peek_scope_id($scope2_id, "#childScope/1", 0);
 			$Page1_withLoadAssets({});
 			_patch_child_end();
 			_scope($scope2_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "4:2");
@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		} else {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope2 = _patch_child($scope1_id, "#childScope/1", 0);
+			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 0);
 			$Page2_withLoadAssets({ error: input.error });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_error#0:4/init");

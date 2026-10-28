@@ -47,7 +47,7 @@ var rowsx_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 2));
 		_set_scope_reason(_mask_group($scope0_reason, 3) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 1) << 7 | _mask_group($scope0_reason, 3) << 9 | _mask_group($scope0_reason, 0) << 13);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		Panel.content({
 			isOpen: input.open,
 			fmt: _resume((v) => lib.format(v), "b0"),
@@ -93,7 +93,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(542 | (_mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 1) << 7));
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			rowsx_default({
 				label: l,
 				open: input.open,

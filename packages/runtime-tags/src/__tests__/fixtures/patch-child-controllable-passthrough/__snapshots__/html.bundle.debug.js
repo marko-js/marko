@@ -41,7 +41,7 @@ var middle_default = _template("__tests__/tags/middle/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	counter_default({
 		show: input.show,
 		onCount: input.onCount
@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let last = 0;
 	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "#text/1", last, 2)}</p>`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/2", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	middle_default({
 		show: input.show,
 		onCount: _resume(function(next) {

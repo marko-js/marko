@@ -50,14 +50,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $open__closures = new Set();
 	let open = false;
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/0", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	wrapper_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		const $wrapper_content__label__closures = new Set();
 		const label = input.label;
 		_set_scope_reason(10);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		toggle_default({
 			open,
 			content: _content_resume("__tests__/template.marko_2*content", () => {

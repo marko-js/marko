@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
 				_set_scope_reason(0);
-				const $childScope = _patch_child($scope2_id, "#childScope/0", 0);
+				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 				card_default({ content: _content_resume("__tests__/template.marko_3*content", () => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();

@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		let qty = row.qty;
 		_set_scope_reason(50);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		stepper_default({
 			value: qty,
 			valueChange: _resume((_new_qty) => {

@@ -20,7 +20,7 @@ _shells({ "__tests__/tags/outer/index.marko": /*@__PURE__*/ ((_w0) => `__tests__
 var outer_default = _template("__tests__/tags/outer/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	inner_default({});
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/outer/index.marko", 0);
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_patch_child($scope1_id, "#childScope/0", 0);
+			_peek_scope_id($scope1_id, "#childScope/0", 0);
 			outer_default({});
 			_patch_child_end();
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");

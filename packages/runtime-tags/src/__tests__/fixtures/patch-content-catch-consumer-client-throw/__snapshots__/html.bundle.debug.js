@@ -87,7 +87,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(8);
-	const $childScope = _patch_child($scope0_id, "#childScope/2", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	wrapper_default({
 		fail: count > 1,
 		fallback: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -99,7 +99,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(8);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/3", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/3", 1);
 	error_wrapper_default({
 		fail: count > 1,
 		fallback: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {

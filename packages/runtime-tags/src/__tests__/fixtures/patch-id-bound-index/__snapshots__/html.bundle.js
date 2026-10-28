@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	_for_of(["x", "y"], (name) => {
 		const $scope1_id = _scope_id();
 		const $for_content__store_set__closures = /* @__PURE__ */ new Set();
-		const $childScope = _patch_child($scope1_id, "a", 0, 1);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0, 1);
 		let store = store_default({});
 		_var($scope1_id, "b", $childScope, "a0");
 		_patch_child_end();

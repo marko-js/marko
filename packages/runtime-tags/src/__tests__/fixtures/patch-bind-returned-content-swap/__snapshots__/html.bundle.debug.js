@@ -45,11 +45,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	let a = child_default({ label: "A" });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/2", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/2", 1);
 	let b = child_default({ label: "B" });
 	_patch_child_end();
 	_dynamic_tag($scope0_id, "#text/4", input.first ? a : b, {}, 18, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);

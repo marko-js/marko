@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let last = "none";
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	counter_box_default({ onChange: _resume(function(v) {
 		last = "a" + v;
 	}, "a0", $scope0_id) });

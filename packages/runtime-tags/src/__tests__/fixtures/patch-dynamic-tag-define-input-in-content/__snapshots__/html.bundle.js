@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope3_id, {});
 	}, $scope0_id) };
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	wrap_default({ content: _content("a5", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();

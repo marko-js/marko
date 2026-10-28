@@ -19,7 +19,7 @@ var pass_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_set_scope_reason((2 | _mask_group($scope0_reason, 0)) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_text_default({ v: input.x + $global$1.suffix });
 	_patch_child_end();
 	_fill_global_subscribe("c0", $scope0_id, $cg__input_x);
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	pass_default({ x: "a" });
 	_patch_child_end();
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}`);

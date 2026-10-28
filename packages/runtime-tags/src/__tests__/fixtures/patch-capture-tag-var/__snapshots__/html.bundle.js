@@ -25,13 +25,13 @@ _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0, _w1) => `0
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "a", 0, $cg__input_v && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_v && 1);
 	let picked = pick_default({ value: input.v });
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", picked, !_server_guard($scope0_reason, 0));
 	$cg__input_v && _var($scope0_id, "b", $childScope, "a1");
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope2 = _patch_child($scope0_id, "c", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	label_default({ get: _bind_resume(function() {
 		return picked;
 	}, "a0", $scope0_id) });

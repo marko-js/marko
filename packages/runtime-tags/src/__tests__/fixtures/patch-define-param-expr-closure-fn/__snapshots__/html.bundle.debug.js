@@ -40,10 +40,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "2:2", { on: "2:13" }), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "__tests__/template.marko_1_f#0:6/subscribe");
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	D.content({ on: input.x });
 	_patch_child_end();
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	counter_default({});
 	_patch_child_end();
 	_scope($scope0_id, {

@@ -93,10 +93,10 @@ var template_default = _template("a", (input) => {
 		$wg__input_x || $wi__input_x && _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
-	const $childScope = _patch_child($scope0_id, "c", 0);
+	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	Show.content({ v: input.a });
 	_patch_child_end();
-	const $childScope2 = _patch_child($scope0_id, "d", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "d", 1);
 	counter_default({});
 	_patch_child_end();
 	_scope($scope0_id, {

@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	const getTitle = _bind_resume(() => input.title, "__tests__/template.marko_0/getTitle", $scope0_id);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_default(_patch_live($childScope, { get: getTitle }, $scope0_id, "getTitle"));
 	_patch_child_end();
 	_scope($scope0_id, {

@@ -31,7 +31,7 @@ var template_default = _template("b", (input) => {
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Child_withLoadAssets({ label: input.label });
 	_patch_child_end();
 	_try($scope0_id, "c", () => {
@@ -43,7 +43,7 @@ var template_default = _template("b", (input) => {
 			_scope($scope3_id, {});
 		}, 1, "b1", 1);
 		_set_scope_reason(0);
-		const $childScope2 = _patch_child($scope1_id, "c", 1);
+		const $childScope2 = _peek_scope_id($scope1_id, "c", 1);
 		$Child_withLoadAssets({ label: "in-try" });
 		_patch_child_end();
 		_await($scope1_id, "d", input.b, (b) => {

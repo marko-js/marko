@@ -26,7 +26,7 @@ var route_bar_default = _template("__tests__/tags/route-bar.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let w = 40;
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	bar_default({ pct: w });
 	_patch_child_end();
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);
@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "#childScope/1", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 			$Route_withLoadAssets({});
 			_patch_child_end();
 			_scope($scope1_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "2:2");

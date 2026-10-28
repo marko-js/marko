@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_patch_write($scope1_id, "PatchWrite:user_name", user?.name);
 		_html(`<h4>${_text_resume($scope1_id, "#text/0", user.name, void 0, 4, 0)}</h4>`);
-		const $childScope = _patch_child($scope1_id, "#childScope/1", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 		address_view_default({ address: user.address });
 		_patch_child_end();
 		_html(`<button class=pick>pick</button>${_el_resume($scope1_id, "#button/2")}`);

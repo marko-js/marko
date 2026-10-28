@@ -47,17 +47,17 @@ _shells({
 var a_tag_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	plain_default({});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	field_default({ name: input.n });
 	_patch_child_end();
 	_try($scope0_id, "c", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		const $childScope3 = _patch_child($scope1_id, "a", 2);
+		const $childScope3 = _peek_scope_id($scope1_id, "a", 2);
 		thrower_default({});
 		_patch_child_end();
 		_scope($scope1_id, { a: _existing_scope($childScope3) });
@@ -83,11 +83,11 @@ var template_default = _template("a", (input) => {
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		a_tag_default({ n: row.id });
 		_patch_child_end();
 		_set_scope_reason(0);
-		const $childScope2 = _patch_child($scope1_id, "b", 1);
+		const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 		field_default({ name: `row ${row.id}` });
 		_patch_child_end();
 		_scope($scope1_id, {

@@ -21,13 +21,13 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		return text + "!";
 	}, $scope0_id) };
-	const $childScope = _patch_child($scope0_id, "a", 0, $cg__input_v && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_v && 1);
 	let row = Row.content({ text: input.v });
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", row, !_server_guard($scope0_reason, 0));
 	$cg__input_v && _var($scope0_id, "b", $childScope, "a2");
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope2 = _patch_child($scope0_id, "c", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	label_default({ get: _bind_resume(function() {
 		return row;
 	}, "a0", $scope0_id) });

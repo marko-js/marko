@@ -61,21 +61,21 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_page__closures = new Set();
 	_set_scope_reason(0);
-	const $childScope3 = _patch_child($scope0_id, "#childScope/0", 1);
+	const $childScope3 = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	layout_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (input.page <= 0) {
 				const $scope2_id = _scope_id();
-				const $childScope = _patch_child($scope2_id, "#childScope/1", 0);
+				const $childScope = _peek_scope_id($scope2_id, "#childScope/1", 0);
 				$PageA_withLoadAssets({});
 				_patch_child_end();
 				_scope($scope2_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "6:4");
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
-				const $childScope2 = _patch_child($scope3_id, "#childScope/1", 0);
+				const $childScope2 = _peek_scope_id($scope3_id, "#childScope/1", 0);
 				$PageB_withLoadAssets({});
 				_patch_child_end();
 				_scope($scope3_id, { "#childScope/1": _existing_scope($childScope2) }, "__tests__/template.marko", "9:4");

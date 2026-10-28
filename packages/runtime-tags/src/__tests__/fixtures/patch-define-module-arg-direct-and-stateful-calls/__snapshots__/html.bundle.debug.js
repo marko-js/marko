@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({
 		fmt: lib.format,
 		label: input.label
@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);
-			const $childScope2 = _patch_child($scope1_id, "#childScope/0", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1);
 			Panel.content({
 				fmt: lib.format,
 				label: input.label

@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope2_id, "#text/0", input.on ? card_default : "div", {}, 10, _content_resume("__tests__/template.marko_3*content", () => {
 			const $scope3_id = _scope_id();
 			const $scope3_reason = _scope_reason();
-			const $childScope = _patch_child($scope3_id, "#childScope/0", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 0, void 0, $scope0_id);
 			Note.content({});
 			_patch_child_end();
 			_scope($scope3_id, {
@@ -69,10 +69,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wg__input_on || $wi__input_on && _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_html("<main>");
-	const $childScope2 = _patch_child($scope0_id, "#childScope/0", 2);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 2);
 	Note.content({});
 	_patch_child_end();
-	const $childScope3 = _patch_child($scope0_id, "#childScope/1", 3);
+	const $childScope3 = _peek_scope_id($scope0_id, "#childScope/1", 3);
 	Wrap.content({});
 	_patch_child_end();
 	_html("</main>");

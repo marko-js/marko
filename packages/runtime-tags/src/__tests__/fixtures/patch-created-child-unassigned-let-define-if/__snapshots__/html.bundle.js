@@ -23,7 +23,7 @@ var card_default = _template("b", (input) => {
 		}, $scope1_id, "a", 1, $wg__open, void 0, void 0, void 0, ["b0"], $scope1_reason, 0);
 		$wi__open && _scope($scope1_id, {});
 	}, $scope0_id) };
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({ open: n });
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });

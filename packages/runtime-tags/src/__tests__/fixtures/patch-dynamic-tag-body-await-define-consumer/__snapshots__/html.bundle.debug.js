@@ -60,7 +60,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_await($scope0_id, "#text/0", input.p, (x) => {
 		const $scope3_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
-		const $childScope = _patch_child($scope3_id, "#childScope/0", 2, void 0, $scope0_id);
+		const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 2, void 0, $scope0_id);
 		K.content({ x });
 		_patch_child_end();
 		_filled_guard($scope0_reason, 1) && _content_withheld("__tests__/tags/card.marko_2*content", $scope3_id) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", input.content);

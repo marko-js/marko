@@ -20,7 +20,7 @@ var template_default = _template("b", (input) => {
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	card_default({ content: _content("b4", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();

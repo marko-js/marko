@@ -22,28 +22,28 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html("<main>");
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	badge_default({
 		label: "New",
 		tone: "info"
 	});
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	badge_default({
 		label: "Sale",
 		tone: "warn"
 	});
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope3 = _patch_child($scope0_id, "c", 2);
+	const $childScope3 = _peek_scope_id($scope0_id, "c", 2);
 	badge_default({
 		label: "Hot",
 		tone: "info"
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-	const $childScope4 = _patch_child($scope0_id, "d", 3);
+	const $childScope4 = _peek_scope_id($scope0_id, "d", 3);
 	badge_default({
 		label: input.status,
 		tone: "info"
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_text_resume($scope1_id, "a", p.name, void 0, $scope0_reason, 1)} `);
 		_set_scope_reason(0);
-		const $childScope5 = _patch_child($scope1_id, "b", 4);
+		const $childScope5 = _peek_scope_id($scope1_id, "b", 4);
 		badge_default({
 			label: "Item",
 			tone: "info"

@@ -20,7 +20,7 @@ var loaded_default = _template("__tests__/tags/loaded.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	field_default({ name: input.name });
 	_patch_child_end();
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 10, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope4_id = _scope_id();
 					const $scope4_reason = _scope_reason();
 					_set_scope_reason(0);
-					const $childScope = _patch_child($scope4_id, "#childScope/0", 1);
+					const $childScope = _peek_scope_id($scope4_id, "#childScope/0", 1);
 					field_default({ name: item.key });
 					_patch_child_end();
 					_scope($scope4_id, {
@@ -80,7 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope5_reason = _scope_reason();
 			const $scope5_id = _scope_id();
 			_set_scope_reason(0);
-			_patch_child($scope5_id, "#childScope/0", 0);
+			_peek_scope_id($scope5_id, "#childScope/0", 0);
 			field_default({ name: "loading" });
 			_patch_child_end();
 		}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_2*content");

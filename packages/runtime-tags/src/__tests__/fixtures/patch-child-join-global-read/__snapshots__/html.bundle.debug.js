@@ -29,14 +29,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_set_scope_reason(38 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		a: input.x,
 		b: "n" + n
 	});
 	_patch_child_end();
 	_set_scope_reason(14 | _mask_group($scope0_reason, 1) << 5);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	child_default({
 		a: "m" + n,
 		b: input.y

@@ -18,7 +18,7 @@ _shells({ "__tests__/tags/outer.marko": /*@__PURE__*/ ((_w0) => `__tests__/tags/
 var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	inner_default({});
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/outer.marko_0");
@@ -70,10 +70,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			outer_default({});
 			_patch_child_end();
-			const $childScope2 = _patch_child($scope1_id, "#childScope/1", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 			Body.content({});
 			_patch_child_end();
 			_for_of(input.items, (item) => {
@@ -93,7 +93,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}
 			}, $scope1_id, "#text/3", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["__tests__/template.marko_6*shell"], $scope0_reason, 5);
 			_set_scope_reason(0);
-			const $childScope3 = _patch_child($scope1_id, "#childScope/4", 2);
+			const $childScope3 = _peek_scope_id($scope1_id, "#childScope/4", 2);
 			wrap_default({ body: attrTag({ content: _content_elide("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
@@ -112,7 +112,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_dynamic_tag($scope1_id, "#text/5", input.tag, {}, 34, _content_resume("__tests__/template.marko_3*content", () => {
 				const $scope3_id = _scope_id();
 				const $scope3_reason = _scope_reason();
-				const $childScope4 = _patch_child($scope3_id, "#childScope/0", 3);
+				const $childScope4 = _peek_scope_id($scope3_id, "#childScope/0", 3);
 				inner_default({});
 				_patch_child_end();
 				_for_of(input.items, (item) => {

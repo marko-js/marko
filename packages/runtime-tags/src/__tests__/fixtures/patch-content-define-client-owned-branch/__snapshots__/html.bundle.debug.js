@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	Panel.content({
 		open: count % 2 === 0,
 		body: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {

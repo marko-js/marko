@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrapper_default({ content: _content("a4", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();

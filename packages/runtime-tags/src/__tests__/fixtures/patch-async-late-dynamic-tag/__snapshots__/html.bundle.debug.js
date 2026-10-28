@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wi__input_as__OR__input_p && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_p: input.p }] : []), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	frame_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();

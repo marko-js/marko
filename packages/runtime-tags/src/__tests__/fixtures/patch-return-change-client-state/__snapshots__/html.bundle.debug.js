@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let last = "none";
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, 1);
 	let count = counter_box_default({
 		onA: _resume(function(v) {
 			last = "a" + v;

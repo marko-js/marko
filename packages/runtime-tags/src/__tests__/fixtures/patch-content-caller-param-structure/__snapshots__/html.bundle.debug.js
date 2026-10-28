@@ -83,7 +83,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	toggle_if_default({
 		open: input.open,
 		content: _content_resume("__tests__/tags/param-host.marko_1*content", () => {
@@ -96,7 +96,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	toggle_for_default({
 		open: input.open,
 		content: _content_resume("__tests__/tags/param-host.marko_2*content", () => {
@@ -112,7 +112,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope3 = _patch_child($scope0_id, "#childScope/2", 2);
+	const $childScope3 = _peek_scope_id($scope0_id, "#childScope/2", 2);
 	toggle_tag_default({
 		open: input.open,
 		content: _content_resume("__tests__/tags/param-host.marko_3*content", () => {
@@ -163,7 +163,7 @@ var const_host_default = _template("__tests__/tags/const-host.marko", (input) =>
 	const $input_label__closures = new Set();
 	const show = input.open;
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	toggle_if_default({
 		open: show,
 		content: _content_resume("__tests__/tags/const-host.marko_1*content", () => {
@@ -176,7 +176,7 @@ var const_host_default = _template("__tests__/tags/const-host.marko", (input) =>
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	toggle_for_default({
 		open: show,
 		content: _content_resume("__tests__/tags/const-host.marko_2*content", () => {
@@ -192,7 +192,7 @@ var const_host_default = _template("__tests__/tags/const-host.marko", (input) =>
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope3 = _patch_child($scope0_id, "#childScope/2", 2);
+	const $childScope3 = _peek_scope_id($scope0_id, "#childScope/2", 2);
 	toggle_tag_default({
 		open: show,
 		content: _content_resume("__tests__/tags/const-host.marko_3*content", () => {
@@ -236,14 +236,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let open = true;
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	param_host_default({
 		open,
 		label: input.label
 	});
 	_patch_child_end();
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	const_host_default({
 		open,
 		label: input.label

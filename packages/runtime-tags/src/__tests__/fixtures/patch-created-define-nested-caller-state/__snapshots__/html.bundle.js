@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_set_scope_reason(_mask_group($scope2_reason, 0) << 1 | _mask_group($scope2_reason, 1) << 3);
-		const $childScope = _patch_child($scope2_id, "a", 0);
+		const $childScope = _peek_scope_id($scope2_id, "a", 0);
 		Inner.content({
 			v,
 			show
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope2_id, { a: _existing_scope($childScope) });
 	}, $scope0_id) };
 	_set_scope_reason(2 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope2 = _patch_child($scope0_id, "a", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "a", 1);
 	Outer.content({
 		v: count,
 		show: input.show

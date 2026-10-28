@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "3:4", { z: "3:19" }), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0) | _mask_group($scope2_reason, 0)) << 1, 0) && "__tests__/template.marko_2_input_label#0:4/subscribe"), _client_guard((_mask_group($scope1_reason, 0) | _mask_group($scope2_reason, 0)) << 1, 0) && "__tests__/template.marko_2_x#1:3/subscribe");
 		}, $scope1_id) };
 		_set_scope_reason(_mask_group($scope1_reason, 1) << 1);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		Inner.content({ z: y });
 		_patch_child_end();
 		_scope($scope1_id, {
@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope4_id = _scope_id();
 			const $scope4_reason = _scope_reason();
 			_set_scope_reason(_mask_group($scope4_reason, 0) << 1 | _mask_group($scope4_reason, 2) << 3 | _mask_group($scope4_reason, 1) << 5 | _mask_group($scope4_reason, 3) << 7);
-			const $childScope2 = _patch_child($scope4_id, "#childScope/0", 1, void 0, $scope0_id);
+			const $childScope2 = _peek_scope_id($scope4_id, "#childScope/0", 1, void 0, $scope0_id);
 			Wrapper.content({
 				a: b,
 				b: a,
@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "9:4");
 		}, $scope3_id) };
 		_set_scope_reason(_mask_group($scope3_reason, 1) << 1 | _mask_group($scope3_reason, 2) << 3);
-		const $childScope3 = _patch_child($scope3_id, "#childScope/0", 2, void 0, $scope0_id);
+		const $childScope3 = _peek_scope_id($scope3_id, "#childScope/0", 2, void 0, $scope0_id);
 		Outer.content({
 			x: a,
 			y: b
@@ -77,7 +77,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (depth) {
 				const $scope5_id = _scope_id();
 				_set_scope_reason(_mask_group($scope3_reason, 0) << 1 | _mask_group($scope3_reason, 2) << 3 | _mask_group($scope3_reason, 1) << 5 | _mask_group($scope3_reason, 3) << 7);
-				const $childScope4 = _patch_child($scope5_id, "#childScope/0", 3, void 0, $scope3_id);
+				const $childScope4 = _peek_scope_id($scope5_id, "#childScope/0", 3, void 0, $scope3_id);
 				Relay.content({
 					a: b,
 					b: a,
@@ -106,7 +106,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 	}, $scope0_id) };
 	_set_scope_reason(38 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope5 = _patch_child($scope0_id, "#childScope/0", 4);
+	const $childScope5 = _peek_scope_id($scope0_id, "#childScope/0", 4);
 	Wrapper.content({
 		a: input.a,
 		b: n,

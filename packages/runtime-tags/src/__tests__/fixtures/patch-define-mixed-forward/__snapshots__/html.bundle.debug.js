@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	let s = 1;
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Kid.content({
 		a: s,
 		b: input.x

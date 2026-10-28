@@ -34,7 +34,7 @@ var template_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope = _patch_child($scope1_id, "b", 0);
+		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		$Child_withLoadAssets({ label: input.label });
 		_patch_child_end();
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "b1");
@@ -53,7 +53,7 @@ var template_default = _template("b", (input) => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html(`<b>${_text_resume($scope3_id, "a", err.message, void 0, 4, 0)}</b>`);
-		const $childScope2 = _patch_child($scope3_id, "b", 1, void 0, $scope0_id);
+		const $childScope2 = _peek_scope_id($scope3_id, "b", 1, void 0, $scope0_id);
 		Lazy.content({});
 		_patch_child_end();
 		_scope($scope3_id, {

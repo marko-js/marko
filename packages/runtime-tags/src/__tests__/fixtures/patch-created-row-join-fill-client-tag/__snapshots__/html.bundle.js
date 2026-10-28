@@ -31,7 +31,7 @@ var row_list_default = _template("c", (input) => {
 	const $input_settled__closures = /* @__PURE__ */ new Set();
 	const $bounty__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	let bounty = plain_let_default({ value: 1 });
 	_var($scope0_id, "b", $childScope, "c0");
 	_patch_child_end();
@@ -72,7 +72,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	row_list_default({
 		tally: input.tally,
 		type: input.type,

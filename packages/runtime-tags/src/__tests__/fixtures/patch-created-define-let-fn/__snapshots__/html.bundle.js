@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_set_scope_reason(_mask_group($scope2_reason, 0) << 1);
-		const $childScope = _patch_child($scope2_id, "a", 0);
+		const $childScope = _peek_scope_id($scope2_id, "a", 0);
 		card_default({ fn: w.fn });
 		_patch_child_end();
 		_scope($scope2_id, { a: _existing_scope($childScope) });
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope2 = _patch_child($scope1_id, "a", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "a", 1);
 			Wrap.content({ fn: function() {
 				return "f:" + input.label;
 			} });

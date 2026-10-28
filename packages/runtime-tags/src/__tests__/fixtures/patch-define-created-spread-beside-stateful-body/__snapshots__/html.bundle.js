@@ -28,21 +28,21 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 2) << 3);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			Panel.content({
 				...input.a,
 				...input.b
 			});
 			_patch_child_end();
 			_set_scope_reason(_mask_group($scope0_reason, 5) << 1 | _mask_group($scope0_reason, 5) << 3);
-			const $childScope2 = _patch_child($scope1_id, "b", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 			Panel.content({
 				isOpen: true,
 				...input.b
 			});
 			_patch_child_end();
 			_set_scope_reason(0);
-			const $childScope3 = _patch_child($scope1_id, "c", 2);
+			const $childScope3 = _peek_scope_id($scope1_id, "c", 2);
 			Panel.content({
 				isOpen: true,
 				label: "x"

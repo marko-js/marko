@@ -66,15 +66,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1><p${_attr("title", $global$1.locale, $scope0_id, "#p/1")}>${_text_resume($scope0_id, "#text/2", $global$1.brand, void 0, 4, 0)}</p>${_el_resume($scope0_id, "#p/1")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/3", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/3", 0);
 	price_card_default({ label: input.label });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/4", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/4", 1);
 	promo_tag_default({ text: "Sale" });
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
-	const $childScope3 = _patch_child($scope0_id, "#childScope/5", 2);
+	const $childScope3 = _peek_scope_id($scope0_id, "#childScope/5", 2);
 	site_footer_default({ year: input.year });
 	_patch_child_end();
 	_html("</main>");

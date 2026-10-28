@@ -30,7 +30,7 @@ _shells({ "__tests__/tags/widget/index.marko": /*@__PURE__*/ (() => `__tests__/t
 var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, 1);
 	let v = inner_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/widget/index.marko_0_v#4/var");
 	_patch_child_end();
@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_patch_child($scope1_id, "#childScope/0", 0);
+			_peek_scope_id($scope1_id, "#childScope/0", 0);
 			widget_default({});
 			_patch_child_end();
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");

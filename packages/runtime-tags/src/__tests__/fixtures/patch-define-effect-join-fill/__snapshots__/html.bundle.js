@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		}) || (_filled_guard($scope1_reason, 1) && (_client_guard($scope1_reason, 2) ? _patch_fill($scope1_id, "va2", a, !$sg__a) : _patch_write($scope1_id, "xe", a, !$sg__a)), _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_fill($scope1_id, "va3", b, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id) };
 	_set_scope_reason(38 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Row.content({
 		a: input.a,
 		b: n

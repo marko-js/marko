@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(12 | _mask_group($scope0_reason, 0) << 5);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		child_default({
 			message: err.message,
 			count,

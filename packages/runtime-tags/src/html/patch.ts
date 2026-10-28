@@ -43,6 +43,7 @@ export { _template_patch as _template } from "./patches/template";
 export {
   _existing_scope,
   _id,
+  _peek_scope_id,
   _resume_locals,
   _scope,
   _script,
@@ -72,7 +73,6 @@ export {
   getUpdatesFrom as _mask_group,
   _page_render,
   _patch_bind,
-  _patch_child,
   popIdHop as _patch_child_end,
   _patch_effect,
   _patch_fill,

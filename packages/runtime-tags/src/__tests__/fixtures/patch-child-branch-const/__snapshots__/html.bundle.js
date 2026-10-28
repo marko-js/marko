@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 1) << 7);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		show: input.show,
 		title: "fixed",

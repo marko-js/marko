@@ -38,7 +38,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<section><h2>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2>`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	grand_default({ content: input.content });
 	_patch_child_end();
 	_html("</section>");
@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_note__closures = new Set();
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		title: input.title,
 		content: _content_resume("__tests__/template.marko_1*content", () => {

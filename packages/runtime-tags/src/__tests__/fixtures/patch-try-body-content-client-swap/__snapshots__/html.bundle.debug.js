@@ -72,7 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "4:2"));
 	}, $scope0_id) };
 	_set_scope_reason(10);
-	const $childScope = _patch_child($scope0_id, "#childScope/2", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	wrapper_default({
 		fail: false,
 		content: alt ? A : B

@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(["x", "y"], (name) => {
 		const $scope1_id = _scope_id();
 		const $for_content__store_set__closures = new Set();
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0, 1);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, 1);
 		let store = store_default({});
 		_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_store#10/var");
 		_patch_child_end();

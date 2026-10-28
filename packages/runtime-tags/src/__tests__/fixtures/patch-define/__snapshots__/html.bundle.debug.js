@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_title__closures, _scope($scope1_id, { _: $wi__input_title && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_title#0:4/subscribe");
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	thing.content({ x: input.n });
 	_patch_child_end();
 	_html(`<div${_attr_class([input.cls, { on: input.on }], $scope0_id, "#div/1", $scope0_reason, 0)}${_attr_style({ color: input.color }, $scope0_id, "#div/1", $scope0_reason, 5)}>x</div>${_el_resume($scope0_id, "#div/1", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 5))}`);

@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		}), _client_guard((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 5)) << 1, 0) && "a3");
 	}, $scope0_id) };
 	_set_scope_reason(926 | (_mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 2) << 11 | _mask_group($scope0_reason, 3) << 13));
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Row.content({
 		a: n,
 		b: input.x,

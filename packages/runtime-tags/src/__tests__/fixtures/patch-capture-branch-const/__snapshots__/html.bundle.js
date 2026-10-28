@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			const t = input.v + "!";
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xb", t, !$sg__input_v);
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			label_default({ get: _bind_resume(function() {
 				return t;
 			}, "a0", $scope1_id) });

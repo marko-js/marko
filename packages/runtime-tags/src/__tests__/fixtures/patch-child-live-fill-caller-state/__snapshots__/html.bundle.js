@@ -35,7 +35,7 @@ var mid_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	let s = "!";
 	_set_scope_reason(2 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		suffix: s,
 		show: input.show
@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let show = false;
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	mid_default({ show });
 	_patch_child_end();
 	_html(`<button class=show>show</button>${_el_resume($scope0_id, "b")}`);

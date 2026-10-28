@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_label__closures = new Set();
 	let count = 0;
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	card_default({
 		meta: attrTag({
 			n: count,

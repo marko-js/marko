@@ -27,13 +27,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		field_default({ name: "before" });
 		_patch_child_end();
 		_await($scope1_id, "#text/1", item.promise, (value) => {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-			const $childScope2 = _patch_child($scope2_id, "#childScope/0", 1);
+			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1);
 			field_default({ name: value });
 			_patch_child_end();
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "1:50");

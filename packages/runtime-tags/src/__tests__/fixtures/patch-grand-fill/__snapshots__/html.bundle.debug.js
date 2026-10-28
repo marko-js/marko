@@ -20,7 +20,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<h3>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h3>`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	badge_default({ text: input.subtitle });
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/tags/card/index.marko", 0);
@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 2) << 3);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			card_default({
 				title: input.title,
 				subtitle: input.subtitle

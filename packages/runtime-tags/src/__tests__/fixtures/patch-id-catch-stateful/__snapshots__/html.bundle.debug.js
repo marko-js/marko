@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, void 0, (error) => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
-				const $childScope = _patch_child($scope3_id, "#childScope/0", 0);
+				const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 0);
 				let count = field_default({ name: error.message });
 				_var($scope3_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_3_count#6/var");
 				_patch_child_end();

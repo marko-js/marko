@@ -31,13 +31,13 @@ _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.m
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, $cg__input_v && 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $cg__input_v && 1);
 	let picked = pick_default({ value: input.v });
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:picked", picked, !_server_guard($scope0_reason, 0));
 	$cg__input_v && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_picked#6/var");
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/2", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/2", 1);
 	label_default({ get: _bind_resume(function() {
 		return picked;
 	}, "__tests__/template.marko_0/get", $scope0_id) });

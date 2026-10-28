@@ -33,14 +33,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
 		_set_scope_reason(_mask_group($scope3_reason, 0) << 1 | _mask_group($scope3_reason, 1) << 3);
-		const $childScope = _patch_child($scope3_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 0);
 		Inner.content({
 			isOpen,
 			label
 		});
 		_patch_child_end();
 		_set_scope_reason(_mask_group($scope3_reason, 1) << 3);
-		const $childScope2 = _patch_child($scope3_id, "#childScope/1", 1);
+		const $childScope2 = _peek_scope_id($scope3_id, "#childScope/1", 1);
 		Inner.content({
 			isOpen: true,
 			label
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 3) << 3);
-			const $childScope3 = _patch_child($scope1_id, "#childScope/0", 2);
+			const $childScope3 = _peek_scope_id($scope1_id, "#childScope/0", 2);
 			Outer.content({
 				isOpen: input.open,
 				label: input.label

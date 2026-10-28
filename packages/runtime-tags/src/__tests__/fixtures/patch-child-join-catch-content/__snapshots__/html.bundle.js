@@ -47,7 +47,7 @@ var panel_default = _template("b", (input) => {
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrapper_default({
 		fail: input.fail,
 		fallback: attrTag({ content: _content_resume("b3", () => {
@@ -80,7 +80,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let n = "k";
 	_set_scope_reason(134 | (_mask_group($scope0_reason, 2) << 3 | _mask_group($scope0_reason, 1) << 5));
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		a: input.a,
 		b: n,
@@ -88,7 +88,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 3 | _mask_group($scope0_reason, 1) << 5 | _mask_group($scope0_reason, 3) << 7);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	panel_default({
 		a: input.a,
 		b: input.b,

@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 					_html(`<em>${_text_resume($scope3_id, "a", v, void 0, $scope0_reason, 2)}</em>`);
 					_scope($scope3_id, {});
 				}, 1, "a0");
-				const $childScope = _patch_child($scope2_id, "b", 0);
+				const $childScope = _peek_scope_id($scope2_id, "b", 0);
 				counter_default({});
 				_patch_child_end();
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_promise ? "a4" : "a5");

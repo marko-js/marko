@@ -33,7 +33,7 @@ var src_default = _template("__tests__/tags/src.marko", (input) => {
 			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/src.marko", "4:6"));
 		}, $scope0_id) });
 	});
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, $cg__input_items && 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $cg__input_items && 1);
 	let h = holder_default({ tab: $tab });
 	$cg__input_items && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/src.marko_0_h#6/var");
 	_patch_child_end();
@@ -92,12 +92,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, $cg__input_items && 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $cg__input_items && 1);
 	let tabs = src_default({ items: input.items });
 	$cg__input_items && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_tabs#7/var");
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/2", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/2", 1);
 	view_default({
 		tabs,
 		selected: input.selected

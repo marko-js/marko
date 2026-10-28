@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["a2"], $scope0_reason, 1);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	counter_default({});
 	_patch_child_end();
 	_scope($scope0_id, {

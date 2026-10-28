@@ -32,7 +32,7 @@ var card_default = _template("b", (input) => {
 		if (input.w) {
 			const $scope3_id = _scope_id();
 			_set_scope_reason(2);
-			const $childScope = _patch_child($scope3_id, "a", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope3_id, "a", 0, void 0, $scope0_id);
 			Panel.content({ open: k });
 			_patch_child_end();
 			_scope($scope3_id, {
@@ -64,7 +64,7 @@ var template_default = _template("a", (input) => {
 		if (input.on) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 3) << 3);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			card_default({
 				n: input.n,
 				w: input.w

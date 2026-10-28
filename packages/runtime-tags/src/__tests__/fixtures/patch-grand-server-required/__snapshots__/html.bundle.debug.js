@@ -29,7 +29,7 @@ var outer_default = _template("__tests__/tags/outer/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	inner_default({ open: input.o });
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/outer/index.marko", 0);
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			outer_default({ o: input.o });
 			_patch_child_end();
 			_scope($scope1_id, { "#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", "3:4");

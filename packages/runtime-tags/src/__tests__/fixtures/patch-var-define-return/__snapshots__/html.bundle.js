@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		return $return;
 	}, $scope0_id) };
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	let total = Sum.content({
 		a: n,
 		b: input.b

@@ -32,7 +32,7 @@ var template_default = _template("b", (input) => {
 	const item = { label: input.label };
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Child_withLoadAssets({
 		name: "a",
 		item: _patch_live($childScope, item, $scope0_id, "f")
@@ -45,7 +45,7 @@ var template_default = _template("b", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_resume($scope2_id, "a", value, void 0, $scope0_reason, 2)}</span>`);
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
-			const $childScope2 = _patch_child($scope2_id, "c", 1);
+			const $childScope2 = _peek_scope_id($scope2_id, "c", 1);
 			$Child_withLoadAssets({
 				name: "c",
 				item: _patch_live($childScope2, item, $scope2_id, ">>f")

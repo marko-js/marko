@@ -77,12 +77,12 @@ var file_host_default = _template("__tests__/tags/file-host.marko", (input) => {
 	const $input_files__closures = new Set();
 	const $input_filesChange__closures = new Set();
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/0", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	file_panes_default({ first: attrTag({ content: _content_elide("__tests__/tags/file-host.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		file_tabs_default({
 			files: input.files,
 			filesChange: input.filesChange
@@ -112,12 +112,12 @@ var route_pg_default = _template("__tests__/tags/route-pg.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, 1);
 	let files = file_store_default({ value: [{ path: "a" }] });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/route-pg.marko_0_files#3/var");
 	_patch_child_end();
 	_set_scope_reason(10);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/2", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/2", 1);
 	file_host_default({
 		files,
 		filesChange: _resume((_new_files) => {
@@ -146,7 +146,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "#childScope/1", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 			$Route_withLoadAssets({});
 			_patch_child_end();
 			_scope($scope1_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "2:2");

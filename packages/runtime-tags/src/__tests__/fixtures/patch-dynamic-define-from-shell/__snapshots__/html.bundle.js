@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_patch_write($scope1_id, "wg", user?.name);
 		_html(`<h4>${_text_resume($scope1_id, "a", user.name, void 0, 4, 0)}</h4>`);
-		const $childScope = _patch_child($scope1_id, "b", 0);
+		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		address_view_default({ address: user.address });
 		_patch_child_end();
 		_html(`<button class=pick>pick</button>${_el_resume($scope1_id, "c")}`);

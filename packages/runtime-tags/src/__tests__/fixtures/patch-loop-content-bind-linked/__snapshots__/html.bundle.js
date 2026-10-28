@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
 		}, $scope0_id, () => [{ 2: label }]) });
 	});
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	list_default({
 		onPick: _bind_resume(function() {
 			console.log(input.note);

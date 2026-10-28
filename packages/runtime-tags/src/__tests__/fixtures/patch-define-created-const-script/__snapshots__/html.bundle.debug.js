@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
-			const $childScope = _patch_child($scope2_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 			Probe.content({});
 			_patch_child_end();
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "8:2");

@@ -63,7 +63,7 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["a1"], $scope0_reason, 2);
 	_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
-	const $childScope = _patch_child($scope0_id, "c", 0);
+	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	badge_default({ label: input.badge });
 	_patch_child_end();
 	_html("</main>");

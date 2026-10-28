@@ -42,7 +42,7 @@ var tree_a_default = _template("__tests__/tags/tree-a.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<ul>");
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			tree_b_default({ node: input.node.kid });
 			_patch_child_end();
 			_html("</ul>");
@@ -74,7 +74,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			tree_a_default({ node: input.node });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_node#0:4/init");

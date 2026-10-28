@@ -13,7 +13,7 @@ _shells({ c: /*@__PURE__*/ (() => `c${_shell_marker($setup)};${((_w0) => `0${_w0
 var w_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "a", 0, $cg__input_x && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_x && 1);
 	let r = ret_default({ x: input.x });
 	$cg__input_x && _var($scope0_id, "b", $childScope, "c0");
 	_patch_child_end();
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	_for_until(1, 0, 1, (n) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(2);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		w_default({ x: s + n });
 		_patch_child_end();
 		_scope($scope1_id, { a: _existing_scope($childScope) });

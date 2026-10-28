@@ -20,7 +20,7 @@ var relay_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	leaf_default({
 		text: input.label,
 		note: input.qty
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html("<main>");
 	_set_scope_reason(8 | _mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	relay_default({
 		label: input.title,
 		qty: count

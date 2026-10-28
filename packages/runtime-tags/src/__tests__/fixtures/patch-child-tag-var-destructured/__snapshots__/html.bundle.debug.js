@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			let { valueChange: $valueChange, value } = counter_default({});
 			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_$pattern#4/var");
 			_patch_child_end();

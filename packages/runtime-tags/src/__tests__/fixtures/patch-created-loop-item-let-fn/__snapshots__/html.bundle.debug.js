@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			} }], (item) => {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-				const $childScope = _patch_child($scope2_id, "#childScope/0", 0);
+				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 				card_default({ opts: item });
 				_patch_child_end();
 				_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "1:17");

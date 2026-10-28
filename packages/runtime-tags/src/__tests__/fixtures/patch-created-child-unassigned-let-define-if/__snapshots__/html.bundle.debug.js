@@ -26,7 +26,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, $wg__open, void 0, void 0, void 0, ["__tests__/tags/card.marko_2*shell"], $scope1_reason, 0);
 		$wi__open && _scope($scope1_id, {}, "__tests__/tags/card.marko", "2:2");
 	}, $scope0_id) };
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({ open: n });
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/card.marko", 0);

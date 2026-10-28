@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_set_scope_reason(158 | (_mask_group($scope0_reason, 3) << 5 | _mask_group($scope0_reason, 2) << 9));
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		a: n,
 		b: input.x,
@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 3) << 5 | _mask_group($scope0_reason, 4) << 7 | _mask_group($scope0_reason, 2) << 9);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	child_default({
 		a: input.y,
 		b: input.x,

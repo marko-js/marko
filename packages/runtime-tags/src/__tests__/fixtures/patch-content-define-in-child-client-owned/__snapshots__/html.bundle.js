@@ -28,7 +28,7 @@ var wrap_default = _template("b", (input) => {
 		($wi__input_title || $wi__open) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({ open: input.open });
 	_patch_child_end();
 	_scope($scope0_id, {
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html("<main>");
 	_set_scope_reason(8 | _mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrap_default({
 		open: true,
 		title: input.title

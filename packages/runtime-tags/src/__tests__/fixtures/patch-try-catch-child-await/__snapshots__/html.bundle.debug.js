@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		loader_default({ promise: input.promise });
 		_patch_child_end();
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "__tests__/template.marko_1_input_promise#0:3/init" : "__tests__/template.marko_1_input_promise#0:3/subscribe");

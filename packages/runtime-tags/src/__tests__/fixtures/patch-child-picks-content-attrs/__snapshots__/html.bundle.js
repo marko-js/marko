@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	let s = 0;
 	_html(`<button>s</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 4) << 7 | _mask_group($scope0_reason, 0) << 9 | _mask_group($scope0_reason, 2) << 11 | _mask_group($scope0_reason, 4) << 17);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	pick_default({
 		on: input.on,
 		title: input.title,

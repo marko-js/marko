@@ -27,7 +27,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0, $cg__input_label && 1);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, $cg__input_label && 1);
 			let v = card_default({ x: input.label });
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchWrite:v", v, !$sg__input_label);
 			$cg__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/tags/wrap.marko_1_v#4/var");
@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let label = input.label;
 	_html(`<button class=edit>edit</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(8 | _mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	wrap_default({
 		label,
 		show: input.show

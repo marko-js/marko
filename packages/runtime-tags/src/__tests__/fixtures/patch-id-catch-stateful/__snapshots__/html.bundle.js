@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			}, void 0, (error) => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
-				const $childScope = _patch_child($scope3_id, "a", 0);
+				const $childScope = _peek_scope_id($scope3_id, "a", 0);
 				let count = field_default({ name: error.message });
 				_var($scope3_id, "b", $childScope, "a0");
 				_patch_child_end();

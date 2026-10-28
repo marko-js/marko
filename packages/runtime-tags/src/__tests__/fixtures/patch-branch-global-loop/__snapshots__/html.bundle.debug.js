@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html("<div>");
 			_for_of(items, (item) => {
 				const $scope3_id = _scope_id();
-				const $childScope = _patch_child($scope3_id, "#childScope/0", 0);
+				const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 0);
 				row_default(item);
 				_patch_child_end();
 				_scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "10:6");

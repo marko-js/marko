@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 2) << 3);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		field_default({
 			name: item.key,
 			heading
@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope2 = _patch_child($scope2_id, "#childScope/0", 1);
+		const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1);
 		field_default({
 			name: item.key,
 			heading
@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_in(input.record, (key, value) => {
 		const $scope3_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope3 = _patch_child($scope3_id, "#childScope/0", 2);
+		const $childScope3 = _peek_scope_id($scope3_id, "#childScope/0", 2);
 		field_default({
 			name: key,
 			heading
@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_in(input.record, (key, value) => {
 		const $scope4_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 3) << 3);
-		const $childScope4 = _patch_child($scope4_id, "#childScope/0", 3);
+		const $childScope4 = _peek_scope_id($scope4_id, "#childScope/0", 3);
 		field_default({
 			name: value,
 			heading
@@ -78,7 +78,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_to(input.end, input.start, 1, (i) => {
 		const $scope5_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope5 = _patch_child($scope5_id, "#childScope/0", 4);
+		const $childScope5 = _peek_scope_id($scope5_id, "#childScope/0", 4);
 		field_default({
 			name: i,
 			heading
@@ -89,7 +89,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_to(input.end, input.start, 1, (i) => {
 		const $scope6_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-		const $childScope6 = _patch_child($scope6_id, "#childScope/0", 5);
+		const $childScope6 = _peek_scope_id($scope6_id, "#childScope/0", 5);
 		field_default({
 			name: i,
 			heading
@@ -100,7 +100,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_until(input.end, input.start, 2, (i) => {
 		const $scope7_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope7 = _patch_child($scope7_id, "#childScope/0", 6);
+		const $childScope7 = _peek_scope_id($scope7_id, "#childScope/0", 6);
 		field_default({
 			name: i,
 			heading
@@ -111,7 +111,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_until(input.end, input.start, 2, (i) => {
 		const $scope8_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-		const $childScope8 = _patch_child($scope8_id, "#childScope/0", 7);
+		const $childScope8 = _peek_scope_id($scope8_id, "#childScope/0", 7);
 		field_default({
 			name: i,
 			heading

@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	const z = input.v + $global$1.flag;
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	wrap_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
 		const $scope1_id = _scope_id();

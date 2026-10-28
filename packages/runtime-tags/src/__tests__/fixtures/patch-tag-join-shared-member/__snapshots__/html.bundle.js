@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	let b = "b";
 	_html(`<button>b</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(40838 | (_mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 1) << 5 | _mask_group($scope0_reason, 2) << 13 | _mask_group($scope0_reason, 3) << 17 | _mask_group($scope0_reason, 4) << 19));
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	rows_default({
 		a: input.a,
 		b,

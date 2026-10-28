@@ -70,12 +70,12 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 2, $cg__input_a && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 2, $cg__input_a && 1);
 	let first = D.content({ label: input.a });
 	$cg__input_a && _var($scope0_id, "b", $childScope, "a7");
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 2) << 3);
-	const $childScope2 = _patch_child($scope0_id, "c", 3);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 3);
 	D.content({
 		label: input.b,
 		prev: first

@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	let note = input.note;
 	_html("<main>");
 	_set_scope_reason(32);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		title: "fixed",
 		klass: "c",

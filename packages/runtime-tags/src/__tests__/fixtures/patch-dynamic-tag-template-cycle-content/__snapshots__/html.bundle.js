@@ -36,7 +36,7 @@ var tree_b_default = _template("c", (input) => {
 	const $input_node_kid__closures = /* @__PURE__ */ new Set();
 	_html(`<div>${_text_resume($scope0_id, "a", input.node.name, void 0, $scope0_reason, 0)}`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope = _patch_child($scope0_id, "b", 1);
+	const $childScope = _peek_scope_id($scope0_id, "b", 1);
 	wrap_default({
 		show: !!input.node.kid,
 		content: _content_resume("c2", () => {
@@ -68,14 +68,14 @@ var tree_a_default = _template("b", (input) => {
 	const $input_node_kid__closures = /* @__PURE__ */ new Set();
 	_html(`<li>${_text_resume($scope0_id, "a", input.node.name, void 0, $scope0_reason, 0)}`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	wrap_default({
 		show: !!input.node.kid,
 		content: _content_resume("b2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			tree_b_default({ node: input.node.kid });
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, _client_guard($scope0_reason, 1) ? "b0" : "b1");

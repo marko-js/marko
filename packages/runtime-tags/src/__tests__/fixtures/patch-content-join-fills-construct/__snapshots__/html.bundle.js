@@ -66,7 +66,7 @@ var page_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $bonus__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	let bonus = box_default({});
 	_var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
@@ -77,12 +77,12 @@ var page_default = _template("a", (input) => {
 		const $for_content__item_n__closures = /* @__PURE__ */ new Set();
 		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "va2", item?.n);
 		_set_scope_reason(0);
-		const $childScope3 = _patch_child($scope1_id, "a", 2);
+		const $childScope3 = _peek_scope_id($scope1_id, "a", 2);
 		panel_default({ aside: attrTag({ content: _content_elide("a1", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_set_scope_reason(6);
-			const $childScope2 = _patch_child($scope2_id, "a", 1);
+			const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
 			counter_default({ base: (bonus ?? p.base) + item.n });
 			_patch_child_end();
 			_subscribe($wi__input_items && $for_content__item_n__closures, _subscribe($bonus__closures, _scope($scope2_id, {
@@ -120,7 +120,7 @@ var template_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			page_default({ items: input.items });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b0");

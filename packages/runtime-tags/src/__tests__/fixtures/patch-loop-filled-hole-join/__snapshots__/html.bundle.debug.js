@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = false;
 	_html(`<button class=toggle>${_text_resume($scope0_id, "#text/1", open ? "open" : "closed")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-	const $childScope = _patch_child($scope0_id, "#childScope/2", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	feed_list_default({
 		items: input.items,
 		data: input.data

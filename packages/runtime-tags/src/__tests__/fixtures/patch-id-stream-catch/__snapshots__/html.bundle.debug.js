@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope2 = _patch_child($scope1_id, "#childScope/0", 2);
+		const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 2);
 		field_default({
 			name: "before",
 			heading
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_for_of(items, (item) => {
 				const $scope5_id = _scope_id();
 				_set_scope_reason(0);
-				const $childScope3 = _patch_child($scope5_id, "#childScope/0", 3);
+				const $childScope3 = _peek_scope_id($scope5_id, "#childScope/0", 3);
 				field_default({
 					name: item.key,
 					heading
@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_set_scope_reason(0);
-		_patch_child($scope2_id, "#childScope/0", 0);
+		_peek_scope_id($scope2_id, "#childScope/0", 0);
 		field_default({
 			name: "loading",
 			heading
@@ -78,7 +78,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_set_scope_reason(16);
-		const $childScope = _patch_child($scope3_id, "#childScope/0", 1);
+		const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 1);
 		field_default({
 			name: error.message,
 			heading

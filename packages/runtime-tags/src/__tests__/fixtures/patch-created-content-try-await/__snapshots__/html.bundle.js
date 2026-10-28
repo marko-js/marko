@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	const $input_id__closures = /* @__PURE__ */ new Set();
 	const $input_value__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 2) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrap_default({
 		show: input.show,
 		content: _content_resume("a5", () => {

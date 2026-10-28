@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const $if_content__v__closures = /* @__PURE__ */ new Set();
-			const $childScope = _patch_child($scope1_id, "a", 0, 1);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0, 1);
 			let v = counter_default({});
 			_var($scope1_id, "b", $childScope, "a0");
 			_patch_child_end();

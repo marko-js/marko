@@ -27,7 +27,7 @@ var template_default = _template("b", (input) => {
 		return n;
 	})();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Tagged_withLoadAssets({ node });
 	_patch_child_end();
 	_scope($scope0_id, { b: _existing_scope($childScope) });

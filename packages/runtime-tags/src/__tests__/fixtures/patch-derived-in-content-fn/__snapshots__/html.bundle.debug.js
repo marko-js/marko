@@ -36,14 +36,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_label__closures = new Set();
 	let shown = "";
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/0", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	wrapper_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		const label = input.label;
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(($scope0_page ? _mask_group($scope0_reason, 0) : 0) << 1);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		reader_default(_patch_live($childScope, {
 			read: _bind_resume(() => label, "__tests__/template.marko_1/read", $scope1_id),
 			onRead: _resume(function(value) {

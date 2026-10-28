@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_set_scope_reason(16);
-			const $childScope = _patch_child($scope3_id, "a", 1);
+			const $childScope = _peek_scope_id($scope3_id, "a", 1);
 			field_default({ name: item });
 			_patch_child_end();
 			_scope($scope3_id, { a: _existing_scope($childScope) });
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope4_id = _scope_id();
 			_set_scope_reason(16);
-			const $childScope2 = _patch_child($scope4_id, "a", 2);
+			const $childScope2 = _peek_scope_id($scope4_id, "a", 2);
 			field_default({ name: key });
 			_patch_child_end();
 			_scope($scope4_id, { a: _existing_scope($childScope2) });
@@ -64,7 +64,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope5_id = _scope_id();
 			_set_scope_reason(16);
-			const $childScope3 = _patch_child($scope5_id, "a", 3);
+			const $childScope3 = _peek_scope_id($scope5_id, "a", 3);
 			field_default({ name: i });
 			_patch_child_end();
 			_scope($scope5_id, { a: _existing_scope($childScope3) });
@@ -75,13 +75,13 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope6_id = _scope_id();
 			_set_scope_reason(16);
-			const $childScope4 = _patch_child($scope6_id, "a", 4);
+			const $childScope4 = _peek_scope_id($scope6_id, "a", 4);
 			field_default({ name: i });
 			_patch_child_end();
 			_scope($scope6_id, { a: _existing_scope($childScope4) });
 		}, $scope0_id) });
 	});
-	const $childScope5 = _patch_child($scope0_id, "a", 5);
+	const $childScope5 = _peek_scope_id($scope0_id, "a", 5);
 	Content.content({ item: $item });
 	_patch_child_end();
 	_scope($scope0_id, {

@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			} }], (item) => {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-				const $childScope = _patch_child($scope2_id, "a", 0);
+				const $childScope = _peek_scope_id($scope2_id, "a", 0);
 				card_default({ opts: item });
 				_patch_child_end();
 				_scope($scope2_id, { a: _existing_scope($childScope) });

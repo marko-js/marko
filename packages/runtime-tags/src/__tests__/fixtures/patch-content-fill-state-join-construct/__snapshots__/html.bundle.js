@@ -21,7 +21,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<section><h2>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2>`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	frame_default({ content: input.content });
 	_patch_child_end();
 	_html("</section>");
@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $for_content__item_id__closures = /* @__PURE__ */ new Set();
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		card_default({
 			title: item.title,
 			content: _content_elide("a2", () => {

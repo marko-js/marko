@@ -18,7 +18,7 @@ var tabs_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	view_default({ content: [...input.tab].find((t) => t.active)?.content });
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	let s = 0;
 	_html(`<button class=s>s</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	tabs_default({ tab: attrTags(attrTag({
 		active: input.x === 1,
 		content: _content_elide("a1", () => {

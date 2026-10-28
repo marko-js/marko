@@ -19,7 +19,7 @@ var mid_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_view_default(_patch_live($childScope, { get: input.get }, $scope0_id, "d"));
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.get, !_server_guard($scope0_reason, 0));
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 	const up = _resume(() => "U" + input.title + n, "a0", $scope0_id);
 	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id);
 	_set_scope_reason(6);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	mid_default({ get: input.upper ? up : low });
 	_patch_child_end();
 	_html(`<button>inc</button>${_el_resume($scope0_id, "b")}`);

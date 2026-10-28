@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	};
 	_html(`<p>${_text_resume($scope0_id, "#text/0", input.x, void 0, $scope0_reason, 1)}</p>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	child_default({ value: _patch_live($childScope, c, $scope0_id, "input_y input_x") });
 	_patch_child_end();
 	_scope($scope0_id, {

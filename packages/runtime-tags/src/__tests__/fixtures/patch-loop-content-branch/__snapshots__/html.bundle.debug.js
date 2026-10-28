@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $for_content__item_n__closures = new Set();
 		const $for_content__item_alt__closures = new Set();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		card_default({
 			title: item.t,
 			content: _content_elide("__tests__/template.marko_2*content", () => {

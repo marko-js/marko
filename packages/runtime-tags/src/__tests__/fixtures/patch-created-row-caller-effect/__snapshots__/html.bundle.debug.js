@@ -33,14 +33,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(38 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope = _patch_child($scope0_id, "#childScope/2", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	child_default({
 		items: input.items,
 		count
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/3", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/3", 1);
 	child_default({
 		items: input.items,
 		count: input.count

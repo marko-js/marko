@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	const $global$1 = $global();
 	let count = 0;
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_text_default({ v: count + $global$1.suffix });
 	_patch_child_end();
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}`);

@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 		_html(`<p>${_text_resume($scope1_id, "a", n)}</p>`);
 		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");
 	}, $scope0_id) };
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Count.content({});
 	_patch_child_end();
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			child_default({});
 			_patch_child_end();
 			_scope($scope1_id, { a: _existing_scope($childScope) });

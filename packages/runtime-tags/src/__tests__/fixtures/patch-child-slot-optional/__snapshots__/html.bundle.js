@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({ title: input.title });
 	_patch_child_end();
 	_html(`<button>${_text_resume($scope0_id, "c", count)}</button>${_el_resume($scope0_id, "b")}</main>`);

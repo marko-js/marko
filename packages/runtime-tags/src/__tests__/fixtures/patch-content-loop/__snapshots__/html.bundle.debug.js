@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $for_content__item_text__closures = new Set();
 		_html("<li>");
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		widget_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();

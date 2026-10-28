@@ -33,7 +33,7 @@ var row_list_default = _template("__tests__/tags/row-list.marko", (input) => {
 	const $input_settled__closures = new Set();
 	const $bounty__closures = new Set();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, 1);
 	let bounty = plain_let_default({ value: 1 });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/row-list.marko_0_bounty#9/var");
 	_patch_child_end();
@@ -80,7 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	row_list_default({
 		tally: input.tally,
 		type: input.type,
@@ -93,7 +93,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (more) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			_patch_child($scope1_id, "#childScope/0", 1);
+			_peek_scope_id($scope1_id, "#childScope/0", 1);
 			row_list_default({
 				tally: [],
 				type: "a",

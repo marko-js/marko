@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 		}), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1)) << 1, 0) && "a4");
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 2) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Wrap.content({
 		n: input.n,
 		content: input.x === 1 ? A : B

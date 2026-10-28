@@ -32,7 +32,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 			if (k === input.sel) {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(126);
-				const $childScope = _patch_child($scope2_id, "#childScope/0", 0);
+				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 				child_default({
 					a: v + s,
 					b: input.b
@@ -81,7 +81,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 3) << 7);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	shape_default({
 		obj: input.obj,
 		sel: input.sel,

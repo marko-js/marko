@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<main>");
 	_await($scope0_id, "#text/0", input.v, (v) => {
 		const $scope3_id = _scope_id();
-		const $childScope = _patch_child($scope3_id, "#childScope/0", 1, void 0, $scope0_id);
+		const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 1, void 0, $scope0_id);
 		Body.content({});
 		_patch_child_end();
 		_filled_guard($scope0_reason, 2) && _content_withheld("__tests__/template.marko_2*content", $scope3_id) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.note);

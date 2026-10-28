@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_on__closures = new Set();
 	_html("<main>");
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	card_default({
 		p: input.p,
 		content: _content("__tests__/template.marko_1*content", () => {

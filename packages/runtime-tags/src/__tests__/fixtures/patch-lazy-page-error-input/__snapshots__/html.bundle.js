@@ -38,7 +38,7 @@ var template_default = _template("c", (input) => {
 	_if(() => {
 		if (input.page === 1) {
 			const $scope2_id = _scope_id();
-			const $childScope = _patch_child($scope2_id, "b", 0);
+			const $childScope = _peek_scope_id($scope2_id, "b", 0);
 			$Page1_withLoadAssets({});
 			_patch_child_end();
 			_scope($scope2_id, { b: _existing_scope($childScope) });
@@ -46,7 +46,7 @@ var template_default = _template("c", (input) => {
 		} else {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope2 = _patch_child($scope1_id, "b", 0);
+			const $childScope2 = _peek_scope_id($scope1_id, "b", 0);
 			$Page2_withLoadAssets({ error: input.error });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "c0");

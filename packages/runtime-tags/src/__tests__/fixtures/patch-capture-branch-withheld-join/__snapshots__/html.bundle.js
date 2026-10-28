@@ -43,7 +43,7 @@ var child_default = _template("b", (input) => {
 			_patch_attr_content("a", $scope1_id, input.mode ? frag.content : null, 0, void 0, $scope0_reason, 6);
 			_html(`</section>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 6))}`);
 			_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
-			const $childScope = _patch_child($scope1_id, "b", 1);
+			const $childScope = _peek_scope_id($scope1_id, "b", 1);
 			reader_default({ get: _bind_resume(function() {
 				return c;
 			}, "b0", $scope1_id) });
@@ -78,7 +78,7 @@ var template_default = _template("a", (input) => {
 	let n = 0;
 	let m = false;
 	_set_scope_reason(10366 | (_mask_group($scope0_reason, 2) << 7 | _mask_group($scope0_reason, 1) << 9));
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		a: n,
 		b: input.x,
@@ -87,7 +87,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(8312 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 7 | _mask_group($scope0_reason, 1) << 9 | _mask_group($scope0_reason, 3) << 11));
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	child_default({
 		a: input.y,
 		b: input.x,

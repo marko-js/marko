@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const branchId = _id("branchId");
 				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
 				_set_scope_reason(0);
-				_patch_child($scope4_id, "#childScope/2", 0);
+				_peek_scope_id($scope4_id, "#childScope/2", 0);
 				field_default({ name: "caught" });
 				_patch_child_end();
 			}
@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const branchId = _id("branchId~1");
 				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
 				_set_scope_reason(0);
-				_patch_child($scope6_id, "#childScope/2", 1);
+				_peek_scope_id($scope6_id, "#childScope/2", 1);
 				field_default({ name: "caught" });
 				_patch_child_end();
 			}
@@ -79,7 +79,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const branchId = _id("branchId~2");
 				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
 				_set_scope_reason(0);
-				_patch_child($scope8_id, "#childScope/2", 2);
+				_peek_scope_id($scope8_id, "#childScope/2", 2);
 				field_default({ name: "caught" });
 				_patch_child_end();
 			}
@@ -93,7 +93,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const branchId = _id("branchId~3");
 				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
 				_set_scope_reason(0);
-				_patch_child($scope10_id, "#childScope/2", 3);
+				_peek_scope_id($scope10_id, "#childScope/2", 3);
 				field_default({ name: "caught" });
 				_patch_child_end();
 			}

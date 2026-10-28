@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (true) {
 				$item = attrTag({ label: "x" });
 			}
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			Panel.content({
 				isOpen: input.open,
 				item: $item

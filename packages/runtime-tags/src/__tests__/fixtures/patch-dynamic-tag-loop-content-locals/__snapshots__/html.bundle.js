@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, {});
 		}, $scope0_id, () => [{ 1: t }]) });
 	});
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	tabs_default({
 		selected: input.selected,
 		tab: $tab

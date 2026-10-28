@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope = _patch_child($scope1_id, "#childScope/1", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 		$LazyChild_withLoadAssets({ label: input.label });
 		_patch_child_end();
 		$cg__input_label && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:3/init");
@@ -73,7 +73,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope2 = _patch_child($scope2_id, "#childScope/0", 1);
+		const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1);
 		child_default({ label: input.label });
 		_patch_child_end();
 		$cg__input_label && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:3/init");
@@ -96,7 +96,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope3 = _patch_child($scope3_id, "#childScope/1", 2);
+		const $childScope3 = _peek_scope_id($scope3_id, "#childScope/1", 2);
 		$LazyChild_withLoadAssets({ label: input.label });
 		_patch_child_end();
 		$cg__input_label && _patch_init($scope3_id, "__tests__/template.marko_3_input_label#0:3/init");
@@ -109,7 +109,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Outer = { content: _content("__tests__/template.marko_7*content", () => {
 		const $scope7_id = _scope_id();
 		const $scope7_reason = _scope_reason();
-		const $childScope4 = _patch_child($scope7_id, "#childScope/0", 3, void 0, $scope0_id);
+		const $childScope4 = _peek_scope_id($scope7_id, "#childScope/0", 3, void 0, $scope0_id);
 		Inner.content({});
 		_patch_child_end();
 		_scope($scope7_id, {
@@ -127,16 +127,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope5_reason = _scope_reason();
 		const $scope5_id = _scope_id();
 		_html(`<b>${_text_resume($scope5_id, "#text/0", err.message, void 0, 4, 0)}</b>`);
-		const $childScope5 = _patch_child($scope5_id, "#childScope/1", 4, void 0, $scope0_id);
+		const $childScope5 = _peek_scope_id($scope5_id, "#childScope/1", 4, void 0, $scope0_id);
 		LazyBody.content({});
 		_patch_child_end();
-		const $childScope6 = _patch_child($scope5_id, "#childScope/2", 5, void 0, $scope0_id);
+		const $childScope6 = _peek_scope_id($scope5_id, "#childScope/2", 5, void 0, $scope0_id);
 		ChildBody.content({});
 		_patch_child_end();
-		const $childScope7 = _patch_child($scope5_id, "#childScope/3", 6);
+		const $childScope7 = _peek_scope_id($scope5_id, "#childScope/3", 6);
 		OwnBody.content({});
 		_patch_child_end();
-		const $childScope8 = _patch_child($scope5_id, "#childScope/4", 7, void 0, $scope0_id);
+		const $childScope8 = _peek_scope_id($scope5_id, "#childScope/4", 7, void 0, $scope0_id);
 		Outer.content({});
 		_patch_child_end();
 		_scope($scope5_id, {

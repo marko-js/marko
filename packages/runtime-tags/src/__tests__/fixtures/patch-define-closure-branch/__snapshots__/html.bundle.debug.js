@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "2:2", { label: "2:17" }), "__tests__/template.marko_1_open#0:5/subscribe") || _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", label, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({ label: input.label });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/1")}`);

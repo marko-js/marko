@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			card_default({ opts: _patch_live($childScope, opts, $scope1_id, ">d") });
 			_patch_child_end();
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a1");

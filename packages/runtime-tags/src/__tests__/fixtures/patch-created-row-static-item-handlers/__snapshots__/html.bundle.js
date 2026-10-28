@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			_for_of([1, 2], (i) => {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(($scope0_page ? 1 : 0) << 1);
-				const $childScope = _patch_child($scope2_id, "a", 0);
+				const $childScope = _peek_scope_id($scope2_id, "a", 0);
 				field_default({ onKeyDown: _resume(function() {
 					count += i;
 				}, "a0", $scope2_id) });

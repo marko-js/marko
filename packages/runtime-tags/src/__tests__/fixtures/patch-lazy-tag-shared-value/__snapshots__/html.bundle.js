@@ -31,7 +31,7 @@ var template_default = _template("b", (input) => {
 	let count = 0;
 	_html(`<button>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "d", 0);
+	const $childScope = _peek_scope_id($scope0_id, "d", 0);
 	$Child_withLoadAssets({ item: _patch_live($childScope, item, $scope0_id, "g") });
 	_patch_child_end();
 	_script($scope0_id, "b0");

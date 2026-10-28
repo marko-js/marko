@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main>");
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	let tag = tagger_default({});
 	_patch_child_end();
 	_html(`<p>${_text_resume($scope0_id, "#text/2", tag, void 0, 4, 0)}</p></main>`);

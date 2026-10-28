@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", item?.id);
 		_html(`<li${hovered === item.id ? " class=hovered" : ""}>`);
-		const $childScope = _patch_child($scope1_id, "#childScope/1", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 		card_default({
 			label: item.id,
 			href: link(data, item.id)

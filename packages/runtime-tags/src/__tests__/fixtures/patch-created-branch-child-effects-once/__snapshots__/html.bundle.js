@@ -17,7 +17,7 @@ _shells({ c: /*@__PURE__*/ ((_w0) => `c${_shell_marker($setup$1)};${((_w0) => `/
 var outer_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	inner_default({});
 	_patch_child_end();
 	_script($scope0_id, "c0");
@@ -65,10 +65,10 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			outer_default({});
 			_patch_child_end();
-			const $childScope2 = _patch_child($scope1_id, "b", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 			Body.content({});
 			_patch_child_end();
 			_for_of(input.items, (item) => {
@@ -88,7 +88,7 @@ var template_default = _template("a", (input) => {
 				}
 			}, $scope1_id, "d", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["a7"], $scope0_reason, 5);
 			_set_scope_reason(0);
-			const $childScope3 = _patch_child($scope1_id, "e", 2);
+			const $childScope3 = _peek_scope_id($scope1_id, "e", 2);
 			wrap_default({ body: attrTag({ content: _content_elide("a5", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
@@ -107,7 +107,7 @@ var template_default = _template("a", (input) => {
 			_dynamic_tag($scope1_id, "f", input.tag, {}, 34, _content_resume("a4", () => {
 				const $scope3_id = _scope_id();
 				_scope_reason();
-				const $childScope4 = _patch_child($scope3_id, "a", 3);
+				const $childScope4 = _peek_scope_id($scope3_id, "a", 3);
 				inner_default({});
 				_patch_child_end();
 				_for_of(input.items, (item) => {

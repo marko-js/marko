@@ -31,14 +31,14 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<button>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(8 | _mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "c", 0);
+	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	child_default({
 		show: input.show,
 		count
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope2 = _patch_child($scope0_id, "d", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "d", 1);
 	child_default({
 		show: input.show,
 		count: input.count

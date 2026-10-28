@@ -23,14 +23,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	card_default({ title: "root" });
 	_patch_child_end();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope2 = _patch_child($scope1_id, "#childScope/0", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1);
 			card_default({ title: "branch" });
 			_patch_child_end();
 			_html(`<p>${_text_resume($scope1_id, "#text/1", input.note, void 0, $scope0_reason, 1)}</p>`);

@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_patch_fill($scope1_id, "va1", item?.id);
 		_html(`<li${hovered === item.id ? " class=hovered" : ""}>`);
-		const $childScope = _patch_child($scope1_id, "b", 0);
+		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		card_default({
 			label: item.id,
 			href: link(data, item.id)

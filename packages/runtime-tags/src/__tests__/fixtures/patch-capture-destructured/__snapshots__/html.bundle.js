@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	const { title } = input.v;
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", title, !_server_guard($scope0_reason, 0));
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_default({ get: _bind_resume(function() {
 		return title;
 	}, "a0", $scope0_id) });

@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $for_content__row_id__closures = /* @__PURE__ */ new Set();
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 3);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		card_default({
 			user: row.user,
 			content: _content_kept("a2", () => {

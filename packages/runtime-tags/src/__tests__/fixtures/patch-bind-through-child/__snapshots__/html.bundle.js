@@ -52,13 +52,13 @@ _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0, _w1) => `0
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	let store = store_default({});
 	_var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
 	_html(`<p>${_text_resume($scope0_id, "c", store.last)}</p>`);
 	_set_scope_reason(8 | _mask_group($scope0_reason, 0) << 1);
-	const $childScope2 = _patch_child($scope0_id, "d", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "d", 1);
 	child_default({
 		show: input.show,
 		on: store.set

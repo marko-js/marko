@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $cg__value = _client_guard($scope1_reason, 0);
 		_set_scope_reason((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1);
-		const $childScope = _patch_child($scope1_id, "a", 0, ($cg__input_suffix || $cg__value) && 1);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0, ($cg__input_suffix || $cg__value) && 1);
 		let label = labeler_default({ title: value + input.suffix });
 		($cg__input_suffix || $cg__value) && _var($scope1_id, "b", $childScope, "a0");
 		_patch_child_end();
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		}), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "a3") || _filled_guard($scope1_reason, 0) && $cg__input_suffix && _patch_fill($scope1_id, "va2", value, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(2);
-	const $childScope2 = _patch_child($scope0_id, "a", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "a", 1);
 	Row.content({ value: n });
 	_patch_child_end();
 	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);

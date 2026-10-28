@@ -28,7 +28,7 @@ var template_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope = _patch_child($scope1_id, "b", 0);
+			const $childScope = _peek_scope_id($scope1_id, "b", 0);
 			$Lazy_withLoadAssets({ label: "s" });
 			_patch_child_end();
 			_scope($scope1_id, { b: _existing_scope($childScope) });

@@ -23,7 +23,7 @@ var first_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const item = [...input.item][0];
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	shows_default({ content: item.content });
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, {});
 		}, $scope0_id, () => [{ 1: x }]) });
 	});
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	first_default({ item: $item });
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });

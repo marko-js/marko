@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "5:2");
 	}, $scope0_id) };
 	_set_scope_reason((_mask_group($scope0_reason, 0) | _filled_guard($scope0_reason, 0)) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content(input.label);
 	_patch_child_end();
 	_dynamic_tag($scope0_id, "#text/1", open ? Other : Panel, [input.label], 8, 0, 1);

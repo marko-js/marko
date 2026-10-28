@@ -39,7 +39,7 @@ var mid_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_set_scope_reason(16 | ((2 | _mask_group($scope0_reason, 0)) << 1 | _mask_group($scope0_reason, 0) << 5));
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		a: $global$1.x,
 		b: input.b
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	mid_default({ b: n });
 	_patch_child_end();
 	_html(`<button class=n>+</button>${_el_resume($scope0_id, "b")}`);

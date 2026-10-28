@@ -61,7 +61,7 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 					const have = withDrops(bankCount(p, part), drops, part);
 					const live = have + now * proj;
 					_html(`<span${live < 2 ? " class=short" : ""}>${_text_resume($scope3_id, "#text/1", part, void 0, 0, 0)} ${_text_resume($scope3_id, "#text/2", have, 2)}</span>${_el_resume($scope3_id, "#span/0")}`);
-					const $childScope = _patch_child($scope3_id, "#childScope/3", 0);
+					const $childScope = _peek_scope_id($scope3_id, "#childScope/3", 0);
 					show_rate_default({ v: proj });
 					_patch_child_end();
 					_subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
@@ -108,7 +108,7 @@ _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.m
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	$Shop_withLoadAssets({});
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);

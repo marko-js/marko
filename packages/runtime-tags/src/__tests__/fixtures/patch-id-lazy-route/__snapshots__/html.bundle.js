@@ -46,7 +46,7 @@ var route_cl_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	sub_default({
 		n: input.n,
 		items: [{
@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Route_withLoadAssets({ n: Number($global$1.n || 5) });
 	_patch_child_end();
 	_fill_global_subscribe("a0", $scope0_id);

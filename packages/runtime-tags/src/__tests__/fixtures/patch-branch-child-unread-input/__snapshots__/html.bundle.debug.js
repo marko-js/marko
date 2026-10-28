@@ -64,7 +64,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.admin) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			panel_default({ data: input.adminData });
 			_patch_child_end();
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_adminData#0:7/init");
@@ -76,7 +76,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		} else {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
-			const $childScope2 = _patch_child($scope2_id, "#childScope/0", 0);
+			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 0);
 			card_default({ user: input.user });
 			_patch_child_end();
 			_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_user#0:8/init");
@@ -91,11 +91,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.more) {
 			const $scope3_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 6) << 1);
-			const $childScope3 = _patch_child($scope3_id, "#childScope/0", 1);
+			const $childScope3 = _peek_scope_id($scope3_id, "#childScope/0", 1);
 			card_default(input.props);
 			_patch_child_end();
 			_set_scope_reason(_mask_group($scope0_reason, 5) << 1 | _mask_group($scope0_reason, 5) << 3);
-			const $childScope4 = _patch_child($scope3_id, "#childScope/1", 2);
+			const $childScope4 = _peek_scope_id($scope3_id, "#childScope/1", 2);
 			toggle_default({ user: input.other });
 			_patch_child_end();
 			_client_guard($scope0_reason, 5) && _patch_init($scope3_id, "__tests__/template.marko_3_input_other#0:11/init");

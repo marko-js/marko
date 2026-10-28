@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.left) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope = _patch_child($scope2_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 			field_default({ label: "left" });
 			_patch_child_end();
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "1:2");
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.right) {
 			const $scope3_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope2 = _patch_child($scope3_id, "#childScope/0", 1);
+			const $childScope2 = _peek_scope_id($scope3_id, "#childScope/0", 1);
 			field_default({ label: "right" });
 			_patch_child_end();
 			_scope($scope3_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "2:2");
@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (input.right) {
 				const $scope4_id = _scope_id();
 				_set_scope_reason(0);
-				const $childScope3 = _patch_child($scope4_id, "#childScope/0", 2);
+				const $childScope3 = _peek_scope_id($scope4_id, "#childScope/0", 2);
 				field_default({ label: "repeat" });
 				_patch_child_end();
 				_scope($scope4_id, { "#childScope/0": _existing_scope($childScope3) }, "__tests__/template.marko", "3:17");
@@ -66,10 +66,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wi__input_right && _subscribe(_unfilled_if($scope0_reason, 1) && $input_right__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_right#0:7/subscribe", $wg__input_right);
 		$wg__input_right || $wi__input_right && _resume_branch($scope1_id);
 	}, $scope0_id) };
-	const $childScope4 = _patch_child($scope0_id, "#childScope/2", 3);
+	const $childScope4 = _peek_scope_id($scope0_id, "#childScope/2", 3);
 	Repeat.content({});
 	_patch_child_end();
-	const $childScope5 = _patch_child($scope0_id, "#childScope/3", 4);
+	const $childScope5 = _peek_scope_id($scope0_id, "#childScope/3", 4);
 	Repeat.content({});
 	_patch_child_end();
 	_scope($scope0_id, {

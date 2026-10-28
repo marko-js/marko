@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		const $for_content__item_text__closures = /* @__PURE__ */ new Set();
 		_html("<li>");
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		widget_default({ content: _content_elide("a1", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();

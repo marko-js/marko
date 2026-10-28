@@ -51,7 +51,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			$wg__input_show || _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	list_default({ item: $item });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/child.marko_0");
@@ -76,7 +76,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({ show: input.show });
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

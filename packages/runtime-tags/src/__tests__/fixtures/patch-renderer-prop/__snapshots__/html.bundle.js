@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		body: extra,
 		open: true

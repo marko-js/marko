@@ -31,14 +31,14 @@ var template_default = _template("b", (input) => {
 	const item = { label: input.label };
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		name: "a",
 		item: _patch_live($childScope, item, $scope0_id, "f")
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	child_default({
 		name: "b",
 		item: _patch_live($childScope2, item, $scope0_id, "f")
@@ -51,7 +51,7 @@ var template_default = _template("b", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_resume($scope2_id, "a", value, void 0, $scope0_reason, 2)}</span>`);
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
-			const $childScope3 = _patch_child($scope2_id, "b", 2);
+			const $childScope3 = _peek_scope_id($scope2_id, "b", 2);
 			child_default({
 				name: "c",
 				item: _patch_live($childScope3, item, $scope2_id, ">>f")

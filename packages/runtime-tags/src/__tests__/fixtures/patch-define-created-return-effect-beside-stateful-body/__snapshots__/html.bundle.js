@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope = _patch_child($scope2_id, "a", 0);
+			const $childScope = _peek_scope_id($scope2_id, "a", 0);
 			let r = Panel.content({
 				isOpen: true,
 				label: "k"

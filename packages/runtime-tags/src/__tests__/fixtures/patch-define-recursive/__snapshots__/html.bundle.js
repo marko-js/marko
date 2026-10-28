@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 			if (n) {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(_mask_group($scope1_reason, 0) << 1);
-				const $childScope = _patch_child($scope2_id, "a", 0, void 0, $scope0_id);
+				const $childScope = _peek_scope_id($scope2_id, "a", 0, void 0, $scope0_id);
 				foo.content(n - 1);
 				_patch_child_end();
 				_scope($scope2_id, {
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, { _: ($wi__input_x || $wi__n) && _scope_with_id($scope0_id) }), $cg__input_x && "a3");
 	}, $scope0_id) };
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "a", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "a", 1);
 	foo.content(2);
 	_patch_child_end();
 	_scope($scope0_id, {

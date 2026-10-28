@@ -27,7 +27,7 @@ var panel_default = _template("b", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope3_id = _scope_id();
-			const $childScope = _patch_child($scope3_id, "a", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope3_id, "a", 0, void 0, $scope0_id);
 			Info.content({});
 			_patch_child_end();
 			_scope($scope3_id, {
@@ -68,7 +68,7 @@ var template_default = _template("a", (input) => {
 	let n = "k";
 	let s = true;
 	_set_scope_reason(2686 | _mask_group($scope0_reason, 3) << 7);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		a: input.a,
 		b: n,
@@ -76,7 +76,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 3) << 7 | _mask_group($scope0_reason, 4) << 9 | _mask_group($scope0_reason, 5) << 11);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	panel_default({
 		a: input.a,
 		b: input.b,

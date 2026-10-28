@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.rows, (row) => {
 		const $scope5_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope5_id, "a", 2);
+		const $childScope = _peek_scope_id($scope5_id, "a", 2);
 		card_default({ content: _content_kept("a1", () => {
 			_scope_reason();
 			const $scope6_id = _scope_id();

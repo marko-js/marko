@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const reads = { count: 0 };
 	_html("<main>");
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, 1);
 	let count = counter_box_default({
 		start: 1,
 		reads

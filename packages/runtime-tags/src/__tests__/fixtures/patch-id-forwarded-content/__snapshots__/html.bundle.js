@@ -37,7 +37,7 @@ var forward_body_default = _template("d", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	forward_default({ content: _content_elide("d1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -62,7 +62,7 @@ var forward_attr_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	forward_default({ content: input.content });
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });
@@ -90,7 +90,7 @@ var forward_define_default = _template("e", (input) => {
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id) };
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 2);
+	const $childScope = _peek_scope_id($scope0_id, "a", 2);
 	Wrap.content({ content: _content_elide("e2", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -128,7 +128,7 @@ var forward_inner_default = _template("f", (input) => {
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_content && "f2", $wg__input_content);
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
 	}, $scope0_id) };
-	const $childScope = _patch_child($scope0_id, "a", 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Inner.content({});
 	_patch_child_end();
 	_scope($scope0_id, {
@@ -168,25 +168,25 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		field_default({ label: "defined" });
 		_patch_child_end();
 		_scope($scope1_id, { a: _existing_scope($childScope) });
 	}, $scope0_id) };
 	_set_scope_reason(0);
-	const $childScope3 = _patch_child($scope0_id, "a", 2);
+	const $childScope3 = _peek_scope_id($scope0_id, "a", 2);
 	forward_default({ content: _content("a1", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope2 = _patch_child($scope2_id, "a", 1);
+		const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
 		field_default({ label: "direct" });
 		_patch_child_end();
 		_scope($scope2_id, { a: _existing_scope($childScope2) });
 	}, $scope0_id) });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope4 = _patch_child($scope0_id, "b", 3);
+	const $childScope4 = _peek_scope_id($scope0_id, "b", 3);
 	forward_default({ content: _content("a2", () => {
 		_scope_reason();
 		_scope_id();
@@ -194,19 +194,19 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope6 = _patch_child($scope0_id, "c", 5);
+	const $childScope6 = _peek_scope_id($scope0_id, "c", 5);
 	forward_body_default({ content: _content("a3", () => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope5 = _patch_child($scope4_id, "a", 4);
+		const $childScope5 = _peek_scope_id($scope4_id, "a", 4);
 		field_default({ label: "body" });
 		_patch_child_end();
 		_scope($scope4_id, { a: _existing_scope($childScope5) });
 	}, $scope0_id) });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope7 = _patch_child($scope0_id, "d", 6);
+	const $childScope7 = _peek_scope_id($scope0_id, "d", 6);
 	forward_body_default({ content: _content("a4", () => {
 		_scope_reason();
 		_scope_id();
@@ -214,35 +214,35 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope9 = _patch_child($scope0_id, "e", 8);
+	const $childScope9 = _peek_scope_id($scope0_id, "e", 8);
 	forward_attr_default({ content: _content("a5", () => {
 		_scope_reason();
 		const $scope6_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope8 = _patch_child($scope6_id, "a", 7);
+		const $childScope8 = _peek_scope_id($scope6_id, "a", 7);
 		field_default({ label: "attr" });
 		_patch_child_end();
 		_scope($scope6_id, { a: _existing_scope($childScope8) });
 	}, $scope0_id) });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope10 = _patch_child($scope0_id, "f", 9);
+	const $childScope10 = _peek_scope_id($scope0_id, "f", 9);
 	forward_default({ content: Labeled });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope12 = _patch_child($scope0_id, "g", 11);
+	const $childScope12 = _peek_scope_id($scope0_id, "g", 11);
 	forward_define_default({ content: _content("a6", () => {
 		_scope_reason();
 		const $scope7_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope11 = _patch_child($scope7_id, "a", 10);
+		const $childScope11 = _peek_scope_id($scope7_id, "a", 10);
 		field_default({ label: "define" });
 		_patch_child_end();
 		_scope($scope7_id, { a: _existing_scope($childScope11) });
 	}, $scope0_id) });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope13 = _patch_child($scope0_id, "h", 12);
+	const $childScope13 = _peek_scope_id($scope0_id, "h", 12);
 	forward_define_default({ content: _content("a7", () => {
 		_scope_reason();
 		_scope_id();
@@ -250,19 +250,19 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope15 = _patch_child($scope0_id, "i", 14);
+	const $childScope15 = _peek_scope_id($scope0_id, "i", 14);
 	forward_inner_default({ content: _content("a8", () => {
 		_scope_reason();
 		const $scope9_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope14 = _patch_child($scope9_id, "a", 13);
+		const $childScope14 = _peek_scope_id($scope9_id, "a", 13);
 		field_default({ label: "inner" });
 		_patch_child_end();
 		_scope($scope9_id, { a: _existing_scope($childScope14) });
 	}, $scope0_id) });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope16 = _patch_child($scope0_id, "j", 15);
+	const $childScope16 = _peek_scope_id($scope0_id, "j", 15);
 	forward_inner_default({ content: _content("a9", () => {
 		_scope_reason();
 		_scope_id();
@@ -270,7 +270,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope17 = _patch_child($scope0_id, "k", 16);
+	const $childScope17 = _peek_scope_id($scope0_id, "k", 16);
 	named_default({ content: _content_elide("a10", () => {
 		_scope_reason();
 		_scope_id();
@@ -281,12 +281,12 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope12_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope19 = _patch_child($scope12_id, "a", 18);
+			const $childScope19 = _peek_scope_id($scope12_id, "a", 18);
 			forward_body_default({ content: _content_elide("a11", () => {
 				_scope_reason();
 				const $scope13_id = _scope_id();
 				_set_scope_reason(0);
-				const $childScope18 = _patch_child($scope13_id, "a", 17);
+				const $childScope18 = _peek_scope_id($scope13_id, "a", 17);
 				field_default({ label: "created" });
 				_patch_child_end();
 				_scope($scope13_id, { a: _existing_scope($childScope18) });

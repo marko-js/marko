@@ -80,7 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "14:6", { x: "14:10" }), $cg__input_v && "__tests__/template.marko_3_input_v#0:3/subscribe");
 		}, 0, $scope1_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 4);
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope1_id, "#childScope/3", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/3", 0);
 		wrap_default({ content: _content_elide("__tests__/template.marko_4*content", () => {
 			const $scope4_reason = _scope_reason();
 			const $scope4_id = _scope_id();

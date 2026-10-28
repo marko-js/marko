@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	};
 	_html(`<p>${_text_resume($scope0_id, "a", input.x, void 0, $scope0_reason, 1)}</p>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	child_default({ value: _patch_live($childScope, c, $scope0_id, "f e") });
 	_patch_child_end();
 	_scope($scope0_id, {

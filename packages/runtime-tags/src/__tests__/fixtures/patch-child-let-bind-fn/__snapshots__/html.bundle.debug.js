@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let busy = false;
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	let refresh = picker_default({ refreshingChange: _resume(function(v) {
 		busy = v;
 	}, "__tests__/template.marko_0/refreshingChange", $scope0_id) });

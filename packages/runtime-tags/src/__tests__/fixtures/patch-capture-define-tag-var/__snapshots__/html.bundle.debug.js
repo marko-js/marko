@@ -25,13 +25,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $return = text + "!";
 		return $return;
 	}, $scope0_id) };
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, $cg__input_v && 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $cg__input_v && 1);
 	let row = Row.content({ text: input.v });
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:row", row, !_server_guard($scope0_reason, 0));
 	$cg__input_v && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_row#6/var");
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/2", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/2", 1);
 	label_default({ get: _bind_resume(function() {
 		return row;
 	}, "__tests__/template.marko_0/get", $scope0_id) });

@@ -31,7 +31,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 		_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/feed-list.marko_fill2", item?.id);
 		_html(`<li${hovered === item.id ? " class=hovered" : ""}>`);
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
-		const $childScope = _patch_child($scope1_id, "#childScope/1", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 		card_default({
 			label: item.id,
 			href: link(input.data, item.id)
@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const data = $global$1.data;
 	let open = false;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	feed_list_default({
 		items: data.items,
 		data
@@ -80,7 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			_patch_child($scope1_id, "#childScope/0", 1);
+			_peek_scope_id($scope1_id, "#childScope/0", 1);
 			feed_list_default({
 				items: [{ id: "c" }],
 				data: { q: "client" }

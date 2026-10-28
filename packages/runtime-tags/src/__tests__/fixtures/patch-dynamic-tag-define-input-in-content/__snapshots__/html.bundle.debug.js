@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope3_id, {}, "__tests__/template.marko", "4:2");
 	}, $scope0_id) };
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	wrap_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();

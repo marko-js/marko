@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "#text/0", Promise.resolve(input.value), () => {
 				const $scope2_id = _scope_id();
-				const $childScope = _patch_child($scope2_id, "#childScope/0", 0, $cg__input_value && 1);
+				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0, $cg__input_value && 1);
 				let w = widget_default({ label: input.value });
 				$cg__input_value && _var($scope2_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_2_w#3/var");
 				_patch_child_end();

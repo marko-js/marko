@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, { a: label });
 		}, $scope0_id) });
 	});
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	list_default({ item: $item });
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });

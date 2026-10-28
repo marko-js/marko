@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	const $childScope = _patch_child($scope0_id, "a", 0, $cg__input_n && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_n && 1);
 	let double = doubler_default({ value: input.n });
 	$cg__input_n && _var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();

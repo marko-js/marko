@@ -21,7 +21,7 @@ var page_b_default = _template("__tests__/tags/page-b.marko", (input) => {
 	let progress = 0;
 	_html(`<button>${_text_resume($scope0_id, "#text/1", progress)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(8);
-	const $childScope = _patch_child($scope0_id, "#childScope/2", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	demo_card_default({
 		name: "Switch",
 		progress
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			page_b_default({});
 			_patch_child_end();
 			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "1:2");

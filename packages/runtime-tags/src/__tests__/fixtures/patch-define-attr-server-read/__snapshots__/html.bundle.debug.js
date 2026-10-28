@@ -36,10 +36,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Foo = { label: input.label };
 	_html(`<span>${_text_resume($scope0_id, "#text/0", Foo.label, void 0, $scope0_reason, 0)}</span>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	echo_default({ text: Foo.label });
 	_patch_child_end();
-	const $childScope2 = _patch_child($scope0_id, "#childScope/2", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/2", 1);
 	counter_default({});
 	_patch_child_end();
 	_scope($scope0_id, {

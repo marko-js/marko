@@ -33,10 +33,10 @@ var template_default = _template("a", (input) => {
 	const Foo = { label: input.label };
 	_html(`<span>${_text_resume($scope0_id, "a", Foo.label, void 0, $scope0_reason, 0)}</span>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	echo_default({ text: Foo.label });
 	_patch_child_end();
-	const $childScope2 = _patch_child($scope0_id, "c", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	counter_default({});
 	_patch_child_end();
 	_scope($scope0_id, {

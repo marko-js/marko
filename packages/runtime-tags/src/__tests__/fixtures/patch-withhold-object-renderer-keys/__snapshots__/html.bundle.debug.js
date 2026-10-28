@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_note__closures = new Set();
 	let m = false;
 	_set_scope_reason(6);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	holder_default({ mode: m || input.mode });
 	_patch_child_end();
 	_html("<main>");

@@ -63,7 +63,7 @@ var docs_default = _template("__tests__/docs.marko", (input) => {
 			if (list[0]) {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-				const $childScope = _patch_child($scope2_id, "#childScope/0", 0);
+				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 				icon_default({ name: list[0] });
 				_patch_child_end();
 				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/docs.marko_2_list_0#1:4/init");
@@ -125,7 +125,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_page__closures = new Set();
 	const $input_list__closures = new Set();
 	_set_scope_reason(0);
-	const $childScope4 = _patch_child($scope0_id, "#childScope/0", 2);
+	const $childScope4 = _peek_scope_id($scope0_id, "#childScope/0", 2);
 	root_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
@@ -138,7 +138,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			} else {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
-				const $childScope3 = _patch_child($scope2_id, "#childScope/1", 1);
+				const $childScope3 = _peek_scope_id($scope2_id, "#childScope/1", 1);
 				$Docs_withLoadAssets({
 					list: input.list,
 					content: _content_elide("__tests__/template.marko_3*content", () => {
@@ -147,14 +147,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						_if(() => {
 							if (input.page === 1) {
 								const $scope5_id = _scope_id();
-								const $childScope = _patch_child($scope5_id, "#childScope/1", 0);
+								const $childScope = _peek_scope_id($scope5_id, "#childScope/1", 0);
 								$PageA_withLoadAssets({});
 								_patch_child_end();
 								_scope($scope5_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "12:8");
 								return 0;
 							} else {
 								const $scope6_id = _scope_id();
-								const $childScope2 = _patch_child($scope6_id, "#childScope/1", 0);
+								const $childScope2 = _peek_scope_id($scope6_id, "#childScope/1", 0);
 								$PageB_withLoadAssets({});
 								_patch_child_end();
 								_scope($scope6_id, { "#childScope/1": _existing_scope($childScope2) }, "__tests__/template.marko", "15:8");

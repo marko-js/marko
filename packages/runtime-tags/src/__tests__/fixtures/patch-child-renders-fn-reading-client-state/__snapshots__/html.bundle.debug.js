@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_set_scope_reason(($scope0_page ? 3 : 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	card_default({ fn: _resume(function() {
 		return "f:" + input.label + n;
 	}, "__tests__/template.marko_0/fn", $scope0_id) });

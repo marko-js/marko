@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope = _patch_child($scope1_id, "#childScope/1", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 		$Child_withLoadAssets({ label: input.label });
 		_patch_child_end();
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:3/init");
@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
 		_html(`<b>${_text_resume($scope3_id, "#text/0", err.message, void 0, 4, 0)}</b>`);
-		const $childScope2 = _patch_child($scope3_id, "#childScope/1", 1, void 0, $scope0_id);
+		const $childScope2 = _peek_scope_id($scope3_id, "#childScope/1", 1, void 0, $scope0_id);
 		Lazy.content({});
 		_patch_child_end();
 		_scope($scope3_id, {

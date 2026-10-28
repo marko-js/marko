@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "wd", i, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | ($scope0_page ? 3 : 0) << 3);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		row_default({
 			item,
 			onPick: _resume(function() {

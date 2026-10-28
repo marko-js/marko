@@ -49,7 +49,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			$wg__input_show || $wi__input_items__OR__input_show && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	list_default({ item: $item });
 	_patch_child_end();
 	_scope($scope0_id, {
@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let items = [1, 2];
 	_html(`<button>add</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	child_default({
 		items,
 		show: input.show

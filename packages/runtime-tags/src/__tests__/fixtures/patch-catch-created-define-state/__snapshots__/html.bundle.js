@@ -57,7 +57,7 @@ var template_default = _template("c", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope = _patch_child($scope1_id, "b", 0);
+		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		$LazyChild_withLoadAssets({ label: input.label });
 		_patch_child_end();
 		$cg__input_label && _patch_init($scope1_id, "c1");
@@ -70,7 +70,7 @@ var template_default = _template("c", (input) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope2 = _patch_child($scope2_id, "a", 1);
+		const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
 		child_default({ label: input.label });
 		_patch_child_end();
 		$cg__input_label && _patch_init($scope2_id, "c4");
@@ -93,7 +93,7 @@ var template_default = _template("c", (input) => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope3 = _patch_child($scope3_id, "b", 2);
+		const $childScope3 = _peek_scope_id($scope3_id, "b", 2);
 		$LazyChild_withLoadAssets({ label: input.label });
 		_patch_child_end();
 		$cg__input_label && _patch_init($scope3_id, "c10");
@@ -106,7 +106,7 @@ var template_default = _template("c", (input) => {
 	const Outer = { content: _content("c12", () => {
 		const $scope7_id = _scope_id();
 		_scope_reason();
-		const $childScope4 = _patch_child($scope7_id, "a", 3, void 0, $scope0_id);
+		const $childScope4 = _peek_scope_id($scope7_id, "a", 3, void 0, $scope0_id);
 		Inner.content({});
 		_patch_child_end();
 		_scope($scope7_id, {
@@ -124,16 +124,16 @@ var template_default = _template("c", (input) => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
 		_html(`<b>${_text_resume($scope5_id, "a", err.message, void 0, 4, 0)}</b>`);
-		const $childScope5 = _patch_child($scope5_id, "b", 4, void 0, $scope0_id);
+		const $childScope5 = _peek_scope_id($scope5_id, "b", 4, void 0, $scope0_id);
 		LazyBody.content({});
 		_patch_child_end();
-		const $childScope6 = _patch_child($scope5_id, "c", 5, void 0, $scope0_id);
+		const $childScope6 = _peek_scope_id($scope5_id, "c", 5, void 0, $scope0_id);
 		ChildBody.content({});
 		_patch_child_end();
-		const $childScope7 = _patch_child($scope5_id, "d", 6);
+		const $childScope7 = _peek_scope_id($scope5_id, "d", 6);
 		OwnBody.content({});
 		_patch_child_end();
-		const $childScope8 = _patch_child($scope5_id, "e", 7, void 0, $scope0_id);
+		const $childScope8 = _peek_scope_id($scope5_id, "e", 7, void 0, $scope0_id);
 		Outer.content({});
 		_patch_child_end();
 		_scope($scope5_id, {

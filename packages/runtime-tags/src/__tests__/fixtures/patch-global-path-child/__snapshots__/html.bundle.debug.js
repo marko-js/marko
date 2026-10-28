@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<b>${_text_resume($scope1_id, "#text/0", $global$1.k, $scope0_page)}</b>`);
-			_patch_child($scope1_id, "#childScope/1", 0);
+			_peek_scope_id($scope1_id, "#childScope/1", 0);
 			path_child_default({});
 			_patch_child_end();
 			_fill_global_subscribe("__tests__/template.marko_1_$global_k#0:7", $scope1_id, 1);

@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_y__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 1) << 5 | _mask_group($scope0_reason, 1) << 7 | _mask_group($scope0_reason, 1) << 13);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	one_default({
 		Tag: card_default,
 		show: input.x === 1,

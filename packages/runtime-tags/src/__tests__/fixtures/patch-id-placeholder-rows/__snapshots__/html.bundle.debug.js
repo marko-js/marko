@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			_patch_child($scope2_id, "#childScope/0", 0);
+			_peek_scope_id($scope2_id, "#childScope/0", 0);
 			field_default({
 				name: row.key,
 				heading
@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_set_scope_reason(16);
-			const $childScope = _patch_child($scope3_id, "#childScope/0", 1);
+			const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 1);
 			field_default({
 				name: error.message,
 				heading

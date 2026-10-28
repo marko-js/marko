@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 				_await($scope3_id, "a", input.card, (user) => {
 					const $scope7_id = _scope_id();
 					_set_scope_reason(_mask_group($scope0_reason, 5) << 1);
-					const $childScope = _patch_child($scope7_id, "a", 0);
+					const $childScope = _peek_scope_id($scope7_id, "a", 0);
 					card_default({ user });
 					_patch_child_end();
 					_scope($scope7_id, { a: _existing_scope($childScope) });

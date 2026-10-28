@@ -37,11 +37,11 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	let a = child_default({ label: "A" });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "c", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	let b = child_default({ label: "B" });
 	_patch_child_end();
 	_dynamic_tag($scope0_id, "e", input.first ? a : b, {}, 18, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);

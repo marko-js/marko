@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 			_html("<div>");
 			_for_of(items, (item) => {
 				const $scope3_id = _scope_id();
-				const $childScope = _patch_child($scope3_id, "a", 0);
+				const $childScope = _peek_scope_id($scope3_id, "a", 0);
 				row_default(item);
 				_patch_child_end();
 				_scope($scope3_id, { a: _existing_scope($childScope) });

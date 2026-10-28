@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 	let label = "label";
 	_html(`<button class=rename>rename</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(2 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	panel_default({
 		label,
 		error: input.error

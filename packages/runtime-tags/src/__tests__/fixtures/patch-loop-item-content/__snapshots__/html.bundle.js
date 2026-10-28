@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		const $for_content__item_n__closures = /* @__PURE__ */ new Set();
 		_html("<li>");
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		card_default({
 			title: item.t,
 			content: _content_elide("a1", () => {

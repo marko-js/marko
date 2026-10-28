@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			_set_scope_reason(0);
 			let $item;
 			$item = attrTag({ label: "x" });
-			const $childScope = _patch_child($scope2_id, "a", 0);
+			const $childScope = _peek_scope_id($scope2_id, "a", 0);
 			Panel.content({
 				isOpen: true,
 				item: $item

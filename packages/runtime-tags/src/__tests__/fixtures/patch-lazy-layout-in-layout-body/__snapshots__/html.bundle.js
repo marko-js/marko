@@ -64,7 +64,7 @@ var template_default = _template("e", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_page__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
-	const $childScope4 = _patch_child($scope0_id, "a", 2);
+	const $childScope4 = _peek_scope_id($scope0_id, "a", 2);
 	root_default({ content: _content("e7", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -77,21 +77,21 @@ var template_default = _template("e", (input) => {
 			} else {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(0);
-				const $childScope3 = _patch_child($scope2_id, "b", 1);
+				const $childScope3 = _peek_scope_id($scope2_id, "b", 1);
 				$Docs_withLoadAssets({ content: _content_elide("e1", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
 					_if(() => {
 						if (input.page === 1) {
 							const $scope5_id = _scope_id();
-							const $childScope = _patch_child($scope5_id, "b", 0);
+							const $childScope = _peek_scope_id($scope5_id, "b", 0);
 							$PageA_withLoadAssets({});
 							_patch_child_end();
 							_scope($scope5_id, { b: _existing_scope($childScope) });
 							return 0;
 						} else {
 							const $scope6_id = _scope_id();
-							const $childScope2 = _patch_child($scope6_id, "b", 0);
+							const $childScope2 = _peek_scope_id($scope6_id, "b", 0);
 							$PageB_withLoadAssets({});
 							_patch_child_end();
 							_scope($scope6_id, { b: _existing_scope($childScope2) });

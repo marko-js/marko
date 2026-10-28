@@ -19,7 +19,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_html(`<p>${_text_resume($scope1_id, "#text/0", k)}</p>`);
 		_subscribe($k__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2"), "__tests__/tags/card.marko_1_k#0:5/subscribe");
 	}, $scope0_id) };
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({});
 	_patch_child_end();
 	_html(`<button>x</button>${_el_resume($scope0_id, "#button/1")}`);
@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.on) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			card_default({ n: input.n });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_n#0:4/init");

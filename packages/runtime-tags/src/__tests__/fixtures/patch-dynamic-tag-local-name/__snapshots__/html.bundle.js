@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 	let n = 1;
 	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><button>+</button>${_el_resume($scope0_id, "b")}`);
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "c", 0);
+	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	child_default({ value: n });
 	_patch_child_end();
 	_html("</main>");

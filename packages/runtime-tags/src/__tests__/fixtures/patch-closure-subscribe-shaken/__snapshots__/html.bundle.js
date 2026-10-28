@@ -77,7 +77,7 @@ _shells({ b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0) => `b%b/${
 var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Shop_withLoadAssets({});
 	_patch_child_end();
 	_scope($scope0_id, { b: _existing_scope($childScope) });

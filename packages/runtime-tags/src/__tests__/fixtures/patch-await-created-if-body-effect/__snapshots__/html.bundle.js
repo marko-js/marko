@@ -34,7 +34,7 @@ var template_default = _template("b", (input) => {
 				const $scope2_id = _scope_id();
 				_filled_guard($scope0_reason, 1) && _patch_fill($scope2_id, "vb1", x);
 				_set_scope_reason(6);
-				const $childScope = _patch_child($scope2_id, "b", 0);
+				const $childScope = _peek_scope_id($scope2_id, "b", 0);
 				$Lazy_withLoadAssets({ label: x + n });
 				_patch_child_end();
 				_script($scope2_id, "b0");

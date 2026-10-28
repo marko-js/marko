@@ -75,7 +75,7 @@ var heading_default = _template("c", (input) => {
 			$wg__input_type || ($wi__input_n__OR__input_type || $wi__i) && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
-	const $childScope = _patch_child($scope0_id, "a", 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	list_default({ item: $item });
 	_patch_child_end();
 	_scope($scope0_id, {
@@ -94,7 +94,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	heading_default({
 		type: card_default,
 		n: input.n

@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(`<em>${_text_resume($scope3_id, "#text/0", v, void 0, $scope0_reason, 2)}</em>`);
 					_scope($scope3_id, {}, "__tests__/template.marko", "4:8");
 				}, 1, "__tests__/template.marko_3*content");
-				const $childScope = _patch_child($scope2_id, "#childScope/1", 0);
+				const $childScope = _peek_scope_id($scope2_id, "#childScope/1", 0);
 				counter_default({});
 				_patch_child_end();
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_promise ? "__tests__/template.marko_2_input_promise#0:4/init" : "__tests__/template.marko_2_input_promise#0:4/subscribe");

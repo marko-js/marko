@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_write_if($scope1_reason, 1) && _scope($scope1_id, { label }, "__tests__/template.marko", "2:2", { label: "2:25" }) || _filled_guard($scope1_reason, 2) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", label, !_server_guard($scope1_reason, 2));
 	}, $scope0_id) };
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({
 		isOpen: open,
 		label: input.label

@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	$Child_withLoadAssets({ label: input.label });
 	_patch_child_end();
 	_try($scope0_id, "#text/2", () => {
@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope3_id, {}, "__tests__/template.marko", "5:4");
 		}, 1, "__tests__/template.marko_3*content", 1);
 		_set_scope_reason(0);
-		const $childScope2 = _patch_child($scope1_id, "#childScope/2", 1);
+		const $childScope2 = _peek_scope_id($scope1_id, "#childScope/2", 1);
 		$Child_withLoadAssets({ label: "in-try" });
 		_patch_child_end();
 		_await($scope1_id, "#text/3", input.b, (b) => {

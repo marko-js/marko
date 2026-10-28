@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 		}, $scope2_id) };
 		_html(`<section><button>${_text_resume($scope2_id, "b", n)}</button>${_el_resume($scope2_id, "a")}`);
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope2_id, "c", 1);
+		const $childScope = _peek_scope_id($scope2_id, "c", 1);
 		Card.content({
 			label: "direct",
 			content: _content_elide("a2", () => {

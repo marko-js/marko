@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html("<main>");
 	_set_scope_reason(30);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	duo_default({
 		label: input.title,
 		value: count

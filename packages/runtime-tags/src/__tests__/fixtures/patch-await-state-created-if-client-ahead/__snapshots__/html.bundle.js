@@ -31,7 +31,7 @@ var template_default = _template("b", (input) => {
 			_await($scope1_id, "a", Promise.resolve(n), (x) => {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(6);
-				const $childScope = _patch_child($scope2_id, "b", 0);
+				const $childScope = _peek_scope_id($scope2_id, "b", 0);
 				$Lazy_withLoadAssets({ label: input.label + x });
 				_patch_child_end();
 				_script($scope2_id, "b0");

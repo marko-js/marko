@@ -27,7 +27,7 @@ var child_default = _template("b", (input) => {
 	const $wrapper_content__subscribers = /* @__PURE__ */ new Set();
 	const $input_a11yText__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	wrapper_default({ content: _content_elide("b4", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -61,11 +61,11 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({});
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "c", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	child_default({ a11yText: "Close" });
 	_patch_child_end();
 	_scope($scope0_id, {

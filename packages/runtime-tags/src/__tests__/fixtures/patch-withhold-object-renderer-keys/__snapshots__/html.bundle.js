@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let m = false;
 	_set_scope_reason(6);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	holder_default({ mode: input.mode });
 	_patch_child_end();
 	_html("<main>");

@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_flag = _server_guard($scope0_reason, 1), $sg__input_title = _server_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({ item: _patch_live($childScope, input.flag ? { t: input.title } : { t: "none" }, $scope0_id, "d e") });
 	_patch_child_end();
 	_scope($scope0_id, {

@@ -60,7 +60,7 @@ var shop_default = _template("a", (input) => {
 					const have = withDrops(bankCount(p, part), drops, part);
 					const live = have + now * proj;
 					_html(`<span${live < 2 ? " class=short" : ""}>${_text_resume($scope3_id, "b", part, void 0, 0, 0)} ${_text_resume($scope3_id, "c", have, 2)}</span>${_el_resume($scope3_id, "a")}`);
-					const $childScope = _patch_child($scope3_id, "d", 0);
+					const $childScope = _peek_scope_id($scope3_id, "d", 0);
 					show_rate_default({ v: proj });
 					_patch_child_end();
 					_subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
@@ -97,7 +97,7 @@ _shells({ b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0) => `b%b/${
 var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Shop_withLoadAssets({});
 	_patch_child_end();
 	_scope($scope0_id, { b: _existing_scope($childScope) });

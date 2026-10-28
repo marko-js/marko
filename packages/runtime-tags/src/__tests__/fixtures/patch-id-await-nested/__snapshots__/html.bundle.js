@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			_await($scope2_id, "a", item.inner, (inner) => {
 				const $scope3_id = _scope_id();
 				_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-				const $childScope = _patch_child($scope3_id, "a", 0);
+				const $childScope = _peek_scope_id($scope3_id, "a", 0);
 				field_default({ name: inner });
 				_patch_child_end();
 				_scope($scope3_id, { a: _existing_scope($childScope) });

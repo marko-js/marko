@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let pre = "a";
 	_set_scope_reason(24 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 5 | _mask_group($scope0_reason, 2) << 7));
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		obj: input.obj,
 		sel: input.sel,

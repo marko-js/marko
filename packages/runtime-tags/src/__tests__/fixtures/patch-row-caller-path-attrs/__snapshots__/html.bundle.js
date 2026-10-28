@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let path = "/a";
 	_set_scope_reason(38 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	navlist_default({
 		items: input.items,
 		path

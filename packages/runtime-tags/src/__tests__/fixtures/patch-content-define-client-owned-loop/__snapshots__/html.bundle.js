@@ -24,11 +24,11 @@ var template_default = _template("a", (input) => {
 		_scope($scope1_id, { _: ($wi__input_suffix || $wi__items) && _scope_with_id($scope0_id) });
 	}, $scope0_id) };
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	List.content({ items: _patch_live($childScope, count % 2 ? ["a"] : ["a", "b"], $scope0_id, "") });
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	List.content({ items: input.items });
 	_patch_child_end();
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}`);

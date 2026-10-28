@@ -45,7 +45,7 @@ var template_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.which ? counter_default : other_default, { label: input.label }, 5, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-	const $childScope = _patch_child($scope0_id, "b", 1);
+	const $childScope = _peek_scope_id($scope0_id, "b", 1);
 	chooser_default({
 		Tag: input.which ? counter_default : other_default,
 		label: input.label

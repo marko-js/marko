@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
 				_set_scope_reason(0);
-				const $childScope = _patch_child($scope2_id, "a", 0);
+				const $childScope = _peek_scope_id($scope2_id, "a", 0);
 				card_default({ content: _content_resume("a2", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();

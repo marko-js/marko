@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_await($scope0_id, "a", input.v, (v) => {
 		const $scope3_id = _scope_id();
-		const $childScope = _patch_child($scope3_id, "a", 1, void 0, $scope0_id);
+		const $childScope = _peek_scope_id($scope3_id, "a", 1, void 0, $scope0_id);
 		Body.content({});
 		_patch_child_end();
 		_filled_guard($scope0_reason, 2) && _content_withheld("a0", $scope3_id) && _patch_fill($scope0_id, "va6", input.note);

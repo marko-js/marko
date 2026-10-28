@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	counter_default({ value: count });
 	_patch_child_end();
 	_html(`<button class=inc>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);

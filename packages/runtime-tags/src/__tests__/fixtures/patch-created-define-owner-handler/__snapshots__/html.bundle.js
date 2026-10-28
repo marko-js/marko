@@ -20,7 +20,7 @@ var card_default = _template("b", (input) => {
 		_script($scope1_id, "b1");
 		_subscribe($k__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b2");
 	}, $scope0_id) };
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({});
 	_patch_child_end();
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb3", k, 1);
@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 		if (input.on) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			card_default({ n: input.n });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a0");

@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let b = "b";
 	_html(`<button>b</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(649190 | (_mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 1) << 11 | _mask_group($scope0_reason, 2) << 17 | _mask_group($scope0_reason, 3) << 21 | _mask_group($scope0_reason, 4) << 23));
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	code_block_default({
 		a: input.a,
 		b,

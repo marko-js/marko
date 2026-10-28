@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_dynamic_tag($scope3_id, "#text/0", input.on ? card_default : "div", {}, 10, _content_resume("__tests__/template.marko_4*content", () => {
 					const $scope4_id = _scope_id();
 					const $scope4_reason = _scope_reason();
-					const $childScope = _patch_child($scope4_id, "#childScope/0", 0, void 0, $scope0_id);
+					const $childScope = _peek_scope_id($scope4_id, "#childScope/0", 0, void 0, $scope0_id);
 					Body.content({});
 					_patch_child_end();
 					_scope($scope4_id, {

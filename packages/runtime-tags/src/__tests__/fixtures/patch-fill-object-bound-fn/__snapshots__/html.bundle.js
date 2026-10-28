@@ -35,12 +35,12 @@ _shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0, _w1) => `0
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	let s = store_default({});
 	_var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
 	_set_scope_reason(10 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope2 = _patch_child($scope0_id, "c", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	child_default({
 		s,
 		label: input.label

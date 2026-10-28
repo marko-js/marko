@@ -30,7 +30,7 @@ var src_default = _template("d", (input) => {
 			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		}, $scope0_id) });
 	});
-	const $childScope = _patch_child($scope0_id, "a", 0, $cg__input_items && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_items && 1);
 	let h = holder_default({ tab: $tab });
 	$cg__input_items && _var($scope0_id, "b", $childScope, "d2");
 	_patch_child_end();
@@ -85,12 +85,12 @@ var page_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0, $cg__input_items && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_items && 1);
 	let tabs = src_default({ items: input.items });
 	$cg__input_items && _var($scope0_id, "b", $childScope, "c0");
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-	const $childScope2 = _patch_child($scope0_id, "c", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	view_default({
 		tabs,
 		selected: input.selected
@@ -116,7 +116,7 @@ var wrap_default = _template("f", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 3 | _mask_group($scope0_reason, 3) << 5);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			page_default({
 				items: input.items,
 				selected: input.selected
@@ -144,7 +144,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 3) << 7);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrap_default({
 		show: input.show,
 		items: input.items,

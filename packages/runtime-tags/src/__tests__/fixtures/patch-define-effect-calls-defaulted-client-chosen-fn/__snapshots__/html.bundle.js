@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope1_id, { e: g }) || _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "xe", g, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(6);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Show.content({ get: low });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}`);

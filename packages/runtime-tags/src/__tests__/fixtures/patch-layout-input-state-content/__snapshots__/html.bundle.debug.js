@@ -36,7 +36,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<html>${_flush_head()}<body><main>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	wrap_default({
 		show: input.open,
 		content: _content_resume("__tests__/layout.marko_1*content", () => {
@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let open = false;
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	layout_default({
 		open,
 		content: _content("__tests__/template.marko_1*content", () => {

@@ -35,7 +35,7 @@ var template_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let a = 1;
 	_set_scope_reason(2534 | (_mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 2) << 9 | _mask_group($scope0_reason, 1) << 13));
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	layout_default({
 		a,
 		b: input.b,

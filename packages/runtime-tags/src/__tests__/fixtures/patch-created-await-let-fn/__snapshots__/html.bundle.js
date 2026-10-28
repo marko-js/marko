@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 			_await($scope1_id, "a", resolveAfter("v", 1), (v) => {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
-				const $childScope = _patch_child($scope2_id, "a", 0);
+				const $childScope = _peek_scope_id($scope2_id, "a", 0);
 				card_default({ fn: function() {
 					return v + ":" + input.label;
 				} });

@@ -36,7 +36,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 		});
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 2) << 3 | _mask_group($scope0_reason, 1) << 7);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	TextField.content({
 		placeholder: input.hint,
 		value: input.v,
@@ -59,7 +59,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 		}) || (_filled_guard($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:log", log, !_server_guard($scope2_reason, 1)), _filled_guard($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:value", value, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	Log.content({
 		log: _bind_resume(function(value) {
 			console.log(value, input.hint);
@@ -85,7 +85,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let v = "x";
 	_html(`<button>v</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(38 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	field_default({
 		hint: input.hint,
 		v

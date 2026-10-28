@@ -17,7 +17,7 @@ _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.m
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	static_child_default({});
 	_patch_child_end();
 	_html(`<p>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)}</p>`);

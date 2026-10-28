@@ -84,7 +84,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<button>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "c", 0);
+	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	wrapper_default({
 		fail: input.fail,
 		fallback: attrTag({ content: _content_resume("a2", () => {
@@ -96,7 +96,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-	const $childScope2 = _patch_child($scope0_id, "d", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "d", 1);
 	error_wrapper_default({
 		fail: input.fail,
 		fallback: attrTag({ content: _content_resume("a5", () => {

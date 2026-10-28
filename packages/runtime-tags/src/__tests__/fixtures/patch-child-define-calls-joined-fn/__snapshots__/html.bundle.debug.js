@@ -34,7 +34,7 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 		}) || _filled_guard($scope1_reason, 3) && _patch_write($scope1_id, "PatchMarkedWrite:get", get, !_server_guard($scope1_reason, 3));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 3) << 7 | _mask_group($scope0_reason, 4) << 9 | _mask_group($scope0_reason, 5) << 11 | _mask_group($scope0_reason, 6) << 13);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Show.content({
 		a: input.a,
 		b: input.b,
@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const up = _bind_resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id);
 	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
 	_set_scope_reason(1950 | (_mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 0) << 11));
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_view_default({
 		a: upper ? up : low,
 		b: low,

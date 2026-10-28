@@ -57,14 +57,14 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	detail_view_default({
 		error: input.error,
 		detail: input.detail
 	});
 	_patch_child_end();
 	_set_scope_reason(2 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	detail_view_default({
 		error: input.error,
 		detail: ""

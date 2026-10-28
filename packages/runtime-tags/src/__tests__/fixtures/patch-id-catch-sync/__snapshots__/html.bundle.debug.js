@@ -49,17 +49,17 @@ _shells({
 var a_tag_default = _template("__tests__/tags/a-tag.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	plain_default({});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	field_default({ name: input.n });
 	_patch_child_end();
 	_try($scope0_id, "#text/2", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		const $childScope3 = _patch_child($scope1_id, "#childScope/0", 2);
+		const $childScope3 = _peek_scope_id($scope1_id, "#childScope/0", 2);
 		thrower_default({});
 		_patch_child_end();
 		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope3) }, "__tests__/tags/a-tag.marko", "3:2");
@@ -88,11 +88,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		a_tag_default({ n: row.id });
 		_patch_child_end();
 		_set_scope_reason(0);
-		const $childScope2 = _patch_child($scope1_id, "#childScope/1", 1);
+		const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 		field_default({ name: `row ${row.id}` });
 		_patch_child_end();
 		_scope($scope1_id, {

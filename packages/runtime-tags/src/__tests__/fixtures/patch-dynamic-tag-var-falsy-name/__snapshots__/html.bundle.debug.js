@@ -28,7 +28,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	const $wrapper_content__subscribers = new Set();
 	const $input_a11yText__closures = new Set();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	wrapper_default({ content: _content_elide("__tests__/tags/child/index.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
@@ -65,11 +65,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	let plain = child_default({});
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/2", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/2", 1);
 	let labeled = child_default({ a11yText: "Close" });
 	_patch_child_end();
 	_scope($scope0_id, {

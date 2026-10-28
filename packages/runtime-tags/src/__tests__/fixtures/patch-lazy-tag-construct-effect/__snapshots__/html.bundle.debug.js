@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<div${_patch_attrs(input.attrs, "#div/0", $scope1_id, "div", void 0, $scope0_reason, 2)}>x</div>${_el_resume($scope1_id, "#div/0")}`);
 			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
-			const $childScope = _patch_child($scope1_id, "#childScope/2", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/2", 0);
 			$Child_withLoadAssets({ label: input.label });
 			_patch_child_end();
 			_script($scope1_id, "__tests__/template.marko_1_input_attrs#0:4");

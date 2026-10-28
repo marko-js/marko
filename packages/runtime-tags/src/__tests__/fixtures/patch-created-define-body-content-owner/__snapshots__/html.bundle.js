@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			const $if_content__n__closures = /* @__PURE__ */ new Set();
 			let n = 0;
 			_set_scope_reason(0);
-			const $childScope = _patch_child($scope1_id, "a", 1, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope1_id, "a", 1, void 0, $scope0_id);
 			Wrap.content({ content: _content_elide("a4", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();

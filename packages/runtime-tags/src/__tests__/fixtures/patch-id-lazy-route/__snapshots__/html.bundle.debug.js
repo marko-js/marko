@@ -49,7 +49,7 @@ var route_cl_default = _template("__tests__/tags/route-cl.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	sub_default({
 		n: input.n,
 		items: [{
@@ -71,7 +71,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	$Route_withLoadAssets({ n: Number($global$1.n || 5) });
 	_patch_child_end();
 	_fill_global_subscribe("__tests__/template.marko_0_$global_n#5", $scope0_id);

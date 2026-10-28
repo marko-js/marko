@@ -25,7 +25,7 @@ var list_default = _template("c", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xe", item, !_server_guard($scope0_reason, 1));
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope = _patch_child($scope1_id, "a", 0, $cg__input_items__OR__input_suffix && 1);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0, $cg__input_items__OR__input_suffix && 1);
 		let label = labeler_default({ title: item + input.suffix });
 		$cg__input_items__OR__input_suffix && _var($scope1_id, "b", $childScope, "c0");
 		_patch_child_end();
@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let items = ["x"];
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	list_default({
 		items,
 		suffix: input.suffix

@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope3_id = _scope_id();
 					const $scope3_reason = _scope_reason();
 					_set_scope_reason(_mask_group($scope1_reason, 0) << 1);
-					const $childScope = _patch_child($scope3_id, "#childScope/0", 0, void 0, $scope0_id);
+					const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 0, void 0, $scope0_id);
 					Tree.content({ depth: depth - 1 });
 					_patch_child_end();
 					_subscribe(_unfilled_if($scope1_reason, 0) && $Tree_content__depth__closures, _scope($scope3_id, {
@@ -77,7 +77,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/0", 2);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 2);
 	Tree.content({ depth: 1 });
 	_patch_child_end();
 	_html("</main>");

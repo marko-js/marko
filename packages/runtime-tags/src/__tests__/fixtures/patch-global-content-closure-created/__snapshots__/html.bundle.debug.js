@@ -35,7 +35,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $global$1 = $global();
 	let count = 0;
 	_set_scope_reason(10);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	panel_default({
 		open: count % 2 === 0,
 		body: attrTag({ content: _content_resume("__tests__/tags/card.marko_1*content", () => {
@@ -69,7 +69,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_patch_child($scope1_id, "#childScope/0", 0);
+			_peek_scope_id($scope1_id, "#childScope/0", 0);
 			card_default({});
 			_patch_child_end();
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");

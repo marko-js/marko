@@ -32,11 +32,11 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	}, $scope0_id) };
 	let t = true;
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Row.content({ show: t });
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	Row.content({ show: input.show });
 	_patch_child_end();
 	_html(`<button class=t>t</button>${_el_resume($scope0_id, "#button/2")}`);
@@ -69,7 +69,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = "k";
 	_set_scope_reason(38 | (_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 7));
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	panel_default({
 		a: input.a,
 		b: n,
@@ -77,7 +77,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 3) << 5 | _mask_group($scope0_reason, 2) << 7);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	panel_default({
 		a: input.a,
 		b: input.b,

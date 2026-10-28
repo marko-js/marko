@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}`);
-	const $childScope = _patch_child($scope0_id, "#childScope/2", 0, $cg__input_user && 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0, $cg__input_user && 1);
 	let info = user_info_default({ user: input.user });
 	$cg__input_user && _var($scope0_id, "#scopeOffset/3", $childScope, "__tests__/template.marko_0_info#12/var");
 	_patch_child_end();
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope2 = _patch_child($scope1_id, "#childScope/0", 1, $cg__input_user2 && 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1, $cg__input_user2 && 1);
 			let info2 = user_info_default({ user: input.user2 });
 			$cg__input_user2 && _var($scope1_id, "#scopeOffset/1", $childScope2, "__tests__/template.marko_1_info2#3/var");
 			_patch_child_end();

@@ -27,7 +27,7 @@ var outer_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	card_default({ content: _content_kept("c1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -59,7 +59,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			outer_default({ content: _content_elide("a1", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();

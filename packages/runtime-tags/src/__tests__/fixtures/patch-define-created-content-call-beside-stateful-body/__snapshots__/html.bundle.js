@@ -41,14 +41,14 @@ var template_default = _template("a", (input) => {
 		_write_if($scope4_reason, 1) && _scope($scope4_id, { e: _unfilled_if($scope4_reason, 1) && content }) || (_filled_guard($scope4_reason, 2) && $cg__show && _patch_fill($scope4_id, "va6", content, !_server_guard($scope4_reason, 2)), $cg__show && _content_withhold(content));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope2 = _patch_child($scope0_id, "a", 2);
+	const $childScope2 = _peek_scope_id($scope0_id, "a", 2);
 	Wrap.content({
 		show: input.show,
 		content: _content_resume("a2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 2) << 3);
-			const $childScope = _patch_child($scope1_id, "a", 1);
+			const $childScope = _peek_scope_id($scope1_id, "a", 1);
 			Panel.content({
 				isOpen: true,
 				label: input.label

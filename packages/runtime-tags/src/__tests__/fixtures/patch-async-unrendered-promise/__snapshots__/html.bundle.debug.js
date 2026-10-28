@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_await($scope3_id, "#text/0", input.card, (user) => {
 					const $scope7_id = _scope_id();
 					_set_scope_reason(_mask_group($scope0_reason, 5) << 1);
-					const $childScope = _patch_child($scope7_id, "#childScope/0", 0);
+					const $childScope = _peek_scope_id($scope7_id, "#childScope/0", 0);
 					card_default({ user });
 					_patch_child_end();
 					_scope($scope7_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "8:6");

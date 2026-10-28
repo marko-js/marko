@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, $cg__input_title && 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $cg__input_title && 1);
 	let label = labeler_default({ title: input.title });
 	$cg__input_title && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_label#9/var");
 	_patch_child_end();

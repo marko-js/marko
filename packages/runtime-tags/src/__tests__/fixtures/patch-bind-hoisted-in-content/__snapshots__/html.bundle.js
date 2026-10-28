@@ -37,11 +37,11 @@ var template_default = _template("a", (input) => {
 	const $setLast_getter = _hoist($scope0_id, "a0");
 	const $frame_content__subscribers = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "a", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "a", 1);
 	frame_default({ content: _content("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		let setLast = store_default({});
 		_patch_child_end();
 		_subscribe($frame_content__subscribers, _scope($scope1_id, {

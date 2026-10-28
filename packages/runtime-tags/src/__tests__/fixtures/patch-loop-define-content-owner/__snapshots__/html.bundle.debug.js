@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope2_id) };
 		_html(`<section><button>${_text_resume($scope2_id, "#text/1", n)}</button>${_el_resume($scope2_id, "#button/0")}`);
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope2_id, "#childScope/2", 1);
+		const $childScope = _peek_scope_id($scope2_id, "#childScope/2", 1);
 		Card.content({
 			label: "direct",
 			content: _content_elide("__tests__/template.marko_6*content", () => {

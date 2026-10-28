@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "a", Promise.resolve(input.value), () => {
 				const $scope2_id = _scope_id();
-				const $childScope = _patch_child($scope2_id, "a", 0, $cg__input_value && 1);
+				const $childScope = _peek_scope_id($scope2_id, "a", 0, $cg__input_value && 1);
 				let w = widget_default({ label: input.value });
 				$cg__input_value && _var($scope2_id, "b", $childScope, "a0");
 				_patch_child_end();

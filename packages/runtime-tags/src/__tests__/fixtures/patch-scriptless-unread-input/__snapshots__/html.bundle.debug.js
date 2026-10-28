@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			card_default({ user: input.user });
 			_patch_child_end();
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_user#0:6/init");
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 2), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
 	_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	card_default({ user: input.user2 });
 	_patch_child_end();
 	_dynamic_tag($scope0_id, "#text/2", input.tag, { class: input.cls }, 17, _content_resume("__tests__/template.marko_2*content", () => {

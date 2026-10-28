@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					return "f:" + input.label;
 				} });
 			}
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			card_default({ a: attrTag({ b: $b }) });
 			_patch_child_end();
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_on#0:4_input_label#0:5/init");

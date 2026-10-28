@@ -26,7 +26,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 		$wg__input_content || $wg__t || ($wi__input_content || $wi__t) && _resume_branch($scope1_id);
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	Wrap.content({ t: input.t });
 	_patch_child_end();
 	_scope($scope0_id, {
@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let z = 0;
 	_html(`<button class=z>z</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	one_default({
 		t: input.y,
 		content: _content_resume("__tests__/template.marko_1*content", () => {

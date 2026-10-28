@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
-	const $childScope = _patch_child($scope0_id, "c", 0, $cg__input_user && 1);
+	const $childScope = _peek_scope_id($scope0_id, "c", 0, $cg__input_user && 1);
 	let info = user_info_default({ user: input.user });
 	$cg__input_user && _var($scope0_id, "d", $childScope, "a0");
 	_patch_child_end();
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope2 = _patch_child($scope1_id, "a", 1, $cg__input_user2 && 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "a", 1, $cg__input_user2 && 1);
 			let info2 = user_info_default({ user: input.user2 });
 			$cg__input_user2 && _var($scope1_id, "b", $childScope2, "a1");
 			_patch_child_end();

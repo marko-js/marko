@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 	const $input_fail__closures = /* @__PURE__ */ new Set();
 	const $input_x__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrap_default({ content: _content_resume("a5", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();

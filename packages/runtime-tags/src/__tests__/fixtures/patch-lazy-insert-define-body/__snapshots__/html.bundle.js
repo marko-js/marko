@@ -28,7 +28,7 @@ var template_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_set_scope_reason(_mask_group($scope1_reason, 0) << 1);
-		const $childScope = _patch_child($scope1_id, "b", 0);
+		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		$Lazy_withLoadAssets({ label });
 		_patch_child_end();
 		_scope($scope1_id, { b: _existing_scope($childScope) });
@@ -38,7 +38,7 @@ var template_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope2 = _patch_child($scope2_id, "a", 1);
+			const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
 			Row.content({ label: "s" });
 			_patch_child_end();
 			_scope($scope2_id, { a: _existing_scope($childScope2) });

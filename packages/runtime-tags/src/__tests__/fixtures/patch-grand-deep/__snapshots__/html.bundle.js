@@ -20,7 +20,7 @@ var l2_default = _template("c", (input) => {
 	let n = 0;
 	_html(`<button class=n>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "c", 0);
+	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	l3_default({ note: input.note });
 	_patch_child_end();
 	_script($scope0_id, "c0");
@@ -38,7 +38,7 @@ var l1_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	l2_default({ note: input.note });
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });
@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			l1_default({ note: input.note });
 			_patch_child_end();
 			_scope($scope1_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });

@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $for_content__p_text__closures = /* @__PURE__ */ new Set();
 		_set_scope_reason(10);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		panel_default({
 			open,
 			content: _content_resume("a2", () => {

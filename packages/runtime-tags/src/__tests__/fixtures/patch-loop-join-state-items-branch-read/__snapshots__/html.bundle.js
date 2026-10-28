@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	let list = ["p", "q"];
 	let show = true;
 	_set_scope_reason(570 | _mask_group($scope0_reason, 2) << 7);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		b: input.b,
 		items: list,
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 4) << 5 | _mask_group($scope0_reason, 2) << 7 | _mask_group($scope0_reason, 3) << 9);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	child_default({
 		b: input.b,
 		items: input.items,

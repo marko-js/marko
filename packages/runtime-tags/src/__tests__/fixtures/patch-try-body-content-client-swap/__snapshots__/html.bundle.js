@@ -69,7 +69,7 @@ var template_default = _template("a", (input) => {
 		}));
 	}, $scope0_id) };
 	_set_scope_reason(10);
-	const $childScope = _patch_child($scope0_id, "c", 0);
+	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	wrapper_default({
 		fail: false,
 		content: B

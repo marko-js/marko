@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (n) {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(_mask_group($scope1_reason, 0) << 1 | _mask_group($scope1_reason, 1) << 3);
-				const $childScope = _patch_child($scope2_id, "#childScope/0", 0);
+				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 				Level.content({
 					n: n - 1,
 					label,
@@ -73,7 +73,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", 1, _write_guard($scope1_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_2*shell"], $scope1_reason, 0);
 		_set_scope_reason(_mask_group($scope1_reason, 2) << 1);
-		const $childScope2 = _patch_child($scope1_id, "#childScope/1", 1);
+		const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 		keeper_default({ content });
 		_patch_child_end();
 		_scope($scope1_id, {
@@ -89,7 +89,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-	const $childScope3 = _patch_child($scope0_id, "#childScope/0", 2);
+	const $childScope3 = _peek_scope_id($scope0_id, "#childScope/0", 2);
 	Level.content({
 		n: 2,
 		label: input.label

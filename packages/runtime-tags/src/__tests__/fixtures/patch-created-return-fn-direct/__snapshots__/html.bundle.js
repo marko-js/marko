@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope = _patch_child($scope1_id, "a", 0, $cg__input_label && 1);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0, $cg__input_label && 1);
 			let r = card_default({ label: input.label });
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "wf", r, !$sg__input_label);
 			$cg__input_label && _var($scope1_id, "b", $childScope, "a0");

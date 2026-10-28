@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	let open = true;
 	_html("<main>");
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	widget_default({ content: _content("a5", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope3_id = _scope_id();
 			_set_scope_reason(0);
-			_patch_child($scope3_id, "a", 1);
+			_peek_scope_id($scope3_id, "a", 1);
 			widget_default({ content: _content("a8", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();

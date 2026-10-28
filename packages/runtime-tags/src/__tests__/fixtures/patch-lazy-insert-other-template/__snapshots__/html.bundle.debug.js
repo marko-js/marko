@@ -28,7 +28,7 @@ var opener_default = _template("__tests__/tags/opener.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			_patch_child($scope1_id, "#childScope/1", 0);
+			_peek_scope_id($scope1_id, "#childScope/1", 0);
 			$Lazy_withLoadAssets$1({ label: "c" });
 			_patch_child_end();
 			_scope($scope1_id, {}, "__tests__/tags/opener.marko", "4:2");
@@ -52,14 +52,14 @@ _shells({
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	opener_default({});
 	_patch_child_end();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope2 = _patch_child($scope1_id, "#childScope/1", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 			$Lazy_withLoadAssets({ label: "s" });
 			_patch_child_end();
 			_scope($scope1_id, { "#childScope/1": _existing_scope($childScope2) }, "__tests__/template.marko", "3:2");

@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	let s = false;
 	_set_scope_reason(3066 | _mask_group($scope0_reason, 1) << 13);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		a: count,
 		b: input.x,
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(926 | (_mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 2) << 11 | _mask_group($scope0_reason, 1) << 13));
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	panel_default({
 		a: input.y,
 		b: input.x,

@@ -37,14 +37,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_await($scope1_id, "#text/0", input.promise, (value) => {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(_mask_group($scope0_reason, 3) << 3);
-				const $childScope = _patch_child($scope2_id, "#childScope/0", 0);
+				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 				Panel.content({
 					isOpen: true,
 					label: value
 				});
 				_patch_child_end();
 				_set_scope_reason(_mask_group($scope0_reason, 4) << 3);
-				const $childScope2 = _patch_child($scope2_id, "#childScope/1", 1);
+				const $childScope2 = _peek_scope_id($scope2_id, "#childScope/1", 1);
 				Panel.content({
 					isOpen: true,
 					label: input.label

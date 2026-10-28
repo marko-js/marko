@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:item_upper", item?.upper, !_server_guard($scope0_reason, 2));
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		label_view_default(_patch_live($childScope, { get: item.upper ? up : low }, $scope1_id, ">up >low item_upper"));
 		_patch_child_end();
 		(_filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope1_id, "__tests__/template.marko_1_up#0:5_low#0:6_item_upper#3/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">up", _filled_guard($scope0_reason, 1) && ">low", _filled_guard($scope0_reason, 2) && "item_upper");

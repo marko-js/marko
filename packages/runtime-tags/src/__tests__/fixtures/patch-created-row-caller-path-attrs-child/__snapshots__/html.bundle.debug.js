@@ -29,7 +29,7 @@ var navx_default = _template("__tests__/tags/navx.marko", (input) => {
 		const active = item.href === input.path;
 		_html(`<a${_attr_class(["link", { active }], $scope1_id, "#a/0", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "#a/0", $scope0_reason, 1)}>`);
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-		const $childScope = _patch_child($scope1_id, "#childScope/1", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 		icon_default({ name: item.icon });
 		_patch_child_end();
 		_html(`<span>${_text_resume($scope1_id, "#text/2", item.label, void 0, $scope0_reason, 1)}</span></a>${_el_resume($scope1_id, "#a/0", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 1))}`);
@@ -71,7 +71,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(38 | (_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 7));
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			navx_default({
 				items: input.items,
 				path,

@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_await($scope0_id, "#text/0", input.first, (a) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 0) << 5);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		tagged_default({
 			id: "a",
 			tag: a.tag
@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_await($scope0_id, "#text/1", input.second, (b) => {
 		const $scope2_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 1) << 5);
-		const $childScope2 = _patch_child($scope2_id, "#childScope/0", 1);
+		const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1);
 		tagged_default({
 			id: "b",
 			tag: b.tag

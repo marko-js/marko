@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_prefix__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	keeper_default({ content: _content_resume("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) });
 	_patch_child_end();
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	keeper_default({ content: _content_resume("a3", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();

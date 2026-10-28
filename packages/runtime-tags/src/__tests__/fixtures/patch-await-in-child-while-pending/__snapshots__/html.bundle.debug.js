@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html("<section>");
 		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		my_child_default({
 			msg: input.msg,
 			promise: input.promise

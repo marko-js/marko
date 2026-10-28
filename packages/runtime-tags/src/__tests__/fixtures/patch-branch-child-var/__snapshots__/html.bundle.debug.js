@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0, $cg__input_label && 1);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, $cg__input_label && 1);
 			let el = box_default({ label: input.label });
 			$cg__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_el#3/var");
 			_patch_child_end();

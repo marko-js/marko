@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		open: input.open,
 		content: _content_resume("a1", ({ x }) => {

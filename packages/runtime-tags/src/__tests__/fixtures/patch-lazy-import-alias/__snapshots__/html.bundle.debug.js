@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const X = $Child_withLoadAssets;
 			_html(`<button>${_text_resume($scope1_id, "#text/1", n)}</button>${_el_resume($scope1_id, "#button/0")}`);
 			_set_scope_reason(2);
-			const $childScope = _patch_child($scope1_id, "#childScope/3", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/3", 0);
 			$Child_withLoadAssets({ label: n });
 			_patch_child_end();
 			_script($scope1_id, "__tests__/template.marko_1");

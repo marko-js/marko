@@ -69,12 +69,12 @@ var file_host_default = _template("b", (input) => {
 	const $input_files__closures = /* @__PURE__ */ new Set();
 	const $input_filesChange__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "a", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "a", 1);
 	file_panes_default({ first: attrTag({ content: _content_elide("b2", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		file_tabs_default({
 			files: input.files,
 			filesChange: input.filesChange
@@ -104,12 +104,12 @@ var route_pg_default = _template("f", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	let files = file_store_default({ value: [{ path: "a" }] });
 	_var($scope0_id, "b", $childScope, "f1");
 	_patch_child_end();
 	_set_scope_reason(10);
-	const $childScope2 = _patch_child($scope0_id, "c", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	file_host_default({
 		files,
 		filesChange: _resume((_new_files) => {
@@ -135,7 +135,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "b", 0);
+			const $childScope = _peek_scope_id($scope1_id, "b", 0);
 			$Route_withLoadAssets({});
 			_patch_child_end();
 			_scope($scope1_id, { b: _existing_scope($childScope) });

@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		return n;
 	})();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	tagged_default({ node });
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });

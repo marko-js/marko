@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 			}, "a0", { g: x }, $scope0_id)
 		});
 	});
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	menu_default({ item: $item });
 	_patch_child_end();
 	_html(`<p>${_text_resume($scope0_id, "b", picked)}</p>`);

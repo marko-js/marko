@@ -26,7 +26,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
-			const $childScope = _patch_child($scope2_id, "#childScope/0", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0, void 0, $scope0_id);
 			Info.content({});
 			_patch_child_end();
 			_scope($scope2_id, {
@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	let s = false;
 	_set_scope_reason(9198 | _mask_group($scope0_reason, 1) << 11);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	panel_default({
 		a: count,
 		b: input.x,
@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(8696 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 9 | _mask_group($scope0_reason, 1) << 11));
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	panel_default({
 		a: input.y,
 		b: input.x,

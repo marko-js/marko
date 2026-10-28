@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrapper_default({ content: _content_resume("a1", ({ value }) => {
 		const $scope1_reason = _scope_reason(), $wg__value = _write_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();

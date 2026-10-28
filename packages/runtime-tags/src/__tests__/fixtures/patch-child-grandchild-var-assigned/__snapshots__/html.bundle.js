@@ -27,7 +27,7 @@ _shells({ b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0) => `0${_w0
 var widget_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	let v = inner_default({});
 	_var($scope0_id, "b", $childScope, "b0");
 	_patch_child_end();
@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_patch_child($scope1_id, "a", 0);
+			_peek_scope_id($scope1_id, "a", 0);
 			widget_default({});
 			_patch_child_end();
 			_scope($scope1_id, {});

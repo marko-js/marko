@@ -34,7 +34,7 @@ var a_tag_default = _template("__tests__/tags/a-tag.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<span>a${_text_resume($scope0_id, "#text/0", input.n, 2, $scope0_reason, 0)}</span>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	b_tag_default({ n: input.n });
 	_patch_child_end();
 	const $return = input.n * 10;
@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			a_tag_default({ n: input.n });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_n#0:4/init");

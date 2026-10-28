@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	let n = 0;
 	const z = input.v + $global$1.flag;
 	_set_scope_reason(0);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrap_default({ content: _content("a2", () => {
 		_scope_reason();
 		const $scope1_page = _page_render();

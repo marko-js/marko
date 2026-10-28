@@ -44,14 +44,14 @@ var template_default = _template("a", (input) => {
 	const $open__closures = /* @__PURE__ */ new Set();
 	let open = false;
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "a", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "a", 1);
 	wrapper_default({ content: _content("a7", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		const $wrapper_content__label__closures = /* @__PURE__ */ new Set();
 		const label = input.label;
 		_set_scope_reason(10);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		toggle_default({
 			open,
 			content: _content_resume("a2", () => {

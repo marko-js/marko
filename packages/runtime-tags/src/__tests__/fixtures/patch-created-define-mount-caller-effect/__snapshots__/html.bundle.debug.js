@@ -28,14 +28,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "#childScope/2", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	Info.content({ label: count });
 	_patch_child_end();
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
-			const $childScope2 = _patch_child($scope2_id, "#childScope/0", 1, void 0, $scope0_id);
+			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1, void 0, $scope0_id);
 			Info.content({ label: input.label });
 			_patch_child_end();
 			_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:8/init");

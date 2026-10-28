@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "#text/0", SITE, void 0, 0, 0)} ${_text_resume($scope2_id, "#text/1", page.title, 2, $scope0_reason, 0)}</p>`);
-			const $childScope = _patch_child($scope2_id, "#childScope/2", 0);
+			const $childScope = _peek_scope_id($scope2_id, "#childScope/2", 0);
 			counter_default({});
 			_patch_child_end();
 			_if(() => {

@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
 	_set_scope_reason(482 | (_mask_group($scope0_reason, 0) << 3 | ($scope0_page ? 1 : 0) << 11 | _mask_group($scope0_reason, 0) << 13));
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_view_default({
 		a: _resume(() => "x" + n, "__tests__/template.marko_0/a", $scope0_id),
 		b: low,

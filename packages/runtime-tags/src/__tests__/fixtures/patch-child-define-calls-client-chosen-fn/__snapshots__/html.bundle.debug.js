@@ -19,7 +19,7 @@ var mid_define_default = _template("__tests__/tags/mid-define.marko", (input) =>
 		_scope($scope1_id, { get }, "__tests__/tags/mid-define.marko", "1:2", { get: "1:16" }) || _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:get", get, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Show.content({ get: input.get });
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/mid-define.marko", 0);
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const up = _bind_resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id);
 	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
 	_set_scope_reason(6);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	mid_define_default({ get: upper ? up : low });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/1")}`);

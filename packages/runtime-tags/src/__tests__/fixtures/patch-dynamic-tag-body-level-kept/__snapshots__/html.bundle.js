@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $v__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	let v = counter_default({});
 	_var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();

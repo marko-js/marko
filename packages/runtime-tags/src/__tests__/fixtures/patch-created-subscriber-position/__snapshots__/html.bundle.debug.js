@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<main>");
 			_set_scope_reason(0);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			frame_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope1_id) });
 			_patch_child_end();
 			_set_scope_reason(0);
-			const $childScope2 = _patch_child($scope1_id, "#childScope/1", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 			frame_default({ content: _content_elide("__tests__/template.marko_3*content", () => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();

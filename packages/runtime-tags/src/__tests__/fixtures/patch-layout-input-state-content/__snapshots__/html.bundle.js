@@ -35,7 +35,7 @@ var layout_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<html>${_flush_head()}<body><main>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrap_default({
 		show: input.open,
 		content: _content_resume("a0", () => {
@@ -58,7 +58,7 @@ var template_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let open = false;
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	layout_default({
 		open,
 		content: _content("b1", () => {

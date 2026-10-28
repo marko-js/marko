@@ -25,7 +25,7 @@ var host_default = _template("c", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope = _patch_child($scope1_id, "b", 0);
+			const $childScope = _peek_scope_id($scope1_id, "b", 0);
 			$Child_withLoadAssets({ label: input.label });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "c0");
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	host_default({
 		show: input.show,
 		label: input.label

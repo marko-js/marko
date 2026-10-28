@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let items = [{ id: 1 }, { id: 2 }];
 	_html(`<button>drop</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	rows_default({
 		items,
 		promise: input.promise

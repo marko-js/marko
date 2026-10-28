@@ -88,7 +88,7 @@ var page_b_default = _template("c", (input) => {
 	_for_of([1, 2], (item) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		card_default({
 			title: item,
 			content: _content_elide("c1", () => {
@@ -143,7 +143,7 @@ var template_default = _template("d", (input) => {
 		} else {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
-			const $childScope3 = _patch_child($scope1_id, "b", 1);
+			const $childScope3 = _peek_scope_id($scope1_id, "b", 1);
 			$Layout_withLoadAssets({
 				list: input.list,
 				content: _content_elide("d4", () => {
@@ -153,7 +153,7 @@ var template_default = _template("d", (input) => {
 						if (input.page === 1) {
 							const $scope3_id = _scope_id();
 							_set_scope_reason(_mask_group($scope0_reason, 6) << 1 | _mask_group($scope0_reason, 5) << 3);
-							const $childScope = _patch_child($scope3_id, "b", 0);
+							const $childScope = _peek_scope_id($scope3_id, "b", 0);
 							$PageA_withLoadAssets({
 								wide: input.wide,
 								note: input.note
@@ -169,7 +169,7 @@ var template_default = _template("d", (input) => {
 						} else {
 							const $scope4_id = _scope_id();
 							_set_scope_reason(_mask_group($scope0_reason, 6) << 1);
-							const $childScope2 = _patch_child($scope4_id, "b", 0);
+							const $childScope2 = _peek_scope_id($scope4_id, "b", 0);
 							$PageB_withLoadAssets({ note: input.note });
 							_patch_child_end();
 							$cg__input_note && _patch_init($scope4_id, "d2");

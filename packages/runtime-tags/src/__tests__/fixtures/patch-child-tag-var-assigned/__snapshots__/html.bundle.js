@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			let count = counter_box_default({ start: 1 });
 			_var($scope1_id, "b", $childScope, "a0");
 			_patch_child_end();

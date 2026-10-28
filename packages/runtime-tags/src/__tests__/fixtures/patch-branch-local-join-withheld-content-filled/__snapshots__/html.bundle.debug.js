@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	let m = false;
 	_set_scope_reason(41454 | (_mask_group($scope0_reason, 2) << 9 | _mask_group($scope0_reason, 1) << 11));
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		a: n,
 		b: input.x,
@@ -76,7 +76,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(33272 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 9 | _mask_group($scope0_reason, 1) << 11 | _mask_group($scope0_reason, 3) << 13));
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	child_default({
 		a: input.y,
 		b: input.x,

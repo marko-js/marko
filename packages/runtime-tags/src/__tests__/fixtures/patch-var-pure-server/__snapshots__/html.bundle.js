@@ -28,11 +28,11 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<main>");
-	const $childScope = _patch_child($scope0_id, "a", 0, $cg__input_n && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_n && 1);
 	let double = doubler_default({ value: input.n });
 	$cg__input_n && _var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
-	const $childScope2 = _patch_child($scope0_id, "c", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	labeler_default({ title: double });
 	_patch_child_end();
 	_html("</main>");

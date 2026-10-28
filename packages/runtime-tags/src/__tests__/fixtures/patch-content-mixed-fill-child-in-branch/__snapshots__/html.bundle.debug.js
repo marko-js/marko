@@ -65,19 +65,19 @@ var page_default = _template("__tests__/page.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $live__closures = new Set();
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, 1);
 	let bonus = box_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/page.marko_0_bonus#7/var");
 	_patch_child_end();
 	const live = bonus ?? input.base;
 	_html(`<button class=bonus>bonus</button>${_el_resume($scope0_id, "#button/2")}`);
 	_set_scope_reason(0);
-	const $childScope3 = _patch_child($scope0_id, "#childScope/3", 2);
+	const $childScope3 = _peek_scope_id($scope0_id, "#childScope/3", 2);
 	panel_default({ aside: attrTag({ content: _content_elide("__tests__/page.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(6);
-		const $childScope2 = _patch_child($scope1_id, "#childScope/0", 1);
+		const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1);
 		counter_default({ base: live });
 		_patch_child_end();
 		_subscribe($live__closures, _scope($scope1_id, {
@@ -114,7 +114,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			page_default({ base: input.base });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_base#0:4/init");

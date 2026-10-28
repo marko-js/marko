@@ -32,7 +32,7 @@ var card_default = _template("b", (input) => {
 	const $global$1 = $global();
 	let count = 0;
 	_set_scope_reason(10);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		open: true,
 		body: attrTag({ content: _content_resume("b1", () => {

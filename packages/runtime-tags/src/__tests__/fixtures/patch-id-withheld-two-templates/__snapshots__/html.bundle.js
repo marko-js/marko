@@ -27,7 +27,7 @@ var relay_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		other: input.content,
 		content: _content_kept("c0", () => {
@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(0);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		relay_default({ content: _content_kept("a0", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();

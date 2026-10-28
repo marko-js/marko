@@ -28,14 +28,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}), _client_guard((_mask_group($scope0_reason, 2) | _mask_group($scope1_reason, 2)) << 1, 0) && "__tests__/template.marko_1_input_y#0:5/subscribe");
 	}, $scope0_id) };
 	_set_scope_reason(14 | _mask_group($scope0_reason, 3) << 5);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Row.content({
 		a: n,
 		b: input.x
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 4) << 3 | _mask_group($scope0_reason, 5) << 5);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/1", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	Row.content(input.row);
 	_patch_child_end();
 	_html(`<button class=n>+</button>${_el_resume($scope0_id, "#button/2")}`);

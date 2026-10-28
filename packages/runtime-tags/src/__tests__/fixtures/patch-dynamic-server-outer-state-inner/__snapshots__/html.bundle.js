@@ -39,7 +39,7 @@ var template_default = _template("c", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_set_scope_reason(2);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		box_default({
 			k: count,
 			content: _content_elide("c1", () => {

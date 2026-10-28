@@ -18,7 +18,7 @@ _shells({ "__tests__/tags/w.marko": /*@__PURE__*/ (() => `__tests__/tags/w.marko
 var w_default = _template("__tests__/tags/w.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, $cg__input_x && 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $cg__input_x && 1);
 	let r = ret_default({ x: input.x });
 	$cg__input_x && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/w.marko_0_r#6/var");
 	_patch_child_end();
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_until(1 + s % 3, 0, 1, (n) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(2);
-		const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		w_default({ x: s + n });
 		_patch_child_end();
 		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:2");

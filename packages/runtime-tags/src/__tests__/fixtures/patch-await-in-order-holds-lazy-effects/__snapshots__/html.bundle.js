@@ -27,7 +27,7 @@ var template_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let value = 0;
 	_set_scope_reason(8);
-	const $childScope = _patch_child($scope0_id, "b", 0);
+	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Child_withLoadAssets({
 		value,
 		valueChange: _resume((_new_value) => {

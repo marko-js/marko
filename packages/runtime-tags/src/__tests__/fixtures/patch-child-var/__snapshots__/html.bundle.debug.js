@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, 1);
 	let card = price_card_default({ label: input.label });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_card#8/var");
 	_patch_child_end();

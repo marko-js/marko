@@ -438,20 +438,24 @@ export function knownTagTranslateHTML(
       t.variableDeclaration("const", [
         t.variableDeclarator(
           peekScopeId,
-          isPatch()
-            ? callRuntime(
-                "_patch_child",
-                getScopeIdIdentifier(section),
-                getScopeAccessorLiteral(childScopeBinding),
-                t.numericLiteral(nextIdSite()),
-                // Only a patch render of a section patches write reads these two.
-                patchWrites(section) && varId && guardVar(t.numericLiteral(1)),
-                patchWrites(section) &&
-                  childSection.parent !== section &&
-                  namesBodyOwner(section, childSection) &&
-                  getScopeIdIdentifier(childSection.parent!),
-              )
-            : callRuntime("_peek_scope_id"),
+          callRuntime(
+            "_peek_scope_id",
+            ...(isPatch()
+              ? [
+                  getScopeIdIdentifier(section),
+                  getScopeAccessorLiteral(childScopeBinding),
+                  t.numericLiteral(nextIdSite()),
+                  // Only a patch render of a section patches write reads these two.
+                  patchWrites(section) &&
+                    varId &&
+                    guardVar(t.numericLiteral(1)),
+                  patchWrites(section) &&
+                    childSection.parent !== section &&
+                    namesBodyOwner(section, childSection) &&
+                    getScopeIdIdentifier(childSection.parent!),
+                ]
+              : []),
+          ),
         ),
       ]),
     );
@@ -510,7 +514,7 @@ export function knownTagTranslateHTML(
     statements.push(
       t.expressionStatement(
         callRuntime(
-          "_patch_child",
+          "_peek_scope_id",
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(childScopeBinding),
           t.numericLiteral(nextIdSite()),

@@ -27,16 +27,16 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.mode === 0) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			field_default({});
 			_patch_child_end();
 			_if(() => {
 				if (input.nested) {
 					const $scope4_id = _scope_id();
-					const $childScope2 = _patch_child($scope4_id, "a", 1);
+					const $childScope2 = _peek_scope_id($scope4_id, "a", 1);
 					field_default({});
 					_patch_child_end();
-					const $childScope3 = _patch_child($scope4_id, "b", 2);
+					const $childScope3 = _peek_scope_id($scope4_id, "b", 2);
 					field_default({});
 					_patch_child_end();
 					_scope($scope4_id, {
@@ -54,16 +54,16 @@ var template_default = _template("a", (input) => {
 			return 0;
 		} else if (input.mode === 1) {
 			const $scope2_id = _scope_id();
-			const $childScope4 = _patch_child($scope2_id, "a", 0);
+			const $childScope4 = _peek_scope_id($scope2_id, "a", 0);
 			field_default({});
 			_patch_child_end();
-			const $childScope5 = _patch_child($scope2_id, "b", 1);
+			const $childScope5 = _peek_scope_id($scope2_id, "b", 1);
 			field_default({});
 			_patch_child_end();
-			const $childScope6 = _patch_child($scope2_id, "c", 2);
+			const $childScope6 = _peek_scope_id($scope2_id, "c", 2);
 			field_default({});
 			_patch_child_end();
-			const $childScope7 = _patch_child($scope2_id, "d", 3);
+			const $childScope7 = _peek_scope_id($scope2_id, "d", 3);
 			field_default({});
 			_patch_child_end();
 			_scope($scope2_id, {
@@ -75,7 +75,7 @@ var template_default = _template("a", (input) => {
 			return 1;
 		} else {
 			const $scope3_id = _scope_id();
-			const $childScope8 = _patch_child($scope3_id, "a", 0);
+			const $childScope8 = _peek_scope_id($scope3_id, "a", 0);
 			field_default({});
 			_patch_child_end();
 			_scope($scope3_id, { a: _existing_scope($childScope8) });
@@ -86,16 +86,16 @@ var template_default = _template("a", (input) => {
 		"a2",
 		"a3"
 	], $scope0_reason, 0);
-	const $childScope9 = _patch_child($scope0_id, "b", 4);
+	const $childScope9 = _peek_scope_id($scope0_id, "b", 4);
 	field_default({});
 	_patch_child_end();
-	const $childScope10 = _patch_child($scope0_id, "c", 5);
+	const $childScope10 = _peek_scope_id($scope0_id, "c", 5);
 	field_default({});
 	_patch_child_end();
 	_if(() => {
 		if (input.other) {
 			const $scope5_id = _scope_id();
-			const $childScope11 = _patch_child($scope5_id, "a", 6);
+			const $childScope11 = _peek_scope_id($scope5_id, "a", 6);
 			field_default({});
 			_patch_child_end();
 			_scope($scope5_id, { a: _existing_scope($childScope11) });

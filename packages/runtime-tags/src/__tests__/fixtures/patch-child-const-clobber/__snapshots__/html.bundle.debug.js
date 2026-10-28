@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let note = input.note;
 	_html("<main>");
 	_set_scope_reason(32);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	card_default({
 		title: "fixed",
 		klass: "c",

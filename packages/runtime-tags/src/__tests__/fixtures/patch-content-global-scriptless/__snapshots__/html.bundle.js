@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	const $global$1 = $global();
 	_html("<main>");
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		title: input.title,
 		content: _content("a1", () => {
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope2 = _patch_child($scope2_id, "a", 1);
+			const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
 			card_default({
 				title: "x",
 				content: _content_elide("a3", () => {

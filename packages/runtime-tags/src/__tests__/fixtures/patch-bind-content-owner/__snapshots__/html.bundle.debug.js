@@ -45,13 +45,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $store_set__closures = new Set();
 	const $input_show__closures = new Set();
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, 1);
 	let store = store_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_store#7/var");
 	_patch_child_end();
 	_html(`<p>${_text_resume($scope0_id, "#text/2", store.last)}</p>`);
 	_set_scope_reason(0);
-	const $childScope2 = _patch_child($scope0_id, "#childScope/3", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/3", 1);
 	frame_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();

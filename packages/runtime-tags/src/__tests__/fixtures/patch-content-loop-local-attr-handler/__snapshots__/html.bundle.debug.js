@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko_0/onPick", { "x/6": x }, $scope0_id)
 		});
 	});
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	menu_default({ item: $item });
 	_patch_child_end();
 	_html(`<p>${_text_resume($scope0_id, "#text/1", picked)}</p>`);

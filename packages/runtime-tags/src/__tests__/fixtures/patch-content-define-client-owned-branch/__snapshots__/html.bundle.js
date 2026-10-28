@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);
-	const $childScope = _patch_child($scope0_id, "a", 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Panel.content({
 		open: true,
 		body: attrTag({ content: _content_resume("a3", () => {

@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "2:2", { n: "2:17" }), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "__tests__/template.marko_1_input_suffix#0:4/subscribe") || _filled_guard($scope1_reason, 0) && _client_guard($scope0_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", n, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(2);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Label.content({ n: count });
 	_patch_child_end();
 	_html(`<button>+</button>${_el_resume($scope0_id, "#button/1")}`);

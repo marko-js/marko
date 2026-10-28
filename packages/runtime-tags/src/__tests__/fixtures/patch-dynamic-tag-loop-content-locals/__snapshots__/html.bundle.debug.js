@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:6");
 		}, $scope0_id, () => [{ t }]) });
 	});
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	tabs_default({
 		selected: input.selected,
 		tab: $tab

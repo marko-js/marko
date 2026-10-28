@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	const up = _bind_resume(() => "U" + input.title, "a0", $scope0_id);
 	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id);
 	_set_scope_reason(6);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_view_default(_patch_live($childScope, { get: low }, $scope0_id, "g h"));
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}`);

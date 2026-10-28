@@ -23,7 +23,7 @@ var panel_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope = _patch_child($scope2_id, "a", 0, void 0, $scope0_id);
+			const $childScope = _peek_scope_id($scope2_id, "a", 0, void 0, $scope0_id);
 			Info.content({ id: "x" });
 			_patch_child_end();
 			_scope($scope2_id, {
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		n: count,
 		show: input.show

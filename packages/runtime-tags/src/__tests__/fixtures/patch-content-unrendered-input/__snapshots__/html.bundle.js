@@ -90,14 +90,14 @@ var template_default = _template("a", (input) => {
 	let n = 0;
 	_html(`<button class=inc>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 3) << 1 | _mask_group($scope0_reason, 3) << 3 | _mask_group($scope0_reason, 3) << 5);
-	const $childScope2 = _patch_child($scope0_id, "c", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	gate_default({
 		show: input.admin,
 		admin: attrTag({ content: _content_resume("a4", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
-			const $childScope = _patch_child($scope1_id, "a", 0);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			panel_default({ rows: input.rows });
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 4) && _patch_init($scope1_id, _client_guard($scope0_reason, 4) ? "a0" : "a1");
@@ -116,7 +116,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 6) << 1 | _mask_group($scope0_reason, 6) << 3);
-	const $childScope3 = _patch_child($scope0_id, "d", 2);
+	const $childScope3 = _peek_scope_id($scope0_id, "d", 2);
 	wrapper_default({
 		show: input.showBody,
 		content: _content_resume("a8", () => {

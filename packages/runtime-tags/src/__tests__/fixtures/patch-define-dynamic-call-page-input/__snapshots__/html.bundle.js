@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope3_id, {});
 	}, $scope0_id) };
 	_set_scope_reason(2 | _mask_group($scope0_reason, 4) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({
 		isOpen: open,
 		label: input.label

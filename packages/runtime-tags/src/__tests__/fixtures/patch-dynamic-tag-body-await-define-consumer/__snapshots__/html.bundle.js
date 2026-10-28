@@ -51,7 +51,7 @@ var card_default = _template("b", (input) => {
 	_await($scope0_id, "a", input.p, (x) => {
 		const $scope3_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
-		const $childScope = _patch_child($scope3_id, "a", 2, void 0, $scope0_id);
+		const $childScope = _peek_scope_id($scope3_id, "a", 2, void 0, $scope0_id);
 		K.content({ x });
 		_patch_child_end();
 		_filled_guard($scope0_reason, 1) && _content_withheld("b0", $scope3_id) && _patch_fill($scope0_id, "vb4", input.content);

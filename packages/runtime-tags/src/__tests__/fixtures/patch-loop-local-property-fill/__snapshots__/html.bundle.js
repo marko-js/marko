@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		const item = row.item;
 		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "va0", item?.id);
 		_set_scope_reason(6);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		tagged_default({ label: `${item.id}:${count}` });
 		_patch_child_end();
 		_scope($scope1_id, {

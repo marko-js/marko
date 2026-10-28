@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let s = 0;
 	_html(`<button class=s>s</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
-	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	tabs_default({
 		selected: input.x,
 		tab: attrTags(attrTag({

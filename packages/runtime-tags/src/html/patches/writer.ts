@@ -29,7 +29,7 @@ import {
   _subscribe as _base_subscribe,
   _var as _base_var,
   _html,
-  _peek_scope_id,
+  _peek_scope_id as _base_peek_scope_id,
   _existing_scope as _base_existing_scope,
   _resume,
   _scope as _base_scope,
@@ -250,7 +250,7 @@ function renderWithheld(
   const rendered = (state.withheldRendered ??= new Map());
   const key = PatchKey.Withheld + id;
   if (rendered.has(key + " " + ownerId)) return;
-  const scopeId = _peek_scope_id();
+  const scopeId = _base_peek_scope_id();
   rendered.set(key + " " + ownerId, scopeId);
   state.patchLinks[scopeId] = {
     parent: ownerId,
@@ -782,22 +782,23 @@ export function _write_guard(mask: GroupMask, group: number) {
     : 0;
 }
 
-// Peeks the child's scope id, which no patch has yet, for its first write to
-// link, and enters its call site; a created `<define>` body's link names its owner.
-export function _patch_child(
-  scopeId: number,
-  accessor: Accessor,
-  site: number,
+// A known child's call also links the child's patch, which it has none of yet, and
+// enters its call site; a created `<define>` body's link names its owner.
+export function _peek_scope_id(
+  scopeId?: number,
+  accessor?: Accessor,
+  site?: number,
   wiresVar?: 1 | Falsy,
   ownerScopeId?: number,
 ) {
-  const childScopeId = _peek_scope_id();
+  const childScopeId = _base_peek_scope_id();
+  if (scopeId === undefined) return childScopeId;
   const state = getState();
-  pushIdHop(IdHop.Site, MARKO_DEBUG ? [accessor, site] : site);
+  pushIdHop(IdHop.Site, MARKO_DEBUG ? [accessor!, site!] : site!);
   if (state instanceof PatchRenderState) {
     const link: PatchLink = (state.patchLinks[childScopeId] = {
       parent: scopeId,
-      hop: accessor,
+      hop: accessor!,
     });
     if (ownerScopeId && inCreatable()) link.owner = ownerScopeId;
     // A created child's tag variable wiring leads its setup, ahead of what it
@@ -1226,7 +1227,7 @@ export function _existing_scope(scopeId: number) {
   return _scope(scopeId, {});
 }
 
-// Names the wiring `_patch_child` placed in a created child's setup.
+// Names the wiring `_peek_scope_id` placed in a created child's setup.
 export function _var(
   parentScopeId: number,
   scopeOffsetAccessor: Accessor,

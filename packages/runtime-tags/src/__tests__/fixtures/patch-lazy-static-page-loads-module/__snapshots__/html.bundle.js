@@ -21,7 +21,7 @@ var template_default = _template("b", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			const $childScope = _patch_child($scope1_id, "b", 0);
+			const $childScope = _peek_scope_id($scope1_id, "b", 0);
 			$Page_withLoadAssets({});
 			_patch_child_end();
 			_scope($scope1_id, { b: _existing_scope($childScope) });

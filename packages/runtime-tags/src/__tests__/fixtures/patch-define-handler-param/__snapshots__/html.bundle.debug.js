@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "2:2", { id: "2:16" }) || _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchWrite:id", id, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Card.content({ id: input.id });
 	_patch_child_end();
 	_html(`<p>Cart: ${_text_resume($scope0_id, "#text/1", cart.join(","), 2)}</p>`);

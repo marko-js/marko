@@ -80,7 +80,7 @@ var param_host_default = _template("d", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	toggle_if_default({
 		open: input.open,
 		content: _content_resume("d2", () => {
@@ -93,7 +93,7 @@ var param_host_default = _template("d", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	toggle_for_default({
 		open: input.open,
 		content: _content_resume("d5", () => {
@@ -109,7 +109,7 @@ var param_host_default = _template("d", (input) => {
 	});
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope3 = _patch_child($scope0_id, "c", 2);
+	const $childScope3 = _peek_scope_id($scope0_id, "c", 2);
 	toggle_tag_default({
 		open: input.open,
 		content: _content_resume("d8", () => {
@@ -152,7 +152,7 @@ var outer_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	param_host_default({
 		open: input.open,
 		label: input.label
@@ -183,7 +183,7 @@ var define_host_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wi__open = _write_if($scope1_reason, 0);
 		_set_scope_reason(_mask_group($scope1_reason, 0) << 1 | _mask_group($scope1_reason, 0) << 3);
-		const $childScope = _patch_child($scope1_id, "a", 0);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		toggle_if_default({
 			open,
 			content: _content_resume("b2", () => {
@@ -196,7 +196,7 @@ var define_host_default = _template("b", (input) => {
 		});
 		_patch_child_end();
 		_set_scope_reason(_mask_group($scope1_reason, 0) << 1 | _mask_group($scope1_reason, 0) << 3);
-		const $childScope2 = _patch_child($scope1_id, "b", 1);
+		const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 		toggle_for_default({
 			open,
 			content: _content_resume("b5", () => {
@@ -212,7 +212,7 @@ var define_host_default = _template("b", (input) => {
 		});
 		_patch_child_end();
 		_set_scope_reason(_mask_group($scope1_reason, 0) << 1 | _mask_group($scope1_reason, 0) << 3);
-		const $childScope3 = _patch_child($scope1_id, "c", 2);
+		const $childScope3 = _peek_scope_id($scope1_id, "c", 2);
 		toggle_tag_default({
 			open,
 			content: _content_resume("b8", () => {
@@ -245,7 +245,7 @@ var define_host_default = _template("b", (input) => {
 		});
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-	const $childScope4 = _patch_child($scope0_id, "a", 4);
+	const $childScope4 = _peek_scope_id($scope0_id, "a", 4);
 	Sel.content({ open: input.open });
 	_patch_child_end();
 	_scope($scope0_id, {
@@ -263,14 +263,14 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let open = true;
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
-	const $childScope = _patch_child($scope0_id, "a", 0);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	outer_default({
 		open,
 		label: input.label
 	});
 	_patch_child_end();
 	_set_scope_reason(8 | _mask_group($scope0_reason, 0) << 1);
-	const $childScope2 = _patch_child($scope0_id, "b", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	define_host_default({
 		open,
 		label: input.label

@@ -34,11 +34,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(2);
-			const $childScope = _patch_child($scope1_id, "#childScope/0", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			card_default({ promise: Promise.resolve(n) });
 			_patch_child_end();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope2 = _patch_child($scope1_id, "#childScope/1", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 			card_default({ promise: input.p });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_p#0:5/init");

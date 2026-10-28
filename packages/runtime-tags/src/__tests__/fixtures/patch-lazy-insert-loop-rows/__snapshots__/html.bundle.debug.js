@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope = _patch_child($scope1_id, "#childScope/1", 0);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 			$Lazy_withLoadAssets({ label: "s" });
 			_patch_child_end();
 			_scope($scope1_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", "4:2");
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(items, (item) => {
 		const $scope2_id = _scope_id();
 		_set_scope_reason(2);
-		const $childScope2 = _patch_child($scope2_id, "#childScope/1", 1);
+		const $childScope2 = _peek_scope_id($scope2_id, "#childScope/1", 1);
 		$Lazy_withLoadAssets({ label: item });
 		_patch_child_end();
 		_scope($scope2_id, { "#childScope/1": _existing_scope($childScope2) }, "__tests__/template.marko", "7:2");

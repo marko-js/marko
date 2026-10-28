@@ -33,12 +33,12 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<output id=out></output>");
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope = _patch_child($scope0_id, "a", 0, $cg__input_title && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_title && 1);
 	let fn = make_default({ title: input.title });
 	$cg__input_title && _var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
-	const $childScope2 = _patch_child($scope0_id, "c", 1);
+	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	reader_default({ fn });
 	_patch_child_end();
 	_html(`<button class=other>o</button>${_el_resume($scope0_id, "d")}`);

@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 			const $scope4_id = _scope_id();
 			const $scope4_reason = _scope_reason();
 			_set_scope_reason(_mask_group($scope4_reason, 0) << 1);
-			const $childScope = _patch_child($scope4_id, "a", 0);
+			const $childScope = _peek_scope_id($scope4_id, "a", 0);
 			Inner.content({ z: v });
 			_patch_child_end();
 			_scope($scope4_id, { a: _existing_scope($childScope) });
@@ -43,17 +43,17 @@ var template_default = _template("a", (input) => {
 			const $scope5_id = _scope_id();
 			const $scope5_reason = _scope_reason();
 			_set_scope_reason(_mask_group($scope5_reason, 0) << 1);
-			const $childScope2 = _patch_child($scope5_id, "a", 1);
+			const $childScope2 = _peek_scope_id($scope5_id, "a", 1);
 			Inner.content({ z: w });
 			_patch_child_end();
 			_scope($scope5_id, { a: _existing_scope($childScope2) });
 		}, $scope1_id) };
 		_set_scope_reason(_mask_group($scope1_reason, 2) << 1);
-		const $childScope3 = _patch_child($scope1_id, "a", 2);
+		const $childScope3 = _peek_scope_id($scope1_id, "a", 2);
 		Left.content({ v: y });
 		_patch_child_end();
 		_set_scope_reason(_mask_group($scope1_reason, 2) << 1);
-		const $childScope4 = _patch_child($scope1_id, "b", 3);
+		const $childScope4 = _peek_scope_id($scope1_id, "b", 3);
 		Right.content({ w: y });
 		_patch_child_end();
 		_scope($scope1_id, {
@@ -68,7 +68,7 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
 		_set_scope_reason(_mask_group($scope3_reason, 0) << 1 | _mask_group($scope3_reason, 1) << 3 | _mask_group($scope3_reason, 2) << 5);
-		const $childScope5 = _patch_child($scope3_id, "a", 4);
+		const $childScope5 = _peek_scope_id($scope3_id, "a", 4);
 		Outer.content({
 			x: a,
 			y: b
@@ -77,7 +77,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope3_id, { a: _existing_scope($childScope5) });
 	}, $scope0_id) };
 	_set_scope_reason(38 | _mask_group($scope0_reason, 1) << 3);
-	const $childScope6 = _patch_child($scope0_id, "a", 5);
+	const $childScope6 = _peek_scope_id($scope0_id, "a", 5);
 	Wrapper.content({
 		a: input.a,
 		b: n

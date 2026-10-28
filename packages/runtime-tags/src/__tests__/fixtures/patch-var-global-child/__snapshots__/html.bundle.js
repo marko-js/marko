@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 1;
 	_html("<main>");
-	const $childScope = _patch_child($scope0_id, "a", 0, 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
 	let d = greet_default({ n: count });
 	_var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
