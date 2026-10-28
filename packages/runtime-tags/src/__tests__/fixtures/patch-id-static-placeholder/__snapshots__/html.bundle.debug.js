@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (true) {
 				const $scope4_id = _scope_id();
 				_set_scope_reason(0);
-				_peek_scope_id($scope4_id, "#childScope/0", 0);
+				_patch_child($scope4_id, "#childScope/0", 0);
 				field_default({ name: "loading" });
 				_patch_child_end();
 			}
@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (true) {
 				const $scope6_id = _scope_id();
 				_set_scope_reason(0);
-				_peek_scope_id($scope6_id, "#childScope/0", 1);
+				_patch_child($scope6_id, "#childScope/0", 1);
 				field_default({ name: "loading" });
 				_patch_child_end();
 			}
@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (true) {
 				const $scope8_id = _scope_id();
 				_set_scope_reason(0);
-				_peek_scope_id($scope8_id, "#childScope/0", 2);
+				_patch_child($scope8_id, "#childScope/0", 2);
 				field_default({ name: "loading" });
 				_patch_child_end();
 			}
@@ -77,7 +77,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (true) {
 				const $scope10_id = _scope_id();
 				_set_scope_reason(0);
-				_peek_scope_id($scope10_id, "#childScope/0", 3);
+				_patch_child($scope10_id, "#childScope/0", 3);
 				field_default({ name: "loading" });
 				_patch_child_end();
 			}
@@ -87,7 +87,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			forOf([0, 1], (i) => {
 				const $scope12_id = _scope_id();
 				_set_scope_reason(0);
-				_peek_scope_id($scope12_id, "#childScope/0", 4);
+				_patch_child($scope12_id, "#childScope/0", 4);
 				field_default({ name: "nested" });
 				_patch_child_end();
 			});

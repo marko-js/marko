@@ -41,12 +41,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			_peek_scope_id($scope1_id, "#childScope/0", 1);
+			_patch_child($scope1_id, "#childScope/0", 1);
 			box_default({ content: _content("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_set_scope_reason(0);
-				_peek_scope_id($scope2_id, "#childScope/0", 0);
+				_patch_child($scope2_id, "#childScope/0", 0);
 				card_default({ content: _content("__tests__/template.marko_3*content", () => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();

@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 				const branchId = _id("B");
 				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
 				_set_scope_reason(0);
-				_peek_scope_id($scope4_id, "c", 0);
+				_patch_child($scope4_id, "c", 0);
 				field_default({ name: "caught" });
 				_patch_child_end();
 			}
@@ -59,7 +59,7 @@ var template_default = _template("a", (input) => {
 				const branchId = _id("D");
 				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
 				_set_scope_reason(0);
-				_peek_scope_id($scope6_id, "c", 1);
+				_patch_child($scope6_id, "c", 1);
 				field_default({ name: "caught" });
 				_patch_child_end();
 			}
@@ -73,7 +73,7 @@ var template_default = _template("a", (input) => {
 				const branchId = _id("F");
 				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
 				_set_scope_reason(0);
-				_peek_scope_id($scope8_id, "c", 2);
+				_patch_child($scope8_id, "c", 2);
 				field_default({ name: "caught" });
 				_patch_child_end();
 			}
@@ -87,7 +87,7 @@ var template_default = _template("a", (input) => {
 				const branchId = _id("H");
 				_html(`<label${_attr("for", branchId)}>branch</label><input${_attr("id", branchId)}>`);
 				_set_scope_reason(0);
-				_peek_scope_id($scope10_id, "c", 3);
+				_patch_child($scope10_id, "c", 3);
 				field_default({ name: "caught" });
 				_patch_child_end();
 			}

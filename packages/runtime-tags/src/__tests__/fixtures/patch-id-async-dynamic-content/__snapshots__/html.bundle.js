@@ -75,7 +75,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope5_id = _scope_id();
 			_set_scope_reason(0);
-			_peek_scope_id($scope5_id, "a", 0);
+			_patch_child($scope5_id, "a", 0);
 			field_default({ name: "loading" });
 			_patch_child_end();
 		}, void 0, "a9", void 0, "a5");

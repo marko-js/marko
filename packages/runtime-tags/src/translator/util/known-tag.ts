@@ -514,7 +514,7 @@ export function knownTagTranslateHTML(
     statements.push(
       t.expressionStatement(
         callRuntime(
-          "_peek_scope_id",
+          "_patch_child",
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(childScopeBinding),
           t.numericLiteral(nextIdSite()),

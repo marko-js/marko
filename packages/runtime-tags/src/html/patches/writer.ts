@@ -781,8 +781,8 @@ export function _write_guard(mask: GroupMask, group: number) {
     : 0;
 }
 
-// A known child's call also links the child's patch, which it has none of yet, and
-// enters its call site; a created `<define>` body's link names its owner.
+// Also links the known child's patch and enters its call site (alone, as `_patch_child`,
+// where no slot holds the child); a created `<define>` body's link names its owner.
 export function _peek_scope_id(
   scopeId?: number,
   accessor?: Accessor,

@@ -80,7 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope5_reason = _scope_reason();
 			const $scope5_id = _scope_id();
 			_set_scope_reason(0);
-			_peek_scope_id($scope5_id, "#childScope/0", 0);
+			_patch_child($scope5_id, "#childScope/0", 0);
 			field_default({ name: "loading" });
 			_patch_child_end();
 		}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_2*content");

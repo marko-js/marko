@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_resume($scope1_id, "a", $global$1.brand, $scope0_page)}</em>`);
-			_peek_scope_id($scope1_id, "b", 0);
+			_patch_child($scope1_id, "b", 0);
 			brand_default({});
 			_patch_child_end();
 			_fill_global_subscribe("a0", $scope1_id, 1);

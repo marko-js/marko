@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 			{
 				const $scope4_id = _scope_id();
 				_set_scope_reason(0);
-				_peek_scope_id($scope4_id, "a", 0);
+				_patch_child($scope4_id, "a", 0);
 				field_default({ name: "loading" });
 				_patch_child_end();
 			}
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 			{
 				const $scope6_id = _scope_id();
 				_set_scope_reason(0);
-				_peek_scope_id($scope6_id, "a", 1);
+				_patch_child($scope6_id, "a", 1);
 				field_default({ name: "loading" });
 				_patch_child_end();
 			}
@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 			{
 				const $scope8_id = _scope_id();
 				_set_scope_reason(0);
-				_peek_scope_id($scope8_id, "a", 2);
+				_patch_child($scope8_id, "a", 2);
 				field_default({ name: "loading" });
 				_patch_child_end();
 			}
@@ -71,7 +71,7 @@ var template_default = _template("a", (input) => {
 			{
 				const $scope10_id = _scope_id();
 				_set_scope_reason(0);
-				_peek_scope_id($scope10_id, "a", 3);
+				_patch_child($scope10_id, "a", 3);
 				field_default({ name: "loading" });
 				_patch_child_end();
 			}
@@ -81,7 +81,7 @@ var template_default = _template("a", (input) => {
 			forOf([0, 1], (i) => {
 				const $scope12_id = _scope_id();
 				_set_scope_reason(0);
-				_peek_scope_id($scope12_id, "a", 4);
+				_patch_child($scope12_id, "a", 4);
 				field_default({ name: "nested" });
 				_patch_child_end();
 			});
