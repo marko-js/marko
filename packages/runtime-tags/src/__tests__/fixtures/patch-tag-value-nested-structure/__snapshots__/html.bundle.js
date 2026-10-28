@@ -26,7 +26,7 @@ var panel_default = _template("b", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $wg__input_y, void 0, void 0, void 0, ["b2"], $scope0_reason, 2);
-			_filled_guard($scope0_reason, 1) && ($cg__input_x || $cg__input_y) && _patch_effect($scope1_id, "ib1", "b");
+			_filled_guard($scope0_reason, 1) && ($cg__input_x || $cg__input_y) && _patch_init_entry($scope1_id, "b1", "b");
 			$cg__input_a && _patch_init($scope1_id, "b4");
 			$cg__input_y && _patch_init($scope1_id, "b5");
 			_scope($scope1_id, {

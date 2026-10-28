@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_effect($scope0_id, "PatchInit:__tests__/template.marko_0_upper#6_up#7_low#8/init", _filled_guard($scope0_reason, 0) && "up", _filled_guard($scope0_reason, 1) && "low");
+	_patch_init_entry($scope0_id, "__tests__/template.marko_0_upper#6_up#7_low#8/init", _filled_guard($scope0_reason, 0) && "up", _filled_guard($scope0_reason, 1) && "low");
 	_scope($scope0_id, {
 		input_other: input.other,
 		input_title: input.title,

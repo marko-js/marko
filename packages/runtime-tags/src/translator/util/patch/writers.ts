@@ -427,10 +427,9 @@ export function writePatchResumeStatements(
                   fromIter(getParamSelectedStructure(closureSection) || []),
                 ),
                 callPatchRuntime(
-                  "_patch_effect",
+                  "_patch_init_entry",
                   section,
-                  getPatchKey().Init +
-                    getResumeRegisterId(closureSection, binding, "init"),
+                  getResumeRegisterId(closureSection, binding, "init"),
                   ...getDeps(
                     section,
                     [binding],
@@ -473,10 +472,9 @@ export function writePatchResumeStatements(
                   ...deps,
                 )
               : callPatchRuntime(
-                  "_patch_effect",
+                  "_patch_init_entry",
                   section,
-                  getPatchKey().Init +
-                    getResumeRegisterId(section, ref, "init"),
+                  getResumeRegisterId(section, ref, "init"),
                   ...deps,
                 ),
           );

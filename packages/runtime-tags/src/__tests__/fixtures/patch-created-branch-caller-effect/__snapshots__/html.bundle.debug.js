@@ -19,7 +19,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, void 0, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 0);
-	_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_effect($scope0_id, "PatchInit:__tests__/tags/child.marko_1_input_count#0:4/init", "input_count");
+	_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_init_entry($scope0_id, "__tests__/tags/child.marko_1_input_count#0:4/init", "input_count");
 	_scope($scope0_id, { input_count: input.count }, "__tests__/tags/child.marko", 0, { input_count: ["input.count"] }) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_count", input.count, !_server_guard($scope0_reason, 1));
 });
 

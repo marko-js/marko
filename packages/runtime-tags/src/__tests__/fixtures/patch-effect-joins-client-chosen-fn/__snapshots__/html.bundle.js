@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a2");
 	_script($scope0_id, "a3");
-	_patch_effect($scope0_id, "ia4", _filled_guard($scope0_reason, 0) && "g", _filled_guard($scope0_reason, 0) && "h");
+	_patch_init_entry($scope0_id, "a4", _filled_guard($scope0_reason, 0) && "g", _filled_guard($scope0_reason, 0) && "h");
 	_scope($scope0_id, {
 		d: input.title,
 		e: upper,

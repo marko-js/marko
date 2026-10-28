@@ -833,11 +833,7 @@ export function _patch_join_init(
   if (state instanceof PatchRenderState) {
     const updatesFrom = getUpdatesFrom(mask, group);
     if (updatesFrom === (UpdatesFrom.Client | UpdatesFrom.Server)) {
-      ensureScopePatch(state, scopeId)[PatchKey.Init + initId] = trackDeps(
-        state,
-        scopeId,
-        deps,
-      );
+      writeInitEntry(state, scopeId, initId, deps);
       return 1;
     }
     if (updatesFrom & UpdatesFrom.Client && inCreatable())
@@ -1045,17 +1041,31 @@ export function _script(
   }
 }
 
-// An init entry, valued by the writes this instance's patch sends it depends on.
-export function _patch_effect(
+// An init the client runs on the scope, existing or created, once the writes it
+// depends on that this patch sends are in.
+export function _patch_init_entry(
   scopeId: number,
-  key: string,
+  initId: string,
   ...deps: (string | Falsy)[]
 ) {
   const state = getState();
   if (state instanceof PatchRenderState) {
-    writePatchEntry(state, scopeId, key, trackDeps(state, scopeId, deps));
+    writeInitEntry(state, scopeId, initId, deps);
   }
-  return "";
+}
+
+function writeInitEntry(
+  state: PatchRenderState,
+  scopeId: number,
+  initId: string,
+  deps: (string | Falsy)[],
+) {
+  writePatchEntry(
+    state,
+    scopeId,
+    PatchKey.Init + initId,
+    trackDeps(state, scopeId, deps),
+  );
 }
 
 // The writes an entry re-runs on resolve once the flush's are in: a slot

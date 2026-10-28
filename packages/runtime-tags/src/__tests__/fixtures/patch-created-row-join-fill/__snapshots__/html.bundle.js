@@ -42,7 +42,7 @@ var row_list_default = _template("c", (input) => {
 			if (input.type) {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_resume($scope2_id, "a", t + bounty + input.settled)}</span>`);
-				_patch_effect($scope2_id, "ic1", _filled_guard($scope0_reason, 2) && ">>i", _filled_guard($scope0_reason, 0) && ">c");
+				_patch_init_entry($scope2_id, "c1", _filled_guard($scope0_reason, 2) && ">>i", _filled_guard($scope0_reason, 0) && ">c");
 				_subscribe($bounty__closures, _subscribe($wi__input_settled && $input_settled__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "c2"), "c3");
 				return 0;
 			}

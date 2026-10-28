@@ -15,7 +15,7 @@ var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
 	}, "__tests__/tags/stepper.marko_0/valueChange", $scope0_id), void 0, void 0, void 0, "PatchWrite:ControlledHandler:#input/0")} type=number>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/stepper.marko_0");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/stepper.marko_0_input_value#4_input_valueChange#5/init");
-	_patch_effect($scope0_id, "PatchInit:__tests__/tags/stepper.marko_0_clamp#7_current#8/init", _filled_guard($scope0_reason, 1) && "clamp");
+	_patch_init_entry($scope0_id, "__tests__/tags/stepper.marko_0_clamp#7_current#8/init", _filled_guard($scope0_reason, 1) && "clamp");
 	const $currentChange = input.valueChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/stepper.marko_fill2", current, "PatchWrite:TagVariableChange:current", $currentChange, $scope0_reason, 0);
 	_scope($scope0_id, {
