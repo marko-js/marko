@@ -24,9 +24,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-fill-state-join-construct/template.marko_1*shell"]
 }]
-;Cxg
+;DRg
 
-// PATCH holding Cxg
+// PATCH holding DRg
 {
   "PatchLoop:#text/0": [{
     "PatchChild:#childScope/0": {

@@ -54,9 +54,9 @@
     }
   }
 }]
-;IYxZ
+;JYxZ
 
-// PATCH holding IYxZ
+// PATCH holding JYxZ
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko", "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_1*shell,<p>wide</p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_3*shell !#childScope/1>packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_0;b%b/bD l%b D l&b;<!><!><h1>A</h1><p> </p><!><button> </button><!>`, {
   "PatchBranch:#text/0": [1, {
     "PatchChild:#childScope/1": {
@@ -81,9 +81,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_1*shell"]
 }]
-;Iax5
+;Jax5
 
-// PATCH holding Iax5
+// PATCH holding Jax5
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/layout.marko", "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko", {
   "PatchBranch:#text/0": [1, {
     "PatchChild:#childScope/1": {

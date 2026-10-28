@@ -11,16 +11,16 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-caller-state/tags/panel.marko_2*shell"]
   }
 }]
-;CAI
+;CgI
 
-// PATCH holding CAI
+// PATCH holding CgI
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": 0
   }
 }
 
-// PATCH holding CAI
+// PATCH holding CgI
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{

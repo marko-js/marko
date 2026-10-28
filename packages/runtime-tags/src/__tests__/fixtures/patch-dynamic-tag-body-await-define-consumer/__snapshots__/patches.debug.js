@@ -18,9 +18,9 @@
   },
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-consumer/template.marko_fill2": "b"
 }]
-;Ebk
+;E7k
 
-// PATCH holding Ebk
+// PATCH holding E7k
 {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-consumer/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-consumer/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {

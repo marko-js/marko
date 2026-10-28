@@ -30,6 +30,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&%c`)("D%l");
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$3]);
 _shells({
 	"__tests__/tags/card.marko_2*content": "__tests__/tags/card.marko_2*content __tests__/tags/card.marko_2_n#0:6/init;D ;<b> </b>",
+	"~__tests__/tags/card.marko_2*content": "~__tests__/tags/card.marko_2*content __tests__/tags/card.marko_2_n#0:6/init;D ;<b> </b>",
 	"__tests__/tags/card.marko": /*@__PURE__*/ (() => `__tests__/tags/card.marko${_shell_marker($setup$1)};${((_w0) => `/${_w0}&%c`)("D%l")};${((_w0) => `${_w0}<!><!>`)($template$3)}`)()
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {

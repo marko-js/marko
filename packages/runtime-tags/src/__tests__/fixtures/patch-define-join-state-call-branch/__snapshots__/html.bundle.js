@@ -6,6 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($Row_content_
 const $setup$1 = [["a>", "b>"], ["b5"]];
 _shells({
 	b4: /*@__PURE__*/ ((_w0, _w1) => `b4;${_w0};${_w1}`)($Row_content__walks, $Row_content__template),
+	"~b4": /*@__PURE__*/ ((_w0, _w1) => `~b4;${_w0};${_w1}`)($Row_content__walks, $Row_content__template),
 	b: /*@__PURE__*/ (() => `b a> b>!b5;${((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($Row_content__walks, $Row_content__walks)};${((_w0, _w1) => `<!>${_w0}${_w1}<button class=t>t</button>`)($Row_content__template, $Row_content__template)}`)(),
 	b3: "b3;D ;<p> </p>"
 });

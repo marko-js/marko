@@ -31,6 +31,7 @@ const $walks$5 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
 const $setup$5 = _shell_setup([[], []], ["#childScope/0>", $setup$6]);
 _shells({
 	"__tests__/tags/forward-body.marko_1*content": "__tests__/tags/forward-body.marko_1*content;b%;<!><!><!>",
+	"~__tests__/tags/forward-body.marko_1*content": "~__tests__/tags/forward-body.marko_1*content;b%;<!><!><!>",
 	"__tests__/tags/forward-body.marko": /*@__PURE__*/ ((_w0) => `__tests__/tags/forward-body.marko${_shell_marker($setup$5)};${((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template$6)
 });
 var forward_body_default = _template("__tests__/tags/forward-body.marko", (input) => {
@@ -77,7 +78,9 @@ const $walks$3 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content2__walks);
 const $setup$3 = [[], []];
 _shells({
 	"__tests__/tags/forward-define.marko_2*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/forward-define.marko_2*content;${_w0};${_w1}`)($Wrap_content2__walks, $Wrap_content2__template),
+	"~__tests__/tags/forward-define.marko_2*content": /*@__PURE__*/ ((_w0, _w1) => `~__tests__/tags/forward-define.marko_2*content;${_w0};${_w1}`)($Wrap_content2__walks, $Wrap_content2__template),
 	"__tests__/tags/forward-define.marko_1*content": "__tests__/tags/forward-define.marko_1*content;b%;<!><!><!>",
+	"~__tests__/tags/forward-define.marko_1*content": "~__tests__/tags/forward-define.marko_1*content;b%;<!><!><!>",
 	"__tests__/tags/forward-define.marko": /*@__PURE__*/ (() => `__tests__/tags/forward-define.marko;${((_w0) => `b/${_w0}&b`)($Wrap_content2__walks)};${((_w0) => `<!>${_w0}<!>`)($Wrap_content2__template)}`)()
 });
 var forward_define_default = _template("__tests__/tags/forward-define.marko", (input) => {
@@ -115,6 +118,7 @@ const $walks$2 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Inner_content__walks);
 const $setup$2 = [["#childScope/0>"], []];
 _shells({
 	"__tests__/tags/forward-inner.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/forward-inner.marko_1*content;${_w0};${_w1}`)($Inner_content__walks, $Inner_content__template),
+	"~__tests__/tags/forward-inner.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `~__tests__/tags/forward-inner.marko_1*content;${_w0};${_w1}`)($Inner_content__walks, $Inner_content__template),
 	"__tests__/tags/forward-inner.marko": /*@__PURE__*/ (() => `__tests__/tags/forward-inner.marko #childScope/0>;${((_w0) => `b/${_w0}&b`)($Inner_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Inner_content__template)}`)()
 });
 var forward_inner_default = _template("__tests__/tags/forward-inner.marko", (input) => {
@@ -160,9 +164,13 @@ const $walks = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5, _w6, _w7, _w8, _w9,
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$6], ["#childScope/1>", $setup$6], ["#childScope/2>", $setup$5], ["#childScope/3>", $setup$5], ["#childScope/4>", $setup$4], ["#childScope/5>", $setup$6], ["#childScope/6>", $setup$3], ["#childScope/7>", $setup$3], ["#childScope/8>", $setup$2], ["#childScope/9>", $setup$2], ["#childScope/10>", $setup$1]);
 _shells({
 	"__tests__/template.marko_13*content": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_13*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$7]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$7)};${_w0}`)($template$7),
+	"~__tests__/template.marko_13*content": /*@__PURE__*/ ((_w0) => `~__tests__/template.marko_13*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$7]))};${((_w0) => `/${_w0}&`)($walks$7)};${_w0}`)($template$7),
 	"__tests__/template.marko_11*content": "__tests__/template.marko_11*content,<em>none</em>",
+	"~__tests__/template.marko_11*content": "~__tests__/template.marko_11*content,<em>none</em>",
 	"__tests__/template.marko_8*content": "__tests__/template.marko_8*content,<em>none</em>",
+	"~__tests__/template.marko_8*content": "~__tests__/template.marko_8*content,<em>none</em>",
 	"__tests__/template.marko_7*content": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_7*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$7]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$7)};${_w0}`)($template$7),
+	"~__tests__/template.marko_7*content": /*@__PURE__*/ ((_w0) => `~__tests__/template.marko_7*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$7]))};${((_w0) => `/${_w0}&`)($walks$7)};${_w0}`)($template$7),
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1, _w2, _w3, _w4, _w5, _w6, _w7, _w8, _w9, _w10) => `/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}&/${_w6}&/${_w7}&/${_w8}&/${_w9}&/${_w10}&%c`)("D%l", "D%l", $walks$5, $walks$5, $walks$4, "D%l", $walks$3, $walks$3, $walks$2, $walks$2, "b%c")};${((_w0, _w1, _w2, _w3, _w4, _w5, _w6, _w7, _w8, _w9, _w10) => `${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}${_w6}${_w7}${_w8}${_w9}${_w10}<!><!>`)($template$6, $template$6, $template$5, $template$5, $template$4, $template$6, $template$3, $template$3, $template$2, $template$2, $template$1)}`)(),
 	"__tests__/template.marko_12*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_12*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$5]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$5)};${_w0}`)($template$5)
 });

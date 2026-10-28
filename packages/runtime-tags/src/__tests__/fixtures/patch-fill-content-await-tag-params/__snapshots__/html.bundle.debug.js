@@ -19,6 +19,7 @@ const $setup$1 = _shell_setup([[], ["__tests__/tags/inner.marko_0"]], ["#childSc
 _shells({
 	"__tests__/tags/inner.marko_1_#text#0/await": "__tests__/tags/inner.marko_1_#text#0/await;D ;<p> </p>",
 	"__tests__/tags/inner.marko_1*content": "__tests__/tags/inner.marko_1*content __tests__/tags/inner.marko_1_#text#0/init __tests__/tags/inner.marko_1_input_second#0:4/subscribe __tests__/tags/inner.marko_1_input_first#0:5/subscribe __tests__/tags/inner.marko_1_showSecond#0:6/init __tests__/tags/inner.marko_1_input_second#0:4_input_first#0:5_showSecond#0:6/init;b%;<!><!><!>",
+	"~__tests__/tags/inner.marko_1*content": "~__tests__/tags/inner.marko_1*content __tests__/tags/inner.marko_1_#text#0/init __tests__/tags/inner.marko_1_input_second#0:4/subscribe __tests__/tags/inner.marko_1_input_first#0:5/subscribe __tests__/tags/inner.marko_1_showSecond#0:6/init __tests__/tags/inner.marko_1_input_second#0:4_input_first#0:5_showSecond#0:6/init;b%;<!><!><!>",
 	"__tests__/tags/inner.marko": /*@__PURE__*/ (() => `__tests__/tags/inner.marko${_shell_marker($setup$1)};${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template$2)}`)()
 });
 var inner_default = _template("__tests__/tags/inner.marko", (input) => {

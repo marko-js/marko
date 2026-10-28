@@ -17,6 +17,7 @@ const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)("D%l");
 const $setup = _shell_setup([[], ["b2"]], ["c>", $setup$1]);
 _shells({
 	b1: "b1;D ;<em> </em>",
+	"~b1": "~b1;D ;<em> </em>",
 	b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0) => ` D l/${_w0}&`)("D%l")};${((_w0) => `<button> </button>${_w0}`)($template$1)}`)()
 });
 var card_default = _template("b", (input) => {

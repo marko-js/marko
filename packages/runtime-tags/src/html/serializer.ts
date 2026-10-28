@@ -18,6 +18,8 @@ export interface Registered {
   access: string;
   scope: unknown;
   locals: Locals | undefined;
+  // Kept content: no page registration names it, so a patch ships its shell.
+  shell?: 1;
 }
 
 // What registered content reads that its scopes may lack, computed only once
@@ -539,15 +541,22 @@ export function dropQueuedCall(
   return false;
 }
 
-// `access` is the text every occurrence of the value serializes as.
+// `access` is the text every occurrence of the value serializes as: kept
+// content's (`shell`) is `0`, as a page elides it.
 export function register<T extends WeakKey>(
   id: string,
   val: T,
   scope?: unknown,
   locals?: Locals,
-  access = "_._" + toAccess(toObjectKey(id)),
+  shell?: 1,
 ) {
-  REGISTRY.set(val, { id, scope, locals, access });
+  REGISTRY.set(val, {
+    id,
+    scope,
+    locals,
+    access: shell ? "0" : "_._" + toAccess(toObjectKey(id)),
+    shell,
+  });
   return val;
 }
 

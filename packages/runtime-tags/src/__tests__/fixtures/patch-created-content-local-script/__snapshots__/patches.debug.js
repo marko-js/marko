@@ -10,4 +10,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-local-script/tags/list.marko_1*shell"]
   }
 }]
-;CQo
+;Cwo

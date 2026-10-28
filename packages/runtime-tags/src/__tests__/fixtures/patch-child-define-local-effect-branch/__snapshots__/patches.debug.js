@@ -10,9 +10,9 @@
     }
   }
 }]
-;CAI
+;CgI
 
-// PATCH holding CAI
+// PATCH holding CgI
 {
   "PatchChild:#childScope/0": {
     "PatchChild:#childScope/0": {

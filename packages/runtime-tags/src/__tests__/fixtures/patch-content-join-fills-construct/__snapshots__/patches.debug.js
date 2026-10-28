@@ -40,9 +40,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/template.marko_1*shell"]
 }]
-;EYY
+;E4Y
 
-// PATCH holding EYY
+// PATCH holding E4Y
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

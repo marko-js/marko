@@ -23,9 +23,9 @@
     }
   }
 }]
-;DTQ
+;DzQ
 
-// PATCH holding DTQ
+// PATCH holding DzQ
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -51,7 +51,7 @@
   }
 }
 
-// PATCH holding DTQ
+// PATCH holding DzQ
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

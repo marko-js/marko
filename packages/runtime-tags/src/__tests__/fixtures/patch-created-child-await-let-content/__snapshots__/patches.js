@@ -23,9 +23,9 @@
     }
   }
 }]
-;DRY
+;DxY
 
-// PATCH holding DRY
+// PATCH holding DxY
 {
   ba: [{
     ca: {
@@ -51,7 +51,7 @@
   }
 }
 
-// PATCH holding DRY
+// PATCH holding DxY
 {
   ba: [{
     ca: {

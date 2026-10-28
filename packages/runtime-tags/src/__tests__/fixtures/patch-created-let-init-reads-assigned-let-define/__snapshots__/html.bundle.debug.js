@@ -7,6 +7,7 @@ const WORD = "w";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content !;D ;<span> </span>",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content !;D ;<span> </span>",
 	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell __tests__/template.marko_1_input_a#0:4_x#4/init!__tests__/template.marko_1;${/*@__PURE__*/ ((_w0) => `b/${_w0}&D l D l`)($Body_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<p> </p><button> </button>`)($Body_content__template)}`)()
 });

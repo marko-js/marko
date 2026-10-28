@@ -3,6 +3,7 @@ const $Wrap_content2__walks = "D lD%l";
 const $Wrap_content2__template = "<p> </p><div><!></div>";
 _shells({
 	a4: "a4 a10!a2; D%c%;<button><!>:<!></button>",
+	"~a4": "~a4 a10!a2; D%c%;<button><!>:<!></button>",
 	a: "a !a7;b%b ;<!><!><button>+</button>",
 	a6: /*@__PURE__*/ (() => `a6 >a>a12;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content2__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content2__template)}`)()
 });

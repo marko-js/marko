@@ -61,6 +61,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
 const $setup$1 = _shell_setup([[], []], ["a>", $setup$2]);
 _shells({
 	b2: /*@__PURE__*/ ((_w0) => `b2${_shell_marker(_shell_setup([[], []], ["a>", $setup$3]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$3),
+	"~b2": /*@__PURE__*/ ((_w0) => `~b2${_shell_marker(_shell_setup([[], []], ["a>", $setup$3]))};${((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$3),
 	b: /*@__PURE__*/ ((_w0) => `b${_shell_marker($setup$1)};${((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template$2)
 });
 var file_host_default = _template("b", (input) => {

@@ -12,9 +12,9 @@
     }
   }, "a4"]
 }]
-;DRw
+;Dxw
 
-// PATCH holding DRw
+// PATCH holding Dxw
 {
   ba: [{
     ca: {
@@ -29,7 +29,7 @@
   }, "a4"]
 }
 
-// PATCH holding DRw
+// PATCH holding Dxw
 [`a2;Db%;<em>A:<!></em>`, {
   ba: [{
     ca: {
@@ -43,9 +43,9 @@
     }
   }, "a4"]
 }]
-;DR4
+;Dx4
 
-// PATCH holding DR4
+// PATCH holding Dx4
 {
   ba: [{
     ca: {
@@ -60,12 +60,12 @@
   }, "a4"]
 }
 
-// PATCH holding DR4
+// PATCH holding Dx4
 {
   ba: 0
 }
 
-// PATCH holding DR4
+// PATCH holding Dx4
 {
   ba: [{
     ca: {

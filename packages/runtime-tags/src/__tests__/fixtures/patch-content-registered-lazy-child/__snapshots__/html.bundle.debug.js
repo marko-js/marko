@@ -44,6 +44,7 @@ const $Box_withLoadAssets = withLoadAssets(() => box_default, "__tests__/box.mar
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$1]);
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D ;<em> </em>",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content;D ;<em> </em>",
 	"__tests__/template.marko_1*content": /*@__PURE__*/ (() => `__tests__/template.marko_1*content${_shell_marker(_shell_setup([[], []], ["#childScope/1>", $setup$2]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D%l")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$2)}`)(),
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)(" b")};${((_w0) => `<main>${_w0}</main>`)($template$1)}`)()
 });

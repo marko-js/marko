@@ -23,9 +23,9 @@ a, b, [`a1;b%;<!><!><!>`, `d1;b%;<!><!><!>`, `d0;b%b/b&b;<!><!><h1>A</h1><!>`, `
     }
   }
 }]
-;GYYD
+;G4YD
 
-// PATCH holding GYYD
+// PATCH holding G4YD
 a, c, [`d4;b%b/b&b;<!><!><h1>B</h1><!>`, {
   ba: [1, {
     cb: {
@@ -42,10 +42,10 @@ a, c, [`d4;b%b/b&b;<!><!><h1>B</h1><!>`, {
     }
   }, "d2"]
 }]
-;GYYL
+;G4YL
 
-// PATCH holding GYYL
+// PATCH holding G4YL
 [`d3,<p>home</p>`, {
   ba: "d3"
 }]
-;GYYP
+;G4YP

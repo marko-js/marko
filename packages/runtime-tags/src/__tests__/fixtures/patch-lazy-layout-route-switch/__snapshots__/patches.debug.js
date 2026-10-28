@@ -23,9 +23,9 @@
     }
   }
 }]
-;GYwF
+;G4wF
 
-// PATCH holding GYwF
+// PATCH holding G4wF
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/layout.marko", "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/page-b.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/template.marko_5*shell;b%b/b&b;<!><!><h1>B</h1><!>`, {
   "PatchBranch:#text/0": [1, {
     "PatchChild:#childScope/1": {
@@ -42,10 +42,10 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/template.marko_1*shell"]
 }]
-;GYwN
+;G4wN
 
-// PATCH holding GYwN
+// PATCH holding G4wN
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/template.marko_3*shell,<p>home</p>`, {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/template.marko_3*shell"
 }]
-;GYwP
+;G4wP

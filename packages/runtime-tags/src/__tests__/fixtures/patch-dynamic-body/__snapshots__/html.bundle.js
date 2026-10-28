@@ -23,6 +23,7 @@ var box_b_default = _template("b", (input) => {
 // template.marko
 _shells({
 	c0: "c0; ; ",
+	"~c0": "~c0; ; ",
 	c: "c !;D%;<main><!></main>"
 });
 var template_default = _template("c", (input) => {

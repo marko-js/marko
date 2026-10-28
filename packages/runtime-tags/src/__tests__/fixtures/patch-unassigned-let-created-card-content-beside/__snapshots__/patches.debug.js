@@ -11,9 +11,9 @@
     "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-unassigned-let-created-card-content-beside/tags/card.marko_fill0": "b"
   }
 }]
-;CwM
+;DQM
 
-// PATCH holding CwM
+// PATCH holding DQM
 {
   "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-unassigned-let-created-card-content-beside/tags/card.marko",
   "PatchChild:BranchScopes:#text/0": {

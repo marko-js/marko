@@ -47,6 +47,7 @@ const $walks$4 = "b%c";
 const $setup$4 = [[], []];
 _shells({
 	"__tests__/tags/toggle-tag.marko_1*content": "__tests__/tags/toggle-tag.marko_1*content;b%;<!><!><!>",
+	"~__tests__/tags/toggle-tag.marko_1*content": "~__tests__/tags/toggle-tag.marko_1*content;b%;<!><!><!>",
 	"__tests__/tags/toggle-tag.marko": "__tests__/tags/toggle-tag.marko !;b%;<!><!><!>"
 });
 var toggle_tag_default = _template("__tests__/tags/toggle-tag.marko", (input) => {
@@ -73,6 +74,7 @@ const $walks$3 = /*@__PURE__*/ ((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}&%c`
 const $setup$3 = _shell_setup([[], []], ["#childScope/0>", $setup$6], ["#childScope/1>", $setup$5], ["#childScope/2>", $setup$4]);
 _shells({
 	"__tests__/tags/param-host.marko_4*content": "__tests__/tags/param-host.marko_4*content;Db%;<p>own <!></p>",
+	"~__tests__/tags/param-host.marko_4*content": "~__tests__/tags/param-host.marko_4*content;Db%;<p>own <!></p>",
 	"__tests__/tags/param-host.marko_3*content": "__tests__/tags/param-host.marko_3*content;Db%;<p>tag <!></p>",
 	"__tests__/tags/param-host.marko_2*content": "__tests__/tags/param-host.marko_2*content;Db%;<p>for <!></p>",
 	"__tests__/tags/param-host.marko_1*content": "__tests__/tags/param-host.marko_1*content;Db%;<p>if <!></p>",
@@ -172,10 +174,12 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Sel_content__walks);
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", [[""], []]], ["#childScope/0>", _shell_setup([[], []], ["#childScope/0>", $setup$6], ["#childScope/1>", $setup$5], ["#childScope/2>", $setup$4])]);
 _shells({
 	"__tests__/tags/define-host.marko_5*content": "__tests__/tags/define-host.marko_5*content;Db%;<p>own <!></p>",
+	"~__tests__/tags/define-host.marko_5*content": "~__tests__/tags/define-host.marko_5*content;Db%;<p>own <!></p>",
 	"__tests__/tags/define-host.marko_4*content": "__tests__/tags/define-host.marko_4*content;Db%;<p>tag <!></p>",
 	"__tests__/tags/define-host.marko_3*content": "__tests__/tags/define-host.marko_3*content;Db%;<p>for <!></p>",
 	"__tests__/tags/define-host.marko_2*content": "__tests__/tags/define-host.marko_2*content;Db%;<p>if <!></p>",
 	"__tests__/tags/define-host.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/define-host.marko_1*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$6], ["#childScope/1>", $setup$5], ["#childScope/2>", $setup$4]))};${_w0};${_w1}`)($Sel_content__walks, $Sel_content__template),
+	"~__tests__/tags/define-host.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `~__tests__/tags/define-host.marko_1*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$6], ["#childScope/1>", $setup$5], ["#childScope/2>", $setup$4]))};${_w0};${_w1}`)($Sel_content__walks, $Sel_content__template),
 	"__tests__/tags/define-host.marko": /*@__PURE__*/ (() => `__tests__/tags/define-host.marko${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)($Sel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Sel_content__template)}`)()
 });
 var define_host_default = _template("__tests__/tags/define-host.marko", (input) => {

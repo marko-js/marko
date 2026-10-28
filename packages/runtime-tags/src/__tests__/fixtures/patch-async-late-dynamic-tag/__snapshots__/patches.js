@@ -36,9 +36,9 @@
     }
   }
 }
-;E0Y
+;FUY
 
-// PATCH holding E0Y
+// PATCH holding FUY
 {
   fa: [">section", "a5", {
     class: "box"

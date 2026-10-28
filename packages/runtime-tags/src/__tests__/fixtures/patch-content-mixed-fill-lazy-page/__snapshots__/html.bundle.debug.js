@@ -59,6 +59,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}& b/${_w1}&`)("", $walks$2
 const $setup$1 = _shell_setup([[], ["__tests__/page.marko_0"]], ["#childScope/0>", $setup$4], ["#childScope/3>", $setup$2]);
 _shells({
 	"__tests__/page.marko_1*content": /*@__PURE__*/ ((_w0) => `__tests__/page.marko_1*content${_shell_marker(_shell_setup([["__tests__/page.marko_1_live#0:9/init"], []], ["#childScope/0>", $setup$3]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$3)};${_w0}`)($template$3),
+	"~__tests__/page.marko_1*content": /*@__PURE__*/ ((_w0) => `~__tests__/page.marko_1*content${_shell_marker(_shell_setup([["__tests__/page.marko_1_live#0:9/init"], []], ["#childScope/0>", $setup$3]))};${((_w0) => `/${_w0}&`)($walks$3)};${_w0}`)($template$3),
 	"__tests__/page.marko": /*@__PURE__*/ (() => `__tests__/page.marko${_shell_marker($setup$1)};${((_w0, _w1) => `0${_w0}& b/${_w1}&`)("", $walks$2)};${((_w0, _w1) => `${_w0}<button class=bonus>bonus</button>${_w1}`)("", $template$2)}`)()
 });
 var page_default = _template("__tests__/page.marko", (input) => {

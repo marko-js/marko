@@ -6,6 +6,7 @@ const $walks = "b%c";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_x#1:1/init;D ;<p> </p>",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content __tests__/template.marko_2_x#1:1/init;D ;<p> </p>",
 	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell #childScope/0>__tests__/template.marko_2_x#1:1/init;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Show_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Show_content__template)}`)()
 });

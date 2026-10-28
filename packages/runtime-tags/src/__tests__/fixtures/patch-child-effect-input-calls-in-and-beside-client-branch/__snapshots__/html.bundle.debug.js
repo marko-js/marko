@@ -16,6 +16,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b%b b`)($Panel_content__walk
 const $setup$1 = [[], ["__tests__/tags/card.marko_0"]];
 _shells({
 	"__tests__/tags/card.marko_3*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/card.marko_3*content;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
+	"~__tests__/tags/card.marko_3*content": /*@__PURE__*/ ((_w0, _w1) => `~__tests__/tags/card.marko_3*content;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
 	"__tests__/tags/card.marko": /*@__PURE__*/ (() => `__tests__/tags/card.marko !__tests__/tags/card.marko_0;${((_w0) => `b/${_w0}&%b%b b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!><!><button class=toggle>toggle</button>`)($Panel_content__template)}`)(),
 	"__tests__/tags/card.marko_1*shell": /*@__PURE__*/ (() => `__tests__/tags/card.marko_1*shell;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)(),
 	"__tests__/tags/card.marko_4*shell": "__tests__/tags/card.marko_4*shell;D ;<em> </em>"

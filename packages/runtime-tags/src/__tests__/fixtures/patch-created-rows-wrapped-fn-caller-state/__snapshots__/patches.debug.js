@@ -27,9 +27,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-state/template.marko_1*shell"]
 }]
-;DSo
+;Dyo
 
-// PATCH holding DSo
+// PATCH holding Dyo
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

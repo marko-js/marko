@@ -10,9 +10,9 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-position/template.marko_1*shell"],
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-position/template.marko_fill0": "y"
 }]
-;Cxw
+;Dxw
 
-// PATCH holding Cxw
+// PATCH holding Dxw
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -25,7 +25,7 @@
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-position/template.marko_fill0": "z"
 }
 
-// PATCH holding Cxw
+// PATCH holding Dxw
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

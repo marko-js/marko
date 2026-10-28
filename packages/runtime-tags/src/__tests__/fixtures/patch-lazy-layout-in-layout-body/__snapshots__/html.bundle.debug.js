@@ -57,6 +57,7 @@ const $PageB_withLoadAssets = withLoadAssets(() => page_b_default, "__tests__/pa
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$4]);
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;b%;<!><!><!>",
+	"~__tests__/template.marko_3*content": "~__tests__/template.marko_3*content;b%;<!><!><!>",
 	"__tests__/template.marko": /*@__PURE__*/ ((_w0) => `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&`)($walks$4)};${_w0}`)($template$4),
 	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell${_shell_marker(_shell_setup([[], []], ["#childScope/1>", $setup$3]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$3)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$3)}`)(),
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell,<p>home</p>",

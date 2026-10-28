@@ -18,6 +18,7 @@ const $setup$1 = _shell_setup([[], ["c1"]], ["a>", $setup$2]);
 _shells({
 	c5: "c5;D ;<p> </p>",
 	c0: "c0 c8 c9 c10 c11 c12;b%;<!><!><!>",
+	"~c0": "~c0 c8 c9 c10 c11 c12;b%;<!><!><!>",
 	c: /*@__PURE__*/ (() => `c${_shell_marker($setup$1)};${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template$1)}`)()
 });
 var inner_default = _template("c", (input) => {

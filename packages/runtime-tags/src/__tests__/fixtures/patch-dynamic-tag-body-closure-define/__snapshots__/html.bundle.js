@@ -1,6 +1,7 @@
 // template.marko
 _shells({
 	a0: "a0 !a1; b%;<button id=open>open</button><!><!>",
+	"~a0": "~a0 !a1; b%;<button id=open>open</button><!><!>",
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {

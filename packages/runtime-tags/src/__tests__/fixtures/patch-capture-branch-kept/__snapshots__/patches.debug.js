@@ -10,9 +10,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-capture-branch-kept/tags/child.marko_1*shell"]
   }
 }]
-;EAE
+;EgE
 
-// PATCH holding EAE
+// PATCH holding EgE
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/1": [{

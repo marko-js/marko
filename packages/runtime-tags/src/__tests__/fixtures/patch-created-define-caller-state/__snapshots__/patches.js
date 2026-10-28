@@ -11,16 +11,16 @@
     }, "b3"]
   }
 }]
-;CAM
+;CgM
 
-// PATCH holding CAM
+// PATCH holding CgM
 {
   ca: {
     ba: 0
   }
 }
 
-// PATCH holding CAM
+// PATCH holding CgM
 {
   ca: {
     ba: [{

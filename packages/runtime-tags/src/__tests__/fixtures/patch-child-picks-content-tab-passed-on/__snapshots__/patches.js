@@ -6,9 +6,9 @@
     }
   }
 }]
-;CgI
+;DgI
 
-// PATCH holding CgI
+// PATCH holding DgI
 [`a1;b%;A<!>`, {
   cb: {
     ca: {
@@ -19,9 +19,9 @@
     }
   }
 }]
-;CwY
+;DwY
 
-// PATCH holding CwY
+// PATCH holding DwY
 {
   cb: {
     ca: {

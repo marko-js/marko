@@ -21,9 +21,9 @@
     "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-call-branch/tags/panel.marko_fill1/unpatched": "q"
   }
 }]
-;CAI
+;CgI
 
-// PATCH holding CAI
+// PATCH holding CgI
 {
   "PatchChild:#childScope/0": {
     "PatchChild:#childScope/1": {

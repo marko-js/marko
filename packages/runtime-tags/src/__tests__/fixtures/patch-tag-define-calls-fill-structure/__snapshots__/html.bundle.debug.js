@@ -6,6 +6,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& D l`)($D_conten
 const $setup$1 = [["#childScope/0>", "#childScope/1>"], ["__tests__/tags/shape.marko_0"]];
 _shells({
 	"__tests__/tags/shape.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/shape.marko_1*content;${_w0};${_w1}`)($D_content__walks, $D_content__template),
+	"~__tests__/tags/shape.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `~__tests__/tags/shape.marko_1*content;${_w0};${_w1}`)($D_content__walks, $D_content__template),
 	"__tests__/tags/shape.marko": /*@__PURE__*/ (() => `__tests__/tags/shape.marko #childScope/0> #childScope/1>!__tests__/tags/shape.marko_0;${((_w0, _w1) => `b/${_w0}&/${_w1}& D l`)($D_content__walks, $D_content__walks)};${((_w0, _w1) => `<!>${_w0}${_w1}<button> </button>`)($D_content__template, $D_content__template)}`)(),
 	"__tests__/tags/shape.marko_2*shell": "__tests__/tags/shape.marko_2*shell;D ;<span> </span>"
 });

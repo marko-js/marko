@@ -25,6 +25,7 @@ var my_for_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a1: "a1 a4!a0; D ;<button class=r> </button>",
+	"~a1": "~a1 a4!a0; D ;<button class=r> </button>",
 	a: "a;b%;<!><!><!>",
 	a2: /*@__PURE__*/ (() => `a2${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`)()
 });

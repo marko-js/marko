@@ -26,6 +26,7 @@ var my_for_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
 	a0: "a0; ; ",
+	"~a0": "~a0; ; ",
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {

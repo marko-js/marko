@@ -3,6 +3,7 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 _shells({
 	a1: "a1;b%;<!><!><!>",
+	"~a1": "~a1;b%;<!><!><!>",
 	a: "a !;b%;<!><!><!>",
 	a5: /*@__PURE__*/ (() => `a5 a>!a2;${/*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<button>x</button>`)($Panel_content__template)}`)()
 });

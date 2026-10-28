@@ -26,4 +26,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-closure-scopes/template.marko_1*shell"]
 }]
-;CQw
+;Cww

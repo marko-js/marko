@@ -28,9 +28,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-locals/tags/list.marko_1*shell"]
   }
 }]
-;Cxo
+;DRo
 
-// PATCH holding Cxo
+// PATCH holding DRo
 {
   "PatchChild:#childScope/0": {
     "PatchLoop:#text/0": [{

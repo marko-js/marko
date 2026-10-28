@@ -4,6 +4,7 @@ const $walks$1 = "/&b b";
 const $setup$1 = [["#childScope/0>__tests__/tags/card.marko_1_k#0:6/init", "#childScope/0>__tests__/tags/card.marko_1_input_w#0:5_k#0:6/init"], ["__tests__/tags/card.marko_0"]];
 _shells({
 	"__tests__/tags/card.marko_1*content": "__tests__/tags/card.marko_1*content __tests__/tags/card.marko_1_k#0:6/init __tests__/tags/card.marko_1_input_w#0:5_k#0:6/init,",
+	"~__tests__/tags/card.marko_1*content": "~__tests__/tags/card.marko_1*content __tests__/tags/card.marko_1_k#0:6/init __tests__/tags/card.marko_1_input_w#0:5_k#0:6/init,",
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko #childScope/0>__tests__/tags/card.marko_1_k#0:6/init #childScope/0>__tests__/tags/card.marko_1_input_w#0:5_k#0:6/init!__tests__/tags/card.marko_0;/&b ;<!><button>x</button>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {

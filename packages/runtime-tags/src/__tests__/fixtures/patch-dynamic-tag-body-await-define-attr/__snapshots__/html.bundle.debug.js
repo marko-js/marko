@@ -35,6 +35,7 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
 	"__tests__/tags/card.marko_2*content": "__tests__/tags/card.marko_2*content;b%;<!><!><!>",
+	"~__tests__/tags/card.marko_2*content": "~__tests__/tags/card.marko_2*content;b%;<!><!><!>",
 	"__tests__/tags/card.marko_1*content": /*@__PURE__*/ (() => `__tests__/tags/card.marko_1*content;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Pass_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Pass_content__template)}`)(),
 	"__tests__/tags/card.marko_0_#text#0/await": /*@__PURE__*/ (() => `__tests__/tags/card.marko_0_#text#0/await;${((_w0) => `b/${_w0}&b`)($Pass_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Pass_content__template)}`)(),
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko;b%;<!><!><!>"

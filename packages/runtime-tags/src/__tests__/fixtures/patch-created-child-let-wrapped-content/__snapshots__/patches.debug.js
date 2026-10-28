@@ -16,9 +16,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_1*shell"]
 }]
-;DTQ
+;ETQ
 
-// PATCH holding DTQ
+// PATCH holding ETQ
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -37,7 +37,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-wrapped-content/template.marko_1*shell"]
 }
 
-// PATCH holding DTQ
+// PATCH holding ETQ
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

@@ -16,6 +16,7 @@ _shells({
 	a1: "a1;D ;<em> </em>",
 	a2: "a2;D ;<em> </em>",
 	a3: "a3;b%;<!><!><!>",
+	"~a3": "~a3;b%;<!><!><!>",
 	a: "a !; ;<main></main>",
 	a4: /*@__PURE__*/ ((_w0) => `a4${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template)
 });

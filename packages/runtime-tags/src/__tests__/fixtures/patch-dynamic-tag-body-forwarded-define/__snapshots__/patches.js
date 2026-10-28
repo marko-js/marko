@@ -13,9 +13,9 @@
   },
   va3: "b"
 }]
-;Cx4
+;DR4
 
-// PATCH holding Cx4
+// PATCH holding DR4
 {
   fa: ["b", "a0"],
   cAa: {

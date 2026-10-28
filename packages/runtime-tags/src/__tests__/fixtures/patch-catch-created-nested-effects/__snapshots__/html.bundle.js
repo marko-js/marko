@@ -17,6 +17,7 @@ function boom(msg) {
 _shells({
 	a5: "a5;D ;<p> </p>",
 	a6: "a6 a32!a12",
+	"~a6": "~a6 a32!a12",
 	a7: /*@__PURE__*/ (() => `a7${_shell_marker(_shell_setup([[
 		"a20",
 		"a21",

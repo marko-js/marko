@@ -512,11 +512,14 @@ _Avoid_: deliver/delivery, forwarder
 Content a consumer renders instead of the patch: one the client owns (a tag
 client state names, unpatched structure) skips it, and the flush reports the
 content (`_content_withhold`). Content a known child renders from its state,
-where plain renders it nowhere on the client, is _kept content_
-(`keepsContent`): it creates from its shell, never by registration, and a flush
-renders its holes once per owner under the _withheld entry_
+where plain renders it nowhere on the client, or that client state holds, is
+_kept content_ (`keepsContent`): it creates from its shell, never by registration,
+and a flush renders its holes once per owner under the _withheld entry_
 (`PatchWithheld:<id>`), which the client applies to each live instance in the
-owner's `WithheldScopes:<id>` set (`_content_kept`).
+owner's `WithheldScopes:<id>` set (`_content`'s `elide` 2). It registers under its
+_kept shell id_ (`keptShellId`, `~<id>`), which no module registration shares: a
+patch sends it bound to its owner by that id, and an instance the client creates
+from the shell joins the set and takes the entry the owner last took.
 
 **Written join**:
 A join of two or more params, one a caller passes, whose every read the patch

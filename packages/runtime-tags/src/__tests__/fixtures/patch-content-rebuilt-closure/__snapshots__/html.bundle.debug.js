@@ -23,6 +23,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$2]);
 _shells({
 	"__tests__/tags/child.marko_1*content": "__tests__/tags/child.marko_1*content;b%;<!><!><!>",
+	"~__tests__/tags/child.marko_1*content": "~__tests__/tags/child.marko_1*content;b%;<!><!><!>",
 	"__tests__/tags/child.marko": /*@__PURE__*/ (() => `__tests__/tags/child.marko${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`)(),
 	"__tests__/tags/child.marko_2*shell": "__tests__/tags/child.marko_2*shell,<span>shown</span>"
 });

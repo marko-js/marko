@@ -12,9 +12,9 @@
     vb7: "y"
   }
 }]
-;CAM
+;CgM
 
-// PATCH holding CAM
+// PATCH holding CgM
 {
   ca: {
     vb8: "z"

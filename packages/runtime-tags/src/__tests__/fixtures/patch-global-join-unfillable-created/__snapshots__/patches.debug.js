@@ -17,9 +17,9 @@
     }
   }
 }]
-;BgE
+;CAE
 
-// PATCH holding BgE
+// PATCH holding CAE
 {
   "$global:": {
     suffix: "c"

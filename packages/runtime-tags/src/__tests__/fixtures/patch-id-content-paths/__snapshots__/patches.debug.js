@@ -62,9 +62,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_5*shell"]
   }
 }]
-;F0EH
+;GUEH
 
-// PATCH holding F0EH
+// PATCH holding GUEH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_3*shell;b// D l b%c&b&b;<!><label> </label><input><!><!><!><!>`, {
   "PatchBranch:#text/0": [1, {
     "PatchChild:#childScope/0": {
@@ -125,4 +125,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_5*shell"]
   }
 }]
-;F8EH
+;GcEH

@@ -13,7 +13,7 @@ import {
   writeProp,
 } from "../serializer";
 import type { ScopeInternals } from "../writer";
-import { type PatchRenderState, resolveEntryDeps } from "./writer";
+import { type PatchRenderState, resolveEntryDeps, shippedId } from "./writer";
 
 // A patch flush is one flat entry tree per line: no fn wrapper, no list
 // brackets, and no scope ids, since the live page maps none to its scopes.
@@ -77,11 +77,11 @@ export class PatchSerializerState extends SerializerState {
     registered: Registered,
   ) {
     this.buf.push("_([");
-    this.writeScopePath(
-      (registered.scope as ScopeInternals)[K_SCOPE_ID]!,
-      registered.id,
-    );
-    this.buf.push("]," + quoteRegisterId(registered.id));
+    const id = shippedId(this.render, registered);
+    // The tree's references resolve as it parses, so a shell one names applies first.
+    if (registered.shell) this.render.shellsLead = true;
+    this.writeScopePath((registered.scope as ScopeInternals)[K_SCOPE_ID]!, id);
+    this.buf.push("]," + quoteRegisterId(id));
     if ((val as { [RendererProp.Id]?: string })[RendererProp.Id]) {
       this.buf.push(",1");
     } else if (registered.locals) {

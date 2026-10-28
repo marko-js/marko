@@ -15,7 +15,12 @@ import {
   RenderDataProp,
   RendererProp,
 } from "../../common/types";
-import { K_SCOPE_ID, REGISTRY, setDebugInfo } from "../serializer";
+import {
+  K_SCOPE_ID,
+  REGISTRY,
+  type Registered,
+  setDebugInfo,
+} from "../serializer";
 import type { ServerRenderer } from "../template";
 import {
   type Boundary,
@@ -543,6 +548,8 @@ export class PatchRenderState extends PatchPageState {
   // none leaves the page's token as it is.
   public heldCount = 0;
   public pendingShells = "";
+  // Data names a pending shell: they ship on a line of their own, applied first.
+  public shellsLead?: true;
   override serializer = new PatchSerializerState(this);
   // A flush carries every entry rendered so far, so a patch never reorders: the
   // client creates a shown `@placeholder` from the shell its render ships.
@@ -620,8 +627,8 @@ export class PatchRenderState extends PatchPageState {
     return out;
   }
 
-  // Each item is a line applied before the next evaluates; the first, the tree or
-  // `[...shells, tree]`, is led by the lazy modules it waits for (`_a,_b,{…}`).
+  // Each item is a line applied before the next evaluates; the first (the tree,
+  // `[...shells, tree]` or `[...shells]`) is led by the lazy modules it waits for.
   override addResumes(channel: Channel, resumes: string) {
     if (!resumes) return;
     // The client reads a leading id (or a debug id's string) as a module to
@@ -640,12 +647,17 @@ export class PatchRenderState extends PatchPageState {
       for (const id of this.patchFlushReadyIds || []) {
         ready += (MARKO_DEBUG ? JSON.stringify(id) : id.slice(1)) + ",";
       }
+      // A tree naming a shell resolves it as it parses, so the shells then lead on a
+      // line of their own; else they share the tree's, which a lazy wait holds whole.
       channel.resumes =
         ready +
         (this.pendingShells
-          ? "[" + this.pendingShells + "," + resumes + "]"
+          ? this.shellsLead
+            ? "[" + this.pendingShells + "]\n" + resumes
+            : "[" + this.pendingShells + "," + resumes + "]"
           : resumes);
       this.pendingShells = "";
+      this.shellsLead = undefined;
       this.patchFlushReadyIds = undefined;
     }
   }
@@ -953,7 +965,7 @@ function bindEntry(state: PatchRenderState, scopeId: number, value: unknown) {
   if (up !== undefined) {
     // Render-only locals (a loop's values) ride along, as the document's
     // call to the registered factory passes them; a function's ride its reference.
-    const id = withOwnerHops("^".repeat(up), registered!.id);
+    const id = withOwnerHops("^".repeat(up), shippedId(state, registered!));
     const locals = registered!.locals?.(state.scope);
     if (!locals) return id;
     if ((value as ServerRenderer)[RendererProp.Id]) {
@@ -967,6 +979,12 @@ function bindEntry(state: PatchRenderState, scopeId: number, value: unknown) {
       return locals[0] ? [id, locals[0]] : id;
     }
   }
+}
+
+// A registration's id; kept content's names its shell, which the flush ships.
+export function shippedId(state: PatchRenderState, { id, shell }: Registered) {
+  if (shell) shipShell(state, id);
+  return id;
 }
 
 // A registration's id behind the hops to its owner, which the client reads off its

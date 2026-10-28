@@ -3,6 +3,7 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 _shells({
 	b0: /*@__PURE__*/ ((_w0, _w1) => `b0;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
+	"~b0": /*@__PURE__*/ ((_w0, _w1) => `~b0;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
 	b: /*@__PURE__*/ (() => `b !;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)()
 });
 var card_default = _template("b", (input) => {

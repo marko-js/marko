@@ -13,9 +13,9 @@
   },
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/template.marko_fill0": "b"
 }]
-;Cxc
+;DRc
 
-// PATCH holding Cxc
+// PATCH holding DRc
 {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/tags/fwd.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {

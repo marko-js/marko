@@ -23,9 +23,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-closure-mix/template.marko_1*shell"]
 }]
-;CQw
+;Cww
 
-// PATCH holding CQw
+// PATCH holding Cww
 {
   "$global:": {
     brand: "Zed"

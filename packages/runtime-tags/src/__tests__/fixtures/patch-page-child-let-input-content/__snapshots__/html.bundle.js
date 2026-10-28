@@ -16,7 +16,10 @@ var card_default = _template("b", (input) => {
 
 // template.marko
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
-_shells({ a: /*@__PURE__*/ ((_w0) => `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template) });
+_shells({
+	"~a1": "~a1;Db%;<em>static <!></em>",
+	a: /*@__PURE__*/ ((_w0) => `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template)
+});
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();

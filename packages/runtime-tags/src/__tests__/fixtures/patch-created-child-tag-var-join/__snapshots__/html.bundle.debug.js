@@ -69,6 +69,7 @@ const $walks$2 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
 const $setup$2 = _shell_setup([[], []], ["#childScope/0>", $setup$3]);
 _shells({
 	"__tests__/tags/file-host.marko_1*content": /*@__PURE__*/ ((_w0) => `__tests__/tags/file-host.marko_1*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$4]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$4)};${_w0}`)($template$4),
+	"~__tests__/tags/file-host.marko_1*content": /*@__PURE__*/ ((_w0) => `~__tests__/tags/file-host.marko_1*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$4]))};${((_w0) => `/${_w0}&`)($walks$4)};${_w0}`)($template$4),
 	"__tests__/tags/file-host.marko": /*@__PURE__*/ ((_w0) => `__tests__/tags/file-host.marko${_shell_marker($setup$2)};${((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template$3)
 });
 var file_host_default = _template("__tests__/tags/file-host.marko", (input) => {

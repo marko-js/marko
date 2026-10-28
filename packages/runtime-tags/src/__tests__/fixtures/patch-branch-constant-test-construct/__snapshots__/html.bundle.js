@@ -18,6 +18,7 @@ const ITEMS = ["a", "b"];
 const $setup = [[], []];
 _shells({
 	a1: "a1;D l%;<span> </span><!><!>",
+	"~a1": "~a1;D l%;<span> </span><!><!>",
 	a: "a;b%;<!><!><!>",
 	a2: /*@__PURE__*/ ((_w0) => `a2${_shell_marker(_shell_setup([[], []], ["a>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template$1),
 	a3: "a3;b%;<!><!><!>",

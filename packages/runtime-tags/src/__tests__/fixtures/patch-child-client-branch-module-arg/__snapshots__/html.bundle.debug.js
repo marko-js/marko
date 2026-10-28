@@ -16,6 +16,7 @@ const $walks$1 = "b%b%b b";
 const $setup$1 = [[], ["__tests__/tags/card.marko_0"]];
 _shells({
 	"__tests__/tags/card.marko_3*content": "__tests__/tags/card.marko_3*content;b%;<!><!><!>",
+	"~__tests__/tags/card.marko_3*content": "~__tests__/tags/card.marko_3*content;b%;<!><!><!>",
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko !__tests__/tags/card.marko_0;b%b%b ;<!><!><!><button class=toggle>toggle</button>",
 	"__tests__/tags/card.marko_1*shell": /*@__PURE__*/ (() => `__tests__/tags/card.marko_1*shell;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)(),
 	"__tests__/tags/card.marko_4*shell": "__tests__/tags/card.marko_4*shell;D ;<em> </em>"

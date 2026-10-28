@@ -4,9 +4,9 @@
     "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-child-picks-content-tab-flag/template.marko_2*content"
   }
 }]
-;CAM
+;DAM
 
-// PATCH holding CAM
+// PATCH holding DAM
 [`packages/runtime-tags/src/__tests__/fixtures/patch-child-picks-content-tab-flag/template.marko_1*content;b%;A<!>`, {
   "PatchChild:#childScope/1": {
     "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-child-picks-content-tab-flag/template.marko_1*content",
@@ -15,9 +15,9 @@
     }
   }
 }]
-;CQw
+;DQw
 
-// PATCH holding CQw
+// PATCH holding DQw
 {
   "PatchChild:#childScope/1": {
     "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-child-picks-content-tab-flag/template.marko_2*content"

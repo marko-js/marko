@@ -21,9 +21,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell"]
 }]
-;CQw
+;Cww
 
-// PATCH holding CQw
+// PATCH holding Cww
 {
   "$global:": {
     brand: "Zed"
@@ -47,7 +47,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-global-scriptless/template.marko_2*shell"]
 }
 
-// PATCH holding CQw
+// PATCH holding Cww
 {
   "$global:": {
     brand: "Qux"

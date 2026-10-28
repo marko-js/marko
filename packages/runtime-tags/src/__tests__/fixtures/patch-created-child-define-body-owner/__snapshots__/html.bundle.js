@@ -6,6 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Count_content__walks);
 const $setup = [["a>b4"], ["b2"]];
 _shells({
 	b0: /*@__PURE__*/ ((_w0, _w1) => `b0 b4;${_w0};${_w1}`)($Count_content__walks, $Count_content__template),
+	"~b0": /*@__PURE__*/ ((_w0, _w1) => `~b0 b4;${_w0};${_w1}`)($Count_content__walks, $Count_content__template),
 	b: /*@__PURE__*/ (() => `b a>b4!b2;${((_w0) => `b/${_w0}& b`)($Count_content__walks)};${((_w0) => `<!>${_w0}<button>+</button>`)($Count_content__template)}`)()
 });
 var child_default = _template("b", (input) => {

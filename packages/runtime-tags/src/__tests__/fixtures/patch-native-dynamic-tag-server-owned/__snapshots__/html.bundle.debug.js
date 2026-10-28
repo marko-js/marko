@@ -4,6 +4,7 @@ const $walks = "b%b D l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content; ; ",
+	"~__tests__/template.marko_1*content": "~__tests__/template.marko_1*content; ; ",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b D ;<!><!><button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {

@@ -12,9 +12,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-body-content-owner/template.marko_1*shell"]
 }]
-;BwY
+;CQY
 
-// PATCH holding BwY
+// PATCH holding CQY
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

@@ -7,6 +7,7 @@ const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_7*content": "__tests__/template.marko_7*content __tests__/template.marko_7_n#2:11/init",
 	"__tests__/template.marko_6*content": "__tests__/template.marko_6*content __tests__/template.marko_6_n#2:11/init;D%c%;<i><!> <!></i>",
+	"~__tests__/template.marko_6*content": "~__tests__/template.marko_6*content __tests__/template.marko_6_n#2:11/init;D%c%;<i><!> <!></i>",
 	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content __tests__/template.marko_5_n#2:11/init",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content",
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",

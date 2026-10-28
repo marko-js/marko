@@ -33,6 +33,7 @@ var child_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
 	a0: "a0,one",
+	"~a0": "~a0,one",
 	a: /*@__PURE__*/ ((_w0) => `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)(" b")};${_w0}`)($template)
 });
 var template_default = _template("a", (input) => {

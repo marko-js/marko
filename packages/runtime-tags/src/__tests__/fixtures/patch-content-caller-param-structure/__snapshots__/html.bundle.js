@@ -44,6 +44,7 @@ const $template$2 = "<!><!><!>";
 const $setup$3 = [[], []];
 _shells({
 	f0: "f0;b%;<!><!><!>",
+	"~f0": "~f0;b%;<!><!><!>",
 	f: "f !;b%;<!><!><!>"
 });
 var toggle_tag_default = _template("f", (input) => {
@@ -70,6 +71,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}&%c`
 const $setup$2 = _shell_setup([[], []], ["a>", $setup$5], ["b>", $setup$4], ["c>", $setup$3]);
 _shells({
 	c9: "c9;Db%;<p>own <!></p>",
+	"~c9": "~c9;Db%;<p>own <!></p>",
 	c8: "c8;Db%;<p>tag <!></p>",
 	c5: "c5;Db%;<p>for <!></p>",
 	c2: "c2;Db%;<p>if <!></p>",
@@ -149,6 +151,7 @@ const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}&%c`)(
 const $setup$1 = _shell_setup([[], []], ["a>", $setup$5], ["b>", $setup$4], ["c>", $setup$3]);
 _shells({
 	b9: "b9;Db%;<p>own <!></p>",
+	"~b9": "~b9;Db%;<p>own <!></p>",
 	b8: "b8;Db%;<p>tag <!></p>",
 	b5: "b5;Db%;<p>for <!></p>",
 	b2: "b2;Db%;<p>if <!></p>",

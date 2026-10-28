@@ -4,6 +4,7 @@ const $walks = "/&b b";
 const $setup = [["a>b6", "a>b7"], ["b4"]];
 _shells({
 	b0: "b0 b6 b7,",
+	"~b0": "~b0 b6 b7,",
 	b: "b a>b6 a>b7!b4;/&b ;<!><button>x</button>"
 });
 var card_default = _template("b", (input) => {

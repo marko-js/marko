@@ -25,9 +25,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/template.marko_1*shell"]
 }]
-;D0I
+;EUI
 
-// PATCH holding D0I
+// PATCH holding EUI
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

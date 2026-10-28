@@ -16,6 +16,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks);
 const $setup = [[], []];
 _shells({
 	b3: /*@__PURE__*/ ((_w0, _w1) => `b3;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
+	"~b3": /*@__PURE__*/ ((_w0, _w1) => `~b3;${_w0};${_w1}`)($Panel_content__walks, $Panel_content__template),
 	b: /*@__PURE__*/ (() => `b;${((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)(),
 	b2: "b2;D ;<em> </em>"
 });

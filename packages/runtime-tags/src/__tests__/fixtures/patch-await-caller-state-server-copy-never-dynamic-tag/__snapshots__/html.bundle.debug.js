@@ -4,6 +4,7 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
 	"__tests__/tags/show-await.marko_2*content": "__tests__/tags/show-await.marko_2*content; ; ",
+	"~__tests__/tags/show-await.marko_2*content": "~__tests__/tags/show-await.marko_2*content; ; ",
 	"__tests__/tags/show-await.marko_1*content": "__tests__/tags/show-await.marko_1*content;b%;<!><!><!>",
 	"__tests__/tags/show-await.marko_0_#text#0/await": "__tests__/tags/show-await.marko_0_#text#0/await;b%;<!><!><!>",
 	"__tests__/tags/show-await.marko": "__tests__/tags/show-await.marko;b%;<!><!><!>"

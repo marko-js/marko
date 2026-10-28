@@ -36,6 +36,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$1]);
 _shells({
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content,one",
+	"~__tests__/template.marko_1*content": "~__tests__/template.marko_1*content,one",
 	"__tests__/template.marko": /*@__PURE__*/ ((_w0) => `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&`)(" b")};${_w0}`)($template$1)
 });
 var template_default = _template("__tests__/template.marko", (input) => {

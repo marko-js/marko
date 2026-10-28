@@ -26,6 +26,7 @@ const $Pass_content__walks = "b%c";
 const $Pass_content__template = "<!><!><!>";
 _shells({
 	b0: "b0;b%;<!><!><!>",
+	"~b0": "~b0;b%;<!><!><!>",
 	b4: /*@__PURE__*/ (() => `b4;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Pass_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Pass_content__template)}`)(),
 	b5: /*@__PURE__*/ (() => `b5;${((_w0) => `b/${_w0}&b`)($Pass_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Pass_content__template)}`)(),
 	b: "b;b%;<!><!><!>"

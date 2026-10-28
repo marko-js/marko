@@ -16,6 +16,7 @@ const $walks$1 = "b%b b";
 const $setup$1 = [[], ["__tests__/tags/rowsx.marko_0"]];
 _shells({
 	"__tests__/tags/rowsx.marko_2*content": "__tests__/tags/rowsx.marko_2*content !;b%;<!><!><!>",
+	"~__tests__/tags/rowsx.marko_2*content": "~__tests__/tags/rowsx.marko_2*content !;b%;<!><!><!>",
 	"__tests__/tags/rowsx.marko": "__tests__/tags/rowsx.marko !__tests__/tags/rowsx.marko_0;b%b ;<!><!><button class=l>l</button>",
 	"__tests__/tags/rowsx.marko_1*shell": /*@__PURE__*/ (() => `__tests__/tags/rowsx.marko_1*shell __tests__/tags/rowsx.marko_1_suffix#0:6/init;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)(),
 	"__tests__/tags/rowsx.marko_3*shell": "__tests__/tags/rowsx.marko_3*shell;D ;<em> </em>"

@@ -6,14 +6,14 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unassigned-let-define-in-created-branch-same-input/template.marko_1*shell"]
 }]
-;BgE
+;CAE
 
-// PATCH holding BgE
+// PATCH holding CAE
 {
   "PatchBranch:#text/0": 0
 }
 
-// PATCH holding BgE
+// PATCH holding CAE
 {
   "PatchBranch:#text/0": [{
     "PatchSetupValues:": {

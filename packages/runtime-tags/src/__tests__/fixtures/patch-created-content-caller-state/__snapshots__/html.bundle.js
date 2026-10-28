@@ -16,6 +16,7 @@ const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
 	b1: "b1;D ;<em> </em>",
+	"~b1": "~b1;D ;<em> </em>",
 	b: "b !;b%;<!><!><!>",
 	b2: /*@__PURE__*/ ((_w0) => `b2${_shell_marker(_shell_setup([[], []], ["a>", $setup$2]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template$1)
 });

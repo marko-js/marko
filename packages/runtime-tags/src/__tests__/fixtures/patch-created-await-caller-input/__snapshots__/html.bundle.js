@@ -18,6 +18,7 @@ const $setup = _shell_setup([[], ["b1"]], ["a>", $setup$1]);
 _shells({
 	b5: "b5;D ;<p> </p>",
 	b0: "b0 b8 b9 b10 b11 b12;b%;<!><!><!>",
+	"~b0": "~b0 b8 b9 b10 b11 b12;b%;<!><!><!>",
 	b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template$1)}`)()
 });
 var under_wrapper_default = _template("b", (input) => {

@@ -32,9 +32,9 @@
     }
   }, "a4"]
 }]
-;DR4
+;Dx4
 
-// PATCH holding DR4
+// PATCH holding Dx4
 {
   la: [{
     ca: {
@@ -49,7 +49,7 @@
   }, "a4"]
 }
 
-// PATCH holding DR4
+// PATCH holding Dx4
 {
   la: [{
     ca: {

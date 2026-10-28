@@ -14,6 +14,7 @@ var wrapper_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a2: "a2 !a0; ;<button>show</button>",
+	"~a2": "~a2 !a0; ;<button>show</button>",
 	a: "a !;b%bD ;<!><!><p> </p>",
 	a3: /*@__PURE__*/ ((_w0) => `a3${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template)
 });

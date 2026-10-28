@@ -47,6 +47,7 @@ const $walks$3 = "b%c";
 const $setup$3 = [[], []];
 _shells({
 	"__tests__/tags/toggle-tag.marko_1*content": "__tests__/tags/toggle-tag.marko_1*content;b%;<!><!><!>",
+	"~__tests__/tags/toggle-tag.marko_1*content": "~__tests__/tags/toggle-tag.marko_1*content;b%;<!><!><!>",
 	"__tests__/tags/toggle-tag.marko": "__tests__/tags/toggle-tag.marko !;b%;<!><!><!>"
 });
 var toggle_tag_default = _template("__tests__/tags/toggle-tag.marko", (input) => {
@@ -73,6 +74,7 @@ const $walks$2 = /*@__PURE__*/ ((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}&%c`
 const $setup$2 = _shell_setup([[], []], ["#childScope/0>", $setup$5], ["#childScope/1>", $setup$4], ["#childScope/2>", $setup$3]);
 _shells({
 	"__tests__/tags/param-host.marko_4*content": "__tests__/tags/param-host.marko_4*content;Db%;<p>own <!></p>",
+	"~__tests__/tags/param-host.marko_4*content": "~__tests__/tags/param-host.marko_4*content;Db%;<p>own <!></p>",
 	"__tests__/tags/param-host.marko_3*content": "__tests__/tags/param-host.marko_3*content;Db%;<p>tag <!></p>",
 	"__tests__/tags/param-host.marko_2*content": "__tests__/tags/param-host.marko_2*content;Db%;<p>for <!></p>",
 	"__tests__/tags/param-host.marko_1*content": "__tests__/tags/param-host.marko_1*content;Db%;<p>if <!></p>",
@@ -152,6 +154,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}&%c`
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$5], ["#childScope/1>", $setup$4], ["#childScope/2>", $setup$3]);
 _shells({
 	"__tests__/tags/const-host.marko_4*content": "__tests__/tags/const-host.marko_4*content;Db%;<p>own <!></p>",
+	"~__tests__/tags/const-host.marko_4*content": "~__tests__/tags/const-host.marko_4*content;Db%;<p>own <!></p>",
 	"__tests__/tags/const-host.marko_3*content": "__tests__/tags/const-host.marko_3*content;Db%;<p>tag <!></p>",
 	"__tests__/tags/const-host.marko_2*content": "__tests__/tags/const-host.marko_2*content;Db%;<p>for <!></p>",
 	"__tests__/tags/const-host.marko_1*content": "__tests__/tags/const-host.marko_1*content;Db%;<p>if <!></p>",

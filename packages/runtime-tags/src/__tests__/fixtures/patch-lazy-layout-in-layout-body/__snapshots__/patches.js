@@ -13,9 +13,9 @@ a, b, [`e1;b%;<!><!><!>`, `e0;b%b/b&b;<!><!><h1>A</h1><!>`, `e2;b%b/bD%l&b;<!><!
     }
   }
 }]
-;FeA
+;F+A
 
-// PATCH holding FeA
+// PATCH holding F+A
 a, c, [`e4;b%b/b&b;<!><!><h1>B</h1><!>`, {
   ca: {
     cAa: {
@@ -30,9 +30,9 @@ a, c, [`e4;b%b/b&b;<!><!><h1>B</h1><!>`, {
     }
   }
 }]
-;FeAC
+;F+AC
 
-// PATCH holding FeAC
+// PATCH holding F+AC
 [`e3,<p>home</p>`, {
   ca: {
     cAa: {
@@ -40,4 +40,4 @@ a, c, [`e4;b%b/b&b;<!><!><h1>B</h1><!>`, {
     }
   }
 }]
-;FeAD
+;F+AD

@@ -63,6 +63,11 @@ _shells({
 		"__tests__/page.marko_2_item_n#1:3/subscribe",
 		"__tests__/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/init"
 	], []], ["#childScope/0>", $setup$3]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$3)};${_w0}`)($template$3),
+	"~__tests__/page.marko_2*content": /*@__PURE__*/ ((_w0) => `~__tests__/page.marko_2*content${_shell_marker(_shell_setup([[
+		"__tests__/page.marko_2_bonus#0:7/init",
+		"__tests__/page.marko_2_item_n#1:3/subscribe",
+		"__tests__/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/init"
+	], []], ["#childScope/0>", $setup$3]))};${((_w0) => `/${_w0}&`)($walks$3)};${_w0}`)($template$3),
 	"__tests__/page.marko": /*@__PURE__*/ (() => `__tests__/page.marko${_shell_marker($setup$1)};${((_w0) => `0${_w0}& b%c`)("")};${((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("")}`)(),
 	"__tests__/page.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/page.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$2]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2)
 });

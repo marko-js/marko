@@ -25,9 +25,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/template.marko_1*shell"]
 }]
-;D0I
+;EUI
 
-// PATCH holding D0I
+// PATCH holding EUI
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-lazy-page/page.marko", {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/1": {

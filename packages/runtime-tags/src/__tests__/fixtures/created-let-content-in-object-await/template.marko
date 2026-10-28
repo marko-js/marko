@@ -1,0 +1,5 @@
+import { resolveAfter } from "../../utils/resolve";
+<if=input.show><outer><em>static ${input.label}</em></outer></if>
+<await|v|=resolveAfter(input.label, 3)>
+  <if=input.show><div>${v}</div></if>
+</await>

@@ -9,9 +9,9 @@
     }
   }
 }]
-;BAE
+;BgE
 
-// PATCH holding BAE
+// PATCH holding BgE
 {
   fa: [">article", "a0", {
     class: "three"
@@ -23,7 +23,7 @@
   }
 }
 
-// PATCH holding BAE
+// PATCH holding BgE
 {
   fa: [">section", "a0", {
     class: "four"

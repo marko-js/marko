@@ -19,6 +19,7 @@ const $walks = "b%b%b%b%c";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_6*content": "__tests__/template.marko_6*content; b D ;<input><label> </label>",
+	"~__tests__/template.marko_6*content": "~__tests__/template.marko_6*content; b D ;<input><label> </label>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko": "__tests__/template.marko !;b%b%b%b%;<!><!><!><!><!><!>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell; b%;<input><!><!>",

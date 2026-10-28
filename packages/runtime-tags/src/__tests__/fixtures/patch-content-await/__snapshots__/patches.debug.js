@@ -12,9 +12,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell"]
 }]
-;DSw
+;Dyw
 
-// PATCH holding DSw
+// PATCH holding Dyw
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {
@@ -29,12 +29,12 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell"]
 }
 
-// PATCH holding DSw
+// PATCH holding Dyw
 {
   "PatchBranch:#main/0": 0
 }
 
-// PATCH holding DSw
+// PATCH holding Dyw
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {

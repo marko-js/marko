@@ -4,9 +4,9 @@
     fa: "^^a2"
   }
 }]
-;CAI
+;DAI
 
-// PATCH holding CAI
+// PATCH holding DAI
 [`a1;b%;A<!>`, {
   cb: {
     fa: "^^a1",
@@ -15,9 +15,9 @@
     }
   }
 }]
-;CQY
+;DQY
 
-// PATCH holding CQY
+// PATCH holding DQY
 {
   cb: {
     fa: "^^a2"

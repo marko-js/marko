@@ -40,6 +40,7 @@ const $Box_withLoadAssets = withLoadAssets(() => box_default, "a", flush, "_a");
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
 	b2: "b2;D ;<em> </em>",
+	"~b2": "~b2;D ;<em> </em>",
 	b3: /*@__PURE__*/ (() => `b3${_shell_marker(_shell_setup([[], []], ["b>", $setup$2]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("D%l")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)(),
 	b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)(" b")};${((_w0) => `<main>${_w0}</main>`)($template)}`)()
 });

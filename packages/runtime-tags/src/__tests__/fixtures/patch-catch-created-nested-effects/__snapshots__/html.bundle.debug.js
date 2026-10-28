@@ -22,6 +22,7 @@ const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_5*content": "__tests__/template.marko_5*content;D ;<p> </p>",
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content __tests__/template.marko_4_input_v#0:3/subscribe!__tests__/template.marko_4_input_v#0:3",
+	"~__tests__/template.marko_4*content": "~__tests__/template.marko_4*content __tests__/template.marko_4_input_v#0:3/subscribe!__tests__/template.marko_4_input_v#0:3",
 	"__tests__/template.marko_1*content": /*@__PURE__*/ (() => `__tests__/template.marko_1*content${_shell_marker(_shell_setup([[
 		"__tests__/template.marko_1_input_v#0:3/subscribe",
 		"__tests__/template.marko_1_input_show#0:4/subscribe",

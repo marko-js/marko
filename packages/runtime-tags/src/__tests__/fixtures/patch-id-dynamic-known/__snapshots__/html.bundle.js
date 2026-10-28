@@ -20,7 +20,9 @@ var plain_default = _template("c", (input) => {
 // template.marko
 _shells({
 	a2: "a2; D l ;<label> </label><input>",
+	"~a2": "~a2; D l ;<label> </label><input>",
 	a3: "a3; D l ;<label> </label><input>",
+	"~a3": "~a3; D l ;<label> </label><input>",
 	a: "a;b%b%b%;<!><!><!><!><!>",
 	a1: "a1;b%;<!><!><!>",
 	a4: "a4;b%;<!><!><!>",

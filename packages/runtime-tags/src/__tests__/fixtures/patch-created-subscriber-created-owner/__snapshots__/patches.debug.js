@@ -19,9 +19,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/template.marko_1*shell"]
 }]
-;D1w
+;EVw
 
-// PATCH holding D1w
+// PATCH holding EVw
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -43,7 +43,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-subscriber-created-owner/template.marko_1*shell"]
 }
 
-// PATCH holding D1w
+// PATCH holding EVw
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

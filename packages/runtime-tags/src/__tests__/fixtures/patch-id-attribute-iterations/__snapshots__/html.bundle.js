@@ -16,9 +16,13 @@ const $Content_content__walks = "b%c";
 const $Content_content__template = "<!><!><!>";
 _shells({
 	a1: /*@__PURE__*/ ((_w0) => `a1${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
+	"~a1": /*@__PURE__*/ ((_w0) => `~a1${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
 	a2: /*@__PURE__*/ ((_w0) => `a2${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
+	"~a2": /*@__PURE__*/ ((_w0) => `~a2${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
 	a3: /*@__PURE__*/ ((_w0) => `a3${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
+	"~a3": /*@__PURE__*/ ((_w0) => `~a3${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
 	a4: /*@__PURE__*/ ((_w0) => `a4${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
+	"~a4": /*@__PURE__*/ ((_w0) => `~a4${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
 	a: /*@__PURE__*/ (() => `a !;${((_w0) => `b/${_w0}&b`)($Content_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Content_content__template)}`)(),
 	a0: "a0;b%;<!><!><!>"
 });

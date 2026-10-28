@@ -23,9 +23,9 @@
   va28: !0,
   va29: [1]
 }]
-;Dzo
+;ETo
 
-// PATCH holding Dzo
+// PATCH holding ETo
 {
   ka: [{
     ta: "c",
@@ -54,7 +54,7 @@
   va29: [1, 2]
 }
 
-// PATCH holding Dzo
+// PATCH holding ETo
 {
   cAa: [{
     ta: "d"

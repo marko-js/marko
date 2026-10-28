@@ -19,6 +19,7 @@ const $setup = [[], []];
 _shells({
 	c6: "c6;D ;<p> </p>",
 	c2: "c2",
+	"~c2": "~c2",
 	c5: /*@__PURE__*/ (() => `c5${_shell_marker(_shell_setup([[], []], ["a>", $setup$1]))}`)(),
 	c: "c !;b%;<!><!><!>"
 });

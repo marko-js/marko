@@ -14,9 +14,9 @@
     }
   }
 }]
-;Cxo
+;Dxo
 
-// PATCH holding Cxo
+// PATCH holding Dxo
 {
   fa: [0, "c2"],
   cAa: {
@@ -29,7 +29,7 @@
   }
 }
 
-// PATCH holding Cxo
+// PATCH holding Dxo
 {
   fa: ["b", "c2"],
   cAa: {

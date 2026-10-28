@@ -12,9 +12,9 @@
     "PatchMarkedWrite:input_b": "b"
   }
 }]
-;CAI
+;CgI
 
-// PATCH holding CAI
+// PATCH holding CgI
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": 0,
@@ -22,7 +22,7 @@
   }
 }
 
-// PATCH holding CAI
+// PATCH holding CgI
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
@@ -37,7 +37,7 @@
   }
 }
 
-// PATCH holding CAI
+// PATCH holding CgI
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{

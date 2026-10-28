@@ -6,7 +6,9 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&/&b`)($TextField_content__walks
 const $setup$1 = [[], ["a>b3", "a>b4"]];
 _shells({
 	b6: "b6,",
+	"~b6": "~b6,",
 	b2: /*@__PURE__*/ ((_w0, _w1) => `b2 !b3 b4;${_w0};${_w1}`)($TextField_content__walks, $TextField_content__template),
+	"~b2": /*@__PURE__*/ ((_w0, _w1) => `~b2 !b3 b4;${_w0};${_w1}`)($TextField_content__walks, $TextField_content__template),
 	b: /*@__PURE__*/ (() => `b !a>b3 a>b4;${((_w0) => `b/${_w0}&/&b`)($TextField_content__walks)};${((_w0) => `<!>${_w0}<!>`)($TextField_content__template)}`)()
 });
 var field_default = _template("b", (input) => {

@@ -16,9 +16,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell"]
 }]
-;CQw
+;Cww
 
-// PATCH holding CQw
+// PATCH holding Cww
 {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c",
@@ -37,7 +37,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-two-consumers-swap/template.marko_2*shell"]
 }
 
-// PATCH holding CQw
+// PATCH holding Cww
 {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "c",
@@ -48,7 +48,7 @@
   "PatchBranch:#text/1": 0
 }
 
-// PATCH holding CQw
+// PATCH holding Cww
 {
   "PatchChild:#childScope/0": {
     "PatchText:#text/0": "e",

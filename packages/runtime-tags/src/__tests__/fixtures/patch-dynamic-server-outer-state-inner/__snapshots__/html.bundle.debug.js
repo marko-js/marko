@@ -32,7 +32,9 @@ const $walks = "b%b b";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content; ; ",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content; ; ",
 	"__tests__/template.marko_1*content": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*content${_shell_marker(_shell_setup([["__tests__/template.marko_1_count#0:6/init"], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1),
+	"~__tests__/template.marko_1*content": /*@__PURE__*/ ((_w0) => `~__tests__/template.marko_1*content${_shell_marker(_shell_setup([["__tests__/template.marko_1_count#0:6/init"], []], ["#childScope/0>", $setup$1]))};${((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1),
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>+</button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {

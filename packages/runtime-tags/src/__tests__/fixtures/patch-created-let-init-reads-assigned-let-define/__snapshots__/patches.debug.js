@@ -17,9 +17,9 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_1*shell"],
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-define/template.marko_fill0": "b"
 }]
-;BgE
+;CAE
 
-// PATCH holding BgE
+// PATCH holding CAE
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

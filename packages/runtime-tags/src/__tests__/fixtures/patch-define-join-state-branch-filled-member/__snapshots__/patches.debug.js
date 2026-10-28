@@ -12,9 +12,9 @@
     "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_fill0": "y"
   }
 }]
-;CAI
+;CgI
 
-// PATCH holding CAI
+// PATCH holding CgI
 {
   "PatchChild:#childScope/0": {
     "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_fill0/unpatched": "z"

@@ -19,4 +19,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-content-in-construct/template.marko_1*shell"]
 }]
-;CxI
+;DRI

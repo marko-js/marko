@@ -173,6 +173,11 @@ export function isPromise(value: unknown): value is Promise<unknown> {
   );
 }
 
+// Kept content's shell id: the content's id behind a `~`, which no module
+// registration's id starts with, so the client creates it from the shell.
+export const keptShellId = (contentId: string) => "~" + contentId;
+export const isKeptShellId = (id: string) => id[0] === "~";
+
 export function normalizeDynamicRenderer<Renderer>(
   value: any,
 ): Renderer | string | undefined {

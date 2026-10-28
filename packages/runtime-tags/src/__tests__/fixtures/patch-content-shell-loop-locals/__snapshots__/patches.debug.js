@@ -16,4 +16,4 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-loop-locals/tags/view.marko_1*shell"]
   }
 }]
-;DzQ
+;ETQ

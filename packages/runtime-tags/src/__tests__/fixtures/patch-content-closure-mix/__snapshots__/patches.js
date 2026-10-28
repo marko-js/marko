@@ -23,9 +23,9 @@
     }
   }, "a4"]
 }]
-;CQY
+;CwY
 
-// PATCH holding CQY
+// PATCH holding CwY
 {
   $: {
     brand: "Zed"

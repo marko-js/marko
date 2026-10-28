@@ -13,9 +13,9 @@
     }
   }
 }]
-;FWAB
+;F2AB
 
-// PATCH holding FWAB
+// PATCH holding F2AB
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/docs.marko", "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/page-b.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_6*shell;b%b/b&b;<!><!><h1>B</h1><!>`, {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
@@ -30,9 +30,9 @@
     }
   }
 }]
-;FWAD
+;F2AD
 
-// PATCH holding FWAD
+// PATCH holding F2AD
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-in-layout-body/template.marko_4*shell,<p>home</p>`, {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
@@ -40,4 +40,4 @@
     }
   }
 }]
-;FeAD
+;F+AD

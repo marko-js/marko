@@ -12,9 +12,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/tags/menu.marko_1*shell"]
   }
 }]
-;CQo
+;Cwo
 
-// PATCH holding CQo
+// PATCH holding Cwo
 {
   "PatchChild:#childScope/0": {
     "PatchLoop:#text/0": [{

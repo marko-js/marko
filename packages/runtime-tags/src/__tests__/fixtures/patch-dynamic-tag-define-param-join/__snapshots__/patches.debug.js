@@ -14,14 +14,14 @@
     }
   }
 }]
-;BgE
+;CAE
 
-// PATCH holding BgE
+// PATCH holding CAE
 {
   "PatchDynamicTag:#text/0": 0
 }
 
-// PATCH holding BgE
+// PATCH holding CAE
 {
   "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-define-param-join/template.marko_1*content",
   "PatchChild:BranchScopes:#text/0": {
@@ -38,7 +38,7 @@
   }
 }
 
-// PATCH holding BgE
+// PATCH holding CAE
 {
   "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-define-param-join/template.marko_1*content",
   "PatchChild:BranchScopes:#text/0": {

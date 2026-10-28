@@ -12,9 +12,9 @@
     xe: "b"
   }
 }]
-;CAM
+;CgM
 
-// PATCH holding CAM
+// PATCH holding CgM
 {
   ca: {
     ba: 0,
@@ -22,7 +22,7 @@
   }
 }
 
-// PATCH holding CAM
+// PATCH holding CgM
 {
   ca: {
     ba: [{
@@ -37,7 +37,7 @@
   }
 }
 
-// PATCH holding CAM
+// PATCH holding CgM
 {
   ca: {
     ba: [{

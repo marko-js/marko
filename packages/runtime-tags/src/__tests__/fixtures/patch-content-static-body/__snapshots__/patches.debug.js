@@ -7,9 +7,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-static-body/template.marko_1*shell"]
 }]
-;CQw
+;Cww
 
-// PATCH holding CQw
+// PATCH holding Cww
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {

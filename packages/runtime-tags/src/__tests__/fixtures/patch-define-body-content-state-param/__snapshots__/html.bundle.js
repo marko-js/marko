@@ -6,6 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks);
 const $setup$1 = [[], []];
 _shells({
 	b0: /*@__PURE__*/ ((_w0, _w1) => `b0;${_w0};${_w1}`)($Wrap_content__walks, $Wrap_content__template),
+	"~b0": /*@__PURE__*/ ((_w0, _w1) => `~b0;${_w0};${_w1}`)($Wrap_content__walks, $Wrap_content__template),
 	b: /*@__PURE__*/ (() => `b;${((_w0) => `b/${_w0}&b`)($Wrap_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Wrap_content__template)}`)()
 });
 var one_default = _template("b", (input) => {

@@ -10,6 +10,7 @@ _shells({
 	"__tests__/tags/wrap.marko_2_#text#0/await": "__tests__/tags/wrap.marko_2_#text#0/await;D ;<em> </em>",
 	"__tests__/tags/wrap.marko_2*content": "__tests__/tags/wrap.marko_2*content;b%;<!><!><!>",
 	"__tests__/tags/wrap.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/wrap.marko_1*content !;${_w0};${_w1}`)($Card_content__walks, $Card_content__template),
+	"~__tests__/tags/wrap.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `~__tests__/tags/wrap.marko_1*content !;${_w0};${_w1}`)($Card_content__walks, $Card_content__template),
 	"__tests__/tags/wrap.marko": /*@__PURE__*/ (() => `__tests__/tags/wrap.marko #childScope/0>;${((_w0) => `b/${_w0}&b`)($Card_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Card_content__template)}`)()
 });
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {

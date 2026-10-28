@@ -6,9 +6,9 @@
     }
   }
 }]
-;CgQ
+;DgQ
 
-// PATCH holding CgQ
+// PATCH holding DgQ
 [`packages/runtime-tags/src/__tests__/fixtures/patch-child-picks-content-tab-passed-on/template.marko_1*content;b%;A<!>`, {
   "PatchChild:#childScope/1": {
     "PatchChild:#childScope/0": {
@@ -19,9 +19,9 @@
     }
   }
 }]
-;Cxg
+;Dxg
 
-// PATCH holding Cxg
+// PATCH holding Dxg
 {
   "PatchChild:#childScope/1": {
     "PatchChild:#childScope/0": {

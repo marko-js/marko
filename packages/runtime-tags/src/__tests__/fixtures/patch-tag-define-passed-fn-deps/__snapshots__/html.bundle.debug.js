@@ -6,7 +6,9 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&/&b`)($TextField_content__wal
 const $setup$1 = [[], ["#childScope/0>__tests__/tags/field.marko_1_attrs#6", "#childScope/0>__tests__/tags/field.marko_1"]];
 _shells({
 	"__tests__/tags/field.marko_2*content": "__tests__/tags/field.marko_2*content,",
+	"~__tests__/tags/field.marko_2*content": "~__tests__/tags/field.marko_2*content,",
 	"__tests__/tags/field.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/field.marko_1*content !__tests__/tags/field.marko_1_attrs#6 __tests__/tags/field.marko_1;${_w0};${_w1}`)($TextField_content__walks, $TextField_content__template),
+	"~__tests__/tags/field.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `~__tests__/tags/field.marko_1*content !__tests__/tags/field.marko_1_attrs#6 __tests__/tags/field.marko_1;${_w0};${_w1}`)($TextField_content__walks, $TextField_content__template),
 	"__tests__/tags/field.marko": /*@__PURE__*/ (() => `__tests__/tags/field.marko !#childScope/0>__tests__/tags/field.marko_1_attrs#6 #childScope/0>__tests__/tags/field.marko_1;${((_w0) => `b/${_w0}&/&b`)($TextField_content__walks)};${((_w0) => `<!>${_w0}<!>`)($TextField_content__template)}`)()
 });
 var field_default = _template("__tests__/tags/field.marko", (input) => {

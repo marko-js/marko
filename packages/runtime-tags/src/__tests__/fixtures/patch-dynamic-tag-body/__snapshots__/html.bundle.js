@@ -13,6 +13,7 @@ var wrap_default = _template("b", (input) => {
 _shells({
 	a0: "a0,hi",
 	a1: "a1; ; ",
+	"~a1": "~a1; ; ",
 	a: "a !;b%b%;<!><!><!><!>"
 });
 var template_default = _template("a", (input) => {

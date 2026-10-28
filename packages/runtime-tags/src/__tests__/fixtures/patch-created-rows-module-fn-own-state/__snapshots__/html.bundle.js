@@ -16,6 +16,7 @@ const $walks = "b%b b";
 const $setup = [[], ["b8"]];
 _shells({
 	b2: "b2 !;b%;<!><!><!>",
+	"~b2": "~b2 !;b%;<!><!><!>",
 	b: "b !b8;b%b ;<!><!><button class=l>l</button>",
 	b3: /*@__PURE__*/ (() => `b3 b13;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`)(),
 	b1: "b1;D ;<em> </em>"

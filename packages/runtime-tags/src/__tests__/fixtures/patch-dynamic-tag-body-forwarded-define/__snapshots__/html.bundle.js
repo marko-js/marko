@@ -1,6 +1,7 @@
 // tags/fwd.marko
 _shells({
 	b0: "b0 !b1; b%;<button class=toggle>t</button><!><!>",
+	"~b0": "~b0 !b1; b%;<button class=toggle>t</button><!><!>",
 	b4: "b4",
 	b: "b !;b%;<!><!><!>"
 });

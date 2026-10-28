@@ -54,9 +54,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-id-dynamic-known/template.marko_4*shell"]
 }]
-;Efs
+;Ffs
 
-// PATCH holding Efs
+// PATCH holding Ffs
 {
   "PatchLoop:#text/0": [{
     "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-id-dynamic-known/tags/labeled.marko",

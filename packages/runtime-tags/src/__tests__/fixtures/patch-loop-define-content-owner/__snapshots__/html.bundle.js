@@ -4,6 +4,7 @@ const $Card_content__template = "<p><!><!></p>";
 _shells({
 	a1: "a1 a18",
 	a2: "a2 a20;D%c%;<i><!> <!></i>",
+	"~a2": "~a2 a20;D%c%;<i><!> <!></i>",
 	a3: "a3 a22",
 	a4: "a4",
 	a: "a;b%;<!><!><!>",

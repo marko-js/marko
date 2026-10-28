@@ -18,6 +18,7 @@ const $walks = " D l%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content !__tests__/template.marko_2,<p>body</p>",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content !__tests__/template.marko_2,<p>body</p>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template$1)
 });

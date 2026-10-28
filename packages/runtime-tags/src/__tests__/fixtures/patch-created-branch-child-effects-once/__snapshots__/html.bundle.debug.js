@@ -48,6 +48,7 @@ const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_3*content": /*@__PURE__*/ (() => `__tests__/template.marko_3*content${_shell_marker(_shell_setup([[], ["__tests__/template.marko_3"]], ["#childScope/0>", $setup$3]))}`)(),
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content !__tests__/template.marko_2;b%;<em>content</em><!><!>",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content !__tests__/template.marko_2;b%;<em>content</em><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([["__tests__/template.marko_1_count#0:9/init"], ["__tests__/template.marko_1"]], ["#childScope/0>", $setup$2], [">#childScope/1>", [[], ["__tests__/template.marko_4"]]], ["#childScope/4>", $setup$1]))};${/*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&%b%b/${_w2}&%c`)($walks$2, $Body_content__walks, "D%l")};${/*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}<!><!>${_w2}<!><!>`)($template$2, $Body_content__template, $template$1)}`)(),
 	"__tests__/template.marko_5*shell": "__tests__/template.marko_5*shell;D ;<i> </i>",

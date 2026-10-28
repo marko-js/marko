@@ -16,9 +16,9 @@
     }
   }, "a5"]
 }]
-;CQY
+;CwY
 
-// PATCH holding CQY
+// PATCH holding CwY
 {
   ca: {
     ta: "c",
@@ -37,7 +37,7 @@
   }, "a5"]
 }
 
-// PATCH holding CQY
+// PATCH holding CwY
 {
   ca: {
     ta: "c",
@@ -48,7 +48,7 @@
   bb: 0
 }
 
-// PATCH holding CQY
+// PATCH holding CwY
 {
   ca: {
     ta: "e",

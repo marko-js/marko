@@ -8,9 +8,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-attr-tags-construct/template.marko_1*shell"]
 }]
-;Cxw
+;Dxw
 
-// PATCH holding Cxw
+// PATCH holding Dxw
 {
   "PatchBranch:#main/0": [{
     "PatchChild:#childScope/0": {

@@ -8,6 +8,7 @@ _shells({
 	"__tests__/tags/show-await.marko_2*content": "__tests__/tags/show-await.marko_2*content;D ;<p> </p>",
 	"__tests__/tags/show-await.marko_1_#text#0/await": "__tests__/tags/show-await.marko_1_#text#0/await;D ;<p> </p>",
 	"__tests__/tags/show-await.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/show-await.marko_1*content;${_w0};${_w1}`)($Row_content__walks, $Row_content__template),
+	"~__tests__/tags/show-await.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `~__tests__/tags/show-await.marko_1*content;${_w0};${_w1}`)($Row_content__walks, $Row_content__template),
 	"__tests__/tags/show-await.marko": /*@__PURE__*/ (() => `__tests__/tags/show-await.marko #childScope/0>;${((_w0) => `b/${_w0}&b`)($Row_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`)()
 });
 var show_await_default = _template("__tests__/tags/show-await.marko", (input) => {

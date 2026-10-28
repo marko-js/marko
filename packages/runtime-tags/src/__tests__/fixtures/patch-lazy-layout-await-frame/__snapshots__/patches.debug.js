@@ -39,9 +39,9 @@
     }
   }
 }]
-;IRxa
+;Ixxa
 
-// PATCH holding IRxa
+// PATCH holding Ixxa
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko", "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/page-b.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_6*shell;b%b/b&b;<!><!><h1>B</h1><!>`, {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
@@ -70,9 +70,9 @@
     }
   }
 }]
-;IRza
+;Ixza
 
-// PATCH holding IRza
+// PATCH holding Ixza
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_4*shell,<p>home</p>`, {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
@@ -80,4 +80,4 @@
     }
   }
 }]
-;IRz6
+;Ixz6

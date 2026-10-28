@@ -9,9 +9,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-unassigned-let-created-card-define/template.marko_1*shell"]
 }]
-;CAM
+;CgM
 
-// PATCH holding CAM
+// PATCH holding CgM
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

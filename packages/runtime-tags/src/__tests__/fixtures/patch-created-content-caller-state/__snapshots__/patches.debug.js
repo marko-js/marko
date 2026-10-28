@@ -13,16 +13,16 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-state/tags/panel.marko_1*shell"]
   }
 }]
-;CwY
+;DQY
 
-// PATCH holding CwY
+// PATCH holding DQY
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": 0
   }
 }
 
-// PATCH holding CwY
+// PATCH holding DQY
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{

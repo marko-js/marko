@@ -1,0 +1,10 @@
+<if=input.show><outer><em>static ${input.label}</em></outer></if>
+<main>
+  <host show=input.show native=input.native label=input.label>
+    <@wrap|{ content }|>
+      <let/open=true/>
+      <button.toggle onClick() { open = !open }>t</button>
+      <if=open><${content}/></if>
+    </@wrap>
+  </host>
+</main>

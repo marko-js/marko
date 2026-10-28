@@ -40,6 +40,7 @@ const $setup$1 = _shell_setup([[], []], ["a>", $setup$2]);
 _shells({
 	c0: "c0;b%c%;item <!> of <!>",
 	c6: "c6 !;b%;<!><!><!>",
+	"~c6": "~c6 !;b%;<!><!><!>",
 	c: /*@__PURE__*/ (() => `c${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`)()
 });
 var heading_default = _template("c", (input) => {

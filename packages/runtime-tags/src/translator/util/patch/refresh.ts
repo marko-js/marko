@@ -509,8 +509,8 @@ function mayTakeSeed(binding: Binding) {
   );
 }
 
-// Read in `section` past renders, effects, inits and name-only dynamic tags:
-// by control flow, a call, a child, join or return.
+// Read in `section` (or through an alias) past renders, effects, inits and
+// name-only dynamic tags: by control flow, a call, a child, join or return.
 function readsPastRenders(
   binding: Binding,
   section: Section,
@@ -540,6 +540,9 @@ function readsPastRenders(
     ) {
       return true;
     }
+  }
+  for (const alias of binding.aliases) {
+    if (readsPastRenders(alias, section, seen)) return true;
   }
   for (const alias of binding.propertyAliases.values()) {
     if (readsPastRenders(alias, section, seen)) return true;

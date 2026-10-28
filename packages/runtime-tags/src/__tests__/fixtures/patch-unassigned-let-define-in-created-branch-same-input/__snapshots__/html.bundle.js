@@ -3,6 +3,7 @@ const $Show_content__walks = "D l";
 const $Show_content__template = "<p> </p>";
 _shells({
 	a0: "a0 a6;D ;<p> </p>",
+	"~a0": "~a0 a6;D ;<p> </p>",
 	a: "a !;b%;<!><!><!>",
 	a3: /*@__PURE__*/ (() => `a3 a>a6;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Show_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Show_content__template)}`)()
 });

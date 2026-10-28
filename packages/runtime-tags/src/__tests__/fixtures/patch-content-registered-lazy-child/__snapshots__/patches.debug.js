@@ -14,9 +14,9 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-registered-lazy-child/tags/card/index.marko_1*shell"]
   }
 }]
-;DTQ
+;DzQ
 
-// PATCH holding DTQ
+// PATCH holding DzQ
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-content-registered-lazy-child/box.marko", {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": [{

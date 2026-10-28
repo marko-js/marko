@@ -8,9 +8,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-handler/template.marko_1*shell"]
 }]
-;CAM
+;CgM
 
-// PATCH holding CAM
+// PATCH holding CgM
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

@@ -19,6 +19,7 @@ const ITEMS = ["a", "b"];
 const $setup$1 = [[], []];
 _shells({
 	"__tests__/page.marko_2*content": "__tests__/page.marko_2*content;D l%;<span> </span><!><!>",
+	"~__tests__/page.marko_2*content": "~__tests__/page.marko_2*content;D l%;<span> </span><!><!>",
 	"__tests__/page.marko": "__tests__/page.marko;b%;<!><!><!>",
 	"__tests__/page.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/page.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$2]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2),
 	"__tests__/page.marko_3*shell": "__tests__/page.marko_3*shell;b%;<!><!><!>",

@@ -28,7 +28,9 @@ var tabs_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["a3"]], ["b>", $setup$1]);
 _shells({
 	a2: "a2 a6;b%;B<!>",
+	"~a2": "~a2 a6;b%;B<!>",
 	a1: "a1;b%;A<!>",
+	"~a1": "~a1;b%;A<!>",
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => ` b/${_w0}&b`)($walks)};${((_w0) => `<button class=s>s</button>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {

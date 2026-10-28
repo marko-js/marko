@@ -4,6 +4,7 @@ const $walks = "b%c";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_value#1:4/subscribe;D ;<p> </p>",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content __tests__/template.marko_2_value#1:4/subscribe;D ;<p> </p>",
 	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content #childScope/0>__tests__/template.marko_2_value#1:4/subscribe!__tests__/template.marko_1",
 	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>"
 });

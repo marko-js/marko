@@ -27,9 +27,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-branch/template.marko_1*shell"]
 }]
-;DSI
+;DyI
 
-// PATCH holding DSI
+// PATCH holding DyI
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

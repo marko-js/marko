@@ -1,4 +1,4 @@
-import { normalizeDynamicRenderer } from "../../common/helpers";
+import { keptShellId, normalizeDynamicRenderer } from "../../common/helpers";
 import { ROOT_SCOPE_ID } from "../../common/meta";
 import {
   type Accessor,
@@ -235,27 +235,23 @@ export function pairsContent(
   return pairs;
 }
 
-// Content with no client renderer (`elide`) elides its slot to `0`: an unbound
-// registration whose every occurrence serializes as that access text.
+// Content with no client renderer (`elide`) registers under its kept shell's id:
+// a patch sends it bound to its owner, and a page elides its slot to `0`.
 export function _content(
   id: string,
   fn: ServerRenderer,
   scopeId?: number,
   elide?: 1 | 2,
 ) {
-  return elide
-    ? register(
-        "",
-        _base_content(
-          id,
-          elide > 1 ? keepHoles(id, fn, scopeId!) : fn,
-          scopeId,
-        ),
-        undefined,
-        undefined,
-        "0",
-      )
-    : _base_content(id, fn, scopeId);
+  if (!elide) return _base_content(id, fn, scopeId);
+  const state = getState();
+  return register(
+    keptShellId(id),
+    _base_content(id, elide > 1 ? keepHoles(id, fn, scopeId!) : fn, scopeId),
+    state instanceof PatchRenderState && scopeWithId(state, scopeId!),
+    undefined,
+    1,
+  );
 }
 
 // Kept content (`elide` 2) takes its instances' holes as data: each one a page

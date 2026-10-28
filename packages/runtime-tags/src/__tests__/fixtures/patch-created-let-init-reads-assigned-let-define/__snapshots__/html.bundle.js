@@ -4,6 +4,7 @@ const $Body_content__template = "<span> </span>";
 const WORD = "w";
 _shells({
 	a0: "a0 !;D ;<span> </span>",
+	"~a0": "~a0 !;D ;<span> </span>",
 	a: "a !;b%;<!><!><!>",
 	a7: /*@__PURE__*/ (() => `a7 a11!a3;${/*@__PURE__*/ ((_w0) => `b/${_w0}&D l D l`)($Body_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<p> </p><button> </button>`)($Body_content__template)}`)()
 });

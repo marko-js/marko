@@ -13,9 +13,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-await-caller-input/template.marko_1*shell"]
 }]
-;DRQ
+;DxQ
 
-// PATCH holding DRQ
+// PATCH holding DxQ
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

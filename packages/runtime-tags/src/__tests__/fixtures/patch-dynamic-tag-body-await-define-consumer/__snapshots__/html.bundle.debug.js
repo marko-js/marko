@@ -37,6 +37,7 @@ _shells({
 	"__tests__/tags/card.marko_3*content": /*@__PURE__*/ (() => `__tests__/tags/card.marko_3*content >#childScope/0>;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($K_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($K_content__template)}`)(),
 	"__tests__/tags/card.marko_2*content": "__tests__/tags/card.marko_2*content",
 	"__tests__/tags/card.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/card.marko_1*content;${_w0};${_w1}`)($K_content__walks, $K_content__template),
+	"~__tests__/tags/card.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `~__tests__/tags/card.marko_1*content;${_w0};${_w1}`)($K_content__walks, $K_content__template),
 	"__tests__/tags/card.marko_0_#text#0/await": /*@__PURE__*/ (() => `__tests__/tags/card.marko_0_#text#0/await >#childScope/0>;${((_w0) => `b/${_w0}&b`)($K_content__walks)};${((_w0) => `<!>${_w0}<!>`)($K_content__template)}`)(),
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko !;b%;<!><!><!>"
 });

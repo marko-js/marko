@@ -11,9 +11,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-assigned-let-member-content/template.marko_1*shell"]
 }]
-;CQw
+;Cww
 
-// PATCH holding CQw
+// PATCH holding Cww
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -27,7 +27,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-assigned-let-member-content/template.marko_1*shell"]
 }
 
-// PATCH holding CQw
+// PATCH holding Cww
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

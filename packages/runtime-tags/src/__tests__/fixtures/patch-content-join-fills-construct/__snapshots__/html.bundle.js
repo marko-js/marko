@@ -58,6 +58,11 @@ _shells({
 		"a9",
 		"a10"
 	], []], ["a>", $setup$2]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2),
+	"~a1": /*@__PURE__*/ ((_w0) => `~a1${_shell_marker(_shell_setup([[
+		"a8",
+		"a9",
+		"a10"
+	], []], ["a>", $setup$2]))};${((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2),
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `0${_w0}& b%c`)("")};${((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("")}`)(),
 	a3: /*@__PURE__*/ ((_w0) => `a3${_shell_marker(_shell_setup([[], []], ["a>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
 });

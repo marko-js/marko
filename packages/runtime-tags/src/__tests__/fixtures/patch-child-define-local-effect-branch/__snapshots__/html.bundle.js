@@ -6,6 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Card_content__walks);
 const $setup$1 = [["a>"], []];
 _shells({
 	b3: /*@__PURE__*/ ((_w0, _w1) => `b3 !;${_w0};${_w1}`)($Card_content__walks, $Card_content__template),
+	"~b3": /*@__PURE__*/ ((_w0, _w1) => `~b3 !;${_w0};${_w1}`)($Card_content__walks, $Card_content__template),
 	b: /*@__PURE__*/ (() => `b a>;${((_w0) => `b/${_w0}&b`)($Card_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Card_content__template)}`)(),
 	b2: "b2;D ;<p> </p>"
 });

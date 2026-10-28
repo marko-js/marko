@@ -14,9 +14,9 @@
     "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-created-branch-module-arg/tags/card.marko_fill1": "b"
   }
 }]
-;Cwo
+;DQo
 
-// PATCH holding Cwo
+// PATCH holding DQo
 {
   "PatchChild:#childScope/0": {
     "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-created-branch-module-arg/tags/card.marko_fill1/unpatched": "c"

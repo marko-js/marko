@@ -18,7 +18,9 @@ const $walks = "b%b b b";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content __tests__/template.marko_3_input_label#0:6/subscribe __tests__/template.marko_3_b#0:8/init __tests__/template.marko_3_input_label#0:6_b#0:8/init;D%c%;<p class=b><!> <!></p>",
+	"~__tests__/template.marko_3*content": "~__tests__/template.marko_3*content __tests__/template.marko_3_input_label#0:6/subscribe __tests__/template.marko_3_b#0:8/init __tests__/template.marko_3_input_label#0:6_b#0:8/init;D%c%;<p class=b><!> <!></p>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_input_label#0:6/subscribe __tests__/template.marko_2_a#0:7/init __tests__/template.marko_2_input_label#0:6_a#0:7/init;D ;<p class=a> </p>",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content __tests__/template.marko_2_input_label#0:6/subscribe __tests__/template.marko_2_a#0:7/init __tests__/template.marko_2_input_label#0:6_a#0:7/init;D ;<p class=a> </p>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b b ;<!><!><button class=a>a</button><button class=b>b</button>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1]))};${/*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&/${_w1}&l`)("D%l", "D%l")};${/*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($template$1, $template$1)}`)()
 });

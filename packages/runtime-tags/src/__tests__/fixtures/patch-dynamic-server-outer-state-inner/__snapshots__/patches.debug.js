@@ -14,9 +14,9 @@
     }
   }
 }]
-;Cxo
+;Dxo
 
-// PATCH holding Cxo
+// PATCH holding Dxo
 {
   "PatchDynamicTag:#text/0": [0, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {
@@ -29,7 +29,7 @@
   }
 }
 
-// PATCH holding Cxo
+// PATCH holding Dxo
 {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-server-outer-state-inner/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {

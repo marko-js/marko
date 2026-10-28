@@ -28,9 +28,9 @@
     }, "b0"]
   }
 }]
-;CxY
+;DRY
 
-// PATCH holding CxY
+// PATCH holding DRY
 {
   ca: {
     la: [{

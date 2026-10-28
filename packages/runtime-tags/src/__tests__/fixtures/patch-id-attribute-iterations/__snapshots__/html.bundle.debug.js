@@ -19,9 +19,13 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Content_content__walks);
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_6*content": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_6*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1),
+	"~__tests__/template.marko_6*content": /*@__PURE__*/ ((_w0) => `~__tests__/template.marko_6*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1),
 	"__tests__/template.marko_5*content": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_5*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1),
+	"~__tests__/template.marko_5*content": /*@__PURE__*/ ((_w0) => `~__tests__/template.marko_5*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1),
 	"__tests__/template.marko_4*content": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_4*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1),
+	"~__tests__/template.marko_4*content": /*@__PURE__*/ ((_w0) => `~__tests__/template.marko_4*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1),
 	"__tests__/template.marko_3*content": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_3*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1),
+	"~__tests__/template.marko_3*content": /*@__PURE__*/ ((_w0) => `~__tests__/template.marko_3*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1),
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko !;${((_w0) => `b/${_w0}&b`)($Content_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Content_content__template)}`)(),
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;b%;<!><!><!>"
 });

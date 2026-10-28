@@ -12,9 +12,9 @@
     }
   }
 }]
-;CAI
+;CgI
 
-// PATCH holding CAI
+// PATCH holding CgI
 {
   "PatchChild:#childScope/0": {
     "PatchMarkedWrite:input_a": "C",

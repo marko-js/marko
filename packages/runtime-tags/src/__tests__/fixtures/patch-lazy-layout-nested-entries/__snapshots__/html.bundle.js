@@ -83,6 +83,7 @@ const $PageA_withLoadAssets = withLoadAssets(() => page_a_default, "b", flush, "
 const $PageB_withLoadAssets = withLoadAssets(() => page_b_default, "c", flush, "_c");
 _shells({
 	d5: "d5;b%;<!><!><!>",
+	"~d5": "~d5;b%;<!><!><!>",
 	d: "d !;E%;<html><body><!></body></html>",
 	d6: /*@__PURE__*/ (() => `d6${_shell_marker(_shell_setup([[], []], ["b>", $setup$2]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$2)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$2)}`)(),
 	d4: /*@__PURE__*/ (() => `d4${_shell_marker(_shell_setup([[], []], ["b>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)(),

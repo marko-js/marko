@@ -20,6 +20,7 @@ var list_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["a4"]], ["a>", $setup$1]);
 _shells({
 	a1: "a1 a7;D l%;<em> </em><!><!>",
+	"~a1": "~a1 a7;D l%;<em> </em><!><!>",
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `b/${_w0}& D l`)("b%c")};${((_w0) => `<!>${_w0}<button> </button>`)($template)}`)(),
 	a0: "a0;D%;<b><!>!</b>"
 });

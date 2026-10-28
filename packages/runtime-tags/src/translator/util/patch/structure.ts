@@ -13,6 +13,7 @@ import {
 import { type ReferencedExtra } from "../references";
 import {
   forEachParamGroup,
+  getRendererReason,
   isContentRender,
   getCallerParamGroups,
   type Section,
@@ -48,15 +49,19 @@ export const inStatefulBranch = createPassMemo(
   false,
 );
 
-// Content read inside stateful structure renders there; a tag rendering it
-// with client state renders it on the client wherever it sits.
+// Content read inside stateful structure renders there; content rendered with
+// client state, or held by it, may render on the client anywhere.
 export function isStatefulLeaf(read: ReferencedExtra) {
   return (
     (isContentRender(read) || !!read.derives) &&
     (inStatefulBranch(read.section) ||
-      // State the client never changes renders as the server does.
-      (!!read.rendersContent && hasClientState(getSourcesForExpr(read))))
+      (!!read.rendersContent && hasClientState(getSourcesForExpr(read))) ||
+      some(read.derives, holdsClientState))
   );
+}
+
+function holdsClientState(binding: Binding) {
+  return hasClientState(binding.sources);
 }
 // A read rendering the content where a patch may too: outside stateful structure,
 // or naming a created scope's `<let>` alone, which the patch creates first.
@@ -100,10 +105,11 @@ export const isStatefulBranch = createPassMemo((section: Section) => {
       ? section.branchExpr
       : undefined;
   const sources = expr && getSourcesForExpr(expr);
-  // A body every consumer renders stateful, or one whose own branch
-  // expression derives from state.
+  // A body every consumer renders stateful by the renderer the client registers
+  // (else the patch keeps it), or one whose own branch expression derives from state.
   return (
-    getStatefulConsumers(section) === "every" ||
+    (getStatefulConsumers(section) === "every" &&
+      !!getRendererReason(section)) ||
     (!!expr &&
       (hasClientState(sources) ||
         inStatefulBranch(section.parent!) ||

@@ -39,9 +39,9 @@ a, b, [`a1;b%b%;<!><!><!><!>`, `e1;b%;<!><!><!>`, `e0;b%b/b&b;<!><!><h1>A</h1><!
     }
   }
 }]
-;IRaO
+;IxaO
 
-// PATCH holding IRaO
+// PATCH holding IxaO
 a, c, [`e4;b%b/b&b;<!><!><h1>B</h1><!>`, {
   ca: {
     cAa: {
@@ -70,9 +70,9 @@ a, c, [`e4;b%b/b&b;<!><!><h1>B</h1><!>`, {
     }
   }
 }]
-;IRau
+;Ixau
 
-// PATCH holding IRau
+// PATCH holding Ixau
 [`e3,<p>home</p>`, {
   ca: {
     cAa: {
@@ -80,4 +80,4 @@ a, c, [`e4;b%b/b&b;<!><!><h1>B</h1><!>`, {
     }
   }
 }]
-;IRa+
+;Ixa+

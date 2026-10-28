@@ -1,12 +1,21 @@
+import { isKeptShellId } from "../../common/helpers";
 import {
   AccessorPrefix,
   AccessorProp,
   PatchKey,
+  RendererProp,
   type Scope,
 } from "../../common/types";
+import { _resumed } from "../resume";
 import { subscribeToScopeSet } from "../signals";
-import { setupPatchers, patchers, patchScope } from "./apply";
+import {
+  installPatchShells,
+  patchers,
+  patchScope,
+  setupPatchers,
+} from "./apply";
 import "./dynamic-tag.feat";
+import { registerShell, shells } from "./shells";
 
 declare module "./apply" {
   interface PatchValues {
@@ -14,12 +23,17 @@ declare module "./apply" {
   }
 }
 
+// The kept instances of content its owner holds, and the withheld entry it last
+// took, which an instance the client creates later takes too.
+export type WithheldScopes = Set<Scope> & { [PatchKey.Withheld]?: Scope };
+
 // The holes of content a client consumer keeps, for each live instance its
 // owner holds.
 patchers[PatchKey.Withheld] = (scope, contentId, value) => {
-  for (const instance of (scope[AccessorPrefix.WithheldScopes + contentId] as
-    | Set<Scope>
-    | undefined) || []) {
+  const instances = (scope[AccessorPrefix.WithheldScopes + contentId] ||=
+    new Set()) as WithheldScopes;
+  instances[PatchKey.Withheld] = value;
+  for (const instance of instances) {
     if (instance[AccessorProp.Gen] > 0) patchScope(value, instance);
   }
 };
@@ -46,3 +60,25 @@ patchers[PatchKey.DynamicTag] = setupPatchers[PatchKey.DynamicTag] = (
     );
   }
 };
+
+// Kept content creates from its shell (its registration): an instance takes the
+// owner's record, and main's dynamic tag joins it to the owner's set.
+installPatchShells((shell) => {
+  const id = registerShell(shell);
+  if (isKeptShellId(id)) {
+    const key = AccessorPrefix.WithheldScopes + id.slice(1);
+    _resumed[id] = (owner?: Scope) => {
+      const content = shells[id](owner);
+      const setup = content[RendererProp.Setup];
+      content[RendererProp.Accessor] = key;
+      content[RendererProp.Setup] = (branch) => {
+        const entry = (
+          branch[AccessorProp.Owner]![key] as WithheldScopes | undefined
+        )?.[PatchKey.Withheld];
+        if (entry) patchScope(entry, branch);
+        setup?.(branch);
+      };
+      return content;
+    };
+  }
+});

@@ -10,6 +10,7 @@ _shells({
 	b5: "b5;D ;<em> </em>",
 	b6: "b6;b%;<!><!><!>",
 	b7: /*@__PURE__*/ ((_w0, _w1) => `b7 !;${_w0};${_w1}`)($Card_content__walks, $Card_content__template),
+	"~b7": /*@__PURE__*/ ((_w0, _w1) => `~b7 !;${_w0};${_w1}`)($Card_content__walks, $Card_content__template),
 	b: /*@__PURE__*/ (() => `b a>;${((_w0) => `b/${_w0}&b`)($Card_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Card_content__template)}`)()
 });
 var wrap_default = _template("b", (input) => {

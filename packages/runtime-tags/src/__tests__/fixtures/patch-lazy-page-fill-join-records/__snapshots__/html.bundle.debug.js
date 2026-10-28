@@ -74,6 +74,7 @@ const $walks$1 = "b%b D l";
 const $setup$1 = [[], ["__tests__/page-b.marko_0"]];
 _shells({
 	"__tests__/page-b.marko_2*content": "__tests__/page-b.marko_2*content __tests__/page-b.marko_2_count#0:6/init;D%c%c%;<span><!>/<!>/<!></span>",
+	"~__tests__/page-b.marko_2*content": "~__tests__/page-b.marko_2*content __tests__/page-b.marko_2_count#0:6/init;D%c%c%;<span><!>/<!>/<!></span>",
 	"__tests__/page-b.marko": "__tests__/page-b.marko !__tests__/page-b.marko_0;b%b D ;<h1>B</h1><!><button> </button>",
 	"__tests__/page-b.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/page-b.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$2]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2)
 });
@@ -124,6 +125,7 @@ const $PageB_withLoadAssets = withLoadAssets(() => page_b_default, "__tests__/pa
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;b%;<!><!><!>",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content;b%;<!><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko !;E%;<html><body><!></body></html>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/1>", $setup$4]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$4)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$4)}`)(),
 	"__tests__/template.marko_3*shell": /*@__PURE__*/ (() => `__tests__/template.marko_3*shell${_shell_marker(_shell_setup([[], []], ["#childScope/1>", $setup$3]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$3)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$3)}`)(),

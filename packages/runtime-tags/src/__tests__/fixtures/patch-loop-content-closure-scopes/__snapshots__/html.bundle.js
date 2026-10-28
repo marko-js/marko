@@ -15,6 +15,7 @@ var panel_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a1: "a1;D ;<p> </p>",
+	"~a1": "~a1;D ;<p> </p>",
 	a: "a;b%;<!><!><!>",
 	a2: /*@__PURE__*/ ((_w0) => `a2${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template)
 });

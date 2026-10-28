@@ -6,6 +6,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Show_content__walks);
 const $setup$1 = [[], []];
 _shells({
 	"__tests__/tags/label-view.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/label-view.marko_1*content;${_w0};${_w1}`)($Show_content__walks, $Show_content__template),
+	"~__tests__/tags/label-view.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `~__tests__/tags/label-view.marko_1*content;${_w0};${_w1}`)($Show_content__walks, $Show_content__template),
 	"__tests__/tags/label-view.marko": /*@__PURE__*/ (() => `__tests__/tags/label-view.marko;${((_w0) => `b/${_w0}&b`)($Show_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Show_content__template)}`)()
 });
 var label_view_default = _template("__tests__/tags/label-view.marko", (input) => {

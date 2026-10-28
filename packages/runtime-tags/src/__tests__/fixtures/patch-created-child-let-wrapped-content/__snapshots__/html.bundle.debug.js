@@ -20,6 +20,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2);
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$2]);
 _shells({
 	"__tests__/tags/outer.marko_1*content": "__tests__/tags/outer.marko_1*content;D%;<b><!></b>",
+	"~__tests__/tags/outer.marko_1*content": "~__tests__/tags/outer.marko_1*content;D%;<b><!></b>",
 	"__tests__/tags/outer.marko": /*@__PURE__*/ ((_w0) => `__tests__/tags/outer.marko${_shell_marker($setup$1)};${((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2)
 });
 var outer_default = _template("__tests__/tags/outer.marko", (input) => {
@@ -51,6 +52,7 @@ const $walks = "b%c";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;Db%;<em>static <!></em>",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content;Db%;<em>static <!></em>",
 	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
 });

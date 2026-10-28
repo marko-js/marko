@@ -54,6 +54,7 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}& b/${_w1}&`)("", $walks$1);
 const $setup = _shell_setup([[], ["a2"]], ["a>", $setup$3], ["d>", $setup$1]);
 _shells({
 	a1: /*@__PURE__*/ ((_w0) => `a1${_shell_marker(_shell_setup([["a5"], []], ["a>", $setup$2]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2),
+	"~a1": /*@__PURE__*/ ((_w0) => `~a1${_shell_marker(_shell_setup([["a5"], []], ["a>", $setup$2]))};${((_w0) => `/${_w0}&`)($walks$2)};${_w0}`)($template$2),
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0, _w1) => `0${_w0}& b/${_w1}&`)("", $walks$1)};${((_w0, _w1) => `${_w0}<button class=bonus>bonus</button>${_w1}`)("", $template$1)}`)()
 });
 var page_default = _template("a", (input) => {

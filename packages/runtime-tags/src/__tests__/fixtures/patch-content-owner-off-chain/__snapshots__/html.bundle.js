@@ -13,6 +13,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&`)("");
 const $setup$2 = _shell_setup([[], []], ["a>", $setup$3]);
 _shells({
 	c1: "c1 c5!c0; D%c%;<button><!> <!></button>",
+	"~c1": "~c1 c5!c0; D%c%;<button><!> <!></button>",
 	c: /*@__PURE__*/ ((_w0) => `c${_shell_marker($setup$2)};${((_w0) => `0${_w0}&`)("")};${_w0}`)("")
 });
 var src_default = _template("c", (input) => {

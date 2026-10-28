@@ -26,7 +26,9 @@ var box_default = _template("a", (input) => {
 // template.marko
 _shells({
 	c1: "c1; ; ",
+	"~c1": "~c1; ; ",
 	c2: /*@__PURE__*/ ((_w0) => `c2${_shell_marker(_shell_setup([["c7"], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
+	"~c2": /*@__PURE__*/ ((_w0) => `~c2${_shell_marker(_shell_setup([["c7"], []], ["a>", $setup]))};${((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template),
 	c: "c !c3;b%b ;<!><!><button>+</button>"
 });
 var template_default = _template("c", (input) => {

@@ -74,9 +74,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2*shell"]
 }]
-;Ef4
+;E/4
 
-// PATCH holding Ef4
+// PATCH holding E/4
 {
   "PatchLoop:#text/0": [2, {
     "PatchChild:#childScope/2": {

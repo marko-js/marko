@@ -17,6 +17,7 @@ function boom(error) {
 _shells({
 	a6: "a6;D ;<p> </p>",
 	a2: "a2 a11",
+	"~a2": "~a2 a11",
 	a5: /*@__PURE__*/ (() => `a5${_shell_marker(_shell_setup([[], []], ["a>", $setup]))}`)(),
 	a: "a !a7; D l%;<button> </button><!><!>"
 });

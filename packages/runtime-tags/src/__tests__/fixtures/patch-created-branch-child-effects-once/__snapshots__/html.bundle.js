@@ -43,6 +43,7 @@ const $Body_content__template = "<b>define</b>";
 _shells({
 	a4: /*@__PURE__*/ (() => `a4${_shell_marker(_shell_setup([[], ["a15"]], ["a>", $setup$2]))}`)(),
 	a5: "a5 !a12;b%;<em>content</em><!><!>",
+	"~a5": "~a5 !a12;b%;<em>content</em><!><!>",
 	a: "a !a23; D l%;<button> </button><!><!>",
 	a6: /*@__PURE__*/ (() => `a6${_shell_marker(_shell_setup([["a31"], ["a19"]], ["a>", $setup$1], [">b>", [[], ["a1"]]], ["e>", $setup]))};${/*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&%b%b/${_w2}&%c`)($walks, $Body_content__walks, "D%l")};${/*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}<!><!>${_w2}<!><!>`)($template$1, $Body_content__template, $template)}`)(),
 	a3: "a3;D ;<i> </i>",

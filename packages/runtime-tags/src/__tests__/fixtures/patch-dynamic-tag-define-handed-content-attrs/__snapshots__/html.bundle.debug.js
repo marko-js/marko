@@ -6,6 +6,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks);
 const $setup$1 = [["#childScope/0>"], []];
 _shells({
 	"__tests__/tags/one.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `__tests__/tags/one.marko_1*content;${_w0};${_w1}`)($Wrap_content__walks, $Wrap_content__template),
+	"~__tests__/tags/one.marko_1*content": /*@__PURE__*/ ((_w0, _w1) => `~__tests__/tags/one.marko_1*content;${_w0};${_w1}`)($Wrap_content__walks, $Wrap_content__template),
 	"__tests__/tags/one.marko": /*@__PURE__*/ (() => `__tests__/tags/one.marko #childScope/0>;${((_w0) => `b/${_w0}&b`)($Wrap_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Wrap_content__template)}`)()
 });
 var one_default = _template("__tests__/tags/one.marko", (input) => {

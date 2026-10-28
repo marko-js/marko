@@ -5,6 +5,7 @@ import {
   loadFileForImport,
 } from "@marko/compiler/babel-utils";
 
+import { keptShellId } from "../../common/helpers";
 import {
   type Binding,
   bindingUtil,
@@ -25,6 +26,7 @@ import {
   patchCreates,
   patchCreatesOrComposes,
   getPatchWrite,
+  keepsContent,
   keepsHoles,
   readsKeptInputOnClient,
   writesSeed,
@@ -112,6 +114,9 @@ export const [getShells] = createOutputState(() => {
     ) {
       addShell(shells, section, "content");
     }
+    if (elidesContent(section)) {
+      shells[keptShellId(getResumeRegisterId(section, "content"))] = section;
+    }
   });
   forEachSection((section) => {
     if (shipsBranchShell(section)) addShell(shells, section, "shell");
@@ -124,7 +129,11 @@ export const [getShells] = createOutputState(() => {
 export function linkPatchSends() {
   const programExtra = getProgram().node.extra;
   forEachSection((section) => {
-    if (keepsHoles(section)) linkRuntimeFeature("patches/withheld");
+    // Kept content reaches the client only bound to its owner, created from its shell.
+    if (keepsContent(section)) {
+      linkRuntimeFeature("patches/withheld");
+      linkRuntimeFeature("patches/bind");
+    }
     if (
       // Boundary content no shell creates renders by the renderer its
       // module registers.
@@ -419,6 +428,18 @@ function composesLazyMarkup(op: StructureOp) {
             : op.renderer.program.section!,
         )))
   );
+}
+
+// Content no registration names (`_content`'s `elide`), under its kept shell id:
+// `2` keeps its instances' holes as data, `1` ships its shell alone.
+export function elidesContent(section: Section) {
+  return getRendererReason(section)
+    ? 0
+    : keepsHoles(section)
+      ? 2
+      : shipsContentShell(section)
+        ? 1
+        : 0;
 }
 
 // Content a patch may create ships a shell unless stateful; boundary content's

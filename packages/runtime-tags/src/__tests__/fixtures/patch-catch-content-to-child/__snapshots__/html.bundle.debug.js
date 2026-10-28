@@ -22,6 +22,7 @@ const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<p> </p>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content __tests__/template.marko_2_count#0:7/init",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content __tests__/template.marko_2_count#0:7/init",
 	"__tests__/template.marko_1*content": /*@__PURE__*/ (() => `__tests__/template.marko_1*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))}`)(),
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
 });

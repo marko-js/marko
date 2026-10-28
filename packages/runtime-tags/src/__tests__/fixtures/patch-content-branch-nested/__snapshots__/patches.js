@@ -4,9 +4,9 @@
     ba: 0
   }, "a5"]
 }]
-;CgM
+;DAM
 
-// PATCH holding CgM
+// PATCH holding DAM
 [`a1;D ;<em> </em>`, `a4;/D l%c&b;<p> </p><!><!><!>`, {
   ba: [{
     ba: [{
@@ -20,9 +20,9 @@
     }, "a4"]
   }, "a5"]
 }]
-;Cw4
+;DQ4
 
-// PATCH holding Cw4
+// PATCH holding DQ4
 {
   ba: [{
     ba: [{
@@ -37,12 +37,12 @@
   }, "a5"]
 }
 
-// PATCH holding Cw4
+// PATCH holding DQ4
 {
   ba: 0
 }
 
-// PATCH holding Cw4
+// PATCH holding DQ4
 {
   ba: [{
     ba: [{

@@ -1,0 +1,6 @@
+import Toggle from "./tags/toggle.marko";
+
+<if=input.show><outer><em>static ${input.label}</em></outer></if>
+<main>
+  <${input.on ? Toggle : "div"}><em>${input.note}</em></>
+</main>

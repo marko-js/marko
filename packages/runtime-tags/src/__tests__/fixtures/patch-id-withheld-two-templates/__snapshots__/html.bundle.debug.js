@@ -21,6 +21,7 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$2);
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$2]);
 _shells({
 	"__tests__/tags/relay.marko_1*content": "__tests__/tags/relay.marko_1*content; b ;<input><label>relay</label>",
+	"~__tests__/tags/relay.marko_1*content": "~__tests__/tags/relay.marko_1*content; b ;<input><label>relay</label>",
 	"__tests__/tags/relay.marko": /*@__PURE__*/ (() => `__tests__/tags/relay.marko${_shell_marker($setup$1)};${((_w0) => `/${_w0}&b`)($walks$2)};${((_w0) => `${_w0}<!>`)($template$2)}`)()
 });
 var relay_default = _template("__tests__/tags/relay.marko", (input) => {
@@ -48,6 +49,7 @@ const $walks = "b%c";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content; b Db%;<input><label>p <!></label>",
+	"~__tests__/template.marko_2*content": "~__tests__/template.marko_2*content; b Db%;<input><label>p <!></label>",
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1)}`)()
 });

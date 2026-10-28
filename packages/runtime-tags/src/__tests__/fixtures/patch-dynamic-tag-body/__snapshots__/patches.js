@@ -11,9 +11,9 @@
     }
   }
 }]
-;CQ4
+;Cw4
 
-// PATCH holding CQ4
+// PATCH holding Cw4
 {
   fa: [">section", "a0", {
     class: "b"
@@ -24,7 +24,7 @@
   }
 }
 
-// PATCH holding CQ4
+// PATCH holding Cw4
 {
   fa: [">section", "a0", {
     class: "c"

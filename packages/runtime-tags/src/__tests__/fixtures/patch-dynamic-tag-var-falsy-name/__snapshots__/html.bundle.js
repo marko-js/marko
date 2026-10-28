@@ -17,7 +17,9 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
 const $setup$1 = _shell_setup([[], []], ["a>", $setup$2]);
 _shells({
 	b1: "b1,content",
+	"~b1": "~b1,content",
 	b4: "b4;b1;<!><!><!>",
+	"~b4": "~b4;b1;<!><!><!>",
 	b: /*@__PURE__*/ ((_w0) => `b${_shell_marker($setup$1)};${((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template$1)
 });
 var child_default = _template("b", (input) => {

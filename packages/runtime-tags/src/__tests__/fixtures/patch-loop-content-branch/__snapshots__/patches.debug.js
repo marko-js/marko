@@ -32,9 +32,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_1*shell"]
 }]
-;DTw
+;Dzw
 
-// PATCH holding DTw
+// PATCH holding Dzw
 {
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {
@@ -49,7 +49,7 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-branch/template.marko_1*shell"]
 }
 
-// PATCH holding DTw
+// PATCH holding Dzw
 {
   "PatchLoop:#ul/0": [{
     "PatchChild:#childScope/0": {

@@ -10,9 +10,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-nested-call/template.marko_1*shell"]
 }]
-;CxQ
+;DRQ
 
-// PATCH holding CxQ
+// PATCH holding DRQ
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {

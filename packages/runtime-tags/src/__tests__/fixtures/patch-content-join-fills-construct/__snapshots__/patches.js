@@ -40,9 +40,9 @@
     }
   }, "b1"]
 }]
-;ERY
+;ExY
 
-// PATCH holding ERY
+// PATCH holding ExY
 {
   ba: [{
     ca: {

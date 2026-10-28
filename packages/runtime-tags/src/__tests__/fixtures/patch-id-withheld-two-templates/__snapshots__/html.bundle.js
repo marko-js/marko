@@ -21,6 +21,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
 	c0: "c0; b ;<input><label>relay</label>",
+	"~c0": "~c0; b ;<input><label>relay</label>",
 	c: /*@__PURE__*/ (() => `c${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks$1)};${((_w0) => `${_w0}<!>`)($template$1)}`)()
 });
 var relay_default = _template("c", (input) => {
@@ -45,6 +46,7 @@ var relay_default = _template("c", (input) => {
 // template.marko
 _shells({
 	a0: "a0; b Db%;<input><label>p <!></label>",
+	"~a0": "~a0; b Db%;<input><label>p <!></label>",
 	a: "a;b%;<!><!><!>",
 	a1: /*@__PURE__*/ (() => `a1${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template)}`)()
 });

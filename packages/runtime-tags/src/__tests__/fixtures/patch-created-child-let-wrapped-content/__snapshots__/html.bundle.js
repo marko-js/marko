@@ -20,6 +20,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
 	c1: "c1;D%;<b><!></b>",
+	"~c1": "~c1;D%;<b><!></b>",
 	c: /*@__PURE__*/ ((_w0) => `c${_shell_marker($setup)};${((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
 });
 var outer_default = _template("c", (input) => {
@@ -48,6 +49,7 @@ var outer_default = _template("c", (input) => {
 // template.marko
 _shells({
 	a1: "a1;Db%;<em>static <!></em>",
+	"~a1": "~a1;Db%;<em>static <!></em>",
 	a: "a !;b%;<!><!><!>",
 	a2: /*@__PURE__*/ ((_w0) => `a2${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${_w0}`)($template)
 });

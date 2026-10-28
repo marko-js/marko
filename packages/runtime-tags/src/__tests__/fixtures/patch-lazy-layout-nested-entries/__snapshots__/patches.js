@@ -31,9 +31,9 @@ a, b, [`a1;b%;<!><!><!>`, `d5;b%;<!><!><!>`, `b0,<p>wide</p>`, `d4 !b>b1;b%b/bD 
     }
   }
 }]
-;HSYO
+;HyYO
 
-// PATCH holding HSYO
+// PATCH holding HyYO
 a, c, [`d7;b%b/bD l%c&b;<!><!><h1>B</h1><p> </p><!><!><!>`, {
   ba: [1, {
     cb: {
@@ -55,9 +55,9 @@ a, c, [`d7;b%b/bD l%c&b;<!><!><h1>B</h1><p> </p><!><!><!>`, {
     }
   }, "d6"]
 }]
-;HSYe
+;HyYe
 
-// PATCH holding HSYe
+// PATCH holding HyYe
 a, b, {
   ba: [1, {
     cb: {
@@ -83,8 +83,8 @@ a, b, {
   }, "d6"]
 }
 
-// PATCH holding HSYe
+// PATCH holding HyYe
 [`d8,<p>home</p>`, {
   ba: "d8"
 }]
-;HSY+
+;HyY+

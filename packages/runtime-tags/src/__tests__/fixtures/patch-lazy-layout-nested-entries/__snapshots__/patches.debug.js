@@ -31,9 +31,9 @@
     }
   }
 }]
-;HSwO
+;HywO
 
-// PATCH holding HSwO
+// PATCH holding HywO
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko", "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-b.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_4*shell;b%b/bD l%c&b;<!><!><h1>B</h1><p> </p><!><!><!>`, {
   "PatchBranch:#text/0": [1, {
     "PatchChild:#childScope/1": {
@@ -55,9 +55,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell"]
 }]
-;HSwe
+;Hywe
 
-// PATCH holding HSwe
+// PATCH holding Hywe
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/layout.marko", "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko", {
   "PatchBranch:#text/0": [1, {
     "PatchChild:#childScope/1": {
@@ -83,8 +83,8 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_1*shell"]
 }
 
-// PATCH holding HSwe
+// PATCH holding Hywe
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_5*shell,<p>home</p>`, {
   "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_5*shell"
 }]
-;HSw+
+;Hyw+

@@ -14,9 +14,9 @@
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_1*content"],
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_fill0": "b"
 }]
-;Cww
+;DQw
 
-// PATCH holding Cww
+// PATCH holding DQw
 {
   "PatchCatch:#text/2": [{
     "PatchChild:#childScope/0": {
@@ -33,7 +33,7 @@
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_fill0": "c"
 }
 
-// PATCH holding Cww
+// PATCH holding DQw
 {
   "PatchCatch:#text/2": [{
     "PatchChild:#childScope/0": {
@@ -50,7 +50,7 @@
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-content-to-child/template.marko_fill0": "e"
 }
 
-// PATCH holding Cww
+// PATCH holding DQw
 {
   "PatchChild:BranchScopes:#text/2": [{
     "PatchText:#text/0": "ok"

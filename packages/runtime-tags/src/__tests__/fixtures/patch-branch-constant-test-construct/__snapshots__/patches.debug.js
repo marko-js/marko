@@ -28,9 +28,9 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell"]
 }]
-;Ey4B
+;FS4B
 
-// PATCH holding Ey4B
+// PATCH holding FS4B
 [`packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_4*shell,<p>down</p>`, {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -60,4 +60,4 @@
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/template.marko_1*shell"]
 }]
-;Ez4B
+;FT4B

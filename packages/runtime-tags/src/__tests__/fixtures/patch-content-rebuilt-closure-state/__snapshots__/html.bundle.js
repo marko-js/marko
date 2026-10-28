@@ -22,6 +22,7 @@ const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
 const $setup$1 = _shell_setup([[], ["b3"]], ["b>", $setup$2]);
 _shells({
 	b1: "b1 b7;b%;<!><!><!>",
+	"~b1": "~b1 b7;b%;<!><!><!>",
 	b: /*@__PURE__*/ (() => `b${_shell_marker($setup$1)};${((_w0) => ` b/${_w0}&b`)("b%c")};${((_w0) => `<button>add</button>${_w0}<!>`)($template$1)}`)(),
 	b0: "b0,<span>shown</span>"
 });

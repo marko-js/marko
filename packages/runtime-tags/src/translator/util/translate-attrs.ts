@@ -20,7 +20,7 @@ import {
   getParamsTreeAt,
   hasAllKnownProps,
 } from "./params-tree";
-import { keepsHoles, readsKeptInputOnClient } from "./patch/refresh";
+import { readsKeptInputOnClient } from "./patch/refresh";
 import { callRuntime } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
 import { scopeIdentifier } from "./scope-read";
@@ -31,7 +31,7 @@ import {
   getSection,
   type Section,
 } from "./sections";
-import { shipsContentShell } from "./shell";
+import { elidesContent } from "./shell";
 import { getContentClosureValues, getResumeRegisterId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
 import {
@@ -423,10 +423,9 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   if (bodySection) {
     if (isOutputHTML()) {
       const serialized = getRendererReason(bodySection);
+      const elide = elidesContent(bodySection);
       body.node.body.unshift(getScopeReasonStatement(bodySection) as any);
 
-      // An unregistered shell content elides its slot (`1`), and kept content
-      // also keeps its instances' holes (`2`).
       return callRuntime(
         serialized ? "_content_resume" : "_content",
         t.stringLiteral(getResumeRegisterId(bodySection, "content")),
@@ -441,9 +440,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         ),
         serialized
           ? getRegisteredLocals(bodySection)
-          : keepsHoles(bodySection)
-            ? t.numericLiteral(2)
-            : shipsContentShell(bodySection) && t.numericLiteral(1),
+          : !!elide && t.numericLiteral(elide),
         serialized &&
           readsKeptInputOnClient(bodySection) &&
           t.numericLiteral(1),

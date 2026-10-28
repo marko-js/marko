@@ -23,9 +23,9 @@
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_fill1": !0,
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_fill2": [1]
 }]
-;Dzw
+;ETw
 
-// PATCH holding Dzw
+// PATCH holding ETw
 {
   "PatchCatch:#text/0": [{
     "PatchText:#text/0": "c",
@@ -54,7 +54,7 @@
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_fill2": [1, 2]
 }
 
-// PATCH holding Dzw
+// PATCH holding ETw
 {
   "PatchChild:BranchScopes:#text/0": [{
     "PatchText:#text/0": "d"

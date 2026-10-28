@@ -36,9 +36,9 @@
     }
   }
 }
-;E4gB
+;FYgB
 
-// PATCH holding E4gB
+// PATCH holding FYgB
 {
   "PatchDynamicTag:#text/0": [">section", "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_1*content", {
     class: "box"

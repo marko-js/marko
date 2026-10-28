@@ -15,6 +15,7 @@ var wrap_default = _template("c", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
 	b0: "b0 b3;D ;<b> </b>",
+	"~b0": "~b0 b3;D ;<b> </b>",
 	b: /*@__PURE__*/ ((_w0) => `b${_shell_marker($setup)};${((_w0) => `/${_w0}&`)("D%l")};${_w0}`)($template)
 });
 var card_default = _template("b", (input) => {

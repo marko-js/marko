@@ -9,9 +9,9 @@
     }
   }
 }]
-;BAE
+;BgE
 
-// PATCH holding BAE
+// PATCH holding BgE
 {
   "PatchDynamicTag:#text/0": [">article", "packages/runtime-tags/src/__tests__/fixtures/patch-native-dynamic-tag-server-owned/template.marko_1*content", {
     class: "three"
@@ -23,7 +23,7 @@
   }
 }
 
-// PATCH holding BAE
+// PATCH holding BgE
 {
   "PatchDynamicTag:#text/0": [">section", "packages/runtime-tags/src/__tests__/fixtures/patch-native-dynamic-tag-server-owned/template.marko_1*content", {
     class: "four"

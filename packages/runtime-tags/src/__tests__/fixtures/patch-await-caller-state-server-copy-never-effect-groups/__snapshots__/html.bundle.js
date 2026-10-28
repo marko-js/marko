@@ -8,6 +8,7 @@ _shells({
 	b1: "b1;D ;<p> </p>",
 	b2: "b2;D ;<p> </p>",
 	b3: /*@__PURE__*/ ((_w0, _w1) => `b3 b5;${_w0};${_w1}`)($Row_content__walks, $Row_content__template),
+	"~b3": /*@__PURE__*/ ((_w0, _w1) => `~b3 b5;${_w0};${_w1}`)($Row_content__walks, $Row_content__template),
 	b: /*@__PURE__*/ (() => `b a>b5;${((_w0) => `b/${_w0}&b`)($Row_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`)()
 });
 var show_await_default = _template("b", (input) => {

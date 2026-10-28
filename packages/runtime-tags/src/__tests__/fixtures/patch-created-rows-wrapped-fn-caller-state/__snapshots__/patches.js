@@ -27,9 +27,9 @@
     }
   }, "a2"]
 }]
-;DSo
+;Dyo
 
-// PATCH holding DSo
+// PATCH holding Dyo
 {
   ba: [{
     ca: {

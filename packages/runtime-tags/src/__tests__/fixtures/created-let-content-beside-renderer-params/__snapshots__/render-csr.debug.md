@@ -1,0 +1,29 @@
+# Render `{"show":true,"label":"b"}`
+```html
+<button>
+  x
+</button>
+<section>
+  <button>
+    clear
+  </button>
+  <em>
+    static b
+  </em>
+</section>
+<main>
+  <button
+    class="flag"
+  >
+    f
+  </button>
+  <button
+    class="toggle"
+  >
+    t
+  </button>
+  <i>
+    b
+  </i>
+</main>
+```

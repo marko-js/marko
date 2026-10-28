@@ -11,9 +11,9 @@
     }
   }
 }]
-;CQ0
+;Cw0
 
-// PATCH holding CQ0
+// PATCH holding Cw0
 {
   "PatchDynamicTag:#text/0": [">section", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content", {
     class: "b"
@@ -24,7 +24,7 @@
   }
 }
 
-// PATCH holding CQ0
+// PATCH holding Cw0
 {
   "PatchDynamicTag:#text/0": [">section", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body/template.marko_2*content", {
     class: "c"

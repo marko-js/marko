@@ -14,6 +14,7 @@ var widget_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a1: "a1;D ;<em> </em>",
+	"~a1": "~a1;D ;<em> </em>",
 	a: "a !; ;<main></main>",
 	a5: "a5; ;<div></div>",
 	a4: /*@__PURE__*/ (() => `a4${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template)}`)()

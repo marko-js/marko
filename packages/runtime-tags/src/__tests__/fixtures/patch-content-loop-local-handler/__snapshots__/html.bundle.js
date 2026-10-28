@@ -20,6 +20,7 @@ var menu_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
 	a2: "a2 !a1; D l ;<button> </button><span></span>",
+	"~a2": "~a2 !a1; D l ;<button> </button><span></span>",
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&D l`)("b%c")};${((_w0) => `<!>${_w0}<p> </p>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {

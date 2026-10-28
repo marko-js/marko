@@ -28,6 +28,7 @@ _shells({
 	a1: "a1;D ;<em> </em>",
 	a2: "a2;D ;<b> </b>",
 	a3: "a3;b%;<!><!><!>",
+	"~a3": "~a3;b%;<!><!><!>",
 	a4: "a4;D ;<em> </em>",
 	a5: "a5 a14",
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `D%b/${_w0}& l`)(" b")};${((_w0) => `<main><!>${_w0}<button>interactive</button></main>`)($template)}`)()

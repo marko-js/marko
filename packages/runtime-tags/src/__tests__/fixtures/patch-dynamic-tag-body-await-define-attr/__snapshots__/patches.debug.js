@@ -17,9 +17,9 @@
   },
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-attr/template.marko_fill2": "b"
 }]
-;D1U
+;EVU
 
-// PATCH holding D1U
+// PATCH holding EVU
 {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-attr/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-define-attr/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {
