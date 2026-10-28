@@ -1,0 +1,49 @@
+// tags/card/index.marko
+const $template = "<b> </b><!><!>";
+const $walks = "D l%c";
+const $setup = [[], []];
+_shells({ b: "b;D l%;<b> </b><!><!>" });
+var card_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	_html(`<b>${_text_resume($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</b>`);
+	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
+	_scope($scope0_id, {});
+});
+
+// template.marko
+_shells({
+	a1: "a1;D ;<em> </em>",
+	a: "a; ;<ul></ul>",
+	a2: /*@__PURE__*/ (() => `a2${_shell_marker(_shell_setup([[], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template)}`)()
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	_html("<ul>");
+	_for_of(input.items, (item) => {
+		const $scope1_id = _scope_id();
+		const $for_content__item_n__closures = /* @__PURE__ */ new Set();
+		_html("<li>");
+		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		const $childScope = _peek_scope_id($scope1_id, "a", 0);
+		card_default({
+			title: item.t,
+			content: _content("a1", () => {
+				_scope_reason();
+				const $scope2_id = _scope_id();
+				_html(`<em>${_text_resume($scope2_id, "a", item.n, 1, $scope0_reason, 0)}</em>`);
+				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a0");
+				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope2_id, { _: $wi__input_items && _scope_with_id($scope1_id) }));
+			}, $scope1_id, 1)
+		});
+		_patch_child_end();
+		_html("</li>");
+		_scope($scope1_id, {
+			f: $wi__input_items && _unfilled_if($scope0_reason, 0) && $for_content__item_n__closures,
+			a: _existing_scope($childScope)
+		});
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
+	_html(`</ul>${_el_resume($scope0_id, "a")}`);
+	_scope($scope0_id, {});
+}, 1);

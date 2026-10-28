@@ -1,0 +1,8 @@
+<try><await|value|=input.promise><p>${value}</p></await>
+<@placeholder>
+<for|i| of=[0,1]><if=true><field name="loading"/></if></for>
+<for|i| in={a:0,b:1}><if=true><field name="loading"/></if></for>
+<for|i| to=1><if=true><field name="loading"/></if></for>
+<for|i| until=2><if=true><field name="loading"/></if></for>
+<for|g| of=[0,1]><for|i| of=[0,1]><field name="nested"/></for></for>
+</@placeholder></try>

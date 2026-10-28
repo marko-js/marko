@@ -25,7 +25,12 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  getReadyId,
+  isOutputHTML,
+  isPatch,
+} from "../../util/marko-config";
 import { dropNodes } from "../../util/references";
 import {
   callRuntime,
@@ -112,18 +117,19 @@ export default {
       knownTagAnalyze(tag, childSection, childExtra.paramsTree);
 
       const tagName = getTagNameHint(tag.node);
-      if (tagExtra.tagNameLoad) {
-        structure.marker(tag, tagExtra.nodeBinding!);
-        structure.child(tag, tagName);
-        structure.enterShallow(tag);
-      } else {
-        structure.child(tag, tagName, {
+      const load = tagExtra.tagNameLoad;
+      if (load) structure.marker(tag, tagExtra.nodeBinding!);
+      structure.child(
+        tag,
+        tagName,
+        {
           kind: StructureKind.ExportRef,
           program: childExtra,
           path: getTagRelativePath(tag),
           hint: tagName,
-        });
-      }
+        },
+        load,
+      );
     },
   },
   translate: {
@@ -221,6 +227,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
               binding.name,
             )!,
             triggerIdent,
+            isPatch() ? getReadyId(childFile)! : undefined,
           )
         );
       },
@@ -322,6 +329,7 @@ function createLoadIdentifier(
   runtime: "_load_signal" | "_load_setup",
   request: string,
   trigger: t.Identifier | undefined,
+  readyId?: string,
 ) {
   const id = generateUidIdentifier(name);
   cache.set(key, id);
@@ -333,16 +341,24 @@ function createLoadIdentifier(
     t.variableDeclaration("let", [
       t.variableDeclarator(
         id,
-        callRuntime(
-          runtime,
-          trigger
-            ? t.addComment(
-                t.callExpression(trigger, [load]),
-                "leading",
-                "@__PURE__",
-              )
-            : load,
-        ),
+        readyId
+          ? // A patch loads the input itself, ahead of the trigger.
+            callRuntime(
+              "_load_signal_patch",
+              load,
+              t.stringLiteral(readyId),
+              trigger,
+            )
+          : callRuntime(
+              runtime,
+              trigger
+                ? t.addComment(
+                    t.callExpression(trigger, [load]),
+                    "leading",
+                    "@__PURE__",
+                  )
+                : load,
+            ),
       ),
     ]),
   );

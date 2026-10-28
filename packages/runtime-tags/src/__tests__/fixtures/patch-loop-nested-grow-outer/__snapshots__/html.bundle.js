@@ -1,0 +1,30 @@
+// template.marko
+_shells({
+	a: "a !a3;b%b ;<!><!><button>+</button>",
+	a2: "a2;b%;<!><!><!>",
+	a1: "a1 a5;D ;<p> </p>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	const $count__closures = /* @__PURE__ */ new Set();
+	let count = 0;
+	_for_of(input.rows, (row) => {
+		const $scope1_id = _scope_id();
+		_for_of(row.cells, (cell) => {
+			const $scope2_id = _scope_id();
+			_html(`<p>${_text_resume($scope2_id, "a", row.id + "@0")}</p>`);
+			_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0");
+		}, (cell) => cell, $scope1_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);
+		_scope($scope1_id, {
+			M: row?.id,
+			_: _scope_with_id($scope0_id)
+		});
+	}, (row) => row.id, $scope0_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
+	_html(`<button>+</button>${_el_resume($scope0_id, "b")}`);
+	_script($scope0_id, "a3");
+	_scope($scope0_id, {
+		f: count,
+		g: $count__closures
+	});
+}, 1);

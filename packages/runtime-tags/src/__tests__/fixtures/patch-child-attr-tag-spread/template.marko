@@ -1,0 +1,10 @@
+import { thing2 } from "./helper";
+<let/show=true/>
+<main>
+  <if=show>
+    <tabs>
+      <@tab ...thing2/>
+    </tabs>
+  </if>
+  <button onClick() { show = !show }>t</button>
+</main>

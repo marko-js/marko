@@ -1,0 +1,11 @@
+<define/Counter>
+  <let/n=0/>
+  <button.inc onClick() { n++ }>${input.label} ${n}</button>
+  <return=n/>
+</define>
+<define/Other>
+  <i>${input.label}</i>
+  <return=-1/>
+</define>
+<${input.which ? Counter : Other}/count label=input.label/>
+<p>${count}</p>

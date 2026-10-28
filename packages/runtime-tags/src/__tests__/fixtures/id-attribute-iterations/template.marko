@@ -1,0 +1,7 @@
+<define/Content|{ item: items }|><for|item| of=items><${item}/></for></define>
+<Content>
+<for|item| of=input.items><@item><field name=item/></@item></for>
+<for|key,value| in=input.record><@item><field name=key/></@item></for>
+<for|i| to=input.end><@item><field name=i/></@item></for>
+<for|i| until=input.end><@item><field name=i/></@item></for>
+</Content>

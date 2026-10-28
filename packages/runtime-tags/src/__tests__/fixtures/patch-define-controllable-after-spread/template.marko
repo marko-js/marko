@@ -1,0 +1,5 @@
+<define/TextField|input|>
+  <const/{ value, valueChange, ...attrs }=input/>
+  <input ...attrs value=value valueChange=valueChange/>
+</define>
+<TextField placeholder=input.hint value=input.v valueChange(next) { document.title = next }/>

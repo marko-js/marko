@@ -1,0 +1,8 @@
+<let/count=0/>
+<const/alias=count/>
+<const/copy=count/>
+<button onClick() { count++ }>${count + $global.suffix}</button>
+<p>${alias + $global.suffix}</p>
+<if=count>
+  <b>${copy + $global.suffix}</b>
+</if>

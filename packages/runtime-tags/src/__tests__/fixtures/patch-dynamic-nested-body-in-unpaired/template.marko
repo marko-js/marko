@@ -1,0 +1,8 @@
+import Card from "./card.marko";
+import Box from "./box.marko";
+<let/count=0/>
+<${Card}>
+  <@meta n=count/>
+  <${Box} k=input.label>${input.label}!${count}</>
+</>
+<button onClick() { count++ }>+</button>

@@ -1,0 +1,6 @@
+<define/Show|{ a, b, flag }|>
+  <const/get=flag ? a : b/>
+  <output/el/>
+  <script>el().textContent = get(); console.log("run", get())</script>
+</define>
+<Show a=input.a b=input.b flag=input.flag/>

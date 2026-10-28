@@ -1,0 +1,5 @@
+<let/count=0/>
+<for|i| of=input.items>
+  <${i % 2 ? "p" : "div"} data-n=count>${i}</>
+</for>
+<button onClick() { count++ }>+</button>

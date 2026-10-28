@@ -1,0 +1,15 @@
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-join-fill/tags/child.marko_0_input_a#4": "input_a",
+    "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-join-fill/tags/child.marko_fill0": "y"
+  }
+}
+
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-join-fill/tags/child.marko_0_input_a#4": "input_a",
+    "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-join-fill/tags/child.marko_fill0": "z"
+  }
+}

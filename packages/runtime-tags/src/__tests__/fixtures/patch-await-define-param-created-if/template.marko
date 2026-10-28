@@ -1,0 +1,10 @@
+<let/n=0/>
+<button.open onClick() { n++ }>inc</button>
+<define/Show|{ p, label }: { p: Promise<number>; label: string }|>
+  <await|x|=p>
+    <p>${label}:${x}</p>
+  </await>
+</define>
+<if=input.show>
+  <Show p=Promise.resolve(n) label=input.label/>
+</if>

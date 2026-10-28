@@ -1,0 +1,9 @@
+<let/open=true/>
+<button onClick() { open = !open }>t</button>
+<if=open>
+  <p>${$global.o.x.toUpperCase()}</p>
+  <b>${$global.o.list.length}</b>
+  <i>${$global.o["a.b"]}</i>
+  <u>${$global["c.d"]}</u>
+  <s>${$global.p?.x}</s>
+</if>
