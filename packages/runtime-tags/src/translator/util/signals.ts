@@ -1855,9 +1855,6 @@ function wrapIntersectionFills(
     (registrations[0] ||= { closure: [], fills: [] }).fills.push(...valueOnly);
   }
   let expr = value;
-  for (const ref of intersection) {
-    expr = keepDerivedFills(getCanonicalBinding(ref), expr);
-  }
   for (const { closure, fills } of registrations) {
     expr = buildFillSignal(closure, fills, expr);
   }
@@ -1923,7 +1920,6 @@ function wrapClosureFill(
   value: t.Expression,
 ) {
   const { section } = signal;
-  if (closure.section !== section) value = keepDerivedFills(closure, value);
   if (isDynamicClosure(section, closure) || !getClosureSignalBuilder(section)) {
     return value;
   }
@@ -1932,8 +1928,8 @@ function wrapClosureFill(
     : value;
 }
 
-// The closures content derives a local from, whose fill joins ship with the local's
-// readers: where no flush creates the content, nothing ships its setup.
+// The closures registering fills that a local derives from, in content no flush
+// creates.
 const [getDerivedFillClosures] = createAnalysisMemo((local: Binding) => {
   const closures: Binding[] = [];
   const { section } = local;
@@ -1958,31 +1954,6 @@ function addDerivedFillClosures(
       addDerivedFillClosures(section, root, closures);
     }
   });
-}
-
-// A reader of such a local carries those closures' fills: each runs the closure in
-// its subscribed scopes, deriving the local, whose signal re-runs its readers.
-function keepDerivedFills(local: Binding, expr: t.Expression) {
-  const { section } = local;
-  for (const closure of getDerivedFillClosures(local)) {
-    // The subscribers run the closure, given last, rather than `expr`.
-    expr = buildFillSignal(
-      [
-        importRuntime("_closure_subscribers"),
-        getClosureAccessorLiteral(closure),
-        t.numericLiteral(getDynamicClosureIndex(closure, section)),
-        t.arrowFunctionExpression(
-          [scopeIdentifier],
-          t.callExpression(getSignal(section, closure).identifier, [
-            scopeIdentifier,
-          ]),
-        ),
-      ],
-      [`${getScopeAccessor(closure, true)} ${getPatchFillKey(closure)}`],
-      expr,
-    );
-  }
-  return expr;
 }
 
 // Resumed code reading a local the closure derives (an effect, a handler, a
