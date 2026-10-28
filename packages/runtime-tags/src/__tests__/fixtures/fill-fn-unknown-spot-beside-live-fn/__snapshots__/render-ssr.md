@@ -1,0 +1,20 @@
+# Render `{"title":"a","key":"fmt","pre":[]}`
+```html
+<main>
+  <em>
+    x:a
+  </em>
+  <em>
+    x=a
+  </em>
+  <em>
+    x#a
+  </em>
+  <p>
+    a
+  </p>
+  <button>
+    t
+  </button>
+</main>
+```

@@ -1,0 +1,7 @@
+<let/count=0/>
+<main>
+  <for|{ id, ...rest }| of=input.items by=(item) => item.id>
+    <p>${id + ":" + Object.keys(rest).join("+") + "#" + count}</p>
+  </for>
+  <button onClick() { count++ }>+</button>
+</main>

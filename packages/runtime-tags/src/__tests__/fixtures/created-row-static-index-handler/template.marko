@@ -1,0 +1,7 @@
+<let/count=0/>
+<if=input.show>
+  <for|item, i| of=["a", "b"]>
+    <button.r onClick() { count += i + 1 }>${item}</button>
+  </for>
+</if>
+<p>${count}</p>

@@ -1,0 +1,2 @@
+<let/s=0/><for|k, v| in=input.obj><if=(k === input.sel)><child a=(v + s) b=input.b/></if></for><button onClick() { s++ }/>
+<script>document.body.dataset.b = String(input.b)</script>

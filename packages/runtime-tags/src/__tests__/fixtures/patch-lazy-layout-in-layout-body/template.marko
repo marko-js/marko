@@ -1,0 +1,20 @@
+import Root from "./root.marko"
+import Docs from "./docs.marko" with { load: "render" }
+import PageA from "./page-a.marko" with { load: "render" }
+import PageB from "./page-b.marko" with { load: "render" }
+
+<Root>
+  <if=input.page === 0>
+    <p>home</p>
+  </if>
+  <else>
+    <Docs>
+      <if=input.page === 1>
+        <PageA/>
+      </if>
+      <else>
+        <PageB/>
+      </else>
+    </Docs>
+  </else>
+</Root>

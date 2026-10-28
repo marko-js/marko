@@ -1,0 +1,8 @@
+<let/n=0/>
+<button.open onClick() { n++ }>inc</button>
+<define/Row|r|>
+  <em>${input.label}:${r.v}</em>
+</define>
+<await|x|=Promise.resolve(n)>
+  <Row v=x/>
+</await>

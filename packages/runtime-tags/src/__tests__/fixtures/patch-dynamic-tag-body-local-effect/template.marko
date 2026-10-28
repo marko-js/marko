@@ -1,0 +1,9 @@
+import Card from "./tags/card.marko";
+<main>
+  <if=input.show>
+    <const/x=input.note + "!"/>
+    <div/el/>
+    <script>el().textContent = x</script>
+    <${input.on ? Card : "div"}><em>${x}</em></>
+  </if>
+</main>

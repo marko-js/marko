@@ -19,17 +19,22 @@ import MagicString, { type SourceMap } from "magic-string";
 import { addAssetImport } from "../util/asset-imports";
 import { BindingType, createBinding } from "../util/bindings";
 import buildStringExpression from "../util/build-string-expression";
+import { getPatchKey } from "../util/get-accessor-enums";
 import { isCoreTagName } from "../util/is-core-tag";
-import { isOutputDOM } from "../util/marko-config";
+import { isOutputDOM, isPatch } from "../util/marko-config";
 import { type Opt, push } from "../util/optional";
+import { onReasonsSettled, writesPatchHole } from "../util/patch/decisions";
+import { patchWrites } from "../util/patch/structure";
+import { getExprRootGroupArgs, getNamedPatchKey } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { getReferencedBindings, mergeReferences } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
 import {
   getNodeContentType,
   ensureSection,
+  getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
@@ -124,10 +129,22 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   const tagExtra = mergeReferences(section, node, []);
   let exprExtras: Opt<t.NodeExtra> = tagExtra;
   for (const value of dynamicStyleValues(node)) {
-    exprExtras = push(exprExtras, (value.extra ??= {}));
+    const valueExtra = (value.extra ??= {});
+    valueExtra.rendersValue = true;
+    exprExtras = push(exprExtras, valueExtra);
   }
 
   addReasonExprs(ensureSlot(binding), exprExtras);
+  // Stateful structure is known only once reasons settle.
+  if (isPatch()) {
+    onReasonsSettled(() => {
+      // The flush writes a dynamic style's rule, even a state-sourced one: a
+      // scope the flush creates never runs the setup that writes its selector.
+      if (patchWrites(section)) {
+        linkRuntimeFeature("patches/style");
+      }
+    });
+  }
 }
 
 function createCustomPropertyNames(tag: t.NodePath<t.MarkoTag>) {
@@ -216,7 +233,28 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const binding = node.extra?.nodeBinding;
 
   if (binding) {
-    writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
+    const names = node.extra![kCustomPropertyNames]!;
+    const section = getSection(tag);
+    writer.writeTo(tag)`${callRuntime(
+      "_style_html",
+      buildStyleDecls(node, (value, i) =>
+        callRuntime(
+          "_escape_style_value",
+          value,
+          ...(patchWrites(section)
+            ? [
+                getScopeIdIdentifier(section),
+                t.stringLiteral(
+                  getNamedPatchKey(getPatchKey().Style, binding, names[i]),
+                ),
+                ...(writesPatchHole(section, value.extra)
+                  ? getExprRootGroupArgs(section, value.extra!)
+                  : [t.numericLiteral(0), t.numericLiteral(0)]),
+              ]
+            : []),
+        ),
+      ),
+    )}`;
     writer.markNode(tag, binding, getWriteReason(binding));
   }
 
@@ -304,13 +342,16 @@ function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function buildStyleDecls(node: t.MarkoTag) {
+function buildStyleDecls(
+  node: t.MarkoTag,
+  toDecl: (value: t.Expression, i: number) => t.Expression,
+) {
   const names = node.extra![kCustomPropertyNames]!;
   const parts: (string | t.Expression)[] = [];
 
   dynamicStyleValues(node).forEach((value, i) => {
     parts.push(`${names[i]}:`);
-    parts.push(callRuntime("_escape_style_value", value));
+    parts.push(toDecl(value, i));
     parts.push(";");
   });
 

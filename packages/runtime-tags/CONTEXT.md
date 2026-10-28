@@ -48,6 +48,16 @@ alias, the binding it aliases (`aliasOf`), summarized by kind as its
 _sources_.
 _Avoid_: upstream, downstream, feed, feeder
 
+**Readers**:
+What reads a value through its aliases and derives links: its _reason_, and
+each read the value reaches, marked if before a call site hands it to a callee,
+and if as a dynamic tag's input rather than its name. An alias
+(`<const/b=a/>`) is no read, so `a`'s readers include `b`'s; a computing init
+(`<const/b=a + 1/>`) is a read of `a`, and the walk goes on into `b`'s readers.
+A call site maps the callee's param reasons through the expressions it passes,
+to their sources (a passed `<let>` gives a state reason).
+_Avoid_: landing read
+
 **Branch expression**:
 The expression a branch section is rendered by: an `<if>` condition, a
 `<for>` collection, or a dynamic tag's renderer (`branchExpr`).
@@ -76,6 +86,13 @@ is a render-time value of the scope that declares it, so module scope
 (`static`, `export`) never sees it.
 _Avoid_: ref
 
+**Initial value**:
+A `<let>`'s value as its scope is created, from its `value=` (`initialValue`);
+an uncontrolled `<let>` takes it once. In a patch template, the server renders
+it where its init reads only other `<let>`s at theirs and no patch fills it or
+state its init reads; otherwise client code computes it.
+_Avoid_: first value
+
 **Module read**:
 A read of an import binding (`styles.box`, `logo`) and its member names, which
 the module can evaluate once its imports load: so a template may write it into
@@ -99,7 +116,7 @@ _Avoid_: closure
 **Intersection**:
 A canonical set of bindings whose shared work waits for every member in the
 current render generation. Remaining intersections lower through `_or`.
-_Avoid_: dependency array
+_Avoid_: dependency array, join
 
 **Signal**:
 The translator's bucket of client work for a section, keyed by setup, one
@@ -130,12 +147,19 @@ Translate's conclusion from a slot's reason (`getWriteGuard`): whether
 and under which guard the server writes it.
 `always` and state reasons write unconditionally; param-only ones are
 _guarded_ (`isGuardedReason`): each call site guards them.
-_Avoid_: serialization flag, serialized value, conditional reason
+At a call site the guard is one runtime value for plain and patch templates:
+two bits per param reason group, client renders and server contributes; a
+patch template reads the pair as where the group updates from.
+_Avoid_: serialization flag, serialized value, conditional reason, ownership mask as a second value
 
 **Param reason group**:
 A param set a template's call sites report as two bits (`paramReasonGroups`),
 built from what each write reason leaves guarded. The list is the
 template's interface to its callers, fixed at analyze exit.
+A patch template adds a group for each question its output asks of where
+existing sources update from: fills, writes, intersections, var wiring
+(`ensurePatchReasonGroups`), and call sites' param group sources
+(`addKnownTagReasons`).
 
 **Slot**:
 What analysis records, with its reason, for one thing client code may read
@@ -222,6 +246,17 @@ Applying scope flushes, adopting server-rendered nodes, creating branches, and
 running effects without an initial client rerender.
 _Avoid_: hydrate, hydration, replay
 
+**Created scope**:
+A scope a patch creates from a shell where the live page has none, seeded by
+its fills and set up by registered ids (`inits…!effects…`) in place of a
+renderer's setup; a live scope the patch writes into is _paired_. Content the
+page registers creates from that renderer's markup with the shell's ids and
+no params, or from the renderer alone where it has no setup or params. A
+`@catch` creates from its registered renderer, whose setup runs: the patch
+stands in for its error, whose effects mount from their entries. The same
+word as a client render's `createBranch`; the patch is just who creates.
+_Avoid_: construct, rebuild
+
 **Resume payload**:
 Server-emitted JavaScript data and scope flushes for required scope slots,
 shared values, and registrations. It is neither JSON nor every server value.
@@ -259,6 +294,323 @@ A `readyId`-keyed serialization channel that withholds lazy resume data until
 its module registers and earlier data drains.
 _Avoid_: async HTML stream
 
+## Patch protocol
+
+**Patch render**:
+A server rerender of a patch page (`template.patch`), streamed as flushes the
+live page applies by refreshing values and navigating structure, without a
+full page render.
+_Avoid_: rerender, hydration update
+
+**Flush**:
+One payload of a patch render (a sync flush, a settle, a lazy module's
+ready data): the shells it ships, then its tree of patches, applied as a
+unit: the flush commit check accepts or rejects it whole. The same word as a
+normal render's flush.
+_Avoid_: frame
+
+**Patch**:
+One scope's part of a flush: the fills it writes into the scope's holes and
+the structural entries it navigates by (a branch, a loop, a child, a setup
+envelope), keyed by the accessors resume uses and applied to the live scope
+(`patchScope`). A flush's patches nest under their parent's structural
+entries, from the page root's.
+_Avoid_: partial
+
+**Shell**:
+A body a patch may create, as its id with setup ids (setup reading nothing a
+patch writes, or all of a `@catch`'s, which no patch pairs), walks and markup
+(`id inits…!effects…;walks;template`): registered by the server module at
+load and shipped in the first flush that creates from it, so the client
+creates the body without bundling its template. Its setup ids lead with
+those of each scope its markup composes, a known child's (a template's
+`$setup` export), each addressed by its hop (`accessor>id`, after a `>` per
+owner up), which sets that scope's owner; an id-less hop (`>a>`) sets only
+that. Composed scopes' effects mount with the created scope's.
+The server builds those ids (`_shell_setup`) and writes the shell's marker from
+them (`_shell_marker`).
+_Avoid_: skeleton, template string
+
+**Patch request kind**:
+What `patchRequestKind(headers, url)` reads a `~`-marked request as
+(`PatchRequestKind`, the same strings in every build): this build's patch
+(`Patch`), which `template.patch` renders, or another build's (`Stale`), which
+the server refuses with a 412 before rendering. A request without the marker
+or the header is a document's.
+
+**Held-shell token**:
+The request's `x-marko-patch` value after the build id: the shells the page
+already holds, as the last response's closing token named them, so a flush
+ships only new ones. It may forget shells (they ship again), never claim one
+the page lacks. It indexes the shells its server process has loaded, so every
+process serving one client loads the same templates (a build contract met by
+importing routes statically, as Marko Run does); a template loaded later changes
+the index, so earlier tokens read as holding nothing and their shells ship again.
+_Avoid_: shell cache, shell manifest
+
+**Setup envelope**:
+A patch's `PatchKey.Setup` and `PatchKey.SetupValues` entries: what a created
+scope gets in place of its renderer's setup (seeds, bindings, init ids). It
+applies only to a scope its flush created; a paired scope ignores it. Its
+writes, bindings and init ids apply at once, ahead of the scope's child
+scopes, which may read them; its values follow the scope's child entries on the
+wire, as their renders may read what those write. A write never sets a slot a
+value's signal sets, which would then skip its renders: a `<let>` whose renders
+read members seeds the written ones in that one value too. Where its group
+mixes, a written intersection the scope inits rides the scope's own `PatchKey.Init`
+entry, created or paired.
+_Avoid_: seed block, init payload
+
+**Held flush**:
+A flush waiting for the lazy modules it writes into to register
+(`patches/ready`, `holdFlush`); later flushes of the response queue behind it, and a
+rejected one is discarded.
+
+**Known child**:
+A section its callers pass params to (`isKnownChild`): a template's root, or a
+`<define>` body its direct calls render. Patches handle both alike: the
+params' groups gate writes in the body and the sections inside it, a flush
+writes its scope, and a created one seeds from its setup envelope.
+_Avoid_: called body, define root, root-like body
+
+**Structural param**:
+A known child's param a branch expression derives from (`structuralParams`),
+where it is declared or in a child it is passed to: state in the call site's
+expressions (those at the child's tag) hands that structure to the client at
+run time.
+_Avoid_: upstream of structure, selector
+
+**Param-selected structure**:
+A branch around a section (inclusive), or content a call site passes, that a
+known child's params alone select (`getParamSelectedStructure`): a caller
+passing client state for them hands it to the client at run time, so a read
+inside fills only where that caller's group bits say (a fill's `structure`
+condition).
+_Avoid_: rebuild, rebuilt structure
+
+**Stateful structure**:
+A branch body whose branch expression has a state reason (its `BranchExpr`
+slot) — state sources, no `$global`, param sources a patch fills —
+derived from its branch expression (`isStatefulBranch`), never stored; or a
+content or `<define>` body every consumer renders with client state. Resumed
+code re-renders it, so patch renders skip it and flushes omit its entry. A
+body only some consumer renders so (`getStatefulConsumers`) is patch-written
+structure whose instances each consumer sets at render: a call by its mask, a
+dynamic tag or stateful chain by rendering it unpatched.
+_Avoid_: state-selected, client-owned
+
+**Updates from**:
+Which side a param group at a call site takes its values from, as the runtime
+reads it from the group's two bits (`getUpdatesFrom`: `UpdatesFrom.Client`
+renders, `UpdatesFrom.Server` contributes). The client bit is set by
+client state, or for a server value the client derives: a call input its
+callee reads alone (`isClientDerivedParam`) where the fills of what the input reads
+ship, which then reach it and no hole is written. Only the group of a
+known child's param is decided per call, at render, and only code in that body
+reads it (`isCallerParamAt`); analysis knows only sources (state, params,
+`$global`), so translate code names those and never decides where a group
+updates from.
+_Avoid_: ownership, owned (owner is the owner scope); server-/client- as a
+compile-time fact
+
+**Hole / filled / unfilled**:
+A read a patch keeps current by writing its value at the site is a _hole_ the
+patch _fills_; the html gates say which side acts on a param group:
+`_filled_guard` (a patch fills it: server-sourced, or constant where a created
+scope needs the seed), `_unfilled_if` (no patch fills it: the group is
+client-sourced, or the read sits in unpatched structure, unless the value is a `<define>`
+param a call passes as a module read from structure the client renders, which
+the call's forwards there push first: `derivesConstantParam`). Translate derives reads no patch can
+fill (`PatchWrite.unfillable`), never the gate.
+_Avoid_: server-side/client-side value, owned read
+
+**Unpatched structure**:
+Structure patch renders skip and so never fill: stateful structure, a
+branch or loop whose expression derives from a group updating from the client
+(not an `<await>` body: its promise settles into the branch its owner made),
+a dynamic tag site a patch never pairs, a `@catch` (one reading its error is
+written once, by the patch creating it). The html writer tracks it at render
+as context (`withUnpatched`, `inUnpatched`) because a child template cannot
+see how its parent reached it; the static cases are where `patchWrites` fails.
+_Avoid_: client-owned structure, client-selected
+
+**Caught try**:
+A `<try>` whose `@catch` took its body's place, in the document, on a client
+error or in a patch. Like a `<let>`, it is page state: it stays caught until the
+try itself is created anew. A patch never replaces its catch, which follows the
+page through fills as unpatched structure does; one rendering its body rejects,
+so the browser loads the URL as a document.
+_Avoid_: recovered try
+
+**Structural-or-global param**:
+A structural param, or one whose reads mix with `$global` — the value
+never leaves through an expression channel, so whoever renders must supply
+it. Translate derives which groups a patch must fill from this fact. Where a
+call site hands the param to the client, a changed `$global` key re-runs the
+signal there instead: the page ships the value and subscribes the scope.
+_Avoid_: server-required param
+
+**`$global` signal**:
+A signal's client work that reads `$global` as it renders (each expression
+records the deepest member it reads, as a property alias would), split into a
+function the signal calls. A patch build registers it with the members it
+reads, each as its keys from `$global` (`_fill_global`), so a patch
+changing one re-runs only that work, once, on each scope that ran it. Work
+reading under the same keys shares one signal; a script keeps its own, so it
+runs again only when what it reads changes. A loop's rows reading one share a
+single subscription on the loop's owner (`_fill_global_for`, or
+`_fill_global_path_for` for a member path), which walks the rows on a change,
+so a row the client creates subscribes to none.
+_Avoid_: part, global part, `$global` join
+
+**Stable**:
+A binding or expression with no sources, so fixed for its scope's lifetime: a
+constant, an `<id>`, a `<define>`'s renderer. A patch write of a stable value
+only seeds a created scope.
+
+**Kept structure**:
+A loop or branch whose expression is stable (its group's mask is `0`), outside
+structure a flush creates: its scopes stay, so
+the patch renders its body as kept (`withKeptBranchId`, not creatable), ships
+no shell, and a kept branch with nothing filled ships no entry. Outside such
+structure an `<await>` body whose promise the client settles, or that always
+pairs, renders kept too (`keptBranch`): no flush creates it.
+_Avoid_: static branch, frozen rows
+
+**Branch path**:
+The root section and every section below it crossing no dropped content and
+no boundary content reading no params: a `@placeholder`, or a `@catch` reading
+none of its error (`enclosing.branchPath`). Outside stateful structure, its text
+and attr holes emit direct patch writes (`patchWrites`), a `@catch`'s into the
+scope its flush creates.
+_Avoid_: capture path, patch section
+
+**Patch fill**:
+A value a patch writes into a hole is a _fill_. A _patch fill_ is a
+server-sourced binding whose reads intersect client state, so patches refresh
+it through a registered fill signal. An _intersection fill_ is a known child's
+input read by an intersection whose other inputs a caller may pass client state:
+the section owning the intersection registers it on the intersection alone
+(`_fill`), and writes it only while another input is client-sourced (otherwise
+the value is a write). A written intersection takes them where each member its patch ships is a template input only it
+calls for, its scopes reached by hops; otherwise
+the scope inits it, a member only it reads rides its slot write where another
+member is client-sourced (a created scope's seed otherwise), and one filled
+for other reads registers on it with a dispatch that runs nothing. No template
+fills its value into another's param signal.
+Assigned state registers through its own declaration (`_fill_let`), which
+reaches every intersection that reads it, so no intersection registers it again.
+_Avoid_: deliver/delivery, forwarder
+
+**Withheld content**:
+Content a consumer renders instead of the patch: one the client owns (a tag
+client state names, unpatched structure) skips it, and the flush reports the
+content (`_content_withhold`). Content a known child renders from its state,
+where plain renders it nowhere on the client, is _kept content_
+(`keepsContent`): it creates from its shell, never by registration, and a flush
+renders its holes once per owner under the _withheld entry_
+(`PatchWithheld:<id>`), which the client applies to each live instance in the
+owner's `WithheldScopes:<id>` set (`_content_kept`).
+
+**Written intersection**:
+An intersection of two or more params, one a caller passes, whose every read the patch
+leaves to a hole it writes or an effect its entry re-runs, through any `<const>`
+of it (`isPatchWrittenIntersection`); not where each call of a `<define>` body passes a
+member client state, unless a member reads another intersection. The patch writes it
+where its group is server-sourced on the instance; where the group mixes, its
+members' intersection fills re-run it, or, where some member has none (one below the
+template root or reached over subscribers, a member of two, one filled for
+other reads), the patch names the intersection's init on the scope, fresh or existing
+(`_patch_init_entry`), and no member's fill re-runs it.
+
+**Unpatched key**:
+A member's fill key with the `/unpatched` suffix (`getPatchFillKey`), as
+withheld content's is `/content`. Where the client may own a written intersection's
+structure, the member ships under it in place of its fill, slot write or
+seed. Its run re-runs the intersection, and it registers wherever the fill key does.
+A value a fill ships for other reads too, passed to a call in param-selected
+structure of its own (`dispatchesUnpatchedAt`), reaches that call only under
+it: a patch keeps the callee per instance where it renders the structure.
+
+**Effect write / capture write**:
+Wire channels for values a patch sends that no fill consumes: an accessor write
+plus effect re-run, or a bare accessor write for registered-function
+captures. The re-run entry also mounts the effect in a scope its flush created,
+whose shell names no effect reading what a patch writes (a created `@catch`'s
+names them, and gets no entry); an effect the created scope's own render
+queues ships as a `QueuedEffect`, which only re-runs it.
+
+**Marked write / marked bind**:
+A write (`PatchKey.MarkedWrite`) or bind (`PatchKey.MarkedBind`) of a value an
+entry depends on. It sets the slot and, only when the value changed, records the
+response in the slot's _change mark_ (`AccessorPrefix.PatchChanged` + accessor),
+which effect and init entries read (`depChanged`). A marked bind binds through
+the `Bind` patcher, which keeps one function per owner and registration
+(`AccessorPrefix.BoundFn` + id, on the owner scope, filled as resume revives
+one, on pages linking `patches/marked-bind` or `patches/live-bind`), so it marks
+only a new function. Here, as everywhere in the patch protocol, _bind_ means a
+registration attached to its owner scope (an owner-bound entry), not main's
+two-way binding (`:=`, a change handler binding a control). A plain write
+(`PatchKey.Write`) marks nothing; a created scope's setup writes go plain, since
+nothing it holds has run.
+_Avoid_: dirty flag, version (a mark names its response)
+
+**Live bind**:
+How a patch hands the client a live function, one capturing a value a patch may
+write. The slot's bind (`PatchKey.LiveBind` + accessor) or the fill's
+(`PatchKey.LiveFill` + fill key) sends the registration's id with owner hops,
+never the function: _bind_ here is a registration attached to its owner scope,
+as for every owner-bound entry, not main's two-way binding (`:=`). The
+registration names its captures (`_bind_resume`), and the client makes a new
+function only when one changed in that patch, sharing it across slots by
+(owner, id) within a run; the first bind finds the function resume revived. A
+function reading client state is the client's, so it never takes one. Rides
+`patches/live-bind`, linked only where a holder can receive one.
+_Avoid_: live value, identity table, binding (main's `:=`)
+
+**Built object**:
+A value an object or array literal builds, one a branch may yield one from
+(either arm of `?:`, either side of `||` or `??`, the right of `&&`), or the
+input a call builds: its readers depend on its sources, not its identity. A call
+records the built objects it passes (`_patch_live`), so a child's entries name
+their sources.
+_Avoid_: fresh object, identity-less value
+
+**Patch pairing**:
+How a patch treats a dynamic tag (`PatchPairing`, `renderDynamicTag`): `Render`
+pairs the live branch and renders the tag; `Skip` leaves it to the resumed page,
+whose renderer is the client's; `Keep` pairs it keeping the live branch, so no
+entry ships; `Setup` renders it into the setup only a created scope applies.
+
+**Param group sources**:
+Per reason group at a templated call site (`getParamGroupSources`): the
+call site's sources for the group, function-body reads included, and
+whether it covers a structural-or-global param. Translate composes
+group masks and admission from it.
+_Avoid_: group feeds, group ownership, provenance, feed/feeder for a source
+
+**Owner-bound entry / bind reference**:
+How a flush ships a registration bound to a scope. A value that is one,
+bound to the site's scope or an owner up its chain, rides an _owner-bound
+entry_ (its id and hops up) that resolves to the registered value as it
+applies. Any other is a _bind reference_ `_(path, id)`: the scope's links
+down from the page root (loop items by index, checked by key), walked on
+use; content resolves to its renderer. Both ride `patches/bind`, which the
+module registering a scope-bound value imports.
+_Avoid_: bind table, bind source, bind 0
+
+**Patch-keyed node**:
+A dom node the writer emits a patch entry keyed on, so its marker or scope ref
+is written whatever its reason says: a node rendering a value a flush
+writes (`rendersValue`, `writesPatchHole`), a known tag's child scope ref
+(`isKnownChildNode`, `patchWrites`), or the marker of loop rows a flush
+pairs (`getLoopBody`, `patchesBranchesAt`). Analyze records what the template
+renders there; the patch module concludes once per analysis which slots are keyed
+(`isPatchKeyedSlot`), which forces their writes (`getSlotWriteReason`). Being
+keyed is no reason, so it never makes a template a root, wires a tag variable,
+or registers a subscriber.
+_Avoid_: anchor (a DOM reference node), patch record, paired reason
+
 ## Compilation modes
 
 **Output mode**:
@@ -278,4 +630,6 @@ or `always` reason). Everything below a root arrives through its imports. An
 entry that initializes the runtime imports every root. A param-only reason is
 never a root's own (the parent passing it client state already bundles the
 template).
+A patch page always initializes, so a registration its payload names always
+resolves.
 _Avoid_: linked page, unlinked page, scriptless page (as a bundling state)

@@ -5,7 +5,7 @@ import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { push, some } from "./optional";
 import { isGuardedReason, isStateReason, type Reasons } from "./reasons";
 import { hasResumableAssignment } from "./references";
-import { callRuntime } from "./runtime";
+import { absentArg, callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
 import {
   ContentType,
@@ -64,6 +64,9 @@ export function getBranchResumeArgs(
   tag: t.NodePath<t.MarkoTag>,
   branchReasons: Reasons,
   singleNode: boolean,
+  // A patched branch keeps its markers and pairs statically: patches address
+  // it at the markers, and interior writes reach it through the pairing.
+  patchesBranches?: boolean,
 ) {
   const tagSection = getSection(tag);
   const nodeBinding = tag.node.extra!.nodeBinding!;
@@ -72,15 +75,35 @@ export function getBranchResumeArgs(
   const endArgs = buildBranchEndArgs(
     tagSection,
     nodeBinding,
-    getOnlyChildParentTagName(tag),
-    singleNode,
+    !patchesBranches && getOnlyChildParentTagName(tag),
+    !patchesBranches && singleNode,
   );
   const [markerGuard] = endArgs;
+  // A patched chain's shells follow, so its guard is never left off.
   return [
     scopeId,
     accessor,
-    getWriteGuardForAny(tagSection, branchReasons, !markerGuard),
-    ...endArgs,
+    getWriteGuardForAny(
+      tagSection,
+      branchReasons,
+      !patchesBranches && !markerGuard,
+    ),
+    ...(patchesBranches ? getPatchEndArgs(endArgs) : endArgs),
+  ];
+}
+
+// Before a patch's arguments, end args main reads as left off.
+export function getPatchEndArgs([
+  markerGuard,
+  branchExprGuard,
+  parentEndTag,
+  singleNode,
+]: ReturnType<typeof buildBranchEndArgs>) {
+  return [
+    markerGuard || absentArg(1),
+    branchExprGuard || absentArg(1),
+    parentEndTag || absentArg(0),
+    singleNode || absentArg(0),
   ];
 }
 

@@ -1,0 +1,14 @@
+<const/f() { return input.a; }/>
+<for|item| of=input.items>
+  <const/v=input.a + item/>
+  <const/g() { return v; }/>
+  <span>${f()}</span>
+  <if=input.x><em>${g()}</em></if>
+</for>
+<await|v|=input.value><b>${v}${f()}</b></await>
+<define/Show|{ v }|>
+  <const/h() { return v; }/>
+  <if=input.x><i>${h()}</i></if>
+</define>
+<Show v=input.a/>
+<counter/>

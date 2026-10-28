@@ -1,0 +1,50 @@
+// tags/label-view.marko
+const $template = "<output></output>";
+const $setup$1 = [[], []];
+_shells({ b: "b !; ;<output></output>" });
+var label_view_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	const get = input.flag ? input.a : input.b;
+	_html(`<output></output>${_el_resume($scope0_id, "a")}`);
+	_script($scope0_id, "b0", 1, _filled_guard($scope0_reason, 3), "h");
+	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "b4");
+	_scope($scope0_id, {
+		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.flag,
+		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.a,
+		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.b,
+		h: get
+	}) || (_filled_guard($scope0_reason, 4) && _client_guard($scope0_reason, 2) && _patch_fill($scope0_id, "vb1", input.flag, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb2", input.a, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb3", input.b, !_server_guard($scope0_reason, 6)), _filled_guard($scope0_reason, 3) && _patch_write($scope0_id, "xh", get, !_server_guard($scope0_reason, 3)));
+});
+
+// template.marko
+const $setup = _shell_setup([[], ["a2"]], ["a>", $setup$1]);
+_shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)(" b")};${((_w0) => `${_w0}<button>toggle</button>`)($template)}`)() });
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $sg__input_other = _server_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 1);
+	const $scope0_id = _scope_id();
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.other, !$sg__input_other);
+	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.title, !$sg__input_title);
+	let upper = false;
+	const up = _bind_resume(() => "U" + input.other, "a0", $scope0_id);
+	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id);
+	_set_scope_reason(6630 | (_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 1) << 13));
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
+	label_view_default({
+		a: low,
+		b: low,
+		flag: true
+	});
+	_patch_child_end();
+	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}`);
+	_script($scope0_id, "a2");
+	_patch_init_entry($scope0_id, "a3", [_filled_guard($scope0_reason, 0) && "h", _filled_guard($scope0_reason, 1) && "i"]);
+	_scope($scope0_id, {
+		e: input.other,
+		f: input.title,
+		g: upper,
+		h: up,
+		i: low,
+		a: _existing_scope($childScope)
+	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xh", up, !$sg__input_other), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xi", low, !$sg__input_title));
+}, 1);

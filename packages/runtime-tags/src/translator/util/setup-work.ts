@@ -49,7 +49,12 @@ function setCallSectionsSetup(body: Section) {
   });
 }
 
-function hasOwnSetupWork(section: Section) {
+// Whether the section's own setup runs client work, but for the expressions
+// `skip` leaves out.
+export function hasOwnSetupWork(
+  section: Section,
+  skip?: (extra: t.NodeExtra) => boolean | undefined,
+) {
   const info = getSetupInfo(section);
   // Setup subscribes the section to the closures it reads, and sets up another
   // template it renders.
@@ -62,7 +67,7 @@ function hasOwnSetupWork(section: Section) {
   }
   for (const expr of info.exprs) {
     const extra = getCanonicalExtra(expr);
-    if (!extra.dropped && !getReferencedBindings(extra)) {
+    if (!extra.dropped && !getReferencedBindings(extra) && !skip?.(extra)) {
       return true;
     }
   }

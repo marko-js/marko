@@ -1,0 +1,13 @@
+import Child from "./child.marko" with { load: "render" }
+
+<const/item={ label: input.label }>
+<main>
+  <Child name="a" item=item/>
+  <try>
+    <@placeholder>loading</@placeholder>
+    <await|value|=input.promise>
+      <span>${value}</span>
+      <Child name="c" item=item/>
+    </await>
+  </try>
+</main>

@@ -1,0 +1,16 @@
+A patch unexpectedly rejected (set `expect_rejection` if intended).
+# Update `{"show":true,"open":true}`
+```html
+<em>
+   
+</em>
+<button
+  class="l"
+>
+  l
+</button>
+```
+## Change
+```
+INSERT: em
+```

@@ -1,0 +1,10 @@
+<let/count=0/>
+<const/p=input.p/>
+<main>
+  <for|item| of=input.items>
+    <card title=item.title>
+      <span>${p.name}/${count}/${item.id}</span>
+    </card>
+  </for>
+  <button onClick() { count++ }>+</button>
+</main>
