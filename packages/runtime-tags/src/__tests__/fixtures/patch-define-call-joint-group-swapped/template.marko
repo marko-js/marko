@@ -1,0 +1,9 @@
+<let/on=true/>
+<define/Show|{ a, b }|>
+  <if=(a || b)>
+    <p>${input.label}</p>
+  </if>
+</define>
+<Show a=on b=input.flag/>
+<Show a=input.flag b=on/>
+<button onClick() { on = !on }>toggle</button>

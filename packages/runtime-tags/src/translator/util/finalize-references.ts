@@ -9,11 +9,11 @@ import {
   type ParamBinding,
   type ReferencedBindings,
   bindingUtil,
-  compareIntersections,
   getAliasRoot,
   someAlias,
   getBindings,
   getCanonicalBinding,
+  getCanonicalIntersection,
   getAssignedObject,
   getPropertyPath,
   isDirectAlias,
@@ -24,11 +24,9 @@ import { finalizeContentDerives } from "./content-derives";
 import { generateUid } from "./generate-uid";
 import { isPatch } from "./marko-config";
 import {
-  addSorted,
   every,
   concat,
   filter,
-  findSorted,
   forEach,
   first,
   last,
@@ -1034,27 +1032,6 @@ function resolveReferencedBindings(
     closureSection,
     hoistedSection,
   };
-}
-
-// The section's one array equal to `intersection`, recorded when new, so equal
-// reference binding groups are referentially equal.
-function getCanonicalIntersection(
-  intersectionsBySection: Map<Section, Intersection[]>,
-  section: Section,
-  intersection: Intersection,
-) {
-  const intersections = intersectionsBySection.get(section) || [];
-  const canonical = findSorted(
-    compareIntersections,
-    intersections,
-    intersection,
-  );
-  if (canonical) return canonical;
-  intersectionsBySection.set(
-    section,
-    addSorted(compareIntersections, intersections, intersection),
-  );
-  return intersection;
 }
 
 function resolveConstantReference(binding: Binding): ResolvedRead | undefined {
