@@ -552,11 +552,20 @@ export function _await<T>(
         content(value);
       }
     };
-    return _base_await(
-      scopeId,
-      accessor,
-      copy,
-      creatable ? settle : keptBranch<T | typeof skipped, void>(settle),
+    // The client shows its own `@placeholder` while its promise pends: the copy
+    // waits behind one that renders nothing (a patch never reorders, so no ids).
+    return tryPlaceholder(
+      () =>
+        _base_await(
+          scopeId,
+          accessor,
+          copy,
+          creatable ? settle : keptBranch<T | typeof skipped, void>(settle),
+        ),
+      rendersNothing,
+      0,
+      0,
+      0,
     );
   }
   // A created scope builds the body from this shell, even when settled; an
@@ -795,3 +804,5 @@ function renderRowHop(
   rowEach = each;
   rowCb = cb;
 }
+
+function rendersNothing() {}

@@ -1,0 +1,15 @@
+<let/p=input.promise/>
+<button.swap onClick() { p = Promise.resolve("swapped"); }>swap</button>
+<try>
+  <@placeholder><em>outer</em></@placeholder>
+  <await|title|=input.title>
+    <h1>${title}</h1>
+    <try>
+      <@placeholder><em>inner</em></@placeholder>
+      <show-await promise=p label=input.label/>
+    </try>
+  </await>
+  <await|note|=input.note>
+    <small>${note}</small>
+  </await>
+</try>

@@ -1,0 +1,6 @@
+<let/p=input.promise/>
+<button.swap onClick() { p = Promise.resolve("swapped"); }>swap</button>
+<try>
+  <@placeholder><em>loading</em></@placeholder>
+  <show-await promise=p label=input.label/>
+</try>

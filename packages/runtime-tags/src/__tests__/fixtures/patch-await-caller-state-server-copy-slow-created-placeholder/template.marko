@@ -1,0 +1,7 @@
+<let/p=input.promise/>
+<let/resolve/>
+<button.open onClick() { p = new Promise(r => { resolve = r; }); }>pend</button>
+<button.settle disabled=!resolve onClick() { resolve("client"); }>settle</button>
+<if=input.show>
+  <show-await promise=p label=input.label/>
+</if>
