@@ -316,6 +316,7 @@ export function getEffectWrites(section: Section, signal: Signal) {
 }
 
 // The params and `$global` each state's first value reads, through other states.
+// A controlled `<let>` that is no state root has no init fact, so it answers none.
 export function getStateInitSources(states: Sources["state"]) {
   const inits = reduce(states, mergeInitSources);
   return inits && withSources(inits, undefined, inits.param);

@@ -653,8 +653,6 @@ function buildLetSeeds(section: Section, binding: Binding) {
       andGuard(guard, buildPatchFill(section, binding, undefined, setup)),
     ];
   }
-  // A client source's init sets the members.
-  if (binding.initSources?.state) return [];
   const writes: t.Expression[] = [];
   const addMemberSeeds = (member: Binding) => {
     for (const alias of member.propertyAliases.values()) {
