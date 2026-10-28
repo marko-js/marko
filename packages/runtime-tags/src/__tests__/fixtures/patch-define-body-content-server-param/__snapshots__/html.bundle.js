@@ -11,7 +11,7 @@ _shells({
 var one_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const Wrap = { content: _content_elide("b0", ({ content, t }) => {
+	const Wrap = { content: _content("b0", ({ content, t }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__content__OR__t = _write_guard($scope1_reason, 0), $cg__t = _client_guard($scope1_reason, 2), $cg__content = _client_guard($scope1_reason, 1);
 		_dynamic_tag($scope1_id, "a", content, { title: t }, 1, 0, 0, $wg__content__OR__t, $scope1_reason, 0, 0, 1);
@@ -22,7 +22,7 @@ var one_default = _template("b", (input) => {
 			d: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0)) && content,
 			e: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 0)) && t
 		});
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Wrap.content({

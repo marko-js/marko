@@ -28,7 +28,7 @@ var outer_default = _template("c", (input) => {
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
-	card_default({ content: _content_kept("c1", () => {
+	card_default({ content: _content("c1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html("<b>");
@@ -37,7 +37,7 @@ var outer_default = _template("c", (input) => {
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "c0");
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
-	}, $scope0_id) });
+	}, $scope0_id, 2) });
 	_patch_child_end();
 	_scope($scope0_id, {
 		e: $wi__input_content && _unfilled_if($scope0_reason, 0) && $input_content__closures,
@@ -60,13 +60,13 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			outer_default({ content: _content_elide("a1", () => {
+			outer_default({ content: _content("a1", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<em>static ${_text_resume($scope2_id, "a", input.label, 2, $scope0_reason, 2)}</em>`);
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a0");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_label && _scope_with_id($scope1_id) }));
-			}, $scope1_id) });
+			}, $scope1_id, 1) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_label && _scope_with_id($scope0_id),

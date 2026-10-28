@@ -14,7 +14,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_show__closures = new Set();
-	const Card = { content: _content_elide("__tests__/tags/wrap.marko_1*content", () => {
+	const Card = { content: _content("__tests__/tags/wrap.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		const x = input.label + "!";
@@ -34,7 +34,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		}, "__tests__/tags/wrap.marko", "1:2", { x: "2:10" }), $cg__input_label && "__tests__/tags/wrap.marko_1_input_label#0:3/subscribe", $wg__input_show), $cg__input_show && "__tests__/tags/wrap.marko_1_input_show#0:4/subscribe", $wg__input_show) || _filled_guard($scope0_reason, 1) && ($cg__input_show ? _patch_fill($scope1_id, "PatchFill:__tests__/tags/wrap.marko_fill0", x, !$sg__input_label) : _patch_write($scope1_id, "PatchMarkedWrite:x", x, !$sg__input_label));
 		$wg__input_show || _resume_branch($scope1_id);
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Card.content({});
 	_patch_child_end();

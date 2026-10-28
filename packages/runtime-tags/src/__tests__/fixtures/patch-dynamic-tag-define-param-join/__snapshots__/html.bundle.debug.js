@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $wi__value = _write_if($scope1_reason, 0);
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill2", value);
 		let count = 0;
-		const Inner = { content: _content_elide("__tests__/template.marko_2*content", ({ y }) => {
+		const Inner = { content: _content("__tests__/template.marko_2*content", ({ y }) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
 			const b = value + y;
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				y: $wi__value && y,
 				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "3:4", { y: "3:19" }));
-		}, $scope1_id) };
+		}, $scope1_id, 1) };
 		_set_scope_reason(2);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		Inner.content({ y: count });

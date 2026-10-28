@@ -24,7 +24,7 @@ var rowsx_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let suffix = "s";
-	const Panel = { content: _content_elide("b2", ({ isOpen, fmt, label }) => {
+	const Panel = { content: _content("b2", ({ isOpen, fmt, label }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 4), $cg__isOpen = _client_guard($scope2_reason, 4);
 		_if(() => {
@@ -40,7 +40,7 @@ var rowsx_default = _template("b", (input) => {
 			e: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 4)) && fmt,
 			f: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 4) || _unfilled_if($scope2_reason, 6)) && label
 		}) || (_filled_guard($scope2_reason, 5) && ($cg__isOpen || _client_guard($scope2_reason, 6)) && _patch_fill($scope2_id, "vb4", fmt, !_server_guard($scope2_reason, 5)), _filled_guard($scope2_reason, 6) && $cg__isOpen && _patch_fill($scope2_id, "vb5", label, !_server_guard($scope2_reason, 6)));
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_for_of(input.items, (x) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "vb6", x);

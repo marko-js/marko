@@ -30,7 +30,7 @@ var under_wrapper_default = _template("b", (input) => {
 	_html("<main>");
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	frame_default({ content: _content_elide("b0", () => {
+	frame_default({ content: _content("b0", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.first, (value) => {
@@ -40,7 +40,7 @@ var under_wrapper_default = _template("b", (input) => {
 		}, 1, 0);
 		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }))));
 		_resume_branch($scope1_id);
-	}, $scope0_id) });
+	}, $scope0_id, 1) });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}</main>`);
 	_script($scope0_id, "b1");

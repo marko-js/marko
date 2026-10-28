@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			my_for_default({
 				to: 2,
-				content: _content_elide("__tests__/template.marko_2*content", (i) => {
+				content: _content("__tests__/template.marko_2*content", (i) => {
 					const $scope2_reason = _scope_reason();
 					const $scope2_id = _scope_id();
 					_patch_write($scope2_id, "PatchWrite:i", i);
@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						i,
 						_: _scope_with_id($scope1_id)
 					}, "__tests__/template.marko", "3:4", { i: "3:11" }));
-				}, $scope1_id)
+				}, $scope1_id, 1)
 			});
 			_patch_child_end();
 			_scope($scope1_id, {

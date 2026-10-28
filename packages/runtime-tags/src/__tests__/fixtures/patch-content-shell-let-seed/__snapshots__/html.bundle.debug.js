@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
-			wrap_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
+			wrap_default({ content: _content("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				let n = 0;
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					n,
 					_: $wi__input_show__OR__input_label && _scope_with_id($scope1_id)
 				}, "__tests__/template.marko", "2:4", { n: "3:10" }));
-			}, $scope1_id) });
+			}, $scope1_id, 1) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_label && _scope_with_id($scope0_id),

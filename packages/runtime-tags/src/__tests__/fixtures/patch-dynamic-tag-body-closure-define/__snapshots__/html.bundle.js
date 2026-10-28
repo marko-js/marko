@@ -6,7 +6,7 @@ _shells({
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const Foo = { content: _content_elide("a0", (input) => {
+	const Foo = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id(), $scope1_reason = _scope_reason();
 		_write_guard($scope1_reason, 0);
 		_content_withhold(input?.content), _patch_fill($scope1_id, "va2", input?.content);
@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a1");
 		_patch_fill($scope1_id, "va3", open, 1);
 		_scope($scope1_id, { e: input?.content });
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	let count = 1;
 	_dynamic_tag($scope0_id, "a", Foo, {}, 10, _content_resume("a4", () => {
 		const $scope3_id = _scope_id();

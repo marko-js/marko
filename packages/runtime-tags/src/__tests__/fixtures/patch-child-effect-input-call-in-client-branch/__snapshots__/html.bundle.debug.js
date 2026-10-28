@@ -24,7 +24,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 7), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	let open = true;
-	const Panel = { content: _content_elide("__tests__/tags/card.marko_3*content", ({ isOpen, fmt, label }) => {
+	const Panel = { content: _content("__tests__/tags/card.marko_3*content", ({ isOpen, fmt, label }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 4), $cg__isOpen = _client_guard($scope3_reason, 4);
 		_if(() => {
@@ -45,7 +45,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			fmt: "2:25",
 			label: "2:30"
 		});
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

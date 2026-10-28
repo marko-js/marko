@@ -30,13 +30,13 @@ var template_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_text__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
-	_dynamic_tag($scope0_id, "a", input.mode === "a" ? box_a_default : box_b_default, {}, 2, _content_elide("c0", () => {
+	_dynamic_tag($scope0_id, "a", input.mode === "a" ? box_a_default : box_b_default, {}, 2, _content("c0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(_text_resume($scope1_id, "a", input.text, void 0, $scope0_reason, 2));
 		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "c1");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_text__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
-	}, $scope0_id), 0, $wg__input_mode, $scope0_reason, 1);
+	}, $scope0_id, 1), 0, $wg__input_mode, $scope0_reason, 1);
 	_html("</main>");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.text,

@@ -31,7 +31,7 @@ var inner_default = _template("__tests__/tags/inner.marko", (input) => {
 	_html("<main>");
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	frame_default({ content: _content_elide("__tests__/tags/inner.marko_1*content", () => {
+	frame_default({ content: _content("__tests__/tags/inner.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", showSecond ? input.second : input.first, (value) => {
@@ -41,7 +41,7 @@ var inner_default = _template("__tests__/tags/inner.marko", (input) => {
 		}, 1, 0);
 		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/inner.marko", "3:4"))));
 		_resume_branch($scope1_id);
-	}, $scope0_id) });
+	}, $scope0_id, 1) });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/tags/inner.marko_0");

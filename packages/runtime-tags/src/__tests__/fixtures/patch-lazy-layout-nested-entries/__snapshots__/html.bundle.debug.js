@@ -111,7 +111,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope3 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 			$Layout_withLoadAssets({
 				list: input.list,
-				content: _content_elide("__tests__/template.marko_2*content", () => {
+				content: _content("__tests__/template.marko_2*content", () => {
 					const $scope2_reason = _scope_reason();
 					const $scope2_id = _scope_id();
 					_if(() => {
@@ -154,7 +154,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					$cg__input_page && _patch_init($scope2_id, "__tests__/template.marko_2_input_page#0:3/init");
 					$wi__input_page__OR__input_wide__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 2) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "11:8"));
 					$wg__input_page || $wi__input_page__OR__input_wide__OR__input_note && _resume_branch($scope2_id);
-				}, $scope1_id)
+				}, $scope1_id, 1)
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_list#0:4/init");

@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			wrapper_default({ content: _content_elide("a2", () => {
+			wrapper_default({ content: _content("a2", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				const label = input.label;
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 					b: label,
 					_: _scope_with_id($scope1_id)
 				}));
-			}, $scope1_id) });
+			}, $scope1_id, 1) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),

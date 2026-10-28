@@ -236,7 +236,7 @@ function withhold(state: PatchRenderState, value: unknown) {
   }
 }
 
-// Content whose kept instances take their holes as data (`_content_kept`).
+// Content whose kept instances take their holes as data (`_content`'s `elide` 2).
 export const withheldRenderers = new WeakSet<ServerRenderer>();
 
 // A flush that leaves content to the consumers keeping it renders its holes

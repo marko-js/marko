@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		const $for_content__item__closures = /* @__PURE__ */ new Set();
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
-		card_default({ content: _content_elide("a3", () => {
+		card_default({ content: _content("a3", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<i>${_text_resume($scope2_id, "a", $global$1.brand, void 0, 4, 0)}:${_text_resume($scope2_id, "b", input.prefix, 2, $scope0_reason, 2)}:${_text_resume($scope2_id, "c", item, 2, $scope0_reason, 1)}</i>`);
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 			_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a1");
 			$cg__input_items && _patch_init($scope2_id, "a2");
 			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope2_id, { _: $wi__input_items__OR__input_prefix && _scope_with_id($scope1_id) })));
-		}, $scope1_id) });
+		}, $scope1_id, 1) });
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: $wi__input_items__OR__input_prefix && _scope_with_id($scope0_id),

@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 			const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
 			card_default({
 				title: input.t2,
-				content: _content_elide("a3", () => {
+				content: _content("a3", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
 					_html(`<em>${_text_resume($scope3_id, "a", input.note, void 0, $scope0_reason, 3)}</em>`);
@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 						_: _write_if($scope0_reason, 0) && _scope_with_id($scope2_id),
 						Ci: $wi__input_note && 1
 					}));
-				}, $scope2_id)
+				}, $scope2_id, 1)
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 5) && _patch_init($scope2_id, "a4");

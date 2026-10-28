@@ -50,7 +50,7 @@ var heading_default = _template("c", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 	let $item;
 	forUntil(input.n, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content_elide("c6", () => {
+		$item = attrTags($item, { content: _content("c6", () => {
 			const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wi__i = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			const $item_content__i__closures = /* @__PURE__ */ new Set();
@@ -73,7 +73,7 @@ var heading_default = _template("c", (input) => {
 				h: $wi__i && $item_content__i__closures
 			}));
 			$wg__input_type || ($wi__input_n__OR__input_type || $wi__i) && _resume_branch($scope1_id);
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	list_default({ item: $item });

@@ -12,7 +12,7 @@ var fwd_default = _template("__tests__/tags/fwd.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
 	const $global$1 = $global();
-	const Wrap = { content: _content_elide("__tests__/tags/fwd.marko_2*content", ({ content }) => {
+	const Wrap = { content: _content("__tests__/tags/fwd.marko_2*content", ({ content }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__content = _write_guard($scope2_reason, 0);
 		_content_withhold(content), _patch_fill($scope2_id, "PatchFill:__tests__/tags/fwd.marko_fill1", content);
@@ -35,7 +35,7 @@ var fwd_default = _template("__tests__/tags/fwd.marko", (input) => {
 			content: "1:16",
 			open: "2:8"
 		});
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_dynamic_tag($scope0_id, "#text/0", $global$1.p ? "p" : Wrap, {}, 18, _content_resume("__tests__/tags/fwd.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();

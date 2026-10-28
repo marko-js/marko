@@ -35,16 +35,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			card_default({
 				title: input.title,
-				header: attrTag({ content: _content_elide("__tests__/template.marko_3*content", () => {
+				header: attrTag({ content: _content("__tests__/template.marko_3*content", () => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();
 					_html("<b>static header</b>");
-				}, $scope1_id) }),
-				content: _content_elide("__tests__/template.marko_2*content", () => {
+				}, $scope1_id, 1) }),
+				content: _content("__tests__/template.marko_2*content", () => {
 					const $scope2_reason = _scope_reason();
 					const $scope2_id = _scope_id();
 					_html("body");
-				}, $scope1_id)
+				}, $scope1_id, 1)
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_title#0:4/init");

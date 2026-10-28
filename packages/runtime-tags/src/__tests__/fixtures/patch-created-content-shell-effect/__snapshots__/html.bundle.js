@@ -27,12 +27,12 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			wrap_default({ body: attrTag({ content: _content_elide("a1", () => {
+			wrap_default({ body: attrTag({ content: _content("a1", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html("<p>body</p>");
 				_script($scope2_id, "a0", 0);
-			}, $scope1_id) }) });
+			}, $scope1_id, 1) }) });
 			_patch_child_end();
 			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;

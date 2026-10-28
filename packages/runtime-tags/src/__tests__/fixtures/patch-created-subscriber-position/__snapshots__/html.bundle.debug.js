@@ -36,16 +36,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html("<main>");
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
-			frame_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
+			frame_default({ content: _content("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p class=a>${_text_resume($scope2_id, "#text/0", input.label + ":" + a)}</p>`);
 				_subscribe($a__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6")));
-			}, $scope1_id) });
+			}, $scope1_id, 1) });
 			_patch_child_end();
 			_set_scope_reason(0);
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
-			frame_default({ content: _content_elide("__tests__/template.marko_3*content", () => {
+			frame_default({ content: _content("__tests__/template.marko_3*content", () => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
 				_html(`<p class=b>${_text_resume($scope3_id, "#text/0", b)} ${_text_resume($scope3_id, "#text/1", input.label + ":" + b, 2)}</p>`);
@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_: _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_label/9": $wi__input_label && 1
 				}, "__tests__/template.marko", "6:6")));
-			}, $scope1_id) });
+			}, $scope1_id, 1) });
 			_patch_child_end();
 			_html("</main>");
 			_scope($scope1_id, {

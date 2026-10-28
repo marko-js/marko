@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
 	let $item;
 	forOf(input.items, (item) => {
-		$item = attrTags($item, { content: _content_elide("a4", () => {
+		$item = attrTags($item, { content: _content("a4", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_set_scope_reason(16);
@@ -46,10 +46,10 @@ var template_default = _template("a", (input) => {
 			field_default({ name: item });
 			_patch_child_end();
 			_scope($scope3_id, { a: _existing_scope($childScope) });
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	forIn(input.record, (key, value) => {
-		$item = attrTags($item, { content: _content_elide("a3", () => {
+		$item = attrTags($item, { content: _content("a3", () => {
 			_scope_reason();
 			const $scope4_id = _scope_id();
 			_set_scope_reason(16);
@@ -57,10 +57,10 @@ var template_default = _template("a", (input) => {
 			field_default({ name: key });
 			_patch_child_end();
 			_scope($scope4_id, { a: _existing_scope($childScope2) });
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	forTo(input.end, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content_elide("a2", () => {
+		$item = attrTags($item, { content: _content("a2", () => {
 			_scope_reason();
 			const $scope5_id = _scope_id();
 			_set_scope_reason(16);
@@ -68,10 +68,10 @@ var template_default = _template("a", (input) => {
 			field_default({ name: i });
 			_patch_child_end();
 			_scope($scope5_id, { a: _existing_scope($childScope3) });
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	forUntil(input.end, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content_elide("a1", () => {
+		$item = attrTags($item, { content: _content("a1", () => {
 			_scope_reason();
 			const $scope6_id = _scope_id();
 			_set_scope_reason(16);
@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 			field_default({ name: i });
 			_patch_child_end();
 			_scope($scope6_id, { a: _existing_scope($childScope4) });
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	const $childScope5 = _peek_scope_id($scope0_id, "a", 5);
 	Content.content({ item: $item });

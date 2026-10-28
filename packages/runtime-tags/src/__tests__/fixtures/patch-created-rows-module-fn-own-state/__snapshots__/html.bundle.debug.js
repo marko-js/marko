@@ -24,7 +24,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let suffix = "s";
-	const Panel = { content: _content_elide("__tests__/tags/rowsx.marko_2*content", ({ isOpen, fmt, label }) => {
+	const Panel = { content: _content("__tests__/tags/rowsx.marko_2*content", ({ isOpen, fmt, label }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 4), $cg__isOpen = _client_guard($scope2_reason, 4);
 		_if(() => {
@@ -43,7 +43,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 			fmt: "3:25",
 			label: "3:30"
 		}) || (_filled_guard($scope2_reason, 5) && ($cg__isOpen || _client_guard($scope2_reason, 6)) && _patch_fill($scope2_id, "PatchFill:__tests__/tags/rowsx.marko_fill3", fmt, !_server_guard($scope2_reason, 5)), _filled_guard($scope2_reason, 6) && $cg__isOpen && _patch_fill($scope2_id, "PatchFill:__tests__/tags/rowsx.marko_fill4", label, !_server_guard($scope2_reason, 6)));
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_for_of(input.items, (x) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/rowsx.marko_fill2", x);

@@ -136,7 +136,7 @@ var template_default = _template("e", (input) => {
 				const $childScope3 = _peek_scope_id($scope2_id, "b", 1);
 				$Docs_withLoadAssets({
 					list: input.list,
-					content: _content_elide("e1", () => {
+					content: _content("e1", () => {
 						_scope_reason();
 						const $scope3_id = _scope_id();
 						_if(() => {
@@ -162,7 +162,7 @@ var template_default = _template("e", (input) => {
 							Cf: 1
 						}));
 						$wg__input_page || $wi__input_page && _resume_branch($scope3_id);
-					}, $scope2_id)
+					}, $scope2_id, 1)
 				});
 				_patch_child_end();
 				$cg__input_list && _patch_init($scope2_id, "e6");

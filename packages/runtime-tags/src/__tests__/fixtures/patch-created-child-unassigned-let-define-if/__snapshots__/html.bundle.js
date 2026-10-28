@@ -10,7 +10,7 @@ var card_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = input.n;
-	const Panel = { content: _content_elide("b1", ({ open }) => {
+	const Panel = { content: _content("b1", ({ open }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__open = _write_guard($scope1_reason, 0), $wi__open = _write_if($scope1_reason, 0);
 		_if(() => {
@@ -22,7 +22,7 @@ var card_default = _template("b", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__open, void 0, void 0, void 0, ["b0"], $scope1_reason, 0);
 		$wi__open && _scope($scope1_id, {});
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({ open: n });
 	_patch_child_end();

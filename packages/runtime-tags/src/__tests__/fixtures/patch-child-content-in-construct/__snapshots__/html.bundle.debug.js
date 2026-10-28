@@ -28,13 +28,13 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
-	wrap_default({ content: _content_elide("__tests__/tags/card/index.marko_1*content", () => {
+	wrap_default({ content: _content("__tests__/tags/card/index.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>${_text_resume($scope1_id, "#text/0", input.note, void 0, $scope0_reason, 0)}</em>`);
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/card/index.marko_1_input_note#0:5/init");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: $wi__input_note && _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "3:2"));
-	}, $scope0_id) });
+	}, $scope0_id, 1) });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/card/index.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card/index.marko_fill0", n, 1);

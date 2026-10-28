@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.labels, (label) => {
-		$item = attrTags($item, { content: _content_elide("a1", () => {
+		$item = attrTags($item, { content: _content("a1", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_patch_fill($scope1_id, "va2", label);
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 				c: label,
 				_: _scope_with_id($scope0_id)
 			})));
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	list_default({ item: $item });

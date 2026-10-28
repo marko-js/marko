@@ -29,15 +29,15 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	const $input_a11yText__closures = new Set();
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
-	wrapper_default({ content: _content_elide("__tests__/tags/child/index.marko_1*content", () => {
+	wrapper_default({ content: _content("__tests__/tags/child/index.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		const $inputa11yTextbutton_scope = _peek_scope_id();
-		let $btn = _dynamic_tag($scope1_id, "#text/0", input.a11yText && "button", { "aria-label": input.a11yText }, 1, _content_elide("__tests__/tags/child/index.marko_2*content", () => {
+		let $btn = _dynamic_tag($scope1_id, "#text/0", input.a11yText && "button", { "aria-label": input.a11yText }, 1, _content("__tests__/tags/child/index.marko_2*content", () => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
 			_html("content");
-		}, $scope1_id), void 0, void 0, $scope0_reason, 0, void 0, void 0, void 0, "__tests__/tags/child/index.marko_1_$btn#2/var");
+		}, $scope1_id, 1), void 0, void 0, $scope0_reason, 0, void 0, void 0, void 0, "__tests__/tags/child/index.marko_1_$btn#2/var");
 		_var($scope1_id, "#scopeOffset/1", $inputa11yTextbutton_scope, "__tests__/tags/child/index.marko_1_$btn#2/var");
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/child/index.marko_1_input_a11yText#0:3/init");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
@@ -45,7 +45,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 			_: $wi__input_a11yText && _scope_with_id($scope0_id)
 		}, "__tests__/tags/child/index.marko", "1:2", { $btn: "2:36" })));
 		_assert_hoist($btn);
-	}, $scope0_id) });
+	}, $scope0_id, 1) });
 	_patch_child_end();
 	const $return = { btn: $btn_getter };
 	_scope($scope0_id, {

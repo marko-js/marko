@@ -81,7 +81,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, 0, $scope1_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell", $scope0_reason, 4);
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/3", 0);
-		wrap_default({ content: _content_elide("__tests__/template.marko_4*content", () => {
+		wrap_default({ content: _content("__tests__/template.marko_4*content", () => {
 			const $scope4_reason = _scope_reason();
 			const $scope4_id = _scope_id();
 			_html(`<s>${_text_resume($scope4_id, "#text/0", w, void 0, $scope0_reason, 2)}</s>`);
@@ -92,7 +92,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:input_v/8": $wi__input_v && 3
 			}, "__tests__/template.marko", "18:6")));
-		}, $scope1_id) });
+		}, $scope1_id, 1) });
 		_patch_child_end();
 		_script($scope1_id, "__tests__/template.marko_1_input_v#0:3");
 		$cg__input_show && _patch_write($scope1_id, "PatchWrite:w", w, 1);

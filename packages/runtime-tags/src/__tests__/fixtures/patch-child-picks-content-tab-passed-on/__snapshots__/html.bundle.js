@@ -42,21 +42,21 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	tabs_default({ tab: attrTags(attrTag({
 		active: input.x === 1,
-		content: _content_elide("a1", () => {
+		content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`A${_text_resume($scope1_id, "a", input.y, 2, $scope0_reason, 2)}`);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a0");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_y__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
-		}, $scope0_id)
+		}, $scope0_id, 1)
 	}), {
 		active: input.x === 2,
-		content: _content_elide("a2", () => {
+		content: _content("a2", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`B${_text_resume($scope2_id, "a", s, 2)}`);
 			_subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
-		}, $scope0_id)
+		}, $scope0_id, 1)
 	}) });
 	_patch_child_end();
 	_script($scope0_id, "a3");

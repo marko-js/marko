@@ -32,7 +32,7 @@ var page_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
-		panel_default({ aside: attrTag({ content: _content_elide("a1", () => {
+		panel_default({ aside: attrTag({ content: _content("a1", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_resume($scope2_id, "a", m, void 0, 0, 0)}</span>`);
@@ -58,7 +58,7 @@ var page_default = _template("a", (input) => {
 				}
 			}, $scope2_id, "b", 1, 0, void 0, void 0, void 0, ["a3"], 0, 0);
 			_scope($scope2_id, { _: $wi__input_down && _scope_with_id($scope1_id) });
-		}, $scope1_id) }) });
+		}, $scope1_id, 1) }) });
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: $wi__input_down && _scope_with_id($scope0_id),

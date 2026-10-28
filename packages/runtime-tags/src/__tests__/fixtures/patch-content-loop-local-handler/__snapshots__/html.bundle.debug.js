@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.items, (x) => {
-		$item = attrTags($item, { content: _content_elide("__tests__/template.marko_1*content", () => {
+		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "PatchMarkedWrite:x_name", x?.name);
@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				x_name: x?.name,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "4:6", { x_name: 0 });
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	menu_default({ item: $item });

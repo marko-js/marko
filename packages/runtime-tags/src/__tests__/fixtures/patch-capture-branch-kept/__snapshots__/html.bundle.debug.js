@@ -54,7 +54,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_set_scope_reason(2);
 			let $item;
 			forOf(items, (item) => {
-				$item = attrTags($item, { content: _content_elide("__tests__/tags/child.marko_2*content", () => {
+				$item = attrTags($item, { content: _content("__tests__/tags/child.marko_2*content", () => {
 					const $scope2_reason = _scope_reason();
 					const $scope2_id = _scope_id();
 					_if(() => {
@@ -68,7 +68,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 					_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/child.marko_2_s#1:2/init");
 					_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "7:8"));
 					$wg__input_show || _resume_branch($scope2_id);
-				}, $scope1_id) });
+				}, $scope1_id, 1) });
 			});
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			list_default({ item: $item });

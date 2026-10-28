@@ -52,7 +52,7 @@ var child_default = _template("b", (input) => {
 			_set_scope_reason(2);
 			let $item;
 			forOf(items, (item) => {
-				$item = attrTags($item, { content: _content_elide("b4", () => {
+				$item = attrTags($item, { content: _content("b4", () => {
 					_scope_reason();
 					const $scope2_id = _scope_id();
 					_if(() => {
@@ -66,7 +66,7 @@ var child_default = _template("b", (input) => {
 					_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "b6");
 					_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					$wg__input_show || _resume_branch($scope2_id);
-				}, $scope1_id) });
+				}, $scope1_id, 1) });
 			});
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			list_default({ item: $item });

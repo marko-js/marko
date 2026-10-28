@@ -22,7 +22,7 @@ _shells({
 var rowsx_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const Panel = { content: _content_elide("b2", ({ isOpen, fmt, label }) => {
+	const Panel = { content: _content("b2", ({ isOpen, fmt, label }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__isOpen = _write_guard($scope1_reason, 4), $cg__isOpen = _client_guard($scope1_reason, 4);
 		_if(() => {
@@ -40,7 +40,7 @@ var rowsx_default = _template("b", (input) => {
 			e: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 2)) && fmt,
 			f: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 2)) && label
 		});
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 0) << 7 | _mask_group($scope0_reason, 1) << 9 | _mask_group($scope0_reason, 2) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({

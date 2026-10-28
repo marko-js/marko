@@ -13,7 +13,7 @@ var field_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.hint, !_server_guard($scope0_reason, 1));
-	const TextField = { content: _content_elide("b2", (input) => {
+	const TextField = { content: _content("b2", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $cg__valueChange = _client_guard($scope1_reason, 2);
 		const { value, valueChange, ...attrs } = input;
@@ -30,7 +30,7 @@ var field_default = _template("b", (input) => {
 			d: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0)) && value,
 			e: _unfilled_if($scope1_reason, 0) && valueChange
 		});
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 2) << 3 | _mask_group($scope0_reason, 1) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	TextField.content({
@@ -41,7 +41,7 @@ var field_default = _template("b", (input) => {
 		}, "b0")
 	});
 	_patch_child_end();
-	const Log = { content: _content_elide("b6", ({ log, value }) => {
+	const Log = { content: _content("b6", ({ log, value }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_script($scope2_id, "b7", 0, (_filled_guard($scope2_reason, 1) || _filled_guard($scope2_reason, 2)) && (_client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? 2 : 1), _filled_guard($scope2_reason, 1) && "c", _filled_guard($scope2_reason, 2) && "d");
@@ -50,7 +50,7 @@ var field_default = _template("b", (input) => {
 			c: log,
 			d: value
 		}) || (_filled_guard($scope2_reason, 1) && _patch_write($scope2_id, "xc", log, !_server_guard($scope2_reason, 1)), _filled_guard($scope2_reason, 2) && _patch_write($scope2_id, "xd", value, !_server_guard($scope2_reason, 2)));
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	Log.content({

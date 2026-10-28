@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		if (input.on) {
 			const $scope1_id = _scope_id();
 			let k = input.n;
-			const Panel = { content: _content_elide("a1", ({ open }) => {
+			const Panel = { content: _content("a1", ({ open }) => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason(), $wg__open = _write_guard($scope2_reason, 0), $wi__open = _write_if($scope2_reason, 0);
 				_if(() => {
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 					}
 				}, $scope2_id, "a", $wg__open, $wg__open, 0, 0, 1);
 				($wi__input_on__OR__input_w || $wi__open) && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
-			}, $scope1_id) };
+			}, $scope1_id, 1) };
 			_set_scope_reason(2);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			Panel.content({ open: k });

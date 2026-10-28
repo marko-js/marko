@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.items, (x) => {
-		$item = attrTags($item, { content: _content_elide("a2", () => {
+		$item = attrTags($item, { content: _content("a2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "xe", x?.name);
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 				e: x?.name,
 				_: _scope_with_id($scope0_id)
 			});
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	menu_default({ item: $item });

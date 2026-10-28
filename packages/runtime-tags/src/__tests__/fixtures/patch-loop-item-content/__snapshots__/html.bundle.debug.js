@@ -32,13 +32,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		card_default({
 			title: item.t,
-			content: _content_elide("__tests__/template.marko_2*content", () => {
+			content: _content("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_resume($scope2_id, "#text/0", item.n, void 0, $scope0_reason, 0)}</em>`);
 				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_item_n#1:4/init");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope2_id, { _: $wi__input_items && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:10"));
-			}, $scope1_id)
+			}, $scope1_id, 1)
 		});
 		_patch_child_end();
 		_html("</li>");

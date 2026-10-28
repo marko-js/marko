@@ -31,14 +31,14 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		card_default({
 			user: row.user,
-			content: _content_kept("a2", () => {
+			content: _content("a2", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_resume($scope2_id, "a", row.id, void 0, $scope0_reason, 1)} ${_text_resume($scope2_id, "b", input.label, 2, $scope0_reason, 2)}</em>`);
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a0");
 				$cg__input_rows && _patch_init($scope2_id, "a1");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__row_id__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_label && _scope_with_id($scope1_id) })));
-			}, $scope1_id)
+			}, $scope1_id, 2)
 		});
 		_patch_child_end();
 		_scope($scope1_id, {

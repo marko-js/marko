@@ -14,7 +14,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
-	const Row = { content: _content_elide("__tests__/tags/panel.marko_1*content", ({ show }) => {
+	const Row = { content: _content("__tests__/tags/panel.marko_1*content", ({ show }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 0), $wi__show = _write_if($scope1_reason, 0);
 		_if(() => {
@@ -29,7 +29,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", 1, $wg__show, void 0, void 0, void 0, ["__tests__/tags/panel.marko_2*shell"], $scope1_reason, 0);
 		($wi__input_a__OR__input_b || $wi__show) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "1:2");
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	let t = true;
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

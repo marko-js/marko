@@ -89,7 +89,7 @@ var template_default = _template("a", (input) => {
 			}, $scope1_id, "d", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["a7"], $scope0_reason, 5);
 			_set_scope_reason(0);
 			const $childScope3 = _peek_scope_id($scope1_id, "e", 2);
-			wrap_default({ body: attrTag({ content: _content_elide("a5", () => {
+			wrap_default({ body: attrTag({ content: _content("a5", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html("<em>content</em>");
@@ -102,7 +102,7 @@ var template_default = _template("a", (input) => {
 				_script($scope2_id, "a12");
 				$cg__input_items && _patch_init($scope2_id, "a13");
 				_subscribe(_unfilled_if($scope0_reason, 4) && $input_items__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }));
-			}, $scope1_id) }) });
+			}, $scope1_id, 1) }) });
 			_patch_child_end();
 			_dynamic_tag($scope1_id, "f", input.tag, {}, 34, _content_resume("a4", () => {
 				const $scope3_id = _scope_id();

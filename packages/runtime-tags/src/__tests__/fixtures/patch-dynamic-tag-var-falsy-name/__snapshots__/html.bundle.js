@@ -28,22 +28,22 @@ var child_default = _template("b", (input) => {
 	const $input_a11yText__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
-	wrapper_default({ content: _content_elide("b4", () => {
+	wrapper_default({ content: _content("b4", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		const $inputa11yTextbutton_scope = _peek_scope_id();
-		let $btn = _dynamic_tag($scope1_id, "a", input.a11yText && "button", { "aria-label": input.a11yText }, 1, _content_elide("b1", () => {
+		let $btn = _dynamic_tag($scope1_id, "a", input.a11yText && "button", { "aria-label": input.a11yText }, 1, _content("b1", () => {
 			_scope_id();
 			_scope_reason();
 			_html("content");
-		}, $scope1_id), void 0, void 0, $scope0_reason, 0, void 0, void 0, void 0, "b2");
+		}, $scope1_id, 1), void 0, void 0, $scope0_reason, 0, void 0, void 0, void 0, "b2");
 		_var($scope1_id, "b", $inputa11yTextbutton_scope, "b2");
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "b3");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			c: $btn,
 			_: $wi__input_a11yText && _scope_with_id($scope0_id)
 		})));
-	}, $scope0_id) });
+	}, $scope0_id, 1) });
 	_patch_child_end();
 	const $return = { btn: $btn_getter };
 	_scope($scope0_id, {

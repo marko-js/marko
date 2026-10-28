@@ -13,7 +13,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
-	const Panel = { content: _content_elide("__tests__/tags/wrap.marko_1*content", ({ open }) => {
+	const Panel = { content: _content("__tests__/tags/wrap.marko_1*content", ({ open }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__open = _write_guard($scope1_reason, 0), $wi__open = _write_if($scope1_reason, 0);
 		_if(() => {
@@ -26,7 +26,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", 1, $wg__open, void 0, void 0, void 0, ["__tests__/tags/wrap.marko_2*shell"], $scope1_reason, 0);
 		($wi__input_title || $wi__open) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/wrap.marko", "1:2");
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({ open: input.open });

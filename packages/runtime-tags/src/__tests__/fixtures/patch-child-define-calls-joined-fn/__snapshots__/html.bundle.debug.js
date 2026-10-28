@@ -11,7 +11,7 @@ _shells({
 var label_view_default = _template("__tests__/tags/label-view.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const Show = { content: _content_elide("__tests__/tags/label-view.marko_1*content", ({ a, b, flag }) => {
+	const Show = { content: _content("__tests__/tags/label-view.marko_1*content", ({ a, b, flag }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $cg__b__OR__flag = _client_guard($scope1_reason, 2), $cg__a__OR__flag = _client_guard($scope1_reason, 1), $cg__a__OR__b = _client_guard($scope1_reason, 0);
 		const get = flag ? a : b;
@@ -32,7 +32,7 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 			flag: "1:22",
 			get: "2:10"
 		}) || _filled_guard($scope1_reason, 3) && _patch_write($scope1_id, "PatchMarkedWrite:get", get, !_server_guard($scope1_reason, 3));
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 3) << 7 | _mask_group($scope0_reason, 4) << 9 | _mask_group($scope0_reason, 5) << 11 | _mask_group($scope0_reason, 6) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Show.content({

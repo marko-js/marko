@@ -22,13 +22,13 @@ var src_default = _template("d", (input) => {
 	let count = 0;
 	let $tab;
 	forOf(input.items, (t) => {
-		$tab = attrTags($tab, { content: _content_elide("d1", () => {
+		$tab = attrTags($tab, { content: _content("d1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<button>${_text_resume($scope1_id, "b", t, void 0, 4, 0)} ${_text_resume($scope1_id, "c", count, 2)}</button>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "d0");
 			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_items && 1);
 	let h = holder_default({ tab: $tab });

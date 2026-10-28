@@ -44,13 +44,13 @@ var template_default = _template("a", (input) => {
 			const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
 			card_default({
 				title: "x",
-				content: _content_elide("a3", () => {
+				content: _content("a3", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
 					_html(`<i>${_text_resume($scope3_id, "a", $global$1.brand, void 0, 4, 0)}</i>`);
 					_fill_global_subscribe("a2", $scope3_id);
 					_scope($scope3_id, {});
-				}, $scope2_id)
+				}, $scope2_id, 1)
 			});
 			_patch_child_end();
 			_scope($scope2_id, { a: _existing_scope($childScope2) });

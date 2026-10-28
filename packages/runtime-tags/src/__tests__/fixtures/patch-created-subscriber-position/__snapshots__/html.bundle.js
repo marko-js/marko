@@ -32,16 +32,16 @@ var template_default = _template("a", (input) => {
 			_html("<main>");
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			frame_default({ content: _content_elide("a0", () => {
+			frame_default({ content: _content("a0", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p class=a>${_text_resume($scope2_id, "a", input.label + ":0")}</p>`);
 				_subscribe($a__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
-			}, $scope1_id) });
+			}, $scope1_id, 1) });
 			_patch_child_end();
 			_set_scope_reason(0);
 			const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
-			frame_default({ content: _content_elide("a1", () => {
+			frame_default({ content: _content("a1", () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
 				_html(`<p class=b>${_text_resume($scope3_id, "a", b)} ${_text_resume($scope3_id, "b", input.label + ":0", 2)}</p>`);
@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 					_: _scope_with_id($scope1_id),
 					Cj: $wi__input_label && 1
 				})));
-			}, $scope1_id) });
+			}, $scope1_id, 1) });
 			_patch_child_end();
 			_html("</main>");
 			_scope($scope1_id, {

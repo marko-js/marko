@@ -43,7 +43,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_content = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
-	const Pass = { content: _content_elide("__tests__/tags/card.marko_2*content", ({ c, on }) => {
+	const Pass = { content: _content("__tests__/tags/card.marko_2*content", ({ c, on }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__c__OR__on = _write_guard($scope2_reason, 0), $cg__on = _client_guard($scope2_reason, 2), $cg__c = _client_guard($scope2_reason, 1);
 		_dynamic_tag($scope2_id, "#text/0", on ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__c__OR__on, $scope2_reason, 0);
@@ -57,7 +57,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			c: "2:16",
 			on: "2:19"
 		});
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_await($scope0_id, "#text/0", input.p, (x) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 3 | _mask_group($scope0_reason, 1) << 5);

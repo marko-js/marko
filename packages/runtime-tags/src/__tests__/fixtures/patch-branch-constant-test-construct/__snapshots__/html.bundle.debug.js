@@ -33,7 +33,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
-		panel_default({ aside: attrTag({ content: _content_elide("__tests__/page.marko_2*content", () => {
+		panel_default({ aside: attrTag({ content: _content("__tests__/page.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_resume($scope2_id, "#text/0", m, void 0, 0, 0)}</span>`);
@@ -59,7 +59,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 				}
 			}, $scope2_id, "#text/1", 1, 0, void 0, void 0, void 0, ["__tests__/page.marko_3*shell"], 0, 0);
 			_scope($scope2_id, { _: $wi__input_down && _scope_with_id($scope1_id) }, "__tests__/page.marko", "4:6");
-		}, $scope1_id) }) });
+		}, $scope1_id, 1) }) });
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: $wi__input_down && _scope_with_id($scope0_id),

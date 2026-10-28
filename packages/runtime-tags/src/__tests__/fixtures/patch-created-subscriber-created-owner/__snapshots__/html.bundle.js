@@ -39,13 +39,13 @@ var child_default = _template("c", (input) => {
 		const $catch_content__err_message__closures = /* @__PURE__ */ new Set();
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
-		box_default({ content: _content_elide("c2", () => {
+		box_default({ content: _content("c2", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_resume($scope2_id, "a", err.message, void 0, 4, 0)} ${_text_resume($scope2_id, "b", input.label, 2, $scope0_reason, 0)}</span>`);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, _client_guard($scope0_reason, 0) ? "c0" : "c1");
 			_subscribe(_unfilled_if() && $wi__err_message && $catch_content__err_message__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
-		}, $scope1_id) });
+		}, $scope1_id, 1) });
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),

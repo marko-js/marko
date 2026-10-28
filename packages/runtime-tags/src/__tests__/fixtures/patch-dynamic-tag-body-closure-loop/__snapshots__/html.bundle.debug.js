@@ -63,7 +63,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 	let $item;
 	forUntil(input.n, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content_elide("__tests__/tags/heading.marko_1*content", () => {
+		$item = attrTags($item, { content: _content("__tests__/tags/heading.marko_1*content", () => {
 			const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wi__i = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			const $item_content__i__closures = new Set();
@@ -86,7 +86,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 				"ClosureScopes:i/7": $wi__i && $item_content__i__closures
 			}, "__tests__/tags/heading.marko", "3:6", { i: "2:8" }));
 			$wg__input_type || ($wi__input_n__OR__input_type || $wi__i) && _resume_branch($scope1_id);
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	list_default({ item: $item });

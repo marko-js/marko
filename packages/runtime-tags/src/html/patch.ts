@@ -34,12 +34,7 @@ export {
   forTo,
   forUntil,
 } from "./patches/control-flow";
-export {
-  _content_elide,
-  _content_kept,
-  _content_resume,
-  _dynamic_tag,
-} from "./patches/dynamic-tag";
+export { _content, _content_resume, _dynamic_tag } from "./patches/dynamic-tag";
 export { _html_resume, _text_resume } from "./patches/content";
 export { _template_patch as _template } from "./patches/template";
 export {

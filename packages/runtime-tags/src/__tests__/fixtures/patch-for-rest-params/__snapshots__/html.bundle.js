@@ -35,12 +35,12 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	my_for_default({
 		to: 5,
-		content: _content_elide("a0", (i) => {
+		content: _content("a0", (i) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(_text_resume($scope1_id, "a", i, void 0, 4, 0));
 			_scope($scope1_id, {});
-		}, $scope0_id)
+		}, $scope0_id, 1)
 	});
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });

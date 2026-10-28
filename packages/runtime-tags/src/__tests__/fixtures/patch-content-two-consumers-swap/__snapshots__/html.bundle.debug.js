@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1);
 			card_default({
 				title: input.t2,
-				content: _content_elide("__tests__/template.marko_3*content", () => {
+				content: _content("__tests__/template.marko_3*content", () => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();
 					_html(`<em>${_text_resume($scope3_id, "#text/0", input.note, void 0, $scope0_reason, 3)}</em>`);
@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						_: _write_if($scope0_reason, 0) && _scope_with_id($scope2_id),
 						"ClosureSignalIndex:input_note/8": $wi__input_note && 1
 					}, "__tests__/template.marko", "6:6"));
-				}, $scope2_id)
+				}, $scope2_id, 1)
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 5) && _patch_init($scope2_id, "__tests__/template.marko_2_input_t2#0:7/init");

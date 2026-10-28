@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.labels, (label) => {
-		$item = attrTags($item, { content: _content_elide("__tests__/template.marko_1*content", () => {
+		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", label);
@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				label,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "4:6", { label: "3:8" })));
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	list_default({ item: $item });

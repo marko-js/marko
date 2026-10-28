@@ -38,12 +38,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	my_for_default({
 		to: 5,
-		content: _content_elide("__tests__/template.marko_1*content", (i) => {
+		content: _content("__tests__/template.marko_1*content", (i) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(_text_resume($scope1_id, "#text/0", i, void 0, 4, 0));
 			_scope($scope1_id, {}, "__tests__/template.marko", "1:2");
-		}, $scope0_id)
+		}, $scope0_id, 1)
 	});
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

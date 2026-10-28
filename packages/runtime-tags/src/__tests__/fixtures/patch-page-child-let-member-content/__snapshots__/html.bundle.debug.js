@@ -25,12 +25,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_label__closures = new Set();
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	card_default({ content: _content_kept("__tests__/template.marko_1*content", () => {
+	card_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>static ${_text_resume($scope1_id, "#text/0", input.label, 2, $scope0_reason, 0)}</em>`);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: $wi__input_label && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_label#0:3/subscribe");
-	}, $scope0_id) });
+	}, $scope0_id, 2) });
 	_patch_child_end();
 	_scope($scope0_id, {
 		"ClosureScopes:input_label/4": $wi__input_label && _unfilled_if($scope0_reason, 0) && $input_label__closures,

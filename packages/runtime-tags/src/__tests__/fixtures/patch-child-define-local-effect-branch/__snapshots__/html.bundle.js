@@ -14,7 +14,7 @@ var wrap_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_show__closures = /* @__PURE__ */ new Set();
-	const Card = { content: _content_elide("b3", () => {
+	const Card = { content: _content("b3", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const x = input.label + "!";
@@ -34,7 +34,7 @@ var wrap_default = _template("b", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		}), $cg__input_label && "b7", $wg__input_show), $cg__input_show && "b6", $wg__input_show) || _filled_guard($scope0_reason, 1) && ($cg__input_show ? _patch_fill($scope1_id, "vb4", x, !$sg__input_label) : _patch_write($scope1_id, "xb", x, !$sg__input_label));
 		$wg__input_show || _resume_branch($scope1_id);
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Card.content({});
 	_patch_child_end();

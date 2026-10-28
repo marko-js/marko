@@ -13,12 +13,12 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $k__closures = /* @__PURE__ */ new Set();
 	let k = input.n;
-	const Panel = { content: _content_elide("b0", () => {
+	const Panel = { content: _content("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<p>${_text_resume($scope1_id, "a", k)}</p>`);
 		_subscribe($k__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({});
 	_patch_child_end();

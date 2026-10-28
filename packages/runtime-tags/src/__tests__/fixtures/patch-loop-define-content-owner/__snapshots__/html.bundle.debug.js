@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $childScope = _peek_scope_id($scope2_id, "#childScope/2", 1);
 		Card.content({
 			label: "direct",
-			content: _content_elide("__tests__/template.marko_6*content", () => {
+			content: _content("__tests__/template.marko_6*content", () => {
 				const $scope6_reason = _scope_reason();
 				const $scope6_id = _scope_id();
 				_html(`<i>${_text_resume($scope6_id, "#text/0", row.label, void 0, $scope0_reason, 0)} ${_text_resume($scope6_id, "#text/1", n, 2)}</i>`);
@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					"ClosureSignalIndex:row_label/13": $wi__input_rows && 1,
 					"ClosureSignalIndex:n/15": 1
 				}, "__tests__/template.marko", "9:6")));
-			}, $scope2_id)
+			}, $scope2_id, 1)
 		});
 		_patch_child_end();
 		_dynamic_tag($scope2_id, "#text/3", row.card ? Card : "span", { label: "dynamic" }, 17, _content_resume("__tests__/template.marko_7*content", () => {

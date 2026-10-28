@@ -11,7 +11,7 @@ import {
   RendererProp,
 } from "../../common/types";
 import {
-  _content,
+  _content as _base_content,
   _content_resume as _base_content_resume,
   _dynamic_tag as _base_dynamic_tag,
 } from "../dynamic-tag";
@@ -227,19 +227,32 @@ export function pairsContent(
   return pairs;
 }
 
-// Content with no client renderer elides its slot to `0`: an unbound
+// Content with no client renderer (`elide`) elides its slot to `0`: an unbound
 // registration whose every occurrence serializes as that access text.
-export function _content_elide(
+export function _content(
   id: string,
   fn: ServerRenderer,
-  scopeId: number | undefined,
+  scopeId?: number,
+  elide?: 1 | 2,
 ) {
-  return register("", _content(id, fn, scopeId), undefined, undefined, "0");
+  return elide
+    ? register(
+        "",
+        _base_content(
+          id,
+          elide > 1 ? keepHoles(id, fn, scopeId!) : fn,
+          scopeId,
+        ),
+        undefined,
+        undefined,
+        "0",
+      )
+    : _base_content(id, fn, scopeId);
 }
 
-// Content whose kept instances take their holes as data: each instance a page
+// Kept content (`elide` 2) takes its instances' holes as data: each one a page
 // renders joins its owner's set, and the client adds those it creates.
-export function _content_kept(id: string, fn: ServerRenderer, scopeId: number) {
+function keepHoles(id: string, fn: ServerRenderer, scopeId: number) {
   const renderer = (...args: Parameters<ServerRenderer>) => {
     const state = getState();
     const instanceId = _peek_scope_id();
@@ -268,7 +281,7 @@ export function _content_kept(id: string, fn: ServerRenderer, scopeId: number) {
     return result;
   };
   withheldRenderers.add(renderer);
-  return _content_elide(id, renderer, scopeId);
+  return renderer;
 }
 
 // The dynamic tag entry of `input` content: a shell ships its id

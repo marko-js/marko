@@ -74,13 +74,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope5_id = _scope_id();
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope5_id, "#childScope/0", 2);
-		card_default({ content: _content_kept("__tests__/template.marko_6*content", () => {
+		card_default({ content: _content("__tests__/template.marko_6*content", () => {
 			const $scope6_reason = _scope_reason();
 			const $scope6_id = _scope_id();
 			const uid = _id("uid~2");
 			_html(`<input${_attr("id", uid, $scope6_id, "#input/0", 0, 0)}>${_el_resume($scope6_id, "#input/0", 0)}<label${_attr("for", uid, $scope6_id, "#label/1", 0, 0)}>${_text_resume($scope6_id, "#text/2", row.id, void 0, $scope0_reason, 5)}</label>${_el_resume($scope6_id, "#label/1", 0)}`);
 			_scope($scope6_id, { _: _write_if($scope0_reason, 5) && _scope_with_id($scope5_id) }, "__tests__/template.marko", "14:4");
-		}, $scope5_id) });
+		}, $scope5_id, 2) });
 		_patch_child_end();
 		_scope($scope5_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "13:2");
 	}, "id", $scope0_id, "#text/3", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_5*shell", $scope0_reason, 5);

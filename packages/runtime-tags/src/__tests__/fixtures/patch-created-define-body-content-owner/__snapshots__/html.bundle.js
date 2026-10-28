@@ -27,14 +27,14 @@ var template_default = _template("a", (input) => {
 			let n = 0;
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 1, void 0, $scope0_id);
-			Wrap.content({ content: _content_elide("a4", () => {
+			Wrap.content({ content: _content("a4", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<button>${_text_resume($scope2_id, "b", input.label, void 0, $scope0_reason, 2)}:${_text_resume($scope2_id, "c", n, 2)}</button>${_el_resume($scope2_id, "a")}`);
 				_script($scope2_id, "a2");
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a3");
 				_subscribe($if_content__n__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
-			}, $scope1_id) });
+			}, $scope1_id, 1) });
 			_patch_child_end();
 			_patch_fill($scope1_id, "va5", n, 1);
 			_scope($scope1_id, {

@@ -141,7 +141,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $childScope3 = _peek_scope_id($scope2_id, "#childScope/1", 1);
 				$Docs_withLoadAssets({
 					list: input.list,
-					content: _content_elide("__tests__/template.marko_3*content", () => {
+					content: _content("__tests__/template.marko_3*content", () => {
 						const $scope3_reason = _scope_reason();
 						const $scope3_id = _scope_id();
 						_if(() => {
@@ -167,7 +167,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							"ClosureSignalIndex:input_page/5": 1
 						}, "__tests__/template.marko", "11:6"));
 						$wg__input_page || $wi__input_page && _resume_branch($scope3_id);
-					}, $scope2_id)
+					}, $scope2_id, 1)
 				});
 				_patch_child_end();
 				$cg__input_list && _patch_init($scope2_id, "__tests__/template.marko_2_input_list#0:4/init");

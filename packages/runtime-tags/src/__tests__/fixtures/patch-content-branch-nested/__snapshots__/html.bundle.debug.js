@@ -38,13 +38,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 					widget_default({
 						label: input.label,
-						content: _content_elide("__tests__/template.marko_3*content", () => {
+						content: _content("__tests__/template.marko_3*content", () => {
 							const $scope3_reason = _scope_reason();
 							const $scope3_id = _scope_id();
 							_html(`<em>${_text_resume($scope3_id, "#text/0", input.text, void 0, $scope0_reason, 6)}</em>`);
 							_client_guard($scope0_reason, 6) && _patch_init($scope3_id, "__tests__/template.marko_3_input_text#0:6/init");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:10"));
-						}, $scope2_id)
+						}, $scope2_id, 1)
 					});
 					_patch_child_end();
 					_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, $cg__input_label ? "__tests__/template.marko_2_input_label#0:5/init" : "__tests__/template.marko_2_input_label#0:5/subscribe");

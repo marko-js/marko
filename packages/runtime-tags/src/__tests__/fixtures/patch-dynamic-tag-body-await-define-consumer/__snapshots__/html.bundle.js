@@ -35,7 +35,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $wi__input_content = _write_if($scope0_reason, 1), $cg__input_p = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
-	const K = { content: _content_elide("b3", ({ x }) => {
+	const K = { content: _content("b3", ({ x }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wi__x = _write_if($scope1_reason, 0), $wg__x = _write_guard($scope1_reason, 0);
 		_dynamic_tag($scope1_id, "a", x ? keeper_default : "div", {}, 10, _content_resume("b0", () => {
@@ -47,7 +47,7 @@ var card_default = _template("b", (input) => {
 			$wg__input_content || ($wi__input_content || $wi__x) && _resume_branch($scope2_id);
 		}, $scope1_id, ($scope) => $scope1_page ? [{ d: input.content }, { _: $scope($scope0_id) }] : []), 0, $wg__x, $scope1_reason, 0);
 		($wi__input_content || $wi__x) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_await($scope0_id, "a", input.p, (x) => {
 		const $scope3_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 2) << 1);

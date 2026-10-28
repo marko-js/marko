@@ -22,7 +22,7 @@ _shells({
 var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const Panel = { content: _content_elide("__tests__/tags/rowsx.marko_1*content", ({ isOpen, fmt, label }) => {
+	const Panel = { content: _content("__tests__/tags/rowsx.marko_1*content", ({ isOpen, fmt, label }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__isOpen = _write_guard($scope1_reason, 4), $cg__isOpen = _client_guard($scope1_reason, 4);
 		_if(() => {
@@ -43,7 +43,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 			fmt: "2:25",
 			label: "2:30"
 		});
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 0) << 7 | _mask_group($scope0_reason, 1) << 9 | _mask_group($scope0_reason, 2) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({

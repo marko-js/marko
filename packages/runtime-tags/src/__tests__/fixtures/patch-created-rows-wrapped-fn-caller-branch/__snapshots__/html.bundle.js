@@ -24,7 +24,7 @@ var rowsx_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
-	const Panel = { content: _content_elide("b3", ({ isOpen, fmt, label }) => {
+	const Panel = { content: _content("b3", ({ isOpen, fmt, label }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 4), $cg__isOpen = _client_guard($scope3_reason, 4);
 		_if(() => {
@@ -42,7 +42,7 @@ var rowsx_default = _template("b", (input) => {
 			e: (_unfilled_if($scope3_reason, 1) || _unfilled_if($scope3_reason, 2)) && fmt,
 			f: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 2)) && label
 		});
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_for_of(input.items, (x) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 2));

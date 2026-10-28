@@ -12,7 +12,7 @@ var one_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $cg__input_content = _client_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 0), $cg__input_t = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
-	const Wrap = { content: _content_elide("b0", ({ t }) => {
+	const Wrap = { content: _content("b0", ({ t }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__t = _write_guard($scope1_reason, 0), $wi__t = _write_if($scope1_reason, 0);
 		_dynamic_tag($scope1_id, "a", input.content, { title: t }, 1, 0, 0, $wg__input_content || $wg__t, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, 0, 0, $scope0_reason);
@@ -24,7 +24,7 @@ var one_default = _template("b", (input) => {
 			_: _scope_with_id($scope0_id)
 		}), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "b1", $wg__input_content || $wg__t);
 		$wg__input_content || $wg__t || ($wi__input_content || $wi__t) && _resume_branch($scope1_id);
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Wrap.content({ t: input.t });

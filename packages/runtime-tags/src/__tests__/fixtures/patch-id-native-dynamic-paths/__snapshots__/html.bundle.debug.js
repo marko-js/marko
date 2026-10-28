@@ -39,13 +39,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		const Tag = item.on ? "p" : "div";
-		_dynamic_tag($scope2_id, "#text/0", Tag, { content: attrTag({ content: _content_elide("__tests__/template.marko_4*content", () => {
+		_dynamic_tag($scope2_id, "#text/0", Tag, { content: attrTag({ content: _content("__tests__/template.marko_4*content", () => {
 			const $scope4_reason = _scope_reason();
 			const $scope4_id = _scope_id();
 			const uid = _id("uid~1");
 			_html(`<label${_attr("for", uid, $scope4_id, "#label/0", 0, 0)}>attr</label>${_el_resume($scope4_id, "#label/0", 0)}<input${_attr("id", uid, $scope4_id, "#input/1", 0, 0)}>${_el_resume($scope4_id, "#input/1", 0)}`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "8:12");
-		}, $scope2_id) }) }, 9, 0, 0, $wg__input_items, $scope0_reason, 0);
+		}, $scope2_id, 1) }) }, 9, 0, 0, $wg__input_items, $scope0_reason, 0);
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
 		const $childScope = _peek_scope_id($scope2_id, "#childScope/1", 2);
 		Wrap.content({

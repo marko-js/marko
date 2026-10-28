@@ -32,16 +32,16 @@ var template_default = _template("a", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			card_default({
 				title: input.title,
-				header: attrTag({ content: _content_elide("a0", () => {
+				header: attrTag({ content: _content("a0", () => {
 					_scope_reason();
 					_scope_id();
 					_html("<b>static header</b>");
-				}, $scope1_id) }),
-				content: _content_elide("a1", () => {
+				}, $scope1_id, 1) }),
+				content: _content("a1", () => {
 					_scope_reason();
 					_scope_id();
 					_html("body");
-				}, $scope1_id)
+				}, $scope1_id, 1)
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a2");

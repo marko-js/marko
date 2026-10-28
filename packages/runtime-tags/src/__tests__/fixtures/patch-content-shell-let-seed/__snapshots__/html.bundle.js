@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			wrap_default({ content: _content_elide("a3", () => {
+			wrap_default({ content: _content("a3", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				let n = 0;
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 					d: n,
 					_: $wi__input_show__OR__input_label && _scope_with_id($scope1_id)
 				}));
-			}, $scope1_id) });
+			}, $scope1_id, 1) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_label && _scope_with_id($scope0_id),

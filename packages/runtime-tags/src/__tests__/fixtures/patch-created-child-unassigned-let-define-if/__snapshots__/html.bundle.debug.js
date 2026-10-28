@@ -13,7 +13,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = input.n;
-	const Panel = { content: _content_elide("__tests__/tags/card.marko_1*content", ({ open }) => {
+	const Panel = { content: _content("__tests__/tags/card.marko_1*content", ({ open }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__open = _write_guard($scope1_reason, 0), $wi__open = _write_if($scope1_reason, 0);
 		_if(() => {
@@ -25,7 +25,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", 1, $wg__open, void 0, void 0, void 0, ["__tests__/tags/card.marko_2*shell"], $scope1_reason, 0);
 		$wi__open && _scope($scope1_id, {}, "__tests__/tags/card.marko", "2:2");
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({ open: n });
 	_patch_child_end();

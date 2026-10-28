@@ -24,7 +24,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 7), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	let open = true;
-	const Panel = { content: _content_elide("b2", ({ isOpen, fmt, label }) => {
+	const Panel = { content: _content("b2", ({ isOpen, fmt, label }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 4), $cg__isOpen = _client_guard($scope3_reason, 4);
 		_if(() => {
@@ -42,7 +42,7 @@ var card_default = _template("b", (input) => {
 			e: (_unfilled_if($scope3_reason, 1) || _unfilled_if($scope3_reason, 2)) && fmt,
 			f: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 2)) && label
 		});
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

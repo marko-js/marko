@@ -28,14 +28,14 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.labels, (label) => {
-		$item = attrTags($item, { content: _content_elide("a1", () => {
+		$item = attrTags($item, { content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "xa", label);
 			_html("<p>item</p>");
 			_script($scope1_id, "a0", 0, 1, "a");
 			_scope($scope1_id, { a: label });
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	list_default({ item: $item });

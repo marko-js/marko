@@ -94,7 +94,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope1_id, "#text/3", 1, _write_guard($scope0_reason, 5), void 0, void 0, void 0, ["__tests__/template.marko_6*shell"], $scope0_reason, 5);
 			_set_scope_reason(0);
 			const $childScope3 = _peek_scope_id($scope1_id, "#childScope/4", 2);
-			wrap_default({ body: attrTag({ content: _content_elide("__tests__/template.marko_2*content", () => {
+			wrap_default({ body: attrTag({ content: _content("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html("<em>content</em>");
@@ -107,7 +107,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_script($scope2_id, "__tests__/template.marko_2");
 				$cg__input_items && _patch_init($scope2_id, "__tests__/template.marko_2_input_items#0:6/init");
 				_subscribe(_unfilled_if($scope0_reason, 4) && $input_items__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "20:6"));
-			}, $scope1_id) }) });
+			}, $scope1_id, 1) }) });
 			_patch_child_end();
 			_dynamic_tag($scope1_id, "#text/5", input.tag, {}, 34, _content_resume("__tests__/template.marko_3*content", () => {
 				const $scope3_id = _scope_id();

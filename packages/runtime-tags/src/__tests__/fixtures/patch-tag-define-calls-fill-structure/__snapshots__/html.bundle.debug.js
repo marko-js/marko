@@ -18,7 +18,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 	const f = _bind_resume(function() {
 		return input.a;
 	}, "__tests__/tags/shape.marko_0/f", $scope0_id);
-	const D = { content: _content_elide("__tests__/tags/shape.marko_1*content", ({ on }) => {
+	const D = { content: _content("__tests__/tags/shape.marko_1*content", ({ on }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 0), $wi__on = _write_if($scope1_reason, 0);
 		_if(() => {
@@ -31,7 +31,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", 1, $wg__on, void 0, void 0, void 0, ["__tests__/tags/shape.marko_2*shell"], $scope1_reason, 0);
 		($wi__input_a || $wi__on) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/shape.marko", "2:34");
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	D.content({ on: input.x });

@@ -30,13 +30,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		_html("hi");
 	}, $scope0_id), 0, $wg__input_tag__OR__input_cls, $scope0_reason, 0, 0, 3);
-	_dynamic_tag($scope0_id, "#text/1", input.wrap ? wrap_default : null, {}, 10, _content_elide("__tests__/template.marko_1*content", () => {
+	_dynamic_tag($scope0_id, "#text/1", input.wrap ? wrap_default : null, {}, 10, _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(_text_resume($scope1_id, "#text/0", input.note, void 0, $scope0_reason, 6));
 		_client_guard($scope0_reason, 6) && _patch_init($scope1_id, "__tests__/template.marko_1_input_note#0:8/init");
 		_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
-	}, $scope0_id), 0, $wg__input_wrap, $scope0_reason, 5);
+	}, $scope0_id, 1), 0, $wg__input_wrap, $scope0_reason, 5);
 	_scope($scope0_id, {
 		input_tag: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.tag,
 		input_cls: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.cls,

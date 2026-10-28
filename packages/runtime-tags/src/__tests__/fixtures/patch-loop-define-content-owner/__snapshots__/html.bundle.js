@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id($scope2_id, "c", 1);
 		Card.content({
 			label: "direct",
-			content: _content_elide("a2", () => {
+			content: _content("a2", () => {
 				_scope_reason();
 				const $scope6_id = _scope_id();
 				_html(`<i>${_text_resume($scope6_id, "a", row.label, void 0, $scope0_reason, 0)} ${_text_resume($scope6_id, "b", n, 2)}</i>`);
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 					Cn: $wi__input_rows && 1,
 					Cp: 1
 				})));
-			}, $scope2_id)
+			}, $scope2_id, 1)
 		});
 		_patch_child_end();
 		_dynamic_tag($scope2_id, "d", row.card ? Card : "span", { label: "dynamic" }, 17, _content_resume("a1", () => {

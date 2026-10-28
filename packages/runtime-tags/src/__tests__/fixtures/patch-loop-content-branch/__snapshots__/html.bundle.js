@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		card_default({
 			title: item.t,
-			content: _content_elide("a3", () => {
+			content: _content("a3", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_if(() => {
@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 				$cg__input_items && _patch_init($scope2_id, "a6");
 				$wi__input_items && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				$wg__input_items || $wi__input_items && _resume_branch($scope2_id);
-			}, $scope1_id)
+			}, $scope1_id, 1)
 		});
 		_patch_child_end();
 		_scope($scope1_id, {

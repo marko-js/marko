@@ -28,13 +28,13 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		panel_default({
 			label: p.label,
-			content: _content_elide("a1", () => {
+			content: _content("a1", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_resume($scope2_id, "a", p.text, void 0, $scope0_reason, 0)}</p>`);
 				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a0");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: $wi__input_panels && _scope_with_id($scope1_id) }));
-			}, $scope1_id)
+			}, $scope1_id, 1)
 		});
 		_patch_child_end();
 		_scope($scope1_id, {

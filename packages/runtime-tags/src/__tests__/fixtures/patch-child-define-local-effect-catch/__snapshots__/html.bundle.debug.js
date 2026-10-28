@@ -17,7 +17,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = new Set();
 	const $input_label__closures = new Set();
-	const Card = { content: _content_elide("__tests__/tags/wrap.marko_1*content", () => {
+	const Card = { content: _content("__tests__/tags/wrap.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $Card_content__x__closures = new Set();
 		const $scope1_reason = _scope_reason();
@@ -47,7 +47,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			"ClosureScopes:x/7": $wi__input_label && $Card_content__x__closures
 		}, "__tests__/tags/wrap.marko", "1:2", { x: "2:10" }), $cg__input_label && "__tests__/tags/wrap.marko_1_input_label#0:3/subscribe", 0) || _filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/wrap.marko_fill0", x, !_server_guard($scope0_reason, 1));
 		_resume_branch($scope1_id);
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Card.content({});
 	_patch_child_end();

@@ -49,14 +49,14 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		card_default({
 			title: item.title,
-			content: _content_elide("a2", () => {
+			content: _content("a2", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_resume($scope2_id, "a", p.name, void 0, $scope0_reason, 0)}/${_text_resume($scope2_id, "b", count, 2)}/${_text_resume($scope2_id, "c", item.id, 2, $scope0_reason, 1)}</span>`);
 				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a0");
 				$cg__input_items && _patch_init($scope2_id, "a1");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item_id__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $p_name__closures, _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }))));
-			}, $scope1_id)
+			}, $scope1_id, 1)
 		});
 		_patch_child_end();
 		_scope($scope1_id, {

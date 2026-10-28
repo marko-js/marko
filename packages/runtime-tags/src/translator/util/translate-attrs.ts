@@ -424,15 +424,10 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
       const serialized = registersContent(bodySection);
       body.node.body.unshift(getScopeReasonStatement(bodySection) as any);
 
-      // An unregistered shell content elides its slot.
+      // An unregistered shell content elides its slot (`1`), and kept content
+      // also keeps its instances' holes (`2`).
       return callRuntime(
-        serialized
-          ? "_content_resume"
-          : keepsHoles(bodySection)
-            ? "_content_kept"
-            : shipsContentShell(bodySection)
-              ? "_content_elide"
-              : "_content",
+        serialized ? "_content_resume" : "_content",
         t.stringLiteral(getResumeRegisterId(bodySection, "content")),
         t.arrowFunctionExpression(
           body.node.params,
@@ -443,7 +438,11 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
             getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
           )!,
         ),
-        serialized && getRegisteredLocals(bodySection),
+        serialized
+          ? getRegisteredLocals(bodySection)
+          : keepsHoles(bodySection)
+            ? t.numericLiteral(2)
+            : shipsContentShell(bodySection) && t.numericLiteral(1),
         serialized &&
           readsKeptInputOnClient(bodySection) &&
           t.numericLiteral(1),

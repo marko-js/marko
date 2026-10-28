@@ -53,14 +53,14 @@ var toggle_tag_default = _template("__tests__/tags/toggle-tag.marko", (input) =>
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wi__input_open__OR__input_content = _write_if($scope0_reason, 0), $wg__input_open = _write_guard($scope0_reason, 1), $cg__input_open = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
-	_dynamic_tag($scope0_id, "#text/0", input.open ? "div" : "section", {}, 10, _content_elide("__tests__/tags/toggle-tag.marko_1*content", () => {
+	_dynamic_tag($scope0_id, "#text/0", input.open ? "div" : "section", {}, 10, _content("__tests__/tags/toggle-tag.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_dynamic_tag($scope1_id, "#text/0", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 2);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, _client_guard($scope0_reason, 2) ? "__tests__/tags/toggle-tag.marko_1_input_content#0:4/init" : "__tests__/tags/toggle-tag.marko_1_input_content#0:4/subscribe");
 		$wi__input_open__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/toggle-tag.marko", "1:4"));
 		$wg__input_content || $wi__input_open__OR__input_content && _resume_branch($scope1_id);
-	}, $scope0_id), 0, $wg__input_open, $scope0_reason, 1);
+	}, $scope0_id, 1), 0, $wg__input_open, $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content,
 		"ClosureScopes:input_content/5": _write_if($scope0_reason, 2) && $input_content__closures
@@ -127,7 +127,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	_dynamic_tag($scope0_id, "#text/3", input.open ? "div" : "section", {}, 26, _content_elide("__tests__/tags/param-host.marko_4*content", () => {
+	_dynamic_tag($scope0_id, "#text/3", input.open ? "div" : "section", {}, 26, _content("__tests__/tags/param-host.marko_4*content", () => {
 		const $scope4_id = _scope_id();
 		const $scope4_reason = _scope_reason();
 		_html(`<p>own ${_text_resume($scope4_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
@@ -136,7 +136,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 			_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_label/8": $wi__input_label && 3
 		}, "__tests__/tags/param-host.marko", "10:4"));
-	}, $scope0_id), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
+	}, $scope0_id, 1), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
 		"ClosureScopes:input_label/8": $wi__input_label && $input_label__closures,
@@ -207,7 +207,7 @@ var const_host_default = _template("__tests__/tags/const-host.marko", (input) =>
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	_dynamic_tag($scope0_id, "#text/3", show ? "div" : "section", {}, 26, _content_elide("__tests__/tags/const-host.marko_4*content", () => {
+	_dynamic_tag($scope0_id, "#text/3", show ? "div" : "section", {}, 26, _content("__tests__/tags/const-host.marko_4*content", () => {
 		const $scope4_id = _scope_id();
 		const $scope4_reason = _scope_reason();
 		_html(`<p>own ${_text_resume($scope4_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
@@ -216,7 +216,7 @@ var const_host_default = _template("__tests__/tags/const-host.marko", (input) =>
 			_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_label/9": $wi__input_label && 3
 		}, "__tests__/tags/const-host.marko", "11:4"));
-	}, $scope0_id), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
+	}, $scope0_id, 1), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
 		"ClosureScopes:input_label/9": $wi__input_label && $input_label__closures,

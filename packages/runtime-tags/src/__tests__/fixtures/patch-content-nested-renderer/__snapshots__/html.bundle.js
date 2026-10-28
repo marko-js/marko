@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 1);
-			card_default({ content: _content_elide("a2", () => {
+			card_default({ content: _content("a2", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_resume($scope2_id, "a", input.note, void 0, $scope0_reason, 2)}</p>`);
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a0");
 				_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a1");
 				_subscribe(_unfilled_if($scope0_reason, 3) && $input_inner__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_note__OR__input_inner && _scope_with_id($scope1_id) })));
-			}, $scope1_id) });
+			}, $scope1_id, 1) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_note__OR__input_inner && _scope_with_id($scope0_id),

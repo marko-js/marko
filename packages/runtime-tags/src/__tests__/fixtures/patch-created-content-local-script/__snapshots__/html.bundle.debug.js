@@ -31,14 +31,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.labels, (label) => {
-		$item = attrTags($item, { content: _content_elide("__tests__/template.marko_1*content", () => {
+		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "PatchMarkedWrite:label", label);
 			_html("<p>item</p>");
 			_script($scope1_id, "__tests__/template.marko_1_label#0", 0, 1, "label");
 			_scope($scope1_id, { label }, "__tests__/template.marko", "3:6", { label: "2:8" });
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	list_default({ item: $item });

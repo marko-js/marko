@@ -13,7 +13,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_w__closures = /* @__PURE__ */ new Set();
 	let k = [input.n];
-	const List = { content: _content_elide("b1", ({ items }) => {
+	const List = { content: _content("b1", ({ items }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__items = _write_guard($scope1_reason, 0), $wi__items = _write_if($scope1_reason, 0);
 		_for_of(items, (x) => {
@@ -22,7 +22,7 @@ var card_default = _template("b", (input) => {
 			($wi__input_w || $wi__items) && _subscribe($wi__input_w && $input_w__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b0", $wg__input_w || $wg__items);
 		}, 0, $scope1_id, "a", $wg__items, $wg__items, 0, 0, 1);
 		($wi__input_w || $wi__items) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	List.content({ items: k });

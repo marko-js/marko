@@ -18,7 +18,7 @@ var shape_default = _template("b", (input) => {
 	const f = _bind_resume(function() {
 		return input.a;
 	}, "b0", $scope0_id);
-	const D = { content: _content_elide("b4", ({ on }) => {
+	const D = { content: _content("b4", ({ on }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 0), $wi__on = _write_if($scope1_reason, 0);
 		_if(() => {
@@ -31,7 +31,7 @@ var shape_default = _template("b", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__on, void 0, void 0, void 0, ["b3"], $scope1_reason, 0);
 		($wi__input_a || $wi__on) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	D.content({ on: input.x });

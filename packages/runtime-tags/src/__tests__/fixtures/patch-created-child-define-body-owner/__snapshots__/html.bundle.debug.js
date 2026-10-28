@@ -13,12 +13,12 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $n__closures = new Set();
 	let n = 0;
-	const Count = { content: _content_elide("__tests__/tags/child.marko_1*content", () => {
+	const Count = { content: _content("__tests__/tags/child.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<p>${_text_resume($scope1_id, "#text/0", n)}</p>`);
 		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2"), "__tests__/tags/child.marko_1_n#0:2/subscribe");
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Count.content({});
 	_patch_child_end();

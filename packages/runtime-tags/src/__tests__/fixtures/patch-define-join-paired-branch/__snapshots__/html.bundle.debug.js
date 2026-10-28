@@ -14,7 +14,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
-	const Info = { content: _content_elide("__tests__/tags/panel.marko_1*content", () => {
+	const Info = { content: _content("__tests__/tags/panel.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + ":" + input.b, void 0, $scope0_reason, 0)}</p>`);
@@ -22,7 +22,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_b#0:4/subscribe");
 		_patch_join_init($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:3_input_b#0:4/init", $scope0_reason, 0, _filled_guard($scope0_reason, 4) && ">input_a", _filled_guard($scope0_reason, 5) && ">input_b");
 		_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "1:2"), $cg__input_a && "__tests__/tags/panel.marko_1_input_a#0:3/subscribe"), $cg__input_b && "__tests__/tags/panel.marko_1_input_b#0:4/subscribe");
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();

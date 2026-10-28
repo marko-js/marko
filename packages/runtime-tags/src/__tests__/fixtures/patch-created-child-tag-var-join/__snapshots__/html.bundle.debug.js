@@ -78,7 +78,7 @@ var file_host_default = _template("__tests__/tags/file-host.marko", (input) => {
 	const $input_filesChange__closures = new Set();
 	_set_scope_reason(0);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 1);
-	file_panes_default({ first: attrTag({ content: _content_elide("__tests__/tags/file-host.marko_1*content", () => {
+	file_panes_default({ first: attrTag({ content: _content("__tests__/tags/file-host.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
@@ -94,7 +94,7 @@ var file_host_default = _template("__tests__/tags/file-host.marko", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/tags/file-host.marko", "2:4")));
-	}, $scope0_id) }) });
+	}, $scope0_id, 1) }) });
 	_patch_child_end();
 	_scope($scope0_id, {
 		"ClosureScopes:input_files/5": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_files__closures,

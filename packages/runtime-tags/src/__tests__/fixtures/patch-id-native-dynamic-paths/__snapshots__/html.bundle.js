@@ -33,13 +33,13 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		const Tag = item.on ? "p" : "div";
-		_dynamic_tag($scope2_id, "a", Tag, { content: attrTag({ content: _content_elide("a3", () => {
+		_dynamic_tag($scope2_id, "a", Tag, { content: attrTag({ content: _content("a3", () => {
 			_scope_reason();
 			const $scope4_id = _scope_id();
 			const uid = _id("B");
 			_html(`<label${_attr("for", uid, $scope4_id, "a", 0, 0)}>attr</label>${_el_resume($scope4_id, "a", 0)}<input${_attr("id", uid, $scope4_id, "b", 0, 0)}>${_el_resume($scope4_id, "b", 0)}`);
 			_scope($scope4_id, {});
-		}, $scope2_id) }) }, 9, 0, 0, $wg__input_items, $scope0_reason, 0);
+		}, $scope2_id, 1) }) }, 9, 0, 0, $wg__input_items, $scope0_reason, 0);
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
 		const $childScope = _peek_scope_id($scope2_id, "b", 2);
 		Wrap.content({

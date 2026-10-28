@@ -46,13 +46,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1);
 			card_default({
 				title: "x",
-				content: _content_elide("__tests__/template.marko_3*content", () => {
+				content: _content("__tests__/template.marko_3*content", () => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();
 					_html(`<i>${_text_resume($scope3_id, "#text/0", $global$1.brand, void 0, 4, 0)}</i>`);
 					_fill_global_subscribe("__tests__/template.marko_3_$global_brand#0:7", $scope3_id);
 					_scope($scope3_id, {}, "__tests__/template.marko", "6:6");
-				}, $scope2_id)
+				}, $scope2_id, 1)
 			});
 			_patch_child_end();
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "5:4");

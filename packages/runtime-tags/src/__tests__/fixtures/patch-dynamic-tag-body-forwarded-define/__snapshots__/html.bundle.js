@@ -9,7 +9,7 @@ var fwd_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
-	const Wrap = { content: _content_elide("b0", ({ content }) => {
+	const Wrap = { content: _content("b0", ({ content }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__content = _write_guard($scope2_reason, 0);
 		_content_withhold(content), _patch_fill($scope2_id, "vb2", content);
@@ -29,7 +29,7 @@ var fwd_default = _template("b", (input) => {
 			e: content,
 			f: open
 		});
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_dynamic_tag($scope0_id, "a", $global$1.p ? "p" : Wrap, {}, 18, _content_resume("b4", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();

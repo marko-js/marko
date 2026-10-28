@@ -42,11 +42,11 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({ button: attrTag({
 		onClick: function() {},
-		content: _content_elide("a0", () => {
+		content: _content("a0", () => {
 			_scope_reason();
 			_scope_id();
 			_html("one");
-		}, $scope0_id)
+		}, $scope0_id, 1)
 	}) });
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });

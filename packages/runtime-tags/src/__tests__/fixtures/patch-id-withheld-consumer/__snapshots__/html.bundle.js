@@ -27,13 +27,13 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
-		card_default({ content: _content_kept("a0", () => {
+		card_default({ content: _content("a0", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			const uid = _id("A");
 			_html(`<input${_attr("id", uid, $scope2_id, "a", 0, 0)}>${_el_resume($scope2_id, "a", 0)}<label${_attr("for", uid, $scope2_id, "b", 0, 0)}>${_text_resume($scope2_id, "c", row.id, void 0, $scope0_reason, 0)}</label>${_el_resume($scope2_id, "b", 0)}`);
 			_scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) });
-		}, $scope1_id) });
+		}, $scope1_id, 2) });
 		_patch_child_end();
 		_scope($scope1_id, { a: _existing_scope($childScope) });
 	}, "id", $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a1", $scope0_reason, 0);

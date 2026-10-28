@@ -35,13 +35,13 @@ var template_default = _template("a", (input) => {
 					const $childScope = _peek_scope_id($scope2_id, "a", 0);
 					widget_default({
 						label: input.label,
-						content: _content_elide("a1", () => {
+						content: _content("a1", () => {
 							_scope_reason();
 							const $scope3_id = _scope_id();
 							_html(`<em>${_text_resume($scope3_id, "a", input.text, void 0, $scope0_reason, 6)}</em>`);
 							_client_guard($scope0_reason, 6) && _patch_init($scope3_id, "a0");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope2_id) }));
-						}, $scope2_id)
+						}, $scope2_id, 1)
 					});
 					_patch_child_end();
 					_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, $cg__input_label ? "a2" : "a3");

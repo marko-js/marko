@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $for_content__item__closures = new Set();
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
-		card_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
+		card_default({ content: _content("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<i>${_text_resume($scope2_id, "#text/0", $global$1.brand, void 0, 4, 0)}:${_text_resume($scope2_id, "#text/1", input.prefix, 2, $scope0_reason, 2)}:${_text_resume($scope2_id, "#text/2", item, 2, $scope0_reason, 1)}</i>`);
@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_prefix#0:4/init");
 			$cg__input_items && _patch_init($scope2_id, "__tests__/template.marko_2_item#1:2/init");
 			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope2_id, { _: $wi__input_items__OR__input_prefix && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6")));
-		}, $scope1_id) });
+		}, $scope1_id, 1) });
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: $wi__input_items__OR__input_prefix && _scope_with_id($scope0_id),

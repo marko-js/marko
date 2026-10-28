@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			my_for_default({
 				to: 2,
-				content: _content_elide("a1", (i) => {
+				content: _content("a1", (i) => {
 					_scope_reason();
 					const $scope2_id = _scope_id();
 					_patch_write($scope2_id, "wd", i);
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 						d: i,
 						_: _scope_with_id($scope1_id)
 					}));
-				}, $scope1_id)
+				}, $scope1_id, 1)
 			});
 			_patch_child_end();
 			_scope($scope1_id, {

@@ -45,21 +45,21 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	tabs_default({ tab: attrTags(attrTag({
 		active: input.x === 1,
-		content: _content_elide("__tests__/template.marko_1*content", () => {
+		content: _content("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`A${_text_resume($scope1_id, "#text/0", input.y, 2, $scope0_reason, 2)}`);
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "__tests__/template.marko_1_input_y#0:5/init");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_y__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4"));
-		}, $scope0_id)
+		}, $scope0_id, 1)
 	}), {
 		active: input.x === 2,
-		content: _content_elide("__tests__/template.marko_2*content", () => {
+		content: _content("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`B${_text_resume($scope2_id, "#text/0", s, 2)}`);
 			_subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
-		}, $scope0_id)
+		}, $scope0_id, 1)
 	}) });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0");

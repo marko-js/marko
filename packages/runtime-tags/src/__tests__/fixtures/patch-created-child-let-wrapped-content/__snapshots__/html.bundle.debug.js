@@ -28,7 +28,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $input_content__closures = new Set();
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
-	card_default({ content: _content_kept("__tests__/tags/outer.marko_1*content", () => {
+	card_default({ content: _content("__tests__/tags/outer.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html("<b>");
@@ -37,7 +37,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/outer.marko_1_input_content#0:3/init");
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/outer.marko", "1:2"));
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
-	}, $scope0_id) });
+	}, $scope0_id, 2) });
 	_patch_child_end();
 	_scope($scope0_id, {
 		"ClosureScopes:input_content/4": $wi__input_content && _unfilled_if($scope0_reason, 0) && $input_content__closures,
@@ -63,13 +63,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
-			outer_default({ content: _content_elide("__tests__/template.marko_2*content", () => {
+			outer_default({ content: _content("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<em>static ${_text_resume($scope2_id, "#text/0", input.label, 2, $scope0_reason, 2)}</em>`);
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:4/init");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_label && _scope_with_id($scope1_id) }, "__tests__/template.marko", "1:17"));
-			}, $scope1_id) });
+			}, $scope1_id, 1) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_label && _scope_with_id($scope0_id),

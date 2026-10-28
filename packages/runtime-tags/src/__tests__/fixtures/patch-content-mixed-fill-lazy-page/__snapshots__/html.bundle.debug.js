@@ -73,7 +73,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 	_html(`<button class=bonus>bonus</button>${_el_resume($scope0_id, "#button/2")}`);
 	_set_scope_reason(0);
 	const $childScope3 = _peek_scope_id($scope0_id, "#childScope/3", 2);
-	panel_default({ aside: attrTag({ content: _content_elide("__tests__/page.marko_1*content", () => {
+	panel_default({ aside: attrTag({ content: _content("__tests__/page.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(6);
@@ -84,7 +84,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope2)
 		}, "__tests__/page.marko", "5:4"));
-	}, $scope0_id) }) });
+	}, $scope0_id, 1) }) });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/page.marko_0");
 	_scope($scope0_id, {

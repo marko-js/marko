@@ -15,7 +15,7 @@ var panel_default = _template("b", (input) => {
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	let open = true;
-	const Info = { content: _content_elide("b0", () => {
+	const Info = { content: _content("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<p>${_text_resume($scope1_id, "a", input.a + ":" + input.b, void 0, $scope0_reason, 0)}</p>`);
@@ -23,7 +23,7 @@ var panel_default = _template("b", (input) => {
 		(_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b2");
 		_patch_join_init($scope1_id, "b3", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && ">f", _filled_guard($scope0_reason, 4) && ">g");
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }), $cg__input_a && "b1"), _client_guard($scope0_reason, 4) && "b2");
-	}, $scope0_id) };
+	}, $scope0_id, 1) };
 	_if(() => {
 		if (input.show) {
 			const $scope3_id = _scope_id();

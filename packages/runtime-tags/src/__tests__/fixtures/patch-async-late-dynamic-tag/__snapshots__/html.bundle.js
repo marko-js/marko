@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ g: input.p }] : []), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "b", 1);
-	frame_default({ content: _content_elide("a3", () => {
+	frame_default({ content: _content("a3", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_await($scope2_id, "a", input.q, (w) => {
@@ -63,7 +63,7 @@ var template_default = _template("a", (input) => {
 		_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a7");
 		$wi__input_q && _subscribe(_unfilled_if($scope0_reason, 3) && $input_q__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
 		$wi__input_q && _resume_branch($scope2_id);
-	}, $scope0_id) });
+	}, $scope0_id, 1) });
 	_patch_child_end();
 	_html(`<button>interactive</button>${_el_resume($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a8");

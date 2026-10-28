@@ -78,7 +78,7 @@ var page_default = _template("a", (input) => {
 		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "va2", item?.n);
 		_set_scope_reason(0);
 		const $childScope3 = _peek_scope_id($scope1_id, "a", 2);
-		panel_default({ aside: attrTag({ content: _content_elide("a1", () => {
+		panel_default({ aside: attrTag({ content: _content("a1", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_set_scope_reason(6);
@@ -89,7 +89,7 @@ var page_default = _template("a", (input) => {
 				_: _scope_with_id($scope1_id),
 				a: _existing_scope($childScope2)
 			})));
-		}, $scope1_id) }) });
+		}, $scope1_id, 1) }) });
 		_patch_child_end();
 		_scope($scope1_id, {
 			d: item?.n,

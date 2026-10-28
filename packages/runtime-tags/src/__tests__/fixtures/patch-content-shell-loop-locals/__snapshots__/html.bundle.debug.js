@@ -23,14 +23,14 @@ var src_default = _template("__tests__/tags/src.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let $tab;
 	forOf(input.items, (t) => {
-		$tab = attrTags($tab, { content: _content_elide("__tests__/tags/src.marko_1*content", () => {
+		$tab = attrTags($tab, { content: _content("__tests__/tags/src.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "PatchWrite:t", t);
 			_html(`<button>${_text_resume($scope1_id, "#text/1", t, void 0, 4, 0)}</button>${_el_resume($scope1_id, "#button/0")}`);
 			_script($scope1_id, "__tests__/tags/src.marko_1");
 			_scope($scope1_id, { t }, "__tests__/tags/src.marko", "3:6", { t: "2:8" });
-		}, $scope0_id) });
+		}, $scope0_id, 1) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $cg__input_items && 1);
 	let h = holder_default({ tab: $tab });

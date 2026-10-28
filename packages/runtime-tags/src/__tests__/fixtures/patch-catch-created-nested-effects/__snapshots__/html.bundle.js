@@ -76,7 +76,7 @@ var template_default = _template("a", (input) => {
 		}, 0, $scope1_id, "c", 1, void 0, void 0, void 0, void 0, "a8", $scope0_reason, 4);
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "d", 0);
-		wrap_default({ content: _content_elide("a6", () => {
+		wrap_default({ content: _content("a6", () => {
 			_scope_reason();
 			const $scope4_id = _scope_id();
 			_html(`<s>${_text_resume($scope4_id, "a", w, void 0, $scope0_reason, 2)}</s>`);
@@ -87,7 +87,7 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope1_id),
 				Ci: $wi__input_v && 3
 			})));
-		}, $scope1_id) });
+		}, $scope1_id, 1) });
 		_patch_child_end();
 		_script($scope1_id, "a16");
 		$cg__input_show && _patch_write($scope1_id, "wh", w, 1);

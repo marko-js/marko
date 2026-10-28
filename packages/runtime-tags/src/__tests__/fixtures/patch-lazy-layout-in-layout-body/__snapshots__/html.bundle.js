@@ -78,7 +78,7 @@ var template_default = _template("e", (input) => {
 				const $scope2_id = _scope_id();
 				_set_scope_reason(0);
 				const $childScope3 = _peek_scope_id($scope2_id, "b", 1);
-				$Docs_withLoadAssets({ content: _content_elide("e1", () => {
+				$Docs_withLoadAssets({ content: _content("e1", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
 					_if(() => {
@@ -104,7 +104,7 @@ var template_default = _template("e", (input) => {
 						Ce: 1
 					}));
 					$wg__input_page || $wi__input_page && _resume_branch($scope3_id);
-				}, $scope2_id) });
+				}, $scope2_id, 1) });
 				_patch_child_end();
 				_scope($scope2_id, {
 					_: $wi__input_page && _scope_with_id($scope1_id),
