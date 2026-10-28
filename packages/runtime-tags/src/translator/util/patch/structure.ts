@@ -265,11 +265,10 @@ export function hasStructuralParam(group: ParamReasonGroup) {
 // Whether a patch renders the branches or loop rows at the node: it writes
 // the node's section, and none is stateful (a chain with one is the client's).
 export function patchesBranchesAt(binding: Binding) {
-  return patchWrites(binding.section) && !hasStatefulBranchAt(binding);
-}
-
-export function hasStatefulBranchAt(binding: Binding) {
-  return some(binding.branchBodies, isStatefulBranch);
+  return (
+    patchWrites(binding.section) &&
+    !some(binding.branchBodies, isStatefulBranch)
+  );
 }
 
 // A known child renders at the node, which holds the child's scope.

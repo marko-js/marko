@@ -1205,8 +1205,8 @@ export function _subscribe(
     : _base_subscribe(subscribers, scope, resumeId || undefined, markerGuard);
 }
 
-// A patch render resumes no scope: its writes stop before main's, which count
-// resume writes and owe async visits.
+// A patch render resumes no scope: it skips main's write and returns nothing,
+// so a write's `_scope(…) || fills` writes the patch's fills.
 export function _scope(
   scopeId: number,
   partialScope: PartialScope,
@@ -1222,6 +1222,7 @@ export function _scope(
   }
 }
 
+// Main's builds and counts a scope that a patch render drops.
 export function _existing_scope(scopeId: number) {
   return _scope(scopeId, {});
 }

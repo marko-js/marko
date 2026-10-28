@@ -248,8 +248,8 @@ export function getReasonSection(section: Section) {
   return cur;
 }
 
-// A page render's gate: statically serialized values and structure a patch
-// never speaks ride it, so a flush carries fills alone.
+// A page render's gate, for what a page and a patch render pass differently:
+// a known child's group arguments, content locals, the global dimension.
 export function scopePageIdentifier(section: Section) {
   const state = getSectionGuards(section);
   const id = t.identifier(ensureSharedUid(`scope${section.id}_page`, section));
