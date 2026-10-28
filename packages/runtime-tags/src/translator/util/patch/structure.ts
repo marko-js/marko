@@ -1,6 +1,7 @@
 // Analyze-side structure facts for patches, in template terms; group guards
 // and wire channels belong to ./decisions, ./refresh, ./writers.
 import { type Binding, bindingUtil } from "../bindings";
+import * as Consumers from "../constants/consumers";
 import { createPassMemo } from "../cyclic-memo";
 import { isPatch } from "../marko-config";
 import { every, first, some } from "../optional";
@@ -77,16 +78,16 @@ function isPatchedLeaf(read: ReferencedExtra) {
 // Which consumers render a tag body with client state (as its prop renders in the child):
 // some, or every one where no patched read or call outside stateful structure is left.
 export const getStatefulConsumers = createPassMemo(
-  (section: Section): "some" | "every" | undefined => {
+  (section: Section): Consumers.Value => {
     const { derives } = section;
     const readers = derives && getDerivedReaders(derives);
-    if (!readers || !someRead(readers, isStatefulLeaf)) return;
+    if (!readers || !someRead(readers, isStatefulLeaf)) return Consumers.None;
     return some(section.callSections, isPatchedCall) ||
       someRead(readers, isPatchedLeaf)
-      ? "some"
-      : "every";
+      ? Consumers.Some
+      : Consumers.Every;
   },
-  undefined,
+  Consumers.None,
 );
 
 function isPatchedCall(callSection: Section) {
@@ -106,7 +107,7 @@ export const isStatefulBranch = createPassMemo((section: Section) => {
   // A body every consumer renders stateful by the renderer the client registers
   // (else the patch keeps it), or one whose own branch expression derives from state.
   return (
-    (getStatefulConsumers(section) === "every" &&
+    (getStatefulConsumers(section) === Consumers.Every &&
       !!getRendererReason(section)) ||
     (!!expr && (hasClientState(sources) || inStatefulBranch(section.parent!)))
   );
