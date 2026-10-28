@@ -1,9 +1,5 @@
 import type { TestConfig } from "../../main.test";
 
-const click = (document: Document) => {
-  document.querySelector("button")!.click();
-};
-
 // patch-lazy-tag-construct-load-retried where the page's own client code loads
 // the input signal's chunk, which imports the chunk that fails.
 export const config: TestConfig = {
@@ -21,3 +17,7 @@ export const config: TestConfig = {
     click,
   ],
 };
+
+function click(document: Document) {
+  document.querySelector("button")!.click();
+}

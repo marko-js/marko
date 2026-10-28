@@ -65,6 +65,8 @@ export async function importEvictable<T>(entry: string): Promise<T> {
 
 interface State {
   cache: Map<string, Promise<vm.Module>>;
+  // Each module's fetched source: a module is fetched once.
+  sources: Map<string, string>;
   pending: number;
   promise: Promise<void> | undefined;
   resolve: (() => void) | undefined;
@@ -73,6 +75,7 @@ interface State {
 }
 
 const stateForCtx = new WeakMap<WeakKey, State>();
+const fetchFailures = new WeakSet<Error>();
 
 // Simulates the network for a lazy chunk import: a load failure, a chunk that
 // lands on the next `resolveAfter` tick, or one held until a `release` step.
@@ -89,6 +92,7 @@ export async function importWithContext<T>(
     stateForCtx.get(context) ||
     ((state: State) => (stateForCtx.set(context, state), state))({
       cache: new Map(),
+      sources: new Map(),
       pending: 0,
       promise: undefined,
       resolve: undefined,
@@ -99,7 +103,11 @@ export async function importWithContext<T>(
   function load(id: string, delay?: boolean): Promise<vm.Module> {
     let cached = state.cache.get(id);
     if (!cached) {
-      const mod = new vm.SourceTextModule(readFileSync(id, "utf8"), {
+      let source = state.sources.get(id);
+      if (source === undefined) {
+        state.sources.set(id, (source = readFileSync(id, "utf8")));
+      }
+      const mod = new vm.SourceTextModule(source, {
         context,
         identifier: id,
         importModuleDynamically: importDynamic,
@@ -107,9 +115,11 @@ export async function importWithContext<T>(
 
       state.pending++;
       const linked = mod.link(importModuleDynamically);
-      // A graph whose load failed loads again on a later import, as a browser's
-      // does (whatwg/html#10327); an evaluation error stays.
-      linked.catch(() => state.cache.delete(id));
+      // Only a failed fetch leaves the module map, so a later import fetches it
+      // again (whatwg/html#10327); a link or evaluation error stays.
+      linked.catch(
+        (error) => fetchFailures.has(error) && state.cache.delete(id),
+      );
       state.cache.set(
         id,
         (cached = (delay ? linked.then(() => resolveAfter(0)) : linked)
@@ -140,7 +150,9 @@ export async function importWithContext<T>(
     // Simulate a network-level chunk load failure (e.g. deploy skew) for the
     // matched dynamic import while its siblings resolve normally.
     if (fault === "reject") {
-      return Promise.reject(new Error(`simulated chunk load failure: ${id}`));
+      const error = new Error(`simulated chunk load failure: ${id}`);
+      fetchFailures.add(error);
+      return Promise.reject(error);
     }
 
     if (!resolved) {
