@@ -150,6 +150,7 @@ import {
   type Sources,
 } from "./sources";
 import {
+  createAnalysisSectionState,
   createAnalysisState,
   createOutputSectionState,
   createOutputState,
@@ -875,9 +876,11 @@ function rollUp(
 // Which calls of the body give its params' group the client's bit, as a mask is
 // set at render: client state passed to any of them, or a caller group's bit.
 export function getClientCalls(body: Section, params: ParamReasonGroup) {
+  // A template's callers are unknown.
+  if (!body.parent) return Consumers.Some;
   return getGroupClientCalls(
     Array.isArray(params)
-      ? getCanonicalIntersection(getParamGroups(), body, params)
+      ? getCanonicalIntersection(paramGroupsBySection, body, params)
       : params,
   );
 }
@@ -887,16 +890,16 @@ export function isClientAtEveryCall(params: Sources["param"]) {
   return reduceParamGroups(params, orClientAtEveryCall, false);
 }
 
-// Equal groups of a body's params share one array, the memo's key.
-const [getParamGroups] = createAnalysisState(
-  () => new Map<Section, SortedMany<ParamBinding>[]>(),
-);
+// One array per equal group of a body's params, the memo's key: the answer
+// decides `paramReasonGroups`, and intersections group reads, not sources.
+const [getParamGroups, setParamGroups] = createAnalysisSectionState<
+  SortedMany<ParamBinding>[] | undefined
+>();
+const paramGroupsBySection = { get: getParamGroups, set: setParamGroups };
 
 const getGroupClientCalls = createPassMemo(
   (params: ParamReasonGroup): Consumers.Value => {
     const body = first(params)!.section;
-    // A template's callers are unknown.
-    if (!body.parent) return Consumers.Some;
     if (!body.callSections) return Consumers.None;
     let someCall = false;
     // A read outside known calls may render the body with other input.

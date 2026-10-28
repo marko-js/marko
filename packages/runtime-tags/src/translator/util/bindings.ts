@@ -339,7 +339,10 @@ export function compareIntersections(a: Intersection, b: Intersection) {
 // The section's one array equal to `intersection`, recorded when new, so equal
 // binding groups are referentially equal.
 export function getCanonicalIntersection<T extends Intersection>(
-  intersectionsBySection: Map<Section, T[]>,
+  intersectionsBySection: {
+    get(section: Section): T[] | undefined;
+    set(section: Section, intersections: T[]): void;
+  },
   section: Section,
   intersection: T,
 ) {
