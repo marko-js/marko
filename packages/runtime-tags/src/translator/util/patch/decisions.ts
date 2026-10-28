@@ -85,7 +85,7 @@ export function serverRendersFirstValue(state: Binding, section: Section) {
 
 const fillsFirstValue = createPassMemo(
   (state: Binding) =>
-    canPatchFill(state) || some(state.initStates, canPatchFill),
+    canPatchFill(state) || some(state.initSources?.state, canPatchFill),
   false,
 );
 
