@@ -1,0 +1,6 @@
+import Card from "./tags/card.marko";
+import Plain from "./tags/plain.marko";
+<define/H><em>${input.note}</em></define>
+<main>
+  <${input.on ? Card : Plain} header=H/>
+</main>

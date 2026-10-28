@@ -13,7 +13,7 @@ Translator-agnostic compiler: parses `.marko` into a Babel AST (custom node type
 
 ## Translator contract
 
-A translator module exports: `translate` (required visitor), `taglibs` (required, `[[id, props]]`), optional `transform` / `analyze` visitors, `tagDiscoveryDirs`, `optionalTaglibs`, `preferAPI` (`"tags"` | `"class"`), `getRuntimeEntryFiles(output, optimize)`, and optionally `cheatsheet` (a module-relative path to an LLM syntax reference; `tryLoadTranslator` resolves it to a cwd-relative path and `util/agent-fix-guide.js` points coding agents at it on compile errors). Loading is resolved from `config.translator` or auto-detected from the app's dependencies (`util/try-load-translator.js`, default logic in `config.js`).
+A translator module exports: `translate` (required visitor), `taglibs` (required, `[[id, props]]`), optional `transform` / `analyze` visitors, `tagDiscoveryDirs`, `optionalTaglibs`, `preferAPI` (`"tags"` | `"class"`), `getRuntimeEntryFiles(output, optimize, patches)`, and optionally `cheatsheet` (a module-relative path to an LLM syntax reference; `tryLoadTranslator` resolves it to a cwd-relative path and `util/agent-fix-guide.js` points coding agents at it on compile errors). Loading is resolved from `config.translator` or auto-detected from the app's dependencies (`util/try-load-translator.js`, default logic in `config.js`).
 
 ## Notes
 

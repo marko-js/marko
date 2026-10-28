@@ -1,0 +1,8 @@
+<let/on=false/>
+<main>
+  <if=on>
+    <badge ...input.badge/>
+  </if>
+  <card ...{ ...input.props, note: on ? "on" : "off" }/>
+  <button id="o" onClick() { on = !on }>o</button>
+</main>

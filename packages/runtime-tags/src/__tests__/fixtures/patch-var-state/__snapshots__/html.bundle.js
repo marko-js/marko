@@ -1,0 +1,31 @@
+// tags/doubler/index.marko
+const $template = "<span>x2</span>";
+const $setup$1 = [[], []];
+_shells({ b: "b,<span>x2</span>" });
+var doubler_default = _template("b", (input) => {
+	_scope_reason();
+	_scope_id();
+	const double = input.value * 2;
+	_html("<span>x2</span>");
+	return double;
+});
+
+// template.marko
+const $setup = _shell_setup([[], ["a1"]], ["a>", $setup$1]);
+_shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `D0${_w0}&D l l`)("b")};${((_w0) => `<main>${_w0}<p> </p><button>+</button></main>`)($template)}`)() });
+var template_default = _template("a", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	let count = 1;
+	_html("<main>");
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, 1);
+	let double = doubler_default({ value: count });
+	_var($scope0_id, "b", $childScope, "a0");
+	_patch_child_end();
+	_html(`<p>${_text_resume($scope0_id, "c", double)}</p><button>+</button>${_el_resume($scope0_id, "d")}</main>`);
+	_script($scope0_id, "a1");
+	_scope($scope0_id, {
+		e: count,
+		a: _existing_scope($childScope)
+	});
+}, 1);

@@ -1,3 +1,4 @@
+export const BoundFn = "BoundFn:";
 export const BranchScopes = "BranchScopes:";
 export const ClosureScopes = "ClosureScopes:";
 export const ClosureSignalIndex = "ClosureSignalIndex:";
@@ -12,9 +13,11 @@ export const EventAttributes = "EventAttributes:";
 export const IdFallback = "IdFallback:";
 export const KeyedScopes = "KeyedScopes:";
 export const Lifecycle = "Lifecycle:";
+export const PatchChanged = "PatchChanged:";
 export const Promise = "Promise:";
 export const TagVariableChange = "TagVariableChange:";
 export const TryBranch = "TryBranch:";
+export const WithheldScopes = "WithheldScopes:";
 
 type Self = typeof import("./accessor-prefix.debug");
 export type Value = Self[keyof Self];

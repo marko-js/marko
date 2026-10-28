@@ -1,0 +1,12 @@
+<let/on=false/>
+<const/label=input.no + "!"/>
+<main>
+  <h2>${input.yes}</h2>
+  <if=on>
+    <b>${input.yes}</b>
+  </if>
+  <else>
+    <i>${label}</i>
+  </else>
+  <button onClick() { on = !on }>toggle</button>
+</main>

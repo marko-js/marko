@@ -42,7 +42,7 @@ import type { ServerRenderer } from "./template";
 
 export type PartialScope = Record<Accessor, unknown>;
 
-interface Channel extends SerializeChannel {
+export interface Channel extends SerializeChannel {
   parent?: Channel;
   resumes: string;
   writeScopes: Record<number, PartialScope>;
@@ -155,13 +155,6 @@ export function withContext<T, U, V>(
   } finally {
     ctx[kPendingContexts]--;
     ctx[key] = prev;
-  }
-}
-
-// A chunk that renders later keeps the context values set at its position.
-export function captureContext(chunk: Chunk) {
-  if (chunk.context?.[kPendingContexts]) {
-    chunk.context = { ...chunk.context, [kPendingContexts]: 0 };
   }
 }
 
@@ -489,7 +482,7 @@ export function _scope_with_id(scopeId: number) {
   return scopeWithId($chunk.boundary.state, scopeId);
 }
 
-function scopeWithId(state: State, scopeId: number) {
+export function scopeWithId(state: State, scopeId: number) {
   const { scopes } = state;
   let scope = scopes.get(scopeId);
   if (!scope) {
@@ -684,7 +677,9 @@ export class State implements Channel {
   public resumes = "";
   public nonceAttr = "";
   public serializer = new SerializerState();
-  public writeReorders: Chunk[] | null = null;
+  // The settled reorders the next flush streams; `false` for a state that
+  // never reorders.
+  public writeReorders: Chunk[] | null | false = null;
   public scopes = new Map<number, ScopeInternals>();
   // A scope by id, for the locals of registered content once it is sent.
   public scope = (scopeId: number) => scopeWithId(this, scopeId);
@@ -755,6 +750,11 @@ export class State implements Channel {
     flushSerializer(boundary, this);
   }
 
+  // The `$global` values the client reads, written once as scope 0.
+  getSerializedGlobals() {
+    return getFilteredGlobals(this.$global);
+  }
+
   // Installs the walker runtime and opens this render's data.
   runtimeScript() {
     return (
@@ -765,6 +765,13 @@ export class State implements Channel {
       this.$global.renderId +
       '")'
     );
+  }
+
+  // A chunk that renders later keeps the context values set at its position.
+  captureContext(chunk: Chunk) {
+    if (chunk.context?.[kPendingContexts]) {
+      chunk.context = { ...chunk.context, [kPendingContexts]: 0 };
+    }
   }
 
   // Custom and dynamic tags hide from analysis whether a try's body resumes, so
@@ -1053,7 +1060,13 @@ export class Chunk {
     const { state } = boundary;
     restart: for (;;) {
       let reorders: Chunk[] | null | false = null;
-      for (let cur: Chunk = this; cur.next && !cur.async; cur = cur.next) {
+      // A state that never reorders decides the placeholders past pending
+      // content too.
+      for (
+        let cur: Chunk = this;
+        cur.next && (!cur.async || state.writeReorders === false);
+        cur = cur.next
+      ) {
         if (cur.renderPlaceholder(state)) {
           if (boundary.aborted) return;
           continue restart;
@@ -1098,6 +1111,13 @@ export class Chunk {
     const { body } = placeholder;
     let end = body;
     while (end.next && !end.async) end = end.next;
+
+    if (end.async && state.writeReorders === false) {
+      // A state that never reorders keeps the whole body in order: past each
+      // `<await>` is the rest it forked.
+      placeholder.render();
+      while (end.next) end = end.next;
+    }
 
     if (!end.async) {
       end.next = this.next;
@@ -1644,7 +1664,7 @@ function flushSerializer(boundary: Boundary, channel: Channel) {
     // values assigned mid-render are dropped — call is unsupported by design.
     if (!channel.readyId && !state.hasWrittenGlobals) {
       state.hasWrittenGlobals = true;
-      const globals = getFilteredGlobals(state.$global);
+      const globals = state.getSerializedGlobals();
       // Globals become scope 0 so we can reference them as `_(0)`.
       if (globals) flushes.push([0, globals, globals]);
     }
@@ -1679,7 +1699,7 @@ function flushSerializer(boundary: Boundary, channel: Channel) {
 
 function flushSerializerGlobals(boundary: Boundary) {
   const { state } = boundary;
-  const globals = getFilteredGlobals(state.$global);
+  const globals = state.getSerializedGlobals();
   if (globals) {
     state.hasWrittenGlobals = true;
     state.needsWalkerRuntime = true;

@@ -1,0 +1,7 @@
+<await|x|=input.promise>
+  <for|n, i| of=[x]>
+    <await|y|=Promise.resolve(i)>
+      <b>${n}:${y}</b>
+    </await>
+  </for>
+</await>

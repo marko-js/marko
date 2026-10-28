@@ -1,0 +1,10 @@
+<await|x|=input.promise>
+  <let/m=x/>
+  <let/n=x valueChange(v) { m = v + "?" }/>
+  <let/s=x/>
+  <let/c=s valueChange(v) { s = v }/>
+  <p>${x}</p>
+  <span/el/>
+  <button.set onClick() { n = "z"; c = "y"; }>set</button>
+  <script>el().textContent = [m, n, s, c].join("|")</script>
+</await>

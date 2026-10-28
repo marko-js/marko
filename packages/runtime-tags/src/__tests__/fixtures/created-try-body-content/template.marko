@@ -1,0 +1,7 @@
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<define/A><em>A ${input.label}</em></define>
+<define/B><i>B ${input.label}</i></define>
+<if=input.show>
+  <wrapper fail=(count > 1) content=(input.alt ? A : B)/>
+</if>

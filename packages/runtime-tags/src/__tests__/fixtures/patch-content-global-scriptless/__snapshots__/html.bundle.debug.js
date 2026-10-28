@@ -1,0 +1,64 @@
+// tags/card/index.marko
+const $template$1 = "<section><h2> </h2><!></section>";
+const $walks$1 = "E l%l";
+const $setup$1 = [[], []];
+_shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;E l%;<section><h2> </h2><!></section>" });
+var card_default = _template("__tests__/tags/card/index.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	_html(`<section><h2>${_text_resume($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</h2>`);
+	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
+	_html("</section>");
+	_scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
+});
+
+// template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!></main>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)($walks$1);
+const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$1]);
+_shells({
+	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<i> </i>",
+	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `D/${_w0}&%l`)($walks$1)};${((_w0) => `<main>${_w0}<!></main>`)($template$1)}`)(),
+	"__tests__/template.marko_2*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_2*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${_w0}`)($template$1)
+});
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	const $global$1 = $global();
+	_html("<main>");
+	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
+	card_default({
+		title: input.title,
+		content: _content("__tests__/template.marko_1*content", () => {
+			const $scope1_reason = _scope_reason();
+			const $scope1_id = _scope_id();
+			_html(`<em>${_text_resume($scope1_id, "#text/0", $global$1.brand, 1, 4, 0)}</em>`);
+			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:7", $scope1_id);
+			_scope($scope1_id, {}, "__tests__/template.marko", "2:4");
+		}, $scope0_id)
+	});
+	_patch_child_end();
+	_if(() => {
+		if (input.show) {
+			const $scope2_id = _scope_id();
+			_set_scope_reason(0);
+			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1);
+			card_default({
+				title: "x",
+				content: _content("__tests__/template.marko_3*content", () => {
+					const $scope3_reason = _scope_reason();
+					const $scope3_id = _scope_id();
+					_html(`<i>${_text_resume($scope3_id, "#text/0", $global$1.brand, 1, 4, 0)}</i>`);
+					_fill_global_subscribe("__tests__/template.marko_3_$global_brand#0:7", $scope3_id);
+					_scope($scope3_id, {}, "__tests__/template.marko", "6:6");
+				}, $scope2_id, 1)
+			});
+			_patch_child_end();
+			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "5:4");
+			return 0;
+		}
+	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
+	_html("</main>");
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+}, 1);

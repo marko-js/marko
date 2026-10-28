@@ -1,0 +1,7 @@
+<let/items=input.items/>
+<button onClick() { items = [...items, {key: "c"}] }>add</button>
+<for|item| of=items by="key">
+  <id/headingId/>
+  <h2 id=headingId>${item.key}</h2>
+  <input aria-describedby=headingId title=(input.prefix + " " + headingId)>
+</for>

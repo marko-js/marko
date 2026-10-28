@@ -1,0 +1,20 @@
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-selector-define-fill/template.marko_fill0": 2
+  }
+}
+
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-selector-define-fill/template.marko_fill0": 4
+  }
+}
+
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-selector-define-fill/template.marko_fill0": 3
+  }
+}

@@ -1,0 +1,12 @@
+<main>
+  <try>
+    <@placeholder>outer</@placeholder>
+    <try>
+      <@placeholder>inner</@placeholder>
+      <@catch|err|><em>${err.message}</em></@catch>
+      <await|value|=input.promise>
+        <span>${value}</span>
+      </await>
+    </try>
+  </try>
+</main>

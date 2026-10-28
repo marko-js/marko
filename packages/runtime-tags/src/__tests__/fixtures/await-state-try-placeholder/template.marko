@@ -1,0 +1,10 @@
+<let/n=0/>
+<button.open onClick() { n++ }>inc</button>
+<if=input.show>
+  <try>
+    <await|x|=Promise.resolve(n)>
+      <p>${input.label}:${x}</p>
+    </await>
+    <@placeholder>loading</@placeholder>
+  </try>
+</if>

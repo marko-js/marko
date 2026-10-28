@@ -1,0 +1,21 @@
+// PATCH
+[`packages/runtime-tags/src/__tests__/fixtures/patch-created-row-key-join/template.marko_2*shell packages/runtime-tags/src/__tests__/fixtures/patch-created-row-key-join/template.marko_2_n#1:2/init packages/runtime-tags/src/__tests__/fixtures/patch-created-row-key-join/template.marko_2_n#1:2_m#1:3/init!packages/runtime-tags/src/__tests__/fixtures/patch-created-row-key-join/template.marko_2; D ;<button> </button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-row-key-join/template.marko_1*shell !; ;<li></li>`, {
+  "PatchLoop:#ul/0": ["a", {
+    "PatchBranch:#li/0": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-key-join/template.marko_2*shell",
+    "PatchSetup:": {
+      "PatchWrite:m": 1
+    },
+    "PatchSetupValues:": {
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-key-join/template.marko_fill1": 0
+    }
+  }, "b", {
+    "PatchBranch:#li/0": _.a,
+    "PatchSetup:": {
+      "PatchWrite:m": 1
+    },
+    "PatchSetupValues:": {
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-key-join/template.marko_fill1": 0
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-key-join/template.marko_1*shell"]
+}]
+;BwY

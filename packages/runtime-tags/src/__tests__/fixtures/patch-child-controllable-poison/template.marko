@@ -1,0 +1,9 @@
+<let/last=0/>
+<const/onCount=(next: number) => { last = next }/>
+<main>
+  <h1>${input.title}</h1>
+  <p>Last ${last}</p>
+  <for|name| of=["a", "b"]>
+    <counter show=input.show step=(name === "a" ? 1 : 2) onCount=onCount/>
+  </for>
+</main>

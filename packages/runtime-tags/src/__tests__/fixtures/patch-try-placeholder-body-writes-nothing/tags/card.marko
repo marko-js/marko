@@ -1,0 +1,6 @@
+import Plain from "./plain.marko";
+static const registry = { p: Plain };
+<try>
+ <${registry[input.kind]}/>
+ <@placeholder><em>loading</em></@placeholder>
+</try>
