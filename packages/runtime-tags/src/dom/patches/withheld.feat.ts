@@ -48,12 +48,7 @@ patchers[PatchKey.Withheld] = (scope, accessor, value) => {
     }
     // Else a consumer this flush created renders it, from its shell, not its
     // registration: it joins no owner's set, so only its site reaches it.
-    if (
-      !branch &&
-      hops !== undefined &&
-      creating &&
-      scope[AccessorProp.Gen] === runId
-    ) {
+    if (!branch && hops !== undefined && creating) {
       patchers[PatchKey.DynamicTag]!(scope, accessor, hops + keptShellId(id));
       branch = scope[AccessorPrefix.BranchScopes + accessor] as Scope;
     }
@@ -77,14 +72,14 @@ patchers[PatchKey.Withheld] = (scope, accessor, value) => {
 // The owner's record gives an `<id>` in structure it creates one value; one per
 // instance takes code main never ships, so a second instance creating it rejects.
 setupPatchers[PatchKey.Withheld] = (_scope, _accessor, mark) => {
-  if ((mark as Scope)[0]) {
+  if (mark[0]) {
     throw MARKO_DEBUG
       ? new Error(
           "A patch gave kept content's `<id>` to more than one instance it creates: the page loads the URL as a document instead.",
         )
       : 0;
   }
-  (mark as Scope)[0] = 1;
+  mark[0] = 1;
 };
 
 // Kept content creates from its shell (its registration): an instance takes the

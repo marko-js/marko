@@ -2194,6 +2194,7 @@ const accessorPrefixDescriptions: Record<string, string> = {
   KeyedScopes: "the keyed scopes",
   Lifecycle: "the lifecycle handlers",
   PatchChanged: "the patch change mark",
+  PatchCreated: "the created await mark",
   Promise: "the pending promise",
   TagVariableChange: "the tag variable change handler",
   TryBranch: "the try branch",

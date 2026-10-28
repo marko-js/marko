@@ -514,9 +514,15 @@ client state names, unpatched structure) skips it, and the flush reports the
 content (`_content_withhold`). Content a known child renders from its state,
 where plain renders it nowhere on the client, or that client state holds, is
 _kept content_ (`keepsContent`): it creates from its shell, never by registration,
-and a flush renders its holes once per owner under the _withheld entry_
-(`PatchWithheld:<id>`), which the client applies to each live instance in the
-owner's `WithheldScopes:<id>` set (`_content`'s `elide` 2). It registers under its
+and a flush renders each instance's holes at its site (`PatchWithheld:<accessor>`,
+`_content`'s `elide` 2); where an instance no site reaches may hold it, also once
+per owner under the _withheld entry_ (`PatchWithheld:<id>`, `elide` 3), which the
+client applies to each live instance in the owner's `WithheldScopes:<id>` set.
+Structure the client renders from a created scope's starting state (its client
+rows and branches) the flush renders too, paired (`inFresh`): their kept entries
+apply once the scope's renders built it (`PatchRendered:`), and an `<await>` there
+still pending at the flush rejects the patch where it renders kept content
+(`PatchKeptAwait:`). It registers under its
 _kept shell id_ (`keptShellId`, `~<id>`), which no module registration shares: a
 patch sends it bound to its owner by that id, and an instance the client creates
 from the shell joins the set and takes the entry the owner last took.

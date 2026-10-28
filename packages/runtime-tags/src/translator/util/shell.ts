@@ -134,8 +134,9 @@ export function linkPatchSends() {
     if (keepsContent(section)) {
       linkRuntimeFeature("patches/withheld");
       linkRuntimeFeature("patches/bind");
-      // A created scope's client rows may render it: their entries wait for them.
-      if (keepsOwnerRecord(section)) linkRuntimeFeature("patches/loop-item");
+      // A created scope's client-owned structure may render it: its entries wait
+      // for that structure's renders.
+      if (keepsOwnerRecord(section)) linkRuntimeFeature("patches/rendered");
     }
     if (
       // Boundary content no shell creates renders by the renderer its

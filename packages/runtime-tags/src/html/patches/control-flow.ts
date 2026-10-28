@@ -42,6 +42,7 @@ import {
   getIds,
   getUpdatesFrom,
   inCreatable,
+  inFresh,
   keptBranch,
   openScopePatch,
   linkScopePatch,
@@ -55,8 +56,12 @@ import {
   pushIdHop,
   shipShell,
   walkMarkers,
+  freshEntries,
+  renderFresh,
+  withFreshKept,
   withKeptBranchId,
   withUnpatched,
+  writeFresh,
   writePatchEntry,
 } from "./writer";
 
@@ -115,8 +120,12 @@ export function _if(
   const { state } = getChunk()!.boundary;
   if (state instanceof PatchRenderState) {
     // A chain with no shells is the resumed page's (unpatched): a patch skips it.
-    if (shellIds)
+    if (shellIds) {
       writeBranch(state, scopeId, accessor, cb, shellIds, mask, group);
+    } else if (inCreatable() || inFresh()) {
+      // The client renders it from the state it starts with, as the server does.
+      writeFresh(state, scopeId, AccessorPrefix.BranchScopes + accessor, cb);
+    }
     return;
   }
   // A patchable conditional's markers must resume even on a page with no
@@ -406,7 +415,7 @@ function patchLoop<A, B>(
         mask,
         group,
       );
-    } else if (inCreatable()) {
+    } else if (inCreatable() || inFresh()) {
       writeCreatedRows(state, cb, iterate, scopeId, accessor);
     }
     return;
@@ -512,8 +521,6 @@ function writeCreatedRows<A, B>(
   accessor: string,
 ) {
   const items: unknown[] = patchTreeNode(state, []);
-  const row = keptBranch(cb);
-  const keptSites = state.keptSites;
   let index = 0;
   iterate((itemKey, sameAsIndex, a, b) => {
     const branchId = _peek_scope_id();
@@ -524,17 +531,14 @@ function writeCreatedRows<A, B>(
     state.patchLinks[branchId] = { parent: scopeId, hop: [accessor, at] };
     const patch = openScopePatch(state, branchId);
     pushIdHop(IdHop.Row, itemKey);
-    withBranchId(branchId, row, a, b);
+    withBranchId(branchId, () => withFreshKept(cb, a, b));
     popIdHop();
     if (hasKeys(patch)) {
       items.push(typeof at === "number" ? at : patchTreeNode(state, at), patch);
     }
   });
-  // Only kept content needs them: the client renders the rest itself.
-  if (items.length && state.keptSites !== keptSites) {
-    ensurePatchSetup(state, ensureScopePatch(state, scopeId))[
-      PatchKey.LoopItem + accessor
-    ] = items;
+  if (items.length) {
+    freshEntries(state, scopeId)[PatchKey.LoopItem + accessor] = items;
   }
 }
 
@@ -568,7 +572,25 @@ export function _await<T>(
       markerGuard,
     );
   }
-  if (shellId === 0) return;
+  if (shellId === 0) {
+    // The client settles it from the state it starts with, as the server does.
+    if (!(inCreatable() || inFresh())) return;
+    const hop = AccessorPrefix.BranchScopes + accessor;
+    if (!isPromise(promise)) {
+      writeFresh(state, scopeId, hop, content, promise as T);
+    } else if (mayWithhold) {
+      // Pending, the client renders its body after every entry, where kept content
+      // takes code the page without patches never ships: the patch rejects there.
+      freshEntries(state, scopeId)[PatchKey.KeptAwait + accessor] = 1;
+      state.keptSites = (state.keptSites || 0) + 1;
+      _base_await(scopeId, accessor, promise.then(undefined, skip), (value) => {
+        if (value !== skipped && renderFresh(state, content, value)) {
+          writePatchEntry(state, scopeId, PatchKey.KeptAwait + accessor, "");
+        }
+      });
+    }
+    return;
+  }
   // No patch fills the promise: the client settles it, and the server's copy only
   // renders the body's holes as data. A rejected copy writes nothing.
   if (unfilled) {
@@ -668,9 +690,11 @@ export function _try(
   // The placeholder's branch id precedes the body's, as in a document.
   const placeholderBranchId = placeholderContent ? _scope_id() : 0;
   const branchId = _peek_scope_id();
+  // One the client just rendered from its starting state only pairs, uncaught.
+  const fresh = inFresh();
   // The entry carries the creation payload (body shell, slot ids) unless the try
   // always pairs here; one that only pairs still names its catch, so a caught try rejects its body.
-  const create = !alwaysPairs || inCreatable();
+  const create = (!alwaysPairs || inCreatable()) && !fresh;
   // Beside the patch: `[catchId, bodyId?, placeholderId?]`, the catch first.
   const slotIds = !create
     ? [catchId]
@@ -683,7 +707,7 @@ export function _try(
     accessor,
     branchId,
     create ? bodyId : undefined,
-    create || catchId ? slotIds : undefined,
+    create || (catchId && !fresh) ? slotIds : undefined,
     scopeId,
   );
   const chunk = getChunk()!;

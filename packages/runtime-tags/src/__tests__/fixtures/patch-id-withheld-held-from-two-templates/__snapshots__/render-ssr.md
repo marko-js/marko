@@ -86,6 +86,11 @@ for (const input of document.querySelectorAll("input")) {
 ```
 ## Change
 ```
+INSERT: p:nth-of-type(1) > :is(#sM_1UUUUA, label)
+REMOVE: p:nth-of-type(1) > label + #sM_1UUUUA
+REMOVE: p:nth-of-type(1) > label + label
+UPDATE: #sM_1UUUUA[id] null => "sM_1UUUUA"
+UPDATE: p:nth-of-type(1) > label[for] null => "sM_1UUUUA"
 INSERT: p:nth-of-type(2) + :is(button, p, p)
 ```
 

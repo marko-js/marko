@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-whole-input/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-whole-input/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-whole-input/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-whole-input/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-whole-input/template.marko_1*content`, {
   "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-whole-input/tags/card.marko",
   "PatchChild:BranchScopes:#text/0": {
     "PatchSetupValues:": {
@@ -11,9 +11,9 @@
   },
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-whole-input/template.marko_fill0": "b"
 }]
-;CgA
+;CxE
 
-// PATCH holding CgA
+// PATCH holding CxE
 {
   "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-whole-input/tags/card.marko",
   "PatchChild:BranchScopes:#text/0": {

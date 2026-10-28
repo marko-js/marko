@@ -16,6 +16,8 @@ export const KeyedScopes = "O";
 export const Lifecycle = "K";
 // A patch's change mark of a value an entry depends on, by its response.
 export const PatchChanged = "T";
+// An `<await>` the client settles in structure a patch created.
+export const PatchCreated = "S";
 export const Promise = "L";
 export const TagVariableChange = "M";
 export const TryBranch = "Q";

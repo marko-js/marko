@@ -1,4 +1,5 @@
 import { isAttrTag } from "../../common/attr-tag";
+import { hasKeys } from "../../common/helpers";
 import { ROOT_SCOPE_ID } from "../../common/meta";
 import {
   encodeIdKey,
@@ -35,6 +36,7 @@ import {
   _var as _base_var,
   _html,
   _peek_scope_id as _base_peek_scope_id,
+  _scope_id as _base_scope_id,
   _resume,
   _scope as _base_scope,
   _script as _base_script,
@@ -210,6 +212,56 @@ export function inCreatable() {
   );
 }
 
+// Structure the client renders this flush from the starting state the server
+// renders (a created scope's client rows and branches): a patch pairs it.
+const kFresh = Symbol();
+export function inFresh() {
+  return !!getChunk()!.context?.[kFresh];
+}
+
+// Renders such structure, paired: its patch where kept content rendered there
+// (the client renders the rest itself).
+export function renderFresh<A, B>(
+  state: PatchRenderState,
+  cb: (a: A, b: B) => unknown,
+  a?: A,
+  b?: B,
+) {
+  const branchId = _base_peek_scope_id();
+  const patch = openScopePatch(state, branchId);
+  const keptSites = state.keptSites;
+  withBranchId(branchId, () => withFreshKept(cb, a!, b!));
+  if (_base_peek_scope_id() === branchId) _base_scope_id();
+  return state.keptSites !== keptSites && patch;
+}
+
+// Its entries go after its scope's renders where the flush creates that scope.
+export function writeFresh<A, B>(
+  state: PatchRenderState,
+  scopeId: number,
+  hop: string,
+  cb: (a: A, b: B) => unknown,
+  a?: A,
+  b?: B,
+) {
+  const patch = renderFresh(state, cb, a, b);
+  if (patch && hasKeys(patch)) {
+    freshEntries(state, scopeId)[PatchKey.Child + hop] = patch;
+  }
+}
+
+// Where entries for structure the client renders go: after the renders of a
+// scope the flush creates; inside such structure, beside the rest.
+export function freshEntries(state: PatchRenderState, scopeId: number) {
+  const patch = ensureScopePatch(state, scopeId);
+  return inFresh() ? patch : ensurePatchSetup(state, patch, PatchKey.Rendered);
+}
+
+// Renders `cb` as such structure, kept: its creation is the client's.
+export function withFreshKept<A, B>(cb: (a: A, b: B) => unknown, a: A, b: B) {
+  return withContext(kFresh, 1, () => keepBranch(cb, a, b));
+}
+
 // Renders a branch a flush pairs but never creates.
 export function withKeptBranchId<T>(branchId: number, cb: () => T): T {
   return withBranchId(branchId, keepBranch<T, void, void>, cb);
@@ -343,7 +395,10 @@ export function patchTreeNode<T extends object>(
 export function ensurePatchSetup(
   state: PatchRenderState,
   patch: Record<string, unknown>,
-  key: typeof PatchKey.Setup | typeof PatchKey.SetupValues = PatchKey.Setup,
+  key:
+    | typeof PatchKey.Setup
+    | typeof PatchKey.SetupValues
+    | typeof PatchKey.Rendered = PatchKey.Setup,
 ) {
   return (patch[key] ??= patchTreeNode(state, {})) as Record<string, unknown>;
 }

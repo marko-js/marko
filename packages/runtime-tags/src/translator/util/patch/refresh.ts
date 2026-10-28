@@ -846,6 +846,30 @@ export function awaitMayWithhold(body: Section) {
   return false;
 }
 
+// A client-settled `<await>` body reading content made above it, which a caller
+// may keep: a patch creating the await can't give that content its entries.
+export function awaitReadsContentAbove(body: Section) {
+  for (let above = body.parent; above; above = above.parent) {
+    if (
+      some(
+        above.bindings,
+        (binding) =>
+          !!getPatchFill(binding).contentKind && someReadWithin(binding, body),
+      )
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function someReadWithin(binding: Binding, section: Section) {
+  for (const read of binding.reads.keys()) {
+    if (isSameOrAncestorSection(section, read.section)) return true;
+  }
+  return false;
+}
+
 // Whether the binding's fill reaches `section` under its unpatched key alone.
 export function dispatchesUnpatchedAt(binding: Binding, section: Section) {
   return sectionUtil.has(getPatchFill(binding).unpatchedSections, section);

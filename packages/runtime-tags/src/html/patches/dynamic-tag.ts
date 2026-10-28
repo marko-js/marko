@@ -277,9 +277,8 @@ export function _content(
   );
 }
 
-// Kept content (`elide` 2) takes its instances' holes as data at their sites; with
-// an owner's record (`3`), each instance a page renders where no site reaches
-// joins the owner's set, and the client adds those it creates.
+// Kept content (`elide` 2) takes each instance's holes at its site; an owner's
+// record (`3`) takes those of instances no site reaches, which join its set.
 function keepHoles(
   id: string,
   fn: ServerRenderer,

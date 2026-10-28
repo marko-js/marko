@@ -2,6 +2,9 @@
 [`b b5!b1; b%;<button class=toggle>toggle</button><!><!>`, `a0`, {
   fa: ["b", "a0"],
   cAa: {
+    R: {
+      Ab: 1
+    },
     o: {
       vb3: 1
     },
@@ -15,6 +18,9 @@
 {
   fa: ["b", "a0"],
   cAa: {
+    R: {
+      Ab: 1
+    },
     o: {
       vb3: 1
     },

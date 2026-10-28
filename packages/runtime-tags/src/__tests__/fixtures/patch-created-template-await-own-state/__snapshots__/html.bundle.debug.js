@@ -23,7 +23,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0");
 		_scope($scope1_id, {}, "__tests__/tags/card.marko", "3:2");
-	}, 1, 0);
+	}, 1, 0, 0, 0, 1);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill1", n, 1);
 	_scope($scope0_id, {

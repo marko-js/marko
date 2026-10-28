@@ -3,7 +3,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
-      "PatchSetup:": {
+      "PatchRendered:": {
         "PatchLoopItem:#text/1": [0, {
           "PatchChild:#childScope/0": {
             "PatchWithheld:#text/0": [{
@@ -45,7 +45,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
-      "PatchSetup:": {
+      "PatchRendered:": {
         "PatchLoopItem:#text/1": [0, {
           "PatchChild:#childScope/0": {
             "PatchWithheld:#text/0": [{

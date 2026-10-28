@@ -44,6 +44,12 @@ export const Write = "w";
 export const MarkedWrite = "x";
 // Content a client consumer keeps: the holes each instance its owner holds takes.
 export const Withheld = "W";
+// Setup-only: entries for what a created scope's own renders build from its
+// starting state, applied once those ran.
+export const Rendered = "R";
+// An `<await>` the client settles in structure a patch creates: `1` marks it
+// created; `""`, in the flush its body settles in, rejects a marked one.
+export const KeptAwait = "A";
 
 type Self = typeof import("./patch-key");
 export type Value = Self[keyof Self];

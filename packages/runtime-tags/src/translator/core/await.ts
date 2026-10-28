@@ -20,7 +20,10 @@ import {
   getWriteSources,
   onReasonsSettled,
 } from "../util/patch/decisions";
-import { awaitMayWithhold } from "../util/patch/refresh";
+import {
+  awaitMayWithhold,
+  awaitReadsContentAbove,
+} from "../util/patch/refresh";
 import {
   isStatefulBranch,
   patchWrites,
@@ -106,6 +109,12 @@ export default {
     if (isPatch()) {
       onReasonsSettled(() => {
         if (patchMayWrite(bodySection)) linkRuntimeFeature("patches/await");
+        if (
+          isStatefulBranch(bodySection) &&
+          awaitReadsContentAbove(bodySection)
+        ) {
+          linkRuntimeFeature("patches/kept-await");
+        }
       });
     }
     const valueExtra = (valueAttr.value.extra ??= {});
@@ -236,7 +245,16 @@ export default {
 
 // A stateful body settles by `_await_promise` alone: its `0` skips the Pending entry.
 function getPendingArgs(bodySection: Section): Array<t.Expression | Falsy> {
-  if (isStatefulBranch(bodySection)) return [t.numericLiteral(0)];
+  if (isStatefulBranch(bodySection)) {
+    // Pending in structure a patch creates, content from above in its body
+    // rejects the patch (`patches/kept-await`).
+    return [
+      t.numericLiteral(0),
+      absentArg(0),
+      absentArg(0),
+      awaitReadsContentAbove(bodySection) && t.numericLiteral(1),
+    ];
+  }
   const shellId = findShellId(bodySection);
   const sources = getWriteSources(bodySection.branchExpr);
   // Where no patch fills the promise, the client settles the branch it rendered.

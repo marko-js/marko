@@ -1,7 +1,6 @@
-import { AccessorProp, PatchKey, type Scope } from "../../common/types";
-import { queueRender } from "../queue";
+import { PatchKey, type Scope } from "../../common/types";
 import { getLoopItem, type LoopItemAt } from "./apply";
-import { patchers, patchScope, setupPatchers, withCreating } from "./apply";
+import { patchers, patchScope } from "./apply";
 
 declare module "./apply" {
   interface PatchValues {
@@ -17,15 +16,3 @@ patchers[PatchKey.LoopItem] = (scope, accessor, value) => {
     if (item) patchScope(value[i + 1] as Scope, item);
   }
 };
-
-// The rows a created scope starts with render in its own renders this run: their
-// entries apply after those, as a creation's (keyed as `queueCompleteAwaitCounter`).
-setupPatchers[PatchKey.LoopItem] = (scope, accessor, value) =>
-  queueRender(
-    scope,
-    () =>
-      withCreating(() => patchers[PatchKey.LoopItem]!(scope, accessor, value)),
-    -1,
-    undefined,
-    scope[AccessorProp.Id] + 1e9,
-  );

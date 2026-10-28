@@ -14,6 +14,7 @@ export const IdFallback = "IdFallback:";
 export const KeyedScopes = "KeyedScopes:";
 export const Lifecycle = "Lifecycle:";
 export const PatchChanged = "PatchChanged:";
+export const PatchCreated = "PatchCreated:";
 export const Promise = "Promise:";
 export const TagVariableChange = "TagVariableChange:";
 export const TryBranch = "TryBranch:";

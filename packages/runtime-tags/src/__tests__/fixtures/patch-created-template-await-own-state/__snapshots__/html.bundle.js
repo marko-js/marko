@@ -20,7 +20,7 @@ var card_default = _template("b", (input) => {
 			}
 		}, $scope1_id, "a");
 		_scope($scope1_id, {});
-	}, 1, 0);
+	}, 1, 0, 0, 0, 1);
 	_script($scope0_id, "b1");
 	_patch_fill($scope0_id, "vb3", n, 1);
 	_scope($scope0_id, {
