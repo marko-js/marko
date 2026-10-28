@@ -15,8 +15,8 @@
       }
     },
     "lazy.mjs": {
-      "min": 810,
-      "brotli": 443
+      "min": 793,
+      "brotli": 438
     },
     "shared": {
       "min": 2126,
