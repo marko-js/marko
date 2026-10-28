@@ -544,9 +544,9 @@ export class PatchRenderState extends PatchPageState {
   public heldCount = 0;
   public pendingShells = "";
   override serializer = new PatchSerializerState(this);
-  // A flush carries every entry rendered so far, and the client creates a
-  // shown `@placeholder` from the shell its render ships.
-  override keepsPendingBodies = true;
+  // A flush carries every entry rendered so far, so a patch never reorders: the
+  // client creates a shown `@placeholder` from the shell its render ships.
+  override writeReorders: State["writeReorders"] = false;
   // The flush's merge tree of patches by scope; `joinFlush` drops it.
   patchTree?: Record<number, Record<string, unknown>>;
   // Every object and array the patch writers built for the flush's tree.
