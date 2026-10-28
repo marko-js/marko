@@ -1255,6 +1255,8 @@ export function getCallerGroupGuard(
   check: HTMLRuntimeHelpers,
   sources: Sources | undefined,
 ) {
+  // Asked at render even where every call gives the group the client's bit:
+  // a patch's mask drops it for functions the scope registers.
   const write = getWriteGroups(section, sources);
   // One caller group's mask-only check hoists, as a write guard does.
   if (

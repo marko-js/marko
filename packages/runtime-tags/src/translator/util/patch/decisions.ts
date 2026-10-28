@@ -103,10 +103,10 @@ function isAssigned(state: Binding) {
   return !!state.assignments;
 }
 
-// The sources take client state: their own (an unassigned `<let>`'s too), or a
-// param every call of its body passes it.
+// The sources include client state: their own (an unassigned `<let>`'s too), or
+// through params every call of their body gives it.
 export function hasClientState(sources: Sources | undefined) {
-  return !!sources?.state || some(sources?.param, isClientAtEveryCall);
+  return !!sources?.state || isClientAtEveryCall(sources?.param);
 }
 
 // A handler written inline merged its references with its control's, so

@@ -1,0 +1,12 @@
+<let/on=true/>
+<define/Show|{ a, b }|>
+  <if=(a || b)>
+    <p>${input.label}</p>
+  </if>
+</define>
+<define/Forward|{ x, y }|>
+  <Show a=x b=y/>
+</define>
+<Forward x=on y=input.flag/>
+<Forward x=input.flag y=on/>
+<button onClick() { on = !on }>toggle</button>

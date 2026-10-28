@@ -9,6 +9,7 @@ import {
   createBinding,
   type ParamBinding,
   getCanonicalBinding,
+  getCanonicalIntersection,
   getDebugNames,
   ensurePropertyAlias,
   getPropertyAlias,
@@ -38,6 +39,7 @@ import {
   type Opt,
   reduce,
   some,
+  type SortedMany,
   type SortedOpt,
   toArray,
 } from "./optional";
@@ -124,6 +126,7 @@ import {
   isSameOrAncestorSection,
   type ParamReasonGroup,
   type ParamReasonGroups,
+  reduceParamGroups,
   type Section,
   sectionUtil,
 } from "./sections";
@@ -868,27 +871,45 @@ function rollUp(
   return true;
 }
 
-// Which calls of the param's body give it the client's bit, as their masks do at
-// render: one passing it client state, or a param of its own such calls give it.
-export const getClientCalls = createPassMemo(
-  (param: ParamBinding): "some" | "every" | undefined => {
-    const body = param.section;
+// Which calls of the body give its params' group the client's bit, as a mask is
+// set at render: client state passed to any of them, or a caller group's bit.
+export function getClientCalls(body: Section, params: ParamReasonGroup) {
+  return getGroupClientCalls(
+    Array.isArray(params)
+      ? getCanonicalIntersection(getParamGroups(), body, params)
+      : params,
+  );
+}
+
+// Some group of the params (each body's) gets the client's bit at every call.
+export function isClientAtEveryCall(params: Sources["param"]) {
+  return reduceParamGroups(params, addEveryCallGroup, false);
+}
+
+// Equal groups of a body's params share one array, the memo's key.
+const [getParamGroups] = createAnalysisState(
+  () => new Map<Section, SortedMany<ParamBinding>[]>(),
+);
+
+const getGroupClientCalls = createPassMemo(
+  (params: ParamReasonGroup): "some" | "every" | undefined => {
+    const body = first(params)!.section;
     // A template's callers are unknown.
     if (!body.parent) return "some";
     if (!body.callSections) return;
     let someCall = false;
-    // A landing read renders the body with input no known call passes.
+    // A read outside known calls may render the body with other input.
     let everyCall = !getDerivedReaders(body.derives!).reads;
     forEach(body.callSections, (callSection) => {
       for (const tagExtra of callSection.knownTags!) {
         if (tagExtra[kChildSection] === body) {
           const passed = reduce(
-            mapParamReasonToExpr(tagExtra[kKnownExprs]!, param),
+            mapParamReasonToExpr(tagExtra[kKnownExprs]!, params),
             mergeAllSourcesForExpr,
           );
           const calls = passed?.state
             ? "every"
-            : reduce(passed?.param, addClientCalls);
+            : reduceParamGroups(passed?.param, addClientCalls, undefined);
           someCall ||= !!calls;
           everyCall &&= calls === "every";
         }
@@ -899,16 +920,21 @@ export const getClientCalls = createPassMemo(
   undefined,
 );
 
-// A call passing several params composes their bits: the client's where any's is.
+// A call composes its caller groups' bits: the client's where any's is.
 function addClientCalls(
   calls: "some" | "every" | undefined,
-  param: ParamBinding,
+  body: Section,
+  params: ParamReasonGroup,
 ) {
-  return calls === "every" ? calls : getClientCalls(param) || calls;
+  return calls === "every" ? calls : getClientCalls(body, params) || calls;
 }
 
-export function isClientAtEveryCall(param: ParamBinding) {
-  return getClientCalls(param) === "every";
+function addEveryCallGroup(
+  every: boolean,
+  body: Section,
+  params: ParamReasonGroup,
+) {
+  return every || getClientCalls(body, params) === "every";
 }
 
 // A known tag rendering another template calls its setup in the section's

@@ -54,6 +54,7 @@ import { getScopeAccessor } from "../scope-accessor";
 import {
   type Section,
   ensureCallerParamGroups,
+  getCallerParamGroupsAt,
   getConditionalCallerGroupsAt,
   isContentRender,
   forEachSection,
@@ -64,6 +65,7 @@ import {
   isSameOrAncestorSection,
   sectionUtil,
   isLoopBody,
+  type ParamReasonGroup,
 } from "../sections";
 import { inCreatedCatch, shipsContentShell } from "../shell";
 import { findSlot, type Slot, SlotKind } from "../slots";
@@ -544,8 +546,8 @@ function mayTakeSeed(binding: Binding) {
     binding.type !== BindingType.dom &&
     binding.type !== BindingType.constant &&
     every(binding.sources?.state, (state) => isFirstState(state, section)) &&
-    // A value of a param every call passes client state comes with the call.
-    !some(binding.sources?.param, isClientAtEveryCall) &&
+    // A value of params every call gives client state comes with the call.
+    !isClientAtEveryCall(binding.sources?.param) &&
     // A branch's own params arrive with its structure.
     !(isSectionParam(binding) && !binding.localOf && !seedsParam(binding)) &&
     // No fill (it ships wherever client code reads the value) and no write.
@@ -1878,10 +1880,11 @@ export function hasTagCallerParamAt(
   sources: Sources | undefined,
   section: Section,
 ) {
-  return some(
-    sources?.param,
-    (param) => isCallerParamAt(param, section) && !!getClientCalls(param),
-  );
+  return getCallerParamGroupsAt(sources?.param, section).some(hasClientCalls);
+}
+
+function hasClientCalls([body, params]: [Section, ParamReasonGroup]) {
+  return !!getClientCalls(body, params);
 }
 
 // A created subscriber of the closure is reached only by subscribing: a read
@@ -1930,7 +1933,7 @@ export const isPatchWrittenJoin = createPassMemo((join: Intersection) => {
     Array.isArray(sources?.param) &&
     hasTagCallerParamAt(sources, section!) &&
     !(
-      some(sources.param, isClientAtEveryCall) &&
+      isClientAtEveryCall(sources.param) &&
       // A member another join reads keeps it written: its key would ship for both.
       every(join, (member) => !readsOtherJoin(member, join))
     )

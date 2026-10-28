@@ -5,6 +5,8 @@ import { ReservedId } from "../../common/types";
 import { toAccess } from "../../html/serializer";
 import * as BindingType from "./constants/binding-type";
 import {
+  addSorted,
+  findSorted,
   mapToString,
   type Opt,
   type SortedMany,
@@ -332,6 +334,27 @@ export function compareIntersections(a: Intersection, b: Intersection) {
   }
 
   return 0;
+}
+
+// The section's one array equal to `intersection`, recorded when new, so equal
+// binding groups are referentially equal.
+export function getCanonicalIntersection<T extends Intersection>(
+  intersectionsBySection: Map<Section, T[]>,
+  section: Section,
+  intersection: T,
+) {
+  const intersections = intersectionsBySection.get(section) || [];
+  const canonical = findSorted(
+    compareIntersections,
+    intersections,
+    intersection,
+  );
+  if (canonical) return canonical;
+  intersectionsBySection.set(
+    section,
+    addSorted(compareIntersections, intersections, intersection),
+  );
+  return intersection;
 }
 
 export function getAliasRoot(binding: Binding) {
