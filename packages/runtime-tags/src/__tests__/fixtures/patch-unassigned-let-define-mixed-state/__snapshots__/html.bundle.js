@@ -1,7 +1,7 @@
 // template.marko
 const $Body_content__walks = "b%c";
 const $Body_content__template = "<!><!><!>";
-_shells({ a: /*@__PURE__*/ (() => `a !a2;${((_w0) => ` D l/${_w0}&b`)($Body_content__walks)};${((_w0) => `<button> </button>${_w0}<!>`)($Body_content__template)}`)() });
+_shells({ a: /*@__PURE__*/ (() => `a !a1;${((_w0) => ` D l/${_w0}&b`)($Body_content__walks)};${((_w0) => `<button> </button>${_w0}<!>`)($Body_content__template)}`)() });
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -19,13 +19,13 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", $wg__a, $wg__a, 0, 0, 1);
-		$wi__a && _scope($scope1_id, {}) || _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "va1", a, !_server_guard($scope1_reason, 0));
+		$wi__a && _scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	Body.content({ a: "" });
 	_patch_child_end();
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		g: k,
 		h: c,

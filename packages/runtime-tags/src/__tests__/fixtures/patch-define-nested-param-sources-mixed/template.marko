@@ -1,0 +1,11 @@
+<let/n=0/>
+<define/Inner|{ v }|>
+  <if=v>
+    <p>${input.label}</p>
+  </if>
+</define>
+<define/Outer|{ a, b }|>
+  <Inner v=(a || b)/>
+</define>
+<Outer a=(n % 2 === 0) b=input.flag/>
+<button onClick() { n++ }>+</button>

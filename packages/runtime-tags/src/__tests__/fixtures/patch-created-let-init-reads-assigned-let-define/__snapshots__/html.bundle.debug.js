@@ -23,7 +23,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
 				_html(`<span>${_text_resume($scope2_id, "#text/0", v + w, 1, $scope2_reason, 0)}</span>`);
-				_client_guard($scope2_reason, 2) && _patch_write($scope2_id, "PatchWrite:v", v, 1);
 				_client_guard($scope2_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_v#3_w#4/init");
 				_scope($scope2_id, {
 					v: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && v,

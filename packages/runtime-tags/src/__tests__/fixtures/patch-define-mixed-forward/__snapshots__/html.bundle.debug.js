@@ -14,11 +14,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<span>${_text_resume($scope1_id, "#text/0", input.a + input.b, 1, $scope1_reason, 0)}</span>`);
 		_scope($scope1_id, {
 			input_a: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 1)) && input.a,
-			input_b: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 2)) && input.b
+			input_b: _unfilled_if($scope1_reason, 1) && input.b
 		}, "__tests__/template.marko", "1:2", {
 			input_a: ["input.a", "1:13"],
 			input_b: ["input.b", "1:13"]
-		}) || (_filled_guard($scope1_reason, 1) && _client_guard($scope1_reason, 2) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", input.a, !_server_guard($scope1_reason, 1)), _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", input.b, !_server_guard($scope1_reason, 2)));
+		}) || _filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", input.b, !_server_guard($scope1_reason, 2));
 	}, $scope0_id) };
 	let s = 1;
 	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);

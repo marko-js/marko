@@ -35,7 +35,7 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 const $template = "<!><!><button class=l>l</button>";
 const $walks = "b%b b";
-const $if_content__fmt__OR__label = /*@__PURE__*/ _fill_join_if("__tests__/tags/rowsx.marko_fill4", "label", /*@__PURE__*/ _fill_join_if("__tests__/tags/rowsx.marko_fill3", "fmt", /*@__PURE__*/ _or_resume("__tests__/tags/rowsx.marko_3_fmt#2:4_label#2:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.fmt($scope._.label))), "#text/0", 0), "#text/0", 0);
+const $if_content__fmt__OR__label = /*@__PURE__*/ _fill_join_if("__tests__/tags/rowsx.marko_fill3", "fmt", /*@__PURE__*/ _or_resume("__tests__/tags/rowsx.marko_3_fmt#2:4_label#2:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.fmt($scope._.label))), "#text/0", 0);
 const $if_content__fmt = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__fmt__OR__label);
 const $if_content__setup = ($scope) => {
 	$if_content__fmt._($scope);
@@ -45,12 +45,12 @@ const $if_content__label = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_content__setup);
 const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen ? 0 : 1);
 const $Panel_content__tag_input_fmt = /*@__PURE__*/ _fill_const("__tests__/tags/rowsx.marko_fill3", "fmt", $if_content__fmt);
-const $Panel_content__tag_input_label = /*@__PURE__*/ _fill_const("__tests__/tags/rowsx.marko_fill4", "label", $if_content__label);
+const $Panel_content__tag_input_label = /*@__PURE__*/ _const("label", $if_content__label);
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => {
+	$Panel_content__tag_input_label($scope, $temp.label);
 	$Panel_content__isOpen($scope, $temp.isOpen);
 	$Panel_content__tag_input_fmt($scope, $temp.fmt);
-	$Panel_content__tag_input_label($scope, $temp.label);
 };
 const $for_content__input_open = /*@__PURE__*/ _init_resume("__tests__/tags/rowsx.marko_1_input_open#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/rowsx.marko_fill0", "input_open", /*@__PURE__*/ _for_closure("#text/0", ($scope) => $Panel_content__isOpen($scope["#childScope/0"], $scope._.input_open))));
 const $for_content__setup = ($scope) => {

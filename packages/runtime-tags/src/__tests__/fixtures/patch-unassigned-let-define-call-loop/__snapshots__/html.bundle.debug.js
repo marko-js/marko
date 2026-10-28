@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe(_unfilled_if((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_w && $input_w__closures, _scope($scope1_id, {
 			v: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope1_reason, 0)) && v,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "2:2", { v: "2:15" }), _client_guard((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 0)) << 1, 0) && "__tests__/template.marko_1_input_w#0:4/subscribe") || _filled_guard($scope1_reason, 0) && _client_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", v, !_server_guard($scope1_reason, 0));
+		}, "__tests__/template.marko", "2:2", { v: "2:15" }), _client_guard((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 0)) << 1, 0) && "__tests__/template.marko_1_input_w#0:4/subscribe");
 	}, $scope0_id) };
 	_for_of(items, (v) => {
 		const $scope2_id = _scope_id();

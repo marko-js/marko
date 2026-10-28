@@ -2,7 +2,6 @@
 // and wire channels belong to ./decisions, ./refresh, ./writers.
 import { type Binding, bindingUtil } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
-import { everyCallPasses } from "../known-tag";
 import { isPatch } from "../marko-config";
 import { every, first, some } from "../optional";
 import {
@@ -12,7 +11,6 @@ import {
 } from "../reasons";
 import { type ReferencedExtra } from "../references";
 import {
-  forEachParamGroup,
   getRendererReason,
   isContentRender,
   getCallerParamGroups,
@@ -110,34 +108,9 @@ export const isStatefulBranch = createPassMemo((section: Section) => {
   return (
     (getStatefulConsumers(section) === "every" &&
       !!getRendererReason(section)) ||
-    (!!expr &&
-      (hasClientState(sources) ||
-        inStatefulBranch(section.parent!) ||
-        isPassedStateByEveryCall(sources)))
+    (!!expr && (hasClientState(sources) || inStatefulBranch(section.parent!)))
   );
 }, false);
-
-// Params of `<define>` bodies that every call passes client state, where nothing
-// else renders the bodies: each group's, or (`anyGroup`) one group's.
-export function isPassedStateByEveryCall(
-  sources: Sources | undefined,
-  anyGroup?: boolean,
-) {
-  let passes = !anyGroup && !!sources?.param;
-  forEachParamGroup(sources?.param, (body, params) => {
-    const { derives } = body;
-    const groupPasses =
-      !!derives &&
-      !someRead(getDerivedReaders(derives), isAnyRead) &&
-      everyCallPasses(body, params, hasClientState);
-    passes = anyGroup ? passes || groupPasses : passes && groupPasses;
-  });
-  return passes;
-}
-
-function isAnyRead() {
-  return true;
-}
 
 // What selects the section: a branch's expression, or the call site
 // expression passing content (an attribute tag item of a param loop).

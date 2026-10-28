@@ -16,7 +16,7 @@ const $Inner_content2__$temp = ($scope, $temp) => {
 	$Inner_content2__open($scope, $temp.open);
 	$Inner_content2__tag_input_content($scope, $temp.content);
 };
-const $Inner_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_title#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", ($scope) => _text($scope["#text/0"], $scope._._.input_title), ($scope) => $scope._._, "__tests__/template.marko_2_input_title#0:4/subscribe"), 0));
+const $Inner_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", ($scope) => _text($scope["#text/0"], $scope._._.input_title), ($scope) => $scope._._, "__tests__/template.marko_2_input_title#0:4/subscribe"), 0);
 const $Inner_content__setup = $Inner_content__input_title;
 const $Inner_content = _content("__tests__/template.marko_2*content", "<em> </em>", "D ", $Inner_content__setup);
 const $Outer_content__setup = ($scope) => $Inner_content2__tag_input_content($scope["#childScope/0"], $Inner_content($scope));

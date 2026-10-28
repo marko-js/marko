@@ -137,6 +137,7 @@ import {
   writeSlot,
 } from "./signals";
 import { findSlot, ensureSlot, SlotKind } from "./slots";
+import { getDerivedReaders } from "./solve-reasons";
 import {
   hasCallerParamSource,
   hasCallerParamSourceAt,
@@ -867,34 +868,47 @@ function rollUp(
   return true;
 }
 
-// Whether some call of the `<define>` body passes the params what `test` holds
-// of: the sources of their call-site expressions.
-export function someCallPasses(
-  body: Section,
-  params: Sources["param"],
-  test: (sources: Sources | undefined) => boolean,
-) {
-  return some(body.callSections, (callSection) =>
-    callSection.knownTags!.some(
-      (tagExtra) =>
-        tagExtra[kChildSection] === body &&
-        test(
-          reduce(
-            mapParamReasonToExpr(tagExtra[kKnownExprs]!, params),
+// Which calls of the param's body give it the client's bit, as their masks do at
+// render: one passing it client state, or a param of its own such calls give it.
+export const getClientCalls = createPassMemo(
+  (param: ParamBinding): "some" | "every" | undefined => {
+    const body = param.section;
+    // A template's callers are unknown.
+    if (!body.parent) return "some";
+    if (!body.callSections) return;
+    let someCall = false;
+    // A landing read renders the body with input no known call passes.
+    let everyCall = !getDerivedReaders(body.derives!).reads;
+    forEach(body.callSections, (callSection) => {
+      for (const tagExtra of callSection.knownTags!) {
+        if (tagExtra[kChildSection] === body) {
+          const passed = reduce(
+            mapParamReasonToExpr(tagExtra[kKnownExprs]!, param),
             mergeAllSourcesForExpr,
-          ),
-        ),
-    ),
-  );
+          );
+          const calls = passed?.state
+            ? "every"
+            : reduce(passed?.param, addClientCalls);
+          someCall ||= !!calls;
+          everyCall &&= calls === "every";
+        }
+      }
+    });
+    return everyCall ? "every" : someCall ? "some" : undefined;
+  },
+  undefined,
+);
+
+// A call passing several params composes their bits: the client's where any's is.
+function addClientCalls(
+  calls: "some" | "every" | undefined,
+  param: ParamBinding,
+) {
+  return calls === "every" ? calls : getClientCalls(param) || calls;
 }
 
-// Whether every call of the `<define>` body passes the params what `test` holds of.
-export function everyCallPasses(
-  body: Section,
-  params: Sources["param"],
-  test: (sources: Sources | undefined) => boolean,
-) {
-  return !someCallPasses(body, params, (sources) => !test(sources));
+export function isClientAtEveryCall(param: ParamBinding) {
+  return getClientCalls(param) === "every";
 }
 
 // A known tag rendering another template calls its setup in the section's

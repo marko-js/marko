@@ -33,10 +33,10 @@ const $Wrapper_content__a = ($scope, a) => $Outer_content__tag_input_x($scope["#
 const $Wrapper_content__b = ($scope, b) => $Outer_content__y($scope["#childScope/0"], b);
 const $Wrapper_content__$params = ($scope, $params6) => $Wrapper_content__$temp($scope, $params6[0]);
 const $Wrapper_content__$temp = ($scope, $temp5) => {
-	$Wrapper_content__a($scope, $temp5.a);
 	$Wrapper_content__b($scope, $temp5.b);
+	$Wrapper_content__a($scope, $temp5.a);
 };
-const $Inner_content__input_label__OR__x__OR__z = /*@__PURE__*/ _fill_join("| __tests__/template.marko_fill1", "x", /*@__PURE__*/ _fill_join("| __tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:4_x#1:4_z#3/init", 4, ($scope) => _text($scope["#text/0"], $scope._._.input_label + $scope._.x + $scope.z), 2)));
+const $Inner_content__input_label__OR__x__OR__z = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill1", "x", /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/0"], $scope._._.input_label + $scope._.x + $scope.z), 2), "input_label/7", 0), "x/8", 0);
 const $Inner_content__input_label = /*@__PURE__*/ _closure_get("input_label/7", $Inner_content__input_label__OR__x__OR__z, ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:4/subscribe");
 const $Inner_content__setup = ($scope) => {
 	$Inner_content__input_label($scope);
@@ -60,8 +60,8 @@ const $Outer_content__tag_input_x__closure = /*@__PURE__*/ _closure($Inner_conte
 const $Outer_content__tag_input_x = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "x", $Outer_content__tag_input_x__closure);
 const $Outer_content__$params = ($scope, $params2) => $Outer_content__$temp($scope, $params2[0]);
 const $Outer_content__$temp = ($scope, $temp) => {
-	$Outer_content__tag_input_x($scope, $temp.x);
 	$Outer_content__y($scope, $temp.y);
+	$Outer_content__tag_input_x($scope, $temp.x);
 };
 const $n = /*@__PURE__*/ _let("n/6", ($scope) => $Wrapper_content__b($scope["#childScope/0"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

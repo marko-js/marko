@@ -13,6 +13,7 @@ import {
 } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
 import { mergeInitSources } from "../finalize-references";
+import { isClientAtEveryCall } from "../known-tag";
 import { isPatch } from "../marko-config";
 import { every, forEach, type Opt, push, reduce, some } from "../optional";
 import {
@@ -102,10 +103,10 @@ function isAssigned(state: Binding) {
   return !!state.assignments;
 }
 
-// The sources take client state: state sources are the client's, an unassigned
-// `<let>`'s included.
+// The sources take client state: their own (an unassigned `<let>`'s too), or a
+// param every call of its body passes it.
 export function hasClientState(sources: Sources | undefined) {
-  return !!sources?.state;
+  return !!sources?.state || some(sources?.param, isClientAtEveryCall);
 }
 
 // A handler written inline merged its references with its control's, so

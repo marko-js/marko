@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_w && $input_w__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope1_reason, 0)) && v,
 			_: _scope_with_id($scope0_id)
-		}), _client_guard((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 0)) << 1, 0) && "a2") || _filled_guard($scope1_reason, 0) && _client_guard($scope0_reason, 1) && _patch_fill($scope1_id, "va1", v, !_server_guard($scope1_reason, 0));
+		}), _client_guard((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 0)) << 1, 0) && "a1");
 	}, $scope0_id) };
 	_for_of(items, (v) => {
 		const $scope2_id = _scope_id();
@@ -28,5 +28,5 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		e: input.w,
 		g: $wi__input_w && $input_w__closures
-	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va3", input.w, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va2", input.w, !_server_guard($scope0_reason, 1));
 }, 1);

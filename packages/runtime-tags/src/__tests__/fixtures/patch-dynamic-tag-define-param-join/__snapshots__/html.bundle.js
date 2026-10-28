@@ -19,7 +19,6 @@ var template_default = _template("a", (input) => {
 			const $scope2_reason = _scope_reason();
 			const b = value + y;
 			_html(`<p>${_text_resume($scope2_id, "a", b, 1, $scope2_reason, 0)}</p>`);
-			_patch_write($scope2_id, "wd", y, 1);
 			_client_guard($scope2_reason, 0) && _patch_init($scope2_id, "a1");
 			_subscribe(_unfilled_if($scope2_reason, 0) && $wi__value && $Outer_content__value__closures, _scope($scope2_id, {
 				d: $wi__value && y,

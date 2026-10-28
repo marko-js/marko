@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, {
 			v: $wi__input_w && v,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "2:2", { v: "2:15" }) || _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", v, !_server_guard($scope1_reason, 0));
+		}, "__tests__/template.marko", "2:2", { v: "2:15" });
 	}, $scope0_id) };
 	_for_of(items, (v) => {
 		const $scope3_id = _scope_id();

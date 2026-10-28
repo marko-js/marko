@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope1_id, {
 			d: $wi__input_w && v,
 			_: _scope_with_id($scope0_id)
-		}) || _filled_guard($scope1_reason, 0) && _patch_fill($scope1_id, "va2", v, !_server_guard($scope1_reason, 0));
+		});
 	}, $scope0_id) };
 	_for_of(items, (v) => {
 		const $scope3_id = _scope_id();
@@ -35,5 +35,5 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		e: input.w,
 		g: $wi__input_w && $input_w__closures
-	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va3", input.w, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va2", input.w, !_server_guard($scope0_reason, 1));
 }, 1);
