@@ -3,7 +3,7 @@ _shells({ a: "a;D ;<div class=a> </div>" });
 var card_a_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div class=a>${_patch_text($scope0_id, "a", input.user.name, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div class=a>${_text_resume($scope0_id, "a", input.user.name, void 0, $scope0_reason, 0)}</div>`);
 	_scope($scope0_id, {});
 });
 
@@ -12,7 +12,7 @@ _shells({ b: "b;D ;<div class=b> </div>" });
 var card_b_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div class=b>${_patch_text($scope0_id, "a", input.user.name, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div class=b>${_text_resume($scope0_id, "a", input.user.name, void 0, $scope0_reason, 0)}</div>`);
 	_scope($scope0_id, {});
 });
 
@@ -30,13 +30,13 @@ var template_default = _template("c", (input) => {
 	const Row = { content: _content_resume("c0", ({ user }) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<p>${_patch_text($scope1_id, "a", user.name)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", user.name, void 0, 4, 0)}</p>`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	const Alt = { content: _content_resume("c1", ({ user }) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_html(`<i>${_patch_text($scope2_id, "a", user.name)}</i>`);
+		_html(`<i>${_text_resume($scope2_id, "a", user.name, void 0, 4, 0)}</i>`);
 		_scope($scope2_id, {});
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "c", input.which ? card_a_default : card_b_default, { user: input.user }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);

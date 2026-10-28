@@ -11,14 +11,14 @@ _shells({
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</h1>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "#text/0", input.value, (v) => {
 				const $scope2_id = _scope_id();
 				let open = false;
-				_html(`<button>${_text_resume($scope2_id, "#text/1", open ? "close" : "open")} ${_patch_text($scope2_id, "#text/2", v, 2, $scope0_reason, 3)}</button>${_el_resume($scope2_id, "#button/0")}`);
+				_html(`<button>${_text_resume($scope2_id, "#text/1", open ? "close" : "open")} ${_text_resume($scope2_id, "#text/2", v, 2, $scope0_reason, 3)}</button>${_el_resume($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill1", open, 1);
 				_scope($scope2_id, { open }, "__tests__/template.marko", "4:6", { open: "5:12" });

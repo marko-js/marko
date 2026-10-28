@@ -12,7 +12,7 @@ var page_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_for_of(ITEMS, (m) => {
 		const $scope1_id = _scope_id();
-		_html(`<span>${_patch_text($scope1_id, "a", m, void 0, 0, 0)}</span>`);
+		_html(`<span>${_text_resume($scope1_id, "a", m, void 0, 0, 0)}</span>`);
 		_if(() => {
 			if (m === "b") {
 				_scope_id();

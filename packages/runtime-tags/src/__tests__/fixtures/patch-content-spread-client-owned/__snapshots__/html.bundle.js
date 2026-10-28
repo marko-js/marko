@@ -19,7 +19,7 @@ var frag_host_default = _template("b", (input) => {
 	const two = { content: _content_resume("b1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<strong>${_patch_text($scope1_id, "a", input.b, void 0, $scope0_reason, 0)}</strong>`);
+		_html(`<strong>${_text_resume($scope1_id, "a", input.b, void 0, $scope0_reason, 0)}</strong>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "b2" : "b3");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id) };

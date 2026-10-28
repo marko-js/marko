@@ -20,12 +20,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_patch_text($scope3_id, "#text/0", label, void 0, $scope2_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "#text/0", label, void 0, $scope2_reason, 2)}</em>`);
 				_scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:4");
 				return 0;
 			}
 		}, $scope2_id, "#text/0", 1, _write_guard($scope2_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 1);
-		_html(`<span>${_patch_text($scope2_id, "#text/1", isOpen ? label : "-", void 0, $scope2_reason, 0)}</span>`);
+		_html(`<span>${_text_resume($scope2_id, "#text/1", isOpen ? label : "-", void 0, $scope2_reason, 0)}</span>`);
 		$cg__label && _patch_write($scope2_id, "PatchMarkedWrite:isOpen", isOpen, !(_filled_guard($scope2_reason, 1) && $cg__label));
 		_patch_join_init($scope2_id, "__tests__/template.marko_2_isOpen#4_label#5/init", $scope2_reason, 0, _filled_guard($scope2_reason, 1) && "isOpen", _filled_guard($scope2_reason, 2) && "label");
 		_scope($scope2_id, {
@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				label: $global$1.brand
 			});
 			_patch_child_end();
-			_html(`<span>${_patch_text($scope1_id, "#text/2", $global$1.brand)}</span>`);
+			_html(`<span>${_text_resume($scope1_id, "#text/2", $global$1.brand, void 0, 4, 0)}</span>`);
 			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:17", $scope1_id);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_show#0:5/init");
 			_scope($scope1_id, {

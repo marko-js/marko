@@ -16,7 +16,7 @@ var child_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	const x = input.a + input.c;
-	_html(`<p>${_patch_text($scope0_id, "b", x, void 0, $scope0_reason, 0)}</p><button class=t>t</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<p>${_text_resume($scope0_id, "b", x, void 0, $scope0_reason, 0)}</p><button class=t>t</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");
 	$cg__input_a && _patch_write($scope0_id, "xg", input.c, !(_filled_guard($scope0_reason, 2) && $cg__input_a));
 	_patch_join_init($scope0_id, "b2", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "f", _filled_guard($scope0_reason, 2) && "g");

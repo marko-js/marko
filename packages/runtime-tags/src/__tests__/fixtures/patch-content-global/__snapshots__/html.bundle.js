@@ -6,7 +6,7 @@ _shells({ b: "b;E l%;<section><span> </span><!></section>" });
 var widget_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><span>${_patch_text($scope0_id, "a", input.value, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<section><span>${_text_resume($scope0_id, "a", input.value, void 0, $scope0_reason, 0)}</span>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</section>");
 	_scope($scope0_id, {});
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<div>${_patch_text($scope1_id, "a", $global$1.brand)}</div>`);
+			_html(`<div>${_text_resume($scope1_id, "a", $global$1.brand, void 0, 4, 0)}</div>`);
 			_fill_global_subscribe("a0", $scope1_id);
 			_scope($scope1_id, {});
 		}, $scope0_id)

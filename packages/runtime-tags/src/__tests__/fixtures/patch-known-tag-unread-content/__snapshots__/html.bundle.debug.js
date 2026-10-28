@@ -20,6 +20,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
 	static_child_default({});
 	_patch_child_end();
-	_html(`<p>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

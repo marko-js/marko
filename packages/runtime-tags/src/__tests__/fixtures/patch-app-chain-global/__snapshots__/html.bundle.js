@@ -40,7 +40,7 @@ var page_b_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	const [q, issues] = $global().search;
 	let count = 0;
-	_html(`<button class=b>b:${_patch_text($scope0_id, "b", q, 2)}:${_patch_text($scope0_id, "c", issues ? "!" : "", 2)}:${_text_resume($scope0_id, "d", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=b>b:${_text_resume($scope0_id, "b", q, 2, 4, 0)}:${_text_resume($scope0_id, "c", issues ? "!" : "", 2, 4, 0)}:${_text_resume($scope0_id, "d", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_fill_global_subscribe("c0", $scope0_id);
 	_script($scope0_id, "c1");
 	_patch_fill($scope0_id, "vc2", count, 1);

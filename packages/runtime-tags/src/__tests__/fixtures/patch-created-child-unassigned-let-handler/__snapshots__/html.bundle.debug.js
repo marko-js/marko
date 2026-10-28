@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let x = input.foo;
 	let count = 0;
-	_html(`<em>${_patch_text($scope0_id, "#text/0", count, void 0, 0, 0, 1)}</em><button>set</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", count, void 0, 0, 0, 1)}</em><button>set</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_x_length#6");
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:x_length", x?.length, 1);
 	_scope($scope0_id, { x_length: x?.length }, "__tests__/tags/child.marko", 0, { x_length: ["x.length", "1:6"] });

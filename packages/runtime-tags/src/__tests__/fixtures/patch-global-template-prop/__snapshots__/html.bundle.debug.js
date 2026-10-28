@@ -7,7 +7,7 @@ var other_default = _template("__tests__/tags/other.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<i>user=${_patch_text($scope0_id, "#text/0", $global$1.user, 2)}</i>`);
+	_html(`<i>user=${_text_resume($scope0_id, "#text/0", $global$1.user, 2, 4, 0)}</i>`);
 	_fill_global_subscribe("__tests__/tags/other.marko_0_$global_user#4", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/tags/other.marko", 0);
 });
@@ -22,7 +22,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div>");
 	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
-	_html(`<b>${_patch_text($scope0_id, "#text/1", input.n, void 0, $scope0_reason, 1)}</b></div>`);
+	_html(`<b>${_text_resume($scope0_id, "#text/1", input.n, void 0, $scope0_reason, 1)}</b></div>`);
 	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

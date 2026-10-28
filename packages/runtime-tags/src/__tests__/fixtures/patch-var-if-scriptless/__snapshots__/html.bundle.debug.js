@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/child.marko": "^__tests__/tags/child.marko;D ;<span> <
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</span>`);
 	const $return = input.label + "!";
 	_scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 	return $return;
@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let x = child_default({ label: input.label });
 			$cg__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_x#3/var");
 			_patch_child_end();
-			_html(`<p>${_patch_text($scope1_id, "#text/2", x, void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/2", x, void 0, $scope0_reason, 1)}</p>`);
 			$cg__input_label && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:4/init");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),

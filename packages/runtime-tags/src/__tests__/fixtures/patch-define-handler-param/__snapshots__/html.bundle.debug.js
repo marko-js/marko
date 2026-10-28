@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Card = { content: _content("__tests__/template.marko_1*content", ({ id }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<h1>Product ${_patch_text($scope1_id, "#text/0", id, 2, $scope1_reason, 0)}</h1><button>Add to cart</button>${_el_resume($scope1_id, "#button/1")}`);
+		_html(`<h1>Product ${_text_resume($scope1_id, "#text/0", id, 2, $scope1_reason, 0)}</h1><button>Add to cart</button>${_el_resume($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {
 			id,

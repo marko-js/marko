@@ -6,7 +6,7 @@ _shells({ b: "b; E lD ;<section><h2> </h2><p> </p></section>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section${_attr_class(input.klass, $scope0_id, "a", $scope0_reason, 0)}><h2>${_patch_text($scope0_id, "b", input.title, void 0, $scope0_reason, 1)}</h2><p>${_patch_text($scope0_id, "c", input.note, void 0, $scope0_reason, 2)}</p></section>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
+	_html(`<section${_attr_class(input.klass, $scope0_id, "a", $scope0_reason, 0)}><h2>${_text_resume($scope0_id, "b", input.title, void 0, $scope0_reason, 1)}</h2><p>${_text_resume($scope0_id, "c", input.note, void 0, $scope0_reason, 2)}</p></section>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
 	_scope($scope0_id, {});
 });
 

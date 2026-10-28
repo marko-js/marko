@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_await($scope2_id, "a", input.a, (a) => {
 				const $scope5_id = _scope_id();
-				_html(`<b>${_patch_text($scope5_id, "a", a, void 0, $scope0_reason, 1)}</b>`);
+				_html(`<b>${_text_resume($scope5_id, "a", a, void 0, $scope0_reason, 1)}</b>`);
 				_scope($scope5_id, {});
 			}, 1, "a1", 1);
 			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_a ? "a8" : "a9");
@@ -33,12 +33,12 @@ var template_default = _template("a", (input) => {
 		}, void 0, (err) => {
 			_scope_reason();
 			const $scope4_id = _scope_id();
-			_html(`<s>${_patch_text($scope4_id, "a", err.message)}</s>`);
+			_html(`<s>${_text_resume($scope4_id, "a", err.message, void 0, 4, 0)}</s>`);
 			_scope($scope4_id, {});
 		}, void 0, "a2", "a5", 1, 1, 1);
 		_await($scope1_id, "b", input.b, (b) => {
 			const $scope6_id = _scope_id();
-			_html(`<em>${_patch_text($scope6_id, "a", b, void 0, $scope0_reason, 2)}</em>`);
+			_html(`<em>${_text_resume($scope6_id, "a", b, void 0, $scope0_reason, 2)}</em>`);
 			_scope($scope6_id, {});
 		}, 1, "a0", 1);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_b ? "a10" : "a11");

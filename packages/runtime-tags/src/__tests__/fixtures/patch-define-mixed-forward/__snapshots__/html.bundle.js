@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	const Kid = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<span>${_patch_text($scope1_id, "a", input.a + input.b, void 0, $scope1_reason, 0)}</span>`);
+		_html(`<span>${_text_resume($scope1_id, "a", input.a + input.b, void 0, $scope1_reason, 0)}</span>`);
 		_scope($scope1_id, {
 			d: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 1)) && input.a,
 			e: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 2)) && input.b

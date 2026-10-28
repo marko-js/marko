@@ -17,7 +17,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			_filled_guard($scope0_reason, 2) ? _patch_fill($scope1_id, "PatchFill:__tests__/tags/panel.marko_fill3", a) : _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_x#0:5/init");
 			const b = input.y + "b";
 			_filled_guard($scope0_reason, 3) ? _patch_fill($scope1_id, "PatchFill:__tests__/tags/panel.marko_fill4", b) : _patch_init($scope1_id, "__tests__/tags/panel.marko_1_input_y#0:6/init");
-			_html(`<p>${_text_resume($scope1_id, "#text/0", a + count)}</p><p>${_text_resume($scope1_id, "#text/1", b + count)}</p><em>${_patch_text($scope1_id, "#text/2", a + b, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", a + count)}</p><p>${_text_resume($scope1_id, "#text/1", b + count)}</p><em>${_text_resume($scope1_id, "#text/2", a + b, void 0, $scope0_reason, 0)}</em>`);
 			_patch_join_init($scope1_id, "__tests__/tags/panel.marko_1_a#3_b#5/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && "a", _filled_guard($scope0_reason, 3) && "b");
 			_scope($scope1_id, {
 				a,

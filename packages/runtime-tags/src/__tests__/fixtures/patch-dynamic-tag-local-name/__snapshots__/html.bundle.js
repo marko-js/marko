@@ -4,7 +4,7 @@ var alpha_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<i>A ${_patch_text($scope0_id, "a", $global$1.brand, 2)}</i>`);
+	_html(`<i>A ${_text_resume($scope0_id, "a", $global$1.brand, 2, 4, 0)}</i>`);
 	_fill_global_subscribe("b0", $scope0_id);
 	_scope($scope0_id, {});
 });
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 1;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><button>+</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><button>+</button>${_el_resume($scope0_id, "b")}`);
 	_set_scope_reason(2);
 	const $childScope = _patch_child($scope0_id, "c", 0);
 	child_default({ value: n });

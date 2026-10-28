@@ -10,7 +10,7 @@ var panel_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<em>${_patch_text($scope1_id, "a", item, void 0, $scope0_reason, 0)}:${_patch_text($scope1_id, "b", input.n, 2, $scope0_reason, 1)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", item, void 0, $scope0_reason, 0)}:${_text_resume($scope1_id, "b", input.n, 2, $scope0_reason, 1)}</em>`);
 		_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b0");
 		_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b1", $scope0_reason, 0);

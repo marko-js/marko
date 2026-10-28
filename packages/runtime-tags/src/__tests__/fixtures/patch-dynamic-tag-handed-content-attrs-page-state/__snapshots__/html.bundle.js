@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		content: _content_resume("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`A${_patch_text($scope1_id, "a", input.y, 2, $scope0_reason, 0)}`);
+			_html(`A${_text_resume($scope1_id, "a", input.y, 2, $scope0_reason, 0)}`);
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_y__closures, _scope($scope1_id, { _: $wi__input_y && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a0");
 		}, $scope0_id)
 	});

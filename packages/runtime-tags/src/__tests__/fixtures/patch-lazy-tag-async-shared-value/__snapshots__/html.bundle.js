@@ -43,7 +43,7 @@ var template_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.promise, (value) => {
 			const $scope2_id = _scope_id();
-			_html(`<span>${_patch_text($scope2_id, "a", value, void 0, $scope0_reason, 2)}</span>`);
+			_html(`<span>${_text_resume($scope2_id, "a", value, void 0, $scope0_reason, 2)}</span>`);
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
 			const $childScope2 = _patch_child($scope2_id, "c", 1);
 			$Child_withLoadAssets({

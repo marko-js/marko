@@ -17,7 +17,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 	_try($scope0_id, "#text/0", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_patch_text($scope2_id, "#text/0", input.fail ? boom() : "ok", void 0, $scope0_reason, 2)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", input.fail ? boom() : "ok", void 0, $scope0_reason, 2)}</p>`);
 		_dynamic_tag($scope2_id, "#text/1", input.content, {}, 10, 0, 0, $wg__input_content, $scope0_reason, 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, _client_guard($scope0_reason, 1) ? "__tests__/tags/wrapper.marko_2_input_content#0:3/init" : "__tests__/tags/wrapper.marko_2_input_content#0:3/subscribe");
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_fail ? "__tests__/tags/wrapper.marko_2_input_fail#0:4/init" : "__tests__/tags/wrapper.marko_2_input_fail#0:4/subscribe");
@@ -58,14 +58,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const A = { content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>A ${_patch_text($scope1_id, "#text/0", input.label, 2, $scope0_reason, 1)}</em>`);
+		_html(`<em>A ${_text_resume($scope1_id, "#text/0", input.label, 2, $scope0_reason, 1)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_label ? "__tests__/template.marko_1_input_label#0:5/init" : "__tests__/template.marko_1_input_label#0:5/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"));
 	}, $scope0_id) };
 	const B = { content: _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<i>B ${_patch_text($scope2_id, "#text/0", input.label, 2, $scope0_reason, 1)}</i>`);
+		_html(`<i>B ${_text_resume($scope2_id, "#text/0", input.label, 2, $scope0_reason, 1)}</i>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_label ? "__tests__/template.marko_2_input_label#0:5/init" : "__tests__/template.marko_2_input_label#0:5/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),

@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	const Info = { content: _content("a0", ({ id }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<p>${_patch_text($scope2_id, "a", id, void 0, $scope2_reason, 0)}:${_text_resume($scope2_id, "b", count, 2)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "a", id, void 0, $scope2_reason, 0)}:${_text_resume($scope2_id, "b", count, 2)}</p>`);
 		_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), "a1");
 	}, $scope0_id) };
 	_if(() => {

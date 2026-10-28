@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_attr_select_value($scope0_id, "#select/0", v, _resume((_new_v) => {
 		v = _new_v;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id), () => {
-		_html(`<select><option${_patch_attrs(input.a, "#option/1", $scope0_id, "option", void 0, $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/2", input.label, void 0, $scope0_reason, 1)}</option>${_el_resume($scope0_id, "#option/1")}<option${_attr_option_value("b")}>b</option><option${_patch_attrs({
+		_html(`<select><option${_patch_attrs(input.a, "#option/1", $scope0_id, "option", void 0, $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/2", input.label, void 0, $scope0_reason, 1)}</option>${_el_resume($scope0_id, "#option/1")}<option${_attr_option_value("b")}>b</option><option${_patch_attrs({
 			value: "c",
 			...input.c
 		}, "#option/3", $scope0_id, "option", void 0, $scope0_reason, 2)}>c</option>${_el_resume($scope0_id, "#option/3")}</select>`);

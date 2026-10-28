@@ -7,7 +7,7 @@ var field_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("A");
-	_html(`<label${_attr("for", uid, $scope0_id, "a", $scope0_reason, 0)}>${_patch_text($scope0_id, "b", input.name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "c", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "c", $scope0_reason, 2)}>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 2))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "a", $scope0_reason, 0)}>${_text_resume($scope0_id, "b", input.name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "c", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "c", $scope0_reason, 2)}>${_el_resume($scope0_id, "c", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 2))}`);
 	_scope($scope0_id, {});
 });
 
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_await($scope3_id, "a", row.promise, (v) => {
 				const $scope4_id = _scope_id();
-				_html(`<p>${_patch_text($scope4_id, "a", v, void 0, $scope0_reason, 0)}</p>`);
+				_html(`<p>${_text_resume($scope4_id, "a", v, void 0, $scope0_reason, 0)}</p>`);
 				_scope($scope4_id, {});
 			}, 1, "a0");
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, $cg__input_rows ? "a5" : "a6");

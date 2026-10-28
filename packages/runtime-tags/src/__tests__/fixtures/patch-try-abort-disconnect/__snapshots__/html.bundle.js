@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.a, (v) => {
 			const $scope4_id = _scope_id();
-			_html(`<p>A:${_patch_text($scope4_id, "a", v, 2, $scope0_reason, 0)}</p>`);
+			_html(`<p>A:${_text_resume($scope4_id, "a", v, 2, $scope0_reason, 0)}</p>`);
 			_scope($scope4_id, {});
 		}, 1, "a0", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_a ? "a5" : "a6");

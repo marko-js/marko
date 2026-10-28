@@ -3,7 +3,7 @@ _shells({ a: "a;D ;<b> </b>" });
 var counter_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<b>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</b>`);
 	_scope($scope0_id, {});
 });
 
@@ -16,7 +16,7 @@ var lazy_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb1", count, 1);
 	_scope($scope0_id, { g: count });
@@ -29,7 +29,7 @@ _shells({ c: /*@__PURE__*/ (() => `c${_shell_marker($setup$2)};${((_w0) => `D l%
 var other_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<i>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</i>`);
+	_html(`<i>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</i>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "c", 0);
 	$Lazy_withLoadAssets({ label: input.label });

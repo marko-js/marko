@@ -7,7 +7,7 @@ var store_default = _template("__tests__/tags/store.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let last = 0;
-	_html(`<p>${_patch_text($scope0_id, "#text/0", last, void 0, 0, 0, 1)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", last, void 0, 0, 0, 1)}</p>`);
 	const $return = _resume((next) => {
 		last = next;
 	}, "__tests__/tags/store.marko_0/_return", $scope0_id);

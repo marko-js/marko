@@ -7,7 +7,7 @@ var alpha_default = _template("__tests__/tags/alpha.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<i>A ${_patch_text($scope0_id, "#text/0", $global$1.brand, 2)}</i>`);
+	_html(`<i>A ${_text_resume($scope0_id, "#text/0", $global$1.brand, 2, 4, 0)}</i>`);
 	_fill_global_subscribe("__tests__/tags/alpha.marko_0_$global_brand#4", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/tags/alpha.marko", 0);
 });
@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 1;
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1><button>+</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1><button>+</button>${_el_resume($scope0_id, "#button/1")}`);
 	_set_scope_reason(2);
 	const $childScope = _patch_child($scope0_id, "#childScope/2", 0);
 	child_default({ value: n });

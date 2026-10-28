@@ -17,7 +17,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_filled_guard($scope0_reason, 3) ? _patch_fill($scope1_id, "PatchFill:__tests__/tags/child.marko_fill3", x) : _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5/init");
 			const y = input.b + "?";
 			_filled_guard($scope0_reason, 4) ? _patch_fill($scope1_id, "PatchFill:__tests__/tags/child.marko_fill4", y) : _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_b#0:6/init");
-			_html(`<p>${_text_resume($scope1_id, "#text/0", x + y + m)}</p><em>${_patch_text($scope1_id, "#text/1", input.a + input.b, void 0, $scope0_reason, 1)}</em><button class=m>m</button>${_el_resume($scope1_id, "#button/2")}`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", x + y + m)}</p><em>${_text_resume($scope1_id, "#text/1", input.a + input.b, void 0, $scope0_reason, 1)}</em><button class=m>m</button>${_el_resume($scope1_id, "#button/2")}`);
 			_script($scope1_id, "__tests__/tags/child.marko_1");
 			_patch_join_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_input_b#0:6/init", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && ">input_a", _filled_guard($scope0_reason, 4) && ">input_b");
 			_patch_fill($scope1_id, "PatchFill:__tests__/tags/child.marko_fill2", m, 1);

@@ -13,13 +13,13 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_patch_text($scope1_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 2)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 2)}</p>`);
 			_patch_join_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:4_input_b#0:8/init", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && ">input_a", _filled_guard($scope0_reason, 7) && ">input_b");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 6), void 0, void 0, void 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 6);
-	_html(`<em>${_patch_text($scope0_id, "#text/1", c, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/1", c, void 0, $scope0_reason, 0)}</em>`);
 	_filled_guard($scope0_reason, 4) && $cg__input_show ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0/unpatched", input.a) : _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !(_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 5) || _client_guard($scope0_reason, 7))));
 	$cg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_d", input.d, !(_filled_guard($scope0_reason, 5) && $cg__input_a));
 	_filled_guard($scope0_reason, 7) && $cg__input_show ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill1/unpatched", input.b) : _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !(_filled_guard($scope0_reason, 7) && $cg__input_a));

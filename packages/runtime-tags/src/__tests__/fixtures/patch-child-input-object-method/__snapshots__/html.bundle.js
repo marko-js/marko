@@ -9,7 +9,7 @@ var code_block_default = _template("b", (input) => {
 	const highlight = _bind_resume(function(text) {
 		return text.replace(input.cursor.test, (m) => `<b>${input.cursor.content((s) => s)}</b>`);
 	}, "b0", $scope0_id);
-	_html(`<div>${_patch_html($scope0_id, "a", highlight(input.text), void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div>${_html_resume($scope0_id, "a", highlight(input.text), void 0, $scope0_reason, 0)}</div>`);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b3");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.cursor,

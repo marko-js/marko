@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const foo = { content: _content("__tests__/template.marko_1*content", (n) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wi__n = _write_if($scope1_reason, 0);
-		_html(`<b>${_patch_text($scope1_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</b>`);
+		_html(`<b>${_text_resume($scope1_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</b>`);
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();

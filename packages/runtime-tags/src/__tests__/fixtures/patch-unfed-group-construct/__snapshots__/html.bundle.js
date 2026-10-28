@@ -8,7 +8,7 @@ var kid_default = _template("b", (input) => {
 	_write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let on = false;
-	_html(`<div>${_patch_text($scope0_id, "a", input.a, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", input.a, void 0, $scope0_reason, 0)}</div>`);
 	_if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_html(`<button>t</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");

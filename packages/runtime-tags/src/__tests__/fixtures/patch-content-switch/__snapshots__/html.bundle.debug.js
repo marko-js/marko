@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			} else if (input.kind === "b") {
 				const $scope2_id = _scope_id();
-				_html(`<i>B:${_patch_text($scope2_id, "#text/0", input.kind, 2, $scope0_reason, 0)}</i>`);
+				_html(`<i>B:${_text_resume($scope2_id, "#text/0", input.kind, 2, $scope0_reason, 0)}</i>`);
 				$cg__input_kind && _patch_init($scope2_id, "__tests__/template.marko_2_input_kind#0:5/init");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_kind__closures, _scope($scope2_id, {
 					_: $wi__input_kind && _scope_with_id($scope1_id),

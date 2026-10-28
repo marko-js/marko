@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			_await($scope1_id, "a", input.promise, (v) => {
 				const $scope2_id = _scope_id();
 				let open = false;
-				_html(`<button>${_patch_text($scope2_id, "b", v, void 0, $scope0_reason, 2)} ${_text_resume($scope2_id, "c", "open", 2)}</button>${_el_resume($scope2_id, "a")}`);
+				_html(`<button>${_text_resume($scope2_id, "b", v, void 0, $scope0_reason, 2)} ${_text_resume($scope2_id, "c", "open", 2)}</button>${_el_resume($scope2_id, "a")}`);
 				_script($scope2_id, "a0");
 				_patch_fill($scope2_id, "va1", open, 1);
 				_scope($scope2_id, { f: open });

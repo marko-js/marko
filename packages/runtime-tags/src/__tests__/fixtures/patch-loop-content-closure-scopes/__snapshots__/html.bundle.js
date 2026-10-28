@@ -6,7 +6,7 @@ _shells({ b: "b;E lD%;<div class=panel><h4> </h4><div class=body><!></div></div>
 var panel_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div class=panel><h4>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</h4><div class=body>`);
+	_html(`<div class=panel><h4>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</h4><div class=body>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</div></div>");
 	_scope($scope0_id, {});
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			content: _content_elide("a1", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<p>${_patch_text($scope2_id, "a", p.text, void 0, $scope0_reason, 0)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "a", p.text, void 0, $scope0_reason, 0)}</p>`);
 				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "a0");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: $wi__input_panels && _scope_with_id($scope1_id) }));
 			}, $scope1_id)

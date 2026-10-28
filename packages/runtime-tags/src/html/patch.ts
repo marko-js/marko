@@ -38,6 +38,7 @@ export {
   _content_resume,
   _dynamic_tag,
 } from "./patches/dynamic-tag";
+export { _html_resume, _text_resume } from "./patches/content";
 export { _template_patch as _template } from "./patches/template";
 export {
   _existing_scope,
@@ -58,12 +59,7 @@ export {
   _patch_attrs_partial,
   _patch_attrs_partial_content,
 } from "./patches/attrs";
-export {
-  _patch_html,
-  _patch_style,
-  _patch_text,
-  _patch_text_content,
-} from "./patches/content";
+export { _patch_style, _patch_text_content } from "./patches/content";
 export { _content_withheld, _stateful_return } from "./patches/dynamic-tag";
 export { _shell_marker, _shell_setup, _shells } from "./patches/shells";
 export { patchRequestKind, patchResponseHeaders } from "./patches/template";

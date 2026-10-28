@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
 	let count = 0;
-	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</p><input${_attr_input_value($scope0_id, "#input/1", input.label, _bind_resume(function(v) {
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</p><input${_attr_input_value($scope0_id, "#input/1", input.label, _bind_resume(function(v) {
 		console.log(v + ":" + input.label);
 	}, "__tests__/template.marko_0/valueChange", $scope0_id), 1, $scope0_reason, 0, 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/1")}`);
 	_if(() => {

@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", input.wrap ? card_default : "div", {}, 2, _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
-			_html(`<b>${_patch_text($scope2_id, "#text/0", row.label, void 0, $scope0_reason, 1)}</b>`);
+			_html(`<b>${_text_resume($scope2_id, "#text/0", row.label, void 0, $scope0_reason, 1)}</b>`);
 			_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_rows ? "__tests__/template.marko_2_row_label#1:3/init" : "__tests__/template.marko_2_row_label#1:3/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__row_label__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_wrap && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
 		}, $scope1_id, ($scope) => $scope0_page ? [{ row_label: row?.label }] : []), 0, $wg__input_wrap, $scope0_reason, 2);

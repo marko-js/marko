@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_patch_text($scope3_id, "#text/0", label, void 0, $scope0_reason, 1)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "#text/0", label, void 0, $scope0_reason, 1)}</em>`);
 				_client_guard($scope0_reason, 1) && _patch_init($scope3_id, "__tests__/template.marko_3_label#1:4/init");
 				_scope($scope3_id, { _: $wi__input_label && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4");
 				return 0;

@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", Foo, {}, 10, _content_resume("a4", () => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
-		_html(`count ${_patch_text($scope3_id, "a", count, 2, 0, 0)}`);
+		_html(`count ${_text_resume($scope3_id, "a", count, 2, 0, 0)}`);
 		_scope($scope3_id, {});
 	}, $scope0_id, ($scope) => [{ e: count }]), 0, 0, 0, 0);
 }, 1);

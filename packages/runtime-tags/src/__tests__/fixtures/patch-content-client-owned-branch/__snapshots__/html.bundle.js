@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 		body: attrTag({ content: _content_resume("a2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_patch_text($scope1_id, "a", input.title, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "a", input.title, void 0, $scope0_reason, 0)}</em>`);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "a0" : "a1");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		}, $scope0_id) })

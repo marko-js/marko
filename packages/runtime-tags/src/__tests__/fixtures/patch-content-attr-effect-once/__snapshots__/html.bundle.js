@@ -10,7 +10,7 @@ var host_default = _template("b", (input) => {
 	const extra = { content: _content_resume("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<em>${_patch_text($scope1_id, "a", input.label, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", input.label, void 0, $scope0_reason, 0)}</em>`);
 		_script($scope1_id, "b1");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, _client_guard($scope0_reason, 0) ? "b2" : "b3");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));

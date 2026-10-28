@@ -6,7 +6,7 @@ _shells({ b: "b;D l%;<p> </p><!><!>" });
 var widget_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</p>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_scope($scope0_id, {});
 });
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 						content: _content_elide("a1", () => {
 							_scope_reason();
 							const $scope3_id = _scope_id();
-							_html(`<em>${_patch_text($scope3_id, "a", input.text, void 0, $scope0_reason, 6)}</em>`);
+							_html(`<em>${_text_resume($scope3_id, "a", input.text, void 0, $scope0_reason, 6)}</em>`);
 							_client_guard($scope0_reason, 6) && _patch_init($scope3_id, "a0");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope2_id) }));
 						}, $scope2_id)

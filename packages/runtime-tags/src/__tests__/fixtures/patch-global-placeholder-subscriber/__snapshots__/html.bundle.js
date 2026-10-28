@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.promise, (value) => {
 			const $scope3_id = _scope_id();
-			_html(`<em>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_resume($scope3_id, "a", value, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a2", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "a5" : "a6");

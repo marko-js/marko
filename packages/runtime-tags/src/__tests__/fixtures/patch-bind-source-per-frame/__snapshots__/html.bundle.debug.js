@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureSignalIndex:handler/11": $wi__input_title && 1
 		}, "__tests__/template.marko", "7:4", { "EventAttributes:#button/0": ["...{ title: input.title, onClick: handler }", "8:25"] }), $cg__input_title && "__tests__/template.marko_2_input_title#0:5/subscribe"), $cg__input_title && "__tests__/template.marko_2_handler#0:9/subscribe");
 	}, 1, "__tests__/template.marko_2*content", 1, 1);
-	_html(`<em>${_patch_text($scope0_id, "#text/2", count, void 0, 0, 0)}</em></main>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/2", count, void 0, 0, 0)}</em></main>`);
 	_scope($scope0_id, {
 		input_title: input.title,
 		"ClosureScopes:input_title/10": $wi__input_title && $input_title__closures,

@@ -16,7 +16,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_for_of(list, (item) => {
 			const $scope2_id = _scope_id();
-			_html(`<a>${_patch_text($scope2_id, "#text/0", item, void 0, $scope0_reason, 0)}</a>`);
+			_html(`<a>${_text_resume($scope2_id, "#text/0", item, void 0, $scope0_reason, 0)}</a>`);
 			_scope($scope2_id, {}, "__tests__/layout.marko", "3:6");
 		}, 0, $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/layout.marko_2*shell", $scope0_reason, 0);
 		_scope($scope1_id, {}, "__tests__/layout.marko", "2:4");
@@ -39,7 +39,7 @@ var page_a_default = _template("__tests__/page-a.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<h1>A</h1><p>${_patch_text($scope0_id, "#text/0", input.note, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<h1>A</h1><p>${_text_resume($scope0_id, "#text/0", input.note, void 0, $scope0_reason, 0)}</p>`);
 	_if(() => {
 		if (input.wide) {
 			const $scope1_id = _scope_id();
@@ -62,7 +62,7 @@ _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko;E l%;<section>
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2>`);
+	_html(`<section><h2>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</section>");
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
@@ -94,7 +94,7 @@ var page_b_default = _template("__tests__/page-b.marko", (input) => {
 			content: _content_elide("__tests__/page-b.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<span>${_patch_text($scope2_id, "#text/0", p, void 0, $scope0_reason, 0)}/${_text_resume($scope2_id, "#text/1", count, 2)}/${_patch_text($scope2_id, "#text/2", item, 2, 0, 0)}</span>`);
+				_html(`<span>${_text_resume($scope2_id, "#text/0", p, void 0, $scope0_reason, 0)}/${_text_resume($scope2_id, "#text/1", count, 2)}/${_text_resume($scope2_id, "#text/2", item, 2, 0, 0)}</span>`);
 				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/page-b.marko_2_p#0:7/init");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $p__closures, _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/page-b.marko", "5:4")));
 			}, $scope1_id)

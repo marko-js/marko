@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.on ? "section" : "article", { class: input.label }, 1, _content_elide("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(_patch_text($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 2));
+		_html(_text_resume($scope1_id, "#text/0", input.label, void 0, $scope0_reason, 2));
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_label ? "__tests__/template.marko_1_input_label#0:6/init" : "__tests__/template.marko_1_input_label#0:6/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
 	}, $scope0_id), 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);

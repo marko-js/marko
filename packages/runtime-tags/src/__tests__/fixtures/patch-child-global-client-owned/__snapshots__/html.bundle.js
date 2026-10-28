@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 		body: attrTag({ content: _content_resume("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_patch_text($scope1_id, "a", $global$1.brand)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "a", $global$1.brand, void 0, 4, 0)}</em>`);
 			_fill_global_subscribe("a0", $scope1_id);
 			_scope($scope1_id, {});
 		}, $scope0_id) })

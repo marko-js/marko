@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/field/index.marko": "__tests__/tags/field/index.marko 
 var field_default = _template("__tests__/tags/field/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange, 1, $scope0_reason, 0, 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_patch_text($scope0_id, "#text/1", input.value, void 0, $scope0_reason, 1)}</em>`);
+	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange, 1, $scope0_reason, 0, 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/0")}<em>${_text_resume($scope0_id, "#text/1", input.value, void 0, $scope0_reason, 1)}</em>`);
 	_script($scope0_id, "__tests__/tags/field/index.marko_0");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/field/index.marko_0_input_value#4_input_valueChange#5/init");
 	_scope($scope0_id, {

@@ -4,7 +4,7 @@ _shells({ b: "b;D%c%;<span><!> <!></span>" });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_patch_text($scope0_id, "a", input.message, void 0, $scope0_reason, 0)} ${_patch_text($scope0_id, "b", input.count, 2, $scope0_reason, 1)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", input.message, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "b", input.count, 2, $scope0_reason, 1)}</span>`);
 	_scope($scope0_id, {});
 });
 
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	_try($scope0_id, "c", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<p>${_patch_text($scope1_id, "a", input.fail ? boom(input.msg) : input.msg, void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", input.fail ? boom(input.msg) : input.msg, void 0, $scope0_reason, 0)}</p>`);
 		(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "a1");
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "a2");
 		_patch_join_init($scope1_id, "a3", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">f", _filled_guard($scope0_reason, 2) && ">g");

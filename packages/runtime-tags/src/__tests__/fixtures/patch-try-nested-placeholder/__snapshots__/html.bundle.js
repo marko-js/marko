@@ -22,13 +22,13 @@ var template_default = _template("a", (input) => {
 			_try($scope3_id, "a", () => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
-				_html(`<span>${_patch_text($scope4_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
+				_html(`<span>${_text_resume($scope4_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope4_id, $cg__input_promise ? "a0" : "a1");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $await_content__value__closures, _scope($scope4_id, { _: $wi__input_promise && _scope_with_id($scope3_id) }), $cg__input_promise && "a1");
 			}, void 0, (err) => {
 				_scope_reason();
 				const $scope5_id = _scope_id();
-				_html(`<em>${_patch_text($scope5_id, "a", err.message)}</em>`);
+				_html(`<em>${_text_resume($scope5_id, "a", err.message, void 0, 4, 0)}</em>`);
 				_scope($scope5_id, {});
 			}, void 0, "a2", "a3", 1, 1, 1);
 			$wi__input_promise && _scope($scope3_id, { f: _unfilled_if($scope0_reason, 0) && $await_content__value__closures });

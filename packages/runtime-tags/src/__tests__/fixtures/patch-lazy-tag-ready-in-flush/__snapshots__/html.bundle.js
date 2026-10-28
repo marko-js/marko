@@ -7,7 +7,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_patch_fill($scope0_id, "va1", count, 1);
 	_scope($scope0_id, { g: count });
@@ -39,7 +39,7 @@ var template_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.a, (a) => {
 			const $scope3_id = _scope_id();
-			_html(`<b>${_patch_text($scope3_id, "a", a, void 0, $scope0_reason, 2)}</b>`);
+			_html(`<b>${_text_resume($scope3_id, "a", a, void 0, $scope0_reason, 2)}</b>`);
 			_scope($scope3_id, {});
 		}, 1, "b1", 1);
 		_set_scope_reason(0);
@@ -48,7 +48,7 @@ var template_default = _template("b", (input) => {
 		_patch_child_end();
 		_await($scope1_id, "d", input.b, (b) => {
 			const $scope4_id = _scope_id();
-			_html(`<em>${_patch_text($scope4_id, "a", b, void 0, $scope0_reason, 3)}</em>`);
+			_html(`<em>${_text_resume($scope4_id, "a", b, void 0, $scope0_reason, 3)}</em>`);
 			_scope($scope4_id, {});
 		}, 1, "b0", 1);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_a ? "b6" : "b7");

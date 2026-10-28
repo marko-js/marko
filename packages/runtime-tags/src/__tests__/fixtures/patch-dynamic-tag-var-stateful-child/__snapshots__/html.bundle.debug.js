@@ -8,7 +8,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button class=inc>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "#text/2", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=inc>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "#text/2", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	const $return = n;
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter.marko_fill0", n, 1);
@@ -24,7 +24,7 @@ _shells({ "__tests__/tags/other.marko": "^__tests__/tags/other.marko;D ;<i> </i>
 var other_default = _template("__tests__/tags/other.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<i>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</i>`);
+	_html(`<i>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</i>`);
 	const $return = -1;
 	_scope($scope0_id, {}, "__tests__/tags/other.marko", 0);
 	return $return;

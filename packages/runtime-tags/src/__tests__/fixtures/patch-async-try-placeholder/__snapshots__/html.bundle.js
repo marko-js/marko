@@ -10,13 +10,13 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 1), $wi__input_promise = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.promise, (value) => {
 			const $scope3_id = _scope_id();
-			_html(`<em>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 1)}</em>`);
+			_html(`<em>${_text_resume($scope3_id, "a", value, void 0, $scope0_reason, 1)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a0", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_promise ? "a4" : "a5");

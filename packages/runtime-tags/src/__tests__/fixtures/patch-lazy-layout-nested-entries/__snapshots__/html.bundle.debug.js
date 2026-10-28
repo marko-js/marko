@@ -16,7 +16,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_for_of(list, (item) => {
 			const $scope2_id = _scope_id();
-			_html(`<a>${_patch_text($scope2_id, "#text/0", item, void 0, $scope0_reason, 0)}</a>`);
+			_html(`<a>${_text_resume($scope2_id, "#text/0", item, void 0, $scope0_reason, 0)}</a>`);
 			_scope($scope2_id, {}, "__tests__/layout.marko", "3:6");
 		}, 0, $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/layout.marko_2*shell", $scope0_reason, 0);
 		_scope($scope1_id, {}, "__tests__/layout.marko", "2:4");
@@ -39,7 +39,7 @@ var page_a_default = _template("__tests__/page-a.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<h1>A</h1><p>${_patch_text($scope0_id, "#text/0", input.note, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<h1>A</h1><p>${_text_resume($scope0_id, "#text/0", input.note, void 0, $scope0_reason, 0)}</p>`);
 	_if(() => {
 		if (input.wide) {
 			const $scope1_id = _scope_id();
@@ -65,7 +65,7 @@ _shells({
 var page_b_default = _template("__tests__/page-b.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<h1>B</h1><p>${_patch_text($scope0_id, "#text/0", input.note, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<h1>B</h1><p>${_text_resume($scope0_id, "#text/0", input.note, void 0, $scope0_reason, 0)}</p>`);
 	_if(() => {
 		if (input.wide) {
 			const $scope1_id = _scope_id();

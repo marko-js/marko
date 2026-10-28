@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.heading, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.heading, void 0, $scope0_reason, 0)}</h1>`);
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		_for_of(row.cells, (cell) => {

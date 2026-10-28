@@ -1,6 +1,10 @@
 import { type Accessor, PatchKey } from "../../common/types";
 import { _escape_style_value, _to_text, _unescaped } from "../content";
-import { type GroupMask, _html_resume, _text_resume } from "../writer";
+import {
+  type GroupMask,
+  _html_resume as _base_html_resume,
+  _text_resume as _base_text_resume,
+} from "../writer";
 import {
   normalizePatchValue,
   ensureFills,
@@ -8,7 +12,9 @@ import {
   writeFill,
 } from "./writer";
 
-export function _patch_text(
+// A hole a patch writes passes its group: a patch render writes its fill, a page
+// renders it with main's resume marking (none for a constant group's).
+export function _text_resume(
   scopeId: number,
   accessor: Accessor,
   value: unknown,
@@ -17,11 +23,10 @@ export function _patch_text(
   group?: number,
   rewritten?: 1,
 ) {
-  const fills = ensureFills(scopeId, mask, group!);
-  // The patch write doubles as the output writer, so the text rides the
-  // same resume marking a plain placeholder gets, but for a constant group's.
+  const fills =
+    group === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
-    ? _text_resume(
+    ? _base_text_resume(
         scopeId,
         accessor,
         value,
@@ -37,7 +42,7 @@ export function _patch_text(
 
 // An unescaped hole: the entry carries the markup string the client parses
 // into the hole's range; the output writer marks that range for resume.
-export function _patch_html(
+export function _html_resume(
   scopeId: number,
   accessor: Accessor,
   value: unknown,
@@ -46,9 +51,10 @@ export function _patch_html(
   group?: number,
   rewritten?: 1,
 ) {
-  const fills = ensureFills(scopeId, mask, group!);
+  const fills =
+    group === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
-    ? _html_resume(
+    ? _base_html_resume(
         scopeId,
         accessor,
         value,

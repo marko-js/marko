@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_patch_text($scope3_id, "a", label, void 0, $scope1_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "a", label, void 0, $scope1_reason, 2)}</em>`);
 				_scope($scope3_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) });
 				return 0;
 			}
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 				label: "k"
 			});
 			_patch_child_end();
-			_html(`<b>${_patch_text($scope2_id, "c", r, void 0, 0, 0)}</b>`);
+			_html(`<b>${_text_resume($scope2_id, "c", r, void 0, 0, 0)}</b>`);
 			_scope($scope2_id, { a: _existing_scope($childScope) });
 			return 0;
 		}

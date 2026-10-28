@@ -86,7 +86,7 @@ var param_host_default = _template("c", (input) => {
 		content: _content_resume("c2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<p>if ${_patch_text($scope1_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
+			_html(`<p>if ${_text_resume($scope1_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_label ? "c0" : "c1");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: $wi__input_open__OR__input_label && _scope_with_id($scope0_id) }));
 		}, $scope0_id)
@@ -99,7 +99,7 @@ var param_host_default = _template("c", (input) => {
 		content: _content_resume("c5", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<p>for ${_patch_text($scope2_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
+			_html(`<p>for ${_text_resume($scope2_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_label ? "c3" : "c4");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {
 				_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
@@ -115,7 +115,7 @@ var param_host_default = _template("c", (input) => {
 		content: _content_resume("c8", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<p>tag ${_patch_text($scope3_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
+			_html(`<p>tag ${_text_resume($scope3_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope3_id, $cg__input_label ? "c6" : "c7");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope3_id, {
 				_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
@@ -127,7 +127,7 @@ var param_host_default = _template("c", (input) => {
 	_dynamic_tag($scope0_id, "d", input.open ? "div" : "section", {}, 26, _content_elide("c9", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
-		_html(`<p>own ${_patch_text($scope4_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
+		_html(`<p>own ${_text_resume($scope4_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope4_id, $cg__input_label ? "c10" : "c11");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope4_id, {
 			_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
@@ -166,7 +166,7 @@ var const_host_default = _template("b", (input) => {
 		content: _content_resume("b2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<p>if ${_patch_text($scope1_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
+			_html(`<p>if ${_text_resume($scope1_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_label ? "b0" : "b1");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: $wi__input_open__OR__input_label && _scope_with_id($scope0_id) }));
 		}, $scope0_id)
@@ -179,7 +179,7 @@ var const_host_default = _template("b", (input) => {
 		content: _content_resume("b5", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<p>for ${_patch_text($scope2_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
+			_html(`<p>for ${_text_resume($scope2_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_label ? "b3" : "b4");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {
 				_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
@@ -195,7 +195,7 @@ var const_host_default = _template("b", (input) => {
 		content: _content_resume("b8", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<p>tag ${_patch_text($scope3_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
+			_html(`<p>tag ${_text_resume($scope3_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope3_id, $cg__input_label ? "b6" : "b7");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope3_id, {
 				_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
@@ -207,7 +207,7 @@ var const_host_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "d", show ? "div" : "section", {}, 26, _content_elide("b9", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
-		_html(`<p>own ${_patch_text($scope4_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
+		_html(`<p>own ${_text_resume($scope4_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope4_id, $cg__input_label ? "b10" : "b11");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope4_id, {
 			_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),

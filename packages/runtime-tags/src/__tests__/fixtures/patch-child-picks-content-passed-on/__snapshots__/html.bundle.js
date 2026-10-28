@@ -7,7 +7,7 @@ var view_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
-	_html(`<span>${_patch_text($scope0_id, "b", input.title, void 0, $scope0_reason, 1)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "b", input.title, void 0, $scope0_reason, 1)}</span>`);
 	_scope($scope0_id, {});
 });
 
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 		a: attrTag({ content: _content_resume("a2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`A${_patch_text($scope1_id, "a", input.x, 2, $scope0_reason, 2)}`);
+			_html(`A${_text_resume($scope1_id, "a", input.x, 2, $scope0_reason, 2)}`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, _client_guard($scope0_reason, 2) ? "a0" : "a1");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_x__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
 		}, $scope0_id) }),

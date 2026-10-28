@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	let info = user_info_default({ user: input.user });
 	$cg__input_user && _var($scope0_id, "d", $childScope, "a0");
 	_patch_child_end();
-	_html(`<p>${_patch_text($scope0_id, "e", info.name, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "e", info.name, void 0, $scope0_reason, 0)}</p>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 			let info2 = user_info_default({ user: input.user2 });
 			$cg__input_user2 && _var($scope1_id, "b", $childScope2, "a1");
 			_patch_child_end();
-			_html(`<p>${_patch_text($scope1_id, "c", info2.name, void 0, $scope0_reason, 2)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "c", info2.name, void 0, $scope0_reason, 2)}</p>`);
 			$cg__input_user2 && _patch_init($scope1_id, "a2");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),

@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 		_try($scope1_id, "a", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<p>${_patch_text($scope2_id, "a", check(input.fail, input.x), void 0, $scope0_reason, 0)}</p>`);
+			_html(`<p>${_text_resume($scope2_id, "a", check(input.fail, input.x), void 0, $scope0_reason, 0)}</p>`);
 			(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "a0");
 			(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "a1");
 			_patch_join_init($scope2_id, "a2", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">>d", _filled_guard($scope0_reason, 2) && ">>e");
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 		}, void 0, (err) => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b>`);
+			_html(`<b>${_text_resume($scope3_id, "a", err.message, void 0, 4, 0)}</b>`);
 			_scope($scope3_id, {});
 		}, void 0, "a3", "a4", void 0, 1, 1);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });

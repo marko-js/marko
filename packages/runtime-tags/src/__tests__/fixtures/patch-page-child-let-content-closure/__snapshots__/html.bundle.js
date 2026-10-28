@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	card_default({ content: _content_kept("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<em>static ${_patch_text($scope1_id, "a", input.label, 2, $scope0_reason, 0)}</em>`);
+		_html(`<em>static ${_text_resume($scope1_id, "a", input.label, 2, $scope0_reason, 0)}</em>`);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: $wi__input_label && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a0");
 	}, $scope0_id) });
 	_patch_child_end();

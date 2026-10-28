@@ -27,7 +27,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_await($scope2_id, "#text/0", input.promise, (v) => {
 				const $scope4_id = _scope_id();
-				_html(`<em>${_patch_text($scope4_id, "#text/0", v, void 0, $scope0_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope4_id, "#text/0", v, void 0, $scope0_reason, 2)}</em>`);
 				_scope($scope4_id, {}, "__tests__/tags/wrap.marko", "4:6");
 			}, 1, "__tests__/tags/wrap.marko_4*content");
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_promise ? "__tests__/tags/wrap.marko_2_input_promise#0:4/init" : "__tests__/tags/wrap.marko_2_input_promise#0:4/subscribe");
@@ -36,7 +36,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		}, void 0, (err) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<b>${_patch_text($scope3_id, "#text/0", err.message)}</b>`);
+			_html(`<b>${_text_resume($scope3_id, "#text/0", err.message, void 0, 4, 0)}</b>`);
 			_script($scope3_id, "__tests__/tags/wrap.marko_3_x#1:1");
 			$cg__input_label && _patch_init($scope3_id, "__tests__/tags/wrap.marko_3_x#1:1/init");
 			_subscribe($wi__input_label && $Card_content__x__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/wrap.marko", "5:6"), "__tests__/tags/wrap.marko_3_x#1:1/subscribe");

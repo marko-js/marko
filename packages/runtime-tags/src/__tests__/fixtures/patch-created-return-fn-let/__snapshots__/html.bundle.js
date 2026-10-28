@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 			let r = card_default({ label: input.label });
 			$cg__input_label && _var($scope1_id, "b", $childScope, "a0");
 			_patch_child_end();
-			_html(`<p>${_patch_text($scope1_id, "c", r.fn(), void 0, (_mask_group($scope0_reason, 1) & 1) << 1, 0, 1)}</p><button>set</button>${_el_resume($scope1_id, "d")}`);
+			_html(`<p>${_text_resume($scope1_id, "c", r.fn(), void 0, (_mask_group($scope0_reason, 1) & 1) << 1, 0, 1)}</p><button>set</button>${_el_resume($scope1_id, "d")}`);
 			_script($scope1_id, "a1");
 			$cg__input_label && _patch_init($scope1_id, "a2");
 			_scope($scope1_id, {

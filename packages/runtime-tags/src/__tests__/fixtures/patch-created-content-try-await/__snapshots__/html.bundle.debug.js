@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_await($scope3_id, "#text/0", input.value, (v) => {
 					const $scope4_id = _scope_id();
-					_html(`<p>${_patch_text($scope4_id, "#text/0", input.id, void 0, $scope0_reason, 3)}:${_patch_text($scope4_id, "#text/1", v, 2, $scope0_reason, 4)}</p>`);
+					_html(`<p>${_text_resume($scope4_id, "#text/0", input.id, void 0, $scope0_reason, 3)}:${_text_resume($scope4_id, "#text/1", v, 2, $scope0_reason, 4)}</p>`);
 					_unfilled_if($scope0_reason, 3) && _patch_init($scope4_id, _client_guard($scope0_reason, 3) ? "__tests__/template.marko_4_input_id#0:4/init" : "__tests__/template.marko_4_input_id#0:4/subscribe");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_id__closures, _scope($scope4_id, { "ClosureSignalIndex:input_id/6": $wi__input_id && 1 }, "__tests__/template.marko", "3:6"));
 				}, 1, "__tests__/template.marko_4*content");

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
-	_html(`<p>${_patch_text($scope0_id, "#text/2", input.title, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/2", input.title, void 0, $scope0_reason, 0)}</p>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { open }, "__tests__/template.marko", 0, { open: "1:6" });
 }, 1);

@@ -6,7 +6,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = input.count + 10;
-	_html(`<span>${_patch_text($scope0_id, "a", n, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", n, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0)}</span>`);
 	_scope($scope0_id, {});
 });
 

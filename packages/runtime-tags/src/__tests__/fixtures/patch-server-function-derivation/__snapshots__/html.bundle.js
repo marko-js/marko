@@ -26,7 +26,7 @@ var panel_default = _template("b", (input) => {
 	_if(() => {}, $scope0_id, "d");
 	_for_of(pending, (row) => {
 		const $scope2_id = _scope_id();
-		_html(`<p>${_patch_text($scope2_id, "a", row.name)}/${_text_resume($scope2_id, "b", count, 2)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "a", row.name, void 0, 4, 0)}/${_text_resume($scope2_id, "b", count, 2)}</p>`);
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}, "id", $scope0_id, "e", 1, void 0, void 0, void 0, void 0, "b0");
 	_fill_global_subscribe("b1", $scope0_id);

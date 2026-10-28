@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		let o = opts;
-		_html(`<p>${_patch_text($scope2_id, "#text/0", o.fn(), void 0, (_mask_group($scope2_reason, 0) & 1) << 1, 0)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", o.fn(), void 0, (_mask_group($scope2_reason, 0) & 1) << 1, 0)}</p>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);

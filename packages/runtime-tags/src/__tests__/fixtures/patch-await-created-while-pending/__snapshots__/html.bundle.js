@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			const $for_content__item_msg__closures = /* @__PURE__ */ new Set();
 			_await($scope3_id, "a", item.promise, () => {
 				const $scope4_id = _scope_id();
-				_html(`<div>${_patch_text($scope4_id, "a", item.msg, void 0, $scope0_reason, 0)} done</div>`);
+				_html(`<div>${_text_resume($scope4_id, "a", item.msg, void 0, $scope0_reason, 0)} done</div>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope4_id, $cg__input_items ? "a0" : "a1");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_msg__closures, _scope($scope4_id, {}), $cg__input_items && "a1");
 			}, 1, "a2");

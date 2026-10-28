@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 				b: 2
 			}, (k, v) => {
 				const $scope2_id = _scope_id();
-				_html(`<button class=r>${_patch_text($scope2_id, "b", k, void 0, 0, 0)}</button>${_el_resume($scope2_id, "a")}`);
+				_html(`<button class=r>${_text_resume($scope2_id, "b", k, void 0, 0, 0)}</button>${_el_resume($scope2_id, "a")}`);
 				_script($scope2_id, "a0");
 				_patch_write($scope2_id, "we", v, 1);
 				_scope($scope2_id, {

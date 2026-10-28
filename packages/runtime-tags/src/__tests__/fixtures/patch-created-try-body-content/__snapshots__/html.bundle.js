@@ -16,7 +16,7 @@ var wrapper_default = _template("b", (input) => {
 	_try($scope0_id, "a", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_patch_text($scope2_id, "a", input.fail ? boom() : "ok", void 0, $scope0_reason, 2)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "a", input.fail ? boom() : "ok", void 0, $scope0_reason, 2)}</p>`);
 		_dynamic_tag($scope2_id, "b", input.content, {}, 10, 0, 0, $wg__input_content, $scope0_reason, 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, _client_guard($scope0_reason, 1) ? "b1" : "b2");
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_fail ? "b3" : "b4");
@@ -54,14 +54,14 @@ var template_default = _template("a", (input) => {
 	const A = { content: _content_resume("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<em>A ${_patch_text($scope1_id, "a", input.label, 2, $scope0_reason, 1)}</em>`);
+		_html(`<em>A ${_text_resume($scope1_id, "a", input.label, 2, $scope0_reason, 1)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_label ? "a1" : "a2");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	const B = { content: _content_resume("a3", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_html(`<i>B ${_patch_text($scope2_id, "a", input.label, 2, $scope0_reason, 1)}</i>`);
+		_html(`<i>B ${_text_resume($scope2_id, "a", input.label, 2, $scope0_reason, 1)}</i>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_label ? "a4" : "a5");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),

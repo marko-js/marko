@@ -36,7 +36,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 		panel_default({ aside: attrTag({ content: _content_elide("__tests__/page.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<span>${_patch_text($scope2_id, "#text/0", m, void 0, 0, 0)}</span>`);
+			_html(`<span>${_text_resume($scope2_id, "#text/0", m, void 0, 0, 0)}</span>`);
 			_if(() => {
 				if (m === "b") {
 					const $scope3_id = _scope_id();

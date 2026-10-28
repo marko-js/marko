@@ -14,7 +14,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const frag = { content: _content_resume("__tests__/tags/child.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>${_patch_text($scope1_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 0)}</em>`);
 		(_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:3/subscribe");
 		(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4/subscribe");
 		_patch_join_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:3_input_b#0:4/init", $scope0_reason, 0, _filled_guard($scope0_reason, 4) && ">input_a", _filled_guard($scope0_reason, 5) && ">input_b");

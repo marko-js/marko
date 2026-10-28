@@ -12,7 +12,7 @@ var loader_default = _template("b", (input) => {
 	_html("<div class=ld>");
 	_await($scope0_id, "a", input.promise, (v) => {
 		const $scope1_id = _scope_id();
-		_html(`<em>${_patch_text($scope1_id, "a", v, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", v, void 0, $scope0_reason, 0)}</em>`);
 		_scope($scope1_id, {});
 	}, 1, "b0", 1);
 	_html("</div>");
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<b>${_patch_text($scope2_id, "a", err.message)}</b>`);
+		_html(`<b>${_text_resume($scope2_id, "a", err.message, void 0, 4, 0)}</b>`);
 		_scope($scope2_id, {});
 	}, void 0, "a2", "a3", 1, 1, 1);
 	_html("</main>");

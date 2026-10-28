@@ -14,7 +14,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_patch_text($scope1_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 1)}</p>`);
 			_patch_join_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_input_b#0:6/init", $scope0_reason, 1, _filled_guard($scope0_reason, 5) && ">input_a", _filled_guard($scope0_reason, 6) && ">input_b");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2");
 			return 0;
@@ -23,7 +23,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const frag = { content: _content_resume("__tests__/tags/child.marko_2*content", () => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<em>${_patch_text($scope2_id, "#text/0", input.a, void 0, $scope0_reason, 5)}</em>`);
+		_html(`<em>${_text_resume($scope2_id, "#text/0", input.a, void 0, $scope0_reason, 5)}</em>`);
 		_unfilled_if($scope0_reason, 5) && _patch_init($scope2_id, $cg__input_a ? "__tests__/tags/child.marko_2_input_a#0:5/init" : "__tests__/tags/child.marko_2_input_a#0:5/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "4:2"));
 	}, $scope0_id) };

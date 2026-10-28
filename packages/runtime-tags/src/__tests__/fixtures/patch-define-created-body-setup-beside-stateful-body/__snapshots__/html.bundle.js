@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_patch_text($scope3_id, "a", label, void 0, $scope2_reason, 1)} ${_patch_text($scope3_id, "b", n, 2, 0, 0)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "a", label, void 0, $scope2_reason, 1)} ${_text_resume($scope3_id, "b", n, 2, 0, 0)}</em>`);
 				_client_guard($scope2_reason, 1) && _patch_init($scope3_id, "a0");
 				_scope($scope3_id, { _: _write_if($scope2_reason, 1) && _scope_with_id($scope2_id) });
 				return 0;

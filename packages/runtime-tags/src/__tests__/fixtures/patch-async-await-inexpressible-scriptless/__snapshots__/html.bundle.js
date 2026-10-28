@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 				let w = widget_default({ label: input.value });
 				$cg__input_value && _var($scope2_id, "b", $childScope, "a0");
 				_patch_child_end();
-				_html(`<em>${_patch_text($scope2_id, "c", w, void 0, $scope0_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "c", w, void 0, $scope0_reason, 2)}</em>`);
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_value ? "a1" : "a2");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, { a: _existing_scope($childScope) }), $cg__input_value && "a2");
 			}, 1, "a3");

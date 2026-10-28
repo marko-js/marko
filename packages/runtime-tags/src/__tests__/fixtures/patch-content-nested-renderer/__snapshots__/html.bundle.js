@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			card_default({ content: _content_elide("a2", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<p>${_patch_text($scope2_id, "a", input.note, void 0, $scope0_reason, 2)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "a", input.note, void 0, $scope0_reason, 2)}</p>`);
 				_dynamic_tag($scope2_id, "b", input.inner, {}, 2, 0, 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "a0");
 				_client_guard($scope0_reason, 3) && _patch_init($scope2_id, "a1");

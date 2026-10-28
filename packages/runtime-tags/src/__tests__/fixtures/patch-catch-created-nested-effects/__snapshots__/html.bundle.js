@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	_try($scope0_id, "a", () => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
-		_html(`<p>${_patch_text($scope5_id, "a", input.fail ? boom(input.msg) : input.msg, void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope5_id, "a", input.fail ? boom(input.msg) : input.msg, void 0, $scope0_reason, 1)}</p>`);
 		(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 1)) && _patch_init($scope5_id, "a23");
 		(_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 1)) && _patch_init($scope5_id, "a24");
 		_patch_join_init($scope5_id, "a25", $scope0_reason, 1, _filled_guard($scope0_reason, 5) && ">g", _filled_guard($scope0_reason, 6) && ">h");
@@ -47,11 +47,11 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $catch_content__w__closures = /* @__PURE__ */ new Set();
 		const w = input.v * 10;
-		_html(`<b>${_patch_text($scope1_id, "a", err.message)}</b>`);
+		_html(`<b>${_text_resume($scope1_id, "a", err.message, void 0, 4, 0)}</b>`);
 		_if(() => {
 			if (input.show) {
 				const $scope2_id = _scope_id();
-				_html(`<i>${_patch_text($scope2_id, "a", w, void 0, $scope0_reason, 2)}</i>`);
+				_html(`<i>${_text_resume($scope2_id, "a", w, void 0, $scope0_reason, 2)}</i>`);
 				_script($scope2_id, "a0");
 				$cg__input_v && _patch_init($scope2_id, "a1");
 				$cg__input_v && _patch_init($scope2_id, "a2");
@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 		_for_of(input.items, (x) => {
 			const $scope3_id = _scope_id();
 			_filled_guard($scope0_reason, 4) && _patch_write($scope3_id, "xc", x, !$sg__input_items);
-			_html(`<u>${_patch_text($scope3_id, "a", x, void 0, $scope0_reason, 4)}</u>`);
+			_html(`<u>${_text_resume($scope3_id, "a", x, void 0, $scope0_reason, 4)}</u>`);
 			_script($scope3_id, "a9");
 			_patch_join_init($scope3_id, "a10", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">>d", _filled_guard($scope0_reason, 4) && "c");
 			_subscribe($wi__input_v && $input_v__closures, _scope($scope3_id, {
@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 		wrap_default({ content: _content_elide("a6", () => {
 			_scope_reason();
 			const $scope4_id = _scope_id();
-			_html(`<s>${_patch_text($scope4_id, "a", w, void 0, $scope0_reason, 2)}</s>`);
+			_html(`<s>${_text_resume($scope4_id, "a", w, void 0, $scope0_reason, 2)}</s>`);
 			_script($scope4_id, "a12");
 			$cg__input_v && _patch_init($scope4_id, "a13");
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope4_id, $cg__input_v ? "a14" : "a15");

@@ -9,7 +9,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	let c = input.content;
 	_html(`<section><button>clear</button>${_el_resume($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/1", c, {}, 2, void 0, void 0, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1);
-	_html(`<p>${_patch_text($scope0_id, "#text/2", input.user.name, void 0, $scope0_reason, 1)}</p></section>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/2", input.user.name, void 0, $scope0_reason, 1)}</p></section>`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0) || _content_withhold(input.content);
 });

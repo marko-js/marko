@@ -7,7 +7,7 @@ _shells({
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div${$class}>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div${$class}>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</div>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

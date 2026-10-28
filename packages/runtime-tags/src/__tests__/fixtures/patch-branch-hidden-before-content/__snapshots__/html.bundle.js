@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.error) {
 			const $scope1_id = _scope_id();
-			_html(`<p class=error>${_patch_text($scope1_id, "a", input.error, void 0, $scope0_reason, 0)}</p>`);
+			_html(`<p class=error>${_text_resume($scope1_id, "a", input.error, void 0, $scope0_reason, 0)}</p>`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_await($scope2_id, "a", input.promise, (value) => {
 			const $scope3_id = _scope_id();
-			_html(`<em>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 1)}</em>`);
+			_html(`<em>${_text_resume($scope3_id, "a", value, void 0, $scope0_reason, 1)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a2");
 		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a3", 0);

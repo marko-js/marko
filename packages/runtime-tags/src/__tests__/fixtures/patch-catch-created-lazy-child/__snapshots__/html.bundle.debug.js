@@ -7,7 +7,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill0", count, 1);
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
@@ -34,13 +34,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_try($scope0_id, "#text/0", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_patch_text($scope2_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_error ? "__tests__/template.marko_2_input_error#0:4/init" : "__tests__/template.marko_2_input_error#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2"), $cg__input_error && "__tests__/template.marko_2_input_error#0:4/subscribe");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<b>${_patch_text($scope1_id, "#text/0", err.message)}</b>`);
+		_html(`<b>${_text_resume($scope1_id, "#text/0", err.message, void 0, 4, 0)}</b>`);
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 		const $childScope = _patch_child($scope1_id, "#childScope/2", 0);
 		$Child_withLoadAssets({ label: input.label });

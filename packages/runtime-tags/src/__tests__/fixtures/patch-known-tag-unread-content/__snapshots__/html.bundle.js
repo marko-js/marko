@@ -17,6 +17,6 @@ var template_default = _template("a", (input) => {
 	const $childScope = _patch_child($scope0_id, "a", 0);
 	static_child_default({});
 	_patch_child_end();
-	_html(`<p>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

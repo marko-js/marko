@@ -41,7 +41,7 @@ var page_b_default = _template("__tests__/page-b.marko", (input) => {
 	const $global$2 = $global();
 	const [q, issues] = $global$2.search;
 	let count = 0;
-	_html(`<button class=b>b:${_patch_text($scope0_id, "#text/1", q, 2)}:${_patch_text($scope0_id, "#text/2", issues ? "!" : "", 2)}:${_text_resume($scope0_id, "#text/3", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=b>b:${_text_resume($scope0_id, "#text/1", q, 2, 4, 0)}:${_text_resume($scope0_id, "#text/2", issues ? "!" : "", 2, 4, 0)}:${_text_resume($scope0_id, "#text/3", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_fill_global_subscribe("__tests__/page-b.marko_0_$global_search#6", $scope0_id);
 	_script($scope0_id, "__tests__/page-b.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/page-b.marko_fill0", count, 1);

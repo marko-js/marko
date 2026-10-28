@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<pre>line 1
 line 2
-line 3</pre><p>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</p>`);
+line 3</pre><p>${_text_resume($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</p>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;

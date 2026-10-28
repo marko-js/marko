@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	_try($scope0_id, "c", () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<p>${_patch_text($scope3_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope3_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope3_id, $cg__input_error ? "a3" : "a4");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope3_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), $cg__input_error && "a4");
 	}, void 0, (err) => {
@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 		box_default({ content: _content_elide("a2", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<span>${_patch_text($scope2_id, "a", err.message)} ${_text_resume($scope2_id, "b", count, 2)} ${_patch_text($scope2_id, "c", input.label, 2, $scope0_reason, 0)}</span>`);
+			_html(`<span>${_text_resume($scope2_id, "a", err.message, void 0, 4, 0)} ${_text_resume($scope2_id, "b", count, 2)} ${_text_resume($scope2_id, "c", input.label, 2, $scope0_reason, 0)}</span>`);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, _client_guard($scope0_reason, 0) ? "a0" : "a1");
 			_subscribe(_unfilled_if() && $wi__err_message && $catch_content__err_message__closures, _subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }))));
 		}, $scope1_id) });

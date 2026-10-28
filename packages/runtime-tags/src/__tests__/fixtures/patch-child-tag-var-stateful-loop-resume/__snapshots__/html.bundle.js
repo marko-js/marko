@@ -17,7 +17,7 @@ var w_default = _template("c", (input) => {
 	let r = ret_default({ x: input.x });
 	$cg__input_x && _var($scope0_id, "b", $childScope, "c0");
 	_patch_child_end();
-	_html(`<p>r:${_patch_text($scope0_id, "c", r, 2, $scope0_reason, 0)}</p>`);
+	_html(`<p>r:${_text_resume($scope0_id, "c", r, 2, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 });
 

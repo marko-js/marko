@@ -6,7 +6,7 @@ _shells({ b: "b;Db%;<p>Value <!></p>" });
 var arg_badge_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>Value ${_patch_text($scope0_id, "a", input.value, 2, $scope0_reason, 0)}</p>`);
+	_html(`<p>Value ${_text_resume($scope0_id, "a", input.value, 2, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, {});
 });
 
@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_set_scope_reason(2);
 	const $childScope = _patch_child($scope0_id, "b", 0);
 	arg_badge_default({ value: count });

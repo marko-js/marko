@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $n__closures = new Set();
 	let n = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_try($scope0_id, "#text/1", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();

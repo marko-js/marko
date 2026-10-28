@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope2_id = _scope_id();
-				_html(`<em>${_patch_text($scope2_id, "a", label, void 0, $scope1_reason, 1)} ${_patch_text($scope2_id, "b", input.label, 2, $scope0_reason, 1)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "a", label, void 0, $scope1_reason, 1)} ${_text_resume($scope2_id, "b", input.label, 2, $scope0_reason, 1)}</em>`);
 				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_label ? "a0" : "a1");
 				_client_guard($scope1_reason, 1) && _patch_init($scope2_id, "a2");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1");

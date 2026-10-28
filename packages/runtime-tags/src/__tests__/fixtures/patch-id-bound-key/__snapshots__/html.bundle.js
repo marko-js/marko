@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		_var($scope1_id, "b", $childScope, "a0");
 		_patch_child_end();
 		const uid = _id("A");
-		_html(`<label${_attr("for", uid, $scope1_id, "c", 0, 0)}>${_patch_text($scope1_id, "d", name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope1_id, "c", 0)}<input${_attr("id", uid, $scope1_id, "e", 0, 0)}>${_el_resume($scope1_id, "e", 0)}<p>${_patch_text($scope1_id, "f", name, void 0, $scope0_reason, 1)}:${_text_resume($scope1_id, "g", store.last, 2)}</p>`);
+		_html(`<label${_attr("for", uid, $scope1_id, "c", 0, 0)}>${_text_resume($scope1_id, "d", name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope1_id, "c", 0)}<input${_attr("id", uid, $scope1_id, "e", 0, 0)}>${_el_resume($scope1_id, "e", 0)}<p>${_text_resume($scope1_id, "f", name, void 0, $scope0_reason, 1)}:${_text_resume($scope1_id, "g", store.last, 2)}</p>`);
 		_for_of(input.keys.toReversed(), (other) => {
 			const $scope2_id = _scope_id();
 			_if(() => {

@@ -6,7 +6,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $return = input.x + "!";
-	_html(`<span>${_patch_text($scope0_id, "a", input.x, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", input.x, void 0, $scope0_reason, 0)}</span>`);
 	_scope($scope0_id, {});
 	return $return;
 });
@@ -30,7 +30,7 @@ var wrap_default = _template("c", (input) => {
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "we", v, !$sg__input_label);
 			$cg__input_label && _var($scope1_id, "b", $childScope, "c0");
 			_patch_child_end();
-			_html(`<p>${_patch_text($scope1_id, "c", v, void 0, $scope0_reason, 1)}</p><button class=log>log</button>${_el_resume($scope1_id, "d")}`);
+			_html(`<p>${_text_resume($scope1_id, "c", v, void 0, $scope0_reason, 1)}</p><button class=log>log</button>${_el_resume($scope1_id, "d")}`);
 			_script($scope1_id, "c1");
 			$cg__input_label && _patch_init($scope1_id, "c2");
 			_scope($scope1_id, {

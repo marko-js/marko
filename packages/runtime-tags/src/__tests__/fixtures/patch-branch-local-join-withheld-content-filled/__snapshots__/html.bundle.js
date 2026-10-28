@@ -18,7 +18,7 @@ var child_default = _template("b", (input) => {
 			const frag = { content: _content_resume("b0", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
-				_html(`<em>${_patch_text($scope2_id, "a", input.a + c, void 0, $scope0_reason, 0)}</em><i>${_patch_text($scope2_id, "b", c, void 0, $scope0_reason, 5)}</i>`);
+				_html(`<em>${_text_resume($scope2_id, "a", input.a + c, void 0, $scope0_reason, 0)}</em><i>${_text_resume($scope2_id, "b", c, void 0, $scope0_reason, 5)}</i>`);
 				(_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "b1");
 				(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, $cg__input_b ? "b2" : "b3");
 				_patch_join_init($scope2_id, "b4", $scope0_reason, 0, _filled_guard($scope0_reason, 6) && ">>f", _filled_guard($scope0_reason, 5) && ">b");

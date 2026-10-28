@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope2_id = _scope_id();
-				_html(`<em>${_patch_text($scope2_id, "#text/0", label, void 0, $scope1_reason, 1)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "#text/0", label, void 0, $scope1_reason, 1)}</em>`);
 				_client_guard($scope1_reason, 1) && _patch_init($scope2_id, "__tests__/template.marko_2_label#1:4/init");
 				_scope($scope2_id, { _: _write_if($scope1_reason, 1) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4");
 				return 0;
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Other = { content: _content_resume("__tests__/template.marko_3*content", ({ label }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
-		_html(`<i>${_patch_text($scope3_id, "#text/0", label)}</i>`);
+		_html(`<i>${_text_resume($scope3_id, "#text/0", label, void 0, 4, 0)}</i>`);
 		_scope($scope3_id, {}, "__tests__/template.marko", "7:2");
 	}, $scope0_id) };
 	_set_scope_reason(2 | _mask_group($scope0_reason, 4) << 3);

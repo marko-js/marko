@@ -17,21 +17,21 @@ var template_default = _template("a", (input) => {
 	_try($scope0_id, "a", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<p>${_patch_text($scope1_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_error ? "a1" : "a2");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_error__closures, _scope($scope1_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), $cg__input_error && "a2");
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_patch_write($scope3_id, "we", err?.message);
-		_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b><button>log</button>${_el_resume($scope3_id, "b")}`);
+		_html(`<b>${_text_resume($scope3_id, "a", err.message, void 0, 4, 0)}</b><button>log</button>${_el_resume($scope3_id, "b")}`);
 		_script($scope3_id, "a0");
 		_scope($scope3_id, { e: err?.message });
 	}, void 0, "a3", "a4", 1, 1, 1);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_patch_text($scope2_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_error ? "a6" : "a7");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_error__closures, _scope($scope2_id, {
 			_: $wi__input_error && _scope_with_id($scope0_id),

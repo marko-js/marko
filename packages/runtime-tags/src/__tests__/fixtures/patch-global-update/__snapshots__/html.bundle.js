@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<main><h1>${_patch_text($scope0_id, "a", $global$1.brand)}</h1><button>read</button>${_el_resume($scope0_id, "b")}<p>${_text_resume($scope0_id, "c", "")}</p></main>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", $global$1.brand, void 0, 4, 0)}</h1><button>read</button>${_el_resume($scope0_id, "b")}<p>${_text_resume($scope0_id, "c", "")}</p></main>`);
 	_fill_global_subscribe("a0", $scope0_id);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});

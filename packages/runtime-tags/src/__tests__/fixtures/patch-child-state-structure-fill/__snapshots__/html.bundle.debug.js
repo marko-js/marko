@@ -13,7 +13,7 @@ var toggle_panel_default = _template("__tests__/tags/toggle-panel/index.marko", 
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<em>${_patch_text($scope1_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</em>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/tags/toggle-panel/index.marko_1_input_title#0:4/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/toggle-panel/index.marko", "2:4");
 			return 0;

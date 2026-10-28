@@ -7,7 +7,7 @@ var lazy_child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb1", count, 1);
 	_scope($scope0_id, { g: count });
@@ -22,7 +22,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_patch_text($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_patch_fill($scope0_id, "va1", count, 1);
 	_scope($scope0_id, { g: count });
@@ -117,13 +117,13 @@ var template_default = _template("c", (input) => {
 	_try($scope0_id, "a", () => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
-		_html(`<p>${_patch_text($scope4_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope4_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope4_id, $cg__input_error ? "c13" : "c14");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope4_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), $cg__input_error && "c14");
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
-		_html(`<b>${_patch_text($scope5_id, "a", err.message)}</b>`);
+		_html(`<b>${_text_resume($scope5_id, "a", err.message, void 0, 4, 0)}</b>`);
 		const $childScope5 = _patch_child($scope5_id, "b", 4, void 0, $scope0_id);
 		LazyBody.content({});
 		_patch_child_end();

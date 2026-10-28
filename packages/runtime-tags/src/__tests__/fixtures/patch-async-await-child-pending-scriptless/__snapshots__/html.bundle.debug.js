@@ -7,7 +7,7 @@ var pill_default = _template("__tests__/tags/pill.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = input.start;
-	_html(`<b class=pill>${_patch_text($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 1)}:${_text_resume($scope0_id, "#text/1", n, 2)}</b><button class=inc>+</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<b class=pill>${_text_resume($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 1)}:${_text_resume($scope0_id, "#text/1", n, 2)}</b><button class=inc>+</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/pill.marko_0");
 	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/pill.marko_fill0", n, 1);
 	_scope($scope0_id, { n }, "__tests__/tags/pill.marko", 0, { n: "1:6" });

@@ -22,7 +22,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_filled_guard($scope0_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 2));
 		const d = input.b + item;
-		_html(`<p>${_patch_text($scope2_id, "#text/0", d, void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", d, void 0, $scope0_reason, 0)}</p>`);
 		(_filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope2_id, "__tests__/tags/child.marko_2_input_b#0:5_item#2/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">input_b", _filled_guard($scope0_reason, 2) && "item");
 		_scope($scope2_id, {
 			item: _write_if($scope0_reason, 1) && item,

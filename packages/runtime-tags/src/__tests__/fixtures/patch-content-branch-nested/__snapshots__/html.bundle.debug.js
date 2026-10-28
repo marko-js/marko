@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/widget/index.marko": "__tests__/tags/widget/index.mark
 var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</p>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_scope($scope0_id, {}, "__tests__/tags/widget/index.marko", 0);
 });
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						content: _content_elide("__tests__/template.marko_3*content", () => {
 							const $scope3_reason = _scope_reason();
 							const $scope3_id = _scope_id();
-							_html(`<em>${_patch_text($scope3_id, "#text/0", input.text, void 0, $scope0_reason, 6)}</em>`);
+							_html(`<em>${_text_resume($scope3_id, "#text/0", input.text, void 0, $scope0_reason, 6)}</em>`);
 							_client_guard($scope0_reason, 6) && _patch_init($scope3_id, "__tests__/template.marko_3_input_text#0:6/init");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:10"));
 						}, $scope2_id)

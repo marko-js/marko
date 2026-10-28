@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_await($scope2_id, "a", value, (v) => {
 				const $scope3_id = _scope_id();
-				_html(`<p>${_patch_text($scope3_id, "a", id, void 0, $scope1_reason, 0)}:${_patch_text($scope3_id, "b", v, 2, $scope1_reason, 1)}:${_text_resume($scope3_id, "c", count, 2)}</p>`);
+				_html(`<p>${_text_resume($scope3_id, "a", id, void 0, $scope1_reason, 0)}:${_text_resume($scope3_id, "b", v, 2, $scope1_reason, 1)}:${_text_resume($scope3_id, "c", count, 2)}</p>`);
 				_unfilled_if($scope1_reason, 0) && _patch_init($scope3_id, _client_guard($scope1_reason, 0) ? "a1" : "a2");
 				_subscribe(_unfilled_if($scope1_reason, 0) && $Info_content__id__closures, _subscribe($count__closures, _scope($scope3_id, {}), "a3"), "a2");
 			}, 1, "a4");

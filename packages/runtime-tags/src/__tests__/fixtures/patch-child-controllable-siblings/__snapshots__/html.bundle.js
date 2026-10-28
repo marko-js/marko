@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let first = 0;
 	let second = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><p>First ${_text_resume($scope0_id, "b", first, 2)} Second ${_text_resume($scope0_id, "c", second, 2)}</p>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><p>First ${_text_resume($scope0_id, "b", first, 2)} Second ${_text_resume($scope0_id, "c", second, 2)}</p>`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 	const $childScope = _patch_child($scope0_id, "d", 0);
 	counter_default({

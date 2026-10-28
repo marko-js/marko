@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_for_of(["a", "b"], (item, i) => {
 				const $scope2_id = _scope_id();
-				_html(`<button class=r>${_patch_text($scope2_id, "#text/1", item, void 0, 0, 0)}</button>${_el_resume($scope2_id, "#button/0")}`);
+				_html(`<button class=r>${_text_resume($scope2_id, "#text/1", item, void 0, 0, 0)}</button>${_el_resume($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_scope($scope2_id, {
 					"#LoopKey": i,

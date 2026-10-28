@@ -14,7 +14,7 @@ var child_default = _template("a", (input) => {
 	_for_of([1, 2], (i) => {
 		const $scope1_id = _scope_id();
 		_patch_fill($scope1_id, "va0", i);
-		_html(`<span>${_patch_text($scope1_id, "a", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope1_id, "b", count + i, 2)}</span>`);
+		_html(`<span>${_text_resume($scope1_id, "a", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope1_id, "b", count + i, 2)}</span>`);
 		_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "a1");
 		_scope($scope1_id, {
 			d: i,
@@ -52,7 +52,7 @@ var template_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "c", 1, $wg__input_show, void 0, void 0, void 0, ["b1"], $scope0_reason, 0);
-	_html(`</main>${_el_resume($scope0_id, "c", $wg__input_show)}<p>${_patch_text($scope0_id, "d", input.label, void 0, $scope0_reason, 1)}</p>`);
+	_html(`</main>${_el_resume($scope0_id, "c", $wg__input_show)}<p>${_text_resume($scope0_id, "d", input.label, void 0, $scope0_reason, 1)}</p>`);
 	_script($scope0_id, "b2");
 	_scope($scope0_id, {
 		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,

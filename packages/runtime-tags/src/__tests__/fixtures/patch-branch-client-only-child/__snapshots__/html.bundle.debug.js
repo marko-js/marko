@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
-	_html(`<span>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}</span><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}</span><button>+</button>${_el_resume($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_title: input.title,

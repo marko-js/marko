@@ -7,7 +7,7 @@ var labeled_default = _template("__tests__/tags/labeled.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = _id("uid");
-	_html(`<label${_attr("for", uid, $scope0_id, "#label/0", 0, 0)}>${_patch_text($scope0_id, "#text/1", input.name, void 0, $scope0_reason, 0)}</label>${_el_resume($scope0_id, "#label/0", 0)}<input${_attr("id", uid, $scope0_id, "#input/2", 0, 0)}>${_el_resume($scope0_id, "#input/2", 0)}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "#label/0", 0, 0)}>${_text_resume($scope0_id, "#text/1", input.name, void 0, $scope0_reason, 0)}</label>${_el_resume($scope0_id, "#label/0", 0)}<input${_attr("id", uid, $scope0_id, "#input/2", 0, 0)}>${_el_resume($scope0_id, "#input/2", 0)}`);
 	_scope($scope0_id, {}, "__tests__/tags/labeled.marko", 0);
 });
 
@@ -19,7 +19,7 @@ _shells({ "__tests__/tags/plain.marko": "__tests__/tags/plain.marko;D ;<span> </
 var plain_default = _template("__tests__/tags/plain.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_patch_text($scope0_id, "#text/0", input.name, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.name, void 0, $scope0_reason, 0)}</span>`);
 	_scope($scope0_id, {}, "__tests__/tags/plain.marko", 0);
 });
 
@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			const $scope3_reason = _scope_reason();
 			const bodyId = _id("bodyId");
-			_html(`<label${_attr("for", bodyId, $scope3_id, "#label/0", 0, 0)}>${_patch_text($scope3_id, "#text/1", item.key, void 0, $scope0_reason, 0)}</label>${_el_resume($scope3_id, "#label/0", 0)}<input${_attr("id", bodyId, $scope3_id, "#input/2", 0, 0)}>${_el_resume($scope3_id, "#input/2", 0)}`);
+			_html(`<label${_attr("for", bodyId, $scope3_id, "#label/0", 0, 0)}>${_text_resume($scope3_id, "#text/1", item.key, void 0, $scope0_reason, 0)}</label>${_el_resume($scope3_id, "#label/0", 0)}<input${_attr("id", bodyId, $scope3_id, "#input/2", 0, 0)}>${_el_resume($scope3_id, "#input/2", 0)}`);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, $cg__input_items ? "__tests__/template.marko_3_item_key#2:4/init" : "__tests__/template.marko_3_item_key#2:4/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_key__closures, _scope($scope3_id, { _: $wi__input_items && _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:6"));
 		}, $scope2_id), 0, $wg__input_items, $scope0_reason, 0);
@@ -64,7 +64,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope5_id = _scope_id();
 			const $scope5_reason = _scope_reason();
 			const nullId = _id("nullId");
-			_html(`<label${_attr("for", nullId, $scope5_id, "#label/0", 0, 0)}>${_patch_text($scope5_id, "#text/1", item.key, void 0, $scope0_reason, 0)}</label>${_el_resume($scope5_id, "#label/0", 0)}<input${_attr("id", nullId, $scope5_id, "#input/2", 0, 0)}>${_el_resume($scope5_id, "#input/2", 0)}`);
+			_html(`<label${_attr("for", nullId, $scope5_id, "#label/0", 0, 0)}>${_text_resume($scope5_id, "#text/1", item.key, void 0, $scope0_reason, 0)}</label>${_el_resume($scope5_id, "#label/0", 0)}<input${_attr("id", nullId, $scope5_id, "#input/2", 0, 0)}>${_el_resume($scope5_id, "#input/2", 0)}`);
 			$cg__input_items && _patch_init($scope5_id, "__tests__/template.marko_5_item_key#4:4/init");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content3__item_key__closures, _scope($scope5_id, { _: $wi__input_items && _scope_with_id($scope4_id) }, "__tests__/template.marko", "8:6"));
 		}, $scope4_id), 0, $wg__input_items, $scope0_reason, 0);

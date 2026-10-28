@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (isOpen && !hidden) {
 				const $scope3_id = _scope_id();
-				_html(`<em${_patch_attrs(rest, "#em/0", $scope3_id, "em", void 0, $scope2_reason, 3)}>${_patch_text($scope3_id, "#text/1", Object.keys(rest).join(), void 0, $scope2_reason, 3)}</em>${_el_resume($scope3_id, "#em/0")}`);
+				_html(`<em${_patch_attrs(rest, "#em/0", $scope3_id, "em", void 0, $scope2_reason, 3)}>${_text_resume($scope3_id, "#text/1", Object.keys(rest).join(), void 0, $scope2_reason, 3)}</em>${_el_resume($scope3_id, "#em/0")}`);
 				_script($scope3_id, "__tests__/template.marko_3_rest#2:6");
 				_client_guard($scope2_reason, 3) && _patch_init($scope3_id, "__tests__/template.marko_3_rest#2:6/init");
 				_scope($scope3_id, { _: _write_if($scope2_reason, 3) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:4", { "EventAttributes:#em/0": ["...rest", "4:12"] });

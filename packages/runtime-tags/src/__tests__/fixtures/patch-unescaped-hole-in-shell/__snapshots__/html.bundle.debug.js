@@ -17,14 +17,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<div>${_patch_html($scope1_id, "#text/0", input.html, void 0, $scope0_reason, 2)}</div><div class=x>${_patch_html($scope1_id, "#text/1", input.html, void 0, $scope0_reason, 2)}</div>`);
+			_html(`<div>${_html_resume($scope1_id, "#text/0", input.html, void 0, $scope0_reason, 2)}</div><div class=x>${_html_resume($scope1_id, "#text/1", input.html, void 0, $scope0_reason, 2)}</div>`);
 			_if(() => {
 				if (input.show > 1) {
 					const $scope2_id = _scope_id();
 					_if(() => {
 						if (input.html) {
 							const $scope3_id = _scope_id();
-							_html(`<div>${_patch_html($scope3_id, "#text/0", input.html, void 0, $scope0_reason, 2)}</div><div class=y>${_patch_html($scope3_id, "#text/1", input.html, void 0, $scope0_reason, 2)}</div>`);
+							_html(`<div>${_html_resume($scope3_id, "#text/0", input.html, void 0, $scope0_reason, 2)}</div><div class=y>${_html_resume($scope3_id, "#text/1", input.html, void 0, $scope0_reason, 2)}</div>`);
 							_unfilled_if($scope0_reason, 2) && _patch_init($scope3_id, $cg__input_html ? "__tests__/template.marko_3_input_html#0:4/init" : "__tests__/template.marko_3_input_html#0:4/subscribe");
 							_subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope3_id, {
 								_: $wi__input_show__OR__input_html && _scope_with_id($scope2_id),
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_if(() => {
 						if (input.html) {
 							const $scope4_id = _scope_id();
-							_html(_patch_html($scope4_id, "#text/0", input.html, void 0, $scope0_reason, 2));
+							_html(_html_resume($scope4_id, "#text/0", input.html, void 0, $scope0_reason, 2));
 							_unfilled_if($scope0_reason, 2) && _patch_init($scope4_id, $cg__input_html ? "__tests__/template.marko_4_input_html#0:4/init" : "__tests__/template.marko_4_input_html#0:4/subscribe");
 							_subscribe(_unfilled_if($scope0_reason, 2) && $input_html__closures, _scope($scope4_id, {
 								_: $wi__input_show__OR__input_html && _scope_with_id($scope2_id),

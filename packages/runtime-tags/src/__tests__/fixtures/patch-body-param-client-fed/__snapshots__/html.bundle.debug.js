@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko; D ;<a> </a>" 
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<a${_attr("href", input.href, $scope0_id, "#a/0", $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "#a/0", _mask_group($scope0_reason, 0))}`);
+	_html(`<a${_attr("href", input.href, $scope0_id, "#a/0", $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}</a>${_el_resume($scope0_id, "#a/0", _mask_group($scope0_reason, 0))}`);
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 });
 
@@ -72,6 +72,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_write_if($scope1_reason, 0) && _scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "2:4");
 	}, $scope0_id) }) });
 	_patch_child_end();
-	_html(`<p>${_patch_text($scope0_id, "#text/1", input.title, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/1", input.title, void 0, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", 0);
 }, 1);

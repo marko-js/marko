@@ -3,7 +3,7 @@ _shells({ b: "b;E l%;<section><em> </em><!></section>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><em>${_patch_text($scope0_id, "a", input.meta ? input.meta.n : "-", void 0, $scope0_reason, 0)}</em>`);
+	_html(`<section><em>${_text_resume($scope0_id, "a", input.meta ? input.meta.n : "-", void 0, $scope0_reason, 0)}</em>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</section>");
 	_scope($scope0_id, {});
@@ -17,7 +17,7 @@ _shells({ a: "a;E l%;<article><b> </b><!></article>" });
 var box_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<article><b>${_patch_text($scope0_id, "a", input.k, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<article><b>${_text_resume($scope0_id, "a", input.k, void 0, $scope0_reason, 0)}</b>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</article>");
 	_scope($scope0_id, {});
@@ -45,7 +45,7 @@ var template_default = _template("c", (input) => {
 			content: _content_elide("c1", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(_patch_text($scope2_id, "a", input.label, void 0, $scope0_reason, 2));
+				_html(_text_resume($scope2_id, "a", input.label, void 0, $scope0_reason, 2));
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "c0");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }));
 			}, $scope1_id)

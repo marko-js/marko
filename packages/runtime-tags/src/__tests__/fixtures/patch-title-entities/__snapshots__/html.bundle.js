@@ -3,6 +3,6 @@ _shells({ a: "a;E lE ;<html><head><title></title></head><body><main> </main></bo
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<html><head><title>${_patch_text_content($scope0_id, "ma", `${_to_text(input.title)} & more <3`, _escape, $scope0_reason, 0)}</title>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}${_flush_head()}</head><body><main>${_patch_text($scope0_id, "b", input.body, void 0, $scope0_reason, 1)}</main>`), _trailers("</body></html>");
+	_html(`<html><head><title>${_patch_text_content($scope0_id, "ma", `${_to_text(input.title)} & more <3`, _escape, $scope0_reason, 0)}</title>${_el_resume($scope0_id, "a", _mask_group($scope0_reason, 0))}${_flush_head()}</head><body><main>${_text_resume($scope0_id, "b", input.body, void 0, $scope0_reason, 1)}</main>`), _trailers("</body></html>");
 	_scope($scope0_id, {});
 }, 1);

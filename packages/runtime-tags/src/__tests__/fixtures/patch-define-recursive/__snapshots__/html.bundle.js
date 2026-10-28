@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	const foo = { content: _content("a1", (n) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wi__n = _write_if($scope1_reason, 0);
-		_html(`<b>${_patch_text($scope1_id, "a", input.x, void 0, $scope0_reason, 0)}</b>`);
+		_html(`<b>${_text_resume($scope1_id, "a", input.x, void 0, $scope0_reason, 0)}</b>`);
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();

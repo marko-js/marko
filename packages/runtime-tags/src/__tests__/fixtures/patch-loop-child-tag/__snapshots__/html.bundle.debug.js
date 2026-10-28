@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/row.marko": "__tests__/tags/row.marko;D%b%;<li><!><!><
 var row_default = _template("__tests__/tags/row.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<li>${_patch_text($scope0_id, "#text/0", input.item.name, void 0, $scope0_reason, 0)}${_patch_text($scope0_id, "#text/1", input.item.hot ? " 🔥" : "", 2, $scope0_reason, 1)}</li>`);
+	_html(`<li>${_text_resume($scope0_id, "#text/0", input.item.name, void 0, $scope0_reason, 0)}${_text_resume($scope0_id, "#text/1", input.item.hot ? " 🔥" : "", 2, $scope0_reason, 1)}</li>`);
 	_scope($scope0_id, {}, "__tests__/tags/row.marko", 0);
 });
 

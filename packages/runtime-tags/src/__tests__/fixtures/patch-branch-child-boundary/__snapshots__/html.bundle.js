@@ -12,7 +12,7 @@ var loader_default = _template("b", (input) => {
 	_html("<div class=ld>");
 	_await($scope0_id, "a", input.promise, (v) => {
 		const $scope1_id = _scope_id();
-		_html(_patch_text($scope1_id, "a", v, void 0, $scope0_reason, 0));
+		_html(_text_resume($scope1_id, "a", v, void 0, $scope0_reason, 0));
 		_scope($scope1_id, {});
 	}, 1, "b0", 1);
 	_html("</div>");

@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			Wrap.content({ content: _content_elide("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<button>${_patch_text($scope2_id, "#text/1", input.label, void 0, $scope0_reason, 2)}:${_text_resume($scope2_id, "#text/2", n, 2)}</button>${_el_resume($scope2_id, "#button/0")}`);
+				_html(`<button>${_text_resume($scope2_id, "#text/1", input.label, void 0, $scope0_reason, 2)}:${_text_resume($scope2_id, "#text/2", n, 2)}</button>${_el_resume($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:5/init");
 				_subscribe($if_content__n__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "8:4")));

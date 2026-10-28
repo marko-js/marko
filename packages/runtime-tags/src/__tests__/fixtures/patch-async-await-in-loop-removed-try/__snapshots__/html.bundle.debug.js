@@ -16,7 +16,7 @@ var rows_default = _template("__tests__/tags/rows.marko", (input) => {
 		_html("<div>");
 		_await($scope1_id, "#text/0", input.promise, (v) => {
 			const $scope2_id = _scope_id();
-			_html(`<em>${_patch_text($scope2_id, "#text/0", item.id, void 0, $scope0_reason, 1)}:${_patch_text($scope2_id, "#text/1", v, 2, $scope0_reason, 2)}</em>`);
+			_html(`<em>${_text_resume($scope2_id, "#text/0", item.id, void 0, $scope0_reason, 1)}:${_text_resume($scope2_id, "#text/1", v, 2, $scope0_reason, 2)}</em>`);
 			_scope($scope2_id, {}, "__tests__/tags/rows.marko", "3:6");
 		}, 1, "__tests__/tags/rows.marko_2*content");
 		_html("</div>");

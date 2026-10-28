@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		let n = 0;
-		_html(`<p>${_patch_text($scope1_id, "a", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope1_id, "b", n, 2)}</p><button>+</button>${_el_resume($scope1_id, "c")}`);
+		_html(`<p>${_text_resume($scope1_id, "a", input.label, void 0, $scope0_reason, 0)} ${_text_resume($scope1_id, "b", n, 2)}</p><button>+</button>${_el_resume($scope1_id, "c")}`);
 		_script($scope1_id, "a0");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			d: n,

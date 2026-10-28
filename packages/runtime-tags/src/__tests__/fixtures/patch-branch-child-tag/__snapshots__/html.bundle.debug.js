@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/badge.marko": "__tests__/tags/badge.marko;D%b%;<span c
 var badge_default = _template("__tests__/tags/badge.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span class=badge>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}${_patch_text($scope0_id, "#text/1", input.note ? ` (${_to_text(input.note)})` : "", 2, $scope0_reason, 1)}</span>`);
+	_html(`<span class=badge>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}${_text_resume($scope0_id, "#text/1", input.note ? ` (${_to_text(input.note)})` : "", 2, $scope0_reason, 1)}</span>`);
 	_scope($scope0_id, {}, "__tests__/tags/badge.marko", 0);
 });
 

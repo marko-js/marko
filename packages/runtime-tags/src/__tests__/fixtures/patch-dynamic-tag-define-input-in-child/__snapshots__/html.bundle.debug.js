@@ -13,13 +13,13 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 	const Card = { content: _content_resume("__tests__/tags/picker.marko_1*content", ({ record }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<h4>${_patch_text($scope1_id, "#text/0", record.name)}</h4>`);
+		_html(`<h4>${_text_resume($scope1_id, "#text/0", record.name, void 0, 4, 0)}</h4>`);
 		_scope($scope1_id, {}, "__tests__/tags/picker.marko", "1:2");
 	}, $scope0_id) };
 	const Other = { content: _content_resume("__tests__/tags/picker.marko_2*content", ({ record }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<h5>${_patch_text($scope2_id, "#text/0", record.name)}</h5>`);
+		_html(`<h5>${_text_resume($scope2_id, "#text/0", record.name, void 0, 4, 0)}</h5>`);
 		_scope($scope2_id, {}, "__tests__/tags/picker.marko", "4:2");
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.useA ? Card : Other, { record: input.record }, 1, 0, 0, $wg__input_useA__OR__input_record, $scope0_reason, 0);

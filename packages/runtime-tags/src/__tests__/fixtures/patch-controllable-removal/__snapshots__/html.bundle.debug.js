@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const handler = _resume((next) => {
 		document.querySelector("main").dataset.got = next;
 	}, "__tests__/template.marko_0/handler");
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</h1><input${_attr_input_value($scope0_id, "#input/1", input.value, input.wire ? handler : undefined, 1, $scope0_reason, 0, 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/1")}</main>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 1)}</h1><input${_attr_input_value($scope0_id, "#input/1", input.value, input.wire ? handler : undefined, 1, $scope0_reason, 0, 1, $scope0_reason, 0)}>${_el_resume($scope0_id, "#input/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_value: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.value,

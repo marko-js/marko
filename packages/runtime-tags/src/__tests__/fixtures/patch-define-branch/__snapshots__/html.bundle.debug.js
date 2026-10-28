@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const foo = { content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>${_patch_text($scope1_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", input.x, void 0, $scope0_reason, 0)}</em>`);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), "__tests__/template.marko_1_input_x#0:4/subscribe");
 	}, $scope0_id) };
 	_if(() => {

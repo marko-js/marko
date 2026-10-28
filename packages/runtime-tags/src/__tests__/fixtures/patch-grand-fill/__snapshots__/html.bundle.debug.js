@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/card/tags/badge/index.marko": "__tests__/tags/card/tag
 var badge_default = _template("__tests__/tags/card/tags/badge/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_patch_text($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 0)}</em>`);
 	_scope($scope0_id, {}, "__tests__/tags/card/tags/badge/index.marko", 0);
 });
 
@@ -18,7 +18,7 @@ _shells({ "__tests__/tags/card/index.marko": /*@__PURE__*/ (() => `__tests__/tag
 var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<h3>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h3>`);
+	_html(`<h3>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h3>`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
 	badge_default({ text: input.subtitle });

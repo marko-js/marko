@@ -89,7 +89,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 		content: _content_resume("__tests__/tags/param-host.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<p>if ${_patch_text($scope1_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
+			_html(`<p>if ${_text_resume($scope1_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, $cg__input_label ? "__tests__/tags/param-host.marko_1_input_label#0:7/init" : "__tests__/tags/param-host.marko_1_input_label#0:7/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: $wi__input_open__OR__input_label && _scope_with_id($scope0_id) }, "__tests__/tags/param-host.marko", "1:2"));
 		}, $scope0_id)
@@ -102,7 +102,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 		content: _content_resume("__tests__/tags/param-host.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<p>for ${_patch_text($scope2_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
+			_html(`<p>for ${_text_resume($scope2_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_label ? "__tests__/tags/param-host.marko_2_input_label#0:7/init" : "__tests__/tags/param-host.marko_2_input_label#0:7/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {
 				_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
@@ -118,7 +118,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 		content: _content_resume("__tests__/tags/param-host.marko_3*content", () => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<p>tag ${_patch_text($scope3_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
+			_html(`<p>tag ${_text_resume($scope3_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope3_id, $cg__input_label ? "__tests__/tags/param-host.marko_3_input_label#0:7/init" : "__tests__/tags/param-host.marko_3_input_label#0:7/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope3_id, {
 				_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
@@ -130,7 +130,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 	_dynamic_tag($scope0_id, "#text/3", input.open ? "div" : "section", {}, 26, _content_elide("__tests__/tags/param-host.marko_4*content", () => {
 		const $scope4_id = _scope_id();
 		const $scope4_reason = _scope_reason();
-		_html(`<p>own ${_patch_text($scope4_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
+		_html(`<p>own ${_text_resume($scope4_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope4_id, $cg__input_label ? "__tests__/tags/param-host.marko_4_input_label#0:7/init" : "__tests__/tags/param-host.marko_4_input_label#0:7/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope4_id, {
 			_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
@@ -192,7 +192,7 @@ var define_host_default = _template("__tests__/tags/define-host.marko", (input) 
 			content: _content_resume("__tests__/tags/define-host.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<p>if ${_patch_text($scope2_id, "#text/0", input.label, 2, $scope0_reason, 0)}</p>`);
+				_html(`<p>if ${_text_resume($scope2_id, "#text/0", input.label, 2, $scope0_reason, 0)}</p>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_label ? "__tests__/tags/define-host.marko_2_input_label#0:3/init" : "__tests__/tags/define-host.marko_2_input_label#0:3/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, { _: ($wi__input_label || $wi__open) && _scope_with_id($scope1_id) }, "__tests__/tags/define-host.marko", "2:4"));
 			}, $scope1_id)
@@ -205,7 +205,7 @@ var define_host_default = _template("__tests__/tags/define-host.marko", (input) 
 			content: _content_resume("__tests__/tags/define-host.marko_3*content", () => {
 				const $scope3_reason = _scope_reason();
 				const $scope3_id = _scope_id();
-				_html(`<p>for ${_patch_text($scope3_id, "#text/0", input.label, 2, $scope0_reason, 0)}</p>`);
+				_html(`<p>for ${_text_resume($scope3_id, "#text/0", input.label, 2, $scope0_reason, 0)}</p>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, $cg__input_label ? "__tests__/tags/define-host.marko_3_input_label#0:3/init" : "__tests__/tags/define-host.marko_3_input_label#0:3/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope3_id, {
 					_: ($wi__input_label || $wi__open) && _scope_with_id($scope1_id),
@@ -221,7 +221,7 @@ var define_host_default = _template("__tests__/tags/define-host.marko", (input) 
 			content: _content_resume("__tests__/tags/define-host.marko_4*content", () => {
 				const $scope4_reason = _scope_reason();
 				const $scope4_id = _scope_id();
-				_html(`<p>tag ${_patch_text($scope4_id, "#text/0", input.label, 2, $scope0_reason, 0)}</p>`);
+				_html(`<p>tag ${_text_resume($scope4_id, "#text/0", input.label, 2, $scope0_reason, 0)}</p>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope4_id, $cg__input_label ? "__tests__/tags/define-host.marko_4_input_label#0:3/init" : "__tests__/tags/define-host.marko_4_input_label#0:3/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope4_id, {
 					_: ($wi__input_label || $wi__open) && _scope_with_id($scope1_id),
@@ -233,7 +233,7 @@ var define_host_default = _template("__tests__/tags/define-host.marko", (input) 
 		_dynamic_tag($scope1_id, "#text/3", open ? "div" : "section", {}, 26, _content_elide("__tests__/tags/define-host.marko_5*content", () => {
 			const $scope5_id = _scope_id();
 			const $scope5_reason = _scope_reason();
-			_html(`<p>own ${_patch_text($scope5_id, "#text/0", input.label, 2, $scope0_reason, 0)}</p>`);
+			_html(`<p>own ${_text_resume($scope5_id, "#text/0", input.label, 2, $scope0_reason, 0)}</p>`);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope5_id, $cg__input_label ? "__tests__/tags/define-host.marko_5_input_label#0:3/init" : "__tests__/tags/define-host.marko_5_input_label#0:3/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope5_id, {
 				_: ($wi__input_label || $wi__open) && _scope_with_id($scope1_id),

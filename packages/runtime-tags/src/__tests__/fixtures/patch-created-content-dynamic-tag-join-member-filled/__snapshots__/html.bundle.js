@@ -3,7 +3,7 @@ _shells({ b: "b;Db%;<i>one <!></i>" });
 var one_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<i>one ${_patch_text($scope0_id, "a", input.id, 2, $scope0_reason, 0)}</i>`);
+	_html(`<i>one ${_text_resume($scope0_id, "a", input.id, 2, $scope0_reason, 0)}</i>`);
 	_scope($scope0_id, {});
 });
 
@@ -12,7 +12,7 @@ _shells({ c: "c;Db%;<b>two <!></b>" });
 var two_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>two ${_patch_text($scope0_id, "a", input.id, 2, $scope0_reason, 0)}</b>`);
+	_html(`<b>two ${_text_resume($scope0_id, "a", input.id, 2, $scope0_reason, 0)}</b>`);
 	_scope($scope0_id, {});
 });
 
@@ -63,7 +63,7 @@ var template_default = _template("a", (input) => {
 			_try($scope1_id, "b", () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
-				_html(`<p>${_patch_text($scope3_id, "a", input.id, void 0, $scope0_reason, 4)}</p>`);
+				_html(`<p>${_text_resume($scope3_id, "a", input.id, void 0, $scope0_reason, 4)}</p>`);
 				_unfilled_if($scope0_reason, 4) && _patch_init($scope3_id, $cg__input_id ? "a0" : "a1");
 				_subscribe(_unfilled_if($scope0_reason, 4) && $input_id__closures, _scope($scope3_id, {
 					_: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id),

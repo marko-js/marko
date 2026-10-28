@@ -21,6 +21,6 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["a1"], $scope0_reason, 0);
-	_html(`<p>${_patch_text($scope0_id, "b", input.note, void 0, $scope0_reason, 2)}</p></main>`);
+	_html(`<p>${_text_resume($scope0_id, "b", input.note, void 0, $scope0_reason, 2)}</p></main>`);
 	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.nonce }) || _filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va2", input.nonce, !_server_guard($scope0_reason, 1));
 }, 1);

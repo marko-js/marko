@@ -6,7 +6,7 @@ _shells({ a: "a !a0; D ;<button> </button>" });
 var tagged_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<button>${_patch_text($scope0_id, "b", "", void 0, 0, 0, 1)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_resume($scope0_id, "b", "", void 0, 0, 0, 1)}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { e: input.node }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "we", input.node, !_server_guard($scope0_reason, 0));
 });

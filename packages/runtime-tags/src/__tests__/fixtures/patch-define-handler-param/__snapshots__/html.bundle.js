@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	const Card = { content: _content("a0", ({ id }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<h1>Product ${_patch_text($scope1_id, "a", id, 2, $scope1_reason, 0)}</h1><button>Add to cart</button>${_el_resume($scope1_id, "b")}`);
+		_html(`<h1>Product ${_text_resume($scope1_id, "a", id, 2, $scope1_reason, 0)}</h1><button>Add to cart</button>${_el_resume($scope1_id, "b")}`);
 		_script($scope1_id, "a1");
 		_scope($scope1_id, {
 			e: id,

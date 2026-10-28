@@ -20,7 +20,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		_if(() => {
 			if (show) {
 				const $scope2_id = _scope_id();
-				_html(`<p>${_patch_text($scope2_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 0)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "#text/0", input.a + input.b, void 0, $scope0_reason, 0)}</p>`);
 				(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:5/subscribe");
 				(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "__tests__/tags/panel.marko_2_input_b#0:6/subscribe");
 				_patch_join_init($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:5_input_b#0:6/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">>input_a", _filled_guard($scope0_reason, 2) && ">>input_b");

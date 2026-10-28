@@ -19,7 +19,7 @@ var panel_default = _template("b", (input) => {
 			_if(() => {
 				if (input.y) {
 					const $scope2_id = _scope_id();
-					_html(`<button class=read>${_patch_text($scope2_id, "b", v, void 0, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "a")}`);
+					_html(`<button class=read>${_text_resume($scope2_id, "b", v, void 0, $scope0_reason, 1)}</button>${_el_resume($scope2_id, "a")}`);
 					_script($scope2_id, "b0");
 					$cg__input_a && _patch_init($scope2_id, "b1");
 					_scope($scope2_id, { _: _scope_with_id($scope1_id) });
@@ -36,7 +36,7 @@ var panel_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), void 0, void 0, void 0, ["b3"], $scope0_reason, 0);
-	_html(`<output>${_patch_text($scope0_id, "b", out, void 0, 0, 0, 1)}</output>`);
+	_html(`<output>${_text_resume($scope0_id, "b", out, void 0, 0, 0, 1)}</output>`);
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.a,
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.y

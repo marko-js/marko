@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_await($scope2_id, "a", input.promise, (v) => {
 			const $scope3_id = _scope_id();
-			_html(_patch_text($scope3_id, "a", v, void 0, $scope0_reason, 1));
+			_html(_text_resume($scope3_id, "a", v, void 0, $scope0_reason, 1));
 			_scope($scope3_id, {});
 		}, 1, "a2", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_promise ? "a5" : "a6");

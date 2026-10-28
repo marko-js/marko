@@ -16,7 +16,7 @@ var wrapper_default = _template("c", (input) => {
 	_try($scope0_id, "a", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_patch_text($scope2_id, "a", input.fail ? boom() : "ok", void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "a", input.fail ? boom() : "ok", void 0, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_fail ? "c1" : "c2");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), $cg__input_fail && "c2");
 	}, void 0, () => {
@@ -53,7 +53,7 @@ var panel_default = _template("b", (input) => {
 		fallback: attrTag({ content: _content_resume("b3", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_patch_text($scope1_id, "a", input.a + input.b, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "a", input.a + input.b, void 0, $scope0_reason, 0)}</em>`);
 			(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b0");
 			(_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b1");
 			_patch_join_init($scope1_id, "b2", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 3) && ">f");

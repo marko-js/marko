@@ -24,7 +24,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p0) {
 			const $scope1_id = _scope_id();
-			_html(`<span id=s0>${_patch_text($scope1_id, "a", input.p0, void 0, $scope0_reason, 1)}</span>`);
+			_html(`<span id=s0>${_text_resume($scope1_id, "a", input.p0, void 0, $scope0_reason, 1)}</span>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
@@ -33,7 +33,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p1) {
 			const $scope2_id = _scope_id();
-			_html(`<span id=s1>${_patch_text($scope2_id, "a", input.p1, void 0, $scope0_reason, 2)}</span>`);
+			_html(`<span id=s1>${_text_resume($scope2_id, "a", input.p1, void 0, $scope0_reason, 2)}</span>`);
 			_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "b17");
 			_scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
@@ -42,7 +42,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p2) {
 			const $scope3_id = _scope_id();
-			_html(`<span id=s2>${_patch_text($scope3_id, "a", input.p2, void 0, $scope0_reason, 3)}</span>`);
+			_html(`<span id=s2>${_text_resume($scope3_id, "a", input.p2, void 0, $scope0_reason, 3)}</span>`);
 			_client_guard($scope0_reason, 3) && _patch_init($scope3_id, "b18");
 			_scope($scope3_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) });
 			return 0;
@@ -51,7 +51,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p3) {
 			const $scope4_id = _scope_id();
-			_html(`<span id=s3>${_patch_text($scope4_id, "a", input.p3, void 0, $scope0_reason, 4)}</span>`);
+			_html(`<span id=s3>${_text_resume($scope4_id, "a", input.p3, void 0, $scope0_reason, 4)}</span>`);
 			_client_guard($scope0_reason, 4) && _patch_init($scope4_id, "b19");
 			_scope($scope4_id, { _: _write_if($scope0_reason, 4) && _scope_with_id($scope0_id) });
 			return 0;
@@ -60,7 +60,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p4) {
 			const $scope5_id = _scope_id();
-			_html(`<span id=s4>${_patch_text($scope5_id, "a", input.p4, void 0, $scope0_reason, 5)}</span>`);
+			_html(`<span id=s4>${_text_resume($scope5_id, "a", input.p4, void 0, $scope0_reason, 5)}</span>`);
 			_client_guard($scope0_reason, 5) && _patch_init($scope5_id, "b20");
 			_scope($scope5_id, { _: _write_if($scope0_reason, 5) && _scope_with_id($scope0_id) });
 			return 0;
@@ -69,7 +69,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p5) {
 			const $scope6_id = _scope_id();
-			_html(`<span id=s5>${_patch_text($scope6_id, "a", input.p5, void 0, $scope0_reason, 6)}</span>`);
+			_html(`<span id=s5>${_text_resume($scope6_id, "a", input.p5, void 0, $scope0_reason, 6)}</span>`);
 			_client_guard($scope0_reason, 6) && _patch_init($scope6_id, "b21");
 			_scope($scope6_id, { _: _write_if($scope0_reason, 6) && _scope_with_id($scope0_id) });
 			return 0;
@@ -78,7 +78,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p6) {
 			const $scope7_id = _scope_id();
-			_html(`<span id=s6>${_patch_text($scope7_id, "a", input.p6, void 0, $scope0_reason, 7)}</span>`);
+			_html(`<span id=s6>${_text_resume($scope7_id, "a", input.p6, void 0, $scope0_reason, 7)}</span>`);
 			_client_guard($scope0_reason, 7) && _patch_init($scope7_id, "b22");
 			_scope($scope7_id, { _: _write_if($scope0_reason, 7) && _scope_with_id($scope0_id) });
 			return 0;
@@ -87,7 +87,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p7) {
 			const $scope8_id = _scope_id();
-			_html(`<span id=s7>${_patch_text($scope8_id, "a", input.p7, void 0, $scope0_reason, 8)}</span>`);
+			_html(`<span id=s7>${_text_resume($scope8_id, "a", input.p7, void 0, $scope0_reason, 8)}</span>`);
 			_client_guard($scope0_reason, 8) && _patch_init($scope8_id, "b23");
 			_scope($scope8_id, { _: _write_if($scope0_reason, 8) && _scope_with_id($scope0_id) });
 			return 0;
@@ -96,7 +96,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p8) {
 			const $scope9_id = _scope_id();
-			_html(`<span id=s8>${_patch_text($scope9_id, "a", input.p8, void 0, $scope0_reason, 9)}</span>`);
+			_html(`<span id=s8>${_text_resume($scope9_id, "a", input.p8, void 0, $scope0_reason, 9)}</span>`);
 			_client_guard($scope0_reason, 9) && _patch_init($scope9_id, "b24");
 			_scope($scope9_id, { _: _write_if($scope0_reason, 9) && _scope_with_id($scope0_id) });
 			return 0;
@@ -105,7 +105,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p9) {
 			const $scope10_id = _scope_id();
-			_html(`<span id=s9>${_patch_text($scope10_id, "a", input.p9, void 0, $scope0_reason, 10)}</span>`);
+			_html(`<span id=s9>${_text_resume($scope10_id, "a", input.p9, void 0, $scope0_reason, 10)}</span>`);
 			_client_guard($scope0_reason, 10) && _patch_init($scope10_id, "b25");
 			_scope($scope10_id, { _: _write_if($scope0_reason, 10) && _scope_with_id($scope0_id) });
 			return 0;
@@ -114,7 +114,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p10) {
 			const $scope11_id = _scope_id();
-			_html(`<span id=s10>${_patch_text($scope11_id, "a", input.p10, void 0, $scope0_reason, 11)}</span>`);
+			_html(`<span id=s10>${_text_resume($scope11_id, "a", input.p10, void 0, $scope0_reason, 11)}</span>`);
 			_client_guard($scope0_reason, 11) && _patch_init($scope11_id, "b26");
 			_scope($scope11_id, { _: _write_if($scope0_reason, 11) && _scope_with_id($scope0_id) });
 			return 0;
@@ -123,7 +123,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p11) {
 			const $scope12_id = _scope_id();
-			_html(`<span id=s11>${_patch_text($scope12_id, "a", input.p11, void 0, $scope0_reason, 12)}</span>`);
+			_html(`<span id=s11>${_text_resume($scope12_id, "a", input.p11, void 0, $scope0_reason, 12)}</span>`);
 			_client_guard($scope0_reason, 12) && _patch_init($scope12_id, "b27");
 			_scope($scope12_id, { _: _write_if($scope0_reason, 12) && _scope_with_id($scope0_id) });
 			return 0;
@@ -132,7 +132,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p12) {
 			const $scope13_id = _scope_id();
-			_html(`<span id=s12>${_patch_text($scope13_id, "a", input.p12, void 0, $scope0_reason, 13)}</span>`);
+			_html(`<span id=s12>${_text_resume($scope13_id, "a", input.p12, void 0, $scope0_reason, 13)}</span>`);
 			_client_guard($scope0_reason, 13) && _patch_init($scope13_id, "b28");
 			_scope($scope13_id, { _: _write_if($scope0_reason, 13) && _scope_with_id($scope0_id) });
 			return 0;
@@ -141,7 +141,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p13) {
 			const $scope14_id = _scope_id();
-			_html(`<span id=s13>${_patch_text($scope14_id, "a", input.p13, void 0, $scope0_reason, 14)}</span>`);
+			_html(`<span id=s13>${_text_resume($scope14_id, "a", input.p13, void 0, $scope0_reason, 14)}</span>`);
 			_client_guard($scope0_reason, 14) && _patch_init($scope14_id, "b29");
 			_scope($scope14_id, { _: _write_if($scope0_reason, 14) && _scope_with_id($scope0_id) });
 			return 0;
@@ -150,7 +150,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p14) {
 			const $scope15_id = _scope_id();
-			_html(`<span id=s14>${_patch_text($scope15_id, "a", input.p14, void 0, $scope0_reason, 15)}</span>`);
+			_html(`<span id=s14>${_text_resume($scope15_id, "a", input.p14, void 0, $scope0_reason, 15)}</span>`);
 			_client_guard($scope0_reason, 15) && _patch_init($scope15_id, "b30");
 			_scope($scope15_id, { _: _write_if($scope0_reason, 15) && _scope_with_id($scope0_id) });
 			return 0;
@@ -159,7 +159,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.p15) {
 			const $scope16_id = _scope_id();
-			_html(`<span id=s15>${_patch_text($scope16_id, "a", input.p15, void 0, $scope0_reason, 16)}</span>`);
+			_html(`<span id=s15>${_text_resume($scope16_id, "a", input.p15, void 0, $scope0_reason, 16)}</span>`);
 			_client_guard($scope0_reason, 16) && _patch_init($scope16_id, "b31");
 			_scope($scope16_id, { _: _write_if($scope0_reason, 16) && _scope_with_id($scope0_id) });
 			return 0;

@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const Inner = { content: _content("__tests__/template.marko_2*content", ({ z }) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
-			_html(`<p>${_patch_text($scope2_id, "#text/0", input.label + x + z, void 0, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0) | _mask_group($scope2_reason, 0)) << 1, 0)}</p>`);
+			_html(`<p>${_text_resume($scope2_id, "#text/0", input.label + x + z, void 0, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0) | _mask_group($scope2_reason, 0)) << 1, 0)}</p>`);
 			_client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && _patch_write($scope2_id, "PatchMarkedWrite:z", z, !(_filled_guard($scope2_reason, 0) && ($cg__input_label || _client_guard($scope1_reason, 0))));
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:4/subscribe");
 			(_unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope2_reason, 0)) && _patch_init($scope2_id, "__tests__/template.marko_2_x#1:3/subscribe");

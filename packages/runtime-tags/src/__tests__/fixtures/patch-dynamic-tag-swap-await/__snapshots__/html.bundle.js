@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_await($scope1_id, "a", input.p, (v) => {
 			const $scope2_id = _scope_id();
-			_html(`<em>${_patch_text($scope2_id, "a", v, void 0, $scope0_reason, 2)}</em>`);
+			_html(`<em>${_text_resume($scope2_id, "a", v, void 0, $scope0_reason, 2)}</em>`);
 			_scope($scope2_id, {});
 		}, 1, "a0");
 		_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "a3");

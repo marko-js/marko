@@ -6,7 +6,7 @@ var label_view_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const get = input.flag ? input.a : input.b;
-	_html(`<p>${_patch_text($scope0_id, "a", get(), void 0, $scope0_reason, 3)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", get(), void 0, $scope0_reason, 3)}</p>`);
 	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "b3");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.flag,

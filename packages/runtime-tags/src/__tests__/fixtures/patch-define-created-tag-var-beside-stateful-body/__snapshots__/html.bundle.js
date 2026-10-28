@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_patch_text($scope3_id, "a", label, void 0, $scope2_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "a", label, void 0, $scope2_reason, 2)}</em>`);
 				$cg__label && _patch_init($scope3_id, "a0");
 				_scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) });
 				return 0;
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 			_filled_guard($scope0_reason, 1) ? _patch_fill($scope1_id, "va7", ret) : _patch_init($scope1_id, "a8");
 			$cg__input_label && _var($scope1_id, "b", $childScope, "a6");
 			_patch_child_end();
-			_html(`<b>${_patch_text($scope1_id, "c", ret, void 0, $scope0_reason, 1)}</b>`);
+			_html(`<b>${_text_resume($scope1_id, "c", ret, void 0, $scope0_reason, 1)}</b>`);
 			_if(() => {}, $scope1_id, "d", 1, 1, 0, 0, 1);
 			_scope($scope1_id, {
 				e: ret,

@@ -14,11 +14,11 @@ var child_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			const $if_content__c__closures = /* @__PURE__ */ new Set();
 			const c = input.b + "!";
-			_html(`<p>${_patch_text($scope1_id, "a", input.a + c, void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "a", input.a + c, void 0, $scope0_reason, 1)}</p>`);
 			const frag = { content: _content_resume("b0", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
-				_html(`<em>${_patch_text($scope2_id, "a", c, void 0, $scope0_reason, 6)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "a", c, void 0, $scope0_reason, 6)}</em>`);
 				_unfilled_if($scope0_reason, 6) && _patch_init($scope2_id, $cg__input_b ? "b1" : "b2");
 				_subscribe(_unfilled_if($scope0_reason, 6) && $if_content__c__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) }));
 			}, $scope1_id) };

@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_await($scope2_id, "a", input.promise, (value) => {
 				const $scope6_id = _scope_id();
-				_html(`<span>${_patch_text($scope6_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
+				_html(`<span>${_text_resume($scope6_id, "a", value, void 0, $scope0_reason, 0)}</span>`);
 				_scope($scope6_id, {});
 			}, 1, "a0", 1);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_promise ? "a7" : "a8");
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		}, (err) => {
 			_scope_reason();
 			const $scope5_id = _scope_id();
-			_html(`<em>${_patch_text($scope5_id, "a", err.message)}</em>`);
+			_html(`<em>${_text_resume($scope5_id, "a", err.message, void 0, 4, 0)}</em>`);
 			_scope($scope5_id, {});
 		}, "a2", "a1", "a5", 1, 1, 3);
 		$wi__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) });

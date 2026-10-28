@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					_html(`<b>${_patch_text($scope2_id, "#text/0", label)}!</b>`);
+					_html(`<b>${_text_resume($scope2_id, "#text/0", label, void 0, 4, 0)}!</b>`);
 					_scope($scope2_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:8");
 					return 0;
 				}

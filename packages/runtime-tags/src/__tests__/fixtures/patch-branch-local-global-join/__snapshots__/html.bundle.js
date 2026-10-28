@@ -13,7 +13,7 @@ var child_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const c = $global$1.g + "!";
-			_html(`<p>${_patch_text($scope1_id, "a", input.a + input.b + c, void 0, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "a", input.a + input.b + c, void 0, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
 			_fill_global_subscribe("b0", $scope1_id);
 			_client_guard($scope0_reason, 0) && _patch_write($scope1_id, "wb", c, 1);
 			_client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_init($scope1_id, "b1");

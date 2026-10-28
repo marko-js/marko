@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/bold.marko": "__tests__/tags/bold.marko;D ;<b> </b>" }
 var bold_default = _template("__tests__/tags/bold.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<b>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</b>`);
 	_scope($scope0_id, {}, "__tests__/tags/bold.marko", 0);
 });
 
@@ -18,7 +18,7 @@ _shells({ "__tests__/tags/italic.marko": "__tests__/tags/italic.marko;D ;<i> </i
 var italic_default = _template("__tests__/tags/italic.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<i>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</i>`);
+	_html(`<i>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</i>`);
 	_scope($scope0_id, {}, "__tests__/tags/italic.marko", 0);
 });
 

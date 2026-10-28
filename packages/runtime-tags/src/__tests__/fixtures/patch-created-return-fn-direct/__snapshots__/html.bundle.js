@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "wf", r, !$sg__input_label);
 			$cg__input_label && _var($scope1_id, "b", $childScope, "a0");
 			_patch_child_end();
-			_html(`<p>${_patch_text($scope1_id, "c", r.fn(), void 0, $scope0_reason, 1)} ${_patch_text($scope1_id, "d", "-", 2, 0, 0, 1)}</p><button>show</button>${_el_resume($scope1_id, "e")}`);
+			_html(`<p>${_text_resume($scope1_id, "c", r.fn(), void 0, $scope0_reason, 1)} ${_text_resume($scope1_id, "d", "-", 2, 0, 0, 1)}</p><button>show</button>${_el_resume($scope1_id, "e")}`);
 			_script($scope1_id, "a1");
 			$cg__input_label && _patch_init($scope1_id, "a2");
 			_scope($scope1_id, {

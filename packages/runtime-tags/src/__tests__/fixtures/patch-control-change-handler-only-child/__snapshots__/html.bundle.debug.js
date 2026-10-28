@@ -7,7 +7,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</p><input${_attr_input_value($scope0_id, "#input/1", void 0, _resume(function(v) {
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</p><input${_attr_input_value($scope0_id, "#input/1", void 0, _resume(function(v) {
 		count += v.length;
 	}, "__tests__/tags/child.marko_0/valueChange", $scope0_id))}>${_el_resume($scope0_id, "#input/1")}<span>${_text_resume($scope0_id, "#text/2", count)}</span>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");

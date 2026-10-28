@@ -31,7 +31,7 @@ var panel_default = _template("b", (input) => {
 			wrap_default({ content: _content_elide("b1", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<em>${_patch_text($scope2_id, "a", input.n, void 0, $scope0_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "a", input.n, void 0, $scope0_reason, 2)}</em>`);
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "b0");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_n__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_n && _scope_with_id($scope1_id) }));
 			}, $scope1_id) });

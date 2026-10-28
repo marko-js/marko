@@ -4,7 +4,7 @@ var brand_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$2 = $global();
-	_html(`<b>${_patch_text($scope0_id, "a", $global$2.brand)}</b>`);
+	_html(`<b>${_text_resume($scope0_id, "a", $global$2.brand, void 0, 4, 0)}</b>`);
 	_fill_global_subscribe("b0", $scope0_id);
 	_scope($scope0_id, {});
 });

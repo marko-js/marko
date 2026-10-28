@@ -5,7 +5,7 @@ _shells({ a: "a;D ;<div> </div>" });
 var probe_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_patch_text($scope0_id, "a", "pending", void 0, 0, 0, 1)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "a", "pending", void 0, 0, 0, 1)}</div>`);
 	_script($scope0_id, "a0", 1, _filled_guard($scope0_reason, 0), "d");
 	_scope($scope0_id, { d: input.promise }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.promise, !_server_guard($scope0_reason, 0));
 });
@@ -33,7 +33,7 @@ var template_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.promise, (v) => {
 			const $scope3_id = _scope_id();
-			_html(`<em>${_patch_text($scope3_id, "a", v.name, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_resume($scope3_id, "a", v.name, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "b0", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "b4" : "b5");

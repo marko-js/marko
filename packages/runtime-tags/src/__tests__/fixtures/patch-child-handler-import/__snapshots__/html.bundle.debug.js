@@ -12,7 +12,7 @@ var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let last = "";
-	_html(`<p>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}${_patch_text($scope0_id, "#text/1", last, 2, 0, 0, 1)}</p><button class=run>run</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}${_text_resume($scope0_id, "#text/1", last, 2, 0, 0, 1)}</p><button class=run>run</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/widget/index.marko_0");
 	_scope($scope0_id, { input_label: input.label }, "__tests__/tags/widget/index.marko", 0, { input_label: ["input.label"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
 });

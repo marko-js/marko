@@ -3,7 +3,7 @@ _shells({ b: "b;D%c%c%;<strong><!> <!> <!></strong>" });
 var large_label_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<strong>${_patch_text($scope0_id, "a", input.message, void 0, $scope0_reason, 0)} ${_patch_text($scope0_id, "b", input.count, 2, $scope0_reason, 1)} ${_patch_text($scope0_id, "c", input.label, 2, $scope0_reason, 2)}</strong>`);
+	_html(`<strong>${_text_resume($scope0_id, "a", input.message, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "b", input.count, 2, $scope0_reason, 1)} ${_text_resume($scope0_id, "c", input.label, 2, $scope0_reason, 2)}</strong>`);
 	_scope($scope0_id, {});
 });
 
@@ -12,7 +12,7 @@ _shells({ c: "c;D%c%c%;<small><!> <!> <!></small>" });
 var small_label_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<small>${_patch_text($scope0_id, "a", input.message, void 0, $scope0_reason, 0)} ${_patch_text($scope0_id, "b", input.count, 2, $scope0_reason, 1)} ${_patch_text($scope0_id, "c", input.label, 2, $scope0_reason, 2)}</small>`);
+	_html(`<small>${_text_resume($scope0_id, "a", input.message, void 0, $scope0_reason, 0)} ${_text_resume($scope0_id, "b", input.count, 2, $scope0_reason, 1)} ${_text_resume($scope0_id, "c", input.label, 2, $scope0_reason, 2)}</small>`);
 	_scope($scope0_id, {});
 });
 
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	_try($scope0_id, "c", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_patch_text($scope2_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 2)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "a", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 2)}</p>`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_error ? "a4" : "a5");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), $cg__input_error && "a5");
 	}, void 0, (err) => {

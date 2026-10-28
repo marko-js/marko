@@ -5,7 +5,7 @@ _shells({ c: "c;D ;<b> </b>" });
 var leaf_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>${_patch_text($scope0_id, "a", input.text, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<b>${_text_resume($scope0_id, "a", input.text, void 0, $scope0_reason, 0)}</b>`);
 	_scope($scope0_id, {});
 });
 

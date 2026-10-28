@@ -7,7 +7,7 @@ var path_child_default = _template("__tests__/tags/path-child.marko", (input) =>
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$2 = $global();
-	_html(`<p>${_patch_text($scope0_id, "#text/0", $global$2.o.x)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", $global$2.o.x, void 0, 4, 0)}</p>`);
 	_fill_global_subscribe("__tests__/tags/path-child.marko_0_$global_o#4", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/tags/path-child.marko", 0);
 });

@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_await($scope2_id, "a", input.promise, (value) => {
 					const $scope4_id = _scope_id();
-					_html(`<em>${_patch_text($scope4_id, "a", value, void 0, $scope0_reason, 2)}</em>`);
+					_html(`<em>${_text_resume($scope4_id, "a", value, void 0, $scope0_reason, 2)}</em>`);
 					_scope($scope4_id, {});
 				}, 1, "a0");
 				_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_promise ? "a5" : "a6");

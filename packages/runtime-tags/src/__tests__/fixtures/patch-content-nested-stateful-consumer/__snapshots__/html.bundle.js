@@ -18,7 +18,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<section><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2>`);
+	_html(`<section><h2>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2>`);
 	_if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</section>`);
 	_script($scope0_id, "b0");
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 		content: _content_resume("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</em>`);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
 		}, $scope0_id)
 	});

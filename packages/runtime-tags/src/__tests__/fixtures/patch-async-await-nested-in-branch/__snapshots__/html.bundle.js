@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 				const $await_content__outer__closures = /* @__PURE__ */ new Set();
 				_await($scope2_id, "a", input.inner, (inner) => {
 					const $scope3_id = _scope_id();
-					_html(`<em>${_patch_text($scope3_id, "a", outer, void 0, $scope0_reason, 3)}:${_patch_text($scope3_id, "b", inner, 2, $scope0_reason, 4)}</em>`);
+					_html(`<em>${_text_resume($scope3_id, "a", outer, void 0, $scope0_reason, 3)}:${_text_resume($scope3_id, "b", inner, 2, $scope0_reason, 4)}</em>`);
 					_unfilled_if($scope0_reason, 3) && _patch_init($scope3_id, $cg__input_outer ? "a0" : "a1");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $await_content__outer__closures, _scope($scope3_id, {}), $cg__input_outer && "a1");
 				}, 1, "a2");

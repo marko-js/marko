@@ -7,7 +7,7 @@ _shells({ b: "b;D ;<a href=\"/\"> </a>" });
 var child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<a href="/">${_patch_text($scope0_id, "a", random(), void 0, 0, 0)}</a>`);
+	_html(`<a href="/">${_text_resume($scope0_id, "a", random(), void 0, 0, 0)}</a>`);
 	_scope($scope0_id, {});
 });
 

@@ -8,7 +8,7 @@ _shells({ b: "b;D ;<em> </em>" });
 var widget_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_patch_text($scope0_id, "a", brand(), void 0, 0, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "a", brand(), void 0, 0, 0)}</em>`);
 	_scope($scope0_id, {});
 });
 

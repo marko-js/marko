@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.p, (value) => {
 			const $scope2_id = _scope_id();
-			_html(`<em>${_patch_text($scope2_id, "#text/0", value + n, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_resume($scope2_id, "#text/0", value + n, void 0, $scope0_reason, 0)}</em>`);
 			$cg__input_p && _patch_init($scope2_id, "__tests__/template.marko_2_n#1:2_value#2/init");
 			_scope($scope2_id, {}, "__tests__/template.marko", "3:6");
 		}, 1, "__tests__/template.marko_2*content");

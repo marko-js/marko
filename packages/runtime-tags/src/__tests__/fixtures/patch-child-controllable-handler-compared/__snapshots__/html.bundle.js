@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	const onCount = _resume((next) => {
 		last = next;
 	}, "a0", $scope0_id);
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "b", last, 2)}</p><pre id=log></pre>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1><p>Last ${_text_resume($scope0_id, "b", last, 2)}</p><pre id=log></pre>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

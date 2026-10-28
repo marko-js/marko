@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const thing = { content: _content("__tests__/template.marko_1*content", (attrs) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>${_patch_text($scope1_id, "#text/0", attrs.x, void 0, $scope1_reason, 0)} ${_patch_text($scope1_id, "#text/1", input.title, 2, $scope0_reason, 1)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", attrs.x, void 0, $scope1_reason, 0)} ${_text_resume($scope1_id, "#text/1", input.title, 2, $scope0_reason, 1)}</em>`);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_title__closures, _scope($scope1_id, { _: $wi__input_title && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_title#0:4/subscribe");
 	}, $scope0_id) };
 	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);

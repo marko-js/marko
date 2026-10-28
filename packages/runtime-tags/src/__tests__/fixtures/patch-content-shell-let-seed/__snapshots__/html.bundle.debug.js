@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				let n = 0;
-				_html(`<button>${_patch_text($scope2_id, "#text/1", input.label, void 0, $scope0_reason, 2)} ${_text_resume($scope2_id, "#text/2", n, 2)}</button>${_el_resume($scope2_id, "#button/0")}`);
+				_html(`<button>${_text_resume($scope2_id, "#text/1", input.label, void 0, $scope0_reason, 2)} ${_text_resume($scope2_id, "#text/2", n, 2)}</button>${_el_resume($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_client_guard($scope0_reason, 2) && _patch_init($scope2_id, "__tests__/template.marko_2_input_label#0:4/init");
 				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill1", n, 1);

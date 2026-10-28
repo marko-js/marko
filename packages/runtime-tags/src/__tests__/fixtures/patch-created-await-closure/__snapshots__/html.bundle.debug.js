@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "#text/0", input.promise, (v) => {
 				const $scope2_id = _scope_id();
-				_html(`<p>${_text_resume($scope2_id, "#text/0", count)} ${_patch_text($scope2_id, "#text/1", v, 2, $scope0_reason, 1)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "#text/0", count)} ${_text_resume($scope2_id, "#text/1", v, 2, $scope0_reason, 1)}</p>`);
 				_subscribe($count__closures, _scope($scope2_id, {}, "__tests__/template.marko", "4:4"), "__tests__/template.marko_2_count#0:6/subscribe");
 			}, 1, "__tests__/template.marko_2*content");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_promise#0:5/init");

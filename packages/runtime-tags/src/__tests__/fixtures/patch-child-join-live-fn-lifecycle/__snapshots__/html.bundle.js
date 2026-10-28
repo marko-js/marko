@@ -7,7 +7,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.a, !$sg__input_a);
 	const fmt = _bind_resume(() => input.a + "!", "b0", $scope0_id);
-	_html(`<p>${_patch_text($scope0_id, "a", fmt() + input.b, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", fmt() + input.b, void 0, $scope0_reason, 0)}</p>`);
 	_script($scope0_id, "b1", 1, (_filled_guard($scope0_reason, 2) || _filled_guard($scope0_reason, 1)) && ($cg__input_b || $cg__input_a ? 2 : 1), _filled_guard($scope0_reason, 2) && "e", _filled_guard($scope0_reason, 1) && "f");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b4");
 	_scope($scope0_id, {

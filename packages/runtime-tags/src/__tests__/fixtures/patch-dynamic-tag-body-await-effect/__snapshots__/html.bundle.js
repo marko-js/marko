@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope1_id, "a", input.on ? card_default : "div", {}, 2, _content_resume("a0", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
-			_html(`<em>${_patch_text($scope2_id, "a", input.note, void 0, $scope0_reason, 2)} ${_patch_text($scope2_id, "b", v, 2, $scope0_reason, 3)}</em>`);
+			_html(`<em>${_text_resume($scope2_id, "a", input.note, void 0, $scope0_reason, 2)} ${_text_resume($scope2_id, "b", v, 2, $scope0_reason, 3)}</em>`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, _client_guard($scope0_reason, 2) ? "a1" : "a2");
 			_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, _client_guard($scope0_reason, 3) ? "a3" : "a4");
 			_subscribe(_unfilled_if($scope0_reason, 3) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: $wi__input_note__OR__input_v__OR__input_on && _scope_with_id($scope1_id) })));

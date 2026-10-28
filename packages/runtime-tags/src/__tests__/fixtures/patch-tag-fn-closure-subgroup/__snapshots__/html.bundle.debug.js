@@ -12,7 +12,7 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 	const f = _bind_resume(function(t) {
 		return t + input.a + input.b + input.c;
 	}, "__tests__/tags/code-block.marko_0/f", $scope0_id);
-	_html(`<div>${_patch_text($scope0_id, "#text/0", f(input.d), void 0, $scope0_reason, 7)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", f(input.d), void 0, $scope0_reason, 7)}</div>`);
 	$cg__input_a__OR__input_b__OR__input_c && _patch_init($scope0_id, "__tests__/tags/code-block.marko_0_input_a#3_input_b#4_input_c#5/init");
 	_client_guard($scope0_reason, 7) && _patch_init($scope0_id, "__tests__/tags/code-block.marko_0_input_d#7_f#8/init");
 	_scope($scope0_id, {

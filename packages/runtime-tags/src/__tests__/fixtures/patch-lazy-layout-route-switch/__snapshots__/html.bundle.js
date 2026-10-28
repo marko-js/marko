@@ -16,7 +16,7 @@ var layout_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_for_of(list, (item) => {
 			const $scope2_id = _scope_id();
-			_html(`<a>${_patch_text($scope2_id, "a", item, void 0, $scope0_reason, 0)}</a>`);
+			_html(`<a>${_text_resume($scope2_id, "a", item, void 0, $scope0_reason, 0)}</a>`);
 			_scope($scope2_id, {});
 		}, 0, $scope1_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 0);
 		_scope($scope1_id, {});

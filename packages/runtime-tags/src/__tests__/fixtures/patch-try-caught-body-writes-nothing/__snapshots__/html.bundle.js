@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<b>${_patch_text($scope2_id, "a", err.message)}</b>`);
+		_html(`<b>${_text_resume($scope2_id, "a", err.message, void 0, 4, 0)}</b>`);
 		_scope($scope2_id, {});
 	}, void 0, "a2", "a3", 1, 1, 1);
 	_html("</main>");

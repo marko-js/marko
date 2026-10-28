@@ -6,7 +6,7 @@ _shells({ "__tests__/card.marko": "__tests__/card.marko;E l%;<section><em> </em>
 var card_default = _template("__tests__/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><em>${_patch_text($scope0_id, "#text/0", input.meta ? input.meta.n : "-", void 0, $scope0_reason, 0)}</em>`);
+	_html(`<section><em>${_text_resume($scope0_id, "#text/0", input.meta ? input.meta.n : "-", void 0, $scope0_reason, 0)}</em>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</section>");
 	_scope($scope0_id, {}, "__tests__/card.marko", 0);
@@ -20,7 +20,7 @@ _shells({ "__tests__/box.marko": "__tests__/box.marko;E l%;<article><b> </b><!><
 var box_default = _template("__tests__/box.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<article><b>${_patch_text($scope0_id, "#text/0", input.k, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<article><b>${_text_resume($scope0_id, "#text/0", input.k, void 0, $scope0_reason, 0)}</b>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</article>");
 	_scope($scope0_id, {}, "__tests__/box.marko", 0);
@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				content: _content("__tests__/template.marko_2*content", () => {
 					const $scope2_reason = _scope_reason();
 					const $scope2_id = _scope_id();
-					_html(`${_patch_text($scope2_id, "#text/0", input.label, void 0, $scope0_reason, 0)}!${_text_resume($scope2_id, "#text/1", count, 2)}`);
+					_html(`${_text_resume($scope2_id, "#text/0", input.label, void 0, $scope0_reason, 0)}!${_text_resume($scope2_id, "#text/1", count, 2)}`);
 					_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, {
 						_: _scope_with_id($scope1_id),
 						"ClosureSignalIndex:input_label/6": $wi__input_label && 1

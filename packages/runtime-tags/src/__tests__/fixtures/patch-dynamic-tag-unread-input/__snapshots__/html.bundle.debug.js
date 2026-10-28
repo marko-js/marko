@@ -6,7 +6,7 @@ _shells({ "__tests__/card-a.marko": "__tests__/card-a.marko;D ;<div class=a> </d
 var card_a_default = _template("__tests__/card-a.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div class=a>${_patch_text($scope0_id, "#text/0", input.user.name, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div class=a>${_text_resume($scope0_id, "#text/0", input.user.name, void 0, $scope0_reason, 0)}</div>`);
 	_scope($scope0_id, {}, "__tests__/card-a.marko", 0);
 });
 
@@ -18,7 +18,7 @@ _shells({ "__tests__/card-b.marko": "__tests__/card-b.marko;D ;<div class=b> </d
 var card_b_default = _template("__tests__/card-b.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div class=b>${_patch_text($scope0_id, "#text/0", input.user.name, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div class=b>${_text_resume($scope0_id, "#text/0", input.user.name, void 0, $scope0_reason, 0)}</div>`);
 	_scope($scope0_id, {}, "__tests__/card-b.marko", 0);
 });
 
@@ -39,13 +39,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Row = { content: _content_resume("__tests__/template.marko_1*content", ({ user }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<p>${_patch_text($scope1_id, "#text/0", user.name)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", user.name, void 0, 4, 0)}</p>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "6:2");
 	}, $scope0_id) };
 	const Alt = { content: _content_resume("__tests__/template.marko_2*content", ({ user }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<i>${_patch_text($scope2_id, "#text/0", user.name)}</i>`);
+		_html(`<i>${_text_resume($scope2_id, "#text/0", user.name, void 0, 4, 0)}</i>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "7:2");
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/2", input.which ? card_a_default : card_b_default, { user: input.user }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);

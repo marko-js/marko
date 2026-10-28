@@ -13,7 +13,7 @@ var my_child_default = _template("__tests__/tags/my-child/index.marko", (input) 
 	const $input_msg__closures = new Set();
 	_await($scope0_id, "#text/0", input.promise, () => {
 		const $scope1_id = _scope_id();
-		_html(`<div id=done>${_patch_text($scope1_id, "#text/0", input.msg, void 0, $scope0_reason, 0)} done</div>`);
+		_html(`<div id=done>${_text_resume($scope1_id, "#text/0", input.msg, void 0, $scope0_reason, 0)} done</div>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_msg ? "__tests__/tags/my-child/index.marko_1_input_msg#0:4/init" : "__tests__/tags/my-child/index.marko_1_input_msg#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_msg__closures, _scope($scope1_id, {}, "__tests__/tags/my-child/index.marko", "1:2"), $cg__input_msg && "__tests__/tags/my-child/index.marko_1_input_msg#0:4/subscribe");
 	}, 1, "__tests__/tags/my-child/index.marko_1*content", 1);

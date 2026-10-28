@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (on) {
 				const $scope2_id = _scope_id();
-				_html(`<span>${_patch_text($scope2_id, "#text/0", f(), void 0, $scope0_reason, 0)}</span>`);
+				_html(`<span>${_text_resume($scope2_id, "#text/0", f(), void 0, $scope0_reason, 0)}</span>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_a ? "__tests__/template.marko_2_f#0:6/init" : "__tests__/template.marko_2_f#0:6/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $f2__closures, _scope($scope2_id, { _: ($wi__input_a || $wi__on) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), $cg__input_a && "__tests__/template.marko_2_f#0:6/subscribe");
 				return 0;

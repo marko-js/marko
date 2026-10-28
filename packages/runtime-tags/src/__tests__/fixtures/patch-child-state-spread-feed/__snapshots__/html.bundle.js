@@ -10,7 +10,7 @@ var tabs_default = _template("b", (input) => {
 	_if(() => {
 		if (input.tab) {
 			const $scope1_id = _scope_id();
-			_html(`<div>a ${_patch_text($scope1_id, "a", input.tab.on, 2, $scope0_reason, 1)}</div>`);
+			_html(`<div>a ${_text_resume($scope1_id, "a", input.tab.on, 2, $scope0_reason, 1)}</div>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;

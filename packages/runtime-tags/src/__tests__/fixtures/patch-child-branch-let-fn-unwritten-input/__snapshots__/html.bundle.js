@@ -12,7 +12,7 @@ var card_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let f = input.fn;
-			_html(`<button>${_patch_text($scope1_id, "b", f(), void 0, (_mask_group($scope0_reason, 1) & 1) << 1, 0, 1)}</button>${_el_resume($scope1_id, "a")}`);
+			_html(`<button>${_text_resume($scope1_id, "b", f(), void 0, (_mask_group($scope0_reason, 1) & 1) << 1, 0, 1)}</button>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "b0");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "b1");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });

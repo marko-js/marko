@@ -18,7 +18,7 @@ var panel_default = _template("b", (input) => {
 	const Info = { content: _content_elide("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<p>${_patch_text($scope1_id, "a", input.a + ":" + input.b, void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", input.a + ":" + input.b, void 0, $scope0_reason, 0)}</p>`);
 		(_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b1");
 		(_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b2");
 		_patch_join_init($scope1_id, "b3", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && ">f", _filled_guard($scope0_reason, 4) && ">g");

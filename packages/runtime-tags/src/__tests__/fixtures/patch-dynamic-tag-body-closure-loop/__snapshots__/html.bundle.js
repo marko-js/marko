@@ -57,7 +57,7 @@ var heading_default = _template("c", (input) => {
 			_dynamic_tag($scope1_id, "a", input.type, {}, 2, _content_resume("c0", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
-				_html(`item ${_patch_text($scope2_id, "a", i, 2)} of ${_patch_text($scope2_id, "b", input.n, 2, $scope0_reason, 1)}`);
+				_html(`item ${_text_resume($scope2_id, "a", i, 2, 4, 0)} of ${_text_resume($scope2_id, "b", input.n, 2, $scope0_reason, 1)}`);
 				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_n ? "c1" : "c2");
 				_patch_init($scope2_id, "c3");
 				_subscribe(_unfilled_if() && $wi__i && $item_content__i__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope2_id, { _: ($wi__input_n__OR__input_type || $wi__i) && _scope_with_id($scope1_id) })));

@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			let c = 0;
-			_html(`<button>${_text_resume($scope1_id, "b", c)} ${_patch_text($scope1_id, "c", input.id, 2, $scope0_reason, 2)}</button>${_el_resume($scope1_id, "a")}`);
+			_html(`<button>${_text_resume($scope1_id, "b", c)} ${_text_resume($scope1_id, "c", input.id, 2, $scope0_reason, 2)}</button>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "a0");
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, _client_guard($scope0_reason, 2) ? "a1" : "a2");
 			_patch_fill($scope1_id, "va3", c, 1);

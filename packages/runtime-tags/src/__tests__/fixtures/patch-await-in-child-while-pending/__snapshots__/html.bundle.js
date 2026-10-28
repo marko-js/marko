@@ -12,7 +12,7 @@ var my_child_default = _template("b", (input) => {
 	const $input_msg__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.promise, () => {
 		const $scope1_id = _scope_id();
-		_html(`<div id=done>${_patch_text($scope1_id, "a", input.msg, void 0, $scope0_reason, 0)} done</div>`);
+		_html(`<div id=done>${_text_resume($scope1_id, "a", input.msg, void 0, $scope0_reason, 0)} done</div>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_msg ? "b0" : "b1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_msg__closures, _scope($scope1_id, {}), $cg__input_msg && "b1");
 	}, 1, "b2", 1);

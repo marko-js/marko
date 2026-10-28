@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko;D ;<div> </div
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div>${_patch_text($scope0_id, "#text/0", input.user.name, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.user.name, void 0, $scope0_reason, 0)}</div>`);
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 });
 
@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "#text/0", input.user, (user) => {
 				const $scope5_id = _scope_id();
-				_html(`<p>${_patch_text($scope5_id, "#text/0", user.name, void 0, $scope0_reason, 4)}</p>`);
+				_html(`<p>${_text_resume($scope5_id, "#text/0", user.name, void 0, $scope0_reason, 4)}</p>`);
 				_scope($scope5_id, {}, "__tests__/template.marko", "4:4");
 			}, 1, "__tests__/template.marko_5*content");
 			_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "__tests__/template.marko_1_input_user#0:8/init");
@@ -79,7 +79,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope4_reason = _scope_reason();
 		_await($scope4_id, "#text/0", input.boxed, (user) => {
 			const $scope8_id = _scope_id();
-			_html(`<p>${_patch_text($scope8_id, "#text/0", user.name, void 0, $scope0_reason, 7)}</p>`);
+			_html(`<p>${_text_resume($scope8_id, "#text/0", user.name, void 0, $scope0_reason, 7)}</p>`);
 			_scope($scope8_id, {}, "__tests__/template.marko", "13:4");
 		}, 1, "__tests__/template.marko_8*content");
 		_client_guard($scope0_reason, 7) && _patch_init($scope4_id, "__tests__/template.marko_4_input_boxed#0:11/init");

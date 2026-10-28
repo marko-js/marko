@@ -10,7 +10,7 @@ _shells({
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div class=wrap><h1>Hello ${_patch_text($scope0_id, "#text/0", input.name, 2, $scope0_reason, 0)}</h1>`);
+	_html(`<div class=wrap><h1>Hello ${_text_resume($scope0_id, "#text/0", input.name, 2, $scope0_reason, 0)}</h1>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), void 0, void 0, void 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
-		_html(`<li>${_patch_text($scope2_id, "#text/0", item, void 0, $scope0_reason, 2)}</li>`);
+		_html(`<li>${_text_resume($scope2_id, "#text/0", item, void 0, $scope0_reason, 2)}</li>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "6:4");
 	}, 0, $scope0_id, "#text/2", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
 	_html("</div>");

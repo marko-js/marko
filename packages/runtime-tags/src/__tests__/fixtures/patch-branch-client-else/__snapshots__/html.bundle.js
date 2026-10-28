@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let on = false;
 	const label = input.no + "!";
-	_html(`<main><h2>${_patch_text($scope0_id, "a", input.yes, void 0, $scope0_reason, 1)}</h2>`);
+	_html(`<main><h2>${_text_resume($scope0_id, "a", input.yes, void 0, $scope0_reason, 1)}</h2>`);
 	_if(() => {
 		{
 			const $scope2_id = _scope_id();

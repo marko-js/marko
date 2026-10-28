@@ -26,6 +26,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _patch_child($scope0_id, "#childScope/0", 0);
 	let tag = tagger_default({});
 	_patch_child_end();
-	_html(`<p>${_patch_text($scope0_id, "#text/2", tag)}</p></main>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/2", tag, void 0, 4, 0)}</p></main>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

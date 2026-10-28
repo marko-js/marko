@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let n = 0;
-			_html(`<p>${_patch_text($scope1_id, "#text/0", n, void 0, 0, 0)}:${_text_resume($scope1_id, "#text/1", count, 2)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", n, void 0, 0, 0)}:${_text_resume($scope1_id, "#text/1", count, 2)}</p>`);
 			_script($scope1_id, "__tests__/template.marko_1_count#0:5_n#2");
 			_patch_write($scope1_id, "PatchWrite:n", n, 1);
 			_scope($scope1_id, {

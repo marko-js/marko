@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $scope0_page, void 0, void 0, void 0, ["__tests__/template.marko_1*shell"]);
-	_html(`<main>${_patch_text($scope0_id, "#text/1", input.msg, void 0, $scope0_reason, 0)}</main>`);
+	_html(`<main>${_text_resume($scope0_id, "#text/1", input.msg, void 0, $scope0_reason, 0)}</main>`);
 	_if(() => {
 		if (!$global$1.meta.hideFooter) {
 			const $scope2_id = _scope_id();

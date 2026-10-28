@@ -7,7 +7,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button class=row>${_patch_text($scope0_id, "#text/1", input.n, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=row>${_text_resume($scope0_id, "#text/1", input.n, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/page.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/page.marko_fill0", count, 1);
 	_scope($scope0_id, { count }, "__tests__/page.marko", 0, { count: "1:6" });

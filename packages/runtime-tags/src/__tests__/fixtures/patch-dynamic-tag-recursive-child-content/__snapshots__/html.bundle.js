@@ -34,7 +34,7 @@ const $content = (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_node_kid = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_node_kid__closures = /* @__PURE__ */ new Set();
-	_html(`<li>${_patch_text($scope0_id, "a", input.node.name, void 0, $scope0_reason, 0)}`);
+	_html(`<li>${_text_resume($scope0_id, "a", input.node.name, void 0, $scope0_reason, 0)}`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
 	const $childScope2 = _patch_child($scope0_id, "b", 1);
 	wrap_default({
@@ -73,7 +73,7 @@ var template_default = _template("a", (input) => {
 	const Card = { content: _content_resume("a0", ({ node }) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<b>${_patch_text($scope1_id, "a", node.name)}</b>`);
+		_html(`<b>${_text_resume($scope1_id, "a", node.name, void 0, 4, 0)}</b>`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	_html("<ul>");

@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_for_of(items, (item) => {
 				const $scope3_id = _scope_id();
-				_html(`<a${_attr("href", `?q=${params.q.trim()}&i=${item}`, $scope3_id, "#a/0")}>${_patch_text($scope3_id, "#text/1", item)}</a>${_el_resume($scope3_id, "#a/0")}`);
+				_html(`<a${_attr("href", `?q=${params.q.trim()}&i=${item}`, $scope3_id, "#a/0")}>${_text_resume($scope3_id, "#text/1", item, void 0, 4, 0)}</a>${_el_resume($scope3_id, "#a/0")}`);
 				_scope($scope3_id, {}, "__tests__/template.marko", "5:6");
 			}, 0, $scope2_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_3*shell");
 			_scope($scope2_id, {}, "__tests__/template.marko", "4:4");

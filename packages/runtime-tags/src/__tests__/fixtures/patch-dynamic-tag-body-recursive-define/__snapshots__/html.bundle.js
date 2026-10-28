@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $Tree_content__depth__closures = /* @__PURE__ */ new Set();
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wi__depth = _write_if($scope1_reason, 0);
-		_html(`<em>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</em>`);
 		_if(() => {
 			if (depth) {
 				const $scope2_id = _scope_id();

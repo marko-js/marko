@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				},
 				label: input.label
 			};
-			_html(`<p>${_patch_text($scope1_id, "#text/0", o.label, void 0, (_mask_group($scope0_reason, 1) & 1) << 1, 0)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", o.label, void 0, (_mask_group($scope0_reason, 1) & 1) << 1, 0)}</p>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:4/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
 			return 0;

@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_await($scope2_id, "#text/0", input.a, (a) => {
 				const $scope6_id = _scope_id();
-				_html(`<b>${_patch_text($scope6_id, "#text/0", a, void 0, $scope0_reason, 0)}</b>`);
+				_html(`<b>${_text_resume($scope6_id, "#text/0", a, void 0, $scope0_reason, 0)}</b>`);
 				_scope($scope6_id, {}, "__tests__/template.marko", "6:10");
 			}, 1, "__tests__/template.marko_6*content", 1);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_a ? "__tests__/template.marko_2_input_a#0:4/init" : "__tests__/template.marko_2_input_a#0:4/subscribe");
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, void 0, (e) => {
 			const $scope5_reason = _scope_reason();
 			const $scope5_id = _scope_id();
-			_html(`<s>${_patch_text($scope5_id, "#text/0", e.message)}</s>`);
+			_html(`<s>${_text_resume($scope5_id, "#text/0", e.message, void 0, 4, 0)}</s>`);
 			_scope($scope5_id, {}, "__tests__/template.marko", "7:10");
 		}, void 0, "__tests__/template.marko_5*content", "__tests__/template.marko_2*content", 1, 1, 1);
 		_if(() => {

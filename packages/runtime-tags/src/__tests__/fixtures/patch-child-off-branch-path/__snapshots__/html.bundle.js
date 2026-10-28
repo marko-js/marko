@@ -3,7 +3,7 @@ _shells({ c: "c;D ;<p> </p>" });
 var note_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_patch_text($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", input.label, void 0, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, {});
 });
 
@@ -52,7 +52,7 @@ var card_default = _template("b", (input) => {
 		const $scope2_id = _scope_id();
 		_await($scope2_id, "a", input.slow, (v) => {
 			const $scope5_id = _scope_id();
-			_html(`<em>${_patch_text($scope5_id, "a", v, void 0, $scope0_reason, 1)}</em>`);
+			_html(`<em>${_text_resume($scope5_id, "a", v, void 0, $scope0_reason, 1)}</em>`);
 			_scope($scope5_id, {});
 		}, 1, "b3", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_slow ? "b8" : "b9");
@@ -76,7 +76,7 @@ var card_default = _template("b", (input) => {
 		const $scope4_id = _scope_id();
 		_await($scope4_id, "a", input.failing, (v) => {
 			const $scope7_id = _scope_id();
-			_html(`<em>${_patch_text($scope7_id, "a", v, void 0, $scope0_reason, 3)}</em>`);
+			_html(`<em>${_text_resume($scope7_id, "a", v, void 0, $scope0_reason, 3)}</em>`);
 			_scope($scope7_id, {});
 		}, 1, "b1", 1);
 		_unfilled_if($scope0_reason, 3) && _patch_init($scope4_id, $cg__input_failing ? "b13" : "b14");
@@ -133,7 +133,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_await($scope2_id, "a", input.slow, (v) => {
 			const $scope3_id = _scope_id();
-			_html(`<em>${_patch_text($scope3_id, "a", v, void 0, $scope0_reason, 1)}</em>`);
+			_html(`<em>${_text_resume($scope3_id, "a", v, void 0, $scope0_reason, 1)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a2", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_slow ? "a5" : "a6");

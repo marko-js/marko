@@ -29,7 +29,7 @@ var panel_default = _template("b", (input) => {
 			_if(() => {
 				if (input.show) {
 					const $scope3_id = _scope_id();
-					_html(`<i>${_patch_text($scope3_id, "a", input.a + ":" + input.b, void 0, $scope0_reason, 2)}</i>`);
+					_html(`<i>${_text_resume($scope3_id, "a", input.a + ":" + input.b, void 0, $scope0_reason, 2)}</i>`);
 					(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2)) && _patch_init($scope3_id, "b5");
 					(_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 2)) && _patch_init($scope3_id, "b6");
 					_patch_join_init($scope3_id, "b7", $scope0_reason, 2, _filled_guard($scope0_reason, 5) && ">>e", _filled_guard($scope0_reason, 6) && ">>f");

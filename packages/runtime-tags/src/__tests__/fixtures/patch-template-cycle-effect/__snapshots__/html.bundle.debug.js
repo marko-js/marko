@@ -29,7 +29,7 @@ _shells({ "__tests__/tags/a-tag.marko": /*@__PURE__*/ (() => `__tests__/tags/a-t
 var a_tag_default = _template("__tests__/tags/a-tag.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>a${_patch_text($scope0_id, "#text/0", input.n, 2, $scope0_reason, 0)}</span>`);
+	_html(`<span>a${_text_resume($scope0_id, "#text/0", input.n, 2, $scope0_reason, 0)}</span>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
 	b_tag_default({ n: input.n });

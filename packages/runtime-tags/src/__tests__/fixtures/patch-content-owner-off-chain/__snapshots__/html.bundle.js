@@ -25,7 +25,7 @@ var src_default = _template("c", (input) => {
 		$tab = attrTags($tab, { content: _content_elide("c1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<button>${_patch_text($scope1_id, "b", t)} ${_text_resume($scope1_id, "c", count, 2)}</button>${_el_resume($scope1_id, "a")}`);
+			_html(`<button>${_text_resume($scope1_id, "b", t, void 0, 4, 0)} ${_text_resume($scope1_id, "c", count, 2)}</button>${_el_resume($scope1_id, "a")}`);
 			_script($scope1_id, "c0");
 			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		}, $scope0_id) });

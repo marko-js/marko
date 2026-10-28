@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", $global$1.brand)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", $global$1.brand, void 0, 4, 0)}</h1>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", input.promise, (value) => {
 			const $scope3_id = _scope_id();
 			_filled_guard($scope0_reason, 0) && _patch_write($scope3_id, "PatchMarkedWrite:value", value, !_server_guard($scope0_reason, 0));
-			_html(`<span id=v>${_patch_text($scope3_id, "#text/0", value, void 0, $scope0_reason, 0)}</span>`);
+			_html(`<span id=v>${_text_resume($scope3_id, "#text/0", value, void 0, $scope0_reason, 0)}</span>`);
 			_script($scope3_id, "__tests__/template.marko_3_value#2", 1, _filled_guard($scope0_reason, 0), "value");
 			_scope($scope3_id, { value }, "__tests__/template.marko", "4:6", { value: "4:12" });
 		}, 1, "__tests__/template.marko_3*content", 1);

@@ -6,7 +6,7 @@ _shells({ b: "b;E l%;<section><h2> </h2><!></section>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2>`);
+	_html(`<section><h2>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</section>");
 	_scope($scope0_id, {});
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_patch_text($scope1_id, "a", $global$1.brand)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "a", $global$1.brand, void 0, 4, 0)}</em>`);
 			_fill_global_subscribe("a0", $scope1_id);
 			_scope($scope1_id, {});
 		}, $scope0_id)
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 				content: _content_elide("a3", () => {
 					_scope_reason();
 					const $scope3_id = _scope_id();
-					_html(`<i>${_patch_text($scope3_id, "a", $global$1.brand)}</i>`);
+					_html(`<i>${_text_resume($scope3_id, "a", $global$1.brand, void 0, 4, 0)}</i>`);
 					_fill_global_subscribe("a2", $scope3_id);
 					_scope($scope3_id, {});
 				}, $scope2_id)

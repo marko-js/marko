@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 					content: _content_resume("a3", () => {
 						_scope_reason();
 						const $scope3_id = _scope_id();
-						_html(`<em>${_patch_text($scope3_id, "a", n, void 0, $scope1_reason, 0)}:${_patch_text($scope3_id, "b", label, 2, $scope1_reason, 1)}</em>`);
+						_html(`<em>${_text_resume($scope3_id, "a", n, void 0, $scope1_reason, 0)}:${_text_resume($scope3_id, "b", label, 2, $scope1_reason, 1)}</em>`);
 						_unfilled_if($scope1_reason, 0) && _patch_init($scope3_id, "a0");
 						_unfilled_if($scope1_reason, 1) && _patch_init($scope3_id, $cg__label ? "a1" : "a2");
 						_subscribe(_unfilled_if($scope1_reason, 1) && $Level_content__label__closures, _subscribe(_unfilled_if($scope1_reason, 0) && $Level_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) })));

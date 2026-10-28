@@ -7,7 +7,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let shown = "none";
-	_html(`<button>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}: ${_patch_text($scope0_id, "#text/2", shown, 2, 0, 0, 1)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 1)}: ${_text_resume($scope0_id, "#text/2", shown, 2, 0, 0, 1)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_scope($scope0_id, { fn: input.fn }, "__tests__/tags/child.marko", 0, { fn: "1:10" }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:fn", input.fn, !_server_guard($scope0_reason, 0));
 });

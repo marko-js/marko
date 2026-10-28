@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_patch_text($scope1_id, "a", item, void 0, $scope0_reason, 0)}`);
+		_html(`<li>${_text_resume($scope1_id, "a", item, void 0, $scope0_reason, 0)}`);
 		_if(() => {}, $scope1_id, "b", 1, 1, 0, 0, 1);
 		_html("</li>");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });

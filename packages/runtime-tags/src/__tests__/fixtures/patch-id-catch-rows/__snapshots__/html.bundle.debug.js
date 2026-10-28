@@ -7,7 +7,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("uid");
-	_html(`<label${_attr("for", uid, $scope0_id, "#label/0", $scope0_reason, 0)}>${_patch_text($scope0_id, "#text/1", input.name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "#label/0", _mask_group($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "#input/2", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "#input/2", $scope0_reason, 2)}>${_el_resume($scope0_id, "#input/2", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 2))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "#label/0", $scope0_reason, 0)}>${_text_resume($scope0_id, "#text/1", input.name, void 0, $scope0_reason, 1)}</label>${_el_resume($scope0_id, "#label/0", _mask_group($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "#input/2", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "#input/2", $scope0_reason, 2)}>${_el_resume($scope0_id, "#input/2", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 2))}`);
 	_scope($scope0_id, {}, "__tests__/tags/field.marko", 0);
 });
 
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_await($scope3_id, "#text/0", row.promise, (v) => {
 				const $scope4_id = _scope_id();
-				_html(`<p>${_patch_text($scope4_id, "#text/0", v, void 0, $scope0_reason, 0)}</p>`);
+				_html(`<p>${_text_resume($scope4_id, "#text/0", v, void 0, $scope0_reason, 0)}</p>`);
 				_scope($scope4_id, {}, "__tests__/template.marko", "4:4");
 			}, 1, "__tests__/template.marko_4*content");
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope3_id, $cg__input_rows ? "__tests__/template.marko_3_row_promise#1:3/init" : "__tests__/template.marko_3_row_promise#1:3/subscribe");

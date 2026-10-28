@@ -7,7 +7,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let settled = false;
-	_html(`<div>${_patch_text($scope0_id, "#text/1", settled ? "settled" : "pending", void 0, 0, 0, 1)}</div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`<div>${_text_resume($scope0_id, "#text/1", settled ? "settled" : "pending", void 0, 0, 0, 1)}</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/probe.marko_0_input_promise#4", 1, _filled_guard($scope0_reason, 0), "input_promise");
 	_scope($scope0_id, { input_promise: input.promise }, "__tests__/tags/probe.marko", 0, { input_promise: ["input.promise"] }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 0));
 });
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.promise, (v) => {
 			const $scope3_id = _scope_id();
-			_html(`<em>${_patch_text($scope3_id, "#text/0", v.name, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_resume($scope3_id, "#text/0", v.name, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "8:4");
 		}, 1, "__tests__/template.marko_3*content", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "__tests__/template.marko_1_input_promise#0:6/init" : "__tests__/template.marko_1_input_promise#0:6/subscribe");

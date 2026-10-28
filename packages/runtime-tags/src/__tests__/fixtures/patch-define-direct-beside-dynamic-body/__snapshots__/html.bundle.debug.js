@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Panel = { content: _content_resume("__tests__/template.marko_1*content", (props) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<em>${_patch_text($scope1_id, "#text/0", JSON.stringify(props), void 0, $scope1_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "#text/0", JSON.stringify(props), void 0, $scope1_reason, 0)}</em>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	_set_scope_reason((_mask_group($scope0_reason, 0) | _filled_guard($scope0_reason, 0)) << 1);

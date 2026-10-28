@@ -7,7 +7,7 @@ var badge_default = _template("__tests__/tags/badge/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<span>${_patch_text($scope0_id, "#text/0", $global$1.brand)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", $global$1.brand, void 0, 4, 0)}</span>`);
 	_script($scope0_id, "__tests__/tags/badge/index.marko_0_$global_brand#4");
 	_scope($scope0_id, {}, "__tests__/tags/badge/index.marko", 0);
 });

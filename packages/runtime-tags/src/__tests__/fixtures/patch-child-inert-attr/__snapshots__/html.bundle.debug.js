@@ -11,7 +11,7 @@ _shells({ "__tests__/tags/dump/index.marko": "__tests__/tags/dump/index.marko;D 
 var dump_default = _template("__tests__/tags/dump/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_patch_text($scope0_id, "#text/0", JSON.stringify(input), void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", JSON.stringify(input), void 0, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, {}, "__tests__/tags/dump/index.marko", 0);
 });
 

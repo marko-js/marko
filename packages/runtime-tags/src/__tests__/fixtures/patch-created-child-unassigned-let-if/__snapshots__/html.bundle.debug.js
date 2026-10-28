@@ -13,7 +13,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_if(() => {
 		if (n) {
 			const $scope1_id = _scope_id();
-			_html(`<p><b>yes</b> ${_patch_text($scope1_id, "#text/0", input.n, 2, $scope0_reason, 0)}</p>`);
+			_html(`<p><b>yes</b> ${_text_resume($scope1_id, "#text/0", input.n, 2, $scope0_reason, 0)}</p>`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/card.marko_1_input_n#0:3/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2");
 			return 0;

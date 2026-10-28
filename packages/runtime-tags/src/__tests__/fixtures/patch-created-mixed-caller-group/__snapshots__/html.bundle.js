@@ -13,11 +13,11 @@ var panel_default = _template("b", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_patch_text($scope1_id, "a", input.n, void 0, $scope0_reason, 2)}</p><div>`);
+			_html(`<p>${_text_resume($scope1_id, "a", input.n, void 0, $scope0_reason, 2)}</p><div>`);
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					_html(`<em>${_patch_text($scope2_id, "a", input.n, void 0, $scope0_reason, 2)}</em>`);
+					_html(`<em>${_text_resume($scope2_id, "a", input.n, void 0, $scope0_reason, 2)}</em>`);
 					_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_n ? "b0" : "b1");
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_n__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_n && _scope_with_id($scope1_id) }), $cg__input_n && "b1");
 					return 0;

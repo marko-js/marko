@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_await($scope1_id, "#text/0", Promise.resolve(input.label), (x) => {
 				const $scope2_id = _scope_id();
 				_filled_guard($scope0_reason, 1) && _patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill1", x);
-				_html(`<p>${_patch_text($scope2_id, "#text/0", x, void 0, $scope0_reason, 1)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "#text/0", x, void 0, $scope0_reason, 1)}</p>`);
 				_if(() => {
 					if (n % 2) {
 						const $scope3_id = _scope_id();

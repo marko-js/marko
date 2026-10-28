@@ -5,7 +5,7 @@ _shells({ c: "c;D ;<em> </em>" });
 var show_rate_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_patch_text($scope0_id, "a", input.v, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "a", input.v, void 0, $scope0_reason, 0)}</em>`);
 	_scope($scope0_id, {});
 });
 
@@ -59,7 +59,7 @@ var shop_default = _template("a", (input) => {
 					_patch_fill($scope3_id, "va0", part);
 					const have = withDrops(bankCount(p, part), drops, part);
 					const live = have + now * proj;
-					_html(`<span${live < 2 ? " class=short" : ""}>${_patch_text($scope3_id, "b", part, void 0, 0, 0)} ${_text_resume($scope3_id, "c", have, 2)}</span>${_el_resume($scope3_id, "a")}`);
+					_html(`<span${live < 2 ? " class=short" : ""}>${_text_resume($scope3_id, "b", part, void 0, 0, 0)} ${_text_resume($scope3_id, "c", have, 2)}</span>${_el_resume($scope3_id, "a")}`);
 					const $childScope = _patch_child($scope3_id, "d", 0);
 					show_rate_default({ v: proj });
 					_patch_child_end();

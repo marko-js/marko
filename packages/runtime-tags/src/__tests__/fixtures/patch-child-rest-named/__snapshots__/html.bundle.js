@@ -7,7 +7,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { label, ...rest } = input;
-	_html(`<h2>${_patch_text($scope0_id, "a", label, void 0, $scope0_reason, 0)}</h2><p>${_patch_text($scope0_id, "b", JSON.stringify(rest), void 0, $scope0_reason, 1)}</p>`);
+	_html(`<h2>${_text_resume($scope0_id, "a", label, void 0, $scope0_reason, 0)}</h2><p>${_text_resume($scope0_id, "b", JSON.stringify(rest), void 0, $scope0_reason, 1)}</p>`);
 	_scope($scope0_id, {});
 });
 

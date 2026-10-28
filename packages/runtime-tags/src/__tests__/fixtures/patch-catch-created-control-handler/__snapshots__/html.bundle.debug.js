@@ -18,13 +18,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_try($scope0_id, "#text/0", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_patch_text($scope2_id, "#text/0", input.fail ? boom() : "ok", void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", input.fail ? boom() : "ok", void 0, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_fail ? "__tests__/template.marko_2_input_fail#0:4/init" : "__tests__/template.marko_2_input_fail#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), $cg__input_fail && "__tests__/template.marko_2_input_fail#0:4/subscribe");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<b>${_patch_text($scope1_id, "#text/0", err.message)}</b><input${_attr_input_value($scope1_id, "#input/1", input.label, _resume(function(v) {
+		_html(`<b>${_text_resume($scope1_id, "#text/0", err.message, void 0, 4, 0)}</b><input${_attr_input_value($scope1_id, "#input/1", input.label, _resume(function(v) {
 			console.log("changed", v);
 		}, "__tests__/template.marko_1/valueChange"), 1, $scope0_reason, 0, 1, $scope0_reason, 0)}>${_el_resume($scope1_id, "#input/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");

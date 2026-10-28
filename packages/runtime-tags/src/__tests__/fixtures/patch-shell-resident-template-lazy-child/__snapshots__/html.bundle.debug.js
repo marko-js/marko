@@ -6,7 +6,7 @@ _shells({ "__tests__/counter.marko": "__tests__/counter.marko;D ;<b> </b>" });
 var counter_default = _template("__tests__/counter.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<b>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</b>`);
 	_scope($scope0_id, {}, "__tests__/counter.marko", 0);
 });
 
@@ -19,7 +19,7 @@ var lazy_default = _template("__tests__/lazy.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_patch_text($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", input.label, void 0, $scope0_reason, 0)}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/lazy.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/lazy.marko_fill0", count, 1);
 	_scope($scope0_id, { count }, "__tests__/lazy.marko", 0, { count: "1:6" });
@@ -34,7 +34,7 @@ _shells({ "__tests__/other.marko": /*@__PURE__*/ (() => `__tests__/other.marko${
 var other_default = _template("__tests__/other.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<i>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</i>`);
+	_html(`<i>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</i>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/2", 0);
 	$Lazy_withLoadAssets({ label: input.label });

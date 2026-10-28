@@ -14,7 +14,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const $scope1_id = _scope_id();
 			const c = input.b + "!";
 			_filled_guard($scope0_reason, 3) && _patch_write($scope1_id, "PatchMarkedWrite:c", c, !$sg__input_b);
-			_html(`<p>${_patch_text($scope1_id, "#text/0", input.a + c, void 0, $scope0_reason, 1)}</p><div></div>${_el_resume($scope1_id, "#div/1")}`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + c, void 0, $scope0_reason, 1)}</p><div></div>${_el_resume($scope1_id, "#div/1")}`);
 			_script($scope1_id, "__tests__/tags/child.marko_1_c#2", 1, _filled_guard($scope0_reason, 3), "c");
 			$cg__input_b && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4/init");
 			_patch_join_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_c#2/init", $scope0_reason, 1, _filled_guard($scope0_reason, 4) && ">input_a", _filled_guard($scope0_reason, 3) && "c");

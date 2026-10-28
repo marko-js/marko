@@ -3,7 +3,7 @@ _shells({ a: "a;Db%;<span class=child>child <!></span>" });
 var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span class=child>child ${_patch_text($scope0_id, "a", input.label, 2, $scope0_reason, 0)}</span>`);
+	_html(`<span class=child>child ${_text_resume($scope0_id, "a", input.label, 2, $scope0_reason, 0)}</span>`);
 	_scope($scope0_id, {});
 });
 
@@ -12,7 +12,7 @@ _shells({ b: "b;Db%;<span class=other>other <!></span>" });
 var other_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span class=other>other ${_patch_text($scope0_id, "a", input.label, 2, $scope0_reason, 0)}</span>`);
+	_html(`<span class=other>other ${_text_resume($scope0_id, "a", input.label, 2, $scope0_reason, 0)}</span>`);
 	_scope($scope0_id, {});
 });
 

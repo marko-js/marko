@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_try($scope0_id, "#text/0", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<em>${_patch_text($scope2_id, "#text/0", input.message, void 0, $scope0_reason, 0)}${_text_resume($scope2_id, "#text/1", count === 1 ? boom() : "", 2)}</em>`);
+		_html(`<em>${_text_resume($scope2_id, "#text/0", input.message, void 0, $scope0_reason, 0)}${_text_resume($scope2_id, "#text/1", count === 1 ? boom() : "", 2)}</em>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_message ? "__tests__/template.marko_2_input_message#0:5/init" : "__tests__/template.marko_2_input_message#0:5/subscribe");
 		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_message__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<b>${_patch_text($scope1_id, "#text/0", err.message)} ${_patch_text($scope1_id, "#text/1", input.message, 2, $scope0_reason, 0)}</b>`);
+		_html(`<b>${_text_resume($scope1_id, "#text/0", err.message, void 0, 4, 0)} ${_text_resume($scope1_id, "#text/1", input.message, 2, $scope0_reason, 0)}</b>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_message ? "__tests__/template.marko_1_input_message#0:5/init" : "__tests__/template.marko_1_input_message#0:5/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_message__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:6"), "__tests__/template.marko_1_input_message#0:5/subscribe");
 	}, void 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);

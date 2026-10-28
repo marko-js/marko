@@ -7,7 +7,7 @@ var counter_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let spins = 0;
-	_html(`<section><p>Value ${_patch_text($scope0_id, "a", input.value, 2, $scope0_reason, 0)} (spun ${_text_resume($scope0_id, "b", spins, 2)})</p><button class=spin>spin</button>${_el_resume($scope0_id, "c")}</section>`);
+	_html(`<section><p>Value ${_text_resume($scope0_id, "a", input.value, 2, $scope0_reason, 0)} (spun ${_text_resume($scope0_id, "b", spins, 2)})</p><button class=spin>spin</button>${_el_resume($scope0_id, "c")}</section>`);
 	_script($scope0_id, "b0");
 	_patch_fill($scope0_id, "vb1", spins, 1);
 	_scope($scope0_id, { g: spins });
@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_set_scope_reason(2);
 	const $childScope = _patch_child($scope0_id, "b", 0);
 	counter_default({ value: count });

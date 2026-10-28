@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_await($scope2_id, "#text/0", input.promise, (v) => {
 					const $scope3_id = _scope_id();
-					_html(`<em>${_patch_text($scope3_id, "#text/0", v, void 0, $scope0_reason, 2)}</em>`);
+					_html(`<em>${_text_resume($scope3_id, "#text/0", v, void 0, $scope0_reason, 2)}</em>`);
 					_scope($scope3_id, {}, "__tests__/template.marko", "4:8");
 				}, 1, "__tests__/template.marko_3*content");
 				const $childScope = _patch_child($scope2_id, "#childScope/1", 0);

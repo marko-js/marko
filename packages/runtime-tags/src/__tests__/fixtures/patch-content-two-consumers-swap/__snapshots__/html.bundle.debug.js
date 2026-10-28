@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;E 
 var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2>`);
+	_html(`<section><h2>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</section>");
 	_scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_patch_text($scope1_id, "#text/0", input.note, void 0, $scope0_reason, 3)}</em>`);
+			_html(`<em>${_text_resume($scope1_id, "#text/0", input.note, void 0, $scope0_reason, 3)}</em>`);
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope1_id, { _: $wi__input_note && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), $cg__input_note && "__tests__/template.marko_1_input_note#0:5/subscribe");
 		}, $scope0_id)
 	});
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				content: _content_elide("__tests__/template.marko_3*content", () => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();
-					_html(`<em>${_patch_text($scope3_id, "#text/0", input.note, void 0, $scope0_reason, 3)}</em>`);
+					_html(`<em>${_text_resume($scope3_id, "#text/0", input.note, void 0, $scope0_reason, 3)}</em>`);
 					$cg__input_note && _patch_init($scope3_id, "__tests__/template.marko_3_input_note#0:5/init");
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope3_id, {
 						_: _write_if($scope0_reason, 0) && _scope_with_id($scope2_id),

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html("<li>static</li>");
 			}, 0, $scope1_id, "#ul/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_2*shell", 0, 0);
-			_html(`</ul>${_el_resume($scope1_id, "#ul/0")}<div>${_patch_html($scope1_id, "#text/1", "<b>hi</b>", void 0, 0, 0)}</div><p>${_patch_text($scope1_id, "#text/2", input.show, void 0, $scope0_reason, 0)}</p>`);
+			_html(`</ul>${_el_resume($scope1_id, "#ul/0")}<div>${_html_resume($scope1_id, "#text/1", "<b>hi</b>", void 0, 0, 0)}</div><p>${_text_resume($scope1_id, "#text/2", input.show, void 0, $scope0_reason, 0)}</p>`);
 			_client_guard($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/template.marko_1_input_show#0:3/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 			return 0;

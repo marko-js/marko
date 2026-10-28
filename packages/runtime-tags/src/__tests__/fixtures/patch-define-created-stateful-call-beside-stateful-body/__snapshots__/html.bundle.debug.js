@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
-				_html(`<em>${_patch_text($scope4_id, "#text/0", text, void 0, $scope2_reason, 1)}${_text_resume($scope4_id, "#text/1", n, 2)}</em><button class=inc>+</button>${_el_resume($scope4_id, "#button/2")}`);
+				_html(`<em>${_text_resume($scope4_id, "#text/0", text, void 0, $scope2_reason, 1)}${_text_resume($scope4_id, "#text/1", n, 2)}</em><button class=inc>+</button>${_el_resume($scope4_id, "#button/2")}`);
 				_script($scope4_id, "__tests__/template.marko_4");
 				_scope($scope4_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:4");
 				return 0;
@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (on) {
 				const $scope5_id = _scope_id();
-				_html(`<i>${_patch_text($scope5_id, "#text/0", label, void 0, $scope3_reason, 1)}</i>`);
+				_html(`<i>${_text_resume($scope5_id, "#text/0", label, void 0, $scope3_reason, 1)}</i>`);
 				_client_guard($scope3_reason, 1) && _patch_init($scope5_id, "__tests__/template.marko_5_label#3:5/init");
 				_scope($scope5_id, { _: _write_if($scope3_reason, 1) && _scope_with_id($scope3_id) }, "__tests__/template.marko", "9:4");
 				return 0;

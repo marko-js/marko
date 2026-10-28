@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				card_default({ content: _content_resume("__tests__/template.marko_3*content", () => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();
-					_html(`<em>static ${_patch_text($scope3_id, "#text/0", input.label, 2, $scope0_reason, 2)}</em>`);
+					_html(`<em>static ${_text_resume($scope3_id, "#text/0", input.label, 2, $scope0_reason, 2)}</em>`);
 					_unfilled_if($scope0_reason, 2) && _patch_init($scope3_id, _client_guard($scope0_reason, 2) ? "__tests__/template.marko_3_input_label#0:5/init" : "__tests__/template.marko_3_input_label#0:5/subscribe");
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:6"));
 				}, $scope2_id) });

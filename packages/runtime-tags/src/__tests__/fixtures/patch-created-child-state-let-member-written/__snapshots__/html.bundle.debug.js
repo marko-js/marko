@@ -8,7 +8,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let a = input.label;
 	let o = { label: a };
-	_html(`<p>${_patch_text($scope0_id, "#text/0", o.label, void 0, 0, 0)}</p><button>log</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", o.label, void 0, 0, 0)}</p><button>log</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0_o_label#7");
 	_patch_write($scope0_id, "PatchWrite:o_label", o?.label, 1);
 	_scope($scope0_id, { o_label: o?.label }, "__tests__/tags/card.marko", 0, { o_label: ["o.label", "2:6"] });

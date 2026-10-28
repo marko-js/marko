@@ -16,7 +16,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	const Info = { content: _content_elide("__tests__/tags/panel.marko_1*content", ({ id }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<p>${_patch_text($scope1_id, "#text/0", id, void 0, $scope1_reason, 0)}:${_patch_text($scope1_id, "#text/1", input.n, 2, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", id, void 0, $scope1_reason, 0)}:${_text_resume($scope1_id, "#text/1", input.n, 2, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_n ? "__tests__/tags/panel.marko_1_input_n#0:3/init" : "__tests__/tags/panel.marko_1_input_n#0:3/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "1:2"), $cg__input_n && "__tests__/tags/panel.marko_1_input_n#0:3/subscribe");
 	}, $scope0_id) };

@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $for_content__item_msg__closures = new Set();
 			_await($scope3_id, "#text/0", item.promise, () => {
 				const $scope4_id = _scope_id();
-				_html(`<div>${_patch_text($scope4_id, "#text/0", item.msg, void 0, $scope0_reason, 0)} done</div>`);
+				_html(`<div>${_text_resume($scope4_id, "#text/0", item.msg, void 0, $scope0_reason, 0)} done</div>`);
 				_unfilled_if($scope0_reason, 0) && _patch_init($scope4_id, $cg__input_items ? "__tests__/template.marko_4_item_msg#3:4/init" : "__tests__/template.marko_4_item_msg#3:4/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_msg__closures, _scope($scope4_id, {}, "__tests__/template.marko", "6:8"), $cg__input_items && "__tests__/template.marko_4_item_msg#3:4/subscribe");
 			}, 1, "__tests__/template.marko_4*content");

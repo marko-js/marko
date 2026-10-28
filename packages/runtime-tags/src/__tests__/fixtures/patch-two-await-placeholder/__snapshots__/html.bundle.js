@@ -18,12 +18,12 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.a, (a) => {
 			const $scope3_id = _scope_id();
-			_html(`<span>${_patch_text($scope3_id, "a", a, void 0, $scope0_reason, 1)}</span>`);
+			_html(`<span>${_text_resume($scope3_id, "a", a, void 0, $scope0_reason, 1)}</span>`);
 			_scope($scope3_id, {});
 		}, 1, "a1", 1);
 		_await($scope1_id, "b", input.b, (b) => {
 			const $scope4_id = _scope_id();
-			_html(`<span>${_patch_text($scope4_id, "a", b, void 0, $scope0_reason, 2)}</span>`);
+			_html(`<span>${_text_resume($scope4_id, "a", b, void 0, $scope0_reason, 2)}</span>`);
 			_scope($scope4_id, {});
 		}, 1, "a0", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_a ? "a6" : "a7");

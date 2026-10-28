@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/arg-badge/index.marko": "__tests__/tags/arg-badge/inde
 var arg_badge_default = _template("__tests__/tags/arg-badge/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>Value ${_patch_text($scope0_id, "#text/0", input.value, 2, $scope0_reason, 0)}</p>`);
+	_html(`<p>Value ${_text_resume($scope0_id, "#text/0", input.value, 2, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, {}, "__tests__/tags/arg-badge/index.marko", 0);
 });
 
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_set_scope_reason(2);
 	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
 	arg_badge_default({ value: count });

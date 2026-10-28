@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	_await($scope0_id, "a", Promise.resolve("u" + ++n), (uid) => {
 		const $scope1_id = _scope_id();
 		_patch_write($scope1_id, "we", uid);
-		_html(`<label${_attr("for", `${uid}-${input.name}`, $scope1_id, "a", $scope0_reason, 0)}>${_patch_text($scope1_id, "b", input.label, void 0, $scope0_reason, 1)}</label>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}<button>show</button>${_el_resume($scope1_id, "c")}`);
+		_html(`<label${_attr("for", `${uid}-${input.name}`, $scope1_id, "a", $scope0_reason, 0)}>${_text_resume($scope1_id, "b", input.label, void 0, $scope0_reason, 1)}</label>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0))}<button>show</button>${_el_resume($scope1_id, "c")}`);
 		_script($scope1_id, "a0");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "a1");
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_label ? "a2" : "a3");

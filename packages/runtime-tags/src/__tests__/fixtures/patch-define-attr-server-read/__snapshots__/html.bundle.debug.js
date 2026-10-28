@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/echo.marko": "__tests__/tags/echo.marko;D ;<em> </em>"
 var echo_default = _template("__tests__/tags/echo.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_patch_text($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 0)}</em>`);
 	_scope($scope0_id, {}, "__tests__/tags/echo.marko", 0);
 });
 
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const Foo = { label: input.label };
-	_html(`<span>${_patch_text($scope0_id, "#text/0", Foo.label, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", Foo.label, void 0, $scope0_reason, 0)}</span>`);
 	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
 	echo_default({ text: Foo.label });

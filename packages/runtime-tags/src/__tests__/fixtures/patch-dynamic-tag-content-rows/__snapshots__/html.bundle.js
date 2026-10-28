@@ -10,14 +10,14 @@ _shells({
 var layout_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $cg__input_rows = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 1);
 	_html("<header>");
 	_dynamic_tag($scope0_id, "c", input.header, {}, 10, 0, 0, _write_guard($scope0_reason, 2), $scope0_reason, 2);
 	_html("</header><ul>");
 	_for_of(input.rows, (n) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_patch_text($scope1_id, "a", n, void 0, $scope0_reason, 3)}`);
+		_html(`<li>${_text_resume($scope1_id, "a", n, void 0, $scope0_reason, 3)}`);
 		_dynamic_tag($scope1_id, "b", input.row, {}, 18, 0, 0, _write_guard($scope0_reason, 4), $scope0_reason, 4);
 		_html("</li>");
 		_client_guard($scope0_reason, 4) && _patch_init($scope1_id, "b0");
@@ -26,7 +26,7 @@ var layout_default = _template("b", (input) => {
 	_html(`</ul>${_el_resume($scope0_id, "d")}<ol>`);
 	_for_of(input.rows, (n) => {
 		const $scope2_id = _scope_id();
-		_html(`<li>${_patch_text($scope2_id, "a", n, void 0, $scope0_reason, 3)}`);
+		_html(`<li>${_text_resume($scope2_id, "a", n, void 0, $scope0_reason, 3)}`);
 		_dynamic_tag($scope2_id, "b", input.content, {}, 26, 0, 0, $wg__input_content, $scope0_reason, 1);
 		_html("</li>");
 		_client_guard($scope0_reason, 1) && _patch_init($scope2_id, "b3");
@@ -58,13 +58,13 @@ var template_default = _template("a", (input) => {
 		header: attrTag({ content: _content("a5", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<b>${_patch_text($scope1_id, "a", input.text, void 0, $scope0_reason, 3)}<input></b>`);
+			_html(`<b>${_text_resume($scope1_id, "a", input.text, void 0, $scope0_reason, 3)}<input></b>`);
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_text__closures, _scope($scope1_id, { _: $wi__input_text && _scope_with_id($scope0_id) }), $cg__input_text && "a0");
 		}, $scope0_id) }),
 		row: attrTag({ content: _content_resume("a6", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<em>${_patch_text($scope2_id, "a", input.text, void 0, $scope0_reason, 3)}<input></em>`);
+			_html(`<em>${_text_resume($scope2_id, "a", input.text, void 0, $scope0_reason, 3)}<input></em>`);
 			_unfilled_if($scope0_reason, 3) && _patch_init($scope2_id, $cg__input_text ? "a1" : "a2");
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_text__closures, _scope($scope2_id, {
 				_: $wi__input_rows__OR__input_text && _scope_with_id($scope0_id),
@@ -74,7 +74,7 @@ var template_default = _template("a", (input) => {
 		content: _content_resume("a7", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<p>${_patch_text($scope3_id, "a", input.text, void 0, $scope0_reason, 3)}<input></p>`);
+			_html(`<p>${_text_resume($scope3_id, "a", input.text, void 0, $scope0_reason, 3)}<input></p>`);
 			_unfilled_if($scope0_reason, 3) && _patch_init($scope3_id, $cg__input_text ? "a3" : "a4");
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_text__closures, _scope($scope3_id, {
 				_: $wi__input_rows__OR__input_text && _scope_with_id($scope0_id),

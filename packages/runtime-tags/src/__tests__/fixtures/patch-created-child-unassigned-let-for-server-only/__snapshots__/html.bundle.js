@@ -9,7 +9,7 @@ var card_default = _template("b", (input) => {
 	let items = input.items;
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_patch_text($scope1_id, "a", item, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0)}</li>`);
+		_html(`<li>${_text_resume($scope1_id, "a", item, void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0)}</li>`);
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "b0", (_mask_group($scope0_reason, 0) & 1) << 1, 0);
 	_scope($scope0_id, {});

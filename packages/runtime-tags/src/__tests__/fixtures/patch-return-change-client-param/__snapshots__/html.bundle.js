@@ -6,7 +6,7 @@ var counter_box_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 1;
-	_html(`<span>${_patch_text($scope0_id, "a", count, void 0, 0, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", count, void 0, 0, 0)}</span>`);
 	const $return = count;
 	const $valueChange = _patch_bind($scope0_id, "wU", input.onChange || void 0, $scope0_reason, 0);
 	_scope($scope0_id, {

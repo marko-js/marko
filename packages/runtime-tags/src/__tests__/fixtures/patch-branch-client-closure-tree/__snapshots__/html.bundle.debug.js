@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/note/index.marko": "__tests__/tags/note/index.marko;D 
 var note_default = _template("__tests__/tags/note/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_patch_text($scope0_id, "#text/0", "n:" + input.text, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", "n:" + input.text, void 0, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, {}, "__tests__/tags/note/index.marko", 0);
 });
 

@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Panel = { content: _content_resume("__tests__/template.marko_1*content", ({ value }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<p>${_patch_text($scope1_id, "#text/0", value + input.title, void 0, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", value + input.title, void 0, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
 		$cg__input_title && _patch_write($scope1_id, "PatchMarkedWrite:value", value, !(_filled_guard($scope1_reason, 0) && $cg__input_title));
 		_patch_join_init($scope1_id, "__tests__/template.marko_1_input_title#0:5_value#3/init", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, _filled_guard($scope0_reason, 0) && ">input_title", _filled_guard($scope1_reason, 0) && "value");
 		_subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_title && $input_title__closures, _scope($scope1_id, {

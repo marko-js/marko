@@ -6,7 +6,7 @@ _shells({ b: "b; D ;<output> </output>" });
 var label_view_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<output>${_patch_text($scope0_id, "b", input.get(), void 0, $scope0_reason, 0)}</output>${_el_resume($scope0_id, "a")}`);
+	_html(`<output>${_text_resume($scope0_id, "b", input.get(), void 0, $scope0_reason, 0)}</output>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0", 1, _filled_guard($scope0_reason, 0), "e");
 	_scope($scope0_id, { e: input.get }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.get, !_server_guard($scope0_reason, 0));
 });

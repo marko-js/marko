@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	const Panel = { content: _content("a0", ({ fmt, a, b }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $cg__fmt = _client_guard($scope2_reason, 3);
-		_html(`<em>${_patch_text($scope2_id, "a", fmt(a), void 0, $scope2_reason, 0)} ${_patch_text($scope2_id, "b", fmt(b), 2, $scope2_reason, 1)}</em>`);
+		_html(`<em>${_text_resume($scope2_id, "a", fmt(a), void 0, $scope2_reason, 0)} ${_text_resume($scope2_id, "b", fmt(b), 2, $scope2_reason, 1)}</em>`);
 		_filled_guard($scope2_reason, 3) && (_client_guard($scope2_reason, 4) || _client_guard($scope2_reason, 5)) && _patch_write($scope2_id, "xe", fmt);
 		$cg__fmt && _patch_write($scope2_id, "xf", a, !(_filled_guard($scope2_reason, 4) && $cg__fmt));
 		$cg__fmt && _patch_write($scope2_id, "xh", b, !(_filled_guard($scope2_reason, 5) && $cg__fmt));

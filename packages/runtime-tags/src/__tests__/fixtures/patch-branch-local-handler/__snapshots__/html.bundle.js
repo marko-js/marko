@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			const label = input.title + "!";
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "wc", label, !$sg__input_title);
-			_html(`<p>${_patch_text($scope1_id, "a", label, void 0, $scope0_reason, 1)}</p><button>c</button>${_el_resume($scope1_id, "b")}`);
+			_html(`<p>${_text_resume($scope1_id, "a", label, void 0, $scope0_reason, 1)}</p><button>c</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a0");
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a1");
 			_scope($scope1_id, {

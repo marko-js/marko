@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope1_id, "a", row.card ? card_default : "div", {}, 2, _content_resume("a0", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
-			_html(`<b>${_patch_text($scope2_id, "a", row.label, void 0, $scope0_reason, 0)}</b>`);
+			_html(`<b>${_text_resume($scope2_id, "a", row.label, void 0, $scope0_reason, 0)}</b>`);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, _client_guard($scope0_reason, 0) ? "a1" : "a2");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope2_id, { _: $wi__input_rows && _scope_with_id($scope1_id) }));
 		}, $scope1_id, ($scope) => $scope0_page ? [{ e: row?.label }] : []), 0, $wg__input_rows, $scope0_reason, 0);

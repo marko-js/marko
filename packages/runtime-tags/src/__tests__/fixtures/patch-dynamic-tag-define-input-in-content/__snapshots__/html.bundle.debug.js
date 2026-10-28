@@ -29,13 +29,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Card = { content: _content_resume("__tests__/template.marko_2*content", ({ record }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<h4>${_patch_text($scope2_id, "#text/0", record.name)}</h4>`);
+		_html(`<h4>${_text_resume($scope2_id, "#text/0", record.name, void 0, 4, 0)}</h4>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	const Other = { content: _content_resume("__tests__/template.marko_3*content", ({ record }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
-		_html(`<h5>${_patch_text($scope3_id, "#text/0", record.name)}</h5>`);
+		_html(`<h5>${_text_resume($scope3_id, "#text/0", record.name, void 0, 4, 0)}</h5>`);
 		_scope($scope3_id, {}, "__tests__/template.marko", "4:2");
 	}, $scope0_id) };
 	_set_scope_reason(0);

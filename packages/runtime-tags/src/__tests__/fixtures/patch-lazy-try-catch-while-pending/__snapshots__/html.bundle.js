@@ -18,7 +18,7 @@ var child_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", $global$1.promise, (v) => {
 			const $scope4_id = _scope_id();
-			_html(`<em>${_patch_text($scope4_id, "a", $global$1.name)} ${_patch_text($scope4_id, "b", v, 2)}</em>`);
+			_html(`<em>${_text_resume($scope4_id, "a", $global$1.name, void 0, 4, 0)} ${_text_resume($scope4_id, "b", v, 2, 4, 0)}</em>`);
 			_fill_global_subscribe("a0", $scope4_id);
 			_scope($scope4_id, {});
 		}, 1, "a1", 1);

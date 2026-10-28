@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/pill.marko": "__tests__/tags/pill.marko;D ;<b class=pi
 var pill_default = _template("__tests__/tags/pill.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<b class=pill>${_patch_text($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 0)}</b>`);
+	_html(`<b class=pill>${_text_resume($scope0_id, "#text/0", input.text, void 0, $scope0_reason, 0)}</b>`);
 	_scope($scope0_id, {}, "__tests__/tags/pill.marko", 0);
 });
 

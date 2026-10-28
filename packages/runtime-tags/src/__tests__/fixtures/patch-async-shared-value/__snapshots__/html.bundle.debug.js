@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.promise, (value) => {
 			const $scope2_id = _scope_id();
-			_html(`<span>${_patch_text($scope2_id, "#text/0", value, void 0, $scope0_reason, 2)}</span>`);
+			_html(`<span>${_text_resume($scope2_id, "#text/0", value, void 0, $scope0_reason, 2)}</span>`);
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
 			const $childScope3 = _patch_child($scope2_id, "#childScope/1", 2);
 			child_default({

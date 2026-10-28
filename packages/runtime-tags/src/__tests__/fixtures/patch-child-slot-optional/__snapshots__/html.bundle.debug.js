@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/card/index.marko": "__tests__/tags/card/index.marko;E 
 var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div class=card><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<div class=card><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</div>");
 	_scope($scope0_id, {}, "__tests__/tags/card/index.marko", 0);

@@ -10,13 +10,13 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<main><h1>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 1)}</h1>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 1)}</h1>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "a", input.promise, (value) => {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_patch_text($scope3_id, "a", value, void 0, $scope0_reason, 3)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "a", value, void 0, $scope0_reason, 3)}</em>`);
 				_scope($scope3_id, {});
 			}, 1, "a0");
 			_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "a4");

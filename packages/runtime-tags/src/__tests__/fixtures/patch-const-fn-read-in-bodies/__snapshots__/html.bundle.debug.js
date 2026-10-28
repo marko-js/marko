@@ -44,11 +44,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const g = _bind_resume(function() {
 			return v;
 		}, "__tests__/template.marko_1/g", $scope1_id);
-		_html(`<span>${_patch_text($scope1_id, "#text/0", f(), void 0, $scope0_reason, 2)}</span>`);
+		_html(`<span>${_text_resume($scope1_id, "#text/0", f(), void 0, $scope0_reason, 2)}</span>`);
 		_if(() => {
 			if (input.x) {
 				const $scope4_id = _scope_id();
-				_html(`<em>${_patch_text($scope4_id, "#text/0", g(), void 0, $scope0_reason, 0)}</em>`);
+				_html(`<em>${_text_resume($scope4_id, "#text/0", g(), void 0, $scope0_reason, 0)}</em>`);
 				_client_guard($scope0_reason, 0) && _patch_init($scope4_id, "__tests__/template.marko_4_g#1:6/init");
 				_scope($scope4_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:4");
 				return 0;
@@ -71,7 +71,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 0, $scope0_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_1*shell", $scope0_reason, 3);
 	_await($scope0_id, "#text/1", input.value, (v) => {
 		const $scope3_id = _scope_id();
-		_html(`<b>${_patch_text($scope3_id, "#text/0", v, void 0, $scope0_reason, 5)}${_patch_text($scope3_id, "#text/1", f(), 2, $scope0_reason, 2)}</b>`);
+		_html(`<b>${_text_resume($scope3_id, "#text/0", v, void 0, $scope0_reason, 5)}${_text_resume($scope3_id, "#text/1", f(), 2, $scope0_reason, 2)}</b>`);
 		_unfilled_if($scope0_reason, 2) && _patch_init($scope3_id, $cg__input_a ? "__tests__/template.marko_3_f#0:10/init" : "__tests__/template.marko_3_f#0:10/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $f2__closures, _scope($scope3_id, {}, "__tests__/template.marko", "8:2"), $cg__input_a && "__tests__/template.marko_3_f#0:10/subscribe");
 	}, 1, "__tests__/template.marko_3*content", 1);
@@ -85,7 +85,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (input.x) {
 				const $scope5_id = _scope_id();
-				_html(`<i>${_patch_text($scope5_id, "#text/0", h(), void 0, $scope2_reason, 0)}</i>`);
+				_html(`<i>${_text_resume($scope5_id, "#text/0", h(), void 0, $scope2_reason, 0)}</i>`);
 				_client_guard($scope2_reason, 0) && _patch_init($scope5_id, "__tests__/template.marko_5_h#2:4/init");
 				_scope($scope5_id, { _: _write_if($scope2_reason, 0) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "11:4");
 				return 0;

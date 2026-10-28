@@ -21,19 +21,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_try($scope0_id, "#text/0", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<p>${_patch_text($scope1_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_error ? "__tests__/template.marko_1_input_error#0:6/init" : "__tests__/template.marko_1_input_error#0:6/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_error__closures, _scope($scope1_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), $cg__input_error && "__tests__/template.marko_1_input_error#0:6/subscribe");
 	}, void 0, (err) => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_html(`<b>${_patch_text($scope3_id, "#text/0", err)}</b>`);
+		_html(`<b>${_text_resume($scope3_id, "#text/0", err, void 0, 4, 0)}</b>`);
 		_scope($scope3_id, {}, "__tests__/template.marko", "8:6");
 	}, void 0, "__tests__/template.marko_3*content", "__tests__/template.marko_1*content", 1, 1, 1);
 	_try($scope0_id, "#text/1", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`<p>${_patch_text($scope2_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope2_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_error ? "__tests__/template.marko_2_input_error#0:6/init" : "__tests__/template.marko_2_input_error#0:6/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_error__closures, _scope($scope2_id, {
 			_: $wi__input_error && _scope_with_id($scope0_id),
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope4_reason = _scope_reason();
 		const $scope4_id = _scope_id();
-		_html(`<i>${_patch_text($scope4_id, "#text/0", err.message)}</i>`);
+		_html(`<i>${_text_resume($scope4_id, "#text/0", err.message, void 0, 4, 0)}</i>`);
 		_scope($scope4_id, {}, "__tests__/template.marko", "12:6");
 	}, void 0, "__tests__/template.marko_4*content", "__tests__/template.marko_2*content", 1, 1, 1);
 	_html(`<button>${_text_resume($scope0_id, "#text/3", count)}</button>${_el_resume($scope0_id, "#button/2")}</main>`);

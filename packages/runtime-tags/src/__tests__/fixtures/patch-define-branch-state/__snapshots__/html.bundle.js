@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		let n = input.start;
-		_html(`<div class=counter><span>${_patch_text($scope2_id, "a", input.label, void 0, $scope2_reason, 1)}: ${_text_resume($scope2_id, "b", n, 2)}</span><button class=inc>+</button>${_el_resume($scope2_id, "c")}</div>`);
+		_html(`<div class=counter><span>${_text_resume($scope2_id, "a", input.label, void 0, $scope2_reason, 1)}: ${_text_resume($scope2_id, "b", n, 2)}</span><button class=inc>+</button>${_el_resume($scope2_id, "c")}</div>`);
 		_script($scope2_id, "a1");
 		_filled_guard($scope2_reason, 0) && _patch_fill($scope2_id, "va2", n, 1);
 		_scope($scope2_id, { h: n });

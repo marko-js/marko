@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_try($scope0_id, "#text/0", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<p>${_patch_text($scope1_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", input.error ? boom(input.error) : "ok", void 0, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_error ? "__tests__/template.marko_1_input_error#0:5/init" : "__tests__/template.marko_1_input_error#0:5/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_error__closures, _scope($scope1_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), $cg__input_error && "__tests__/template.marko_1_input_error#0:5/subscribe");
 	}, void 0, (err) => {
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (err.status === 404) {
 				const $scope3_id = _scope_id();
-				_html(`<b>missing ${_patch_text($scope3_id, "#text/0", err.message, 2)}</b>`);
+				_html(`<b>missing ${_text_resume($scope3_id, "#text/0", err.message, 2, 4, 0)}</b>`);
 				_scope($scope3_id, { _: _write_if($scope2_reason, 1) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "12:8");
 				return 0;
 			} else {
@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope2_id, "#text/0", 1, _write_guard($scope2_reason, 0), void 0, void 0, void 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_4*shell"]);
 		_for_of(err.items, (item) => {
 			const $scope5_id = _scope_id();
-			_html(`<span>${_patch_text($scope5_id, "#text/0", item)}</span>`);
+			_html(`<span>${_text_resume($scope5_id, "#text/0", item, void 0, 4, 0)}</span>`);
 			_scope($scope5_id, {}, "__tests__/template.marko", "18:8");
 		}, 0, $scope2_id, "#text/1", 1, void 0, void 0, void 0, void 0, "__tests__/template.marko_5*shell");
 		_script($scope2_id, "__tests__/template.marko_2");

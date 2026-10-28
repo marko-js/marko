@@ -39,14 +39,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_try($scope1_id, "#text/0", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<p>${_patch_text($scope2_id, "#text/0", SITE, void 0, 0, 0)} ${_patch_text($scope2_id, "#text/1", page.title, 2, $scope0_reason, 0)}</p>`);
+			_html(`<p>${_text_resume($scope2_id, "#text/0", SITE, void 0, 0, 0)} ${_text_resume($scope2_id, "#text/1", page.title, 2, $scope0_reason, 0)}</p>`);
 			const $childScope = _patch_child($scope2_id, "#childScope/2", 0);
 			counter_default({});
 			_patch_child_end();
 			_if(() => {
 				if (page.fail) {
 					const $scope4_id = _scope_id();
-					_html(_patch_text($scope4_id, "#text/0", throwIt(), void 0, 0, 0));
+					_html(_text_resume($scope4_id, "#text/0", throwIt(), void 0, 0, 0));
 					_scope($scope4_id, {}, "__tests__/template.marko", "10:8");
 					return 0;
 				}

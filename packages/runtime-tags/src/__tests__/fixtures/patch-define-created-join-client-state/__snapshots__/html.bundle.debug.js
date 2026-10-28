@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const PlainChild = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<p>t=${_patch_text($scope2_id, "#text/0", input.a + input.b, 2, $scope2_reason, 0)}</p>`);
+		_html(`<p>t=${_text_resume($scope2_id, "#text/0", input.a + input.b, 2, $scope2_reason, 0)}</p>`);
 		_client_guard($scope2_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_input_a#3_input_b#4/init");
 		_scope($scope2_id, {
 			input_a: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && input.a,

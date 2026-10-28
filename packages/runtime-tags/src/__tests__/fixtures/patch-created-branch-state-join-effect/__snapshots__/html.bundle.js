@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let n = 0;
-			_html(`<p>${_patch_text($scope1_id, "a", n, void 0, 0, 0)}:${_text_resume($scope1_id, "b", count, 2)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "a", n, void 0, 0, 0)}:${_text_resume($scope1_id, "b", count, 2)}</p>`);
 			_script($scope1_id, "a0");
 			_patch_write($scope1_id, "wc", n, 1);
 			_scope($scope1_id, {

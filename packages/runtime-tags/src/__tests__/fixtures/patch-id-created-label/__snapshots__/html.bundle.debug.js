@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (input.show) {
 				const $scope2_id = _scope_id();
-				_html(`<label${_attr("for", uid, $scope2_id, "#label/0", 0, 0)}>${_patch_text($scope2_id, "#text/1", item.key, void 0, $scope0_reason, 2)}</label>${_el_resume($scope2_id, "#label/0", 0)}`);
+				_html(`<label${_attr("for", uid, $scope2_id, "#label/0", 0, 0)}>${_text_resume($scope2_id, "#text/1", item.key, void 0, $scope0_reason, 2)}</label>${_el_resume($scope2_id, "#label/0", 0)}`);
 				_scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4");
 				return 0;
 			}
@@ -78,7 +78,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope6_reason = _scope_reason();
 			const $scope6_id = _scope_id();
 			const uid = _id("uid~2");
-			_html(`<input${_attr("id", uid, $scope6_id, "#input/0", 0, 0)}>${_el_resume($scope6_id, "#input/0", 0)}<label${_attr("for", uid, $scope6_id, "#label/1", 0, 0)}>${_patch_text($scope6_id, "#text/2", row.id, void 0, $scope0_reason, 5)}</label>${_el_resume($scope6_id, "#label/1", 0)}`);
+			_html(`<input${_attr("id", uid, $scope6_id, "#input/0", 0, 0)}>${_el_resume($scope6_id, "#input/0", 0)}<label${_attr("for", uid, $scope6_id, "#label/1", 0, 0)}>${_text_resume($scope6_id, "#text/2", row.id, void 0, $scope0_reason, 5)}</label>${_el_resume($scope6_id, "#label/1", 0)}`);
 			_scope($scope6_id, { _: _write_if($scope0_reason, 5) && _scope_with_id($scope5_id) }, "__tests__/template.marko", "14:4");
 		}, $scope5_id) });
 		_patch_child_end();

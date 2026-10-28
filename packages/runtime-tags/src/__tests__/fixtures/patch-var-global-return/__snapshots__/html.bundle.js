@@ -22,6 +22,6 @@ var template_default = _template("a", (input) => {
 	const $childScope = _patch_child($scope0_id, "a", 0);
 	let tag = tagger_default({});
 	_patch_child_end();
-	_html(`<p>${_patch_text($scope0_id, "c", tag)}</p></main>`);
+	_html(`<p>${_text_resume($scope0_id, "c", tag, void 0, 4, 0)}</p></main>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

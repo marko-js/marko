@@ -21,7 +21,7 @@ _shells({ b: "b;Db%;<nav>A <!></nav>" });
 var nav_a_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<nav>A ${_patch_text($scope0_id, "a", input.label, 2, $scope0_reason, 0)}</nav>`);
+	_html(`<nav>A ${_text_resume($scope0_id, "a", input.label, 2, $scope0_reason, 0)}</nav>`);
 	_scope($scope0_id, {});
 });
 
@@ -30,7 +30,7 @@ _shells({ c: "c;Db%;<nav>B <!></nav>" });
 var nav_b_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<nav>B ${_patch_text($scope0_id, "a", input.label, 2, $scope0_reason, 0)}</nav>`);
+	_html(`<nav>B ${_text_resume($scope0_id, "a", input.label, 2, $scope0_reason, 0)}</nav>`);
 	_scope($scope0_id, {});
 });
 

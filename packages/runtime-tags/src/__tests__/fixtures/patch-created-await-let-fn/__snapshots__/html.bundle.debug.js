@@ -7,7 +7,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let f = input.fn;
-	_html(`<button>${_patch_text($scope0_id, "#text/1", f(), void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_resume($scope0_id, "#text/1", f(), void 0, (_mask_group($scope0_reason, 0) & 1) << 1, 0, 1)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 });

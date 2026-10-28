@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		return "f:" + input.label + n;
 	}, "__tests__/template.marko_0/fn", $scope0_id) });
 	_patch_child_end();
-	_html(`<button>more</button>${_el_resume($scope0_id, "#button/1")}<span>${_patch_text($scope0_id, "#text/2", input.x, void 0, $scope0_reason, 1)}</span>`);
+	_html(`<button>more</button>${_el_resume($scope0_id, "#button/1")}<span>${_text_resume($scope0_id, "#text/2", input.x, void 0, $scope0_reason, 1)}</span>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		input_label: input.label,

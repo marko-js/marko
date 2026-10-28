@@ -6,7 +6,7 @@ _shells({ b: "b;E l%;<section><h2> </h2><!></section>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2>${_patch_text($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2>`);
+	_html(`<section><h2>${_text_resume($scope0_id, "a", input.title, void 0, $scope0_reason, 0)}</h2>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html("</section>");
 	_scope($scope0_id, {});
@@ -39,13 +39,13 @@ var template_default = _template("a", (input) => {
 					_if(() => {
 						if (input.alt) {
 							const $scope3_id = _scope_id();
-							_html(`<em>A:${_patch_text($scope3_id, "a", input.note, 2, $scope0_reason, 6)}</em>`);
+							_html(`<em>A:${_text_resume($scope3_id, "a", input.note, 2, $scope0_reason, 6)}</em>`);
 							$cg__input_note && _patch_init($scope3_id, "a0");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope3_id, { _: $wi__input_show__OR__input_alt__OR__input_note && _scope_with_id($scope2_id) }));
 							return 0;
 						} else {
 							const $scope4_id = _scope_id();
-							_html(`<strong>B:${_patch_text($scope4_id, "a", input.note, 2, $scope0_reason, 6)}</strong>`);
+							_html(`<strong>B:${_text_resume($scope4_id, "a", input.note, 2, $scope0_reason, 6)}</strong>`);
 							$cg__input_note && _patch_init($scope4_id, "a1");
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope4_id, {
 								_: $wi__input_show__OR__input_alt__OR__input_note && _scope_with_id($scope2_id),

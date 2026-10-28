@@ -5,7 +5,7 @@ _shells({ b: "b;D ;<em> </em>" });
 var echo_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_patch_text($scope0_id, "a", input.cfg.label, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "a", input.cfg.label, void 0, $scope0_reason, 0)}</em>`);
 	_scope($scope0_id, {});
 });
 

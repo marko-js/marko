@@ -21,7 +21,7 @@ _shells({ "__tests__/page2.marko": "__tests__/page2.marko;D ;<h1> </h1>" });
 var page2_default = _template("__tests__/page2.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<h1>${_patch_text($scope0_id, "#text/0", input.error.message, void 0, $scope0_reason, 0)}</h1>`);
+	_html(`<h1>${_text_resume($scope0_id, "#text/0", input.error.message, void 0, $scope0_reason, 0)}</h1>`);
 	_scope($scope0_id, {}, "__tests__/page2.marko", 0);
 });
 

@@ -11,7 +11,7 @@ _shells({ "__tests__/tags/stamp/index.marko": "__tests__/tags/stamp/index.marko;
 var stamp_default = _template("__tests__/tags/stamp/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>${_patch_text($scope0_id, "#text/0", stamp(), void 0, 0, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", stamp(), void 0, 0, 0)}</p>`);
 	_scope($scope0_id, {}, "__tests__/tags/stamp/index.marko", 0);
 });
 

@@ -7,7 +7,7 @@ var pick_default = _template("__tests__/tags/pick.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_a__OR__input_b = _client_guard($scope0_reason, 2), $cg__input_on__OR__input_b = _client_guard($scope0_reason, 1), $cg__input_on__OR__input_a = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const c = input.on ? input.a : input.b;
-	_html(`<div>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 7)}`);
+	_html(`<div>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 7)}`);
 	_dynamic_tag($scope0_id, "#text/1", c, {}, 2, 0, 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
 	_html("</div>");
 	_client_guard($scope0_reason, 3) && _patch_init($scope0_id, "__tests__/tags/pick.marko_0_input_on#4_input_a#5_input_b#6/init");
@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		a: attrTag({ content: _content_resume("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`A${_patch_text($scope1_id, "#text/0", input.x, 2, $scope0_reason, 2)}`);
+			_html(`A${_text_resume($scope1_id, "#text/0", input.x, 2, $scope0_reason, 2)}`);
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope1_id, _client_guard($scope0_reason, 2) ? "__tests__/template.marko_1_input_x#0:5/init" : "__tests__/template.marko_1_input_x#0:5/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_x__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4"));
 		}, $scope0_id) }),

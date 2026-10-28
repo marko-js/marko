@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		_html("<select>");
 		_for_of(input.options, (o) => {
 			const $scope1_id = _scope_id();
-			_html(`<option${_attr_option_value(o.value, $scope1_id, "a", $scope0_reason, 1)}>${_patch_text($scope1_id, "b", o.label, void 0, $scope0_reason, 1)}</option>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 1))}`);
+			_html(`<option${_attr_option_value(o.value, $scope1_id, "a", $scope0_reason, 1)}>${_text_resume($scope1_id, "b", o.label, void 0, $scope0_reason, 1)}</option>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 1))}`);
 			_scope($scope1_id, {});
 		}, (o) => o.id, $scope0_id, "a", 1, void 0, void 0, void 0, void 0, "a0", $scope0_reason, 1);
 		_html("</select>");

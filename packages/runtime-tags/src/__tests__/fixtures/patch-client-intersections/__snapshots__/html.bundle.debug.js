@@ -49,7 +49,7 @@ var site_footer_default = _template("__tests__/tags/site-footer.marko", (input) 
 	const $scope0_reason = _scope_reason(), $cg__input_year = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let frozen = 0;
-	_html(`<footer>${_patch_text($scope0_id, "#text/0", input.year + frozen, void 0, $scope0_reason, 0)}</footer>`);
+	_html(`<footer>${_text_resume($scope0_id, "#text/0", input.year + frozen, void 0, $scope0_reason, 0)}</footer>`);
 	$cg__input_year && _patch_write($scope0_id, "PatchWrite:frozen", frozen, 1);
 	$cg__input_year && _patch_init($scope0_id, "__tests__/tags/site-footer.marko_0_input_year#3_frozen#4/init");
 	_scope($scope0_id, { frozen: _unfilled_if($scope0_reason, 0) && frozen }, "__tests__/tags/site-footer.marko", 0, { frozen: "1:6" });
@@ -64,7 +64,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<main><h1>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1><p${_attr("title", $global$1.locale, $scope0_id, "#p/1")}>${_patch_text($scope0_id, "#text/2", $global$1.brand)}</p>${_el_resume($scope0_id, "#p/1")}`);
+	_html(`<main><h1>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h1><p${_attr("title", $global$1.locale, $scope0_id, "#p/1")}>${_text_resume($scope0_id, "#text/2", $global$1.brand, void 0, 4, 0)}</p>${_el_resume($scope0_id, "#p/1")}`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/3", 0);
 	price_card_default({ label: input.label });

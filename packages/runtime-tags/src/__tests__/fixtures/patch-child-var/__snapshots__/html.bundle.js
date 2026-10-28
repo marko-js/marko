@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	let card = price_card_default({ label: input.label });
 	_var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
-	_html(`<main><h1>${_patch_text($scope0_id, "c", input.title, void 0, $scope0_reason, 1)}</h1><button class=read>read</button>${_el_resume($scope0_id, "d")}</main>`);
+	_html(`<main><h1>${_text_resume($scope0_id, "c", input.title, void 0, $scope0_reason, 1)}</h1><button class=read>read</button>${_el_resume($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		i: card,

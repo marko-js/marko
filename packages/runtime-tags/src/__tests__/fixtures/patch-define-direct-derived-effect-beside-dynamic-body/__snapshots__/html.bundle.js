@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		const shout = label + "!";
-		_html(`<em>${_patch_text($scope1_id, "a", shout, void 0, $scope1_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", shout, void 0, $scope1_reason, 0)}</em>`);
 		_script($scope1_id, "a1", 1, _filled_guard($scope1_reason, 0), "e");
 		_scope($scope1_id, { e: shout }) || _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "xe", shout, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };

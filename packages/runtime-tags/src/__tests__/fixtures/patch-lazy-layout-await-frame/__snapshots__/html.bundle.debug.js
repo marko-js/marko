@@ -56,7 +56,7 @@ var docs_default = _template("__tests__/docs.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_for_of(list, (item) => {
 			const $scope3_id = _scope_id();
-			_html(`<a>${_patch_text($scope3_id, "#text/0", item, void 0, $scope0_reason, 0)}</a>`);
+			_html(`<a>${_text_resume($scope3_id, "#text/0", item, void 0, $scope0_reason, 0)}</a>`);
 			_scope($scope3_id, {}, "__tests__/docs.marko", "3:6");
 		}, 0, $scope1_id, "#text/0", 1, void 0, void 0, void 0, void 0, "__tests__/docs.marko_3*shell", $scope0_reason, 0);
 		_if(() => {

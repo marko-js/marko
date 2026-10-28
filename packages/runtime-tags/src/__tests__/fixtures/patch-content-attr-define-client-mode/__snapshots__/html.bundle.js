@@ -12,7 +12,7 @@ var frag_host_default = _template("b", (input) => {
 	const frag = { content: _content_resume("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<em>${_patch_text($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", input.note, void 0, $scope0_reason, 1)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, _client_guard($scope0_reason, 1) ? "b1" : "b2");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
 	}, $scope0_id) };

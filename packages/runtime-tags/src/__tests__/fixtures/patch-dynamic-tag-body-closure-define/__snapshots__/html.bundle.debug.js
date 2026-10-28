@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", show ? Foo : "div", {}, 10, _content_resume("__tests__/template.marko_3*content", () => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
-		_html(`count ${_patch_text($scope3_id, "#text/0", count, 2, 0, 0)}`);
+		_html(`count ${_text_resume($scope3_id, "#text/0", count, 2, 0, 0)}`);
 		_scope($scope3_id, {}, "__tests__/template.marko", "8:4");
 	}, $scope0_id, ($scope) => [{ count }]), 0, 0, 0, 0);
 }, 1);

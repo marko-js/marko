@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 2) && (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope1_id, "xc", item, !_server_guard($scope0_reason, 2));
 		const d = input.b + item;
-		_html(`<p>${_patch_text($scope1_id, "a", input.a + d, void 0, $scope0_reason, 1)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", input.a + d, void 0, $scope0_reason, 1)}</p>`);
 		_filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 4) && _patch_write($scope1_id, "xe", d);
 		(_filled_guard($scope0_reason, 3) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope1_id, "b0", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && ">e", _filled_guard($scope0_reason, 2) && "c");
 		(_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 0)) && _patch_join_init($scope1_id, "b1", $scope0_reason, 1, _filled_guard($scope0_reason, 4) && ">f", _filled_guard($scope0_reason, 0) && "e");

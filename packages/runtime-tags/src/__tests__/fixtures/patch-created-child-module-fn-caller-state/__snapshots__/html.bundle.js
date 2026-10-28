@@ -28,7 +28,7 @@ var rowsx_default = _template("b", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope2_id = _scope_id();
-				_html(`<em>${_patch_text($scope2_id, "a", fmt(label), void 0, $scope1_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope2_id, "a", fmt(label), void 0, $scope1_reason, 2)}</em>`);
 				_patch_join_init($scope2_id, "b0", $scope1_reason, 2, _filled_guard($scope1_reason, 5) && ">e", _filled_guard($scope1_reason, 6) && ">f");
 				_scope($scope2_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) });
 				return 0;

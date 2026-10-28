@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
-				_html(`<em>${_patch_text($scope3_id, "a", v, void 0, $scope1_reason, 0)}</em>`);
+				_html(`<em>${_text_resume($scope3_id, "a", v, void 0, $scope1_reason, 0)}</em>`);
 				_client_guard($scope1_reason, 0) && _patch_init($scope3_id, "a0");
 				_scope($scope3_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) });
 				return 0;

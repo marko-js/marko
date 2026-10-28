@@ -70,7 +70,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 			_dynamic_tag($scope1_id, "#text/0", input.type, {}, 2, _content_resume("__tests__/tags/heading.marko_2*content", () => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
-				_html(`item ${_patch_text($scope2_id, "#text/0", i, 2)} of ${_patch_text($scope2_id, "#text/1", input.n, 2, $scope0_reason, 1)}`);
+				_html(`item ${_text_resume($scope2_id, "#text/0", i, 2, 4, 0)} of ${_text_resume($scope2_id, "#text/1", input.n, 2, $scope0_reason, 1)}`);
 				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_n ? "__tests__/tags/heading.marko_2_input_n#0:3/init" : "__tests__/tags/heading.marko_2_input_n#0:3/subscribe");
 				_patch_init($scope2_id, "__tests__/tags/heading.marko_2_i#1:1/subscribe");
 				_subscribe(_unfilled_if() && $wi__i && $item_content__i__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope2_id, { _: ($wi__input_n__OR__input_type || $wi__i) && _scope_with_id($scope1_id) }, "__tests__/tags/heading.marko", "3:15")));

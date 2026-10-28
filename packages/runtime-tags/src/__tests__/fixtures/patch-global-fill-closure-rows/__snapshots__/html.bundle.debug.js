@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/show-rate.marko": "__tests__/tags/show-rate.marko;D ;<
 var show_rate_default = _template("__tests__/tags/show-rate.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<em>${_patch_text($scope0_id, "#text/0", input.v, void 0, $scope0_reason, 0)}</em>`);
+	_html(`<em>${_text_resume($scope0_id, "#text/0", input.v, void 0, $scope0_reason, 0)}</em>`);
 	_scope($scope0_id, {}, "__tests__/tags/show-rate.marko", 0);
 });
 
@@ -60,7 +60,7 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 					_patch_fill($scope3_id, "PatchFill:__tests__/shop.marko_fill4", part);
 					const have = withDrops(bankCount(p, part), drops, part);
 					const live = have + now * proj;
-					_html(`<span${live < 2 ? " class=short" : ""}>${_patch_text($scope3_id, "#text/1", part, void 0, 0, 0)} ${_text_resume($scope3_id, "#text/2", have, 2)}</span>${_el_resume($scope3_id, "#span/0")}`);
+					_html(`<span${live < 2 ? " class=short" : ""}>${_text_resume($scope3_id, "#text/1", part, void 0, 0, 0)} ${_text_resume($scope3_id, "#text/2", have, 2)}</span>${_el_resume($scope3_id, "#span/0")}`);
 					const $childScope = _patch_child($scope3_id, "#childScope/3", 0);
 					show_rate_default({ v: proj });
 					_patch_child_end();

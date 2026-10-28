@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<p>${_patch_html($scope1_id, "a", fmt(input.text), void 0, $scope0_reason, 1)}</p>`);
+			_html(`<p>${_html_resume($scope1_id, "a", fmt(input.text), void 0, $scope0_reason, 1)}</p>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a1");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;

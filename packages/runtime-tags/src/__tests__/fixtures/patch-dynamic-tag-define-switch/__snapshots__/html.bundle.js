@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		let n = 0;
-		_html(`<button class=inc>${_patch_text($scope1_id, "b", input.label, void 0, $scope0_reason, 1)} ${_text_resume($scope1_id, "c", n, 2)}</button>${_el_resume($scope1_id, "a")}`);
+		_html(`<button class=inc>${_text_resume($scope1_id, "b", input.label, void 0, $scope0_reason, 1)} ${_text_resume($scope1_id, "c", n, 2)}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_label ? "a2" : "a3");
 		_patch_fill($scope1_id, "va4", n, 1);
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	const Other = { content: _content_resume("a5", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_html(`<i>${_patch_text($scope2_id, "a", input.label, void 0, $scope0_reason, 1)}</i>`);
+		_html(`<i>${_text_resume($scope2_id, "a", input.label, void 0, $scope0_reason, 1)}</i>`);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, $cg__input_label ? "a6" : "a7");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 			_: $wi__input_label__OR__input_which && _scope_with_id($scope0_id),

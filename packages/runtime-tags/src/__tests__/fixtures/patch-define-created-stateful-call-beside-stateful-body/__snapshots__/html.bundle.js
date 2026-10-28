@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
-				_html(`<em>${_patch_text($scope4_id, "a", text, void 0, $scope2_reason, 1)}${_text_resume($scope4_id, "b", n, 2)}</em><button class=inc>+</button>${_el_resume($scope4_id, "c")}`);
+				_html(`<em>${_text_resume($scope4_id, "a", text, void 0, $scope2_reason, 1)}${_text_resume($scope4_id, "b", n, 2)}</em><button class=inc>+</button>${_el_resume($scope4_id, "c")}`);
 				_script($scope4_id, "a0");
 				_scope($scope4_id, { _: _scope_with_id($scope2_id) });
 				return 0;
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (on) {
 				const $scope5_id = _scope_id();
-				_html(`<i>${_patch_text($scope5_id, "a", label, void 0, $scope3_reason, 1)}</i>`);
+				_html(`<i>${_text_resume($scope5_id, "a", label, void 0, $scope3_reason, 1)}</i>`);
 				_client_guard($scope3_reason, 1) && _patch_init($scope5_id, "a7");
 				_scope($scope5_id, { _: _write_if($scope3_reason, 1) && _scope_with_id($scope3_id) });
 				return 0;

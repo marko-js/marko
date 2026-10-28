@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		let count = 0;
-		_html(`<em>${_patch_text($scope1_id, "b", label)} ${_text_resume($scope1_id, "c", count, 2)} ${_text_resume($scope1_id, "d", n, 2)}</em>${_el_resume($scope1_id, "a")}`);
+		_html(`<em>${_text_resume($scope1_id, "b", label, void 0, 4, 0)} ${_text_resume($scope1_id, "c", count, 2)} ${_text_resume($scope1_id, "d", n, 2)}</em>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
 		_patch_fill($scope1_id, "va2", count, 1);
 		_subscribe($n__closures, _scope($scope1_id, {

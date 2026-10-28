@@ -30,7 +30,7 @@ var b_default = _template("__tests__/b.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.promise, (value) => {
 			const $scope3_id = _scope_id();
-			_html(`<p>${_patch_text($scope3_id, "#text/0", value, void 0, $scope0_reason, 0)}</p>`);
+			_html(`<p>${_text_resume($scope3_id, "#text/0", value, void 0, $scope0_reason, 0)}</p>`);
 			_scope($scope3_id, {}, "__tests__/b.marko", "3:4");
 		}, 1, "__tests__/b.marko_3*content", 1);
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_promise ? "__tests__/b.marko_1_input_promise#0:4/init" : "__tests__/b.marko_1_input_promise#0:4/subscribe");

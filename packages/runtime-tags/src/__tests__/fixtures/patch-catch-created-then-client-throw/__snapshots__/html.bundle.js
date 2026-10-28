@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			let n = 0;
-			_html(`<button>${_patch_text($scope2_id, "b", item.fail ? boom() : item.id, void 0, $scope0_reason, 0)}${_text_resume($scope2_id, "c", "", 2)}</button>${_el_resume($scope2_id, "a")}`);
+			_html(`<button>${_text_resume($scope2_id, "b", item.fail ? boom() : item.id, void 0, $scope0_reason, 0)}${_text_resume($scope2_id, "c", "", 2)}</button>${_el_resume($scope2_id, "a")}`);
 			_script($scope2_id, "a0");
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, $cg__input_items ? "a1" : "a2");
 			_patch_fill($scope2_id, "va3", n, 1);
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		}, void 0, (err) => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b>`);
+			_html(`<b>${_text_resume($scope3_id, "a", err.message, void 0, 4, 0)}</b>`);
 			_scope($scope3_id, {});
 		}, void 0, "a4", "a5", void 0, 1, 1);
 		$wi__input_items && _scope($scope1_id, { f: _unfilled_if($scope0_reason, 0) && $for_content__item_fail__closures });

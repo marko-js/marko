@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/plain-child.marko": "__tests__/tags/plain-child.marko 
 var plain_child_default = _template("__tests__/tags/plain-child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p>t=${_patch_text($scope0_id, "#text/0", input.a + input.b, 2, $scope0_reason, 0)}</p>`);
+	_html(`<p>t=${_text_resume($scope0_id, "#text/0", input.a + input.b, 2, $scope0_reason, 0)}</p>`);
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "__tests__/tags/plain-child.marko_0_input_a#3_input_b#4/init");
 	_scope($scope0_id, {
 		input_a: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,

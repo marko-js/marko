@@ -27,7 +27,7 @@ _shells({ "__tests__/nav-a.marko": "__tests__/nav-a.marko;Db%;<nav>A <!></nav>" 
 var nav_a_default = _template("__tests__/nav-a.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<nav>A ${_patch_text($scope0_id, "#text/0", input.label, 2, $scope0_reason, 0)}</nav>`);
+	_html(`<nav>A ${_text_resume($scope0_id, "#text/0", input.label, 2, $scope0_reason, 0)}</nav>`);
 	_scope($scope0_id, {}, "__tests__/nav-a.marko", 0);
 });
 
@@ -39,7 +39,7 @@ _shells({ "__tests__/nav-b.marko": "__tests__/nav-b.marko;Db%;<nav>B <!></nav>" 
 var nav_b_default = _template("__tests__/nav-b.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<nav>B ${_patch_text($scope0_id, "#text/0", input.label, 2, $scope0_reason, 0)}</nav>`);
+	_html(`<nav>B ${_text_resume($scope0_id, "#text/0", input.label, 2, $scope0_reason, 0)}</nav>`);
 	_scope($scope0_id, {}, "__tests__/nav-b.marko", 0);
 });
 

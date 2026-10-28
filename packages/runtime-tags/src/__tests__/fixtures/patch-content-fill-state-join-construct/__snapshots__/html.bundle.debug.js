@@ -20,7 +20,7 @@ _shells({ "__tests__/tags/card.marko": /*@__PURE__*/ (() => `__tests__/tags/card
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2>${_patch_text($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2>`);
+	_html(`<section><h2>${_text_resume($scope0_id, "#text/0", input.title, void 0, $scope0_reason, 0)}</h2>`);
 	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
 	const $childScope = _patch_child($scope0_id, "#childScope/1", 0);
 	frame_default({ content: input.content });
@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			content: _content_elide("__tests__/template.marko_2*content", () => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<span>${_patch_text($scope2_id, "#text/0", p.name, void 0, $scope0_reason, 0)}/${_text_resume($scope2_id, "#text/1", count, 2)}/${_patch_text($scope2_id, "#text/2", item.id, 2, $scope0_reason, 1)}</span>`);
+				_html(`<span>${_text_resume($scope2_id, "#text/0", p.name, void 0, $scope0_reason, 0)}/${_text_resume($scope2_id, "#text/1", count, 2)}/${_text_resume($scope2_id, "#text/2", item.id, 2, $scope0_reason, 1)}</span>`);
 				_client_guard($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/template.marko_2_p_name#0:8/init");
 				$cg__input_items && _patch_init($scope2_id, "__tests__/template.marko_2_item_id#1:4/init");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item_id__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $p_name__closures, _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"))));

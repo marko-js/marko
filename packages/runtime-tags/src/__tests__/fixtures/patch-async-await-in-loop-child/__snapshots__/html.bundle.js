@@ -11,7 +11,7 @@ var row_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "a", input.item.promise, (value) => {
 		const $scope1_id = _scope_id();
-		_html(`<em>${_patch_text($scope1_id, "a", value, void 0, $scope0_reason, 0)}</em>`);
+		_html(`<em>${_text_resume($scope1_id, "a", value, void 0, $scope0_reason, 0)}</em>`);
 		_scope($scope1_id, {});
 	}, 1, "b0", 1);
 });

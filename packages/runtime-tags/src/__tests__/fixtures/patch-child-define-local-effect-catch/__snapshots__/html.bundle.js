@@ -27,7 +27,7 @@ var wrap_default = _template("b", (input) => {
 			const $scope2_id = _scope_id();
 			_await($scope2_id, "a", input.promise, (v) => {
 				const $scope4_id = _scope_id();
-				_html(`<em>${_patch_text($scope4_id, "a", v, void 0, $scope0_reason, 2)}</em>`);
+				_html(`<em>${_text_resume($scope4_id, "a", v, void 0, $scope0_reason, 2)}</em>`);
 				_scope($scope4_id, {});
 			}, 1, "b3");
 			_unfilled_if($scope0_reason, 2) && _patch_init($scope2_id, $cg__input_promise ? "b8" : "b9");
@@ -36,7 +36,7 @@ var wrap_default = _template("b", (input) => {
 		}, void 0, (err) => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<b>${_patch_text($scope3_id, "a", err.message)}</b>`);
+			_html(`<b>${_text_resume($scope3_id, "a", err.message, void 0, 4, 0)}</b>`);
 			_script($scope3_id, "b0");
 			$cg__input_label && _patch_init($scope3_id, "b1");
 			_subscribe($wi__input_label && $Card_content__x__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }), "b2");

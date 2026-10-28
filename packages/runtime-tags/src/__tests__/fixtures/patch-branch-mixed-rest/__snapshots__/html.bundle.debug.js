@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	const { known, ...rest } = input;
-	_html(`<main><div>${_patch_text($scope0_id, "#text/0", known, void 0, $scope0_reason, 0)}</div>`);
+	_html(`<main><div>${_text_resume($scope0_id, "#text/0", known, void 0, $scope0_reason, 0)}</div>`);
 	_if(() => {
 		if (rest && count > 1) {
 			const $scope1_id = _scope_id();

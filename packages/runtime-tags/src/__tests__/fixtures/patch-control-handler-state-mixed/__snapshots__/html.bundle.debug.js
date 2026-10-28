@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let cv = "";
 		_html(`<input${_attr_input_value($scope1_id, "#input/0", it.v + cm, _resume(function(v) {
 			cv = v;
-		}, "__tests__/template.marko_1/valueChange", $scope1_id), void 0, void 0, void 0, 1)}>${_el_resume($scope1_id, "#input/0")}<span>${_patch_text($scope1_id, "#text/1", cv, void 0, 0, 0, 1)}</span>`);
+		}, "__tests__/template.marko_1/valueChange", $scope1_id), void 0, void 0, void 0, 1)}>${_el_resume($scope1_id, "#input/0")}<span>${_text_resume($scope1_id, "#text/1", cv, void 0, 0, 0, 1)}</span>`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_patch_effect($scope1_id, "PatchInit:__tests__/template.marko_1_cm#0:9_it_v#4/init", ">cm", _filled_guard($scope0_reason, 1) && "it_v");
 		_scope($scope1_id, {

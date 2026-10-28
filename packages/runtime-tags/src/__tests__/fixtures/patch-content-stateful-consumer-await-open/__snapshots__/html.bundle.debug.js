@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.promise, (v) => {
 			const $scope2_id = _scope_id();
-			_html(`<em>${_patch_text($scope2_id, "#text/0", v, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<em>${_text_resume($scope2_id, "#text/0", v, void 0, $scope0_reason, 0)}</em>`);
 			_scope($scope2_id, {}, "__tests__/template.marko", "2:4");
 		}, 1, "__tests__/template.marko_2*content");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), "__tests__/template.marko_1_input_promise#0:3/subscribe", 0);

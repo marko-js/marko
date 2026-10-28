@@ -9,7 +9,7 @@ _shells({
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<main><p>${_patch_text($scope0_id, "a", input.x, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<main><p>${_text_resume($scope0_id, "a", input.x, void 0, $scope0_reason, 0)}</p>`);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		_scope_id();
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	}, void 0, (e) => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
-		_html(`<s>${_patch_text($scope4_id, "a", e.message)}</s>`);
+		_html(`<s>${_text_resume($scope4_id, "a", e.message, void 0, 4, 0)}</s>`);
 		_scope($scope4_id, {});
 	}, void 0, "a2", "a3", void 0, 1, 1);
 	_html("</main>");

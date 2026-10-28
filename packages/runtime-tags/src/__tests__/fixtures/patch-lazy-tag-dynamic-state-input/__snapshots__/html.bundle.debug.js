@@ -6,7 +6,7 @@ _shells({ "__tests__/child.marko": "__tests__/child.marko;D ;<span> </span>" });
 var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_patch_text($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", input.label, void 0, $scope0_reason, 0)}</span>`);
 	_scope($scope0_id, {}, "__tests__/child.marko", 0);
 });
 

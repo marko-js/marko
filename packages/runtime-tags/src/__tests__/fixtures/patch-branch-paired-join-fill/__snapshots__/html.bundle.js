@@ -17,7 +17,7 @@ var panel_default = _template("b", (input) => {
 			_filled_guard($scope0_reason, 2) ? _patch_fill($scope1_id, "vb0", a) : _patch_init($scope1_id, "b1");
 			const b = input.y + "b";
 			_filled_guard($scope0_reason, 3) ? _patch_fill($scope1_id, "vb2", b) : _patch_init($scope1_id, "b3");
-			_html(`<p>${_text_resume($scope1_id, "a", a + count)}</p><p>${_text_resume($scope1_id, "b", b + count)}</p><em>${_patch_text($scope1_id, "c", a + b, void 0, $scope0_reason, 0)}</em>`);
+			_html(`<p>${_text_resume($scope1_id, "a", a + count)}</p><p>${_text_resume($scope1_id, "b", b + count)}</p><em>${_text_resume($scope1_id, "c", a + b, void 0, $scope0_reason, 0)}</em>`);
 			_patch_join_init($scope1_id, "b4", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && "d", _filled_guard($scope0_reason, 3) && "f");
 			_scope($scope1_id, {
 				d: a,

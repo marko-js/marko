@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<span>hi ${_patch_text($scope1_id, "#text/0", input.msg, 2, $scope0_reason, 1)}</span>`);
+			_html(`<span>hi ${_text_resume($scope1_id, "#text/0", input.msg, 2, $scope0_reason, 1)}</span>`);
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "__tests__/template.marko_1_input_msg#0:6/init");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:6");
 			return 0;

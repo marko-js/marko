@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let info = user_info_default({ user: input.user });
 	$cg__input_user && _var($scope0_id, "#scopeOffset/3", $childScope, "__tests__/template.marko_0_info#12/var");
 	_patch_child_end();
-	_html(`<p>${_patch_text($scope0_id, "#text/4", info.name, void 0, $scope0_reason, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/4", info.name, void 0, $scope0_reason, 0)}</p>`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let info2 = user_info_default({ user: input.user2 });
 			$cg__input_user2 && _var($scope1_id, "#scopeOffset/1", $childScope2, "__tests__/template.marko_1_info2#3/var");
 			_patch_child_end();
-			_html(`<p>${_patch_text($scope1_id, "#text/2", info2.name, void 0, $scope0_reason, 2)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/2", info2.name, void 0, $scope0_reason, 2)}</p>`);
 			$cg__input_user2 && _patch_init($scope1_id, "__tests__/template.marko_1_input_user2#0:10/init");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),
