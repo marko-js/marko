@@ -1203,22 +1203,25 @@ function buildGroupMaskExpr(
     if (!exprs || !every(exprs, (expr) => isScopeBoundExpr(tag, expr))) {
       return value;
     }
-    // A function its scope registers is fixed for the child's life: a page writes it
-    // as its sources say, a patch as the captures it writes say, else as a constant.
-    const patchValue = some(exprs, isLiveArg)
-      ? getGroupSourcesValue(
-          section,
-          childScopeBinding,
-          reasonGroups[i],
-          {
-            state: undefined,
-            param: sources?.param,
-            global: sources?.global,
-            always: undefined,
-          },
-          clientDerived,
-        )
-      : 0;
+    // A function its scope registers changes only as state its value reads does: a page
+    // writes it as its sources say, a patch as that state and the captures it writes say.
+    const state = getSourcesForExprs(exprs)?.state;
+    const live = some(exprs, isLiveArg);
+    const patchValue =
+      state || live
+        ? getGroupSourcesValue(
+            section,
+            childScopeBinding,
+            reasonGroups[i],
+            {
+              state,
+              param: live ? sources?.param : undefined,
+              global: live ? sources?.global : undefined,
+              always: undefined,
+            },
+            clientDerived,
+          )
+        : 0;
     const pageExpr =
       typeof value === "number" ? t.numericLiteral(value) : value;
     const patchExpr =

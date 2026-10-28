@@ -26,12 +26,12 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D l");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D l")};${((_w0) => `${_w0}<button>more</button>`)($template$1)}`)() });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
 	let n = 0;
 	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
-	_set_scope_reason(482 | (_mask_group($scope0_reason, 0) << 3 | ($scope0_page ? 1 : 0) << 11 | _mask_group($scope0_reason, 0) << 13));
+	_set_scope_reason(2530 | (_mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 0) << 13));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_view_default({
 		a: _resume(() => "x" + n, "__tests__/template.marko_0/a", $scope0_id),

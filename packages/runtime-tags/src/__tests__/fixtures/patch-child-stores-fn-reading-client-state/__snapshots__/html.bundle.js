@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_set_scope_reason(($scope0_page ? 3 : 0) << 1);
+	_set_scope_reason(($scope0_page ? 3 : 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({ fn: _resume(function() {
 		return "f:" + input.label + n;
