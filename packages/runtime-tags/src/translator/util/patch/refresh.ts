@@ -434,6 +434,12 @@ export function canPatchFill(binding: Binding) {
   return isPatchSent(binding) && patchWritesScope(binding.section);
 }
 
+// A `<let>` the patch's fill sets wherever its initial value changes, as nothing
+// resumed assigns it: a fill's run forwards nothing into it.
+export function seedsInitialValue(state: Binding) {
+  return !hasResumableAssignment(state) && canPatchFill(state);
+}
+
 // A `<let>` whose initial value client code computes where a patch creates its
 // scope: a patch fills it, or state its init reads.
 export const fillsInitialValue = createPassMemo(
@@ -472,9 +478,15 @@ function mayBeCreated(section: Section) {
   return !!section.parent || !section.template!.page;
 }
 
+// A value a created scope gets from no other channel, unless a seeded join's client
+// init alone reads it (`getClientInitWrites`).
+function seedsCreatedScope(binding: Binding) {
+  return mayTakeSeed(binding) && !readsOnlyInSeededJoins(binding);
+}
+
 // A value a created scope gets from no other channel (a resumed one reads it
 // from the document), unlike fills, writes, a loop's sourced items and others' state.
-function seedsCreatedScope(binding: Binding) {
+function mayTakeSeed(binding: Binding) {
   const { section } = binding;
   return (
     mayBeCreated(section) &&
@@ -1263,15 +1275,70 @@ function initsJoinByWrite(join: Intersection, member: Binding) {
   return !!others && hasTagCallerParamAt(others, member.section);
 }
 
-// A member such a join reads, which the patch writes for the join's init (its
-// sources settle before solve, so no pass resets it).
-const [writesForJoinInit] = createAnalysisMemo((binding: Binding) => {
+// A member such a join reads, which the patch writes for the join's init, unless
+// the join's created init is the client's (`seedsJoinReads`), whose entry writes it.
+const writesForJoinInit = createPassMemo((binding: Binding) => {
   for (const read of binding.reads.keys()) {
     const join = getReferencedBindings(read);
-    if (Array.isArray(join) && initsJoinByWrite(join, binding)) return true;
+    if (
+      Array.isArray(join) &&
+      initsJoinByWrite(join, binding) &&
+      !seedsJoinReads(read.section, join)
+    ) {
+      return true;
+    }
   }
   return false;
 }, false);
+
+// The members a seeded join's client init writes first: seeds it alone reads, as
+// state arrives by its own init.
+export function getClientInitWrites(join: Intersection) {
+  return join.filter(
+    (member) =>
+      !member.sources?.state &&
+      readsOnlyInSeededJoins(member) &&
+      mayTakeSeed(member),
+  );
+}
+
+// Read, by no alias, only in its own section's seeded joins (a closure's scope is
+// another's).
+function readsOnlyInSeededJoins(binding: Binding) {
+  if (binding.aliases.size || binding.propertyAliases.size) return false;
+  for (const read of binding.reads.keys()) {
+    const join = getReferencedBindings(read);
+    if (
+      !Array.isArray(join) ||
+      read.section !== binding.section ||
+      !seedsJoinReads(read.section, join)
+    ) {
+      return false;
+    }
+  }
+  return binding.reads.size > 0;
+}
+
+// A state join whose reads a created scope takes from the patch where the server
+// owns the state's groups: holes it writes and initial values it seeds.
+function seedsJoinReads(section: Section, join: Intersection) {
+  return (
+    !!getSourcesForRef(join)?.state &&
+    !someReadIn(
+      join[0],
+      section,
+      (read) =>
+        getReferencedBindings(read) === join &&
+        !isFilledHole(read) &&
+        !(read.initialValue && every(read.derives, canPatchFill)),
+    )
+  );
+}
+
+// The groups the client may set a seeded join's values in: its states' initial values'.
+export function getSeededJoinSources(join: Intersection) {
+  return getStateInitSources(getSourcesForRef(join)?.state);
+}
 
 // A source of a built object an effect reads, here or as another template's input:
 // the object's readers depend on its sources (`holdsBuiltObject`).
@@ -1644,6 +1711,11 @@ function getJoinInit(
   join: Intersection,
 ): CreatedInit | undefined {
   if (section.intersections!.get(join)!.source) return;
+  if (seedsJoinReads(section, join)) {
+    return every(join, (member) => arrivesBySignal(member, section))
+      ? undefined
+      : { init: "client" };
+  }
   if (some(join, (member) => initsJoinByWrite(join, member))) {
     return { init: "mixed" };
   }

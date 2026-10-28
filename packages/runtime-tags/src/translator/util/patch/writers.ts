@@ -106,6 +106,7 @@ import {
 } from "./decisions";
 import {
   addLiveDeps,
+  getClientInitWrites,
   getCreatedInits,
   getLiveCaptures,
   getPatchFill,
@@ -131,6 +132,7 @@ import {
   initedJoinDependsOn,
   getSentHop,
   rerunsEffectOnPatch,
+  getSeededJoinSources,
 } from "./refresh";
 import { getParamSelectedStructure } from "./structure";
 
@@ -475,12 +477,24 @@ export function writePatchResumeStatements(
           );
         }
       } else if (init.init === "client") {
+        // A seeded join inits where the client sets its values, writing what it alone reads.
+        const state = !!getSourcesForRef(ref)?.state;
         body.push(
           t.expressionStatement(
             buildClientInit(
               section,
-              getSourcesForRef(ref),
+              state ? getSeededJoinSources(ref) : getSourcesForRef(ref),
               getResumeRegisterId(section, ref, "init"),
+              state
+                ? getClientInitWrites(ref).map((member) =>
+                    buildPatchWrite(
+                      section,
+                      member,
+                      undefined,
+                      t.numericLiteral(1),
+                    ),
+                  )
+                : [],
             ),
           ),
         );
@@ -1047,11 +1061,17 @@ function buildClientInit(
   section: Section,
   sources: Sources | undefined,
   initId: string,
+  writes: t.Expression[] = [],
 ) {
+  let init: t.Expression = callPatchRuntime("_patch_init", section, initId);
+  if (writes.length) {
+    writes.push(init);
+    init = t.sequenceExpression(writes);
+  }
   return t.logicalExpression(
     "&&",
     getCallerGroupGuard(section, "_client_guard", sources)!,
-    callPatchRuntime("_patch_init", section, initId),
+    init,
   );
 }
 

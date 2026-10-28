@@ -33,8 +33,8 @@ const $await_content__b = /*@__PURE__*/ _let("b/8", ($scope) => {
 });
 const $await_content__a = /*@__PURE__*/ _let("a/7", ($scope) => $await_content__b($scope, $scope.a));
 const $await_content__x = ($scope, x) => {
-	$input_label($scope["#childScope/4"], x);
 	$await_content__a($scope, x);
+	$input_label($scope["#childScope/4"], x);
 };
 const $await_content__setup = ($scope) => _style_shell($scope, "#style/0");
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);

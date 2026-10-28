@@ -46,8 +46,8 @@ function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$setup$1($scope["#childScope/1"]);
 	$n($scope, "k");
-	$setup__script($scope);
 	$s($scope, true);
+	$setup__script($scope);
 }
 const $input_a = ($scope, input_a) => {
 	$input_a$1($scope["#childScope/0"], input_a);

@@ -23,9 +23,9 @@ const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
+	$on($scope, true);
 	$count($scope, 0);
 	$setup__script($scope);
-	$on($scope, true);
 }
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup);
 

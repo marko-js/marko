@@ -8,8 +8,8 @@ const $all_opts = /*@__PURE__*/ _const("all_opts", ($scope) => $all_opts_fn($sco
 const $f = ($scope, f) => _text($scope["#text/1"], f());
 const $all_opts_fn = /*@__PURE__*/ _const("all_opts_fn", ($scope) => $f($scope, $scope.all_opts_fn));
 const $input$1 = ($scope, input) => {
-	$input_opts_label($scope, input.opts?.label);
 	$all($scope, input);
+	$input_opts_label($scope, input.opts?.label);
 };
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, 0, $input$1);
 

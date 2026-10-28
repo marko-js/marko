@@ -35,7 +35,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // tags/outer.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $o = /*@__PURE__*/ _let("o/4", ($scope) => $input_content$1($scope["#childScope/0"], $scope.o));
+const $o = _fill_resume("__tests__/tags/outer.marko_fill0", /*@__PURE__*/ _let("o/4", ($scope) => $input_content$1($scope["#childScope/0"], $scope.o)));
 const $input_content = $o;
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);

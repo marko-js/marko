@@ -26,8 +26,8 @@ const $show = /*@__PURE__*/ _let("show/1", $show__OR__Foo);
 const $Foo = /*@__PURE__*/ _const("Foo", $show__OR__Foo);
 const $count = /*@__PURE__*/ _let("count/4");
 function $setup($scope) {
-	$Foo($scope, { content: $Foo_content($scope) });
 	$show($scope, true);
+	$Foo($scope, { content: $Foo_content($scope) });
 	$count($scope, 1);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

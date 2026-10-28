@@ -55,6 +55,7 @@ import {
   getPatchFill,
   fillsWithheldContent,
   isReadInJoin,
+  seedsInitialValue,
   fillSubscribes,
   getClosureReadSources,
   isResumedRead,
@@ -1211,7 +1212,7 @@ export function buildSignalFn(signal: Signal): t.Expression {
     // A `<let>`'s initial value takes it only as a created scope first renders,
     // from this value's seed, which no patch renders the `<let>` for.
     (setsInitialValue(value.signal)
-      ? isPatch() && !hasResumableAssignment(value.signal.referencedBindings)
+      ? isPatch() && seedsInitialValue(value.signal.referencedBindings)
         ? signal.patch
         : signal.render
       : getForwardStatements(signal, value.signal)

@@ -5,8 +5,8 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_label($scope);
 	$if_content__x._($scope);
 	_style_shell($scope, "a");
-	_style_rule_item($scope.a, "--M_b0", "red");
 	$if_content__n($scope, 1);
+	_style_rule_item($scope.a, "--M_b0", "red");
 };
 const $if_content__x = /*@__PURE__*/ _init_resume("b3", /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.b, $scope._.d)));
 const $await_content__if = /*@__PURE__*/ _if(1, "<style></style><b class=b><!>:<!>:<!></b>", " bD%c%c%", $if_content__setup);

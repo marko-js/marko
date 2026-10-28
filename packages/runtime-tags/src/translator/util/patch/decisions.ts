@@ -101,8 +101,8 @@ function isAssigned(state: Binding) {
   return !!state.assignments;
 }
 
-// The sources take client state: a patch build bundles every `<let>`, as plain
-// bundles an assigned one.
+// The sources take client state: state sources are the client's, an unassigned
+// `<let>`'s included.
 export function hasClientState(sources: Sources | undefined) {
   return !!sources?.state;
 }

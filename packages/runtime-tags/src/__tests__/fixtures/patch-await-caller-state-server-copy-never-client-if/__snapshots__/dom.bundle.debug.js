@@ -10,8 +10,8 @@ const $if_content__setup$1 = ($scope) => {
 	$if_content__input_label$1($scope);
 	$if_content__x._($scope);
 	_style_shell($scope, "#style/0");
-	_style_rule_item($scope["#style/0"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19await-19caller-19state-19server-19copy-19never-19client-19if-1btags-1bshow-19await-1amarko_0", "red");
 	$if_content__n($scope, 1);
+	_style_rule_item($scope["#style/0"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19await-19caller-19state-19server-19copy-19never-19client-19if-1btags-1bshow-19await-1amarko_0", "red");
 };
 const $if_content__x = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_2_x#1:3/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.x)));
 const $await_content__if = /*@__PURE__*/ _if("#text/1", "<style></style><b class=b><!>:<!>:<!></b>", " bD%c%c%", $if_content__setup$1);
