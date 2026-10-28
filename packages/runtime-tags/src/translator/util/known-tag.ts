@@ -18,6 +18,7 @@ import {
   type ReferencedBindings,
   reserveId,
 } from "./bindings";
+import * as ClientCalls from "./constants/client-calls";
 import { setTagContentDerives } from "./content-derives";
 import { createAnalysisMemo, createPassMemo } from "./cyclic-memo";
 import { generateUidIdentifier } from "./generate-uid";
@@ -183,6 +184,7 @@ import {
   scopePageIdentifier,
 } from "./write-guard";
 
+type ClientCalls = ClientCalls.Value;
 type AttrTagGroup = AttrTagLookup[string]["group"];
 
 // Bound after every tag in the section is set up, so a `<return>` a setup
@@ -892,11 +894,11 @@ const [getParamGroups] = createAnalysisState(
 );
 
 const getGroupClientCalls = createPassMemo(
-  (params: ParamReasonGroup): "some" | "every" | undefined => {
+  (params: ParamReasonGroup): ClientCalls => {
     const body = first(params)!.section;
     // A template's callers are unknown.
-    if (!body.parent) return "some";
-    if (!body.callSections) return;
+    if (!body.parent) return ClientCalls.Some;
+    if (!body.callSections) return ClientCalls.None;
     let someCall = false;
     // A read outside known calls may render the body with other input.
     let everyCall = !getDerivedReaders(body.derives!).reads;
@@ -908,25 +910,31 @@ const getGroupClientCalls = createPassMemo(
             mergeAllSourcesForExpr,
           );
           const calls = passed?.state
-            ? "every"
-            : reduceParamGroups(passed?.param, orClientCalls, undefined);
+            ? ClientCalls.Every
+            : reduceParamGroups(passed?.param, orClientCalls, ClientCalls.None);
           someCall ||= !!calls;
-          everyCall &&= calls === "every";
+          everyCall &&= calls === ClientCalls.Every;
         }
       }
     });
-    return everyCall ? "every" : someCall ? "some" : undefined;
+    return everyCall
+      ? ClientCalls.Every
+      : someCall
+        ? ClientCalls.Some
+        : ClientCalls.None;
   },
-  undefined,
+  ClientCalls.None,
 );
 
 // A call composes its caller groups' bits: the client's where any's is.
 function orClientCalls(
-  calls: "some" | "every" | undefined,
+  calls: ClientCalls,
   body: Section,
   params: ParamReasonGroup,
 ) {
-  return calls === "every" ? calls : getClientCalls(body, params) || calls;
+  return calls === ClientCalls.Every
+    ? calls
+    : getClientCalls(body, params) || calls;
 }
 
 // The groups' bits are or'd, so one the client's at every call is enough.
@@ -935,7 +943,7 @@ function orClientAtEveryCall(
   body: Section,
   params: ParamReasonGroup,
 ) {
-  return every || getClientCalls(body, params) === "every";
+  return every || getClientCalls(body, params) === ClientCalls.Every;
 }
 
 // A known tag rendering another template calls its setup in the section's
