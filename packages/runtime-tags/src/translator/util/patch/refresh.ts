@@ -69,7 +69,15 @@ import {
 } from "../sections";
 import { inCreatedCatch, shipsContentShell } from "../shell";
 import { findSlot, type Slot, SlotKind } from "../slots";
-import { getBranchExprReasonUntil } from "../solve-reasons";
+import {
+  bindingReaders,
+  extraReaders,
+  getBranchExprReasonUntil,
+  getDerivedReaders,
+  type Readers,
+  someLandingRead,
+  someRead,
+} from "../solve-reasons";
 import {
   createSources,
   hasCallerParamSource,
@@ -90,8 +98,6 @@ import {
 import {
   patchWrites,
   hasStructuralParam,
-  someContentRead,
-  someReadFrom,
   isKnownChildNode,
   inStatefulBranch,
   isStatefulBranch,
@@ -679,7 +685,9 @@ function computeFillReadKind(binding: Binding) {
           rendersContent = true;
           keptInLet ||= derived.type === BindingType.let;
         }
-      } else if (someContentRead(derived, undefined, isContentRender)) {
+      } else if (
+        someLandingRead(bindingReaders(derived, true), isContentRender)
+      ) {
         rendersContent = true;
       }
     });
@@ -1114,7 +1122,7 @@ function rendersWithOwner(content: Section) {
     !!derives &&
     isKnownTagExtra(derives.tag) &&
     !isStatefulBranch(content) &&
-    !someContentRead(derives.binding, derives.properties, rendersApart)
+    !someLandingRead(getDerivedReaders(derives), rendersApart)
   );
 }
 
@@ -1439,17 +1447,6 @@ export function hasRenderRead(binding: Binding) {
     if (!expr.isEffect) return true;
   }
   return false;
-}
-
-// Content registers where client code reads its renderer, or where a known
-// child renders it from its state and a flush may create it, naming it by id.
-export function registersContent(section: Section) {
-  return (
-    !!getRendererReason(section) ||
-    (rendersFromChildState(section) &&
-      patchMayCreateEnclosing(section.parent!) &&
-      !keepsContent(section))
-  );
 }
 
 // Kept content with nodes of its own: its instances take their holes as data.
@@ -1813,7 +1810,9 @@ export const isPatchWrittenJoin = createPassMemo((join: Intersection) => {
 // A read the patch leaves to the holes it writes, the effects its entries
 // re-run and the calls whose callees keep their inputs, through derived values.
 function leavesReadToPatch(read: ReferencedExtra): boolean {
-  return !someReadFrom(read, rendersAtSite, isOwnDerived);
+  return (
+    !rendersAtSite(read) && !someRead(extraReaders(read).reads, rendersAtSite)
+  );
 }
 
 // The client renders the read where it sits: it is no hole the patch fills nor a value
@@ -1829,12 +1828,6 @@ function rendersAtSite(read: ReferencedExtra) {
           : derived.type === BindingType.derived,
       ))
   );
-}
-
-// A callee's param is the callee's to keep (`calleeKeepsInput`), so the walk stays
-// in the caller's own derived values.
-function isOwnDerived(derived: Binding, read: ReferencedExtra) {
-  return !isCalleeParam(derived, read.section);
 }
 
 function readsOtherJoin(binding: Binding, join: Intersection) {
@@ -1961,15 +1954,16 @@ function patchMayCreateOwn(section: Section): boolean {
   const { derives } = section;
   // A known consumer decides by where it renders the content; an unknown
   // one may do anything.
-  return (
-    !derives ||
-    someContentRead(derives.binding, derives.properties, patchMayCreateAtRead)
+  if (!derives) return true;
+  const readers = getDerivedReaders(derives);
+  return someLandingRead(readers, (read) =>
+    patchMayCreateAtRead(read, readers),
   );
 }
 
 // A consumer rendering the content client-side creates it on the client, and a
 // read passing it on within the template leaves it to the reads of what it derives.
-function patchMayCreateAtRead(read: ReferencedExtra, binding: Binding) {
+function patchMayCreateAtRead(read: ReferencedExtra, readers: Readers) {
   const rendersContent = isContentRender(read);
   return (
     !isStatefulLeaf(read) &&
@@ -1983,20 +1977,19 @@ function patchMayCreateAtRead(read: ReferencedExtra, binding: Binding) {
     // what its call site hands it, unless the child picks it.
     ((read.section.program === getProgram().node.extra.section
       ? rendersContent && patchWrites(read.section)
-      : picksContent(read, binding)) ||
+      : picksContent(read, readers)) ||
       patchMayCreateEnclosing(read.section, true))
   );
 }
 
 // A read choosing what it renders or passes on, unless handed on as is: a
-// dynamic tag's name (its renderer may render the rest anywhere), else itself.
-function picksContent(read: ReferencedExtra, binding: Binding) {
-  const name = getNameRead(read);
-  const passed = name || read.read;
+// dynamic tag's name (its renderer may render its input anywhere), else itself.
+function picksContent(read: ReferencedExtra, readers: Readers) {
+  const passed = getNameRead(read) || read.read;
   return (
     !passed ||
     !isSectionParam(passed.binding) ||
-    (!!name && name.binding !== binding)
+    !!readers.inputReads?.has(read)
   );
 }
 
@@ -2022,11 +2015,7 @@ export function getRendererCallerSources(extra: t.NodeExtra) {
 const [takesKeptInput] = createAnalysisMemo(
   (section: Section) =>
     !!section.derives &&
-    someContentRead(
-      section.derives.binding,
-      section.derives.properties,
-      keepsWithInput,
-    ),
+    someLandingRead(getDerivedReaders(section.derives), keepsWithInput),
   false,
 );
 

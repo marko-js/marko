@@ -4,7 +4,7 @@ import { type Binding, bindingUtil } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
 import { everyCallPasses } from "../known-tag";
 import { isPatch } from "../marko-config";
-import { at, every, first, type Opt, size, some } from "../optional";
+import { every, first, some } from "../optional";
 import {
   addStructuralParams,
   getSourcesForDerived,
@@ -18,6 +18,7 @@ import {
   type Section,
   type ParamReasonGroup,
 } from "../sections";
+import { getDerivedReaders, someLandingRead } from "../solve-reasons";
 import { hasParamOrGlobalSource, type Sources } from "../sources";
 import { hasClientState, holdsFirstValue } from "./decisions";
 
@@ -47,82 +48,6 @@ export const inStatefulBranch = createPassMemo(
   false,
 );
 
-// The one walk over a content body's consumers (the binding it derives
-// through its property path, aliases, bindings its reads hand it to).
-export function someContentRead(
-  bindings: Opt<Binding>,
-  properties: Opt<string>,
-  leaf: (read: ReferencedExtra, binding: Binding) => boolean,
-) {
-  const seen = new Set<Binding>();
-  const depth = size(properties);
-  return some(bindings, (binding) => {
-    let target: Binding | undefined = binding;
-    for (let i = 0; target && i < depth; i++) {
-      if (someRead(target, leaf, seen)) return true;
-      target = target.propertyAliases.get(at(properties, i)!);
-    }
-    return !!target && someBindingRead(target, leaf, seen);
-  });
-}
-// Whether the read, or a read through what it derives, passes `leaf`, walking
-// into the derived bindings `follows` takes.
-export function someReadFrom(
-  read: ReferencedExtra,
-  leaf: (read: ReferencedExtra) => boolean,
-  follows: (derived: Binding, read: ReferencedExtra) => boolean,
-) {
-  return leaf(read) || someDerivedBindingRead(read, leaf, new Set(), follows);
-}
-// `seen` keeps every binding walked: `leaf` reads no path, so one that held
-// no match never will, and a cycle stops where it started.
-function someBindingRead(
-  binding: Binding,
-  leaf: (read: ReferencedExtra, binding: Binding) => boolean,
-  seen = new Set<Binding>(),
-  follows?: (derived: Binding, read: ReferencedExtra) => boolean,
-): boolean {
-  if (seen.has(binding)) return false;
-  seen.add(binding);
-  if (someRead(binding, leaf, seen, follows)) return true;
-  for (const alias of binding.propertyAliases.values()) {
-    if (someBindingRead(alias, leaf, seen, follows)) return true;
-  }
-  for (const alias of binding.aliases) {
-    if (someBindingRead(alias, leaf, seen, follows)) return true;
-  }
-  return false;
-}
-function someRead(
-  binding: Binding,
-  leaf: (read: ReferencedExtra, binding: Binding) => boolean,
-  seen: Set<Binding>,
-  follows?: (derived: Binding, read: ReferencedExtra) => boolean,
-) {
-  for (const read of binding.reads.keys()) {
-    if (
-      leaf(read, binding) ||
-      someDerivedBindingRead(read, leaf, seen, follows)
-    ) {
-      return true;
-    }
-  }
-  return false;
-}
-function someDerivedBindingRead(
-  read: ReferencedExtra,
-  leaf: (read: ReferencedExtra, binding: Binding) => boolean,
-  seen: Set<Binding>,
-  follows?: (derived: Binding, read: ReferencedExtra) => boolean,
-) {
-  return some(
-    read.derives,
-    (derived) =>
-      (!follows || follows(derived, read)) &&
-      someBindingRead(derived, leaf, seen, follows),
-  );
-}
-
 // Content read inside stateful structure renders there; a tag rendering it
 // with client state renders it on the client wherever it sits.
 export function isStatefulLeaf(read: ReferencedExtra) {
@@ -151,14 +76,10 @@ function isPatchedLeaf(read: ReferencedExtra) {
 export const getStatefulConsumers = createPassMemo(
   (section: Section): "some" | "every" | undefined => {
     const { derives } = section;
-    if (
-      !derives ||
-      !someContentRead(derives.binding, derives.properties, isStatefulLeaf)
-    ) {
-      return;
-    }
+    const readers = derives && getDerivedReaders(derives);
+    if (!readers || !someLandingRead(readers, isStatefulLeaf)) return;
     return some(section.callSections, isPatchedCall) ||
-      someContentRead(derives.binding, derives.properties, isPatchedLeaf)
+      someLandingRead(readers, isPatchedLeaf)
       ? "some"
       : "every";
   },
@@ -201,7 +122,7 @@ export function isPassedStateByEveryCall(
     const { derives } = body;
     const groupPasses =
       !!derives &&
-      !someContentRead(derives.binding, derives.properties, isAnyRead) &&
+      !someLandingRead(getDerivedReaders(derives), isAnyRead) &&
       everyCallPasses(body, params, hasClientState);
     passes = anyGroup ? passes || groupPasses : passes && groupPasses;
   });

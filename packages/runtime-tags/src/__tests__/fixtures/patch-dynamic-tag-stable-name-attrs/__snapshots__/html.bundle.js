@@ -1,5 +1,8 @@
 // template.marko
-_shells({ a: "a;b%;<!><!><!>" });
+_shells({
+	a0: "a0;Db%;<b>R<!></b>",
+	a: "a;b%;<!><!><!>"
+});
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_y = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();

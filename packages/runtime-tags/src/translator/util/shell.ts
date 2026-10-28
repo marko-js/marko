@@ -26,7 +26,6 @@ import {
   patchCreatesOrComposes,
   getPatchWrite,
   keepsHoles,
-  registersContent,
   writesSeed,
 } from "./patch/refresh";
 import {
@@ -47,6 +46,7 @@ import { callRuntime, linkRuntimeFeature } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
 import { isSectionRendererElided } from "./section-renderer";
 import {
+  getRendererReason,
   forEachSection,
   forEachSectionReverse,
   getCallerParamGroups,
@@ -392,7 +392,7 @@ function registersOnClient(section: Section): boolean {
     !!section.parent &&
     !section.branch &&
     !isSectionRendererElided(section) &&
-    (registersContent(section) || registersOnClient(section.parent))
+    (!!getRendererReason(section) || registersOnClient(section.parent))
   );
 }
 

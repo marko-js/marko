@@ -24,7 +24,7 @@ import {
 } from "../../util/marko-config";
 import { finalizeRegistrations } from "../../util/module-registrations";
 import { type ParamsTree, exposeParamsTree } from "../../util/params-tree";
-import { keepsClosureFills, registersContent } from "../../util/patch/refresh";
+import { keepsClosureFills } from "../../util/patch/refresh";
 import { isUnconditionalReason, mapBodyParams } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
 import {
@@ -34,7 +34,11 @@ import {
 } from "../../util/runtime";
 import { createScopeIdentifiers } from "../../util/scope-read";
 import { isSectionRendererElided } from "../../util/section-renderer";
-import { forEachSection, ensureBodySection } from "../../util/sections";
+import {
+  forEachSection,
+  ensureBodySection,
+  getRendererReason,
+} from "../../util/sections";
 import { finalizeSetupWork } from "../../util/setup-work";
 import { solveReasons } from "../../util/solve-reasons";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -135,7 +139,7 @@ export default {
           ) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
-            registersContent(childSection)) ||
+            getRendererReason(childSection)) ||
           keepsClosureFills(childSection)
         );
       });

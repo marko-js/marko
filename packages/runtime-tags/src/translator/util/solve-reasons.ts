@@ -27,6 +27,7 @@ import {
   forEach,
   type OneMany,
   type Opt,
+  reduce,
   rest,
   some,
 } from "./optional";
@@ -48,6 +49,7 @@ import {
   getReferencedBindings,
   getReferencedBindingsInFunction,
   getBindingsDerivedFrom,
+  getNameRead,
 } from "./references";
 import {
   ensureSectionReasonGroups,
@@ -321,23 +323,27 @@ function addRegisteredFnReasons(
 
 // Who reads a value through its aliases and derives links (a cyclic graph):
 // what rereads it after resume, and the reads it lands in (an effect, an input).
-interface Readers {
+export interface Readers {
   reason: undefined | Reason;
-  reads: ReadonlySet<ReferencedExtra> | undefined;
+  /** The reads it lands in before a call site hands it to a callee. */
+  reads: ReadSet;
+  /** The reads it lands in past a call site, in the callee. */
+  calleeReads: ReadSet;
+  /** The dynamic tags it lands in as input rather than as their name. */
+  inputReads: ReadSet;
 }
 
-const UNREAD: Readers = { reason: undefined, reads: undefined };
+type ReadSet = ReadonlySet<ReferencedExtra> | undefined;
 
-const ALWAYS_READ: Readers = {
-  reason: ALWAYS,
-  reads: undefined,
-};
+const UNREAD = readersFor(undefined);
 
-const extraReaders = createPassMemo(computeExtraReaders, UNREAD);
+const ALWAYS_READ = readersFor(ALWAYS);
+
+export const extraReaders = createPassMemo(computeExtraReaders, UNREAD);
 
 // A binding's answer is per asked path: the value itself, one of its
 // properties (a destructured part), or the whole with every property.
-const bindingReaders = createPassPathMemo(computeBindingReaders, UNREAD);
+export const bindingReaders = createPassPathMemo(computeBindingReaders, UNREAD);
 
 export function getReasonForBinding(
   binding: Binding,
@@ -355,14 +361,54 @@ export function getReasonForExpr(extra: t.NodeExtra): undefined | Reason {
 // Whether the value lands somewhere retained (itself included), where client
 // code may read a function as is.
 export function landsRetained(extra: t.NodeExtra) {
-  if (extra.retained) return true;
-  if (!extra.isEffect) {
-    const { reads } = extraReaders(extra);
-    if (reads) {
-      for (const read of reads) if (read.retained) return true;
-    }
+  return (
+    !!extra.retained ||
+    (!extra.isEffect && someLandingRead(extraReaders(extra), isRetained))
+  );
+}
+
+// Whether a read the value lands in, here or in a callee, passes `leaf`.
+export function someLandingRead(
+  { reads, calleeReads }: Readers,
+  leaf: (read: ReferencedExtra) => boolean,
+) {
+  return someRead(reads, leaf) || someRead(calleeReads, leaf);
+}
+
+export function someRead(
+  reads: ReadSet,
+  leaf: (read: ReferencedExtra) => boolean,
+) {
+  if (reads) {
+    for (const read of reads) if (leaf(read)) return true;
   }
   return false;
+}
+
+// Who reads what content derives: the bindings it passes through, at its path.
+export function getDerivedReaders({
+  binding,
+  properties,
+}: NonNullable<Section["derives"]>) {
+  return reduce(
+    binding,
+    (readers, derived) =>
+      mergeReaders(readers, bindingReaders(derived, properties)),
+    UNREAD,
+  );
+}
+
+function readersFor(reason: Reason | undefined): Readers {
+  return {
+    reason,
+    reads: undefined,
+    calleeReads: undefined,
+    inputReads: undefined,
+  };
+}
+
+function isRetained(read: ReferencedExtra) {
+  return !!read.retained;
 }
 
 function computeExtraReaders(extra: t.NodeExtra): Readers {
@@ -403,15 +449,14 @@ function readersOfDerived(
     getDerivedPath(extra, binding, part, properties),
   );
   const exprs = extra.callSiteExprs;
-  return linked.reason && exprs
+  return exprs && linked !== UNREAD
     ? {
-        reason: mapParamReason(
-          binding.section.program,
-          linked.reason,
-          exprs,
-          true,
-        ),
-        reads: linked.reads,
+        reason:
+          linked.reason &&
+          mapParamReason(binding.section.program, linked.reason, exprs, true),
+        reads: undefined,
+        calleeReads: unionReads(linked.reads, linked.calleeReads),
+        inputReads: linked.inputReads,
       }
     : linked;
 }
@@ -465,7 +510,7 @@ function computeBindingReaders(
       ? undefined
       : first(properties);
   const reason = findSlot(binding)?.reason;
-  let readers: Readers = reason ? { reason, reads: undefined } : UNREAD;
+  let readers = reason ? readersFor(reason) : UNREAD;
   // A property is read with the value it is read from.
   const aliased = binding.aliasOf;
   if (properties !== true && aliased) {
@@ -480,6 +525,7 @@ function computeBindingReaders(
     );
   }
   for (const expr of binding.reads.keys()) {
+    readers = withLandingRead(readers, expr, binding);
     if (expr.isEffect) {
       if (
         !(
@@ -493,7 +539,7 @@ function computeBindingReaders(
       continue;
     }
     readers = mergeReaders(
-      withLandingRead(readers, expr),
+      readers,
       readersOfDerives(expr, binding, properties),
     );
   }
@@ -533,23 +579,56 @@ function mergeReaders(a: Readers, b: Readers): Readers {
   if (b === UNREAD) return a;
   const reason = mergeSources(a.reason, b.reason);
   const reads = unionReads(a.reads, b.reads);
-  if (reason === a.reason && reads === a.reads) return a;
-  if (reason === b.reason && reads === b.reads) return b;
-  return { reason, reads };
+  const calleeReads = unionReads(a.calleeReads, b.calleeReads);
+  const inputReads = unionReads(a.inputReads, b.inputReads);
+  if (isSameReaders(a, reason, reads, calleeReads, inputReads)) return a;
+  if (isSameReaders(b, reason, reads, calleeReads, inputReads)) return b;
+  return { reason, reads, calleeReads, inputReads };
+}
+
+function isSameReaders(
+  readers: Readers,
+  reason: Reason | undefined,
+  reads: ReadSet,
+  calleeReads: ReadSet,
+  inputReads: ReadSet,
+) {
+  return (
+    readers.reason === reason &&
+    readers.reads === reads &&
+    readers.calleeReads === calleeReads &&
+    readers.inputReads === inputReads
+  );
 }
 
 // Answers are shared across memo keys: adding copies (at most once per
 // merge), and adding nothing new keeps the identity.
-function withLandingRead(readers: Readers, read: ReferencedExtra): Readers {
-  return readers.reads?.has(read)
+function withLandingRead(
+  readers: Readers,
+  read: ReferencedExtra,
+  binding: Binding,
+): Readers {
+  const name = getNameRead(read);
+  const reads = addRead(readers.reads, read);
+  const inputReads =
+    name && name.binding !== binding
+      ? addRead(readers.inputReads, read)
+      : readers.inputReads;
+  return reads === readers.reads && inputReads === readers.inputReads
     ? readers
-    : { reason: readers.reason, reads: new Set(readers.reads).add(read) };
+    : {
+        reason: readers.reason,
+        reads,
+        calleeReads: readers.calleeReads,
+        inputReads,
+      };
 }
 
-function unionReads(
-  a: ReadonlySet<ReferencedExtra> | undefined,
-  b: ReadonlySet<ReferencedExtra> | undefined,
-) {
+function addRead(reads: ReadSet, read: ReferencedExtra) {
+  return reads?.has(read) ? reads : new Set(reads).add(read);
+}
+
+function unionReads(a: ReadSet, b: ReadSet) {
   if (!a || !b || a === b) return a || b;
   let result: Set<ReferencedExtra> | undefined;
   for (const read of b) {
