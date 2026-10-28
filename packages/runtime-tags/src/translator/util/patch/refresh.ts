@@ -1983,16 +1983,24 @@ function patchMayCreateAtRead(
     // A dynamic tag a patch switches creates what it renders; a child's read renders
     // what its call site hands it, unless the child picks it.
     ((inTemplate
-      ? rendersContent && patchWrites(read.section)
+      ? rendersContent &&
+        switchesContent(read, readers) &&
+        patchWrites(read.section)
       : picksContent(read, readers)) ||
-      // A tag a read hands content to may create it; a callee's root renders
-      // where its call site does, which the content's own sections answer.
+      // A callee's root renders where its call site does, which the content's
+      // own sections answer.
       patchMayCreateEnclosing(
         read.section,
-        inTemplate &&
-          (!read.section.parent || mayBeCreated(read.section.program)),
+        inTemplate && mayBeCreated(read.section.program),
       ))
   );
+}
+
+// A read that may switch the content it renders: its input, or by a name with
+// sources (one with none renders the same content for its scope's life).
+function switchesContent(read: ReferencedExtra, readers: Readers) {
+  const name = getNameRead(read);
+  return !name || !!name.binding.sources || !!readers.inputReads?.has(read);
 }
 
 // A read choosing what it renders or passes on, unless handed on as is: a

@@ -163,7 +163,6 @@ _shells({
 	"__tests__/template.marko_11*content": "__tests__/template.marko_11*content,<em>none</em>",
 	"__tests__/template.marko_8*content": "__tests__/template.marko_8*content,<em>none</em>",
 	"__tests__/template.marko_7*content": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_7*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$7]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$7)};${_w0}`)($template$7),
-	"__tests__/template.marko_1*content": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_1*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$7]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$7)};${_w0}`)($template$7),
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1, _w2, _w3, _w4, _w5, _w6, _w7, _w8, _w9, _w10) => `/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}&/${_w6}&/${_w7}&/${_w8}&/${_w9}&/${_w10}&%c`)("D%l", "D%l", $walks$5, $walks$5, $walks$4, "D%l", $walks$3, $walks$3, $walks$2, $walks$2, "b%c")};${((_w0, _w1, _w2, _w3, _w4, _w5, _w6, _w7, _w8, _w9, _w10) => `${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}${_w6}${_w7}${_w8}${_w9}${_w10}<!><!>`)($template$6, $template$6, $template$5, $template$5, $template$4, $template$6, $template$3, $template$3, $template$2, $template$2, $template$1)}`)(),
 	"__tests__/template.marko_12*shell": /*@__PURE__*/ ((_w0) => `__tests__/template.marko_12*shell${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$5]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$5)};${_w0}`)($template$5)
 });
@@ -178,7 +177,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		field_default({ label: "defined" });
 		_patch_child_end();
 		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "1:2");
-	}, $scope0_id, 1) };
+	}, $scope0_id) };
 	_set_scope_reason(0);
 	const $childScope3 = _peek_scope_id($scope0_id, "#childScope/0", 2);
 	forward_default({ content: _content("__tests__/template.marko_2*content", () => {

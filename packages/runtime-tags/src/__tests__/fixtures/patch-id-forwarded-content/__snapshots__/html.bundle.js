@@ -159,7 +159,6 @@ _shells({
 	a10: "a10,<em>none</em>",
 	a7: "a7,<em>none</em>",
 	a6: /*@__PURE__*/ ((_w0) => `a6${_shell_marker(_shell_setup([[], []], ["a>", $setup$7]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$4)};${_w0}`)($template$6),
-	a0: /*@__PURE__*/ ((_w0) => `a0${_shell_marker(_shell_setup([[], []], ["a>", $setup$7]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$4)};${_w0}`)($template$6),
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0, _w1, _w2, _w3, _w4, _w5, _w6, _w7, _w8, _w9, _w10) => `/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}&/${_w6}&/${_w7}&/${_w8}&/${_w9}&/${_w10}&%c`)("D%l", "D%l", $walks$3, $walks$3, $walks$2, "D%l", $walks$1, $walks$1, $walks, $walks, "b%c")};${((_w0, _w1, _w2, _w3, _w4, _w5, _w6, _w7, _w8, _w9, _w10) => `${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}${_w6}${_w7}${_w8}${_w9}${_w10}<!><!>`)($template$5, $template$5, $template$4, $template$4, $template$3, $template$5, $template$2, $template$2, $template$1, $template$1, $template)}`)(),
 	a12: /*@__PURE__*/ ((_w0) => `a12${_shell_marker(_shell_setup([[], []], ["a>", $setup$5]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$3)};${_w0}`)($template$4)
 });
@@ -174,7 +173,7 @@ var template_default = _template("a", (input) => {
 		field_default({ label: "defined" });
 		_patch_child_end();
 		_scope($scope1_id, { a: _existing_scope($childScope) });
-	}, $scope0_id, 1) };
+	}, $scope0_id) };
 	_set_scope_reason(0);
 	const $childScope3 = _peek_scope_id($scope0_id, "a", 2);
 	forward_default({ content: _content("a1", () => {

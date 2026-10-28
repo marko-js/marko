@@ -1,5 +1,5 @@
 // PATCH
-[`a0`, {
+{
   cc: {
     cAa: [{
       fb: "^^^a0",
@@ -11,28 +11,26 @@
       content: _([], "a0", 1)
     }
   },
-  va7: "b"
-}]
-;CgE
+  va5: "b"
+}
 
-// PATCH holding CgE
-[`a3`, {
+// PATCH
+{
   cc: {
     cAa: [{
-      fb: "^^^a3",
+      fb: "^^^a2",
       cAb: {
         ta: "c"
       }
     }, "b5"],
     vb7: {
-      content: _([], "a3", 1)
+      content: _([], "a2", 1)
     }
   },
-  va7: "c"
-}]
-;CwY
+  va5: "c"
+}
 
-// PATCH holding CwY
+// PATCH
 {
   cc: {
     cAa: [{
@@ -45,5 +43,5 @@
       content: _([], "a0", 1)
     }
   },
-  va7: "d"
+  va5: "d"
 }

@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-try-body-content-server-swap/template.marko_1*content`, {
+{
   "PatchChild:#childScope/2": {
     "PatchChild:BranchScopes:#text/0": [{
       "PatchDynamicTag:#text/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-try-body-content-server-swap/template.marko_1*content",
@@ -12,11 +12,10 @@
     }
   },
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-try-body-content-server-swap/template.marko_fill0": "b"
-}]
-;CgM
+}
 
-// PATCH holding CgM
-[`packages/runtime-tags/src/__tests__/fixtures/patch-try-body-content-server-swap/template.marko_2*content`, {
+// PATCH
+{
   "PatchChild:#childScope/2": {
     "PatchChild:BranchScopes:#text/0": [{
       "PatchDynamicTag:#text/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-try-body-content-server-swap/template.marko_2*content",
@@ -29,10 +28,9 @@
     }
   },
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-try-body-content-server-swap/template.marko_fill0": "c"
-}]
-;Cxg
+}
 
-// PATCH holding Cxg
+// PATCH
 {
   "PatchChild:#childScope/2": {
     "PatchChild:BranchScopes:#text/0": [{
