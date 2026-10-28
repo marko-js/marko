@@ -107,6 +107,9 @@ export async function importWithContext<T>(
 
       state.pending++;
       const linked = mod.link(importModuleDynamically);
+      // A graph whose load failed loads again on a later import, as a browser's
+      // does (whatwg/html#10327); an evaluation error stays.
+      linked.catch(() => state.cache.delete(id));
       state.cache.set(
         id,
         (cached = (delay ? linked.then(() => resolveAfter(0)) : linked)
