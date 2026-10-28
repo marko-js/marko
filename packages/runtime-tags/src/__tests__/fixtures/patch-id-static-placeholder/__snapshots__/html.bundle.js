@@ -35,53 +35,45 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		forOf([0, 1], (i) => {
 			_scope_id();
-			{
-				const $scope4_id = _scope_id();
-				_set_scope_reason(0);
-				_patch_child($scope4_id, "a", 0);
-				field_default({ name: "loading" });
-				_patch_child_end();
-			}
+			_scope_id();
+			_set_scope_reason(0);
+			_patch_child(0);
+			field_default({ name: "loading" });
+			_patch_child_end();
 		});
 		forIn({
 			a: 0,
 			b: 1
 		}, (i) => {
 			_scope_id();
-			{
-				const $scope6_id = _scope_id();
-				_set_scope_reason(0);
-				_patch_child($scope6_id, "a", 1);
-				field_default({ name: "loading" });
-				_patch_child_end();
-			}
+			_scope_id();
+			_set_scope_reason(0);
+			_patch_child(1);
+			field_default({ name: "loading" });
+			_patch_child_end();
 		});
 		forTo(1, 0, 1, (i) => {
 			_scope_id();
-			{
-				const $scope8_id = _scope_id();
-				_set_scope_reason(0);
-				_patch_child($scope8_id, "a", 2);
-				field_default({ name: "loading" });
-				_patch_child_end();
-			}
+			_scope_id();
+			_set_scope_reason(0);
+			_patch_child(2);
+			field_default({ name: "loading" });
+			_patch_child_end();
 		});
 		forUntil(2, 0, 1, (i) => {
 			_scope_id();
-			{
-				const $scope10_id = _scope_id();
-				_set_scope_reason(0);
-				_patch_child($scope10_id, "a", 3);
-				field_default({ name: "loading" });
-				_patch_child_end();
-			}
+			_scope_id();
+			_set_scope_reason(0);
+			_patch_child(3);
+			field_default({ name: "loading" });
+			_patch_child_end();
 		});
 		forOf([0, 1], (g) => {
 			_scope_id();
 			forOf([0, 1], (i) => {
-				const $scope12_id = _scope_id();
+				_scope_id();
 				_set_scope_reason(0);
-				_patch_child($scope12_id, "a", 4);
+				_patch_child(4);
 				field_default({ name: "nested" });
 				_patch_child_end();
 			});

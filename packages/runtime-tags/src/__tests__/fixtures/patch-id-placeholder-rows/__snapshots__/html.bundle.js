@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			_patch_child($scope2_id, "a", 0);
+			_patch_child(0);
 			field_default({
 				name: row.key,
 				heading

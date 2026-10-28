@@ -73,9 +73,9 @@ var template_default = _template("a", (input) => {
 			$wi__input_items__OR__input_loaded && _resume_branch($scope2_id);
 		}, () => {
 			_scope_reason();
-			const $scope5_id = _scope_id();
+			_scope_id();
 			_set_scope_reason(0);
-			_patch_child($scope5_id, "a", 0);
+			_patch_child(0);
 			field_default({ name: "loading" });
 			_patch_child_end();
 		}, void 0, "a9", void 0, "a5");

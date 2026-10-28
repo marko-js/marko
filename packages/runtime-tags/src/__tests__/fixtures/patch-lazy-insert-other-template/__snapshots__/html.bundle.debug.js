@@ -28,7 +28,7 @@ var opener_default = _template("__tests__/tags/opener.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
-			_patch_child($scope1_id, "#childScope/1", 0);
+			_patch_child(0, "#childScope/1");
 			$Lazy_withLoadAssets$1({ label: "c" });
 			_patch_child_end();
 			_scope($scope1_id, {}, "__tests__/tags/opener.marko", "4:2");

@@ -70,7 +70,7 @@ export {
   getUpdatesFrom as _mask_group,
   _page_render,
   _patch_bind,
-  _peek_scope_id as _patch_child,
+  _patch_child,
   popIdHop as _patch_child_end,
   _patch_fill,
   _patch_init,

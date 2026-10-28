@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (open) {
 			const $scope3_id = _scope_id();
 			_set_scope_reason(0);
-			_patch_child($scope3_id, "#childScope/0", 1);
+			_patch_child(1, "#childScope/0");
 			widget_default({ content: _content("__tests__/template.marko_4*content", () => {
 				const $scope4_reason = _scope_reason();
 				const $scope4_id = _scope_id();

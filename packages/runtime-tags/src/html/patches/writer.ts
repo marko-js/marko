@@ -781,8 +781,8 @@ export function _write_guard(mask: GroupMask, group: number) {
     : 0;
 }
 
-// Also links the known child's patch and enters its call site (alone, as `_patch_child`,
-// where no slot holds the child); a created `<define>` body's link names its owner.
+// Also links the known child's patch and enters its call site; a created
+// `<define>` body's link names its owner.
 export function _peek_scope_id(
   scopeId?: number,
   accessor?: Accessor,
@@ -809,6 +809,12 @@ export function _peek_scope_id(
     }
   }
   return childScopeId;
+}
+
+// A known child no slot holds, which no patch pairs: only its call site enters
+// the id path, for the `<id>`s it renders, until `_patch_child_end`.
+export function _patch_child(site: number, accessor?: Accessor) {
+  pushIdHop(IdHop.Site, MARKO_DEBUG ? [accessor!, site] : site);
 }
 
 // An init a fresh scope runs (setup) for what the client owns but no patch fills.

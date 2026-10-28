@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (open) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			_patch_child($scope2_id, "#childScope/1", 1);
+			_patch_child(1, "#childScope/1");
 			$Lazy_withLoadAssets({ label: "c" });
 			_patch_child_end();
 			_scope($scope2_id, {}, "__tests__/template.marko", "7:2");

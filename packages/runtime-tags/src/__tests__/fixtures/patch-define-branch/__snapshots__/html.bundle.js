@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope2_id = _scope_id();
-			_patch_child($scope2_id, "a", 0);
+			_patch_child(0);
 			foo.content({});
 			_patch_child_end();
 			_scope($scope2_id, {});

@@ -21,7 +21,7 @@ import { setTagContentDerives } from "./content-derives";
 import { createAnalysisMemo, createPassMemo } from "./cyclic-memo";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName, getTagNameHint } from "./get-tag-name";
-import { isPage, isPatch } from "./marko-config";
+import { isOptimize, isPage, isPatch } from "./marko-config";
 import { getModuleRead, isResolvedModuleRead } from "./module-read";
 import {
   analyzeAttributeTags,
@@ -517,9 +517,8 @@ export function knownTagTranslateHTML(
       t.expressionStatement(
         callRuntime(
           "_patch_child",
-          getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(childScopeBinding),
           t.numericLiteral(nextIdSite()),
+          !isOptimize() && getScopeAccessorLiteral(childScopeBinding),
         ),
       ),
     );
