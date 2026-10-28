@@ -1,8 +1,8 @@
 import type { TestConfig } from "../../main.test";
-import { resolveAfter } from "../../utils/resolve";
+import { navigate, resolveAfter } from "../../utils/resolve";
 
 // A caught boundary followed by a flush whose await is still pending: that
-// flush carries the body, so it reloads.
+// flush carries the body, so it reloads. The promise starts with its step.
 export const config: TestConfig = {
   // Debug logs the rejection's reason, which optimize cannot.
   skip_parity: true,
@@ -11,6 +11,10 @@ export const config: TestConfig = {
   steps: () => [
     { promise: Promise.resolve(), detail: "a" },
     { promise: Promise.reject(new Error("x")), detail: "b" },
-    { promise: resolveAfter(2), detail: "c" },
+    navigate(pending),
   ],
 };
+
+function pending() {
+  return { promise: resolveAfter(2), detail: "c" };
+}
