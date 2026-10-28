@@ -3,10 +3,6 @@ import assert from "node:assert";
 import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-const globals = (flag: boolean) => ({
-  $global: { flag, serializedGlobals: ["flag"] },
-});
-
 // patch-await-caller-state-global-if without patches.
 export const config: TestConfig = {
   equivalent: false,
@@ -15,10 +11,27 @@ export const config: TestConfig = {
     wait,
     { promise: Promise.resolve("b"), ...globals(true) },
     wait,
-    hidesOn,
+    shows("a", false),
+    clickSwap,
+    wait,
+    shows("swapped", false),
+    { promise: Promise.resolve("c"), ...globals(false) },
+    wait,
+    shows("swapped", false),
   ],
 };
 
-function hidesOn(document: Document) {
-  assert.ok(!document.querySelector("b"));
+function globals(flag: boolean) {
+  return { $global: { flag, serializedGlobals: ["flag"] } };
+}
+
+function shows(text: string, on: boolean) {
+  return (document: Document) => {
+    assert.equal(document.querySelector("p")!.textContent, text);
+    assert.equal(!!document.querySelector("b"), on);
+  };
+}
+
+function clickSwap(document: Document) {
+  document.querySelector<HTMLButtonElement>("button.swap")!.click();
 }

@@ -4,3 +4,10 @@
     brand: "bmce"
   }
 }
+
+// PATCH
+{
+  "$global:": {
+    brand: "cmce"
+  }
+}

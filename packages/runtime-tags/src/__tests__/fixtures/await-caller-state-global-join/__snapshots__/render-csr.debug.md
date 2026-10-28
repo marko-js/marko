@@ -35,3 +35,34 @@ assert.equal(document.querySelector("p").textContent, text);
 ```js
 assert.equal(document.querySelector("p").textContent, text);
 ```
+
+# Update
+```js
+document.querySelector("button.swap").click();
+```
+```html
+<button
+  class="swap"
+>
+  swap
+</button>
+<p>
+  acme:swapped
+</p>
+```
+## Change
+```
+UPDATE: p::text "acme:a" => "acme:swapped"
+```
+
+# Update
+```js
+assert.equal(document.querySelector("p").textContent, text);
+```
+
+# Update `{"promise":{},"$global":{"brand":"cmce","serializedGlobals":["brand"]}}`
+
+# Update
+```js
+assert.equal(document.querySelector("p").textContent, text);
+```
