@@ -1329,15 +1329,18 @@ export function getClientInitWrites(join: Intersection) {
     );
 }
 
-// Read, by itself or an alias, outside `section`'s seeded joins (a closure's
-// scope is another's).
+// Read, by itself or an alias, outside `section`'s seeded joins (a closure's scope
+// is another's), or in one a member's assignment re-runs on the client.
 function readsOutsideSeededJoins(binding: Binding, section: Section): boolean {
   for (const read of binding.reads.keys()) {
     const join = getReferencedBindings(read);
     if (
       !Array.isArray(join) ||
       read.section !== section ||
-      !seedsJoinReads(section, join)
+      !seedsJoinReads(section, join) ||
+      some(join, (member) =>
+        someUpToAliasRoot(member, hasResumableAssignment, undefined),
+      )
     ) {
       return true;
     }
