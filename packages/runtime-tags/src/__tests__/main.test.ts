@@ -772,10 +772,9 @@ function testFixtures(interop?: true) {
                             flushes.length &&
                             !flushes[flushes.length - 1].endsWith("\n\n")
                           ) {
-                            // Within a write, a frame passes before its next line.
-                            await new Promise((resolve) =>
-                              browser.window.requestAnimationFrame(resolve),
-                            );
+                            // Within a write, an animation frame passes before
+                            // its next line, which the server already wrote.
+                            browser.flush("raf");
                           } else if (flushes.length && betweenFlushes) {
                             tracker.logUpdate(input);
                             tracker.beginUpdate();
