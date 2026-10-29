@@ -30,7 +30,7 @@ const $try_content2__if = /*@__PURE__*/ _if("#text/0", "<span>before</span><!><!
 const $try_content2__show = /*@__PURE__*/ _closure_get("show/4", ($scope) => $try_content2__if($scope, $scope._._.show ? 0 : 1), ($scope) => $scope._._, "__tests__/template.marko_2_show#0:3/subscribe");
 const $try_content2__setup = $try_content2__show;
 const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, 0, $catch_content2);
-const $try_content__setup = ($scope) => $try_content__try($scope);
+const $try_content__setup = $try_content__try;
 const $show__closure = /*@__PURE__*/ _closure($try_content2__show);
 const $show = /*@__PURE__*/ _let("show/3", ($scope) => {
 	_text($scope["#text/2"], $scope.show);

@@ -42,9 +42,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise2($scope, rejectAfter(new Error("ERROR!"), 2));
 };
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!><!>", "b%b%b%", $try_content__setup, 0, $catch_content);
-function $setup($scope) {
-	$try($scope);
-}
+const $setup = $try;
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, "b%c", $setup);
 
 // tags/log-effect.marko

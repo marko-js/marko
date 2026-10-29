@@ -694,8 +694,8 @@ export function buildSignalFn(signal: Signal): t.Expression {
     signal.storesValue = true;
   }
 
-  if (!signal.storesValue) {
-    const call = isValue && getOnlyCall(signal.render);
+  if (isValue && !signal.storesValue) {
+    const call = getOnlyCall(signal.render);
     if (
       call &&
       call.callee.type === "Identifier" &&
@@ -709,9 +709,7 @@ export function buildSignalFn(signal: Signal): t.Expression {
     }
 
     return t.arrowFunctionExpression(
-      isValue
-        ? [scopeIdentifier, getSignalValueIdentifier(signal)]
-        : [scopeIdentifier],
+      [scopeIdentifier, getSignalValueIdentifier(signal)],
       toOnlyExpressionOrBlock(signal.render),
     );
   }

@@ -20,9 +20,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, rejectAfter(/* @__PURE__ */ new Error("x"), 1));
 };
 const $try = /*@__PURE__*/ _try(0, "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
-function $setup($scope) {
-	$try($scope);
-}
+const $setup = $try;
 var tags_child_default = /*@__PURE__*/ _template("c", $template, "b%c", $setup);
 
 // components/class-wrap.marko

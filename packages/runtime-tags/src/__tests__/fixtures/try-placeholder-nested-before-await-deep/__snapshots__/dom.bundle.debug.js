@@ -33,7 +33,5 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter("1", 1));
 };
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%b%", $try_content__setup, $placeholder_content);
-function $setup($scope) {
-	$try($scope);
-}
+const $setup = $try;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

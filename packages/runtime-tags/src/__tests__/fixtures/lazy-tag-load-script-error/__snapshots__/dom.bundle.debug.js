@@ -26,9 +26,7 @@ const $try_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%/&", $try_content__setup, 0, $catch_content);
-function $setup($scope) {
-	$try($scope);
-}
+const $setup = $try;
 const $input = ($scope, input) => $input_label($scope, input.label);
 const $input_label__closure = /*@__PURE__*/ _closure($try_content__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__closure);

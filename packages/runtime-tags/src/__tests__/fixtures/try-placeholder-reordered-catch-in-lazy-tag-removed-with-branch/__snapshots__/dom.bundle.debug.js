@@ -22,7 +22,7 @@ const $try_content2__setup = ($scope) => {
 	$try_content2__await_promise($scope, rejectAfter(new Error("nope"), 2));
 };
 const $await_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, $placeholder_content2);
-const $await_content__setup = ($scope) => $await_content__try($scope);
+const $await_content__setup = $await_content__try;
 const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
 const $await_content__v = /*@__PURE__*/ _const("v");
 const $placeholder_content = _content("__tests__/child.marko_4*content", "outer loading");
@@ -40,7 +40,7 @@ const $catch_content__count = /*@__PURE__*/ _closure_get("count/6", ($scope) => 
 const $catch_content__setup = $catch_content__count;
 const $catch_content = _content("__tests__/child.marko_2*content", "<span> </span>", "D ", $catch_content__setup);
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content, $catch_content);
-const $if_content__setup = ($scope) => $if_content__try($scope);
+const $if_content__setup = $if_content__try;
 const $count__closure = /*@__PURE__*/ _closure($catch_content__count);
 const $count = /*@__PURE__*/ _let("count/4", ($scope) => {
 	_text($scope["#text/1"], $scope.count);

@@ -9,8 +9,7 @@ const $try_content2__setup = ($scope) => {
 	$await_content3($scope);
 	$try_content2__await_promise($scope, rejectAfter(/* @__PURE__ */ new Error("nope"), 2));
 };
-const $await_content2__try = /*@__PURE__*/ _try(0, "<!><!><!>", "b%", $try_content2__setup, $placeholder_content);
-const $await_content2__setup = ($scope) => $await_content2__try($scope);
+const $await_content2__setup = /* @__PURE__ */ _try(0, "<!><!><!>", "b%", $try_content2__setup, $placeholder_content);
 const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
 const $await_content2__v = /*@__PURE__*/ _const(2);
 const $await_content2 = /*@__PURE__*/ _await_content(0, "<!><!><!>", "b%", $await_content2__setup);
@@ -22,8 +21,7 @@ const $try_content__setup = ($scope) => {
 const $await_content__count = /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._.f), 0, "a3");
 const $catch_content__count = /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._, "a0");
 const $catch_content = _content("a2", "<span class=caught> </span>", "D ", $catch_content__count);
-const $if_content__try = /*@__PURE__*/ _try(0, "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
-const $if_content__setup = ($scope) => $if_content__try($scope);
+const $if_content__setup = /* @__PURE__ */ _try(0, "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $count__closure = /*@__PURE__*/ _closure($catch_content__count, $await_content__count);
 const $count = /*@__PURE__*/ _let(5, ($scope) => {
 	_text($scope.b, $scope.f);

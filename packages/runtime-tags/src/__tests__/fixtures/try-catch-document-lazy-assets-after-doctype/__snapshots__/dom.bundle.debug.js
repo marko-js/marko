@@ -15,9 +15,7 @@ const $walks = "b%c";
 const $catch_content = _content("__tests__/template.marko_2*content", "caught");
 const $try_content__setup = ($scope) => $setup$1($scope["#childScope/0"]);
 const $try = /*@__PURE__*/ _try("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks$1), $try_content__setup, 0, $catch_content);
-function $setup($scope) {
-	$try($scope);
-}
+const $setup = $try;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
 
 // child.css
