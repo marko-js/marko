@@ -72,10 +72,12 @@ installPatchShells((shell) => {
       const setup = content[RendererProp.Setup];
       content[RendererProp.Accessor] = key;
       content[RendererProp.Setup] = (branch) => {
-        const entry = (
-          branch[AccessorProp.Owner]![key] as WithheldScopes | undefined
-        )?.[PatchKey.Withheld];
-        if (entry) patchScope(entry, branch);
+        patchScope(
+          (branch[AccessorProp.Owner]![key] as WithheldScopes | undefined)?.[
+            PatchKey.Withheld
+          ],
+          branch,
+        );
         setup?.(branch);
       };
       return content;
