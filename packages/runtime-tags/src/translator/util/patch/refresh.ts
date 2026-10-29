@@ -323,18 +323,10 @@ function computePatchFill(binding: Binding): PatchFill {
   // a fill only client-sourced join members call for reaches its joins alone.
   const fillsReads =
     fill === true || !!conditions?.structure || hasContents(conditions);
-  // A client join and withheld content both call for it: it refreshes the
-  // content under a key of its own, which a patch writing the join sends.
-  const splitsContent =
-    !!conditions?.contents &&
-    !!(conditions!.joins || conditions!.structure || conditions!.fills);
-  // Its declaration's run is whole: no closure keeps a key of its own and the
-  // patch renders none of its reads, so that run carries the closures' effects.
+  // Its declaration's run is whole, so it carries closures' effects: no closure
+  // keeps an unpatched join key and the patch fills none of its holes.
   const runsWhole =
-    !unpatchedJoins &&
-    !unpatchedSections &&
-    !splitsContent &&
-    !someAlias(binding, hasPatchRenderedRead, undefined, true);
+    !unpatchedJoins && !someAlias(binding, hasFilledHoleRead, undefined, true);
   // Only the patch's key reaches the declaration: a `<let>` nothing assigns, a template
   // input its signal alone reads, or an always-filled server value its effects read.
   const ownRegistration =
@@ -349,6 +341,11 @@ function computePatchFill(binding: Binding): PatchFill {
             undefined,
             true,
           )));
+  // A client join and withheld content both call for it: it refreshes the
+  // content under a key of its own, which a patch writing the join sends.
+  const splitsContent =
+    !!conditions?.contents &&
+    !!(conditions!.joins || conditions!.structure || conditions!.fills);
   // The unpatched key ships wherever the fill's own guard holds, which leaves
   // the fill key only content that refreshes under a key of its own.
   const unpatchedOnly =
@@ -1204,18 +1201,9 @@ function readsDeclarationOnlyEffect(binding: Binding, runsWhole: boolean) {
   return false;
 }
 
-// A read its own signal leaves to the patch: a hole it fills or a join it writes.
-function hasPatchRenderedRead(binding: Binding) {
-  for (const read of binding.reads.keys()) {
-    const refs = getReferencedBindings(read);
-    if (
-      read.section === binding.section &&
-      (isFilledHole(read) || (Array.isArray(refs) && isPatchWrittenJoin(refs)))
-    ) {
-      return true;
-    }
-  }
-  return false;
+// A hole the patch fills in its own section, which leaves its run to the patch.
+function hasFilledHoleRead(binding: Binding) {
+  return someReadIn(binding, binding.section, isFilledHole);
 }
 
 function isRenderEffectRead(read: ReferencedExtra, binding: Binding) {

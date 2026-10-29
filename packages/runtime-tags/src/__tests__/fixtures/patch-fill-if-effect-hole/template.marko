@@ -1,0 +1,7 @@
+<h1>${input.label}</h1>
+<let/count=0/>
+<if=input.show>
+  <p>${input.label + ": " + count}</p>
+  <script>document.body.dataset.label = input.label</script>
+</if>
+<button onClick() { count++ }>${count}</button>
