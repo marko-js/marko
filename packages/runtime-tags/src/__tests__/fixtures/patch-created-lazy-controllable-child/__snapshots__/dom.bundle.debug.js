@@ -13,7 +13,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$1 = "<p>sel=<!></p>";
 const $walks$1 = "Db%l";
 const $setup$1 = ($_) => {};
-const $selected = _let_change("selected/6", ($scope) => _text($scope["#text/0"], String($scope.selected)));
+const $selected = /*@__PURE__*/ _let_change("selected/6", ($scope) => _text($scope["#text/0"], String($scope.selected)));
 const $input_tab__OR__input_tabChange = /*@__PURE__*/ _fill_join("__tests__/tags/tab-editor.marko_fill1", "input_tabChange", /*@__PURE__*/ _fill_join("__tests__/tags/tab-editor.marko_fill0", "input_tab", /*@__PURE__*/ _or_resume("__tests__/tags/tab-editor.marko_0_input_tab#3_input_tabChange#4/init", 5, ($scope) => $selected($scope, $scope.input_tab, $scope.input_tabChange))));
 const $input_tab = /*@__PURE__*/ _const("input_tab", $input_tab__OR__input_tabChange);
 const $input_tabChange = /*@__PURE__*/ _const("input_tabChange", $input_tab__OR__input_tabChange);

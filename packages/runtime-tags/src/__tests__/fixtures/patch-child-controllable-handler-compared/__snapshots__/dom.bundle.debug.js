@@ -1,7 +1,7 @@
 // tags/counter/index.marko
 const $template$1 = "<!><!><button class=toggle>t</button>";
 const $walks$1 = "b%b b";
-const $if_content__count = _let_change("count/2", ($scope) => _text($scope["#text/0"], $scope.count));
+const $if_content__count = /*@__PURE__*/ _let_change("count/2", ($scope) => _text($scope["#text/0"], $scope.count));
 const $if_content__input_onCount__script = _script("__tests__/tags/counter/index.marko_1_input_onCount#0:4", ($scope) => {
 	{
 		const log = document.getElementById("log");

@@ -6,8 +6,8 @@ const $input_promise = $await_promise;
 
 // template.marko
 const $if_content__p = /*@__PURE__*/ _init_resume("a5", /*@__PURE__*/ _if_closure(2, 0, ($scope) => $input_promise($scope.a, $scope._.h)));
-const $p = /*@__PURE__*/ _let(7, $if_content__p);
-const $resolve = /*@__PURE__*/ _let(8, ($scope) => _attr($scope.b, "disabled", !$scope.i));
+const $p = _let(7, $if_content__p);
+const $resolve = _let(8, ($scope) => _attr($scope.b, "disabled", !$scope.i));
 const $setup__script = _script("a2", ($scope) => {
 	_on($scope.a, "click", function() {
 		$p($scope, new Promise((r) => {

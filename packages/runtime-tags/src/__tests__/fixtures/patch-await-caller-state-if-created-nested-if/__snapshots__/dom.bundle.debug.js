@@ -33,8 +33,8 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $if_content__p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_p#0:7/init", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_promise($scope["#childScope/0"], $scope._.p)));
-const $p = /*@__PURE__*/ _let("p/7", $if_content__p);
-const $resolve = /*@__PURE__*/ _let("resolve/8", ($scope) => _attr($scope["#button/1"], "disabled", !$scope.resolve));
+const $p = _let("p/7", $if_content__p);
+const $resolve = _let("resolve/8", ($scope) => _attr($scope["#button/1"], "disabled", !$scope.resolve));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$p($scope, new Promise((r) => {

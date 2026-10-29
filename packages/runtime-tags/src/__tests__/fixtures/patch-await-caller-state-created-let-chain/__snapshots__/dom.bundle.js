@@ -11,7 +11,7 @@ const $o_label = /*@__PURE__*/ _const(7, ($scope) => {
 });
 
 // tags/show-await.marko
-const $await_content__d = _let_change(10, ($scope) => _text($scope.d, $scope.k));
+const $await_content__d = /*@__PURE__*/ _let_change(10, ($scope) => _text($scope.d, $scope.k));
 const $await_content__c = _let(9, ($scope) => {
 	$await_content__d($scope, $scope.j, $valueChange($scope));
 	_style_rule_item($scope.a, "--M_c0", $scope.j);

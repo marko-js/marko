@@ -1,5 +1,5 @@
 // tags/counter/index.marko
-const $if_content__count = _let_change(2, ($scope) => _text($scope.a, $scope.c));
+const $if_content__count = /*@__PURE__*/ _let_change(2, ($scope) => _text($scope.a, $scope.c));
 const $if_content__input_onCount__script = _script("b0", ($scope) => {
 	{
 		const log = document.getElementById("log");

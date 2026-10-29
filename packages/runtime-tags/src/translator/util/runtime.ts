@@ -18,7 +18,7 @@ export type HTMLRuntimeHelpers = keyof typeof import("../../html/patch");
 
 // Pure despite registering into `_resumed` (`_template`, `_closure_get`): that
 // matters only for a value a serialized register id keeps in the module graph.
-const pureDOMFunctions = new Set<string>([
+const patchPureDOMFunctions = new Set<string>([
   "_await_promise",
   "_fill_join",
   "_fill_global_for",
@@ -59,6 +59,7 @@ const pureDOMFunctions = new Set<string>([
   "_for_until",
   "_for_until_unkeyed",
   "_hoist",
+  "_let_change",
   "_const",
   "_load_signal",
   "_load_signal_patch",
@@ -71,12 +72,10 @@ const pureDOMFunctions = new Set<string>([
   "_load_race_trigger",
 ] satisfies DOMRuntimeHelpers[]);
 
-// Pure outside a patch build, which keeps every `<let>`'s signal as a handler
-// assigning it would.
-const pureOutsidePatchDOMFunctions = new Set<string>([
-  "_let",
-  "_let_change",
-] satisfies DOMRuntimeHelpers[]);
+// A patch build keeps an uncontrolled `<let>`'s signal, as a handler assigning it would.
+const pureDOMFunctions = new Set<string>(patchPureDOMFunctions).add(
+  "_let" satisfies DOMRuntimeHelpers,
+);
 
 const [getRuntimeImports] = createOutputState(
   () => new Map<DOMRuntimeHelpers | HTMLRuntimeHelpers, string>(),
@@ -115,8 +114,7 @@ export function callRuntime(
   );
   if (
     isOutputDOM() &&
-    (pureDOMFunctions.has(name) ||
-      (!isPatch() && pureOutsidePatchDOMFunctions.has(name)))
+    (isPatch() ? patchPureDOMFunctions : pureDOMFunctions).has(name)
   ) {
     return t.addComment(callExpression, "leading", "@__PURE__");
   }
