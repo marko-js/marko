@@ -7,18 +7,22 @@ function bodyErrors(document: Document) {
     document,
     new ReadableStream({
       start: (controller) =>
-        controller.enqueue(new TextEncoder().encode("{}\n")),
+        controller.enqueue(new TextEncoder().encode("{}\n\n")),
       pull: (controller) => controller.error(new Error("cut")),
     }),
   );
 }
 
 function bodyEndsInFlush(document: Document) {
-  return expectCut(document, "{}\n{}");
+  return expectCut(document, "{}\n\n{}");
 }
 
-// A response cut after its first flush (its body errors, or ends inside the
-// next flush) fails the patch, applying nothing past that flush.
+function bodyEndsInWrite(document: Document) {
+  return expectCut(document, "{}\n\n{}\n");
+}
+
+// A response cut after its first write (its body errors, or ends inside the
+// next flush or write) fails the patch, applying nothing past that write.
 async function expectCut(document: Document, body: BodyInit) {
   const { patch } = document.defaultView as unknown as {
     patch: typeof import("@marko/runtime-tags/dom/patch").patch;
@@ -45,5 +49,11 @@ export const config: TestConfig = {
   skip_csr: true,
   // Debug builds warn why the patch rejected.
   skip_parity: true,
-  steps: [{ label: "a" }, bodyErrors, bodyEndsInFlush, { label: "b" }],
+  steps: [
+    { label: "a" },
+    bodyErrors,
+    bodyEndsInFlush,
+    bodyEndsInWrite,
+    { label: "b" },
+  ],
 };

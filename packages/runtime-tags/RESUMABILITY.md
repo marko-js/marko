@@ -66,8 +66,9 @@ patch, fill, structural param, shell).
 - **Flushes.** `html/patches/writer.ts` (`PatchRenderState`) collects a flush's entries into
   one nested tree of patches rooted at the page root; scope ids never ride
   the wire, a patch nests under its parent's structural entry. Each flush
-  is one line and one expression, which `joinFlush` asserts in debug;
-  `dom/patches/apply.ts` evaluates it as an arrow's body.
+  is one line and one expression, which `joinFlush` asserts in debug; an
+  empty line ends each write, and `dom/patches/apply.ts` applies a write's
+  flushes together, evaluating each as an arrow's body.
 - **Applying.** `dom/patches/apply.ts` walks each patch beside its live scope and
   dispatches each entry by its key prefix (`PatchKey`, debug spelled
   `Patch<Kind>:`) into `patchers`, one `dom/patches/*.feat.ts` module per kind,
@@ -112,14 +113,14 @@ patch, fill, structural param, shell).
   and its own (`PatchRequestKind.Patch`) with `template.patch(input, headers)`
   under `patchResponseHeaders(kind)`, uncached, whose
   `x-marko-patch` names the build again for the page to check, one flush per
-  line; every response ends with a `;` line, followed by the token when the
-  shells it sent changed what the page holds.
-  `apply(response, onCommit, onApplied, onEnd, onFail)` reads the body's lines
-  as flushes: `onCommit` right before the first changes the page, `onApplied`
-  once each flush has applied, with anything it waits on (a lazy module, a body
-  the document still streams), `onEnd` once the body ended and all applied, and
-  `onFail` for a response that is no patch, a failed flush or a cut stream. A
-  later `patch()` ends the response. `@marko/vite` names the build
+  line and an empty line after each write; every response ends with a `;`
+  line, followed by the token when the shells it sent changed what the page
+  holds. `apply(response, onCommit, onApplied, onEnd, onFail)` reads the body's
+  lines as flushes, a write's together: `onCommit` right before the first
+  changes the page, `onApplied` once each flush has applied, with anything it
+  waits on (a lazy module, a body the document still streams), `onEnd` once the
+  body ended and all applied, and `onFail` for a response that is no patch, a
+  failed flush or a cut stream. A later `patch()` ends the response. `@marko/vite` names the build
   (`@marko/vite/patch`); `@marko/run` sends the headers and decides what a
   failure loads.
 

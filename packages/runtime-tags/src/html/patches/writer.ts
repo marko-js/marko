@@ -604,7 +604,8 @@ export class PatchRenderState extends PatchPageState {
     this.hasWrittenGlobals = true;
   }
 
-  // The client evaluates and applies each line as one expression.
+  // Each line is one expression; an empty line ends the write, whose lines the
+  // client applies together.
   override joinFlush(_html: string, scripts: string, pending: number) {
     let out = this.held + (scripts ? scripts + "\n" : "");
     if (MARKO_DEBUG && this.pendingShells) {
@@ -632,7 +633,7 @@ export class PatchRenderState extends PatchPageState {
       return "";
     }
     this.held = "";
-    return out;
+    return out && out + "\n";
   }
 
   // Each item is a line applied before the next evaluates; the first, the tree or

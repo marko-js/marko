@@ -32,7 +32,7 @@ const { patch } = document.defaultView
   try {
  await new Promise((resolve) =>
    apply(
- new Response("{}\n", { headers: { "x-marko-patch": "b" } }),
+ new Response("{}\n\n", { headers: { "x-marko-patch": "b" } }),
  () => {
    calls.push("commit");
  },

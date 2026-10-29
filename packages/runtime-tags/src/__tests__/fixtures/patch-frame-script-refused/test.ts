@@ -20,7 +20,7 @@ async function refusedFlush(document: Document) {
   try {
     await new Promise<void>((resolve) =>
       apply(
-        new Response("{}\n", { headers: { "x-marko-patch": "b" } }),
+        new Response("{}\n\n", { headers: { "x-marko-patch": "b" } }),
         () => {
           calls.push("commit");
         },

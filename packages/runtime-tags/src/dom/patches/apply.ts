@@ -307,6 +307,8 @@ export function patch(
       // The flush read so far: each chunk is searched once, and a flush
       // spanning chunks joins at its newline.
       let partial = "";
+      // The write's lines read so far, applied together at its empty line.
+      let lines: string[] = [];
       try {
         for (let read; !(read = await reader.read()).done;) {
           const text = decoder.decode(read.value, { stream: true });
@@ -316,8 +318,16 @@ export function patch(
             render[RenderDataProp.StopPatch] === stop &&
             ~(at = text.indexOf("\n", start))
           ) {
-            waiting++;
-            applyLine(partial + text.slice(start, at), done);
+            const line = partial + text.slice(start, at);
+            if (line) {
+              lines.push(line);
+            } else {
+              for (const expression of lines) {
+                waiting++;
+                applyLine(expression, done);
+              }
+              lines = [];
+            }
             partial = "";
             start = at + 1;
           }
@@ -328,8 +338,9 @@ export function patch(
       }
       if (render[RenderDataProp.StopPatch] === stop) {
         ended = 1;
-        // The server ends each flush with a newline: a remainder was cut short.
-        if (partial + decoder.decode()) {
+        // The server ends each flush with a newline and each write with an empty
+        // line: a remainder was cut short.
+        if (partial + decoder.decode() || lines.length) {
           MARKO_DEBUG ? fail("the stream was cut short") : fail();
         } else if (!waiting) {
           // A response with no flush to apply still commits, once.

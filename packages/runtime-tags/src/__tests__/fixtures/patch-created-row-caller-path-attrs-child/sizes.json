@@ -2,8 +2,8 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 11376,
-        "brotli": 4987
+        "min": 11440,
+        "brotli": 5012
       },
       "files": {
         "tags/navx.marko": 502,
@@ -16,7 +16,7 @@
     "brotli": 268
   },
   "patch": {
-    "min": 530,
-    "brotli": 231
+    "min": 533,
+    "brotli": 239
   }
 }

@@ -9,6 +9,8 @@ const click = (document: Document) => {
 // past a frame: its body updates in place, as on a client render.
 export const config: TestConfig = {
   patches: true,
+  // The settled value arrives in the write's second line.
+  split_writes: true,
   steps: () => [
     {
       label: "a",

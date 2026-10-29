@@ -96,6 +96,11 @@ export type TestConfig = {
    * server streams (reordered content lands before resume starts).
    */
   entry_delay?: number;
+  /**
+   * Sends each patch write a line at a time, an animation frame between its
+   * lines, as a network may split it.
+   */
+  split_writes?: true;
   /** Aborts the SSR render once the first flush streams, simulating a disconnect. */
   abort_ssr?: boolean;
   error_dom?: boolean;
@@ -758,11 +763,19 @@ function testFixtures(interop?: true) {
                     // The token follows the build.
                     patchHeaders.push(headers["x-marko-patch"].split(";")[1]);
                     try {
-                      for await (const flush of template.patch(
-                        input,
-                        headers,
-                      )) {
-                        if (flushes.length && betweenFlushes) {
+                      const writes = template.patch(input, headers);
+                      for await (const flush of config.split_writes
+                        ? splitWrites(writes)
+                        : writes) {
+                        if (
+                          flushes.length &&
+                          !flushes[flushes.length - 1].endsWith("\n\n")
+                        ) {
+                          // Within a write, a frame passes before its next line.
+                          await new Promise((resolve) =>
+                            browser.window.requestAnimationFrame(resolve),
+                          );
+                        } else if (flushes.length && betweenFlushes) {
                           tracker.logUpdate(input);
                           tracker.beginUpdate();
                           const between = await betweenFlushes(
@@ -789,6 +802,8 @@ function testFixtures(interop?: true) {
                         // Each flush is a chunk of the response's body, whose
                         // last ends with the token line.
                         await response.send(flush);
+                        // The page applies a write once its empty line arrives.
+                        if (!flush.endsWith("\n\n")) continue;
                         const result = response.result();
                         // A held load or a still-streaming document settles
                         // the wait later; the patch must have applied by the end.
@@ -1297,6 +1312,11 @@ function propertyName(declaration: string) {
   return declaration.slice(0, declaration.indexOf(":"));
 }
 
+// Each line of each write on its own, the write's empty line with its last.
+async function* splitWrites(writes: AsyncIterable<string>) {
+  for await (const write of writes) yield* write.match(/[^\n]*\n\n?/g)!;
+}
+
 // A wire flush, formatted; the token line (`;` and the token) is no code.
 function formatPatchFlush(line: string) {
   const flush = line.trimEnd();
@@ -1451,8 +1471,11 @@ function streamPatch(
       const controller = await wanted;
       if (controller) {
         wanted = new Promise((resolve) => (wake = resolve));
-        // The server ends every flush with a newline, and the page reports each.
-        for (let at = -1; (at = flush.indexOf("\n", at + 1)) >= 0;) sent++;
+        // The server ends every flush with a newline, and the page reports each;
+        // the empty line ending a write is no flush.
+        for (let at = -1; (at = flush.indexOf("\n", at + 1)) >= 0;) {
+          if (flush[at - 1] !== "\n") sent++;
+        }
         // In thirds, as a network may split it: a flush spans reads.
         const bytes = encoder.encode(flush);
         const third = Math.ceil(bytes.length / 3);

@@ -5,7 +5,7 @@ import type { TestConfig } from "../../main.test";
 
 async function flushesWait(document: Document) {
   assert.deepEqual(
-    await patched(document, "(mark(1),{})\n(mark(2),{})\n", commitLater),
+    await patched(document, "(mark(1),{})\n\n(mark(2),{})\n\n", commitLater),
     ["commit", "committed", "1", "applied", "2", "applied", "end"],
   );
 }
@@ -22,7 +22,7 @@ async function endWaits(document: Document) {
 // flushes waiting behind it unapplied.
 async function stoppedFlushesStay(document: Document) {
   assert.deepEqual(
-    await patched(document, "(stop(),{})\n(mark(2),{})\n", commitLater),
+    await patched(document, "(stop(),{})\n\n(mark(2),{})\n\n", commitLater),
     ["commit", "committed"],
   );
 }
@@ -30,9 +30,10 @@ async function stoppedFlushesStay(document: Document) {
 // A commit that stops its response (an app canceling the URL change, say)
 // leaves all of it unapplied.
 async function stoppedCommitAppliesNothing(document: Document) {
-  assert.deepEqual(await patched(document, "(mark(1),{})\n", commitStopping), [
-    "commit",
-  ]);
+  assert.deepEqual(
+    await patched(document, "(mark(1),{})\n\n", commitStopping),
+    ["commit"],
+  );
 }
 
 // A commit the browser completes in a later task (a held navigation) returns a
