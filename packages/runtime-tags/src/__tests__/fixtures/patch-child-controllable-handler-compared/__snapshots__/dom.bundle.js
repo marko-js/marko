@@ -7,10 +7,10 @@ const $if_content__input_onCount__script = _script("b0", ($scope) => {
 		log.fn = $scope._.e;
 	}
 });
-const $if_content__input_onCount = /*@__PURE__*/ _fill_join("b3", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
+const $if_content__input_onCount = /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
 	$if_content__count($scope, 0, $scope._.e);
 	$if_content__input_onCount__script($scope);
-}));
+});
 const $if_content__setup__script = _script("b1", ($scope) => _on($scope.b, "click", function() {
 	$if_content__count($scope, +$scope.c + 1);
 }));
@@ -23,6 +23,7 @@ const $open = /*@__PURE__*/ _fill_let("b4", 5, ($scope) => $if($scope, $scope.f 
 const $setup__script = _script("b2", ($scope) => _on($scope.b, "click", function() {
 	$open($scope, !$scope.f);
 }));
+const $input_onCount = fill("b3", /*@__PURE__*/ _const(4, $if_content__input_onCount));
 
 // template.marko
 const $last = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h));

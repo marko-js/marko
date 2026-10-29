@@ -323,20 +323,32 @@ function computePatchFill(binding: Binding): PatchFill {
   // a fill only client-sourced join members call for reaches its joins alone.
   const fillsReads =
     fill === true || !!conditions?.structure || hasContents(conditions);
+  // A client join and withheld content both call for it: it refreshes the
+  // content under a key of its own, which a patch writing the join sends.
+  const splitsContent =
+    !!conditions?.contents &&
+    !!(conditions!.joins || conditions!.structure || conditions!.fills);
+  // Its declaration's run is whole: no closure keeps a key of its own and the
+  // patch renders none of its reads, so that run carries the closures' effects.
+  const runsWhole =
+    !unpatchedJoins &&
+    !unpatchedSections &&
+    !splitsContent &&
+    !someAlias(binding, hasPatchRenderedRead, undefined, true);
   // Only the patch's key reaches the declaration: a `<let>` nothing assigns, a template
-  // input its signal alone reads, or an always-filled server value its own effects read.
+  // input its signal alone reads, or an always-filled server value its effects read.
   const ownRegistration =
     !!fill &&
     (binding.sources?.state
       ? !binding.assignments && bindingUtil.has(binding.sources.state, binding)
       : (!binding.section.parent && hasDeclarationOnlyReads(binding)) ||
         (fill === true &&
-          someAlias(binding, readsDeclarationOnlyEffect, undefined, true)));
-  // A client join and withheld content both call for it: it refreshes the
-  // content under a key of its own, which a patch writing the join sends.
-  const splitsContent =
-    !!conditions?.contents &&
-    !!(conditions!.joins || conditions!.structure || conditions!.fills);
+          someAlias(
+            binding,
+            (alias) => readsDeclarationOnlyEffect(alias, runsWhole),
+            undefined,
+            true,
+          )));
   // The unpatched key ships wherever the fill's own guard holds, which leaves
   // the fill key only content that refreshes under a key of its own.
   const unpatchedOnly =
@@ -1178,11 +1190,27 @@ export function hasEffectRead(binding: Binding) {
 // An effect re-reading it where only the declaration's fill reaches: in its own
 // section, or in structure whose closure registration ships only with client
 // renders some pages make.
-function readsDeclarationOnlyEffect(binding: Binding) {
+function readsDeclarationOnlyEffect(binding: Binding, runsWhole: boolean) {
   for (const read of binding.reads.keys()) {
     if (
       isRenderEffectRead(read, binding) &&
-      (read.section === binding.section || !clientRenders(read.section))
+      (runsWhole ||
+        read.section === binding.section ||
+        !clientRenders(read.section))
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// A read its own signal leaves to the patch: a hole it fills or a join it writes.
+function hasPatchRenderedRead(binding: Binding) {
+  for (const read of binding.reads.keys()) {
+    const refs = getReferencedBindings(read);
+    if (
+      read.section === binding.section &&
+      (isFilledHole(read) || (Array.isArray(refs) && isPatchWrittenJoin(refs)))
     ) {
       return true;
     }

@@ -9,10 +9,10 @@ const $if_content__input_onCount__script = _script("__tests__/tags/counter/index
 		log.fn = $scope._.input_onCount;
 	}
 });
-const $if_content__input_onCount = /*@__PURE__*/ _fill_join("__tests__/tags/counter/index.marko_fill0", "input_onCount", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
+const $if_content__input_onCount = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$if_content__count($scope, 0, $scope._.input_onCount);
 	$if_content__input_onCount__script($scope);
-}));
+});
 const $if_content__setup__script = _script("__tests__/tags/counter/index.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);
 }));
@@ -30,7 +30,7 @@ function $setup$1($scope) {
 	$open($scope, true);
 }
 const $input$1 = ($scope, input) => $input_onCount($scope, input.onCount);
-const $input_onCount = /*@__PURE__*/ _fill_const("__tests__/tags/counter/index.marko_fill0", "input_onCount", $if_content__input_onCount);
+const $input_onCount = _fill_resume("__tests__/tags/counter/index.marko_fill0", /*@__PURE__*/ _const("input_onCount", $if_content__input_onCount));
 var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
