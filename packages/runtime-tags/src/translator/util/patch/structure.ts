@@ -171,7 +171,7 @@ export const getParamSelectedStructure = createPassMemo(
 );
 
 // A call input its callee keeps per instance where a patch renders the call: its
-// own fill or holes where its group is the server's, a written join where it mixes.
+// own fill or holes where its group is the server's, a written intersection where it mixes.
 export function calleeKeepsInput(
   section: Section,
   sources: Sources | undefined,

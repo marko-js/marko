@@ -32,7 +32,7 @@ export type Patcher<K extends PatchKind = PatchKind> = (
   accessor: string,
   value: K extends keyof PatchValues ? PatchValues[K] : unknown,
 ) => void;
-// Fills keyed by `templateId:ordinal`. A key's joins chain, and its declaration's fill
+// Fills keyed by `templateId:ordinal`. A key's signals chain, and its declaration's fill
 // replaces them whichever registers first: what derives from it reaches what they would.
 export const patchFills: Record<string, Signal<unknown> & { _?: SignalFn }> =
   {};
@@ -204,7 +204,7 @@ export function patch(
       return done(1);
     }
     // Re-shipped globals land on the globals object, so `$global` reads never go
-    // stale; a page with `$global` joins installed its own (`_fill_global`).
+    // stale; a page with `$global` signals installed its own (`_fill_global`).
     patchers[PatchKey.Globals] ||= (live, _key, value) =>
       Object.assign(live[AccessorProp.Global], value);
     // Reports once: at the first failure, else when the last wait applies.

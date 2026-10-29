@@ -24,7 +24,7 @@ import {
 } from "../signals";
 import { depChanged, patchFills, patchRender } from "./apply";
 
-// Installed by `patches/fill-change` where an entry depends on a value a join's
+// Installed by `patches/fill-change` where an entry depends on a value a signal's
 // fill sets: the fill then marks its change as a write does.
 let markFillChange:
   | ((scope: Scope, valueAccessor: EncodedAccessor) => void)
@@ -39,7 +39,7 @@ export function markFillChanged(scope: Scope, valueAccessor: EncodedAccessor) {
       (MARKO_DEBUG ? valueAccessor : decodeAccessor(valueAccessor as number))
   ] = patchRender[RenderDataProp.StopPatch];
 }
-// A declaration's fill run that leaves out a join its scope inits marks its
+// A declaration's fill run that leaves out a signal its scope inits marks its
 // change for that init.
 export function _fill_mark(
   valueAccessor: EncodedAccessor,
@@ -51,13 +51,13 @@ export function _fill_mark(
   };
 }
 
-function fillJoin<T extends SignalFn>(
+function fillSignal<T extends SignalFn>(
   keys: string,
   valueAccessor: EncodedAccessor,
-  join: T,
+  signal: T,
   dispatch: SignalFn,
 ): T {
-  // Each of the value's keys a patch may send (space separated) runs the join;
+  // Each of the value's keys a patch may send (space separated) runs the signal;
   // those after `|` set the value alone.
   let run = dispatch;
   for (const key of keys.split(" ")) {
@@ -85,27 +85,32 @@ function fillJoin<T extends SignalFn>(
       }
     }
   }
-  return join;
+  return signal;
 }
-// A fill runs the join, through `buildDispatch` where it runs in branches, or
+// A fill runs the signal, through `buildDispatch` where it runs in branches, or
 // runs nothing where another key or the scope's init re-runs it.
 export function _fill<T extends SignalFn>(
   keys: string,
   valueAccessor: EncodedAccessor,
-  join: T,
-  buildDispatch?: (join: SignalFn) => SignalFn,
+  signal: T,
+  buildDispatch?: (signal: SignalFn) => SignalFn,
 ): T {
-  return fillJoin(keys, valueAccessor, join, buildDispatch?.(join) || join);
+  return fillSignal(
+    keys,
+    valueAccessor,
+    signal,
+    buildDispatch?.(signal) || signal,
+  );
 }
-// Owner-side dispatch for cross-section joins over branch scopes; per-kind
+// Owner-side dispatch for cross-section signals over branch scopes; per-kind
 // helpers keep branch-free bundles free of the other kind.
 export function _fill_if<T extends SignalFn>(
   keys: string,
   valueAccessor: EncodedAccessor,
-  join: T,
+  signal: T,
   ...hops: (EncodedAccessor | number)[]
 ): T {
-  let dispatch: SignalFn = join;
+  let dispatch: SignalFn = signal;
   for (let i = hops.length; i; i -= 2) {
     dispatch = _if_closure(
       hops[i - 2] as EncodedAccessor,
@@ -113,41 +118,41 @@ export function _fill_if<T extends SignalFn>(
       dispatch,
     );
   }
-  return fillJoin(keys, valueAccessor, join, dispatch);
+  return fillSignal(keys, valueAccessor, signal, dispatch);
 }
 export function _fill_for<T extends SignalFn>(
   keys: string,
   valueAccessor: EncodedAccessor,
-  join: T,
+  signal: T,
   ...hops: EncodedAccessor[]
 ): T {
-  let dispatch: SignalFn = join;
+  let dispatch: SignalFn = signal;
   for (let i = hops.length; i--;) {
     dispatch = _for_closure(hops[i], dispatch);
   }
-  return fillJoin(keys, valueAccessor, join, dispatch);
+  return fillSignal(keys, valueAccessor, signal, dispatch);
 }
 
 // Deep closure positions of one key reassemble the indexed composite; a
 // shaken position is simply absent.
-const closureFillJoins: Record<string, SignalFn[]> = {};
+const closureFills: Record<string, SignalFn[]> = {};
 export function _fill_closure<T extends ReturnType<typeof _closure_get>>(
   keys: string,
   valueAccessor: EncodedAccessor,
-  join: T,
+  signal: T,
   index: number,
 ): T {
   // Client-created positions stamp this index into their scope, keeping
   // it in agreement with what the server serialized.
-  join[ClosureSignalProp.Index] = index;
+  signal[ClosureSignalProp.Index] = index;
   // Each key keeps its own positions.
   for (const key of keys.split(" ")) {
-    const signals = (closureFillJoins[key] ??= []);
-    // The first position registers the fill join every position shares.
+    const signals = (closureFills[key] ??= []);
+    // The first position registers the fill every position shares.
     if (!signals.length) {
-      fillJoin(key, valueAccessor, join, (scope) => {
+      fillSignal(key, valueAccessor, signal, (scope) => {
         const instances = scope[
-          join[ClosureSignalProp.ScopeInstancesAccessor]
+          signal[ClosureSignalProp.ScopeInstancesAccessor]
         ] as ClosureScopes | undefined;
         if (instances) {
           // A subscriber that resumes after this renders the change it missed.
@@ -159,7 +164,7 @@ export function _fill_closure<T extends ReturnType<typeof _closure_get>>(
             ) {
               signals[
                 (childScope[
-                  join[ClosureSignalProp.SignalIndexAccessor]
+                  signal[ClosureSignalProp.SignalIndexAccessor]
                 ] as number) || 0
               ]?.(childScope);
             }
@@ -167,17 +172,17 @@ export function _fill_closure<T extends ReturnType<typeof _closure_get>>(
         }
       });
     }
-    signals[index] = join;
+    signals[index] = signal;
   }
-  return join;
+  return signal;
 }
 
-// A join in content its owner's closure subscribers hold: the fill runs it in each
+// A signal in content its owner's closure subscribers hold: the fill runs it in each
 // subscribed scope of this closure position.
 export function _fill_subscribers<T extends SignalFn>(
   keys: string,
   valueAccessor: EncodedAccessor,
-  join: T,
+  signal: T,
   closureAccessor: EncodedAccessor,
   index: number,
 ) {
@@ -187,7 +192,7 @@ export function _fill_subscribers<T extends SignalFn>(
   const signalIndex =
     AccessorPrefix.ClosureSignalIndex +
     (MARKO_DEBUG ? closureAccessor : instancesAccessor);
-  return fillJoin(keys, valueAccessor, join, (scope) => {
+  return fillSignal(keys, valueAccessor, signal, (scope) => {
     const instances = scope[instancesAccessor] as ClosureScopes | undefined;
     if (instances) {
       instances[ClosureScopesProp.Changed] = 1;
@@ -197,7 +202,7 @@ export function _fill_subscribers<T extends SignalFn>(
           childScope[AccessorProp.Gen] < runId &&
           ((childScope[signalIndex] as number) || 0) === index
         ) {
-          queueRender(childScope, join, -1);
+          queueRender(childScope, signal, -1);
         }
       }
     }
@@ -220,8 +225,8 @@ function fill<T extends Signal<any>>(
 // signal it wraps.
 export { fill as _fill_resume };
 
-// A fill's run, registered apart from its pure value signal; its unpatched key
-// runs it as a join, which closures below param-selected structure chain onto.
+// A fill's run, registered apart from its pure value signal; its unpatched key runs
+// it too, as closures below param-selected structure chain onto it.
 export function _fill_run(
   key: string,
   id: EncodedAccessor,
@@ -229,7 +234,7 @@ export function _fill_run(
   unpatchedKey?: string,
 ) {
   patchFills[key] = _const(id, run);
-  if (unpatchedKey) fillJoin(unpatchedKey, id, run, run);
+  if (unpatchedKey) fillSignal(unpatchedKey, id, run, run);
 }
 
 // A dynamic tag's variable a patch writes takes the value through its own
@@ -297,8 +302,8 @@ export function _fill_const<T>(
   return fill(key, _const<T>(id, fn), id, fillFn);
 }
 
-// A join a flush runs by this init, after whatever members arrive: a created
-// scope's, or a written join's where its group mixes (`patches/init`).
+// An intersection a flush runs by this init, after whatever members arrive: a created
+// scope's, or a written intersection's where its group mixes (`patches/init`).
 export function _or_resume(
   initId: string,
   id: number,
@@ -310,7 +315,7 @@ export function _or_resume(
     MARKO_DEBUG || scopeIdAccessor === AccessorProp.Id
       ? scopeIdAccessor
       : decodeAccessor(scopeIdAccessor as number);
-  // Queued in the same order as the join's own renders.
+  // Queued in the same order as the intersection's own renders.
   _resumed[initId] = (scope: Scope) =>
     queueRender(scope, fn, id, 0, scope[scopeIdKey]);
   return _or(id, fn, defaultPending, scopeIdAccessor);
@@ -327,7 +332,7 @@ export function _closure_index(
 }
 
 // A created subscriber a shell or flush names by id whether or not client code
-// reaches it: this registration is what ships it, and the fill join around it.
+// reaches it: this registration is what ships it, and the fill around it.
 export function _closure_resume<T extends (scope: Scope, resumed: 1) => void>(
   resumeId: string,
   closureSignal: T,

@@ -111,8 +111,8 @@ const [getFillOrdinals] = createAnalysisState(() => {
   const ordinals = new Map<Binding, number>();
   forEachSection((section) => {
     forEach(section.bindings, (binding) => {
-      const { fill, unpatchedJoins } = getPatchFill(binding);
-      if (fill || unpatchedJoins) ordinals.set(binding, ordinals.size);
+      const { fill, unpatchedIntersections } = getPatchFill(binding);
+      if (fill || unpatchedIntersections) ordinals.set(binding, ordinals.size);
     });
   });
   return ordinals;
@@ -247,10 +247,10 @@ export interface PatchFill {
   objectSource?: boolean;
   writeReads?: boolean;
   ownRegistration?: boolean;
-  joinWrites?: SortedOpt<Sources>;
-  joinFill?: Intersection;
+  intersectionWrites?: SortedOpt<Sources>;
+  intersectionFill?: Intersection;
   unpatchedOnly?: boolean;
-  unpatchedJoins?: Intersection[];
+  unpatchedIntersections?: Intersection[];
   unpatchedStructure?: true | FillConditions;
   unpatchedSections?: SortedOpt<Section>;
 }
@@ -273,16 +273,20 @@ export const [getPatchWrite] = createAnalysisMemo(computePatchWrite, UNREAD);
 function computePatchFill(binding: Binding): PatchFill {
   const read = getFillReadKind(binding);
   const { kind } = read;
-  const { unpatchedJoins, structureReads } = read;
-  // A value only joins the patch writes call for rides its slot write; a fill
+  const { unpatchedIntersections, structureReads } = read;
+  // A value only intersections the patch writes call for rides its slot write; a fill
   // for other reads also goes where they run on the client.
-  const writes = getJoinWrites(kind);
+  const writes = getIntersectionWrites(kind);
   const fillable = canPatchFill(binding);
-  // A join the scope does not init takes join fills: each key ships only where
-  // the join mixes, where the others are the client's.
-  const join = writes && read.writtenJoins!.keys().next().value!;
-  const joinFill = join && !initsWrittenJoin(join) ? join : undefined;
-  const reasons = writes && !joinFill ? undefined : kind;
+  // An intersection the scope does not init takes intersection fills: each key ships only where
+  // the intersection mixes, where the others are the client's.
+  const intersection =
+    writes && read.writtenIntersections!.keys().next().value!;
+  const intersectionFill =
+    intersection && !initsWrittenIntersection(intersection)
+      ? intersection
+      : undefined;
+  const reasons = writes && !intersectionFill ? undefined : kind;
   const effectRead = someAlias(binding, hasEffectRead, undefined, true);
   const fnCapture = someAlias(binding, isRegisteredFnCapture, undefined, true);
   const objectSource = someAlias(
@@ -291,8 +295,8 @@ function computePatchFill(binding: Binding): PatchFill {
     undefined,
     true,
   );
-  // A rendered read (through any alias) the client must derive: joined
-  // with state, or inside structure the client may own.
+  // A rendered read (through any alias) the client must derive: in an
+  // intersection with state, or inside structure the client may own.
   const fill = fillable ? (binding.sources?.state ? true : reasons) : undefined;
   const conditions = fill === true ? undefined : fill;
   // A fill shipped for other reads too reaches calls in its own param-selected
@@ -317,7 +321,7 @@ function computePatchFill(binding: Binding): PatchFill {
     }
   }
   // Every client read stays current, through its declaration and closures;
-  // a fill only client-sourced join members call for reaches its joins alone.
+  // a fill only client-sourced intersection members call for reaches its intersections alone.
   const fillsReads =
     fill === true || !!conditions?.structure || hasContents(conditions);
   // Only the patch's key reaches the declaration: a `<let>` nothing assigns, or a
@@ -327,11 +331,11 @@ function computePatchFill(binding: Binding): PatchFill {
     (binding.sources?.state
       ? !binding.assignments && bindingUtil.has(binding.sources.state, binding)
       : !binding.section.parent && hasDeclarationOnlyReads(binding));
-  // A client join and withheld content both call for it: it refreshes the
-  // content under a key of its own, which a patch writing the join sends.
+  // A client intersection and withheld content both call for it: it refreshes the
+  // content under a key of its own, which a patch writing the intersection sends.
   const splitsContent =
     !!conditions?.contents &&
-    !!(conditions!.joins || conditions!.structure || conditions!.fills);
+    !!(conditions!.intersections || conditions!.structure || conditions!.fills);
   // The unpatched key ships wherever the fill's own guard holds, which leaves
   // the fill key only content that refreshes under a key of its own.
   const unpatchedOnly =
@@ -354,16 +358,19 @@ function computePatchFill(binding: Binding): PatchFill {
     effectRead,
     fnCapture,
     objectSource,
-    // A sent value effects, captures, built objects' readers or a join its
+    // A sent value effects, captures, built objects' readers or an intersection its
     // write inits read: written where a flush writes its scope.
     writeReads:
       isPatchSent(binding) &&
-      (effectRead || fnCapture || objectSource || writesForJoinInit(binding)),
+      (effectRead ||
+        fnCapture ||
+        objectSource ||
+        writesForIntersectionInit(binding)),
     ownRegistration,
-    joinWrites: joinFill || !fillable ? undefined : writes,
-    joinFill,
+    intersectionWrites: intersectionFill || !fillable ? undefined : writes,
+    intersectionFill,
     unpatchedOnly,
-    unpatchedJoins,
+    unpatchedIntersections,
     unpatchedStructure,
     unpatchedSections,
   };
@@ -383,7 +390,7 @@ function holdsWithin(
     sourcesUtil.isSuperset(
       structure,
       sourcesUtil.union(
-        sourcesUtil.union(conditions.structure, conditions.joins),
+        sourcesUtil.union(conditions.structure, conditions.intersections),
         conditions.writes,
       ),
     )
@@ -405,7 +412,7 @@ export function canPatchFill(binding: Binding) {
         patchWritesScope(binding.section) &&
         (!!findSlot(binding, SlotKind.ChangeHandler) ||
           // The seed runs a `<let>`'s signal where plain keeps it and client code holds
-          // the value, or takes it past the scope's renders and effects (a child, a join).
+          // the value, or takes it past the scope's renders and effects (a child, an intersection).
           (binding.type === BindingType.let &&
             mayBeCreated(binding.section) &&
             ((!!binding.assignments && !!getWriteReason(binding)) ||
@@ -417,7 +424,7 @@ export function canPatchFill(binding: Binding) {
         bindingUtil.has(binding.sources.state, binding)
       );
     }
-    // A local a state join reads that the server's next render may change: its
+    // A local a state intersection reads that the server's next render may change: its
     // patch writes it, refreshing a paired scope and seeding a fresh one.
     if (
       binding !== binding.section.params &&
@@ -487,14 +494,14 @@ function seedsCreatedScope(binding: Binding) {
     !isPatchWritten(binding) &&
     // The client derives a constant a call passes from its module read.
     !derivesConstantInput(binding) &&
-    // A value a created init's join derives takes no seed: one would leave
-    // the join's first run unchanged, so what reads the value never runs.
+    // A value a created init's intersection derives takes no seed: one would leave
+    // the intersection's first run unchanged, so what reads the value never runs.
     !derivesByCreatedInit(binding)
   );
 }
 
 // Read in `section` past renders, effects, inits, name-only dynamic tags and (never
-// assigned) control flow and call arguments: by a child, join or return.
+// assigned) control flow and call arguments: by a child, intersection or return.
 function readsPastRenders(
   binding: Binding,
   section: Section,
@@ -542,7 +549,7 @@ export function isFirstState(state: Binding, section: Section) {
   );
 }
 
-// A value its expression's join (a call site's, for a known child's param)
+// A value its expression's intersection (a call site's, for a known child's param)
 // derives by its created init, which every created or composed scope names.
 function derivesByCreatedInit(binding: Binding) {
   const { derivedFrom } = binding;
@@ -553,12 +560,15 @@ function derivesByCreatedInit(binding: Binding) {
   ) {
     return false;
   }
-  const join = getReferencedBindings(derivedFrom);
-  return Array.isArray(join) && !!getJoinInit(derivedFrom.section, join)?.init;
+  const intersection = getReferencedBindings(derivedFrom);
+  return (
+    Array.isArray(intersection) &&
+    !!getIntersectionInit(derivedFrom.section, intersection)?.init
+  );
 }
 
 // A param a created scope gets as a seed, as no structure brings it: a known
-// child's, a loop row's static one, or a `@catch` error member joined with a caller's.
+// child's, a loop row's static one, or a `@catch` error member intersecting a caller's.
 function seedsParam(binding: Binding) {
   const { section } = binding;
   return (
@@ -573,8 +583,8 @@ function seedsParam(binding: Binding) {
 // its reads sit under (param-selected structure, withholdable content).
 export interface FillConditions {
   structure?: SortedOpt<Sources>;
-  joins?: SortedOpt<Sources>;
-  // A nested member's fill re-runs the join: it fills under that member's group.
+  intersections?: SortedOpt<Sources>;
+  // A nested member's fill re-runs the intersection: it fills under that member's group.
   fills?: SortedOpt<Sources>;
   // What its section's end sees, apart from what an `<await>` body below it
   // holds, which a body in `awaits` gates at its end (a content may be both).
@@ -583,29 +593,29 @@ export interface FillConditions {
   awaits?: SortedOpt<Section>;
   // The `<await>` bodies a read crosses handing it on to what may keep it.
   passedUnder?: SortedOpt<Section>;
-  // A join the patch writes reads it: its other members, where the client runs it.
+  // An intersection the patch writes reads it: its other members, where the client runs it.
   writes?: SortedOpt<Sources>;
 }
 
 // What a binding's reads (and its direct aliases') need of its fill, and the
-// joins the patch writes that it reaches in structure the client may own.
+// intersections the patch writes that it reaches in structure the client may own.
 const getFillReadKind = createPassMemo(computeFillReadKind, {
   kind: undefined,
   contentKind: undefined,
-  unpatchedJoins: undefined,
+  unpatchedIntersections: undefined,
   unpatchedStructure: undefined,
   unpatchedSections: undefined,
   structureReads: undefined,
-  writtenJoins: undefined,
+  writtenIntersections: undefined,
   keptInLet: false,
 } as {
   kind: true | FillConditions | undefined;
   contentKind: true | FillConditions | undefined;
-  unpatchedJoins: Intersection[] | undefined;
+  unpatchedIntersections: Intersection[] | undefined;
   unpatchedStructure: true | FillConditions | undefined;
   unpatchedSections: SortedOpt<Section>;
   structureReads: SortedOpt<Sources>;
-  writtenJoins: Map<Intersection, Section> | undefined;
+  writtenIntersections: Map<Intersection, Section> | undefined;
   keptInLet: boolean;
 });
 
@@ -616,7 +626,7 @@ function computeFillReadKind(binding: Binding) {
   let contentKind: true | FillConditions | undefined;
   // A `<let>` it gives itself to keeps it on the client, as content it renders.
   let keptInLet = false;
-  let unpatchedJoins: Intersection[] | undefined;
+  let unpatchedIntersections: Intersection[] | undefined;
   let unpatchedStructure: true | FillConditions | undefined;
   // Closure sections a patch rendering renders every read of, and their structure.
   const unpatchedSections = sectionUtil.filter(
@@ -624,8 +634,8 @@ function computeFillReadKind(binding: Binding) {
     (section) => leavesToPatchAt(binding, section),
   );
   let structureReads: SortedOpt<Sources>;
-  // Each written join its value is shipped for, by the section reading it.
-  let writtenJoins: Map<Intersection, Section> | undefined;
+  // Each written intersection its value is shipped for, by the section reading it.
+  let writtenIntersections: Map<Intersection, Section> | undefined;
   for (const alias of binding.propertyAliases.values()) {
     contentKind = mergeKinds(contentKind, getFillReadKind(alias).contentKind);
   }
@@ -635,13 +645,14 @@ function computeFillReadKind(binding: Binding) {
     // A property alias or rest fills on its own; a direct alias reads this.
     if (isDirectAlias(alias)) {
       kind = mergeKinds(kind, aliasFill.kind);
-      for (const [join, section] of aliasFill.writtenJoins || []) {
-        (writtenJoins ||= new Map()).set(join, section);
+      for (const [intersection, section] of aliasFill.writtenIntersections ||
+        []) {
+        (writtenIntersections ||= new Map()).set(intersection, section);
       }
-      if (aliasFill.unpatchedJoins) {
-        unpatchedJoins = unpatchedJoins
-          ? unpatchedJoins.concat(aliasFill.unpatchedJoins)
-          : aliasFill.unpatchedJoins;
+      if (aliasFill.unpatchedIntersections) {
+        unpatchedIntersections = unpatchedIntersections
+          ? unpatchedIntersections.concat(aliasFill.unpatchedIntersections)
+          : aliasFill.unpatchedIntersections;
         unpatchedStructure = mergeKinds(
           unpatchedStructure,
           aliasFill.unpatchedStructure,
@@ -662,15 +673,15 @@ function computeFillReadKind(binding: Binding) {
     // current with no registration to shake.
     if (readsAtCall(read, binding)) continue;
     const refs = getReferencedBindings(read);
-    const written = Array.isArray(refs) && isPatchWrittenJoin(refs);
+    const written = Array.isArray(refs) && isPatchWrittenIntersection(refs);
     if (written) {
-      // Where the client may own the join's structure, the binding ships
-      // there under its unpatched key, which also re-runs the join.
+      // Where the client may own the intersection's structure, the binding ships
+      // there under its unpatched key, which also re-runs the intersection.
       const structure = getReadStructure(binding, read, effect);
       if (structure) {
         unpatchedStructure = mergeKinds(unpatchedStructure, structure);
-        unpatchedJoins = unpatchedJoins
-          ? unpatchedJoins.concat([refs])
+        unpatchedIntersections = unpatchedIntersections
+          ? unpatchedIntersections.concat([refs])
           : [refs];
       }
     }
@@ -714,17 +725,17 @@ function computeFillReadKind(binding: Binding) {
       }
     }
     if (written && readKind !== true && readKind?.writes) {
-      (writtenJoins ||= new Map()).set(refs, read.section);
+      (writtenIntersections ||= new Map()).set(refs, read.section);
     }
   }
   return {
     kind,
     contentKind,
-    unpatchedJoins,
+    unpatchedIntersections,
     unpatchedStructure,
     unpatchedSections,
     structureReads,
-    writtenJoins,
+    writtenIntersections,
     keptInLet,
   };
 }
@@ -796,11 +807,11 @@ function getReadKind(
   let conditions: FillConditions | undefined;
   if (!effect) {
     const sources = getSourcesForRef(refs);
-    // A live function's join of client state gets it by its bind and the join's init.
+    // A live function's intersection with client state gets it by its bind and the init.
     if (
       Array.isArray(refs) &&
       holdsLiveFn(binding) &&
-      initsJoinByWrite(refs, binding)
+      initsIntersectionByWrite(refs, binding)
     ) {
       return;
     }
@@ -809,29 +820,32 @@ function getReadKind(
     if (derived === true) return true;
     if (derived) conditions = mergeConditions(conditions, derived);
     if (written) {
-      // The patch inits the join where it runs on the client, which needs
+      // The patch inits the intersection where it runs on the client, which needs
       // a caller's value of this binding.
       const writes =
         hasCallerParamSourceAt(binding.sources, binding.section) &&
         getOtherInputs(sources, binding);
       if (writes) conditions = mergeConditions(conditions, { writes });
     } else {
-      // A join whose other members a caller may pass client state,
+      // An intersection whose other members a caller may pass client state,
       // dispatched from this scope; an `<await>` value re-fires no promise.
       const others =
         knownChild &&
         !getExprBranch(read)?.await &&
         getOtherInputs(sources, binding);
       if (others && hasTagCallerParamAt(others, binding.section)) {
-        // A nested member's own fill (a loop row's, joined with state) also
-        // re-runs the join, unless the join is a hole the flush fills itself.
+        // A nested member's own fill (a loop row's, intersecting state) also re-runs
+        // the intersection, unless it is a hole the flush fills itself.
         const fills = isFilledHole(read)
           ? undefined
           : reduce(refs, addNestedMemberFill);
-        conditions = mergeConditions(conditions, { joins: others, fills });
+        conditions = mergeConditions(conditions, {
+          intersections: others,
+          fills,
+        });
       }
     }
-    // A join with a param of a body outside the binding's is computed where
+    // An intersection with a param of a body outside the binding's is computed where
     // the body's calls pass it: on the client for state, else by their bits.
     const passed =
       receivesCallerParams(binding.section) &&
@@ -847,7 +861,7 @@ function getReadKind(
       }
     }
   }
-  // A written join's structure ships the binding under its unpatched key; it
+  // A written intersection's structure ships the binding under its unpatched key; it
   // still hands the value on under the `<await>` bodies it crosses.
   if (written) {
     if (handOff) getReadStructure(binding, read, effect, handOff);
@@ -953,8 +967,8 @@ function getReadStructure(
   return found;
 }
 
-// A closure's sources beside the params its reads here join it with that its section
-// cannot gate on: where a call passes those, the client computes the join.
+// A closure's sources beside the params its reads here intersect it with that its section
+// cannot gate on: where a call passes those, the client computes the intersection.
 export function getClosureReadSources(closure: Binding, section: Section) {
   let sources = closure.sources;
   for (const read of closure.reads.keys()) {
@@ -1039,11 +1053,12 @@ function getDefineCallSources(sources: Sources | undefined, section: Section) {
 
 function addNestedMemberFill(fills: SortedOpt<Sources>, member: Binding) {
   const { fill, effectRead, fnCapture, objectSource } = getPatchFill(member);
-  // A member written only for the join's init re-runs it where its group mixes, which
-  // the join's own arm covers; one an effect, capture or built object reads re-runs kept code.
+  // A member written only for the intersection's init re-runs it where its group mixes,
+  // as its own arm covers; one an effect, capture or built object reads re-runs kept code.
   return !isKnownChild(member.section) &&
     (fill ||
-      (writesForJoinInit(member) && (effectRead || fnCapture || objectSource)))
+      (writesForIntersectionInit(member) &&
+        (effectRead || fnCapture || objectSource)))
     ? sourcesUtil.add(fills, getSourcesForRef(member)!)
     : fills;
 }
@@ -1063,7 +1078,7 @@ function isCallerFedLoopParam(binding: Binding) {
   );
 }
 
-// The params a read joins besides the binding's own that a write in its
+// The params a read intersects besides the binding's own that a write in its
 // section gates on: a caller passes each.
 function getOtherInputs(sources: Sources | undefined, binding: Binding) {
   const others = bindingUtil.difference(
@@ -1133,7 +1148,7 @@ function mergeConditions(
 ): FillConditions {
   return {
     structure: sourcesUtil.union(a?.structure, b.structure),
-    joins: sourcesUtil.union(a?.joins, b.joins),
+    intersections: sourcesUtil.union(a?.intersections, b.intersections),
     fills: sourcesUtil.union(a?.fills, b.fills),
     contents: sectionUtil.union(a?.contents, b.contents),
     awaitedContents: sectionUtil.union(a?.awaitedContents, b.awaitedContents),
@@ -1232,22 +1247,26 @@ export function holdsLiveFn(binding: Binding) {
   return !!derivedFrom && every(derivedFrom, isTrackedFunction);
 }
 
-// A join its scope inits by id once a write marks the member: client state over
+// An intersection its scope inits by id once a write marks the member: client state over
 // a bound live function, or a written caller-fed row param beside caller state.
-function initsJoinByWrite(join: Intersection, member: Binding) {
-  const sources = getSourcesForRef(join);
+function initsIntersectionByWrite(intersection: Intersection, member: Binding) {
+  const sources = getSourcesForRef(intersection);
   if (holdsLiveFn(member)) return !!sources?.state;
   if (!isCallerFedLoopParam(member)) return false;
   const others = getOtherInputs(sources, member);
   return !!others && hasTagCallerParamAt(others, member.section);
 }
 
-// A member such a join reads, which the patch writes for the join's init (its
+// A member such an intersection reads, which the patch writes for the intersection's init (its
 // sources settle before solve, so no pass resets it).
-const [writesForJoinInit] = createAnalysisMemo((binding: Binding) => {
+const [writesForIntersectionInit] = createAnalysisMemo((binding: Binding) => {
   for (const read of binding.reads.keys()) {
-    const join = getReferencedBindings(read);
-    if (Array.isArray(join) && initsJoinByWrite(join, binding)) return true;
+    const intersection = getReferencedBindings(read);
+    if (
+      Array.isArray(intersection) &&
+      initsIntersectionByWrite(intersection, binding)
+    )
+      return true;
   }
   return false;
 }, false);
@@ -1455,26 +1474,27 @@ export function keepsClosureFills(section: Section) {
 }
 
 // How a scope runs what nothing it receives renders: a closure's value, or a
-// join some members of which arrive seeded or not at all.
+// intersection some members of which arrive seeded or not at all.
 export interface CreatedInit {
   // Its init runs on every created scope, where the client contributes the
   // group (`mixed`: on any scope), or where a patch withholds these local fills.
   init?: "always" | "client" | "mixed" | { localFills: SortedOpt<Binding> };
   // Where it subscribes the closure so its owner's fills reach it: every created
-  // scope, or where no patch fills it or the groups of a join of it here.
+  // scope, or where no patch fills it or the groups of an intersection of it here.
   subscribe?: "always" | { unfilled: SortedOpt<Sources> };
 }
 
-// Groups a created subscriber also subscribes in: a join's a call may pass
-// client state; `false` where only its subscribers fill a client-state join.
+// Groups a created subscriber also subscribes in: an intersection's a call may pass
+// client state; `false` where only its subscribers fill a client-state intersection.
 function getCreatedSubscribeStructure(section: Section, closure: Binding) {
   let structure: SortedOpt<Sources>;
-  for (const join of getRenderedJoins(section)) {
-    const sources = bindingUtil.has(join, closure) && getSourcesForRef(join);
+  for (const intersection of getRenderedIntersections(section)) {
+    const sources =
+      bindingUtil.has(intersection, closure) && getSourcesForRef(intersection);
     if (!sources) continue;
     if (!isConditionalReason(sources)) {
-      // A client-state join the closure's declaration fills (its fill replaces
-      // the join's) needs its subscribers always.
+      // A client-state intersection the closure's declaration fills (its fill replaces
+      // the intersection's) needs its subscribers always.
       if (getPatchFill(closure).fillsReads) return false;
     } else if (hasTagCallerParamAt(getOtherInputs(sources, closure), section)) {
       structure = sourcesUtil.add(structure, sources);
@@ -1483,26 +1503,26 @@ function getCreatedSubscribeStructure(section: Section, closure: Binding) {
   return structure;
 }
 
-// The joins the section's signals render, once ids allocate: one with a constant
-// member records a read's constants beside its join.
-const [getRenderedJoins] = createAnalysisMemo((section: Section) => {
-  const joins: Intersection[] = [];
-  for (const join of section.intersections!.keys()) {
-    if (!some(join, isConstant)) {
-      joins.push(join);
+// The intersections the section's signals render, once ids allocate: one with a constant
+// member records a read's constants beside its intersection.
+const [getRenderedIntersections] = createAnalysisMemo((section: Section) => {
+  const intersections: Intersection[] = [];
+  for (const intersection of section.intersections!.keys()) {
+    if (!some(intersection, isConstant)) {
+      intersections.push(intersection);
     }
   }
-  return joins;
+  return intersections;
 }, []);
 
 function isConstant(member: Binding) {
   return member.type === BindingType.constant;
 }
 
-// Whether a join the section renders reads the closure.
-export function isReadInJoin(section: Section, closure: Binding) {
-  return getRenderedJoins(section).some((join) =>
-    bindingUtil.has(join, closure),
+// Whether an intersection the section renders reads the closure.
+export function isReadInIntersection(section: Section, closure: Binding) {
+  return getRenderedIntersections(section).some((intersection) =>
+    bindingUtil.has(intersection, closure),
   );
 }
 
@@ -1512,7 +1532,7 @@ const NO_INITS = new Map<never, CreatedInit>();
 export const getClosureInits = createPassMemo(computeClosureInits, NO_INITS);
 
 // The inits the server names for the section's scopes, its closures' and
-// joins', asked once ids allocate the joins.
+// intersections', asked once ids allocate the intersections.
 export const [getCreatedInits] = createAnalysisMemo(
   computeCreatedInits,
   NO_INITS,
@@ -1543,16 +1563,16 @@ function computeClosureInits(section: Section): Map<Binding, CreatedInit> {
 }
 
 function computeCreatedInits(section: Section) {
-  const joinInits = new Map<Intersection, CreatedInit>();
-  // A closure read here only by joins every created scope inits needs no init of
+  const intersectionInits = new Map<Intersection, CreatedInit>();
+  // A closure read here only by intersections every created scope inits needs no init of
   // its own, unless it subscribes by it.
-  const joinedClosures = new Set<Binding>();
-  for (const join of getRenderedJoins(section)) {
-    const init = getJoinInit(section, join);
+  const intersectionClosures = new Set<Binding>();
+  for (const intersection of getRenderedIntersections(section)) {
+    const init = getIntersectionInit(section, intersection);
     if (init) {
-      joinInits.set(join, init);
+      intersectionInits.set(intersection, init);
       if (init.init === "always") {
-        for (const member of join) joinedClosures.add(member);
+        for (const member of intersection) intersectionClosures.add(member);
       }
     }
   }
@@ -1563,17 +1583,20 @@ function computeCreatedInits(section: Section) {
     const named =
       (init || subscribe) &&
       (isDynamicClosure(section, closure) ||
-        !joinedClosures.has(closure) ||
+        !intersectionClosures.has(closure) ||
         someReadIn(closure, section, (read) => {
-          const join = getReferencedBindings(read);
-          return !Array.isArray(join) || joinInits.get(join)?.init !== "always";
+          const intersection = getReferencedBindings(read);
+          return (
+            !Array.isArray(intersection) ||
+            intersectionInits.get(intersection)?.init !== "always"
+          );
         })) &&
       getNamedInit(section, { init, subscribe });
     if (named) inits.set(closure, named);
   });
-  for (const [join, init] of joinInits) {
+  for (const [intersection, init] of intersectionInits) {
     const named = getNamedInit(section, init);
-    if (named) inits.set(join, named);
+    if (named) inits.set(intersection, named);
   }
   return inits.size ? inits : NO_INITS;
 }
@@ -1586,7 +1609,7 @@ function getNamedInit(
 ): CreatedInit | undefined {
   const flushNames = patchCreatesOrComposes(section);
   // A created scope's shell names its inits, a client contribution's included, and
-  // a patch a written join's or a withheld local fill's on any scope.
+  // a patch a written intersection's or a withheld local fill's on any scope.
   const namesInit =
     init === "always" || init === "client"
       ? flushNames
@@ -1598,30 +1621,34 @@ function getNamedInit(
   return named.init || named.subscribe ? named : undefined;
 }
 
-// A join's created init: a state join inits itself unless every member arrives
+// An intersection's created init: a state intersection inits itself unless every member arrives
 // by its signal; one of caller params inits where the client passes them.
-function getJoinInit(
+function getIntersectionInit(
   section: Section,
-  join: Intersection,
+  intersection: Intersection,
 ): CreatedInit | undefined {
-  if (section.intersections!.get(join)!.source) return;
-  if (some(join, (member) => initsJoinByWrite(join, member))) {
+  if (section.intersections!.get(intersection)!.source) return;
+  if (
+    some(intersection, (member) =>
+      initsIntersectionByWrite(intersection, member),
+    )
+  ) {
     return { init: "mixed" };
   }
-  const sources = getSourcesForRef(join);
+  const sources = getSourcesForRef(intersection);
   if (sources?.state) {
-    return !every(join, (member) => arrivesBySignal(member, section)) &&
+    return !every(intersection, (member) => arrivesBySignal(member, section)) &&
       mayBeCreated(section)
       ? { init: "always" }
       : undefined;
   }
   if (!hasTagCallerParamAt(sources, section)) return;
-  // A written join no member's fill re-runs: a patch names it on any scope.
-  if (initsWrittenJoin(join)) return { init: "mixed" };
+  // A written intersection no member's fill re-runs: a patch names it on any scope.
+  if (initsWrittenIntersection(intersection)) return { init: "mixed" };
   // Closures a withheld local fill re-derives from complete it.
   if (
     !every(
-      join,
+      intersection,
       (member) =>
         typeof getClosureInits(section).get(member)?.init === "object",
     )
@@ -1630,7 +1657,7 @@ function getJoinInit(
   }
 }
 
-// A created scope gets the member by its signal, which runs a state join: state by
+// A created scope gets the member by its signal, which runs a state intersection: state by
 // its own init or fill, never a seed a flush writes; a value with an unconditional fill.
 function arrivesBySignal(member: Binding, section: Section) {
   const root = getCanonicalBinding(member);
@@ -1665,7 +1692,7 @@ function getClosureInit(
   // Client state renders, and subscribes, by its own init.
   if (sources?.state) return "always";
   if (localFills) return { localFills };
-  // A caller's other closures render where the client contributes them; a join
+  // A caller's other closures render where the client contributes them; an intersection
   // of them inits itself.
   if (
     hasTagCallerParamAt(sources, section) &&
@@ -1691,8 +1718,10 @@ function getClosureSubscribe(
     ) &&
     isDynamicClosure(section, closure) &&
     // Content a flush reaches by data takes every value from its entries, but
-    // for the joins with client state it computes itself.
-    !(inContentReachedByData(section) && !isReadInJoin(section, closure))
+    // for the intersections with client state it computes itself.
+    !(
+      inContentReachedByData(section) && !isReadInIntersection(section, closure)
+    )
   ) {
     const unfilled =
       !subscribesFill(closure, section) &&
@@ -1732,8 +1761,8 @@ export function subscribesFill(closure: Binding, section: Section) {
   return (
     someReadIn(closure, section, isUnwrittenRead) &&
     (fillSubscribes(closure, section) ||
-      (isReadInJoin(section, closure) &&
-        joinsFillOverSubscribers(section, closure)))
+      (isReadInIntersection(section, closure) &&
+        fillsOverSubscribers(section, closure)))
   );
 }
 
@@ -1741,14 +1770,14 @@ function isUnwrittenRead(read: ReferencedExtra) {
   return !isFilledHole(read);
 }
 
-// A join in `section` reading the closure runs as a fill join over its owner's
+// An intersection in `section` reading the closure runs as a fill over its owner's
 // subscribers, matching the position each stamped.
-export function joinsFillOverSubscribers(section: Section, closure: Binding) {
+export function fillsOverSubscribers(section: Section, closure: Binding) {
   return (
-    (registersJoinFill(closure) ||
+    (registersIntersectionFill(closure) ||
       // or its unpatched key re-runs it
-      !!getPatchFill(closure).unpatchedJoins?.some((join) =>
-        section.intersections!.has(join),
+      !!getPatchFill(closure).unpatchedIntersections?.some((intersection) =>
+        section.intersections!.has(intersection),
       )) &&
     section.enclosing.nonOptionalAncestor !==
       closure.section.enclosing.nonOptionalAncestor &&
@@ -1756,28 +1785,34 @@ export function joinsFillOverSubscribers(section: Section, closure: Binding) {
   );
 }
 
-// A join of params, one a caller passes, whose reads the patch leaves to holes
-// and effect entries: where its group mixes, join fills or the init re-run it.
-export const isPatchWrittenJoin = createPassMemo((join: Intersection) => {
-  let section: Section | undefined;
-  for (const read of join[0].reads.keys()) {
-    if (getReferencedBindings(read) === join) {
-      if (!leavesReadToPatch(read)) return false;
-      section = read.section;
+// An intersection of params, one a caller passes, whose reads the patch leaves to holes
+// and effect entries: where its group mixes, intersection fills or the init re-run it.
+export const isPatchWrittenIntersection = createPassMemo(
+  (intersection: Intersection) => {
+    let section: Section | undefined;
+    for (const read of intersection[0].reads.keys()) {
+      if (getReferencedBindings(read) === intersection) {
+        if (!leavesReadToPatch(read)) return false;
+        section = read.section;
+      }
     }
-  }
-  const sources = getSourcesForRef(join);
-  // Every caller asks for a join a read references, which sets `section`.
-  return (
-    Array.isArray(sources?.param) &&
-    hasTagCallerParamAt(sources, section!) &&
-    !(
-      isPassedStateByEveryCall(sources, true) &&
-      // A member another join reads keeps it written: its key would ship for both.
-      every(join, (member) => !readsOtherJoin(member, join))
-    )
-  );
-}, false);
+    const sources = getSourcesForRef(intersection);
+    // Every caller asks for an intersection a read references, which sets `section`.
+    return (
+      Array.isArray(sources?.param) &&
+      hasTagCallerParamAt(sources, section!) &&
+      !(
+        isPassedStateByEveryCall(sources, true) &&
+        // A member another intersection reads keeps it written: its key would ship for both.
+        every(
+          intersection,
+          (member) => !readsOtherIntersection(member, intersection),
+        )
+      )
+    );
+  },
+  false,
+);
 
 // A read the patch leaves to the holes it writes, the effects its entries
 // re-run and the calls whose callees keep their inputs, through derived values.
@@ -1808,41 +1843,43 @@ function rendersBeforeCall(read: ReferencedExtra, how: number) {
   return !!(how & READ_BEFORE_CALL) && rendersAtSite(read);
 }
 
-function readsOtherJoin(binding: Binding, join: Intersection) {
+function readsOtherIntersection(binding: Binding, intersection: Intersection) {
   for (const read of binding.reads.keys()) {
     const refs = getReferencedBindings(read);
-    if (Array.isArray(refs) && refs !== join) return true;
+    if (Array.isArray(refs) && refs !== intersection) return true;
   }
   return false;
 }
 
-// Whether a value is shipped for a written join its scope inits, which then depends
+// Whether a value is shipped for a written intersection its scope inits, which then depends
 // on the value's fill (`_fill_mark`).
-export function initedJoinDependsOn(binding: Binding) {
-  if (writesForJoinInit(binding)) return true;
-  for (const join of getFillReadKind(binding).writtenJoins?.keys() || []) {
-    if (initsWrittenJoin(join)) return true;
+export function initedIntersectionDependsOn(binding: Binding) {
+  if (writesForIntersectionInit(binding)) return true;
+  for (const intersection of getFillReadKind(
+    binding,
+  ).writtenIntersections?.keys() || []) {
+    if (initsWrittenIntersection(intersection)) return true;
   }
   return false;
 }
 
-// A written join the scope inits: some shipped member has no fill to re-run it
-// (written for the join's init, below the root, over subscribers, in two joins, filled for others).
-export const initsWrittenJoin = createPassMemo(
-  (join: Intersection) =>
-    isPatchWrittenJoin(join) &&
-    some(join, (ref) => {
+// A written intersection the scope inits: some shipped member has no fill to re-run it
+// (written for its init, below the root, over subscribers, in two, filled for others).
+export const initsWrittenIntersection = createPassMemo(
+  (intersection: Intersection) =>
+    isPatchWrittenIntersection(intersection) &&
+    some(intersection, (ref) => {
       const member = getCanonicalBinding(ref);
-      if (initsJoinByWrite(join, member)) return true;
-      const { kind, writtenJoins } = getFillReadKind(member);
-      const section = writtenJoins?.get(join);
+      if (initsIntersectionByWrite(intersection, member)) return true;
+      const { kind, writtenIntersections } = getFillReadKind(member);
+      const section = writtenIntersections?.get(intersection);
       return (
         !!section &&
         !(
-          getJoinWrites(kind) &&
-          writtenJoins!.size === 1 &&
+          getIntersectionWrites(kind) &&
+          writtenIntersections!.size === 1 &&
           !member.section.parent &&
-          // Its key's hops reach every scope of the join, unlike a subscriber set.
+          // Its key's hops reach every scope of the intersection, unlike a subscriber set.
           section.enclosing.nonOptionalAncestor ===
             member.section.enclosing.nonOptionalAncestor
         )
@@ -1851,19 +1888,19 @@ export const initsWrittenJoin = createPassMemo(
   false,
 );
 
-// The other members' sources of the joins the patch writes, for a value only
-// those joins call for.
-function getJoinWrites(kind: true | FillConditions | undefined) {
+// The other members' sources of the intersections the patch writes, for a value only
+// those intersections call for.
+function getIntersectionWrites(kind: true | FillConditions | undefined) {
   return kind !== true &&
     kind?.writes &&
-    !(kind.structure || kind.joins || kind.fills || kind.contents)
+    !(kind.structure || kind.intersections || kind.fills || kind.contents)
     ? kind.writes
     : undefined;
 }
 
 // A fill its declaration registers (kept by its assignments or its own
-// registration) reaches the join through what derives from it.
-export function registersJoinFill(member: Binding) {
+// registration) reaches the intersection through what derives from it.
+export function registersIntersectionFill(member: Binding) {
   const { fill, fillsReads, ownRegistration } = getPatchFill(member);
   return !!fill && !((member.assignments || ownRegistration) && fillsReads);
 }
@@ -1887,7 +1924,7 @@ export function isSectionParam(binding: Binding) {
   return binding.type === BindingType.param || isParamBinding(binding);
 }
 
-// The caller params a `$global` join reads unfilled: a changed key re-runs it
+// The caller params a `$global` signal reads unfilled: a changed key re-runs it
 // only where the client owns them.
 export function getUnfillableSources(refs: ReferencedBindings) {
   return getSourcesForRef(bindingUtil.filter(refs, isUnfillablePatchRead));
@@ -2088,7 +2125,7 @@ export function namesBodyOwner(section: Section, body: Section) {
   );
 }
 
-// A fill needs a subscriber where no join dispatch reaches the read, or in
+// A fill needs a subscriber where no intersection dispatch reaches the read, or in
 // boundary content, which may resume after a patch render and must catch up.
 export function fillSubscribes(closure: Binding, section: Section) {
   return (
@@ -2102,7 +2139,7 @@ export function fillSubscribes(closure: Binding, section: Section) {
 }
 
 // The closure's own signal carries a fill to the section's reads: a lone
-// read, or a join inside stateful structure, which no join dispatch reaches.
+// read, or an intersection inside stateful structure, which no intersection dispatch reaches.
 export function closureCarriesFill(closure: Binding, section: Section) {
   return (
     hasLoneRead(closure, section) ||
@@ -2111,7 +2148,7 @@ export function closureCarriesFill(closure: Binding, section: Section) {
 }
 
 // A read of the binding (or a direct alias, as an alias never fills on its
-// own) in the section that renders through the closure itself, not a join.
+// own) in the section that renders through the closure itself, not an intersection.
 function hasLoneRead(binding: Binding, section: Section) {
   return someAlias(
     binding,
@@ -2221,27 +2258,31 @@ function findUnfilledStructure(
       for (const ref of refs) {
         const partner = getCanonicalBinding(ref);
         if (partner === binding) continue;
-        const { fill, joinWrites, joinFill } = getPatchFill(partner);
+        const { fill, intersectionWrites, intersectionFill } =
+          getPatchFill(partner);
         if (fill) {
-          // A partner's fill re-runs the join client side, unless the flush
-          // fills the join's hole itself.
+          // A partner's fill re-runs the intersection client side, unless the flush
+          // fills the intersection's hole itself.
           if (!filledHole && (fill === true || fill.contents || fill.fills)) {
             return false;
           }
           if (fill !== true) {
             structure = sourcesUtil.union(
               sourcesUtil.union(structure, fill.structure),
-              fill.joins,
+              fill.intersections,
             );
           }
         }
-        // A caller param fills (or is written for a join's init) by its group;
-        // one no patch sends re-runs the join only where the client calls it.
+        // A caller param fills (or is written for an intersection's init) by its group;
+        // one no patch sends re-runs the intersection only where the client calls it.
         if (hasCallerParamSource(partner.sources)) {
           structure = sourcesUtil.add(
             structure,
             getSourcesForRef(
-              fill || joinWrites || joinFill || writesForJoinInit(partner)
+              fill ||
+                intersectionWrites ||
+                intersectionFill ||
+                writesForIntersectionInit(partner)
                 ? refs
                 : partner,
             )!,
@@ -2301,16 +2342,16 @@ export function isResumedRead(read: ReferencedExtra) {
 }
 
 // A patch asks the sources of what it writes: each value it fills or writes, each
-// join it runs and each expression a node renders.
+// intersection it runs and each expression a node renders.
 export function ensurePatchReasonGroups(
   section: Section,
   intersections: Intersection[] | undefined,
 ) {
   forEach(section.bindings, ensureBindingGroups);
-  // Created joins run by group, and a page ships a patch-filled join's
+  // Created intersections run by group, and a page ships a patch-filled intersection's
   // members by it.
-  for (const join of intersections || []) {
-    ensureCallerParamGroups(getSourcesForRef(join));
+  for (const intersection of intersections || []) {
+    ensureCallerParamGroups(getSourcesForRef(intersection));
   }
   forEach(section.slots, ensureSlotGroups);
   // A closure's init over a written slot gates on the structure callers own.
@@ -2328,14 +2369,23 @@ function ensureSlotGroups(slot: Slot) {
 }
 
 function ensureBindingGroups(binding: Binding) {
-  const { fill, writeReads, joinWrites, contentKind, unpatchedStructure } =
-    getPatchFill(binding);
-  if (fill || joinWrites || (writeReads && patchWritesScope(binding.section))) {
+  const {
+    fill,
+    writeReads,
+    intersectionWrites,
+    contentKind,
+    unpatchedStructure,
+  } = getPatchFill(binding);
+  if (
+    fill ||
+    intersectionWrites ||
+    (writeReads && patchWritesScope(binding.section))
+  ) {
     ensureCallerParamGroups(getSourcesForRef(binding));
   }
-  // Its write in place gates on each written join's other members; its fill, a
+  // Its write in place gates on each written intersection's other members; its fill, a
   // withhold of its content and its unpatched arm on each set of their conditions.
-  forEach(joinWrites, ensureCallerParamGroups);
+  forEach(intersectionWrites, ensureCallerParamGroups);
   ensureConditionGroups(fill);
   ensureConditionGroups(contentKind);
   ensureConditionGroups(unpatchedStructure);
@@ -2349,7 +2399,7 @@ function ensureBindingGroups(binding: Binding) {
 function ensureConditionGroups(kind: true | FillConditions | undefined) {
   if (kind && kind !== true) {
     forEach(kind.structure, ensureCallerParamGroups);
-    forEach(kind.joins, ensureCallerParamGroups);
+    forEach(kind.intersections, ensureCallerParamGroups);
     forEach(kind.fills, ensureCallerParamGroups);
     forEach(kind.writes, ensureCallerParamGroups);
   }
@@ -2408,7 +2458,7 @@ function computePatchWrite(binding: Binding): PatchWrite {
   return {
     write,
     // An effect of a server value alone re-runs by its entry where a fill sends the
-    // value, since the fill's registrations run its joins only.
+    // value, since the fill's registrations run its intersections only.
     effect:
       effectRead &&
       (write ||
@@ -2436,7 +2486,7 @@ function leavesReadUnfilled(binding: Binding) {
   );
 }
 
-// A sent value effects, captures, built objects or a join its write inits read,
+// A sent value effects, captures, built objects or an intersection its write inits read,
 // in a scope a flush writes, that no fill always renders.
 function isPatchWritten(binding: Binding) {
   const { fill, writeReads } = getPatchFill(binding);

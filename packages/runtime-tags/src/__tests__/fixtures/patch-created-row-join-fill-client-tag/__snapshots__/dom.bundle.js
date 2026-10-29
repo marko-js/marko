@@ -12,7 +12,7 @@ _resumed.b0 = $valueChange;
 // tags/row-list.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><button>+</button>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&b%b b`)("");
-const $if_content__input_settled__OR__bounty__OR__t = /*@__PURE__*/ _fill_if("c6", 2, /*@__PURE__*/ _fill("c10", 8, /*@__PURE__*/ _or_resume("c1", 1, ($scope) => _text($scope.a, $scope._.c + $scope._._.j + $scope._._.i), 2), ($join) => /*@__PURE__*/ _for_closure(2, /*@__PURE__*/ _if_closure(0, 0, $join))), 0, 0);
+const $if_content__input_settled__OR__bounty__OR__t = /*@__PURE__*/ _fill_if("c6", 2, /*@__PURE__*/ _fill("c10", 8, /*@__PURE__*/ _or_resume("c1", 1, ($scope) => _text($scope.a, $scope._.c + $scope._._.j + $scope._._.i), 2), ($signal) => /*@__PURE__*/ _for_closure(2, /*@__PURE__*/ _if_closure(0, 0, $signal))), 0, 0);
 const $if_content__input_settled = /*@__PURE__*/ _closure_get(11, $if_content__input_settled__OR__bounty__OR__t, ($scope) => $scope._._, "c2");
 const $if_content__setup$1 = ($scope) => {
 	$if_content__input_settled($scope);

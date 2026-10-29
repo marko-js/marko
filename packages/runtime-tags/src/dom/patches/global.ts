@@ -18,38 +18,38 @@ declare module "./apply" {
   }
 }
 
-// Joins reading `$global`, by id, with the keys each reads (`""`: the whole object;
+// Signals reading `$global`, by id, with the keys each reads (`""`: the whole object;
 // a `0` ends each member where one is nested).
-const globalJoins: Record<string, [SignalFn, (string | 0)[]]> = {};
-// The scopes subscribed to each join, by its id, from every render on the page.
+const globalSignals: Record<string, [SignalFn, (string | 0)[]]> = {};
+// The scopes subscribed to each signal, by its id, from every render on the page.
 const globalScopes: Record<string, Set<Scope> | undefined> = {};
 
 export function _fill_global(
   id: string,
-  join: SignalFn,
+  signal: SignalFn,
   ...keys: (string | 0)[]
 ): SignalFn {
-  // A retained join brings the patcher that re-runs it.
+  // A retained signal brings the patcher that re-runs it.
   patchers[PatchKey.Globals] = patchGlobals;
   // A scope the document subscribes does so on resume, unless an effect of this id
   // registered first: it subscribes as it runs.
   _resumed[id] ||= (scope: Scope) =>
     subscribeToScopeSet(globalScopes, id, scope);
-  return (globalJoins[id] = [
+  return (globalSignals[id] = [
     (scope: Scope) => {
-      join(scope);
+      signal(scope);
       subscribeToScopeSet(globalScopes, id, scope);
     },
     keys,
   ])[0];
 }
 
-// A join a loop's rows read: the loop's owner subscribes once and a changed member
-// walks its rows, as a loop closure does, so a row the client creates joins none.
+// A signal a loop's rows read: the loop's owner subscribes once and a changed member
+// walks its rows, as a loop closure does, so a row the client creates subscribes to none.
 export function _fill_global_for(
   id: string,
   ownerLoopNodeAccessor: EncodedAccessor,
-  join: SignalFn,
+  signal: SignalFn,
   ...keys: (string | 0)[]
 ): SignalFn {
   const rows =
@@ -60,12 +60,13 @@ export function _fill_global_for(
   _fill_global(
     id,
     (owner: Scope) => {
-      for (const row of toArray(owner[rows as keyof Scope] as Scope)) join(row);
+      for (const row of toArray(owner[rows as keyof Scope] as Scope))
+        signal(row);
     },
     ...keys,
   );
   return (scope: Scope) => {
-    join(scope);
+    signal(scope);
     subscribeToScopeSet(globalScopes, id, scope[AccessorProp.Owner]!);
   };
 }
@@ -90,20 +91,20 @@ export function _fill_global_script(
 // with one checks paths, and only on such registrations.
 export function _fill_global_path(
   id: string,
-  join: SignalFn,
+  signal: SignalFn,
   ...keys: (string | 0)[]
 ): SignalFn {
   changesMember = membersChanged;
-  return _fill_global(id, join, ...keys, 0);
+  return _fill_global(id, signal, ...keys, 0);
 }
 export function _fill_global_path_for(
   id: string,
   ownerLoopNodeAccessor: EncodedAccessor,
-  join: SignalFn,
+  signal: SignalFn,
   ...keys: (string | 0)[]
 ): SignalFn {
   changesMember = membersChanged;
-  return _fill_global_for(id, ownerLoopNodeAccessor, join, ...keys, 0);
+  return _fill_global_for(id, ownerLoopNodeAccessor, signal, ...keys, 0);
 }
 export function _fill_global_path_script(
   id: string,
@@ -115,8 +116,8 @@ export function _fill_global_path_script(
 }
 let changesMember: typeof membersChanged | undefined;
 
-// Each join reading a member the patch changes re-runs once per live scope, then
-// the globals land; a later (calling) join sorts first within a scope (`order`).
+// Each signal reading a member the patch changes re-runs once per live scope, then
+// the globals land; a later (calling) signal sorts first within a scope (`order`).
 function patchGlobals(
   live: Scope,
   _accessor: string,
@@ -131,24 +132,24 @@ function patchGlobals(
   }
   // A whole-object read (`""`) re-runs on any change.
   if (changed.length) changed.push("");
-  for (const id in globalJoins) {
+  for (const id in globalSignals) {
     order--;
     if (
-      changesMember && globalJoins[id][1].includes(0)
+      changesMember && globalSignals[id][1].includes(0)
         ? changesMember(
-            globalJoins[id][1],
+            globalSignals[id][1],
             changed,
             live[AccessorProp.Global],
             value,
           )
-        : globalJoins[id][1].some((key) => changed.includes(key as string))
+        : globalSignals[id][1].some((key) => changed.includes(key as string))
     ) {
       // Only this render's scopes: another's reads its own `$global`.
       globalScopes[id]?.forEach(
         (scope) =>
           scope[AccessorProp.Gen] &&
           scope[AccessorProp.Global] === live[AccessorProp.Global] &&
-          queueRender(scope, globalJoins[id][0], order),
+          queueRender(scope, globalSignals[id][0], order),
       );
     }
   }

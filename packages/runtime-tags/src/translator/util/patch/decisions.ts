@@ -276,7 +276,7 @@ function getMaskUpdatesFrom(
   if (write.seed) {
     return holdsGroups(write.groups, groups) ? UpdatesFrom.Client : 0;
   }
-  // A group beyond theirs may add the server's bit, where a written join's init writes.
+  // A group beyond theirs may add the server's bit, where a written intersection's init writes.
   if (
     write.groups.length === groups.length &&
     groups.every(([section, group]) =>

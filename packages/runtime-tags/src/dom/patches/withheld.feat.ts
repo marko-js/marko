@@ -24,7 +24,7 @@ patchers[PatchKey.Withheld] = (scope, contentId, value) => {
   }
 };
 
-// Content an entry creates joins its owner's set, as a page's instances do, and
+// Content an entry creates enters its owner's set, as a page's instances do, and
 // leaves it when destroyed.
 const applyDynamicTag = patchers[PatchKey.DynamicTag]!;
 patchers[PatchKey.DynamicTag] = setupPatchers[PatchKey.DynamicTag] = (

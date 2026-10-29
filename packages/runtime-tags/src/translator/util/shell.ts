@@ -61,7 +61,7 @@ import {
   getSignalRegisterId,
   getSignals,
   isEffectOutsideShell,
-  isJoinFilled,
+  isIntersectionFilled,
 } from "./signals";
 import { type Sources, sourcesUtil } from "./sources";
 import {
@@ -136,7 +136,7 @@ export function linkPatchSends() {
       programExtra.registersBoundaryContent = true;
     }
     forEach(section.bindings, recordPatchEntries);
-    recordJoinInits(section);
+    recordIntersectionInits(section);
     forEach(section.bindings, recordClosureInits);
   });
 }
@@ -179,11 +179,12 @@ function recordPatchEntries(binding: Binding) {
   }
 }
 
-// A mixed join's init a caller's groups decide ships where its group mixes, which
+// A mixed intersection's init a caller's groups decide ships where its group mixes, which
 // a call's client state does: it links there, as a fill's client group does.
-function recordJoinInits(section: Section) {
-  for (const [join, init] of getCreatedInits(section)) {
-    const sources = Array.isArray(join) && getSourcesForRef(join);
+function recordIntersectionInits(section: Section) {
+  for (const [intersection, init] of getCreatedInits(section)) {
+    const sources =
+      Array.isArray(intersection) && getSourcesForRef(intersection);
     if (init.init !== "mixed" || !hasCallerGroupsAt(section, sources)) {
       continue;
     }
@@ -195,7 +196,7 @@ function recordJoinInits(section: Section) {
         params: undefined,
         client,
         init: true,
-        fillChange: some(join, isJoinFilled) || undefined,
+        fillChange: some(intersection, isIntersectionFilled) || undefined,
       });
     }
   }
@@ -235,7 +236,7 @@ function getFillClientParams(
       fill &&
         fill !== true &&
         sourcesUtil.union(
-          sourcesUtil.union(fill.structure, fill.joins),
+          sourcesUtil.union(fill.structure, fill.intersections),
           fill.writes,
         ),
     ],
@@ -271,7 +272,7 @@ export interface ParamEntries {
 export interface ParamFill {
   params: ParamReasonGroup | undefined;
   client: ParamReasonGroup | true;
-  /** A mixed join's init (`patches/init`), filled members marking it (`fillChange`). */
+  /** A mixed intersection's init (`patches/init`), filled members marking it (`fillChange`). */
   init?: true;
   fillChange?: true;
 }

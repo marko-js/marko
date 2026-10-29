@@ -45,15 +45,15 @@ import { writesPatchHole } from "./patch/decisions";
 import {
   getCreatedInits,
   getLiveCaptures,
-  isPatchWrittenJoin,
+  isPatchWrittenIntersection,
   getPatchFillKey,
-  joinsFillOverSubscribers,
-  registersJoinFill,
+  fillsOverSubscribers,
+  registersIntersectionFill,
   subscribesFill,
   getUnfillableSources,
   getPatchFill,
   fillsWithheldContent,
-  isReadInJoin,
+  isReadInIntersection,
   fillSubscribes,
   getClosureReadSources,
   isResumedRead,
@@ -63,7 +63,7 @@ import {
   rerunsEffectOnPatch,
   hasTagCallerParamAt,
   effectEntryNamesFill,
-  initedJoinDependsOn,
+  initedIntersectionDependsOn,
   rerunsByEntry,
 } from "./patch/refresh";
 import { patchesBranchesAt } from "./patch/structure";
@@ -76,7 +76,7 @@ import {
   getPatchFillCalls,
   getRootGroupArgs,
   hasCallerGroupsAt,
-  getMixedJoinInits,
+  getMixedIntersectionInits,
   isBoundLiveCapture,
   isScopeBoundFn,
   writePatchResumeStatements,
@@ -174,12 +174,12 @@ export interface Signal {
     value: t.Expression | undefined;
   }>;
   intersections: Opt<Signal>;
-  /** Its `$global` joins: work reading `$global` keys, which it calls. */
-  globalJoins: Opt<Signal>;
-  /** As a `$global` join, the reads its id names: a script's own, so it
+  /** Its `$global` signals: work reading `$global` keys, which it calls. */
+  globalSignals: Opt<Signal>;
+  /** As a `$global` signal, the reads its id names: a script's own, so it
    * re-runs on exactly those, else the keys its work reads under. */
-  globalJoinReads: ReferencedBindings;
-  /** As a `$global` join, the reads its work makes: a changed value re-runs it. */
+  globalSignalReads: ReferencedBindings;
+  /** As a `$global` signal, the reads its work makes: a changed value re-runs it. */
   globalReads: ReferencedBindings;
   /** Signals this one forwards into: they must declare first when the
    * forward simplifies to a bare, eagerly evaluated reference. */
@@ -408,10 +408,10 @@ export function getSignal(
   section: Section,
   referencedBindings: ReferencedBindings,
   name?: string,
-  globalJoinReads?: ReferencedBindings,
+  globalSignalReads?: ReferencedBindings,
 ) {
   if (
-    !globalJoinReads &&
+    !globalSignalReads &&
     referencedBindings &&
     !Array.isArray(referencedBindings)
   ) {
@@ -428,8 +428,8 @@ export function getSignal(
   }
 
   const signals = getSignals(section);
-  const key = globalJoinReads
-    ? getGlobalJoinId(section, referencedBindings, globalJoinReads)
+  const key = globalSignalReads
+    ? getGlobalSignalId(section, referencedBindings, globalSignalReads)
     : referencedBindings;
   let signal = signals.get(key)!;
   if (!signal) {
@@ -443,8 +443,8 @@ export function getSignal(
         referencedBindings.section === section &&
         getProgram().node.extra.exportNames!.params.get(referencedBindings)
       : !section.parent && getProgram().node.extra.exportNames!.setup;
-    if (globalJoinReads) {
-      signalName += "__" + getDebugNamesAsIdentifier(globalJoinReads);
+    if (globalSignalReads) {
+      signalName += "__" + getDebugNamesAsIdentifier(globalSignalReads);
       exportName = false;
     }
 
@@ -460,8 +460,8 @@ export function getSignal(
         section,
         values: [],
         intersections: undefined,
-        globalJoins: undefined,
-        globalJoinReads,
+        globalSignals: undefined,
+        globalSignalReads,
         globalReads: undefined,
         forwards: undefined,
         render: [],
@@ -492,10 +492,10 @@ export function getSignal(
 
     if (isOutputHTML()) {
       return signal;
-    } else if (globalJoinReads) {
+    } else if (globalSignalReads) {
       const parent = getSignal(section, referencedBindings);
-      parent.globalJoins = push(parent.globalJoins, signal);
-      // The runtime runs a join on the scope alone, so it reads values there.
+      parent.globalSignals = push(parent.globalSignals, signal);
+      // The runtime runs an intersection on the scope alone, so it reads values there.
       parent.storesValue = signal.storesValue = true;
       signal.build = () => buildSignalFn(signal);
     } else if (!referencedBindings) {
@@ -545,11 +545,11 @@ export function getSignal(
         const resumeId =
           (changeable || subscribe) &&
           t.stringLiteral(getResumeRegisterId(section, closure, "subscribe"));
-        // Only the declaration's closure reaches a subscriber whose join's fill
+        // Only the declaration's closure reaches a subscriber whose intersection's fill
         // reaches the scope elsewhere: it ships with that declaration.
         const withDeclaration =
           subscribe === "always" &&
-          registersJoinFill(closure) &&
+          registersIntersectionFill(closure) &&
           !subscribesFill(closure, section);
         // Kept: a scope a flush creates runs only the ids its shell or flush names, so no shipped
         // code reaches one it always subscribes; code changing its structure keeps the rest.
@@ -580,7 +580,7 @@ export function getSignal(
         if (fills) {
           // Deep closure positions reassemble the indexed composite via a
           // shared per-key table, keyed by the serialized index.
-          closureGet = buildClosureFillJoin(
+          closureGet = buildClosureFill(
             "_fill_closure",
             section,
             closure,
@@ -589,7 +589,7 @@ export function getSignal(
           );
         } else if (index && isPatch() && dispatchesByIndex(closure)) {
           // A created later position carries the index its owner's composite
-          // would stamp, which a fill join over the subscribers matches.
+          // would stamp, which a fill over the subscribers matches.
           closureGet = callRuntime(
             "_closure_index",
             t.numericLiteral(index),
@@ -626,7 +626,7 @@ function isChangeableDynamicClosure(section: Section, closure: Binding) {
   );
 }
 
-// A resumed subscriber joins its owner's set, which a patch page ships only
+// A resumed subscriber enters its owner's set, which a patch page ships only
 // where analysis gave it a reason (never for a value read for `$global` alone).
 function shipsClosureScopes(closure: Binding) {
   return !!findSlot(closure, SlotKind.ClosureScopes)?.reason;
@@ -641,50 +641,50 @@ function inShellChain(section: Section) {
   return false;
 }
 
-// The joins whose scopes a document subscribes, which a changed `$global` member
+// The `$global` signals whose scopes a document subscribes, which a changed member
 // re-runs: `true` if resumed code renders the read, else the sources the client may own.
-const [getGlobalJoins] = createAnalysisMemo((section: Section) => {
-  const joins = new Map<string, true | Sources | undefined>();
+const [getGlobalSignals] = createAnalysisMemo((section: Section) => {
+  const signals = new Map<string, true | Sources | undefined>();
   const effects = new Set<string>();
   for (const expr of section.globalReadExprs || []) {
     const referencedBindings = getReferencedBindings(expr);
-    const id = getGlobalJoinId(
+    const id = getGlobalSignalId(
       section,
       referencedBindings,
-      getGlobalJoinReads(expr, getGlobalReads(expr)!),
+      getGlobalSignalReads(expr, getGlobalReads(expr)!),
     );
     // An effect subscribes its scope as it runs, which a document's do on resume,
-    // for any join of its id.
+    // for any signal of its id.
     if (getCanonicalExtra(expr).isEffect) {
       effects.add(id);
       continue;
     }
-    // The client runs a written join wherever its group has a client member.
+    // The client runs a written intersection wherever its group has a client member.
     const unfilled =
       getUnfillableSources(referencedBindings) ||
       isResumedRead(expr) ||
       (Array.isArray(referencedBindings) &&
-        isPatchWrittenJoin(referencedBindings) &&
+        isPatchWrittenIntersection(referencedBindings) &&
         getSourcesForRef(referencedBindings));
-    const prev = joins.get(id);
-    joins.set(
+    const prev = signals.get(id);
+    signals.set(
       id,
       prev === true || unfilled === true
         ? true
         : mergeSources(prev, unfilled || undefined),
     );
   }
-  for (const id of effects) joins.delete(id);
-  return joins;
+  for (const id of effects) signals.delete(id);
+  return signals;
 }, new Map<string, true | Sources | undefined>());
 
-// Registers a `$global` join under the members it reads: pure, so the
+// Registers a `$global` signal under the members it reads: pure, so the
 // consumer's retention decides if a member has a reader.
-function wrapGlobalJoins(signal: Signal, value: t.Expression): t.Expression {
+function wrapGlobalSignals(signal: Signal, value: t.Expression): t.Expression {
   const id = t.stringLiteral(getSignalRegisterId(signal));
   const { path, args } = getGlobalMembers(signal);
   return subscribesLoopOwner(signal.section) &&
-    getGlobalJoins(signal.section).has(id.value)
+    getGlobalSignals(signal.section).has(id.value)
     ? callRuntime(
         path ? "_fill_global_path_for" : "_fill_global_for",
         id,
@@ -701,7 +701,7 @@ function wrapGlobalJoins(signal: Signal, value: t.Expression): t.Expression {
 }
 
 // Rows a loop's markers always resume into its owner: the owner subscribes once
-// to each `$global` join of theirs (no effects), and a change walks its rows.
+// to each `$global` signal of theirs (no effects), and a change walks its rows.
 function subscribesLoopOwner(section: Section) {
   return (
     isLoopBody(section) &&
@@ -774,12 +774,12 @@ export function initValue(binding: Binding, isLet = false) {
       // Where only the key reaches it, the fill's registration ships it and
       // its value signal stays pure; elsewhere what reaches the signal does.
       const fillFn = signal.fillFn && markFill(signal, signal.fillFn);
-      // A value whose only work is a join it registers a fill for: that
-      // registration is its fill, whose run runs the join.
+      // A value whose only work is an intersection it registers a fill for: that
+      // registration is its fill, whose run runs the intersection.
       if (
         !ownRegistration &&
-        registersJoinFill(binding) &&
-        runsOneJoin(signal)
+        registersIntersectionFill(binding) &&
+        runsOneIntersection(signal)
       ) {
         return callRuntime(helper, ...trimEmptyArgs([accessor, fn]));
       }
@@ -793,8 +793,8 @@ export function initValue(binding: Binding, isLet = false) {
       // A fill that ships only with param-selected structure is reached where
       // that structure's render code (plain's) keeps its signal.
       if (!signal.fillFn) return callRuntime("_fill_resume", key, value);
-      // The registration keeps the fill's run alone, and as a join under its
-      // unpatched key, for closures below its own param-selected structure.
+      // The registration keeps the fill's run alone, and runs it under its unpatched
+      // key too, for closures below its own param-selected structure.
       (signal.prependStatements ||= []).push(
         t.expressionStatement(
           callRuntime(
@@ -851,7 +851,7 @@ export function signalHasWork(signal: Signal): boolean {
     signal.hasHTMLEffect ||
     signal.values.length ||
     signal.intersections ||
-    signal.globalJoins
+    signal.globalSignals
   ) {
     return true;
   }
@@ -929,42 +929,47 @@ function setsInitialValue({ referencedBindings }: Signal) {
   );
 }
 
-// A fill's run leaving out what its change judges (an init's join, an effect's
+// A fill's run leaving out what its change judges (an init's intersection, an effect's
 // entry, a live function's bind) marks it; the signal's own run needs none.
 function markFill(signal: Signal, fillFn: t.Expression) {
   const binding = signal.referencedBindings as Binding;
-  return initedJoinDependsOn(binding) ||
+  return initedIntersectionDependsOn(binding) ||
     effectEntryNamesFill(binding) ||
     isBoundLiveCapture(binding)
     ? callRuntime("_fill_mark", getScopeAccessorLiteral(binding, true), fillFn)
     : fillFn;
 }
 
-// A value an entry depends on that a join's fill sets, under its key or its
+// A value an entry depends on that an intersection's fill sets, under its key or its
 // unpatched one: the fill then marks its change (`patches/fill-change`).
-export function isJoinFilled(binding: Binding) {
+export function isIntersectionFilled(binding: Binding) {
   const root = getCanonicalBinding(binding);
-  return registersJoinFill(root) || !!getPatchFill(root).unpatchedJoins;
+  return (
+    registersIntersectionFill(root) ||
+    !!getPatchFill(root).unpatchedIntersections
+  );
 }
 
-// A signal doing nothing but run one join of its section (no source runs it
-// instead): every read of its value is that join, or resolves as a function runs.
-function runsOneJoin(signal: Signal) {
+// A signal doing nothing but run one intersection of its section (no source runs it
+// instead): every read of its value is that intersection, or resolves as a function runs.
+function runsOneIntersection(signal: Signal) {
   const binding = signal.referencedBindings as Binding;
-  let join: Intersection | undefined;
+  let intersection: Intersection | undefined;
   for (const [expr, reads] of binding.reads) {
     if (expr.invokeOnly && every(reads, isDeferredRead)) continue;
     const refs = getReferencedBindings(expr);
     if (
       !Array.isArray(refs) ||
       expr.section !== binding.section ||
-      (join && join !== refs)
+      (intersection && intersection !== refs)
     ) {
       return false;
     }
-    join = refs;
+    intersection = refs;
   }
-  return !!join && !signal.section.intersections!.get(join)!.source;
+  return (
+    !!intersection && !signal.section.intersections!.get(intersection)!.source
+  );
 }
 
 function isDeferredRead(read: Read) {
@@ -982,16 +987,17 @@ function patchRenders(signal: Signal): boolean {
     signal.patchRendered = false;
     signal.patchRendered =
       patchesStructure(signal) ||
-      rendersWrittenJoin(signal) ||
+      rendersWrittenIntersection(signal) ||
       !hasClientRender(signal);
   }
   return signal.patchRendered;
 }
 
-// A join whose reads the patch writes: its members' fills leave it to the patch.
-function rendersWrittenJoin({ referencedBindings }: Signal) {
+// An intersection whose reads the patch writes: its members' fills leave it to the patch.
+function rendersWrittenIntersection({ referencedBindings }: Signal) {
   return (
-    Array.isArray(referencedBindings) && isPatchWrittenJoin(referencedBindings)
+    Array.isArray(referencedBindings) &&
+    isPatchWrittenIntersection(referencedBindings)
   );
 }
 
@@ -1030,7 +1036,7 @@ function hasClientRender(signal: Signal): boolean {
     signal.unpatched.length ||
     signal.values.some(isClientRenderedValue) ||
     !every(signal.intersections, patchRenders) ||
-    !every(signal.globalJoins, patchRenders)
+    !every(signal.globalSignals, patchRenders)
   ) {
     return true;
   }
@@ -1117,12 +1123,12 @@ function buildIntersection(
 ) {
   const { source, id, returnedBy } = section.intersections!.get(intersection)!;
   if (source) return fn;
-  // A created scope runs the join by its init id (`getCreatedInits`), as any
-  // scope does a written join's where its group mixes (`patches/init`).
+  // A created scope runs the intersection by its init id (`getCreatedInits`), as any
+  // scope does a written intersection's where its group mixes (`patches/init`).
   const init = isPatch() && getCreatedInits(section).get(intersection);
   const initResumeId =
     init && getResumeRegisterId(section, intersection, "init");
-  // One a caller's groups decide links where the call sends it (`recordJoinInits`).
+  // One a caller's groups decide links where the call sends it (`recordIntersectionInits`).
   if (
     initResumeId &&
     init.init === "mixed" &&
@@ -1225,8 +1231,11 @@ export function buildSignalFn(signal: Signal): t.Expression {
     );
   });
 
-  forEach(signal.globalJoins, (join) => {
-    pushScopeCall(getForwardStatements(signal, join), join.identifier);
+  forEach(signal.globalSignals, (intersection) => {
+    pushScopeCall(
+      getForwardStatements(signal, intersection),
+      intersection.identifier,
+    );
   });
 
   if (isValue && binding.sources) {
@@ -1545,22 +1554,22 @@ export function addValue(
 }
 
 // An expression reading `$global` keys (a patch build's) adds its work to its
-// signal's join for those keys, along with what it reads.
+// `$global` signal for those keys, along with what it reads.
 function getExprSignal(section: Section, expr: t.NodeExtra | undefined) {
   const reads = getGlobalReads(expr);
   const signal = getSignal(
     section,
     getReferencedBindings(expr),
     undefined,
-    reads && getGlobalJoinReads(expr!, reads),
+    reads && getGlobalSignalReads(expr!, reads),
   );
   if (reads) signal.globalReads = bindingUtil.union(signal.globalReads, reads);
   return signal;
 }
 
-// The reads naming an expression's `$global` join: a script's own, else the
-// keys it reads under, so idempotent work under the same keys shares one join.
-function getGlobalJoinReads(expr: t.NodeExtra, reads: ReferencedBindings) {
+// The reads naming an expression's `$global` signal: a script's own, else the
+// keys it reads under, so idempotent work under the same keys shares one signal.
+function getGlobalSignalReads(expr: t.NodeExtra, reads: ReferencedBindings) {
   return getCanonicalExtra(expr).isEffect
     ? reads
     : reduce(reads, addGlobalKey, undefined as ReferencedBindings);
@@ -1605,8 +1614,8 @@ export function getResumeRegisterId(
   return getTemplateId(markoOpts, filename as string, key);
 }
 
-// A `$global` join's register id names its keys beside its signal's bindings.
-function getGlobalJoinId(
+// A `$global` signal's register id names its keys beside its signal's bindings.
+function getGlobalSignalId(
   section: Section,
   referencedBindings: ReferencedBindings,
   keys: ReferencedBindings,
@@ -1620,10 +1629,10 @@ function getGlobalJoinId(
 export function getSignalRegisterId({
   section,
   referencedBindings,
-  globalJoinReads,
+  globalSignalReads,
 }: Signal) {
-  return globalJoinReads
-    ? getGlobalJoinId(section, referencedBindings, globalJoinReads)
+  return globalSignalReads
+    ? getGlobalSignalId(section, referencedBindings, globalSignalReads)
     : getResumeRegisterId(section, referencedBindings);
 }
 
@@ -1646,7 +1655,7 @@ export function writeSignals(section: Section) {
     }
 
     forEach(signal.intersections, writeSignal);
-    forEach(signal.globalJoins, writeSignal);
+    forEach(signal.globalSignals, writeSignal);
 
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {
@@ -1657,7 +1666,7 @@ export function writeSignals(section: Section) {
         some(signal.referencedBindings, rerunsEffectOnPatch)
       ) {
         importRuntimeFeature("patches/effect");
-        if (some(signal.referencedBindings, isJoinFilled)) {
+        if (some(signal.referencedBindings, isIntersectionFilled)) {
           importRuntimeFeature("patches/fill-change");
         }
       }
@@ -1686,7 +1695,7 @@ export function writeSignals(section: Section) {
 
     let signalDeclaration: t.Statement | undefined;
     if (signal.build) {
-      // A join with no work but its effect is that effect, which its script
+      // An intersection with no work but its effect is that effect, which its script
       // registration puts under each member already.
       const onlyEffect =
         !signal.render.length &&
@@ -1719,9 +1728,9 @@ export function writeSignals(section: Section) {
         const unwrapped = value;
         const binding = signal.referencedBindings;
         if (signal.globalReads) {
-          if (!onlyEffect) value = wrapGlobalJoins(signal, value);
+          if (!onlyEffect) value = wrapGlobalSignals(signal, value);
         } else if (Array.isArray(binding)) {
-          value = wrapJoinFills(signal, binding, value);
+          value = wrapIntersectionFills(signal, binding, value);
         } else if (binding) {
           value = wrapCreatedInit(
             signal,
@@ -1794,29 +1803,29 @@ export function writeSignals(section: Section) {
   return written;
 }
 
-// A join's fill members register on its declaration, so tree-shaking keeps
-// each with the join.
-function wrapJoinFills(
+// An intersection's fill members register on its declaration, so tree-shaking keeps
+// each with the intersection.
+function wrapIntersectionFills(
   signal: Signal,
-  join: Intersection,
+  intersection: Intersection,
   value: t.Expression,
 ) {
   const { section } = signal;
   let expr = value;
-  // A written join's members re-run it by their join fills where the scope does
+  // A written intersection's members re-run it by their intersection fills where the scope does
   // not init it, else only set their values; an unpatched key re-runs it too.
-  const written = isPatchWrittenJoin(join);
-  for (const ref of join) {
+  const written = isPatchWrittenIntersection(intersection);
+  for (const ref of intersection) {
     const member = getCanonicalBinding(ref);
-    const registers = registersJoinFill(member);
-    const { unpatchedJoins, joinFill, unpatchedSections } =
+    const registers = registersIntersectionFill(member);
+    const { unpatchedIntersections, intersectionFill, unpatchedSections } =
       getPatchFill(member);
     const keys: string[] = [];
     let valueKey: string | undefined;
     if (written) {
-      if (joinFill === join) keys.push(getPatchFillKey(member));
+      if (intersectionFill === intersection) keys.push(getPatchFillKey(member));
       else if (registers) valueKey = getPatchFillKey(member);
-      if (unpatchedJoins?.includes(join)) {
+      if (unpatchedIntersections?.includes(intersection)) {
         keys.push(getPatchFillKey(member, "unpatched"));
       }
     } else if (registers) {
@@ -1825,13 +1834,13 @@ function wrapJoinFills(
         keys.push(getPatchFillKey(member));
       }
       // The unpatched key runs whatever the member's fill does.
-      if (unpatchedJoins || unpatchedSections) {
+      if (unpatchedIntersections || unpatchedSections) {
         keys.push(getPatchFillKey(member, "unpatched"));
       }
     }
-    // Its keys run the join where its scope reaches it; one after `|` sets the value
-    // alone (another signal's may be shaken where this join is kept), on any path.
-    const path = keys.length ? getJoinFillPath(section, member) : undefined;
+    // Its keys run the intersection where its scope reaches it; one after `|` sets the value
+    // alone (another signal's may be shaken where this intersection is kept), on any path.
+    const path = keys.length ? getFillPath(section, member) : undefined;
     if (!path) keys.length = 0;
     if (valueKey) keys.push("|", valueKey);
     if (keys.length) {
@@ -1850,18 +1859,18 @@ function wrapJoinFills(
 
 const ownSectionPath = { helper: "_fill", args: [] } as const;
 
-// What runs the join from the member's fill: the join in its own section, the
+// What runs the intersection from the member's fill: the intersection in its own section, the
 // branch hops from the member's section, or its owner's closure subscribers.
-function getJoinFillPath(section: Section, member: Binding) {
+function getFillPath(section: Section, member: Binding) {
   if (member.section === section) return ownSectionPath;
   if (
     section.enclosing.nonOptionalAncestor ===
     member.section.enclosing.nonOptionalAncestor
   ) {
-    return getFillJoinHops(section, member.section);
+    return getFillHops(section, member.section);
   }
-  if (joinsFillOverSubscribers(section, member)) {
-    // A chain passing a non-optional section runs the join in its owner's
+  if (fillsOverSubscribers(section, member)) {
+    // A chain passing a non-optional section runs the intersection in its owner's
     // closure subscribers; in stateful structure its closure signal does.
     return {
       helper: "_fill_subscribers",
@@ -1873,9 +1882,9 @@ function getJoinFillPath(section: Section, member: Binding) {
   }
 }
 
-// The fill join over the branch hops from `section` up to `owner`: a chain of one
+// The fill over the branch hops from `section` up to `owner`: a chain of one
 // kind flattens onto its helper owner-first, as the runtime folds trailing hops.
-function getFillJoinHops(section: Section, owner: Section) {
+function getFillHops(section: Section, owner: Section) {
   const hops: ClosureHop[] = [];
   for (let cur = section; cur !== owner; cur = cur.parent!) {
     hops.push(getClosureSignalBuilder(cur)!.hop);
@@ -1889,19 +1898,19 @@ function getFillJoinHops(section: Section, owner: Section) {
   }
   // A mixed chain compiles a dispatch builder: the arrow pulls in only the
   // closure kinds its chain uses.
-  const joinId = generateUidIdentifier("join");
-  let dispatch: t.Expression = joinId;
+  const signalId = generateUidIdentifier("signal");
+  let dispatch: t.Expression = signalId;
   for (const hop of hops) {
     dispatch = buildClosureHop(hop, dispatch);
   }
   return {
     helper: "_fill",
-    args: [t.arrowFunctionExpression([joinId], dispatch)],
+    args: [t.arrowFunctionExpression([signalId], dispatch)],
   } as const;
 }
 
 // Inside unpatched structure a lone closure over a server fill IS the refresh
-// channel: it registers the fill join itself (a branch hop's, here).
+// channel: it registers the fill itself (a branch hop's, here).
 function wrapClosureFill(
   signal: Signal,
   closure: Binding,
@@ -1912,13 +1921,13 @@ function wrapClosureFill(
     return value;
   }
   return registersClosureFill(section, closure)
-    ? buildClosureFillJoin("_fill", section, closure, value)
+    ? buildClosureFill("_fill", section, closure, value)
     : value;
 }
 
-// A closure's fill join in `section`, under its key unless its declaration's
-// registration carries it, and under its unpatched key, which re-runs joins too.
-function buildClosureFillJoin(
+// A closure's fill in `section`, under its key unless its declaration's
+// registration carries it, and under its unpatched key, which re-runs intersections too.
+function buildClosureFill(
   helper: "_fill" | "_fill_closure",
   section: Section,
   closure: Binding,
@@ -1927,13 +1936,18 @@ function buildClosureFillJoin(
 ) {
   // Content a consumer may withhold refreshes under a key of its own; in
   // param-selected structure of its own, only the unpatched key reaches.
-  const { splitsContent, unpatchedJoins, unpatchedSections, ownRegistration } =
-    getPatchFill(closure);
+  const {
+    splitsContent,
+    unpatchedIntersections,
+    unpatchedSections,
+    ownRegistration,
+  } = getPatchFill(closure);
   const content = section.enclosing.inContentSection && splitsContent;
   const keys: string[] = [];
   if (
     content ||
-    (registersJoinFill(closure) && !dispatchesUnpatchedAt(closure, section))
+    (registersIntersectionFill(closure) &&
+      !dispatchesUnpatchedAt(closure, section))
   ) {
     keys.push(getPatchFillKey(closure, content ? "content" : undefined));
   }
@@ -1941,7 +1955,7 @@ function buildClosureFillJoin(
   if (
     ownRegistration && unpatchedSections
       ? dispatchesUnpatchedAt(closure, section)
-      : unpatchedJoins || unpatchedSections
+      : unpatchedIntersections || unpatchedSections
   ) {
     keys.push(getPatchFillKey(closure, "unpatched"));
   }
@@ -1973,20 +1987,20 @@ function wrapCreatedInit(
 }
 
 // A fill walks the closure's subscribers by the position each stamped where a
-// section reading it joins over them or registers a closure fill join.
+// section reading it runs over them or registers a closure fill.
 const [dispatchesByIndex] = createAnalysisMemo(
   (closure: Binding) =>
     some(
       closure.closureSections,
       (section) =>
         registersClosureFill(section, closure) ||
-        (isReadInJoin(section, closure) &&
-          joinsFillOverSubscribers(section, closure)),
+        (isReadInIntersection(section, closure) &&
+          fillsOverSubscribers(section, closure)),
     ),
   false,
 );
 
-// A closure's signal in `section` registers a fill join where that signal is
+// A closure's signal in `section` registers a fill where that signal is
 // the read's only refresh channel: structure the client may render.
 function registersClosureFill(section: Section, closure: Binding) {
   return (
@@ -2152,8 +2166,11 @@ export function writeRegisteredFns() {
   for (const registeredFn of registeredFns) {
     const fn = registeredFn.node.extra as t.FunctionExtra & t.NodeExtra;
     const live = isPatch() && !!getLiveCaptures(fn);
-    // A capture a join's fill sets marks its change, which judges the bind.
-    if (live && some(getReferencedBindingsInFunction(fn), isJoinFilled)) {
+    // A capture an intersection's fill sets marks its change, which judges the bind.
+    if (
+      live &&
+      some(getReferencedBindingsInFunction(fn), isIntersectionFilled)
+    ) {
       importRuntimeFeature("patches/fill-change");
     }
     statements.push(
@@ -2242,8 +2259,8 @@ export function writeHTMLResumeStatements(
             ]),
           );
           const scopesSlot = findSlot(closure, SlotKind.ClosureScopes);
-          // Only an unfilled read subscribes; a set none joins still ships, as
-          // writing it at its first join costs more runtime than it saves.
+          // Only an unfilled read subscribes; a set none enters still ships, as
+          // writing it at its first entry costs more runtime than it saves.
           writeSlot(
             scopesSlot,
             (isPatch() &&
@@ -2320,8 +2337,8 @@ export function writeHTMLResumeStatements(
     }
   });
 
-  // A scope with client work reading `$global` keys joins their readers.
-  for (const [id, unfilled] of getGlobalJoins(section)) {
+  // A scope with client work reading `$global` keys enters their readers.
+  for (const [id, unfilled] of getGlobalSignals(section)) {
     body.push(
       t.expressionStatement(
         callRuntime(
@@ -2354,9 +2371,13 @@ export function writeHTMLResumeStatements(
         entry ? markerGuard || t.numericLiteral(1) : markerGuard,
         ...(entry || []),
       );
-      // A patch's join init may run the effect instead of its entry.
+      // A patch's intersection init may run the effect instead of its entry.
       const ref = signal.referencedBindings;
-      if (entry && Array.isArray(ref) && getMixedJoinInits(section).has(ref)) {
+      if (
+        entry &&
+        Array.isArray(ref) &&
+        getMixedIntersectionInits(section).has(ref)
+      ) {
         initScripts.set(signal, script);
       } else {
         body.push(t.expressionStatement(script));

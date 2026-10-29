@@ -5,7 +5,7 @@ import type { SignalFn } from "../signals";
 import { depChanged, patchers } from "./apply";
 import "./marked-write.feat";
 
-// A written join a scope inits where its group mixes, valued by the writes it depends
+// A written intersection a scope inits where its group mixes, valued by the writes it depends
 // on: a live scope re-runs it once one changed, checked ahead of the scope's renders.
 patchers[PatchKey.Init] = (scope, id, deps) => {
   if (scope[AccessorProp.Gen] === runId) {

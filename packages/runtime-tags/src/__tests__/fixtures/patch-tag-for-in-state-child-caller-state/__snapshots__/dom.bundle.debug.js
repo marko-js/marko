@@ -17,7 +17,7 @@ const $walks$1 = "b%b b";
 const $if_content__input_b__OR__s__OR__v = /*@__PURE__*/ _fill_if("__tests__/tags/shape.marko_fill3", "v", /*@__PURE__*/ _fill("__tests__/tags/shape.marko_fill1", "input_b", /*@__PURE__*/ _or_resume("__tests__/tags/shape.marko_2_input_b#0:6_s#0:7_v#1:4/init", 1, ($scope) => $input$2($scope["#childScope/0"], {
 	a: $scope._.v + $scope._._.s,
 	b: $scope._._.input_b
-}), 2), ($join) => /*@__PURE__*/ _for_closure("#text/0", /*@__PURE__*/ _if_closure("#text/0", 0, $join))), "#text/0", 0);
+}), 2), ($signal) => /*@__PURE__*/ _for_closure("#text/0", /*@__PURE__*/ _if_closure("#text/0", 0, $signal))), "#text/0", 0);
 const $if_content__input_b = /*@__PURE__*/ _closure_get("input_b/9", $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._, "__tests__/tags/shape.marko_2_input_b#0:6/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__input_b($scope);

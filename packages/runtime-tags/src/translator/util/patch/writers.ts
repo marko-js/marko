@@ -22,7 +22,7 @@ import {
   getPatchKey,
 } from "../get-accessor-enums";
 import { getDeclaredBindingExpression } from "../get-declared-binding-expression";
-import { derivesConstantInput, isJoinedWithClientState } from "../known-tag";
+import { derivesConstantInput, intersectsClientState } from "../known-tag";
 import { isOptimize } from "../marko-config";
 import { isTrackedFunction } from "../module-registrations";
 import {
@@ -120,13 +120,13 @@ import {
   isEffectRead,
   someDerivedRead,
   someReached,
-  isPatchWrittenJoin,
+  isPatchWrittenIntersection,
   getUnfilledReadSources,
   getUnfilledSubscribedSources,
   patchWritesScope,
   type CreatedInit,
   type FillConditions,
-  initedJoinDependsOn,
+  initedIntersectionDependsOn,
   getSentHop,
   rerunsEffectOnPatch,
 } from "./refresh";
@@ -261,21 +261,23 @@ export function getEffectEntryArgs(section: Section, signal: Signal) {
   ];
 }
 
-// The written joins a mixed group's scope inits, each with where its init is
+// The written intersections a mixed group's scope inits, each with where its init is
 // needed: an effect of one runs through the init, else its entry ships.
-export const [getMixedJoinInits] = createOutputSectionState((section) => {
-  const inits = new Map<Intersection, t.Expression | undefined>();
-  for (const [ref, init] of getCreatedInits(section)) {
-    if (Array.isArray(ref) && init.init === "mixed") {
-      const needed = getJoinInitGuard(section, ref);
-      if (needed !== false) inits.set(ref, needed);
+export const [getMixedIntersectionInits] = createOutputSectionState(
+  (section) => {
+    const inits = new Map<Intersection, t.Expression | undefined>();
+    for (const [ref, init] of getCreatedInits(section)) {
+      if (Array.isArray(ref) && init.init === "mixed") {
+        const needed = getIntersectionInitGuard(section, ref);
+        if (needed !== false) inits.set(ref, needed);
+      }
     }
-  }
-  return inits;
-});
+    return inits;
+  },
+);
 
 // A section's patch entries beside its resume data: the setup a created scope
-// gets, and the join inits that run an effect or else its `_script`.
+// gets, and the intersection inits that run an effect or else its `_script`.
 export function writePatchResumeStatements(
   section: Section,
   body: t.Statement[],
@@ -292,7 +294,7 @@ export function writePatchResumeStatements(
       }
     });
   }
-  // Beside fills: a created scope's seeds, written join members' slot writes and
+  // Beside fills: a created scope's seeds, written intersection members' slot writes and
   // unpatched values, and a local's fill or write chosen at the section's end.
   forEach(section.bindings, (binding) => {
     const { seed, write } = getPatchWrite(binding);
@@ -302,17 +304,24 @@ export function writePatchResumeStatements(
       !(getPatchFill(binding).fill || write) &&
       getPatchFill(binding).unpatchedStructure;
     // A value written in place wherever its group is the server's needs no more.
-    const joinWrites = write ? undefined : getPatchFill(binding).joinWrites;
-    // In place where a join the patch writes runs on the client (another
+    const intersectionWrites = write
+      ? undefined
+      : getPatchFill(binding).intersectionWrites;
+    // In place where an intersection the patch writes runs on the client (another
     // member is the client's), unless the unpatched key ships there already.
     const othersClient =
-      joinWrites &&
+      intersectionWrites &&
       !(
         unpatched &&
         (unpatched === true ||
-          sourcesUtil.isSuperset(unpatched.structure, joinWrites))
+          sourcesUtil.isSuperset(unpatched.structure, intersectionWrites))
       )
-        ? orCallerGroupGuards(section, undefined, "_client_guard", joinWrites)
+        ? orCallerGroupGuards(
+            section,
+            undefined,
+            "_client_guard",
+            intersectionWrites,
+          )
         : undefined;
     const filled =
       othersClient || unpatched ? getFilledGuard(section, binding) : undefined;
@@ -437,20 +446,20 @@ export function writePatchResumeStatements(
   });
 
   // The inits a flush names: a created or composed scope's where the client
-  // contributes the group, a subscriber, and on any scope a written join's.
-  const mixedJoinInits = getMixedJoinInits(section);
+  // contributes the group, a subscriber, and on any scope a written intersection's.
+  const mixedIntersectionInits = getMixedIntersectionInits(section);
   for (const [ref, init] of getCreatedInits(section)) {
     if (Array.isArray(ref)) {
       if (init.init === "mixed") {
-        const needed = mixedJoinInits.get(ref);
+        const needed = mixedIntersectionInits.get(ref);
         const groupArgs = getRootGroupArgs(section, getSourcesForRef(ref));
         const deps = getDeps(
           section,
           toArray(ref, getCanonicalBinding),
           "_filled_guard",
         );
-        if (mixedJoinInits.has(ref)) {
-          // A mixed join re-runs as its members change, under its group where params decide it.
+        if (mixedIntersectionInits.has(ref)) {
+          // A mixed intersection re-runs as its members change, by its group where params decide.
           const init = andGuard(
             needed,
             callRuntime(
@@ -461,7 +470,7 @@ export function writePatchResumeStatements(
               ...groupArgs,
             ),
           );
-          // The join's effect ships its entry only where the init doesn't run it.
+          // The intersection's effect ships its entry only where the init doesn't run it.
           const effect = initScripts.get(getSignals(section).get(ref)!);
           body.push(
             t.expressionStatement(
@@ -656,7 +665,7 @@ function getStateInitGuard(section: Section, binding: Binding) {
   );
 }
 
-// A local reaching a written join the client may own, or read in content a
+// A local reaching a written intersection the client may own, or read in content a
 // consumer may withhold (its section's end knows); never a live capture.
 export function writesAtSectionEnd(binding: Binding) {
   const { fill, unpatchedStructure } = getPatchFill(binding);
@@ -771,7 +780,7 @@ function getWithholdCall(section: Section, binding: Binding) {
       contents,
       "_client_guard",
       sourcesUtil.union(
-        sourcesUtil.union(kind.structure, kind.joins),
+        sourcesUtil.union(kind.structure, kind.intersections),
         kind.writes,
       ),
     ),
@@ -1018,7 +1027,7 @@ function buildClientInit(
   );
 }
 
-// A created subscriber joins its owner's set where no patch fills the closure,
+// A created subscriber enters its owner's set where no patch fills the closure,
 // else for its subscribers' fill; it inits where the client contributes.
 function buildSubscribe(
   section: Section,
@@ -1071,20 +1080,20 @@ export function getExprRootGroupArgs(section: Section, extra: t.NodeExtra) {
   const write = getExprWriteGroups(section, extra);
   const groupArgs = buildWriteGroupArgs(write);
   if (write?.seed) return groupArgs;
-  // Where every filled member's unpatched key re-runs a written join, the
+  // Where every filled member's unpatched key re-runs a written intersection, the
   // client writes its hole: the group reads as client-sourced there.
-  const join = isReferencedExtra(extra) && getReferencedBindings(extra);
+  const intersection = isReferencedExtra(extra) && getReferencedBindings(extra);
   if (
     !groupArgs.length ||
-    !Array.isArray(join) ||
-    !isPatchWrittenJoin(join) ||
-    !some(join, (ref) =>
-      unpatchedPastGroup(section, getCanonicalBinding(ref), join),
+    !Array.isArray(intersection) ||
+    !isPatchWrittenIntersection(intersection) ||
+    !some(intersection, (ref) =>
+      unpatchedPastGroup(section, getCanonicalBinding(ref), intersection),
     )
   ) {
     return groupArgs;
   }
-  const needed = getJoinInitGuard(section, join);
+  const needed = getIntersectionInitGuard(section, intersection);
   if (needed === undefined) return groupArgs;
   const client = t.numericLiteral(1);
   return [
@@ -1345,7 +1354,7 @@ function gateFillConditions(
       conditions.awaits &&
       !conditions.contents &&
       !conditions.structure &&
-      !conditions.joins &&
+      !conditions.intersections &&
       !conditions.writes &&
       !conditions.fills
     ) {
@@ -1358,7 +1367,7 @@ function gateFillConditions(
       "_client_guard",
       sourcesUtil.difference(
         sourcesUtil.union(
-          sourcesUtil.union(conditions.structure, conditions.joins),
+          sourcesUtil.union(conditions.structure, conditions.intersections),
           conditions.writes,
         ),
         unpatchedStructure === true ? undefined : unpatchedStructure?.structure,
@@ -1403,8 +1412,8 @@ function gateFillConditions(
   return expr;
 }
 
-// A member of a join the patch writes ships, where the client may own the
-// join's structure there, under its unpatched key: its run also re-runs the join.
+// A member of an intersection the patch writes ships, where the client may own the
+// intersection's structure there, under its unpatched key: its run also re-runs the intersection.
 function orUnpatchedValue(
   section: Section,
   binding: Binding,
@@ -1425,22 +1434,29 @@ function orUnpatchedValue(
       : t.logicalExpression("&&", where, value);
 }
 
-// Where a filled member of a written join ships no unpatched key that re-runs
-// the join on this scope: `false` where every member's always does.
-function getJoinInitGuard(section: Section, join: Intersection) {
+// Where a filled member of a written intersection ships no unpatched key that re-runs
+// the intersection on this scope: `false` where every member's always does.
+function getIntersectionInitGuard(
+  section: Section,
+  intersection: Intersection,
+) {
   if (
-    !some(join, (ref) =>
-      rerunsJoinInPairedRows(section, getCanonicalBinding(ref), join),
+    !some(intersection, (ref) =>
+      rerunsIntersectionInPairedRows(
+        section,
+        getCanonicalBinding(ref),
+        intersection,
+      ),
     )
   ) {
     return;
   }
   let guard: t.Expression | false = false;
-  for (const ref of join) {
+  for (const ref of intersection) {
     const member = getCanonicalBinding(ref);
     const filled = getFilledGuard(section, member);
     let term: t.Expression | undefined = filled;
-    if (rerunsJoinInPairedRows(section, member, join)) {
+    if (rerunsIntersectionInPairedRows(section, member, intersection)) {
       const { unpatchedStructure } = getPatchFill(member);
       const unpatched =
         unpatchedStructure !== true &&
@@ -1454,30 +1470,33 @@ function getJoinInitGuard(section: Section, join: Intersection) {
   return guard;
 }
 
-// The client may own the member's structure where the join's own groups are
+// The client may own the member's structure where the intersection's own groups are
 // the server's, as where the hole is written.
 function unpatchedPastGroup(
   section: Section,
   member: Binding,
-  join: Intersection,
+  intersection: Intersection,
 ) {
   const { unpatchedStructure } = getPatchFill(member);
   return (
-    rerunsJoinInPairedRows(section, member, join) &&
+    rerunsIntersectionInPairedRows(section, member, intersection) &&
     (unpatchedStructure === true ||
       !!unpatchedStructure!.contents ||
       !every(unpatchedStructure!.structure, (sources) =>
-        bindingUtil.isSuperset(getSourcesForRef(join)!.param, sources.param),
+        bindingUtil.isSuperset(
+          getSourcesForRef(intersection)!.param,
+          sources.param,
+        ),
       ))
   );
 }
 
-// The member's unpatched key re-runs the join by its hops in loop rows: a patch
+// The member's unpatched key re-runs the intersection by its hops in loop rows: a patch
 // pairs those where the client may own them, as it renders no such branch.
-function rerunsJoinInPairedRows(
+function rerunsIntersectionInPairedRows(
   section: Section,
   member: Binding,
-  join: Intersection,
+  intersection: Intersection,
 ) {
   const rows = getPairedRows(section);
   return (
@@ -1485,7 +1504,7 @@ function rerunsJoinInPairedRows(
     rows.depth > member.section.depth &&
     section.enclosing.nonOptionalAncestor ===
       member.section.enclosing.nonOptionalAncestor &&
-    !!getPatchFill(member).unpatchedJoins?.includes(join)
+    !!getPatchFill(member).unpatchedIntersections?.includes(intersection)
   );
 }
 
@@ -1717,7 +1736,7 @@ function bindsLive(held: Binding, own: boolean, expr?: t.NodeExtra) {
     ? getPatchWrite(held).write || !!getPatchFill(held).fill
     : rerunsEffectOnPatch(held) ||
         !!getPatchFill(held).fill ||
-        isJoinedWithClientState(held, expr!);
+        intersectsClientState(held, expr!);
 }
 
 // A read of the binding lands in a live function its template registers.
@@ -1820,12 +1839,12 @@ function someHeldFnIn(
     : someHeldFn(binding.derivedFrom || undefined, test, returns, own, seen);
 }
 
-// A reader of a built object that re-runs by its sources: an effect, an inited join,
+// A reader of a built object that re-runs by its sources: an effect, an inited intersection,
 // or another template's fill.
 function rereadsBuiltObject(held: Binding, root: Binding) {
   return (
     rerunsEffectOnPatch(held) ||
-    initedJoinDependsOn(held) ||
+    initedIntersectionDependsOn(held) ||
     (held.section.program !== root.section.program && !!getPatchFill(held).fill)
   );
 }
@@ -1845,7 +1864,7 @@ export function isScopeBoundFn(expr: t.NodeExtra) {
 export const [isMarkedWrite] = createAnalysisMemo(
   (binding: Binding) =>
     effectEntryDependsOn(binding) ||
-    initedJoinDependsOn(binding) ||
+    initedIntersectionDependsOn(binding) ||
     some(binding.closureSections, (section) =>
       rerunsClosureByWrite(getCanonicalBinding(binding), section),
     ),

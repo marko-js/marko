@@ -259,7 +259,7 @@ export function _content(
 }
 
 // Kept content (`elide` 2) takes its instances' holes as data: each one a page
-// renders joins its owner's set, and the client adds those it creates.
+// renders enters its owner's set, and the client adds those it creates.
 function keepHoles(id: string, fn: ServerRenderer, scopeId: number) {
   const renderer = (...args: Parameters<ServerRenderer>) => {
     const state = getState();

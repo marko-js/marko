@@ -2165,7 +2165,7 @@ let compat = {
       return toInsertNode(branch.S, branch.K);
   },
 };
-let globalJoins = {};
+let globalSignals = {};
 let globalScopes = {};
 let changesMember;
 function attrTag(attrs) {
@@ -2179,30 +2179,30 @@ function attrTags(first, attrs) {
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
 }
-function _fill_global(id, join, ...keys) {
+function _fill_global(id, signal, ...keys) {
   return (
     (patchers.$ = patchGlobals),
     (_resumed[id] ||= (scope) => subscribeToScopeSet(globalScopes, id, scope)),
-    (globalJoins[id] = [
+    (globalSignals[id] = [
       (scope) => {
-        (join(scope), subscribeToScopeSet(globalScopes, id, scope));
+        (signal(scope), subscribeToScopeSet(globalScopes, id, scope));
       },
       keys,
     ])[0]
   );
 }
-function _fill_global_for(id, ownerLoopNodeAccessor, join, ...keys) {
+function _fill_global_for(id, ownerLoopNodeAccessor, signal, ...keys) {
   let rows = "A" + decodeAccessor(ownerLoopNodeAccessor);
   return (
     _fill_global(
       id,
       (owner) => {
-        for (let row of toArray(owner[rows])) join(row);
+        for (let row of toArray(owner[rows])) signal(row);
       },
       ...keys,
     ),
     (scope) => {
-      (join(scope), subscribeToScopeSet(globalScopes, id, scope._));
+      (signal(scope), subscribeToScopeSet(globalScopes, id, scope._));
     }
   );
 }
@@ -2213,12 +2213,13 @@ function _fill_global_script(id, fn, ...keys) {
     queue = (scope) => queueEffect(scope, effect);
   return (_fill_global(id, queue, ...keys), queue);
 }
-function _fill_global_path(id, join, ...keys) {
-  return ((changesMember = membersChanged), _fill_global(id, join, ...keys, 0));
+function _fill_global_path(id, signal, ...keys) {
+  return ((changesMember = membersChanged), _fill_global(id, signal, ...keys, 0));
 }
-function _fill_global_path_for(id, ownerLoopNodeAccessor, join, ...keys) {
+function _fill_global_path_for(id, ownerLoopNodeAccessor, signal, ...keys) {
   return (
-    (changesMember = membersChanged), _fill_global_for(id, ownerLoopNodeAccessor, join, ...keys, 0)
+    (changesMember = membersChanged),
+    _fill_global_for(id, ownerLoopNodeAccessor, signal, ...keys, 0)
   );
 }
 function _fill_global_path_script(id, fn, ...keys) {
@@ -2228,13 +2229,14 @@ function patchGlobals(live, _accessor, value, order = 0) {
   let changed = [];
   for (let key in value) live.$[key] !== value[key] && changed.push(key);
   changed.length && changed.push("");
-  for (let id in globalJoins)
+  for (let id in globalSignals)
     (order--,
-      (changesMember && globalJoins[id][1].includes(0)
-        ? changesMember(globalJoins[id][1], changed, live.$, value)
-        : globalJoins[id][1].some((key) => changed.includes(key))) &&
+      (changesMember && globalSignals[id][1].includes(0)
+        ? changesMember(globalSignals[id][1], changed, live.$, value)
+        : globalSignals[id][1].some((key) => changed.includes(key))) &&
         globalScopes[id]?.forEach(
-          (scope) => scope.H && scope.$ === live.$ && queueRender(scope, globalJoins[id][0], order),
+          (scope) =>
+            scope.H && scope.$ === live.$ && queueRender(scope, globalSignals[id][0], order),
         ));
   Object.assign(live.$, value);
 }
@@ -2467,7 +2469,7 @@ function _load_signal_patch(load, id, trigger) {
     };
   return (_load_lazy(id, (_) => load().then((mod) => (apply._ = mod._))), apply);
 }
-let closureFillJoins = {};
+let closureFills = {};
 let liveCaptures = {};
 function markFillChanged(scope, valueAccessor) {
   scope["T" + decodeAccessor(valueAccessor)] = patchRender.q;
@@ -2477,7 +2479,7 @@ function _fill_mark(valueAccessor, fillFn) {
     (markFillChanged(scope, valueAccessor), fillFn && fillFn(scope));
   };
 }
-function fillJoin(keys, valueAccessor, join, dispatch) {
+function fillSignal(keys, valueAccessor, signal, dispatch) {
   let run = dispatch;
   for (let key of keys.split(" "))
     if (key === "|") run = (_) => 0;
@@ -2493,44 +2495,44 @@ function fillJoin(keys, valueAccessor, join, dispatch) {
         (patchFills[key] = _const(valueAccessor, fn))._ = fn;
       }
     }
-  return join;
+  return signal;
 }
-function _fill(keys, valueAccessor, join, buildDispatch) {
-  return fillJoin(keys, valueAccessor, join, buildDispatch?.(join) || join);
+function _fill(keys, valueAccessor, signal, buildDispatch) {
+  return fillSignal(keys, valueAccessor, signal, buildDispatch?.(signal) || signal);
 }
-function _fill_if(keys, valueAccessor, join, ...hops) {
-  let dispatch = join;
+function _fill_if(keys, valueAccessor, signal, ...hops) {
+  let dispatch = signal;
   for (let i = hops.length; i; i -= 2) dispatch = _if_closure(hops[i - 2], hops[i - 1], dispatch);
-  return fillJoin(keys, valueAccessor, join, dispatch);
+  return fillSignal(keys, valueAccessor, signal, dispatch);
 }
-function _fill_for(keys, valueAccessor, join, ...hops) {
-  let dispatch = join;
+function _fill_for(keys, valueAccessor, signal, ...hops) {
+  let dispatch = signal;
   for (let i = hops.length; i--;) dispatch = _for_closure(hops[i], dispatch);
-  return fillJoin(keys, valueAccessor, join, dispatch);
+  return fillSignal(keys, valueAccessor, signal, dispatch);
 }
-function _fill_closure(keys, valueAccessor, join, index) {
-  join.c = index;
+function _fill_closure(keys, valueAccessor, signal, index) {
+  signal.c = index;
   for (let key of keys.split(" ")) {
-    let signals = (closureFillJoins[key] ??= []);
+    let signals = (closureFills[key] ??= []);
     (signals.length ||
-      fillJoin(key, valueAccessor, join, (scope) => {
-        let instances = scope[join.a];
+      fillSignal(key, valueAccessor, signal, (scope) => {
+        let instances = scope[signal.a];
         if (instances) {
           instances._ = 1;
           for (let childScope of instances)
             childScope.H > 0 &&
               childScope.H < runId &&
-              signals[childScope[join.b] || 0]?.(childScope);
+              signals[childScope[signal.b] || 0]?.(childScope);
         }
       }),
-      (signals[index] = join));
+      (signals[index] = signal));
   }
-  return join;
+  return signal;
 }
-function _fill_subscribers(keys, valueAccessor, join, closureAccessor, index) {
+function _fill_subscribers(keys, valueAccessor, signal, closureAccessor, index) {
   let instancesAccessor = decodeAccessor(closureAccessor),
     signalIndex = "C" + instancesAccessor;
-  return fillJoin(keys, valueAccessor, join, (scope) => {
+  return fillSignal(keys, valueAccessor, signal, (scope) => {
     let instances = scope[instancesAccessor];
     if (instances) {
       instances._ = 1;
@@ -2538,7 +2540,7 @@ function _fill_subscribers(keys, valueAccessor, join, closureAccessor, index) {
         childScope.H > 0 &&
           childScope.H < runId &&
           (childScope[signalIndex] || 0) === index &&
-          queueRender(childScope, join, -1);
+          queueRender(childScope, signal, -1);
     }
   });
 }
@@ -2546,7 +2548,7 @@ function fill(key, signal, id, fillFn) {
   return ((patchFills[key] = fillFn === void 0 ? signal : _const(id, fillFn || void 0)), signal);
 }
 function _fill_run(key, id, run, unpatchedKey) {
-  ((patchFills[key] = _const(id, run)), unpatchedKey && fillJoin(unpatchedKey, id, run, run));
+  ((patchFills[key] = _const(id, run)), unpatchedKey && fillSignal(unpatchedKey, id, run, run));
 }
 function _fill_var_resume(id, signal) {
   return ((patchFills[id] = signal), _var_resume(id, signal));

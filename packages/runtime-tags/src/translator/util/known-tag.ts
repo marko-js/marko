@@ -973,9 +973,9 @@ export function isKnownTagExtra(tagExtra: t.MarkoTagExtra) {
   return !!tagExtra[kKnownExprs];
 }
 
-// A child's param the call `expr` passes joins with another, client state among what
+// A child's param the call `expr` passes intersects another, client state among what
 // it passes them: the child fills it where that group is the client's.
-export function isJoinedWithClientState(param: Binding, expr: t.NodeExtra) {
+export function intersectsClientState(param: Binding, expr: t.NodeExtra) {
   const exprs = expr.callSiteExprs;
   return (
     !!exprs &&
@@ -1046,8 +1046,8 @@ export const derivesConstantParam = createPassMemo(
   false,
 );
 
-// A call feeding client state to a param joined with this one: the client
-// re-runs the join (main serializes the module read for it), so none derive it.
+// A call feeding client state to a param intersecting this one: the client
+// re-runs the intersection (main serializes the module read for it), so none derive it.
 function feedsClientStateBeside(
   tagExtra: t.MarkoTagExtra,
   body: Section,
@@ -2149,7 +2149,7 @@ function rendersCallOnClient(section: Section) {
   return !patchWrites(section) || !!getParamSelectedStructure(section);
 }
 
-// Where the client renders the call, its module reads the callee stores (a join
+// Where the client renders the call, its module reads the callee stores (an intersection
 // reads them): resumed, it holds none, which no page writes, so it derives them.
 function getDerivedConstants(
   info: TranslateDOMInfo,
@@ -2179,7 +2179,7 @@ interface DerivedConstant {
   signals: Set<ReferencedBindings>;
 }
 
-// A fill reaching the call by an input a join reads with a constant pushes the
+// A fill reaching the call by an input an intersection reads with a constant pushes the
 // constant first, as setup does (the signal sees the same value, so it re-runs nothing).
 function pushDerivedConstants(
   info: TranslateDOMInfo,

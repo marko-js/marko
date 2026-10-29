@@ -32,7 +32,7 @@ var plain_let_default = /*@__PURE__*/ _template("__tests__/tags/plain-let.marko"
 // tags/row-list.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><button>+</button>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&b%b b`)("");
-const $if_content__input_settled__OR__bounty__OR__t = /*@__PURE__*/ _fill_if("__tests__/tags/row-list.marko_fill2", "t", /*@__PURE__*/ _fill("__tests__/tags/row-list.marko_fill1", "input_settled", /*@__PURE__*/ _or_resume("__tests__/tags/row-list.marko_2_input_settled#0:8_bounty#0:9_t#1:2/init", 1, ($scope) => _text($scope["#text/0"], $scope._.t + $scope._._.bounty + $scope._._.input_settled), 2), ($join) => /*@__PURE__*/ _for_closure("#text/2", /*@__PURE__*/ _if_closure("#text/0", 0, $join))), "#text/0", 0);
+const $if_content__input_settled__OR__bounty__OR__t = /*@__PURE__*/ _fill_if("__tests__/tags/row-list.marko_fill2", "t", /*@__PURE__*/ _fill("__tests__/tags/row-list.marko_fill1", "input_settled", /*@__PURE__*/ _or_resume("__tests__/tags/row-list.marko_2_input_settled#0:8_bounty#0:9_t#1:2/init", 1, ($scope) => _text($scope["#text/0"], $scope._.t + $scope._._.bounty + $scope._._.input_settled), 2), ($signal) => /*@__PURE__*/ _for_closure("#text/2", /*@__PURE__*/ _if_closure("#text/0", 0, $signal))), "#text/0", 0);
 const $if_content__input_settled = /*@__PURE__*/ _closure_get("input_settled/11", $if_content__input_settled__OR__bounty__OR__t, ($scope) => $scope._._, "__tests__/tags/row-list.marko_2_input_settled#0:8/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__input_settled($scope);
