@@ -18,6 +18,7 @@ import {
 import { K_SCOPE_ID, REGISTRY, setDebugInfo } from "../serializer";
 import type { ServerRenderer } from "../template";
 import {
+  type Boundary,
   type Chunk,
   type GroupMask,
   type PartialScope,
@@ -546,8 +547,10 @@ export class PatchRenderState extends PatchPageState {
   // A flush carries every entry rendered so far, so a patch never reorders: the
   // client creates a shown `@placeholder` from the shell its render ships.
   override writeReorders: State["writeReorders"] = false;
-  // A pending patch's objects keep receiving writes until its flush is written.
-  override serializesAtWrite = 1 as const;
+  // The boundary's pending count before the flush serialized.
+  count = 0;
+  // Output held for the async values its serializing found.
+  held = "";
   // The flush's merge tree of patches by scope; `joinFlush` drops it.
   patchTree?: Record<number, Record<string, unknown>>;
   // Every object and array the patch writers built for the flush's tree.
@@ -586,6 +589,13 @@ export class PatchRenderState extends PatchPageState {
   // composing shell's) and those its entries mount.
   override queueEffect() {}
 
+  // A pending patch must not stringify until its flush is emitted: the same
+  // patch objects keep receiving later writes.
+  override serializeFlush(boundary: Boundary) {
+    this.count = boundary.count;
+    if (!boundary.count) super.serializeFlush(boundary);
+  }
+
   constructor($global: State["$global"]) {
     super($global);
     this.hasWalkerRuntime = true;
@@ -596,7 +606,7 @@ export class PatchRenderState extends PatchPageState {
 
   // The client evaluates and applies each line as one expression.
   override joinFlush(_html: string, scripts: string, pending: number) {
-    let out = scripts ? scripts + "\n" : "";
+    let out = this.held + (scripts ? scripts + "\n" : "");
     if (MARKO_DEBUG && this.pendingShells) {
       throw new Error(
         "Invalid patch state, a shell was shipped with nothing to resume in its chunk.",
@@ -612,6 +622,16 @@ export class PatchRenderState extends PatchPageState {
       out += ";" + encodeHeld(this.heldShells) + "\n";
     }
     this.patchTree = this.patchTreeNodes = this.setupIds = undefined;
+    // Serializing at the write first saw these values: those already settled (a
+    // resolved promise) join this write, which the stream's next tick sends.
+    if (pending > this.count) {
+      this.held = out;
+      const { boundary } = this.serializer;
+      boundary.startAsync();
+      Promise.resolve().then(() => boundary.endAsync());
+      return "";
+    }
+    this.held = "";
     return out;
   }
 

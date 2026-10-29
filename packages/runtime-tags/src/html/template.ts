@@ -358,7 +358,6 @@ class ServerRendered implements RenderedTemplate {
     let tick = true;
     let flushing = false;
     let again = false;
-    let held = "";
     let head = this.#head!;
     this.#head = null;
 
@@ -391,18 +390,8 @@ class ServerRendered implements RenderedTemplate {
           head = head.consume(boundary);
           // An abort re-entered above, so the next pass reports it.
           if (boundary.aborted) continue;
-          const count = boundary.count;
-          const html = held + head.flushHTML(boundary);
+          const html = head.flushHTML(boundary);
           if (boundary.aborted) continue;
-          // A state serializing at its write sees its async values only now: one
-          // already settled (a resolved promise) joins this write, a tick on.
-          if (boundary.count > count && boundary.state.serializesAtWrite) {
-            held = html;
-            tick = false;
-            queueTick(onNext);
-            continue;
-          }
-          held = "";
           if (html) onWrite(html);
           // Serializing lazy data may have started async work.
           if (!boundary.count) {
