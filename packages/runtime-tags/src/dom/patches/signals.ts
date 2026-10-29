@@ -172,15 +172,14 @@ export function _fill_join_closure<T extends ReturnType<typeof _closure_get>>(
   return join;
 }
 
-// A join in content its owner's closure subscribers hold: the fill runs it (or
-// `run`, deriving what it reads) in each subscribed scope of this closure position.
+// A join in content its owner's closure subscribers hold: the fill runs it in each
+// subscribed scope of this closure position.
 export function _fill_join_subscribers<T extends SignalFn>(
   keys: string,
   valueAccessor: EncodedAccessor,
   join: T,
   closureAccessor: EncodedAccessor,
   index: number,
-  run: SignalFn = join,
 ) {
   const instancesAccessor = MARKO_DEBUG
     ? AccessorPrefix.ClosureScopes + closureAccessor
@@ -198,7 +197,7 @@ export function _fill_join_subscribers<T extends SignalFn>(
           childScope[AccessorProp.Gen] < runId &&
           ((childScope[signalIndex] as number) || 0) === index
         ) {
-          queueRender(childScope, run, -1);
+          queueRender(childScope, join, -1);
         }
       }
     }

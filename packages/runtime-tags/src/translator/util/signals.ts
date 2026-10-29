@@ -26,7 +26,6 @@ import {
   someReadIn,
 } from "./bindings";
 import { createAnalysisMemo } from "./cyclic-memo";
-import { readsValuesOnResume } from "./finalize-references";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
@@ -60,7 +59,6 @@ import {
   isResumedRead,
   clientMayRender,
   closureCarriesFill,
-  derivesLocals,
   dispatchesUnpatchedAt,
   rerunsEffectOnPatch,
   hasTagCallerParamAt,
@@ -93,7 +91,6 @@ import {
 } from "./reasons";
 import {
   type AssignedBindingExtra,
-  getBindingsDerivedFrom,
   getReferencedBindings,
   getReferencedBindingsInFunction,
   getCanonicalExtra,
@@ -556,9 +553,7 @@ export function getSignal(
           !subscribesFill(closure, section);
         // Kept: a scope a flush creates runs only the ids its shell or flush names, so no shipped
         // code reaches one it always subscribes; code changing its structure keeps the rest.
-        const patchResumed =
-          (subscribe === "always" && !withDeclaration) ||
-          (!!resumeId && derivesForResumedReads(section, closure));
+        const patchResumed = subscribe === "always" && !withDeclaration;
         // Kept for the flush naming it, unless what changes it keeps it as in
         // plain: a fill only param-selected structure ships, or entry content.
         const kept =
@@ -1816,7 +1811,6 @@ function wrapJoinFills(
     const registers = registersJoinFill(member);
     const { unpatchedJoins, joinFill, unpatchedSections } =
       getPatchFill(member);
-    expr = keepDerivedFills(member, expr);
     const keys: string[] = [];
     let valueKey: string | undefined;
     if (written) {
@@ -1914,7 +1908,6 @@ function wrapClosureFill(
   value: t.Expression,
 ) {
   const { section } = signal;
-  if (closure.section !== section) value = keepDerivedFills(closure, value);
   if (isDynamicClosure(section, closure) || !getClosureSignalBuilder(section)) {
     return value;
   }
@@ -1922,78 +1915,6 @@ function wrapClosureFill(
     ? buildClosureFillJoin("_fill_join", section, closure, value)
     : value;
 }
-
-// The closures content derives a local from, whose fill joins ship with the local's
-// readers: where no flush creates the content, nothing ships its setup.
-const [getDerivedFillClosures] = createAnalysisMemo((local: Binding) => {
-  const closures: Binding[] = [];
-  const { section } = local;
-  if (isPatch() && derivesLocals(section) && !shipsContentShell(section)) {
-    addDerivedFillClosures(section, local, closures);
-  }
-  return closures;
-}, [] as Binding[]);
-
-function addDerivedFillClosures(
-  section: Section,
-  binding: Binding,
-  closures: Binding[],
-) {
-  forEach(getBindingsDerivedFrom(getCanonicalBinding(binding)), (input) => {
-    const root = getCanonicalBinding(input);
-    if (root.section !== section) {
-      if (registersClosureFill(section, root) && !closures.includes(root)) {
-        closures.push(root);
-      }
-    } else if (root !== binding && root.type === BindingType.derived) {
-      addDerivedFillClosures(section, root, closures);
-    }
-  });
-}
-
-// A reader of such a local carries those fill joins: each runs the closure in its
-// subscribed scopes, deriving the local, whose signal re-runs its readers.
-function keepDerivedFills(local: Binding, expr: t.Expression) {
-  const { section } = local;
-  for (const closure of getDerivedFillClosures(local)) {
-    expr = callRuntime(
-      "_fill_join_subscribers",
-      t.stringLiteral(getPatchFillKey(closure)),
-      getScopeAccessorLiteral(closure, true),
-      expr,
-      getClosureAccessorLiteral(closure),
-      t.numericLiteral(getDynamicClosureIndex(closure, section)),
-      t.arrowFunctionExpression(
-        [scopeIdentifier],
-        t.callExpression(getSignal(section, closure).identifier, [
-          scopeIdentifier,
-        ]),
-      ),
-    );
-  }
-  return expr;
-}
-
-// Resumed code reading a local the closure derives (an effect, a handler, a
-// captured function) keeps the closure by its id, as that code is kept.
-function derivesForResumedReads(section: Section, closure: Binding) {
-  return some(
-    section.bindings,
-    (local) =>
-      getDerivedFillClosures(local).includes(closure) && readsOnResume(local),
-  );
-}
-
-// A read of the binding resumed code makes (an effect, a handler), here or
-// through the values it derives (a captured function a child calls).
-const [readsOnResume] = createAnalysisMemo((binding: Binding): boolean => {
-  for (const read of binding.reads.keys()) {
-    if (readsValuesOnResume(read) || some(read.derives, readsOnResume)) {
-      return true;
-    }
-  }
-  return false;
-}, false);
 
 // A closure's fill join in `section`, under its key unless its declaration's
 // registration carries it, and under its unpatched key, which re-runs joins too.

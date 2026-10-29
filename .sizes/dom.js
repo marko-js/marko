@@ -1,4 +1,4 @@
-// size: 29615 (min) 10890 (brotli)
+// size: 29611 (min) 10919 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2527,7 +2527,7 @@ function _fill_join_closure(keys, valueAccessor, join, index) {
   }
   return join;
 }
-function _fill_join_subscribers(keys, valueAccessor, join, closureAccessor, index, run = join) {
+function _fill_join_subscribers(keys, valueAccessor, join, closureAccessor, index) {
   let instancesAccessor = decodeAccessor(closureAccessor),
     signalIndex = "C" + instancesAccessor;
   return fillJoin(keys, valueAccessor, join, (scope) => {
@@ -2538,7 +2538,7 @@ function _fill_join_subscribers(keys, valueAccessor, join, closureAccessor, inde
         childScope.H > 0 &&
           childScope.H < runId &&
           (childScope[signalIndex] || 0) === index &&
-          queueRender(childScope, run, -1);
+          queueRender(childScope, join, -1);
     }
   });
 }

@@ -1688,8 +1688,8 @@ export const [comparesBoundFn] = createAnalysisMemo(
     // A live function keeps its record wherever a patch binds it (its captures
     // judge it); a `<return>`'s caller links the record where it compares.
     getLiveCaptures(fn)
-      ? reachesBoundHolder(fn, bindsLive, isDynamicTagInput)
-      : reachesBoundHolder(fn, comparesHeld, isDynamicTagInput, readsAsValue),
+      ? reachesBoundHolder(fn, bindsLive)
+      : reachesBoundHolder(fn, comparesHeld, readsAsValue),
   false,
 );
 
@@ -1745,22 +1745,21 @@ function isBoundLiveFnRead({ fnRoot }: Read) {
 }
 
 // A function reaches a holder `test` accepts (`own`: in its template, not a
-// call's), or one `unknown` places in a template this one cannot see.
+// call's), or a dynamic tag's input, a template this one cannot see.
 function reachesBoundHolder(
   fn: t.NodeExtra,
   test: (held: Binding, own: boolean, expr?: t.NodeExtra) => boolean,
-  unknown = holdsUnknown,
   carries?: (binding: Binding, expr: ReferencedExtra) => boolean,
 ) {
   const { program } = fn.section!;
   return (
-    unknown(fn) ||
+    isDynamicTagInput(fn) ||
     some(fn.derives, (holder) =>
       someReached(
         holder,
         (held, expr) =>
           test(held, held.section.program === program, expr) ||
-          readsAsUnknown(held, unknown),
+          readsAsDynamicTagInput(held),
         fn,
         carries,
       ),
@@ -1889,23 +1888,12 @@ export function rerunsClosureByWrite(closure: Binding, section: Section) {
   );
 }
 
-// A holder a template this one cannot see reads as it is (`unknown`).
-function readsAsUnknown(held: Binding, unknown: typeof holdsUnknown) {
+// A holder a dynamic tag's input reads as it is.
+function readsAsDynamicTagInput(held: Binding) {
   for (const read of held.reads.keys()) {
-    if (unknown(read)) return true;
+    if (isDynamicTagInput(read)) return true;
   }
   return false;
-}
-
-// An expression a template this one cannot see may hold as it is, and mark: a
-// dynamic tag's input, or the template's `<return>`.
-function holdsUnknown(expr: t.NodeExtra) {
-  return (
-    isDynamicTagInput(expr) ||
-    (!!expr.section &&
-      !expr.section.parent &&
-      (expr.exprRoot || expr) === expr.section.returnValueExpr)
-  );
 }
 
 function isDynamicTagInput(expr: t.NodeExtra) {

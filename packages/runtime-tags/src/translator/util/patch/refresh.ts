@@ -1944,10 +1944,9 @@ export function patchMayCreate(section: Section) {
 }
 
 const patchMayCreateOwn = createPassMemo((section: Section): boolean => {
-  if (section.branch) {
-    // An `<await>` or `<try>` body is created with its parent.
-    return section.branch.optional && patchWrites(section);
-  }
+  // A branch body is created with its parent; `patchMayCreateEnclosing` answers
+  // for an optional one.
+  if (section.branch) return false;
   if (section.branchExpr) {
     // A dynamic tag body: the tag renders it whenever its branch expression changes.
     return !!getWriteSources(section.branchExpr) && patchWrites(section);
