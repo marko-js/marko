@@ -1,0 +1,6 @@
+<let/count=0/>
+<panel bChange() {} a=count b=input.x show=input.show/>
+<if=(count > 5)>
+  <panel bChange() {} a=count b="z" show=true/>
+</if>
+<button onClick() { count++ }>+</button>

@@ -14,8 +14,7 @@ const $if_content__input_b__OR__s__OR__v = /*@__PURE__*/ _fill_join_if("c5", 4, 
 }), 2), 0, 0);
 const $if_content__input_b = _closure_resume("c1", /*@__PURE__*/ _closure_get(9, $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._));
 const $if_content__s = /*@__PURE__*/ _init_resume("c13", /*@__PURE__*/ _closure_get(10, $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._, "c2"));
-const $s__closure = /*@__PURE__*/ _closure($if_content__s);
-const $s = /*@__PURE__*/ _fill_let("c11", 7, $s__closure, /*@__PURE__*/ _fill_mark(7, $s__closure));
+const $s = /*@__PURE__*/ _fill_let("c11", 7, /* @__PURE__ */ _closure($if_content__s));
 const $setup__script = _script("c7", ($scope) => _on($scope.b, "click", function() {
 	$s($scope, +$scope.h + 1);
 }));

@@ -45,6 +45,7 @@ import {
 import { writesPatchHole } from "./patch/decisions";
 import {
   getCreatedInits,
+  getSentHop,
   getLiveCaptures,
   isPatchWrittenJoin,
   getPatchFillKey,
@@ -793,8 +794,12 @@ export function initValue(binding: Binding, isLet = false) {
         // it marks the change their mixed inits re-run on, as theirs do.
         const run =
           fillFn ||
-          (initsMixedJoinOn(binding)
-            ? callRuntime("_fill_mark", accessor, fn)
+          (someAlias(binding, initsMixedJoinOn, undefined, true)
+            ? callRuntime(
+                "_fill_mark",
+                getScopeAccessorLiteral(binding, true),
+                fn,
+              )
             : undefined);
         return callRuntime(`_fill${helper}`, key, accessor, fn, run);
       }
@@ -952,14 +957,15 @@ function markFill(signal: Signal, fillFn: t.Expression) {
     : fillFn;
 }
 
-// A join reading it whose init a flush names on any scope (`mixed`): it re-runs
-// where a member it depends on is marked changed.
+// A join reading it (or a direct alias) whose init a flush names on any scope
+// (`mixed`) with it among the dependencies it re-runs on (`getSentHop`).
 function initsMixedJoinOn(binding: Binding) {
   for (const read of binding.reads.keys()) {
     const join = getReferencedBindings(read);
     if (
       Array.isArray(join) &&
-      getCreatedInits(read.section).get(join)?.init === "mixed"
+      getCreatedInits(read.section).get(join)?.init === "mixed" &&
+      getSentHop(read.section, binding)
     ) {
       return true;
     }

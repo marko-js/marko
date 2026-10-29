@@ -48,7 +48,7 @@ const $for_content__setup = $for_content__input_sel;
 const $for_content__$params = ($scope, $params2) => $for_content__v($scope, $params2[1]);
 const $for_content__v = /*@__PURE__*/ _fill_const("__tests__/tags/shape.marko_fill3", "v", $if_content__v, /*@__PURE__*/ _fill_mark("v", $if_content__v));
 const $s__closure = /*@__PURE__*/ _closure($if_content__s);
-const $s = /*@__PURE__*/ _fill_let("__tests__/tags/shape.marko_fill2", "s/7", $s__closure, /*@__PURE__*/ _fill_mark("s/7", $s__closure));
+const $s = /*@__PURE__*/ _fill_let("__tests__/tags/shape.marko_fill2", "s/7", $s__closure);
 const $setup__script = _script("__tests__/tags/shape.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$s($scope, +$scope.s + 1);
 }));

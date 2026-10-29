@@ -2,8 +2,7 @@
 const $if_content__s__OR__fmt__OR__v = /*@__PURE__*/ _fill_join_if("b6", 4, /*@__PURE__*/ _or_resume("b2", 1, ($scope) => _text($scope.a, $scope._._.i($scope._.e + $scope._._.h)), 2), 0, 0);
 const $if_content__s = /*@__PURE__*/ _init_resume("b12", /*@__PURE__*/ _closure_get(10, $if_content__s__OR__fmt__OR__v, ($scope) => $scope._._, "b3"));
 const $if_content__fmt = /*@__PURE__*/ _closure_get(11, $if_content__s__OR__fmt__OR__v, ($scope) => $scope._._, "b1");
-const $s__closure = /*@__PURE__*/ _closure($if_content__s);
-const $s = /*@__PURE__*/ _fill_let("b10", 7, $s__closure, /*@__PURE__*/ _fill_mark(7, $s__closure));
+const $s = /*@__PURE__*/ _fill_let("b10", 7, /* @__PURE__ */ _closure($if_content__s));
 const $setup__script$1 = _script("b8", ($scope) => _on($scope.b, "click", function() {
 	$s($scope, +$scope.h + 1);
 }));
