@@ -1,4 +1,4 @@
-// size: 3819 (min) 1718 (brotli)
+// size: 3806 (min) 1709 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
@@ -59,7 +59,14 @@ let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
         (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
       )),
         value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-    else if (value < 92) for (value = 25 * currentMultiplier + value - 67; value--;) walkNextNode();
+    else if (value < 92)
+      for (value = 25 * currentMultiplier + value - 67; value--;)
+        if (currentNode.firstChild) currentNode = currentNode.firstChild;
+        else {
+          for (; !currentNode.nextSibling && currentNode.parentNode;)
+            currentNode = currentNode.parentNode;
+          walkNextSibling();
+        }
     else if (value < 107)
       for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
     else if (value < 117) {
@@ -67,11 +74,6 @@ let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
         currentNode = currentNode.parentNode || currentNode;
       walkNextSibling();
     } else storedMultiplier = currentMultiplier * 10 + value - 117;
-};
-let walkNextNode = (_) => {
-  if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
-  for (; !currentNode.nextSibling && currentNode.parentNode;) currentNode = currentNode.parentNode;
-  walkNextSibling();
 };
 let walkNextSibling = (_) => (currentNode = currentNode.nextSibling || currentNode);
 let _resumed = {};

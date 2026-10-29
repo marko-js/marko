@@ -388,13 +388,13 @@ const tagIdsByGlobal = new WeakMap<Scope[typeof AccessorProp.Global], number>();
 // nullish fallback stays stable across recomputes. The slot is deliberately
 // not serialized: a resumed scope's first recompute simply mints again.
 export function _id(scope: Scope, accessor?: Accessor) {
-  let id = accessor !== undefined && (scope[accessor] as string | undefined);
+  let id = accessor && (scope[accessor] as string | undefined);
   if (!id) {
     const $global = scope[AccessorProp.Global];
     const n = tagIdsByGlobal.get($global) || 0;
     tagIdsByGlobal.set($global, n + 1);
     id = "c" + $global.runtimeId + $global.renderId + n.toString(36);
-    if (accessor !== undefined) scope[accessor] = id;
+    if (accessor) scope[accessor] = id;
   }
   return id;
 }
