@@ -9,8 +9,8 @@
       "brotli": 1403
     },
     "show-await.mjs": {
-      "min": 1135,
-      "brotli": 630
+      "min": 1136,
+      "brotli": 628
     },
     "shared": {
       "min": 11905,

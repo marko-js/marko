@@ -130,7 +130,8 @@ function onStreamLanded(scope: Scope, render: () => void) {
 // One render runs them in the order the flushes queued them: renders queued on
 // one scope run in no set order.
 function runLanded(_: Scope, landed: (() => void)[]) {
-  for (const render of landed.splice(0)) render();
+  for (const render of landed) render();
+  landed.length = 0;
 }
 
 // A created body's setup ran as its patch applied: `resolveAwait` only inserts it.
