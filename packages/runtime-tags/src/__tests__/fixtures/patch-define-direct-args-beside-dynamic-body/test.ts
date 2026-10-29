@@ -4,8 +4,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// The same with positional args: the direct call's arg refreshes through a fill
-// only its key reaches.
+// The same with positional args: the server writes the direct call's holes, and a
+// fill refreshes the dynamic tag's join.
 export const config: TestConfig = {
   patches: true,
   steps: [

@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_html(`<i>${_text_resume($scope2_id, "a", label, $wg__label)}</i>`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id) };
-	_set_scope_reason((_mask_group($scope0_reason, 0) | _filled_guard($scope0_reason, 0)) << 1);
+	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content(input.label);
 	_patch_child_end();

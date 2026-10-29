@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1_shout#4", 1, _filled_guard($scope1_reason, 0), "shout");
 		_scope($scope1_id, { shout }, "__tests__/template.marko", "2:2", { shout: "3:10" }) || _filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:shout", shout, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
-	_set_scope_reason((_mask_group($scope0_reason, 0) | _filled_guard($scope0_reason, 0)) << 1);
+	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({ label: input.label });
 	_patch_child_end();

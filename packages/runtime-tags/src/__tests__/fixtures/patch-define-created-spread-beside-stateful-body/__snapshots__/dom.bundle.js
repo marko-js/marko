@@ -20,4 +20,3 @@ const $open = _let(10, $input_label__OR__open__OR__Tag);
 const $setup__script = _script("a7", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.k);
 }));
-_fill_run("a8", 7, /*@__PURE__*/ _fill_mark(7, ($scope) => {}), "a9");

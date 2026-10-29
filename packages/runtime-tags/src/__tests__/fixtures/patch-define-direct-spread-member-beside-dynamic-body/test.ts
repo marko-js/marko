@@ -4,8 +4,8 @@ const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
 
-// A direct call spreads a server object into a body a state-selected dynamic tag also
-// renders: the instance the client derives takes the spread's push from the fill run.
+// A direct call spreads a server object into a body a state-selected dynamic tag
+// also renders: the server writes its holes, and a fill refreshes the tag's join.
 export const config: TestConfig = {
   patches: true,
   steps: [

@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<em>${_text_resume($scope1_id, "#text/0", JSON.stringify(props), 1, $scope1_reason, 0)}</em>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
-	_set_scope_reason((_mask_group($scope0_reason, 0) | _filled_guard($scope0_reason, 0)) << 1);
+	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({ label: input.label });
 	_patch_child_end();

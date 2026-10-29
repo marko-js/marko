@@ -15,10 +15,10 @@ const $Panel_content__$temp = ($scope, $temp) => {
 };
 const $Panel_content = _content("__tests__/template.marko_1*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "Tag", /*@__PURE__*/ _or(14, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "Tag", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(14, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
 	isOpen: !$scope.open,
 	label: $scope.input_label + "!"
-})), 2));
+})), 2)));
 const $open = _let("open/10", $input_label__OR__open__OR__Tag);
 const $Tag = /*@__PURE__*/ _const("Tag", $input_label__OR__open__OR__Tag);
 const $input_other__OR__Panel = /*@__PURE__*/ _or(12, ($scope) => $Tag($scope, $scope.input_other ? "div" : $scope.Panel));
@@ -31,7 +31,7 @@ function $setup($scope) {
 	$setup__script($scope);
 	$Panel($scope, { content: $Panel_content($scope) });
 }
-const $input_show__OR__input_label__OR__input_rest = /*@__PURE__*/ _or_resume("__tests__/template.marko_0_input_show#5_input_label#6_input_rest#7/init", 8, ($scope) => {
+const $input_show__OR__input_label__OR__input_rest = /*@__PURE__*/ _fill_join("| __tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_0_input_show#5_input_label#6_input_rest#7/init", 8, ($scope) => {
 	const $tag_input_spread = {
 		isOpen: $scope.input_show,
 		label: $scope.input_label,
@@ -39,13 +39,12 @@ const $input_show__OR__input_label__OR__input_rest = /*@__PURE__*/ _or_resume("_
 	};
 	$Panel_content__isOpen($scope["#childScope/0"], $tag_input_spread.isOpen);
 	$Panel_content__tag_input_label($scope["#childScope/0"], $tag_input_spread.label);
-}, 2);
+}, 2));
 const $input_show = /*@__PURE__*/ _const("input_show", $input_show__OR__input_label__OR__input_rest);
-_fill_run("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _fill_mark("input_label", $input_label__OR__open__OR__Tag));
-const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
+const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", ($scope) => {
 	$input_label__OR__open__OR__Tag($scope);
 	$input_show__OR__input_label__OR__input_rest($scope);
-});
+}, /*@__PURE__*/ _fill_mark("input_label", $input_label__OR__open__OR__Tag));
 const $input_rest = /*@__PURE__*/ _const("input_rest", $input_show__OR__input_label__OR__input_rest);
 const $input_other = /*@__PURE__*/ _const("input_other", $input_other__OR__Panel);
 const $input = ($scope, input) => {

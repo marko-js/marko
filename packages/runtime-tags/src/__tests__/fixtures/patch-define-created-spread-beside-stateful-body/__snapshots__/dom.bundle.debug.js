@@ -14,7 +14,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__tag_input_label($scope, $temp.label);
 };
 const $Panel_content = _content("__tests__/template.marko_2*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_a#0:6_input_b#0:7/init", 3, ($scope) => {
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill1/unpatched | __tests__/template.marko_fill1", "input_b", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_a#0:6_input_b#0:7/init", 3, ($scope) => {
 	const $tag_input_spread = {
 		...$scope._.input_a,
 		...$scope._.input_b
@@ -71,6 +71,5 @@ const $input = ($scope, input) => {
 	$input_label($scope, input.label);
 };
 const $input_a = /*@__PURE__*/ _const("input_a", $if_content__input_a);
-_fill_run("__tests__/template.marko_fill1", "input_b", /*@__PURE__*/ _fill_mark("input_b", ($scope) => {}), "__tests__/template.marko_fill1/unpatched");
-const $input_b = /*@__PURE__*/ _const("input_b", $if_content__input_b);
+const $input_b = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "input_b", $if_content__input_b, /*@__PURE__*/ _fill_mark("input_b", ($scope) => {}));
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

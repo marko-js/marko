@@ -983,28 +983,12 @@ function hasDeclarationOnlyReads(binding: Binding) {
         some(read.derives, (derived) =>
           isCalleeParam(derived, binding.section),
         ) &&
-        (getDerivedNeeds(read) ||
-          some(
-            read.derives,
-            (derived) =>
-              isCalleeParam(derived, binding.section) &&
-              isClientDerivedParam(derived),
-          )))
+        !!getDerivedNeeds(read))
     ) {
       return true;
     }
   }
   return false;
-}
-
-// A known child's param the client may derive from what its calls pass: a consumer
-// renders the callee client-side, which reads it alone (nothing stored, no structure).
-export function isClientDerivedParam(param: Binding) {
-  return (
-    !!getStatefulConsumers(param.section) &&
-    !findSlot(param)?.reason &&
-    !bindingUtil.has(param.section.structuralParams, param)
-  );
 }
 
 // What deriving the read's values needs of it: an uncontrolled `<let>` derives once,
