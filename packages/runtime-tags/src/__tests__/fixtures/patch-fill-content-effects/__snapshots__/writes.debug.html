@@ -1,0 +1,41 @@
+<section><!--M_[-->
+  <p>a: 0<!--M_$3 #text/0--></p><!--M_]2 #text/0 3-->
+</section>
+<section><!--M_[-->
+  <p>a: 0<!--M_$5 #text/0--></p><!--M_]4 #text/0 5-->
+</section>
+<section><!--M_[-->
+  <p>x: 0<!--M_$7 #text/0--></p><!--M_]6 #text/0 7-->
+</section><button>0<!--M_$1 #text/4--></button><!--M_$1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  M._.r = [_ => [1, {
+      input_label: "a",
+      input_title: "x",
+      count: 0,
+      "ClosureScopes:input_label/10": new Set([_(3), _(5)]),
+      "ClosureScopes:count/12": new Set([_(3), _(5), _(7)]),
+      "#childScope/0": _(2),
+      "#childScope/1": _(4),
+      "ClosureScopes:input_title/11": new Set([_(7)]),
+      "#childScope/2": _(6)
+    }, {
+      "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-fill-content-effects/template.marko_1*content 1"
+    }, {
+      _: _(1)
+    }, {
+      "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-fill-content-effects/template.marko_2*content 1"
+    }, {
+      _: _(1),
+      "ClosureSignalIndex:input_label/10": 1,
+      "ClosureSignalIndex:count/12": 1
+    }, {
+      "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-fill-content-effects/template.marko_3*content 1"
+    }, {
+      _: _(1),
+      "ClosureSignalIndex:count/12": 2
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-fill-content-effects/template.marko_1_input_label#0:7 3 packages/runtime-tags/src/__tests__/fixtures/patch-fill-content-effects/template.marko_2_input_label#0:7 5 packages/runtime-tags/src/__tests__/fixtures/patch-fill-content-effects/template.marko_3_input_title#0:8 7 packages/runtime-tags/src/__tests__/fixtures/patch-fill-content-effects/template.marko_0 1"
+  ];
+  M._.w()
+</script>

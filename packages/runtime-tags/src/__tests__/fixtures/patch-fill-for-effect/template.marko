@@ -1,0 +1,6 @@
+<let/count=0/>
+<for|item| of=input.items>
+  <p>${input.label + " " + item + ": " + count}</p>
+  <script>document.body.dataset[item] = input.label</script>
+</for>
+<button onClick() { count++ }>${count}</button>

@@ -1,0 +1,14 @@
+<let/count=0/>
+<frame>
+  <p>${input.label + ": " + count}</p>
+  <script>document.body.dataset.first = input.label</script>
+</frame>
+<frame>
+  <p>${input.label + ": " + count}</p>
+  <script>document.body.dataset.second = input.label</script>
+</frame>
+<frame>
+  <p>${input.title + ": " + count}</p>
+  <script>document.body.dataset.title = input.title</script>
+</frame>
+<button onClick() { count++ }>${count}</button>
