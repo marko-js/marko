@@ -1,0 +1,4 @@
+import Wrap from "./tags/wrap.marko"
+<define/Body><em>${input.label}</em></define>
+<outer data={ content: Body.content } more=input.more/>
+<${input.wrap && Wrap} content=Body.content/>

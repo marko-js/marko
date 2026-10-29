@@ -1,5 +1,7 @@
 // Analyze-side structure facts for patches, in template terms; group guards
 // and wire channels belong to ./decisions, ./refresh, ./writers.
+import type { types as t } from "@marko/compiler";
+
 import { type Binding, bindingUtil } from "../bindings";
 import * as Consumers from "../constants/consumers";
 import { createPassMemo } from "../cyclic-memo";
@@ -18,9 +20,13 @@ import {
   type Section,
   type ParamReasonGroup,
 } from "../sections";
-import { getDerivedReaders, someRead } from "../solve-reasons";
+import { bindingReaders, getDerivedReaders, someRead } from "../solve-reasons";
 import { hasParamOrGlobalSource, type Sources } from "../sources";
-import { hasClientState, holdsInitialValue } from "./decisions";
+import {
+  getFirstValueLet,
+  hasClientState,
+  holdsInitialValue,
+} from "./decisions";
 
 // Every render of the section is patch-written: on the branch path, outside
 // stateful structure.
@@ -53,15 +59,33 @@ export const inStatefulBranch = createPassMemo(
 export function isStatefulLeaf(read: ReferencedExtra) {
   return (
     (isContentRender(read) || !!read.derives) &&
+    !rendersHeld(read) &&
     (inStatefulBranch(read.section) ||
       (!!read.rendersContent && hasClientState(getSourcesForExpr(read))) ||
       some(read.derives, holdsClientState))
   );
 }
 
+// Client state some read other than a held `<let>`'s tag takes the content from.
 function holdsClientState(binding: Binding) {
-  return hasClientState(binding.sources);
+  return (
+    hasClientState(binding.sources) &&
+    someRead(bindingReaders(binding, true), isUnheldRead)
+  );
 }
+
+// A read the value ends at (not one passing it on), other than a held `<let>`'s tag.
+export function isUnheldRead(read: ReferencedExtra) {
+  return !read.derives && !rendersHeld(read);
+}
+
+// A held `<let>`'s tag: one a `<let>` no client code sets names, which the patch
+// renders for the scope's life.
+export function rendersHeld(read: t.NodeExtra) {
+  const state = getFirstValueLet(read);
+  return !!state && !state.assignments;
+}
+
 // A read rendering the content where a patch may too: outside stateful structure,
 // or naming a created scope's `<let>` alone, which the patch creates first.
 function isPatchedLeaf(read: ReferencedExtra) {
@@ -104,12 +128,14 @@ export const isStatefulBranch = createPassMemo((section: Section) => {
       ? section.branchExpr
       : undefined;
   const sources = expr && getSourcesForExpr(expr);
-  // A body every consumer renders stateful by the renderer the client registers
-  // (else the patch keeps it), or one whose own branch expression derives from state.
+  // A body every consumer renders stateful by the renderer the client registers (else the
+  // patch keeps it), or whose branch expression, unless a held `<let>`'s tag, reads state.
   return (
     (getStatefulConsumers(section) === Consumers.Every &&
       !!getRendererReason(section)) ||
-    (!!expr && (hasClientState(sources) || inStatefulBranch(section.parent!)))
+    (!!expr &&
+      ((hasClientState(sources) && !rendersHeld(expr)) ||
+        inStatefulBranch(section.parent!)))
   );
 }, false);
 

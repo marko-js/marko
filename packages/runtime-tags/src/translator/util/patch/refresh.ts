@@ -109,6 +109,8 @@ import {
   calleeKeepsInput,
   getStatefulConsumers,
   isStatefulLeaf,
+  isUnheldRead,
+  rendersHeld,
 } from "./structure";
 
 // Stable wire/registry key for a fill: a register id for a template-wide fill
@@ -191,14 +193,16 @@ function inClientRenderedContent(section: Section) {
   return false;
 }
 
-// Content a known tag renders, passed from no state and called in place nowhere,
-// that plain renders nowhere on the client: a flush reaches each instance by data.
+// A held `<let>`'s tag's body, or content a known tag renders, passed from no state, called
+// in place nowhere, and on the client rendered by held tags alone: a flush reaches it by data.
 function reachedByData(section: Section) {
   return (
-    !!section.derives &&
-    !section.callSections &&
-    !getSourcesForDerived(section.derives)?.state &&
-    !getRendererReason(section)
+    (!!section.branchExpr && rendersHeld(section.branchExpr)) ||
+    (!!section.derives &&
+      !section.callSections &&
+      !getSourcesForDerived(section.derives)?.state &&
+      (!getRendererReason(section) ||
+        !someRead(getDerivedReaders(section.derives), isUnheldRead)))
   );
 }
 
@@ -1620,9 +1624,14 @@ export function keepsContent(section: Section) {
   );
 }
 
-// Content a known child renders from its state.
+// Content a known child renders from its state: client state, or a held `<let>`'s tag.
 function rendersFromChildState(section: Section) {
-  return isPatch() && !!getStatefulConsumers(section);
+  return (
+    isPatch() &&
+    (!!getStatefulConsumers(section) ||
+      (!!section.derives &&
+        someRead(getDerivedReaders(section.derives), rendersHeld)))
+  );
 }
 
 // Such content closing over what a flush fills, where none creates it and no
@@ -2142,12 +2151,13 @@ function patchMayCreateAtRead(
         (derived) => derived.section.program !== read.section.program,
       )) &&
     // A dynamic tag a patch switches creates what it renders; a child's read renders
-    // what its call site hands it, unless the child picks it.
-    ((inTemplate
-      ? rendersContent &&
-        switchesContent(read, how) &&
-        patchWrites(read.section)
-      : picksContent(read, how)) ||
+    // what its call site hands it, unless the child picks it; a held `<let>`'s tag never switches.
+    ((!rendersHeld(read) &&
+      (inTemplate
+        ? rendersContent &&
+          switchesContent(read, how) &&
+          patchWrites(read.section)
+        : picksContent(read, how))) ||
       // A callee's root renders where its call site does, which the content's
       // own sections answer.
       patchMayCreateEnclosing(
