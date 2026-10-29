@@ -49,13 +49,6 @@ export function createSources(
   global?: Sources["global"],
   always?: Sources["always"],
 ): Sources {
-  /* v8 ignore next 6 -- every caller passes at least one source */
-  if (!(state || param || global || always)) {
-    throw new Error(
-      "Cannot create sources that reference no state, param or $global.",
-    );
-  }
-
   return { state, param, global, always };
 }
 

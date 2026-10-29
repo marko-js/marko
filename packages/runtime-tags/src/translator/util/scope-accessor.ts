@@ -149,14 +149,7 @@ function getDebugClosureAccessor(binding: Binding) {
 }
 
 function getClosureAccessorId(binding: Binding) {
-  const id = getCanonicalBinding(binding).closureId;
-  /* v8 ignore next 5 -- analyze reserves an id for every closure binding */
-  if (id === undefined) {
-    throw new Error(
-      `No closure accessor id was reserved for "${binding.name}".`,
-    );
-  }
-  return id;
+  return getCanonicalBinding(binding).closureId!;
 }
 
 function getSectionInstancesAccessor(section: Section) {

@@ -979,9 +979,6 @@ function mergeInto(
           );
         }
       }
-    } else if (extra?.dropped) {
-      /* v8 ignore next -- a dropped reference is never merged into another */
-      throw new Error("Cannot merged a dropped reference.");
     }
   }
 
@@ -1121,11 +1118,6 @@ export function dropExtra(exprExtra: ReferencedExtra) {
 // A merged expression is never dropped and a dropped one never merged:
 // both would strand reads the target already took.
 function untrackExtra(exprExtra: ReferencedExtra) {
-  /* v8 ignore next 3 -- a merged reference is never dropped */
-  if (exprExtra.merged) {
-    throw new Error("Cannot drop a merged reference");
-  }
-
   const readsByExpr = getReadsByExpression();
   const reads = readsByExpr.get(exprExtra);
   if (reads) {

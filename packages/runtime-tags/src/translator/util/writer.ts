@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { getScopeIdIdentifier, getSection } from "../util/sections";
-import { type Binding, BindingType } from "./bindings";
+import type { Binding } from "./bindings";
 import buildStringExpression, {
   appendLiteral,
 } from "./build-string-expression";
@@ -84,12 +84,6 @@ export function markNode(
   reason: undefined | false | Reason,
   deferred?: boolean,
 ) {
-  if (nodeBinding.type !== BindingType.dom) {
-    throw path.buildCodeFrameError(
-      "POTENTIAL MARKO BUG: Tried to mark a node that was not determined to need a mark during analyze.",
-    );
-  }
-
   if (isOutputHTML()) {
     if (reason) {
       const section = getSection(path);

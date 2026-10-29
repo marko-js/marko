@@ -798,10 +798,6 @@ function joinRepeatable<T>(compare: Compare<T>, a: T, b: T): OneMany<T> {
   return compareResult === 0 ? a : compareResult < 0 ? [a, b] : [b, a];
 }
 
-export function at<T>(data: Opt<T>, index: number): T | undefined {
-  return Array.isArray(data) ? data[index] : index ? undefined : data;
-}
-
 export function first<T>(data: OneMany<T>): T {
   return Array.isArray(data) ? data[0] : data;
 }

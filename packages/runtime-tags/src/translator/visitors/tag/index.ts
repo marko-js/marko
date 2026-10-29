@@ -9,13 +9,6 @@ import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
 import NativeTag from "./native-tag";
 
-const kAnalyzeFailed = Symbol("analyze failed");
-declare module "@marko/compiler/dist/types" {
-  export interface MarkoTagExtra {
-    [kAnalyzeFailed]?: boolean;
-  }
-}
-
 export default {
   analyze: {
     enter(tag) {
@@ -48,13 +41,11 @@ export default {
             break;
         }
       } catch (err) {
-        (tag.node.extra ??= {})[kAnalyzeFailed] = true;
         reportAnalyzeError(tag, err);
         tag.skip();
       }
     },
     exit(tag) {
-      if (tag.node.extra?.[kAnalyzeFailed]) return;
       try {
         const hook = getTagDef(tag)?.analyzer?.hook as Plugin;
 
@@ -67,9 +58,7 @@ export default {
           NativeTag.analyze.exit(tag);
         }
       } catch (err) {
-        (tag.node.extra ??= {})[kAnalyzeFailed] = true;
         reportAnalyzeError(tag, err);
-        return;
       }
     },
   },
