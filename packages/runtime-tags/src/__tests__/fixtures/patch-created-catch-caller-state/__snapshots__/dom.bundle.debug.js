@@ -8,8 +8,8 @@ const $try_content__input_error = /*@__PURE__*/ _init_resume("__tests__/tags/det
 const $try_content__setup = $try_content__input_error;
 const $if_content__input_detail__script = _script("__tests__/tags/detail-view.marko_2_input_detail#0:3", ($scope) => console.log("detail", $scope._._.input_detail));
 const $if_content__input_detail = /*@__PURE__*/ _init_resume("__tests__/tags/detail-view.marko_2_input_detail#0:3/init", _closure_resume("__tests__/tags/detail-view.marko_2_input_detail#0:3/subscribe", /*@__PURE__*/ _fill_closure("__tests__/tags/detail-view.marko_fill0", "input_detail", /*@__PURE__*/ _closure_get("input_detail/5", ($scope) => {
-	$if_content__input_detail__script($scope);
 	_text($scope["#text/0"], $scope._._.input_detail);
+	$if_content__input_detail__script($scope);
 }, ($scope) => $scope._._), 1)));
 const $if_content__setup = $if_content__input_detail;
 const $catch_content__if = /*@__PURE__*/ _if("#text/1", "<i> </i>", "D ", $if_content__setup);

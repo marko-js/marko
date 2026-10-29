@@ -1167,9 +1167,18 @@ export function hasEffectRead(binding: Binding) {
   return false;
 }
 
-// An effect in its section reading it alone, which only its declaration's signal runs.
+// An effect reading it alone in a scope a patch writes, which only its declaration's
+// signal or a closure of it runs: neither ships where main never changes the value.
 function readsOwnEffect(binding: Binding) {
-  return someReadIn(binding, binding.section, isOwnEffectRead);
+  for (const read of binding.reads.keys()) {
+    if (
+      (read.section === binding.section || patchWrites(read.section)) &&
+      isOwnEffectRead(read, binding)
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function isOwnEffectRead(read: ReferencedExtra, binding: Binding) {
