@@ -88,7 +88,14 @@ const walkInternal = function walkInternal(
     } else if (value < WalkCode.NextEnd + 1) {
       value = WalkRangeSize.Next * currentMultiplier + value - WalkCode.Next;
       while (value--) {
-        walkNextNode();
+        if (currentNode.firstChild) {
+          currentNode = currentNode.firstChild;
+        } else {
+          while (!currentNode.nextSibling && currentNode.parentNode) {
+            currentNode = currentNode.parentNode;
+          }
+          walkNextSibling();
+        }
       }
     } else if (value < WalkCode.OverEnd + 1) {
       value = WalkRangeSize.Over * currentMultiplier + value - WalkCode.Over;
@@ -129,14 +136,6 @@ export function getDebugKey(index: number, node: Node | string) {
 
   return index;
 }
-
-const walkNextNode = (_?: never) => {
-  if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
-  while (!currentNode.nextSibling && currentNode.parentNode) {
-    currentNode = currentNode.parentNode;
-  }
-  walkNextSibling();
-};
 
 const walkNextSibling = (_?: never) =>
   (currentNode = currentNode.nextSibling || currentNode);
