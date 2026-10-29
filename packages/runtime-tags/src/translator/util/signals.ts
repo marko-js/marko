@@ -45,7 +45,7 @@ import {
 import { writesPatchHole } from "./patch/decisions";
 import {
   getCreatedInits,
-  getSentHop,
+  getMixedInitDepSet,
   getLiveCaptures,
   isPatchWrittenJoin,
   getPatchFillKey,
@@ -794,7 +794,7 @@ export function initValue(binding: Binding, isLet = false) {
         // it marks the change their mixed inits re-run on, as theirs do.
         const run =
           fillFn ||
-          (someAlias(binding, initsMixedJoinOn, undefined, true)
+          (getMixedInitDepSet().has(getCanonicalBinding(binding))
             ? callRuntime(
                 "_fill_mark",
                 getScopeAccessorLiteral(binding, true),
@@ -955,22 +955,6 @@ function markFill(signal: Signal, fillFn: t.Expression) {
     isBoundLiveCapture(binding)
     ? callRuntime("_fill_mark", getScopeAccessorLiteral(binding, true), fillFn)
     : fillFn;
-}
-
-// A join reading it (or a direct alias) whose init a flush names on any scope
-// (`mixed`) with it among the dependencies it re-runs on (`getSentHop`).
-function initsMixedJoinOn(binding: Binding) {
-  for (const read of binding.reads.keys()) {
-    const join = getReferencedBindings(read);
-    if (
-      Array.isArray(join) &&
-      getCreatedInits(read.section).get(join)?.init === "mixed" &&
-      getSentHop(read.section, binding)
-    ) {
-      return true;
-    }
-  }
-  return false;
 }
 
 // A value an entry depends on that a join's fill sets, under its key or its

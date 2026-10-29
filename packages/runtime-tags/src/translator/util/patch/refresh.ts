@@ -1376,6 +1376,25 @@ export const [getLiveDeps] = createAnalysisMemo(
   [] as Binding[],
 );
 
+// What a mixed join's init re-runs on, each as the slot a flush transfers: a
+// member's own where it fills or writes it for joins, else what builds it.
+export function getMixedInitDeps(section: Section, join: Intersection) {
+  const deps = new Set<Binding>();
+  for (const member of join) {
+    const root = getCanonicalBinding(member);
+    const { fill, joinWrites } = getPatchFill(root);
+    for (const dep of fill || joinWrites ? [root] : getLiveDeps(root)) {
+      if (getSentHop(section, dep)) deps.add(dep);
+    }
+  }
+  return [...deps];
+}
+
+// Every mixed init's dependencies: a fill replacing their joins' marks them.
+export const [getMixedInitDepSet] = createAnalysisState(
+  () => new Set<Binding>(),
+);
+
 export function addLiveDeps(deps: Set<Binding>, binding: Binding) {
   return getLiveDeps(binding).reduce(addLiveDep, deps);
 }
@@ -1498,6 +1517,8 @@ export interface CreatedInit {
   // Where it subscribes the closure so its owner's fills reach it: every created
   // scope, or where no patch fills it or the groups of a join of it here.
   subscribe?: "always" | { unfilled: SortedOpt<Sources> };
+  // A mixed init's dependencies, recorded once its sends link (`getMixedInitDeps`).
+  deps?: Binding[];
 }
 
 // Groups a created subscriber also subscribes in: a join's a call may pass

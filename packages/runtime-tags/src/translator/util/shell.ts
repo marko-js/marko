@@ -18,6 +18,8 @@ import { forEach, some, type SortedOpt } from "./optional";
 import {
   patchMayCreate,
   getCreatedInits,
+  getMixedInitDepSet,
+  getMixedInitDeps,
   getPatchFill,
   rerunsByEntry,
   namesBodyOwner,
@@ -180,14 +182,16 @@ function recordPatchEntries(binding: Binding) {
   }
 }
 
-// A mixed join's init a caller's groups decide ships where its group mixes, which
-// a call's client state does: it links there, as a fill's client group does.
+// A mixed join's init records what it re-runs on; one a caller's groups decide ships
+// where a call's client state mixes its group, linking there as a fill's does.
 function recordJoinInits(section: Section) {
   for (const [join, init] of getCreatedInits(section)) {
-    const sources = Array.isArray(join) && getSourcesForRef(join);
-    if (init.init !== "mixed" || !hasCallerGroupsAt(section, sources)) {
-      continue;
-    }
+    if (init.init !== "mixed" || !Array.isArray(join)) continue;
+    // Its dependencies, for its entry and for the fills that must mark them.
+    init.deps = getMixedInitDeps(section, join);
+    for (const dep of init.deps) getMixedInitDepSet().add(dep);
+    const sources = getSourcesForRef(join);
+    if (!hasCallerGroupsAt(section, sources)) continue;
     for (const [paramSection, client] of getCallerParamGroupsAt(
       sources.param,
       section,

@@ -441,11 +441,7 @@ export function writePatchResumeStatements(
       if (init.init === "mixed") {
         const needed = mixedJoinInits.get(ref);
         const groupArgs = getRootGroupArgs(section, getSourcesForRef(ref));
-        const deps = getDeps(
-          section,
-          toArray(ref, getCanonicalBinding),
-          "_filled_guard",
-        );
+        const deps = formatDeps(section, init.deps!, "_filled_guard");
         if (mixedJoinInits.has(ref)) {
           // A mixed join re-runs as its members change, under its group where params decide it.
           const init = andGuard(
@@ -1635,8 +1631,23 @@ function getDeps(
   check: HTMLRuntimeHelpers,
   entryGroup?: ParamReasonGroup | false,
 ) {
+  return formatDeps(
+    section,
+    roots.reduce(addLiveDeps, new Set<Binding>()),
+    check,
+    entryGroup,
+  );
+}
+
+// Each sent dependency's hop, guarded by its caller group where one decides it.
+function formatDeps(
+  section: Section,
+  roots: Iterable<Binding>,
+  check: HTMLRuntimeHelpers,
+  entryGroup?: ParamReasonGroup | false,
+) {
   const deps: t.Expression[] = [];
-  for (const root of roots.reduce(addLiveDeps, new Set<Binding>())) {
+  for (const root of roots) {
     const hop = getSentHop(section, root);
     if (hop) {
       const sources = getSourcesForRef(root)!;
