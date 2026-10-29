@@ -68,7 +68,6 @@ import {
   effectEntryNamesFill,
   initedJoinDependsOn,
   rerunsByEntry,
-  getStructureState,
   reachesOnlyByOwnReads,
 } from "./patch/refresh";
 import { patchesBranchesAt } from "./patch/structure";
@@ -145,6 +144,7 @@ import {
 import { isQueuedOnCreate, inCreatedCatch, shipsContentShell } from "./shell";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
+import { getBranchExprReasonUntil } from "./solve-reasons";
 import { hasParamOrGlobalSource, mergeSources, type Sources } from "./sources";
 import { createOutputState, createOutputSectionState } from "./state";
 import { toOnlyExpressionOrBlock } from "./to-only-or-block";
@@ -1757,7 +1757,8 @@ export function writeSignals(section: Section) {
           // Its branches, which no client code renders, resume by their markers.
           value = registerRuntimeValue(
             getResumeRegisterId(signal.section, binding, "patch"),
-            getStructureState(signal.section)
+            getBranchExprReasonUntil(signal.section, signal.section.program)
+              ?.state
               ? callRuntime("_with_branches", value)
               : value,
           );

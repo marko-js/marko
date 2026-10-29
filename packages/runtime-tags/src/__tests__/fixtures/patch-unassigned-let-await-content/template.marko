@@ -1,0 +1,2 @@
+<let/show=input.show/>
+<if=show><wrap><await|r|=Promise.resolve(input.v)><p>${r + input.w}</p></await></wrap></if>
