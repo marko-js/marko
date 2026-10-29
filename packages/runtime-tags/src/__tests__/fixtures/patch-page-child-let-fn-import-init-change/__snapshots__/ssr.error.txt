@@ -1,0 +1,11 @@
+A patch unexpectedly rejected (set `expect_rejection` if intended).
+# Update `{"alt":false,"more":true,"label":"b"}`
+```html
+<p>
+   
+</p>
+```
+## Change
+```
+INSERT: p
+```

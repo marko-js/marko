@@ -1,0 +1,2 @@
+A patch unexpectedly rejected (set `expect_rejection` if intended).
+# Update `{"label":"b","alt":false}`

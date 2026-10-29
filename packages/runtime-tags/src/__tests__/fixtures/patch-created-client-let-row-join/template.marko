@@ -1,0 +1,7 @@
+<if=input.show>
+  <let/b=1/>
+  <for|i| of=[1, 2]>
+    <span>${b + i}</span>
+  </for>
+  <button.b onClick() { b++ }>b</button>
+</if>

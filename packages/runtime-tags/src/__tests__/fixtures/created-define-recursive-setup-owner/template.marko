@@ -1,0 +1,7 @@
+<define/Card|{n,content}|>
+<let/x=0/>
+<button onClick(){x++}>${x}</button>
+<${content}/>
+<if=n><Card n=(n-1)><em>${input.label}</em></Card></if>
+</define>
+<if=input.show><Card n=2><strong>${input.label}</strong></Card></if>

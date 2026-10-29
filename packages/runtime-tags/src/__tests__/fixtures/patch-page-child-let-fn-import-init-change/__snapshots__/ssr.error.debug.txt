@@ -1,0 +1,1 @@
+Unable to serialize "f" in packages/runtime-tags/src/__tests__/fixtures/patch-page-child-let-fn-import-init-change/tags/outer.marko:1:6. Values referenced in the browser must be serializable.

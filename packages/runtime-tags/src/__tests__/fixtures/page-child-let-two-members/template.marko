@@ -1,0 +1,6 @@
+import Card from "./tags/card.marko";
+
+<const/fn=(v) => "f-" + v/>
+<const/other=(v) => "g-" + v/>
+
+<outer value={ tag: Card, fmt: input.alt ? other : fn } label=input.label/>
