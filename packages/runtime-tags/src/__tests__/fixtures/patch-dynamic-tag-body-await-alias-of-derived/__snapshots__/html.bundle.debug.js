@@ -46,8 +46,8 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", x ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 		_filled_guard($scope0_reason, 1) && $cg__input_content && _patch_write($scope1_id, "PatchMarkedWrite:x", x);
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4/subscribe");
-		_patch_join_init($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4_x#2/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_content", _filled_guard($scope0_reason, 1) && "x");
-		_patch_join_init($scope1_id, "__tests__/tags/card.marko_1_x#2_d#8/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "x", _filled_guard($scope0_reason, 0) && "c");
+		_patch_init_entry($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4_x#2/init", [_filled_guard($scope0_reason, 2) && ">input_content", _filled_guard($scope0_reason, 1) && "x"], $scope0_reason, 0);
+		_patch_init_entry($scope1_id, "__tests__/tags/card.marko_1_x#2_d#8/init", [_filled_guard($scope0_reason, 1) && "x", _filled_guard($scope0_reason, 0) && "c"], $scope0_reason, 0);
 		$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, {
 			x: _unfilled_if($scope0_reason, 0) && x,
 			c: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && c

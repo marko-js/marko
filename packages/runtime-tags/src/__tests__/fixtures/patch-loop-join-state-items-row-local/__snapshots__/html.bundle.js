@@ -14,7 +14,7 @@ var child_default = _template("b", (input) => {
 		_html(`<p>${_text_resume($scope1_id, "a", input.a + d, 1, (_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 3) ? _mask_group($scope0_reason, 1) : 1) << 1, 0)}</p>`);
 		$cg__input_a && _patch_write($scope1_id, "xb", d, !(_filled_guard($scope0_reason, 3) && $cg__input_a));
 		$cg__input_b && _patch_init($scope1_id, "b0");
-		(_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 3)) && _patch_join_init($scope1_id, "b1", $scope0_reason, 1, _filled_guard($scope0_reason, 4) && ">f", _filled_guard($scope0_reason, 3) && "b");
+		(_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 3)) && _patch_init_entry($scope1_id, "b1", [_filled_guard($scope0_reason, 4) && ">f", _filled_guard($scope0_reason, 3) && "b"], $scope0_reason, 1);
 		_scope($scope1_id, {
 			b: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 1)) && d,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)

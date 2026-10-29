@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<p>${_text_resume($scope1_id, "a", value + input.title, 1, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
 		$cg__input_title && _patch_write($scope1_id, "xd", value, !(_filled_guard($scope1_reason, 0) && $cg__input_title));
-		_patch_join_init($scope1_id, "a1", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, _filled_guard($scope0_reason, 0) && ">f", _filled_guard($scope1_reason, 0) && "d");
+		_patch_init_entry($scope1_id, "a1", [_filled_guard($scope0_reason, 0) && ">f", _filled_guard($scope1_reason, 0) && "d"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0);
 		_subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_title && $input_title__closures, _scope($scope1_id, {
 			d: _unfilled_if($scope0_reason, 0) && value,
 			_: _scope_with_id($scope0_id)

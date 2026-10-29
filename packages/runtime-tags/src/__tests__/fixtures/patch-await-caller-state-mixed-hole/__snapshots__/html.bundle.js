@@ -15,7 +15,7 @@ var show_await_default = _template("b", (input) => {
 		_html(`<p>${_text_resume($scope1_id, "a", input.label + ":" + x, 1, $scope0_reason, 0)}</p>`);
 		_filled_guard($scope0_reason, 1) && $cg__input_label && _patch_write($scope1_id, "xc", x);
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b0");
-		_patch_join_init($scope1_id, "b1", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c");
+		_patch_init_entry($scope1_id, "b1", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { c: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && x }), $cg__input_label && "b0");
 	}, 1, "b2", _unfilled_if($scope0_reason, 1), 1);
 	$cg__input_promise && _patch_write($scope0_id, "xe", input.label, !(_filled_guard($scope0_reason, 2) && $cg__input_promise));

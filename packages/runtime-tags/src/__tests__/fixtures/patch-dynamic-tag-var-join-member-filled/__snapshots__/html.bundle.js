@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 		$wg__input_id || _resume_branch($scope1_id);
 	}, void 0, "a4", void 0, "a5", 1);
 	_filled_guard($scope0_reason, 1) && $cg__input_id && _patch_write($scope0_id, "xg", input.which);
-	_patch_join_init($scope0_id, "a7", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "g", _filled_guard($scope0_reason, 2) && "h");
+	_patch_init_entry($scope0_id, "a7", [_filled_guard($scope0_reason, 1) && "g", _filled_guard($scope0_reason, 2) && "h"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.which,
 		h: input.id,

@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 			});
 			_patch_child_end();
 			$cg__input_b && _patch_init($scope1_id, "a5");
-			_patch_join_init($scope1_id, "a6", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && ">g", _filled_guard($scope0_reason, 5) && ">h");
+			_patch_init_entry($scope1_id, "a6", [_filled_guard($scope0_reason, 4) && ">g", _filled_guard($scope0_reason, 5) && ">h"], $scope0_reason, 2);
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope),

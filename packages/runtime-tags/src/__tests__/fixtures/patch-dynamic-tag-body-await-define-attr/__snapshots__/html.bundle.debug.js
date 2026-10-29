@@ -49,7 +49,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_dynamic_tag($scope2_id, "#text/0", on ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__c__OR__on, $scope2_reason, 0);
 		$cg__on && _patch_write($scope2_id, "PatchMarkedWrite:c", c, !(_filled_guard($scope2_reason, 1) && $cg__on));
 		$cg__c && _patch_write($scope2_id, "PatchMarkedWrite:on", on, !(_filled_guard($scope2_reason, 2) && $cg__c));
-		_patch_join_init($scope2_id, "__tests__/tags/card.marko_2_c#3_on#4/init", $scope2_reason, 0, _filled_guard($scope2_reason, 1) && "c", _filled_guard($scope2_reason, 2) && "on");
+		_patch_init_entry($scope2_id, "__tests__/tags/card.marko_2_c#3_on#4/init", [_filled_guard($scope2_reason, 1) && "c", _filled_guard($scope2_reason, 2) && "on"], $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
 			c: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0)) && c,
 			on: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 0)) && on

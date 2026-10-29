@@ -829,28 +829,6 @@ export function _patch_init(scopeId: number, initId: string) {
   return "";
 }
 
-// A join a patch writes as holes under its group: a mixed group's scope re-runs
-// it, fresh or existing (`1`: its effect's entry needn't ship); a client one, fresh.
-export function _patch_join_init(
-  scopeId: number,
-  initId: string,
-  mask: GroupMask,
-  group: number,
-  ...deps: (string | Falsy)[]
-) {
-  const state = getState();
-  if (state instanceof PatchRenderState) {
-    const updatesFrom = getUpdatesFrom(mask, group);
-    if (updatesFrom === (UpdatesFrom.Client | UpdatesFrom.Server)) {
-      writeInitEntry(state, scopeId, initId, deps);
-      return 1;
-    }
-    if (updatesFrom & UpdatesFrom.Client && inCreatable())
-      addSetupId(state, scopeId, initId);
-  }
-  return 0;
-}
-
 // Emitted as the scope reason's complement, so only a patch (the falsy
 // patch reason) ever reaches here.
 export function _patch_fill(
@@ -1049,16 +1027,29 @@ export function _script(
 }
 
 // An init the client runs on the scope, existing or created, once the writes it
-// depends on that this patch sends are in.
+// depends on that this patch sends are in (`1`: it runs what an effect's entry would).
+// Under a caller group, only while the group mixes, or on creation while it's the client's.
 export function _patch_init_entry(
   scopeId: number,
   initId: string,
-  ...deps: (string | Falsy)[]
+  deps: (string | Falsy)[],
+  mask?: GroupMask,
+  group?: number,
 ) {
   const state = getState();
   if (state instanceof PatchRenderState) {
-    writeInitEntry(state, scopeId, initId, deps);
+    const updatesFrom =
+      group === undefined
+        ? UpdatesFrom.Client | UpdatesFrom.Server
+        : getUpdatesFrom(mask, group);
+    if (updatesFrom === (UpdatesFrom.Client | UpdatesFrom.Server)) {
+      writeInitEntry(state, scopeId, initId, deps);
+      return 1;
+    }
+    if (updatesFrom & UpdatesFrom.Client && inCreatable())
+      addSetupId(state, scopeId, initId);
   }
+  return 0;
 }
 
 function writeInitEntry(

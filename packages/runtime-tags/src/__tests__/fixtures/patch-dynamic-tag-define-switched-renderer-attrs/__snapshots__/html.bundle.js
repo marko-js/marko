@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		_html(`<span>${_text_resume($scope1_id, "a", n, 1, $scope1_reason, 0)}</span>`);
 		_dynamic_tag($scope1_id, "b", content, { title: input.t }, 1, 0, 0, _write_guard($scope0_reason, 0) || _write_guard($scope1_reason, 1), (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1)) << 1, 0, 0, 1, $scope1_reason);
 		_filled_guard($scope1_reason, 1) && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xf", content);
-		_patch_join_init($scope1_id, "a3", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1)) << 1, 0, _filled_guard($scope0_reason, 0) && ">d", _filled_guard($scope1_reason, 1) && "f");
+		_patch_init_entry($scope1_id, "a3", [_filled_guard($scope0_reason, 0) && ">d", _filled_guard($scope1_reason, 1) && "f"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1)) << 1, 0);
 		_subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1)) << 1, 0) && $wi__input_t && $input_t__closures, _scope($scope1_id, {
 			f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1) || _unfilled_if($scope0_reason, 2)) && content,
 			_: ($wi__input_t || _write_if($scope1_reason, 1)) && _scope_with_id($scope0_id)

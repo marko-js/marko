@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 		$cg__input_x && _patch_write($scope1_id, "wg", g, 1);
 		$cg__input_x && _patch_init($scope1_id, "a9");
 		$cg__input_a && _patch_init($scope1_id, "a10");
-		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 3)) && _patch_join_init($scope1_id, "a11", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">g", _filled_guard($scope0_reason, 3) && "d");
+		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 3)) && _patch_init_entry($scope1_id, "a11", [_filled_guard($scope0_reason, 2) && ">g", _filled_guard($scope0_reason, 3) && "d"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item,
 			f: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && v,

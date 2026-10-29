@@ -23,7 +23,7 @@ var show_await_default = _template("b", (input) => {
 			_html(`<p>${_text_resume($scope2_id, "a", x + ":" + text, 1, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
 			_filled_guard($scope0_reason, 0) && $cg__text && _patch_write($scope2_id, "xc", x);
 			(_unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && _patch_init($scope2_id, "b0");
-			_patch_join_init($scope2_id, "b1", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, _filled_guard($scope1_reason, 0) && ">d", _filled_guard($scope0_reason, 0) && "c");
+			_patch_init_entry($scope2_id, "b1", [_filled_guard($scope1_reason, 0) && ">d", _filled_guard($scope0_reason, 0) && "c"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0);
 			_subscribe(_unfilled_if($scope1_reason, 0) && $Row_content__text__closures, _scope($scope2_id, { c: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 0)) && x }), $cg__text && "b0");
 		}, 1, "b2", _unfilled_if($scope0_reason, 0));
 		$cg__input_promise && _patch_write($scope1_id, "xd", text, !(_filled_guard($scope1_reason, 0) && $cg__input_promise));

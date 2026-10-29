@@ -25,7 +25,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		if (input.b) {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "#text/0", input.a + input.b, 1, $scope0_reason, 1)}</p>`);
-			_patch_join_init($scope2_id, "__tests__/tags/child.marko_2_input_a#0:4_input_b#0:6/init", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && ">input_a", _filled_guard($scope0_reason, 5) && ">input_b");
+			_patch_init_entry($scope2_id, "__tests__/tags/child.marko_2_input_a#0:4_input_b#0:6/init", [_filled_guard($scope0_reason, 3) && ">input_a", _filled_guard($scope0_reason, 5) && ">input_b"], $scope0_reason, 1);
 			_scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "3:2");
 			return 0;
 		}

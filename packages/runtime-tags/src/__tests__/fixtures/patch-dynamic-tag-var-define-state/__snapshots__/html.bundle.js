@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "b", $inputwhichCounterOther_scope, "a8");
 	_html(`<p>${_text_resume($scope0_id, "c", count)}</p>`);
 	_filled_guard($scope0_reason, 2) && $cg__input_label && _patch_write($scope0_id, "xg", input.which);
-	_patch_join_init($scope0_id, "a10", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "f", _filled_guard($scope0_reason, 2) && "g");
+	_patch_init_entry($scope0_id, "a10", [_filled_guard($scope0_reason, 1) && "f", _filled_guard($scope0_reason, 2) && "g"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.which,

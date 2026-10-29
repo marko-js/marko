@@ -38,7 +38,7 @@ var feed_list_default = _template("c", (input) => {
 		_patch_child_end();
 		_html(`</li>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "c0");
-		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "c2", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "e");
+		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_init_entry($scope1_id, "c2", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "e"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			e: item?.id,
 			_: _scope_with_id($scope0_id),

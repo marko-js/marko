@@ -13,7 +13,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + input.b, 1, $scope0_reason, 1)}</p>`);
-			_patch_join_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_input_b#0:6/init", $scope0_reason, 1, _filled_guard($scope0_reason, 5) && ">input_a", _filled_guard($scope0_reason, 6) && ">input_b");
+			_patch_init_entry($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_input_b#0:6/init", [_filled_guard($scope0_reason, 5) && ">input_a", _filled_guard($scope0_reason, 6) && ">input_b"], $scope0_reason, 1);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2");
 			return 0;
 		}
@@ -22,7 +22,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_filled_guard($scope0_reason, 5) && $cg__input_show ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0/unpatched", input.a) : _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !(_filled_guard($scope0_reason, 5) && (_client_guard($scope0_reason, 6) || _client_guard($scope0_reason, 7))));
 	_filled_guard($scope0_reason, 6) && $cg__input_show ? _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill1/unpatched", input.b) : _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !(_filled_guard($scope0_reason, 6) && $cg__input_a));
 	$cg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_c", input.c, !(_filled_guard($scope0_reason, 7) && $cg__input_a));
-	_patch_join_init($scope0_id, "__tests__/tags/child.marko_0_input_a#5_input_c#7/init", $scope0_reason, 2, _filled_guard($scope0_reason, 5) && "input_a", _filled_guard($scope0_reason, 7) && "input_c");
+	_patch_init_entry($scope0_id, "__tests__/tags/child.marko_0_input_a#5_input_c#7/init", [_filled_guard($scope0_reason, 5) && "input_a", _filled_guard($scope0_reason, 7) && "input_c"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_a: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.a,
 		input_b: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.b,

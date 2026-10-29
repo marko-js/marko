@@ -23,7 +23,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_resume($scope2_id, "#text/0", fmt(v + s))}</span>`);
 				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "__tests__/tags/card.marko_2_fmt#0:8/subscribe");
-				_patch_init_entry($scope2_id, "__tests__/tags/card.marko_2_s#0:7_fmt#0:8_v#1:4/init", _filled_guard($scope0_reason, 1) && ">>fmt", _filled_guard($scope0_reason, 2) && ">v");
+				_patch_init_entry($scope2_id, "__tests__/tags/card.marko_2_s#0:7_fmt#0:8_v#1:4/init", [_filled_guard($scope0_reason, 1) && ">>fmt", _filled_guard($scope0_reason, 2) && ">v"]);
 				_subscribe($wi__input_prefix && $fmt2__closures, _subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/card.marko", "3:26"), "__tests__/tags/card.marko_2_s#0:7/subscribe"), _client_guard($scope0_reason, 1) && "__tests__/tags/card.marko_2_fmt#0:8/subscribe");
 				return 0;
 			}

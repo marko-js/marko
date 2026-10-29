@@ -14,8 +14,8 @@ var child_default = _template("b", (input) => {
 		const d = input.b + item;
 		_html(`<p>${_text_resume($scope1_id, "a", input.a + d, 1, $scope0_reason, 1)}</p>`);
 		_filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 4) && _patch_write($scope1_id, "xe", d);
-		(_filled_guard($scope0_reason, 3) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope1_id, "b0", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && ">e", _filled_guard($scope0_reason, 2) && "c");
-		(_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 0)) && _patch_join_init($scope1_id, "b1", $scope0_reason, 1, _filled_guard($scope0_reason, 4) && ">f", _filled_guard($scope0_reason, 0) && "e");
+		(_filled_guard($scope0_reason, 3) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_init_entry($scope1_id, "b0", [_filled_guard($scope0_reason, 3) && ">e", _filled_guard($scope0_reason, 2) && "c"], $scope0_reason, 0);
+		(_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 0)) && _patch_init_entry($scope1_id, "b1", [_filled_guard($scope0_reason, 4) && ">f", _filled_guard($scope0_reason, 0) && "e"], $scope0_reason, 1);
 		_scope($scope1_id, {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && item,
 			e: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 1)) && d,

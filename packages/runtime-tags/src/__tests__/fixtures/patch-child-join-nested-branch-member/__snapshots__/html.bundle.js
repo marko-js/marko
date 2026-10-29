@@ -32,7 +32,7 @@ var panel_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b3"], $scope0_reason, 3);
 	_html(`<p>${_text_resume($scope0_id, "b", input.a + ":" + input.b, 1, $scope0_reason, 2)}</p>`);
 	$cg__input_b && _patch_write($scope0_id, "xg", input.a, !(_filled_guard($scope0_reason, 5) && $cg__input_b));
-	_patch_join_init($scope0_id, "b6", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && "f", _filled_guard($scope0_reason, 5) && "g");
+	_patch_init_entry($scope0_id, "b6", [_filled_guard($scope0_reason, 4) && "f", _filled_guard($scope0_reason, 5) && "g"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.b,
 		g: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.a,

@@ -16,7 +16,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 		_html(`<p>${_text_resume($scope1_id, "#text/0", input.label + ":" + x, 1, $scope0_reason, 0)}</p>`);
 		_filled_guard($scope0_reason, 1) && $cg__input_label && _patch_write($scope1_id, "PatchMarkedWrite:x", x);
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe");
-		_patch_join_init($scope1_id, "__tests__/tags/show-await.marko_1_input_label#0:4_x#2/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_label", _filled_guard($scope0_reason, 1) && "x");
+		_patch_init_entry($scope1_id, "__tests__/tags/show-await.marko_1_input_label#0:4_x#2/init", [_filled_guard($scope0_reason, 2) && ">input_label", _filled_guard($scope0_reason, 1) && "x"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { x: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && x }, "__tests__/tags/show-await.marko", "1:2", { x: "1:8" }), $cg__input_label && "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe");
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 1), 1);
 	$cg__input_promise && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !(_filled_guard($scope0_reason, 2) && $cg__input_promise));

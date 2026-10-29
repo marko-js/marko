@@ -21,8 +21,8 @@ var template_default = _template("a", (input) => {
 		_filled_guard($scope2_reason, 3) && (_client_guard($scope2_reason, 4) || _client_guard($scope2_reason, 5)) && _patch_write($scope2_id, "xe", fmt);
 		$cg__fmt && _patch_write($scope2_id, "xf", a, !(_filled_guard($scope2_reason, 4) && $cg__fmt));
 		$cg__fmt && _patch_write($scope2_id, "xh", b, !(_filled_guard($scope2_reason, 5) && $cg__fmt));
-		_patch_join_init($scope2_id, "a1", $scope2_reason, 0, _filled_guard($scope2_reason, 3) && "e", _filled_guard($scope2_reason, 4) && "f");
-		_patch_join_init($scope2_id, "a2", $scope2_reason, 1, _filled_guard($scope2_reason, 3) && "e", _filled_guard($scope2_reason, 5) && "h");
+		_patch_init_entry($scope2_id, "a1", [_filled_guard($scope2_reason, 3) && "e", _filled_guard($scope2_reason, 4) && "f"], $scope2_reason, 0);
+		_patch_init_entry($scope2_id, "a2", [_filled_guard($scope2_reason, 3) && "e", _filled_guard($scope2_reason, 5) && "h"], $scope2_reason, 1);
 		_scope($scope2_id, {
 			e: (_unfilled_if($scope2_reason, 2, 3) || _unfilled_if($scope2_reason, 0, 3) || _unfilled_if($scope2_reason, 1, 3)) && fmt,
 			f: (_unfilled_if($scope2_reason, 3) || _unfilled_if($scope2_reason, 0)) && a,

@@ -28,7 +28,11 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		label_view_default(_patch_live($childScope, { get: item.upper ? up : low }, $scope1_id, ">f >g d"));
 		_patch_child_end();
-		(_filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope1_id, "a2", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">f", _filled_guard($scope0_reason, 1) && ">g", _filled_guard($scope0_reason, 2) && "d");
+		(_filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_init_entry($scope1_id, "a2", [
+			_filled_guard($scope0_reason, 1) && ">f",
+			_filled_guard($scope0_reason, 1) && ">g",
+			_filled_guard($scope0_reason, 2) && "d"
+		], $scope0_reason, 0);
 		_scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && item?.upper,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

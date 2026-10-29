@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 	_html(`<button class=t>t</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");
 	$cg__input_b && _patch_write($scope0_id, "xf", input.a, !(_filled_guard($scope0_reason, 1) && $cg__input_b));
-	_patch_join_init($scope0_id, "b2", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "f", _filled_guard($scope0_reason, 2) && "g");
+	_patch_init_entry($scope0_id, "b2", [_filled_guard($scope0_reason, 1) && "f", _filled_guard($scope0_reason, 2) && "g"], $scope0_reason, 0);
 	_patch_fill($scope0_id, "vb3", open, 1);
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,

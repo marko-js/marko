@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "b", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["a2"], $scope0_reason, 3);
-			_filled_guard($scope0_reason, 2) && ($cg__input_show || $cg__input_inner) && _patch_init_entry($scope1_id, "a1", "c");
+			_filled_guard($scope0_reason, 2) && ($cg__input_show || $cg__input_inner) && _patch_init_entry($scope1_id, "a1", ["c"]);
 			$cg__input_title && _patch_init($scope1_id, "a4");
 			$cg__input_inner && _patch_init($scope1_id, "a5");
 			_scope($scope1_id, {

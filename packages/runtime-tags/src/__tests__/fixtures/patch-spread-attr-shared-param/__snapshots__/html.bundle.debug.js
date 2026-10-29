@@ -16,8 +16,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_filled_guard($scope0_reason, 7) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title);
 	_filled_guard($scope0_reason, 8) && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_cls", input.cls);
 	_filled_guard($scope0_reason, 9) && _client_guard($scope0_reason, 6) && _patch_write($scope0_id, "PatchMarkedWrite:input_width", input.width);
-	_patch_join_init($scope0_id, "__tests__/template.marko_0_input_url#4_input_title#5_input_cls#6/init", $scope0_reason, 4, _filled_guard($scope0_reason, 6) && "input_url", _filled_guard($scope0_reason, 7) && "input_title", _filled_guard($scope0_reason, 8) && "input_cls");
-	_patch_join_init($scope0_id, "__tests__/template.marko_0_input_url#4_input_width#8/init", $scope0_reason, 2, _filled_guard($scope0_reason, 6) && "input_url", _filled_guard($scope0_reason, 9) && "input_width");
+	_patch_init_entry($scope0_id, "__tests__/template.marko_0_input_url#4_input_title#5_input_cls#6/init", [
+		_filled_guard($scope0_reason, 6) && "input_url",
+		_filled_guard($scope0_reason, 7) && "input_title",
+		_filled_guard($scope0_reason, 8) && "input_cls"
+	], $scope0_reason, 4);
+	_patch_init_entry($scope0_id, "__tests__/template.marko_0_input_url#4_input_width#8/init", [_filled_guard($scope0_reason, 6) && "input_url", _filled_guard($scope0_reason, 9) && "input_width"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_url: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.url,
 		input_title: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 4)) && input.title,

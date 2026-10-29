@@ -23,7 +23,7 @@ var card_default = _template("b", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_resume($scope2_id, "a", fmt(v + s))}</span>`);
 				_unfilled_if($scope0_reason, 1) && _patch_init($scope2_id, "b1");
-				_patch_init_entry($scope2_id, "b2", _filled_guard($scope0_reason, 1) && ">>i", _filled_guard($scope0_reason, 2) && ">e");
+				_patch_init_entry($scope2_id, "b2", [_filled_guard($scope0_reason, 1) && ">>i", _filled_guard($scope0_reason, 2) && ">e"]);
 				_subscribe($wi__input_prefix && $fmt2__closures, _subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b3"), _client_guard($scope0_reason, 1) && "b1");
 				return 0;
 			}

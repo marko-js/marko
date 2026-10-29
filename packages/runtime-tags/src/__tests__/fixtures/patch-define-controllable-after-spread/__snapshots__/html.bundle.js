@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a3");
 		$cg__valueChange && _patch_write($scope1_id, "xd", value, !(_filled_guard($scope1_reason, 1) && $cg__valueChange));
 		_client_guard($scope1_reason, 0) && _patch_write($scope1_id, "xe", valueChange, !(_filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1)));
-		_patch_join_init($scope1_id, "a4", $scope1_reason, 0, _filled_guard($scope1_reason, 1) && "d", _filled_guard($scope1_reason, 2) && "e");
+		_patch_init_entry($scope1_id, "a4", [_filled_guard($scope1_reason, 1) && "d", _filled_guard($scope1_reason, 2) && "e"], $scope1_reason, 0);
 		_scope($scope1_id, {
 			d: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0)) && value,
 			e: _unfilled_if($scope1_reason, 0) && valueChange

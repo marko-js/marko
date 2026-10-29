@@ -14,7 +14,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 1));
 		_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + item, 1, $scope0_reason, 0)}</p><div></div>${_el_resume($scope1_id, "#div/1")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1_item#3", 1, _filled_guard($scope0_reason, 1), "item");
-		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:4_item#3/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_a", _filled_guard($scope0_reason, 1) && "item");
+		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_init_entry($scope1_id, "__tests__/tags/child.marko_1_input_a#0:4_item#3/init", [_filled_guard($scope0_reason, 2) && ">input_a", _filled_guard($scope0_reason, 1) && "item"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)

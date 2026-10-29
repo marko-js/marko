@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		icon_default({ name: item.icon });
 		_patch_child_end();
 		_html(`<span>${_text_resume($scope1_id, "c", item.label, 1, $scope0_reason, 1)}</span></a>${_el_resume($scope1_id, "a", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 1))}`);
-		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "a0", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">f", _filled_guard($scope0_reason, 1) && "f");
+		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_init_entry($scope1_id, "a0", [_filled_guard($scope0_reason, 2) && ">f", _filled_guard($scope0_reason, 1) && "f"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item?.href,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

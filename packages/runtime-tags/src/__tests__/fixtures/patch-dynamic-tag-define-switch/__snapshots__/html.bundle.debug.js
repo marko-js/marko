@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.which ? Counter : Other, { label: input.label }, 1, 0, 0, $wg__input_label__OR__input_which, $scope0_reason, 0);
 	_filled_guard($scope0_reason, 2) && $cg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_which", input.which);
-	_patch_join_init($scope0_id, "__tests__/template.marko_0_input_label#3_input_which#4_Counter#5_Other#6/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "input_label", _filled_guard($scope0_reason, 2) && "input_which");
+	_patch_init_entry($scope0_id, "__tests__/template.marko_0_input_label#3_input_which#4_Counter#5_Other#6/init", [_filled_guard($scope0_reason, 1) && "input_label", _filled_guard($scope0_reason, 2) && "input_which"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
 		input_which: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.which,

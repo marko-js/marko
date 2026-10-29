@@ -40,7 +40,7 @@ var show_await_default = _template("c", (input) => {
 		_patch_child_end();
 		_filled_guard($scope0_reason, 1) && $cg__input_label && _patch_write($scope1_id, "xi", x);
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, $cg__input_label ? "c3" : "c4");
-		_patch_join_init($scope1_id, "c5", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "i");
+		_patch_init_entry($scope1_id, "c5", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "i"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, {
 			i: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && x,
 			g: _existing_scope($childScope)

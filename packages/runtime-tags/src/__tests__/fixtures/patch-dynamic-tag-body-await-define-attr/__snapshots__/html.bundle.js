@@ -40,7 +40,7 @@ var card_default = _template("b", (input) => {
 		_dynamic_tag($scope2_id, "a", on ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__c__OR__on, $scope2_reason, 0);
 		$cg__on && _patch_write($scope2_id, "xd", c, !(_filled_guard($scope2_reason, 1) && $cg__on));
 		$cg__c && _patch_write($scope2_id, "xe", on, !(_filled_guard($scope2_reason, 2) && $cg__c));
-		_patch_join_init($scope2_id, "b1", $scope2_reason, 0, _filled_guard($scope2_reason, 1) && "d", _filled_guard($scope2_reason, 2) && "e");
+		_patch_init_entry($scope2_id, "b1", [_filled_guard($scope2_reason, 1) && "d", _filled_guard($scope2_reason, 2) && "e"], $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
 			d: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0)) && c,
 			e: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 0)) && on

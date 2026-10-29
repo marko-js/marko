@@ -43,7 +43,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show);
 	_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_rest", input.rest);
-	_patch_join_init($scope0_id, "__tests__/template.marko_0_input_show#5_input_label#6_input_rest#7/init", $scope0_reason, 2, _filled_guard($scope0_reason, 3) && "input_show", _filled_guard($scope0_reason, 4) && "input_label", _filled_guard($scope0_reason, 5) && "input_rest");
+	_patch_init_entry($scope0_id, "__tests__/template.marko_0_input_show#5_input_label#6_input_rest#7/init", [
+		_filled_guard($scope0_reason, 3) && "input_show",
+		_filled_guard($scope0_reason, 4) && "input_label",
+		_filled_guard($scope0_reason, 5) && "input_rest"
+	], $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_show: _write_if($scope0_reason, 1) && input.show,
 		input_label: input.label,

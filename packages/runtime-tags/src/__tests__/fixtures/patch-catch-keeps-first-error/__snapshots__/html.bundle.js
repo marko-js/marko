@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		_html(`<p>${_text_resume($scope2_id, "a", input.fail ? boom(new Error(input.msg)) : "ok", 1, $scope0_reason, 0)}</p>`);
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "a3");
 		(_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "a4");
-		_patch_join_init($scope2_id, "a5", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">g", _filled_guard($scope0_reason, 3) && ">h");
+		_patch_init_entry($scope2_id, "a5", [_filled_guard($scope0_reason, 2) && ">g", _filled_guard($scope0_reason, 3) && ">h"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_fail && "a3"), $cg__input_msg && "a4");
 	}, void 0, (err) => {
 		_scope_reason();

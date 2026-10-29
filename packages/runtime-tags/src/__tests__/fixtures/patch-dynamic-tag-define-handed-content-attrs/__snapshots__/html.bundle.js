@@ -18,7 +18,7 @@ var one_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "a", input.content, { title: t }, 1, 0, 0, $wg__input_content || $wg__t, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, 0, 0, $scope0_reason);
 		$cg__input_content && _patch_write($scope1_id, "xd", t, !(_filled_guard($scope1_reason, 0) && $cg__input_content));
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "b1");
-		_patch_join_init($scope1_id, "b2", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, _filled_guard($scope0_reason, 0) && ">d", _filled_guard($scope1_reason, 0) && "d");
+		_patch_init_entry($scope1_id, "b2", [_filled_guard($scope0_reason, 0) && ">d", _filled_guard($scope1_reason, 0) && "d"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0);
 		($wi__input_content || $wi__t) && _subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_content && $input_content__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 1)) && t,
 			_: _scope_with_id($scope0_id)

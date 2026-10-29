@@ -45,7 +45,7 @@ var rowsy_default = _template("b", (input) => {
 			label: tag,
 			content: Label
 		}, 9, 0, 0, $wg__input_tags__OR__input_card, $scope0_reason, 0);
-		(_filled_guard($scope0_reason, 3) && !$cg__input_tags || !$cg__input_tags || !$cg__input_tags || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope2_id, "b6", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && ">h", _filled_guard($scope0_reason, 2) && "c");
+		(_filled_guard($scope0_reason, 3) && !$cg__input_tags || !$cg__input_tags || !$cg__input_tags || _filled_guard($scope0_reason, 2)) && _patch_init_entry($scope2_id, "b6", [_filled_guard($scope0_reason, 3) && ">h", _filled_guard($scope0_reason, 2) && "c"], $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope2_id, {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && tag,
 			_: _scope_with_id($scope0_id)

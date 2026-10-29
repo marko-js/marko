@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 		_html(`<p>${_text_resume($scope5_id, "a", input.fail ? boom(input.msg) : input.msg, 1, $scope0_reason, 1)}</p>`);
 		(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 1)) && _patch_init($scope5_id, "a23");
 		(_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 1)) && _patch_init($scope5_id, "a24");
-		_patch_join_init($scope5_id, "a25", $scope0_reason, 1, _filled_guard($scope0_reason, 5) && ">g", _filled_guard($scope0_reason, 6) && ">h");
+		_patch_init_entry($scope5_id, "a25", [_filled_guard($scope0_reason, 5) && ">g", _filled_guard($scope0_reason, 6) && ">h"], $scope0_reason, 1);
 		_subscribe(_unfilled_if($scope0_reason, 6) && $input_msg__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_fail__closures, _scope($scope5_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }), $cg__input_fail && "a23"), $cg__input_msg && "a24");
 	}, void 0, (err) => {
 		_scope_reason();
@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 			_filled_guard($scope0_reason, 4) && _patch_write($scope3_id, "xc", x, !$sg__input_items);
 			_html(`<u>${_text_resume($scope3_id, "a", x, 1, $scope0_reason, 4)}</u>`);
 			_script($scope3_id, "a9");
-			_patch_join_init($scope3_id, "a10", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">>d", _filled_guard($scope0_reason, 4) && "c");
+			_patch_init_entry($scope3_id, "a10", [_filled_guard($scope0_reason, 2) && ">>d", _filled_guard($scope0_reason, 4) && "c"], $scope0_reason, 0);
 			_subscribe($wi__input_v && $input_v__closures, _scope($scope3_id, {
 				c: x,
 				_: _scope_with_id($scope1_id),

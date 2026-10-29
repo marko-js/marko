@@ -17,7 +17,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", content, { title: t }, 1, 0, 0, $wg__content__OR__t, $scope1_reason, 0, 0, 1);
 		$cg__t && _patch_write($scope1_id, "PatchMarkedWrite:content", content, !(_filled_guard($scope1_reason, 1) && $cg__t));
 		$cg__content && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !(_filled_guard($scope1_reason, 2) && $cg__content));
-		_patch_join_init($scope1_id, "__tests__/tags/one.marko_1_content#3_t#4/init", $scope1_reason, 0, _filled_guard($scope1_reason, 1) && "content", _filled_guard($scope1_reason, 2) && "t");
+		_patch_init_entry($scope1_id, "__tests__/tags/one.marko_1_content#3_t#4/init", [_filled_guard($scope1_reason, 1) && "content", _filled_guard($scope1_reason, 2) && "t"], $scope1_reason, 0);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {
 			content: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0)) && content,
 			t: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 0)) && t

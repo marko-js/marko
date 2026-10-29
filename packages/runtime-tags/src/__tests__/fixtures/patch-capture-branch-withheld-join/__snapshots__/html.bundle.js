@@ -36,7 +36,7 @@ var child_default = _template("b", (input) => {
 				_html(`<em>${_text_resume($scope2_id, "a", input.a + c, 1, $scope0_reason, 0)}</em><i>${_text_resume($scope2_id, "b", c, 1, $scope0_reason, 4)}</i>`);
 				(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "b5");
 				(_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, $cg__input_b ? "b6" : "b7");
-				_patch_join_init($scope2_id, "b8", $scope0_reason, 0, _filled_guard($scope0_reason, 5) && ">>f", _filled_guard($scope0_reason, 4) && ">c");
+				_patch_init_entry($scope2_id, "b8", [_filled_guard($scope0_reason, 5) && ">>f", _filled_guard($scope0_reason, 4) && ">c"], $scope0_reason, 0);
 				_subscribe(_unfilled_if($scope0_reason, 4) && $if_content__c__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_b__OR__input_a__OR__input_mode && _scope_with_id($scope1_id) })));
 			}, $scope1_id) };
 			_html("<section>");

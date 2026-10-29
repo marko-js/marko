@@ -27,7 +27,7 @@ var child_default = _template("b", (input) => {
 			_html(`</section>${_el_resume($scope1_id, "b", _mask_group($scope0_reason, 8))}`);
 			_filled_guard($scope0_reason, 6) ? ($cg__input_a || _content_withheld("b0", $scope1_id) || $cg__input_mode) && _patch_fill($scope1_id, "vb3", c) : _patch_init($scope1_id, "b4");
 			$cg__input_mode && _patch_write($scope1_id, "wf", frag?.content, 1);
-			_patch_join_init($scope1_id, "b5", $scope0_reason, 1, _filled_guard($scope0_reason, 7) && ">f", _filled_guard($scope0_reason, 6) && "c");
+			_patch_init_entry($scope1_id, "b5", [_filled_guard($scope0_reason, 7) && ">f", _filled_guard($scope0_reason, 6) && "c"], $scope0_reason, 1);
 			$cg__input_mode && _patch_init($scope1_id, "b6");
 			_scope($scope1_id, {
 				c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 6)) && c,

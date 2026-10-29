@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope3_id, "a", Tag, { content }, 1, 0, 0, $wg__on__OR__content, $scope3_reason, 0);
 		$cg__on && _patch_write($scope3_id, "xe", content, !(_filled_guard($scope3_reason, 2) && $cg__on));
 		$cg__content && _patch_write($scope3_id, "xf", Tag, !(_filled_guard($scope3_reason, 1) && $cg__content));
-		_patch_join_init($scope3_id, "a2", $scope3_reason, 0, _filled_guard($scope3_reason, 2) && "e", _filled_guard($scope3_reason, 1) && "f");
+		_patch_init_entry($scope3_id, "a2", [_filled_guard($scope3_reason, 2) && "e", _filled_guard($scope3_reason, 1) && "f"], $scope3_reason, 0);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {
 			e: (_unfilled_if($scope3_reason, 1) || _unfilled_if($scope3_reason, 0)) && content,
 			f: (_unfilled_if($scope3_reason, 2) || _unfilled_if($scope3_reason, 0)) && Tag

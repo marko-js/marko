@@ -19,7 +19,11 @@ var template_default = _template("a", (input) => {
 		_filled_guard($scope2_reason, 4) && _client_guard($scope2_reason, 2) && _patch_write($scope2_id, "xd", fmt);
 		_filled_guard($scope2_reason, 5) && _client_guard($scope2_reason, 1) && _patch_write($scope2_id, "xe", sep);
 		$cg__fmt__OR__sep && _patch_write($scope2_id, "xf", label, !(_filled_guard($scope2_reason, 6) && $cg__fmt__OR__sep));
-		_patch_join_init($scope2_id, "a1", $scope2_reason, 3, _filled_guard($scope2_reason, 4) && "d", _filled_guard($scope2_reason, 5) && "e", _filled_guard($scope2_reason, 6) && "f");
+		_patch_init_entry($scope2_id, "a1", [
+			_filled_guard($scope2_reason, 4) && "d",
+			_filled_guard($scope2_reason, 5) && "e",
+			_filled_guard($scope2_reason, 6) && "f"
+		], $scope2_reason, 3);
 		_scope($scope2_id, {
 			d: (_unfilled_if($scope2_reason, 2, 4) || _unfilled_if($scope2_reason, 3, 4)) && fmt,
 			e: (_unfilled_if($scope2_reason, 1, 5) || _unfilled_if($scope2_reason, 3, 5)) && sep,

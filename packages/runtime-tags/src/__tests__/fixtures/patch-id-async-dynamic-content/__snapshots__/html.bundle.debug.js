@@ -69,7 +69,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				]), 0, $wg__input_items__OR__input_loaded, $scope0_reason, 0);
 				_filled_guard($scope0_reason, 1) && $cg__input_loaded && _patch_write($scope3_id, "PatchMarkedWrite:ready", ready);
 				(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope3_id, "__tests__/template.marko_3_input_loaded#0:4/subscribe");
-				_patch_join_init($scope3_id, "__tests__/template.marko_3_input_loaded#0:4_ready#2/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">>>input_loaded", _filled_guard($scope0_reason, 1) && "ready");
+				_patch_init_entry($scope3_id, "__tests__/template.marko_3_input_loaded#0:4_ready#2/init", [_filled_guard($scope0_reason, 2) && ">>>input_loaded", _filled_guard($scope0_reason, 1) && "ready"], $scope0_reason, 0);
 				$wi__input_items__OR__input_loaded && _subscribe(_unfilled_if($scope0_reason, 2) && $input_loaded__closures, _scope($scope3_id, { ready: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && ready }, "__tests__/template.marko", "5:4", { ready: "5:10" }), $cg__input_loaded && "__tests__/template.marko_3_input_loaded#0:4/subscribe", $wg__input_items__OR__input_loaded);
 				$wg__input_items__OR__input_loaded || $wi__input_items__OR__input_loaded && _resume_branch($scope3_id);
 			}, 1, "__tests__/template.marko_3*content", _unfilled_if($scope0_reason, 1), 0, 1);

@@ -527,7 +527,7 @@ where its group is server-sourced on the instance; where the group mixes, its
 members' join fills re-run it, or, where some member has none (one below the
 template root or reached over subscribers, a member of two, one filled for
 other reads), the patch names the join's init on the scope, fresh or existing
-(`_patch_join_init`), and no member's fill re-runs it.
+(`_patch_init_entry`), and no member's fill re-runs it.
 
 **Unpatched key**:
 A member's fill key with the `/unpatched` suffix (`getPatchFillKey`), as

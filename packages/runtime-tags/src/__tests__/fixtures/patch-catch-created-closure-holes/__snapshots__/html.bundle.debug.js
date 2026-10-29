@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<p>${_text_resume($scope2_id, "#text/0", input.fail ? boom(input.msg) : input.msg, 1, $scope0_reason, 0)}</p>`);
 		(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "__tests__/template.marko_2_input_msg#0:3/subscribe");
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "__tests__/template.marko_2_input_fail#0:4/subscribe");
-		_patch_join_init($scope2_id, "__tests__/template.marko_2_input_msg#0:3_input_fail#0:4/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">input_msg", _filled_guard($scope0_reason, 2) && ">input_fail");
+		_patch_init_entry($scope2_id, "__tests__/template.marko_2_input_msg#0:3_input_fail#0:4/init", [_filled_guard($scope0_reason, 1) && ">input_msg", _filled_guard($scope0_reason, 2) && ">input_fail"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope2_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_msg/5": $wi__input_msg && 1

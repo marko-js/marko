@@ -31,7 +31,7 @@ var rowsx_default = _template("b", (input) => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
 				_html(`<em>${_text_resume($scope4_id, "a", fmt(label), 1, $scope3_reason, 2)}</em>`);
-				_patch_join_init($scope4_id, "b1", $scope3_reason, 2, _filled_guard($scope3_reason, 5) && ">e", _filled_guard($scope3_reason, 6) && ">f");
+				_patch_init_entry($scope4_id, "b1", [_filled_guard($scope3_reason, 5) && ">e", _filled_guard($scope3_reason, 6) && ">f"], $scope3_reason, 2);
 				_scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) });
 				return 0;
 			}
@@ -55,7 +55,7 @@ var rowsx_default = _template("b", (input) => {
 		});
 		_patch_child_end();
 		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "b7");
-		(_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope1_id, "b8", $scope0_reason, 0, _filled_guard($scope0_reason, 4) && ">h", _filled_guard($scope0_reason, 2) && "c");
+		(_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_init_entry($scope1_id, "b8", [_filled_guard($scope0_reason, 4) && ">h", _filled_guard($scope0_reason, 2) && "c"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			c: _write_if($scope0_reason, 4) && x,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),

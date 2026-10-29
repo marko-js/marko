@@ -29,7 +29,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 			if (isOpen) {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_resume($scope2_id, "#text/0", fmt(label), 1, $scope1_reason, 2)}</em>`);
-				_patch_join_init($scope2_id, "__tests__/tags/rowsx.marko_2_fmt#1:4_label#1:5/init", $scope1_reason, 2, _filled_guard($scope1_reason, 5) && ">fmt", _filled_guard($scope1_reason, 6) && ">label");
+				_patch_init_entry($scope2_id, "__tests__/tags/rowsx.marko_2_fmt#1:4_label#1:5/init", [_filled_guard($scope1_reason, 5) && ">fmt", _filled_guard($scope1_reason, 6) && ">label"], $scope1_reason, 2);
 				_scope($scope2_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/tags/rowsx.marko", "3:4");
 				return 0;
 			}

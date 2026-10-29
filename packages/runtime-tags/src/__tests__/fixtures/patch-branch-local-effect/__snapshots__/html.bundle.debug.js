@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
-			_filled_guard($scope0_reason, 2) && ($cg__input_show || $cg__input_inner) && _patch_init_entry($scope1_id, "__tests__/template.marko_2_label#1:2/init", "label");
+			_filled_guard($scope0_reason, 2) && ($cg__input_show || $cg__input_inner) && _patch_init_entry($scope1_id, "__tests__/template.marko_2_label#1:2/init", ["label"]);
 			$cg__input_title && _patch_init($scope1_id, "__tests__/template.marko_1_input_title#0:4/init");
 			$cg__input_inner && _patch_init($scope1_id, "__tests__/template.marko_1_input_inner#0:5/init");
 			_scope($scope1_id, {

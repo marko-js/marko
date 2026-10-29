@@ -75,7 +75,6 @@ export {
   _patch_fill,
   _patch_init,
   _patch_init_entry,
-  _patch_join_init,
   _patch_let_change,
   _patch_live,
   _patch_nonce,

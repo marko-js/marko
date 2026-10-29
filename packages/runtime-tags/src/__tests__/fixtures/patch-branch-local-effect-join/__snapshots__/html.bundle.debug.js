@@ -17,7 +17,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_html(`<p>${_text_resume($scope1_id, "#text/0", input.a + c, 1, $scope0_reason, 1)}</p><div></div>${_el_resume($scope1_id, "#div/1")}`);
 			_script($scope1_id, "__tests__/tags/child.marko_1_c#2", 1, _filled_guard($scope0_reason, 3), "c");
 			$cg__input_b && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4/init");
-			_patch_join_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_c#2/init", $scope0_reason, 1, _filled_guard($scope0_reason, 4) && ">input_a", _filled_guard($scope0_reason, 3) && "c");
+			_patch_init_entry($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_c#2/init", [_filled_guard($scope0_reason, 4) && ">input_a", _filled_guard($scope0_reason, 3) && "c"], $scope0_reason, 1);
 			_scope($scope1_id, {
 				c,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)

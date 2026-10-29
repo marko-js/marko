@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.which ? Counter : Other, { label: input.label }, 1, 0, 0, $wg__input_label__OR__input_which, $scope0_reason, 0);
 	_filled_guard($scope0_reason, 2) && $cg__input_label && _patch_write($scope0_id, "xe", input.which);
-	_patch_join_init($scope0_id, "a9", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "d", _filled_guard($scope0_reason, 2) && "e");
+	_patch_init_entry($scope0_id, "a9", [_filled_guard($scope0_reason, 1) && "d", _filled_guard($scope0_reason, 2) && "e"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.which,

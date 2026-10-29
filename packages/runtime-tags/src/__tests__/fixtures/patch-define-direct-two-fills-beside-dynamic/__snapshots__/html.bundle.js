@@ -40,7 +40,11 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.show);
 	_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.rest);
-	_patch_join_init($scope0_id, "a7", $scope0_reason, 2, _filled_guard($scope0_reason, 3) && "f", _filled_guard($scope0_reason, 4) && "g", _filled_guard($scope0_reason, 5) && "h");
+	_patch_init_entry($scope0_id, "a7", [
+		_filled_guard($scope0_reason, 3) && "f",
+		_filled_guard($scope0_reason, 4) && "g",
+		_filled_guard($scope0_reason, 5) && "h"
+	], $scope0_reason, 2);
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 1) && input.show,
 		g: input.label,

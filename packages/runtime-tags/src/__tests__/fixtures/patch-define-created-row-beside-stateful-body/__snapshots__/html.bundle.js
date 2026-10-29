@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		});
 		_patch_child_end();
 		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "a5");
-		(_filled_guard($scope0_reason, 4) && !$cg__input_rows || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope1_id, "a6", $scope0_reason, 0, _filled_guard($scope0_reason, 4) && ">h", _filled_guard($scope0_reason, 2) && "c");
+		(_filled_guard($scope0_reason, 4) && !$cg__input_rows || _filled_guard($scope0_reason, 2)) && _patch_init_entry($scope1_id, "a6", [_filled_guard($scope0_reason, 4) && ">h", _filled_guard($scope0_reason, 2) && "c"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			c: _write_if($scope0_reason, 4) && row,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),

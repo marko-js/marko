@@ -28,7 +28,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_html(`</section>${_el_resume($scope1_id, "#section/1", _mask_group($scope0_reason, 8))}`);
 			_filled_guard($scope0_reason, 6) ? ($cg__input_a || _content_withheld("__tests__/tags/child.marko_2*content", $scope1_id) || $cg__input_mode) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/child.marko_fill3", c) : _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4/init");
 			$cg__input_mode && _patch_write($scope1_id, "PatchWrite:frag_content", frag?.content, 1);
-			_patch_join_init($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_c#2/init", $scope0_reason, 1, _filled_guard($scope0_reason, 7) && ">input_a", _filled_guard($scope0_reason, 6) && "c");
+			_patch_init_entry($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_c#2/init", [_filled_guard($scope0_reason, 7) && ">input_a", _filled_guard($scope0_reason, 6) && "c"], $scope0_reason, 1);
 			$cg__input_mode && _patch_init($scope1_id, "__tests__/tags/child.marko_1_input_mode#0:6_frag_content#5/init");
 			_scope($scope1_id, {
 				c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 6)) && c,

@@ -20,7 +20,11 @@ var label_view_default = _template("b", (input) => {
 		$cg__b__OR__flag && _patch_write($scope1_id, "xd", a, !(_filled_guard($scope1_reason, 4) && $cg__b__OR__flag));
 		$cg__a__OR__flag && _patch_write($scope1_id, "xe", b, !(_filled_guard($scope1_reason, 5) && $cg__a__OR__flag));
 		$cg__a__OR__b && _patch_write($scope1_id, "xf", flag, !(_filled_guard($scope1_reason, 6) && $cg__a__OR__b));
-		_patch_join_init($scope1_id, "b2", $scope1_reason, 3, _filled_guard($scope1_reason, 4) && "d", _filled_guard($scope1_reason, 5) && "e", _filled_guard($scope1_reason, 6) && "f");
+		_patch_init_entry($scope1_id, "b2", [
+			_filled_guard($scope1_reason, 4) && "d",
+			_filled_guard($scope1_reason, 5) && "e",
+			_filled_guard($scope1_reason, 6) && "f"
+		], $scope1_reason, 3);
 		_scope($scope1_id, {
 			d: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 3)) && a,
 			e: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 3)) && b,
@@ -59,7 +63,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
-	_patch_init_entry($scope0_id, "a3", _filled_guard($scope0_reason, 0) && "g", _filled_guard($scope0_reason, 0) && "h");
+	_patch_init_entry($scope0_id, "a3", [_filled_guard($scope0_reason, 0) && "g", _filled_guard($scope0_reason, 0) && "h"]);
 	_scope($scope0_id, {
 		e: input.title,
 		f: upper,

@@ -16,7 +16,7 @@ var child_default = _template("b", (input) => {
 			_html(`<p>${_text_resume($scope1_id, "a", input.a + c, 1, $scope0_reason, 0)}</p>`);
 			$cg__input_a && _patch_write($scope1_id, "xb", c, !(_filled_guard($scope0_reason, 2) && $cg__input_a));
 			_client_guard($scope0_reason, 2) && _patch_init($scope1_id, "b0");
-			_patch_join_init($scope1_id, "b1", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && ">g", _filled_guard($scope0_reason, 2) && "b");
+			_patch_init_entry($scope1_id, "b1", [_filled_guard($scope0_reason, 3) && ">g", _filled_guard($scope0_reason, 2) && "b"], $scope0_reason, 0);
 			_scope($scope1_id, {
 				b: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && c,
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)

@@ -10,8 +10,8 @@ var row_default = _template("__tests__/tags/row.marko", (input) => {
 	$cg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !(_filled_guard($scope0_reason, 3) && $cg__input_b));
 	_client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !(_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 5))));
 	$cg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !(_filled_guard($scope0_reason, 5) && $cg__input_b));
-	_patch_join_init($scope0_id, "__tests__/tags/row.marko_0_input_a#4_input_b#5/init", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && "input_a", _filled_guard($scope0_reason, 4) && "input_b");
-	_patch_join_init($scope0_id, "__tests__/tags/row.marko_0_input_b#5_input_y#7/init", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && "input_b", _filled_guard($scope0_reason, 5) && "input_y");
+	_patch_init_entry($scope0_id, "__tests__/tags/row.marko_0_input_a#4_input_b#5/init", [_filled_guard($scope0_reason, 3) && "input_a", _filled_guard($scope0_reason, 4) && "input_b"], $scope0_reason, 0);
+	_patch_init_entry($scope0_id, "__tests__/tags/row.marko_0_input_b#5_input_y#7/init", [_filled_guard($scope0_reason, 4) && "input_b", _filled_guard($scope0_reason, 5) && "input_y"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_a: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.a,
 		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.b,

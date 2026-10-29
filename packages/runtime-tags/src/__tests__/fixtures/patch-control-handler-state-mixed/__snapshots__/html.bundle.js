@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 			cv = v;
 		}, "a0", $scope1_id), 0, 0, 0, "wEa")}>${_el_resume($scope1_id, "a")}<span>${_text_resume($scope1_id, "b", cv, 1, 0, 0, 1)}</span>`);
 		_script($scope1_id, "a1");
-		_patch_init_entry($scope1_id, "a3", ">j", _filled_guard($scope0_reason, 1) && "e");
+		_patch_init_entry($scope1_id, "a3", [">j", _filled_guard($scope0_reason, 1) && "e"]);
 		_scope($scope1_id, {
 			e: it?.v,
 			_: _scope_with_id($scope0_id)

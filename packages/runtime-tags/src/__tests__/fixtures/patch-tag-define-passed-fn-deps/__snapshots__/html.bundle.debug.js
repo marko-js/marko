@@ -25,7 +25,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 		_script($scope1_id, "__tests__/tags/field.marko_1");
 		$cg__valueChange && _patch_write($scope1_id, "PatchMarkedWrite:value", value, !(_filled_guard($scope1_reason, 1) && $cg__valueChange));
 		_client_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:valueChange", valueChange, !(_filled_guard($scope1_reason, 2) && _client_guard($scope1_reason, 1)));
-		_patch_join_init($scope1_id, "__tests__/tags/field.marko_1_value#3_valueChange#4/init", $scope1_reason, 0, _filled_guard($scope1_reason, 1) && "value", _filled_guard($scope1_reason, 2) && "valueChange");
+		_patch_init_entry($scope1_id, "__tests__/tags/field.marko_1_value#3_valueChange#4/init", [_filled_guard($scope1_reason, 1) && "value", _filled_guard($scope1_reason, 2) && "valueChange"], $scope1_reason, 0);
 		_scope($scope1_id, {
 			value: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0)) && value,
 			valueChange: _unfilled_if($scope1_reason, 0) && valueChange

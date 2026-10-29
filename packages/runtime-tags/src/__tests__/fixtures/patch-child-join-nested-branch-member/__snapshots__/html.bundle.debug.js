@@ -32,7 +32,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 3);
 	_html(`<p>${_text_resume($scope0_id, "#text/1", input.a + ":" + input.b, 1, $scope0_reason, 2)}</p>`);
 	$cg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !(_filled_guard($scope0_reason, 5) && $cg__input_b));
-	_patch_join_init($scope0_id, "__tests__/tags/panel.marko_0_input_b#5_input_a#6/init", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && "input_b", _filled_guard($scope0_reason, 5) && "input_a");
+	_patch_init_entry($scope0_id, "__tests__/tags/panel.marko_0_input_b#5_input_a#6/init", [_filled_guard($scope0_reason, 4) && "input_b", _filled_guard($scope0_reason, 5) && "input_a"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.b,
 		input_a: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.a,

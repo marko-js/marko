@@ -14,7 +14,7 @@ var child_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_resume($scope1_id, "a", input.a + input.b, 1, $scope0_reason, 1)}</p>`);
-			_patch_join_init($scope1_id, "b0", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && ">g", _filled_guard($scope0_reason, 4) && ">h");
+			_patch_init_entry($scope1_id, "b0", [_filled_guard($scope0_reason, 3) && ">g", _filled_guard($scope0_reason, 4) && ">h"], $scope0_reason, 1);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}

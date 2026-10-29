@@ -43,14 +43,14 @@ var card_default = _template("b", (input) => {
 			_dynamic_tag($scope2_id, "a", y ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 			_filled_guard($scope0_reason, 1) && $cg__input_content && _patch_write($scope2_id, "xc", y);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "b0");
-			_patch_join_init($scope2_id, "b1", $scope0_reason, 0, _filled_guard($scope0_reason, 0) && ">e", _filled_guard($scope0_reason, 1) && "c");
+			_patch_init_entry($scope2_id, "b1", [_filled_guard($scope0_reason, 0) && ">e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
 			$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $await_content__c__closures, _scope($scope2_id, { c: _unfilled_if($scope0_reason, 0) && y }), _client_guard($scope0_reason, 0) && "b0", $wg__input_p__OR__input_content);
 			$wg__input_p__OR__input_content || $wi__input_p__OR__input_content && _resume_branch($scope2_id);
 		}, 1, "b2", _unfilled_if($scope0_reason, 1), 1, 1);
 		_filled_guard($scope0_reason, 1) && $cg__input_content && _patch_write($scope1_id, "xc", x);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_p ? "b6" : "b7");
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b8");
-		_patch_join_init($scope1_id, "b9", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c");
+		_patch_init_entry($scope1_id, "b9", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
 		$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_p__closures, _scope($scope1_id, {
 			c: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && x,
 			e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && c,

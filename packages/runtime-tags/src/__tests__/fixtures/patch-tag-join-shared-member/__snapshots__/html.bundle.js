@@ -11,8 +11,12 @@ var rows_default = _template("b", (input) => {
 	$cg__input_a__OR__input_c && _patch_write($scope0_id, "xf", input.b, !(_filled_guard($scope0_reason, 7) && $cg__input_a__OR__input_c));
 	$cg__input_a__OR__input_b && _patch_write($scope0_id, "xg", input.c, !(_filled_guard($scope0_reason, 8) && $cg__input_a__OR__input_b));
 	$cg__input_a && _patch_write($scope0_id, "xi", input.d, !(_filled_guard($scope0_reason, 9) && $cg__input_a));
-	_patch_join_init($scope0_id, "b0", $scope0_reason, 4, _filled_guard($scope0_reason, 6) && "e", _filled_guard($scope0_reason, 7) && "f", _filled_guard($scope0_reason, 8) && "g");
-	_patch_join_init($scope0_id, "b1", $scope0_reason, 2, _filled_guard($scope0_reason, 6) && "e", _filled_guard($scope0_reason, 9) && "i");
+	_patch_init_entry($scope0_id, "b0", [
+		_filled_guard($scope0_reason, 6) && "e",
+		_filled_guard($scope0_reason, 7) && "f",
+		_filled_guard($scope0_reason, 8) && "g"
+	], $scope0_reason, 4);
+	_patch_init_entry($scope0_id, "b1", [_filled_guard($scope0_reason, 6) && "e", _filled_guard($scope0_reason, 9) && "i"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.a,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 4)) && input.b,

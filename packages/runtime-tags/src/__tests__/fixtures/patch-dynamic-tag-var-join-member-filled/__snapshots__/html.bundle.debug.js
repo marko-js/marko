@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wg__input_id || _resume_branch($scope1_id);
 	}, void 0, "__tests__/template.marko_1*content", void 0, "__tests__/template.marko_2*content", 1);
 	_filled_guard($scope0_reason, 1) && $cg__input_id && _patch_write($scope0_id, "PatchMarkedWrite:input_which", input.which);
-	_patch_join_init($scope0_id, "__tests__/template.marko_0_input_which#6_input_id#7/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "input_which", _filled_guard($scope0_reason, 2) && "input_id");
+	_patch_init_entry($scope0_id, "__tests__/template.marko_0_input_which#6_input_id#7/init", [_filled_guard($scope0_reason, 1) && "input_which", _filled_guard($scope0_reason, 2) && "input_id"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_which: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.which,
 		input_id: input.id,

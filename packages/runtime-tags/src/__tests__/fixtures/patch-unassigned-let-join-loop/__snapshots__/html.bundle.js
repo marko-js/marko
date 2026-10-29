@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 2) && _patch_fill($scope1_id, "va0", i);
 		_html(`<li>${_text_resume($scope1_id, "a", x + input.b + i)}</li>`);
-		_patch_init_entry($scope1_id, "a1", _filled_guard($scope0_reason, 3) && ">f", _filled_guard($scope0_reason, 2) && "c");
+		_patch_init_entry($scope1_id, "a1", [_filled_guard($scope0_reason, 3) && ">f", _filled_guard($scope0_reason, 2) && "c"]);
 		_scope($scope1_id, {
 			c: i,
 			_: _scope_with_id($scope0_id)

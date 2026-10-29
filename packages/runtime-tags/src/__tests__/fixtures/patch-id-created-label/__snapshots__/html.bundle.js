@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope5_id, { a: _existing_scope($childScope) });
 	}, "id", $scope0_id, "d", 1, 1, 1, 0, 0, "a5", $scope0_reason, 5);
 	_filled_guard($scope0_reason, 4) && $cg__input_show && _patch_write($scope0_id, "xi", input.on);
-	_patch_join_init($scope0_id, "a8", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && "h", _filled_guard($scope0_reason, 4) && "i");
+	_patch_init_entry($scope0_id, "a8", [_filled_guard($scope0_reason, 3) && "h", _filled_guard($scope0_reason, 4) && "i"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.show,
 		i: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.on,

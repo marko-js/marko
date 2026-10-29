@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xc", item, !_server_guard($scope0_reason, 1));
 		_html(`<p>${_text_resume($scope1_id, "a", item, 1, $scope0_reason, 1)}</p>`);
-		_patch_join_init($scope1_id, "b1", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c") || _script($scope1_id, "b0", 1, (_filled_guard($scope0_reason, 2) || _filled_guard($scope0_reason, 1)) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 1) ? 2 : 1), _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c");
+		_patch_init_entry($scope1_id, "b1", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0) || _script($scope1_id, "b0", 1, (_filled_guard($scope0_reason, 2) || _filled_guard($scope0_reason, 1)) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 1) ? 2 : 1), _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c");
 		_scope($scope1_id, {
 			c: item,
 			_: _scope_with_id($scope0_id)

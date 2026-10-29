@@ -18,7 +18,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", input.content, { title: t }, 1, 0, 0, $wg__input_content || $wg__t, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, 0, 0, $scope0_reason);
 		$cg__input_content && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !(_filled_guard($scope1_reason, 0) && $cg__input_content));
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, "__tests__/tags/one.marko_1_input_content#0:3/subscribe");
-		_patch_join_init($scope1_id, "__tests__/tags/one.marko_1_input_content#0:3_t#3/init", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, _filled_guard($scope0_reason, 0) && ">input_content", _filled_guard($scope1_reason, 0) && "t");
+		_patch_init_entry($scope1_id, "__tests__/tags/one.marko_1_input_content#0:3_t#3/init", [_filled_guard($scope0_reason, 0) && ">input_content", _filled_guard($scope1_reason, 0) && "t"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0);
 		($wi__input_content || $wi__t) && _subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_content && $input_content__closures, _scope($scope1_id, {
 			t: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 1)) && t,
 			_: _scope_with_id($scope0_id)

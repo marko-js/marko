@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<em>${_text_resume($scope2_id, "#text/0", fmt(label), 1, $scope2_reason, 0)}</em>`);
 		_filled_guard($scope2_reason, 1) && _client_guard($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt);
 		$cg__fmt && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !(_filled_guard($scope2_reason, 2) && $cg__fmt));
-		_patch_join_init($scope2_id, "__tests__/template.marko_2_fmt#2_label#3/init", $scope2_reason, 0, _filled_guard($scope2_reason, 1) && "fmt", _filled_guard($scope2_reason, 2) && "label");
+		_patch_init_entry($scope2_id, "__tests__/template.marko_2_fmt#2_label#3/init", [_filled_guard($scope2_reason, 1) && "fmt", _filled_guard($scope2_reason, 2) && "label"], $scope2_reason, 0);
 		_scope($scope2_id, {
 			fmt: (_unfilled_if($scope2_reason, 2, 1) || _unfilled_if($scope2_reason, 0, 1)) && fmt,
 			label: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 0)) && label

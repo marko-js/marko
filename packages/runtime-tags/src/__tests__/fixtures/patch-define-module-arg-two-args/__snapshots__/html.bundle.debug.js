@@ -24,8 +24,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_filled_guard($scope2_reason, 3) && (_client_guard($scope2_reason, 4) || _client_guard($scope2_reason, 5)) && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt);
 		$cg__fmt && _patch_write($scope2_id, "PatchMarkedWrite:a", a, !(_filled_guard($scope2_reason, 4) && $cg__fmt));
 		$cg__fmt && _patch_write($scope2_id, "PatchMarkedWrite:b", b, !(_filled_guard($scope2_reason, 5) && $cg__fmt));
-		_patch_join_init($scope2_id, "__tests__/template.marko_2_fmt#4_a#5/init", $scope2_reason, 0, _filled_guard($scope2_reason, 3) && "fmt", _filled_guard($scope2_reason, 4) && "a");
-		_patch_join_init($scope2_id, "__tests__/template.marko_2_fmt#4_b#7/init", $scope2_reason, 1, _filled_guard($scope2_reason, 3) && "fmt", _filled_guard($scope2_reason, 5) && "b");
+		_patch_init_entry($scope2_id, "__tests__/template.marko_2_fmt#4_a#5/init", [_filled_guard($scope2_reason, 3) && "fmt", _filled_guard($scope2_reason, 4) && "a"], $scope2_reason, 0);
+		_patch_init_entry($scope2_id, "__tests__/template.marko_2_fmt#4_b#7/init", [_filled_guard($scope2_reason, 3) && "fmt", _filled_guard($scope2_reason, 5) && "b"], $scope2_reason, 1);
 		_scope($scope2_id, {
 			fmt: (_unfilled_if($scope2_reason, 2, 3) || _unfilled_if($scope2_reason, 0, 3) || _unfilled_if($scope2_reason, 1, 3)) && fmt,
 			a: (_unfilled_if($scope2_reason, 3) || _unfilled_if($scope2_reason, 0)) && a,

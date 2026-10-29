@@ -25,7 +25,7 @@ var show_await_default = _template("b", (input) => {
 			_scope($scope2_id, { c: x });
 		}, 1, "b1", _unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && 2);
 		$cg__input_promise && _patch_write($scope1_id, "xd", text, !(_filled_guard($scope1_reason, 0) && $cg__input_promise));
-		_patch_join_init($scope1_id, "b4", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, _filled_guard($scope0_reason, 0) && ">d", _filled_guard($scope1_reason, 0) && "d");
+		_patch_init_entry($scope1_id, "b4", [_filled_guard($scope0_reason, 0) && ">d", _filled_guard($scope1_reason, 0) && "d"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0);
 		($wi__input_promise || $wi__text) && _subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_promise && $input_promise__closures, _scope($scope1_id, {
 			d: $wi__input_promise && text,
 			_: _scope_with_id($scope0_id)

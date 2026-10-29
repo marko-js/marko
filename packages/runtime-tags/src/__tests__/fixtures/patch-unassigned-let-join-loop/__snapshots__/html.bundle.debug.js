@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 2) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", i);
 		_html(`<li>${_text_resume($scope1_id, "#text/0", x + input.b + i)}</li>`);
-		_patch_init_entry($scope1_id, "__tests__/template.marko_1_input_b#0:5_x#0:6_i#2/init", _filled_guard($scope0_reason, 3) && ">input_b", _filled_guard($scope0_reason, 2) && "i");
+		_patch_init_entry($scope1_id, "__tests__/template.marko_1_input_b#0:5_x#0:6_i#2/init", [_filled_guard($scope0_reason, 3) && ">input_b", _filled_guard($scope0_reason, 2) && "i"]);
 		_scope($scope1_id, {
 			i,
 			_: _scope_with_id($scope0_id)

@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<span>${_text_resume($scope1_id, "a", on && f(), 1, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</span>`);
 		$cg__input_a && _patch_write($scope1_id, "xd", on, !(_filled_guard($scope1_reason, 0) && $cg__input_a));
-		_patch_join_init($scope1_id, "a2", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, _filled_guard($scope0_reason, 0) && ">g", _filled_guard($scope1_reason, 0) && "d");
+		_patch_init_entry($scope1_id, "a2", [_filled_guard($scope0_reason, 0) && ">g", _filled_guard($scope1_reason, 0) && "d"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0);
 		_subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_a && $f2__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 1)) && on,
 			_: ($wi__input_a || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)

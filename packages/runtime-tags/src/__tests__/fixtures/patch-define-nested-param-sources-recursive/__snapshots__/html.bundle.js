@@ -25,7 +25,11 @@ var template_default = _template("a", (input) => {
 			_client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1)) << 1, 0) && _patch_write($scope2_id, "xd", z, !(_filled_guard($scope2_reason, 0) && ($cg__input_label || _client_guard($scope1_reason, 1))));
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "a1");
 			(_unfilled_if($scope1_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1) || _unfilled_if($scope2_reason, 0)) && _patch_init($scope2_id, "a2");
-			_patch_join_init($scope2_id, "a3", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0, _filled_guard($scope0_reason, 0) && ">>e", _filled_guard($scope1_reason, 1) && ">d", _filled_guard($scope2_reason, 0) && "d");
+			_patch_init_entry($scope2_id, "a3", [
+				_filled_guard($scope0_reason, 0) && ">>e",
+				_filled_guard($scope1_reason, 1) && ">d",
+				_filled_guard($scope2_reason, 0) && "d"
+			], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0);
 			_subscribe(_unfilled_if((_mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
 				d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 2) || _unfilled_if($scope2_reason, 0)) && z,
 				_: _scope_with_id($scope1_id)

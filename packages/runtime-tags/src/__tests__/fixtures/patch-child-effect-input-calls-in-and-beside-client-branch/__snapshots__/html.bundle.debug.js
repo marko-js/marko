@@ -31,7 +31,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
 				_html(`<em>${_text_resume($scope4_id, "#text/0", fmt(label), 1, $scope3_reason, 2)}</em>`);
-				_patch_join_init($scope4_id, "__tests__/tags/card.marko_4_fmt#3:4_label#3:5/init", $scope3_reason, 2, _filled_guard($scope3_reason, 5) && ">fmt", _filled_guard($scope3_reason, 6) && ">label");
+				_patch_init_entry($scope4_id, "__tests__/tags/card.marko_4_fmt#3:4_label#3:5/init", [_filled_guard($scope3_reason, 5) && ">fmt", _filled_guard($scope3_reason, 6) && ">label"], $scope3_reason, 2);
 				_scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) }, "__tests__/tags/card.marko", "3:4");
 				return 0;
 			}

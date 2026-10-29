@@ -39,7 +39,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 		_patch_child_end();
 		_html(`</li>${_el_resume($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/tags/feed-list.marko_1");
-		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#4/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_data", _filled_guard($scope0_reason, 1) && "item_id");
+		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_init_entry($scope1_id, "__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#4/init", [_filled_guard($scope0_reason, 2) && ">input_data", _filled_guard($scope0_reason, 1) && "item_id"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			item_id: item?.id,
 			_: _scope_with_id($scope0_id),

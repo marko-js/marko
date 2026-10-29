@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_text_resume($scope2_id, "a", fmt(label), 1, $scope2_reason, 0)}</em><b>${_text_resume($scope2_id, "b", title, 1, $scope2_reason, 3)}</b>`);
 		_filled_guard($scope2_reason, 1) && _client_guard($scope2_reason, 2) && _patch_write($scope2_id, "xe", fmt);
 		$cg__fmt && _patch_write($scope2_id, "xf", label, !(_filled_guard($scope2_reason, 2) && $cg__fmt));
-		_patch_join_init($scope2_id, "a1", $scope2_reason, 0, _filled_guard($scope2_reason, 1) && "e", _filled_guard($scope2_reason, 2) && "f");
+		_patch_init_entry($scope2_id, "a1", [_filled_guard($scope2_reason, 1) && "e", _filled_guard($scope2_reason, 2) && "f"], $scope2_reason, 0);
 		_scope($scope2_id, {
 			e: (_unfilled_if($scope2_reason, 2, 1) || _unfilled_if($scope2_reason, 0, 1)) && fmt,
 			f: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 0)) && label

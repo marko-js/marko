@@ -81,7 +81,7 @@ var template_default = _template("a", (input) => {
 			}, void 0, "a2", void 0, "a3");
 			(_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1)) && _patch_init($scope1_id, "a4");
 			(_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 1)) && _patch_init($scope1_id, "a5");
-			_patch_join_init($scope1_id, "a6", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && ">e", _filled_guard($scope0_reason, 4) && ">f");
+			_patch_init_entry($scope1_id, "a6", [_filled_guard($scope0_reason, 3) && ">e", _filled_guard($scope0_reason, 4) && ">f"], $scope0_reason, 1);
 			_subscribe(_unfilled_if($scope0_reason, 4) && $input_id__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_which__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
 			$wg__input_which__OR__input_id || _resume_branch($scope1_id);
 		}, $scope0_id)

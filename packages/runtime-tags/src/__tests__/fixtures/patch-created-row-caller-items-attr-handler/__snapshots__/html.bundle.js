@@ -14,7 +14,7 @@ var navlist_default = _template("b", (input) => {
 		const active = item.href === input.path;
 		_html(`<a${_attr_class(["link", { active }], $scope1_id, "aa$class", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "aa$href", $scope0_reason, 1)}>${_text_resume($scope1_id, "b", item.label, 1, $scope0_reason, 1)}</a>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
-		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "b1", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "e");
+		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_init_entry($scope1_id, "b1", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "e"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			e: item?.href,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)

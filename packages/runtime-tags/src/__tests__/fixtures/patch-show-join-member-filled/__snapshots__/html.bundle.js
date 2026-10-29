@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		$wg__input_id || _resume_branch($scope1_id);
 	}, void 0, "a3", void 0, "a4", 1);
 	_filled_guard($scope0_reason, 1) && $cg__input_id && _patch_write($scope0_id, "xe", input.which);
-	_patch_join_init($scope0_id, "a6", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "e", _filled_guard($scope0_reason, 2) && "f");
+	_patch_init_entry($scope0_id, "a6", [_filled_guard($scope0_reason, 1) && "e", _filled_guard($scope0_reason, 2) && "f"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.which,
 		f: input.id,

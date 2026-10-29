@@ -31,7 +31,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
 				_html(`<em>${_text_resume($scope4_id, "#text/0", fmt(label), 1, $scope3_reason, 2)}</em>`);
-				_patch_join_init($scope4_id, "__tests__/tags/rowsx.marko_4_fmt#3:4_label#3:5/init", $scope3_reason, 2, _filled_guard($scope3_reason, 5) && ">fmt", _filled_guard($scope3_reason, 6) && ">label");
+				_patch_init_entry($scope4_id, "__tests__/tags/rowsx.marko_4_fmt#3:4_label#3:5/init", [_filled_guard($scope3_reason, 5) && ">fmt", _filled_guard($scope3_reason, 6) && ">label"], $scope3_reason, 2);
 				_scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) }, "__tests__/tags/rowsx.marko", "4:4");
 				return 0;
 			}
@@ -58,7 +58,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 		});
 		_patch_child_end();
 		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/tags/rowsx.marko_1_input_open#0:6/init");
-		(_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope1_id, "__tests__/tags/rowsx.marko_1_input_label#0:7_x#2/init", $scope0_reason, 0, _filled_guard($scope0_reason, 4) && ">input_label", _filled_guard($scope0_reason, 2) && "x");
+		(_filled_guard($scope0_reason, 4) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_init_entry($scope1_id, "__tests__/tags/rowsx.marko_1_input_label#0:7_x#2/init", [_filled_guard($scope0_reason, 4) && ">input_label", _filled_guard($scope0_reason, 2) && "x"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			x: _write_if($scope0_reason, 4) && x,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),

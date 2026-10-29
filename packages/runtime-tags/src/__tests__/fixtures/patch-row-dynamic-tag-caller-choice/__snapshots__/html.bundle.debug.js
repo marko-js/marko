@@ -45,7 +45,7 @@ var rowsy_default = _template("__tests__/tags/rowsy.marko", (input) => {
 			label: tag,
 			content: Label
 		}, 9, 0, 0, $wg__input_tags__OR__input_card, $scope0_reason, 0);
-		(_filled_guard($scope0_reason, 3) && !$cg__input_tags || !$cg__input_tags || !$cg__input_tags || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope2_id, "__tests__/tags/rowsy.marko_2_input_card#0:7_Card#0:8_Label#0:10_tag#2/init", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && ">input_card", _filled_guard($scope0_reason, 2) && "tag");
+		(_filled_guard($scope0_reason, 3) && !$cg__input_tags || !$cg__input_tags || !$cg__input_tags || _filled_guard($scope0_reason, 2)) && _patch_init_entry($scope2_id, "__tests__/tags/rowsy.marko_2_input_card#0:7_Card#0:8_Label#0:10_tag#2/init", [_filled_guard($scope0_reason, 3) && ">input_card", _filled_guard($scope0_reason, 2) && "tag"], $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope2_id, {
 			tag: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && tag,
 			_: _scope_with_id($scope0_id)

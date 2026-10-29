@@ -55,7 +55,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		}, $scope1_id, ($scope) => $scope0_page ? [{ c }] : []), 0, $wg__input_p, $scope0_reason, 1);
 		_filled_guard($scope0_reason, 1) && $cg__input_content && _patch_write($scope1_id, "PatchMarkedWrite:x", x);
 		_content_withheld("__tests__/tags/card.marko_2*content", $scope1_id) && _content_withhold(c), _filled_guard($scope0_reason, 0) ? _content_withheld("__tests__/tags/card.marko_2*content", $scope1_id) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/card.marko_fill0", c) : _patch_init($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4/init");
-		_patch_join_init($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4_x#2/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_content", _filled_guard($scope0_reason, 1) && "x");
+		_patch_init_entry($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4_x#2/init", [_filled_guard($scope0_reason, 2) && ">input_content", _filled_guard($scope0_reason, 1) && "x"], $scope0_reason, 0);
 		$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, {
 			x: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && x,
 			c: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && c,

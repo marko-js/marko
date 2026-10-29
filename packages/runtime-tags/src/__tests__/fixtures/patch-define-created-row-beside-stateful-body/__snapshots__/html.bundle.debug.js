@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_client_guard($scope0_reason, 3) && _patch_init($scope1_id, "__tests__/template.marko_1_input_open#0:6/init");
-		(_filled_guard($scope0_reason, 4) && !$cg__input_rows || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope1_id, "__tests__/template.marko_1_input_label#0:7_row#2/init", $scope0_reason, 0, _filled_guard($scope0_reason, 4) && ">input_label", _filled_guard($scope0_reason, 2) && "row");
+		(_filled_guard($scope0_reason, 4) && !$cg__input_rows || _filled_guard($scope0_reason, 2)) && _patch_init_entry($scope1_id, "__tests__/template.marko_1_input_label#0:7_row#2/init", [_filled_guard($scope0_reason, 4) && ">input_label", _filled_guard($scope0_reason, 2) && "row"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			row: _write_if($scope0_reason, 4) && row,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),

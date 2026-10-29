@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_var($scope0_id, "#scopeOffset/1", $inputwhichCounterOther_scope, "__tests__/template.marko_0_count#10/var");
 	_html(`<p>${_text_resume($scope0_id, "#text/2", count)}</p>`);
 	_filled_guard($scope0_reason, 2) && $cg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_which", input.which);
-	_patch_join_init($scope0_id, "__tests__/template.marko_0_input_label#5_input_which#6_Counter#7_Other#8/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "input_label", _filled_guard($scope0_reason, 2) && "input_which");
+	_patch_init_entry($scope0_id, "__tests__/template.marko_0_input_label#5_input_which#6_Counter#7_Other#8/init", [_filled_guard($scope0_reason, 1) && "input_label", _filled_guard($scope0_reason, 2) && "input_which"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
 		input_which: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.which,

@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 		const $return = X;
 		$cg__input_on && _patch_write($scope1_id, "xf", prev, !(_filled_guard($scope1_reason, 2) && $cg__input_on));
 		$cg__input_on && _patch_write($scope1_id, "wh", X, 1);
-		_patch_join_init($scope1_id, "a5", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 2)) << 1, 0, _filled_guard($scope0_reason, 0) && ">f", _filled_guard($scope1_reason, 2) && "f");
+		_patch_init_entry($scope1_id, "a5", [_filled_guard($scope0_reason, 0) && ">f", _filled_guard($scope1_reason, 2) && "f"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 2)) << 1, 0);
 		($wi__input_on || $wi__label__OR__prev) && _subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 2)) << 1, 0) && $wi__input_on && $input_on__closures, _scope($scope1_id, {
 			e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1)) && label,
 			f: _unfilled_if($scope0_reason, 0) && prev,

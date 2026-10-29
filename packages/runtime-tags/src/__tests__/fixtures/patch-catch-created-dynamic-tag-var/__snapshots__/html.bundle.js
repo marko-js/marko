@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 		_html(`<i>${_text_resume($scope1_id, "d", v)}</i>`);
 		(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "a1");
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "a2");
-		_patch_join_init($scope1_id, "a3", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">d", _filled_guard($scope0_reason, 2) && ">e");
+		_patch_init_entry($scope1_id, "a3", [_filled_guard($scope0_reason, 1) && ">d", _filled_guard($scope0_reason, 2) && ">e"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_big__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a1"), _client_guard($scope0_reason, 2) && "a2");
 	}, 0, "a6", "a7", 1, 1, 1);
 	_filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va8", input.big);

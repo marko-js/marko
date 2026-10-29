@@ -38,7 +38,7 @@ var shape_default = _template("c", (input) => {
 					b: input.b
 				});
 				_patch_child_end();
-				_patch_init_entry($scope2_id, "c0", _filled_guard($scope0_reason, 3) && ">>g", _filled_guard($scope0_reason, 1) && ">e");
+				_patch_init_entry($scope2_id, "c0", [_filled_guard($scope0_reason, 3) && ">>g", _filled_guard($scope0_reason, 1) && ">e"]);
 				_subscribe($s__closures, _subscribe($wi__input_b && $input_b__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)

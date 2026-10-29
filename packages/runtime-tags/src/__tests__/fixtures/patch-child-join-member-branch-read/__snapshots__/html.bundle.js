@@ -20,7 +20,7 @@ var child_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 4), 1, 0, 0, ["b1"], $scope0_reason, 4);
 	$cg__input_a && _patch_write($scope0_id, "xf", input.b, !(_filled_guard($scope0_reason, 3) && $cg__input_a));
-	_patch_join_init($scope0_id, "b3", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && "e", _filled_guard($scope0_reason, 3) && "f");
+	_patch_init_entry($scope0_id, "b3", [_filled_guard($scope0_reason, 2) && "e", _filled_guard($scope0_reason, 3) && "f"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.a,
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.b

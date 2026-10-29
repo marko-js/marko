@@ -64,7 +64,7 @@ var template_default = _template("a", (input) => {
 				]), 0, $wg__input_items__OR__input_loaded, $scope0_reason, 0);
 				_filled_guard($scope0_reason, 1) && $cg__input_loaded && _patch_write($scope3_id, "xc", ready);
 				(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope3_id, "a1");
-				_patch_join_init($scope3_id, "a2", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">>>e", _filled_guard($scope0_reason, 1) && "c");
+				_patch_init_entry($scope3_id, "a2", [_filled_guard($scope0_reason, 2) && ">>>e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
 				$wi__input_items__OR__input_loaded && _subscribe(_unfilled_if($scope0_reason, 2) && $input_loaded__closures, _scope($scope3_id, { c: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && ready }), $cg__input_loaded && "a1", $wg__input_items__OR__input_loaded);
 				$wg__input_items__OR__input_loaded || $wi__input_items__OR__input_loaded && _resume_branch($scope3_id);
 			}, 1, "a3", _unfilled_if($scope0_reason, 1), 0, 1);

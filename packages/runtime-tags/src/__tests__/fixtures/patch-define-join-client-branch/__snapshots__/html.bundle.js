@@ -19,7 +19,7 @@ var panel_default = _template("b", (input) => {
 		_html(`<p>${_text_resume($scope1_id, "a", input.a + ":" + input.b, 1, $scope0_reason, 0)}</p>`);
 		(_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b1");
 		(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b2");
-		_patch_join_init($scope1_id, "b3", $scope0_reason, 0, _filled_guard($scope0_reason, 4) && ">d", _filled_guard($scope0_reason, 5) && ">e");
+		_patch_init_entry($scope1_id, "b3", [_filled_guard($scope0_reason, 4) && ">d", _filled_guard($scope0_reason, 5) && ">e"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }), $cg__input_a && "b1"), $cg__input_b && "b2");
 	}, $scope0_id, 1) };
 	_if(() => {

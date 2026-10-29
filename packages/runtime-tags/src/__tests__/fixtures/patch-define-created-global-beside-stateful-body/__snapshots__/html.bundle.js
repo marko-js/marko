@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		}, $scope2_id, "a", 1, _write_guard($scope2_reason, 1), 1, 0, 0, ["a0"], $scope2_reason, 1);
 		_html(`<span>${_text_resume($scope2_id, "b", isOpen ? label : "-", 1, $scope2_reason, 0)}</span>`);
 		$cg__label && _patch_write($scope2_id, "xe", isOpen, !(_filled_guard($scope2_reason, 1) && $cg__label));
-		_patch_join_init($scope2_id, "a4", $scope2_reason, 0, _filled_guard($scope2_reason, 1) && "e", _filled_guard($scope2_reason, 2) && "f");
+		_patch_init_entry($scope2_id, "a4", [_filled_guard($scope2_reason, 1) && "e", _filled_guard($scope2_reason, 2) && "f"], $scope2_reason, 0);
 		_scope($scope2_id, {
 			e: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && isOpen,
 			f: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 0)) && label

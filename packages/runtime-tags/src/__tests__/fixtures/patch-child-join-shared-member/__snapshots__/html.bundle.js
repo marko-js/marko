@@ -10,8 +10,8 @@ var row_default = _template("b", (input) => {
 	$cg__input_b && _patch_write($scope0_id, "xe", input.a, !(_filled_guard($scope0_reason, 3) && $cg__input_b));
 	_client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.b, !(_filled_guard($scope0_reason, 4) && (_client_guard($scope0_reason, 3) || _client_guard($scope0_reason, 5))));
 	$cg__input_b && _patch_write($scope0_id, "xh", input.y, !(_filled_guard($scope0_reason, 5) && $cg__input_b));
-	_patch_join_init($scope0_id, "b0", $scope0_reason, 0, _filled_guard($scope0_reason, 3) && "e", _filled_guard($scope0_reason, 4) && "f");
-	_patch_join_init($scope0_id, "b1", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && "f", _filled_guard($scope0_reason, 5) && "h");
+	_patch_init_entry($scope0_id, "b0", [_filled_guard($scope0_reason, 3) && "e", _filled_guard($scope0_reason, 4) && "f"], $scope0_reason, 0);
+	_patch_init_entry($scope0_id, "b1", [_filled_guard($scope0_reason, 4) && "f", _filled_guard($scope0_reason, 5) && "h"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.a,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.b,

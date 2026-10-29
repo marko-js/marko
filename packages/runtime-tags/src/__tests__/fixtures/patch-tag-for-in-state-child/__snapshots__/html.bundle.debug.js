@@ -38,7 +38,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 					b: input.b
 				});
 				_patch_child_end();
-				_patch_init_entry($scope2_id, "__tests__/tags/shape.marko_2_input_b#0:6_s#0:7_v#1:4/init", _filled_guard($scope0_reason, 3) && ">>input_b", _filled_guard($scope0_reason, 1) && ">v");
+				_patch_init_entry($scope2_id, "__tests__/tags/shape.marko_2_input_b#0:6_s#0:7_v#1:4/init", [_filled_guard($scope0_reason, 3) && ">>input_b", _filled_guard($scope0_reason, 1) && ">v"]);
 				_subscribe($s__closures, _subscribe($wi__input_b && $input_b__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope)

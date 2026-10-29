@@ -20,7 +20,11 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 		$cg__b__OR__flag && _patch_write($scope1_id, "PatchMarkedWrite:a", a, !(_filled_guard($scope1_reason, 4) && $cg__b__OR__flag));
 		$cg__a__OR__flag && _patch_write($scope1_id, "PatchMarkedWrite:b", b, !(_filled_guard($scope1_reason, 5) && $cg__a__OR__flag));
 		$cg__a__OR__b && _patch_write($scope1_id, "PatchMarkedWrite:flag", flag, !(_filled_guard($scope1_reason, 6) && $cg__a__OR__b));
-		_patch_join_init($scope1_id, "__tests__/tags/label-view.marko_1_a#3_b#4_flag#5/init", $scope1_reason, 3, _filled_guard($scope1_reason, 4) && "a", _filled_guard($scope1_reason, 5) && "b", _filled_guard($scope1_reason, 6) && "flag");
+		_patch_init_entry($scope1_id, "__tests__/tags/label-view.marko_1_a#3_b#4_flag#5/init", [
+			_filled_guard($scope1_reason, 4) && "a",
+			_filled_guard($scope1_reason, 5) && "b",
+			_filled_guard($scope1_reason, 6) && "flag"
+		], $scope1_reason, 3);
 		_scope($scope1_id, {
 			a: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 3)) && a,
 			b: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 3)) && b,
@@ -66,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_init_entry($scope0_id, "__tests__/template.marko_0_upper#5_up#6_low#7/init", _filled_guard($scope0_reason, 0) && "up", _filled_guard($scope0_reason, 0) && "low");
+	_patch_init_entry($scope0_id, "__tests__/template.marko_0_upper#5_up#6_low#7/init", [_filled_guard($scope0_reason, 0) && "up", _filled_guard($scope0_reason, 0) && "low"]);
 	_scope($scope0_id, {
 		input_title: input.title,
 		upper,

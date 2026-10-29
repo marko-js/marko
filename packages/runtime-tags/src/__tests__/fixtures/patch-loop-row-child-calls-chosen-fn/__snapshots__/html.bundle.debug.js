@@ -32,7 +32,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		label_view_default(_patch_live($childScope, { get: item.upper ? up : low }, $scope1_id, ">up >low item_upper"));
 		_patch_child_end();
-		(_filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_join_init($scope1_id, "__tests__/template.marko_1_up#0:5_low#0:6_item_upper#3/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">up", _filled_guard($scope0_reason, 1) && ">low", _filled_guard($scope0_reason, 2) && "item_upper");
+		(_filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 1) && !$cg__input_items || _filled_guard($scope0_reason, 2)) && _patch_init_entry($scope1_id, "__tests__/template.marko_1_up#0:5_low#0:6_item_upper#3/init", [
+			_filled_guard($scope0_reason, 1) && ">up",
+			_filled_guard($scope0_reason, 1) && ">low",
+			_filled_guard($scope0_reason, 2) && "item_upper"
+		], $scope0_reason, 0);
 		_scope($scope1_id, {
 			item_upper: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && item?.upper,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

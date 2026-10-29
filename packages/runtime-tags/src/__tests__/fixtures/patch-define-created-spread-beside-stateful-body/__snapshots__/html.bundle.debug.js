@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			});
 			_patch_child_end();
 			$cg__input_b && _patch_init($scope1_id, "__tests__/template.marko_1_input_b#0:7/init");
-			_patch_join_init($scope1_id, "__tests__/template.marko_1_input_a#0:6_input_b#0:7/init", $scope0_reason, 2, _filled_guard($scope0_reason, 4) && ">input_a", _filled_guard($scope0_reason, 5) && ">input_b");
+			_patch_init_entry($scope1_id, "__tests__/template.marko_1_input_a#0:6_input_b#0:7/init", [_filled_guard($scope0_reason, 4) && ">input_a", _filled_guard($scope0_reason, 5) && ">input_b"], $scope0_reason, 2);
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope),

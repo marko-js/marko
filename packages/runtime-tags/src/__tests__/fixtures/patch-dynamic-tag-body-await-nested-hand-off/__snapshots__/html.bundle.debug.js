@@ -52,14 +52,14 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			_dynamic_tag($scope2_id, "#text/0", y ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 			_filled_guard($scope0_reason, 1) && $cg__input_content && _patch_write($scope2_id, "PatchMarkedWrite:y", y);
 			_unfilled_if($scope0_reason, 0) && _patch_init($scope2_id, "__tests__/tags/card.marko_2_c#1:4/subscribe");
-			_patch_join_init($scope2_id, "__tests__/tags/card.marko_2_c#1:4_y#2/init", $scope0_reason, 0, _filled_guard($scope0_reason, 0) && ">c", _filled_guard($scope0_reason, 1) && "y");
+			_patch_init_entry($scope2_id, "__tests__/tags/card.marko_2_c#1:4_y#2/init", [_filled_guard($scope0_reason, 0) && ">c", _filled_guard($scope0_reason, 1) && "y"], $scope0_reason, 0);
 			$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $await_content__c__closures, _scope($scope2_id, { y: _unfilled_if($scope0_reason, 0) && y }, "__tests__/tags/card.marko", "4:4", { y: "4:10" }), _client_guard($scope0_reason, 0) && "__tests__/tags/card.marko_2_c#1:4/subscribe", $wg__input_p__OR__input_content);
 			$wg__input_p__OR__input_content || $wi__input_p__OR__input_content && _resume_branch($scope2_id);
 		}, 1, "__tests__/tags/card.marko_2*content", _unfilled_if($scope0_reason, 1), 1, 1);
 		_filled_guard($scope0_reason, 1) && $cg__input_content && _patch_write($scope1_id, "PatchMarkedWrite:x", x);
 		_unfilled_if($scope0_reason, 1) && _patch_init($scope1_id, $cg__input_p ? "__tests__/tags/card.marko_1_input_p#0:3/init" : "__tests__/tags/card.marko_1_input_p#0:3/subscribe");
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4/subscribe");
-		_patch_join_init($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4_x#2/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_content", _filled_guard($scope0_reason, 1) && "x");
+		_patch_init_entry($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4_x#2/init", [_filled_guard($scope0_reason, 2) && ">input_content", _filled_guard($scope0_reason, 1) && "x"], $scope0_reason, 0);
 		$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_p__closures, _scope($scope1_id, {
 			x: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && x,
 			c: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && c,

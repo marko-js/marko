@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", input.useA ? Card : Other, { record: input.record }, 1, 0, 0, $wg__input_useA__OR__input_record, $scope0_reason, 0);
-		_patch_join_init($scope1_id, "a2", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">d", _filled_guard($scope0_reason, 2) && ">e");
+		_patch_init_entry($scope1_id, "a2", [_filled_guard($scope0_reason, 1) && ">d", _filled_guard($scope0_reason, 2) && ">e"], $scope0_reason, 0);
 		$wi__input_useA__OR__input_record && _subscribe(_unfilled_if($scope0_reason, 2) && $input_record__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_useA__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_useA && "a3", $wg__input_useA__OR__input_record), $cg__input_record && "a4", $wg__input_useA__OR__input_record);
 		$wg__input_useA__OR__input_record || $wi__input_useA__OR__input_record && _resume_branch($scope1_id);
 	}, $scope0_id) });

@@ -14,7 +14,7 @@ var navlist_default = _template("__tests__/tags/navlist.marko", (input) => {
 		_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:item_href", item?.href, !_server_guard($scope0_reason, 1));
 		const active = item.href === input.path;
 		_html(`<a${_attr_class(["link", { active }], $scope1_id, "PatchAttr:#a/0 class", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "PatchAttr:#a/0 href", $scope0_reason, 1)}>${_text_resume($scope1_id, "#text/1", item.label, 1, $scope0_reason, 1)}</a>${_el_resume($scope1_id, "#a/0", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 1))}`);
-		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_join_init($scope1_id, "__tests__/tags/navlist.marko_1_input_path#0:4_item_href#4/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_path", _filled_guard($scope0_reason, 1) && "item_href");
+		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 1)) && _patch_init_entry($scope1_id, "__tests__/tags/navlist.marko_1_input_path#0:4_item_href#4/init", [_filled_guard($scope0_reason, 2) && ">input_path", _filled_guard($scope0_reason, 1) && "item_href"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			item_href: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item?.href,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)

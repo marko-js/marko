@@ -85,7 +85,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope5_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "13:2");
 	}, "id", $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 5);
 	_filled_guard($scope0_reason, 4) && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on);
-	_patch_join_init($scope0_id, "__tests__/template.marko_0_input_show#7_input_on#8_Field#10/init", $scope0_reason, 1, _filled_guard($scope0_reason, 3) && "input_show", _filled_guard($scope0_reason, 4) && "input_on");
+	_patch_init_entry($scope0_id, "__tests__/template.marko_0_input_show#7_input_on#8_Field#10/init", [_filled_guard($scope0_reason, 3) && "input_show", _filled_guard($scope0_reason, 4) && "input_on"], $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_show: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.show,
 		input_on: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.on,

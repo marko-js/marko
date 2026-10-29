@@ -18,13 +18,13 @@ var code_block_default = _template("b", (input) => {
 		if (input.text.length > 2) {
 			const $scope1_id = _scope_id();
 			_html(`<div>${_html_resume($scope1_id, "a", highlight(input.text), 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</div>`);
-			_patch_join_init($scope1_id, "b1", (2 | _mask_group($scope0_reason, 0)) << 1, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && ">g");
+			_patch_init_entry($scope1_id, "b1", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && ">g"], (2 | _mask_group($scope0_reason, 0)) << 1, 0);
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
 			_html(`<span>${_html_resume($scope2_id, "a", highlight(input.text), 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</span>`);
-			_patch_join_init($scope2_id, "b2", (2 | _mask_group($scope0_reason, 0)) << 1, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && ">g");
+			_patch_init_entry($scope2_id, "b2", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && ">g"], (2 | _mask_group($scope0_reason, 0)) << 1, 0);
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 1;
 		}

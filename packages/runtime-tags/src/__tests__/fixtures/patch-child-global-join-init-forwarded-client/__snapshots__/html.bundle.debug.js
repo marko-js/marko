@@ -20,7 +20,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<button class=t>t</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	$cg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !(_filled_guard($scope0_reason, 2) && $cg__input_a));
-	_patch_join_init($scope0_id, "__tests__/tags/child.marko_0_input_a#5_input_b#6/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "input_a", _filled_guard($scope0_reason, 2) && "input_b");
+	_patch_init_entry($scope0_id, "__tests__/tags/child.marko_0_input_a#5_input_b#6/init", [_filled_guard($scope0_reason, 1) && "input_a", _filled_guard($scope0_reason, 2) && "input_b"], $scope0_reason, 0);
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill1", open, 1);
 	_scope($scope0_id, {
 		input_a: input.a,

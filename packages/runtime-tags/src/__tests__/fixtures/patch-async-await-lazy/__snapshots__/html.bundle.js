@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		}, 1, "a1", _unfilled_if($scope0_reason, 0) && 2, 1);
 		(_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "a6");
 		(_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "a7");
-		_patch_join_init($scope1_id, "a8", $scope0_reason, 0, _filled_guard($scope0_reason, 4) && ">i", _filled_guard($scope0_reason, 5) && ">j");
+		_patch_init_entry($scope1_id, "a8", [_filled_guard($scope0_reason, 4) && ">i", _filled_guard($scope0_reason, 5) && ">j"], $scope0_reason, 0);
 		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_related && "a6", 0), $cg__input_slow && "a7", 0);
 		$wi__input_related__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 	_filled_guard($scope0_reason, 4) && $cg__input_slow && _patch_write($scope0_id, "xi", input.related);
 	_filled_guard($scope0_reason, 5) && ($cg__input_related || _client_guard($scope0_reason, 6)) && _patch_write($scope0_id, "xj", input.slow);
 	_filled_guard($scope0_reason, 6) && $cg__input_slow && _patch_write($scope0_id, "xk", input.note);
-	_patch_join_init($scope0_id, "a10", $scope0_reason, 2, _filled_guard($scope0_reason, 5) && "j", _filled_guard($scope0_reason, 6) && "k");
+	_patch_init_entry($scope0_id, "a10", [_filled_guard($scope0_reason, 5) && "j", _filled_guard($scope0_reason, 6) && "k"], $scope0_reason, 2);
 	_scope($scope0_id, {
 		i: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && input.related,
 		j: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.slow,

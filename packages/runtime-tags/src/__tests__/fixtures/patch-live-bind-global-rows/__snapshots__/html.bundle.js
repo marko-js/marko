@@ -14,7 +14,7 @@ var stepper_default = _template("b", (input) => {
 	}, "b1", $scope0_id), 0, 0, 0, "wEa")} type=number>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b2");
 	_client_guard($scope0_reason, 0) && _patch_init($scope0_id, "b5");
-	_patch_init_entry($scope0_id, "b6", _filled_guard($scope0_reason, 1) && "h");
+	_patch_init_entry($scope0_id, "b6", [_filled_guard($scope0_reason, 1) && "h"]);
 	const $currentChange = input.valueChange || void 0;
 	_patch_let_change($scope0_id, "vb7", current, "wj", $currentChange, $scope0_reason, 0);
 	_scope($scope0_id, {

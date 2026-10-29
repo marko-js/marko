@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 			_html(`<p>${_text_resume($scope2_id, "a", check(input.fail, input.x), 1, $scope0_reason, 0)}</p>`);
 			(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "a0");
 			(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope2_id, "a1");
-			_patch_join_init($scope2_id, "a2", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">>d", _filled_guard($scope0_reason, 2) && ">>e");
+			_patch_init_entry($scope2_id, "a2", [_filled_guard($scope0_reason, 1) && ">>d", _filled_guard($scope0_reason, 2) && ">>e"], $scope0_reason, 0);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_x__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a0"), _client_guard($scope0_reason, 2) && "a1");
 		}, void 0, (err) => {
 			_scope_reason();

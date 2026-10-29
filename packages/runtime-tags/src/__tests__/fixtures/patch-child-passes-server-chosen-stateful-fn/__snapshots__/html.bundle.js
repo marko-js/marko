@@ -41,7 +41,11 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>inc</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
-	_patch_init_entry($scope0_id, "a5", _filled_guard($scope0_reason, 1) && "f", "i", _filled_guard($scope0_reason, 0) && "j");
+	_patch_init_entry($scope0_id, "a5", [
+		_filled_guard($scope0_reason, 1) && "f",
+		"i",
+		_filled_guard($scope0_reason, 0) && "j"
+	]);
 	_scope($scope0_id, {
 		e: input.title,
 		f: input.upper,

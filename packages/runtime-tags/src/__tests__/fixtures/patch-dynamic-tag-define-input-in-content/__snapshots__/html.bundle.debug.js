@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", input.useA ? Card : Other, { record: input.record }, 1, 0, 0, $wg__input_useA__OR__input_record, $scope0_reason, 0);
-		_patch_join_init($scope1_id, "__tests__/template.marko_1_input_useA#0:3_input_record#0:4_Card#0:5_Other#0:6/init", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && ">input_useA", _filled_guard($scope0_reason, 2) && ">input_record");
+		_patch_init_entry($scope1_id, "__tests__/template.marko_1_input_useA#0:3_input_record#0:4_Card#0:5_Other#0:6/init", [_filled_guard($scope0_reason, 1) && ">input_useA", _filled_guard($scope0_reason, 2) && ">input_record"], $scope0_reason, 0);
 		$wi__input_useA__OR__input_record && _subscribe(_unfilled_if($scope0_reason, 2) && $input_record__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_useA__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"), $cg__input_useA && "__tests__/template.marko_1_input_useA#0:3/subscribe", $wg__input_useA__OR__input_record), $cg__input_record && "__tests__/template.marko_1_input_record#0:4/subscribe", $wg__input_useA__OR__input_record);
 		$wg__input_useA__OR__input_record || $wi__input_useA__OR__input_record && _resume_branch($scope1_id);
 	}, $scope0_id) });

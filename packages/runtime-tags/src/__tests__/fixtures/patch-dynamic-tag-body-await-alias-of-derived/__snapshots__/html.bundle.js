@@ -37,8 +37,8 @@ var card_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "a", x ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 		_filled_guard($scope0_reason, 1) && $cg__input_content && _patch_write($scope1_id, "xc", x);
 		(_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && _patch_init($scope1_id, "b0");
-		_patch_join_init($scope1_id, "b1", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c");
-		_patch_join_init($scope1_id, "b2", $scope0_reason, 0, _filled_guard($scope0_reason, 1) && "c", _filled_guard($scope0_reason, 0) && "e");
+		_patch_init_entry($scope1_id, "b1", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
+		_patch_init_entry($scope1_id, "b2", [_filled_guard($scope0_reason, 1) && "c", _filled_guard($scope0_reason, 0) && "e"], $scope0_reason, 0);
 		$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, {
 			c: _unfilled_if($scope0_reason, 0) && x,
 			e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && c

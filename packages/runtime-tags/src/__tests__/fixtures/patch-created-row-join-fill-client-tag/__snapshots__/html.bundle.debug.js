@@ -44,7 +44,7 @@ var row_list_default = _template("__tests__/tags/row-list.marko", (input) => {
 			if (input.type) {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_resume($scope2_id, "#text/0", t + bounty + input.settled)}</span>`);
-				_patch_init_entry($scope2_id, "__tests__/tags/row-list.marko_2_input_settled#0:8_bounty#0:9_t#1:2/init", _filled_guard($scope0_reason, 2) && ">>input_settled", _filled_guard($scope0_reason, 0) && ">t");
+				_patch_init_entry($scope2_id, "__tests__/tags/row-list.marko_2_input_settled#0:8_bounty#0:9_t#1:2/init", [_filled_guard($scope0_reason, 2) && ">>input_settled", _filled_guard($scope0_reason, 0) && ">t"]);
 				_subscribe($bounty__closures, _subscribe($wi__input_settled && $input_settled__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/row-list.marko", "3:4"), _client_guard($scope0_reason, 2) && "__tests__/tags/row-list.marko_2_input_settled#0:8/subscribe"), "__tests__/tags/row-list.marko_2_bounty#0:9/subscribe");
 				return 0;
 			}

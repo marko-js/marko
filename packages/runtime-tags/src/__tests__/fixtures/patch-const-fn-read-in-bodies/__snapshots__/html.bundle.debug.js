@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$cg__input_x && _patch_write($scope1_id, "PatchWrite:g", g, 1);
 		$cg__input_x && _patch_init($scope1_id, "__tests__/template.marko_1_input_x#0:8/init");
 		$cg__input_a && _patch_init($scope1_id, "__tests__/template.marko_1_f#0:10/init");
-		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 3)) && _patch_join_init($scope1_id, "__tests__/template.marko_1_input_a#0:6_item#3/init", $scope0_reason, 0, _filled_guard($scope0_reason, 2) && ">input_a", _filled_guard($scope0_reason, 3) && "item");
+		(_filled_guard($scope0_reason, 2) && !$cg__input_items || _filled_guard($scope0_reason, 3)) && _patch_init_entry($scope1_id, "__tests__/template.marko_1_input_a#0:6_item#3/init", [_filled_guard($scope0_reason, 2) && ">input_a", _filled_guard($scope0_reason, 3) && "item"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			item: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item,
 			v: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && v,

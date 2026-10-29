@@ -25,7 +25,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			_scope($scope2_id, { x }, "__tests__/tags/show-await.marko", "2:4", { x: "2:10" });
 		}, 1, "__tests__/tags/show-await.marko_2*content", _unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && 2);
 		$cg__input_promise && _patch_write($scope1_id, "PatchMarkedWrite:text", text, !(_filled_guard($scope1_reason, 0) && $cg__input_promise));
-		_patch_join_init($scope1_id, "__tests__/tags/show-await.marko_1_input_promise#0:3_text#3/init", (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, _filled_guard($scope0_reason, 0) && ">input_promise", _filled_guard($scope1_reason, 0) && "text");
+		_patch_init_entry($scope1_id, "__tests__/tags/show-await.marko_1_input_promise#0:3_text#3/init", [_filled_guard($scope0_reason, 0) && ">input_promise", _filled_guard($scope1_reason, 0) && "text"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0);
 		($wi__input_promise || $wi__text) && _subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_promise && $input_promise__closures, _scope($scope1_id, {
 			text: $wi__input_promise && text,
 			_: _scope_with_id($scope0_id)

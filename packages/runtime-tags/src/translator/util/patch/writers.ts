@@ -415,13 +415,15 @@ export function writePatchResumeStatements(
                   "_patch_init_entry",
                   section,
                   getResumeRegisterId(closureSection, binding, "init"),
-                  ...getDeps(
-                    section,
-                    [binding],
-                    "_filled_guard",
-                    isConditionalReason(sources) &&
-                      !sources.global &&
-                      getSoleCallerGroup(section, sources),
+                  t.arrayExpression(
+                    getDeps(
+                      section,
+                      [binding],
+                      "_filled_guard",
+                      isConditionalReason(sources) &&
+                        !sources.global &&
+                        getSoleCallerGroup(section, sources),
+                    ),
                   ),
                 ),
               ),
@@ -449,20 +451,13 @@ export function writePatchResumeStatements(
           // A mixed join re-runs as its members change, under its group where params decide it.
           const init = andGuard(
             needed,
-            groupArgs.length
-              ? callPatchRuntime(
-                  "_patch_join_init",
-                  section,
-                  getResumeRegisterId(section, ref, "init"),
-                  ...groupArgs,
-                  ...deps,
-                )
-              : callPatchRuntime(
-                  "_patch_init_entry",
-                  section,
-                  getResumeRegisterId(section, ref, "init"),
-                  ...deps,
-                ),
+            callPatchRuntime(
+              "_patch_init_entry",
+              section,
+              getResumeRegisterId(section, ref, "init"),
+              t.arrayExpression(deps),
+              ...groupArgs,
+            ),
           );
           // The join's effect ships its entry only where the init doesn't run it.
           const effect = initScripts.get(getSignals(section).get(ref)!);

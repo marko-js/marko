@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope2_id, "#text/0", 1, _write_guard($scope2_reason, 1), 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 1);
 		_html(`<span>${_text_resume($scope2_id, "#text/1", isOpen ? label : "-", 1, $scope2_reason, 0)}</span>`);
 		$cg__label && _patch_write($scope2_id, "PatchMarkedWrite:isOpen", isOpen, !(_filled_guard($scope2_reason, 1) && $cg__label));
-		_patch_join_init($scope2_id, "__tests__/template.marko_2_isOpen#4_label#5/init", $scope2_reason, 0, _filled_guard($scope2_reason, 1) && "isOpen", _filled_guard($scope2_reason, 2) && "label");
+		_patch_init_entry($scope2_id, "__tests__/template.marko_2_isOpen#4_label#5/init", [_filled_guard($scope2_reason, 1) && "isOpen", _filled_guard($scope2_reason, 2) && "label"], $scope2_reason, 0);
 		_scope($scope2_id, {
 			isOpen: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && isOpen,
 			label: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 0)) && label
