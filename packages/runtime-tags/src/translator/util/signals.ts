@@ -1752,7 +1752,8 @@ export function writeSignals(section: Section) {
             (!!binding &&
               !Array.isArray(binding) &&
               registersClosureFill(signal.section, binding))) &&
-          reachesOnlyByOwnReads(signal.section, binding)
+          reachesOnlyByOwnReads(signal.section, binding) &&
+          !keptByMemberRegistry(signal.section, binding)
         ) {
           // Its branches, which no client code renders, resume by their markers.
           value = registerRuntimeValue(
@@ -2063,6 +2064,20 @@ function buildClosureFillJoin(
         index !== undefined && t.numericLiteral(index),
       )
     : value;
+}
+
+// A join its members' signals run, kept by one that registers itself: by its
+// created init or its closure fill.
+function keptByMemberRegistry(section: Section, refs: ReferencedBindings) {
+  return (
+    Array.isArray(refs) &&
+    refs.some(
+      (member) =>
+        (!!getCreatedInits(section).get(member)?.init ||
+          registersClosureFill(section, member)) &&
+        reachesOnlyByOwnReads(section, member),
+    )
+  );
 }
 
 // A scope a flush creates runs the closure by its init, registered with the
