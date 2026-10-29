@@ -680,6 +680,9 @@ export class State implements Channel {
   // The settled reorders the next flush streams; `false` for a state that
   // never reorders.
   public writeReorders: Chunk[] | null | false = null;
+  // A state whose data takes writes until its flush is written: while async
+  // work pends, it serializes only there (a patch's flush tree).
+  declare serializesAtWrite?: 1;
   public scopes = new Map<number, ScopeInternals>();
   // A scope by id, for the locals of registered content once it is sent.
   public scope = (scopeId: number) => scopeWithId(this, scopeId);
@@ -747,7 +750,9 @@ export class State implements Channel {
   }
 
   serializeFlush(boundary: Boundary) {
-    flushSerializer(boundary, this);
+    if (!(this.serializesAtWrite && boundary.count)) {
+      flushSerializer(boundary, this);
+    }
   }
 
   // The `$global` values the client reads, written once as scope 0.

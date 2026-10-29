@@ -1,0 +1,70 @@
+<button>0<!--M_$1 #text/1--></button><!--M_$1 #button/0--><!--M_[--><!--M_!^3--><!--M_[-->
+<p>acme!</p>
+<p>0 a<!--M_$10 #text/0--></p>
+<!--M_|11 #text/0--><!--M_]1 #PlaceholderBranch3 2--><!--M_!3--><!--M_]1 #text/2 3--><!--M_[--><!--M_!^6-->
+<p>fixed</p><!--M_!6--><!--M_]4 #text/0 6--><!--M_[--><!--M_!^b-->
+<t hidden M_=3><!--M_#c--></t>
+<t hidden M_=6><!--M_#d--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [0, {
+    brand: "acme"
+  }, {
+    input_label: "a",
+    brand: "acme!",
+    n: 0,
+    "ClosureScopes:n/15": new Set
+  }, 2, {
+    input_label: "fixed",
+    input_other: (p => p = new Promise((f, r) => _.a = {
+      f,
+      r(e) {
+        p.catch(_ => 0);
+        r(e)
+      }
+    }))()
+  }], _ => (_.a.f("o1"), 0), _ => [3, {
+    "#PlaceholderBranch": _(2)
+  }, 4, {
+    _: _(1),
+    "#childScope/1": _(10),
+    "#childScope/2": _(11)
+  }, 3, {
+    _: _(4),
+    "#ClosestBranchId": 5
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_*--><!--M_!b--><!--M_]4 #text/1 7-->
+<t hidden M_=b><!--M_*7-->
+  <p>fixed</p><b>o1</b>
+</t>
+<script>
+  M._.r.push(_ => [14, {
+      _: _(4)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/child-off-branch-path-pending/template.marko_1_n#0:11/subscribe 8 _placeholderDismiss 3 packages/runtime-tags/src/__tests__/fixtures/child-off-branch-path-pending/template.marko_0 1"
+    );
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><em>s1</em></t>
+<t hidden M_=d><em>s1</em></t>
+<script>
+  M._.r.push(_ => [3, {
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/child-off-branch-path-pending/template.marko_1*content"
+      ]
+  }], _ => [6, {
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/child-off-branch-path-pending/tags/card.marko_1*content"
+      ]
+  }]);
+  M._.w()
+</script>

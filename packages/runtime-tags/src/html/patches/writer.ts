@@ -18,7 +18,6 @@ import {
 import { K_SCOPE_ID, REGISTRY, setDebugInfo } from "../serializer";
 import type { ServerRenderer } from "../template";
 import {
-  type Boundary,
   type Chunk,
   type GroupMask,
   type PartialScope,
@@ -547,6 +546,8 @@ export class PatchRenderState extends PatchPageState {
   // A flush carries every entry rendered so far, so a patch never reorders: the
   // client creates a shown `@placeholder` from the shell its render ships.
   override writeReorders: State["writeReorders"] = false;
+  // A pending patch's objects keep receiving writes until its flush is written.
+  override serializesAtWrite = 1 as const;
   // The flush's merge tree of patches by scope; `joinFlush` drops it.
   patchTree?: Record<number, Record<string, unknown>>;
   // Every object and array the patch writers built for the flush's tree.
@@ -584,12 +585,6 @@ export class PatchRenderState extends PatchPageState {
   // A paired scope keeps its effects; a created one gets its shell's (or the
   // composing shell's) and those its entries mount.
   override queueEffect() {}
-
-  // A pending patch must not stringify until its flush is emitted: the same
-  // patch objects keep receiving later writes.
-  override serializeFlush(boundary: Boundary) {
-    if (!boundary.count) super.serializeFlush(boundary);
-  }
 
   constructor($global: State["$global"]) {
     super($global);
