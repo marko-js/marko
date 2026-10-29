@@ -604,10 +604,11 @@ export const [getShellSetup] = createOutputSectionState<
           hop = ">" + hop;
         }
         const setup = patchComposes(body) && getShellSetup(body);
-        // A body reading its owner gets it from its hop: an id-less one
-        // where the shell names none of its ids.
+        // A body gets its owner from its hop: an id-less one where the
+        // shell names none of its ids, or where an imported template's
+        // setup may name none (`linksBodyOwner` counts it as linked).
         if (
-          namesBodyOwner(section, body) &&
+          (namesBodyOwner(section, body) || (setup && !Array.isArray(setup))) &&
           !(Array.isArray(setup) && hasIds(setup))
         ) {
           composed.push([hop, [[""], []]]);
@@ -680,6 +681,61 @@ export function buildShellMarker(section: Section) {
       " " + inits.join(" ") + (effects.length ? "!" + effects.join(" ") : ""),
     );
   }
+}
+
+// A flush creating a call of a `<define>` body links the body to its owner
+// where its shell runs an id at the body's hop (`getShellSetup`): the call's
+// patch link names that owner then, so the server walks the scopes the client
+// does. A recursive call, translated before its body's effects, keeps to a
+// body reading its owner.
+export function linksBodyOwner(section: Section, body: Section) {
+  if (
+    !body.parent ||
+    !patchWrites(section) ||
+    !patchCreatesOrComposes(section)
+  ) {
+    return false;
+  }
+  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
+    if (cur === body) return namesBodyOwner(section, body);
+  }
+  return hopRunsIds(section, body);
+}
+
+function hopRunsIds(section: Section, body: Section): boolean {
+  return (
+    namesBodyOwner(section, body) || (patchComposes(body) && runsIds(body))
+  );
+}
+
+// The section's setup runs an id, as `getShellSetup` builds it: its own init
+// or effect, or one at the hop of a scope it composes.
+function runsIds(section: Section) {
+  for (const body of section.children) {
+    if (initsAwaitContent(body)) return true;
+  }
+  for (const [, init] of getCreatedInits(section)) {
+    if (init.init === "always" || init.subscribe === "always") return true;
+  }
+  for (const { hasHTMLEffect, referencedBindings } of getSignals(
+    section,
+  ).values()) {
+    if (hasHTMLEffect && !isEffectOutsideShell(section, referencedBindings)) {
+      return true;
+    }
+  }
+  for (const op of section.structure!) {
+    if (
+      typeof op === "object" &&
+      op.kind === StructureKind.Child &&
+      op.renderer &&
+      (op.renderer.kind !== StructureKind.SectionRef ||
+        hopRunsIds(section, op.renderer.section))
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function hasIds(setup: ShellSetup) {

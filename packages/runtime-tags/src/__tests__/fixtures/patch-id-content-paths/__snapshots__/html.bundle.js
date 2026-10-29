@@ -76,8 +76,8 @@ _shells({
 	"~a2": /*@__PURE__*/ (() => `~a2${_shell_marker(_shell_setup([[], []], ["a>", $setup$4]))};${((_w0) => `/${_w0}&b`)($walks$2)};${((_w0) => `${_w0}<!>`)($template$3)}`)(),
 	a3: /*@__PURE__*/ (() => `a3${_shell_marker(_shell_setup([[], []], ["a>", $setup$4]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$2)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$3)}`)(),
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0, _w1, _w2) => `b%b%b/${_w0}&/${_w1}&/${_w2}&b`)($Content_content__walks, $walks$1, $walks)};${((_w0, _w1, _w2) => `<!><!><!>${_w0}${_w1}${_w2}<!>`)($Content_content__template, $template$2, $template)}`)(),
-	a4: /*@__PURE__*/ (() => `a4${_shell_marker(_shell_setup([[], []], [">a>", _shell_setup([[], []], ["a>", $setup$4])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template)}`)(),
-	a5: /*@__PURE__*/ (() => `a5${_shell_marker(_shell_setup([[], []], [">a>", _shell_setup([[], []], ["a>", $setup$4])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template)}`)(),
+	a4: /*@__PURE__*/ (() => `a4${_shell_marker(_shell_setup([[], []], [">a>", [[""], []]], [">a>", _shell_setup([[], []], ["a>", $setup$4])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template)}`)(),
+	a5: /*@__PURE__*/ (() => `a5${_shell_marker(_shell_setup([[], []], [">a>", [[""], []]], [">a>", _shell_setup([[], []], ["a>", $setup$4])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template)}`)(),
 	a1: "a1;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
@@ -106,7 +106,7 @@ var template_default = _template("a", (input) => {
 		if (input.flip) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope2 = _peek_scope_id($scope2_id, "a", 2);
+			const $childScope2 = _peek_scope_id($scope2_id, "a", 2, 0, $scope0_id);
 			Item.content({ name: "first" });
 			_patch_child_end();
 			_scope($scope2_id, { a: _existing_scope($childScope2) });
@@ -114,7 +114,7 @@ var template_default = _template("a", (input) => {
 		} else {
 			const $scope3_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope3 = _peek_scope_id($scope3_id, "a", 2);
+			const $childScope3 = _peek_scope_id($scope3_id, "a", 2, 0, $scope0_id);
 			Item.content({ name: "other" });
 			_patch_child_end();
 			_scope($scope3_id, { a: _existing_scope($childScope3) });

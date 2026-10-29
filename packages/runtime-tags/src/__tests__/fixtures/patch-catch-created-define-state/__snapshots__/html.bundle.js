@@ -130,7 +130,7 @@ var template_default = _template("c", (input) => {
 		const $childScope6 = _peek_scope_id($scope5_id, "c", 5, 0, $scope0_id);
 		ChildBody.content({});
 		_patch_child_end();
-		const $childScope7 = _peek_scope_id($scope5_id, "d", 6);
+		const $childScope7 = _peek_scope_id($scope5_id, "d", 6, 0, $scope0_id);
 		OwnBody.content({});
 		_patch_child_end();
 		const $childScope8 = _peek_scope_id($scope5_id, "e", 7, 0, $scope0_id);

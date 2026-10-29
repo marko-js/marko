@@ -32,11 +32,11 @@ const $Level_content__walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1);
 const $Level_content__template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1);
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($Level_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($Level_content__walks);
-const $setup = _shell_setup([[], []], ["#childScope/0>", _shell_setup([[], []], ["#childScope/1>", $setup$1])]);
+const $setup = _shell_setup([[], []], ["#childScope/0>", [[""], []]], ["#childScope/0>", _shell_setup([[], []], ["#childScope/1>", $setup$1])]);
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)($Level_content__walks)};${((_w0) => `<main>${_w0}</main>`)($Level_content__template)}`)(),
-	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell${_shell_marker(_shell_setup([[], []], [">>#childScope/0>", _shell_setup([[], []], ["#childScope/1>", $setup$1])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Level_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Level_content__template)}`)()
+	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell${_shell_marker(_shell_setup([[], []], [">>#childScope/0>", [[""], []]], [">>#childScope/0>", _shell_setup([[], []], ["#childScope/1>", $setup$1])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Level_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Level_content__template)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();

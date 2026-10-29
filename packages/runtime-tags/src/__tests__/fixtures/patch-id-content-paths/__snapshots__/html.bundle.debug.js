@@ -79,8 +79,8 @@ _shells({
 	"~__tests__/template.marko_7*content": /*@__PURE__*/ (() => `~__tests__/template.marko_7*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$4]))};${((_w0) => `/${_w0}&b`)($walks$4)};${((_w0) => `${_w0}<!>`)($template$4)}`)(),
 	"__tests__/template.marko_6*content": /*@__PURE__*/ (() => `__tests__/template.marko_6*content${_shell_marker(_shell_setup([[], []], ["#childScope/0>", $setup$4]))};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$4)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$4)}`)(),
 	"__tests__/template.marko": /*@__PURE__*/ (() => `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1, _w2) => `b%b%b/${_w0}&/${_w1}&/${_w2}&b`)($Content_content__walks, $walks$3, $walks$1)};${((_w0, _w1, _w2) => `<!><!><!>${_w0}${_w1}${_w2}<!>`)($Content_content__template, $template$3, $template$1)}`)(),
-	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell${_shell_marker(_shell_setup([[], []], [">#childScope/0>", _shell_setup([[], []], ["#childScope/0>", $setup$4])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template)}`)(),
-	"__tests__/template.marko_3*shell": /*@__PURE__*/ (() => `__tests__/template.marko_3*shell${_shell_marker(_shell_setup([[], []], [">#childScope/0>", _shell_setup([[], []], ["#childScope/0>", $setup$4])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template)}`)(),
+	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell${_shell_marker(_shell_setup([[], []], [">#childScope/0>", [[""], []]], [">#childScope/0>", _shell_setup([[], []], ["#childScope/0>", $setup$4])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template)}`)(),
+	"__tests__/template.marko_3*shell": /*@__PURE__*/ (() => `__tests__/template.marko_3*shell${_shell_marker(_shell_setup([[], []], [">#childScope/0>", [[""], []]], [">#childScope/0>", _shell_setup([[], []], ["#childScope/0>", $setup$4])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template)}`)(),
 	"__tests__/template.marko_5*shell": "__tests__/template.marko_5*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -109,7 +109,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.flip) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 2);
+			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 2, 0, $scope0_id);
 			Item.content({ name: "first" });
 			_patch_child_end();
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "4:2");
@@ -117,7 +117,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		} else {
 			const $scope3_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope3 = _peek_scope_id($scope3_id, "#childScope/0", 2);
+			const $childScope3 = _peek_scope_id($scope3_id, "#childScope/0", 2, 0, $scope0_id);
 			Item.content({ name: "other" });
 			_patch_child_end();
 			_scope($scope3_id, { "#childScope/0": _existing_scope($childScope3) }, "__tests__/template.marko", "4:42");

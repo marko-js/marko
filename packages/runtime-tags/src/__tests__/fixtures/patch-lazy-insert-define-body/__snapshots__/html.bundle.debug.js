@@ -22,7 +22,7 @@ const $Lazy_withLoadAssets = withLoadAssets(() => lazy_default, "__tests__/lazy.
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%b%;<button class=open>open</button><!><!><!>",
-	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell${_shell_marker(_shell_setup([[], []], [">#childScope/0>", _shell_setup([[], []], ["#childScope/1>", $setup$1])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`)()
+	"__tests__/template.marko_2*shell": /*@__PURE__*/ (() => `__tests__/template.marko_2*shell${_shell_marker(_shell_setup([[], []], [">#childScope/0>", [[""], []]], [">#childScope/0>", _shell_setup([[], []], ["#childScope/1>", $setup$1])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1);
+			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1, 0, $scope0_id);
 			Row.content({ label: "s" });
 			_patch_child_end();
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "7:2");

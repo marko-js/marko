@@ -17,7 +17,7 @@ const $Wrap_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks);
 const $Wrap_content__template = $template;
 _shells({
 	a: "a !;b%;<!><!><!>",
-	a2: /*@__PURE__*/ (() => `a2${_shell_marker(_shell_setup([[], []], [">a>", _shell_setup([[], []], ["a>", $setup])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content__template)}`)()
+	a2: /*@__PURE__*/ (() => `a2${_shell_marker(_shell_setup([[], []], [">a>", [[""], []]], [">a>", _shell_setup([[], []], ["a>", $setup])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content__template)}`)()
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope2 = _peek_scope_id($scope1_id, "a", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "a", 1, 0, $scope0_id);
 			Wrap.content({ fn: function() {
 				return "f:" + input.label;
 			} });

@@ -20,7 +20,7 @@ const $walks = "b%c";
 const $setup = [[], []];
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>",
-	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([[], []], [">#childScope/0>", _shell_setup([[], []], ["#childScope/0>", $setup$1])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content__template)}`)()
+	"__tests__/template.marko_1*shell": /*@__PURE__*/ (() => `__tests__/template.marko_1*shell${_shell_marker(_shell_setup([[], []], [">#childScope/0>", [[""], []]], [">#childScope/0>", _shell_setup([[], []], ["#childScope/0>", $setup$1])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content__template)}`)()
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
-			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1, 0, $scope0_id);
 			Wrap.content({ fn: function() {
 				return "f:" + input.label;
 			} });

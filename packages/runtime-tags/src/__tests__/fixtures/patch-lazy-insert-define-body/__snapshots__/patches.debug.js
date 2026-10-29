@@ -1,5 +1,5 @@
 // PATCH
-"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-define-body/lazy.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-define-body/template.marko_2*shell !>#childScope/0>#childScope/1>packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-define-body/lazy.marko_0;b/b%b/ D%c%l&b&b;<!><!><!><button class=child><!>:<!></button><!><!>`, {
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-define-body/lazy.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-define-body/template.marko_2*shell >#childScope/0>!>#childScope/0>#childScope/1>packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-define-body/lazy.marko_0;b/b%b/ D%c%l&b&b;<!><!><!><button class=child><!>:<!></button><!><!>`, {
   "PatchBranch:#text/1": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/1": {

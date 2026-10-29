@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-created-define-let-fn/template.marko_1*shell !>#childScope/0>#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-created-define-let-fn/tags/card.marko_0;b// D l&&b;<!><button> </button><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-created-define-let-fn/template.marko_1*shell >#childScope/0>!>#childScope/0>#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-created-define-let-fn/tags/card.marko_0;b// D l&&b;<!><button> </button><!>`, {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {

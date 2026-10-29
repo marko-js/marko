@@ -63,7 +63,6 @@ import {
   rerunsEffectOnPatch,
   getPatchFill,
   holdsLiveFn,
-  namesBodyOwner,
   patchCreatesOrComposes,
   isClientDerivedParam,
 } from "./patch/refresh";
@@ -132,7 +131,12 @@ import {
   sectionUtil,
 } from "./sections";
 import { addSetupExpr, addSetupWork } from "./setup-work";
-import { addParamFill, getParamEntries, type ParamFill } from "./shell";
+import {
+  addParamFill,
+  getParamEntries,
+  linksBodyOwner,
+  type ParamFill,
+} from "./shell";
 import {
   addStatement,
   getResumeRegisterId,
@@ -458,7 +462,7 @@ export function knownTagTranslateHTML(
                     absentArg(0),
                   patchWrites(section) &&
                     childSection.parent !== section &&
-                    namesBodyOwner(section, childSection) &&
+                    linksBodyOwner(section, childSection) &&
                     getScopeIdIdentifier(childSection.parent!),
                 ]
               : []),

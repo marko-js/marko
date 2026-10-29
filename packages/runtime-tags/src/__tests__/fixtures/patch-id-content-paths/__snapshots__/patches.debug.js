@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_2*shell;b// D l b%c&b&b;<!><label> </label><input><!><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/tags/field.marko; D l b%;<label> </label><input><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_6*content;/ D l b%c&b;<label> </label><input><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_7*content;/ D l b%c&b;<label> </label><input><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_5*shell;b%;<!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_2*shell >#childScope/0>;b// D l b%c&b&b;<!><label> </label><input><!><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/tags/field.marko; D l b%;<label> </label><input><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_6*content;/ D l b%c&b;<label> </label><input><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_7*content;/ D l b%c&b;<label> </label><input><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_5*shell;b%;<!><!><!>`, {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
@@ -65,7 +65,7 @@
 ;GUEH
 
 // PATCH holding GUEH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_3*shell;b// D l b%c&b&b;<!><label> </label><input><!><!><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-id-content-paths/template.marko_3*shell >#childScope/0>;b// D l b%c&b&b;<!><label> </label><input><!><!><!><!>`, {
   "PatchBranch:#text/0": [1, {
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {

@@ -1,0 +1,10 @@
+<define/Card|input|>
+  <let/n=0/>
+  <section>
+    <button onClick() { n++ }>${n}</button>
+    <${input.content}/>
+  </section>
+</define>
+<if=input.show>
+  <Card><em>static ${input.label}</em></Card>
+</if>

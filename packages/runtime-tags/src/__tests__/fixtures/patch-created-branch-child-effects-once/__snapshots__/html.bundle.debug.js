@@ -74,7 +74,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			outer_default({});
 			_patch_child_end();
-			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
+			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1, 0, $scope0_id);
 			Body.content({});
 			_patch_child_end();
 			_for_of(input.items, (item) => {

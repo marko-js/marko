@@ -27,11 +27,11 @@ var keeper_default = _template("b", (input) => {
 // template.marko
 const $Level_content__walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks);
 const $Level_content__template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template);
-const $setup = _shell_setup([[], []], ["a>", _shell_setup([[], []], ["b>", $setup$1])]);
+const $setup = _shell_setup([[], []], ["a>", [[""], []]], ["a>", _shell_setup([[], []], ["b>", $setup$1])]);
 _shells({
 	a3: "a3",
 	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)($Level_content__walks)};${((_w0) => `<main>${_w0}</main>`)($Level_content__template)}`)(),
-	a5: /*@__PURE__*/ (() => `a5${_shell_marker(_shell_setup([[], []], [">>a>", _shell_setup([[], []], ["b>", $setup$1])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Level_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Level_content__template)}`)()
+	a5: /*@__PURE__*/ (() => `a5${_shell_marker(_shell_setup([[], []], [">>a>", [[""], []]], [">>a>", _shell_setup([[], []], ["b>", $setup$1])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Level_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Level_content__template)}`)()
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();

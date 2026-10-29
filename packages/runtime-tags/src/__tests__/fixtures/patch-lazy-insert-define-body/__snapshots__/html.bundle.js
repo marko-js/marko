@@ -19,7 +19,7 @@ const $Row_content__template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($templ
 const $Lazy_withLoadAssets = withLoadAssets(() => lazy_default, "a", flush, "_a");
 _shells({
 	b: "b !b2; b%b%;<button class=open>open</button><!><!><!>",
-	b1: /*@__PURE__*/ (() => `b1${_shell_marker(_shell_setup([[], []], [">a>", _shell_setup([[], []], ["b>", $setup])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`)()
+	b1: /*@__PURE__*/ (() => `b1${_shell_marker(_shell_setup([[], []], [">a>", [[""], []]], [">a>", _shell_setup([[], []], ["b>", $setup])]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`)()
 });
 var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -38,7 +38,7 @@ var template_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
 			_set_scope_reason(0);
-			const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
+			const $childScope2 = _peek_scope_id($scope2_id, "a", 1, 0, $scope0_id);
 			Row.content({ label: "s" });
 			_patch_child_end();
 			_scope($scope2_id, { a: _existing_scope($childScope2) });

@@ -133,7 +133,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $childScope6 = _peek_scope_id($scope5_id, "#childScope/2", 5, 0, $scope0_id);
 		ChildBody.content({});
 		_patch_child_end();
-		const $childScope7 = _peek_scope_id($scope5_id, "#childScope/3", 6);
+		const $childScope7 = _peek_scope_id($scope5_id, "#childScope/3", 6, 0, $scope0_id);
 		OwnBody.content({});
 		_patch_child_end();
 		const $childScope8 = _peek_scope_id($scope5_id, "#childScope/4", 7, 0, $scope0_id);
