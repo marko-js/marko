@@ -367,8 +367,7 @@ class State {
     accessor: string,
     registered: Registered,
   ) {
-    const ref = new Reference(parent, accessor, this.flushId, this.buf.length);
-    ref.channel = this.channel;
+    const ref = new Reference(this, parent, accessor, this.buf.length);
     this.refs.set(val, ref);
     if (MARKO_DEBUG) {
       ref.debug = DEBUG.get(val);
@@ -398,7 +397,7 @@ export class Reference {
   public assignments: null | string[] = null;
   public deferredMembers: null | DeferredMembers = null;
   public scopeId: number | undefined = undefined;
-  public channel: SerializeChannel | undefined = undefined;
+  public channel: SerializeChannel | undefined;
   public parent: Reference | null;
   public accessor: string | null;
   public flushId: number;
@@ -408,15 +407,16 @@ export class Reference {
   // claims an id off it, so a value read once never pays for a binding.
   public path: string | null = null;
   constructor(
+    state: State,
     parent: Reference | null,
     accessor: string | null,
-    flushId: number,
     pos: number | null = null,
     id: string | null = null,
   ) {
+    this.channel = state.channel;
     this.parent = parent;
     this.accessor = accessor;
-    this.flushId = flushId;
+    this.flushId = state.flushId;
     this.pos = pos;
     this.id = id;
   }
@@ -815,9 +815,8 @@ function writeReferenceOr(
 
   state.refs.set(
     val,
-    (ref = new Reference(parent, accessor, state.flushId, state.buf.length)),
+    (ref = new Reference(state, parent, accessor, state.buf.length)),
   );
-  ref.channel = state.channel;
 
   if (MARKO_DEBUG) {
     ref.debug = DEBUG.get(val);
@@ -841,9 +840,8 @@ function trackScope(state: State, val: WeakKey, scopeId: number) {
 }
 
 function newScopeReference(state: State, val: WeakKey, scopeId: number) {
-  const ref = new Reference(null, null, state.flushId);
+  const ref = new Reference(state, null, null);
   ref.scopeId = scopeId;
-  ref.channel = state.channel;
   state.refs.set(val, ref);
   if (MARKO_DEBUG) {
     ref.debug = DEBUG.get(val);
@@ -890,13 +888,7 @@ function writeString(
         return true;
       }
     } else {
-      const ref = new Reference(
-        parent,
-        accessor,
-        state.flushId,
-        state.buf.length,
-      );
-      ref.channel = state.channel;
+      const ref = new Reference(state, parent, accessor, state.buf.length);
       state.strs.set(val, ref);
     }
   }
@@ -1216,8 +1208,7 @@ function writePromise(state: State, val: Promise<unknown>, ref: Reference) {
 
 function newAsyncHandle(state: State, parent: Reference, id: string) {
   const handle = {};
-  const handleRef = new Reference(parent, null, state.flushId, null, id);
-  handleRef.channel = state.channel;
+  const handleRef = new Reference(state, parent, null, null, id);
   state.refs.set(handle, handleRef);
   return handle;
 }
@@ -1413,9 +1404,9 @@ function writeArrayArg(
 ) {
   if (assignsPrefix || needsId) {
     const arrayRef = new Reference(
+      state,
       ref,
       null,
-      state.flushId,
       null,
       nextRefAccess(state),
     );
@@ -1423,11 +1414,7 @@ function writeArrayArg(
     writeArray(state, items, arrayRef);
   } else {
     state.buf.push(plainPrefix);
-    writeArray(
-      state,
-      items,
-      new Reference(ref, null, state.flushId, state.buf.length),
-    );
+    writeArray(state, items, new Reference(state, ref, null, state.buf.length));
   }
   state.buf.push(")");
 }
@@ -1444,9 +1431,9 @@ function newArgReference(state: State, parent: Reference, val: object) {
         : state.refs.has(member as WeakKey))
     ) {
       const ref = new Reference(
+        state,
         parent,
         null,
-        state.flushId,
         null,
         nextRefAccess(state),
       );
@@ -1454,7 +1441,7 @@ function newArgReference(state: State, parent: Reference, val: object) {
       return ref;
     }
   }
-  return new Reference(parent, null, state.flushId, state.buf.length);
+  return new Reference(state, parent, null, state.buf.length);
 }
 
 // Only a reusable non-scope member makes its container need an id.
@@ -1534,10 +1521,7 @@ function writeTypedArray(
         : "") + ")",
     );
   } else {
-    state.refs.set(
-      val.buffer,
-      new Reference(ref, "buffer", state.flushId, null),
-    );
+    state.refs.set(val.buffer, new Reference(state, ref, "buffer"));
     state.buf.push(
       "new " +
         name +
@@ -1692,10 +1676,7 @@ function writeRequest(state: State, val: Request, ref: Reference) {
     options += sep + "headers:" + ensureRefAccess(state, seenHeaders);
     sep = ",";
   } else {
-    state.refs.set(
-      val.headers,
-      new Reference(ref, "headers", state.flushId, null),
-    );
+    state.refs.set(val.headers, new Reference(state, ref, "headers"));
     const headers = stringEntriesToHeadersInit(val.headers as any);
     if (headers) {
       options += sep + "headers:" + headers;
@@ -1764,10 +1745,7 @@ function writeResponse(state: State, val: Response, ref: Reference) {
     // entries inline (which also clobbered its reference).
     options += sep + "headers:" + ensureRefAccess(state, seenHeaders);
   } else {
-    state.refs.set(
-      val.headers,
-      new Reference(ref, "headers", state.flushId, null),
-    );
+    state.refs.set(val.headers, new Reference(state, ref, "headers"));
     const headers = stringEntriesToHeadersInit(val.headers as any);
     if (headers) {
       options += sep + "headers:" + headers;
@@ -1904,9 +1882,9 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
   );
   if (needsId) {
     const arrayRef = new Reference(
+      state,
       ref,
       null,
-      state.flushId,
       null,
       nextRefAccess(state),
     );
@@ -1916,18 +1894,12 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
     writeArray(
       state,
       yields,
-      new Reference(ref, null, state.flushId, state.buf.length),
+      new Reference(state, ref, null, state.buf.length),
     );
   }
 
   if (heldReturn) {
-    const holder = new Reference(
-      ref,
-      null,
-      state.flushId,
-      null,
-      nextRefAccess(state),
-    );
+    const holder = new Reference(state, ref, null, null, nextRefAccess(state));
     state.buf.push("," + holder.id + "={}");
     writeProp(state, returnValue, holder, "v");
   } else if (returnValue !== undefined) {
@@ -2041,9 +2013,9 @@ function writeMaybeIterableProps(state: State, val: object, ref: Reference) {
     if (iterArr.length) {
       // Remaining items bind outside the lazily evaluated generator body.
       const iterRef = new Reference(
+        state,
         ref,
         null,
-        state.flushId,
         null,
         nextRefAccess(state),
       );

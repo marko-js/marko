@@ -2234,6 +2234,31 @@ describe("serializer", () => {
       );
     });
 
+    const typedArray = new Uint8Array([1]);
+    const request = new Request("https://ebay.com/", { headers: { a: "1" } });
+    const response = new Response(null, { headers: { a: "1" } });
+    for (const [name, owner, member] of [
+      ["a typed array's buffer", typedArray, typedArray.buffer],
+      ["a request's headers", request, request.headers],
+      ["a response's headers", response, response.headers],
+    ] as const) {
+      it(`aborts when independent ready channels share ${name}`, () => {
+        const { boundary, aborted } = abortingBoundary();
+        const serializer = new SerializerState();
+        stringifyScopes(serializer, [[1, {}, { owner }]], boundary, {
+          readyId: "a",
+        });
+        stringifyScopes(serializer, [[2, {}, { member }]], boundary, {
+          readyId: "b",
+        });
+        assert.equal(aborted.length, 1);
+        assert.match(
+          String(aborted[0]),
+          /shared between independently lazy loaded content/,
+        );
+      });
+    }
+
     it("reaches a value serialized by an ancestor ready channel", () => {
       const { boundary, aborted } = abortingBoundary();
       const serializer = new SerializerState();
