@@ -545,8 +545,8 @@ function mayTakeSeed(binding: Binding) {
   );
 }
 
-// Read in `section` (or through an alias) past renders, effects, inits and
-// name-only dynamic tags: by control flow, a call, a child, join or return.
+// Read in `section` (or through an alias) past renders, effects, inits and tags it
+// names of no own content: by control flow, a call, a child, join or return.
 function readsPastRenders(
   binding: Binding,
   section: Section,
@@ -561,7 +561,7 @@ function readsPastRenders(
       (read.rendersValue && !hasParamOrGlobalSource(getSourcesForExpr(read))) ||
       read.isEffect ||
       read.initialValue ||
-      read.nameOnly
+      (read.nameOnly && !getOwnContentNameReads().has(read))
     ) {
       continue;
     }
@@ -585,6 +585,23 @@ function readsPastRenders(
   }
   return false;
 }
+
+// The template's name-only dynamic tags rendering content it defines, whose code
+// its module holds (a native tag's name needs none).
+const [getOwnContentNameReads] = createAnalysisState(() => {
+  const reads = new Set<ReferencedExtra>();
+  forEachSection((section) => {
+    if (section.derives) {
+      someRead(getDerivedReaders(section.derives), (read) => {
+        if (read.nameOnly && read.section.program === section.program) {
+          reads.add(read);
+        }
+        return false;
+      });
+    }
+  });
+  return reads;
+});
 
 // A `<let>` the created scope starts from its render's value, as a resumed
 // one does: its own, with no server value reaching it or state its init reads.
