@@ -328,20 +328,6 @@ export default {
         const classFile = classTagTemplate ? loadFileForTag(tag)! : undefined;
         const classHydration = classFile?.metadata.marko.classHydration;
 
-        // A resumed page never re-creates its root section, so an inert Class
-        // API child there needs no client code; any branch can be created later.
-        if (
-          !isOutputHTML() &&
-          isOptimize() &&
-          classTagTemplate &&
-          !markerReason &&
-          !classHydration &&
-          getSection(tag) === getProgram().node.extra.section
-        ) {
-          tag.remove();
-          return;
-        }
-
         setNeedsCompat(true);
 
         if (t.isStringLiteral(tagExpression)) {
