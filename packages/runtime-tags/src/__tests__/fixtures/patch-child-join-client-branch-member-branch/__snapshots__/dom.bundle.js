@@ -15,9 +15,9 @@ const $input_other = ($scope, input_other) => $if2($scope, input_other ? 0 : 1);
 const $input_b = /*@__PURE__*/ _const(6, $if_content__input_b);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(10, ($scope) => $input_b($scope.a, $scope.k));
-const $s = /*@__PURE__*/ _let(11, ($scope) => $input_show($scope.a, $scope.l));
-const $o = /*@__PURE__*/ _let(12, ($scope) => {
+const $n = _let(10, ($scope) => $input_b($scope.a, $scope.k));
+const $s = _let(11, ($scope) => $input_show($scope.a, $scope.l));
+const $o = _let(12, ($scope) => {
 	$input_other($scope.a, $scope.m);
 	$input_other($scope.b, $scope.m);
 });

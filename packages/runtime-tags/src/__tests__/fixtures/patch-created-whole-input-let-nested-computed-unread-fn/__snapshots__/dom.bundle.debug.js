@@ -1,13 +1,3 @@
-// tags/card.marko
-const $template$1 = "<p> </p>";
-const $walks$1 = "D l";
-const $setup$1 = ($_) => {};
-const $i = /*@__PURE__*/ _let("i/3", ($scope) => $i_opts($scope, $scope.i?.opts));
-const $i_opts = /*@__PURE__*/ _const("i_opts", ($scope) => $i_opts_label($scope, $scope.i_opts?.label));
-const $i_opts_label = /*@__PURE__*/ _const("i_opts_label", ($scope) => _text($scope["#text/0"], $scope.i_opts_label));
-const $input$1 = $i;
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, "D l", 0, $input$1);
-
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
@@ -35,3 +25,13 @@ const $input = ($scope, input) => {
 };
 const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", $if_content__input_label);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+
+// tags/card.marko
+const $template = "<p> </p>";
+const $walks = "D l";
+const $setup = ($_) => {};
+const $i = _let("i/3", ($scope) => $i_opts($scope, $scope.i?.opts));
+const $i_opts = /*@__PURE__*/ _const("i_opts", ($scope) => $i_opts_label($scope, $scope.i_opts?.label));
+const $i_opts_label = /*@__PURE__*/ _const("i_opts_label", ($scope) => _text($scope["#text/0"], $scope.i_opts_label));
+const $input = $i;
+var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template, "D l", 0, $input);

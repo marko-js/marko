@@ -6,7 +6,7 @@ function format(label) {
 // tags/widget/index.marko
 const $template = "<p><!><!></p><button class=run>run</button>";
 const $walks = "D%b%l b";
-const $last = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
+const $last = _let(6, ($scope) => _text($scope.b, $scope.g));
 const $setup__script$1 = _script("b0", ($scope) => _on($scope.c, "click", function() {
 	$last($scope, format($scope.f));
 }));
@@ -23,7 +23,7 @@ const $if_content__setup = ($scope) => {
 	$setup($scope.a);
 };
 const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $if_content__setup);
-const $show = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
+const $show = _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$show($scope, !$scope.f);
 }));

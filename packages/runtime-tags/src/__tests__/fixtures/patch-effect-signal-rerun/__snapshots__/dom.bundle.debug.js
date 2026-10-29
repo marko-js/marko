@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button> </button><p></p>";
 const $walks = " D l b";
-const $clicks = /*@__PURE__*/ _let("clicks/6", ($scope) => _text($scope["#text/1"], $scope.clicks));
+const $clicks = _let("clicks/6", ($scope) => _text($scope["#text/1"], $scope.clicks));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clicks($scope, +$scope.clicks + 1);
 }));

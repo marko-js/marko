@@ -5,7 +5,7 @@ const $if_content__input_title__script = _script("__tests__/template.marko_1_inp
 const $if_content__input_title = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_title__script));
 const $if_content__setup = $if_content__input_title;
 const $if = /*@__PURE__*/ _if("#text/0", "<p>big</p>", 0, $if_content__setup);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => $if($scope, $scope.count > 1 ? 0 : 1));
+const $count = _let("count/5", ($scope) => $if($scope, $scope.count > 1 ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

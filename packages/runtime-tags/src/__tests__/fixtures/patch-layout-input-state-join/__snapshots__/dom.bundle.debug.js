@@ -32,7 +32,7 @@ const $Layout_content__setup__script = _script("__tests__/template.marko_1", ($s
 }));
 const $Layout_content__setup = $Layout_content__setup__script;
 const $Layout_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button>inc</button>", " ", $Layout_content__setup);
-const $a = /*@__PURE__*/ _let("a/5", ($scope) => $input_a($scope["#childScope/0"], $scope.a));
+const $a = _let("a/5", ($scope) => $input_a($scope["#childScope/0"], $scope.a));
 function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $Layout_content($scope));
 	$a($scope, 1);

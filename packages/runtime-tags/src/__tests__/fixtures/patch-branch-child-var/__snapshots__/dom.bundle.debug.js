@@ -23,7 +23,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $if_content__el = _var_resume("__tests__/template.marko_1_el#3/var", /*@__PURE__*/ _const("el"));
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

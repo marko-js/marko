@@ -2,7 +2,7 @@
 const $template = "<main><h1> </h1><!></main>";
 const $walks = "E l%l";
 const $setup = ($_) => {};
-const $if_content__frozen = /*@__PURE__*/ _let("frozen/1", ($scope) => _text($scope["#text/0"], $scope.frozen));
+const $if_content__frozen = _let("frozen/1", ($scope) => _text($scope["#text/0"], $scope.frozen));
 const $if_content__setup = ($scope) => $if_content__frozen($scope, 1);
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $if = /*@__PURE__*/ _if("#text/1", "<p>Value <!></p>", "Db%", $if_content__setup);

@@ -10,7 +10,7 @@ const $if_content__input_attrs = /*@__PURE__*/ _init_resume("__tests__/template.
 	});
 })));
 const $if_content__setup = $if_content__input_attrs;
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }

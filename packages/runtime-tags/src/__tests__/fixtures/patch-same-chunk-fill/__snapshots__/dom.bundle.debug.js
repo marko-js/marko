@@ -1,7 +1,7 @@
 // tags/probe.marko
 const $template$1 = "<div> </div>";
 const $walks$1 = " D l";
-const $settled = /*@__PURE__*/ _let("settled/5", ($scope) => _text($scope["#text/1"], $scope.settled ? "settled" : "pending"));
+const $settled = _let("settled/5", ($scope) => _text($scope["#text/1"], $scope.settled ? "settled" : "pending"));
 function $setup$1($scope) {
 	$settled($scope, false);
 }
@@ -28,7 +28,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);
 };
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/7", ($scope) => _text($scope["#text/1"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/3", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);

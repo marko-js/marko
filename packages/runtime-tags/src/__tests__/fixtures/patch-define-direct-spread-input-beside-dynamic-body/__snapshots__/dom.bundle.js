@@ -7,7 +7,7 @@ const $Panel_content__$temp = ($scope, $temp) => $Panel_content__label($scope, $
 const $Panel_content = _content("a0", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $input_label__OR__open__OR__Panel = /*@__PURE__*/ _or(8, ($scope) => $dynamicTag($scope, $scope.g ? "b" : $scope.h, ($_) => ({ label: $scope.f })), 2);
-const $open = /*@__PURE__*/ _let(6, $input_label__OR__open__OR__Panel);
+const $open = _let(6, $input_label__OR__open__OR__Panel);
 const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.g);
 }));

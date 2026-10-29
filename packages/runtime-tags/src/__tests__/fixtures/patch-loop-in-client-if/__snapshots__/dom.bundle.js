@@ -6,8 +6,8 @@ const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<li><!>: <!></li>", "D%c%", $for_content__setup, $for_content__$params);
 const $if_content__items = /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__for($scope, [$scope._.h]));
 const $if = /*@__PURE__*/ _if(0, "<ul></ul>", " ", $if_content__items);
-const $show = /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
-const $items = /*@__PURE__*/ _let(7, $if_content__items);
+const $show = _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
+const $items = _let(7, $if_content__items);
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.b, "click", function() {
 		$show($scope, !$scope.g);

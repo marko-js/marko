@@ -5,7 +5,7 @@ const $for_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko
 const $for_content__setup = $for_content__count;
 const $for_content__item_label = ($scope, item_label) => _text($scope["#text/0"], item_label);
 const $for_content__$params = ($scope, $params2) => $for_content__item_label($scope, $params2[0]?.label);
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
+const $count = _let("count/6", ($scope) => {
 	_text($scope["#text/2"], $scope.count);
 	$for_content__count($scope);
 });

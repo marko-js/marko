@@ -33,7 +33,7 @@ const $for_content__setup = ($scope) => {
 const $for_content__onCount = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $input_onCount($scope["#childScope/0"], $scope._.onCount));
 const $for_content__name = ($scope, name) => $input_step($scope["#childScope/0"], name === "a" ? 1 : 2);
 const $for_content__$params = ($scope, $params2) => $for_content__name($scope, $params2[0]);
-const $last = /*@__PURE__*/ _let("last/7", ($scope) => _text($scope["#text/1"], $scope.last));
+const $last = _let("last/7", ($scope) => _text($scope["#text/1"], $scope.last));
 const $onCount2 = /*@__PURE__*/ _const("onCount");
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $for_content__setup, $for_content__$params);
 function $setup($scope) {

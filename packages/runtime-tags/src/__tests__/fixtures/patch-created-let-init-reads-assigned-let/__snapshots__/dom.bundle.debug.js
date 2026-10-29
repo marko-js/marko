@@ -2,7 +2,7 @@
 const $template$2 = "<section><button>x</button><!></section>";
 const $walks$2 = "D b%l";
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $c$1 = /*@__PURE__*/ _let("c/7", ($scope) => $dynamicTag$1($scope, $scope.c));
+const $c$1 = _let("c/7", ($scope) => $dynamicTag$1($scope, $scope.c));
 const $input_content__OR__open$1 = /*@__PURE__*/ _or_resume("__tests__/tags/card.marko_0_input_content#4_open#5/init", 6, ($scope) => $c$1($scope, $scope.open ? $scope.input_content : undefined));
 const $open$1 = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "open/5", $input_content__OR__open$1);
 const $setup__script$1 = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
@@ -21,8 +21,8 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template$1 = "<section><button>y</button><!></section>";
 const $walks$1 = "D b%l";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $c = /*@__PURE__*/ _let("c/8", ($scope) => $dynamicTag($scope, $scope.c));
-const $picked = /*@__PURE__*/ _let("picked/7", ($scope) => $c($scope, $scope.picked));
+const $c = _let("c/8", ($scope) => $dynamicTag($scope, $scope.c));
+const $picked = _let("picked/7", ($scope) => $c($scope, $scope.picked));
 const $input_content__OR__open = /*@__PURE__*/ _or_resume("__tests__/tags/relay.marko_0_input_content#4_open#5/init", 6, ($scope) => $picked($scope, $scope.open ? $scope.input_content : undefined));
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/relay.marko_fill0", "open/5", $input_content__OR__open);
 const $setup__script = _script("__tests__/tags/relay.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

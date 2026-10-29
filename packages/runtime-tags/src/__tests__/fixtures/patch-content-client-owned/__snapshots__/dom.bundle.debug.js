@@ -24,7 +24,7 @@ const $if_content__setup = ($scope) => {
 	$input_content_direct($scope["#childScope/0"], $card_content($scope));
 };
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $input_open = $open;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);

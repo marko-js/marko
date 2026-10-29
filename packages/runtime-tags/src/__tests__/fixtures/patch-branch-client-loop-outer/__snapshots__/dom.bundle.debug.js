@@ -8,7 +8,7 @@ const $for_content__expand = /*@__PURE__*/ _init_resume("__tests__/template.mark
 const $for_content__setup = $for_content__expand;
 const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $expand = /*@__PURE__*/ _let("expand/6", $for_content__expand);
+const $expand = _let("expand/6", $for_content__expand);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$expand($scope, !$scope.expand);
 }));

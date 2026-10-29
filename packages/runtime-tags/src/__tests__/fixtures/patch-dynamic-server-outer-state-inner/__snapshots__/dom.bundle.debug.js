@@ -39,7 +39,7 @@ const $inputonCardnull_content__setup = ($scope) => {
 };
 const $inputonCardnull_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $inputonCardnull_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($inputonCardnull_content__count);
-const $count = /*@__PURE__*/ _let("count/6", $count__closure);
+const $count = _let("count/6", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

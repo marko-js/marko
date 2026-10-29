@@ -14,7 +14,7 @@ const $if_content__alt = /*@__PURE__*/ _fill_join("a10", 10, /*@__PURE__*/ _if_c
 const $if_content__last = /*@__PURE__*/ _fill_join("a11", 11, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input($scope.c, { fn: $scope._.l })));
 const $if_content__tag = /*@__PURE__*/ _fill_join("a12", 12, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input($scope.d, { fn: $scope._.m })));
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `${_w0}${_w1}${_w2}${_w3}`)($template, $template, $template, $template), /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `/${_w0}&/${_w1}&/${_w2}&/${_w3}&`)("D l", "D l", "D l", "D l"), $if_content__setup);
-const $show = /*@__PURE__*/ _let(13, ($scope) => $if($scope, $scope.n ? 0 : 1));
+const $show = _let(13, ($scope) => $if($scope, $scope.n ? 0 : 1));
 const $setup__script = _script("a5", ($scope) => _on($scope.b, "click", function() {
 	$show($scope, !$scope.n);
 }));

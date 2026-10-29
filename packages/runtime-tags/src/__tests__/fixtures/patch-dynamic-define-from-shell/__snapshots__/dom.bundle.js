@@ -17,4 +17,4 @@ const $Card_content__$params = ($scope, $params2) => {
 	$Card_content__user_address($scope, $params2[0].user?.address);
 };
 const $Card_content = _content$1("a0", /*@__PURE__*/ ((_w0) => `<h4> </h4>${_w0}<button class=pick>pick</button>`)($template), /*@__PURE__*/ ((_w0) => `D l/${_w0}& b`)("D l"), $Card_content__setup, $Card_content__$params);
-const $picked = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
+const $picked = _let(6, ($scope) => _text($scope.b, $scope.g));

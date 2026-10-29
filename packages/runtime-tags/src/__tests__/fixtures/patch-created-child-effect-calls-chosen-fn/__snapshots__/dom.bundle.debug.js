@@ -25,7 +25,7 @@ const $if_content__input_pick__OR__fa__OR__fb = /*@__PURE__*/ _fill_join_if("__t
 const $if_content__input_pick = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_pick__OR__fa__OR__fb);
 const $if_content__fa = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_pick__OR__fa__OR__fb);
 const $if_content__fb = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_pick__OR__fa__OR__fb);
-const $flag = /*@__PURE__*/ _let("flag/7", ($scope) => _text($scope["#text/1"], $scope.flag));
+const $flag = _let("flag/7", ($scope) => _text($scope["#text/1"], $scope.flag));
 const $fa2 = /*@__PURE__*/ _const("fa");
 const $fb2 = /*@__PURE__*/ _const("fb");
 function $setup($scope) {

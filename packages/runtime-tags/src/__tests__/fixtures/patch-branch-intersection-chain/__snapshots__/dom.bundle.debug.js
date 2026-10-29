@@ -18,7 +18,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__count = /*@__PURE__*/ _if_closure("#div/0", 0, $if_content__input_title__OR__count);
 const $input_title__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _or(8, ($scope) => _text($scope["#text/1"], $scope.input_title + " root #" + $scope.count)));
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => {
+const $count = _let("count/7", ($scope) => {
 	$input_title__OR__count($scope);
 	$if_content__count($scope);
 	$elseif_content__count($scope);

@@ -1,5 +1,5 @@
 // template.marko
-const $count = /*@__PURE__*/ _let(6, ($scope) => {
+const $count = _let(6, ($scope) => {
 	_attr_input_value($scope, "b", void 0, $valueChange($scope));
 	_text($scope.c, $scope.g);
 });

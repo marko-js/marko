@@ -12,8 +12,8 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(1, "<p> </p>", "D ", $for_content__se
 const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 
 // template.marko
-const $list = /*@__PURE__*/ _let(9, ($scope) => $input_items($scope.a, $scope.j));
-const $show = /*@__PURE__*/ _let(10, ($scope) => $input_show($scope.a, $scope.k));
+const $list = _let(9, ($scope) => $input_items($scope.a, $scope.j));
+const $show = _let(10, ($scope) => $input_show($scope.a, $scope.k));
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.c, "click", function() {
 		$list($scope, $scope.j.concat("r"));

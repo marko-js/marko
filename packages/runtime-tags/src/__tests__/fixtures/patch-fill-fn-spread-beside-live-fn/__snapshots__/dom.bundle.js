@@ -12,7 +12,7 @@ const $if_content__setup = ($scope) => {
 const $if_content__items = /*@__PURE__*/ _fill_join("a5", 8, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input($scope.b, { fn: $scope._.i })));
 const $if_content__tag = /*@__PURE__*/ _fill_join("a6", 9, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input($scope.c, { fn: $scope._.j })));
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}`)($template, $template, $template), /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}&`)("D l", "D l", "D l"), $if_content__setup);
-const $show = /*@__PURE__*/ _let(10, ($scope) => $if($scope, $scope.k ? 0 : 1));
+const $show = _let(10, ($scope) => $if($scope, $scope.k ? 0 : 1));
 const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {
 	$show($scope, !$scope.k);
 }));

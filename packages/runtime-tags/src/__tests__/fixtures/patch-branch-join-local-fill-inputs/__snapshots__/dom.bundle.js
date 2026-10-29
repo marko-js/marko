@@ -18,7 +18,7 @@ const $input_a = /*@__PURE__*/ _const(5, ($scope) => {
 });
 
 // template.marko
-const $n = /*@__PURE__*/ _let(8, ($scope) => $input_a($scope.a, $scope.i));
+const $n = _let(8, ($scope) => $input_a($scope.a, $scope.i));
 const $setup__script = _script("a0", ($scope) => _on($scope.c, "click", function() {
 	$n($scope, +$scope.i + 1);
 }));

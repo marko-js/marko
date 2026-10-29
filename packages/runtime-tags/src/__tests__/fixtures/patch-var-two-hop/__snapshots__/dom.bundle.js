@@ -6,7 +6,7 @@ const $input_value$1 = ($scope, input_value) => $double$1($scope, input_value * 
 const $input_value = ($scope, input_value) => _text($scope.a, input_value);
 
 // template.marko
-const $count = /*@__PURE__*/ _let(4, ($scope) => $input_value$1($scope.a, $scope.e));
+const $count = _let(4, ($scope) => $input_value$1($scope.a, $scope.e));
 const $setup__script = _script("a1", ($scope) => _on($scope.d, "click", function() {
 	$count($scope, +$scope.e + 1);
 }));

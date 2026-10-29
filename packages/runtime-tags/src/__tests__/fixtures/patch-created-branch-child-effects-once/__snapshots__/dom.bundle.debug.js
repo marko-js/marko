@@ -83,7 +83,7 @@ const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/5", $inputtag_
 const $if_content__input_tag = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_tag#0:8/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_tag", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_tag))));
 const $if_content__count__script = _script("__tests__/template.marko_1_count#0:9", ($scope) => console.log("branch count", $scope._.count));
 const $if_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_count#0:9/init", /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__count__script));
-const $count = /*@__PURE__*/ _let("count/9", ($scope) => {
+const $count = _let("count/9", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$if_content__count($scope);
 });

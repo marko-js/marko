@@ -10,7 +10,7 @@ const $input_rest__OR__text = /*@__PURE__*/ _fill_join("__tests__/template.marko
 	}, _controllable_input);
 	$input_rest__OR__text__script($scope);
 }));
-const $text = /*@__PURE__*/ _let("text/5", ($scope) => {
+const $text = _let("text/5", ($scope) => {
 	_text($scope["#text/1"], $scope.text);
 	$input_rest__OR__text($scope);
 });

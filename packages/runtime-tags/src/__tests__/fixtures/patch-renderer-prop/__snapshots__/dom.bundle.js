@@ -7,7 +7,7 @@ const $input_open = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
 // template.marko
 const $extra_content__input_title = /*@__PURE__*/ _init_resume("a1", /*@__PURE__*/ _fill_join_closure("a4", 4, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._.e), 0, "a2"), 0));
 const $extra_content = _content$1("a0", "<em> </em>", "D ", $extra_content__input_title);
-const $count = /*@__PURE__*/ _let(5, ($scope) => $input_open($scope.a, $scope.f % 2 === 0));
+const $count = _let(5, ($scope) => $input_open($scope.a, $scope.f % 2 === 0));
 const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.f + 1);
 }));

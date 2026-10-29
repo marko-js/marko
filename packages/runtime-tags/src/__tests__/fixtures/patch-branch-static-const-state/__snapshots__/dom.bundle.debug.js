@@ -8,7 +8,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__count._($scope);
 	$if_content__base($scope, 10 * 2);
 };
-const $count = /*@__PURE__*/ _let("count/5", $if_content__count);
+const $count = _let("count/5", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

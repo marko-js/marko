@@ -14,7 +14,7 @@ const $B_content__input_label = /*@__PURE__*/ _fill_join_closure("a5", 5, /*@__P
 const $B_content = _content$1("a2", "<i>B <!></i>", "Db%", $B_content__input_label);
 const $A_content__input_label = /*@__PURE__*/ _fill_join_closure("a5", 5, /*@__PURE__*/ _closure_get(11, ($scope) => _text($scope.a, $scope._.f), 0, "a1"), 0);
 const $A_content = _content$1("a0", "<em>A <!></em>", "Db%", $A_content__input_label);
-const $count = /*@__PURE__*/ _let(7, ($scope) => {
+const $count = _let(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	$input_fail($scope.c, $scope.h > 1);
 });

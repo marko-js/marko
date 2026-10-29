@@ -18,7 +18,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__f = /*@__PURE__*/ _let("f/2", ($scope) => _text($scope["#text/1"], $scope.f()));
+const $if_content__f = _let("f/2", ($scope) => _text($scope["#text/1"], $scope.f()));
 const $if_content__input_fn = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_1_input_fn#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_fn", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__f($scope, $scope._.input_fn))));
 const $if_content__setup__script = _script("__tests__/tags/card.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$if_content__f($scope, () => "x");

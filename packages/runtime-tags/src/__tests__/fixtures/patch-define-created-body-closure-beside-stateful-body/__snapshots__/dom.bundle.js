@@ -13,7 +13,7 @@ const $Panel_content__$temp = ($scope, $temp) => $Panel_content__isOpen($scope, 
 const $Panel_content = _content$1("a3", $Panel_content__template, $Panel_content__walks, $Panel_content__setup, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $open__OR__Tag = /*@__PURE__*/ _fill_join("a10", 12, /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.m, ($_) => ({ isOpen: !$scope.j }))));
-const $open = /*@__PURE__*/ _let(9, $open__OR__Tag);
+const $open = _let(9, $open__OR__Tag);
 const $setup__script = _script("a7", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.j);
 }));

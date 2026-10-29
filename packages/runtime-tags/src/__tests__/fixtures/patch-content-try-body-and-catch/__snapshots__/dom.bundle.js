@@ -12,7 +12,7 @@ const $input_fail = /*@__PURE__*/ _const(4, $input_fail__closure);
 // template.marko
 const $wrapper_content__input_label = /*@__PURE__*/ _fill_join_closure("a3", 5, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._.f), 0, "a0"), 0);
 const $wrapper_content = _content$1("a1", "<em> </em>", "D ", $wrapper_content__input_label);
-const $count = /*@__PURE__*/ _let(6, ($scope) => {
+const $count = _let(6, ($scope) => {
 	_text($scope.b, $scope.g);
 	$input_fail($scope.c, $scope.g > 0);
 });

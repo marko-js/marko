@@ -14,7 +14,7 @@ const $input_a = /*@__PURE__*/ _fill_const("b1", 6, ($scope) => {
 const $input_b = /*@__PURE__*/ _const(7, $input_b__OR__input_a);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(7, ($scope) => {
+const $n = _let(7, ($scope) => {
 	$input_b($scope.a, "n" + $scope.h);
 	$input_a($scope.b, "m" + $scope.h);
 });

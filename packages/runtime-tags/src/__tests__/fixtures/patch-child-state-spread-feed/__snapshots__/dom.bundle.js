@@ -20,9 +20,9 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__o = /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_tab($scope.b, attrTag({ ...$scope._.f })));
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0, _w1, _w2) => `<!>${_w0}${_w1}${_w2}<!>`)($template, $template, $template), /*@__PURE__*/ ((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}&b`)("b%c", "b%c", "b%c"), $if_content__setup);
-const $show = /*@__PURE__*/ _let(3, ($scope) => $if($scope, $scope.d ? 0 : 1));
+const $show = _let(3, ($scope) => $if($scope, $scope.d ? 0 : 1));
 const $o = /*@__PURE__*/ _const(5, $if_content__o);
-const $on = /*@__PURE__*/ _let(4, ($scope) => {
+const $on = _let(4, ($scope) => {
 	$o($scope, { on: $scope.e });
 	$if_content__on($scope);
 });

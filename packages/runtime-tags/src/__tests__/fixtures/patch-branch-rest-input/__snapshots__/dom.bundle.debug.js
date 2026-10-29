@@ -3,7 +3,7 @@ const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 const $if = /*@__PURE__*/ _if("#text/2", "<span>shown</span>");
 const $input_show__OR__on = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(8, ($scope) => $if($scope, $scope.input_show && $scope.on ? 0 : 1)));
-const $on = /*@__PURE__*/ _let("on/7", $input_show__OR__on);
+const $on = _let("on/7", $input_show__OR__on);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$on($scope, !$scope.on);
 }));

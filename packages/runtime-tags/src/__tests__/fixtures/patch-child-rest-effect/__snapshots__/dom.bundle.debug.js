@@ -22,7 +22,7 @@ const $input_title__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.mar
 	value: $scope.count,
 	label: $scope.input_title
 })));
-const $count = /*@__PURE__*/ _let("count/5", $input_title__OR__count);
+const $count = _let("count/5", $input_title__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

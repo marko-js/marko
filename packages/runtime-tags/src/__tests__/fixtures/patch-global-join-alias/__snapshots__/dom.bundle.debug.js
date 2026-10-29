@@ -6,7 +6,7 @@ const $if_content__count = /*@__PURE__*/ _if_closure("#text/3", 0, $if_content__
 const $if_content__setup = $if_content__count;
 const $if = /*@__PURE__*/ _if("#text/3", "<b> </b>", "D ", $if_content__setup);
 const $count__$global_suffix = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_0_count#4_$global_suffix#8", ($scope) => _text($scope["#text/1"], $scope.count + _global_read($scope.$global, "suffix")), "suffix");
-const $count = /*@__PURE__*/ _let("count/4", ($scope) => {
+const $count = _let("count/4", ($scope) => {
 	$alias($scope, $scope.count);
 	$if($scope, $scope.count ? 0 : 1);
 	$count__$global_suffix($scope);

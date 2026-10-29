@@ -8,7 +8,7 @@ const $x = /*@__PURE__*/ _const("x", ($scope) => {
 	$input_other__OR__x($scope);
 });
 const $input_label__OR__n = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(7, ($scope) => $x($scope, $scope.n + $scope.input_label)));
-const $n = /*@__PURE__*/ _let("n/6", $input_label__OR__n);
+const $n = _let("n/6", $input_label__OR__n);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

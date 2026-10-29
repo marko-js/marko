@@ -4,7 +4,7 @@ const $if_content__setup__script = _script("a0", ($scope) => _on($scope.b, "clic
 	$if_content__n($scope, +$scope.c + 1);
 }));
 const $input_title__OR__count = /*@__PURE__*/ _fill_join("a4", 5, /*@__PURE__*/ _or(8, ($scope) => _text($scope.a, $scope.f + " #" + $scope.h)));
-const $count = /*@__PURE__*/ _let(7, $input_title__OR__count);
+const $count = _let(7, $input_title__OR__count);
 const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.h + 1);
 }));

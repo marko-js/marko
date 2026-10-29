@@ -17,7 +17,7 @@ const $placeholder_content = _content("__tests__/template.marko_2*content", "<em
 const $try_content__for = /*@__PURE__*/ _for_of("#section/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $try_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_items#0:5/init", /*@__PURE__*/ _closure_get("input_items/7", ($scope) => $try_content__for($scope, [$scope._.input_items, "id"]), 0, "__tests__/template.marko_1_input_items#0:5/subscribe"));
 const $try_content__setup = $try_content__input_items;
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/2", "<section></section>", " ", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);

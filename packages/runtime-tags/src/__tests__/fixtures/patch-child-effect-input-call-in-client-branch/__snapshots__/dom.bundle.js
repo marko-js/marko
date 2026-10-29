@@ -36,7 +36,7 @@ _fill_run("b13", 8, ($scope) => {
 const $input_label__script = _script("b10", ($scope) => console.log("label", $scope.i));
 
 // template.marko
-const $shown = /*@__PURE__*/ _let(6, ($scope) => $input_show($scope.a, $scope.g));
+const $shown = _let(6, ($scope) => $input_show($scope.a, $scope.g));
 const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$shown($scope, !$scope.g);
 }));

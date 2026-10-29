@@ -7,7 +7,7 @@ const $if_content__setup = ($scope) => {
 	$load_Lazy_setup($scope, $scope.b, $scope.a);
 };
 const $if2 = /*@__PURE__*/ _if(2, "<!><!><!>", "b%/&", $if_content__setup);
-const $open = /*@__PURE__*/ _let(7, ($scope) => $if2($scope, $scope.h ? 0 : 1));
+const $open = _let(7, ($scope) => $if2($scope, $scope.h ? 0 : 1));
 const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.h);
 }));

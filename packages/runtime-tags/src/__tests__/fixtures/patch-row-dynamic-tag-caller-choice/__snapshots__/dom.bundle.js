@@ -36,7 +36,7 @@ const $setup__script$1 = _script("b7", ($scope) => _on($scope.a, "click", functi
 const $input_card = /*@__PURE__*/ _const(7, $for_content__input_card);
 
 // template.marko
-const $card = /*@__PURE__*/ _let(6, ($scope) => $input_card($scope.a, $scope.g));
+const $card = _let(6, ($scope) => $input_card($scope.a, $scope.g));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$card($scope, !$scope.g);
 }));

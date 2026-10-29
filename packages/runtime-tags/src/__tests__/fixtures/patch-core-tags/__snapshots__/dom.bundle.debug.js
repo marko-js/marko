@@ -11,7 +11,7 @@ const $input_value__OR__count__script = _script("__tests__/template.marko_0_inpu
 	value: $scope.input_value
 }));
 const $input_value__OR__count = /*@__PURE__*/ _or(8, $input_value__OR__count__script);
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => {
+const $count = _let("count/7", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$input_value__OR__count($scope);
 });

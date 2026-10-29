@@ -28,7 +28,7 @@ const $fallback_content2__input_label = /*@__PURE__*/ _init_resume("a2", /*@__PU
 const $fallback_content2 = _content$1("a4", "<i> </i>", "D ", $fallback_content2__input_label);
 const $fallback_content__input_label = /*@__PURE__*/ _fill_join_closure("a6", 6, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.g), 0, "a0"), 0);
 const $fallback_content = _content$1("a1", "<em> </em>", "D ", $fallback_content__input_label);
-const $count = /*@__PURE__*/ _let(7, ($scope) => {
+const $count = _let(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	$input_fail$1($scope.c, $scope.h > 1);
 	$input_fail($scope.d, $scope.h > 1);

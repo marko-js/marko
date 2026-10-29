@@ -22,7 +22,7 @@ const $input_b__closure = /*@__PURE__*/ _closure($if_content__input_b);
 const $input_b = /*@__PURE__*/ _fill_const("c9", 6, $input_b__closure);
 
 // template.marko
-const $b = /*@__PURE__*/ _let(6, ($scope) => $input_b($scope.b, $scope.g));
+const $b = _let(6, ($scope) => $input_b($scope.b, $scope.g));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$b($scope, $scope.g + "!");
 }));

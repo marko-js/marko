@@ -14,7 +14,7 @@ const $if_content__setup = ($scope) => {
 };
 const $try_content__if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__setup);
 const $try_content__pending = /*@__PURE__*/ _init_resume("a16", /*@__PURE__*/ _closure_get(7, ($scope) => $try_content__if($scope, $scope._.f ? 0 : 1), 0, "a9"));
-const $pending = /*@__PURE__*/ _let(5, /* @__PURE__ */ _closure($try_content__pending, $if_content__pending));
+const $pending = _let(5, /* @__PURE__ */ _closure($try_content__pending, $if_content__pending));
 const $setup__script = _script("a10", ($scope) => _on($scope.b, "click", function() {
 	$pending($scope, new Promise((r) => globalThis.__resolve = r));
 }));

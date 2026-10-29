@@ -5,7 +5,7 @@ const $if_content__input_a__$global_g = /*@__PURE__*/ _fill_global_join("__tests
 const $if_content__input_a = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__input_a__$global_g));
 const $if_content__setup = $if_content__input_a;
 const $if = /*@__PURE__*/ _if("#text/2", "<p>t:<!></p>", "Db%", $if_content__setup);
-const $s = /*@__PURE__*/ _let("s/6", ($scope) => {
+const $s = _let("s/6", ($scope) => {
 	_text($scope["#text/1"], $scope.s);
 	$if($scope, $scope.s % 2 === 1 ? 0 : 1);
 });

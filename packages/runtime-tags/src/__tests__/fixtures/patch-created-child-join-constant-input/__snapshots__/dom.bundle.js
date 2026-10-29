@@ -7,7 +7,7 @@ const $if_content__n = /*@__PURE__*/ _init_resume("a5", /*@__PURE__*/ _if_closur
 	$input_b($scope.a, $scope._.g);
 	$input_b($scope.b, $scope._.g);
 }));
-const $n = /*@__PURE__*/ _let(6, $if_content__n);
+const $n = _let(6, $if_content__n);
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$n($scope, +$scope.g + 1);
 }));

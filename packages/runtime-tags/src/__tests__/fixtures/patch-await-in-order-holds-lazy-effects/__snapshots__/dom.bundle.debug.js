@@ -24,7 +24,7 @@ let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal_patch(($_) => impor
 let $load_Child_tag_input_valueChange = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:child.marko.input_valueChange.mjs"), "ready:__tests__/child.marko");
 const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
-const $value = /*@__PURE__*/ _let("value/7", ($scope) => $load_Child_tag_input_value($scope["#childScope/1"], $scope.value));
+const $value = _let("value/7", ($scope) => $load_Child_tag_input_value($scope["#childScope/1"], $scope.value));
 function $setup($scope) {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_valueChange($scope["#childScope/1"], $valueChange($scope));

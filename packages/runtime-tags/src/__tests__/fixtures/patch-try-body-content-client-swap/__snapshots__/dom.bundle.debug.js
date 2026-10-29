@@ -39,7 +39,7 @@ const $A_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/temp
 const $A_content__setup = $A_content__input_label;
 const $A_content = _content("__tests__/template.marko_1*content", "<em>A <!></em>", "Db%", $A_content__setup);
 const $alt__OR__A__OR__B = /*@__PURE__*/ _or(9, ($scope) => $input_content($scope["#childScope/2"], $scope.alt ? $scope.A : $scope.B), 2);
-const $alt = /*@__PURE__*/ _let("alt/6", ($scope) => {
+const $alt = _let("alt/6", ($scope) => {
 	_text($scope["#text/1"], $scope.alt ? "A" : "B");
 	$alt__OR__A__OR__B($scope);
 });

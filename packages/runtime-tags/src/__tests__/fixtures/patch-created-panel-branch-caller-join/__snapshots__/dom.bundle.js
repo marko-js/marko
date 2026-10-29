@@ -5,7 +5,7 @@ const $input_a = /*@__PURE__*/ _const(4, $if_content__input_a);
 
 // template.marko
 const $if_content__count = /*@__PURE__*/ _init_resume("a7", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_a($scope.a, $scope._.h)));
-const $count = /*@__PURE__*/ _let(7, $if_content__count);
+const $count = _let(7, $if_content__count);
 const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.h + 1);
 }));

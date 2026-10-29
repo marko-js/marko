@@ -1,12 +1,12 @@
 // template.marko
 const $template = "<div id=spread></div><input name=spread><div> </div><p> </p><button>+</button>";
 const $walks = " b bD lD l b";
-const $html = /*@__PURE__*/ _let("html/8", ($scope) => _html($scope, $scope.html, "#text/2"));
+const $html = _let("html/8", ($scope) => _html($scope, $scope.html, "#text/2"));
 const $attrs__script = _script("__tests__/template.marko_0_attrs#9", ($scope) => {
 	_attrs_script($scope, "#div/0");
 	_attrs_script($scope, "#input/1");
 });
-const $attrs = /*@__PURE__*/ _let("attrs/9", ($scope) => {
+const $attrs = _let("attrs/9", ($scope) => {
 	_attrs_partial_content($scope, "#div/0", $scope.attrs, { id: 1 });
 	_attrs_partial($scope, "#input/1", $scope.attrs, { name: 1 }, _controllable_input);
 	$attrs__script($scope);

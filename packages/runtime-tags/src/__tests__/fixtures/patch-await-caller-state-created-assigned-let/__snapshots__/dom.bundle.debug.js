@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $await_content__f = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill1", "f/9", ($scope) => _text($scope["#text/1"], $scope.f));
 const $await_content__a__OR__l = /*@__PURE__*/ _or_resume("__tests__/tags/show-await.marko_1_a#5_l#6/init", 7, ($scope) => $await_content__f($scope, $scope.a + ":" + $scope.l));
-const $await_content__l = /*@__PURE__*/ _let("l/6", $await_content__a__OR__l);
+const $await_content__l = _let("l/6", $await_content__a__OR__l);
 const $await_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_1_input_label#0:4/init", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $await_content__l($scope, $scope._.input_label), 0, "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe"));
 const $await_content__setup__script = _script("__tests__/tags/show-await.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
 	$await_content__e($scope, $scope.e + "?");
@@ -14,7 +14,7 @@ const $await_content__setup = ($scope) => {
 	$await_content__setup__script($scope);
 };
 const $await_content__e = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill0", "e/8", ($scope) => _text($scope["#text/0"], $scope.e));
-const $await_content__a = /*@__PURE__*/ _let("a/5", ($scope) => {
+const $await_content__a = _let("a/5", ($scope) => {
 	$await_content__e($scope, $scope.a);
 	$await_content__a__OR__l($scope);
 });
@@ -42,7 +42,7 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $if_content__p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_p#0:7/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.p)));
-const $p = /*@__PURE__*/ _let("p/7", $if_content__p);
+const $p = _let("p/7", $if_content__p);
 const $input_promise = $p;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$p($scope, Promise.resolve("swapped"));

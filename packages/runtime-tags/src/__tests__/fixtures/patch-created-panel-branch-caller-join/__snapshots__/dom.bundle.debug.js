@@ -31,7 +31,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__input_show = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_show#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_show", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_show$1($scope["#childScope/0"], $scope._.input_show))));
 const $if_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_count#0:7/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_a($scope["#childScope/0"], $scope._.count)));
-const $count = /*@__PURE__*/ _let("count/7", $if_content__count);
+const $count = _let("count/7", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

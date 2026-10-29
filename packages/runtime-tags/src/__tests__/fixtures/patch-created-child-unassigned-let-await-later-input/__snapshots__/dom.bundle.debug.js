@@ -5,7 +5,7 @@ const $await_content__x = ($scope, x) => _text($scope["#text/0"], x);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p> </p>", "D ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $n = /*@__PURE__*/ _let("n/4", ($scope) => $await_promise($scope, Promise.resolve($scope.n)));
+const $n = _let("n/4", ($scope) => $await_promise($scope, Promise.resolve($scope.n)));
 const $input_n$1 = $n;
 const $setup$1 = $await_content;
 const $input$1 = ($scope, input) => $input_n$1($scope, input.n);
@@ -14,7 +14,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = "<button> </button><main><!></main>";
 const $walks = " D lD%l";
-const $c = /*@__PURE__*/ _let("c/8", ($scope) => _text($scope["#text/1"], $scope.c));
+const $c = _let("c/8", ($scope) => _text($scope["#text/1"], $scope.c));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$c($scope, +$scope.c + 1);
 }));

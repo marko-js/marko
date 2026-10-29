@@ -7,7 +7,7 @@ const $if_content2__setup = ($scope) => {
 	$load_Lazy_tag_input_label($scope.b, "c");
 };
 const $if2 = /*@__PURE__*/ _if(2, "<!><!><!>", "b%/&", $if_content2__setup);
-const $open = /*@__PURE__*/ _let(6, ($scope) => $if2($scope, $scope.g ? 0 : 1));
+const $open = _let(6, ($scope) => $if2($scope, $scope.g ? 0 : 1));
 const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));

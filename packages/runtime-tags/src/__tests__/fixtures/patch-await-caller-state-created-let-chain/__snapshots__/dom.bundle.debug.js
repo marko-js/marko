@@ -5,8 +5,8 @@ var v_show_await_marko_default = "\n    .v { color: var(--M_packages-1bruntime-1
 const $template$2 = "<p> </p><button>log</button>";
 const $walks$2 = "D l b";
 const $setup$2 = ($_) => {};
-const $o = /*@__PURE__*/ _let("o/6", ($scope) => $o_label($scope, $scope.o?.label));
-const $a = /*@__PURE__*/ _let("a/5", ($scope) => $o($scope, { label: $scope.a }));
+const $o = _let("o/6", ($scope) => $o_label($scope, $scope.o?.label));
+const $a = _let("a/5", ($scope) => $o($scope, { label: $scope.a }));
 const $input_label = $a;
 const $o_label__script = _script("__tests__/tags/card.marko_0_o_label#7", ($scope) => _on($scope["#button/1"], "click", function() {
 	console.log($scope.o_label);
@@ -21,17 +21,17 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // tags/show-await.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $await_content__d = /*@__PURE__*/ _let_change("d/10", ($scope) => _text($scope["#text/3"], $scope.d));
-const $await_content__c = /*@__PURE__*/ _let("c/9", ($scope) => {
+const $await_content__d = _let_change("d/10", ($scope) => _text($scope["#text/3"], $scope.d));
+const $await_content__c = _let("c/9", ($scope) => {
 	$await_content__d($scope, $scope.c, $valueChange($scope));
 	_style_rule_item($scope["#style/0"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19await-19caller-19state-19created-19let-19chain-1btags-1bshow-19await-1amarko_0", $scope.c);
 	_text($scope["#text/2"], $scope.c);
 });
-const $await_content__b = /*@__PURE__*/ _let("b/8", ($scope) => {
+const $await_content__b = _let("b/8", ($scope) => {
 	$await_content__c($scope, $scope.b);
 	_text($scope["#text/1"], $scope.b);
 });
-const $await_content__a = /*@__PURE__*/ _let("a/7", ($scope) => $await_content__b($scope, $scope.a));
+const $await_content__a = _let("a/7", ($scope) => $await_content__b($scope, $scope.a));
 const $await_content__x = ($scope, x) => {
 	$await_content__a($scope, x);
 	$input_label($scope["#childScope/4"], x);
@@ -57,7 +57,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__p._($scope);
 	$setup$1($scope["#childScope/0"]);
 };
-const $p = /*@__PURE__*/ _let("p/6", $if_content__p);
+const $p = _let("p/6", $if_content__p);
 const $input_promise = $p;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$p($scope, Promise.resolve("swapped"));

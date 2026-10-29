@@ -7,7 +7,7 @@ const $if_content__setup__$global_a__OR__$global_c = /*@__PURE__*/ _fill_global_
 const $if_content__setup = $if_content__setup__$global_a__OR__$global_c;
 const $if = /*@__PURE__*/ _if("#text/1", "<b> </b>", "D ", $if_content__setup);
 const $for = /*@__PURE__*/ _for_until_unkeyed("#ul/2", "<li> </li>", "D ", $for_content__setup);
-const $open = /*@__PURE__*/ _let("open/8", ($scope) => {
+const $open = _let("open/8", ($scope) => {
 	$if($scope, $scope.open ? 0 : 1);
 	$for($scope, [
 		$scope.open ? 1 : 0,

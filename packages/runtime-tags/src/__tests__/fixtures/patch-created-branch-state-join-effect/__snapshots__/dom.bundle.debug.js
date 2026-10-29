@@ -7,7 +7,7 @@ const $if_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko_
 	_text($scope["#text/1"], $scope._.count);
 	$if_content__count__OR__n($scope);
 }));
-const $if_content__n = /*@__PURE__*/ _let("n/2", ($scope) => {
+const $if_content__n = _let("n/2", ($scope) => {
 	$if_content__count__OR__n($scope);
 	_text($scope["#text/0"], $scope.n);
 });
@@ -15,7 +15,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__count._($scope);
 	$if_content__n($scope, 0);
 };
-const $count = /*@__PURE__*/ _let("count/5", $if_content__count);
+const $count = _let("count/5", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

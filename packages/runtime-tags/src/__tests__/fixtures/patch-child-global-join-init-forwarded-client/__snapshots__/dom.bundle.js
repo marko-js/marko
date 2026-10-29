@@ -13,7 +13,7 @@ const $input_b$1 = /*@__PURE__*/ _const(6, $input_a__OR__input_b);
 const $input_b = ($scope, input_b) => $input_b$1($scope.a, input_b);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(2, ($scope) => $input_b($scope.a, $scope.c));
+const $n = _let(2, ($scope) => $input_b($scope.a, $scope.c));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$n($scope, +$scope.c + 1);
 }));

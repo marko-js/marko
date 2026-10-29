@@ -17,7 +17,7 @@ const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => $api2($scop
 	label: "title"
 }));
 const $if = /*@__PURE__*/ _if("#text/0", "<p><!>: <!></p>", "D%c%", $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/7", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = _let("show/7", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, true);
 }));

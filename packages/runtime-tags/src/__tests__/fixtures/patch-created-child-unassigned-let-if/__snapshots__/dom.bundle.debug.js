@@ -5,7 +5,7 @@ const $setup$1 = ($_) => {};
 const $if_content__input_n = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_1_input_n#0:3/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_n)));
 const $if_content__setup = $if_content__input_n;
 const $if = /*@__PURE__*/ _if("#text/0", "<p><b>yes</b> <!></p>", "Dc%", $if_content__setup);
-const $n = /*@__PURE__*/ _let("n/4", ($scope) => $if($scope, $scope.n ? 0 : 1));
+const $n = _let("n/4", ($scope) => $if($scope, $scope.n ? 0 : 1));
 const $input_n$1 = /*@__PURE__*/ _const("input_n", ($scope) => {
 	$n($scope, $scope.input_n);
 	$if_content__input_n($scope);
@@ -16,7 +16,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = "<button> </button><main><!></main>";
 const $walks = " D lD%l";
-const $c = /*@__PURE__*/ _let("c/8", ($scope) => _text($scope["#text/1"], $scope.c));
+const $c = _let("c/8", ($scope) => _text($scope["#text/1"], $scope.c));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$c($scope, +$scope.c + 1);
 }));

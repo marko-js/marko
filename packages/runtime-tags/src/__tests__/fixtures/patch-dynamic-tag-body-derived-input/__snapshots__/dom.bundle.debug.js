@@ -5,7 +5,7 @@ const $inputtag_content__input_a = /*@__PURE__*/ _init_resume("__tests__/templat
 const $inputtag_content__setup = $inputtag_content__input_a;
 const $inputtag_content = _content("__tests__/template.marko_1*content", " ", " ", $inputtag_content__setup);
 _content_resume($inputtag_content);
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = _let("n/7", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

@@ -79,7 +79,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<button class=hide>hide</button>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks$1, $walks$1);
-const $shown = /*@__PURE__*/ _let("shown/6", ($scope) => $input_show($scope["#childScope/0"], $scope.shown));
+const $shown = _let("shown/6", ($scope) => $input_show($scope["#childScope/0"], $scope.shown));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$shown($scope, !$scope.shown);
 }));

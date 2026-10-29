@@ -41,7 +41,7 @@ const $for_content__$params = ($scope, $params2) => {
 const $for_content__item_id__closure = /*@__PURE__*/ _closure($card_content__item_id);
 const $for_content__item_id = /*@__PURE__*/ _const("item_id", $for_content__item_id__closure);
 const $count__closure = /*@__PURE__*/ _closure($card_content__count);
-const $count = /*@__PURE__*/ _let("count/6", $count__closure);
+const $count = _let("count/6", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

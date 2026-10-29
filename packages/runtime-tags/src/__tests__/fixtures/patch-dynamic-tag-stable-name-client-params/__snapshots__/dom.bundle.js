@@ -1,6 +1,6 @@
 // template.marko
 const $Box_content__show__OR__label__OR__n = /*@__PURE__*/ _or(7, ($scope) => _text($scope.b, $scope.e ? $scope.f + $scope.g : "-"), 2);
-const $Box_content__n = /*@__PURE__*/ _let(6, $Box_content__show__OR__label__OR__n);
+const $Box_content__n = _let(6, $Box_content__show__OR__label__OR__n);
 const $Box_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$Box_content__n($scope, +$scope.g + 1);
 }));

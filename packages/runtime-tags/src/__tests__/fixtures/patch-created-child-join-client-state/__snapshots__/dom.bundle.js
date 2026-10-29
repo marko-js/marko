@@ -4,7 +4,7 @@ const $input_a = /*@__PURE__*/ _const(3, $input_a__OR__input_b);
 
 // template.marko
 const $if_content__tab = /*@__PURE__*/ _init_resume("a5", /*@__PURE__*/ _if_closure(1, 0, ($scope) => $input_a($scope.a, $scope._.g)));
-const $tab = /*@__PURE__*/ _let(6, $if_content__tab);
+const $tab = _let(6, $if_content__tab);
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
 	$tab($scope, +$scope.g + 1);
 }));

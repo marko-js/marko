@@ -1,7 +1,7 @@
 // tags/counter/index.marko
 const $template$1 = "<!><!><button class=toggle>t</button>";
 const $walks$1 = "b%b b";
-const $if_content__count = /*@__PURE__*/ _let_change("count/2", ($scope) => _text($scope["#text/0"], $scope.count));
+const $if_content__count = _let_change("count/2", ($scope) => _text($scope["#text/0"], $scope.count));
 const $if_content__input_onCount__script = _script("__tests__/tags/counter/index.marko_1_input_onCount#0:4", ($scope) => {
 	{
 		const log = document.getElementById("log");
@@ -41,7 +41,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__onCount._($scope);
 	$setup$1($scope["#childScope/0"]);
 };
-const $last = /*@__PURE__*/ _let("last/7", ($scope) => _text($scope["#text/1"], $scope.last));
+const $last = _let("last/7", ($scope) => _text($scope["#text/1"], $scope.last));
 const $onCount2 = /*@__PURE__*/ _const("onCount");
 function $setup($scope) {
 	$last($scope, 0);

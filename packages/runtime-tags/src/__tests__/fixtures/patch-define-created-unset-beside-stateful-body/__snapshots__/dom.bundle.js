@@ -20,7 +20,7 @@ const $input_label__OR__input_hidden__OR__open__OR__Tag = /*@__PURE__*/ _fill_jo
 	label: $scope.h + "!",
 	hidden: $scope.j
 })), 3))));
-const $open = /*@__PURE__*/ _let(10, $input_label__OR__input_hidden__OR__open__OR__Tag);
+const $open = _let(10, $input_label__OR__input_hidden__OR__open__OR__Tag);
 const $setup__script = _script("a9", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.k);
 }));

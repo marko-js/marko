@@ -2,8 +2,8 @@
 const $template = "<button> </button>";
 const $walks = " D l";
 const $b_getter = _hoist_resume("__tests__/template.marko_0_b#3/hoist", "b");
-const $b2 = /*@__PURE__*/ _let("b/3", ($scope) => _assert_hoist($scope.b));
-const $a2 = /*@__PURE__*/ _let("a/2", ($scope) => {
+const $b2 = _let("b/3", ($scope) => _assert_hoist($scope.b));
+const $a2 = _let("a/2", ($scope) => {
 	_text($scope["#text/1"], typeof $scope.a);
 	$b2($scope, $b($scope));
 });

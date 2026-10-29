@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   assertNoParams,
   computeNode,
+  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -18,7 +19,7 @@ import {
 import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { hasEmittedAssignment } from "../util/finalize-references";
-import { isOptimize, isOutputDOM } from "../util/marko-config";
+import { isOptimize, isOutputDOM, isPatch } from "../util/marko-config";
 import { addReason } from "../util/reasons";
 import {
   mergeReferences,
@@ -99,6 +100,8 @@ export default {
     ]);
 
     setDerivedFrom(binding, tagExtra);
+    // A patch build ships every `<let>` as if a handler assigned it.
+    if (isPatch()) getProgram().node.extra.isInteractive = true;
 
     if (valueChangeAttr) {
       valueChangeAttr.value.extra!.changeHandler = true;

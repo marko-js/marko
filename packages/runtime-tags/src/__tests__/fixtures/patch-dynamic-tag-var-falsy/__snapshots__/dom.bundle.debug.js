@@ -2,7 +2,7 @@
 const $template = "<!><!><button> </button>";
 const $walks = "b1b D l";
 _dynamic_tag_var_resume("#text/0");
-const $clicks = /*@__PURE__*/ _let("clicks/7", ($scope) => _text($scope["#text/3"], $scope.clicks));
+const $clicks = _let("clicks/7", ($scope) => _text($scope["#text/3"], $scope.clicks));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$clicks($scope, $scope.clicks + ($scope.el ? 1 : -1));
 }));

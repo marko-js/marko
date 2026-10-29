@@ -22,7 +22,7 @@ const $wrapper_content__setup = ($scope) => {
 };
 const $wrapper_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<button>show</button>", " ", $wrapper_content__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $wrapper_content($scope));
-const $shown = /*@__PURE__*/ _let("shown/6", ($scope) => _text($scope["#text/1"], $scope.shown));
+const $shown = _let("shown/6", ($scope) => _text($scope["#text/1"], $scope.shown));
 function $setup($scope) {
 	$shown($scope, "");
 }

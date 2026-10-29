@@ -15,7 +15,7 @@ const $catch_content__$params = ($scope, $params2) => {
 };
 const $catch_content__err_message = /*@__PURE__*/ _const(5, $if_content__err_message);
 const $catch_content = _content$1("a1", "<!><!><!><!>", "b%b%", $catch_content__setup, $catch_content__$params);
-const $count = /*@__PURE__*/ _let(6, ($scope) => _text($scope.c, $scope.g));
+const $count = _let(6, ($scope) => _text($scope.c, $scope.g));
 const $setup__script = _script("a8", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.g + 1);
 }));

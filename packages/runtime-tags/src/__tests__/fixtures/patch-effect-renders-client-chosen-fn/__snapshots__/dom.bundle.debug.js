@@ -7,7 +7,7 @@ const $pick = /*@__PURE__*/ _const("pick", ($scope) => {
 	$pick__script($scope);
 });
 const $upper__OR__up__OR__low = /*@__PURE__*/ _or_resume("__tests__/template.marko_0_upper#5_up#6_low#7/init", 8, ($scope) => $pick($scope, $scope.upper ? $scope.up : $scope.low), 2);
-const $upper = /*@__PURE__*/ _let("upper/5", $upper__OR__up__OR__low);
+const $upper = _let("upper/5", $upper__OR__up__OR__low);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$upper($scope, !$scope.upper);
 }));

@@ -13,7 +13,7 @@ const $try_content__setup = ($scope) => {
 const $placeholder_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0);
 const $placeholder_content__setup = $placeholder_content__input_label;
 const $placeholder_content = _content("__tests__/template.marko_1*content", "<p> </p>", "D ", $placeholder_content__setup);
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => _text($scope["#text/2"], $scope.n));
+const $n = _let("n/7", ($scope) => _text($scope["#text/2"], $scope.n));
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);

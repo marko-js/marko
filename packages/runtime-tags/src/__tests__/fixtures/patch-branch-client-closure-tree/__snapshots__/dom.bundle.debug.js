@@ -19,7 +19,7 @@ const $if_content__setup = ($scope) => {
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", "D ", $if_content2__setup);
 const $if_content__show = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.show ? 0 : 1));
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!><!>${_w0}`)($template$1), /*@__PURE__*/ ((_w0) => `b%b/${_w0}&`)("D l"), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/5", ($scope) => {
+const $show = _let("show/5", ($scope) => {
 	$if($scope, $scope.show ? 0 : 1);
 	$if_content__show($scope);
 });

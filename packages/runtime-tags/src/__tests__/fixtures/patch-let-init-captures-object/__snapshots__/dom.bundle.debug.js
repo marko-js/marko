@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button> </button>";
 const $walks = " D l";
-const $a2 = /*@__PURE__*/ _let("a/2", ($scope) => {
+const $a2 = _let("a/2", ($scope) => {
 	$a_self($scope, $scope.a?.self);
 	$a2($scope, { self: $a($scope) });
 });

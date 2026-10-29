@@ -1,5 +1,5 @@
 // template.marko
-const $last = /*@__PURE__*/ _let(6, ($scope) => _text($scope.c, $scope.g));
+const $last = _let(6, ($scope) => _text($scope.c, $scope.g));
 const $setup__script = _script("a2", ($scope) => {
 	_attr_input_checkedValue_script($scope, "a");
 	_attr_input_checkedValue_script($scope, "b");

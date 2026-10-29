@@ -70,7 +70,7 @@ const $fallback_content__setup = ($scope) => {
 const $fallback_content__count = /*@__PURE__*/ _closure_get("count/10", ($scope) => _text($scope["#text/1"], $scope._.count), 0, "__tests__/template.marko_1_count#0:8/subscribe");
 const $fallback_content = _content("__tests__/template.marko_1*content", "<em><!> <!></em>", "D%c%", $fallback_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($fallback_content__count, $fallback_content2__count);
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => {
+const $count = _let("count/8", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$count__closure($scope);
 });

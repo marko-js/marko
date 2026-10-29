@@ -25,7 +25,7 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 		$item_content__x_name__script($scope);
 	}
 });
-const $picked = /*@__PURE__*/ _let("picked/5", ($scope) => _text($scope["#text/1"], $scope.picked));
+const $picked = _let("picked/5", ($scope) => _text($scope["#text/1"], $scope.picked));
 function $setup($scope) {
 	$picked($scope, "none");
 }

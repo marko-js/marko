@@ -9,7 +9,7 @@ const $Panel_content__$temp = ($scope, $temp) => $Panel_content__label($scope, $
 const $Panel_content = _content("__tests__/template.marko_1*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_attrs_label__OR__open__OR__Panel = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.open ? "b" : $scope.Panel, ($_) => ({ label: $scope.input_attrs_label })), 2);
-const $open = /*@__PURE__*/ _let("open/7", $input_attrs_label__OR__open__OR__Panel);
+const $open = _let("open/7", $input_attrs_label__OR__open__OR__Panel);
 const $Panel = /*@__PURE__*/ _const("Panel", $input_attrs_label__OR__open__OR__Panel);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);

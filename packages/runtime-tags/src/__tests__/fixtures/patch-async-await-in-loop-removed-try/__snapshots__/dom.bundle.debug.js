@@ -32,7 +32,7 @@ const $try_content__setup = ($scope) => {
 };
 const $try_content__items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_items#0:5/init", /*@__PURE__*/ _closure_get("items/7", ($scope) => $input_items($scope["#childScope/0"], $scope._.items), 0, "__tests__/template.marko_1_items#0:5/subscribe"));
 const $items__closure = /*@__PURE__*/ _closure($try_content__items);
-const $items = /*@__PURE__*/ _let("items/5", $items__closure);
+const $items = _let("items/5", $items__closure);
 const $try = /*@__PURE__*/ _try("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$items($scope, $scope.items.slice(1));

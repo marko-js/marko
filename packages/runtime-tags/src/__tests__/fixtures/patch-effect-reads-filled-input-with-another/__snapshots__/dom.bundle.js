@@ -1,6 +1,6 @@
 // template.marko
 const $input_label__OR__n = /*@__PURE__*/ _or(9, ($scope) => _text($scope.b, $scope.i + $scope.f));
-const $n = /*@__PURE__*/ _let(8, $input_label__OR__n);
+const $n = _let(8, $input_label__OR__n);
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.i + 1);
 }));

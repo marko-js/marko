@@ -38,7 +38,7 @@ var feed_list_default = /*@__PURE__*/ _template("__tests__/tags/feed-list.marko"
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button class=toggle> </button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)(" b");
-const $open = /*@__PURE__*/ _let("open/7", ($scope) => _text($scope["#text/1"], $scope.open ? "open" : "closed"));
+const $open = _let("open/7", ($scope) => _text($scope["#text/1"], $scope.open ? "open" : "closed"));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

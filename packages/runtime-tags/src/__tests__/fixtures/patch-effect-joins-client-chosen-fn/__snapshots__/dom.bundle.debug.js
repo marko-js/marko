@@ -5,8 +5,8 @@ const $n__OR__pick__script = _script("__tests__/template.marko_0_n#5_pick#9", ($
 const $n__OR__pick = /*@__PURE__*/ _or(10, $n__OR__pick__script);
 const $pick = /*@__PURE__*/ _const("pick", $n__OR__pick);
 const $upper__OR__up__OR__low = /*@__PURE__*/ _or_resume("__tests__/template.marko_0_upper#4_up#6_low#7/init", 8, ($scope) => $pick($scope, $scope.upper ? $scope.up : $scope.low), 2);
-const $upper = /*@__PURE__*/ _let("upper/4", $upper__OR__up__OR__low);
-const $n = /*@__PURE__*/ _let("n/5", $n__OR__pick);
+const $upper = _let("upper/4", $upper__OR__up__OR__low);
+const $n = _let("n/5", $n__OR__pick);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$upper($scope, !$scope.upper);
 	$n($scope, +$scope.n + 1);

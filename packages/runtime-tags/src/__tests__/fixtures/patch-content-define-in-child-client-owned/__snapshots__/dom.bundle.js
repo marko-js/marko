@@ -5,7 +5,7 @@ const $Panel_content__open = ($scope, open) => $Panel_content__if($scope, open ?
 const $input_open = ($scope, input_open) => $Panel_content__open($scope.a, input_open);
 
 // template.marko
-const $count = /*@__PURE__*/ _let(5, ($scope) => $input_open($scope.a, $scope.f % 2 === 0));
+const $count = _let(5, ($scope) => $input_open($scope.a, $scope.f % 2 === 0));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.f + 1);
 }));

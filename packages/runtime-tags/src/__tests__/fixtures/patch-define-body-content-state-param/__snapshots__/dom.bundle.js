@@ -7,7 +7,7 @@ const $input_t = ($scope, input_t) => $Wrap_content__t($scope.a, input_t);
 // template.marko
 const $one_content__input_y = /*@__PURE__*/ _fill_join_closure("a3", 4, /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.a, $scope._.e), 0, "a0"), 0);
 const $one_content = _content$1("a1", "A<!>", "b%", $one_content__input_y);
-const $s = /*@__PURE__*/ _let(5, ($scope) => $input_t($scope.b, $scope.f));
+const $s = _let(5, ($scope) => $input_t($scope.b, $scope.f));
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
 	$s($scope, $scope.f + "!");
 }));

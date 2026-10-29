@@ -26,7 +26,7 @@ const $if_content2__setup = ($scope) => $if_content2__for($scope, [[
 ]]);
 const $if_content__p = /*@__PURE__*/ _init_resume("a5", /*@__PURE__*/ _if_closure(3, 0, ($scope) => $input_promise($scope.a, $scope._.k)));
 const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content2__setup);
-const $prefixes = /*@__PURE__*/ _let(9, ($scope) => $if($scope, $scope.j ? 0 : 1));
+const $prefixes = _let(9, ($scope) => $if($scope, $scope.j ? 0 : 1));
 const $setup__script = _script("a2", ($scope) => {
 	_on($scope.a, "click", function() {
 		$prefixes($scope, true);
@@ -35,4 +35,4 @@ const $setup__script = _script("a2", ($scope) => {
 		$p($scope, Promise.resolve("swapped"));
 	});
 });
-const $p = /*@__PURE__*/ _let(10, $if_content__p);
+const $p = _let(10, $if_content__p);

@@ -24,7 +24,7 @@ const $Row_content__label = _var_resume("__tests__/template.marko_1_label#7/var"
 const $Row_content__value = /*@__PURE__*/ _const("value", $Row_content__input_suffix__OR__value);
 const $Row_content__$params = ($scope, $params2) => $Row_content__$temp($scope, $params2[0]);
 const $Row_content__$temp = ($scope, $temp) => $Row_content__value($scope, $temp.value);
-const $n = /*@__PURE__*/ _let("n/5", ($scope) => $Row_content__value($scope["#childScope/0"], $scope.n));
+const $n = _let("n/5", ($scope) => $Row_content__value($scope["#childScope/0"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

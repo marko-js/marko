@@ -21,7 +21,7 @@ const $inputonCardnull_content__setup = $inputonCardnull_content__input_label;
 const $inputonCardnull_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $inputonCardnull_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputonCardnull_content);
 const $input_on__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_on", /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_on ? card_default : null, ($_) => ({ meta: attrTag({ n: $scope.count }) }))));
-const $count = /*@__PURE__*/ _let("count/6", $input_on__OR__count);
+const $count = _let("count/6", $input_on__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

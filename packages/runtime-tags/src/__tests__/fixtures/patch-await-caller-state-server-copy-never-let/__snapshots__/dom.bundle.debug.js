@@ -1,8 +1,8 @@
 // tags/show-await.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $await_content__m = /*@__PURE__*/ _let_change("m/5", ($scope) => _text($scope["#text/1"], $scope.m));
-const $await_content__n = /*@__PURE__*/ _let("n/4", ($scope) => {
+const $await_content__m = _let_change("m/5", ($scope) => _text($scope["#text/1"], $scope.m));
+const $await_content__n = _let("n/4", ($scope) => {
 	$await_content__m($scope, $scope.n, $valueChange($scope));
 	_text($scope["#text/0"], $scope.n);
 });
@@ -27,7 +27,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__p._($scope);
 	$setup$1($scope["#childScope/0"]);
 };
-const $p = /*@__PURE__*/ _let("p/6", $if_content__p);
+const $p = _let("p/6", $if_content__p);
 const $input_promise = $p;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$p($scope, Promise.resolve("swapped"));

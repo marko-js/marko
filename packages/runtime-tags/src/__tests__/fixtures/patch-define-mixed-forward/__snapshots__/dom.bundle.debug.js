@@ -11,7 +11,7 @@ const $Kid_content__input = ($scope, input) => {
 	$Kid_content__input_a($scope, input.a);
 	$Kid_content__input_b($scope, input.b);
 };
-const $s = /*@__PURE__*/ _let("s/5", ($scope) => $Kid_content__input_a($scope["#childScope/0"], $scope.s));
+const $s = _let("s/5", ($scope) => $Kid_content__input_a($scope["#childScope/0"], $scope.s));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$s($scope, +$scope.s + 1);
 }));

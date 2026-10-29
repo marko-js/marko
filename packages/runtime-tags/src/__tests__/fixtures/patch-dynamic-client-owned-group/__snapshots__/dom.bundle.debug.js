@@ -24,7 +24,7 @@ var picker_default = /*@__PURE__*/ _template("__tests__/tags/picker/index.marko"
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("b%c");
-const $on = /*@__PURE__*/ _let("on/5", ($scope) => $input_on($scope["#childScope/0"], $scope.on));
+const $on = _let("on/5", ($scope) => $input_on($scope["#childScope/0"], $scope.on));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$on($scope, !$scope.on);
 }));

@@ -20,7 +20,7 @@ const $if_content__setup = ($scope) => {
 };
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1", 0, 0, 1);
 const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "Tag", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => [!$scope.open, $scope.input_label + "!"]), 2)));
-const $open = /*@__PURE__*/ _let("open/9", $input_label__OR__open__OR__Tag);
+const $open = _let("open/9", $input_label__OR__open__OR__Tag);
 const $Tag = /*@__PURE__*/ _const("Tag", $input_label__OR__open__OR__Tag);
 const $input_other__OR__Panel = /*@__PURE__*/ _or(11, ($scope) => $Tag($scope, $scope.input_other ? "div" : $scope.Panel));
 const $Panel = /*@__PURE__*/ _const("Panel", $input_other__OR__Panel);

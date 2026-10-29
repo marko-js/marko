@@ -20,7 +20,7 @@ const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
 const $input_promise = $await_promise;
 
 // template.marko
-const $p = /*@__PURE__*/ _let(6, ($scope) => $input_promise($scope.b, $scope.g));
+const $p = _let(6, ($scope) => $input_promise($scope.b, $scope.g));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$p($scope, Promise.resolve("swapped"));
 }));

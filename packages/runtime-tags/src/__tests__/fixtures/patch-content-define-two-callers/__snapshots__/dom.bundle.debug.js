@@ -20,7 +20,7 @@ const $body_content2 = _content("__tests__/template.marko_2*content", "<strong> 
 const $body_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0/content", "input_title", /*@__PURE__*/ _closure_get("input_title/8", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:5/subscribe"), 0));
 const $body_content__setup = $body_content__input_title;
 const $body_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $body_content__setup);
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.count % 2 === 0));
+const $count = _let("count/7", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.count % 2 === 0));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

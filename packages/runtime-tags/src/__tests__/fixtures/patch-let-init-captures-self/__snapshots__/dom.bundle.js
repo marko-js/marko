@@ -1,5 +1,5 @@
 // template.marko
-const $a2 = /*@__PURE__*/ _let(2, ($scope) => {
+const $a2 = _let(2, ($scope) => {
 	_text($scope.b, typeof $scope.c);
 	$a2($scope, $a($scope));
 });

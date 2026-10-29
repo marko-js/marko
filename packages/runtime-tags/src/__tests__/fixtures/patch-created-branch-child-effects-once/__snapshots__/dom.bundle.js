@@ -28,7 +28,7 @@ const $body_content__setup__script = _script("a12", ($scope) => console.log("con
 const $if_content__setup__script = _script("a19", ($scope) => console.log("branch setup", document.querySelectorAll("i").length));
 const $if_content__count__script = _script("a18", ($scope) => console.log("branch count", $scope._.j));
 const $if_content__count = /*@__PURE__*/ _init_resume("a31", /*@__PURE__*/ _if_closure(2, 0, $if_content__count__script));
-const $count = /*@__PURE__*/ _let(9, ($scope) => {
+const $count = _let(9, ($scope) => {
 	_text($scope.b, $scope.j);
 	$if_content__count($scope);
 });

@@ -10,7 +10,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_promise._($scope);
 	$await_content($scope);
 };
-const $count = /*@__PURE__*/ _let("count/9", ($scope) => _text($scope["#text/3"], $scope.count));
+const $count = _let("count/9", ($scope) => _text($scope["#text/3"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

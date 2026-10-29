@@ -5,7 +5,7 @@ var v_show_await_marko_default = "\n      .b { color: var(--M_packages-1bruntime
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $if_content__input_label$1 = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_2_input_label#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/show-await.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/3"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/tags/show-await.marko_2_input_label#0:4/subscribe"), 0));
-const $if_content__n = /*@__PURE__*/ _let("n/4", ($scope) => _text($scope["#text/2"], $scope.n));
+const $if_content__n = _let("n/4", ($scope) => _text($scope["#text/2"], $scope.n));
 const $if_content__setup$1 = ($scope) => {
 	$if_content__input_label$1($scope);
 	$if_content__x._($scope);
@@ -43,7 +43,7 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $if_content__p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_p#0:7/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.p)));
-const $p = /*@__PURE__*/ _let("p/7", $if_content__p);
+const $p = _let("p/7", $if_content__p);
 const $input_promise = $p;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$p($scope, Promise.resolve("swapped"));

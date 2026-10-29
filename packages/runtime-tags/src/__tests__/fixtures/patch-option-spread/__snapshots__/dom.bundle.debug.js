@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<select><option> </option><option value=b>b</option><option>c</option></select><span> </span><button>t</button>";
 const $walks = " D D lb lD l b";
-const $v = /*@__PURE__*/ _let("v/11", ($scope) => {
+const $v = _let("v/11", ($scope) => {
 	_attr_select_value($scope, "#select/0", $scope.v, $valueChange($scope));
 	_text($scope["#text/4"], $scope.v);
 });

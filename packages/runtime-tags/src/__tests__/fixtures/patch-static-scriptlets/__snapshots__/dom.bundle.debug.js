@@ -11,7 +11,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__count._($scope);
 };
 const $if_content__count = /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__input_title__OR__count);
-const $count = /*@__PURE__*/ _let("count/8", $if_content__count);
+const $count = _let("count/8", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$count($scope, +$scope.count + 1);
 	document.querySelector("main").dataset.flag = flag;

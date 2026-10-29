@@ -68,7 +68,7 @@ var rowsy_default = /*@__PURE__*/ _template("__tests__/tags/rowsy.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=c>c</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($walks$1);
-const $card = /*@__PURE__*/ _let("card/6", ($scope) => $input_card($scope["#childScope/0"], $scope.card));
+const $card = _let("card/6", ($scope) => $input_card($scope["#childScope/0"], $scope.card));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$card($scope, !$scope.card);
 }));

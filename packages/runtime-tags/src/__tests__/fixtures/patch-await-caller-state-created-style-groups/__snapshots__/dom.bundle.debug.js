@@ -53,7 +53,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_p#0:10/init", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.p)));
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content2__setup);
-const $prefixes = /*@__PURE__*/ _let("prefixes/9", ($scope) => $if($scope, $scope.prefixes ? 0 : 1));
+const $prefixes = _let("prefixes/9", ($scope) => $if($scope, $scope.prefixes ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$prefixes($scope, true);
@@ -66,7 +66,7 @@ function $setup($scope) {
 	$prefixes($scope, false);
 	$setup__script($scope);
 }
-const $p = /*@__PURE__*/ _let("p/10", $if_content__p);
+const $p = _let("p/10", $if_content__p);
 const $input_promise = $p;
 const $if2 = /*@__PURE__*/ _if("#text/3", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
 const $input_show = ($scope, input_show) => $if2($scope, input_show ? 0 : 1);

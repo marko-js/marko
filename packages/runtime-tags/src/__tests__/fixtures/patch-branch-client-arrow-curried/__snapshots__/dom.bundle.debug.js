@@ -7,7 +7,7 @@ const $if_content__setup = $if_content__mk;
 const $mk2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "mk", $if_content__mk);
 const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => $mk2($scope, $mk($scope)));
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

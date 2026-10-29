@@ -15,7 +15,7 @@ const $catch_content__$params = ($scope, $params2) => $catch_content__err_messag
 const $catch_content = _content("__tests__/template.marko_2*content", "<em><!> <!></em>", "D%c%", $catch_content__setup, $catch_content__$params);
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

@@ -6,9 +6,9 @@
         "brotli": 6315
       },
       "files": {
-        "tags/card.marko": 454,
-        "tags/show-await.marko": 1007,
-        "template.marko": 359
+        "tags/card.marko": 426,
+        "tags/show-await.marko": 951,
+        "template.marko": 345
       }
     }
   },

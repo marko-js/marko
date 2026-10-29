@@ -37,7 +37,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__n._($scope);
 	$await_content($scope);
 };
-const $n = /*@__PURE__*/ _let("n/6", $if_content__n);
+const $n = _let("n/6", $if_content__n);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

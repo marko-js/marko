@@ -42,8 +42,8 @@ _resumed.b0 = $fmt;
 // template.marko
 const $if_content__l = /*@__PURE__*/ _init_resume("a5", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_label($scope.a, $scope._.h)));
 const $if_content__o = /*@__PURE__*/ _init_resume("a6", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_open($scope.a, $scope._.i)));
-const $l = /*@__PURE__*/ _let(7, $if_content__l);
-const $o = /*@__PURE__*/ _let(8, $if_content__o);
+const $l = _let(7, $if_content__l);
+const $o = _let(8, $if_content__o);
 const $setup__script = _script("a2", ($scope) => {
 	_on($scope.b, "click", function() {
 		$l($scope, $scope.h + "!");

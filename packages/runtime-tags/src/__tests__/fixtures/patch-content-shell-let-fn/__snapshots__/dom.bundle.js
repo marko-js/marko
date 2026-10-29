@@ -1,7 +1,7 @@
 // tags/card.marko
 const $template = "<button> </button>";
 const $walks = " D l";
-const $f = /*@__PURE__*/ _let(5, ($scope) => _text($scope.b, $scope.f()));
+const $f = _let(5, ($scope) => _text($scope.b, $scope.f()));
 const $input_fn = $f;
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$f($scope, () => "x");

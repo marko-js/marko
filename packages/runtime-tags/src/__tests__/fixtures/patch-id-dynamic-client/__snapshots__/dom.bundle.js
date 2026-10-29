@@ -15,7 +15,7 @@ var labeled_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $i
 // template.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag(2);
-const $on = /*@__PURE__*/ _let(5, ($scope) => {
+const $on = _let(5, ($scope) => {
 	$dynamicTag($scope, $scope.f ? labeled_default : null, ($_) => ({ name: "a" }));
 	$dynamicTag2($scope, $scope.f ? labeled_default : null, ($_) => ({ name: "b" }));
 });

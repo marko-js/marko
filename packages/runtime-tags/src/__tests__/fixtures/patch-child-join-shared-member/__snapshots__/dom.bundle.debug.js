@@ -20,7 +20,7 @@ var row_default = /*@__PURE__*/ _template("__tests__/tags/row.marko", $template$
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<button>+</button>`)($template$1, $template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}& b`)($walks$1, $walks$1, $walks$1);
-const $n = /*@__PURE__*/ _let("n/8", ($scope) => {
+const $n = _let("n/8", ($scope) => {
 	$input_a($scope["#childScope/0"], $scope.n);
 	$input_b($scope["#childScope/0"], $scope.n);
 	$input_a($scope["#childScope/1"], $scope.n);

@@ -1,5 +1,5 @@
 // template.marko
-const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "close" : "open"));
+const $open = _let(6, ($scope) => _text($scope.b, $scope.g ? "close" : "open"));
 const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));

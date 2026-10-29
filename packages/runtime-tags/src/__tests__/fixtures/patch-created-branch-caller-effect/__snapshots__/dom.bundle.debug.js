@@ -17,7 +17,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<button> </button>${_w0}${_w1}<!>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` D l/${_w0}&/${_w1}&b`)("b%c", "b%c");
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => {
+const $count = _let("count/8", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$input_count$1($scope["#childScope/2"], $scope.count);
 });

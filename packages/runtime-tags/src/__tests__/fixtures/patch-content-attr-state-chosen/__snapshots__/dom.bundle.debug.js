@@ -8,7 +8,7 @@ const $one_content__input_b = /*@__PURE__*/ _fill_join_closure("__tests__/templa
 const $one_content__setup = $one_content__input_b;
 const $one_content = _content("__tests__/template.marko_1*content", "<em>one <!></em>", "Db%", $one_content__setup);
 const $mode__OR__one__OR__two = /*@__PURE__*/ _or(8, ($scope) => _attr_content($scope, "#section/1", $scope.mode ? $scope.one : $scope.two), 2);
-const $mode = /*@__PURE__*/ _let("mode/5", $mode__OR__one__OR__two);
+const $mode = _let("mode/5", $mode__OR__one__OR__two);
 const $one = /*@__PURE__*/ _const("one", $mode__OR__one__OR__two);
 const $two = /*@__PURE__*/ _const("two", $mode__OR__one__OR__two);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

@@ -59,7 +59,7 @@ const $Sel_content__open = ($scope, open) => {
 const $input_open = ($scope, input_open) => $Sel_content__open($scope.a, input_open);
 
 // template.marko
-const $open = /*@__PURE__*/ _let(6, ($scope) => {
+const $open = _let(6, ($scope) => {
 	$input_open$1($scope.a, $scope.g);
 	$input_open($scope.b, $scope.g);
 });

@@ -21,7 +21,7 @@ const $if_content__setup__script = _script("a3", ($scope) => _on($scope.c, "clic
 	_var_change($scope.a, 5);
 }));
 const $if_content__count = _var_resume("a2", ($scope, count) => {});
-const $last = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
+const $last = _let(6, ($scope) => _text($scope.b, $scope.g));
 const $onB = ($scope) => function(v) {
 	$last($scope._, $scope._.f + "b" + v);
 };

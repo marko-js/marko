@@ -14,7 +14,7 @@ const $if_content__setup = ($scope) => {
 const $try_content__if = /*@__PURE__*/ _if("#section/0", "<!><!><!>", "b%", $if_content__setup);
 const $try_content__input_show = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_show#0:5/init", /*@__PURE__*/ _closure_get("input_show/9", ($scope) => $try_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/template.marko_1_input_show#0:5/subscribe"));
 const $try_content__setup = $try_content__input_show;
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/2", "<section></section>", " ", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);

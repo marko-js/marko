@@ -43,7 +43,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button class=p>p</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($walks$1);
 const $input_dyn__OR__input_prefix__OR__pre = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_prefix", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_dyn", /*@__PURE__*/ _or(9, ($scope) => $input_prefix$1($scope["#childScope/0"], $scope.input_dyn ? $scope.pre : $scope.input_prefix), 2)));
-const $pre = /*@__PURE__*/ _let("pre/8", $input_dyn__OR__input_prefix__OR__pre);
+const $pre = _let("pre/8", $input_dyn__OR__input_prefix__OR__pre);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$pre($scope, $scope.pre + "!");
 }));

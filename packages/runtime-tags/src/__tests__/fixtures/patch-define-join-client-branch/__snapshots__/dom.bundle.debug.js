@@ -31,8 +31,8 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<button class=c>+</button><button class=s>s</button>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b b`)("b%c", "b%c");
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => $input_a($scope["#childScope/0"], $scope.count));
-const $s = /*@__PURE__*/ _let("s/9", ($scope) => {
+const $count = _let("count/8", ($scope) => $input_a($scope["#childScope/0"], $scope.count));
+const $s = _let("s/9", ($scope) => {
 	$input_show($scope["#childScope/0"], $scope.s);
 	$input_show($scope["#childScope/1"], $scope.s);
 });

@@ -13,7 +13,7 @@ const $input_label = /*@__PURE__*/ _fill_const("b5", 5, $if_content__input_label
 const $input_other = /*@__PURE__*/ _fill_const("b6", 6, $if_content__input_other);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(5, ($scope) => {
+const $n = _let(5, ($scope) => {
 	$input_label($scope.a, $scope.f ? "X" : "Y");
 	$input_other($scope.a, $scope.f ? "A" : "B");
 });

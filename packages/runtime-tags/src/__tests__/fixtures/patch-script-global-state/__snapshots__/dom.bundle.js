@@ -1,6 +1,6 @@
 // template.marko
 const $count__$global_brand__script = _fill_global_script("a0", ($scope) => $scope.a.dataset.log = ($scope.a.dataset.log || "") + "[" + $scope.c + $scope.$.brand + "]", "brand");
-const $count = /*@__PURE__*/ _let(2, /* @__PURE__ */ _fill_global_join("a0", ($scope) => {
+const $count = _let(2, /* @__PURE__ */ _fill_global_join("a0", ($scope) => {
 	_text($scope.b, $scope.c + $scope.$.brand);
 	$count__$global_brand__script($scope);
 }, "brand"));

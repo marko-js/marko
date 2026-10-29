@@ -15,8 +15,8 @@ const $for_content__setup = $for_content__inner;
 const $for_content__$params = ($scope, $params2) => $for_content__o($scope, $params2[0]);
 const $for_content__o = /*@__PURE__*/ _const("o", $for_content2__o);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
-const $outer = /*@__PURE__*/ _let("outer/6", ($scope) => $for($scope, [$scope.outer]));
-const $inner = /*@__PURE__*/ _let("inner/7", $for_content__inner);
+const $outer = _let("outer/6", ($scope) => $for($scope, [$scope.outer]));
+const $inner = _let("inner/7", $for_content__inner);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
 		$outer($scope, [...$scope.outer, "b"]);

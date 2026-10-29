@@ -28,7 +28,7 @@ const $Card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content
 const $meta_content__input_label = /*@__PURE__*/ _closure_get("input_label/6", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:4/subscribe");
 const $meta_content__setup = $meta_content__input_label;
 const $meta_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $meta_content__setup);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => $input_meta_n($scope["#childScope/0"], $scope.count));
+const $count = _let("count/5", ($scope) => $input_meta_n($scope["#childScope/0"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

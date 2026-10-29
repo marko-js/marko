@@ -8,7 +8,7 @@ const $input_rest__OR__text = /*@__PURE__*/ _fill_join("a2", 4, /*@__PURE__*/ _o
 	}, _controllable_input);
 	$input_rest__OR__text__script($scope);
 }));
-const $text = /*@__PURE__*/ _let(5, ($scope) => {
+const $text = _let(5, ($scope) => {
 	_text($scope.b, $scope.f);
 	$input_rest__OR__text($scope);
 });

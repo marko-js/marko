@@ -13,7 +13,7 @@ const $Content_content = _content$1("b0", "<em><!> <!></em>", " D%c%", $Content_
 const $count = /*@__PURE__*/ _fill_let("b5", 3, /* @__PURE__ */ _closure($Content_content__count));
 
 // template.marko
-const $n = /*@__PURE__*/ _let(10, ($scope) => _text($scope.g, $scope.k));
+const $n = _let(10, ($scope) => _text($scope.g, $scope.k));
 const $setup__script = _script("a0", ($scope) => _on($scope.f, "click", function() {
 	$n($scope, +$scope.k + 1);
 }));

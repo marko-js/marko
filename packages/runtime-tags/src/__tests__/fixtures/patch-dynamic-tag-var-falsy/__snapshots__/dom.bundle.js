@@ -1,6 +1,6 @@
 // template.marko
 _dynamic_tag_var_resume(0);
-const $clicks = /*@__PURE__*/ _let(7, ($scope) => _text($scope.d, $scope.h));
+const $clicks = _let(7, ($scope) => _text($scope.d, $scope.h));
 const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$clicks($scope, $scope.h + ($scope.i ? 1 : -1));
 }));

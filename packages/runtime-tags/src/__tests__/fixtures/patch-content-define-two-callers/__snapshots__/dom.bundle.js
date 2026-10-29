@@ -7,7 +7,7 @@ const $body_content2__input_title = /*@__PURE__*/ _init_resume("a7", /*@__PURE__
 const $body_content2 = _content$1("a1", "<strong> </strong>", "D ", $body_content2__input_title);
 const $body_content__input_title = /*@__PURE__*/ _init_resume("a5", /*@__PURE__*/ _fill_join_closure("a11", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.f), 0, "a6"), 0));
 const $body_content = _content$1("a2", "<em> </em>", "D ", $body_content__input_title);
-const $count = /*@__PURE__*/ _let(7, ($scope) => $Panel_content__open($scope.a, $scope.h % 2 === 0));
+const $count = _let(7, ($scope) => $Panel_content__open($scope.a, $scope.h % 2 === 0));
 const $setup__script = _script("a9", ($scope) => _on($scope.c, "click", function() {
 	$count($scope, +$scope.h + 1);
 }));

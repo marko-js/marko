@@ -6,7 +6,7 @@ const $Inner_content2__open = ($scope, open) => $Inner_content2__if($scope, open
 const $Inner_content__input_title = /*@__PURE__*/ _init_resume("a4", /*@__PURE__*/ _fill_join_closure("a8", 4, /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.a, $scope._._.e), ($scope) => $scope._._, "a5"), 0));
 const $Inner_content = _content$1("a1", "<em> </em>", "D ", $Inner_content__input_title);
 const $Outer_content__open = ($scope, open) => $Inner_content2__open($scope.a, open);
-const $count = /*@__PURE__*/ _let(5, ($scope) => $Outer_content__open($scope.a, $scope.f % 2 === 0));
+const $count = _let(5, ($scope) => $Outer_content__open($scope.a, $scope.f % 2 === 0));
 const $setup__script = _script("a7", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.f + 1);
 }));

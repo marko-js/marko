@@ -3,7 +3,7 @@ const $input_label__OR__input_qty = /*@__PURE__*/ _fill_join("b1", 4, /*@__PURE_
 const $input_qty = /*@__PURE__*/ _const(4, $input_label__OR__input_qty);
 
 // template.marko
-const $count = /*@__PURE__*/ _let(5, ($scope) => $input_qty($scope.a, $scope.f));
+const $count = _let(5, ($scope) => $input_qty($scope.a, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.f + 1);
 }));

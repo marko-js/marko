@@ -5,7 +5,7 @@ const $_return = ($scope) => function() {
 _bind_resume("b0 c", $_return);
 
 // template.marko
-const $if_content__shown = /*@__PURE__*/ _let(6, ($scope) => _text($scope.d, $scope.g));
+const $if_content__shown = _let(6, ($scope) => _text($scope.d, $scope.g));
 const $if_content__setup__script = _script("a1", ($scope) => _on($scope.e, "click", function() {
 	$if_content__shown($scope, $scope.f.fn());
 }));

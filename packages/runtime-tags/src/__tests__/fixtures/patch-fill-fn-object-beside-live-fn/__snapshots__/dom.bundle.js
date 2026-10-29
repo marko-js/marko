@@ -22,7 +22,7 @@ const $if_content__o_get = /*@__PURE__*/ _fill_join("a14", 12, /*@__PURE__*/ _if
 const $if_content__o_ = /*@__PURE__*/ _fill_join("a15", 13, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input($scope.g, { fn: $scope._.n })));
 const $if_content__tag = /*@__PURE__*/ _fill_join("a16", 14, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input($scope.h, { fn: $scope._.o })));
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5, _w6, _w7) => `${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}${_w6}${_w7}`)($template, $template, $template, $template, $template, $template, $template, $template), /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5, _w6, _w7) => `/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}&/${_w6}&/${_w7}&`)("D l", "D l", "D l", "D l", "D l", "D l", "D l", "D l"), $if_content__setup);
-const $show = /*@__PURE__*/ _let(15, ($scope) => $if($scope, $scope.p ? 0 : 1));
+const $show = _let(15, ($scope) => $if($scope, $scope.p ? 0 : 1));
 const $setup__script = _script("a8", ($scope) => _on($scope.b, "click", function() {
 	$show($scope, !$scope.p);
 }));

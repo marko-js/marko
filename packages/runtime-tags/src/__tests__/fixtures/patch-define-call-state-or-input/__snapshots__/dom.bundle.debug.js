@@ -14,7 +14,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__tag_input_label($scope, $temp.label);
 };
 const $input_show__OR__open = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(7, ($scope) => $Panel_content__isOpen($scope["#childScope/0"], $scope.open || $scope.input_show)));
-const $open = /*@__PURE__*/ _let("open/6", $input_show__OR__open);
+const $open = _let("open/6", $input_show__OR__open);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

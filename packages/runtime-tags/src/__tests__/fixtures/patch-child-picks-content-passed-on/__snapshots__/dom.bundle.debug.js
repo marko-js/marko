@@ -39,7 +39,7 @@ const $a_content__input_x = /*@__PURE__*/ _init_resume("__tests__/template.marko
 const $a_content__setup = $a_content__input_x;
 const $a_content = _content("__tests__/template.marko_1*content", "A<!>", "b%", $a_content__setup);
 const $s__closure = /*@__PURE__*/ _closure($b_content__s);
-const $s = /*@__PURE__*/ _let("s/7", $s__closure);
+const $s = _let("s/7", $s__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$s($scope, +$scope.s + 1);
 }));

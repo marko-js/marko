@@ -55,7 +55,7 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $if_content__l = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_l#0:6/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.l)));
-const $l = /*@__PURE__*/ _let("l/6", $if_content__l);
+const $l = _let("l/6", $if_content__l);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$l($scope, $scope.l + "!");
 }));

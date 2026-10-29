@@ -23,7 +23,7 @@ const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_p__OR__c = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_p", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag$1($scope, $scope.input_p ? keeper_default : "div", ($_) => ({ content: $scope.c }))));
-const $c = _fill_resume("__tests__/tags/card.marko_fill1", /*@__PURE__*/ _let("c/5", $input_p__OR__c));
+const $c = _fill_resume("__tests__/tags/card.marko_fill1", _let("c/5", $input_p__OR__c));
 const $input_content = $c;
 const $input_p$1 = /*@__PURE__*/ _const("input_p", $input_p__OR__c);
 const $input$1 = ($scope, input) => {

@@ -22,7 +22,7 @@ const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => {
 	$tag2($scope, $tag($scope));
 });
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1), /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)("D l", "D l"), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/8", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = _let("show/8", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, !$scope.show);
 }));

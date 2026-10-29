@@ -23,7 +23,7 @@ let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trig
 let $load_Child_tag_input_item = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:child.marko.input_item.mjs"), "ready:__tests__/child.marko", $load_Child_trigger);
 const $item = /*@__PURE__*/ _const("item", ($scope) => $load_Child_tag_input_item($scope["#childScope/3"], $scope.item));
 const $input_label = ($scope, input_label) => $item($scope, { label: input_label });
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 	document.title = JSON.stringify($scope.item);

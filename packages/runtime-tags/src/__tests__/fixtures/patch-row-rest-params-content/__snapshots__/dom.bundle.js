@@ -10,4 +10,4 @@ const $myfor_content__setup = ($scope) => {
 const $myfor_content__$params = ($scope, $params2) => $myfor_content__i($scope, $params2[0]);
 const $myfor_content__i = /*@__PURE__*/ _const(3);
 const $myfor_content = _content$1("a1", "<button class=r> </button>", " D ", $myfor_content__setup, $myfor_content__$params);
-const $n = /*@__PURE__*/ _let(4, /* @__PURE__ */ _closure($myfor_content__n));
+const $n = _let(4, /* @__PURE__ */ _closure($myfor_content__n));

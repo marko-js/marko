@@ -1,3 +1,9 @@
+// tags/frame.marko
+const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $if_content__input_content = /*@__PURE__*/ _init_resume("b0", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.d)));
+const $if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__input_content);
+const $open = _let(4, ($scope) => $if($scope, $scope.e ? 0 : 1));
+
 // template.marko
 const $await_content__v = ($scope, v) => _text($scope.a, v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);

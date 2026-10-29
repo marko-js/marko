@@ -40,7 +40,7 @@ const $Outer_content__$temp = ($scope, $temp) => {
 	$Outer_content__tag_input_x($scope, $temp.x);
 	$Outer_content__y($scope, $temp.y);
 };
-const $n = /*@__PURE__*/ _let("n/6", ($scope) => $Wrapper_content__b($scope["#childScope/0"], $scope.n));
+const $n = _let("n/6", ($scope) => $Wrapper_content__b($scope["#childScope/0"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

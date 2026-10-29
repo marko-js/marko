@@ -32,7 +32,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<button class=swap>swap</button>${_w0
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&%c`)("b%c");
 const $await_content__x = ($scope, x) => _text($scope["#text/0"], x);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
-const $p = /*@__PURE__*/ _let("p/8", ($scope) => $input_promise$1($scope["#childScope/1"], $scope.p));
+const $p = _let("p/8", ($scope) => $input_promise$1($scope["#childScope/1"], $scope.p));
 const $input_promise = $p;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$p($scope, Promise.resolve("swapped"));

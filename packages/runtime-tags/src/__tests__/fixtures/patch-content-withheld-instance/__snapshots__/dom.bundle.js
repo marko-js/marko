@@ -6,7 +6,7 @@ const $for_content__input_mode = /*@__PURE__*/ _for_closure(0, $for_content__inp
 const $input_mode = /*@__PURE__*/ _const(4, $for_content__input_mode);
 
 // template.marko
-const $mode = /*@__PURE__*/ _let(5, ($scope) => $input_mode($scope.b, $scope.f));
+const $mode = _let(5, ($scope) => $input_mode($scope.b, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$mode($scope, !$scope.f);
 }));

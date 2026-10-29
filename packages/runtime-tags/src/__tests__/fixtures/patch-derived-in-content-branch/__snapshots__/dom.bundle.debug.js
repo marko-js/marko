@@ -27,7 +27,7 @@ const $wrapper_content__setup = ($scope) => {
 const $wrapper_content__count = /*@__PURE__*/ _closure_get("count/7", $wrapper_content__count__OR__label, 0, "__tests__/template.marko_1_count#0:5/subscribe");
 const $wrapper_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $wrapper_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($wrapper_content__count);
-const $count = /*@__PURE__*/ _let("count/5", $count__closure);
+const $count = _let("count/5", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

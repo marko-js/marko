@@ -43,7 +43,7 @@ const $catch_content__err_message = /*@__PURE__*/ _const(3, $catch_content__inpu
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content$1("a6", "<!><!><!>", "b%", $catch_content__setup, $catch_content__$params);
 const $count__closure = /*@__PURE__*/ _closure($catch_content__count);
-const $count = /*@__PURE__*/ _let(8, ($scope) => {
+const $count = _let(8, ($scope) => {
 	_text($scope.b, $scope.i);
 	$count__closure($scope);
 });

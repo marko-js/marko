@@ -12,7 +12,7 @@ const $Panel_content__tag_input_label = /*@__PURE__*/ _fill_const("__tests__/tem
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => $Panel_content__tag_input_label($scope, $temp.label);
 const $open__closure = /*@__PURE__*/ _closure($Panel_content__open);
-const $open = /*@__PURE__*/ _let("open/5", $open__closure);
+const $open = _let("open/5", $open__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

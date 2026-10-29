@@ -15,7 +15,7 @@ const $Show_content__setup = $Show_content__input_x;
 const $Show_content__f = /*@__PURE__*/ _fill_const("a4", 4, $if_content2__f);
 const $Show_content__v = /*@__PURE__*/ _const(3, ($scope) => $Show_content__f($scope, $f($scope)));
 const $if = /*@__PURE__*/ _if(1, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Show_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Show_content__walks), $if_content__setup);
-const $show = /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
+const $show = _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
 const $setup__script = _script("a6", ($scope) => _on($scope.a, "click", function() {
 	$show($scope, !$scope.g);
 }));

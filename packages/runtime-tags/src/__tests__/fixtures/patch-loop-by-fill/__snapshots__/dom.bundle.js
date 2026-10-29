@@ -5,7 +5,7 @@ const $for = /*@__PURE__*/ _for_of(0, "<li> </li>", "D ", 0, $for_content__$para
 const $input_keyField__OR__items = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _or(6, ($scope) => $for($scope, [$scope.f, function(item) {
 	return item[$scope.e];
 }])));
-const $items = /*@__PURE__*/ _let(5, $input_keyField__OR__items);
+const $items = _let(5, $input_keyField__OR__items);
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$items($scope, [...$scope.f, {
 		n: 3,

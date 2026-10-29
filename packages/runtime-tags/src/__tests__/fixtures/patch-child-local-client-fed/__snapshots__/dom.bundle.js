@@ -10,7 +10,7 @@ const $setup__script$1 = _script("b3", ($scope) => _on($scope.b, "click", functi
 const $input_label = /*@__PURE__*/ _fill_const("b4", 5, $if_content__input_label);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(5, ($scope) => $input_label($scope.a, $scope.f ? "X" : "Y"));
+const $n = _let(5, ($scope) => $input_label($scope.a, $scope.f ? "X" : "Y"));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$n($scope, +$scope.f + 1);
 }));

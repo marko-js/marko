@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const $if_content__a__OR__b = /*@__PURE__*/ _or_resume("__tests__/template.marko_1_a#2_b#3/init", 4, ($scope) => _text($scope["#text/0"], $scope.a + $scope.b));
-const $if_content__a = /*@__PURE__*/ _let("a/2", $if_content__a__OR__b);
+const $if_content__a = _let("a/2", $if_content__a__OR__b);
 const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_a#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__a($scope, $scope._.input_a))));
 const $if_content__b = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "b/3", $if_content__a__OR__b);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {

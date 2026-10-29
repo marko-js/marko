@@ -2,7 +2,7 @@
 const $template$1 = "<button class=reset>reset</button><div><!></div>";
 const $walks$1 = " bD%l";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $c = /*@__PURE__*/ _let("c/5", ($scope) => $dynamicTag($scope, $scope.c));
+const $c = _let("c/5", ($scope) => $dynamicTag($scope, $scope.c));
 const $input_content = /*@__PURE__*/ _const("input_content", ($scope) => $c($scope, $scope.input_content));
 const $setup__script = _script("__tests__/tags/keep.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$c($scope, $scope.input_content);

@@ -2,7 +2,7 @@
 const $template = "<main><!><button> </button></main>";
 const $walks = "D%b D m";
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _let("count/6", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

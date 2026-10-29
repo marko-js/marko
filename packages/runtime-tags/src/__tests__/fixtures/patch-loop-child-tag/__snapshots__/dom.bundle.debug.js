@@ -16,7 +16,7 @@ const $template = "<ul></ul><button> </button>";
 const $walks = " b D l";
 const $for_content__item = ($scope, item) => $input_item($scope["#childScope/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _let("count/6", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

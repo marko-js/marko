@@ -5,7 +5,7 @@ const $for_content__input_count = /*@__PURE__*/ _for_closure(0, $for_content__in
 const $input_count = /*@__PURE__*/ _const(4, $for_content__input_count);
 
 // template.marko
-const $count = /*@__PURE__*/ _let(8, ($scope) => {
+const $count = _let(8, ($scope) => {
 	_text($scope.b, $scope.i);
 	$input_count($scope.c, $scope.i);
 });

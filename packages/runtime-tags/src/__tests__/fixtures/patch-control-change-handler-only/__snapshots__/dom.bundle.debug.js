@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<p> </p><input><span> </span>";
 const $walks = "D l bD l";
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
+const $count = _let("count/6", ($scope) => {
 	_attr_input_value($scope, "#input/1", void 0, $valueChange($scope));
 	_text($scope["#text/2"], $scope.count);
 });

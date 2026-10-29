@@ -17,7 +17,7 @@ const $inputonCarddiv_content__input_note = /*@__PURE__*/ _init_resume("a1", /*@
 const $inputonCarddiv_content = _content$1("a0", "<em> </em>", "D ", $inputonCarddiv_content__input_note);
 _content_resume($inputonCarddiv_content);
 const $input_mode__OR__m = /*@__PURE__*/ _fill_join("a4", 5, /*@__PURE__*/ _or(9, ($scope) => $input_mode($scope.a, $scope.i || $scope.f)));
-const $m = /*@__PURE__*/ _let(8, $input_mode__OR__m);
+const $m = _let(8, $input_mode__OR__m);
 const $setup__script = _script("a3", ($scope) => _on($scope.c, "click", function() {
 	$m($scope, !$scope.i);
 }));

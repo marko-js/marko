@@ -15,9 +15,9 @@ const $input_mode = /*@__PURE__*/ _const(7, $input_mode__OR__frag_content);
 const $input_b = /*@__PURE__*/ _const(6, $if_content__input_b);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(10, ($scope) => $input_b($scope.a, $scope.k));
-const $s = /*@__PURE__*/ _let(11, ($scope) => $input_show($scope.a, $scope.l));
-const $m = /*@__PURE__*/ _let(12, ($scope) => {
+const $n = _let(10, ($scope) => $input_b($scope.a, $scope.k));
+const $s = _let(11, ($scope) => $input_show($scope.a, $scope.l));
+const $m = _let(12, ($scope) => {
 	$input_mode($scope.a, $scope.m);
 	$input_mode($scope.b, $scope.m);
 });

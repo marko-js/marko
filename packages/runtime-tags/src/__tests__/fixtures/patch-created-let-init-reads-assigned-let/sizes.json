@@ -6,8 +6,8 @@
         "brotli": 5661
       },
       "files": {
-        "tags/card.marko": 521,
-        "tags/relay.marko": 559,
+        "tags/card.marko": 507,
+        "tags/relay.marko": 531,
         "template.marko": 608
       }
     }

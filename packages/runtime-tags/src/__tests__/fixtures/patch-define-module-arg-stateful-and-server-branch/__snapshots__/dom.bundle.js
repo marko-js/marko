@@ -23,7 +23,7 @@ const $if_content__setup = ($scope) => {
 	$Panel_content__fmt($scope.a, lib.format);
 };
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $if_content__setup);
-const $open = /*@__PURE__*/ _let(7, ($scope) => $if($scope, $scope.h ? 0 : 1));
+const $open = _let(7, ($scope) => $if($scope, $scope.h ? 0 : 1));
 const $setup__script = _script("a4", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.h);
 }));

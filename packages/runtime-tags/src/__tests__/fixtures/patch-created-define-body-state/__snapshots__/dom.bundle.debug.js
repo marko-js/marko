@@ -15,7 +15,7 @@ const $if_content__setup = ($scope) => {
 	$Info_content__setup($scope["#childScope/0"]);
 };
 const $count__closure = /*@__PURE__*/ _closure($Info_content__count);
-const $count = /*@__PURE__*/ _let("count/6", $count__closure);
+const $count = _let("count/6", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

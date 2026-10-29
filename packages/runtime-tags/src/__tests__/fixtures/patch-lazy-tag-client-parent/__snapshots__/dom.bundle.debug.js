@@ -43,7 +43,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label)));
 const $if = /*@__PURE__*/ _if("#main/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
-const $mounted = /*@__PURE__*/ _let("mounted/5", ($scope) => $if($scope, $scope.mounted ? 0 : 1));
+const $mounted = _let("mounted/5", ($scope) => $if($scope, $scope.mounted ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => $mounted($scope, true));
 function $setup($scope) {
 	$mounted($scope, false);

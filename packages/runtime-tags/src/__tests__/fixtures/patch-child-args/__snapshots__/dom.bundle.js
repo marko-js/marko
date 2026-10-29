@@ -9,7 +9,7 @@ const $if_content__setup = ($scope) => {
 	$input($scope.a, "x");
 };
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template, $template), /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)("D l", "D l"), $if_content__setup);
-const $show = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
+const $show = _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$show($scope, !$scope.f);
 }));

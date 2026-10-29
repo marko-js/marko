@@ -3,7 +3,7 @@ const $template = "<main><h1> </h1><ul></ul><button>Count <!></button></main>";
 const $walks = "E l b Db%m";
 const $for_content__item_label = ($scope, item_label) => _text($scope["#text/0"], item_label);
 const $for_content__$params = ($scope, $params2) => $for_content__item_label($scope, $params2[0]?.label);
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/3"], $scope.count));
+const $count = _let("count/8", ($scope) => _text($scope["#text/3"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

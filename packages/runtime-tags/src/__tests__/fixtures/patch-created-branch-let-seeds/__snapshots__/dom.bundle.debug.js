@@ -27,7 +27,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_y._($scope);
 	$if_content__setup__script($scope);
 };
-const $if_content__b = /*@__PURE__*/ _let("b/3", $if_content__a__OR__b);
+const $if_content__b = _let("b/3", $if_content__a__OR__b);
 const $if_content__input_y = /*@__PURE__*/ _init_resume("__tests__/tags/view.marko_1_input_y#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/view.marko_fill1", "input_y", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__b($scope, $scope._.input_y))));
 const $if = /*@__PURE__*/ _if("#text/0", "<span> </span><button>+</button>", "D l ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

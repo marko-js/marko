@@ -35,7 +35,7 @@ const $await_content__setup = ($scope) => {
 	$await_content__handler($scope);
 };
 const $await_content__handler = /*@__PURE__*/ _closure_get("handler/11", $await_content__input_title__OR__handler, 0, "__tests__/template.marko_1_handler#0:9/subscribe");
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _let("count/8", ($scope) => _text($scope["#text/2"], $scope.count));
 function $setup($scope) {
 	$await_content($scope);
 	$await_content2($scope);

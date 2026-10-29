@@ -9,7 +9,7 @@ var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("D l");
-const $other = /*@__PURE__*/ _let("other/5");
+const $other = _let("other/5");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$other($scope, $scope.other + 1);
 }));

@@ -41,7 +41,7 @@ const $wrapper_content__setup = ($scope) => {
 const $wrapper_content__open = /*@__PURE__*/ _closure_get("open/7", ($scope) => $input_open($scope["#childScope/0"], $scope._.open), 0, "__tests__/template.marko_1_open#0:5/subscribe");
 const $wrapper_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $wrapper_content__setup);
 const $open__closure = /*@__PURE__*/ _closure($wrapper_content__open);
-const $open = /*@__PURE__*/ _let("open/5", $open__closure);
+const $open = _let("open/5", $open__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

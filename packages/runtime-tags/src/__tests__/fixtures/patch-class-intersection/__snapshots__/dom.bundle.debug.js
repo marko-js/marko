@@ -8,7 +8,7 @@ const $input_tone__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.mark
 	$scope.input_tone,
 	$scope.count % 2 && "odd"
 ])));
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => {
+const $count = _let("count/7", ($scope) => {
 	_attr_class($scope["#span/1"], $scope.count % 2 ? "odd" : "even");
 	$input_tone__OR__count($scope);
 });

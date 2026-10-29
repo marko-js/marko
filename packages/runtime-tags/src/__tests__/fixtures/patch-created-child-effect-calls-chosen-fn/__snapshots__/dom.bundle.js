@@ -2,7 +2,7 @@
 const $fn__script = _script("b0", ($scope) => $scope.d());
 
 // template.marko
-const $flag = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h));
+const $flag = _let(7, ($scope) => _text($scope.b, $scope.h));
 const $fa = ($scope) => function() {
 	$flag($scope, 1);
 	const m = document.querySelector("main");

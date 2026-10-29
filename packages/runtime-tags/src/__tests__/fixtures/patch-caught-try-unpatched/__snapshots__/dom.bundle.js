@@ -12,7 +12,7 @@ const $try_content__input_fail = /*@__PURE__*/ _fill_join_closure("a6", 5, /*@__
 const $if_content__try = /*@__PURE__*/ _try(0, "<p><!><!></p>", "D%b%", $try_content__setup, 0, $catch_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);
 const $if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__setup);
-const $open = /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
+const $open = _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
 const $setup__script = _script("a4", ($scope) => _on($scope.b, "click", function() {
 	$open($scope, !$scope.g);
 }));

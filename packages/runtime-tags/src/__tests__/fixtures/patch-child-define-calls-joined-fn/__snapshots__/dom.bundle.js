@@ -10,7 +10,7 @@ const $input_a = ($scope, input_a) => $Show_content__a($scope.a, input_a);
 
 // template.marko
 const $upper__OR__up__OR__low = /*@__PURE__*/ _or_resume("a3", 8, ($scope) => $input_a($scope.a, $scope.f ? $scope.g : $scope.h), 2);
-const $upper = /*@__PURE__*/ _let(5, $upper__OR__up__OR__low);
+const $upper = _let(5, $upper__OR__up__OR__low);
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$upper($scope, !$scope.f);
 }));

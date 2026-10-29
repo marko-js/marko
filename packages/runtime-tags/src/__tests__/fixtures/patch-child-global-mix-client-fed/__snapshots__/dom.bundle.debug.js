@@ -12,7 +12,7 @@ var gm_default = /*@__PURE__*/ _template("__tests__/tags/gm/index.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button> </button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& D m`)("D l");
-const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
+const $count = _let("count/3", ($scope) => {
 	$input_v($scope["#childScope/0"], $scope.count);
 	_text($scope["#text/2"], $scope.count);
 });

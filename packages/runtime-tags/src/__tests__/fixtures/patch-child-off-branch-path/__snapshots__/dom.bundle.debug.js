@@ -102,7 +102,7 @@ const $brand__closure = /*@__PURE__*/ _closure($placeholder_content__brand);
 const $brand = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "brand", $brand__closure);
 const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_0_$global_brand#8", ($scope) => $brand($scope, `${$scope.$global.brand}!`), "brand");
 const $n__closure = /*@__PURE__*/ _closure($placeholder_content__n);
-const $n = /*@__PURE__*/ _let("n/11", ($scope) => {
+const $n = _let("n/11", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$n__closure($scope);
 });

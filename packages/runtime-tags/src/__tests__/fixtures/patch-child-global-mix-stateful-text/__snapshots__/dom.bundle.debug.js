@@ -14,7 +14,7 @@ const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
 const $if_content__setup = ($scope) => $input_v($scope["#childScope/0"], "a");
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/2", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/2", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

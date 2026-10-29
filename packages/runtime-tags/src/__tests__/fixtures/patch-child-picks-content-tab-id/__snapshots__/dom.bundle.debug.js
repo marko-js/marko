@@ -22,7 +22,7 @@ const $tab_content__input_y = /*@__PURE__*/ _init_resume("__tests__/template.mar
 const $tab_content__setup = $tab_content__input_y;
 const $tab_content = _content("__tests__/template.marko_1*content", "A<!>", "b%", $tab_content__setup);
 const $s__closure = /*@__PURE__*/ _closure($tab_content2__s);
-const $s = /*@__PURE__*/ _let("s/6", $s__closure);
+const $s = _let("s/6", $s__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$s($scope, +$scope.s + 1);
 }));

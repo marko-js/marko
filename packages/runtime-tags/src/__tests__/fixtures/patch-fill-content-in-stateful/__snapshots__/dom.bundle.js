@@ -14,7 +14,7 @@ const $wrap_content = /*@__PURE__*/ _content$1("a2", "<span> </span>", "D ", $wr
 const $if_content__setup = ($scope) => $input_content_direct($scope.a, $wrap_content($scope));
 const $if = /*@__PURE__*/ _if(1, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($wrap_content__count);
-const $count = /*@__PURE__*/ _let(5, ($scope) => {
+const $count = _let(5, ($scope) => {
 	$if($scope, $scope.f < 2 ? 0 : 1);
 	$count__closure($scope);
 });

@@ -24,7 +24,7 @@ var rows_default = /*@__PURE__*/ _template("__tests__/tags/rows.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>drop</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
-const $items = /*@__PURE__*/ _let("items/5", ($scope) => $input_items($scope["#childScope/1"], $scope.items));
+const $items = _let("items/5", ($scope) => $input_items($scope["#childScope/1"], $scope.items));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$items($scope, $scope.items.slice(1));
 }));

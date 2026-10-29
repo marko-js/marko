@@ -35,9 +35,9 @@ const $if_content__setup = ($scope) => {
 	$input_content_direct($scope["#childScope/1"], $frame_content2($scope));
 };
 const $a__closure = /*@__PURE__*/ _closure($frame_content__a);
-const $a = /*@__PURE__*/ _let("a/7", $a__closure);
+const $a = _let("a/7", $a__closure);
 const $b__closure = /*@__PURE__*/ _closure($frame_content2__b);
-const $b = /*@__PURE__*/ _let("b/8", $b__closure);
+const $b = _let("b/8", $b__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
 		$a($scope, +$scope.a + 1);

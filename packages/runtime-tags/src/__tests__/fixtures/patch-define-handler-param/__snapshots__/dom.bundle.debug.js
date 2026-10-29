@@ -10,7 +10,7 @@ const $Card_content__setup__script = _script("__tests__/template.marko_1", ($sco
 const $Card_content__setup = $Card_content__setup__script;
 const $Card_content__$params = ($scope, $params2) => $Card_content__$temp($scope, $params2[0]);
 const $Card_content__$temp = ($scope, $temp) => $Card_content__id($scope, $temp.id);
-const $cart = /*@__PURE__*/ _let("cart/5", ($scope) => _text($scope["#text/1"], $scope.cart.join(",")));
+const $cart = _let("cart/5", ($scope) => _text($scope["#text/1"], $scope.cart.join(",")));
 function $setup($scope) {
 	$scope["#childScope/0"]._ = $scope;
 	$Card_content__setup($scope["#childScope/0"]);

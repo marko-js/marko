@@ -3,7 +3,7 @@ const $template = "<button> </button><div><input><label> </label></div><div><inp
 const $walks = " D lD b D mD l%c";
 const $for_content__y = ($scope, y) => _attr($scope["#input/0"], "id", y);
 const $for_content__setup = ($scope) => $for_content__y($scope, _id($scope));
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => {
+const $n = _let("n/7", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	_text($scope["#text/4"], $scope.n);
 });

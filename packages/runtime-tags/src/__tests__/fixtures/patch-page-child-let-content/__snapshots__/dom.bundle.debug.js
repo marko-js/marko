@@ -14,7 +14,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<section><button>clear</button><!><p> </p></section>";
 const $walks = "D b%bD m";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $c = /*@__PURE__*/ _let("c/8", ($scope) => $dynamicTag($scope, $scope.c));
+const $c = _let("c/8", ($scope) => $dynamicTag($scope, $scope.c));
 const $input_content = $c;
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$c($scope, undefined);

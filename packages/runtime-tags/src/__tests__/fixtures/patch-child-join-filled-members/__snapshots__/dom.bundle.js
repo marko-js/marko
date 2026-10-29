@@ -14,11 +14,11 @@ const $if = /*@__PURE__*/ _if(1, "<em><!>|<!></em>", "D%c%", $if_content__setup)
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(8, ($scope) => {
+const $n = _let(8, ($scope) => {
 	$input_a($scope.a, $scope.i);
 	$input_a($scope.b, $scope.i);
 });
-const $s = /*@__PURE__*/ _let(9, ($scope) => $input_show($scope.a, $scope.j));
+const $s = _let(9, ($scope) => $input_show($scope.a, $scope.j));
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.c, "click", function() {
 		$n($scope, +$scope.i + 1);

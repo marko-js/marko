@@ -12,7 +12,7 @@ const $input_label__OR__count__script = _script("__tests__/template.marko_0_inpu
 	}
 });
 const $input_label__OR__count = /*@__PURE__*/ _or(6, $input_label__OR__count__script);
-const $count = /*@__PURE__*/ _let("count/5", $input_label__OR__count);
+const $count = _let("count/5", $input_label__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

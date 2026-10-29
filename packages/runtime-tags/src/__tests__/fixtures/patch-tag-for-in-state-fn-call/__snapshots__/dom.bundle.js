@@ -13,7 +13,7 @@ _bind_resume("b0 e", $fmt);
 
 // template.marko
 const $input_dyn__OR__input_prefix__OR__pre = /*@__PURE__*/ _fill_join("a2", 7, /*@__PURE__*/ _fill_join("a1", 6, /*@__PURE__*/ _or(9, ($scope) => $input_prefix($scope.a, $scope.g ? $scope.i : $scope.h), 2)));
-const $pre = /*@__PURE__*/ _let(8, $input_dyn__OR__input_prefix__OR__pre);
+const $pre = _let(8, $input_dyn__OR__input_prefix__OR__pre);
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$pre($scope, $scope.i + "!");
 }));

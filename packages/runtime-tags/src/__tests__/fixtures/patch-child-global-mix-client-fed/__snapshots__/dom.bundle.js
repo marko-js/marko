@@ -4,7 +4,7 @@ const $input_v__$global_flag = /*@__PURE__*/ _fill_global_join("b0", ($scope) =>
 const $input_v = /*@__PURE__*/ _const(3, $input_v__$global_flag);
 
 // template.marko
-const $count = /*@__PURE__*/ _let(3, ($scope) => {
+const $count = _let(3, ($scope) => {
 	$input_v($scope.a, $scope.d);
 	_text($scope.c, $scope.d);
 });

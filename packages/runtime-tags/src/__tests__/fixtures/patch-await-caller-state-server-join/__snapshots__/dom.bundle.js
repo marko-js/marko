@@ -6,7 +6,7 @@ const $input_promise = $await_promise;
 
 // template.marko
 const $input_prefix__OR__n = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _or(7, ($scope) => $input_promise($scope.b, Promise.resolve($scope.e + $scope.g))));
-const $n = /*@__PURE__*/ _let(6, $input_prefix__OR__n);
+const $n = _let(6, $input_prefix__OR__n);
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.g + 1);
 }));

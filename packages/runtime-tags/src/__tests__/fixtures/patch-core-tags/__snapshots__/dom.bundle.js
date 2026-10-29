@@ -9,7 +9,7 @@ const $input_value__OR__count__script = _script("a1", ($scope) => _lifecycle($sc
 	value: $scope.f
 }));
 const $input_value__OR__count = /*@__PURE__*/ _or(8, $input_value__OR__count__script);
-const $count = /*@__PURE__*/ _let(7, ($scope) => {
+const $count = _let(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	$input_value__OR__count($scope);
 });

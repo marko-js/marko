@@ -13,7 +13,7 @@ const $Content_content__label = ($scope, label) => _text($scope.b, label);
 const $Content_content__$params = ($scope, $params2) => $Content_content__label($scope, $params2[0].label);
 const $Content_content = _content$1("a0", "<em><!> <!> <!></em>", " D%c%c%", $Content_content__setup, $Content_content__$params);
 const $n__closure = /*@__PURE__*/ _closure($Content_content__n);
-const $n = /*@__PURE__*/ _let(7, ($scope) => {
+const $n = _let(7, ($scope) => {
 	_text($scope.c, $scope.h);
 	$n__closure($scope);
 });

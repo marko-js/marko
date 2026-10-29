@@ -2,7 +2,7 @@
 const Child = /*@__PURE__*/ _load_template("a", ($_) => import("./child.mjs").then((mod) => mod.default));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2);
 const $input_show__OR__input_label__OR__n = /*@__PURE__*/ _fill_join("b2", 6, /*@__PURE__*/ _fill_join("b1", 5, /*@__PURE__*/ _or(8, ($scope) => $dynamicTag($scope, $scope.f ? Child : null, ($_) => ({ label: `${$scope.g}${$scope.h}` })), 2)));
-const $n = /*@__PURE__*/ _let(7, ($scope) => {
+const $n = _let(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	$input_show__OR__input_label__OR__n($scope);
 });

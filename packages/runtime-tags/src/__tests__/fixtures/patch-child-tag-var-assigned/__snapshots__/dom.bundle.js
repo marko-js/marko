@@ -26,7 +26,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `${_w0}<p> </p><button class=reset>r</button>`)($template), /*@__PURE__*/ ((_w0) => `0${_w0}&D l b`)($walks), $if_content__setup);
-const $show = /*@__PURE__*/ _let(2, ($scope) => $if($scope, $scope.c ? 0 : 1));
+const $show = _let(2, ($scope) => $if($scope, $scope.c ? 0 : 1));
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$show($scope, !$scope.c);
 }));

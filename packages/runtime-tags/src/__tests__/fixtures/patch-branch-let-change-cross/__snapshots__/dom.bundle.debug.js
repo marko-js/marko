@@ -10,8 +10,8 @@ const $if_content__setup = ($scope) => {
 	$if_content__handler._($scope);
 	$if_content__setup__script($scope);
 };
-const $last = /*@__PURE__*/ _let("last/7", ($scope) => _text($scope["#text/1"], $scope.last));
-const $handler2 = /*@__PURE__*/ _let("handler/8");
+const $last = _let("last/7", ($scope) => _text($scope["#text/1"], $scope.last));
+const $handler2 = _let("handler/8");
 function $setup($scope) {
 	$last($scope, 0);
 	$handler2($scope, $handler($scope));

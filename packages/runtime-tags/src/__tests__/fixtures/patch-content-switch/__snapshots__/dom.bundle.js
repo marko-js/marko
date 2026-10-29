@@ -9,7 +9,7 @@ const $widget_content2__input_inner = /*@__PURE__*/ _fill_join_closure("a10", 6,
 const $widget_content2 = /*@__PURE__*/ _content$1("a8", "<!><!><!>", "b%", $widget_content2__input_inner);
 const $if_content__setup = ($scope) => $input_content_direct($scope.a, $widget_content2($scope));
 const $if = /*@__PURE__*/ _if(1, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
-const $open = /*@__PURE__*/ _let(7, ($scope) => $if($scope, $scope.h ? 0 : 1));
+const $open = _let(7, ($scope) => $if($scope, $scope.h ? 0 : 1));
 const $setup__script = _script("a9", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.h);
 }));

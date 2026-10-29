@@ -43,7 +43,7 @@ const $Card_content__setup = ($scope) => {
 };
 const $Card_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $Card_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($Box_content__count);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => {
+const $count = _let("count/5", ($scope) => {
 	$input_meta($scope["#childScope/0"], attrTag({ n: $scope.count }));
 	$count__closure($scope);
 });

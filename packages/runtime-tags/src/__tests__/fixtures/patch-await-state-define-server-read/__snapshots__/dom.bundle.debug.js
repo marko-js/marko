@@ -16,7 +16,7 @@ const $Row_content__$params = ($scope, $params2) => $Row_content__r($scope, $par
 const $Row_content__r = ($scope, r) => $Row_content__r_v($scope, r.v);
 const $await_content = /*@__PURE__*/ _await_content("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks), $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
-const $n = /*@__PURE__*/ _let("n/5", ($scope) => $await_promise($scope, Promise.resolve($scope.n)));
+const $n = _let("n/5", ($scope) => $await_promise($scope, Promise.resolve($scope.n)));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

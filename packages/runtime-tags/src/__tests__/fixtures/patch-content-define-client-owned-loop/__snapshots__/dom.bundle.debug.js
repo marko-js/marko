@@ -11,7 +11,7 @@ const $List_content__for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", "<li><!><!></l
 const $List_content__items = ($scope, items) => $List_content__for($scope, [items]);
 const $List_content__$params = ($scope, $params2) => $List_content__$temp($scope, $params2[0]);
 const $List_content__$temp = ($scope, $temp) => $List_content__items($scope, $temp.items);
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => $List_content__items($scope["#childScope/0"], $scope.count % 2 ? ["a"] : ["a", "b"]));
+const $count = _let("count/7", ($scope) => $List_content__items($scope["#childScope/0"], $scope.count % 2 ? ["a"] : ["a", "b"]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

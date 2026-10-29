@@ -7,7 +7,7 @@ const $for_content__setup = ($scope) => {
 	_text($scope["#text/0"], $scope["#LoopKey"]);
 };
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><!>: <!></li>", "D%c%", $for_content__setup);
-const $items = /*@__PURE__*/ _let("items/5", ($scope) => $for($scope, [$scope.items, "id"]));
+const $items = _let("items/5", ($scope) => $for($scope, [$scope.items, "id"]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$items($scope, [{ id: $scope.items.length + 1 }, ...$scope.items]);
 }));

@@ -16,7 +16,7 @@ const $input_b__closure = /*@__PURE__*/ _closure($fallback_content__input_b);
 const $input_b = /*@__PURE__*/ _const(5, $input_b__closure);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(8, ($scope) => $input_b($scope.a, $scope.i));
+const $n = _let(8, ($scope) => $input_b($scope.a, $scope.i));
 const $setup__script = _script("a0", ($scope) => _on($scope.c, "click", function() {
 	$n($scope, $scope.i + "k");
 }));

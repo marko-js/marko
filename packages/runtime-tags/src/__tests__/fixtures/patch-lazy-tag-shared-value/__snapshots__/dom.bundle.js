@@ -1,5 +1,5 @@
 // template.marko
-const $count = /*@__PURE__*/ _let(8, ($scope) => _text($scope.b, $scope.i));
+const $count = _let(8, ($scope) => _text($scope.b, $scope.i));
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, +$scope.i + 1);
 	document.title = JSON.stringify($scope.h);

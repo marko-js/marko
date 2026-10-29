@@ -9,7 +9,7 @@ const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.mark
 })));
 const $if_content__k = /*@__PURE__*/ _const("k");
 const $if_content__y__script = _script("__tests__/template.marko_1_y#6", ($scope) => _el_read($scope["#span/0"]).dataset.y = String($scope.y));
-const $if_content__y = /*@__PURE__*/ _let("y/6", ($scope) => {
+const $if_content__y = _let("y/6", ($scope) => {
 	$if_content__y__script($scope);
 	$if_content__k($scope, $scope.y + 1);
 });

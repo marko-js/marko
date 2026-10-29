@@ -7,7 +7,7 @@ const $await_content__x = fill("b1", /*@__PURE__*/ _const(3, ($scope) => {
 	$await_content__n__OR__x($scope);
 	$await_content__x__script($scope);
 }));
-const $n = /*@__PURE__*/ _let(6, /* @__PURE__ */ _closure($await_content__n));
+const $n = _let(6, /* @__PURE__ */ _closure($await_content__n));
 const $setup__script = _script("b7", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.g + 1);
 }));

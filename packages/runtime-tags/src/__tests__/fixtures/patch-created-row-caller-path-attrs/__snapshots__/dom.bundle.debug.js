@@ -33,7 +33,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__path._($scope);
 };
 const $if_content__path = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_path#0:6/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_path($scope["#childScope/0"], $scope._.path)));
-const $path = /*@__PURE__*/ _let("path/6", $if_content__path);
+const $path = _let("path/6", $if_content__path);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$path($scope, $scope.path === "/a" ? "/b" : "/a");
 }));

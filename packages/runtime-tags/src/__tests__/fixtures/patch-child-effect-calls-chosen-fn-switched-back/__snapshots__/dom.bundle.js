@@ -10,7 +10,7 @@ const $fn__script = _script("b0", ($scope) => {
 });
 
 // template.marko
-const $flag = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
+const $flag = _let(6, ($scope) => _text($scope.b, $scope.g));
 const $fa = ($scope) => function() {
 	$flag($scope, 1);
 	const m = document.querySelector("main");

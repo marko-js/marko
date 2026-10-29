@@ -8,7 +8,7 @@ const $input_open = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
 const $Layout_content__setup = _script("c0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope._, !$scope._.b);
 }));
-const $open = /*@__PURE__*/ _let(1, ($scope) => $input_open($scope.a, $scope.b));
+const $open = _let(1, ($scope) => $input_open($scope.a, $scope.b));
 
 // lazy.marko
 const $template = "<b>lazy</b>";

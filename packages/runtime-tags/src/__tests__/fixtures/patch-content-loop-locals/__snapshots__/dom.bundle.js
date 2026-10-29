@@ -2,7 +2,7 @@
 const $item_content__n__OR__label = /*@__PURE__*/ _fill_join("a2", 2, /*@__PURE__*/ _or(3, ($scope) => _text($scope.a, $scope.c + $scope._.h)));
 const $item_content__n = /*@__PURE__*/ _init_resume("a7", /*@__PURE__*/ _closure_get(9, $item_content__n__OR__label));
 const $n__closure = /*@__PURE__*/ _closure($item_content__n);
-const $n = /*@__PURE__*/ _let(7, ($scope) => {
+const $n = _let(7, ($scope) => {
 	_text($scope.c, $scope.h);
 	$n__closure($scope);
 });

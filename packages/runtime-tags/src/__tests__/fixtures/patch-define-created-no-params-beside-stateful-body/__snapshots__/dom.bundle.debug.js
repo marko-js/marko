@@ -7,7 +7,7 @@ const $Panel_content = _content("__tests__/template.marko_1*content", $Panel_con
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $Tag = $dynamicTag;
 const $open__OR__Panel = /*@__PURE__*/ _or(8, ($scope) => $Tag($scope, $scope.open ? $scope.Panel : "div"));
-const $open = /*@__PURE__*/ _let("open/6", $open__OR__Panel);
+const $open = _let("open/6", $open__OR__Panel);
 const $Panel = /*@__PURE__*/ _const("Panel", $open__OR__Panel);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);

@@ -39,7 +39,7 @@ const $Label_content__n = /*@__PURE__*/ _init_resume("__tests__/template.marko_1
 const $Label_content = _content("__tests__/template.marko_1*content", "<em><!> <!></em>", "D%c%", $Label_content__setup);
 const $Card = /*@__PURE__*/ _const("Card");
 const $n__closure = /*@__PURE__*/ _closure($Label_content__n);
-const $n = /*@__PURE__*/ _let("n/9", ($scope) => {
+const $n = _let("n/9", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$n__closure($scope);
 });

@@ -24,8 +24,8 @@ const $get = ($scope) => function() {
 _bind_resume("b0 c", $get);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(9, ($scope) => $input_a($scope.a, $scope.j));
-const $m = /*@__PURE__*/ _let(10, ($scope) => {
+const $n = _let(9, ($scope) => $input_a($scope.a, $scope.j));
+const $m = _let(10, ($scope) => {
 	$input_mode($scope.a, $scope.k);
 	$input_mode($scope.b, $scope.k);
 });

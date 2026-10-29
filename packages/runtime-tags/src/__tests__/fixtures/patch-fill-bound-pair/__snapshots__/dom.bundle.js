@@ -7,7 +7,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__fb = /*@__PURE__*/ _if_closure(0, 0, $if_content__fa__OR__fb);
 const $if = /*@__PURE__*/ _if(0, "<p> </p>", "D ", $if_content__setup);
-const $open = /*@__PURE__*/ _let(8, ($scope) => $if($scope, $scope.i ? 0 : 1));
+const $open = _let(8, ($scope) => $if($scope, $scope.i ? 0 : 1));
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$open($scope, !$scope.i);
 }));

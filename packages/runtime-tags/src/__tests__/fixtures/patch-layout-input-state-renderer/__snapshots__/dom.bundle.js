@@ -27,4 +27,4 @@ _resumed.c = nav_b_default;
 const $Layout_content__setup = _script("d0", ($scope) => _on($scope.a, "click", function() {
 	$alt($scope._, !$scope._.e);
 }));
-const $alt = /*@__PURE__*/ _let(4, ($scope) => $input_nav($scope.a, $scope.e ? nav_b_default : nav_a_default));
+const $alt = _let(4, ($scope) => $input_nav($scope.a, $scope.e ? nav_b_default : nav_a_default));

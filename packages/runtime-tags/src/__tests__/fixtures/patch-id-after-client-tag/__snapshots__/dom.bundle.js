@@ -14,7 +14,7 @@ var labeled_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $i
 
 // template.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $on = /*@__PURE__*/ _let(4, ($scope) => $dynamicTag($scope, $scope.e ? labeled_default : null, ($_) => ({ name: "client" })));
+const $on = _let(4, ($scope) => $dynamicTag($scope, $scope.e ? labeled_default : null, ($_) => ({ name: "client" })));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$on($scope, !$scope.e);
 }));

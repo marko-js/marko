@@ -13,7 +13,7 @@ const $if_content__setup = ($scope) => {
 	$input_content_direct($scope.a, $card_content($scope));
 };
 const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $if_content__setup);
-const $open = /*@__PURE__*/ _let(7, ($scope) => $if($scope, $scope.h ? 0 : 1));
+const $open = _let(7, ($scope) => $if($scope, $scope.h ? 0 : 1));
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$open($scope, !$scope.h);
 }));

@@ -29,7 +29,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_outer($scope);
 	$await_content($scope);
 };
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);

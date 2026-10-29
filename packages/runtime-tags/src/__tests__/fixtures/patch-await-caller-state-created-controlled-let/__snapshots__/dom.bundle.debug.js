@@ -40,7 +40,7 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $if_content__l = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_l#0:7/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.l)));
-const $l = /*@__PURE__*/ _let("l/7", $if_content__l);
+const $l = _let("l/7", $if_content__l);
 const $input_label = $l;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$l($scope, "z");

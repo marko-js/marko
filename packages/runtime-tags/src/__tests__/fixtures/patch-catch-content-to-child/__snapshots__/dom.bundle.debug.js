@@ -31,7 +31,7 @@ const $catch_content__err_message__closure = /*@__PURE__*/ _closure($box_content
 const $catch_content__err_message = /*@__PURE__*/ _const("err_message", $catch_content__err_message__closure);
 const $catch_content = _content("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $catch_content__setup, $catch_content__$params);
 const $count__closure = /*@__PURE__*/ _closure($box_content__count);
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => {
+const $count = _let("count/7", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$count__closure($scope);
 });

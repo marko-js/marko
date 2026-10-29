@@ -6,7 +6,7 @@ const $setup__script$1 = _script("d0", ($scope) => _on($scope.a, "click", functi
 }));
 
 // template.marko
-const $n = /*@__PURE__*/ _let(12, ($scope) => _text($scope.b, $scope.m));
+const $n = _let(12, ($scope) => _text($scope.b, $scope.m));
 const $setup__script = _script("a7", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.m + 1);
 }));

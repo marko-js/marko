@@ -4,7 +4,7 @@ const $walks$1 = "";
 const $g2__script = _script("__tests__/tags/card.marko_0_g#5", ($scope) => console.log("run", $scope.g()));
 const $g2 = /*@__PURE__*/ _const("g", $g2__script);
 const $input_fn__OR__open = /*@__PURE__*/ _or_resume("__tests__/tags/card.marko_0_input_fn#2_open#3/init", 4, ($scope) => $g2($scope, $scope.open ? $scope.input_fn : $g));
-const $open = /*@__PURE__*/ _let("open/3", $input_fn__OR__open);
+const $open = _let("open/3", $input_fn__OR__open);
 function $setup$1($scope) {
 	$open($scope, true);
 }
@@ -20,7 +20,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", "", "", 
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>more</button><span> </span>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& bD l`)("");
 const $input_label__OR__n = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(8, ($scope) => $input_fn($scope["#childScope/0"], $fn($scope))));
-const $n = /*@__PURE__*/ _let("n/7", $input_label__OR__n);
+const $n = _let("n/7", $input_label__OR__n);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

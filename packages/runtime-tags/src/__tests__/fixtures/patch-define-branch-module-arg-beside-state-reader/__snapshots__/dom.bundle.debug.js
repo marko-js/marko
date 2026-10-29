@@ -46,7 +46,7 @@ const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.
 	$Panel_content__tag_input_label($scope["#childScope/0"], $scope._.input_label);
 })));
 const $if2 = /*@__PURE__*/ _if("#text/1", "<b> </b>", "D ", $if_content2__setup);
-const $open = /*@__PURE__*/ _let("open/8", ($scope) => $if2($scope, $scope.open ? 0 : 1));
+const $open = _let("open/8", ($scope) => $if2($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);
 }));

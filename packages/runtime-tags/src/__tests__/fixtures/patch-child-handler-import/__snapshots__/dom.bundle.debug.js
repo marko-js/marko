@@ -6,7 +6,7 @@ function format(label) {
 // tags/widget/index.marko
 const $template$1 = "<p><!><!></p><button class=run>run</button>";
 const $walks$1 = "D%b%l b";
-const $last = /*@__PURE__*/ _let("last/6", ($scope) => _text($scope["#text/1"], $scope.last));
+const $last = _let("last/6", ($scope) => _text($scope["#text/1"], $scope.last));
 const $setup__script$1 = _script("__tests__/tags/widget/index.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$last($scope, format($scope.input_label));
 }));
@@ -27,7 +27,7 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/5", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = _let("show/5", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, !$scope.show);
 }));

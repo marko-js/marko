@@ -19,7 +19,7 @@ const $Show_content__v = /*@__PURE__*/ _const("v", ($scope) => $Show_content__f(
 const $Show_content__$params = ($scope, $params2) => $Show_content__$temp($scope, $params2[0]);
 const $Show_content__$temp = ($scope, $temp) => $Show_content__v($scope, $temp.v);
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Show_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Show_content__walks), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$show($scope, !$scope.show);
 }));

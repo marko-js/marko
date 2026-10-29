@@ -14,7 +14,7 @@ const $if_content__setup = ($scope) => {
 	$input_value($scope.a, "a");
 };
 const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
-const $open = /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
+const $open = _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$open($scope, !$scope.g);
 }));

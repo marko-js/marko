@@ -16,7 +16,7 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 };
 const $try_content__input_slow = /*@__PURE__*/ _closure_get("input_slow/14", $try_content__input_related__OR__input_slow, 0, "__tests__/template.marko_1_input_slow#0:9/subscribe");
-const $count = /*@__PURE__*/ _let("count/12", ($scope) => _text($scope["#text/4"], $scope.count));
+const $count = _let("count/12", ($scope) => _text($scope["#text/4"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$count($scope, +$scope.count + 1);

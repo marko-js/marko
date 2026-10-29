@@ -17,7 +17,7 @@ const $inputonpdiv_content = /*@__PURE__*/ _content("__tests__/template.marko_2*
 const $Card_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputonpdiv_content);
 const $Card_content__input_on__OR__n = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_on", /*@__PURE__*/ _or(4, ($scope) => $Card_content__dynamicTag($scope, $scope._.input_on ? "p" : "div", ($_) => ({ "data-n": $scope.n }))), "input_on/5", 0);
 const $Card_content__input_on = /*@__PURE__*/ _closure_get("input_on/5", $Card_content__input_on__OR__n, 0, "__tests__/template.marko_1_input_on#0:3/subscribe");
-const $Card_content__n = /*@__PURE__*/ _let("n/3", ($scope) => {
+const $Card_content__n = _let("n/3", ($scope) => {
 	_text($scope["#text/2"], $scope.n);
 	$Card_content__input_on__OR__n($scope);
 });

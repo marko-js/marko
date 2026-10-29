@@ -39,7 +39,7 @@ const $input_props__OR__on = /*@__PURE__*/ _fill_join("__tests__/template.marko_
 	$input_title($scope["#childScope/1"], $card_input_spread.title);
 	$input_note($scope["#childScope/1"], $card_input_spread.note);
 }));
-const $on = /*@__PURE__*/ _let("on/7", ($scope) => {
+const $on = _let("on/7", ($scope) => {
 	$if($scope, $scope.on ? 0 : 1);
 	$input_props__OR__on($scope);
 });

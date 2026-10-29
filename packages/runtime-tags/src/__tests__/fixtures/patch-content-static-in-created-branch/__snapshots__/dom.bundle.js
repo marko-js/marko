@@ -9,7 +9,7 @@ const $setup__script$1 = _script("b0", ($scope) => _on($scope.a, "click", functi
 
 // template.marko
 const $toggle_content = _content$1("a0", "<em>static body</em>");
-const $count = /*@__PURE__*/ _let(6, ($scope) => _text($scope.c, $scope.g));
+const $count = _let(6, ($scope) => _text($scope.c, $scope.g));
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.g + 1);
 }));

@@ -2,7 +2,7 @@
 const $for_content__setup = /* @__PURE__ */ _fill_global_for("a1", 2, ($scope) => _text($scope.a, $scope.$.a + $scope.$.c), "a", "c");
 const $if = /*@__PURE__*/ _if(1, "<b> </b>", "D ", /* @__PURE__ */ _fill_global_join("a0", ($scope) => _text($scope.a, $scope.$.a + $scope.$.c), "a", "c"));
 const $for = /*@__PURE__*/ _for_until_unkeyed(2, "<li> </li>", "D ", $for_content__setup);
-const $open = /*@__PURE__*/ _let(8, ($scope) => {
+const $open = _let(8, ($scope) => {
 	$if($scope, $scope.i ? 0 : 1);
 	$for($scope, [
 		$scope.i ? 1 : 0,

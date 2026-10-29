@@ -7,7 +7,7 @@ const $for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", "D ", 0, $for_content_
 const $input_keyField__OR__items = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_keyField", /*@__PURE__*/ _or(6, ($scope) => $for($scope, [$scope.items, function(item) {
 	return item[$scope.input_keyField];
 }])));
-const $items = /*@__PURE__*/ _let("items/5", $input_keyField__OR__items);
+const $items = _let("items/5", $input_keyField__OR__items);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$items($scope, [...$scope.items, {
 		n: 3,

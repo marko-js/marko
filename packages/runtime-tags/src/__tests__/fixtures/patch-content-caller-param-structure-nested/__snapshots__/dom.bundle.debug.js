@@ -148,7 +148,7 @@ var define_host_default = /*@__PURE__*/ _template("__tests__/tags/define-host.ma
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<button>+</button>`)($template$2, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks$2, $walks$1);
-const $open = /*@__PURE__*/ _let("open/6", ($scope) => {
+const $open = _let("open/6", ($scope) => {
 	$input_open$1($scope["#childScope/0"], $scope.open);
 	$input_open($scope["#childScope/1"], $scope.open);
 });

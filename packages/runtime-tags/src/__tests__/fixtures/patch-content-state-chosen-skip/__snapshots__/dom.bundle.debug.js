@@ -39,7 +39,7 @@ const $input_b__OR__mode__OR__one__OR__two = /*@__PURE__*/ _fill_join("__tests__
 	}, { id: 1 });
 	$input_b__OR__mode__OR__one__OR__two__script($scope);
 }, 3));
-const $mode = /*@__PURE__*/ _let("mode/7", ($scope) => {
+const $mode = _let("mode/7", ($scope) => {
 	$mode__OR__one__OR__two($scope);
 	$input_b__OR__mode__OR__one__OR__two($scope);
 });

@@ -18,7 +18,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)(" b");
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => $input_items($scope["#childScope/0"], $scope.count ? ["a", "b"] : ["a"]));
+const $count = _let("count/5", ($scope) => $input_items($scope["#childScope/0"], $scope.count ? ["a", "b"] : ["a"]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

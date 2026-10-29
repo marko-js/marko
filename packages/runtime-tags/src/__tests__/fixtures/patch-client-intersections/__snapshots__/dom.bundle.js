@@ -11,3 +11,7 @@ const $seen = /*@__PURE__*/ _fill_let("c2", 5, $input_text__OR__seen);
 const $setup__script = _script("c0", ($scope) => _on($scope.b, "click", function() {
 	$seen($scope, +$scope.f + 1);
 }));
+
+// tags/site-footer.marko
+const $input_year__OR__frozen = /*@__PURE__*/ _or_resume("d0", 5, ($scope) => _text($scope.a, $scope.d + $scope.e));
+const $frozen = _let(4, $input_year__OR__frozen);

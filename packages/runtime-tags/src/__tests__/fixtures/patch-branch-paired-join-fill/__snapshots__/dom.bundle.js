@@ -24,7 +24,7 @@ const $input_x = /*@__PURE__*/ _fill_const("b7", 5, $if_content__input_x);
 const $input_y = /*@__PURE__*/ _fill_const("b8", 6, $if_content__input_y);
 
 // template.marko
-const $y = /*@__PURE__*/ _let(7, ($scope) => {
+const $y = _let(7, ($scope) => {
 	$input_y($scope.a, $scope.h);
 	$input_x($scope.b, $scope.h);
 });

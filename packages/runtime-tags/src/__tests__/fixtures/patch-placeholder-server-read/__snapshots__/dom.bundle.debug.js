@@ -11,7 +11,7 @@ const $try_content__setup = ($scope) => {
 const $placeholder_content__input_msg = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/8", ($scope) => _text($scope["#text/0"], $scope._.input_msg), 0, "__tests__/template.marko_1_input_msg#0:5/subscribe"), 0);
 const $placeholder_content__setup = $placeholder_content__input_msg;
 const $placeholder_content = _content("__tests__/template.marko_1*content", "<em>loading <!></em>", "Db%", $placeholder_content__setup);
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/7", ($scope) => _text($scope["#text/1"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);

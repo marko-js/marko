@@ -7,7 +7,7 @@ function stamp() {
 const $input = ($scope, input) => _text($scope.a, JSON.stringify(input));
 
 // template.marko
-const $count = /*@__PURE__*/ _let(2, ($scope) => $input($scope.a, {
+const $count = _let(2, ($scope) => $input($scope.a, {
 	value: $scope.c,
 	stamp: stamp()
 }));

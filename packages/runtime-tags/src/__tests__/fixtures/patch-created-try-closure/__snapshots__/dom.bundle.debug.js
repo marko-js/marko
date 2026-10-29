@@ -11,7 +11,7 @@ const $try_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<p><!> <!></p>", "D%c%", $try_content__setup, 0, $catch_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);
 const $count__closure = /*@__PURE__*/ _closure($try_content__count);
-const $count = /*@__PURE__*/ _let("count/6", $count__closure);
+const $count = _let("count/6", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

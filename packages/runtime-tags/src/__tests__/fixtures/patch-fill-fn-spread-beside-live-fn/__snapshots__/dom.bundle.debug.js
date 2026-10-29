@@ -27,7 +27,7 @@ const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => {
 });
 const $items2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "items", $if_content__items);
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}`)($template$1, $template$1, $template$1), /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}&`)("D l", "D l", "D l"), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/10", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = _let("show/10", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, !$scope.show);
 }));

@@ -15,7 +15,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label))));
-const $if_content__shown = /*@__PURE__*/ _let("shown/6", ($scope) => _text($scope["#text/3"], $scope.shown));
+const $if_content__shown = _let("shown/6", ($scope) => _text($scope["#text/3"], $scope.shown));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/4"], "click", function() {
 	$if_content__shown($scope, $scope.r.fn());
 }));

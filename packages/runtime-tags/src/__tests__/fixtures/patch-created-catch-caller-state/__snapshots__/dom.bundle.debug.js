@@ -35,7 +35,7 @@ var detail_view_default = /*@__PURE__*/ _template("__tests__/tags/detail-view.ma
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}<button> </button></main>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&/${_w1}& D m`)("b%c", "b%c");
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => {
+const $count = _let("count/8", ($scope) => {
 	$input_detail$1($scope["#childScope/1"], $scope.count ? "n" + $scope.count : "");
 	_text($scope["#text/3"], $scope.count);
 });

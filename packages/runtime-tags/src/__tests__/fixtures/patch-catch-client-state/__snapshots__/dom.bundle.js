@@ -18,7 +18,7 @@ const $input_label__closure = /*@__PURE__*/ _closure($catch_content__input_label
 const $input_label = /*@__PURE__*/ _const(3, $input_label__closure);
 
 // template.marko
-const $label = /*@__PURE__*/ _let(5, ($scope) => $input_label($scope.b, $scope.f));
+const $label = _let(5, ($scope) => $input_label($scope.b, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$label($scope, $scope.f + "!");
 }));

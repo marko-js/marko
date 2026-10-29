@@ -26,7 +26,7 @@ const $for_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $for = /*@__PURE__*/ _for_until_unkeyed("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $for_content__setup);
-const $s = /*@__PURE__*/ _let("s/3", ($scope) => {
+const $s = _let("s/3", ($scope) => {
 	_text($scope["#text/1"], $scope.s);
 	$for($scope, [
 		1 + $scope.s % 3,

@@ -20,7 +20,7 @@ var show_await_default = /*@__PURE__*/ _template("__tests__/tags/show-await.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<button class=open>inc</button>${_w0}${_w1}<!>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` b/${_w0}&/${_w1}&b`)("b%c", "b%c");
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => $input_promise($scope["#childScope/1"], Promise.resolve($scope.n)));
+const $n = _let("n/7", ($scope) => $input_promise($scope["#childScope/1"], Promise.resolve($scope.n)));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

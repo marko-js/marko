@@ -9,7 +9,7 @@ const $f = ($scope) => function(t) {
 _bind_resume("b0 d e f", $f);
 
 // template.marko
-const $b = /*@__PURE__*/ _let(7, ($scope) => $input_b($scope.b, $scope.h));
+const $b = _let(7, ($scope) => $input_b($scope.b, $scope.h));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$b($scope, $scope.h + "!");
 }));

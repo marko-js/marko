@@ -26,7 +26,7 @@ const $try_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $try_content__input_promise = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_promise#0:6/init", /*@__PURE__*/ _closure_get("input_promise/9", ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:6/subscribe"));
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/7", ($scope) => _text($scope["#text/1"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/2", /*@__PURE__*/ ((_w0) => `<section>${_w0}</section>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("b%c"), $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);

@@ -29,7 +29,7 @@ const $Layout_content__setup__script = _script("__tests__/template.marko_1", ($s
 }));
 const $Layout_content__setup = $Layout_content__setup__script;
 const $Layout_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button>toggle</button>", " ", $Layout_content__setup);
-const $open = /*@__PURE__*/ _let("open/1", ($scope) => $input_open($scope["#childScope/0"], $scope.open));
+const $open = _let("open/1", ($scope) => $input_open($scope["#childScope/0"], $scope.open));
 function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $Layout_content($scope));
 	$open($scope, false);

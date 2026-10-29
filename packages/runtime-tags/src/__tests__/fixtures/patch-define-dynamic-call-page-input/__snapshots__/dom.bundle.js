@@ -14,7 +14,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__tag_input_label($scope, $temp.label);
 };
 const $Panel_content = _content$1("a3", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
-const $open = /*@__PURE__*/ _let(8, ($scope) => $Panel_content__isOpen($scope.a, $scope.i));
+const $open = _let(8, ($scope) => $Panel_content__isOpen($scope.a, $scope.i));
 const $setup__script = _script("a5", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.i);
 }));

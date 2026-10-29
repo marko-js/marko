@@ -14,7 +14,7 @@ const $catch_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_co
 const $catch_content__input_detail = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_detail", /*@__PURE__*/ _closure_get("input_detail/8", ($scope) => $catch_content__if($scope, $scope._.input_detail ? 0 : 1), 0, "__tests__/template.marko_1_input_detail#0:5/subscribe"), 0);
 const $catch_content__setup = $catch_content__input_detail;
 const $catch_content = _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $catch_content__setup);
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);

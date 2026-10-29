@@ -14,7 +14,7 @@ const $for_content__i = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill
 	$for_content__i__closure($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $params2[0]);
-const $count = /*@__PURE__*/ _let("count/5", $for_content__count);
+const $count = _let("count/5", $for_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

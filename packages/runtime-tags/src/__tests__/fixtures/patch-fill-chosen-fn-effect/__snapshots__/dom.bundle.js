@@ -13,7 +13,7 @@ const $pick = fill("a4", /*@__PURE__*/ _const(9, ($scope) => {
 	$pick__script($scope);
 }));
 const $if = /*@__PURE__*/ _if(1, "<p> </p>", "D ", $if_content__setup);
-const $open = /*@__PURE__*/ _let(10, ($scope) => $if($scope, $scope.k ? 0 : 1));
+const $open = _let(10, ($scope) => $if($scope, $scope.k ? 0 : 1));
 const $setup__script = _script("a3", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.k);
 }));

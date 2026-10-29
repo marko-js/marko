@@ -27,7 +27,7 @@ const $fallback_content__setup = ($scope) => {
 const $fallback_content__count = /*@__PURE__*/ _closure_get(10, ($scope) => _text($scope.b, $scope._.i), 0, "a1");
 const $fallback_content = _content$1("a2", "<em><!> <!></em>", "D%c%", $fallback_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($fallback_content__count, $fallback_content2__count);
-const $count = /*@__PURE__*/ _let(8, ($scope) => {
+const $count = _let(8, ($scope) => {
 	_text($scope.b, $scope.i);
 	$count__closure($scope);
 });

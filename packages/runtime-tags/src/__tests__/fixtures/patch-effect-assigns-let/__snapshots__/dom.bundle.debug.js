@@ -11,7 +11,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/probe.marko
 const $template = "<p> </p>";
 const $walks = "D l";
-const $seen = /*@__PURE__*/ _let("seen/4", ($scope) => _text($scope["#text/0"], $scope.seen));
+const $seen = _let("seen/4", ($scope) => _text($scope["#text/0"], $scope.seen));
 function $setup($scope) {
 	$seen($scope, "");
 }

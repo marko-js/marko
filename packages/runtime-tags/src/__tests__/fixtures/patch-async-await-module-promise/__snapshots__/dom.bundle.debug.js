@@ -12,7 +12,7 @@ const $if_content__setup = ($scope) => {
 	$await_content($scope);
 	$if_content__await_promise($scope, fetchThing());
 };
-const $n = /*@__PURE__*/ _let("n/6", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = _let("n/6", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

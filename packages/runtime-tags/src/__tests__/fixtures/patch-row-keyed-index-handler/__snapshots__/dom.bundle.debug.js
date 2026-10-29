@@ -14,7 +14,7 @@ const $for_content__$params = ($scope, $params2) => {
 };
 const $for_content__item_v = /*@__PURE__*/ _const("item_v");
 const $for_content__i = /*@__PURE__*/ _const("i");
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }

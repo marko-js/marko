@@ -45,7 +45,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<button>y</button>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks$1, $walks$1);
-const $y = /*@__PURE__*/ _let("y/7", ($scope) => {
+const $y = _let("y/7", ($scope) => {
 	$input_y($scope["#childScope/0"], $scope.y);
 	$input_x$1($scope["#childScope/1"], $scope.y);
 });

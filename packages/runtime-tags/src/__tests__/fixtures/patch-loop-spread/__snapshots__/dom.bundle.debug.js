@@ -8,7 +8,7 @@ const $for_content__item_attrs = /*@__PURE__*/ _const("item_attrs", ($scope) => 
 });
 const $for_content__setup = ($scope) => _text($scope["#text/1"], $scope["#LoopKey"]);
 const $for_content__$params = ($scope, $params2) => $for_content__item_attrs($scope, $params2[0]?.attrs);
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _let("count/6", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

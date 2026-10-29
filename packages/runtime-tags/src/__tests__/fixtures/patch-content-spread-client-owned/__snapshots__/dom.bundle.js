@@ -14,7 +14,7 @@ const $input_mode__OR__one__OR__two = /*@__PURE__*/ _or_resume("b6", 8, ($scope)
 const $input_mode = /*@__PURE__*/ _const(5, $input_mode__OR__one__OR__two);
 
 // template.marko
-const $mode = /*@__PURE__*/ _let(5, ($scope) => $input_mode($scope.b, $scope.f));
+const $mode = _let(5, ($scope) => $input_mode($scope.b, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$mode($scope, !$scope.f);
 }));

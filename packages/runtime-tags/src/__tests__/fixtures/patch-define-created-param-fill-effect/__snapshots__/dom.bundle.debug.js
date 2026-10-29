@@ -23,7 +23,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__o._($scope);
 };
 const $if_content__o = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_o#0:6/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Panel_content__isOpen($scope["#childScope/0"], $scope._.o)));
-const $o = /*@__PURE__*/ _let("o/6", $if_content__o);
+const $o = _let("o/6", $if_content__o);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$o($scope, !$scope.o);
 }));

@@ -13,7 +13,7 @@ const $setup__script$1 = _script("b0", ($scope) => _on($scope.b, "click", functi
 }));
 
 // template.marko
-const $last = /*@__PURE__*/ _let(4, ($scope) => _text($scope.c, $scope.e));
+const $last = _let(4, ($scope) => _text($scope.c, $scope.e));
 const $setup__script = _script("a3", ($scope) => _on($scope.d, "click", function() {
 	_var_change($scope.a, 5);
 }));

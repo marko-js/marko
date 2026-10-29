@@ -19,7 +19,7 @@ const $Row_content__$temp = ($scope, $temp) => {
 	$Row_content__b($scope, $temp.b);
 	$Row_content__c($scope, $temp.c);
 };
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => $Row_content__a($scope["#childScope/0"], $scope.n));
+const $n = _let("n/7", ($scope) => $Row_content__a($scope["#childScope/0"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

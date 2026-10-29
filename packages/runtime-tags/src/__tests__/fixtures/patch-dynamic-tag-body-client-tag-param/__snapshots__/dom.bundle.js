@@ -6,7 +6,7 @@ const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, $inputtag_content);
 const $input_tag = $dynamicTag;
 
 // template.marko
-const $tag = /*@__PURE__*/ _let(5, ($scope) => $input_tag($scope.b, $scope.f));
+const $tag = _let(5, ($scope) => $input_tag($scope.b, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$tag($scope, $scope.f === "b" ? "i" : "b");
 }));

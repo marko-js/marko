@@ -26,7 +26,7 @@ const $if_content__setup = ($scope) => {
 	$load_Lazy_tag_input_label($scope["#childScope/1"], "s");
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<!><!><!>", "b%/&", $for_content__setup, $for_content__$params);
-const $items = /*@__PURE__*/ _let("items/6", ($scope) => $for($scope, [$scope.items]));
+const $items = _let("items/6", ($scope) => $for($scope, [$scope.items]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$items($scope, [...$scope.items, "c" + $scope.items.length]);
 }));

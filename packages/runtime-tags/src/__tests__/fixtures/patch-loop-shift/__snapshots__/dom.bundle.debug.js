@@ -5,7 +5,7 @@ const $for_content__item_label = ($scope, item_label) => _text($scope["#text/0"]
 const $for_content__$params = ($scope, $params2) => $for_content__item_label($scope, $params2[0]?.label);
 const $if_content__input_promo = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_promo#0:8/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_promo)));
 const $if_content__setup = $if_content__input_promo;
-const $count = /*@__PURE__*/ _let("count/10", ($scope) => _text($scope["#text/4"], $scope.count));
+const $count = _let("count/10", ($scope) => _text($scope["#text/4"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

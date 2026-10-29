@@ -21,9 +21,9 @@ const $box_content__count = /*@__PURE__*/ _closure_get("count/10", $box_content_
 const $box_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $box_content__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $box_content($scope));
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $count__closure = /*@__PURE__*/ _closure($box_content__count);
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => {
+const $count = _let("count/8", ($scope) => {
 	_text($scope["#text/3"], $scope.count);
 	$count__closure($scope);
 });

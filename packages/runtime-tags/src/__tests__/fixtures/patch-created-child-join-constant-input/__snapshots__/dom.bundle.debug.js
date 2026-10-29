@@ -24,7 +24,7 @@ const $if_content__n = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_n#
 	$input_b($scope["#childScope/0"], $scope._.n);
 	$input_b($scope["#childScope/1"], $scope._.n);
 }));
-const $n = /*@__PURE__*/ _let("n/6", $if_content__n);
+const $n = _let("n/6", $if_content__n);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

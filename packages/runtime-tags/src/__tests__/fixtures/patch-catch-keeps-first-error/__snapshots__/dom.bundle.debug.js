@@ -35,7 +35,7 @@ const $catch_content__err_message = ($scope, err_message) => $input_msg$1($scope
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_1*content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $catch_content__setup, $catch_content__$params);
 const $n__closure = /*@__PURE__*/ _closure($catch_content__n);
-const $n = /*@__PURE__*/ _let("n/8", ($scope) => {
+const $n = _let("n/8", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$n__closure($scope);
 });

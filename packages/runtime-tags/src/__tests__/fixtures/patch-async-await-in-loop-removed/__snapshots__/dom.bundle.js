@@ -13,7 +13,7 @@ const $for = /*@__PURE__*/ _for_of(0, "<div><!></div>", "D%", $for_content__setu
 const $input_items = ($scope, input_items) => $for($scope, [input_items, "id"]);
 
 // template.marko
-const $items = /*@__PURE__*/ _let(5, ($scope) => $input_items($scope.b, $scope.f));
+const $items = _let(5, ($scope) => $input_items($scope.b, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$items($scope, $scope.f.slice(1));
 }));

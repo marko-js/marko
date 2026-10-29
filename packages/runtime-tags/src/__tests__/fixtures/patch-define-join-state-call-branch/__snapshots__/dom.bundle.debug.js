@@ -39,7 +39,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<button class=n>+</button>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks$1, $walks$1);
-const $n = /*@__PURE__*/ _let("n/8", ($scope) => $input_b$1($scope["#childScope/0"], $scope.n));
+const $n = _let("n/8", ($scope) => $input_b$1($scope["#childScope/0"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$n($scope, $scope.n + "k");
 }));

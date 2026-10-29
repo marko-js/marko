@@ -23,7 +23,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__input_b = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_b", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_text($scope["#childScope/1"], $scope._.input_b)));
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}`)($template$1, $template$1), /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&`)($walks$1, $walks$1), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, !$scope.show);
 }));

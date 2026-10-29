@@ -13,7 +13,7 @@ const $input_a = /*@__PURE__*/ _const("input_a", ($scope) => $fa2($scope, $fa($s
 const $fb2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "fb", $if_content__fb);
 const $input_b = /*@__PURE__*/ _const("input_b", ($scope) => $fb2($scope, $fb($scope)));
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/8", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/8", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

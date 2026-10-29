@@ -11,7 +11,7 @@ const $greeting = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "g
 const $input_name__$global_prefix = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_0_input_name#4_$global_prefix#5", ($scope) => $greeting($scope, _global_read($scope.$global, "prefix") + ":" + $scope.input_name), "prefix");
 const $input_name = /*@__PURE__*/ _const("input_name", $input_name__$global_prefix);
 const $if = /*@__PURE__*/ _if("#text/1", "<span><!> <!></span>", "D%c%", $if_content__setup);
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
+const $count = _let("count/6", ($scope) => {
 	$if($scope, $scope.count < 2 ? 0 : 1);
 	$if_content__count($scope);
 });

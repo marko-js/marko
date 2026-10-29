@@ -23,7 +23,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__w = _var_resume("a0", ($scope, w) => _text($scope.c, w));
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `${_w0}<p class=echo> </p>`)($template), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)($walks), $if_content__setup);
-const $show = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
+const $show = _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$show($scope, !$scope.f);
 }));

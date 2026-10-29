@@ -5,7 +5,7 @@ const $for_content__n = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_n
 const $for_content__setup = $for_content__n;
 const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $n = /*@__PURE__*/ _let("n/6", ($scope) => {
+const $n = _let("n/6", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$for_content__n($scope);
 });

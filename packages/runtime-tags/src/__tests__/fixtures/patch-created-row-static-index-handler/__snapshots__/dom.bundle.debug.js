@@ -9,7 +9,7 @@ const $for_content__item = ($scope, item) => _text($scope["#text/1"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<button class=r> </button>", " D ", $for_content__setup, $for_content__$params);
 const $if_content__setup = ($scope) => $if_content__for($scope, [["a", "b"]]);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }

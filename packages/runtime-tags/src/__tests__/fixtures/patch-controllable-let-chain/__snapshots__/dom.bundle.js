@@ -1,6 +1,6 @@
 // template.marko
-const $if_content__b = /*@__PURE__*/ _let(3, ($scope) => _attr_input_value($scope, "b", $scope.d, $valueChange2($scope)));
-const $if_content__a = /*@__PURE__*/ _let(2, ($scope) => {
+const $if_content__b = _let(3, ($scope) => _attr_input_value($scope, "b", $scope.d, $valueChange2($scope)));
+const $if_content__a = _let(2, ($scope) => {
 	$if_content__b($scope, $scope.c);
 	_attr_input_value($scope, "a", $scope.c, $valueChange($scope));
 });

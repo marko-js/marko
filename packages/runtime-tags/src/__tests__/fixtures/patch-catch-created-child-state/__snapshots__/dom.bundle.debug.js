@@ -29,7 +29,7 @@ const $try_content__setup = ($scope) => {
 };
 const $try_content__input_msg = /*@__PURE__*/ _closure_get("input_msg/9", $try_content__input_fail__OR__input_msg, 0, "__tests__/template.marko_1_input_msg#0:6/subscribe");
 const $count__closure = /*@__PURE__*/ _closure($catch_content__count);
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => {
+const $count = _let("count/7", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$count__closure($scope);
 });

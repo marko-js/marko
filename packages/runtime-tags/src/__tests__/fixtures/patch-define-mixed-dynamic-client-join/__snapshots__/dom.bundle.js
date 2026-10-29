@@ -10,7 +10,7 @@ const $Panel_content__$temp = ($scope, $temp) => $Panel_content__value($scope, $
 const $Panel_content = _content("a0", $Panel_content__template, $Panel_content__walks, $Panel_content__setup, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $input_dyn__OR__n__OR__Panel = /*@__PURE__*/ _fill_join("a4", 6, /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.g ? $scope.i : null, ($_) => ({ value: $scope.h })), 2));
-const $n = /*@__PURE__*/ _let(7, $input_dyn__OR__n__OR__Panel);
+const $n = _let(7, $input_dyn__OR__n__OR__Panel);
 const $setup__script = _script("a3", ($scope) => _on($scope.c, "click", function() {
 	$n($scope, +$scope.h + 1);
 }));

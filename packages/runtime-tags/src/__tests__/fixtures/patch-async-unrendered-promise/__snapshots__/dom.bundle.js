@@ -11,7 +11,7 @@ const $inputtag_content__setup = ($scope) => {
 };
 const $inputtag_content = _content$1("a5", "<!><!><!>", "b%", $inputtag_content__setup);
 _content_resume($inputtag_content);
-const $n = /*@__PURE__*/ _let(12, ($scope) => _text($scope.b, $scope.m));
+const $n = _let(12, ($scope) => _text($scope.b, $scope.m));
 const $setup__script = _script("a15", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.m + 1);
 }));

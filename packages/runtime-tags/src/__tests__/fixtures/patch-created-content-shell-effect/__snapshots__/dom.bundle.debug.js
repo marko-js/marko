@@ -15,7 +15,7 @@ const $body_content__setup__script = _script("__tests__/template.marko_2", ($sco
 const $body_content__setup = $body_content__setup__script;
 const $body_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<p>body</p>", 0, $body_content__setup);
 const $if_content__setup = ($scope) => $input_body($scope["#childScope/0"], attrTag({ content: $body_content($scope) }));
-const $n = /*@__PURE__*/ _let("n/6", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = _let("n/6", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

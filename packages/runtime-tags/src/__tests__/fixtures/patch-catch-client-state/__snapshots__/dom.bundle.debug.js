@@ -38,7 +38,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button class=rename>rename</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
-const $label = /*@__PURE__*/ _let("label/5", ($scope) => $input_label($scope["#childScope/1"], $scope.label));
+const $label = _let("label/5", ($scope) => $input_label($scope["#childScope/1"], $scope.label));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$label($scope, $scope.label + "!");
 }));

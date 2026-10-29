@@ -33,7 +33,7 @@ var picker_default = /*@__PURE__*/ _template("__tests__/tags/picker.marko", $tem
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p><button id=outer>outer</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l b`)($walks$1);
-const $busy = /*@__PURE__*/ _let("busy/4", ($scope) => _text($scope["#text/2"], $scope.busy ? "busy" : "idle"));
+const $busy = _let("busy/4", ($scope) => _text($scope["#text/2"], $scope.busy ? "busy" : "idle"));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$scope.refresh();
 }));

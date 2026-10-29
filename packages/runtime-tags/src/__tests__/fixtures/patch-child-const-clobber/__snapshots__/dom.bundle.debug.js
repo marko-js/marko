@@ -15,7 +15,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)($walks$1);
-const $note = /*@__PURE__*/ _let("note/5", ($scope) => $input_note$1($scope["#childScope/0"], $scope.note));
+const $note = _let("note/5", ($scope) => $input_note$1($scope["#childScope/0"], $scope.note));
 const $input_note = $note;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$note($scope, "client");

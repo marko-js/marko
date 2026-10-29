@@ -4,7 +4,7 @@ const $walks = "D b b D m";
 const $extra_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:6/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/11", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:6/subscribe"), 0));
 const $extra_content__setup = $extra_content__input_title;
 const $extra_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $extra_content__setup);
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/3"], $scope.count));
+const $count = _let("count/8", ($scope) => _text($scope["#text/3"], $scope.count));
 const $input_attrs__OR__extra__script = _script("__tests__/template.marko_0_input_attrs#7_extra#9", ($scope) => _attrs_script($scope, "#section/1"));
 const $input_attrs__OR__extra = /*@__PURE__*/ _or(10, ($scope) => {
 	$input_attrs__OR__extra__script($scope);

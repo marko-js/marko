@@ -1,6 +1,6 @@
 // tags/show-await.marko
 const $if_content__x = /*@__PURE__*/ _init_resume("b0", /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.c)));
-const $if_content__n = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
+const $if_content__n = _let(2, ($scope) => _text($scope.b, $scope.c));
 const $if_content__setup = ($scope) => {
 	$if_content__x._($scope);
 	$if_content__n($scope, 3);
@@ -17,7 +17,7 @@ const $input_promise = $await_promise;
 
 // template.marko
 const $if_content__p = /*@__PURE__*/ _init_resume("a3", /*@__PURE__*/ _if_closure(1, 0, ($scope) => $input_promise($scope.a, $scope._.g)));
-const $p = /*@__PURE__*/ _let(6, $if_content__p);
+const $p = _let(6, $if_content__p);
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$p($scope, Promise.resolve("swapped"));
 }));

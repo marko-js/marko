@@ -16,7 +16,7 @@ const $catch_content__err_message = ($scope, err_message) => $input_msg($scope.a
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content$1("a6", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $catch_content__setup, $catch_content__$params);
 const $n__closure = /*@__PURE__*/ _closure($catch_content__n);
-const $n = /*@__PURE__*/ _let(8, ($scope) => {
+const $n = _let(8, ($scope) => {
 	_text($scope.b, $scope.i);
 	$n__closure($scope);
 });

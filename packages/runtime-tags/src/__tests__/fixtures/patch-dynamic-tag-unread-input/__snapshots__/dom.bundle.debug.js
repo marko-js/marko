@@ -25,7 +25,7 @@ const $Alt_content = _content("__tests__/template.marko_2*content", "<i> </i>", 
 const $Row_content__user_name = ($scope, user_name) => _text($scope["#text/0"], user_name);
 const $Row_content__$params = ($scope, $params2) => $Row_content__user_name($scope, $params2[0].user?.name);
 const $Row_content = _content("__tests__/template.marko_1*content", "<p> </p>", "D ", 0, $Row_content__$params);
-const $n = /*@__PURE__*/ _let("n/20", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = _let("n/20", ($scope) => _text($scope["#text/1"], $scope.n));
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/3");
 const $input_alt__OR__input_user2__OR__Row__OR__Alt = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill3", "input_user2", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_alt", /*@__PURE__*/ _or(23, ($scope) => $dynamicTag2($scope, $scope.input_alt ? $scope.Alt : $scope.Row, ($_) => ({ user: $scope.input_user2 })), 3)));
 const $Row = /*@__PURE__*/ _const("Row", $input_alt__OR__input_user2__OR__Row__OR__Alt);

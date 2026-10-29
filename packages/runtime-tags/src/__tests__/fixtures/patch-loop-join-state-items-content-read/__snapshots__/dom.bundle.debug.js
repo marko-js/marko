@@ -34,8 +34,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=l>l</button><button class=m>m</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b b`)($walks$1);
-const $list = /*@__PURE__*/ _let("list/6", ($scope) => $input_items($scope["#childScope/0"], $scope.list));
-const $m = /*@__PURE__*/ _let("m/7", ($scope) => $input_mode($scope["#childScope/0"], $scope.m));
+const $list = _let("list/6", ($scope) => $input_items($scope["#childScope/0"], $scope.list));
+const $m = _let("m/7", ($scope) => $input_mode($scope["#childScope/0"], $scope.m));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
 		$list($scope, $scope.list.concat("r"));

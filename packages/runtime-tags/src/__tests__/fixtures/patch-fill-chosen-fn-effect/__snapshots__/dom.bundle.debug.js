@@ -18,7 +18,7 @@ const $input_upper__OR__fa__OR__fb = /*@__PURE__*/ _or(8, ($scope) => $pick($sco
 const $fa2 = /*@__PURE__*/ _const("fa", $input_upper__OR__fa__OR__fb);
 const $fb2 = /*@__PURE__*/ _const("fb", $input_upper__OR__fa__OR__fb);
 const $if = /*@__PURE__*/ _if("#text/1", "<p> </p>", "D ", $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/10", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/10", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);
 }));

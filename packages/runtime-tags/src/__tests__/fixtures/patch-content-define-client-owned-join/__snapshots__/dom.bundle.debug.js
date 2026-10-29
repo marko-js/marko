@@ -9,7 +9,7 @@ const $Label_content__setup = $Label_content__input_suffix;
 const $Label_content__n = /*@__PURE__*/ _const("n", $Label_content__input_suffix__OR__n);
 const $Label_content__$params = ($scope, $params2) => $Label_content__$temp($scope, $params2[0]);
 const $Label_content__$temp = ($scope, $temp) => $Label_content__n($scope, $temp.n);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => $Label_content__n($scope["#childScope/0"], $scope.count));
+const $count = _let("count/5", ($scope) => $Label_content__n($scope["#childScope/0"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

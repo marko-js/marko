@@ -28,7 +28,7 @@ const $Card_content__setup = ($scope) => {
 const $Card_content__count = /*@__PURE__*/ _closure_get("count/9", $Card_content__input_on__OR__count, 0, "__tests__/template.marko_1_count#0:6/subscribe");
 const $Card_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $Card_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($Card_content__count);
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
+const $count = _let("count/6", ($scope) => {
 	$input_meta($scope["#childScope/0"], attrTag({ n: $scope.count }));
 	$count__closure($scope);
 });

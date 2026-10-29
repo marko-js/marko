@@ -8,7 +8,7 @@ const $input_open = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
 const $panel_content__p_text = /*@__PURE__*/ _init_resume("a0", /*@__PURE__*/ _fill_join_closure("a3", 3, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._.d), 0, "a1"), 0));
 const $panel_content = _content$1("a2", "<p> </p>", "D ", $panel_content__p_text);
 const $for_content__open = /*@__PURE__*/ _init_resume("a8", /*@__PURE__*/ _for_closure(1, ($scope) => $input_open($scope.a, $scope._.f)));
-const $open = /*@__PURE__*/ _let(5, $for_content__open);
+const $open = _let(5, $for_content__open);
 const $setup__script = _script("a5", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.f);
 }));

@@ -18,7 +18,7 @@ const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
 const $one_content__input_y = /*@__PURE__*/ _closure_get("input_y/6", ($scope) => _text($scope["#text/0"], $scope._.input_y), 0, "__tests__/template.marko_1_input_y#0:4/subscribe");
 const $one_content__setup = $one_content__input_y;
 const $one_content = _content("__tests__/template.marko_1*content", "A<!>", "b%", $one_content__setup);
-const $s = /*@__PURE__*/ _let("s/5");
+const $s = _let("s/5");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$s($scope, +$scope.s + 1);
 }));

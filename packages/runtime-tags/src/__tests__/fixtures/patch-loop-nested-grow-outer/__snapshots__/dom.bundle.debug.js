@@ -7,7 +7,7 @@ const $for_content__for = /*@__PURE__*/ _for_of("#text/0", "<p> </p>", "D ", $fo
 const $for_content__row_cells = ($scope, row_cells) => $for_content__for($scope, [row_cells, (cell) => cell]);
 const $for_content__$params = ($scope, $params2) => $for_content__row_cells($scope, $params2[0]?.cells);
 const $count__closure = /*@__PURE__*/ _closure($for_content2__count);
-const $count = /*@__PURE__*/ _let("count/5", $count__closure);
+const $count = _let("count/5", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

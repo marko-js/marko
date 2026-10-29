@@ -4,7 +4,7 @@ const $await_content__input_label__OR__n = /*@__PURE__*/ _fill_join_subscribers(
 const $await_content__input_label = _closure_resume("a0", /*@__PURE__*/ _closure_get(9, $await_content__input_label__OR__n, ($scope) => $scope._._));
 const $await_content__n = /*@__PURE__*/ _init_resume("a12", /*@__PURE__*/ _closure_get(10, $await_content__input_label__OR__n, ($scope) => $scope._._, "a1"));
 const $n__closure = /*@__PURE__*/ _closure($await_content__n);
-const $n = /*@__PURE__*/ _let(7, ($scope) => {
+const $n = _let(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	$n__closure($scope);
 });

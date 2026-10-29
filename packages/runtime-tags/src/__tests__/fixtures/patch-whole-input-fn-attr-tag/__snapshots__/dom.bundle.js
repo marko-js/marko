@@ -4,7 +4,7 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $shown = /*@__PURE__*/ _let(5, ($scope) => _text($scope.b, $scope.f));
+const $shown = _let(5, ($scope) => _text($scope.b, $scope.f));
 const $onRead = ($scope) => function(v) {
 	$shown($scope, v);
 };

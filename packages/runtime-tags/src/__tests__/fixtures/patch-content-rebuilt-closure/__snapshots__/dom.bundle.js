@@ -17,7 +17,7 @@ const $input_items = /*@__PURE__*/ _const(3, ($scope) => {
 });
 
 // template.marko
-const $items = /*@__PURE__*/ _let(5, ($scope) => $input_items($scope.b, $scope.f));
+const $items = _let(5, ($scope) => $input_items($scope.b, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$items($scope, [...$scope.f, $scope.f.length + 1]);
 }));

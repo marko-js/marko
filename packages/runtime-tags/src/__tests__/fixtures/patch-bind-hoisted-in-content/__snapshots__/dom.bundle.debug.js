@@ -1,7 +1,7 @@
 // tags/store.marko
 const $template$2 = "<p> </p>";
 const $walks$2 = "D l";
-const $last = /*@__PURE__*/ _let("last/1", ($scope) => _text($scope["#text/0"], $scope.last));
+const $last = _let("last/1", ($scope) => _text($scope["#text/0"], $scope.last));
 function $setup$2($scope) {
 	_return($scope, $_return($scope));
 	$last($scope, 0);

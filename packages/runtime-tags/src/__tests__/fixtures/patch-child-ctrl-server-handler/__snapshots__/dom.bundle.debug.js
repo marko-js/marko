@@ -24,7 +24,7 @@ const $if_content__setup = ($scope) => {
 const $handle2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "handle", $if_content__handle);
 const $input_prefix = /*@__PURE__*/ _const("input_prefix", ($scope) => $handle2($scope, $handle($scope)));
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

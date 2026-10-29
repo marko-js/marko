@@ -50,7 +50,7 @@ const $B_content = _content("__tests__/template.marko_2*content", "<i>B <!></i>"
 const $A_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/11", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0));
 const $A_content__setup = $A_content__input_label;
 const $A_content = _content("__tests__/template.marko_1*content", "<em>A <!></em>", "Db%", $A_content__setup);
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => {
+const $count = _let("count/8", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$if_content__count($scope);
 });

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>add</button><!><!>";
 const $walks = " b%c";
-const $for_content__x = /*@__PURE__*/ _let("x/4", ($scope) => _text($scope["#text/1"], $scope.x));
+const $for_content__x = _let("x/4", ($scope) => _text($scope["#text/1"], $scope.x));
 const $for_content__input_v = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_v", /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__x($scope, $scope._.input_v)));
 const $for_content__setup = ($scope) => {
 	$for_content__input_v._($scope);
@@ -10,7 +10,7 @@ const $for_content__setup = ($scope) => {
 };
 const $for_content__input_w = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_w", /*@__PURE__*/ _for_closure("#text/1", ($scope) => _text($scope["#text/2"], $scope._.input_w)));
 const $for = /*@__PURE__*/ _for_until_unkeyed("#text/1", "<p><!>:<!> <!></p>", "D%c%c%", $for_content__setup);
-const $n = /*@__PURE__*/ _let("n/6", ($scope) => $for($scope, [
+const $n = _let("n/6", ($scope) => $for($scope, [
 	$scope.n,
 	0,
 	1

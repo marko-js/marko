@@ -22,7 +22,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<p> </p></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&D m`)("D l");
-const $flag = /*@__PURE__*/ _let("flag/6", ($scope) => _text($scope["#text/1"], $scope.flag));
+const $flag = _let("flag/6", ($scope) => _text($scope["#text/1"], $scope.flag));
 const $input_pick__OR__fa__OR__fb = /*@__PURE__*/ _or(9, ($scope) => $fn($scope["#childScope/0"], $scope.input_pick ? $scope.fa : $scope.fb), 2);
 const $fa2 = /*@__PURE__*/ _const("fa", $input_pick__OR__fa__OR__fb);
 const $fb2 = /*@__PURE__*/ _const("fb", $input_pick__OR__fa__OR__fb);

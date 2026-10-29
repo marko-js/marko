@@ -33,7 +33,7 @@ const $Row_content__label = ($scope, label) => $load_Lazy_tag_input_label($scope
 const $Row_content__$params = ($scope, $params2) => $Row_content__$temp($scope, $params2[0]);
 const $Row_content__$temp = ($scope, $temp) => $Row_content__label($scope, $temp.label);
 const $if2 = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks), $if_content2__setup);
-const $open = /*@__PURE__*/ _let("open/6", ($scope) => $if2($scope, $scope.open ? 0 : 1));
+const $open = _let("open/6", ($scope) => $if2($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, true);
 }));

@@ -7,7 +7,7 @@ const $for_content__setup = $for_content__count;
 const $for_content__rest = /*@__PURE__*/ _const("rest", $for_content__count__OR__rest);
 const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2[0]);
 const $for_content__$temp = ($scope, $temp) => $for_content__rest($scope, (({ id, ...rest }) => rest)($temp));
-const $count = /*@__PURE__*/ _let("count/5", $for_content__count);
+const $count = _let("count/5", $for_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

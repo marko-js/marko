@@ -24,7 +24,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_user._($scope);
 	$load_Card_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
-const $n = /*@__PURE__*/ _let("n/10", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = _let("n/10", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

@@ -15,7 +15,7 @@ const $load = ($scope) => async (refresh) => {
 _resumed.b0 = $load;
 
 // template.marko
-const $busy = /*@__PURE__*/ _let(4, ($scope) => _text($scope.c, $scope.e ? "busy" : "idle"));
+const $busy = _let(4, ($scope) => _text($scope.c, $scope.e ? "busy" : "idle"));
 const $setup__script = _script("a1", ($scope) => _on($scope.d, "click", function() {
 	$scope.f();
 }));

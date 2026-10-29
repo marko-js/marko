@@ -30,7 +30,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__n($scope, 0);
 };
 const $count__closure = /*@__PURE__*/ _closure($Wrap_content2__count);
-const $count = /*@__PURE__*/ _let("count/6", $count__closure);
+const $count = _let("count/6", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

@@ -1,7 +1,7 @@
 // template.marko
 const $b_getter = _hoist_resume("a2", 3);
-const $b2 = /*@__PURE__*/ _let(3);
-const $a2 = /*@__PURE__*/ _let(2, ($scope) => {
+const $b2 = _let(3);
+const $a2 = _let(2, ($scope) => {
 	_text($scope.b, typeof $scope.c);
 	$b2($scope, $b($scope));
 });

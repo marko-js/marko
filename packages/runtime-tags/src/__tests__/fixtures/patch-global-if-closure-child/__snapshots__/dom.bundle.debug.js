@@ -14,7 +14,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__$global_brand($scope);
 };
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<em> </em>${_w0}`)($template$1), /*@__PURE__*/ ((_w0) => `D l/${_w0}&`)("D l"), $if_content__setup);
-const $on = /*@__PURE__*/ _let("on/2", ($scope) => $if($scope, $scope.on ? 0 : 1));
+const $on = _let("on/2", ($scope) => $if($scope, $scope.on ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$on($scope, !$scope.on);
 }));

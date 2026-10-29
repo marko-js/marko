@@ -8,7 +8,7 @@ const $input_promise__closure = /*@__PURE__*/ _closure($try_content__input_promi
 const $input_promise = /*@__PURE__*/ _const(3, $input_promise__closure);
 
 // template.marko
-const $p = /*@__PURE__*/ _let(5, ($scope) => $input_promise($scope.b, $scope.f));
+const $p = _let(5, ($scope) => $input_promise($scope.b, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$p($scope, Promise.resolve("swapped"));
 }));

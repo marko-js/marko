@@ -21,9 +21,9 @@ const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a3", 12, /*@__
 	isOpen: !$scope.i,
 	label: $scope.g + "!"
 })), 2));
-const $open = /*@__PURE__*/ _let(8, $input_label__OR__open__OR__Tag);
+const $open = _let(8, $input_label__OR__open__OR__Tag);
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $if_content__setup);
-const $shown = /*@__PURE__*/ _let(9, ($scope) => $if($scope, $scope.j ? 0 : 1));
+const $shown = _let(9, ($scope) => $if($scope, $scope.j ? 0 : 1));
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.c, "click", function() {
 		$open($scope, !$scope.i);

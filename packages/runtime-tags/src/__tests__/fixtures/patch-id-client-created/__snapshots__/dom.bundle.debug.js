@@ -14,7 +14,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__headingId($scope, _id($scope));
 };
 const $for = /*@__PURE__*/ _for_of("#text/1", "<h2> </h2><input>", " D l ", $for_content__setup);
-const $items = /*@__PURE__*/ _let("items/6", ($scope) => $for($scope, [$scope.items, "key"]));
+const $items = _let("items/6", ($scope) => $for($scope, [$scope.items, "key"]));
 const $input_items = $items;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$items($scope, [...$scope.items, { key: "c" }]);

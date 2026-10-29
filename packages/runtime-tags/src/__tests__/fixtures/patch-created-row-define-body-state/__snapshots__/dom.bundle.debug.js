@@ -41,7 +41,7 @@ const $for_content__setup = ($scope) => {
 const $for_content__item = ($scope, item) => $Info_content__tag_input_id($scope["#childScope/0"], item);
 const $for_content__$params = ($scope, $params4) => $for_content__item($scope, $params4[0]);
 const $count__closure = /*@__PURE__*/ _closure($await_content__count);
-const $count = /*@__PURE__*/ _let("count/6", $count__closure);
+const $count = _let("count/6", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

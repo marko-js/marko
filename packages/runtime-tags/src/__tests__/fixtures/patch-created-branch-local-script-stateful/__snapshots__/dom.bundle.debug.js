@@ -5,7 +5,7 @@ const $if_content__label__script = _script("__tests__/template.marko_1_label#0",
 const $if_content__label = /*@__PURE__*/ _const("label", $if_content__label__script);
 const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#main/2", 0, ($scope) => $if_content__label($scope, $scope._.input_title + "!"))));
 const $if_content__setup = $if_content__input_title;
-const $clicks = /*@__PURE__*/ _let("clicks/7", ($scope) => _text($scope["#text/1"], $scope.clicks));
+const $clicks = _let("clicks/7", ($scope) => _text($scope["#text/1"], $scope.clicks));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clicks($scope, +$scope.clicks + 1);
 }));

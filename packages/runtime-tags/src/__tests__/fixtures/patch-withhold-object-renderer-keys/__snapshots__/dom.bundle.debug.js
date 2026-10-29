@@ -39,7 +39,7 @@ const $inputonCarddiv_content__setup = $inputonCarddiv_content__input_note;
 const $inputonCarddiv_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $inputonCarddiv_content__setup);
 _content_resume($inputonCarddiv_content);
 const $input_mode__OR__m = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_mode", /*@__PURE__*/ _or(9, ($scope) => $input_mode$1($scope["#childScope/0"], $scope.m || $scope.input_mode)));
-const $m = /*@__PURE__*/ _let("m/8", $input_mode__OR__m);
+const $m = _let("m/8", $input_mode__OR__m);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$m($scope, !$scope.m);
 }));

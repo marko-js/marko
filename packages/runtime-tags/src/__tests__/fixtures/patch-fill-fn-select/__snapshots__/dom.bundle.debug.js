@@ -13,7 +13,7 @@ const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => {
 });
 const $input_upper = /*@__PURE__*/ _const("input_upper", $input_upper__OR__up__OR__low);
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/10", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/10", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

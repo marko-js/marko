@@ -39,7 +39,7 @@ const $localId = ($scope, localId) => {
 	_attr($scope["#label/4"], "for", localId);
 	_attr($scope["#input/5"], "id", localId);
 };
-const $local = /*@__PURE__*/ _let("local/13", ($scope) => $localId($scope, $scope.local || _id($scope, "IdFallback:localId")));
+const $local = _let("local/13", ($scope) => $localId($scope, $scope.local || _id($scope, "IdFallback:localId")));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/6"], "click", function() {
 	$local($scope, $scope.local ? "" : "given");
 }));

@@ -16,7 +16,7 @@ const $Info_content__setup = $Info_content__input_page;
 const $Info_content__label = /*@__PURE__*/ _const("label", $Info_content__input_page__OR__label);
 const $Info_content__$params = ($scope, $params2) => $Info_content__$temp($scope, $params2[0]);
 const $Info_content__$temp = ($scope, $temp) => $Info_content__label($scope, $temp.label);
-const $count = /*@__PURE__*/ _let("count/9", ($scope) => {
+const $count = _let("count/9", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$Info_content__label($scope["#childScope/2"], $scope.count);
 });

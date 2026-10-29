@@ -31,7 +31,7 @@ const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a12", 11, /*@_
 	isOpen: !$scope.i,
 	label: $scope.g + "!"
 })), 2)));
-const $open = /*@__PURE__*/ _let(8, ($scope) => {
+const $open = _let(8, ($scope) => {
 	$input_label__OR__open__OR__Tag($scope);
 	$if_content__open($scope);
 });

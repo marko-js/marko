@@ -38,7 +38,7 @@ const $placeholder_content__n = /*@__PURE__*/ _closure_get(15, ($scope) => {
 }, 0, "a1");
 const $placeholder_content = _content$1("a7", /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<!>`)($template$1, $template$1, $template), /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}&b`)("D l", "D l", "b%c"), $placeholder_content__setup);
 const $n__closure = /*@__PURE__*/ _closure($placeholder_content__n);
-const $n = /*@__PURE__*/ _let(11, ($scope) => {
+const $n = _let(11, ($scope) => {
 	_text($scope.b, $scope.l);
 	$n__closure($scope);
 });

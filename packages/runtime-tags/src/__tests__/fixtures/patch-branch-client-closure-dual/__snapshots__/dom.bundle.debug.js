@@ -13,8 +13,8 @@ const $if_content__b = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 });
 const $if_content__setup = $if_content__b;
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!><!>", "b%b%", $if_content__setup);
-const $a = /*@__PURE__*/ _let("a/5", ($scope) => $if($scope, $scope.a ? 0 : 1));
-const $b = /*@__PURE__*/ _let("b/6", $if_content__b);
+const $a = _let("a/5", ($scope) => $if($scope, $scope.a ? 0 : 1));
+const $b = _let("b/6", $if_content__b);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$a($scope, !$scope.a);
 	$b($scope, !$scope.b);

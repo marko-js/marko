@@ -13,7 +13,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__n._($scope);
 };
 const $if_content__n = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_n#0:6/init", /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__n__OR__y));
-const $n = /*@__PURE__*/ _let("n/6", $if_content__n);
+const $n = _let("n/6", $if_content__n);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

@@ -9,7 +9,7 @@ var badge_default = /*@__PURE__*/ _template("b", $template, "D l", $setup);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $if_content__input_plain = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _if_closure(1, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.e ? "span" : badge_default)));
 const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__input_plain);
-const $open = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
+const $open = _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.f);
 }));

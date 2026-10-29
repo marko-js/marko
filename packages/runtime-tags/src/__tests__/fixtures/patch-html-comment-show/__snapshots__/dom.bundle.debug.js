@@ -2,7 +2,7 @@
 const $template = "<!----><!><p> </p><!><button>+</button>";
 const $walks = " b%bD l%b b";
 const $input_label__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(10, ($scope) => _text($scope["#comment/0"], `${_to_text($scope.input_label)} ${_to_text($scope.count)}`)));
-const $count = /*@__PURE__*/ _let("count/9", $input_label__OR__count);
+const $count = _let("count/9", $input_label__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/4"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

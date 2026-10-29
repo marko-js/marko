@@ -26,7 +26,7 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 };
 const $n__closure = /*@__PURE__*/ _closure($placeholder_content__n, $if_content__n);
-const $n = /*@__PURE__*/ _let("n/6", ($scope) => {
+const $n = _let("n/6", ($scope) => {
 	_text($scope["#text/2"], $scope.n);
 	$n__closure($scope);
 });

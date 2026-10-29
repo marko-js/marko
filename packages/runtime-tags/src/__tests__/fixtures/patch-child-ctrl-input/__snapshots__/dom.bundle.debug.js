@@ -24,12 +24,12 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_valueChange($scope["#childScope/0"], $valueChange($scope));
 };
-const $text = /*@__PURE__*/ _let("text/3", ($scope) => {
+const $text = _let("text/3", ($scope) => {
 	_text($scope["#text/1"], $scope.text);
 	$if_content__text($scope);
 });
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/4", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/4", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);
 }));

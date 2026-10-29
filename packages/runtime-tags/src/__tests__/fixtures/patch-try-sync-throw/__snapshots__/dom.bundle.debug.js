@@ -13,7 +13,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_boom($scope);
 };
 const $try_content__input_boom = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_boom#0:6/init", /*@__PURE__*/ _closure_get("input_boom/9", ($scope) => _text($scope["#text/1"], $scope._.input_boom ? boom() : ""), 0, "__tests__/template.marko_1_input_boom#0:6/subscribe"));
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/0", "<em><!><!></em>", "D%b%", $try_content__setup, 0, $catch_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);

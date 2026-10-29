@@ -7,7 +7,7 @@ const $countbi_content = /*@__PURE__*/ _content("__tests__/template.marko_2*cont
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $countbi_content);
 const $if_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_count#0:6/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.count ? "b" : "i")));
 const $if_content__setup = $if_content__count;
-const $count = /*@__PURE__*/ _let("count/6", $if_content__count);
+const $count = _let("count/6", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

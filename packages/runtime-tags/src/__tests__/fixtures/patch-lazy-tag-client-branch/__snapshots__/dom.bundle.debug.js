@@ -27,7 +27,7 @@ const $if_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", $if_co
 const $if_content__input_show = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _if_closure("#main/1", 0, ($scope) => $if_content__if($scope, $scope._.input_show ? 0 : 1)));
 const $if_content__setup = $if_content__input_show;
 const $if = /*@__PURE__*/ _if("#main/1", "<!><!><!>", "b%", $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

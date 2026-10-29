@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<p><!> <!></p><button>go</button>";
 const $walks = "D%c%l b";
-const $out = /*@__PURE__*/ _let("out/7", ($scope) => _text($scope["#text/1"], $scope.out));
+const $out = _let("out/7", ($scope) => _text($scope["#text/1"], $scope.out));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$out($scope, [...$scope.input_items].join(","));
 }));

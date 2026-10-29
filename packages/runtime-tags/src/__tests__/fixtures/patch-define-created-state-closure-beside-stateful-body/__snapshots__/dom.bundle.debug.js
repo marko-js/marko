@@ -10,7 +10,7 @@ const $if_content2__setup = ($scope) => {
 };
 const $if_content2__n = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.n));
 const $Panel_content__open = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_open#0:8/init", /*@__PURE__*/ _closure_get("open/14", ($scope) => _text($scope["#text/0"], $scope._.open ? "o" : "c"), 0, "__tests__/template.marko_2_open#0:8/subscribe"));
-const $Panel_content__n = /*@__PURE__*/ _let("n/6");
+const $Panel_content__n = _let("n/6");
 const $Panel_content__setup = ($scope) => {
 	$Panel_content__open($scope);
 	$Panel_content__n($scope, 1);
@@ -37,7 +37,7 @@ const $open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1"
 	label: "y"
 }))));
 const $open__closure = /*@__PURE__*/ _closure($Panel_content__open);
-const $open = /*@__PURE__*/ _let("open/8", ($scope) => {
+const $open = _let("open/8", ($scope) => {
 	$open__OR__Tag($scope);
 	$open__closure($scope);
 });

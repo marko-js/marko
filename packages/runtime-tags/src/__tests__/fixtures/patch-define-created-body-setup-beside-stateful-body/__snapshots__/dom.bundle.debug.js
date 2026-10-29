@@ -9,7 +9,7 @@ const $if_content2__setup = ($scope) => {
 	$if_content2__n._($scope);
 };
 const $if_content2__n = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/1"], $scope._.n));
-const $Panel_content__n = /*@__PURE__*/ _let("n/5");
+const $Panel_content__n = _let("n/5");
 const $Panel_content__setup = ($scope) => $Panel_content__n($scope, 1);
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em><!> <!></em>", "D%c%", $if_content2__setup);
 const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen ? 0 : 1);
@@ -32,7 +32,7 @@ const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/temp
 	isOpen: !$scope.open,
 	label: $scope.input_label + "!"
 })), 2)));
-const $open = /*@__PURE__*/ _let("open/8", $input_label__OR__open__OR__Tag);
+const $open = _let("open/8", $input_label__OR__open__OR__Tag);
 const $Tag = /*@__PURE__*/ _const("Tag", $input_label__OR__open__OR__Tag);
 const $input_other__OR__Panel = /*@__PURE__*/ _or(10, ($scope) => $Tag($scope, $scope.input_other ? "div" : $scope.Panel));
 const $Panel = /*@__PURE__*/ _const("Panel", $input_other__OR__Panel);

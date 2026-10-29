@@ -10,7 +10,7 @@ const $if_content2__setup = ($scope) => {
 const $Row_content__setup = ($scope) => $load_Lazy_setup($scope, $scope.b, $scope.a);
 const $Row_content__label = ($scope, label) => $load_Lazy_tag_input_label($scope.b, label);
 const $if2 = /*@__PURE__*/ _if(2, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks), $if_content2__setup);
-const $open = /*@__PURE__*/ _let(6, ($scope) => $if2($scope, $scope.g ? 0 : 1));
+const $open = _let(6, ($scope) => $if2($scope, $scope.g ? 0 : 1));
 const $setup__script = _script("b2", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, true);
 }));

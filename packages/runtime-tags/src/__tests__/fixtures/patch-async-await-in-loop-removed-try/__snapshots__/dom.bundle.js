@@ -15,7 +15,7 @@ const $input_items = ($scope, input_items) => $for($scope, [input_items, "id"]);
 // template.marko
 const $placeholder_content = _content$1("a3", "<i>loading</i>");
 const $try_content__items = /*@__PURE__*/ _init_resume("a8", /*@__PURE__*/ _closure_get(7, ($scope) => $input_items($scope.a, $scope._.f), 0, "a2"));
-const $items = /*@__PURE__*/ _let(5, /* @__PURE__ */ _closure($try_content__items));
+const $items = _let(5, /* @__PURE__ */ _closure($try_content__items));
 const $setup__script = _script("a5", ($scope) => _on($scope.a, "click", function() {
 	$items($scope, $scope.f.slice(1));
 }));

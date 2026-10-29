@@ -8,7 +8,7 @@ const $if_content__input_attrs__OR__on = /*@__PURE__*/ _fill_join_if("a3", 5, /*
 	$if_content__input_attrs__OR__on__script($scope);
 }), 0, 0);
 const $if_content__on = /*@__PURE__*/ _if_closure(0, 0, $if_content__input_attrs__OR__on);
-const $on = /*@__PURE__*/ _let(6, $if_content__on);
+const $on = _let(6, $if_content__on);
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$on($scope, !$scope.g);
 }));

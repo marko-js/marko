@@ -3,7 +3,7 @@ const $template = "<div></div><button>+</button>";
 const $walks = " b b";
 const $input_label__OR__count__script = _script("__tests__/template.marko_0_input_label#4_count#5", ($scope) => _el_read($scope["#div/0"]).textContent = `${$scope.input_label}:${$scope.count}`);
 const $input_label__OR__count = /*@__PURE__*/ _or(6, $input_label__OR__count__script);
-const $count = /*@__PURE__*/ _let("count/5", $input_label__OR__count);
+const $count = _let("count/5", $input_label__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

@@ -77,7 +77,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__input_tags = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_tags#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_tags", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_tags$1($scope["#childScope/0"], $scope._.input_tags))));
 const $if_content__card = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_card#0:7/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_card($scope["#childScope/0"], $scope._.card)));
-const $card = /*@__PURE__*/ _let("card/7", $if_content__card);
+const $card = _let("card/7", $if_content__card);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$card($scope, !$scope.card);
 }));

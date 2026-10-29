@@ -26,7 +26,7 @@ const $Card_content__if = /*@__PURE__*/ _if("#text/0", "<ul></ul>", " ", $if_con
 const $Card_content__input_on = /*@__PURE__*/ _closure_get("input_on/8", ($scope) => $Card_content__if($scope, $scope._.input_on ? 0 : 1), 0, "__tests__/template.marko_1_input_on#0:4/subscribe");
 const $Card_content__setup = $Card_content__input_on;
 const $Card_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $Card_content__setup);
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => $input_meta($scope["#childScope/0"], attrTag({ n: $scope.count })));
+const $count = _let("count/7", ($scope) => $input_meta($scope["#childScope/0"], attrTag({ n: $scope.count })));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

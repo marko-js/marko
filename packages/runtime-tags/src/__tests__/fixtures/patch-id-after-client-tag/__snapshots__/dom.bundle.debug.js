@@ -16,7 +16,7 @@ var labeled_default = /*@__PURE__*/ _template("__tests__/tags/labeled.marko", $t
 const $template = "<button>toggle</button><!><input><label>after</label>";
 const $walks = " b%b b b";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $on = /*@__PURE__*/ _let("on/4", ($scope) => $dynamicTag($scope, $scope.on ? labeled_default : null, ($_) => ({ name: "client" })));
+const $on = _let("on/4", ($scope) => $dynamicTag($scope, $scope.on ? labeled_default : null, ($_) => ({ name: "client" })));
 const $after = ($scope, after) => {
 	_attr($scope["#input/2"], "id", after);
 	_attr($scope["#label/3"], "for", after);

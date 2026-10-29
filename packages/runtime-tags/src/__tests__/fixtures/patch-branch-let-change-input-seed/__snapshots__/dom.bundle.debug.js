@@ -10,7 +10,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_start._($scope);
 	$if_content__setup__script($scope);
 };
-const $last = /*@__PURE__*/ _let("last/6", ($scope) => _text($scope["#text/0"], $scope.last));
+const $last = _let("last/6", ($scope) => _text($scope["#text/0"], $scope.last));
 function $setup($scope) {
 	$last($scope, 0);
 }

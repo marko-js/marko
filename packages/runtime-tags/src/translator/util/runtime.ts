@@ -59,8 +59,6 @@ const pureDOMFunctions = new Set<string>([
   "_for_until",
   "_for_until_unkeyed",
   "_hoist",
-  "_let",
-  "_let_change",
   "_const",
   "_load_signal",
   "_load_signal_patch",
@@ -71,6 +69,13 @@ const pureDOMFunctions = new Set<string>([
   "_load_idle_trigger",
   "_load_media_trigger",
   "_load_race_trigger",
+] satisfies DOMRuntimeHelpers[]);
+
+// Pure outside a patch build, which keeps every `<let>`'s signal as a handler
+// assigning it would.
+const pureOutsidePatchDOMFunctions = new Set<string>([
+  "_let",
+  "_let_change",
 ] satisfies DOMRuntimeHelpers[]);
 
 const [getRuntimeImports] = createOutputState(
@@ -108,7 +113,11 @@ export function callRuntime(
     importRuntime(name),
     trimFalsyArgs(args),
   );
-  if (isOutputDOM() && pureDOMFunctions.has(name)) {
+  if (
+    isOutputDOM() &&
+    (pureDOMFunctions.has(name) ||
+      (!isPatch() && pureOutsidePatchDOMFunctions.has(name)))
+  ) {
     return t.addComment(callExpression, "leading", "@__PURE__");
   }
   return callExpression;

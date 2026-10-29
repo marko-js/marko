@@ -43,7 +43,7 @@ const $for_content__input_label = /*@__PURE__*/ _for_closure("#text/0", $for_con
 const $for_content__x = /*@__PURE__*/ _const("x", $for_content__input_label__OR__x);
 const $for_content__$params = ($scope, $params3) => $for_content__x($scope, $params3[0]);
 const $if = /*@__PURE__*/ _if("#text/1", "<b> </b>", "D ", $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $for_content__setup, $for_content__$params);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);

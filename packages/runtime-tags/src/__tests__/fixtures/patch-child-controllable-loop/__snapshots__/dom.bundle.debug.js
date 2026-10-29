@@ -24,7 +24,7 @@ var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.mark
 const $template = "<main><h1> </h1><!></main>";
 const $walks = "E l%l";
 const $for_content__input_show = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_show#0:5/init", /*@__PURE__*/ _for_closure("#text/1", ($scope) => $input_show$1($scope["#childScope/2"], $scope._.input_show)));
-const $for_content__hits = /*@__PURE__*/ _let("hits/5", ($scope) => _text($scope["#text/1"], $scope.hits));
+const $for_content__hits = _let("hits/5", ($scope) => _text($scope["#text/1"], $scope.hits));
 const $for_content__setup = ($scope) => {
 	$for_content__input_show._($scope);
 	$input_onCount($scope["#childScope/2"], $onCount($scope));

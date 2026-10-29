@@ -50,7 +50,7 @@ const $for_content__input_bs = /*@__PURE__*/ _for_closure("#text/2", $for_conten
 const $for_content__$params = ($scope, $params2) => $for_content__a($scope, $params2[0]);
 const $for_content__a__closure = /*@__PURE__*/ _closure($item_content__a);
 const $for_content__a = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill3", "a", $for_content__a__closure);
-const $n = /*@__PURE__*/ _let("n/9", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = _let("n/9", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

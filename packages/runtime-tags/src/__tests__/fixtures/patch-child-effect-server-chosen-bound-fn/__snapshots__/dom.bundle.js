@@ -2,7 +2,7 @@
 const $input_fn__OR__input_v__script = _script("b0", ($scope) => $scope.c($scope.d));
 
 // template.marko
-const $last = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
+const $last = _let(6, ($scope) => _text($scope.b, $scope.g));
 const $fa = ($scope) => function(v) {
 	$last($scope, "a" + v);
 };

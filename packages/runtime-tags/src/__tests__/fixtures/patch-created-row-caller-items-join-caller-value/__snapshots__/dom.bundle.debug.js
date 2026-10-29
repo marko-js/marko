@@ -40,8 +40,8 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $if_content__b = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_b#0:7/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_b($scope["#childScope/0"], $scope._.b)));
-const $list = /*@__PURE__*/ _let("list/6", $if_content__list);
-const $b = /*@__PURE__*/ _let("b/7", $if_content__b);
+const $list = _let("list/6", $if_content__list);
+const $b = _let("b/7", $if_content__b);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
 		$list($scope, $scope.list.concat("r"));

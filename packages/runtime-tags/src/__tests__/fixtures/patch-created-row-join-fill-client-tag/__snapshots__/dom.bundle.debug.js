@@ -63,7 +63,7 @@ const $if_content__setup = ($scope) => {
 	$input_settled$1($scope["#childScope/0"], 0);
 };
 const $if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks$1), $if_content__setup);
-const $more = /*@__PURE__*/ _let("more/8", ($scope) => $if($scope, $scope.more ? 0 : 1));
+const $more = _let("more/8", ($scope) => $if($scope, $scope.more ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#p/1"], "click", function() {
 	$more($scope, true);
 }));

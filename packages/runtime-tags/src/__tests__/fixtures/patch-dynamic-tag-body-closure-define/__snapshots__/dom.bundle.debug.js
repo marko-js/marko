@@ -22,9 +22,9 @@ const $Foo_content__input_content = /*@__PURE__*/ _fill_const("__tests__/templat
 const $Foo_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button id=open>open</button><!><!>", " b%", $Foo_content__setup, $Foo_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $showFoodiv_content);
 const $show__OR__Foo = /*@__PURE__*/ _or(3, ($scope) => $dynamicTag($scope, $scope.show ? $scope.Foo : "div"));
-const $show = /*@__PURE__*/ _let("show/1", $show__OR__Foo);
+const $show = _let("show/1", $show__OR__Foo);
 const $Foo = /*@__PURE__*/ _const("Foo", $show__OR__Foo);
-const $count = /*@__PURE__*/ _let("count/4");
+const $count = _let("count/4");
 function $setup($scope) {
 	$show($scope, true);
 	$Foo($scope, { content: $Foo_content($scope) });

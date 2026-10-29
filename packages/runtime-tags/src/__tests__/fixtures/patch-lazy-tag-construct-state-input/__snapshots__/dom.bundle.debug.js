@@ -19,7 +19,7 @@ const $if_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
 const $if_content__n = /*@__PURE__*/ _if_closure("#main/2", 0, $if_content__input_label__OR__n);
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => {
+const $n = _let("n/7", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$if_content__n($scope);
 });

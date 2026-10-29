@@ -62,7 +62,7 @@ const $data = ($scope, data) => {
 const $data_items = ($scope, data_items) => $input_items($scope["#childScope/1"], data_items);
 const $setup__$global_data = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_0_$global_data#5", ($scope) => $data($scope, $scope.$global.data), "data");
 const $if = /*@__PURE__*/ _if("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

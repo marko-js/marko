@@ -10,11 +10,11 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $if_content__suffix = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_suffix#0:7/init", /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__v__OR__suffix));
-const $v = /*@__PURE__*/ _let("v/6", ($scope) => {
+const $v = _let("v/6", ($scope) => {
 	_text($scope["#text/1"], $scope.v);
 	$if_content__v($scope);
 });
-const $suffix = /*@__PURE__*/ _let("suffix/7", $if_content__suffix);
+const $suffix = _let("suffix/7", $if_content__suffix);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$suffix($scope, $scope.suffix + "!");
 }));

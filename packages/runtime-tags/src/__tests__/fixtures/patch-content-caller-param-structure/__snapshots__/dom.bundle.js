@@ -56,7 +56,7 @@ const $show = ($scope, show) => {
 const $input_open = $show;
 
 // template.marko
-const $open = /*@__PURE__*/ _let(6, ($scope) => {
+const $open = _let(6, ($scope) => {
 	$input_open$1($scope.a, $scope.g);
 	$input_open($scope.b, $scope.g);
 });

@@ -17,12 +17,12 @@ const $if_content__setup = ($scope) => {
 	$setup($scope.a);
 	$input_valueChange($scope.a, $valueChange($scope));
 };
-const $text = /*@__PURE__*/ _let(3, ($scope) => {
+const $text = _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$if_content__text($scope);
 });
 const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $if_content__setup);
-const $open = /*@__PURE__*/ _let(4, ($scope) => $if($scope, $scope.e ? 0 : 1));
+const $open = _let(4, ($scope) => $if($scope, $scope.e ? 0 : 1));
 const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.e);
 }));

@@ -12,7 +12,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $if_content__input_flag = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_flag#0:7/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_flag", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _attr_input_checked($scope, "#input/1", $scope._.input_flag, $checkedChange))));
-const $n = /*@__PURE__*/ _let("n/8", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = _let("n/8", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

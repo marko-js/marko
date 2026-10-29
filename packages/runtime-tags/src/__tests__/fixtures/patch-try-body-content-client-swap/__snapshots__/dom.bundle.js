@@ -13,7 +13,7 @@ const $B_content = _content$1("a2", "<i>B <!></i>", "Db%", $B_content__input_lab
 const $A_content__input_label = /*@__PURE__*/ _fill_join_closure("a5", 5, /*@__PURE__*/ _closure_get(10, ($scope) => _text($scope.a, $scope._.f), 0, "a1"), 0);
 const $A_content = _content$1("a0", "<em>A <!></em>", "Db%", $A_content__input_label);
 const $alt__OR__A__OR__B = /*@__PURE__*/ _or(9, ($scope) => $input_content($scope.c, $scope.g ? $scope.h : $scope.i), 2);
-const $alt = /*@__PURE__*/ _let(6, ($scope) => {
+const $alt = _let(6, ($scope) => {
 	_text($scope.b, $scope.g ? "A" : "B");
 	$alt__OR__A__OR__B($scope);
 });

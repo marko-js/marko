@@ -23,7 +23,7 @@ const $if_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $if_content__r);
 	$if_content__setup__script($scope);
 };
-const $if_content__l = /*@__PURE__*/ _let("l/5", ($scope) => _text($scope["#text/2"], $scope.l.fn()));
+const $if_content__l = _let("l/5", ($scope) => _text($scope["#text/2"], $scope.l.fn()));
 const $if_content__r = _var_resume("__tests__/template.marko_1_r#4/var", $if_content__l);
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<p> </p><button>set</button>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D l b`)(""), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

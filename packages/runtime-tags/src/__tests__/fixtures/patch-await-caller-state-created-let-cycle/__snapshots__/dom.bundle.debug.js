@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $await_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_1_input_label#0:4/init", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe"));
 const $await_content__setup = $await_content__input_label;
-const $await_content__a = /*@__PURE__*/ _let("a/6", ($scope) => {
+const $await_content__a = _let("a/6", ($scope) => {
 	$await_content__a_v($scope, $scope.a?.v);
 	$await_content__b__OR__a($scope);
 });
@@ -11,7 +11,7 @@ const $await_content__b__OR__a = /*@__PURE__*/ _or_resume("__tests__/tags/show-a
 	v: $scope.b,
 	self: $a($scope)
 }));
-const $await_content__b = /*@__PURE__*/ _let("b/5", ($scope) => {
+const $await_content__b = _let("b/5", ($scope) => {
 	$await_content__b__OR__a($scope);
 	_text($scope["#text/0"], $scope.b);
 });
@@ -45,7 +45,7 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $if_content__p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_p#0:7/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.p)));
-const $p = /*@__PURE__*/ _let("p/7", $if_content__p);
+const $p = _let("p/7", $if_content__p);
 const $input_promise = $p;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$p($scope, Promise.resolve("swapped"));

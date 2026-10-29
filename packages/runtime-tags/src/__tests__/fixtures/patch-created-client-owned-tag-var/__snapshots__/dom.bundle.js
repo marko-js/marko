@@ -13,7 +13,7 @@ const $if_content__v = _var_resume("c0", /*@__PURE__*/ _const(4, ($scope) => _te
 const $input_label = /*@__PURE__*/ _fill_const("c4", 4, $if_content__input_label);
 
 // template.marko
-const $label = /*@__PURE__*/ _let(6, ($scope) => $input_label($scope.b, $scope.g));
+const $label = _let(6, ($scope) => $input_label($scope.b, $scope.g));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$label($scope, $scope.g + "?");
 }));

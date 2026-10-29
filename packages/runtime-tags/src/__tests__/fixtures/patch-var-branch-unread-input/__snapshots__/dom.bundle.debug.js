@@ -16,7 +16,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__info = _var_resume("__tests__/template.marko_1_info2#3/var", ($scope, info2) => $if_content__info2_name($scope, info2?.name));
 const $if_content__info2_name = ($scope, info2_name) => _text($scope["#text/2"], info2_name);
-const $n = /*@__PURE__*/ _let("n/11", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = _let("n/11", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

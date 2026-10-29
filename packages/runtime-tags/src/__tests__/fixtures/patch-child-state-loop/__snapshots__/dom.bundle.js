@@ -7,7 +7,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<li><!><!></li>", "D%b%", $for_co
 const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 
 // template.marko
-const $count = /*@__PURE__*/ _let(5, ($scope) => $input_items($scope.a, $scope.f ? ["a", "b"] : ["a"]));
+const $count = _let(5, ($scope) => $input_items($scope.a, $scope.f ? ["a", "b"] : ["a"]));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.f + 1);
 }));

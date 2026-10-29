@@ -16,7 +16,7 @@ const $for_content__item = ($scope, item) => $for_content__item_id($scope, item?
 const $for_content__item_id = /*@__PURE__*/ _const("item_id", $for_content__count__OR__item_id);
 const $for_content__row_item = $for_content__item;
 const $for_content__$params = ($scope, $params2) => $for_content__row_item($scope, $params2[0]?.item);
-const $count = /*@__PURE__*/ _let("count/5", $for_content__count);
+const $count = _let("count/5", $for_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

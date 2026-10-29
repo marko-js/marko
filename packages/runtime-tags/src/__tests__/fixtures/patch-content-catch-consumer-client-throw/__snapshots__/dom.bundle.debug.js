@@ -61,7 +61,7 @@ const $fallback_content2 = _content("__tests__/template.marko_2*content", "<i> <
 const $fallback_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:6/subscribe"), 0);
 const $fallback_content__setup = $fallback_content__input_label;
 const $fallback_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $fallback_content__setup);
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => {
+const $count = _let("count/7", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$input_fail$1($scope["#childScope/2"], $scope.count > 1);
 	$input_fail($scope["#childScope/3"], $scope.count > 1);

@@ -8,7 +8,7 @@ const $input_a__OR__input_b = /*@__PURE__*/ _fill_join("__tests__/template.marko
 const $input_a = /*@__PURE__*/ _const("input_a", $input_a__OR__input_b);
 const $input_b = /*@__PURE__*/ _const("input_b", $input_a__OR__input_b);
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/8", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/8", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

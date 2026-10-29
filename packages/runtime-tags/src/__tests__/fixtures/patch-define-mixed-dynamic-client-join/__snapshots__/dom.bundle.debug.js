@@ -12,7 +12,7 @@ const $Panel_content__$temp = ($scope, $temp) => $Panel_content__value($scope, $
 const $Panel_content = _content("__tests__/template.marko_1*content", $Panel_content__template, $Panel_content__walks, $Panel_content__setup, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_dyn__OR__n__OR__Panel = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_dyn", /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.input_dyn ? $scope.Panel : null, ($_) => ({ value: $scope.n })), 2));
-const $n = /*@__PURE__*/ _let("n/7", $input_dyn__OR__n__OR__Panel);
+const $n = _let("n/7", $input_dyn__OR__n__OR__Panel);
 const $Panel = /*@__PURE__*/ _const("Panel", $input_dyn__OR__n__OR__Panel);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$n($scope, +$scope.n + 1);

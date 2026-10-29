@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<fieldset><input type=checkbox class=a><input type=checkbox class=b></fieldset><p> </p>";
 const $walks = "D b lD l";
-const $last = /*@__PURE__*/ _let("last/6", ($scope) => _text($scope["#text/2"], $scope.last));
+const $last = _let("last/6", ($scope) => _text($scope["#text/2"], $scope.last));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_attr_input_checkedValue_script($scope, "#input/0");
 	_attr_input_checkedValue_script($scope, "#input/1");

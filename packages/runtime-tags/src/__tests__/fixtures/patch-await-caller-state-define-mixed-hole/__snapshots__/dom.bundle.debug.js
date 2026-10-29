@@ -35,7 +35,7 @@ var show_await_default = /*@__PURE__*/ _template("__tests__/tags/show-await.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button class=swap>swap</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)($walks$1);
-const $p = /*@__PURE__*/ _let("p/6", ($scope) => $input_promise$1($scope["#childScope/1"], $scope.p));
+const $p = _let("p/6", ($scope) => $input_promise$1($scope["#childScope/1"], $scope.p));
 const $input_promise = $p;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$p($scope, Promise.resolve("swapped"));

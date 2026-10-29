@@ -8,7 +8,7 @@ const $Panel_content__label = fill("a2", /*@__PURE__*/ _const(4, ($scope) => {
 	$Panel_content__label__script($scope);
 }));
 const $if_content__o = /*@__PURE__*/ _init_resume("a8", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $Panel_content__isOpen($scope.a, $scope._.g)));
-const $o = /*@__PURE__*/ _let(6, $if_content__o);
+const $o = _let(6, $if_content__o);
 const $setup__script = _script("a5", ($scope) => _on($scope.b, "click", function() {
 	$o($scope, !$scope.g);
 }));

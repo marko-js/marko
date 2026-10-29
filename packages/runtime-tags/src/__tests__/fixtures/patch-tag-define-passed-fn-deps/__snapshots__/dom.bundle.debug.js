@@ -60,7 +60,7 @@ var field_default = /*@__PURE__*/ _template("__tests__/tags/field.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>v</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)($walks$1);
-const $v = /*@__PURE__*/ _let("v/5", ($scope) => $input_v($scope["#childScope/1"], $scope.v));
+const $v = _let("v/5", ($scope) => $input_v($scope["#childScope/1"], $scope.v));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$v($scope, $scope.v + "!");
 }));

@@ -17,7 +17,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__tab._($scope);
 };
 const $if_content__tab = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_tab#0:6/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $PlainChild_content__input_a($scope["#childScope/0"], $scope._.tab)));
-const $tab = /*@__PURE__*/ _let("tab/6", $if_content__tab);
+const $tab = _let("tab/6", $if_content__tab);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$tab($scope, +$scope.tab + 1);
 }));

@@ -12,7 +12,7 @@ const $if_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_conte
 const $if_content__input_inner = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_inner#0:7/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_inner", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__if($scope, $scope._.input_inner ? 0 : 1))));
 const $if_content__setup = $if_content__input_inner;
 const $count__closure = /*@__PURE__*/ _closure($if_content2__count);
-const $count = /*@__PURE__*/ _let("count/9", $count__closure);
+const $count = _let("count/9", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

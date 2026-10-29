@@ -25,7 +25,7 @@ var one_default = /*@__PURE__*/ _template("__tests__/tags/one.marko", $template$
 const $template = /*@__PURE__*/ ((_w0) => `<button class=z>z</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)($walks$1);
 const $one_content = _content("__tests__/template.marko_1*content", "A");
-const $z = /*@__PURE__*/ _let("z/5");
+const $z = _let("z/5");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$z($scope, +$scope.z + 1);
 }));

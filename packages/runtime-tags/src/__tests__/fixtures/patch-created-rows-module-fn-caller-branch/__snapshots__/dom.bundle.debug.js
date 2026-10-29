@@ -83,8 +83,8 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__l = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_l#0:7/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.l)));
 const $if_content__o = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_o#0:8/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_open($scope["#childScope/0"], $scope._.o)));
-const $l = /*@__PURE__*/ _let("l/7", $if_content__l);
-const $o = /*@__PURE__*/ _let("o/8", $if_content__o);
+const $l = _let("l/7", $if_content__l);
+const $o = _let("o/8", $if_content__o);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
 		$l($scope, $scope.l + "!");

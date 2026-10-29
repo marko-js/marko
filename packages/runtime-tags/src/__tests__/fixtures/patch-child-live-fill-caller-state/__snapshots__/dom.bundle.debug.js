@@ -34,7 +34,7 @@ var mid_default = /*@__PURE__*/ _template("__tests__/tags/mid.marko", $template$
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button class=show>show</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($walks$1);
-const $show = /*@__PURE__*/ _let("show/2", ($scope) => $input_show($scope["#childScope/0"], $scope.show));
+const $show = _let("show/2", ($scope) => $input_show($scope["#childScope/0"], $scope.show));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, !$scope.show);
 }));

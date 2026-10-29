@@ -5,7 +5,7 @@ const $for_content__boost = /*@__PURE__*/ _init_resume("__tests__/template.marko
 const $for_content__setup = $for_content__boost;
 const $for_content__label = ($scope, label) => _text($scope["#text/0"], label);
 const $for_content__$params = ($scope, $params2) => $for_content__label($scope, $params2[0]);
-const $boost = /*@__PURE__*/ _let("boost/5", $for_content__boost);
+const $boost = _let("boost/5", $for_content__boost);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$boost($scope, +$scope.boost + 1);
 }));

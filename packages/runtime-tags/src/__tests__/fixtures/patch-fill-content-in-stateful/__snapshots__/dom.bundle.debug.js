@@ -22,7 +22,7 @@ const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content
 const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $wrap_content($scope));
 const $if = /*@__PURE__*/ _if("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($wrap_content__count);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => {
+const $count = _let("count/5", ($scope) => {
 	$if($scope, $scope.count < 2 ? 0 : 1);
 	$count__closure($scope);
 });

@@ -15,7 +15,7 @@ const $wrap_content__z__$global_mark = /*@__PURE__*/ _fill_global_join("__tests_
 const $wrap_content__z = /*@__PURE__*/ _closure_get("z/8", $wrap_content__z__$global_mark, 0, "__tests__/template.marko_1_z#0:7/subscribe");
 const $wrap_content__setup = $wrap_content__z;
 const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p></p>", " ", $wrap_content__setup);
-const $n = /*@__PURE__*/ _let("n/6", ($scope) => _text($scope["#text/2"], $scope.n));
+const $n = _let("n/6", ($scope) => _text($scope["#text/2"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

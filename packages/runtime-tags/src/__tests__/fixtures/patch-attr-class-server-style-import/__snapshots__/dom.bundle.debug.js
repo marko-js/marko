@@ -2,7 +2,7 @@
 const $template = "<div></div><!><button> </button>";
 const $walks = " b%b D l";
 var styles;
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/3"], $scope.count));
+const $count = _let("count/7", ($scope) => _text($scope["#text/3"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

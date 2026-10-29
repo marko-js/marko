@@ -19,7 +19,7 @@ const $for_content__setup = ($scope) => {
 	$input_tone($scope["#childScope/1"], "info");
 };
 const $for_content__$params = ($scope, $params2) => $for_content__p_name($scope, $params2[0]?.name);
-const $count = /*@__PURE__*/ _let("count/11", ($scope) => _text($scope["#text/6"], $scope.count));
+const $count = _let("count/11", ($scope) => _text($scope["#text/6"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/5"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

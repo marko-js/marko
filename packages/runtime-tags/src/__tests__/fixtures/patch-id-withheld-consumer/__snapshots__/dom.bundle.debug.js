@@ -35,7 +35,7 @@ function $setup($scope) {
 	$own($scope, _id($scope));
 }
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/3");
-const $c = /*@__PURE__*/ _let("c/8", ($scope) => $dynamicTag($scope, $scope.c));
+const $c = _let("c/8", ($scope) => $dynamicTag($scope, $scope.c));
 const $input_content = $c;
 const $input = ($scope, input) => $input_content($scope, input.content);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template, $walks, $setup, $input);

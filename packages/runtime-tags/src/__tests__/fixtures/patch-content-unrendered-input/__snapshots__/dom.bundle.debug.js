@@ -58,7 +58,7 @@ const $guest_content = _content("__tests__/template.marko_2*content", "<p> </p>"
 const $admin_content__input_rows = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_rows#0:7/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_rows", /*@__PURE__*/ _closure_get("input_rows/12", ($scope) => $input_rows$1($scope["#childScope/0"], $scope._.input_rows), 0, "__tests__/template.marko_1_input_rows#0:7/subscribe"), 0));
 const $admin_content__setup = $admin_content__input_rows;
 const $admin_content = _content("__tests__/template.marko_1*content", $template$3, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $admin_content__setup);
-const $n = /*@__PURE__*/ _let("n/11", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = _let("n/11", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

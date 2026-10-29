@@ -27,7 +27,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/card.marko
 const $template = "<p><!> <!></p><button>show</button>";
 const $walks = "D%c%l b";
-const $o = /*@__PURE__*/ _let("o/6", ($scope) => {
+const $o = _let("o/6", ($scope) => {
 	$o_label($scope, $scope.o?.label);
 	$o_n($scope, $scope.o?.n);
 });
@@ -37,7 +37,7 @@ const $o_label__script = _script("__tests__/tags/card.marko_0_o_label#8", ($scop
 }));
 const $o_label = /*@__PURE__*/ _const("o_label", $o_label__script);
 const $input_opts = $o;
-const $shown = /*@__PURE__*/ _let("shown/9", ($scope) => _text($scope["#text/1"], $scope.shown));
+const $shown = _let("shown/9", ($scope) => _text($scope["#text/1"], $scope.shown));
 function $setup($scope) {
 	$shown($scope, "-");
 }

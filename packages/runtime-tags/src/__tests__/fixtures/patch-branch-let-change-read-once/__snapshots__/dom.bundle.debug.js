@@ -23,7 +23,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $if_content__onCount = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_start__OR__onCount);
-const $last = /*@__PURE__*/ _let("last/6", ($scope) => _text($scope["#text/0"], $scope.last));
+const $last = _let("last/6", ($scope) => _text($scope["#text/0"], $scope.last));
 const $onCount2 = /*@__PURE__*/ _const("onCount");
 function $setup($scope) {
 	$last($scope, 0);

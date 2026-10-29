@@ -1,7 +1,7 @@
 // tags/probe.marko
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
-const $seen = /*@__PURE__*/ _let("seen/6", ($scope) => _text($scope["#text/0"], $scope.seen));
+const $seen = _let("seen/6", ($scope) => _text($scope["#text/0"], $scope.seen));
 function $setup$1($scope) {
 	$seen($scope, "");
 }

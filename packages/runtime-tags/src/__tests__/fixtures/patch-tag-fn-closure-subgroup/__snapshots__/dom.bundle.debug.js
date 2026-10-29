@@ -24,7 +24,7 @@ var code_block_default = /*@__PURE__*/ _template("__tests__/tags/code-block.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>b</button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("D l");
-const $b = /*@__PURE__*/ _let("b/7", ($scope) => $input_b($scope["#childScope/1"], $scope.b));
+const $b = _let("b/7", ($scope) => $input_b($scope["#childScope/1"], $scope.b));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$b($scope, $scope.b + "!");
 }));

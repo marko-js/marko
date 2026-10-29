@@ -26,7 +26,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__input_title = /*@__PURE__*/ _fill_join("a4", 5, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $Panel_content__title($scope.a, $scope._.f)));
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $if_content__setup);
-const $open = /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
+const $open = _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$open($scope, !$scope.g);
 }));

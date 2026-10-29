@@ -15,7 +15,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/child.marko
 const $template = "<button>toggle</button><!><!>";
 const $walks = " b%c";
-const $if_content__x = /*@__PURE__*/ _let("x/2", ($scope) => _text($scope["#text/0"], $scope.x));
+const $if_content__x = _let("x/2", ($scope) => _text($scope["#text/0"], $scope.x));
 const $if_content__input_v = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_v", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__x($scope, $scope._.input_v)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_v._($scope);

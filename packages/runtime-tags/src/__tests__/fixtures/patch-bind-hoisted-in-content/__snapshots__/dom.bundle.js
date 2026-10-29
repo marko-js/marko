@@ -1,5 +1,5 @@
 // tags/store.marko
-const $last = /*@__PURE__*/ _let(1, ($scope) => _text($scope.a, $scope.b));
+const $last = _let(1, ($scope) => _text($scope.a, $scope.b));
 const $_return = ($scope) => (next) => {
 	$last($scope, next);
 };

@@ -27,7 +27,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__w = _var_resume("__tests__/template.marko_1_w#3/var", ($scope, w) => _text($scope["#text/2"], w));
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<p class=echo> </p>`)($template$1), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)($walks$1), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/5", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = _let("show/5", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, !$scope.show);
 }));

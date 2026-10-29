@@ -29,7 +29,7 @@ const $if_content__setup = ($scope) => {
 };
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1", $Tag_content);
 const $open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "Tag", /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({ isOpen: !$scope.open }))));
-const $open = /*@__PURE__*/ _let("open/9", $open__OR__Tag);
+const $open = _let("open/9", $open__OR__Tag);
 const $Tag = /*@__PURE__*/ _const("Tag", $open__OR__Tag);
 const $input_other__OR__Panel = /*@__PURE__*/ _or(11, ($scope) => $Tag($scope, $scope.input_other ? "div" : $scope.Panel));
 const $Panel = /*@__PURE__*/ _const("Panel", $input_other__OR__Panel);

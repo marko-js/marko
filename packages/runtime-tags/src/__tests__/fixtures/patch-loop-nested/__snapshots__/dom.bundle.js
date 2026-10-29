@@ -13,8 +13,8 @@ const $for_content__setup = $for_content__inner;
 const $for_content__$params = ($scope, $params2) => $for_content__o($scope, $params2[0]);
 const $for_content__o = /*@__PURE__*/ _const(2, $for_content2__o);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
-const $outer = /*@__PURE__*/ _let(6, ($scope) => $for($scope, [$scope.g]));
-const $inner = /*@__PURE__*/ _let(7, $for_content__inner);
+const $outer = _let(6, ($scope) => $for($scope, [$scope.g]));
+const $inner = _let(7, $for_content__inner);
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.b, "click", function() {
 		$outer($scope, [...$scope.g, "b"]);

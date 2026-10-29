@@ -10,7 +10,7 @@ const $if_content__input_img = /*@__PURE__*/ _init_resume("__tests__/template.ma
 	});
 })));
 const $if_content__setup = $if_content__input_img;
-const $count = /*@__PURE__*/ _let("count/11", ($scope) => _text($scope["#text/4"], $scope.count));
+const $count = _let("count/11", ($scope) => _text($scope["#text/4"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

@@ -13,7 +13,7 @@ const $input_promise = /*@__PURE__*/ _const(3, ($scope) => {
 
 // template.marko
 const $if_content__p = /*@__PURE__*/ _init_resume("a3", /*@__PURE__*/ _if_closure(1, 0, ($scope) => $input_promise($scope.a, $scope._.g)));
-const $p = /*@__PURE__*/ _let(6, $if_content__p);
+const $p = _let(6, $if_content__p);
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$p($scope, Promise.resolve("swapped"));
 }));

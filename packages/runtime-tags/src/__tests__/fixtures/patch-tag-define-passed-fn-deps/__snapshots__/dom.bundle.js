@@ -20,7 +20,7 @@ _resumed.b0 = $valueChange;
 _bind_resume("b1 e", $log);
 
 // template.marko
-const $v = /*@__PURE__*/ _let(5, ($scope) => $input_v($scope.b, $scope.f));
+const $v = _let(5, ($scope) => $input_v($scope.b, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$v($scope, $scope.f + "!");
 }));

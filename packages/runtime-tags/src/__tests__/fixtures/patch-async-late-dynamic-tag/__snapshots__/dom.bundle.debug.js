@@ -5,7 +5,7 @@ const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/frame.marko_1_input_content#0:3/init", /*@__PURE__*/ _if_closure("#section/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#section/0", "<!><!><!>", "b%", $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/4", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/4", ($scope) => $if($scope, $scope.open ? 0 : 1));
 function $setup$1($scope) {
 	$open($scope, true);
 }

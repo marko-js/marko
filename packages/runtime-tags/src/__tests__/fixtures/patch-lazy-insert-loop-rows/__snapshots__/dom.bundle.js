@@ -5,7 +5,7 @@ const $for_content__setup = ($scope) => $load_Lazy_setup($scope, $scope.b, $scop
 const $for_content__item = ($scope, item) => $load_Lazy_tag_input_label($scope.b, item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for = /*@__PURE__*/ _for_of_unkeyed(2, "<!><!><!>", "b%/&", $for_content__setup, $for_content__$params);
-const $items = /*@__PURE__*/ _let(6, ($scope) => $for($scope, [$scope.g]));
+const $items = _let(6, ($scope) => $for($scope, [$scope.g]));
 const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$items($scope, [...$scope.g, "c" + $scope.g.length]);
 }));

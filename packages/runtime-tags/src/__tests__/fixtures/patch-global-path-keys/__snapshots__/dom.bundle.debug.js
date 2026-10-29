@@ -14,7 +14,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__$global_p($scope);
 };
 const $if = /*@__PURE__*/ _if("#text/1", "<p> </p><b> </b><i> </i><u> </u><s> </s>", "D lD lD lD lD ", $if_content__setup);
-const $open = /*@__PURE__*/ _let("open/2", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _let("open/2", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

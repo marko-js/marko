@@ -2,7 +2,7 @@
 const $template$1 = "<button>clear</button><!><!>";
 const $walks$1 = " b%c";
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $c = /*@__PURE__*/ _let("c/5", ($scope) => $dynamicTag$1($scope, $scope.c));
+const $c = _let("c/5", ($scope) => $dynamicTag$1($scope, $scope.c));
 const $input_content = $c;
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$c($scope, undefined);

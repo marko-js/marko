@@ -22,7 +22,7 @@ const $for_content__setup = ($scope) => {
 	$load_Page_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Page_tag_input_n($scope["#childScope/1"], $scope["#LoopKey"]);
 };
-const $open = /*@__PURE__*/ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "close" : "open"));
+const $open = _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "close" : "open"));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

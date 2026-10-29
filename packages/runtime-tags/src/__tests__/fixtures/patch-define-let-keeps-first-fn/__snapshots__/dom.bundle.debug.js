@@ -4,7 +4,7 @@ const $Card_content__template = "<p> </p>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!>`)($Card_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%c`)($Card_content__walks);
 const $setup = ($_) => {};
-const $Card_content__o = /*@__PURE__*/ _let("o/4", ($scope) => _text($scope["#text/0"], $scope.o.fn()));
+const $Card_content__o = _let("o/4", ($scope) => _text($scope["#text/0"], $scope.o.fn()));
 const $Card_content__opts = $Card_content__o;
 const $Card_content__$params = ($scope, $params2) => $Card_content__$temp($scope, $params2[0]);
 const $Card_content__$temp = ($scope, $temp) => $Card_content__opts($scope, $temp.opts);

@@ -23,7 +23,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $await_content__c = /*@__PURE__*/ _let("c/2", ($scope) => $await_content__dynamicTag($scope, $scope.c));
+const $await_content__c = _let("c/2", ($scope) => $await_content__dynamicTag($scope, $scope.c));
 const $await_content__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_1_input_content#0:3/init", /*@__PURE__*/ _closure_get("input_content/4", ($scope) => $await_content__c($scope, $scope._.input_content), 0, "__tests__/tags/card.marko_1_input_content#0:3/subscribe"));
 const $await_content__setup__script = _script("__tests__/tags/card.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$await_content__c($scope, undefined);

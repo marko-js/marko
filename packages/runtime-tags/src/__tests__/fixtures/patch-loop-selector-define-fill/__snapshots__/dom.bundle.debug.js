@@ -32,7 +32,7 @@ const $List_content__$temp = ($scope, $temp) => {
 	$List_content__tag_input_selected($scope, $temp.selected);
 	$List_content__tag_input_flag($scope, $temp.flag);
 };
-const $on = /*@__PURE__*/ _let("on/5", ($scope) => $List_content__tag_input_flag($scope["#childScope/0"], $scope.on));
+const $on = _let("on/5", ($scope) => $List_content__tag_input_flag($scope["#childScope/0"], $scope.on));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$on($scope, !$scope.on);
 }));

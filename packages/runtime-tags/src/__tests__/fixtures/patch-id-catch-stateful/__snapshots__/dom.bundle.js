@@ -32,7 +32,7 @@ const $try_content__setup = ($scope) => _text($scope.a, fail());
 const $if_content__try = /*@__PURE__*/ _try(0, " ", " ", $try_content__setup, 0, $catch_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);
 const $if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__setup);
-const $show = /*@__PURE__*/ _let(2, ($scope) => $if($scope, $scope.c ? 0 : 1));
+const $show = _let(2, ($scope) => $if($scope, $scope.c ? 0 : 1));
 const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {
 	$show($scope, !$scope.c);
 }));

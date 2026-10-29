@@ -14,7 +14,7 @@ const $List_content__setup__script = _script("a2", ($scope) => _on($scope.b, "cl
 	$List_content__rows($scope, [...$scope.g, { id: $scope.g.length + 1 }]);
 }));
 const $List_content__tag_input_flag = /*@__PURE__*/ _fill_const("a4", 5, $for_content__flag);
-const $on = /*@__PURE__*/ _let(5, ($scope) => $List_content__tag_input_flag($scope.a, $scope.f));
+const $on = _let(5, ($scope) => $List_content__tag_input_flag($scope.a, $scope.f));
 const $setup__script = _script("a6", ($scope) => _on($scope.b, "click", function() {
 	$on($scope, !$scope.f);
 }));

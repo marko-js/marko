@@ -10,7 +10,7 @@ const $input_a__OR__input_c = /*@__PURE__*/ _fill_join("| b1", 5, /*@__PURE__*/ 
 const $input_c = /*@__PURE__*/ _const(6, $input_a__OR__input_c);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(7, ($scope) => $input_c($scope.a, $scope.h));
+const $n = _let(7, ($scope) => $input_c($scope.a, $scope.h));
 const $setup__script = _script("a0", ($scope) => _on($scope.c, "click", function() {
 	$n($scope, $scope.h + "k");
 }));

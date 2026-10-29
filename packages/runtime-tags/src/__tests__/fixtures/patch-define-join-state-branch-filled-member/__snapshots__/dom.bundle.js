@@ -26,8 +26,8 @@ const $input_b__closure = /*@__PURE__*/ _closure($Info_content__input_b);
 const $input_b = /*@__PURE__*/ _const(6, $input_b__closure);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(9, ($scope) => $input_b($scope.a, $scope.j));
-const $s = /*@__PURE__*/ _let(10, ($scope) => $input_show($scope.a, $scope.k));
+const $n = _let(9, ($scope) => $input_b($scope.a, $scope.j));
+const $s = _let(10, ($scope) => $input_show($scope.a, $scope.k));
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.c, "click", function() {
 		$n($scope, $scope.j + "k");

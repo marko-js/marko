@@ -3,7 +3,7 @@ const $Row_content__walks = " D l";
 const $Row_content__template = "<button> </button>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks);
-const $Row_content__shown = /*@__PURE__*/ _let("shown/5", ($scope) => _text($scope["#text/1"], $scope.shown));
+const $Row_content__shown = _let("shown/5", ($scope) => _text($scope["#text/1"], $scope.shown));
 const $Row_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$Row_content__shown($scope, $scope.label);
 }));

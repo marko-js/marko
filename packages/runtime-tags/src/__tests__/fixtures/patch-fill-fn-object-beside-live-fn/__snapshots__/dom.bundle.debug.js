@@ -60,7 +60,7 @@ const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => {
 const $o_get = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill5", "o_get", $if_content__o_get);
 const $o_ = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill6", "o_0", $if_content__o_);
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5, _w6, _w7) => `${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}${_w6}${_w7}`)($template$1, $template$1, $template$1, $template$1, $template$1, $template$1, $template$1, $template$1), /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5, _w6, _w7) => `/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}&/${_w6}&/${_w7}&`)("D l", "D l", "D l", "D l", "D l", "D l", "D l", "D l"), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/15", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = _let("show/15", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, !$scope.show);
 }));

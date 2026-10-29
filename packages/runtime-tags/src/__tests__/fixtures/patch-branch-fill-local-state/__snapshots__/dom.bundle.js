@@ -4,7 +4,7 @@ const $if_content__n = /*@__PURE__*/ _fill_let("a1", 2, $if_content__input_title
 const $if_content__setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$if_content__n($scope, +$scope.c + 1);
 }));
-const $count = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h));
+const $count = _let(7, ($scope) => _text($scope.b, $scope.h));
 const $setup__script = _script("a3", ($scope) => _on($scope.c, "click", function() {
 	$count($scope, +$scope.h + 1);
 }));

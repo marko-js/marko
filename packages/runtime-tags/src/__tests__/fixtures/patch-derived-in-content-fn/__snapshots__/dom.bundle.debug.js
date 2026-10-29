@@ -31,7 +31,7 @@ const $wrapper_content__setup = ($scope) => {
 	$setup$2($scope["#childScope/0"]);
 };
 const $wrapper_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $wrapper_content__setup);
-const $shown = /*@__PURE__*/ _let("shown/5", ($scope) => _text($scope["#text/1"], $scope.shown));
+const $shown = _let("shown/5", ($scope) => _text($scope["#text/1"], $scope.shown));
 function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $wrapper_content($scope));
 	$shown($scope, "");

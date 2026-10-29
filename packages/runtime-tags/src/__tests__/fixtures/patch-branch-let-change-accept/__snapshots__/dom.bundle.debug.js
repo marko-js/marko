@@ -9,7 +9,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 	$if_content__count($scope, 0, $valueChange($scope));
 };
-const $last = /*@__PURE__*/ _let("last/7", ($scope) => _text($scope["#text/1"], $scope.last));
+const $last = _let("last/7", ($scope) => _text($scope["#text/1"], $scope.last));
 function $setup($scope) {
 	$last($scope, 0);
 }

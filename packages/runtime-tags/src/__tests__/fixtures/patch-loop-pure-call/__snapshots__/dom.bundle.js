@@ -6,7 +6,7 @@ const $input_end__OR__start = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _o
 	Math.max(0, $scope.f),
 	1
 ])));
-const $start = /*@__PURE__*/ _let(5, $input_end__OR__start);
+const $start = _let(5, $input_end__OR__start);
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$start($scope, $scope.f + 1);
 }));

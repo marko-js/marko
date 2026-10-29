@@ -9,7 +9,7 @@ const $Sum_content__$temp = ($scope, $temp) => {
 	$Sum_content__a($scope, $temp.a);
 	$Sum_content__b($scope, $temp.b);
 };
-const $n = /*@__PURE__*/ _let("n/8", ($scope) => $Sum_content__a($scope["#childScope/0"], $scope.n));
+const $n = _let("n/8", ($scope) => $Sum_content__a($scope["#childScope/0"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/4"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

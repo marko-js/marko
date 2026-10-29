@@ -19,7 +19,7 @@ const $Panel_content__input_label = /*@__PURE__*/ _init_resume("a5", /*@__PURE__
 const $Panel_content = _content$1("a1", "<em> </em>", "D ", $Panel_content__input_label);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1, $Tag_content);
 const $open__OR__Tag = /*@__PURE__*/ _fill_join("a13", 12, /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.m, ($_) => ({ isOpen: !$scope.j }))));
-const $open = /*@__PURE__*/ _let(9, $open__OR__Tag);
+const $open = _let(9, $open__OR__Tag);
 const $setup__script = _script("a10", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.j);
 }));

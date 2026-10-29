@@ -13,8 +13,8 @@ const $input_a__closure = /*@__PURE__*/ _closure($frag_content__input_a);
 const $input_a = /*@__PURE__*/ _const(3, $input_a__closure);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(8, ($scope) => $input_a($scope.a, $scope.i));
-const $m = /*@__PURE__*/ _let(9, ($scope) => {
+const $n = _let(8, ($scope) => $input_a($scope.a, $scope.i));
+const $m = _let(9, ($scope) => {
 	$input_mode($scope.a, $scope.j);
 	$input_mode($scope.b, $scope.j);
 });

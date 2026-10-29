@@ -1,6 +1,6 @@
 // template.marko
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:child.marko.input_value.mjs"), "_a");
-const $value = /*@__PURE__*/ _let(7, ($scope) => $load_Child_tag_input_value($scope.b, $scope.h));
+const $value = _let(7, ($scope) => $load_Child_tag_input_value($scope.b, $scope.h));
 const $valueChange = ($scope) => (_new_value) => {
 	$value($scope, _new_value);
 };

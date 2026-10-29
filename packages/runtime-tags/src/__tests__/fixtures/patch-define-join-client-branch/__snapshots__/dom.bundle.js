@@ -18,8 +18,8 @@ const $input_a__closure = /*@__PURE__*/ _closure($Info_content__input_a);
 const $input_a = /*@__PURE__*/ _const(3, $input_a__closure);
 
 // template.marko
-const $count = /*@__PURE__*/ _let(8, ($scope) => $input_a($scope.a, $scope.i));
-const $s = /*@__PURE__*/ _let(9, ($scope) => {
+const $count = _let(8, ($scope) => $input_a($scope.a, $scope.i));
+const $s = _let(9, ($scope) => {
 	$input_show($scope.a, $scope.j);
 	$input_show($scope.b, $scope.j);
 });

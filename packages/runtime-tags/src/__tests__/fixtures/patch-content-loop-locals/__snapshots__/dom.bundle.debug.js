@@ -28,7 +28,7 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 	$if_content__label($scope);
 } });
 const $n__closure = /*@__PURE__*/ _closure($item_content__n);
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => {
+const $n = _let("n/7", ($scope) => {
 	_text($scope["#text/2"], $scope.n);
 	$n__closure($scope);
 });

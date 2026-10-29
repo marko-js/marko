@@ -16,7 +16,7 @@ const $try_content__setup = ($scope) => {
 const $tag__closure = /*@__PURE__*/ _closure($catch_content__tag);
 const $tag = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "tag", $tag__closure);
 const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_0_$global_brand#5", ($scope) => $tag($scope, `${$scope.$global.brand}!`), "brand");
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => _text($scope["#text/2"], $scope.n));
+const $n = _let("n/7", ($scope) => _text($scope["#text/2"], $scope.n));
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);

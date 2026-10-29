@@ -8,7 +8,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__await_promise($scope, Promise.resolve("loaded"));
 };
 const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__setup);
-const $open = /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
+const $open = _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));

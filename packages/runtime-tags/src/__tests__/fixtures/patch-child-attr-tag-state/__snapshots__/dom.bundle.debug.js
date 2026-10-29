@@ -19,8 +19,8 @@ const $walks = "D%b b l";
 const $if_content__on = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_tab($scope["#childScope/0"], attrTag({ on: $scope._.on })));
 const $if_content__setup = $if_content__on;
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/3", ($scope) => $if($scope, $scope.show ? 0 : 1));
-const $on = /*@__PURE__*/ _let("on/4", $if_content__on);
+const $show = _let("show/3", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $on = _let("on/4", $if_content__on);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
 		$on($scope, !$scope.on);

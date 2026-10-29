@@ -11,7 +11,7 @@ const $input_on__OR__input_label__OR__count = /*@__PURE__*/ _fill_join("a5", 5, 
 	"data-count": $scope.g
 })), 2)));
 const $count__closure = /*@__PURE__*/ _closure($inputonsectionarticle_content__count);
-const $count = /*@__PURE__*/ _let(6, ($scope) => {
+const $count = _let(6, ($scope) => {
 	$input_on__OR__input_label__OR__count($scope);
 	$count__closure($scope);
 });

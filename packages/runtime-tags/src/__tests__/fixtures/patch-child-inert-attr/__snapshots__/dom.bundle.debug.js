@@ -13,7 +13,7 @@ var dump_default = /*@__PURE__*/ _template("__tests__/tags/dump/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("D l");
-const $count = /*@__PURE__*/ _let("count/2", ($scope) => $input($scope["#childScope/0"], {
+const $count = _let("count/2", ($scope) => $input($scope["#childScope/0"], {
 	value: $scope.count,
 	stamp: stamp()
 }));

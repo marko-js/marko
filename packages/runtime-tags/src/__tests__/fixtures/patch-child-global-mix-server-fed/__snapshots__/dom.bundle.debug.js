@@ -12,7 +12,7 @@ var gm_default = /*@__PURE__*/ _template("__tests__/tags/gm/index.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button> </button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& D m`)("D l");
-const $count = /*@__PURE__*/ _let("count/3", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _let("count/3", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_0_$global_brand#5", ($scope) => $input_v($scope["#childScope/0"], $scope.$global.brand), "brand");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);

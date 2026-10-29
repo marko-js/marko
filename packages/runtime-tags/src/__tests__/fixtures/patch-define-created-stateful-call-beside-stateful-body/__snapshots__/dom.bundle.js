@@ -57,7 +57,7 @@ const $U = ($scope, U) => $dynamicTag2($scope, U, ($_) => ({
 	text: "u"
 }));
 const $open__OR__Inner = /*@__PURE__*/ _or(10, ($scope) => $U($scope, $scope.i ? "div" : $scope.j));
-const $open = /*@__PURE__*/ _let(8, ($scope) => {
+const $open = _let(8, ($scope) => {
 	$open__OR__Outer($scope);
 	$open__OR__T($scope);
 	$open__OR__Inner($scope);

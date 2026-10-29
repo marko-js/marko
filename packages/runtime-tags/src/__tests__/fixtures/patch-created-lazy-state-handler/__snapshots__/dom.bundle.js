@@ -1,5 +1,5 @@
 // template.marko
-const $count = /*@__PURE__*/ _let(5, ($scope) => _text($scope.b, $scope.f));
+const $count = _let(5, ($scope) => _text($scope.b, $scope.f));
 const $onPick = ($scope) => function() {
 	$count($scope._, +$scope._.f + 1);
 };

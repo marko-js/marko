@@ -17,7 +17,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<button class=read> </button>", " D ", $if_content2__setup);
 const $if_content__input_y = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_y#0:6/init", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill1", "input_y", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_y ? 0 : 1))));
-const $out = /*@__PURE__*/ _let("out/7", ($scope) => _text($scope["#text/1"], $scope.out));
+const $out = _let("out/7", ($scope) => _text($scope["#text/1"], $scope.out));
 function $setup$1($scope) {
 	$out($scope, "");
 }
@@ -35,7 +35,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button class=toggle>toggle</button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)($walks$1);
-const $y = /*@__PURE__*/ _let("y/6", ($scope) => $input_y($scope["#childScope/1"], $scope.y));
+const $y = _let("y/6", ($scope) => $input_y($scope["#childScope/1"], $scope.y));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$y($scope, !$scope.y);
 }));

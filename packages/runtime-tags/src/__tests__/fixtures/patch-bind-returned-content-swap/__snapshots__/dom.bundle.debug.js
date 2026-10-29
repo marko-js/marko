@@ -27,7 +27,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", ""
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<!><button> </button>`)("", "");
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&0${_w1}&b%b D l`)("", "");
-const $n = /*@__PURE__*/ _let("n/10", ($scope) => _text($scope["#text/6"], $scope.n));
+const $n = _let("n/10", ($scope) => _text($scope["#text/6"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/5"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

@@ -8,7 +8,7 @@ const $input_end__OR__start = /*@__PURE__*/ _fill_join("__tests__/template.marko
 	Math.max(0, $scope.start),
 	1
 ])));
-const $start = /*@__PURE__*/ _let("start/5", $input_end__OR__start);
+const $start = _let("start/5", $input_end__OR__start);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$start($scope, $scope.start + 1);
 }));

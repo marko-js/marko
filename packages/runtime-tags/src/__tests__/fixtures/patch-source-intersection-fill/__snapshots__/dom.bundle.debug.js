@@ -2,7 +2,7 @@
 const $template = "<p> </p><p> </p><button>+</button>";
 const $walks = "D lD l b";
 const $qty__OR__price = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "price", /*@__PURE__*/ _or(9, ($scope) => _text($scope["#text/1"], $scope.price * $scope.qty)));
-const $qty = /*@__PURE__*/ _let("qty/7", $qty__OR__price);
+const $qty = _let("qty/7", $qty__OR__price);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$qty($scope, +$scope.qty + 1);
 }));

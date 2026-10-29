@@ -16,7 +16,7 @@ const $try_content__setup = ($scope) => {
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);
 const $n__closure = /*@__PURE__*/ _closure($try_content__n);
-const $n = /*@__PURE__*/ _let("n/6", $n__closure);
+const $n = _let("n/6", $n__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

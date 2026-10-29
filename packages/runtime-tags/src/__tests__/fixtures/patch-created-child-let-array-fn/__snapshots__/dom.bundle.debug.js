@@ -19,7 +19,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/card.marko
 const $template = "<button> </button>";
 const $walks = " D l";
-const $o = /*@__PURE__*/ _let("o/5", ($scope) => _text($scope["#text/1"], $scope.o[0]()));
+const $o = _let("o/5", ($scope) => _text($scope["#text/1"], $scope.o[0]()));
 const $input_opts = $o;
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$o($scope, [() => "x"]);

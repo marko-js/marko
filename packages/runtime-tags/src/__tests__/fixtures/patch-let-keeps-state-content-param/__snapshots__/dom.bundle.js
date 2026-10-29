@@ -1,5 +1,5 @@
 // template.marko
-const $boxp_content__l = /*@__PURE__*/ _let(5, ($scope) => _text($scope.b, $scope.f));
+const $boxp_content__l = _let(5, ($scope) => _text($scope.b, $scope.f));
 const $boxp_content__x = ($scope, x) => $boxp_content__l($scope, String(x));
 const $boxp_content__setup = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$boxp_content__l($scope, $scope.f + "+");

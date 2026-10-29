@@ -42,7 +42,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_user._($scope);
 	$await_content($scope);
 };
-const $n = /*@__PURE__*/ _let("n/12", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = _let("n/12", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

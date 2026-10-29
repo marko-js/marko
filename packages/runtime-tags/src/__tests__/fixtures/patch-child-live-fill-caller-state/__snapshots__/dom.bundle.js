@@ -16,7 +16,7 @@ const $setup__script$1 = _script("c0", ($scope) => _on($scope.b, "click", functi
 const $input_show = ($scope, input_show) => $input_show$1($scope.a, input_show);
 
 // template.marko
-const $show = /*@__PURE__*/ _let(2, ($scope) => $input_show($scope.a, $scope.c));
+const $show = _let(2, ($scope) => $input_show($scope.a, $scope.c));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$show($scope, !$scope.c);
 }));

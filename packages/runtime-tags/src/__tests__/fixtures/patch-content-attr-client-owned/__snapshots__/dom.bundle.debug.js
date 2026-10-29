@@ -24,7 +24,7 @@ var frag_host_default = /*@__PURE__*/ _template("__tests__/tags/frag-host.marko"
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>toggle</button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)(" b");
-const $mode = /*@__PURE__*/ _let("mode/5", ($scope) => $input_mode($scope["#childScope/1"], $scope.mode));
+const $mode = _let("mode/5", ($scope) => $input_mode($scope["#childScope/1"], $scope.mode));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$mode($scope, !$scope.mode);
 }));

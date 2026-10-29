@@ -18,7 +18,7 @@ var pass_default = /*@__PURE__*/ _template("__tests__/tags/pass.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button> </button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& D l`)($walks$1);
-const $count = /*@__PURE__*/ _let("count/3", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _let("count/3", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

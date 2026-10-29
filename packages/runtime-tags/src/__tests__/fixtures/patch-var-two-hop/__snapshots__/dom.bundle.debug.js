@@ -18,7 +18,7 @@ var shower_default = /*@__PURE__*/ _template("__tests__/tags/shower/index.marko"
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}<button>+</button></main>`)($template$2, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D0${_w0}&/${_w1}& l`)("b", "D l");
-const $count = /*@__PURE__*/ _let("count/4", ($scope) => $input_value$1($scope["#childScope/0"], $scope.count));
+const $count = _let("count/4", ($scope) => $input_value$1($scope["#childScope/0"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

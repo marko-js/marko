@@ -8,7 +8,7 @@ const $if_content__input_attrs = /*@__PURE__*/ _fill_join("__tests__/template.ma
 }));
 const $if_content__setup = $if_content__input_attrs;
 const $if = /*@__PURE__*/ _if("#text/0", "<a>x</a>", " ", $if_content__setup);
-const $on = /*@__PURE__*/ _let("on/5", ($scope) => $if($scope, $scope.on ? 0 : 1));
+const $on = _let("on/5", ($scope) => $if($scope, $scope.on ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$on($scope, !$scope.on);
 }));

@@ -9,8 +9,8 @@ const $for_content__count = /*@__PURE__*/ _for_closure(0, $for_content__input_no
 const $for_content__item = /*@__PURE__*/ _const(2, $for_content__input_note__OR__count__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<li> </li>", "D ", $for_content__setup, $for_content__$params);
-const $items = /*@__PURE__*/ _let(6, ($scope) => $for($scope, [$scope.g]));
-const $count = /*@__PURE__*/ _let(7, $for_content__count);
+const $items = _let(6, ($scope) => $for($scope, [$scope.g]));
+const $count = _let(7, $for_content__count);
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.b, "click", function() {
 		$items($scope, [...$scope.g, "b"]);

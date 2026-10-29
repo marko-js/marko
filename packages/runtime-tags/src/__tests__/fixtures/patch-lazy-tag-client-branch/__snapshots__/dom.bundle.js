@@ -9,7 +9,7 @@ const $if_content2__setup = ($scope) => {
 const $if_content__if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%/&", $if_content2__setup);
 const $if_content__input_show = /*@__PURE__*/ _fill_join("b2", 4, /*@__PURE__*/ _if_closure(1, 0, ($scope) => $if_content__if($scope, $scope._.e ? 0 : 1)));
 const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__input_show);
-const $open = /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
+const $open = _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
 const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));

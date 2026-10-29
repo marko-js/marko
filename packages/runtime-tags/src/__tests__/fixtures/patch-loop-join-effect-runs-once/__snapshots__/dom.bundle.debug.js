@@ -23,7 +23,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
-const $n = /*@__PURE__*/ _let("n/5", ($scope) => $input_a($scope["#childScope/0"], "m" + $scope.n));
+const $n = _let("n/5", ($scope) => $input_a($scope["#childScope/0"], "m" + $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

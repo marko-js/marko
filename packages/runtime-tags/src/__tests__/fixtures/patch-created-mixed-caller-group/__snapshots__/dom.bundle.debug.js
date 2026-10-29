@@ -31,7 +31,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
 const $input_x__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_x", /*@__PURE__*/ _or(7, ($scope) => $input_n($scope["#childScope/0"], $scope.count + $scope.input_x)));
-const $count = /*@__PURE__*/ _let("count/6", $input_x__OR__count);
+const $count = _let("count/6", $input_x__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

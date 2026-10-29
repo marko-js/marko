@@ -8,7 +8,7 @@ const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<p><b>yes</b></p>");
 const $Panel_content__open = ($scope, open) => $Panel_content__if($scope, open ? 0 : 1);
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => $Panel_content__open($scope, $temp.open);
-const $n = /*@__PURE__*/ _let("n/4", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.n));
+const $n = _let("n/4", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.n));
 const $input_n$1 = $n;
 const $input$1 = ($scope, input) => $input_n$1($scope, input.n);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, 0, $input$1);
@@ -16,7 +16,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = "<button> </button><main><!></main>";
 const $walks = " D lD%l";
-const $c = /*@__PURE__*/ _let("c/8", ($scope) => _text($scope["#text/1"], $scope.c));
+const $c = _let("c/8", ($scope) => _text($scope["#text/1"], $scope.c));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$c($scope, +$scope.c + 1);
 }));

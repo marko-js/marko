@@ -9,7 +9,7 @@ const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_
 const $Panel_content__open = ($scope, open) => $Panel_content__if($scope, open ? 0 : 1);
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => $Panel_content__open($scope, $temp.open);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.count % 2 === 0));
+const $count = _let("count/5", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.count % 2 === 0));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

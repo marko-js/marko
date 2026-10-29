@@ -18,7 +18,7 @@ const $if_content__setup = ($scope) => {
 	$load_Picker_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Picker_tag_input_onPick($scope["#childScope/1"], $onPick($scope));
 };
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }

@@ -15,7 +15,7 @@ const $if_content__setup = ($scope) => $if_content__for($scope, [{
 	a: 1,
 	b: 2
 }]);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }

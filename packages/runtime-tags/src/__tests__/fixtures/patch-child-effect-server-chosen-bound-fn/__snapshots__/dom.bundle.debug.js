@@ -15,7 +15,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", ""
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&D l`)("");
-const $last = /*@__PURE__*/ _let("last/6", ($scope) => _text($scope["#text/1"], $scope.last));
+const $last = _let("last/6", ($scope) => _text($scope["#text/1"], $scope.last));
 const $input_pick__OR__fa__OR__fb = /*@__PURE__*/ _or(9, ($scope) => $fn($scope["#childScope/0"], $scope.input_pick ? $scope.fa : $scope.fb), 2);
 const $fa2 = /*@__PURE__*/ _const("fa", $input_pick__OR__fa__OR__fb);
 const $fb2 = /*@__PURE__*/ _const("fb", $input_pick__OR__fa__OR__fb);

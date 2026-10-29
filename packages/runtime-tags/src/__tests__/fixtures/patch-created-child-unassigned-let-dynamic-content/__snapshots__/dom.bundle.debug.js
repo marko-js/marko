@@ -1,13 +1,3 @@
-// tags/card.marko
-const $template$1 = "<section><button>x</button><!></section>";
-const $walks$1 = "Db%l";
-const $setup$1 = ($_) => {};
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $c = /*@__PURE__*/ _let("c/4", ($scope) => $dynamicTag($scope, $scope.c));
-const $input_content = $c;
-const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, 0, $input$1);
-
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
@@ -25,3 +15,13 @@ const $input = ($scope, input) => {
 const $input_label__closure = /*@__PURE__*/ _closure($card_content__input_label);
 const $input_label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_label", $input_label__closure);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);
+
+// tags/card.marko
+const $template = "<section><button>x</button><!></section>";
+const $walks = "Db%l";
+const $setup = ($_) => {};
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
+const $c = _let("c/4", ($scope) => $dynamicTag($scope, $scope.c));
+const $input_content = $c;
+const $input = ($scope, input) => $input_content($scope, input.content);
+var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template, $walks, 0, $input);

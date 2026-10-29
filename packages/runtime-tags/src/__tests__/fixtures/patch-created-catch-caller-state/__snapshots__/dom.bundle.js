@@ -14,7 +14,7 @@ const $input_detail__closure = /*@__PURE__*/ _closure($catch_content__input_deta
 const $input_detail = /*@__PURE__*/ _fill_const("b10", 3, $input_detail__closure);
 
 // template.marko
-const $count = /*@__PURE__*/ _let(8, ($scope) => {
+const $count = _let(8, ($scope) => {
 	$input_detail($scope.b, $scope.i ? "n" + $scope.i : "");
 	_text($scope.d, $scope.i);
 });

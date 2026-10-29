@@ -7,7 +7,7 @@ const $input_label__OR__count = /*@__PURE__*/ _fill_join("a2", 5, /*@__PURE__*/ 
 	a: $scope.f,
 	b: $scope.h
 }])));
-const $count = /*@__PURE__*/ _let(7, $input_label__OR__count);
+const $count = _let(7, $input_label__OR__count);
 const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$count($scope, +$scope.h + 1);
 }));

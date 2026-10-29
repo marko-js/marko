@@ -13,9 +13,9 @@ const $box_content__count = /*@__PURE__*/ _closure_get(10, $box_content__input_a
 const $box_content = /*@__PURE__*/ _content$1("a2", "<p> </p>", "D ", $box_content__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope.a, $box_content($scope));
 const $if = /*@__PURE__*/ _if(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
-const $open = /*@__PURE__*/ _let(7, ($scope) => $if($scope, $scope.h ? 0 : 1));
+const $open = _let(7, ($scope) => $if($scope, $scope.h ? 0 : 1));
 const $count__closure = /*@__PURE__*/ _closure($box_content__count);
-const $count = /*@__PURE__*/ _let(8, ($scope) => {
+const $count = _let(8, ($scope) => {
 	_text($scope.d, $scope.i);
 	$count__closure($scope);
 });

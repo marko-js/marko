@@ -6,7 +6,7 @@ const $count__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/templat
 	_text($scope["#text/1"], $scope.count + _global_read($scope.$global, "brand"));
 	$count__$global_brand__script($scope);
 }, "brand");
-const $count = /*@__PURE__*/ _let("count/2", $count__$global_brand);
+const $count = _let("count/2", $count__$global_brand);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

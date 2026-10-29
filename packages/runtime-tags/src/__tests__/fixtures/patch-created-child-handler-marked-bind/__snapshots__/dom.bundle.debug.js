@@ -11,7 +11,7 @@ var field_default = /*@__PURE__*/ _template("__tests__/tags/field.marko", $templ
 const $template = "<!><!><p> </p>";
 const $walks = "b%bD l";
 const $if_content__setup = ($scope) => $input_onKeyDown($scope["#childScope/0"], $onKeyDown($scope));
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }

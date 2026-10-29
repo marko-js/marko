@@ -24,7 +24,7 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_valueChange($scope["#childScope/0"], $valueChange($scope));
 };
-const $text = /*@__PURE__*/ _let("text/5", ($scope) => {
+const $text = _let("text/5", ($scope) => {
 	_text($scope["#text/1"], $scope.text);
 	$if_content__text($scope);
 });

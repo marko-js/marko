@@ -8,7 +8,7 @@ const $for_content__setup__script = _script("__tests__/template.marko_1", ($scop
 const $for_content__setup = $for_content__setup__script;
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", "<li> <button>x</button></li>", "D b ", $for_content__setup, $for_content__$params);
-const $items = /*@__PURE__*/ _let("items/2", ($scope) => $for($scope, [$scope.items]));
+const $items = _let("items/2", ($scope) => $for($scope, [$scope.items]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$items($scope, [...$scope.items, "n" + $scope.items.length]);
 }));

@@ -46,7 +46,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $if_content__count = _var_resume("__tests__/template.marko_1_count#7/var", ($scope, count) => {});
-const $last = /*@__PURE__*/ _let("last/6", ($scope) => _text($scope["#text/1"], $scope.last));
+const $last = _let("last/6", ($scope) => _text($scope["#text/1"], $scope.last));
 function $setup($scope) {
 	$last($scope, "none");
 }

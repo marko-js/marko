@@ -19,14 +19,14 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/child.marko
 const $template = "<em> </em><button>set</button>";
 const $walks = "D l b";
-const $user = /*@__PURE__*/ _let("user/5", ($scope) => $user_name($scope, $scope.user?.name));
+const $user = _let("user/5", ($scope) => $user_name($scope, $scope.user?.name));
 const $user_name = /*@__PURE__*/ _const("user_name", ($scope) => $user_name_length($scope, $scope.user_name?.length));
 const $user_name_length__script = _script("__tests__/tags/child.marko_0_user_name_length#7", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.user_name_length);
 }));
 const $user_name_length = /*@__PURE__*/ _const("user_name_length", $user_name_length__script);
 const $input_user = $user;
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/0"], $scope.count));
+const $count = _let("count/8", ($scope) => _text($scope["#text/0"], $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }

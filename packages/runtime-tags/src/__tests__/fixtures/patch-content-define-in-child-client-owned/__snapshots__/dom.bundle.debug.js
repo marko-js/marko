@@ -24,7 +24,7 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)($walks$1);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => $input_open($scope["#childScope/0"], $scope.count % 2 === 0));
+const $count = _let("count/5", ($scope) => $input_open($scope["#childScope/0"], $scope.count % 2 === 0));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

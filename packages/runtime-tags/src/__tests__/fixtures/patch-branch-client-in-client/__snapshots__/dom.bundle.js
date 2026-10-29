@@ -9,8 +9,8 @@ const $if_content__setup = ($scope) => {
 const $if_content__if = /*@__PURE__*/ _if(1, "<p> </p>", "D ", $if_content2__setup);
 const $if_content__on = /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__if($scope, $scope._.h ? 0 : 1));
 const $if = /*@__PURE__*/ _if(0, "<h2> </h2><!><!>", "D l%", $if_content__setup);
-const $count = /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g > 1 ? 0 : 1));
-const $on = /*@__PURE__*/ _let(7, $if_content__on);
+const $count = _let(6, ($scope) => $if($scope, $scope.g > 1 ? 0 : 1));
+const $on = _let(7, $if_content__on);
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.g + 1);
 	$on($scope, !$scope.h);

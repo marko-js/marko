@@ -17,11 +17,11 @@ const $input_b = /*@__PURE__*/ _const(6, ($scope) => {
 });
 
 // template.marko
-const $m = /*@__PURE__*/ _let(8, ($scope) => {
+const $m = _let(8, ($scope) => {
 	$input_mode($scope.a, $scope.i);
 	$input_mode($scope.b, $scope.i);
 });
-const $n = /*@__PURE__*/ _let(9, ($scope) => $input_b($scope.b, $scope.j));
+const $n = _let(9, ($scope) => $input_b($scope.b, $scope.j));
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.c, "click", function() {
 		$m($scope, !$scope.i);

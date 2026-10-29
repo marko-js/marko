@@ -15,7 +15,7 @@ const $catch_content__setup = $catch_content__input_title;
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/1"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_1*content", "<p><!> <!></p>", "D%c%", $catch_content__setup, $catch_content__$params);
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => _text($scope["#text/2"], $scope.n));
+const $n = _let("n/7", ($scope) => _text($scope["#text/2"], $scope.n));
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);

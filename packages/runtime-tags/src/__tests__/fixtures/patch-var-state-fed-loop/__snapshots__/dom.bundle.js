@@ -19,7 +19,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(0, /*@__PURE__*/ ((_w0) => `${_w0}<p>
 const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 
 // template.marko
-const $items = /*@__PURE__*/ _let(5, ($scope) => $input_items($scope.a, $scope.f));
+const $items = _let(5, ($scope) => $input_items($scope.a, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$items($scope, ["y"]);
 }));

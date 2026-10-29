@@ -9,7 +9,7 @@ const $input_b = /*@__PURE__*/ _const(5, ($scope) => {
 const $input_y = /*@__PURE__*/ _const(7, $input_b__OR__input_y);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(8, ($scope) => {
+const $n = _let(8, ($scope) => {
 	$input_a($scope.a, $scope.i);
 	$input_b($scope.a, $scope.i);
 	$input_a($scope.b, $scope.i);

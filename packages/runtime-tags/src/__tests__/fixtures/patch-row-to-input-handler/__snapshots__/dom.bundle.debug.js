@@ -5,7 +5,7 @@ const $for_content__setup__script = _script("__tests__/template.marko_1", ($scop
 	$count($scope._, $scope._.count + ($scope["#LoopKey"] + 1));
 }));
 const $for_content__setup = $for_content__setup__script;
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }

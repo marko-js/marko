@@ -12,7 +12,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__headingId($scope, _id($scope));
 };
 const $for = /*@__PURE__*/ _for_of(1, "<h2> </h2><input>", " D l ", $for_content__setup);
-const $items = /*@__PURE__*/ _let(6, ($scope) => $for($scope, [$scope.g, "key"]));
+const $items = _let(6, ($scope) => $for($scope, [$scope.g, "key"]));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$items($scope, [...$scope.g, { key: "c" }]);
 }));

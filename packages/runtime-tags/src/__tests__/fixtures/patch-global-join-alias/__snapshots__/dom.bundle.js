@@ -2,7 +2,7 @@
 const $if_content__count = /*@__PURE__*/ _if_closure(3, 0, /* @__PURE__ */ _fill_global_join("a0", ($scope) => _text($scope.a, $scope._.e + $scope.$.suffix), "suffix"));
 const $if = /*@__PURE__*/ _if(3, "<b> </b>", "D ", $if_content__count);
 const $count__$global_suffix = /*@__PURE__*/ _fill_global_join("a1", ($scope) => _text($scope.b, $scope.e + $scope.$.suffix), "suffix");
-const $count = /*@__PURE__*/ _let(4, ($scope) => {
+const $count = _let(4, ($scope) => {
 	$alias($scope, $scope.e);
 	$if($scope, $scope.e ? 0 : 1);
 	$count__$global_suffix($scope);

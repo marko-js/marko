@@ -33,7 +33,7 @@ const $Info_content__$temp = ($scope, $temp) => {
 	$Info_content__tag_input_id($scope, $temp.id);
 };
 const $count__closure = /*@__PURE__*/ _closure($await_content__count);
-const $count = /*@__PURE__*/ _let("count/6", $count__closure);
+const $count = _let("count/6", $count__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

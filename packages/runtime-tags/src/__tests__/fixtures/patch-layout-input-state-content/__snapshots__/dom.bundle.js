@@ -12,4 +12,4 @@ const $input_open = ($scope, input_open) => $input_show($scope.a, input_open);
 const $Layout_content__setup = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope._, !$scope._.b);
 }));
-const $open = /*@__PURE__*/ _let(1, ($scope) => $input_open($scope.a, $scope.b));
+const $open = _let(1, ($scope) => $input_open($scope.a, $scope.b));

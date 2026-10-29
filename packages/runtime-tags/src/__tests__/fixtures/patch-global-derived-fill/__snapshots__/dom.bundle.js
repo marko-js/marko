@@ -6,7 +6,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__count = /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.b, $scope._.g));
 const $if = /*@__PURE__*/ _if(1, "<span><!> <!></span>", "D%c%", $if_content__setup);
-const $count = /*@__PURE__*/ _let(6, ($scope) => {
+const $count = _let(6, ($scope) => {
 	$if($scope, $scope.g < 2 ? 0 : 1);
 	$if_content__count($scope);
 });

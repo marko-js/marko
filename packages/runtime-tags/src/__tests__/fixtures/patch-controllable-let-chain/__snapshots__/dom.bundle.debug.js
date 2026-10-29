@@ -2,8 +2,8 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__b = /*@__PURE__*/ _let("b/3", ($scope) => _attr_input_value($scope, "#input/1", $scope.b, $valueChange2($scope)));
-const $if_content__a = /*@__PURE__*/ _let("a/2", ($scope) => {
+const $if_content__b = _let("b/3", ($scope) => _attr_input_value($scope, "#input/1", $scope.b, $valueChange2($scope)));
+const $if_content__a = _let("a/2", ($scope) => {
 	$if_content__b($scope, $scope.a);
 	_attr_input_value($scope, "#input/0", $scope.a, $valueChange($scope));
 });

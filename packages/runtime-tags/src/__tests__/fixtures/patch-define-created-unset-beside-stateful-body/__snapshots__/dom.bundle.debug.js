@@ -30,7 +30,7 @@ const $input_label__OR__input_hidden__OR__open__OR__Tag = /*@__PURE__*/ _fill_jo
 	label: $scope.input_label + "!",
 	hidden: $scope.input_hidden
 })), 3))));
-const $open = /*@__PURE__*/ _let("open/10", $input_label__OR__input_hidden__OR__open__OR__Tag);
+const $open = _let("open/10", $input_label__OR__input_hidden__OR__open__OR__Tag);
 const $Tag = /*@__PURE__*/ _const("Tag", $input_label__OR__input_hidden__OR__open__OR__Tag);
 const $input_other__OR__Panel = /*@__PURE__*/ _or(12, ($scope) => $Tag($scope, $scope.input_other ? "div" : $scope.Panel));
 const $Panel = /*@__PURE__*/ _const("Panel", $input_other__OR__Panel);

@@ -22,7 +22,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/card.marko
 const $template = "<section><button>clear</button><!></section>";
 const $walks = "D b%l";
-const $c = /*@__PURE__*/ _let("c/5", ($scope) => $c_body($scope, $scope.c?.body));
+const $c = _let("c/5", ($scope) => $c_body($scope, $scope.c?.body));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $c_body = /*@__PURE__*/ _const("c_body", ($scope) => $dynamicTag($scope, $scope.c_body));
 const $input_content = ($scope, input_content) => $c($scope, { body: input_content });

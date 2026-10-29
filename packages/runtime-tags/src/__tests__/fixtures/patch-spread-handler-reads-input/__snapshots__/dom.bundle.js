@@ -1,7 +1,7 @@
 // template.marko
 const $if_content__input_label = /*@__PURE__*/ _fill_join("a3", 7, /*@__PURE__*/ _if_closure(2, 0, ($scope) => _text($scope.a, $scope._.h)));
 const $if = /*@__PURE__*/ _if(2, "<em> </em>", "D ", $if_content__input_label);
-const $count = /*@__PURE__*/ _let(8, ($scope) => {
+const $count = _let(8, ($scope) => {
 	_text($scope.e, $scope.i);
 	$if($scope, $scope.i ? 0 : 1);
 });

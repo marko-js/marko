@@ -7,7 +7,7 @@ const $for_content__hovered = /*@__PURE__*/ _init_resume("b7", /*@__PURE__*/ _fo
 const $hovered = /*@__PURE__*/ _fill_let("b5", 5, $for_content__hovered);
 
 // template.marko
-const $open = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h ? "open" : "closed"));
+const $open = _let(7, ($scope) => _text($scope.b, $scope.h ? "open" : "closed"));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.h);
 }));

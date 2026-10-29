@@ -21,7 +21,7 @@ var label_view_default = /*@__PURE__*/ _template("__tests__/tags/label-view.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>more</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D l");
-const $n = /*@__PURE__*/ _let("n/5", ($scope) => $input_a($scope["#childScope/0"], $a($scope)));
+const $n = _let("n/5", ($scope) => $input_a($scope["#childScope/0"], $a($scope)));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

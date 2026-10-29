@@ -14,7 +14,7 @@ const $placeholder_content__if = /*@__PURE__*/ _if(0, "<b>ph <!></b>", "Db%", $i
 const $placeholder_content__n = /*@__PURE__*/ _closure_get(8, ($scope) => $placeholder_content__if($scope, $scope._.g ? 0 : 1), 0, "a2");
 const $placeholder_content = _content$1("a8", "<p>loading</p><!><!>", "b%", $placeholder_content__n);
 const $n__closure = /*@__PURE__*/ _closure($placeholder_content__n, $if_content__n);
-const $n = /*@__PURE__*/ _let(6, ($scope) => {
+const $n = _let(6, ($scope) => {
 	_text($scope.c, $scope.g);
 	$n__closure($scope);
 });

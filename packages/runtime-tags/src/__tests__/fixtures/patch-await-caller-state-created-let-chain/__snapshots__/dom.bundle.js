@@ -1,6 +1,6 @@
 // tags/card.marko
-const $o = /*@__PURE__*/ _let(6, ($scope) => $o_label($scope, $scope.g?.label));
-const $a = /*@__PURE__*/ _let(5, ($scope) => $o($scope, { label: $scope.f }));
+const $o = _let(6, ($scope) => $o_label($scope, $scope.g?.label));
+const $a = _let(5, ($scope) => $o($scope, { label: $scope.f }));
 const $input_label = $a;
 const $o_label__script = _script("b0", ($scope) => _on($scope.b, "click", function() {
 	console.log($scope.h);
@@ -11,17 +11,17 @@ const $o_label = /*@__PURE__*/ _const(7, ($scope) => {
 });
 
 // tags/show-await.marko
-const $await_content__d = /*@__PURE__*/ _let_change(10, ($scope) => _text($scope.d, $scope.k));
-const $await_content__c = /*@__PURE__*/ _let(9, ($scope) => {
+const $await_content__d = _let_change(10, ($scope) => _text($scope.d, $scope.k));
+const $await_content__c = _let(9, ($scope) => {
 	$await_content__d($scope, $scope.j, $valueChange($scope));
 	_style_rule_item($scope.a, "--M_c0", $scope.j);
 	_text($scope.c, $scope.j);
 });
-const $await_content__b = /*@__PURE__*/ _let(8, ($scope) => {
+const $await_content__b = _let(8, ($scope) => {
 	$await_content__c($scope, $scope.i);
 	_text($scope.b, $scope.i);
 });
-const $await_content__a = /*@__PURE__*/ _let(7, ($scope) => $await_content__b($scope, $scope.h));
+const $await_content__a = _let(7, ($scope) => $await_content__b($scope, $scope.h));
 const $await_content__x = ($scope, x) => {
 	$await_content__a($scope, x);
 	$input_label($scope.e, x);
@@ -36,7 +36,7 @@ _resumed.c1 = $valueChange;
 
 // template.marko
 const $if_content__p = /*@__PURE__*/ _init_resume("a3", /*@__PURE__*/ _if_closure(1, 0, ($scope) => $input_promise($scope.a, $scope._.g)));
-const $p = /*@__PURE__*/ _let(6, $if_content__p);
+const $p = _let(6, $if_content__p);
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$p($scope, Promise.resolve("swapped"));
 }));

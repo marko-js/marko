@@ -28,7 +28,7 @@ const $for_content__setup = ($scope) => {
 const $for_content__$params = ($scope, $params2) => $for_content__p_text($scope, $params2[0]?.text);
 const $for_content__p_text__closure = /*@__PURE__*/ _closure($panel_content__p_text);
 const $for_content__p_text = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "p_text", $for_content__p_text__closure);
-const $open = /*@__PURE__*/ _let("open/5", $for_content__open);
+const $open = _let("open/5", $for_content__open);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

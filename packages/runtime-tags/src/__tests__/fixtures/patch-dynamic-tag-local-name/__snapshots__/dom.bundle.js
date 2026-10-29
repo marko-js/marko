@@ -15,7 +15,7 @@ const $Tag = /* @__PURE__ */ _dynamic_tag(0);
 const $input_value = ($scope, input_value) => $Tag($scope, input_value % 2 ? alpha_default : beta_default);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(6, ($scope) => $input_value($scope.c, $scope.g));
+const $n = _let(6, ($scope) => $input_value($scope.c, $scope.g));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$n($scope, +$scope.g + 1);
 }));

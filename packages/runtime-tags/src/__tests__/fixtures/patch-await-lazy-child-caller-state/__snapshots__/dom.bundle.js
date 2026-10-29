@@ -1,7 +1,7 @@
 // template.marko
 let $load_ShowAwait_tag_input_promise = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:show-await.marko.input_promise.mjs"), "_a");
 const $if_content__n = /*@__PURE__*/ _init_resume("b5", /*@__PURE__*/ _if_closure(1, 0, ($scope) => $load_ShowAwait_tag_input_promise($scope.b, Promise.resolve($scope._.g))));
-const $n = /*@__PURE__*/ _let(6, $if_content__n);
+const $n = _let(6, $if_content__n);
 const $setup__script = _script("b2", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.g + 1);
 }));

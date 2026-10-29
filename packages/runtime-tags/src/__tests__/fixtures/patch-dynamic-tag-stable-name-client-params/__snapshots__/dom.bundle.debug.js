@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $Box_content__show__OR__label__OR__n = /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/1"], $scope.show ? $scope.label + $scope.n : "-"), 2);
-const $Box_content__n = /*@__PURE__*/ _let("n/6", $Box_content__show__OR__label__OR__n);
+const $Box_content__n = _let("n/6", $Box_content__show__OR__label__OR__n);
 const $Box_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$Box_content__n($scope, +$scope.n + 1);
 }));

@@ -19,8 +19,8 @@ const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input_b = /*@__PURE__*/ _const(7, $if_content__input_b);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(6, ($scope) => $input_b($scope.a, $scope.g));
-const $s = /*@__PURE__*/ _let(7, ($scope) => $input_show($scope.a, $scope.h));
+const $n = _let(6, ($scope) => $input_b($scope.a, $scope.g));
+const $s = _let(7, ($scope) => $input_show($scope.a, $scope.h));
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.b, "click", function() {
 		$n($scope, $scope.g + "k");

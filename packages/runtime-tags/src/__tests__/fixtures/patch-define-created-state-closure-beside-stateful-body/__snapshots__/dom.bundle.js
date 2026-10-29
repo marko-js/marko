@@ -8,7 +8,7 @@ const $if_content2__setup = ($scope) => {
 };
 const $if_content2__n = /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.b, $scope._.g));
 const $Panel_content__open = /*@__PURE__*/ _init_resume("a10", /*@__PURE__*/ _closure_get(14, ($scope) => _text($scope.a, $scope._.i ? "o" : "c"), 0, "a4"));
-const $Panel_content__n = /*@__PURE__*/ _let(6);
+const $Panel_content__n = _let(6);
 const $Panel_content__setup = ($scope) => {
 	$Panel_content__open($scope);
 	$Panel_content__n($scope, 1);
@@ -28,7 +28,7 @@ const $open__OR__Tag = /*@__PURE__*/ _fill_join("a8", 11, /*@__PURE__*/ _or(12, 
 	label: "y"
 }))));
 const $open__closure = /*@__PURE__*/ _closure($Panel_content__open);
-const $open = /*@__PURE__*/ _let(8, ($scope) => {
+const $open = _let(8, ($scope) => {
 	$open__OR__Tag($scope);
 	$open__closure($scope);
 });

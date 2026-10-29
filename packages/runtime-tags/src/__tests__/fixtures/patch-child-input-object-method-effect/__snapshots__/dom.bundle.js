@@ -1,5 +1,5 @@
 // tags/probe.marko
-const $seen = /*@__PURE__*/ _let(6, ($scope) => _text($scope.a, $scope.g));
+const $seen = _let(6, ($scope) => _text($scope.a, $scope.g));
 const $input_opts__OR__input_label__script = _script("b0", ($scope) => $seen($scope, $scope.d.describe($scope.e)));
 
 // template.marko

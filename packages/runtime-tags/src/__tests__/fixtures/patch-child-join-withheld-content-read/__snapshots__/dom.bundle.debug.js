@@ -38,11 +38,11 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<button class=m>m</button><button class=n>n</button>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}& b b`)($walks$1, $walks$1);
-const $m = /*@__PURE__*/ _let("m/8", ($scope) => {
+const $m = _let("m/8", ($scope) => {
 	$input_mode($scope["#childScope/0"], $scope.m);
 	$input_mode($scope["#childScope/1"], $scope.m);
 });
-const $n = /*@__PURE__*/ _let("n/9", ($scope) => $input_b($scope["#childScope/1"], $scope.n));
+const $n = _let("n/9", ($scope) => $input_b($scope["#childScope/1"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/2"], "click", function() {
 		$m($scope, !$scope.m);

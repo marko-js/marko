@@ -7,7 +7,7 @@ const tone = { warn: "warn" };
 // template.marko
 const $template = /*@__PURE__*/ (() => `<button>toggle</button><div class="${"box"}"></div><div class="${item}"></div><div class="${item}"></div><div></div><div></div><!><!>`)();
 const $walks = " c b b b b%c";
-const $on = /*@__PURE__*/ _let("on/10", ($scope) => {
+const $on = _let("on/10", ($scope) => {
 	_assert_class_toggles(item, ["on"]);
 	_attr_class_names($scope["#div/1"], "on", $scope.on);
 });

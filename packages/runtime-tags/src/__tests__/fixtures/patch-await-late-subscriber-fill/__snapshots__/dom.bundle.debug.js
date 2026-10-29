@@ -17,7 +17,7 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 };
 const $n__closure = /*@__PURE__*/ _closure($await_content__n);
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => {
+const $n = _let("n/7", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$n__closure($scope);
 });

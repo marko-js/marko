@@ -13,7 +13,7 @@ const $input_on__OR__input_label = /*@__PURE__*/ _fill_join("c1", 4, /*@__PURE__
 const $input_on = /*@__PURE__*/ _const(3, $input_on__OR__input_label);
 
 // template.marko
-const $on = /*@__PURE__*/ _let(5, ($scope) => $input_on($scope.a, $scope.f));
+const $on = _let(5, ($scope) => $input_on($scope.a, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$on($scope, !$scope.f);
 }));

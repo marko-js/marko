@@ -6,7 +6,7 @@ const $Show_content__g__script = _script("a4", ($scope) => {
 const $Show_content__g = /*@__PURE__*/ _const(4, $Show_content__g__script);
 const $Show_content__get = ($scope, get) => $Show_content__g($scope, get ?? $g);
 const $upper__OR__up__OR__low = /*@__PURE__*/ _or_resume("a6", 8, ($scope) => $Show_content__get($scope.a, $scope.f ? $scope.g : $scope.h), 2);
-const $upper = /*@__PURE__*/ _let(5, $upper__OR__up__OR__low);
+const $upper = _let(5, $upper__OR__up__OR__low);
 const $setup__script = _script("a5", ($scope) => _on($scope.b, "click", function() {
 	$upper($scope, !$scope.f);
 }));

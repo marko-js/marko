@@ -28,9 +28,9 @@ const $frame_content__setup = ($scope) => {
 const $frame_content__a = /*@__PURE__*/ _closure_get("a/10", $frame_content__input_label__OR__a, 0, "__tests__/template.marko_1_a#0:7/subscribe");
 const $frame_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p class=a> </p>", "D ", $frame_content__setup);
 const $a__closure = /*@__PURE__*/ _closure($frame_content__a);
-const $a = /*@__PURE__*/ _let("a/7", $a__closure);
+const $a = _let("a/7", $a__closure);
 const $b__closure = /*@__PURE__*/ _closure($frame_content2__b);
-const $b = /*@__PURE__*/ _let("b/8", $b__closure);
+const $b = _let("b/8", $b__closure);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/2"], "click", function() {
 		$a($scope, +$scope.a + 1);

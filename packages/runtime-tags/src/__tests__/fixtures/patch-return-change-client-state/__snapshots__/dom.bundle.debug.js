@@ -28,7 +28,7 @@ var counter_box_default = /*@__PURE__*/ _template("__tests__/tags/counter-box/in
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p><button class=set>set</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l b`)($walks$1);
-const $last = /*@__PURE__*/ _let("last/4", ($scope) => _text($scope["#text/2"], $scope.last));
+const $last = _let("last/4", ($scope) => _text($scope["#text/2"], $scope.last));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	_var_change($scope["#childScope/0"], 5, "count");
 }));

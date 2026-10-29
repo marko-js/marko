@@ -24,9 +24,9 @@ const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/temp
 	isOpen: !$scope.open,
 	label: $scope.input_label + "!"
 })), 2));
-const $open = /*@__PURE__*/ _let("open/8", $input_label__OR__open__OR__Tag);
+const $open = _let("open/8", $input_label__OR__open__OR__Tag);
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $if_content__setup);
-const $shown = /*@__PURE__*/ _let("shown/9", ($scope) => $if($scope, $scope.shown ? 0 : 1));
+const $shown = _let("shown/9", ($scope) => $if($scope, $scope.shown ? 0 : 1));
 const $Tag = /*@__PURE__*/ _const("Tag", $input_label__OR__open__OR__Tag);
 const $input_other__OR__Panel = /*@__PURE__*/ _or(11, ($scope) => $Tag($scope, $scope.input_other ? "div" : $scope.Panel));
 const $Panel = /*@__PURE__*/ _const("Panel", $input_other__OR__Panel);

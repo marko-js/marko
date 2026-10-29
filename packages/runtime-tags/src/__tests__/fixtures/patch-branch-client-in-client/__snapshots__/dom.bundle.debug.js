@@ -11,8 +11,8 @@ const $if_content__setup = ($scope) => {
 const $if_content__if = /*@__PURE__*/ _if("#text/1", "<p> </p>", "D ", $if_content2__setup);
 const $if_content__on = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.on ? 0 : 1));
 const $if = /*@__PURE__*/ _if("#text/0", "<h2> </h2><!><!>", "D l%", $if_content__setup);
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => $if($scope, $scope.count > 1 ? 0 : 1));
-const $on = /*@__PURE__*/ _let("on/7", $if_content__on);
+const $count = _let("count/6", ($scope) => $if($scope, $scope.count > 1 ? 0 : 1));
+const $on = _let("on/7", $if_content__on);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 	$on($scope, !$scope.on);

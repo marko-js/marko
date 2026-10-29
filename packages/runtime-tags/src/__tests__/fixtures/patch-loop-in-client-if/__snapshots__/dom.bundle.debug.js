@@ -9,8 +9,8 @@ const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", "<li><!>: <!></l
 const $if_content__items = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__for($scope, [$scope._.items]));
 const $if_content__setup = $if_content__items;
 const $if = /*@__PURE__*/ _if("#text/0", "<ul></ul>", " ", $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
-const $items = /*@__PURE__*/ _let("items/7", $if_content__items);
+const $show = _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $items = _let("items/7", $if_content__items);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
 		$show($scope, !$scope.show);

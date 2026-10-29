@@ -23,7 +23,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$1 = "<section><button>clear</button><!></section>";
 const $walks$1 = "D b%l";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $c = /*@__PURE__*/ _let("c/5", ($scope) => $dynamicTag($scope, $scope.c));
+const $c = _let("c/5", ($scope) => $dynamicTag($scope, $scope.c));
 const $input_content$1 = $c;
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$c($scope, undefined);
@@ -35,7 +35,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // tags/outer.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $o = /*@__PURE__*/ _let("o/4", ($scope) => $input_content$1($scope["#childScope/0"], $scope.o));
+const $o = _let("o/4", ($scope) => $input_content$1($scope["#childScope/0"], $scope.o));
 const $input_content = $o;
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);

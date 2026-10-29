@@ -37,7 +37,7 @@ const $input_card = /*@__PURE__*/ _const(7, $for_content__input_card);
 
 // template.marko
 const $if_content__card = /*@__PURE__*/ _init_resume("a7", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_card($scope.a, $scope._.h)));
-const $card = /*@__PURE__*/ _let(7, $if_content__card);
+const $card = _let(7, $if_content__card);
 const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {
 	$card($scope, !$scope.h);
 }));

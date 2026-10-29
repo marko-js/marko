@@ -15,7 +15,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__on._($scope);
 };
 const $if_content__on = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_attrs__OR__on);
-const $on = /*@__PURE__*/ _let("on/6", $if_content__on);
+const $on = _let("on/6", $if_content__on);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$on($scope, !$scope.on);
 }));

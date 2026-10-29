@@ -16,7 +16,7 @@ const $catch_content__err_message = ($scope, err_message) => _text($scope["#text
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_1*content", "<b><!> <!></b>", "D%c%", $catch_content__setup, $catch_content__$params);
 const $count__closure = /*@__PURE__*/ _closure($try_content__count);
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
+const $count = _let("count/6", ($scope) => {
 	_text($scope["#text/2"], $scope.count);
 	$count__closure($scope);
 });

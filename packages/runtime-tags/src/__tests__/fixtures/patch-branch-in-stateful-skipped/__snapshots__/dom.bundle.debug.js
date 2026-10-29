@@ -33,7 +33,7 @@ const $if_content__setup = ($scope) => {
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#ul/1", "<li> </li>", "D ", 0, $for_content__$params);
 const $if_content__items = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__for($scope, [$scope._.items]));
 const $panel_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><ul></ul>", "b%b ", $if_content__setup);
-const $panel_content__open = /*@__PURE__*/ _let("open/6", ($scope) => $panel_content__if($scope, $scope.open ? 0 : 1));
+const $panel_content__open = _let("open/6", ($scope) => $panel_content__if($scope, $scope.open ? 0 : 1));
 const $panel_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$panel_content__open($scope, !$scope.open);
 }));

@@ -12,7 +12,7 @@ const $guest_content__input_guestText = /*@__PURE__*/ _init_resume("a2", /*@__PU
 const $guest_content = _content$1("a5", "<p> </p>", "D ", $guest_content__input_guestText);
 const $admin_content__input_rows = /*@__PURE__*/ _init_resume("a0", /*@__PURE__*/ _fill_join_closure("a10", 7, /*@__PURE__*/ _closure_get(12, ($scope) => $input_rows($scope.a, $scope._.h), 0, "a1"), 0));
 const $admin_content = _content$1("a4", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $admin_content__input_rows);
-const $n = /*@__PURE__*/ _let(11, ($scope) => _text($scope.b, $scope.l));
+const $n = _let(11, ($scope) => _text($scope.b, $scope.l));
 const $setup__script = _script("a9", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.l + 1);
 }));

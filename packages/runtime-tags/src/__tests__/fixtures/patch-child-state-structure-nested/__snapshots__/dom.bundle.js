@@ -6,7 +6,7 @@ const $if = /*@__PURE__*/ _if(0, "<section></section>", " ", $if_content__input_
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 
 // template.marko
-const $count = /*@__PURE__*/ _let(6, ($scope) => $input_show($scope.a, $scope.g % 2 === 0));
+const $count = _let(6, ($scope) => $input_show($scope.a, $scope.g % 2 === 0));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.g + 1);
 }));

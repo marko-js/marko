@@ -31,7 +31,7 @@ const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 
 // template.marko
-const $shown = /*@__PURE__*/ _let(6, ($scope) => $input_show($scope.a, $scope.g));
+const $shown = _let(6, ($scope) => $input_show($scope.a, $scope.g));
 const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$shown($scope, !$scope.g);
 }));

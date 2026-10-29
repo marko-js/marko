@@ -9,7 +9,7 @@ const $for_content__setup = ($scope) => {
 };
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<button class=read> </button>", " D ", $for_content__setup);
 const $if_content__setup = ($scope) => $if_content__for($scope, [[1]]);
-const $out = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h));
+const $out = _let(7, ($scope) => _text($scope.b, $scope.h));
 const $if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__setup);
 const $input_y = ($scope, input_y) => $if($scope, input_y ? 0 : 1);
 const $f = ($scope) => function() {
@@ -18,7 +18,7 @@ const $f = ($scope) => function() {
 _bind_resume("b0 e", $f);
 
 // template.marko
-const $y = /*@__PURE__*/ _let(5, ($scope) => $input_y($scope.b, $scope.f));
+const $y = _let(5, ($scope) => $input_y($scope.b, $scope.f));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$y($scope, !$scope.f);
 }));

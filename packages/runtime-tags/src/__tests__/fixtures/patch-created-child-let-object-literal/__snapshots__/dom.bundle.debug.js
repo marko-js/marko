@@ -2,7 +2,7 @@
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $o = _fill_resume("__tests__/tags/card.marko_fill0", /*@__PURE__*/ _let("o/4", ($scope) => $o_label($scope, $scope.o?.label)));
+const $o = _fill_resume("__tests__/tags/card.marko_fill0", _let("o/4", ($scope) => $o_label($scope, $scope.o?.label)));
 const $o_label = /*@__PURE__*/ _const("o_label", ($scope) => {
 	_return($scope, $scope.o_label + "!");
 	_text($scope["#text/0"], $scope.o_label);

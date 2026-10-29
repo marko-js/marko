@@ -12,7 +12,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<p>probe</p>";
 const $walks = "b";
 const $count__script = _script("__tests__/tags/probe.marko_0_count#0", ($scope) => document.body.dataset.count = String($scope.count + 1));
-const $count = /*@__PURE__*/ _let("count/0", $count__script);
+const $count = _let("count/0", $count__script);
 function $setup($scope) {
 	$count($scope, 5);
 }

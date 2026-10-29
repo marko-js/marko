@@ -23,7 +23,7 @@ var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main><h1> </h1><p>Last <!></p>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `E lDb%l/${_w0}&l`)("b%c");
-const $last = /*@__PURE__*/ _let("last/7", ($scope) => _text($scope["#text/1"], $scope.last));
+const $last = _let("last/7", ($scope) => _text($scope["#text/1"], $scope.last));
 function $setup($scope) {
 	$input_onCount($scope["#childScope/2"], $onCount($scope));
 	$last($scope, 0);

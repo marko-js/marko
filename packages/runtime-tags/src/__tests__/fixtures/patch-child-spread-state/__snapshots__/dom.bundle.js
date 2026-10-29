@@ -21,7 +21,7 @@ const $input_props__OR__on = /*@__PURE__*/ _fill_join("a1", 6, /*@__PURE__*/ _or
 	$input_title($scope.b, $card_input_spread.title);
 	$input_note($scope.b, $card_input_spread.note);
 }));
-const $on = /*@__PURE__*/ _let(7, ($scope) => {
+const $on = _let(7, ($scope) => {
 	$if($scope, $scope.h ? 0 : 1);
 	$input_props__OR__on($scope);
 });

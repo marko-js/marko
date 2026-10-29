@@ -5,7 +5,7 @@ const $input_count = /*@__PURE__*/ _const(3, $input_label__OR__input_count);
 
 // template.marko
 const $if_content__count = /*@__PURE__*/ _init_resume("a5", /*@__PURE__*/ _if_closure(2, 0, ($scope) => $input_count($scope.a, $scope._.h)));
-const $count = /*@__PURE__*/ _let(7, ($scope) => {
+const $count = _let(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	$if_content__count($scope);
 });

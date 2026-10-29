@@ -33,7 +33,7 @@ var label_view_default = /*@__PURE__*/ _template("__tests__/tags/label-view.mark
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>toggle</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($walks$1);
 const $upper__OR__up__OR__low = /*@__PURE__*/ _or_resume("__tests__/template.marko_0_upper#5_up#6_low#7/init", 8, ($scope) => $input_a($scope["#childScope/0"], $scope.upper ? $scope.up : $scope.low), 2);
-const $upper = /*@__PURE__*/ _let("upper/5", $upper__OR__up__OR__low);
+const $upper = _let("upper/5", $upper__OR__up__OR__low);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$upper($scope, !$scope.upper);
 }));

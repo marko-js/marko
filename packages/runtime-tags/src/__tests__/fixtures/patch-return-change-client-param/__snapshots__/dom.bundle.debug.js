@@ -1,7 +1,7 @@
 // tags/counter-box/index.marko
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
-const $count$1 = /*@__PURE__*/ _let("count/4", ($scope) => {
+const $count$1 = _let("count/4", ($scope) => {
 	_return($scope, $scope.count);
 	_text($scope["#text/0"], $scope.count);
 });
@@ -15,8 +15,8 @@ var counter_box_default = /*@__PURE__*/ _template("__tests__/tags/counter-box/in
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p><button class=mode>b</button><button class=set>set</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l b b`)("D l");
-const $mode = /*@__PURE__*/ _let("mode/5", ($scope) => $input_onChange($scope["#childScope/0"], $scope.mode === "a" ? $onChange($scope) : $onChange2($scope)));
-const $last = /*@__PURE__*/ _let("last/6", ($scope) => _text($scope["#text/2"], $scope.last));
+const $mode = _let("mode/5", ($scope) => $input_onChange($scope["#childScope/0"], $scope.mode === "a" ? $onChange($scope) : $onChange2($scope)));
+const $last = _let("last/6", ($scope) => _text($scope["#text/2"], $scope.last));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/3"], "click", function() {
 		$mode($scope, "b");

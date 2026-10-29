@@ -7,7 +7,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__$global_o($scope);
 };
 const $for = /*@__PURE__*/ _for_until_unkeyed("#ul/2", "<li><!>:<!></li>", "D%c%", $for_content__setup);
-const $n = /*@__PURE__*/ _let("n/3", ($scope) => $for($scope, [
+const $n = _let("n/3", ($scope) => $for($scope, [
 	$scope.n,
 	0,
 	1

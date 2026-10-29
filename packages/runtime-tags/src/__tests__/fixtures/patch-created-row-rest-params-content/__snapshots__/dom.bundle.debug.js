@@ -39,7 +39,7 @@ const $if_content__setup = ($scope) => {
 	$input_to($scope["#childScope/0"], 2);
 };
 const $count__closure = /*@__PURE__*/ _closure($myfor_content__count);
-const $count = /*@__PURE__*/ _let("count/4", $count__closure);
+const $count = _let("count/4", $count__closure);
 function $setup($scope) {
 	$count($scope, 0);
 }

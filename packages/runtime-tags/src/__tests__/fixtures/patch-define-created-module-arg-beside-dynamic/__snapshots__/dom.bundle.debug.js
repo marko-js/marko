@@ -50,7 +50,7 @@ const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/temp
 	fmt: $fmt,
 	label: $scope.input_label
 })), 2)));
-const $open = /*@__PURE__*/ _let("open/9", $input_label__OR__open__OR__Tag);
+const $open = _let("open/9", $input_label__OR__open__OR__Tag);
 const $Tag = /*@__PURE__*/ _const("Tag", $input_label__OR__open__OR__Tag);
 const $input_other__OR__Panel = /*@__PURE__*/ _or(11, ($scope) => $Tag($scope, $scope.input_other ? "div" : $scope.Panel));
 const $Panel = /*@__PURE__*/ _const("Panel", $input_other__OR__Panel);

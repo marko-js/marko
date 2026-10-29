@@ -12,8 +12,8 @@ const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 const $input_a = /*@__PURE__*/ _const(5, $for_content__input_a);
 
 // template.marko
-const $n = /*@__PURE__*/ _let(6, ($scope) => $input_a($scope.a, $scope.g));
-const $list = /*@__PURE__*/ _let(7, ($scope) => $input_items($scope.a, $scope.h));
+const $n = _let(6, ($scope) => $input_a($scope.a, $scope.g));
+const $list = _let(7, ($scope) => $input_items($scope.a, $scope.h));
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.b, "click", function() {
 		$n($scope, $scope.g + "k");

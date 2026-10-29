@@ -8,7 +8,7 @@ const $Outer_content__y = ($scope, y) => {
 	$Left_content__v($scope.a, y);
 	$Right_content__w($scope.b, y);
 };
-const $n = /*@__PURE__*/ _let(6, ($scope) => $Wrapper_content__b($scope.a, $scope.g));
+const $n = _let(6, ($scope) => $Wrapper_content__b($scope.a, $scope.g));
 const $setup__script = _script("a9", ($scope) => _on($scope.b, "click", function() {
 	$n($scope, +$scope.g + 1);
 }));

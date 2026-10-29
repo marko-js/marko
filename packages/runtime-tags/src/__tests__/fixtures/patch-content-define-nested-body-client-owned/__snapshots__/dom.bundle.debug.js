@@ -23,7 +23,7 @@ const $Outer_content__setup = ($scope) => $Inner_content2__tag_input_content($sc
 const $Outer_content__open = ($scope, open) => $Inner_content2__open($scope["#childScope/0"], open);
 const $Outer_content__$params = ($scope, $params3) => $Outer_content__$temp($scope, $params3[0]);
 const $Outer_content__$temp = ($scope, $temp2) => $Outer_content__open($scope, $temp2.open);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => $Outer_content__open($scope["#childScope/0"], $scope.count % 2 === 0));
+const $count = _let("count/5", ($scope) => $Outer_content__open($scope["#childScope/0"], $scope.count % 2 === 0));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

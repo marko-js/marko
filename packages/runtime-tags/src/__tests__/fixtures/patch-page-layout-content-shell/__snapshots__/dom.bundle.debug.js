@@ -12,7 +12,7 @@ var layout_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $tem
 const $template = /*@__PURE__*/ ((_w0) => `<html><body>${_w0}</body></html>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `E/${_w0}&m`)("D%l");
 const $layout_content__input_label = /*@__PURE__*/ _closure_get("input_label/4", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:3/subscribe");
-const $layout_content__n = /*@__PURE__*/ _let("n/3", ($scope) => _text($scope["#text/1"], $scope.n));
+const $layout_content__n = _let("n/3", ($scope) => _text($scope["#text/1"], $scope.n));
 const $layout_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
 	$layout_content__n($scope, +$scope.n + 1);
 }));

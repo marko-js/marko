@@ -23,7 +23,7 @@ const $wrap_content__setup = ($scope) => {
 const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $wrap_content__setup);
 const $if_content__input_error = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_error#0:6/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_error)));
 const $if_content__setup = $if_content__input_error;
-const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/3"], $scope.count));
+const $count = _let("count/8", ($scope) => _text($scope["#text/3"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

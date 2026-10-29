@@ -8,7 +8,7 @@ const $input_v = ($scope, input_v) => {
 
 // template.marko
 const $if_content__input_a__OR__x = /*@__PURE__*/ _fill_join_if("a4", 4, /*@__PURE__*/ _or_resume("a6", 4, ($scope) => _text($scope.c, $scope.d + $scope._.e)), 0, 0);
-const $if_content__y = /*@__PURE__*/ _let(5, ($scope) => $input_v($scope.a, $scope.f));
+const $if_content__y = _let(5, ($scope) => $input_v($scope.a, $scope.f));
 const $if_content__x = /*@__PURE__*/ _fill_let("a2", 3, ($scope) => {
 	$if_content__y($scope, $scope.d);
 	$if_content__input_a__OR__x($scope);

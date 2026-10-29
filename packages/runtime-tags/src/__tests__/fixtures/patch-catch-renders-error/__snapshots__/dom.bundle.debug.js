@@ -14,7 +14,7 @@ const $try_content2__input_error = /*@__PURE__*/ _init_resume("__tests__/templat
 const $try_content2__setup = $try_content2__input_error;
 const $try_content__input_error = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_error#0:6/init", /*@__PURE__*/ _closure_get("input_error/8", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_1_input_error#0:6/subscribe"));
 const $try_content__setup = $try_content__input_error;
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/3"], $scope.count));
+const $count = _let("count/7", ($scope) => _text($scope["#text/3"], $scope.count));
 const $try = /*@__PURE__*/ _try("#text/0", "<p> </p>", "D ", $try_content__setup, 0, $catch_content);
 const $try2 = /*@__PURE__*/ _try("#text/1", "<p> </p>", "D ", $try_content2__setup, 0, $catch_content2);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {

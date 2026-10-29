@@ -20,7 +20,7 @@ const $Label_content__setup = ($scope) => {
 const $Label_content__n = /*@__PURE__*/ _init_resume("a14", /*@__PURE__*/ _closure_get(14, ($scope) => _text($scope.b, $scope._.j)));
 const $Label_content = _content$1("a2", "<em><!> <!></em>", "D%c%", $Label_content__setup);
 const $n__closure = /*@__PURE__*/ _closure($Label_content__n);
-const $n = /*@__PURE__*/ _let(9, ($scope) => {
+const $n = _let(9, ($scope) => {
 	_text($scope.b, $scope.j);
 	$n__closure($scope);
 });

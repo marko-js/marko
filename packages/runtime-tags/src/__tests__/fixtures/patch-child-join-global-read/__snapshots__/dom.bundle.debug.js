@@ -15,7 +15,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<button class=n>+</button>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}& b`)("D l", "D l");
-const $n = /*@__PURE__*/ _let("n/7", ($scope) => {
+const $n = _let("n/7", ($scope) => {
 	$input_b($scope["#childScope/0"], "n" + $scope.n);
 	$input_a($scope["#childScope/1"], "m" + $scope.n);
 });

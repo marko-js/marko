@@ -22,7 +22,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__i($scope, $params2[1]);
 };
 const $for_content__i = /*@__PURE__*/ _const("i");
-const $selected = /*@__PURE__*/ _let("selected/5", ($scope) => _text($scope["#text/0"], $scope.selected));
+const $selected = _let("selected/5", ($scope) => _text($scope["#text/0"], $scope.selected));
 function $setup($scope) {
 	$selected($scope, -1);
 }

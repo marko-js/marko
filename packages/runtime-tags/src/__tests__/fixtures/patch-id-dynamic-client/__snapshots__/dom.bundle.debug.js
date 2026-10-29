@@ -17,7 +17,7 @@ const $template = "<button>toggle</button><!><!><input><label>own</label>";
 const $walks = " b%b%b b b";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/2");
-const $on = /*@__PURE__*/ _let("on/5", ($scope) => {
+const $on = _let("on/5", ($scope) => {
 	$dynamicTag($scope, $scope.on ? labeled_default : null, ($_) => ({ name: "a" }));
 	$dynamicTag2($scope, $scope.on ? labeled_default : null, ($_) => ({ name: "b" }));
 });

@@ -3,7 +3,8 @@ const $if_content__count = /*@__PURE__*/ _fill_let_change("a2", 2, ($scope) => _
 const $if_content__setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$if_content__count($scope, +$scope.c + 1);
 }));
-const $last = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h));
+const $last = _let(7, ($scope) => _text($scope.b, $scope.h));
+const $handler2 = _let(8);
 const $handler = ($scope) => (next) => {
 	$last($scope, next);
 };

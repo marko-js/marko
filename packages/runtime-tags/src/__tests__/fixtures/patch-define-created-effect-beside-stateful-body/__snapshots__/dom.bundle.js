@@ -20,7 +20,7 @@ const $open__OR__Tag = /*@__PURE__*/ _fill_join("a11", 12, /*@__PURE__*/ _or(13,
 	isOpen: !$scope.j,
 	label: "dyn"
 }))));
-const $open = /*@__PURE__*/ _let(9, $open__OR__Tag);
+const $open = _let(9, $open__OR__Tag);
 const $setup__script = _script("a8", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.j);
 }));

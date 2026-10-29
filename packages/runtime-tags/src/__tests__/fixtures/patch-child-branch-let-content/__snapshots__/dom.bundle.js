@@ -1,6 +1,6 @@
 // tags/card.marko
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $if_content__c = /*@__PURE__*/ _let(2, ($scope) => $if_content__dynamicTag($scope, $scope.c));
+const $if_content__c = _let(2, ($scope) => $if_content__dynamicTag($scope, $scope.c));
 const $if_content__setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$if_content__c($scope, void 0);
 }));

@@ -35,7 +35,7 @@ const $myfor_content__$params = ($scope, $params2) => $myfor_content__i($scope, 
 const $myfor_content__i = /*@__PURE__*/ _const("i");
 const $myfor_content = _content("__tests__/template.marko_1*content", "<button class=r> </button>", " D ", $myfor_content__setup, $myfor_content__$params);
 const $n__closure = /*@__PURE__*/ _closure($myfor_content__n);
-const $n = /*@__PURE__*/ _let("n/4", $n__closure);
+const $n = _let("n/4", $n__closure);
 function $setup($scope) {
 	$input_content($scope["#childScope/0"], $myfor_content($scope));
 	$n($scope, 0);

@@ -21,7 +21,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $par
 const $for_content__i = /*@__PURE__*/ _const("i");
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1), /*@__PURE__*/ ((_w0) => `/${_w0}& b`)(" b"), $for_content__setup, $for_content__$params);
 const $if_content__setup = ($scope) => $if_content__for($scope, [[1, 2]]);
-const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }

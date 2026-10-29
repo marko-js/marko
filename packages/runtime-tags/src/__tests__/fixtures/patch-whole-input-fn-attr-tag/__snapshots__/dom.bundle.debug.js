@@ -11,7 +11,7 @@ var reader_default = /*@__PURE__*/ _template("__tests__/tags/reader.marko", $tem
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&D l`)(" b");
-const $shown = /*@__PURE__*/ _let("shown/5", ($scope) => _text($scope["#text/1"], $scope.shown));
+const $shown = _let("shown/5", ($scope) => _text($scope["#text/1"], $scope.shown));
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$shown($scope, "");

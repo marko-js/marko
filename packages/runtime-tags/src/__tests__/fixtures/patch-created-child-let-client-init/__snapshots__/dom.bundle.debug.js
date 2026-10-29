@@ -3,7 +3,7 @@ const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
 const $n__script = _script("__tests__/tags/child.marko_0_n#4", ($scope) => console.log("n", $scope.n));
-const $n = /*@__PURE__*/ _let("n/4", ($scope) => {
+const $n = _let("n/4", ($scope) => {
 	$n__script($scope);
 	_text($scope["#text/0"], $scope.n);
 });
@@ -16,7 +16,7 @@ const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 const $if_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_count#0:6/init", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_count($scope["#childScope/0"], $scope._.count)));
 const $if_content__setup = $if_content__count;
-const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
+const $count = _let("count/6", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$if_content__count($scope);
 });

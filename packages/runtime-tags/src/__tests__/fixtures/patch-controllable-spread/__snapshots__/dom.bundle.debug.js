@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<input><p> </p>";
 const $walks = " bD l";
-const $value = /*@__PURE__*/ _let("value/5", ($scope) => {
+const $value = _let("value/5", ($scope) => {
 	_attr_input_value($scope, "#input/0", $scope.value, $valueChange($scope));
 	_text($scope["#text/1"], $scope.value);
 });

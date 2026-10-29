@@ -17,7 +17,7 @@ const $if_content__if = /*@__PURE__*/ _if(1, "<i> </i><!><!>", "D l%", $if_conte
 const $if_content__open = /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__if($scope, $scope._.f ? 0 : 1));
 const $if = /*@__PURE__*/ _if(0, "<b> </b><!><!>", "D l%", $if_content__setup);
 const $open__closure = /*@__PURE__*/ _closure($if_content2__open);
-const $open = /*@__PURE__*/ _let(5, ($scope) => {
+const $open = _let(5, ($scope) => {
 	$if($scope, $scope.f ? 0 : 1);
 	$if_content__open($scope);
 	$open__closure($scope);

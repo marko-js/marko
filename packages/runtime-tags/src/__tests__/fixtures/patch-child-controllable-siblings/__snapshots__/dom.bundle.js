@@ -5,8 +5,8 @@ const $if_content__setup__script = _script("b0", ($scope) => _on($scope.b, "clic
 }));
 
 // template.marko
-const $first = /*@__PURE__*/ _let(9, ($scope) => _text($scope.b, $scope.j));
-const $second = /*@__PURE__*/ _let(10, ($scope) => _text($scope.c, $scope.k));
+const $first = _let(9, ($scope) => _text($scope.b, $scope.j));
+const $second = _let(10, ($scope) => _text($scope.c, $scope.k));
 const $onCount2 = ($scope) => function(next) {
 	$second($scope, next * 2);
 };

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<fieldset><input type=radio class=a><input type=radio class=b></fieldset><p> </p>";
 const $walks = "D b lD l";
-const $note = /*@__PURE__*/ _let("note/6", ($scope) => _text($scope["#text/2"], $scope.note));
+const $note = _let("note/6", ($scope) => _text($scope["#text/2"], $scope.note));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_attr_input_checkedValue_script($scope, "#input/0");
 	_attr_input_checkedValue_script($scope, "#input/1");

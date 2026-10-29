@@ -31,7 +31,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__try($scope);
 };
 const $pending__closure = /*@__PURE__*/ _closure($try_content__pending, $if_content__pending);
-const $pending = /*@__PURE__*/ _let("pending/5", $pending__closure);
+const $pending = _let("pending/5", $pending__closure);
 const $try = /*@__PURE__*/ _try("#text/0", "<div><!><!></div>", "D%b%", $try_content__setup, $placeholder_content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$pending($scope, new Promise((r) => globalThis.__resolve = r));

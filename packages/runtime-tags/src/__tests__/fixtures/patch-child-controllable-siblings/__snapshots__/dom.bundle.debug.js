@@ -23,8 +23,8 @@ var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<main><h1> </h1><p>First <!> Second <!></p>${_w0}${_w1}</main>`)($template$1, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `E lDb%c%l/${_w0}&/${_w1}&l`)("b%c", "b%c");
-const $first = /*@__PURE__*/ _let("first/9", ($scope) => _text($scope["#text/1"], $scope.first));
-const $second = /*@__PURE__*/ _let("second/10", ($scope) => _text($scope["#text/2"], $scope.second));
+const $first = _let("first/9", ($scope) => _text($scope["#text/1"], $scope.first));
+const $second = _let("second/10", ($scope) => _text($scope["#text/2"], $scope.second));
 function $setup($scope) {
 	$input_onCount($scope["#childScope/3"], $onCount($scope));
 	$input_onCount($scope["#childScope/4"], $onCount2($scope));

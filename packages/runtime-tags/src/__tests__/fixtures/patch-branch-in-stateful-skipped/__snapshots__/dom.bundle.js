@@ -11,7 +11,7 @@ const $if_content__setup = ($scope) => {
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed(1, "<li> </li>", "D ", 0, $for_content__$params);
 const $if_content__items = /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__for($scope, [$scope._.f]));
 const $panel_content__if = /*@__PURE__*/ _if(0, "<!><!><ul></ul>", "b%b ", $if_content__setup);
-const $panel_content__open = /*@__PURE__*/ _let(6, ($scope) => $panel_content__if($scope, $scope.g ? 0 : 1));
+const $panel_content__open = _let(6, ($scope) => $panel_content__if($scope, $scope.g ? 0 : 1));
 const $panel_content__setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$panel_content__open($scope, !$scope.g);
 }));

@@ -5,3 +5,4 @@ const $if_content__setup__script = _script("a0", ($scope) => _on($scope.a, "clic
 	$for_content__n($scope._, +$scope._.c + 1);
 }));
 const $for_content__n = /*@__PURE__*/ _fill_let("a4", 2, $if_content__n);
+const $for_content__m = _let(3);

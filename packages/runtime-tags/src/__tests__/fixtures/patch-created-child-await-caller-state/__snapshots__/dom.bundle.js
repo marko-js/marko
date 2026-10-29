@@ -6,7 +6,7 @@ const $input_promise = $await_promise;
 
 // template.marko
 const $if_content__n = /*@__PURE__*/ _init_resume("a5", /*@__PURE__*/ _if_closure(1, 0, ($scope) => $input_promise($scope.a, Promise.resolve($scope._.g))));
-const $n = /*@__PURE__*/ _let(6, $if_content__n);
+const $n = _let(6, $if_content__n);
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, $scope.g ? 0 : 1);
 }));

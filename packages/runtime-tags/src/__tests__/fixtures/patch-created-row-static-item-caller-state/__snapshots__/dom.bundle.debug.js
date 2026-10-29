@@ -22,7 +22,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__l._($scope);
 	$setup$1($scope["#childScope/0"]);
 };
-const $l = /*@__PURE__*/ _let("l/5", $if_content__l);
+const $l = _let("l/5", $if_content__l);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$l($scope, $scope.l + "!");
 }));

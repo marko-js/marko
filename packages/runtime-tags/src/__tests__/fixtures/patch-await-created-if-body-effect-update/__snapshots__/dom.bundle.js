@@ -12,7 +12,7 @@ _fill_run("a2", 3, ($scope) => {
 	$await_content__x__script($scope);
 });
 const $await_content__x__script = _script("a1", ($scope) => console.log("await", $scope.d));
-const $n = /*@__PURE__*/ _let(6, /* @__PURE__ */ _closure($await_content__n, $if_content2__n));
+const $n = _let(6, /* @__PURE__ */ _closure($await_content__n, $if_content2__n));
 const $setup__script = _script("a8", ($scope) => _on($scope.a, "click", function() {
 	$n($scope, +$scope.g + 1);
 }));

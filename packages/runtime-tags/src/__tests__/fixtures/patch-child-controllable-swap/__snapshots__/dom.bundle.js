@@ -5,7 +5,7 @@ const $if_content__setup__script = _script("b0", ($scope) => _on($scope.b, "clic
 }));
 
 // template.marko
-const $last = /*@__PURE__*/ _let(8, ($scope) => _text($scope.b, $scope.i));
+const $last = _let(8, ($scope) => _text($scope.b, $scope.i));
 const $plain = ($scope) => (next) => {
 	$last($scope, next);
 };

@@ -3,7 +3,7 @@ const $template = "<main><div></div><button>c <!></button></main>";
 const $walks = "D b Db%m";
 const $if_content__input_msg = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_msg#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_msg))));
 const $if_content__setup = $if_content__input_msg;
-const $count = /*@__PURE__*/ _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

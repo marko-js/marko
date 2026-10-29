@@ -1,7 +1,7 @@
 // probe.marko
 const $template = "<div> </div>";
 const $walks = "D l";
-const $settled = /*@__PURE__*/ _let("settled/4", ($scope) => _text($scope["#text/0"], $scope.settled ? "settled" : "pending"));
+const $settled = _let("settled/4", ($scope) => _text($scope["#text/0"], $scope.settled ? "settled" : "pending"));
 function $setup($scope) {
 	$settled($scope, false);
 }

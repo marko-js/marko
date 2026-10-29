@@ -24,7 +24,7 @@ const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 
 // template.marko
 const $if_content__items = /*@__PURE__*/ _init_resume("a5", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_items($scope.a, $scope._.g)));
-const $items = /*@__PURE__*/ _let(6, $if_content__items);
+const $items = _let(6, $if_content__items);
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$items($scope, $scope.g.concat({
 		href: "/b",

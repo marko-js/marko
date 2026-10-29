@@ -21,8 +21,8 @@ const $input_b = /*@__PURE__*/ _fill_const("b3", 5, ($scope) => {
 // template.marko
 const $if_content__list = /*@__PURE__*/ _init_resume("a3", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_items($scope.a, $scope._.g)));
 const $if_content__b = /*@__PURE__*/ _init_resume("a4", /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_b($scope.a, $scope._.h)));
-const $list = /*@__PURE__*/ _let(6, $if_content__list);
-const $b = /*@__PURE__*/ _let(7, $if_content__b);
+const $list = _let(6, $if_content__list);
+const $b = _let(7, $if_content__b);
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.b, "click", function() {
 		$list($scope, $scope.g.concat("r"));

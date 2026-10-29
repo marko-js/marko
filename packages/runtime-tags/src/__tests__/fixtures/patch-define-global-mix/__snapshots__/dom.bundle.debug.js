@@ -7,7 +7,7 @@ const $Badge_content__input_value__$global_flag = /*@__PURE__*/ _fill_global_joi
 const $Badge_content__input_value = /*@__PURE__*/ _const("input_value", $Badge_content__input_value__$global_flag);
 const $Badge_content__$params = ($scope, $params2) => $Badge_content__input($scope, $params2[0]);
 const $Badge_content__input = ($scope, input) => $Badge_content__input_value($scope, input.value);
-const $count = /*@__PURE__*/ _let("count/2", ($scope) => $Badge_content__input_value($scope["#childScope/0"], $scope.count));
+const $count = _let("count/2", ($scope) => $Badge_content__input_value($scope["#childScope/0"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
