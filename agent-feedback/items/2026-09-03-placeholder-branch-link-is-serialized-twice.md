@@ -2,12 +2,12 @@
 type: perf
 impact: low
 effort: med
-site: packages/runtime-tags/src/html/writer.ts › flushPlaceholder
+site: packages/runtime-tags/src/html/writer.ts › renderPlaceholder
 ---
 
 # A stateful placeholder's branch link is serialized twice
 
-`flushPlaceholder` (`packages/runtime-tags/src/html/writer.ts`) writes
+`renderPlaceholder` (`packages/runtime-tags/src/html/writer.ts`) writes
 `PlaceholderBranch` on the try's branch scope as a scope reference, and also
 ends the placeholder branch with a mark whose accessor is
 `AccessorProp.PlaceholderBranch + branchId` on the owner. The walker stores the
