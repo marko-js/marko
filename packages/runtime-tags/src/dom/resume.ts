@@ -49,8 +49,6 @@ export interface RenderData {
   b?: Record<string, ResumeData>;
   /* --- Used by inline runtime --- */
 
-  // Document
-  d: never;
   // Walked node lookup
   l: never;
   // Reorder-runtime
