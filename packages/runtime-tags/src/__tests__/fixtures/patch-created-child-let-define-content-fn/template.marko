@@ -1,0 +1,4 @@
+<define/Body><em>${input.label}</em></define>
+<const/make=() => ({ content: Body.content })/>
+<button onClick() { make() }>make</button>
+<if=input.show><outer data=make()/></if>

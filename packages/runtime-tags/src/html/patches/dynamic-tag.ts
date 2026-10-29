@@ -167,19 +167,24 @@ function renderDynamicTag(
     if (site !== undefined) popIdHop();
     return unpatched;
   }
-  const value = _base_dynamic_tag(
-    scopeId,
-    accessor,
-    tag,
-    inputOrArgs,
-    content,
-    inputIsArgs,
-    markerGuard,
-    tagVar ? 1 : undefined,
-    pairing === PatchPairing.Setup ? PatchPairing.Render : pairing,
-    reason,
-    renderDynamicTag,
-  );
+  const render = () =>
+    _base_dynamic_tag(
+      scopeId,
+      accessor,
+      tag,
+      inputOrArgs,
+      content,
+      inputIsArgs,
+      markerGuard,
+      tagVar ? 1 : undefined,
+      pairing === PatchPairing.Setup ? PatchPairing.Render : pairing,
+      reason,
+      renderDynamicTag,
+    );
+  // A tag client state names is the client's once the flush creates it: what it
+  // renders subscribes, as on the page.
+  const value =
+    pairing === PatchPairing.Setup ? withUnpatched(render) : render();
   if (site !== undefined) popIdHop();
   // A template whose own state drives its return keeps the client's value.
   if (
